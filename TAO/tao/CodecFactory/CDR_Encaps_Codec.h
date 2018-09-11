@@ -46,7 +46,6 @@ class TAO_CDR_Encaps_Codec
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_CDR_Encaps_Codec (CORBA::Octet major,
                         CORBA::Octet minor,
@@ -72,7 +71,6 @@ public:
                                      CORBA::TypeCode_ptr tc);
 
 protected:
-
   /// Destructor.
   /**
    * Only allow this class to be instantiated on the heap since it is
@@ -90,14 +88,12 @@ protected:
   void check_type_for_encoding (const CORBA::Any & data);
 
 private:
-
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
   TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &);
   void operator= (const TAO_CDR_Encaps_Codec &);
 
 private:
-
   /// The major GIOP version associated with this Codec.
   CORBA::Octet const major_;
 
