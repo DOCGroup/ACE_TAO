@@ -1947,12 +1947,10 @@ fi
 %{_libdir}/libACE_Compression.so.%{ACEVERSO}
 %{_libdir}/libACE_RLECompression.so.%{ACEVERSO}
 
-%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM
 %doc README
-%doc THANKS
 %doc VERSION
 
 # ---------------- ace-devel ----------------
@@ -1990,6 +1988,7 @@ fi
 %endif
 %exclude %{_libdir}/libACEXML*.so
 
+%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM
