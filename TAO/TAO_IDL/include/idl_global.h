@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_predefined_type.h"
 #include "utl_stack.h"
 #include "fe_utils.h"
+#include "idl_version.h"
 
 class AST_Root;
 class AST_Module;
@@ -360,6 +361,11 @@ public:
 
   // flag to force generation of skeleton includes (see bug #2419).
   bool need_skeleton_includes_;
+
+  /**
+   * Version of IDL to enforce
+   */
+  IdlVersion idl_version_;
 
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);

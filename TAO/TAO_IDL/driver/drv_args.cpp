@@ -76,6 +76,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_util.h"
 
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_ctype.h"
 #include "ace/Lib_Find.h"
@@ -123,85 +124,35 @@ DRV_usage (void)
               idl_global->prog_name ()));
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Legal flags:\n")));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -A...\t\t\tlocal implementation-specific escape\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Cw\t\t\tWarning if identifier spellings differ ")
-      ACE_TEXT ("only in case (default is error)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Ce\t\t\tError if identifier spellings differ ")
-      ACE_TEXT ("only in case (default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
-      ACE_TEXT ("(default)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
-      ACE_TEXT ("(default is error)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
-      ACE_TEXT ("(default is error)\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -t\t\t\tTemporary directory to be used")
-      ACE_TEXT (" by the IDL compiler.\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -u\t\t\tprints usage message and exits\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Uname\t\t\tundefines name for preprocessor\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
-   ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -V\t\t\tprints version info then exits\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -w\t\t\tsuppresses IDL compiler warning messages\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
-    ));
-  ACE_DEBUG ((
-      LM_DEBUG,
-      ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
-    ));
+    ACE_TEXT ("Legal flags:\n")
+    ACE_TEXT (" -A...\t\t\tlocal implementation-specific escape\n")
+    ACE_TEXT (" -Cw\t\t\tWarning if identifier spellings differ ")
+    ACE_TEXT ("only in case (default is error)\n")
+    ACE_TEXT (" -Ce\t\t\tError if identifier spellings differ ")
+    ACE_TEXT ("only in case (default)\n")
+    ACE_TEXT (" -ae\t\t\tError if anonymous type is seen ")
+    ACE_TEXT ("(default)\n")
+    ACE_TEXT (" -aw\t\t\tWarning if anonymous type is seen ")
+    ACE_TEXT ("(default is error)\n")
+    ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
+    ACE_TEXT ("(default is error)\n")
+    ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
+    ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
+    ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
+    ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
+    ACE_TEXT (" -t\t\t\tTemporary directory to be used")
+    ACE_TEXT (" by the IDL compiler.\n")
+    ACE_TEXT (" -u\t\t\tprints usage message and exits\n")
+    ACE_TEXT (" -Uname\t\t\tundefines name for preprocessor\n")
+    ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
+    ACE_TEXT (" -V\t\t\tprints version info then exits\n")
+    ACE_TEXT (" -w\t\t\tsuppresses IDL compiler warning messages\n")
+    ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
+    ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
+    ACE_TEXT (" --idl-version[=value]\tSet the version of IDL to use\n")
+    ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
+    ACE_TEXT (" --list-idl-versions\t\tPrint IDL versions supported and exit\n")
+  ));
 
   be_util::usage ();
 }
@@ -224,6 +175,7 @@ DRV_parse_args (long ac, char **av)
       if (av[i][0] == '-')
         {
           idl_global->append_idl_flag (av[i]);
+          const char * long_option;
 
           switch (av[i][1])
             {
@@ -549,6 +501,29 @@ DRV_parse_args (long ac, char **av)
                                 );
                 }
 
+              break;
+            case '-': // Long Options
+              long_option = av[i] + 2;
+              if (!ACE_OS::strcmp (long_option, "idl-version"))
+                {
+                  // TODO: Get argument and set idl version, error if invalid
+                }
+              else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
+                {
+                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"),
+                    idl_global->idl_version_.to_string ()));
+                  exit(0);
+                }
+              else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
+                {
+                  // TODO: List IDL versions
+                  exit(0);
+                }
+              else
+                {
+                  idl_global->set_compile_flags (idl_global->compile_flags ()
+                                                 | IDL_CF_ONLY_USAGE);
+                }
               break;
             default:
               be_global->parse_args (i, av);
