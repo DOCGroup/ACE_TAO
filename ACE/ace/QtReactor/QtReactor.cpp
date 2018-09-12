@@ -125,12 +125,28 @@ ACE_QtReactor::timeout_event (void)
   this->reset_timeout ();
 }
 
+#ifdef ACE_HAS_QT5
+ACE_HANDLE
+ACE_QtReactor::handle_from_sender () const
+{
+  // The argument passed to the Qt slot method is ignored due to this bug:
+  // https://bugreports.qt.io/browse/QTBUG-70441
+  QSocketNotifier *const notifier = dynamic_cast<QSocketNotifier *> (this->sender ());
+  return notifier ? ACE_HANDLE (notifier->socket ()) : ACE_INVALID_HANDLE;
+}
+#endif
+
 void
 ACE_QtReactor::read_event (ACE_QT_HANDLE_TYPE p_handle)
 {
   ACE_TRACE ("ACE_QtReactor::read_event");
 
+#ifdef ACE_HAS_QT5
+  ACE_UNUSED_ARG (p_handle);
+  ACE_HANDLE const handle = this->handle_from_sender ();
+#else
   ACE_HANDLE handle = ACE_HANDLE( p_handle );
+#endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
@@ -160,7 +176,12 @@ ACE_QtReactor::write_event (ACE_QT_HANDLE_TYPE p_handle)
 {
   ACE_TRACE ("ACE_QtReactor::write_event");
 
+#ifdef ACE_HAS_QT5
+  ACE_UNUSED_ARG (p_handle);
+  ACE_HANDLE const handle = this->handle_from_sender ();
+#else
   ACE_HANDLE handle = ACE_HANDLE( p_handle );
+#endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
@@ -189,8 +210,12 @@ ACE_QtReactor::exception_event (ACE_QT_HANDLE_TYPE p_handle)
 {
   ACE_TRACE ("ACE_QtReactor::exception_event");
 
+#ifdef ACE_HAS_QT5
+  ACE_UNUSED_ARG (p_handle);
+  ACE_HANDLE const handle = this->handle_from_sender ();
+#else
   ACE_HANDLE handle = ACE_HANDLE( p_handle );
-
+#endif
 
 #ifdef ACE_QTREACTOR_CLEAR_PENDING_EVENTS
   // disable socket notifier to clear pending events
