@@ -200,6 +200,13 @@ private:
     void reset_timeout (void);
     /// reopens notification pipe to create SocketNotifier for it
     void reopen_notification_pipe(void);
+
+#ifdef ACE_HAS_QT5
+    /// Recover the socket's ACE_HANDLE based on the sender of the Qt signal.
+    /// Must be called from a Qt slot method.
+    ACE_HANDLE handle_from_sender () const;
+#endif
+
     /// Deny access since member-wise won't work...
     ACE_QtReactor (const ACE_QtReactor &);
     ACE_QtReactor &operator= (const ACE_QtReactor &);
