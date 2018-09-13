@@ -84,6 +84,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern long DRV_nfiles;
 extern char *DRV_files[];
 
+void process_long_option(long ac, char **av, long &i);
+
 // Push a file into the list of files to be processed
 void
 DRV_push_file (const char *s)
@@ -175,7 +177,6 @@ DRV_parse_args (long ac, char **av)
       if (av[i][0] == '-')
         {
           idl_global->append_idl_flag (av[i]);
-          const char * long_option;
 
           switch (av[i][1])
             {
@@ -503,27 +504,7 @@ DRV_parse_args (long ac, char **av)
 
               break;
             case '-': // Long Options
-              long_option = av[i] + 2;
-              if (!ACE_OS::strcmp (long_option, "idl-version"))
-                {
-                  // TODO: Get argument and set idl version, error if invalid
-                }
-              else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
-                {
-                  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\n"),
-                    idl_global->idl_version_.to_string ()));
-                  exit(0);
-                }
-              else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
-                {
-                  // TODO: List IDL versions
-                  exit(0);
-                }
-              else
-                {
-                  idl_global->set_compile_flags (idl_global->compile_flags ()
-                                                 | IDL_CF_ONLY_USAGE);
-                }
+              process_long_option(ac, av, i);
               break;
             default:
               be_global->parse_args (i, av);
@@ -588,4 +569,69 @@ DRV_parse_args (long ac, char **av)
     }
 
   DRV_cpp_post_init ();
+}
+
+void
+print_idl_versions(bool error)
+{
+  ACE_DEBUG ((LM_INFO,
+    ACE_TEXT ("These are the valid IDL versions this compiler will accept:\n")
+    ));
+  for (int v = 1; v < IDL_VERSION_COUNT; v++)
+    {
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
+        IdlVersion (static_cast<SpecificIdlVersion>(v)).to_string ()
+        ));
+    }
+}
+
+void
+process_long_option(long ac, char **av, long &i)
+{
+  const char *long_option = av[i] + 2;
+  bool no_more_args = i + 1 >= ac;
+  if (!ACE_OS::strcmp (long_option, "idl-version"))
+    {
+      bool invalid_version = no_more_args;
+      if (no_more_args)
+        {
+          ACE_DEBUG ((LM_ERROR,
+            ACE_TEXT ("--idl-version is missing a required argument, ")
+            ACE_TEXT ("the IDL version to use.\n")
+            ));
+        }
+      else
+        {
+          idl_global->idl_version_.from_string(av[++i]);
+          invalid_version = !idl_global->idl_version_.is_valid();
+          if (invalid_version)
+            {
+              ACE_DEBUG ((LM_ERROR,
+                ACE_TEXT ("\"%C\" is not a valid IDL version supported\n"),
+                av[i]
+                ));
+            }
+        }
+      if (invalid_version)
+        {
+          print_idl_versions(true);
+          exit(1);
+        }
+    }
+  else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
+    {
+      ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
+        IdlVersion(DEFAULT_IDL_VERSION).to_string ()));
+      exit(0);
+    }
+  else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
+    {
+      print_idl_versions(false);
+      exit(0);
+    }
+  else
+    {
+      idl_global->set_compile_flags (idl_global->compile_flags ()
+                                     | IDL_CF_ONLY_USAGE);
+    }
 }

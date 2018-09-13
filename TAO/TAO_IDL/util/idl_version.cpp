@@ -7,12 +7,6 @@ static const char * idlVersionNames[IDL_VERSION_COUNT] = {
   "4.0"
 };
 
-static const float idlVersionValues[IDL_VERSION_COUNT] = {
-  0,
-  3.0,
-  4.0
-};
-
 IdlVersion::IdlVersion () : version_(DEFAULT_IDL_VERSION)
 {
 }
@@ -59,33 +53,70 @@ void IdlVersion::from_string (const char * version)
   version_ = IDL_VERSION_INVALID;
 }
 
-bool IdlVersion::operator== (SpecificIdlVersion version) const
+IdlVersion::operator SpecificIdlVersion () const
 {
-  return version_ == version;
+  return version_;
 }
 
-bool IdlVersion::operator!= (SpecificIdlVersion version) const
+bool IdlVersion::operator== (SpecificIdlVersion other) const
 {
-  return version_ != version;
+  return version_ == other;
 }
 
-bool IdlVersion::operator> (SpecificIdlVersion version) const
+bool IdlVersion::operator!= (SpecificIdlVersion other) const
 {
-  return version_ > version;
+  return version_ != other;
 }
 
-bool IdlVersion::operator>= (SpecificIdlVersion version) const
+bool IdlVersion::operator> (SpecificIdlVersion other) const
 {
-  return version_ > version;
+  return version_ > other;
 }
 
-bool IdlVersion::operator< (SpecificIdlVersion version) const
+bool IdlVersion::operator>= (SpecificIdlVersion other) const
 {
-  return version_ > version;
+  return version_ >= other;
 }
 
-bool IdlVersion::operator<= (SpecificIdlVersion version) const
+bool IdlVersion::operator< (SpecificIdlVersion other) const
 {
-  return version_ > version;
+  return version_ < other;
 }
+
+bool IdlVersion::operator<= (SpecificIdlVersion other) const
+{
+  return version_ <= other;
+}
+
+/*
+bool operator== (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left == right.version ();
+}
+
+bool operator!= (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left != right.version ();
+}
+
+bool operator> (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left > right.version ();
+}
+
+bool operator>= (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left >= right.version ();
+}
+
+bool operator< (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left < right.version ();
+}
+
+bool operator<= (SpecificIdlVersion left, const IdlVersion &right)
+{
+  return left <= right.version ();
+}
+*/
 
