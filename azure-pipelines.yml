@@ -30,8 +30,7 @@ steps:
     archiveFilePatterns: 'strawberry-perl.zip'
     destinationFolder: perl
 
-- powershell: |
-  git clone --depth 1 git://github.com/DOCGroup/MPC.git $(Build.SourcesDirectory)\ACE\MPC
+- powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(Build.SourcesDirectory)\ACE\MPC
   displayName: 'git clone MPC'
 
 - task: BatchScript@1
