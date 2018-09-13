@@ -14,19 +14,17 @@ queue:
   - visualstudio
 
 steps:
-- task: eliostruyf.build-task.custom-build-task.file-creator@2
-  displayName: 'File Creator'
-  inputs:
-    filepath: '$(Build.SourcesDirectory)\ACE\ace\config.h'
-    filecontent: '#include "ace/config-win32.h"'
+- powershell: |
+   '#include "ace/config-win32.h"' > $(Build.SourcesDirectory)\ACE\ace\config.h
+  displayName: 'Create config.h file'
 
 - powershell: |
    $client = new-object System.Net.WebClient
    $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
-  displayName: 'PowerShell Script'
+  displayName: 'Download perl'
 
 - task: ExtractFiles@1
-  displayName: 'Extract files '
+  displayName: 'Extract perl'
   inputs:
     archiveFilePatterns: 'strawberry-perl.zip'
     destinationFolder: perl
