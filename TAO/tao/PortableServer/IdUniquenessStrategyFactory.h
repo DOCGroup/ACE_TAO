@@ -34,13 +34,10 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual IdUniquenessStrategy* create (
-        ::PortableServer::IdUniquenessPolicyValue value) = 0;
+      virtual IdUniquenessStrategy* create (::PortableServer::IdUniquenessPolicyValue value) = 0;
 
       /// Cleanup the given strategy instance
-      virtual void destroy (
-        IdUniquenessStrategy *strategy
-        ) = 0;
+      virtual void destroy (IdUniquenessStrategy *strategy) = 0;
     };
   }
 }

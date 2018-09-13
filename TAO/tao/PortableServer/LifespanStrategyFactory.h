@@ -34,13 +34,10 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual LifespanStrategy* create (
-        ::PortableServer::LifespanPolicyValue value) = 0;
+      virtual LifespanStrategy* create (::PortableServer::LifespanPolicyValue value) = 0;
 
       /// Cleanup the given strategy instance
-      virtual void destroy (
-        LifespanStrategy *strategy
-        ) = 0;
+      virtual void destroy (LifespanStrategy *strategy) = 0;
     };
   }
 }

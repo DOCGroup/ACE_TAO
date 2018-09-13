@@ -84,8 +84,7 @@ TAO_POA_Initializer::init (void)
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_LifespanStrategyFactoryImpl
-    );
+      ace_svc_desc_LifespanStrategyFactoryImpl);
 
 #if !defined (CORBA_E_MICRO)
   ACE_Service_Config::process_directive (
@@ -125,8 +124,7 @@ TAO_POA_Initializer::init (void)
       ace_svc_desc_ServantRetentionStrategyFactoryImpl);
 
   ACE_Service_Config::process_directive (
-      ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl
-    );
+      ace_svc_desc_ServantRetentionStrategyRetainFactoryImpl);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
   ACE_Service_Config::process_directive (

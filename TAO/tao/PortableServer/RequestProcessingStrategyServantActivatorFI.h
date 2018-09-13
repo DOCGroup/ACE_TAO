@@ -38,9 +38,7 @@ namespace TAO
         ::PortableServer::RequestProcessingPolicyValue value,
         ::PortableServer::ServantRetentionPolicyValue srvalue);
 
-      virtual void destroy (
-        RequestProcessingStrategy *strategy
-       );
+      virtual void destroy (RequestProcessingStrategy *strategy);
     };
   }
 }
@@ -49,7 +47,6 @@ ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PortableServer, RequestProcessingStrategyServ
 ACE_FACTORY_DECLARE (TAO_PortableServer, RequestProcessingStrategyServantActivatorFactoryImpl)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

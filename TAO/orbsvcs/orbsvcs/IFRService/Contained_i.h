@@ -47,79 +47,52 @@ public:
   virtual ~TAO_Contained_i (void);
 
   /// Remove the repository entry.
-  virtual void destroy (
-    );
+  virtual void destroy ();
 
-  virtual void destroy_i (
-    );
+  virtual void destroy_i ();
 
-  virtual char *id (
-    );
+  virtual char *id ();
 
-  char *id_i (
-    );
+  char *id_i ();
 
-  virtual void id (
-      const char *id
-    );
+  virtual void id (const char *id);
 
-  void id_i (
-      const char *id
-    );
+  void id_i (const char *id);
 
-  virtual char *name (
-    );
+  virtual char *name ();
 
-  char *name_i (
-    );
+  char *name_i ();
 
-  virtual void name (
-      const char *name
-    );
+  virtual void name (const char *name);
 
-  void name_i (
-      const char *name
-    );
+  void name_i (const char *name);
 
-  virtual char *version (
-    );
+  virtual char *version ();
 
-  char *version_i (
-    );
+  char *version_i ();
 
-  virtual void version (
-      const char *version
-    );
+  virtual void version (const char *version);
 
-  void version_i (
-      const char *version
-    );
+  void version_i (const char *version);
 
-  virtual CORBA::Container_ptr defined_in (
-    );
+  virtual CORBA::Container_ptr defined_in ();
 
-  CORBA::Container_ptr defined_in_i (
-    );
+  CORBA::Container_ptr defined_in_i ();
 
-  virtual char *absolute_name (
-    );
+  virtual char *absolute_name ();
 
-  char *absolute_name_i (
-    );
+  char *absolute_name_i ();
 
-  virtual CORBA::Repository_ptr containing_repository (
-    );
+  virtual CORBA::Repository_ptr containing_repository ();
 
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe ();
 
   virtual CORBA::Contained::Description *describe_i ();
 
   virtual void move (
       CORBA::Container_ptr new_container,
       const char *new_name,
-      const char *new_version
-    );
+      const char *new_version);
 
   /// Called from TAO_IFR_Service_Utils::name_exists.
   static int same_as_tmp_name (const char *name);

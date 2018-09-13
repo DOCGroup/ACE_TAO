@@ -358,7 +358,7 @@ ACE_Service_Gestalt::add_processed_static_svc
   /// associates a service object with the Gestalt and makes the
   /// resource (a Service Object) local to the repository. This is but
   /// the first step in using such SO. The next is the
-  /// "initialization" step. It is typicaly done through a "static"
+  /// "initialization" step. It is typically done through a "static"
   /// service configuration directive.
   ///
   /// In contrast a "dynamic" directive, when processed through the

@@ -49,7 +49,6 @@ namespace TAO
   }
 }
 
-
 ACE_STATIC_SVC_DEFINE (
   ServantRetentionStrategyNonRetainFactoryImpl,
   ACE_TEXT ("ServantRetentionStrategyNonRetainFactory"),

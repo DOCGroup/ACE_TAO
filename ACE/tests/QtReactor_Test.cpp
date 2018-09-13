@@ -36,7 +36,6 @@
 #include "test_config.h"
 
 #include <assert.h>
-#include <QtGui/qapplication.h>
 #include <QtCore/qtimer.h>
 
 #include "ace/OS_NS_time.h"

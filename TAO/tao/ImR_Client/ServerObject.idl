@@ -1,8 +1,5 @@
 // -*- IDL -*-
 
-/**
- */
-
 #ifndef TAO_IMRCLIENT_SERVEROBJECT_PIDL
 #define TAO_IMRCLIENT_SERVEROBJECT_PIDL
 
@@ -15,7 +12,6 @@ module ImplementationRepository
    * Implementation Repository (IR), is used to control or check the
    * status of the server by the IR.
    */
-
   interface ServerObject
   {
     /// Check the liveness of a server.

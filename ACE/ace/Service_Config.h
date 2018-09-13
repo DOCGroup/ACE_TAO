@@ -252,19 +252,19 @@ public:
  * The ACE_Service_Config uses the Monostate pattern.  Therefore,
  * you can only have one of these instantiated per-process. It
  * represents the process-wide collection of services, which is
- * typicaly shared among all other configurable entities. The only
+ * typically shared among all other configurable entities. The only
  * ACE_Service_Config instance is registered with and owned by the
  * ACE_Object_Manager.
  *
  * By contrast, the ACE_Service_Gestalt represents the collection
- * of services, pertaining to a configurable entity. Typicaly, a
+ * of services, pertaining to a configurable entity. Typically, a
  * "configurable entity" is an instance, which owns an instance of
- * ACE_Service_Gestalt in order to ensure full controll over the
+ * ACE_Service_Gestalt in order to ensure full control over the
  * services it needs.
  *
  * Another facet of ACE_Service_Config is that for a given thread,
  * it provides access to its current, process-global
- * ACE_Service_Gestalt instance through its curent() method.
+ * ACE_Service_Gestalt instance through its current() method.
  *
  * @note The signal_handler_ static member is allocated by the
  * ACE_Object_Manager.  The ACE_Service_Config constructor
