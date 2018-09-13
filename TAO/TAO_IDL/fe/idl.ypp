@@ -2373,11 +2373,12 @@ annotation_dcl
               ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ERROR: in %C on line %d:\n")
                 ACE_TEXT ("Annotations are an IDL4 feature, ")
-                ACE_TEXT ("they not supported in IDL %C!"),
+                ACE_TEXT ("they not supported in IDL %C!\n"),
                 idl_global->filename ()->get_string (),
                 idl_global->lineno (),
                 idl_global->idl_version_.to_string ()
                 ));
+              idl_global->err()->syntax_error (idl_global->parse_state());
             }
         }
         ;
@@ -2412,7 +2413,20 @@ annotation_member
         ;
 
 annotations
-        : annotations annotation_appl
+        : annotations annotation_appl {
+          if (idl_global->idl_version_ < IDL_VERSION_4_0)
+            {
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ERROR: in %C on line %d:\n")
+                ACE_TEXT ("Annotations are an IDL4 feature, ")
+                ACE_TEXT ("they not supported in IDL %C!\n"),
+                idl_global->filename ()->get_string (),
+                idl_global->lineno (),
+                idl_global->idl_version_.to_string ()
+                ));
+              idl_global->err()->syntax_error (idl_global->parse_state());
+            }
+        }
         | /* EMPTY */
         ;
 

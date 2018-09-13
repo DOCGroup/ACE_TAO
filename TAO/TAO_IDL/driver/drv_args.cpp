@@ -154,6 +154,7 @@ DRV_usage (void)
     ACE_TEXT (" --idl-version[=value]\tSet the version of IDL to use\n")
     ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
     ACE_TEXT (" --list-idl-versions\t\tPrint IDL versions supported and exit\n")
+    ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
   ));
 
   be_util::usage ();
@@ -617,6 +618,10 @@ process_long_option(long ac, char **av, long &i)
           print_idl_versions(true);
           exit(1);
         }
+    }
+  else if (!ACE_OS::strcmp (long_option, "syntax-only"))
+    {
+      idl_global->syntax_only_ = true;
     }
   else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
     {

@@ -155,7 +155,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
     in_typedef_ (false),
     in_tmpl_mod_no_alias_ (false),
-    in_tmpl_mod_alias_ (false)
+    in_tmpl_mod_alias_ (false),
+    syntax_only_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.

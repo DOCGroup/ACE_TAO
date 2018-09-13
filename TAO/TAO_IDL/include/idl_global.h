@@ -368,6 +368,13 @@ public:
    */
   IdlVersion idl_version_;
 
+  /**
+   * Perform the compilation process right up until invoking the backend.
+   * In other words just check the syntax of the input files, do not create
+   * any output.
+   */
+  bool syntax_only_;
+
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);
 

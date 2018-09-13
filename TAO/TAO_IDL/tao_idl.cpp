@@ -279,6 +279,12 @@ DRV_drive (const char *s)
       idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
     }
 
+  if (idl_global->syntax_only_)
+    {
+      DRV_cleanup ();
+      exit (0);
+    }
+
   // Call the main entry point for the BE.
   if (idl_global->compile_flags () & IDL_CF_INFORMATIVE)
     {
