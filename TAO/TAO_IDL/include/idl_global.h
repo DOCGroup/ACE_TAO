@@ -295,7 +295,7 @@ public:
     , PS_PorttypeSqSeen         // Seen '{' for porttype
     , PS_PorttypeQsSeen         // Seen '}' for porttype
     , PS_PorttypeBodySeen       // Seen complete porttype body
-    , PS_AnnotationDevlSeen
+    , PS_AnnotationDeclSeen
   };
 
   // flags for types of declarations seen while parsing.

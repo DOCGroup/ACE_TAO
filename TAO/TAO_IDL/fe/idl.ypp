@@ -381,14 +381,15 @@ at_least_one_definition
         ;
 
 fixed_definition
-        :
-        /* TODO:
-        annotation_dcl
+        : annotation_dcl
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_AnnotationDeclSeen);
         }
-        | */
-        type_dcl
+        ';'
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+        }
+        | type_dcl
         {
 // fixed_definition : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
@@ -1623,6 +1624,13 @@ scoped_names
         ;
 
 scoped_name
+/*
+scoped_name
+  : id
+  | IDL_SCOPE_DELIMITOR id
+  | scoped_name IDL_SCOPE_DELIMITOR id
+  ;
+*/
         : id
         {
 // scoped_name : id
@@ -2348,14 +2356,73 @@ positive_int_expr :
    TODO: annotation_dcl and friends
  */
 
+annotation_dcl
+        : "@annotation" IDENTIFIER '{' annotation_body '}' {
+          if (idl_global->idl_version_ >= IDL_VERSION_4_0)
+            {
+              ACE_DEBUG ((LM_WARNING,
+                ACE_TEXT ("WARNING: in %C on line %d:\n")
+                ACE_TEXT ("Declaring annotations is not supported at the ")
+                ACE_TEXT ("momment, it is being ignored!\n"),
+                idl_global->filename ()->get_string (),
+                idl_global->lineno ()
+                ));
+            }
+          else
+            {
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("ERROR: in %C on line %d:\n")
+                ACE_TEXT ("Annotations are an IDL4 feature, ")
+                ACE_TEXT ("they not supported in IDL %C!"),
+                idl_global->filename ()->get_string (),
+                idl_global->lineno (),
+                idl_global->idl_version_.to_string ()
+                ));
+            }
+        }
+        ;
+
+annotation_body
+        : annotation_body annotation_statement ';'
+        | /* EMPTY */
+        ;
+
+annotation_statement
+        : annotation_member
+        | const_dcl
+        | type_dcl
+        ;
+
+annotation_member_dcl
+        : annotation_member_type simple_declarator
+        ;
+
+annotation_member_type
+        : const_type /* Also covers scope_name wanted by the spec grammer */
+        | "any" /* supported by this compiler? */
+        ;
+
+defaulted_annotation_member_dcl
+        : annotation_member_dcl "default" IDL_CONST const_type
+        ;
+
+annotation_member
+        : annotation_member_dcl
+        | defaulted_annotation_member_dcl
+        ;
+
 annotations
         : annotations annotation_appl
         | /* EMPTY */
         ;
 
 annotation_appl
-        : '@' scoped_name '(' annotation_appl_params ')'
-        | '@' scoped_name
+        : '@' scoped_name annotation_appl_params_maybe
+        ;
+
+annotation_appl_params_maybe
+        : '(' annotation_appl_params ')'
+        | /* EMPTY */
         ;
 
 annotation_appl_params
@@ -3370,12 +3437,12 @@ at_least_one_case_label :
         ;
 
 case_labels
-        : case_labels annotations case_label
+        : case_labels case_label
         {
 // case_labels : case_labels annotations case_label
           UTL_LabelList *ll = 0;
           ACE_NEW_RETURN (ll,
-                          UTL_LabelList ($3,
+                          UTL_LabelList ($2,
                                          0),
                           1);
 
