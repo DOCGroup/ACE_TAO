@@ -23,23 +23,32 @@ enum TAO_IDL_FE_Export SpecificIdlVersion
   IDL_VERSION_INVALID,
 
   /**
-   * TODO: Determine what this should be named
+   * IDL 3.x
+   * tao_idl dialect of IDL defined in OMG CORBA and IDL 3.5 specs.
+   * This is the version of IDL supported by the compiler as is without IDL
+   * version checks.
    */
   IDL_VERSION_3,
 
   /**
-   * IDL 4.0 as defined in OMG 2016-04-02 (http://www.omg.org/spec/IDL/4.0/)
+   * IDL 4.x
+   * tao_idl dialect of IDL as defined in OMG 2016-04-02 (http://www.omg.org/spec/IDL/4.0/)
+   * and later revisions.
    */
-  IDL_VERSION_4_0,
+  IDL_VERSION_4,
 
-  /// Attempting to pass this to IdlVersion will result in an invalid value.
+  /**
+   * SHOULD ALWAYS BE LAST, DO NOT PUT ANY VERSIONS PAST THIS!
+   *
+   * Attempting to pass this to IdlVersion will result in an invalid value.
+   */
   IDL_VERSION_COUNT
 };
 
 /*
  * Default version of IDL to use if no other options are given.
  */
-const SpecificIdlVersion DEFAULT_IDL_VERSION = IDL_VERSION_4_0;
+const SpecificIdlVersion DEFAULT_IDL_VERSION = IDL_VERSION_4;
 
 /**
  * Class Operations involving SpecificIdlVersion Values
@@ -99,19 +108,5 @@ public:
 private:
   SpecificIdlVersion version_;
 };
-
-/**
- * Compare a SpecificIdlVersion to a IdlVersion
- */
-///{
-/*
-bool operator== (SpecificIdlVersion left, const IdlVersion &right);
-bool operator!= (SpecificIdlVersion left, const IdlVersion &right);
-bool operator> (SpecificIdlVersion left, const IdlVersion &right);
-bool operator>= (SpecificIdlVersion left, const IdlVersion &right);
-bool operator< (SpecificIdlVersion left, const IdlVersion &right);
-bool operator<= (SpecificIdlVersion left, const IdlVersion &right);
-*/
-///}
 
 #endif

@@ -1,10 +1,16 @@
+/**
+ * Source File for Tracking IDL Versions
+ *
+ * Header File Counterpart is include/idl_version.h
+ */
+
 #include "ace/OS.h"
 #include "idl_version.h"
 
 static const char * idlVersionNames[IDL_VERSION_COUNT] = {
-  "INVALID",
+  "Invalid",
   "3",
-  "4.0"
+  "4"
 };
 
 IdlVersion::IdlVersion () : version_(DEFAULT_IDL_VERSION)
@@ -13,7 +19,7 @@ IdlVersion::IdlVersion () : version_(DEFAULT_IDL_VERSION)
 
 IdlVersion::IdlVersion (SpecificIdlVersion version)
 {
-  this->version(version);
+  this->version (version);
 }
 
 SpecificIdlVersion IdlVersion::version () const
@@ -44,9 +50,9 @@ void IdlVersion::from_string (const char * version)
     }
   for (int i = 0; i < IDL_VERSION_COUNT; i++)
     {
-      if (!ACE_OS::strcmp(version, idlVersionNames[i])) 
+      if (!ACE_OS::strcmp (version, idlVersionNames[i])) 
         {
-          version_ = static_cast<SpecificIdlVersion>(i);
+          version_ = static_cast<SpecificIdlVersion> (i);
           return;
         }
     }
@@ -87,36 +93,4 @@ bool IdlVersion::operator<= (SpecificIdlVersion other) const
 {
   return version_ <= other;
 }
-
-/*
-bool operator== (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left == right.version ();
-}
-
-bool operator!= (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left != right.version ();
-}
-
-bool operator> (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left > right.version ();
-}
-
-bool operator>= (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left >= right.version ();
-}
-
-bool operator< (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left < right.version ();
-}
-
-bool operator<= (SpecificIdlVersion left, const IdlVersion &right)
-{
-  return left <= right.version ();
-}
-*/
 
