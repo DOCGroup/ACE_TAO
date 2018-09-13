@@ -48,7 +48,7 @@ enum TAO_IDL_FE_Export SpecificIdlVersion
 /*
  * Default version of IDL to use if no other options are given.
  */
-const SpecificIdlVersion DEFAULT_IDL_VERSION = IDL_VERSION_4;
+const SpecificIdlVersion DEFAULT_IDL_VERSION = IDL_VERSION_3;
 
 /**
  * Class Operations involving SpecificIdlVersion Values
