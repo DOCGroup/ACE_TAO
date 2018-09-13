@@ -13,6 +13,7 @@ queue:
   - msbuild
   - visualstudio
 
+steps:
 - powershell: |
    '#include "ace/config-win32.h"' > $(Build.SourcesDirectory)\ACE\ace\config.h
   displayName: 'Create config.h file'
