@@ -1,6 +1,7 @@
 variables:
    ACE_ROOT: $(Build.SourcesDirectory)\ACE
    TAO_ROOT: $(Build.SourcesDirectory)\TAO
+   system.prefergit: true
 
 resources:
 - repo: self
@@ -29,11 +30,8 @@ steps:
     archiveFilePatterns: 'strawberry-perl.zip'
     destinationFolder: perl
 
-- task: fakhrulhilal-maktum.GitDownloader.git-downloader.GitDownloader@0
-  displayName: 'Fetch git: git://github.com/DOCGroup/MPC.git'
-  inputs:
-    RepositoryUrl: 'git://github.com/DOCGroup/MPC.git'
-    RepositoryPath: '$(Build.SourcesDirectory)\ACE\MPC'
+- powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(Build.SourcesDirectory)\ACE\MPC
+  displayName: 'git clone MPC'
 
 - task: BatchScript@1
   displayName: 'Run script perl\perl\bin\perl'
