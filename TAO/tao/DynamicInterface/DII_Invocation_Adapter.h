@@ -93,7 +93,7 @@ namespace TAO
     virtual ~DII_Invocation_Adapter (void);
 
     /// Invoke the target
-    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
 
   protected:
 
@@ -147,7 +147,7 @@ namespace TAO
         TAO::Invocation_Mode mode = TAO_DII_DEFERRED_INVOCATION);
 
     /// Invoke the target
-    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
 
   protected:
     virtual Invocation_Status invoke_twoway (

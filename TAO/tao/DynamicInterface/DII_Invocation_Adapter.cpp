@@ -49,7 +49,7 @@ namespace TAO
   }
 
   void
-  DII_Invocation_Adapter::invoke (TAO::Exception_Data * /*ex_data*/,
+  DII_Invocation_Adapter::invoke (const TAO::Exception_Data * /*ex_data*/,
                                   unsigned long ex_count)
   {
     // Convert DII exception list to a form the invocation can use
@@ -174,7 +174,7 @@ namespace TAO
 
   void
   DII_Deferred_Invocation_Adapter::invoke (
-      TAO::Exception_Data *ex,
+      const TAO::Exception_Data *ex,
       unsigned long ex_count)
   {
     // New reply dispatcher on the heap, because we will go out of
