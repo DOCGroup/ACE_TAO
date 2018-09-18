@@ -1,0 +1,903 @@
+commit 7bb903ff16f80a6bd7b6a0d9779162bb0ee43ed6
+Merge: 06f7c45a665 53b3dd4d14e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 16 14:11:31 2018 +0100
+
+    Merge pull request #709 from jwillemsen/jwi-constexceptiondata
+    
+    Use const exception data pointer when using invoke, not changed by th…
+
+commit 53b3dd4d14ef7f317394d2cb0d0bc72212b52d09
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 16 13:49:49 2018 +0200
+
+    Use const exception data pointer when using invoke, not changed by the implementation, only used
+    
+        * TAO/orbsvcs/orbsvcs/SSLIOP/params_dup.c:
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * TAO/tao/Invocation_Adapter.cpp:
+        * TAO/tao/Invocation_Adapter.h:
+        * TAO/tao/Messaging/Asynch_Invocation_Adapter.cpp:
+        * TAO/tao/Messaging/Asynch_Invocation_Adapter.h:
+        * TAO/tao/operation_details.h:
+        * TAO/tao/operation_details.inl:
+
+commit 07537d121db79a027dea811939fba8b13c2c44c3
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 14 10:37:21 2018 -0500
+
+    Updated SSLECName option (see PR #683) for compatibility with OpenSSL libraries built without EC support; applied style guidelines
+
+commit aaeeeb818dff6826cca42d1a5d63eb106fa8ab02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 11 09:01:13 2018 +0200
+
+    Removed comment at top of mpc file
+
+commit fcfe2830f8f8790a4f044d5cd3d12c6b2ae8edd7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 11 09:00:09 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/CodecFactory/CDR_Encaps_Codec.h:
+        * TAO/tao/CodecFactory/CodecFactory_impl.h:
+
+commit d8991068db5dfcb98a703323d7469da9615c43e2
+Merge: a752608aaa7 06a00d65352
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 10 18:17:32 2018 -0500
+
+    Merge pull request #697 from mitza-oci/qt5
+    
+    Qt5 support
+
+commit 95bf013bd3bccdada189c038efbd93c87b774b1b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 7 16:29:56 2018 -0500
+
+    Qt5 support
+
+commit 8024f9ae9fc8acce347ebd765cf08e550823c111
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 7 16:24:55 2018 -0500
+
+    Fixing warnings from clang by using up-to-date lex and yacc
+
+commit 43f29d07196a29b536b8b0dc934c7877e93d16c7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 7 16:59:33 2018 +0200
+
+    Layout changes
+    
+        * ACE/ace/QtReactor/QtReactor.h:
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.h:
+        * TAO/tao/BiDir_GIOP/BiDir_ORBInitializer.h:
+        * TAO/tao/BiDir_GIOP/BiDir_PolicyFactory.h:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_Factory.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_i.h:
+        * TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * TAO/tao/IORInterceptor/IORInfo.h:
+        * TAO/tao/QtResource/QtResource_Factory.h:
+
+commit 1cd6a89f603e5c6942f8decb6390a7ba1321c730
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 4 17:19:31 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/DynamicInterface/DII_Invocation.h:
+        * TAO/tao/DynamicInterface/DII_Reply_Handler.h:
+
+commit 5181314f8b8e80f23fe9289fdf7ccbfc5d950405
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 4 15:45:10 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/ImR_Client/ServerObject.idl:
+
+commit 15ba1c53b779239d11e3451c196efff0855b17b7
+Merge: e1e2fd98b9b d81e9fe526d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 4 13:05:37 2018 +0100
+
+    Merge pull request #692 from jwillemsen/jwi-imrlogging
+    
+    Only log errors when we have a debugging level set
+
+commit d81e9fe526d94121a583d93ae73beff22bc34ee3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 4 13:17:02 2018 +0200
+
+    Only log errors when we have a debugging level set
+    
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+commit e1e2fd98b9bdf875ccca86fbe16c09ae54ffb948
+Merge: 982ff2069c2 4a37c070ec5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 18:23:58 2018 +0100
+
+    Merge pull request #691 from jwillemsen/jwi-typo
+    
+    Fixed typo in comment
+
+commit eeceb693bd5dc1349f0094c1f925fc8c160e5e9e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 16:23:23 2018 +0200
+
+    Layout change
+    
+        * TAO/TAO_IDL/be/be_visitor_exception/any_op_ch.cpp:
+
+commit 9f3efb4dae088e53fadfdacb66acc0647b5bc9d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 13:45:38 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/PortableServer/PortableServer.cpp:
+        * TAO/tao/PortableServer/Root_POA.h:
+        * TAO/tao/PortableServer/Upcall_Command.h:
+        * TAO/tao/PortableServer/Upcall_Wrapper.h:
+
+commit d5a11aab8e8ac24aaa5bd70069092208c3752c20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 13:45:25 2018 +0200
+
+    Make TAO_Requires_POA_Initializer a const int as attempt to let C++Builder be used with precompiled headers
+    
+        * TAO/tao/PortableServer/PortableServer.h:
+
+commit b019a5bdcd18b04b9c175c9bb79eb515178b75b2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 09:40:00 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/PortableServer/Acceptor_Filter_Factory.cpp:
+        * TAO/tao/PortableServer/IdAssignmentStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/IdAssignmentStrategyUser.cpp:
+        * TAO/tao/PortableServer/IdUniquenessStrategyUnique.cpp:
+        * TAO/tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyImplicit.cpp:
+        * TAO/tao/PortableServer/LifespanStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/LifespanStrategyPersistentFactoryImpl.cpp:
+        * TAO/tao/PortableServer/LifespanStrategyTransientFactoryImpl.cpp:
+        * TAO/tao/PortableServer/Network_Priority_Hook.cpp:
+        * TAO/tao/PortableServer/Object_Adapter_Factory.cpp:
+        * TAO/tao/PortableServer/Policy_Strategy.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServant.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServantFI.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantActivatorFI.cpp:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantLocatorFI.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategyORBControl.cpp:
+        * TAO/tao/PortableServer/ThreadStrategySingle.cpp:
+        * TAO/tao/PortableServer/ThreadStrategySingleFactoryImpl.cpp:
+
+commit 407ffcd7ae65dccd6c203d12474697ca90f39dbc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 09:33:43 2018 +0200
+
+    Layout changes
+    
+        * TAO/tao/PortableServer/IdAssignmentStrategyFactory.h:
+        * TAO/tao/PortableServer/IdAssignmentStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/IdUniquenessStrategyFactory.h:
+        * TAO/tao/PortableServer/IdUniquenessStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyFactory.h:
+        * TAO/tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/LifespanStrategyFactory.h:
+        * TAO/tao/PortableServer/LifespanStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/LifespanStrategyPersistentFactoryImpl.h:
+        * TAO/tao/PortableServer/LifespanStrategyTransientFactoryImpl.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyFactory.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/RequestProcessingStrategyServantActivatorFI.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyFactory.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyNonRetainFactoryImpl.h:
+        * TAO/tao/PortableServer/ServantRetentionStrategyRetainFactoryImpl.h:
+        * TAO/tao/PortableServer/ThreadStrategyFactory.h:
+        * TAO/tao/PortableServer/ThreadStrategyFactoryImpl.h:
+        * TAO/tao/PortableServer/ThreadStrategySingleFactoryImpl.h:
+
+commit 8dcfb4d004aa2644c306ace0960f3349bfba4488
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 09:07:34 2018 +0200
+
+    Some more unicode related changes
+    
+        * TAO/orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/InterfaceAttrExtension_i.cpp:
+
+commit 5d4650e1fb199403206cd8ef5ea41f2b095f1b6f
+Merge: 9d8f3669be7 79f53f320db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 21:12:05 2018 +0100
+
+    Merge pull request #687 from jwillemsen/jwi-ifr
+    
+    Unicode and layout fixes to the IFR
+
+commit 79f53f320db28270d2d4d21a46d514e65e22af44
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 18:50:05 2018 +0200
+
+    Unicode and layout fixes to the IFR
+    
+        * TAO/orbsvcs/orbsvcs/IFRService/AliasDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ArrayDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ArrayDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/AttributeDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/AttributeDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentContainer_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentContainer_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ComponentRepository_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ConstantDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Contained_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/Contained_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/EmitsDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/EventDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ExtLocalInterfaceDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ExtValueDef_i.cpp:
+        * TAO/orbsvcs/orbsvcs/IFRService/ExtValueDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/FactoryDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/FinderDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/FixedDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IDLType_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IRObject_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/UnionDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/UsesDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ValueBoxDef_i.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/ValueDef_i.h:
+
+commit 2682046ca800ec414414af8fee13b9d2aa136bc4
+Author: Doug Lewis <lewisdo@objectcomputing.com>
+Date:   Fri Aug 31 09:10:54 2018 -0500
+
+    SSLIOP ECDH: Updated NEWS file to include modifications for pull request #683.
+
+commit b02c157ba9049f5405ec889463cf290e97fd50c8
+Author: Doug Lewis <lewisdo@objectcomputing.com>
+Date:   Thu Aug 30 12:43:33 2018 -0500
+
+    SSLIOP ECDH: Reduced the scope of the variable ec_nid.
+
+commit 3ff3e337f1b70600b9ebc9c02c1bcc2e0c8d33f2
+Author: Doug Lewis <lewisdo@objectcomputing.com>
+Date:   Thu Aug 30 12:14:33 2018 -0500
+
+    SSLIOP ECDH: Removed id line at top of file.
+
+commit 7d870b7618398f3e3caa477df8d13b2ac44e1485
+Author: Doug Lewis <lewisdo@objectcomputing.com>
+Date:   Thu Aug 30 10:18:49 2018 -0500
+
+    SSLIOP ECDH: Updated to execute test using ECDH.
+
+commit 1c48b797177a0494b3e976058890b47f5348b1da
+Author: Doug Lewis <lewisdo@objectcomputing.com>
+Date:   Thu Aug 30 09:39:43 2018 -0500
+
+    Added Eliptic Curve support to SSLIOP.
+
+commit 4c3a606f281cdd7774d30e9c5332b0c77916f2ba
+Merge: abc4ad2d92d 73b03c94fe5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 21:23:15 2018 +0200
+
+    Merge pull request #669 from jwillemsen/jwi-aamserverstatus
+    
+    For per client activated servers store the server reference within the AAM
+
+commit cc7af2a7494f2d3780d546b727ef4e2dcb1f34d9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 16:02:22 2018 +0200
+
+    Remove old security files
+
+commit 73b03c94fe505229f6b65049b1e63fd79b1d68d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 12:11:02 2018 +0200
+
+    Layout changes
+    
+        * TAO/DevGuideExamples/GettingStarted/README:
+        * TAO/DevGuideExamples/LocalObjects/Messenger/Messenger_i.cpp:
+        * TAO/DevGuideExamples/ValueTypes/Messenger/README:
+
+commit ef21fb3d8291aa9ee52e015dc27f9799213f3bc3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 12:10:52 2018 +0200
+
+    Destroy the ORB at the end of main
+    
+        * TAO/DevGuideExamples/AMH/MessengerClient.cpp:
+        * TAO/DevGuideExamples/GettingStarted/MessengerClient.cpp:
+
+commit 7025278b0f67b8fd708ca200190700096a72ab20
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 12:01:35 2018 +0200
+
+    List ImR changes
+    
+        * TAO/NEWS:
+
+commit 2e6128b2a163baf87b47c1cdfafdb6cfd0cc67fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 12:01:22 2018 +0200
+
+    Const fix
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 020071fb0b2ac9695189c7f0ada32f43a06669a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 09:51:19 2018 +0200
+
+    Active_Pid_Setter is only required on Windows
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.h:
+
+commit 56745c6aa5a41f32c5f579374c11026da512c0ed
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 09:49:46 2018 +0200
+
+    Shutdown the ORB at the end of the test
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_2604_Regression/MessengerClient.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/double_start/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/kill_server/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/kill_slow_server/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/link_poas/README:
+        * TAO/orbsvcs/tests/ImplRepo/link_poas/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/servers_list/client.cpp:
+
+commit 2ebdd3122e41b5248ce980f9a7e1feba36e13b95
+Merge: 866e66604d7 83f60cc01e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 09:29:48 2018 +0200
+
+    Merge branch 'master' into jwi-aamserverstatus
+
+commit 83f60cc01e3507d4f62c96cb6ec92283637e63a9
+Merge: 89254264ab9 1c187c24033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 13 09:16:32 2018 +0200
+
+    Merge pull request #673 from jwillemsen/jwi-anyarrayuniqueptr
+    
+    Make use of std::unique_ptr when C++11 or newer is enabled
+
+commit 1c187c2403375db21b15bd7d5d73f50ee109cde6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 12 19:25:53 2018 +0200
+
+    Make use of std::unique_ptr when C++11 or newer is enabled
+    
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+
+commit bf184730dcc870979f5e2cdbd974576c18eb2ae4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 12 19:22:49 2018 +0200
+
+    Catch exceptions by reference
+    
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/Client_Task.cpp:
+        * TAO/orbsvcs/tests/Security/Bug_2908_Regression/Client_Task.h:
+        * TAO/tests/ZIOP/client.cpp:
+
+commit 866e66604d7b80c6847ff82895ff594f95048ae2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Aug 12 11:12:19 2018 +0200
+
+    In a per client mode each server only gets one request and it is the responsibility of the client to shutdown the server at that moment
+    
+        * TAO/orbsvcs/examples/ImR/Advanced/Messenger_i.h:
+        * TAO/orbsvcs/examples/ImR/Advanced/TestClient.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/Test.idl:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/Test_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/Test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+
+commit 0594c965df6cd3537b10ae152cc47d6786bc9abf
+Merge: 09272a89da2 cfcc4c2fa50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 11:06:12 2018 +0200
+
+    Merge pull request #671 from jwillemsen/jwi-imractivator-loggingfix
+    
+    Fixed incorrect order of arguments to logging macro
+
+commit 3a468cb9498ceb79b53b595da51c41fe2f7b5f59
+Merge: 5e6bac19742 cfcc4c2fa50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 09:14:47 2018 +0200
+
+    Merge branch 'jwi-imractivator-loggingfix' into jwi-aamserverstatus
+
+commit cfcc4c2fa5082a72f69802679a45809d651057c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 09:14:07 2018 +0200
+
+    Fixed incorrect order of arguments to logging macro
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 5e6bac19742e4f86be8310857c046eb7a83da9ca
+Merge: 5f46c339eff 6f4b009d2fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 09:01:00 2018 +0200
+
+    Merge branch 'jwi-imrwindows-fix' into jwi-aamserverstatus
+
+commit 5f46c339eff94c16cdabe5abcc4c695d080d94c4
+Merge: 741d9ae10dc f061bb71b6b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 09:00:54 2018 +0200
+
+    Merge branch 'master' into jwi-aamserverstatus
+
+commit 6f4b009d2fbdf9387ade953d0839b49889fd0884
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 11 09:00:20 2018 +0200
+
+    Fixed windows runtime issue
+    
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit f061bb71b6b58cc51aeae57fd99e10e6de286c1c
+Merge: 68381f0376d fb7aa2fd418
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 21:30:29 2018 +0200
+
+    Merge pull request #668 from jwillemsen/jwi-imr-enhancements
+    
+    Logging enhancements to the ImR
+
+commit 68381f0376d2d15399c41a6d6f87c84158019b82
+Merge: 4cae0e9397e aaa64c96bcc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 16:33:39 2018 +0200
+
+    Merge pull request #667 from jwillemsen/jwi-valuetypeamh-uniqueptr
+    
+    Make use of std::unique_ptr when we have C++11 or newer
+
+commit 741d9ae10dc93e259ffc1374101cf5714b1d0936
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 16:33:22 2018 +0200
+
+    Store the server status for per client activation within the AAM
+    
+        * TAO/orbsvcs/DevGuideExamples/ImplRepo/README:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+
+commit fb7aa2fd4182de6fc7b736de2b6818ab8caeec58
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:43:31 2018 +0200
+
+    Pass -ORBDebugLevel to the imr with the user specified level (-debug)
+    
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+commit f956338f34bb7e4692e8237f6f056c2989850556
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:43:12 2018 +0200
+
+    Fixed compile error
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit d7aa752a85bcbab5479d688bb848109584bc1370
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:41:31 2018 +0200
+
+    Revert some test changes, the AAM for multiple parallel spawned servers for per client mode will share the same Server_Info struct, aligned logging of the AAM
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+commit c0be713cc78355a3c314ebcd0dd1fec4e6009b88
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:26:58 2018 +0200
+
+    Check for self assignment in assignment operator
+    
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.cpp:
+
+commit 7527844612ad3476f1d9a3d4de94cf2b59227f99
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:26:33 2018 +0200
+
+    Docu change
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_ResponseHandler.h:
+
+commit ae4fd13501edbe7a1dcdd5765499805b5739a9c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:26:16 2018 +0200
+
+    Removed get_info method, not used, const changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.h:
+
+commit 4f304ec1d6443641c2b64a1adc2c56f0a6e84c5d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:25:34 2018 +0200
+
+    Initialise pointer to zero
+
+commit 786e4ceb66569c307edcd4fd27290e4c7cbb192a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 15:01:53 2018 +0200
+
+    Initialise pointer with zero
+    
+        * TAO/orbsvcs/ImplRepo_Service/INS_Locator.cpp:
+
+commit aaa64c96bcc4a3807ffeb709390c31dbf3036cb6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 14:01:15 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11 or newer
+    
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_cs.cpp:
+
+commit 2de77538d1c27db849df7f0febeeca1a711227aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 14:00:08 2018 +0200
+
+    Enhanced logging and use more const
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+
+commit 9626700e4e3fa997bb1e9e9a2a399eca3960bde6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 13:31:24 2018 +0200
+
+    Fixed typos
+    
+        * ACE/ace/Connector.h:
+        * TAO/docs/pluggable_messaging.html:
+        * TAO/examples/Persistent_Grid/Grid_Client_i.cpp:
+        * TAO/examples/Persistent_Grid/Persistent_Client_i.cpp:
+        * TAO/examples/Simple/grid/Grid_Client_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * TAO/tao/ImR_Client/ImplRepo.idl:
+
+commit dfadfdb61a81156c29843b1f109efb26b16fa777
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 12:53:57 2018 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+
+commit 216262946e5a3cbd2aee32466a7df8389ffda232
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 12:53:35 2018 +0200
+
+    Pass the server id to the LifeEntry so that we have it in our log
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 06c60787c7ef2e522430a674d21834561954dc3f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 12:15:58 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.h:
+        * TAO/orbsvcs/ImplRepo_Service/UpdateableServerInfo.h:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+commit 6137b63daec938fd3db13a36f26ab5df072e9477
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 11:29:14 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/Activator_Options.h:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+commit 59b8c6ab8b8f508c84ef40f9dc1f0504e83d17b1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 10:44:43 2018 +0200
+
+    Fixed typo
+    
+        * TAO/orbsvcs/ImplRepo_Service/README:
+
+commit a9845587e6bb5d310e4d8bbec421ef102327576f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 10:41:39 2018 +0200
+
+    Logging and const changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 1cf406cdd07dd66a51d5a78dcbf65499fe21be92
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 10:32:26 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/bin/tao_other_tests.lst:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/Test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+
+commit c534c7d92cb95fe9424eeceec259836455f9b432
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:53:07 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/server.cpp:
+
+commit 9f673be240c9e845ed051d9a225e6729332bf5f8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:52:50 2018 +0200
+
+    Added ability to control the server activation mode
+    
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/README:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+commit d26426d12efd557b6bb0a2da07adf0d77471f5f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:25:48 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit 584e9af5b1a9655551f0bcd92b1510631da59ab3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:19:34 2018 +0200
+
+    Tab changes and add a -imrdebug commandline argument to set the ImR Locator/Activator log level
+    
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/README:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/run_test.pl:
+
+commit 1f163d5c9ba2bb3764ce1b836a78bf5546a5bd70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:04:47 2018 +0200
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/double_start/README:
+        * TAO/orbsvcs/tests/ImplRepo/manual_start/README:
+        * TAO/orbsvcs/tests/ImplRepo/scale/client.conf:
+        * TAO/orbsvcs/tests/ImplRepo/scale/server_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/README:
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/client.cpp:
+
+commit b708a29934c1707886f0979468c6d5b713c662da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 09:00:45 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+commit 3dedafeb6acafeb5701375bd765b04357e5a921c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 20:46:56 2018 +0200
+
+    Const and unicode fixes
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/XML_Backing_Store.cpp:
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+commit 5351dea3eb3fd7c32819ada82049403d8cae6a7f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 17:05:07 2018 +0200
+
+    Unicode logging fixes
+    
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Replicator.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit 136779585933c715d25f599be3117c152e06590d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:59:11 2018 +0200
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 695b624dedc17593410c5da9461c5b91bd1dc6a8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:53:50 2018 +0200
+
+    Indent changes
+    
+        * TAO/orbsvcs/tests/ImplRepo/scale_clients/README:
+
+commit 2a69dbad94ef395afb52bad8fc5bcb970bb3c4bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:53:35 2018 +0200
+
+    Fixed unicode logging error
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 47fe3755c2bd041357b2221dcca9c03a5bc4f064
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:38:51 2018 +0200
+
+    Log the POA name when we log that we inform the ImR
+    
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+commit a50ed09ff10fa87ff882cf5e9db866a333162e0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:28:13 2018 +0200
+
+    Only log when debug is set and simplify logging of commandline
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit ac938136f2327c15a229472ba30a564861732535
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 16:26:13 2018 +0200
+
+    Use const for a variable we don't change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 1c5b397ef2b387c1cf1d8f90e73b9b5d86edad9a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 15:33:29 2018 +0200
+
+    Fixed typo in comment
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit 82fd4e96534ec4ea055e557cdac5aa7da7393ceb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 15:30:40 2018 +0200
+
+    Simplified logging
+    
+        * TAO/tao/ImR_Client/ImR_Client.cpp:
+
+commit 78a0a7d39437c57f68a4a5f1d459d2bf4694bdee
+Merge: b1a50e57b5a 134ed84e9c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 11:41:59 2018 +0200
+
+    Merge pull request #664 from jwillemsen/jwi-doxygenfixes
+    
+    Doxygen fixes to PortableGroup
+
+commit b1a50e57b5a499472a299a29067e1268adac2359
+Merge: 1c46338c59b beb0ff66f84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 11:40:59 2018 +0200
+
+    Merge pull request #661 from jwillemsen/jwi-corbaomglinks
+    
+    Fixed links to the OMG website
+
+commit 134ed84e9c281a5482b454a0d4ac80344501cf73
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 11:05:48 2018 +0200
+
+    Fix doxygen warnings
+    
+        * TAO/orbsvcs/orbsvcs/PortableGroup/PG_Properties_Support.h:
+
+commit f92154b03a1dda2440d9be98219fea996623029b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 10:48:41 2018 +0200
+
+    Make x.5.1 public and prepare for the next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit beb0ff66f84c1a2d37de0b02bb447468bac903ff
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 7 13:00:05 2018 +0200
+
+    Fixed some more links
+    
+        * TAO/docs/rtcorba/omg_issues.html:
+        * TAO/docs/rtcorba/status.html:
+
+commit 4a32b32d47986c4c017b7da7101e74654fcb5cfa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 7 12:50:45 2018 +0200
+
+    Fixed links to the OMG website
+    
+        * TAO/docs/rtcorba/status.html:
+        * TAO/tests/RTCORBA/README:
