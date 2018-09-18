@@ -40,12 +40,24 @@ steps:
     arguments: 'ACE\bin\mwc.pl -type vs2017 TAO\TAO_ACE.mwc'
     modifyEnvironment: false
 
+- task: BatchScript@1
+  displayName: 'Run script perl\perl\bin\perl'
+  inputs:
+    filename: 'perl\perl\bin\perl'
+    arguments: 'ACE\bin\mwc.pl -type vs2017 ACE\tests\tests.mwc'
+    modifyEnvironment: false
+
 - task: VSBuild@1
   displayName: 'Build solution TAO\TAO_ACE.sln'
   inputs:
     solution: 'TAO\TAO_ACE.sln'
     maximumCpuCount: true
 
+- task: VSBuild@1
+  displayName: 'Build solution ACE\tests\tests.sln'
+  inputs:
+    solution: 'ACE\tests\tests.sln'
+    maximumCpuCount: true
 
 
 
