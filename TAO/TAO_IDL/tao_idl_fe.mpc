@@ -4,6 +4,7 @@ project(TAO_IDL_GEN) {
   custom_only = 1
 
   verbatim(gnuace, local) {
+    BISON_FLAGS := -d --feature=caret
     all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     GPERF ?= $(ACE_ROOT)/bin/ace_gperf
     fe/fe_lookup.cpp: fe/keywords.dat
@@ -32,10 +33,13 @@ project(TAO_IDL_GEN) {
     "	@echo '         generate it using:'"
     "	@echo '    make y.tab'"
 
+    debug_bison: BISON_FLAGS += --report all
+    debug_bison: y.tab
+
     .PHONY: y.tab
     y.tab: fe/idl.ypp
     "ifeq ($(notdir $(YACC)), bison)"
-    "	$(YACC) -d -p tao_yy -b fe/idl fe/idl.ypp"
+    "	$(YACC) $(BISON_FLAGS) -p tao_yy -b fe/idl fe/idl.ypp"
     "else"
     "	@echo 'ERROR: You must use bison 3 or higher to process this file'"
     "	@/bin/false"
