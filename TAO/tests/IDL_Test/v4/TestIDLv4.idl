@@ -105,8 +105,7 @@ bitmask BitMask2 {
 // This should be able to be parsed but it will not effect anything except the
 // compiler will produce an warning that defining annotations will be ignored.
 // TODO: Make more cases
-@annotation
-struct Annotation1 {
+@annotation Annotation1 {
   short somevalue;
 };
 
