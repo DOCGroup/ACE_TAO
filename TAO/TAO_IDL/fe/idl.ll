@@ -204,6 +204,9 @@ oneway          return IDL_ONEWAY;
                   return IDL_SCOPE_DELIMITOR;
                 }
 
+@annotation return IDL_ANNOTATION_DECL;
+@ return IDL_ANNOTATION_SYMBOL;
+
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,
   // prepend it with a _cxx_. Lookup in the perfect hash table for C++

@@ -169,6 +169,7 @@ public:
       , NT_mirror_port              // Denotes a mirror port
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
+      , NT_annotation               // An application of an annotation
   };
 
   AST_Decl (NodeType type,

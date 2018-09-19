@@ -281,6 +281,9 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %token <wcval>  IDL_WCHAR_LITERAL
 %token <wsval>  IDL_WSTRING_LITERAL
 
+%token IDL_ANNOTATION_DECL
+%token IDL_ANNOTATION_SYMBOL
+
 /*
  * These are production names:
  */
@@ -2351,14 +2354,9 @@ positive_int_expr :
         }
         ;
 
-/* Annotations
-   TODO: actions
-   TODO: annotation_dcl and friends
- */
-
 annotation_dcl
-        : "@annotation" IDENTIFIER '{' annotation_body '}' {
-          if (idl_global->idl_version_ >= IDL_VERSION_4_0)
+        : IDL_ANNOTATION_DECL IDENTIFIER '{' annotation_body '}' {
+          if (idl_global->idl_version_ >= IDL_VERSION_4)
             {
               ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("WARNING: in %C on line %d:\n")
@@ -2400,7 +2398,7 @@ annotation_member_dcl
 
 annotation_member_type
         : const_type /* Also covers scope_name wanted by the spec grammer */
-        | "any" /* supported by this compiler? */
+        | any_type
         ;
 
 defaulted_annotation_member_dcl
@@ -2414,7 +2412,7 @@ annotation_member
 
 annotations
         : annotations annotation_appl {
-          if (idl_global->idl_version_ < IDL_VERSION_4_0)
+          if (idl_global->idl_version_ < IDL_VERSION_4)
             {
               ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("ERROR: in %C on line %d:\n")
@@ -2431,7 +2429,7 @@ annotations
         ;
 
 annotation_appl
-        : '@' scoped_name annotation_appl_params_maybe
+        : IDL_ANNOTATION_SYMBOL scoped_name annotation_appl_params_maybe
         ;
 
 annotation_appl_params_maybe
