@@ -100,3 +100,13 @@ struct Annotated1 {
 bitmask BitMask2 {
   @position(1) flag1
 };
+
+// 7.4.15.4.1 Defining Annotations
+// This should be able to be parsed but it will not effect anything except the
+// compiler will produce an warning that defining annotations will be ignored.
+// TODO: Make more cases
+@annotation
+struct Annotation1 {
+  short somevalue;
+};
+
