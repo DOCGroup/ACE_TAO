@@ -47,18 +47,16 @@ into the application.</p>
 
 <p>
 In fact, this technique was applied systematically to ACE_OS in 2003,
-and resulted in a <a
-href="http://www.dre.vanderbilt.edu/Stats/footprint.shtml">10-15%
-decrease in overall footprint</a> for statically linked applications.
-Interestingly, these techniques also helped reduce <a
-href="http://www.dre.vanderbilt.edu/~isisbuilds/auto_compile_logs/CP_Metrics/metrics/">compilation
-times by ~50%</a>.</p>
+and resulted in a 10-15%
+decrease in overall footprint for statically linked applications.
+Interestingly, these techniques also helped reduce compilation
+times by ~50%.</p>
 
 <p>
 Another very powerful technique for reducing the size of shared
 libries is <a href="../apps/soreduce/README">The Shared Library
 Reduction (<CODE>soreduce</CODE>) tool</a>.  <code>soreduce</code>
-also benifits from the techniques listed above and should give
+also benefits from the techniques listed above and should give
 results comparable to static linking.  In fact, when deploying multiple
 applications, use of shared libraries with <code>soreduce</code> will
 result in smaller overall footprint than static linking.</p>
