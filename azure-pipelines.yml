@@ -91,9 +91,9 @@ jobs:
     displayName: 'Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc'
   - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
     displayName: 'Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc'
-  - bash: make -j 6 TAO
+  - bash: make -j 6 -C TAO
     displayName: 'Build TAO project'
-  - bash: make -j 6 ACE/tests
+  - bash: make -j 6 -C ACE/tests
     displayName: 'Build tests project'
 
 
