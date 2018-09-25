@@ -14,9 +14,6 @@ jobs:
     vmImage: 'vs2017-win2016'
   steps:
   - powershell: |
-      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
-    displayName: 'Create config.h file'
-  - powershell: |
       $client = new-object System.Net.WebClient
       $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
     displayName: 'Download perl'
@@ -25,6 +22,9 @@ jobs:
     inputs:
       archiveFilePatterns: 'strawberry-perl.zip'
       destinationFolder: perl
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: 'Create config.h file'
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: 'git clone MPC'
   - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc
@@ -47,9 +47,6 @@ jobs:
     vmImage: 'vs2015-win2012r2'
   steps:
   - powershell: |
-      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
-    displayName: 'Create config.h file'
-  - powershell: |
       $client = new-object System.Net.WebClient
       $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
     displayName: 'Download perl'
@@ -58,6 +55,9 @@ jobs:
     inputs:
       archiveFilePatterns: 'strawberry-perl.zip'
       destinationFolder: perl
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: 'Create config.h file'
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: 'git clone MPC'
   - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc
