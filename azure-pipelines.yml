@@ -86,9 +86,9 @@ jobs:
     displayName: 'Create platform_macros file'
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(Build.SourcesDirectory)/ACE/MPC
     displayName: 'git clone MPC'
-  - bash: perl ACE_TAO/ACE/bin/mwc.pl -type gnuace TAO/TAO_ACE.mwc
+  - bash: perl $ACE_ROOT/bin/mwc.pl -type gnuace $TAO_ROOT/TAO_ACE.mwc
     displayName: 'Run mwc.pl on TAO/TAO_ACE.mwc'
-  - bash: perl ACE_TAO/ACE/bin/mwc.pl -type gnuace ACE/tests/tests.mwc
+  - bash: perl $ACE_ROOT/bin/mwc.pl -type gnuace $ACE_ROOT/tests/tests.mwc
     displayName: 'Run mwc.pl on ACE/tests/tests.mwc'
   - bash: make -j 6 TAO
     displayName: 'Build TAO project'
