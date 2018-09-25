@@ -10,6 +10,7 @@ resources:
 
 jobs:
 - job: VisualStudio2017
+  timeoutInMinutes: 90
   pool:
     vmImage: 'vs2017-win2016'
   steps:
@@ -43,6 +44,7 @@ jobs:
       maximumCpuCount: true
 
 - job: VisualStudio2015
+  timeoutInMinutes: 90
   pool:
     vmImage: 'vs2015-win2012r2'
   steps:
@@ -76,6 +78,7 @@ jobs:
       maximumCpuCount: true
 
 - job: Linux
+  timeoutInMinutes: 90
   pool:
     vmImage: 'ubuntu-16.04'
   steps:
