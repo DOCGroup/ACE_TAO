@@ -41,7 +41,6 @@ jobs:
       solution: 'ACE/tests/tests.sln'
       maximumCpuCount: true
 
-jobs:
 - job: VisualStudio2015
   pool:
     vmImage: 'vs2015-win2012r2'
@@ -75,7 +74,6 @@ jobs:
       solution: 'ACE\tests\tests.sln'
       maximumCpuCount: true
 
-jobs:
 - job: Linux
   pool:
     vmImage: 'ubuntu-16.04'
