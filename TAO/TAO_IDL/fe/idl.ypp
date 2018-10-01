@@ -2432,7 +2432,7 @@ annotations
           Annotations *annotations = $1;
           AST_Annotation *annotation =
             idl_global->gen ()->create_annotation ($<idlist>2);
-          annotations->insert_head (annotation);
+          annotations->insert_tail (annotation);
           $$ = annotations;
         }
         | /* EMPTY */
@@ -2936,12 +2936,11 @@ struct_decl :
 
 
 struct_type
-        : struct_decl
+        : annotations struct_decl
         {
 // struct_type : struct_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($1,
-                            0);
+          UTL_ScopedName n ($2, 0);
           AST_Structure *d = 0;
 
           /*
@@ -2956,8 +2955,8 @@ struct_type
                                         s->is_local (),
                                         s->is_abstract ()
                                       );
-              AST_Structure::fwd_redefinition_helper (d,
-                                                      s);
+              AST_Structure::fwd_redefinition_helper (d, s);
+              d->annotations ($1);
               (void) s->fe_add_structure (d);
             }
 
@@ -2966,9 +2965,9 @@ struct_type
            */
           idl_global->scopes ().push (d);
 
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
+          $2->destroy ();
+          delete $2;
+          $2 = 0;
         }
         '{'
         {

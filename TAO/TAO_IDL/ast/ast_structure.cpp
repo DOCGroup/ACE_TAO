@@ -398,6 +398,8 @@ AST_Structure::compute_member_count (void)
 void
 AST_Structure::dump (ACE_OSTREAM_TYPE &o)
 {
+  dump_annotations(o);
+
   if (this->is_local ())
     {
       this->dump_i (o, "(local) ");
