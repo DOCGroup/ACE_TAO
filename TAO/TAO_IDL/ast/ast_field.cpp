@@ -158,6 +158,8 @@ AST_Field::~AST_Field (void)
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
+  dump_annotations (o);
+
   switch (this->visibility_)
     {
     case vis_PRIVATE:

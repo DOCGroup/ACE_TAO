@@ -13,3 +13,8 @@ int ast_visitor::visit_fixed (AST_Fixed *)
 {
   return 0;
 }
+
+int ast_visitor::visit_annotation (AST_Annotation *)
+{
+  return 0;
+}

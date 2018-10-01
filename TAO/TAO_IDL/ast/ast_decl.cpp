@@ -88,6 +88,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "ace/OS_NS_stdio.h"
+#include "ast_annotation.h"
+#include "utl_indenter.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -156,7 +158,8 @@ AST_Decl::AST_Decl (NodeType nt,
     typeid_set_ (false),
     last_referenced_as_ (0),
     prefix_scope_ (0),
-    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
+    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ()),
+    annotations_ (0)
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();
@@ -803,6 +806,9 @@ AST_Decl::node_type_to_string (NodeType nt)
 
     case NT_consumes:
       return "consumes";
+
+    case NT_annotation:
+      return "annotation";
 
     // No useful output for these.
     case NT_enum_val:
@@ -1533,3 +1539,29 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 //Narrowing methods for AST_Decl.
 
 IMPL_NARROW_FROM_DECL(AST_Decl)
+
+
+void AST_Decl::annotations (Annotations *annotations)
+{
+  annotations_ = annotations;
+}
+
+Annotations *AST_Decl::annotations ()
+{
+  return annotations_;
+}
+
+void
+AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o)
+{
+  if (annotations_)
+    {
+      AnnotationsIter i (*annotations_);
+      for (AST_Annotation *a = 0; i.next (a); i.advance ())
+        {
+          a->dump (o);
+          // We need to indent the next line (or not if we are not indented)
+          idl_global->indent ()->skip_to (o);
+        }
+    }
+}

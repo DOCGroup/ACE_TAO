@@ -78,6 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
+#include "ace/Containers.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -85,6 +86,9 @@ class Identifier;
 class UTL_Scope;
 class UTL_String;
 class ast_visitor;
+
+class AST_Annotation;
+typedef ACE_DLList<AST_Annotation> Annotations;
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
@@ -169,6 +173,7 @@ public:
       , NT_mirror_port              // Denotes a mirror port
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
+      , NT_annotation_decl          // The declaration of an annotation
       , NT_annotation               // An application of an annotation
   };
 
@@ -309,6 +314,15 @@ public:
   bool in_tmpl_mod_not_aliased (void) const;
   void in_tmpl_mod_not_aliased (bool val);
 
+  /// Set and get annotations for this IDL element
+  ///{
+  void annotations (Annotations *annotations);
+  Annotations *annotations ();
+  ///}
+
+  /// Dump Annotations
+  void dump_annotations (ACE_OSTREAM_TYPE &o);
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -391,6 +405,9 @@ private:
 
   bool in_tmpl_mod_not_aliased_;
   // false by default - if true, we can't be referenced.
+
+  /// Annotations applied to this IDL element
+  Annotations* annotations_;
 
 private:
   void compute_full_name (UTL_ScopedName *n);
