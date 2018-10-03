@@ -171,19 +171,15 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
     }
 
   this->latest_branch_ = boolean_branch (b);
-  switch (this->latest_branch_)
-    {
-    case BUB_TRUE:
-    case BUB_FALSE:
+  if (this->latest_branch_ != BUB_NONE) {
+    if (this->latest_branch_ != BUB_UNCONDITIONAL) {
       *os << "if (" << (this->latest_branch_ == BUB_TRUE ? "" : "!")
           << (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT ?
               "_tao_union._d ()" : "_tao_discriminant") << ")" << be_idt_nl
           << "{" << be_idt_nl;
-    case BUB_UNCONDITIONAL:
-      return 0;
-    default:
-      break;
     }
+    return 0;
+  }
 
   *os << be_nl;
 

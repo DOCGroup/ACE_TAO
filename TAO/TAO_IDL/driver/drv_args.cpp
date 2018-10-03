@@ -573,7 +573,7 @@ DRV_parse_args (long ac, char **av)
 }
 
 void
-print_idl_versions(bool error)
+print_idl_versions()
 {
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("These are the valid IDL versions this compiler will accept:\n")
@@ -615,7 +615,7 @@ process_long_option(long ac, char **av, long &i)
         }
       if (invalid_version)
         {
-          print_idl_versions(true);
+          print_idl_versions();
           exit(1);
         }
     }
@@ -631,7 +631,7 @@ process_long_option(long ac, char **av, long &i)
     }
   else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
     {
-      print_idl_versions(false);
+      print_idl_versions();
       exit(0);
     }
   else

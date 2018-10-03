@@ -106,7 +106,8 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 #endif
 
 IDL_GlobalData::IDL_GlobalData (void)
-  : pd_root (0),
+  : syntax_only_ (false),
+    pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
     pd_err (0),
@@ -155,8 +156,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
     in_typedef_ (false),
     in_tmpl_mod_no_alias_ (false),
-    in_tmpl_mod_alias_ (false),
-    syntax_only_ (false)
+    in_tmpl_mod_alias_ (false)
 {
   // Path for the perfect hash generator(gperf) program.
   // Default is $ACE_ROOT/bin/gperf unless ACE_GPERF is defined.
