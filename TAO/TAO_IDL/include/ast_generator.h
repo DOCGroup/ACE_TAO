@@ -416,8 +416,9 @@ public:
     UTL_ScopedName *parameter_name,
     FE_Utils::T_Param_Info *info);
 
-  virtual
-  AST_Annotation *create_annotation (UTL_ScopedName *name);
+  virtual AST_Annotation * create_annotation (
+    UTL_ScopedName *name,
+    AST_Annotation::Params *params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

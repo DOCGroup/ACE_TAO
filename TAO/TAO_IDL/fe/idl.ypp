@@ -62,8 +62,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
  */
 
-/*
- * idl.ypp - YACC grammar for IDL 3.x
+/**
+ * \file idl.ypp
+ * \brief Bison grammar for IDL
  */
 
 /* Declarations */
@@ -186,6 +187,9 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
+  AST_Annotation *annotation;
+  AST_Annotation::Params *annotation_params;
+  AST_Annotation::Param *annotation_param;
   Annotations *annotations;
 }
 
@@ -359,6 +363,10 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <alval>   actual_parameters at_least_one_actual_parameter
 
 %type <annotations> annotations
+%type <annotation> annotation_appl
+%type <annotation_params> annotation_appl_params_maybe annotation_appl_params
+%type <annotation_params> named_annotation_appl_params more_named_annotation_appl_params
+%type <annotation_param> named_annotation_appl_param
 %%
 
 /*
@@ -1852,8 +1860,7 @@ const_dcl :
         expression
         {
 //      expression
-          UTL_ScopedName n ($5,
-                            0);
+          UTL_ScopedName n ($5, 0);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Constant *c = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstExprSeen);
@@ -1864,28 +1871,24 @@ const_dcl :
            */
           if ($9 != 0 && s != 0)
             {
-              AST_Param_Holder *param_holder =
-                $9->param_holder ();
+              AST_Param_Holder *param_holder = $9->param_holder ();
 
               AST_Expression::AST_ExprValue *result =
-                $9->check_and_coerce ($3,
-                                      tao_enum_constant_decl);
+                $9->check_and_coerce ($3, tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
 
               // If the expression is a template parameter place
               // holder, 'result' will be 0, but it's ok.
               if (result == 0 && param_holder == 0)
                 {
-                  idl_global->err ()->coercion_error ($9,
-                                                      $3);
+                  idl_global->err ()->coercion_error ($9, $3);
                   $9->destroy ();
                   delete $9;
                   $9 = 0;
                 }
               else
                 {
-                  AST_Expression::ExprType et =
-                    $3;
+                  AST_Expression::ExprType et = $3;
 
                   if (param_holder != 0
                       && et != param_holder->info ()->const_type_)
@@ -1895,11 +1898,7 @@ const_dcl :
                     }
                   else
                     {
-                      c =
-                        idl_global->gen ()->create_constant (
-                          $3,
-                          $9,
-                          &n);
+                      c = idl_global->gen ()->create_constant ($3, $9, &n);
 
                       (void) s->fe_add_constant (c);
                     }
@@ -2415,7 +2414,21 @@ annotation_member
         ;
 
 annotations
-        : annotations annotation_appl {
+        : annotations annotation_appl
+        {
+          Annotations *annotations = $1;
+          annotations->insert_tail ($2);
+          $$ = annotations;
+        }
+        | /* EMPTY */
+        {
+          $$ = new Annotations ();
+        }
+        ;
+
+annotation_appl
+        : IDL_ANNOTATION_SYMBOL scoped_name annotation_appl_params_maybe
+        {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             {
               ACE_ERROR ((LM_ERROR,
@@ -2429,46 +2442,66 @@ annotations
               idl_global->err ()->syntax_error (idl_global->parse_state ());
             }
 
-          Annotations *annotations = $1;
-          AST_Annotation *annotation =
-            idl_global->gen ()->create_annotation ($<idlist>2);
-          annotations->insert_tail (annotation);
-          $$ = annotations;
-        }
-        | /* EMPTY */
-        {
-          $$ = new Annotations ();
-        }
-        ;
-
-annotation_appl
-        : IDL_ANNOTATION_SYMBOL scoped_name annotation_appl_params_maybe
-        {
-          $<idlist>$ = $2;
+            $$ = idl_global->gen ()->create_annotation ($2, $3);
         }
         ;
 
 annotation_appl_params_maybe
         : '(' annotation_appl_params ')'
+        {
+          $$ = $2;
+        }
         | /* EMPTY */
+        {
+          $$ = 0;
+        }
         ;
 
 annotation_appl_params
         : const_expr
-        | at_least_one_annotation_appl_param
+        {
+          AST_Annotation::Params *params = new AST_Annotation::Params;
+          AST_Annotation::Param *param = new AST_Annotation::Param;
+          param->id = 0;
+          param->expr = $1;
+          params->insert_head (param);
+          $$ = params;
+        }
+        | named_annotation_appl_params
+        {
+          $$ = $1;
+        }
         ;
 
-at_least_one_annotation_appl_param :
-        annotation_appl_param annotation_appl_named_params
-        ;
+named_annotation_appl_params
+        : named_annotation_appl_param more_named_annotation_appl_params
+        {
+          AST_Annotation::Params *params = $2;
+          params->insert_head ($1);
+          $$ = params;
+        }
 
-annotation_appl_named_params
-        : annotation_appl_named_params ',' annotation_appl_param
+more_named_annotation_appl_params
+        : ',' named_annotation_appl_param more_named_annotation_appl_params
+        {
+          AST_Annotation::Params *params = $3;
+          params->insert_head ($2);
+          $$ = params;
+        }
         | /* EMPTY */
+        {
+          $$ = new AST_Annotation::Params;
+        }
         ;
 
-annotation_appl_param
-        : IDENTIFIER '=' const_expr
+named_annotation_appl_param
+        : id '=' const_expr
+        {
+          AST_Annotation::Param *param = new AST_Annotation::Param;
+          param->id = $1;
+          param->expr = $3;
+          $$ = param;
+        }
         ;
 
 type_dcl

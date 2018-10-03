@@ -138,7 +138,7 @@ extern int tao_yydebug;
 
 union YYSTYPE
 {
-#line 153 "fe/idl.ypp" /* yacc.c:1909  */
+#line 154 "fe/idl.ypp" /* yacc.c:1909  */
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -175,9 +175,12 @@ union YYSTYPE
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
+  AST_Annotation *annotation;
+  AST_Annotation::Params *annotation_params;
+  AST_Annotation::Param *annotation_param;
   Annotations *annotations;
 
-#line 181 "fe/idl.tab.hpp" /* yacc.c:1909  */
+#line 184 "fe/idl.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

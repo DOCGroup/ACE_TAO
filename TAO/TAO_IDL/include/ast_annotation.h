@@ -6,6 +6,8 @@
 #define AST_ANNOTATION_HEADER
 
 #include "ast_decl.h"
+#include "utl_identifier.h"
+#include "ast_expression.h"
 
 #include "ace/Containers.h"
 
@@ -17,9 +19,21 @@ class TAO_IDL_FE_Export AST_Annotation : public virtual AST_Decl
 public:
 
   /**
-   * Create an Annotation using it's name.
+   * Store Optional Annotation Parameters
    */
-  AST_Annotation (UTL_ScopedName *name);
+  ///{
+  struct Param {
+    Identifier *id;
+    AST_Expression *expr;
+  };
+  typedef ACE_DLList<Param> Params;
+  typedef ACE_DLList_Iterator<Param> ParamsIter;
+  ///}
+
+  /**
+   * Create an Annotation using it's name and parameters
+   */
+  AST_Annotation (UTL_ScopedName *name, Params *params);
 
   virtual ~AST_Annotation ();
 
@@ -41,6 +55,9 @@ private:
 
   /// Name of the Annotation
   UTL_ScopedName *name_;
+
+  /// Parameters List
+  Params *params_;
 };
 
 typedef ACE_DLList<AST_Annotation> Annotations;

@@ -3004,8 +3004,7 @@ dump_unary_expr (ACE_OSTREAM_TYPE &o,
 
 // Dump the supplied AST_ExprValue to the ostream o.
 static void
-dump_expr_val (ACE_OSTREAM_TYPE &o,
-               AST_Expression::AST_ExprValue *ev)
+dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
 {
   switch (ev->et)
     {
@@ -3041,24 +3040,26 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       break;
     case AST_Expression::EV_string:
       if (ev->u.strval != 0)
-        ev->u.strval->dump(o);
+        {
+          ev->u.strval->dump (o);
+        }
+      else
+        {
+          o << "(null string)";
+        }
+      break;
     case AST_Expression::EV_longlong:
-//      o << ev->u.llval;
-    break;
+      o << ev->u.llval;
+      break;
     case AST_Expression::EV_ulonglong:
-//      o << ev->u.ullval;
+      o << ev->u.ullval;
       break;
     case AST_Expression::EV_fixed:
       o << ev->u.fixedval;
       break;
-    case AST_Expression::EV_longdouble:
-    case AST_Expression::EV_wstring:
     case AST_Expression::EV_enum:
-    case AST_Expression::EV_none:
-    case AST_Expression::EV_void:
-    case AST_Expression::EV_any:
-    case AST_Expression::EV_object:
-      break;
+    default:
+      o << "(Can not dump this type)";
     }
 }
 
@@ -3069,8 +3070,7 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
   // See if it was a constant or was evaluated already.
   if (this->pd_ev != 0)
     {
-      dump_expr_val (o,
-                     this->pd_ev);
+      dump_expr_val (o, this->pd_ev);
       return;
     }
 

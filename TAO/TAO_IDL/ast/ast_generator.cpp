@@ -1159,10 +1159,12 @@ AST_Generator::create_param_holder (
 }
 
 AST_Annotation *
-AST_Generator::create_annotation (UTL_ScopedName *name)
+AST_Generator::create_annotation (
+  UTL_ScopedName *name,
+  AST_Annotation::Params *params)
 {
   AST_Annotation *retval = 0;
-  ACE_NEW_RETURN (retval, AST_Annotation (name), 0);
+  ACE_NEW_RETURN (retval, AST_Annotation (name, params), 0);
   return retval;
 }
 
