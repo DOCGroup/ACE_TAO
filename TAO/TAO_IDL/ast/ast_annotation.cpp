@@ -37,7 +37,6 @@ void AST_Annotation::dump (ACE_OSTREAM_TYPE &o)
         }
       dump_i (o, ")");
     }
-  dump_i (o, "\n");
 }
 
 int AST_Annotation::ast_accept (ast_visitor *visitor)

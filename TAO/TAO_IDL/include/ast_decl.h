@@ -320,8 +320,13 @@ public:
   Annotations *annotations ();
   ///}
 
-  /// Dump Annotations
-  void dump_annotations (ACE_OSTREAM_TYPE &o);
+  /**
+   * Dump Annotations AST
+   *
+   * By default print each annotation on its own line. If print_inline is true,
+   * it prints them with spaces seperating them instead.
+   */
+  void dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline = false);
 
 protected:
   // These are not private because they're used by

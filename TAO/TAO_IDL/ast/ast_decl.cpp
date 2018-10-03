@@ -1552,7 +1552,7 @@ Annotations *AST_Decl::annotations ()
 }
 
 void
-AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o)
+AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 {
   if (annotations_)
     {
@@ -1560,8 +1560,16 @@ AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o)
       for (AST_Annotation *a = 0; i.next (a); i.advance ())
         {
           a->dump (o);
-          // We need to indent the next line (or not if we are not indented)
-          idl_global->indent ()->skip_to (o);
+          if (print_inline)
+            {
+              dump_i (o, " ");
+            }
+          else
+            {
+              dump_i (o, "\n");
+              // We need to indent the next line (or not if we are not indented)
+              idl_global->indent ()->skip_to (o);
+            }
         }
     }
 }
