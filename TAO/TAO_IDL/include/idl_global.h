@@ -375,6 +375,29 @@ public:
    */
   bool syntax_only_;
 
+  /**
+   * Exit when finished processing cli arguments
+   * Default is false.
+   */
+  bool argparse_exit_;
+
+  /**
+   * If argparse_exit_ is true, this is the program status to return from main.
+   * Default is 0.
+   */
+  int argparse_exit_status_;
+
+  /**
+   * Print command line argument help message when finished processing
+   * cli arguments.
+   */
+  bool print_help_;
+
+  /**
+   * Print compiler version when finished processing cli arguments.
+   */
+  bool print_version_;
+
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);
 

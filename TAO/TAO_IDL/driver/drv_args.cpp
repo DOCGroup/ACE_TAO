@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern long DRV_nfiles;
 extern char *DRV_files[];
 
-void process_long_option(long ac, char **av, long &i);
+bool process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
@@ -127,6 +127,7 @@ DRV_usage (void)
 
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT ("Legal flags:\n")
+    ACE_TEXT (" -h | --help | -u\tPrint this list and exit successfully\n")
     ACE_TEXT (" -A...\t\t\tlocal implementation-specific escape\n")
     ACE_TEXT (" -Cw\t\t\tWarning if identifier spellings differ ")
     ACE_TEXT ("only in case (default is error)\n")
@@ -144,24 +145,32 @@ DRV_usage (void)
     ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
     ACE_TEXT (" -t\t\t\tTemporary directory to be used")
     ACE_TEXT (" by the IDL compiler.\n")
-    ACE_TEXT (" -u\t\t\tprints usage message and exits\n")
     ACE_TEXT (" -Uname\t\t\tundefines name for preprocessor\n")
     ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
     ACE_TEXT (" -V\t\t\tprints version info then exits\n")
     ACE_TEXT (" -w\t\t\tsuppresses IDL compiler warning messages\n")
     ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
     ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
-    ACE_TEXT (" --idl-version[=value]\tSet the version of IDL to use\n")
+    ACE_TEXT (" --idl-version VERSION\tSet the version of IDL to use\n")
     ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
-    ACE_TEXT (" --list-idl-versions\t\tPrint IDL versions supported and exit\n")
+    ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
     ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
   ));
 
   be_util::usage ();
 }
 
+#define UNKNOWN_OPTION \
+  ACE_ERROR (( \
+      LM_ERROR, \
+      ACE_TEXT ("IDL: I don't understand") \
+      ACE_TEXT (" the '%s' option\n"), \
+      ACE_TEXT_CHAR_TO_TCHAR (av[i]) \
+    )); \
+  return true;
+
 // Parse arguments on command line
-void
+bool
 DRV_parse_args (long ac, char **av)
 {
   ACE_CString buffer;
@@ -189,9 +198,7 @@ DRV_parse_args (long ac, char **av)
                   ACE_TEXT ("letters not allowed\n")
                 ));
 
-              ++i;
-              idl_global->set_err_count (idl_global->err_count () + 1);
-              break;
+              return true;
             case 'A':
               if (av[i][2] == '\0')
                 {
@@ -208,11 +215,7 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT ("the -A option\n")
                         ));
 
-                      idl_global->set_compile_flags (
-                                      idl_global->compile_flags ()
-                                      | IDL_CF_ONLY_USAGE
-                                    );
-                      break;
+                      return true;
                     }
                 }
               else
@@ -241,13 +244,8 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  ACE_ERROR ((
-                      LM_ERROR,
-                      ACE_TEXT ("IDL: I don't understand")
-                      ACE_TEXT (" the '%s' option\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                    ));
-                 }
+                  UNKNOWN_OPTION;
+                }
 
                break;
             // Temp directory for the IDL compiler to keep its files.
@@ -260,17 +258,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  ACE_ERROR ((
-                      LM_ERROR,
-                      ACE_TEXT ("IDL: I don't understand")
-                      ACE_TEXT (" the '%s' option\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                    ));
-
-                  idl_global->set_compile_flags (
-                                  idl_global->compile_flags ()
-                                  | IDL_CF_ONLY_USAGE
-                                );
+                  UNKNOWN_OPTION;
                 }
 
               break;
@@ -297,18 +285,7 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      ACE_ERROR ((
-                          LM_ERROR,
-                          ACE_TEXT ("IDL: I don't understand")
-                          ACE_TEXT (" the '%s' option\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                        ));
-
-                      idl_global->set_compile_flags (
-                                      idl_global->compile_flags ()
-                                      | IDL_CF_ONLY_USAGE
-                                    );
-                      break;
+                      UNKNOWN_OPTION;
                     }
                 }
               else
@@ -328,12 +305,21 @@ DRV_parse_args (long ac, char **av)
 
               break;
             case 'E':
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
               idl_global->set_compile_flags (idl_global->compile_flags () |
                                              IDL_CF_ONLY_PREPROC);
               break;
             case 'V':
-              idl_global->set_compile_flags (idl_global->compile_flags () |
-                                             IDL_CF_VERSION);
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
+              idl_global->print_version_ = true;
+              idl_global->argparse_exit_ = true;
+              idl_global->argparse_exit_status_ = 0;
               break;
             case 'W':
               if (av[i][2] == '\0')
@@ -345,18 +331,7 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      ACE_ERROR ((
-                          LM_ERROR,
-                          ACE_TEXT ("IDL: I don't understand")
-                          ACE_TEXT (" the '%s' option\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                        ));
-
-                      idl_global->set_compile_flags (
-                                      idl_global->compile_flags ()
-                                      | IDL_CF_ONLY_USAGE
-                                    );
-                      break;
+                      UNKNOWN_OPTION;
                     }
                 }
               else
@@ -372,11 +347,7 @@ DRV_parse_args (long ac, char **av)
                       ACE_TEXT ("IDL: Incorrect use of -W option\n")
                     ));
 
-                  idl_global->set_compile_flags (
-                                  idl_global->compile_flags ()
-                                  | IDL_CF_ONLY_USAGE
-                                );
-                  break;
+                  return true;
                 case 'p':
                   if (*(s + 1) == ',')
                     {
@@ -404,18 +375,7 @@ DRV_parse_args (long ac, char **av)
                     }
                   else
                     {
-                      ACE_ERROR ((
-                          LM_ERROR,
-                          ACE_TEXT ("IDL: I don't understand")
-                          ACE_TEXT (" the '%s' option\n"),
-                          ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                        ));
-
-                      idl_global->set_compile_flags (
-                                      idl_global->compile_flags ()
-                                      | IDL_CF_ONLY_USAGE
-                                    );
-                      break;
+                      UNKNOWN_OPTION;
                     }
                 }
               else
@@ -439,10 +399,7 @@ DRV_parse_args (long ac, char **av)
                             ACE_TEXT (" the '-Y' option\n")
                           ));
 
-                        idl_global->set_compile_flags (
-                                        idl_global->compile_flags ()
-                                        | IDL_CF_ONLY_USAGE
-                                      );
+                        return true;
                       }
 
                     break;
@@ -453,27 +410,30 @@ DRV_parse_args (long ac, char **av)
                         ACE_TEXT (" %s with the '-Y' option\n"),
                         ACE_TEXT_CHAR_TO_TCHAR (s)
                       ));
-
-                    idl_global->set_compile_flags (
-                                    idl_global->compile_flags ()
-                                    | IDL_CF_ONLY_USAGE
-                                  );
-                   break;
+                    return true;
                 }
               break;
             case 'd':
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
               idl_global->set_compile_flags (idl_global->compile_flags ()
                                              | IDL_CF_DUMP_AST);
               break;
-            case 'u':
-              idl_global->set_compile_flags (idl_global->compile_flags ()
-                                             | IDL_CF_ONLY_USAGE);
-              break;
             case 'v':
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
               idl_global->set_compile_flags (idl_global->compile_flags ()
                                              | IDL_CF_INFORMATIVE);
               break;
             case 'w':
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
               idl_global->set_compile_flags (idl_global->compile_flags ()
                                              | IDL_CF_NOWARNINGS);
               break;
@@ -491,25 +451,42 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  ACE_ERROR ((
-                      LM_ERROR,
-                      ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (av[i])
-                    ));
-
-                  idl_global->set_compile_flags (
-                                  idl_global->compile_flags ()
-                                  | IDL_CF_ONLY_USAGE
-                                );
+                  UNKNOWN_OPTION;
                 }
 
               break;
+
+            case 'u': // Old Help Option
+              if (av[i][2] != '\0')
+                {
+                  UNKNOWN_OPTION;
+                }
+              idl_global->print_help_ = true;
+              idl_global->argparse_exit_ = true;
+              idl_global->argparse_exit_status_ = 0;
+              break;
+
+            case 'h': // Short Help Option, else let be_global process it
+              if (av[i][2] == '\0') {
+                idl_global->print_help_ = true;
+                idl_global->argparse_exit_ = true;
+                idl_global->argparse_exit_status_ = 0;
+                return false;
+              } else {
+                if (be_global->parse_args (i, av)) return true;
+                if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
+              }
+              break;
+
             case '-': // Long Options
-              process_long_option(ac, av, i);
+              if (process_long_option(ac, av, i)) return true;
+              if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
               break;
+
             default:
-              be_global->parse_args (i, av);
-              break;
+              if (be_global->parse_args (i, av)) return true;
+              if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
+
             } // End of switch (av[i][1])
         } // End of IF (av[i][0] == '-')
       else
@@ -570,6 +547,8 @@ DRV_parse_args (long ac, char **av)
     }
 
   DRV_cpp_post_init ();
+
+  return false;
 }
 
 void
@@ -586,7 +565,7 @@ print_idl_versions()
     }
 }
 
-void
+bool
 process_long_option(long ac, char **av, long &i)
 {
   const char *long_option = av[i] + 2;
@@ -616,7 +595,7 @@ process_long_option(long ac, char **av, long &i)
       if (invalid_version)
         {
           print_idl_versions();
-          exit(1);
+          return true;
         }
     }
   else if (!ACE_OS::strcmp (long_option, "syntax-only"))
@@ -627,16 +606,28 @@ process_long_option(long ac, char **av, long &i)
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
         IdlVersion(DEFAULT_IDL_VERSION).to_string ()));
-      exit(0);
+      idl_global->argparse_exit_ = true;
+      idl_global->argparse_exit_status_ = 0;
     }
   else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
     {
       print_idl_versions();
-      exit(0);
+      idl_global->argparse_exit_ = true;
+      idl_global->argparse_exit_status_ = 0;
+    }
+  else if (!ACE_OS::strcmp (long_option, "help"))
+    {
+      idl_global->print_help_ = true;
+      idl_global->argparse_exit_ = true;
+      idl_global->argparse_exit_status_ = 0;
     }
   else
     {
-      idl_global->set_compile_flags (idl_global->compile_flags ()
-                                     | IDL_CF_ONLY_USAGE);
+      ACE_DEBUG ((LM_ERROR,
+        ACE_TEXT ("Unknown long option: %C\n"),
+        long_option
+        ));
+      return true;
     }
+  return false;
 }

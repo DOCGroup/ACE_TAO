@@ -107,6 +107,10 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 
 IDL_GlobalData::IDL_GlobalData (void)
   : syntax_only_ (false),
+    argparse_exit_ (false),
+    argparse_exit_status_ (0),
+    print_help_ (false),
+    print_version_ (false),
     pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),

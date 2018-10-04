@@ -330,22 +330,32 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Parse arguments.
-      DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ());
-
-      // If a version message is requested, print it and exit cleanly.
-      if (idl_global->compile_flags () & IDL_CF_VERSION)
+      if (DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ()))
         {
-          DRV_version ();
-          DRV_cleanup ();
-          return 0;
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("Use \"-h\" or \"--help\" to see valid options.\n")));
+          idl_global->argparse_exit_ = true;
+          idl_global->argparse_exit_status_ = 1;
         }
 
-      // If a usage message is requested, print it and exit cleanly.
-      if (idl_global->compile_flags () & IDL_CF_ONLY_USAGE)
+      // Print Help Message
+      if (idl_global->print_help_)
         {
           DRV_usage ();
+        }
+
+      // If a version message is requested, print it
+      if (idl_global->print_version_)
+        {
+          DRV_version ();
+        }
+
+      // If exiting because of arguments, do it now
+      if (idl_global->argparse_exit_)
+        {
+          int status = idl_global->argparse_exit_status_;
           DRV_cleanup ();
-          return 0;
+          return status;
         }
 
       // If there are no input files, and we are not using the
