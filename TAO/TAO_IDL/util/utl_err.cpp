@@ -314,7 +314,7 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   case IDL_GlobalData::PS_NoState:
     return "Statement cannot be parsed";
   case IDL_GlobalData::PS_TypeDeclSeen:
-    return "Malformed typedef declaration";
+    return "Malformed type declaration";
   case IDL_GlobalData::PS_TypeIdDeclSeen:
     return "Malformed type id declaration";
   case IDL_GlobalData::PS_TypePrefixDeclSeen:
