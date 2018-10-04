@@ -103,6 +103,12 @@ FE_yyparse (void)
   return result;
 }
 
+extern int tao_yydebug;
+void FE_yydebug (bool value)
+{
+  tao_yydebug = value;
+}
+
 #ifdef USE_MCPP_BUFFER_LEXING
 void
 FE_set_yyin (char * f)

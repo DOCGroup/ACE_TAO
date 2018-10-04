@@ -155,6 +155,7 @@ DRV_usage (void)
     ACE_TEXT (" --default-idl-version\tPrint the default IDL version and exit\n")
     ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
     ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
+    ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
   ));
 
   be_util::usage ();
@@ -620,6 +621,10 @@ process_long_option(long ac, char **av, long &i)
       idl_global->print_help_ = true;
       idl_global->argparse_exit_ = true;
       idl_global->argparse_exit_status_ = 0;
+    }
+  else if (!ACE_OS::strcmp (long_option, "bison-trace"))
+    {
+      FE_yydebug (true);
     }
   else
     {
