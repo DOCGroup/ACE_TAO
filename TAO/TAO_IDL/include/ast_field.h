@@ -118,7 +118,7 @@ public:
   DEF_NARROW_FROM_DECL (AST_Field);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  virtual void dump (ACE_OSTREAM_TYPE &o, bool inline_annotations = false);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

@@ -138,7 +138,7 @@ extern int tao_yydebug;
 
 union YYSTYPE
 {
-#line 154 "fe/idl.ypp" /* yacc.c:1909  */
+#line 156 "fe/idl.ypp" /* yacc.c:1909  */
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */

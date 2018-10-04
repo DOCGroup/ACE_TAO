@@ -1841,7 +1841,9 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 
   if (0 < this->pd_decls_used)
     {
-      o << ACE_TEXT ("\n/* Declarations: */\n");
+      o << '\n';
+      idl_global->indent ()->skip_to (o);
+      o << ACE_TEXT ("/* Declarations: */\n");
 
       for (UTL_ScopeActiveIterator j (this, IK_decls);
            !j.is_done ();

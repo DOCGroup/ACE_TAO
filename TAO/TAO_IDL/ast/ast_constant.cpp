@@ -181,6 +181,8 @@ AST_Constant::~AST_Constant (void)
 void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
+  dump_annotations (o);
+
   this->dump_i (o, "const ");
   this->dump_i (o, this->exprtype_to_string ());
   this->dump_i (o, " ");

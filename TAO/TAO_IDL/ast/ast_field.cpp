@@ -156,9 +156,9 @@ AST_Field::~AST_Field (void)
 
 // Dump this AST_Field node to the ostream o.
 void
-AST_Field::dump (ACE_OSTREAM_TYPE &o)
+AST_Field::dump (ACE_OSTREAM_TYPE &o, bool inline_annotations)
 {
-  dump_annotations (o);
+  dump_annotations (o, inline_annotations);
 
   switch (this->visibility_)
     {

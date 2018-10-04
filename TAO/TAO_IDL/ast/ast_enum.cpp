@@ -315,6 +315,8 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
+  dump_annotations (o);
+
   AST_Decl *d = 0;
 
   if (this->is_local ())
@@ -331,20 +333,29 @@ AST_Enum::dump (ACE_OSTREAM_TYPE &o)
   this->local_name ()->dump (o);
 
   this->dump_i (o, " {\n");
+  idl_global->indent ()->increase ();
+  idl_global->indent ()->skip_to (o);
 
   // Must increment the iterator explicitly inside the loop.
   for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();)
     {
       d = i.item ();
+      d->dump_annotations (o, true /* print inline */);
       d->local_name ()->dump (o);
       i.next ();
 
-      if (!i.is_done ())
+      if (i.is_done ())
         {
-          this->dump_i (o, ", ");
+          this->dump_i (o, "\n");
+        }
+      else
+        {
+          this->dump_i (o, ",\n");
+          idl_global->indent ()->skip_to (o);
         }
     }
 
+  idl_global->indent ()->decrease ();
   idl_global->indent ()->skip_to (o);
 
   this->dump_i (o, "}");
