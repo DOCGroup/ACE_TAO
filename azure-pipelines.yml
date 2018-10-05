@@ -74,7 +74,7 @@ jobs:
     inputs:
       archiveFilePatterns: strawberry-perl.zip
       destinationFolder: perl
-perl/perl/bin/perl  - powershell: |
+  - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
