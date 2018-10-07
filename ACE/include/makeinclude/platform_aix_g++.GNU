@@ -83,6 +83,7 @@ endif
 LIBS           += -lxti -ldl
 ARFLAGS        += cruv
 RANLIB          = ranlib
+LD_RPATH        = -Wl,-R,
 
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
