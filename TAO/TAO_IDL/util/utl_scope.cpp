@@ -1833,8 +1833,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
-              d->dump (o);
-              o << ACE_TEXT ("\n");
+              o << *d << ACE_TEXT ("\n");
             }
         }
     }
@@ -1854,8 +1853,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
           if (!d->imported ())
             {
               idl_global->indent ()->skip_to (o);
-              d->dump (o);
-              o << ACE_TEXT (";\n");
+              o << *d << ACE_TEXT (";\n");
             }
         }
     }

@@ -154,12 +154,9 @@ AST_Field::~AST_Field (void)
 {
 }
 
-// Dump this AST_Field node to the ostream o.
 void
-AST_Field::dump (ACE_OSTREAM_TYPE &o, bool inline_annotations)
+AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_annotations (o, inline_annotations);
-
   switch (this->visibility_)
     {
     case vis_PRIVATE:
@@ -219,3 +216,8 @@ AST_Field::contains_wstring (void)
 }
 
 IMPL_NARROW_FROM_DECL(AST_Field)
+
+bool AST_Field::annotatable () const
+{
+  return true;
+}

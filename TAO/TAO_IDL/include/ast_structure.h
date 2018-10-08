@@ -155,6 +155,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const;
+
 protected:
   friend int tao_yyparse (void);
   // Scope Management Protocol.

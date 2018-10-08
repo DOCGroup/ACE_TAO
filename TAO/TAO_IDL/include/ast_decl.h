@@ -328,6 +328,29 @@ public:
    */
   void dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline = false);
 
+  /**
+   * Dump Object with Annotations
+   */
+  void dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations= false);
+
+  /**
+   * Dump AST Object to Stream
+   *
+   * Uses dump_annotations before dumping if object has annotations
+   */
+  friend ACE_OSTREAM_TYPE &
+  operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d);
+
+  /**
+   * Returns true if annoatations are valid to use on this
+   */
+  virtual bool annotatable () const;
+
+  /**
+   * Return true if annotations are dumped inline when using <<
+   */
+  virtual bool dump_annotations_inline () const;
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -414,7 +437,6 @@ private:
   /// Annotations applied to this IDL element
   Annotations* annotations_;
 
-private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
@@ -422,5 +444,8 @@ private:
                                      UTL_Scope *appeared_in);
   // Non-top-level version of set_prefix_with_typeprefix.
 };
+
+typedef ACE_DLList<AST_Decl> AST_Decls;
+typedef ACE_DLList_Iterator<AST_Decl> AST_DeclsIter;
 
 #endif           // _AST_DECL_AST_DECL_HH

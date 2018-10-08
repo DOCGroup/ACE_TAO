@@ -1543,7 +1543,17 @@ IMPL_NARROW_FROM_DECL(AST_Decl)
 
 void AST_Decl::annotations (Annotations *annotations)
 {
-  annotations_ = annotations;
+  if (annotatable ())
+    {
+      annotations_ = annotations;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("ERROR: %C is annotated but its type can't be annotated!\n"),
+        full_name ()
+        ));
+    }
 }
 
 Annotations *AST_Decl::annotations ()
@@ -1572,4 +1582,35 @@ AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
             }
         }
     }
+}
+
+void
+AST_Decl::dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations)
+{
+  if (annotatable ())
+    {
+      dump_annotations (o, inline_annotations);
+    }
+
+  dump (o);
+}
+
+ACE_OSTREAM_TYPE &
+operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d)
+{
+  d.dump_with_annotations (o, d.dump_annotations_inline ());
+
+  return o;
+}
+
+bool
+AST_Decl::annotatable () const
+{
+  return false;
+}
+
+bool
+AST_Decl::dump_annotations_inline () const
+{
+  return false;
 }

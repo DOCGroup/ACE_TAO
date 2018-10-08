@@ -118,7 +118,7 @@ public:
   DEF_NARROW_FROM_DECL (AST_Field);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o, bool inline_annotations = false);
+  virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
@@ -127,6 +127,8 @@ public:
   virtual void destroy (void);
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
 
 protected:
   // Data.
