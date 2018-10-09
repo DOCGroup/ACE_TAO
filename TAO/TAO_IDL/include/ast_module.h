@@ -236,6 +236,8 @@ public:
   // multiple IDL files.
   void reset_last_in_same_parent_scope (void);
 
+  virtual bool annotatable () const { return true; }
+
 private: // Data
   bool pd_has_nested_valuetype_;
 

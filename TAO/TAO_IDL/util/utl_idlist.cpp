@@ -214,18 +214,25 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      i.item ()->dump (o);
-
-      if (first)
+      if (i.item ()->get_string ())
         {
-          if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+          i.item ()->dump (o);
+
+          if (first)
             {
-              first = false;
+              if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+                {
+                  first = false;
+                }
+              else
+                {
+                  second = true;
+                }
             }
-          else
-            {
-              second = true;
-            }
+        }
+      else
+        {
+          o << "(null string)";
         }
     }
 }

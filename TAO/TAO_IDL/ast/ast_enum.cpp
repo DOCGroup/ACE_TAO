@@ -315,8 +315,6 @@ AST_Enum::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Enum::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_annotations (o);
-
   AST_Decl *d = 0;
 
   if (this->is_local ())

@@ -124,6 +124,8 @@ private:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
   // Scope Management.
+
+  virtual bool annotatable () const { return true; }
 };
 
 #endif           // _AST_ENUM_AST_ENUM_HH

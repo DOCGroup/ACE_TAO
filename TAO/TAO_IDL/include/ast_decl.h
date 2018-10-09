@@ -351,6 +351,11 @@ public:
    */
   virtual bool dump_annotations_inline () const;
 
+  /**
+   * Return true if annotations are dumped at all when using <<
+   */
+  virtual bool auto_dump_annotations () const;
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called

@@ -118,7 +118,8 @@ AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 
   idl_global->indent ()->increase ();
   idl_global->indent ()->skip_to (o);
-  AST_Field::dump_with_annotations (o, true /* inline annotations */);
+  AST_Field::dump_annotations (o, true /* print inline */);
+  AST_Field::dump (o);
   idl_global->indent ()->decrease ();
 }
 

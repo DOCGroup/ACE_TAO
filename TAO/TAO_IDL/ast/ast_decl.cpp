@@ -1550,7 +1550,7 @@ void AST_Decl::annotations (Annotations *annotations)
   else
     {
       ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("ERROR: %C is annotated but its type can't be annotated!\n"),
+        ACE_TEXT ("WARNING: %C is annotated but its type can't be annotated!\n"),
         full_name ()
         ));
     }
@@ -1587,7 +1587,7 @@ AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 void
 AST_Decl::dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations)
 {
-  if (annotatable ())
+  if (annotatable () && auto_dump_annotations())
     {
       dump_annotations (o, inline_annotations);
     }
@@ -1613,4 +1613,10 @@ bool
 AST_Decl::dump_annotations_inline () const
 {
   return false;
+}
+
+bool
+AST_Decl::auto_dump_annotations () const
+{
+  return true;
 }

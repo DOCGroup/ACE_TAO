@@ -966,7 +966,6 @@ AST_Union::fe_add_enum_val (AST_EnumVal *t)
 void
 AST_Union::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_annotations (o);
   o << "union ";
   this->local_name ()->dump (o);
   o << " switch (";

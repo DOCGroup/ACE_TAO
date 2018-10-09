@@ -138,7 +138,6 @@ IMPL_NARROW_FROM_SCOPE(AST_Module)
 void
 AST_Module::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_annotations (o);
   this->dump_i (o, "module ");
   this->local_name ()->dump (o);
   this->dump_i (o, " {\n");

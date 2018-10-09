@@ -88,6 +88,8 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const { return true; }
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH
