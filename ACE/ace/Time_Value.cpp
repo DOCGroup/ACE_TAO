@@ -180,8 +180,8 @@ ACE_Time_Value::normalize (bool saturate)
   if (this->tv_.tv_usec >= ACE_ONE_SECOND_IN_USECS ||
       this->tv_.tv_usec <= -ACE_ONE_SECOND_IN_USECS)
     {
-      time_t sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
-      suseconds_t usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
+      time_t const sec = std::abs(this->tv_.tv_usec) / ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
+      suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
           ACE_Numeric_Limits<time_t>::max() - this->tv_.tv_sec < sec)
@@ -317,7 +317,7 @@ ACE_Time_Value::operator *= (double d)
 #ifdef ACE_HAS_CPP98_IOSTREAMS
 ostream &operator<<(ostream &o, const ACE_Time_Value &v)
 {
-  char oldFiller = o.fill ();
+  char const oldFiller = o.fill ();
   o.fill ('0');
   const timeval *tv = v;
   if (tv->tv_sec)
