@@ -179,8 +179,9 @@ union YYSTYPE
   AST_Annotation::Params *annotation_params;
   AST_Annotation::Param *annotation_param;
   Annotations *annotations;
+  AST_Decls *ast_decls;
 
-#line 184 "fe/idl.tab.hpp" /* yacc.c:1909  */
+#line 185 "fe/idl.tab.hpp" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

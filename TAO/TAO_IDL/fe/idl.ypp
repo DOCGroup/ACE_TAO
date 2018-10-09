@@ -145,7 +145,7 @@ extern int tao_yyleng;
 AST_Enum *tao_enum_constant_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
-// Force the pretty debugging code to compile.
+// Compile Optional Tracing Output for Parser, can be enabled with --bison-trace
 #define YYDEBUG 1
 %}
 
@@ -193,6 +193,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   AST_Annotation::Params *annotation_params;
   AST_Annotation::Param *annotation_param;
   Annotations *annotations;
+  AST_Decls *ast_decls;
 }
 
 /*
@@ -302,6 +303,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
 %type <dcval>   fixed_type_spec
+%type <dcval>   definition fixed_definition module const_dcl struct_forward_type
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec module_header
@@ -364,11 +366,13 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 
 %type <alval>   actual_parameters at_least_one_actual_parameter
 
-%type <annotations> annotations
+%type <annotations> at_least_one_annotation annotations_maybe
 %type <annotation> annotation_appl
 %type <annotation_params> annotation_appl_params_maybe annotation_appl_params
 %type <annotation_params> named_annotation_appl_params more_named_annotation_appl_params
 %type <annotation_param> named_annotation_appl_param
+
+%type <ast_decls> member_i;
 %%
 
 /*
@@ -377,19 +381,33 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 start : definitions ;
 
 definitions
-        : definitions definition
-        | /* EMPTY */
+        /*
+         * This is broken up into 2 rules to avoid a grammer abiguity caused
+         * by annotations which causes shift/reduce conflicts in bison.
+         */
+        : definitions at_least_one_annotation definition
+        {
+          AST_Decl *d = $3;
+          if (d) d->annotations ($2);
+        }
+        | definitions definition
+        {
+        }
+        | %empty
         ;
 
 definition
         : fixed_definition
         {
+          $$ = $1;
         }
         | template_module ';'
         {
+          $$ = 0;
         }
         | template_module_inst ';'
         {
+          $$ = 0;
         }
         ;
 
@@ -405,154 +423,140 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | type_dcl
         {
-// fixed_definition : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = $1;
         }
         | typeid_dcl
         {
-//      | typeid_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeIdDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | typeprefix_dcl
         {
-//      | typeprefix_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypePrefixDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | const_dcl
         {
-//      | const_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = $1;
         }
         | exception
         {
-//      | exception
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
-        idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | interface_def
         {
-//      | interface_def
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | module
         {
-//      | module
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = $1;
         }
         | value_def
         {
-//      | value_def
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | component
         {
-//      | component
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | home_decl
         {
-//      | home_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | event
         {
-//      | event
           idl_global->set_parse_state (IDL_GlobalData::PS_EventDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | porttype_decl
         {
-//      | porttype_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | connector_decl
         {
-//      | connector_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
+          $$ = 0;
         }
         | error
         {
-//      | error
           idl_global->err()->syntax_error (idl_global->parse_state());
         }
         ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
+          $$ = 0;
         }
         ;
 
 module_header
         : IDL_MODULE
         {
-// module_header  : IDL_MODULE
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSeen);
         }
         scoped_name
@@ -562,9 +566,8 @@ module_header
         ;
 
 module
-        : annotations module_header
+        : module_header
         {
-// module : module_header
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleIDSeen);
 
           // The module_header rule is common to template module, fixed
@@ -573,7 +576,7 @@ module
           // allow only an identifier (a scoped name of length
           // 1). If not satisfied, we output a parse error with
           // the appropriate message.
-          if ($2->length () != 1)
+          if ($1->length () != 1)
             {
               idl_global->err ()->syntax_error (
                 IDL_GlobalData::PS_ModuleIDSeen);
@@ -587,39 +590,38 @@ module
            */
           if (s != 0)
             {
-              m = idl_global->gen ()->create_module (s, $2);
-              m->annotations ($1);
+              m = idl_global->gen ()->create_module (s, $1);
               (void) s->fe_add_module (m);
             }
 
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
 
           /*
            * Push it on the stack
            */
           idl_global->scopes ().push (m);
+
+          $<dcval>$ = m;
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleSqSeen);
         }
         at_least_one_definition
         {
-//      at_least_one_definition
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ModuleQsSeen);
           /*
            * Finished with this module - pop it from the scope stack.
            */
 
           idl_global->scopes ().pop ();
+          $$ = $<dcval>2;
         }
         ;
 
@@ -633,7 +635,6 @@ template_module_header
 template_module
         : template_module_header
         {
-// template_module : template_module_header
           // The module_header rule is common to template module, fixed
           // module and instantiated template module. In the last
           // case, a fully scoped name is allowed, but here we
@@ -658,7 +659,6 @@ template_module
         }
         '>'
         {
-//        '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleParamsSeen);
 
           AST_Template_Module *tm =
@@ -697,7 +697,6 @@ template_module
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_TmplModuleQsSeen);
 
           /*
@@ -721,7 +720,7 @@ at_least_one_tpl_definition
 
 tpl_definitions
         : tpl_definitions tpl_definition
-        | /* EMPTY */
+        | %empty
         ;
 
 tpl_definition
@@ -732,19 +731,16 @@ tpl_definition
 template_module_ref
         : IDL_ALIAS scoped_name
         {
-// template_module_ref : IDL_ALIAS scoped_name
           idl_global->set_parse_state (
             IDL_GlobalData::PS_ModuleRefSeen);
         }
         '<' at_least_one_formal_parameter_name '>'
         {
-//        '<' at_least_one_formal_parameter_name '>'
           idl_global->set_parse_state (
             IDL_GlobalData::PS_ModuleRefParamsSeen);
         }
         defining_id
         {
-//        defining_id
           idl_global->set_parse_state (
             IDL_GlobalData::PS_ModuleRefIDSeen);
 
@@ -826,19 +822,16 @@ template_module_ref
 template_module_inst
         : template_module_header
         {
-// template_module_inst : template_module_header
           idl_global->set_parse_state (
             IDL_GlobalData::PS_InstModuleSeen);
         }
         at_least_one_actual_parameter '>'
         {
-//        at_least_one_actual_parameter '>'
           idl_global->set_parse_state (
             IDL_GlobalData::PS_InstModuleArgsSeen);
         }
         defining_id
         {
-//        defining_id
           idl_global->set_parse_state (
             IDL_GlobalData::PS_InstModuleIDSeen);
 
@@ -909,7 +902,6 @@ interface_def
 interface :
         interface_header
         {
-// interface : interface_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Interface *i = 0;
 
@@ -948,17 +940,14 @@ interface :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSqSeen);
         }
         exports
         {
-//      exports
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
 
           /*
@@ -971,12 +960,10 @@ interface :
 interface_decl:
          IDL_INTERFACE
          {
-// interface_decl : IDL_INTERFACE
            idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceSeen);
          }
          defining_id
          {
-//       defining_id
            idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceIDSeen);
            $$ = $3;
          }
@@ -985,7 +972,6 @@ interface_decl:
 interface_header :
         interface_decl inheritance_spec
         {
-// interface_header : interface_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
           if ($2 != 0 && $2->truncatable ())
@@ -1023,7 +1009,6 @@ interface_header :
         |
         IDL_LOCAL interface_decl inheritance_spec
         {
-//      | IDL_LOCAL interface_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
           /*
@@ -1054,7 +1039,6 @@ interface_header :
         |
         IDL_ABSTRACT interface_decl inheritance_spec
         {
-//      | IDL_ABSTRACT interface_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
 
           /*
@@ -1087,18 +1071,15 @@ interface_header :
 inheritance_spec
         : ':' opt_truncatable
         {
-// inheritance_spec : ':' opt_truncatable
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           at_least_one_scoped_name
         {
-//      at_least_one_scoped_name
           $4->truncatable ($2);
           $$ = $4;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -1113,7 +1094,6 @@ value_def
 valuetype
         : IDL_CUSTOM value_concrete_decl
         {
-// valuetype : IDL_CUSTOM value_concrete_decl
            ACE_DEBUG ((LM_DEBUG,
                        ACE_TEXT ("error in %C line %d\n"),
                        idl_global->filename ()->get_string (),
@@ -1128,7 +1108,6 @@ valuetype
 value_concrete_decl :
         value_header
         {
-// value_concrete_decl : value_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_ValueType *v = 0;
           AST_Interface *i = 0;
@@ -1172,17 +1151,14 @@ value_concrete_decl :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeSqSeen);
         }
         value_elements
         {
-//      value_elements
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           AST_ValueType *vt =
@@ -1206,7 +1182,6 @@ value_abs_decl :
         IDL_ABSTRACT
         value_header
         {
-// value_abs_decl : IDL_ABSTRACT value_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_ValueType *v = 0;
           AST_Interface *i = 0;
@@ -1250,17 +1225,14 @@ value_abs_decl :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeSqSeen);
         }
         exports
         {
-//      exports
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           /*
@@ -1274,12 +1246,10 @@ value_header :
         value_decl
         inheritance_spec
         {
-// value_header : value_decl inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
         supports_spec
         {
-//      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
           UTL_ScopedName *sn = 0;
@@ -1314,12 +1284,10 @@ value_header :
 value_decl
         : IDL_VALUETYPE
         {
-// value_decl : IDL_VALUETYPE
            idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeSeen);
         }
         defining_id
         {
-//      defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeIDSeen);
           $$ = $3;
         }
@@ -1328,12 +1296,10 @@ value_decl
 opt_truncatable :
         IDL_TRUNCATABLE
         {
-// opt_truncatable : IDL_TRUNCATABLE
           $$ = true;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = false;
         }
         ;
@@ -1342,10 +1308,9 @@ supports_spec :
         IDL_SUPPORTS
         at_least_one_scoped_name
         {
-// supports_spec : IDL_SUPPORTS at_least_one_scoped_name
           $$ = $2;
         }
-        |   /* EMPTY */
+        |   %empty
         {
 /*      |    EMPTY */
           $$ = 0;
@@ -1356,7 +1321,6 @@ value_forward_decl :
         IDL_ABSTRACT
         value_decl
         {
-// value_forward_decl : IDL_ABSTRACT value_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -1381,7 +1345,6 @@ value_forward_decl :
         |
         value_decl
         {
-//      | value_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1,
                             0);
@@ -1408,7 +1371,6 @@ value_forward_decl :
 value_box_decl
         : value_decl type_spec /* in this order %!?*/
         {
-// value_box_decl : value_decl type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueBoxDeclSeen);
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
@@ -1472,123 +1434,103 @@ value_box_decl
 
 value_elements
         : value_elements value_element
-        | /* EMPTY */
+        | %empty
         ;
 
 value_element
         : state_member
         | export
         | init_decl
-          ';'
+        ';'
         ;
 
 state_member
         : IDL_PUBLIC
         {
-// state_member : IDL_PUBLIC
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PUBLIC;
         }
         member_i
         {
-//        member_i
         }
         | IDL_PRIVATE
         {
-//        IDL_PRIVATE
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_PRIVATE;
         }
         member_i
         {
-//        member_i
         }
         ;
 
 exports
         : exports export
-        | /* EMPTY */
+        | %empty
         ;
 
 export
         : type_dcl
         {
-// export : type_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | typeid_dcl
         {
-//      | typeid_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeIdDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | typeprefix_dcl
         {
-//      | typeprefix_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_TypePrefixDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | const_dcl
         {
-//      | const_dcl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
         }
         | exception
         {
-//      | exception
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | attribute
         {
-//      | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | operation
         {
-//      | operation
           idl_global->set_parse_state (IDL_GlobalData::PS_OpDeclSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | error
         {
-//      | error
           idl_global->err()->syntax_error (idl_global->parse_state());
         }
         ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
@@ -1597,7 +1539,6 @@ export
 at_least_one_scoped_name :
         scoped_name scoped_names
         {
-// at_least_one_scoped_name : scoped_name scoped_names
           ACE_NEW_RETURN ($<nlval>$,
                           UTL_NameList ($1,
                                         $2),
@@ -1609,12 +1550,10 @@ scoped_names
         : scoped_names
           ','
         {
-// scoped_names : scoped_names ','
           idl_global->set_parse_state (IDL_GlobalData::PS_SNListCommaSeen);
         }
         scoped_name
         {
-//      scoped_name
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopedNameSeen);
 
           UTL_NameList *nl = 0;
@@ -1633,9 +1572,8 @@ scoped_names
               $<nlval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $<nlval>$ = 0;
         }
         ;
@@ -1650,7 +1588,6 @@ scoped_name
 */
         : id
         {
-// scoped_name : id
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
           ACE_NEW_RETURN ($$,
@@ -1660,12 +1597,10 @@ scoped_name
         }
         | IDL_SCOPE_DELIMITOR
         {
-//      | IDL_SCOPE_DELIMITOR
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopeDelimSeen);
         }
         id
         {
-//      id
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
           Identifier *id = 0;
@@ -1687,7 +1622,6 @@ scoped_name
         | scoped_name
           IDL_SCOPE_DELIMITOR
         {
-//      | scoped_name IDL_SCOPE_DELIMITOR
           idl_global->set_parse_state (IDL_GlobalData::PS_ScopeDelimSeen);
 
           // This cleans up all the non-global "::"s in scoped names.
@@ -1698,7 +1632,6 @@ scoped_name
         }
         id
         {
-//      id
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
 
           UTL_IdList *sn = 0;
@@ -1713,7 +1646,6 @@ scoped_name
 
 id : IDENTIFIER
         {
-// id: IDENTIFIER
           ACE_NEW_RETURN ($$,
                           Identifier ($1),
                           1);
@@ -1735,7 +1667,6 @@ defining_id : IDENTIFIER
 interface_forward :
         interface_decl
         {
-// interface_forward : interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1, 0);
 
@@ -1780,7 +1711,6 @@ interface_forward :
         |
         IDL_LOCAL interface_decl
         {
-//      | IDL_LOCAL interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -1808,7 +1738,6 @@ interface_forward :
         |
         IDL_ABSTRACT interface_decl
         {
-//      | IDL_ABSTRACT interface_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -1836,30 +1765,27 @@ interface_forward :
         ;
 
 const_dcl :
-        annotations IDL_CONST
+        IDL_CONST
         {
-// const_dcl : IDL_CONST
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstSeen);
         }
         const_type
         {
-//      const_type
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstTypeSeen);
         }
         defining_id
         {
-//      defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstIDSeen);
         }
         '='
         {
-//      '='
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstAssignSeen);
         }
         expression
         {
-//      expression
-          UTL_ScopedName n ($6, 0);
+          $$ = 0;
+          UTL_ScopedName n ($5, 0);
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Constant *c = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_ConstExprSeen);
@@ -1868,26 +1794,26 @@ const_dcl :
            * Create a node representing a constant declaration. Store
            * it in the enclosing scope.
            */
-          if ($10 != 0 && s != 0)
+          if ($9 != 0 && s != 0)
             {
-              AST_Param_Holder *param_holder = $10->param_holder ();
+              AST_Param_Holder *param_holder = $9->param_holder ();
 
               AST_Expression::AST_ExprValue *result =
-                $10->check_and_coerce ($4, tao_enum_constant_decl);
+                $9->check_and_coerce ($3, tao_enum_constant_decl);
               tao_enum_constant_decl = 0;
 
               // If the expression is a template parameter place
               // holder, 'result' will be 0, but it's ok.
               if (result == 0 && param_holder == 0)
                 {
-                  idl_global->err ()->coercion_error ($10, $4);
-                  $10->destroy ();
-                  delete $10;
-                  $10 = 0;
+                  idl_global->err ()->coercion_error ($9, $3);
+                  $9->destroy ();
+                  delete $9;
+                  $9 = 0;
                 }
               else
                 {
-                  AST_Expression::ExprType et = $4;
+                  AST_Expression::ExprType et = $3;
 
                   if (param_holder != 0
                       && et != param_holder->info ()->const_type_)
@@ -1897,19 +1823,19 @@ const_dcl :
                     }
                   else
                     {
-                      c = idl_global->gen ()->create_constant ($4, $10, &n);
-                      c->annotations ($1);
+                      c = idl_global->gen ()->create_constant ($3, $9, &n);
                       (void) s->fe_add_constant (c);
+                      $$ = c;
                     }
                 }
-
-              $6->destroy ();
-              delete $6;
-              $6 = 0;
 
               delete result;
               result = 0;
             }
+
+          $5->destroy ();
+          delete $5;
+          $5 = 0;
         }
         ;
 
@@ -1922,24 +1848,14 @@ const_type
         | fixed_type
         | string_type_spec
         {
-// const_type
-//      : integer_type
-//      | char_type
-//      | octet_type
-//      | boolean_type
-//      | floating_pt_type
-//      | fixed_type
-//      | string_type_spec
           $$ = AST_Expression::EV_string;
         }
         | wstring_type_spec
         {
-//      | wstring_type_spec
           $$ = AST_Expression::EV_wstring;
         }
         | scoped_name
         {
-//      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_PredefinedType *c = 0;
           AST_Typedef *t = 0;
@@ -2013,8 +1929,6 @@ const_expr : or_expr ;
 or_expr : xor_expr
         | or_expr '|' xor_expr
         {
-// or_expr : xor_expr
-//      | or_expr '|' xor_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_or,
@@ -2028,8 +1942,6 @@ xor_expr
         : and_expr
         | xor_expr '^' and_expr
         {
-// xor_expr : and_expr
-//      | xor_expr '^' and_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_xor,
@@ -2043,7 +1955,6 @@ and_expr
         : shift_expr
         | and_expr '&' shift_expr
         {
-// and_expr : shift_expr | and_expr '&' shift_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_and,
@@ -2057,7 +1968,6 @@ shift_expr
         : add_expr
         | shift_expr IDL_LEFT_SHIFT add_expr
         {
-// shift_expr : add_expr | shift_expr IDL_LEFT_SHIFT add_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_left,
@@ -2067,7 +1977,6 @@ shift_expr
         }
         | shift_expr IDL_RIGHT_SHIFT add_expr
         {
-//      | shift_expr IDL_RIGHT_SHIFT add_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_right,
@@ -2081,7 +1990,6 @@ add_expr
         : mult_expr
         | add_expr '+' mult_expr
         {
-// add_expr : mult_expr | add_expr '+' mult_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_add,
@@ -2091,7 +1999,6 @@ add_expr
         }
         | add_expr '-' mult_expr
         {
-//      | add_expr '-' mult_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_minus,
@@ -2105,7 +2012,6 @@ mult_expr
         : unary_expr
         | mult_expr '*' unary_expr
         {
-// mult_expr : unary_expr | mult_expr '*' unary_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_mul,
@@ -2115,7 +2021,6 @@ mult_expr
         }
         | mult_expr '/' unary_expr
         {
-//      | mult_expr '/' unary_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_div,
@@ -2125,7 +2030,6 @@ mult_expr
         }
         | mult_expr '%' unary_expr
         {
-//      | mult_expr '%' unary_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_mod,
@@ -2139,7 +2043,6 @@ unary_expr
         : primary_expr
         | '+' primary_expr
         {
-// unary_expr : primary_expr | '+' primary_expr
           $$ =
             idl_global->gen ()->create_expr (
                                     AST_Expression::EC_u_plus,
@@ -2149,7 +2052,6 @@ unary_expr
         }
         | '-' primary_expr
         {
-//      | '-' primary_expr
           $$ =
             idl_global->gen()->create_expr (
                                    AST_Expression::EC_u_minus,
@@ -2159,7 +2061,6 @@ unary_expr
         }
         | '~' primary_expr
         {
-//      | '~' primary_expr
           $$ =
             idl_global->gen()->create_expr (
                                    AST_Expression::EC_bit_neg,
@@ -2172,7 +2073,6 @@ unary_expr
 primary_expr
         : scoped_name
         {
-// primary_expr : scoped_name
           /*
            * An expression which is a scoped name is not resolved now,
            * but only when it is evaluated (such as when it is assigned
@@ -2224,8 +2124,6 @@ primary_expr
         | literal
         | '(' const_expr ')'
         {
-//      | literal
-//      | '(' const_expr ')'
           $$ = $2;
         }
         ;
@@ -2233,18 +2131,15 @@ primary_expr
 literal
         : IDL_INTEGER_LITERAL
         {
-// literal : IDL_INTEGER_LITERAL
           $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_UINTEGER_LITERAL
         {
-//      | IDL_UINTEGER_LITERAL
           $$ =
             idl_global->gen ()->create_expr ($1);
         }
         | IDL_STRING_LITERAL
         {
-//      | IDL_STRING_LITERAL
           $$ = idl_global->gen ()->create_expr ($1);
           $1->destroy ();
           delete $1;
@@ -2252,17 +2147,14 @@ literal
         }
         | IDL_WSTRING_LITERAL
         {
-//      | IDL_WSTRING_LITERAL
           $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_CHARACTER_LITERAL
         {
-//      | IDL_CHARACTER_LITERAL
           $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_WCHAR_LITERAL
         {
-//      | IDL_WCHAR_LITERAL
           ACE_OutputCDR::from_wchar wc ($1);
           $$ = idl_global->gen ()->create_expr (wc);
         }
@@ -2272,17 +2164,14 @@ literal
         }
         | IDL_FLOATING_PT_LITERAL
         {
-//      | IDL_FLOATING_PT_LITERAL
           $$ = idl_global->gen ()->create_expr ($1);
         }
         | IDL_TRUETOK
         {
-//      | IDL_TRUETOK
           $$ = idl_global->gen ()->create_expr (true);
         }
         | IDL_FALSETOK
         {
-//      | IDL_FALSETOK
           $$ = idl_global->gen ()->create_expr (false);
         }
         ;
@@ -2290,7 +2179,6 @@ literal
 positive_int_expr :
         const_expr
         {
-// positive_int_expr : const_expr
           int good_expression = 1;
           $1->evaluate (AST_Expression::EK_positive_int);
           AST_Expression::AST_ExprValue *ev = $1->ev ();
@@ -2385,7 +2273,7 @@ annotation_dcl
 
 annotation_body
         : annotation_body annotation_statement ';'
-        | /* EMPTY */
+        | %empty
         ;
 
 annotation_statement
@@ -2412,14 +2300,23 @@ annotation_member
         | defaulted_annotation_member_dcl
         ;
 
-annotations
-        : annotations annotation_appl
+at_least_one_annotation
+        : annotations_maybe annotation_appl
         {
           Annotations *annotations = $1;
           annotations->insert_tail ($2);
           $$ = annotations;
         }
-        | /* EMPTY */
+        ;
+
+annotations_maybe
+        : annotations_maybe annotation_appl
+        {
+          Annotations *annotations = $1;
+          annotations->insert_tail ($2);
+          $$ = annotations;
+        }
+        | %empty
         {
           $$ = new Annotations ();
         }
@@ -2450,7 +2347,7 @@ annotation_appl_params_maybe
         {
           $$ = $2;
         }
-        | /* EMPTY */
+        | %empty
         {
           $$ = 0;
         }
@@ -2487,7 +2384,7 @@ more_named_annotation_appl_params
           params->insert_head ($2);
           $$ = params;
         }
-        | /* EMPTY */
+        | %empty
         {
           $$ = new AST_Annotation::Params;
         }
@@ -2504,44 +2401,29 @@ named_annotation_appl_param
         ;
 
 type_dcl
-/*
-        : IDL_TYPEDEF type_declarator
-        | struct_type
-        | union_type
-        | enum_type
-        | IDL_NATIVE simple_declarator
-        | constructed_forward_type_spec
-        ;
-*/
         : IDL_TYPEDEF
         {
-// type_dcl : IDL_TYPEDEF
           idl_global->set_parse_state (IDL_GlobalData::PS_TypedefSeen);
           idl_global->in_typedef (true);
         }
         type_declarator
         {
-//      type_declarator
           $$ = 0;
         }
         | struct_type
         {
-//      | struct_type
-          $$ = 0;
+          $$ = $1;
         }
         | union_type
         {
-//      | union_type
-          $$ = 0;
+          $$ = $1;
         }
         | enum_type
         {
-//      | enum_type
-          $$ = 0;
+          $$ = $1;
         }
         | IDL_NATIVE simple_declarator
         {
-//      | IDL_NATIVE simple_declarator
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Native *node = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_NativeSeen);
@@ -2568,7 +2450,6 @@ type_dcl
         }
         | constructed_forward_type_spec
         {
-//      | constructed_forward_type_spec
           $$ = 0;
         }
         ;
@@ -2576,12 +2457,10 @@ type_dcl
 type_declarator :
         type_spec
         {
-// type_declarator : type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_TypeSpecSeen);
         }
         at_least_one_declarator
         {
-//      at_least_one_declarator
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           FE_Declarator *d = 0;
           AST_Typedef *t = 0;
@@ -2653,7 +2532,6 @@ type_spec
 simple_type_spec
         : base_type_spec
         {
-// simple_type_spec : base_type_spec
           $$ =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  $1
@@ -2662,8 +2540,6 @@ simple_type_spec
         | template_type_spec
         | scoped_name
         {
-//      | template_type_spec
-//      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
 
@@ -2719,7 +2595,6 @@ constructed_forward_type_spec
 at_least_one_declarator :
         declarator declarators
         {
-// at_least_one_declarator : declarator declarators
           ACE_NEW_RETURN ($$,
                           UTL_DeclList ($1,
                                         $2),
@@ -2731,12 +2606,10 @@ declarators
         : declarators
           ','
         {
-// declarators : declarators ','
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsCommaSeen);
         }
         declarator
         {
-//      declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
           UTL_DeclList *dl = 0;
@@ -2755,9 +2628,8 @@ declarators
               $<dlval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $<dlval>$ = 0;
         }
         ;
@@ -2770,7 +2642,6 @@ declarator
 at_least_one_simple_declarator :
         simple_declarator simple_declarators
         {
-// at_least_one_simple_declarator : simple_declarator simple_declarators
           ACE_NEW_RETURN ($<dlval>$,
                           UTL_DeclList ($1,
                                         $2),
@@ -2782,12 +2653,10 @@ simple_declarators
         : simple_declarators
           ','
         {
-// simple_declarators : simple_declarators ','
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsCommaSeen);
         }
         simple_declarator
         {
-//      simple_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_DeclsDeclSeen);
 
           UTL_DeclList *dl = 0;
@@ -2806,9 +2675,8 @@ simple_declarators
               $<dlval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $<dlval>$ = 0;
         }
         ;
@@ -2816,7 +2684,6 @@ simple_declarators
 simple_declarator :
         defining_id
         {
-// simple_declarator : defining_id
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
                           UTL_ScopedName ($1,
@@ -2833,7 +2700,6 @@ simple_declarator :
 complex_declarator :
         array_declarator
         {
-// complex_declarator : array_declarator
           UTL_ScopedName *sn = 0;
           ACE_NEW_RETURN (sn,
                           UTL_ScopedName (
@@ -2857,17 +2723,14 @@ integer_type
 signed_int
         : IDL_LONG
         {
-// signed_int : IDL_LONG
           $$ = AST_Expression::EV_long;
         }
         | IDL_LONG IDL_LONG
         {
-//      | IDL_LONG IDL_LONG
           $$ = AST_Expression::EV_longlong;
         }
         | IDL_SHORT
         {
-//      | IDL_SHORT
           $$ = AST_Expression::EV_short;
         }
         ;
@@ -2875,17 +2738,14 @@ signed_int
 unsigned_int
         : IDL_UNSIGNED IDL_LONG
         {
-// unsigned_int : IDL_UNSIGNED IDL_LONG
           $$ = AST_Expression::EV_ulong;
         }
         | IDL_UNSIGNED IDL_LONG IDL_LONG
         {
-//      | IDL_UNSIGNED IDL_LONG IDL_LONG
           $$ = AST_Expression::EV_ulonglong;
         }
         | IDL_UNSIGNED IDL_SHORT
         {
-//      | IDL_UNSIGNED IDL_SHORT
           $$ = AST_Expression::EV_ushort;
         }
         ;
@@ -2893,17 +2753,14 @@ unsigned_int
 floating_pt_type
         : IDL_DOUBLE
         {
-// floating_pt_type : IDL_DOUBLE
           $$ = AST_Expression::EV_double;
         }
         | IDL_FLOAT
         {
-//      | IDL_FLOAT
           $$ = AST_Expression::EV_float;
         }
         | IDL_LONG IDL_DOUBLE
         {
-//      | IDL_LONG IDL_DOUBLE
           $$ = AST_Expression::EV_longdouble;
         }
         ;
@@ -2911,7 +2768,6 @@ floating_pt_type
 fixed_type
         : IDL_FIXED
         {
-// fixed_type : IDL_FIXED
           $$ = AST_Expression::EV_fixed;
         }
         ;
@@ -2919,12 +2775,10 @@ fixed_type
 char_type
         : IDL_CHAR
         {
-// char_type : IDL_CHAR
           $$ = AST_Expression::EV_char;
         }
         | IDL_WCHAR
         {
-//      | IDL_WCHAR
           $$ = AST_Expression::EV_wchar;
         }
         ;
@@ -2932,7 +2786,6 @@ char_type
 octet_type
         : IDL_OCTET
         {
-// octet_type : IDL_OCTET
           $$ = AST_Expression::EV_octet;
         }
         ;
@@ -2940,7 +2793,6 @@ octet_type
 boolean_type
         : IDL_BOOLEAN
         {
-// boolean_type : IDL_BOOLEAN
           $$ = AST_Expression::EV_bool;
         }
         ;
@@ -2948,7 +2800,6 @@ boolean_type
 any_type
         : IDL_ANY
         {
-// any_type : IDL_ANY
           $$ = AST_Expression::EV_any;
         }
         ;
@@ -2956,7 +2807,6 @@ any_type
 object_type
         : IDL_OBJECT
         {
-// object_type : IDL_OBJECT
           $$ = AST_Expression::EV_object;
         }
         ;
@@ -2964,12 +2814,10 @@ object_type
 struct_decl :
         IDL_STRUCT
         {
-// struct_decl : IDL_STRUCT
           idl_global->set_parse_state (IDL_GlobalData::PS_StructSeen);
         }
         defining_id
         {
-//      defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_StructIDSeen);
           $$ = $3;
         }
@@ -2977,11 +2825,10 @@ struct_decl :
 
 
 struct_type
-        : annotations struct_decl
+        : struct_decl
         {
-// struct_type : struct_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($2, 0);
+          UTL_ScopedName n ($1, 0);
           AST_Structure *d = 0;
 
           /*
@@ -2997,7 +2844,6 @@ struct_type
                                         s->is_abstract ()
                                       );
               AST_Structure::fwd_redefinition_helper (d, s);
-              d->annotations ($1);
               (void) s->fe_add_structure (d);
             }
 
@@ -3006,23 +2852,20 @@ struct_type
            */
           idl_global->scopes ().push (d);
 
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_StructSqSeen);
         }
         at_least_one_member
         {
-//      at_least_one_member
           idl_global->set_parse_state (IDL_GlobalData::PS_StructBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_StructQsSeen);
 
           /*
@@ -3039,56 +2882,61 @@ at_least_one_member : member members ;
 
 members
         : members member
-        | /* EMPTY */
+        | %empty
         ;
 
 member  :
         {
-// member  :
           /* is $0 to member_i */
           $<vival>$ = AST_Field::vis_NA;
         }
-        member_i
+        annotations_maybe member_i
+        {
+          if ($3)
+            {
+              AST_DeclsIter i (*$3);
+              for (AST_Decl *d = 0; i.next (d); i.advance ())
+                {
+                  d->annotations ($2);
+                }
+            }
+        }
         ;
 
 member_i :
-        annotations
         type_spec
         {
-// member_i : type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberTypeSeen);
         }
         at_least_one_declarator
         {
-//      at_least_one_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           FE_Declarator *d = 0;
           AST_Field *f = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_MemberDeclsCompleted);
+          AST_Decls *members = 0;
 
           /*
            * Check for illegal recursive use of type.
            */
-          if ($2 != 0
-              && AST_illegal_recursive_type ($2))
+          if ($1 != 0
+              && AST_illegal_recursive_type ($1))
             {
               idl_global->err ()->error1 (UTL_Error::EIDL_RECURSIVE_TYPE,
-                                          $2);
+                                          $1);
             }
           /*
            * Create a node representing a struct or exception member
            * Add it to the enclosing scope.
            */
-          else if (s != 0
-                   && $2 != 0
-                   && $4 != 0)
+          else if (s && $1 && $3)
             {
-              for (UTL_DecllistActiveIterator l ($4);
+              members = new AST_Decls;
+              for (UTL_DecllistActiveIterator l ($3);
                    !l.is_done ();
                    l.next ())
                 {
@@ -3099,7 +2947,7 @@ member_i :
                       continue;
                     }
 
-                  AST_Type *tp = d->compose ($2);
+                  AST_Type *tp = d->compose ($1);
 
                   if (tp == 0)
                     {
@@ -3113,23 +2961,23 @@ member_i :
                                             d->name (),
                                             $<vival>0
                                           );
-                  f->annotations ($1);
+                  members->insert_tail (f);
                   (void) s->fe_add_field (f);
                 }
             }
 
-          $4->destroy ();
-          delete $4;
-          $4 = 0;
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
+
+          $$ = members;
         }
         | error
         {
-//      | error
           idl_global->err()->syntax_error (idl_global->parse_state ());
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
@@ -3138,37 +2986,24 @@ member_i :
 union_decl :
         IDL_UNION
         {
-// union_decl : IDL_UNION
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionSeen);
         }
         defining_id
         {
-//      defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionIDSeen);
           $$ = $3;
         }
         ;
 
 union_type
-/*
-        : annotations union_decl IDL_SWITCH {}
-        '(' {}
-        annotations switch_type_spec {}
-        ')' {}
-        '{' {}
-        at_least_one_case_branch {}
-        '}'
-*/
-        : annotations union_decl IDL_SWITCH
+        : union_decl IDL_SWITCH
         {
-// union_type : union_decl IDL_SWITCH
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchSeen);
         }
         '('
         {
-//      '('
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($2, 0);
+          UTL_ScopedName n ($1, 0);
           AST_Union *u = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchOpenParSeen);
 
@@ -3182,7 +3017,6 @@ union_type
                                                     &n,
                                                     s->is_local (),
                                                     s->is_abstract ());
-              u->annotations ($1);
 
               AST_Structure *st = AST_Structure::narrow_from_decl (u);
               AST_Structure::fwd_redefinition_helper (st, s);
@@ -3199,14 +3033,12 @@ union_type
            * Don't delete $1 yet; we'll need it a bit later.
            */
         }
-        annotations switch_type_spec
+        annotations_maybe switch_type_spec
         {
-//      switch_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchTypeSeen);
         }
         ')'
         {
-//      ')'
           /*
            * The top of the scopes must be an empty union we added after we
            * encountered 'union <id> switch ('. Now we are ready to add a
@@ -3217,21 +3049,21 @@ union_type
           idl_global->scopes ().pop ();
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($2, 0);
+          UTL_ScopedName n ($1, 0);
           idl_global->set_parse_state (IDL_GlobalData::PS_SwitchCloseParSeen);
 
           /*
            * Create a node representing a union.
            */
-          if ($8 != 0 && s != 0)
+          if ($7 != 0 && s != 0)
             {
               AST_ConcreteType *tp =
-                AST_ConcreteType::narrow_from_decl ($8);
-              tp->annotations($7);
+                AST_ConcreteType::narrow_from_decl ($7);
+              tp->annotations($6);
 
               if (tp == 0)
                 {
-                  idl_global->err ()->not_a_type ($8);
+                  idl_global->err ()->not_a_type ($7);
                 }
               else
                 {
@@ -3241,7 +3073,6 @@ union_type
                                                         &n,
                                                         s->is_local (),
                                                         s->is_abstract ());
-                  u->annotations ($1);
 
                   /* Narrow the enclosing scope. */
                   AST_Union *e = AST_Union::narrow_from_scope (top);
@@ -3258,23 +3089,20 @@ union_type
            */
           idl_global->scopes ().push (top);
 
-          $2->destroy ();
-          delete $2;
-          $2 = 0;
+          $1->destroy ();
+          delete $1;
+          $1 = 0;
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionSqSeen);
         }
         at_least_one_case_branch
         {
-//      at_least_one_case_branch
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionQsSeen);
 
           /*
@@ -3294,7 +3122,6 @@ union_type
 switch_type_spec :
         integer_type
         {
-// switch_type_spec : integer_type
           $$ =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  $1
@@ -3302,7 +3129,6 @@ switch_type_spec :
         }
         | char_type
         {
-//      | char_type
           /* wchars are not allowed. */
           if ($1 == AST_Expression::EV_wchar)
             {
@@ -3316,7 +3142,6 @@ switch_type_spec :
         }
         | octet_type
         {
-//      | octet_type
           /* octets are not allowed. */
           idl_global->err ()->error0 (UTL_Error::EIDL_DISC_TYPE);
           $$ =
@@ -3326,7 +3151,6 @@ switch_type_spec :
         }
         | boolean_type
         {
-//      | boolean_type
           $$ =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  $1
@@ -3335,8 +3159,6 @@ switch_type_spec :
         | enum_type
         | scoped_name
         {
-//      | enum_type
-//      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
           AST_PredefinedType *p = 0;
@@ -3445,23 +3267,20 @@ at_least_one_case_branch : case_branch case_branches ;
 
 case_branches
         : case_branches case_branch
-        | /* empty */
+        | %empty
         ;
 
 case_branch :
         at_least_one_case_label
         {
-// case_branch : at_least_one_case_label
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionLabelSeen);
         }
-        annotations element_spec
+        annotations_maybe element_spec
         {
-//      annotations element_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemSeen);
         }
-          ';'
+        ';'
         {
-//      ';'
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_UnionBranch *b = 0;
           AST_Field *f = $4;
@@ -3491,12 +3310,10 @@ case_branch :
         }
         | error
         {
-//      | error
           idl_global->err()->syntax_error (idl_global->parse_state());
         }
-          ';'
+        ';'
         {
-//      ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
           yyerrok;
         }
@@ -3505,7 +3322,6 @@ case_branch :
 at_least_one_case_label :
         case_label case_labels
         {
-// at_least_one_case_label : case_label case_labels
           ACE_NEW_RETURN ($<llval>$,
                           UTL_LabelList ($1,
                                          $2),
@@ -3516,7 +3332,6 @@ at_least_one_case_label :
 case_labels
         : case_labels case_label
         {
-// case_labels : case_labels annotations case_label
           UTL_LabelList *ll = 0;
           ACE_NEW_RETURN (ll,
                           UTL_LabelList ($2,
@@ -3533,9 +3348,8 @@ case_labels
               $<llval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $<llval>$ = 0;
         }
         ;
@@ -3543,12 +3357,10 @@ case_labels
 case_label
         : IDL_DEFAULT
         {
-// case_label : IDL_DEFAULT
           idl_global->set_parse_state (IDL_GlobalData::PS_DefaultSeen);
         }
           ':'
         {
-//      ':'
           idl_global->set_parse_state (IDL_GlobalData::PS_LabelColonSeen);
 
           $$ = idl_global->gen ()->create_union_label (
@@ -3558,7 +3370,6 @@ case_label
         }
         | IDL_CASE
         {
-//      | IDL_CASE
           idl_global->set_parse_state (IDL_GlobalData::PS_CaseSeen);
         }
           const_expr
@@ -3567,7 +3378,6 @@ case_label
         }
           ':'
         {
-//      const_expr
           idl_global->set_parse_state (IDL_GlobalData::PS_LabelColonSeen);
 
           $$ = idl_global->gen()->create_union_label (
@@ -3580,12 +3390,10 @@ case_label
 element_spec :
         type_spec
         {
-// element_spec : type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemTypeSeen);
         }
         declarator
         {
-//      declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemDeclSeen);
 
           /*
@@ -3633,7 +3441,6 @@ element_spec :
 struct_forward_type
         : struct_decl
         {
-// struct_forward_type : struct_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1,
                             0);
@@ -3651,13 +3458,14 @@ struct_forward_type
           $1->destroy ();
           delete $1;
           $1 = 0;
+
+          $$ = d;
         }
         ;
 
 union_forward_type
         : union_decl
         {
-// union_forward_type : union_decl
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1,
                             0);
@@ -3679,16 +3487,14 @@ union_forward_type
         ;
 
 enum_type :
-        annotations IDL_ENUM
+        IDL_ENUM
         {
-// enum_type : IDL_ENUM
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumSeen);
         }
         defining_id
         {
-//      defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          UTL_ScopedName n ($4, 0);
+          UTL_ScopedName n ($3, 0);
           AST_Enum *e = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumIDSeen);
 
@@ -3712,23 +3518,20 @@ enum_type :
            */
           idl_global->scopes ().push (e);
 
-          $4->destroy ();
-          delete $4;
-          $4 = 0;
+          $3->destroy ();
+          delete $3;
+          $3 = 0;
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumSqSeen);
         }
         at_least_one_enumerator
         {
-//      at_least_one_enumerator
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumQsSeen);
 
           /*
@@ -3754,17 +3557,15 @@ enumerators
         : enumerators
           ','
         {
-// enumerators : enumerators ','
           idl_global->set_parse_state (IDL_GlobalData::PS_EnumCommaSeen);
         }
           enumerator
-        | /* EMPTY */
+        | %empty
         ;
 
 enumerator :
-        annotations IDENTIFIER
+        annotations_maybe IDENTIFIER
         {
-// enumerator : annotations IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id ($2);
           ACE::strdelete ($2);
@@ -3800,17 +3601,14 @@ sequence_type_spec
         : seq_head
           ','
         {
-// sequence_type_spec : seq_head ','
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceCommaSeen);
         }
         positive_int_expr
         {
-//      positive_int_expr
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceExprSeen);
         }
           '>'
         {
-//      '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
           /*
@@ -3888,7 +3686,6 @@ sequence_type_spec
         | seq_head
           '>'
         {
-//      | seq_head '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
           /*
@@ -3947,7 +3744,6 @@ sequence_type_spec
 seq_head :
         IDL_SEQUENCE
         {
-// seq_head : IDL_SEQUENCE
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSeen);
 
           /*
@@ -3957,12 +3753,10 @@ seq_head :
         }
         '<'
         {
-//      '<'
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSqSeen);
         }
         simple_type_spec
         {
-//      simple_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
           $$ = $5;
         }
@@ -3980,17 +3774,14 @@ string_type_spec
         : string_head
           '<'
         {
-// string_type_spec : string_head '<'
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
         positive_int_expr
         {
-//      positive_int_expr
            idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
         '>'
         {
-//      '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
 
           /*
@@ -4033,7 +3824,6 @@ string_type_spec
         }
         | string_head
         {
-//      | string_head
           idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
           /*
            * Create a node representing a string.
@@ -4059,7 +3849,6 @@ string_type_spec
 string_head :
         IDL_STRING
         {
-// string_head : IDL_STRING
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
         ;
@@ -4068,17 +3857,14 @@ wstring_type_spec
         : wstring_head
           '<'
         {
-// wstring_type_spec : wstring_head '<'
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSqSeen);
         }
         positive_int_expr
         {
-//      positive_int_expr
            idl_global->set_parse_state (IDL_GlobalData::PS_StringExprSeen);
         }
         '>'
         {
-//      '>'
           idl_global->set_parse_state (IDL_GlobalData::PS_StringQsSeen);
 
           /*
@@ -4110,7 +3896,6 @@ wstring_type_spec
         }
         | wstring_head
         {
-//      | wstring_head
           idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
 
           /*
@@ -4135,7 +3920,6 @@ wstring_type_spec
 wstring_head :
         IDL_WSTRING
         {
-// wstring_head : IDL_WSTRING
           idl_global->set_parse_state (IDL_GlobalData::PS_StringSeen);
         }
         ;
@@ -4143,12 +3927,10 @@ wstring_head :
 array_declarator :
         defining_id
         {
-// array_declarator : defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayIDSeen);
         }
         at_least_one_array_dim
         {
-//      at_least_one_array_dim
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayCompleted);
 
           /*
@@ -4185,7 +3967,6 @@ array_declarator :
 at_least_one_array_dim :
         array_dim array_dims
         {
-// at_least_one_array_dim : array_dim array_dims
           ACE_NEW_RETURN ($<elval>$,
                           UTL_ExprList ($1,
                                         $2),
@@ -4196,7 +3977,6 @@ at_least_one_array_dim :
 array_dims
         : array_dims array_dim
         {
-// array_dims : array_dims array_dim
           UTL_ExprList *el = 0;
           ACE_NEW_RETURN (el,
                           UTL_ExprList ($2,
@@ -4213,9 +3993,8 @@ array_dims
               $<elval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $<elval>$ = 0;
         }
         ;
@@ -4223,17 +4002,14 @@ array_dims
 array_dim :
         '['
         {
-// array_dim : '['
           idl_global->set_parse_state (IDL_GlobalData::PS_DimSqSeen);
         }
         positive_int_expr
         {
-//      positive_int_expr
           idl_global->set_parse_state (IDL_GlobalData::PS_DimExprSeen);
         }
         ']'
         {
-//      ']'
           idl_global->set_parse_state (IDL_GlobalData::PS_DimQsSeen);
 
           /*
@@ -4296,27 +4072,22 @@ attribute
 attribute_readonly :
         IDL_READONLY
         {
-// attribute_readonly : IDL_READONLY
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrROSeen);
         }
         IDL_ATTRIBUTE
         {
-//      IDL_ATTRIBUTE
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
         param_type_spec
         {
-//      param_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
         }
         at_least_one_simple_declarator
         {
-//      at_least_one_simple_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
         }
         opt_raises
         {
-//      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Attribute *a = 0;
           FE_Declarator *d = 0;
@@ -4380,27 +4151,22 @@ attribute_readonly :
 attribute_readwrite :
         IDL_ATTRIBUTE
         {
-// attribute_readwrite : IDL_ATTRIBUTE
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrSeen);
         }
         param_type_spec
         {
-//      param_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrTypeSeen);
         }
         at_least_one_simple_declarator
         {
-//      at_least_one_simple_declarator
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclsSeen);
         }
         opt_getraises
         {
-//      opt_getraises
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseCompleted);
         }
         opt_setraises
         {
-//      opt_setraises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Attribute *a = 0;
           FE_Declarator *d = 0;
@@ -4473,12 +4239,10 @@ attribute_readwrite :
 exception :
         IDL_EXCEPTION
         {
-// exception : IDL_EXCEPTION
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSeen);
         }
         defining_id
         {
-//      defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($3,
                             0);
@@ -4508,17 +4272,14 @@ exception :
         }
         '{'
         {
-//       '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptSqSeen);
         }
         members
         {
-//      members
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ExceptQsSeen);
           /*
            * Done with this exception. Pop its scope from the scope stack.
@@ -4531,12 +4292,10 @@ operation :
         opt_op_attribute
         op_type_spec
         {
-// operation : opt_op_attribute op_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
-        annotations IDENTIFIER
+        annotations_maybe IDENTIFIER
         {
-//      annotations IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           Identifier id ($5);
           ACE::strdelete ($5);
@@ -4601,17 +4360,14 @@ operation :
         }
         parameter_list
         {
-//      parameter_list
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
         opt_raises
         {
-//      opt_raises
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
         }
         opt_context
         {
-//      opt_context
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Operation *o = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpCompleted);
@@ -4644,19 +4400,16 @@ operation :
 opt_op_attribute
         : IDL_ONEWAY
         {
-// opt_op_attribute : IDL_ONEWAY
           idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           $$ = AST_Operation::OP_oneway;
         }
         | IDL_IDEMPOTENT
         {
-//      | IDL_IDEMPOTENT
           idl_global->set_parse_state (IDL_GlobalData::PS_OpAttrSeen);
           $$ = AST_Operation::OP_idempotent;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = AST_Operation::OP_noflags;
         }
         ;
@@ -4665,7 +4418,6 @@ op_type_spec
         : param_type_spec
         | IDL_VOID
         {
-// op_type_spec : param_type_spec | IDL_VOID
           $$ =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                   AST_Expression::EV_void
@@ -4676,13 +4428,11 @@ op_type_spec
 init_decl
         : IDL_FACTORY
         {
-// init_decl : IDL_FACTORY
           //@@ PS_FactorySeen?
           idl_global->set_parse_state (IDL_GlobalData::PS_OpTypeSeen);
         }
-        annotations IDENTIFIER
+        annotations_maybe IDENTIFIER
         {
-//      annotations IDENTIFIER
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           if (s->is_abstract ())
@@ -4724,12 +4474,10 @@ init_decl
         }
         init_parameter_list
         {
-//      init_parameter_list
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
         opt_raises
         {
-//      opt_raises
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
           if ($8 != 0)
@@ -4746,23 +4494,19 @@ init_decl
 init_parameter_list
         : '('
         {
-// init_parameter_list : '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
         ')'
         {
-//      ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         | '('
         {
-//      | '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
         at_least_one_in_parameter
         ')'
         {
-//      at_least_one_in_parameter ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         ;
@@ -4773,27 +4517,23 @@ in_parameters
         : in_parameters
           ','
         {
-// in_parameters : in_parameters ','
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
         }
         in_parameter
-        | /* EMPTY */
+        | %empty
         ;
 
 in_parameter :
         IDL_IN
         {
-// in_parameter : IDL_IN
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
         }
         param_type_spec
         {
-//      param_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
         }
         declarator
         {
-//      declarator
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Argument *a = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
@@ -4829,23 +4569,19 @@ in_parameter :
 parameter_list
         : '('
         {
-// parameter_list : '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
         ')'
         {
-//      ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         | '('
         {
-//      | '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSqSeen);
         }
         at_least_one_parameter
         ')'
         {
-//      at_least_one_parameter ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpQsSeen);
         }
         ;
@@ -4856,27 +4592,23 @@ parameters
         : parameters
           ','
         {
-// parameters : parameters ','
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParCommaSeen);
         }
         parameter
-        | /* EMPTY */
+        | %empty
         ;
 
 parameter :
         direction
         {
-// parameter : direction
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDirSeen);
         }
         param_type_spec
         {
-//      param_type_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParTypeSeen);
         }
         declarator
         {
-//      declarator
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Argument *a = 0;
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParDeclSeen);
@@ -4919,7 +4651,6 @@ parameter :
 param_type_spec
         : base_type_spec
         {
-// param_type_spec : base_type_spec
           $$ =
             idl_global->scopes ().bottom ()->lookup_primitive_type (
                                                  $1
@@ -4929,9 +4660,6 @@ param_type_spec
         | wstring_type_spec
         | scoped_name
         {
-//      | string_type_spec
-//      | wstring_type_spec
-//      | scoped_name
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = 0;
           UTL_ScopedName *n = $1;
@@ -5039,17 +4767,14 @@ param_type_spec
 direction
         : IDL_IN
         {
-// direction : IDL_IN
           $$ = AST_Argument::dir_IN;
         }
         | IDL_OUT
         {
-//      | IDL_OUT
           $$ = AST_Argument::dir_OUT;
         }
         | IDL_INOUT
         {
-//      | IDL_INOUT
           $$ = AST_Argument::dir_INOUT;
         }
         ;
@@ -5057,99 +4782,83 @@ direction
 opt_raises
         : IDL_RAISES
         {
-// opt_raises : IDL_RAISES
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSeen);
         }
           '('
         {
-//      '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseSqSeen);
         }
           at_least_one_scoped_name
           ')'
         {
-//      at_least_one_scoped_name ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseQsSeen);
           $$ = $5;
         }
-        | /* EMPTY */
+        | %empty
         {
           $$ = 0;
-/*      |  EMPTY */
         }
         ;
 
 opt_getraises
         : IDL_GETRAISES
         {
-// opt_getraises : IDL_GETRAISES
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSeen);
         }
           '('
         {
-//      '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseSqSeen);
         }
           at_least_one_scoped_name
           ')'
         {
-//      at_least_one_scoped_name ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpGetRaiseQsSeen);
           $$ = $5;
         }
-        | /* EMPTY */
+        | %empty
         {
           $$ = 0;
-/*      |  EMPTY */
         }
         ;
 
 opt_setraises
         : IDL_SETRAISES
         {
-// opt_setraises : IDL_SETRAISES
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSeen);
         }
           '('
         {
-//      '('
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseSqSeen);
         }
           at_least_one_scoped_name
           ')'
         {
-//      at_least_one_scoped_name ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpSetRaiseQsSeen);
           $$ = $5;
         }
-        | /* EMPTY */
+        | %empty
         {
           $$ = 0;
-/*      |  EMPTY */
         }
         ;
 
 opt_context
         : IDL_CONTEXT
         {
-// opt_context : IDL_CONTEXT
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSeen);
         }
         '('
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextSqSeen);
-//      '('
         }
         at_least_one_string_literal
         ')'
         {
-//      at_least_one_string_literal ')'
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextQsSeen);
           $$ = $5;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -5157,7 +4866,6 @@ opt_context
 at_least_one_string_literal :
         IDL_STRING_LITERAL string_literals
         {
-// at_least_one_string_literal : IDL_STRING_LITERAL string_literals
           ACE_NEW_RETURN ($<slval>$,
                           UTL_StrList ($1,
                                        $2),
@@ -5169,12 +4877,10 @@ string_literals
         : string_literals
           ','
         {
-// string_literals : string_literals ','
           idl_global->set_parse_state (IDL_GlobalData::PS_OpContextCommaSeen);
         }
         IDL_STRING_LITERAL
         {
-//      IDL_STRING_LITERAL
           UTL_StrList *sl = 0;
           ACE_NEW_RETURN (sl,
                           UTL_StrList ($4,
@@ -5191,9 +4897,8 @@ string_literals
               $<slval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -5201,7 +4906,6 @@ string_literals
 typeid_dcl
         : IDL_TYPEID scoped_name IDL_STRING_LITERAL
         {
-// typeid_dcl : IDL_TYPEID scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
             s->lookup_by_name ($2);
@@ -5230,7 +4934,6 @@ typeid_dcl
 typeprefix_dcl
         : IDL_TYPEPREFIX scoped_name IDL_STRING_LITERAL
         {
-// typeprefix_dcl : IDL_TYPEPREFIX scoped_name IDL_STRING_LITERAL
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d = ScopeAsDecl (s);
 
@@ -5274,7 +4977,6 @@ component_forward_decl :
         IDL_COMPONENT
         defining_id
         {
-// component_forward_decl : IDL_COMPONENT defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -5302,7 +5004,6 @@ component_forward_decl :
 component_decl :
         component_header
         {
-// component_decl : component_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Component *c = 0;
 
@@ -5342,17 +5043,14 @@ component_decl :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentSqSeen);
         }
         component_exports
         {
-//      component_exports
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentQsSeen);
 
           /*
@@ -5366,17 +5064,14 @@ component_header :
         IDL_COMPONENT
         defining_id
         {
-//      component_header: IDL_COMPONENT defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_ComponentIDSeen);
         }
         component_inheritance_spec
         {
-//      component_inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
         supports_spec
         {
-//      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
           /*
@@ -5414,102 +5109,84 @@ component_header :
 component_inheritance_spec
         : ':'
         {
-// component_inheritance_spec : ':'
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           scoped_name
         {
-//      scoped_name
           $<idlist>$ = $3;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
 
 component_exports
         : component_exports component_export
-        | /* EMPTY */
+        | %empty
         ;
 
 component_export
         : provides_decl
         {
-// component_export : provides_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | uses_decl
         {
-//      | uses_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | emits_decl
         {
-//      | emits_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_EmitsDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | publishes_decl
         {
-//      | publishes_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_PublishesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | consumes_decl
         {
-//      | consumes_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ConsumesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | attribute
         {
-//      | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | extended_port_decl
         {
-//      | extended_port_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         ;
 
 provides_decl : IDL_PROVIDES interface_type id
         {
-// provides_decl : IDL_PROVIDES interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
@@ -5600,14 +5277,12 @@ provides_decl : IDL_PROVIDES interface_type id
 interface_type
         : scoped_name
         {
-// interface_type : scoped_name
           // Lookups and checking are done where the 'interface_type'
           // token is used, in 'provides_decl' and 'uses_decl'.
           $$ = $1;
         }
         | IDL_OBJECT
         {
-//      | IDL_OBJECT
           Identifier *corba_id = 0;
 
           ACE_NEW_RETURN (corba_id,
@@ -5633,7 +5308,6 @@ interface_type
 
 uses_decl : uses_opt_multiple interface_type id
         {
-// uses_decl : uses_opt_multiple interface_type id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
@@ -5740,7 +5414,6 @@ uses_decl : uses_opt_multiple interface_type id
 uses_opt_multiple
         : IDL_USES opt_multiple
         {
-// uses_opt_multiple : IDL_USES opt_multiple
           // We use this extra rule here to use in both uses_decl and
           // extended_uses_decl, so the LALR(1) parser can avoid conflicts.
           $$ = $2;
@@ -5750,19 +5423,16 @@ uses_opt_multiple
 opt_multiple
         : IDL_MULTIPLE
         {
-// opt_multiple : IDL_MULTIPLE
           $$ = true;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = false;
         }
         ;
 
 emits_decl : IDL_EMITS scoped_name id
         {
-// emits_decl : IDL_EMITS scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
@@ -5835,7 +5505,6 @@ emits_decl : IDL_EMITS scoped_name id
 
 publishes_decl : IDL_PUBLISHES scoped_name id
         {
-// publishes_decl : IDL_PUBLISHES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
@@ -5908,7 +5577,6 @@ publishes_decl : IDL_PUBLISHES scoped_name id
 
 consumes_decl : IDL_CONSUMES scoped_name id
         {
-// consumes_decl : IDL_CONSUMES scoped_name id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           bool so_far_so_good = true;
           AST_Decl::NodeType nt = AST_Decl::NT_type;
@@ -5982,7 +5650,6 @@ consumes_decl : IDL_CONSUMES scoped_name id
 home_decl :
         home_header
         {
-// home_decl : home_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Home *h = 0;
 
@@ -6020,7 +5687,6 @@ home_decl :
         }
         home_body
         {
-//      home_body
           /*
            * Done with this component - pop it off the scopes stack.
            */
@@ -6031,37 +5697,30 @@ home_decl :
 home_header :
         IDL_HOME
         {
-// home_header : IDL_HOME
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeSeen);
         }
         defining_id
         {
-//      defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeIDSeen);
         }
         home_inheritance_spec
         {
-//      home_inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
         supports_spec
         {
-//      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
         }
         IDL_MANAGES
         {
-//      IDL_MANAGES
           idl_global->set_parse_state (IDL_GlobalData::PS_ManagesSeen);
         }
         scoped_name
         {
-//      scoped_name
           idl_global->set_parse_state (IDL_GlobalData::PS_ManagesIDSeen);
         }
         primary_key_spec
         {
-//      primary_key_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_PrimaryKeySpecSeen);
 
           /*
@@ -6111,17 +5770,14 @@ home_header :
 home_inheritance_spec
         : ':'
         {
-// home_inheritance_spec ':'
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritColonSeen);
         }
           scoped_name
         {
-//      scoped_name
           $<idlist>$ = $3;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -6130,12 +5786,10 @@ primary_key_spec
         : IDL_PRIMARYKEY
           scoped_name
         {
-// primary_key_spec : IDL_PRIMARYKEY scoped_name
           $$ = $2;
         }
-        | /* EMPTY */
+        | %empty
         {
-/*      |  EMPTY */
           $$ = 0;
         }
         ;
@@ -6143,46 +5797,39 @@ primary_key_spec
 home_body :
         '{'
         {
-// home_body : '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeSqSeen);
         }
         home_exports
         {
-//      home_exports
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_HomeQsSeen);
         }
         ;
 
 home_exports
         : home_exports home_export
-        | /* EMPTY */
+        | %empty
         ;
 
 home_export
         : export
         | factory_decl
         {
-// home_export : factory_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_FactoryDeclSeen);
         }
-          ';'
+        ';'
         {
-//      | ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | finder_decl
         {
-//      | finder_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_FinderDeclSeen);
         }
-          ';'
+        ';'
         {
-//      | ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         ;
@@ -6191,7 +5838,6 @@ factory_decl :
         IDL_FACTORY
         defining_id
         {
-// factory_decl : IDL_FACTORY defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -6215,12 +5861,10 @@ factory_decl :
         }
         init_parameter_list
         {
-//      init_parameter_list
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
         opt_raises
         {
-//      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
@@ -6243,7 +5887,6 @@ finder_decl :
         IDL_FINDER
         defining_id
         {
-// finder_decl : IDL_FINDER defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -6271,12 +5914,10 @@ finder_decl :
         }
         init_parameter_list
         {
-//      init_parameter_list
           idl_global->set_parse_state (IDL_GlobalData::PS_OpParsCompleted);
         }
         opt_raises
         {
-//      opt_raises
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           idl_global->set_parse_state (IDL_GlobalData::PS_OpRaiseCompleted);
 
@@ -6310,7 +5951,6 @@ event_concrete_forward_decl :
         IDL_EVENTTYPE
         defining_id
         {
-// event_concrete_forward_decl : IDL_EVENTTYPE defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($2,
                             0);
@@ -6339,7 +5979,6 @@ event_abs_forward_decl :
         IDL_EVENTTYPE
         defining_id
         {
-// event_abs_forward_decl : IDL_ABSTRACT IDL_EVENTTYPE defining_id
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($3,
                             0);
@@ -6367,7 +6006,6 @@ event_abs_decl :
         event_abs_header
         event_rest_of_header
         {
-// event_abs_decl : event_abs_header event_rest_of_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_EventType *e = 0;
           AST_Interface *i = 0;
@@ -6412,17 +6050,14 @@ event_abs_decl :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
         }
         exports
         {
-//      exports
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
 
           /*
@@ -6437,7 +6072,6 @@ event_abs_header :
         IDL_EVENTTYPE
         defining_id
         {
-// event_abs_header : IDL_ABSTRACT IDL_EVENTTYPE defining_id
           $$ = $3;
         }
         ;
@@ -6447,7 +6081,6 @@ event_custom_header :
         IDL_EVENTTYPE
         defining_id
         {
-// event_custom_header : IDL_CUSTOM IDL_EVENTTYPE defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           ACE_DEBUG ((LM_DEBUG,
@@ -6465,7 +6098,6 @@ event_plain_header :
         IDL_EVENTTYPE
         defining_id
         {
-// event_plain_header : IDL_EVENTTYPE defining_id
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeIDSeen);
 
           $$ = $2;
@@ -6475,12 +6107,10 @@ event_plain_header :
 event_rest_of_header :
         inheritance_spec
         {
-// event_rest_of_header : inheritance_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_InheritSpecSeen);
         }
         supports_spec
         {
-//      supports_spec
           idl_global->set_parse_state (IDL_GlobalData::PS_SupportSpecSeen);
 
           ACE_NEW_RETURN ($<vhval>$,
@@ -6514,7 +6144,6 @@ event_decl :
         event_header
         event_rest_of_header
         {
-// event_decl : event_header event_rest_of_header
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_EventType *e = 0;
           AST_Interface *i = 0;
@@ -6564,17 +6193,14 @@ event_decl :
         }
         '{'
         {
-//      '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeSqSeen);
         }
         value_elements
         {
-//      value_elements
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeBodySeen);
         }
         '}'
         {
-//      '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_EventTypeQsSeen);
 
           /*
@@ -6587,12 +6213,10 @@ event_decl :
 event_header
         : event_custom_header
         {
-// event_header : event_custom_header
           $$ = $1;
         }
         | event_plain_header
         {
-// event_header : event_plain_header
           $$ = $1;
         }
         ;
@@ -6600,52 +6224,42 @@ event_header
 formal_parameter_type
         : IDL_TYPENAME
         {
-// formal_parameter_type : IDL_TYPENAME
           $<ntval>$ = AST_Decl::NT_type;
         }
         | IDL_STRUCT
         {
-//        IDL_STRUCT
           $<ntval>$ = AST_Decl::NT_struct;
         }
         | IDL_UNION
         {
-//        IDL_UNION
           $<ntval>$ = AST_Decl::NT_union;
         }
         | IDL_EVENTTYPE
         {
-//        IDL_EVENTTYPE
           $<ntval>$ = AST_Decl::NT_eventtype;
         }
         | IDL_SEQUENCE
         {
-//        IDL_SEQUENCE
           $<ntval>$ = AST_Decl::NT_sequence;
         }
         | IDL_INTERFACE
         {
-//        IDL_INTERFACE
           $<ntval>$ = AST_Decl::NT_interface;
         }
         | IDL_VALUETYPE
         {
-//        IDL_VALUETYPE
           $<ntval>$ = AST_Decl::NT_valuetype;
         }
         | IDL_ENUM
         {
-//        IDL_ENUM
           $<ntval>$ = AST_Decl::NT_enum;
         }
         | IDL_EXCEPTION
         {
-//        IDL_EXCEPTION
           $<ntval>$ = AST_Decl::NT_except;
         }
         | IDL_CONST const_type
         {
-//        IDL_CONST const_type
           $<ntval>$ = AST_Decl::NT_const;
           t_param_const_type = $2;
         }
@@ -6654,7 +6268,6 @@ formal_parameter_type
 at_least_one_formal_parameter
         : formal_parameter formal_parameters
         {
-// at_least_one_formal_parameter : formal_parameter formal_parameters
           if ($2 == 0)
             {
               ACE_NEW_RETURN ($2,
@@ -6688,12 +6301,10 @@ at_least_one_formal_parameter
 formal_parameters
         : formal_parameters ','
         {
-// formal_parameters : formal_parameters ','
           // Maybe add a new parse state to set here.
         }
         formal_parameter
         {
-//        formal_parameter
           if ($1 == 0)
             {
               ACE_NEW_RETURN ($1,
@@ -6707,9 +6318,8 @@ formal_parameters
           delete $4;
           $4 = 0;
         }
-        | /* EMPTY */
+        | %empty
         {
-//        /* EMPTY */
           $<plval>$ = 0;
         }
         ;
@@ -6717,7 +6327,6 @@ formal_parameters
 formal_parameter
         : formal_parameter_type IDENTIFIER
         {
-// formal_parameter : formal_parameter_type IDENTIFIER
 
           ACE_NEW_RETURN ($<pival>$,
                           FE_Utils::T_Param_Info,
@@ -6761,7 +6370,6 @@ formal_parameter
 at_least_one_formal_parameter_name
         : formal_parameter_name formal_parameter_names
         {
-// at_least_one_formal_parameter_name : formal_parameter_name formal_parameter_names
           ACE_NEW_RETURN ($<slval>$,
                           UTL_StrList ($1,
                                        $2),
@@ -6772,7 +6380,6 @@ at_least_one_formal_parameter_name
 formal_parameter_names
         : formal_parameter_names ',' formal_parameter_name
         {
-// formal_parameter_names : formal_parameter_names ',' formal_parameter_name
           UTL_StrList *sl = 0;
           ACE_NEW_RETURN (sl,
                           UTL_StrList ($3,
@@ -6789,9 +6396,8 @@ formal_parameter_names
               $<slval>$ = $1;
             }
         }
-        | /* EMPTY */
+        | %empty
         {
-//        /* EMPTY */
           $<slval>$ = 0;
         }
         ;
@@ -6799,7 +6405,6 @@ formal_parameter_names
 formal_parameter_name
         : IDENTIFIER
         {
-// formal_parameter_name : IDENTIFIER
           ACE_NEW_RETURN ($$,
                           UTL_String ($1, true),
                           1);
@@ -6809,12 +6414,10 @@ formal_parameter_name
 porttype_decl
         : IDL_PORTTYPE
         {
-// porttype_decl : IDL_PORTTYPE
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSeen);
         }
-        annotations IDENTIFIER
+        annotations_maybe IDENTIFIER
         {
-//        annotations IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeIDSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
@@ -6833,17 +6436,14 @@ porttype_decl
         }
         '{'
         {
-//        '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeSqSeen);
         }
         at_least_one_port_export
         {
-//        at_least_one_port_export
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeBodySeen);
         }
         '}'
         {
-//        '}'
           idl_global->set_parse_state (IDL_GlobalData::PS_PorttypeQsSeen);
 
           // Done with this port type - pop it off the scopes stack.
@@ -6854,53 +6454,43 @@ porttype_decl
 at_least_one_port_export
         : port_export port_exports
         {
-// at_least_one_port_export : port_export port_exports
         }
         ;
 
 port_exports
         : port_exports port_export
         {
-// port_exports : port_exports port_export
         }
-        | /* EMPTY */
+        | %empty
         {
-//        | /* EMPTY */
         }
         ;
 
 port_export
         : provides_decl
         {
-// port_export : provides_decl
         }
         ';'
         {
-//        ';'
         }
         | uses_decl
         {
-//        | uses_decl
         }
         ';'
         {
-//        ';'
         }
         | attribute
         {
-//        | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
         ';'
         {
-//        ';'
         }
         ;
 
 extended_port_decl
         : IDL_PORT scoped_name IDENTIFIER
         {
-// extended_port_decl : IDL_PORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
@@ -6970,7 +6560,6 @@ extended_port_decl
         }
         | IDL_MIRRORPORT scoped_name IDENTIFIER
         {
-//        | IDL_MIRRORPORT scoped_name IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_MirrorPortDeclSeen);
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
@@ -7019,9 +6608,8 @@ extended_port_decl
         ;
 
 at_least_one_actual_parameter
-        : annotations actual_parameter actual_parameters
+        : annotations_maybe actual_parameter actual_parameters
         {
-// at_least_one_actual_parameter : annotations actual_parameter actual_parameters
           if ($3 == 0)
             {
               ACE_NEW_RETURN ($3,
@@ -7035,9 +6623,8 @@ at_least_one_actual_parameter
         ;
 
 actual_parameters
-        : actual_parameters ',' annotations actual_parameter
+        : actual_parameters ',' annotations_maybe actual_parameter
         {
-// actual_parameters : actual_parameters ',' annotations actual_parameter
           if ($1 == 0)
             {
               ACE_NEW_RETURN ($1,
@@ -7048,9 +6635,8 @@ actual_parameters
           $1->enqueue_tail ($4);
           $<alval>$ = $1;
         }
-        | /* EMPTY */
+        | %empty
         {
-//         | /* EMPTY */
           $<alval>$ = 0;
         }
         ;
@@ -7058,7 +6644,6 @@ actual_parameters
 actual_parameter
         : expression
         {
-// actual_parameter : expression
           // To avoid grammar conflicts with this LALR(1) parser,
           // we take advantage of the fact that an expression can
           // be a scoped name. At that lower level, we create an
@@ -7122,17 +6707,14 @@ connector_decl
 connector_header
         : IDL_CONNECTOR
         {
-// connector_header : IDL_CONNECTOR
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSeen);
         }
-        annotations IDENTIFIER
+        annotations_maybe IDENTIFIER
         {
-//        annotations IDENTIFIER
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorIDSeen);
         }
         component_inheritance_spec
         {
-//        component_inheritance_spec
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Connector *parent = 0;
           bool so_far_so_good = true;
@@ -7188,17 +6770,14 @@ connector_header
 connector_body
         : '{'
         {
-// connector_body " '{'
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorSqSeen);
         }
         connector_exports
         {
-//        connector_exports
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorBodySeen);
         }
         '}'
         {
-//        '}
           idl_global->set_parse_state (IDL_GlobalData::PS_ConnectorQsSeen);
 
           // Done with this connector - pop it off the scope stack.
@@ -7208,48 +6787,40 @@ connector_body
 
 connector_exports
         : connector_exports connector_export
-        | /* EMPTY */
+        | %empty
         ;
 
 connector_export
         : provides_decl
         {
-// connector_export : provides_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ProvidesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | uses_decl
         {
-//        | uses_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_UsesDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | attribute
         {
-//      | attribute
           idl_global->set_parse_state (IDL_GlobalData::PS_AttrDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         | extended_port_decl
         {
-//      | extended_port_decl
           idl_global->set_parse_state (IDL_GlobalData::PS_ExtendedPortDeclSeen);
         }
-          ';'
+        ';'
         {
-//        ';'
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
         }
         ;
