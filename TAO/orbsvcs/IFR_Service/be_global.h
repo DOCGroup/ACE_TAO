@@ -79,7 +79,7 @@ public:
   ACE_CString spawn_options (void);
 
   /// Parse args that affect the backend.
-  void parse_args (long &i, char **av);
+  bool parse_args (long &i, char **av);
 
 private:
   /// Are we removing IR objects from the repository?

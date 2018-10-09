@@ -147,7 +147,7 @@ BE_GlobalData::spawn_options (void)
   return this->orb_args_ + idl_global->idl_flags ();
 }
 
-void
+bool
 BE_GlobalData::parse_args (long &i, char **av)
 {
   switch (av[i][1])
@@ -172,7 +172,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
                 av[i]));
 
-            ACE_OS::exit (99);
+            return true;
           }
         break;
       case 'T':
@@ -185,9 +185,9 @@ BE_GlobalData::parse_args (long &i, char **av)
             av[i]
           ));
 
-        idl_global->set_compile_flags (idl_global->compile_flags ()
-                                       | IDL_CF_ONLY_USAGE);
-        break;
+        return true;
     }
+
+  return false;
 }
 
