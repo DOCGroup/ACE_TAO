@@ -330,13 +330,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Parse arguments.
-      if (DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ()))
-        {
-          ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("Use \"-h\" or \"--help\" to see valid options.\n")));
-          idl_global->argparse_exit_ = true;
-          idl_global->argparse_exit_status_ = 1;
-        }
+      DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ());
 
       // Print Help Message
       if (idl_global->print_help_)
@@ -351,9 +345,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // If exiting because of arguments, do it now
-      if (idl_global->argparse_exit_)
+      if (idl_global->parse_args_exit_)
         {
-          int status = idl_global->argparse_exit_status_;
+          int status = idl_global->parse_args_exit_status_;
+          if (status)
+            {
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("Use \"-h\" or \"--help\" to see valid options.\n")));
+            }
           DRV_cleanup ();
           return status;
         }

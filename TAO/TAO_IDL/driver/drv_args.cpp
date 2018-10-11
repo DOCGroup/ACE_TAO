@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern long DRV_nfiles;
 extern char *DRV_files[];
 
-bool process_long_option(long ac, char **av, long &i);
+void process_long_option(long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
@@ -121,7 +121,7 @@ void
 DRV_usage (void)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%C: usage: %C [flag | file]*\n"),
+              ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),
               idl_global->prog_name (),
               idl_global->prog_name ()));
 
@@ -147,7 +147,7 @@ DRV_usage (void)
     ACE_TEXT (" by the IDL compiler.\n")
     ACE_TEXT (" -Uname\t\t\tundefines name for preprocessor\n")
     ACE_TEXT (" -v\t\t\ttraces compilation stages\n")
-    ACE_TEXT (" -V\t\t\tprints version info then exits\n")
+    ACE_TEXT (" -V | --version\t\tprints version info then exits\n")
     ACE_TEXT (" -w\t\t\tsuppresses IDL compiler warning messages\n")
     ACE_TEXT (" -Wp,<arg1,...,argn>\tpasses args to preprocessor\n")
     ACE_TEXT (" -Yp,path\t\tdefines location of preprocessor\n")
@@ -168,10 +168,11 @@ DRV_usage (void)
       ACE_TEXT (" the '%s' option\n"), \
       ACE_TEXT_CHAR_TO_TCHAR (av[i]) \
     )); \
-  return true;
+  idl_global->parse_args_exit (1); \
+  return;
 
 // Parse arguments on command line
-bool
+void
 DRV_parse_args (long ac, char **av)
 {
   ACE_CString buffer;
@@ -179,13 +180,16 @@ DRV_parse_args (long ac, char **av)
   long i;
   bool has_space = false;
 
+  // After -- process all arguments as files
+  bool just_files = false;
+
   FE_store_env_include_paths ();
   DRV_cpp_init ();
   idl_global->set_prog_name (av[0]);
 
   for (i = 1; i < ac; i++)
     {
-      if (av[i][0] == '-')
+      if (!just_files && av[i][0] == '-')
         {
           idl_global->append_idl_flag (av[i]);
 
@@ -198,8 +202,9 @@ DRV_parse_args (long ac, char **av)
                   ACE_TEXT ("IDL: Space between dash and option ")
                   ACE_TEXT ("letters not allowed\n")
                 ));
+              idl_global->parse_args_exit (1);
+              return;
 
-              return true;
             case 'A':
               if (av[i][2] == '\0')
                 {
@@ -215,8 +220,9 @@ DRV_parse_args (long ac, char **av)
                           ACE_TEXT ("IDL: incorrect use of ")
                           ACE_TEXT ("the -A option\n")
                         ));
+                      idl_global->parse_args_exit (1);
+                      return;
 
-                      return true;
                     }
                 }
               else
@@ -318,9 +324,7 @@ DRV_parse_args (long ac, char **av)
                 {
                   UNKNOWN_OPTION;
                 }
-              idl_global->print_version_ = true;
-              idl_global->argparse_exit_ = true;
-              idl_global->argparse_exit_status_ = 0;
+              idl_global->print_version ();
               break;
             case 'W':
               if (av[i][2] == '\0')
@@ -347,8 +351,9 @@ DRV_parse_args (long ac, char **av)
                       LM_ERROR,
                       ACE_TEXT ("IDL: Incorrect use of -W option\n")
                     ));
+                  idl_global->parse_args_exit (1);
+                  return;
 
-                  return true;
                 case 'p':
                   if (*(s + 1) == ',')
                     {
@@ -399,8 +404,9 @@ DRV_parse_args (long ac, char **av)
                             ACE_TEXT ("IDL: I don't understand")
                             ACE_TEXT (" the '-Y' option\n")
                           ));
+                        idl_global->parse_args_exit (1);
+                        return;
 
-                        return true;
                       }
 
                     break;
@@ -411,7 +417,8 @@ DRV_parse_args (long ac, char **av)
                         ACE_TEXT (" %s with the '-Y' option\n"),
                         ACE_TEXT_CHAR_TO_TCHAR (s)
                       ));
-                    return true;
+                    idl_global->parse_args_exit (1);
+                    return;
                 }
               break;
             case 'd':
@@ -462,31 +469,30 @@ DRV_parse_args (long ac, char **av)
                 {
                   UNKNOWN_OPTION;
                 }
-              idl_global->print_help_ = true;
-              idl_global->argparse_exit_ = true;
-              idl_global->argparse_exit_status_ = 0;
+              idl_global->print_help ();
               break;
 
             case 'h': // Short Help Option, else let be_global process it
               if (av[i][2] == '\0') {
-                idl_global->print_help_ = true;
-                idl_global->argparse_exit_ = true;
-                idl_global->argparse_exit_status_ = 0;
-                return false;
+                idl_global->print_help ();
               } else {
-                if (be_global->parse_args (i, av)) return true;
-                if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
+                be_global->parse_args (i, av);
               }
               break;
 
-            case '-': // Long Options
-              if (process_long_option(ac, av, i)) return true;
-              if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
+            case '-': // -- or Long Options
+              if (av[i][2] == '\0')
+                {
+                  just_files = true; // Treat the following arguments as files
+                }
+              else
+                {
+                  process_long_option(ac, av, i);
+                }
               break;
 
             default:
-              if (be_global->parse_args (i, av)) return true;
-              if (idl_global->argparse_exit_) return false; // Catch Non-Error Exits
+              be_global->parse_args (i, av);
 
             } // End of switch (av[i][1])
         } // End of IF (av[i][0] == '-')
@@ -494,6 +500,8 @@ DRV_parse_args (long ac, char **av)
         {
           DRV_push_file (av[i]);
         }
+
+      if (idl_global->parse_args_exit_) return; // Catch Exits
     } // End of FOR (i = 1; i < ac; i++)
 
   be_util::arg_post_proc ();
@@ -548,8 +556,6 @@ DRV_parse_args (long ac, char **av)
     }
 
   DRV_cpp_post_init ();
-
-  return false;
 }
 
 void
@@ -566,7 +572,7 @@ print_idl_versions()
     }
 }
 
-bool
+void
 process_long_option(long ac, char **av, long &i)
 {
   const char *long_option = av[i] + 2;
@@ -583,8 +589,8 @@ process_long_option(long ac, char **av, long &i)
         }
       else
         {
-          idl_global->idl_version_.from_string(av[++i]);
-          invalid_version = !idl_global->idl_version_.is_valid();
+          idl_global->idl_version_.from_string (av[++i]);
+          invalid_version = !idl_global->idl_version_.is_valid ();
           if (invalid_version)
             {
               ACE_DEBUG ((LM_ERROR,
@@ -595,8 +601,8 @@ process_long_option(long ac, char **av, long &i)
         }
       if (invalid_version)
         {
-          print_idl_versions();
-          return true;
+          print_idl_versions ();
+          idl_global->parse_args_exit (1);
         }
     }
   else if (!ACE_OS::strcmp (long_option, "syntax-only"))
@@ -606,25 +612,25 @@ process_long_option(long ac, char **av, long &i)
   else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        IdlVersion(DEFAULT_IDL_VERSION).to_string ()));
-      idl_global->argparse_exit_ = true;
-      idl_global->argparse_exit_status_ = 0;
+        IdlVersion (DEFAULT_IDL_VERSION).to_string ()));
+      idl_global->parse_args_exit (0);
     }
   else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))
     {
-      print_idl_versions();
-      idl_global->argparse_exit_ = true;
-      idl_global->argparse_exit_status_ = 0;
+      print_idl_versions ();
+      idl_global->parse_args_exit (0);
     }
   else if (!ACE_OS::strcmp (long_option, "help"))
     {
-      idl_global->print_help_ = true;
-      idl_global->argparse_exit_ = true;
-      idl_global->argparse_exit_status_ = 0;
+      idl_global->print_help ();
     }
   else if (!ACE_OS::strcmp (long_option, "bison-trace"))
     {
       FE_yydebug (true);
+    }
+  else if (!ACE_OS::strcmp (long_option, "version"))
+    {
+      idl_global->print_version ();
     }
   else
     {
@@ -632,7 +638,6 @@ process_long_option(long ac, char **av, long &i)
         ACE_TEXT ("Unknown long option: %C\n"),
         long_option
         ));
-      return true;
+      idl_global->parse_args_exit (1);
     }
-  return false;
 }

@@ -62,6 +62,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
+
+#include "idl_defines.h"
 #include "idl_global.h"
 #include "global_extern.h"
 #include "utl_identifier.h"
@@ -107,8 +109,8 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 
 IDL_GlobalData::IDL_GlobalData (void)
   : syntax_only_ (false),
-    argparse_exit_ (false),
-    argparse_exit_status_ (0),
+    parse_args_exit_ (false),
+    parse_args_exit_status_ (0),
     print_help_ (false),
     print_version_ (false),
     pd_root (0),
@@ -530,6 +532,10 @@ IDL_GlobalData::compile_flags (void)
 void
 IDL_GlobalData::set_compile_flags (long cf)
 {
+  if (cf & IDL_CF_ONLY_USAGE)
+    {
+      print_help ();
+    }
   this->pd_compile_flags = cf;
 }
 
@@ -1874,4 +1880,25 @@ void
 IDL_GlobalData::in_tmpl_mod_alias (bool val)
 {
   this->in_tmpl_mod_alias_ = val;
+}
+
+void
+IDL_GlobalData::parse_args_exit (int status)
+{
+  parse_args_exit_ = true;
+  parse_args_exit_status_ = status;
+}
+
+void
+IDL_GlobalData::print_help ()
+{
+  print_help_ = true;
+  parse_args_exit (0);
+}
+
+void
+IDL_GlobalData::print_version ()
+{
+  print_version_ = true;
+  parse_args_exit (0);
 }

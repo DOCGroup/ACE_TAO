@@ -379,13 +379,14 @@ public:
    * Exit when finished processing cli arguments
    * Default is false.
    */
-  bool argparse_exit_;
+  bool parse_args_exit_;
 
   /**
-   * If argparse_exit_ is true, this is the program status to return from main.
+   * If parse_args_exit_ is true, this is the program status to return from
+   * main.
    * Default is 0.
    */
-  int argparse_exit_status_;
+  int parse_args_exit_status_;
 
   /**
    * Print command line argument help message when finished processing
@@ -794,6 +795,24 @@ public:
   bool in_tmpl_mod_alias (void) const;
   void in_tmpl_mod_alias (bool val);
   // Accessors for the member.
+
+  /**
+   * Convenience function that causes the program to exit with the given return
+   * status after returning from parsing arguments.
+   */
+  void parse_args_exit (int status);
+
+  /**
+   * Convenience function that causes the program to print version and exit
+   * with an success return code after returning from parsing arguments.
+   */
+  void print_version ();
+
+  /**
+   * Convenience function that causes the program to print help and exit
+   * with an success return code after returning from parsing arguments.
+   */
+  void print_help ();
 
 private:
   // Data
