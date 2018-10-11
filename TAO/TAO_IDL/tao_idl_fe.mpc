@@ -4,7 +4,7 @@ project(TAO_IDL_GEN) {
   custom_only = 1
 
   verbatim(gnuace, local) {
-    BISON_FLAGS := -d --feature=caret
+    BISON_FLAGS := -d --feature=caret --warnings=error=deprecated --warnings=error=empty-rule --warnings=error=conflicts-rr
     all: fe/fe_lookup.cpp fe/idl.yy.cpp fe/idl.tab.cpp fe/idl.tab.hpp
     GPERF ?= $(ACE_ROOT)/bin/ace_gperf
     fe/fe_lookup.cpp: fe/keywords.dat
