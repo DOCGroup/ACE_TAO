@@ -2,20 +2,22 @@
 
 AST_Decl::NodeType const AST_Annotation::NT = AST_Decl::NT_annotation;
 
-AST_Annotation::AST_Annotation (UTL_ScopedName *name, AST_Annotation::Params *params)
-  : AST_Decl (NT, name), name_ (name->copy ()), params_ (params)
+AST_Annotation::AST_Annotation (
+  UTL_ScopedName *name, AST_Annotation::Params *params)
+  : AST_Decl (NT, name), original_name_ (name->get_string_copy ()),
+    params_ (params)
 {
 }
 
 AST_Annotation::~AST_Annotation ()
 {
-  delete name_;
+  delete [] original_name_;
 }
 
 void AST_Annotation::dump (ACE_OSTREAM_TYPE &o)
 {
   dump_i (o, "@");
-  name_->dump (o);
+  dump_i (o, original_name_);
   if (params_)
     {
       dump_i (o, "(");
@@ -41,9 +43,15 @@ void AST_Annotation::dump (ACE_OSTREAM_TYPE &o)
 
 int AST_Annotation::ast_accept (ast_visitor *visitor)
 {
+  ACE_UNUSED_ARG (visitor);
   return 0;
 }
 
 void AST_Annotation::destroy ()
 {
+}
+
+const char *AST_Annotation::original_name () const
+{
+  return original_name_;
 }

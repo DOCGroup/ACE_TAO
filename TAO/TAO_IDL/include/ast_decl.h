@@ -316,7 +316,7 @@ public:
 
   /// Set and get annotations for this IDL element
   ///{
-  void annotations (Annotations *annotations);
+  virtual void annotations (Annotations *annotations);
   Annotations *annotations ();
   ///}
 
@@ -370,7 +370,6 @@ protected:
   int contains_wstring_;
   // If we are a scope, do we contain a wstring at some level?
 
-protected:
   void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const ;
 
   void compute_repoID (void);
@@ -384,6 +383,9 @@ protected:
 
   const char *node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
+
+  /// Annotations applied to this IDL element
+  Annotations* annotations_;
 
 private:
   // Data
@@ -438,9 +440,6 @@ private:
 
   bool in_tmpl_mod_not_aliased_;
   // false by default - if true, we can't be referenced.
-
-  /// Annotations applied to this IDL element
-  Annotations* annotations_;
 
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.

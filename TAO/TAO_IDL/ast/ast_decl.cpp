@@ -141,6 +141,7 @@ AST_Decl::AST_Decl (NodeType nt,
     repoID_ (0),
     flat_name_ (0),
     contains_wstring_ (-1),
+    annotations_ (0),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
@@ -158,8 +159,7 @@ AST_Decl::AST_Decl (NodeType nt,
     typeid_set_ (false),
     last_referenced_as_ (0),
     prefix_scope_ (0),
-    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ()),
-    annotations_ (0)
+    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
 {
   // If this is the root node, the filename won't have been set yet.
   UTL_String *fn = idl_global->filename ();

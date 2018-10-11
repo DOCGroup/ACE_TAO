@@ -51,10 +51,16 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /*
+   * Get name of the annoation as written by the user
+   * to compare to builtin annoations.
+   */
+  const char* original_name () const;
+
 private:
 
-  /// Name of the Annotation
-  UTL_ScopedName *name_;
+  /// Name of the Annotation as written
+  const char *original_name_;
 
   /// Parameters List
   Params *params_;
