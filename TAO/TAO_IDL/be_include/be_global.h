@@ -930,10 +930,9 @@ public:
   ACE_CString spawn_options (void);
 
   /**
-   * Parse an argument that the frontend did not reconize, returns true if
-   * there was an error parsing the argument(s).
+   * Parse an argument that the frontend did not recognize.
    */
-  bool parse_args (long &i, char **av);
+  void parse_args (long &i, char **av);
 
 private:
   /**
