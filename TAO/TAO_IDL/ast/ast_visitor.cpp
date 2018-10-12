@@ -14,7 +14,7 @@ int ast_visitor::visit_fixed (AST_Fixed *)
   return 0;
 }
 
-int ast_visitor::visit_annotation (AST_Annotation *)
+int ast_visitor::visit_annotation_appl (AST_Annotation_Appl *)
 {
   return 0;
 }

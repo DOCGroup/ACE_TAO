@@ -1270,7 +1270,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_home_header.h"
 #include "fe_private.h"
 #include "fe_extern.h"
-#include "ast_annotation.h"
+#include "ast_annotation_appl.h"
 #include "idl.tab.hpp"
 
 static char *               idl_wstring_escape_reader (char *);

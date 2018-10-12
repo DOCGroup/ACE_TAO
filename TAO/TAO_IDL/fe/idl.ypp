@@ -121,7 +121,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_visitor_tmpl_module_inst.h"
 #include "ast_visitor_tmpl_module_ref.h"
 #include "ast_visitor_context.h"
-#include "ast_annotation.h"
+#include "ast_annotation_appl.h"
 #include "ast_union_branch.h"
 #include "ast_enum_val.h"
 
@@ -189,11 +189,11 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
-  AST_Annotation *annotation;
-  AST_Annotation::Params *annotation_params;
-  AST_Annotation::Param *annotation_param;
-  Annotations *annotations;
-  AST_Decls *ast_decls;
+  AST_Annotation_Appl *annotation_val;
+  AST_Annotation_Appls *annotations_val;
+  AST_Annotation_Appl::Param *annotation_param_val;
+  AST_Annotation_Appl::Params *annotation_params_val;
+  AST_Decls *decls_val;
 }
 
 /*
@@ -365,12 +365,12 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 
 %type <alval>   actual_parameters at_least_one_actual_parameter
 
-%type <annotations> at_least_one_annotation annotations_maybe
-%type <annotation> annotation_appl
-%type <annotation_params> annotation_appl_params_maybe annotation_appl_params
-%type <annotation_params> named_annotation_appl_params more_named_annotation_appl_params
-%type <annotation_param> named_annotation_appl_param
-%type <ast_decls> member_i;
+%type <annotations_val> at_least_one_annotation annotations_maybe
+%type <annotation_val> annotation_appl
+%type <annotation_params_val> annotation_appl_params_maybe annotation_appl_params
+%type <annotation_params_val> named_annotation_appl_params more_named_annotation_appl_params
+%type <annotation_param_val> named_annotation_appl_param
+%type <decls_val> member_i;
 %%
 
 /*
@@ -393,7 +393,7 @@ at_least_one_definition
           AST_Decl *d = $3;
           if (d)
             {
-              d->annotations ($2);
+              d->annotation_appls ($2);
             }
           else
             {
@@ -2302,7 +2302,7 @@ annotation_member_type
         ;
 
 defaulted_annotation_member_dcl
-        : annotation_member_dcl "default" IDL_CONST const_type
+        : annotation_member_dcl IDL_DEFAULT IDL_CONST const_type
         ;
 
 annotation_member
@@ -2313,7 +2313,7 @@ annotation_member
 at_least_one_annotation
         : annotations_maybe annotation_appl
         {
-          Annotations *annotations = $1;
+          AST_Annotation_Appls *annotations = $1;
           annotations->insert_tail ($2);
           $$ = annotations;
         }
@@ -2322,13 +2322,13 @@ at_least_one_annotation
 annotations_maybe
         : annotations_maybe annotation_appl
         {
-          Annotations *annotations = $1;
+          AST_Annotation_Appls *annotations = $1;
           annotations->insert_tail ($2);
           $$ = annotations;
         }
         | %empty
         {
-          $$ = new Annotations ();
+          $$ = new AST_Annotation_Appls ();
         }
         ;
 
@@ -2348,7 +2348,7 @@ annotation_appl
               idl_global->err ()->syntax_error (idl_global->parse_state ());
             }
 
-            $$ = idl_global->gen ()->create_annotation ($2, $3);
+            $$ = idl_global->gen ()->create_annotation_appl ($2, $3);
         }
         ;
 
@@ -2366,8 +2366,8 @@ annotation_appl_params_maybe
 annotation_appl_params
         : const_expr
         {
-          AST_Annotation::Params *params = new AST_Annotation::Params;
-          AST_Annotation::Param *param = new AST_Annotation::Param;
+          AST_Annotation_Appl::Params *params = new AST_Annotation_Appl::Params;
+          AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = 0;
           param->expr = $1;
           params->insert_head (param);
@@ -2382,7 +2382,7 @@ annotation_appl_params
 named_annotation_appl_params
         : named_annotation_appl_param more_named_annotation_appl_params
         {
-          AST_Annotation::Params *params = $2;
+          AST_Annotation_Appl::Params *params = $2;
           params->insert_head ($1);
           $$ = params;
         }
@@ -2390,20 +2390,20 @@ named_annotation_appl_params
 more_named_annotation_appl_params
         : ',' named_annotation_appl_param more_named_annotation_appl_params
         {
-          AST_Annotation::Params *params = $3;
+          AST_Annotation_Appl::Params *params = $3;
           params->insert_head ($2);
           $$ = params;
         }
         | %empty
         {
-          $$ = new AST_Annotation::Params;
+          $$ = new AST_Annotation_Appl::Params;
         }
         ;
 
 named_annotation_appl_param
         : id '=' const_expr
         {
-          AST_Annotation::Param *param = new AST_Annotation::Param;
+          AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = $1;
           param->expr = $3;
           $$ = param;
@@ -2907,7 +2907,7 @@ member  :
               AST_DeclsIter i (*$3);
               for (AST_Decl *d = 0; i.next (d); i.advance ())
                 {
-                  d->annotations ($2);
+                  d->annotation_appls ($2);
                 }
             }
         }
@@ -3069,7 +3069,7 @@ union_type
             {
               AST_ConcreteType *tp =
                 AST_ConcreteType::narrow_from_decl ($7);
-              tp->annotations($6);
+              tp->annotation_appls($6);
 
               if (tp == 0)
                 {
@@ -3308,7 +3308,7 @@ case_branch :
                                         f->field_type (),
                                         f->name ()
                                       );
-              b->annotations ($3);
+              b->annotation_appls ($3);
               (void) s->fe_add_union_branch (b);
 
               // f has passed its field type to the union branch,
@@ -3599,7 +3599,7 @@ enumerator :
                                               c->next_enum_val (),
                                               &n
                                             );
-                  e->annotations ($1);
+                  e->annotation_appls ($1);
                 }
 
               (void) s->fe_add_enum_val (e);
@@ -3768,7 +3768,7 @@ seq_head :
         annotations_maybe simple_type_spec
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
-          $6->annotations ($5);
+          $6->annotation_appls ($5);
           $$ = $6;
         }
         ;

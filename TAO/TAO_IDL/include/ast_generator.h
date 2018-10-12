@@ -94,7 +94,7 @@ class AST_Param_Holder;
 class AST_Finder;
 class AST_Fixed;
 
-#include "ast_annotation.h"
+#include "ast_annotation_appl.h"
 
 // Defines base class for node generators.
 
@@ -416,9 +416,9 @@ public:
     UTL_ScopedName *parameter_name,
     FE_Utils::T_Param_Info *info);
 
-  virtual AST_Annotation * create_annotation (
+  virtual AST_Annotation_Appl * create_annotation_appl (
     UTL_ScopedName *name,
-    AST_Annotation::Params *params);
+    AST_Annotation_Appl::Params *params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

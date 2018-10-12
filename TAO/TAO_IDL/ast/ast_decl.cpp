@@ -88,7 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "ace/OS_NS_stdio.h"
-#include "ast_annotation.h"
+#include "ast_annotation_appl.h"
 #include "utl_indenter.h"
 
 // FUZZ: disable check_for_streams_include
@@ -141,7 +141,7 @@ AST_Decl::AST_Decl (NodeType nt,
     repoID_ (0),
     flat_name_ (0),
     contains_wstring_ (-1),
-    annotations_ (0),
+    annotation_appls_ (0),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
@@ -807,16 +807,7 @@ AST_Decl::node_type_to_string (NodeType nt)
     case NT_consumes:
       return "consumes";
 
-    case NT_annotation:
-      return "annotation";
-
     // No useful output for these.
-    case NT_enum_val:
-    case NT_field:
-    case NT_union_branch:
-    case NT_op:
-    case NT_argument:
-    case NT_root:
     default:
       return "";
     }
@@ -1541,11 +1532,11 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 IMPL_NARROW_FROM_DECL(AST_Decl)
 
 
-void AST_Decl::annotations (Annotations *annotations)
+void AST_Decl::annotation_appls (AST_Annotation_Appls *annotations)
 {
   if (annotatable ())
     {
-      annotations_ = annotations;
+      annotation_appls_ = annotations;
     }
   else
     {
@@ -1556,18 +1547,18 @@ void AST_Decl::annotations (Annotations *annotations)
     }
 }
 
-Annotations *AST_Decl::annotations ()
+AST_Annotation_Appls *AST_Decl::annotation_appls ()
 {
-  return annotations_;
+  return annotation_appls_;
 }
 
 void
 AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 {
-  if (annotations_)
+  if (annotation_appls_)
     {
-      AnnotationsIter i (*annotations_);
-      for (AST_Annotation *a = 0; i.next (a); i.advance ())
+      AST_Annotation_Appls_Iter i (*annotation_appls_);
+      for (AST_Annotation_Appl *a = 0; i.next (a); i.advance ())
         {
           a->dump (o);
           if (print_inline)

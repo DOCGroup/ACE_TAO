@@ -87,8 +87,8 @@ class UTL_Scope;
 class UTL_String;
 class ast_visitor;
 
-class AST_Annotation;
-typedef ACE_DLList<AST_Annotation> Annotations;
+class AST_Annotation_Appl;
+typedef ACE_DLList<AST_Annotation_Appl> AST_Annotation_Appls;
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
@@ -174,7 +174,12 @@ public:
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
       , NT_annotation_decl          // The declaration of an annotation
-      , NT_annotation               // An application of an annotation
+      , NT_annotation_appl          // Application of an annotation to an IDL element
+      /**
+       * Final product of applying an annotation application to an annotation
+       * declaration.
+       */
+      , NT_annotation
   };
 
   AST_Decl (NodeType type,
@@ -316,15 +321,15 @@ public:
 
   /// Set and get annotations for this IDL element
   ///{
-  virtual void annotations (Annotations *annotations);
-  Annotations *annotations ();
+  virtual void annotation_appls (AST_Annotation_Appls *annotations);
+  AST_Annotation_Appls *annotation_appls ();
   ///}
 
   /**
    * Dump Annotations AST
    *
    * By default print each annotation on its own line. If print_inline is true,
-   * it prints them with spaces seperating them instead.
+   * it prints them with spaces separating them instead.
    */
   void dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline = false);
 
@@ -342,7 +347,7 @@ public:
   operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d);
 
   /**
-   * Returns true if annoatations are valid to use on this
+   * Returns true if annotations are valid to use on this
    */
   virtual bool annotatable () const;
 
@@ -385,7 +390,7 @@ protected:
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
-  Annotations* annotations_;
+  AST_Annotation_Appls* annotation_appls_;
 
 private:
   // Data

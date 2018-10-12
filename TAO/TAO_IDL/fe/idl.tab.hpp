@@ -175,11 +175,11 @@ union YYSTYPE
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
-  AST_Annotation *annotation;
-  AST_Annotation::Params *annotation_params;
-  AST_Annotation::Param *annotation_param;
-  Annotations *annotations;
-  AST_Decls *ast_decls;
+  AST_Annotation_Appl *annotation_val;
+  AST_Annotation_Appls *annotations_val;
+  AST_Annotation_Appl::Param *annotation_param_val;
+  AST_Annotation_Appl::Params *annotation_params_val;
+  AST_Decls *decls_val;
 
 #line 185 "fe/idl.tab.hpp" /* yacc.c:1913  */
 };

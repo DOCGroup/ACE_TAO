@@ -2,8 +2,8 @@
  * Abstract Syntax Tree Node for an application of an annotation.
  */
 
-#ifndef AST_ANNOTATION_HEADER
-#define AST_ANNOTATION_HEADER
+#ifndef AST_ANNOTATION_APPL_HEADER
+#define AST_ANNOTATION_APPL_HEADER
 
 #include "ast_decl.h"
 #include "utl_identifier.h"
@@ -14,7 +14,7 @@
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
  */
-class TAO_IDL_FE_Export AST_Annotation : public virtual AST_Decl
+class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Decl
 {
 public:
 
@@ -33,12 +33,12 @@ public:
   /**
    * Create an Annotation using it's name and parameters
    */
-  AST_Annotation (UTL_ScopedName *name, Params *params);
+  AST_Annotation_Appl (UTL_ScopedName *name, Params *params);
 
-  virtual ~AST_Annotation ();
+  virtual ~AST_Annotation_Appl ();
 
   // Narrowing
-  DEF_NARROW_FROM_DECL (AST_Annotation);
+  DEF_NARROW_FROM_DECL (AST_Annotation_Appl);
 
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -66,7 +66,7 @@ private:
   Params *params_;
 };
 
-typedef ACE_DLList<AST_Annotation> Annotations;
-typedef ACE_DLList_Iterator<AST_Annotation> AnnotationsIter;
+typedef ACE_DLList<AST_Annotation_Appl> AST_Annotation_Appls;
+typedef ACE_DLList_Iterator<AST_Annotation_Appl> AST_Annotation_Appls_Iter;
 
 #endif
