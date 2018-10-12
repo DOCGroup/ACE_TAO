@@ -359,7 +359,6 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <ntval>   formal_parameter_type
 
 %type <pival>   formal_parameter
-
 %type <plval>   formal_parameters at_least_one_formal_parameter
 
 %type <sval>    formal_parameter_name
@@ -371,7 +370,6 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <annotation_params> annotation_appl_params_maybe annotation_appl_params
 %type <annotation_params> named_annotation_appl_params more_named_annotation_appl_params
 %type <annotation_param> named_annotation_appl_param
-
 %type <ast_decls> member_i;
 %%
 
@@ -381,6 +379,11 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 start : definitions ;
 
 definitions
+        : at_least_one_definition
+        | %empty
+        ;
+
+at_least_one_definition
         /*
          * This is broken up into 2 rules to avoid a grammer abiguity caused
          * by annotations which causes shift/reduce conflicts in bison.
@@ -388,12 +391,23 @@ definitions
         : definitions at_least_one_annotation definition
         {
           AST_Decl *d = $3;
-          if (d) d->annotations ($2);
+          if (d)
+            {
+              d->annotations ($2);
+            }
+          else
+            {
+              ACE_DEBUG ((LM_WARNING,
+                ACE_TEXT ("WARNING: in %C on line %d: defined element has ")
+                ACE_TEXT ("annotations, but its type does not support them."),
+                idl_global->filename ()->get_string (),
+                idl_global->lineno ()
+                ));
+            }
         }
         | definitions definition
         {
         }
-        | %empty
         ;
 
 definition
@@ -409,10 +423,6 @@ definition
         {
           $$ = 0;
         }
-        ;
-
-at_least_one_definition
-        : definitions definition
         ;
 
 fixed_definition
@@ -3755,10 +3765,11 @@ seq_head :
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceSqSeen);
         }
-        simple_type_spec
+        annotations_maybe simple_type_spec
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
-          $$ = $5;
+          $6->annotations ($5);
+          $$ = $6;
         }
         ;
 
@@ -6270,9 +6281,7 @@ at_least_one_formal_parameter
         {
           if ($2 == 0)
             {
-              ACE_NEW_RETURN ($2,
-                              FE_Utils::T_PARAMLIST_INFO,
-                              1);
+              ACE_NEW_RETURN ($2, FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
           $2->enqueue_head (*$1);
@@ -6294,33 +6303,27 @@ at_least_one_formal_parameter
               return 1;
             }
 
-          $<plval>$ = $2;
+          $$ = $2;
         }
         ;
 
 formal_parameters
-        : formal_parameters ','
-        {
-          // Maybe add a new parse state to set here.
-        }
-        formal_parameter
+        : formal_parameters ',' formal_parameter
         {
           if ($1 == 0)
             {
-              ACE_NEW_RETURN ($1,
-                              FE_Utils::T_PARAMLIST_INFO,
-                              1);
+              ACE_NEW_RETURN ($1, FE_Utils::T_PARAMLIST_INFO, 1);
             }
 
-          $1->enqueue_tail (*$4);
-          $<plval>$ = $1;
+          $1->enqueue_tail (*$3);
+          $$ = $1;
 
-          delete $4;
-          $4 = 0;
+          delete $3;
+          $3 = 0;
         }
         | %empty
         {
-          $<plval>$ = 0;
+          $$ = 0;
         }
         ;
 
@@ -6328,21 +6331,21 @@ formal_parameter
         : formal_parameter_type IDENTIFIER
         {
 
-          ACE_NEW_RETURN ($<pival>$,
+          ACE_NEW_RETURN ($$,
                           FE_Utils::T_Param_Info,
                           1);
 
           AST_Decl::NodeType nt = $1;
 
-          $<pival>$->type_ = nt;
-          $<pival>$->name_ = $2;
+          $$->type_ = nt;
+          $$->name_ = $2;
           ACE::strdelete ($2);
           $2 = 0;
 
           if (nt == AST_Decl::NT_const)
             {
-              $<pival>$->const_type_ = t_param_const_type;
-              $<pival>$->enum_const_type_decl_ =
+              $$->const_type_ = t_param_const_type;
+              $$->enum_const_type_decl_ =
                 tao_enum_constant_decl;
 
               // Reset these values.
@@ -6352,13 +6355,13 @@ formal_parameter
         }
         | IDL_SEQUENCE '<' IDENTIFIER '>' IDENTIFIER
         {
-          ACE_NEW_RETURN ($<pival>$,
+          ACE_NEW_RETURN ($$,
                           FE_Utils::T_Param_Info,
                           1);
 
-          $<pival>$->type_ = AST_Decl::NT_sequence;
-          $<pival>$->seq_param_ref_  = $3;
-          $<pival>$->name_ += $5;
+          $$->type_ = AST_Decl::NT_sequence;
+          $$->seq_param_ref_  = $3;
+          $$->name_ += $5;
 
           ACE::strdelete ($3);
           $3 = 0;
@@ -6370,10 +6373,7 @@ formal_parameter
 at_least_one_formal_parameter_name
         : formal_parameter_name formal_parameter_names
         {
-          ACE_NEW_RETURN ($<slval>$,
-                          UTL_StrList ($1,
-                                       $2),
-                          1);
+          ACE_NEW_RETURN ($$, UTL_StrList ($1, $2), 1);
         }
         ;
 
@@ -6381,24 +6381,21 @@ formal_parameter_names
         : formal_parameter_names ',' formal_parameter_name
         {
           UTL_StrList *sl = 0;
-          ACE_NEW_RETURN (sl,
-                          UTL_StrList ($3,
-                                       0),
-                          1);
+          ACE_NEW_RETURN (sl, UTL_StrList ($3, 0), 1);
 
           if ($1 == 0)
             {
-              $<slval>$ = sl;
+              $$ = sl;
             }
           else
             {
               $1->nconc (sl);
-              $<slval>$ = $1;
+              $$ = $1;
             }
         }
         | %empty
         {
-          $<slval>$ = 0;
+          $$ = 0;
         }
         ;
 

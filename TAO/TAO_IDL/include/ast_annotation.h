@@ -51,7 +51,7 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /*
+  /**
    * Get name of the annoation as written by the user
    * to compare to builtin annoations.
    */

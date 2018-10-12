@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.4.  */
+/* A Bison parser, made by GNU Bison 3.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2015 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -138,7 +138,7 @@ extern int tao_yydebug;
 
 union YYSTYPE
 {
-#line 156 "fe/idl.ypp" /* yacc.c:1909  */
+#line 156 "fe/idl.ypp" /* yacc.c:1913  */
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -181,7 +181,7 @@ union YYSTYPE
   Annotations *annotations;
   AST_Decls *ast_decls;
 
-#line 185 "fe/idl.tab.hpp" /* yacc.c:1909  */
+#line 185 "fe/idl.tab.hpp" /* yacc.c:1913  */
 };
 
 typedef union YYSTYPE YYSTYPE;

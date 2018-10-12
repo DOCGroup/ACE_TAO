@@ -116,6 +116,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool dump_annotations_inline () const { return true; }
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.

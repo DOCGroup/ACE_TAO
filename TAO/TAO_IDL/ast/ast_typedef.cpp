@@ -151,7 +151,7 @@ void
 AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
 {
   this->dump_i (o, "typedef ");
-  this->ref_type_->dump (o);
+  o << *ref_type_;
   this->dump_i (o, " ");
   this->local_name ()->dump (o);
 }
