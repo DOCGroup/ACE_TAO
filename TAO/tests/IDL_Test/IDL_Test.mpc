@@ -91,6 +91,11 @@ project(*IDL): taoserver, messaging, gen_ostream {
     idlflags += loader_const.idl
     PEMNaming.idl
   }
+
+  IDL_Files {
+    idlflags += --idl-version 4
+    v4/Annotations.idl
+  }
 }
 
 project(*DLL): taoidldefaults, taolib, messaging {
