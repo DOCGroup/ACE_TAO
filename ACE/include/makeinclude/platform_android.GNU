@@ -131,6 +131,18 @@ else
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 endif
 
+ifeq ($(shell echo '\#include "android/ndk-version.h"' | $(CXX) -E - > /dev/null 2>&1; echo $$?), 0)
+  CPPFLAGS += -DACE_ANDROID_NDK_HAS_NDK_VERSION_H
+endif
+
+ifdef __NDK_MAJOR__
+  CPPFLAGS += -D__NDK_MAJOR__=$(__NDK_MAJOR__)
+endif
+
+ifdef __NDK_MINOR__
+  CPPFLAGS += -D__NDK_MINOR__=$(__NDK_MINOR__)
+endif
+
 OCFLAGS ?= -O3
 OCCFLAGS ?= -O3
 
