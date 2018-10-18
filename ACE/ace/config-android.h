@@ -89,8 +89,11 @@
 #endif
 
 // semun was added to sys/sem.h in r15
-#if ACE_ANDROID_NDK_AT_LEAST(15, 0) ||  __ANDROID_API__ >= 21
+#if __ANDROID_API__ >= 21
 #  define ACE_HAS_SEMUN
+#  if ACE_ANDROID_NDK_LESS_THAN(15, 0)
+#    define ACE_HAS_LINUX_SEM_H
+#  endif
 #endif
 
 // fd_mask was added in r17c
