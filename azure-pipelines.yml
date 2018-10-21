@@ -101,11 +101,19 @@ jobs:
   pool:
     vmImage: ubuntu-16.04
   steps:
+  - script: sudo apt-get --yes update && sudo apt-get --yes install libxerces-c-dev libssl-dev
+    displayName: install system package dependencies
   - powershell: |
       '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
   - powershell: |
-      'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
+      'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+    displayName: Create default.features file
+  - powershell: |
+      'xerces3=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'ssl=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
