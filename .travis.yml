@@ -31,6 +31,17 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-7.0
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - clang-7.0
+      env: COMPILER='clang++-7.0' VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
             - llvm-toolchain-trusty-6.0
           packages:
             - libxerces-c-dev
