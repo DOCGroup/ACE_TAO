@@ -220,7 +220,6 @@ public:
                                 ACE_Reactor_Mask mask);
 
 #if defined (ACE_WIN32)
-
   // Originally this interface was available for all platforms, but
   // because ACE_HANDLE is an int on non-Win32 platforms, compilers
   // are not able to tell the difference between
@@ -231,7 +230,6 @@ public:
   /// Not implemented.
   virtual int register_handler (ACE_Event_Handler *event_handler,
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
-
 #endif /* ACE_WIN32 */
 
   /// Not implemented.
