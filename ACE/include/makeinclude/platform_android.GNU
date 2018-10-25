@@ -22,6 +22,9 @@ PIE	?= -pie
 #No rwho on Android
 rwho = 0
 
+# Android Studio does not seem to reconize so files with versions
+versioned_so=0
+
 # This section deals with selecting the architecture/compiler
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
