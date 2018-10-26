@@ -6,6 +6,10 @@
 @test_module_ant
 module Test_Module {
 
+  // Annotation on Typedefs
+  @range (min = 1, max = 10)
+  typedef short small_postive;
+
   // Sequence Type Parameter
   typedef sequence<@test_seq_param_ant short, 5> test_seq_t;
 
