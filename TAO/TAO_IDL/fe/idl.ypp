@@ -2297,7 +2297,7 @@ annotation_member_dcl
         ;
 
 annotation_member_type
-        : const_type /* Also covers scope_name wanted by the spec grammer */
+        : const_type /* Also covers scoped_name wanted by the spec grammar */
         | any_type
         ;
 
