@@ -406,7 +406,6 @@ DRV_parse_args (long ac, char **av)
                           ));
                         idl_global->parse_args_exit (1);
                         return;
-
                       }
 
                     break;
@@ -493,7 +492,6 @@ DRV_parse_args (long ac, char **av)
 
             default:
               be_global->parse_args (i, av);
-
             } // End of switch (av[i][1])
         } // End of IF (av[i][0] == '-')
       else

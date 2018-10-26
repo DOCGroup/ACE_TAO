@@ -115,7 +115,7 @@ public:
   // Compares each component for equality.
 
   /**
-   * Return a copy of the contatins as a string
+   * Return a copy of the contents as a string
    */
   char *get_string_copy ();
 

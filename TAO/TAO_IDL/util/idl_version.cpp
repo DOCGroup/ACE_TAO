@@ -4,7 +4,7 @@
  * Header File Counterpart is include/idl_version.h
  */
 
-#include "ace/OS.h"
+#include "ace/OS_NS_string.h"
 #include "idl_version.h"
 
 static const char * idlVersionNames[IDL_VERSION_COUNT] = {
@@ -50,7 +50,7 @@ void IdlVersion::from_string (const char * version)
     }
   for (int i = 0; i < IDL_VERSION_COUNT; i++)
     {
-      if (!ACE_OS::strcmp (version, idlVersionNames[i])) 
+      if (!ACE_OS::strcmp (version, idlVersionNames[i]))
         {
           version_ = static_cast<SpecificIdlVersion> (i);
           return;
