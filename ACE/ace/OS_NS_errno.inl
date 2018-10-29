@@ -52,7 +52,6 @@ ACE_OS::set_errno_to_wsa_last_error (void)
 # endif /* defined(ACE_WIN32) */
 }
 
-
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 
 ACE_INLINE ACE_CE_Errno *
