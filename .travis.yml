@@ -22,11 +22,6 @@ env:
   - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
   - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
   - COMPILER=g++-8
-addons:
-  sonarcloud:
-    organization: "jwillemsen-github" # the key of the org you chose at step #3
-    token:
-      secure: c0pNBImGQ2KwUZIrTEWlRB4NCty4ugVqNtkaRviOP18Qp+vbaf2mrUECzwEhyPAwp0CFE4jzEEOOb94XVugJM+fgrCRtqSrgchRmYioT/Td34AkN/BDzod+/n4bb/e3s9GD2qxehtunMj7roSQ6OZeloc2RIJAustcln3ApruJo=
 matrix:
   include:
   - compiler: clang
@@ -92,6 +87,10 @@ addons:
     - libssl-dev
     - libxerces-c-dev
     - g++-8
+  sonarcloud:
+    organization: "jwillemsen-github" # the key of the org you chose at step #3
+    token:
+      secure: c0pNBImGQ2KwUZIrTEWlRB4NCty4ugVqNtkaRviOP18Qp+vbaf2mrUECzwEhyPAwp0CFE4jzEEOOb94XVugJM+fgrCRtqSrgchRmYioT/Td34AkN/BDzod+/n4bb/e3s9GD2qxehtunMj7roSQ6OZeloc2RIJAustcln3ApruJo=
 before_install:
 - git clone --depth 1 git://github.com/DOCGroup/MPC.git
 branches:
