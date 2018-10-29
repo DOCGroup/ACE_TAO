@@ -25,6 +25,9 @@ rwho = 0
 # Android Studio does not seem to reconize so files with versions
 versioned_so=0
 
+# Only try to use clang, unless this is set to 0, then try to use g++
+android_force_clang ?= 1
+
 # This section deals with selecting the architecture/compiler
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
@@ -78,13 +81,21 @@ ifndef CROSS_COMPILE
   $(error ANDROID_ABI passed (set to: $(ANDROID_ABI)) is not valid)
 endif
 
-# Determine if the g++ compiler is GCC or Clang.
-# There are at least 3 assumptions being made here:
-#  - There is a g++ command to get the version from
-#  - Clang will have "clang" in the version string
-#  - If g++ is actually clang, then we can replace that with clang++
-gplusplus_version = $(shell $(CROSS_COMPILE)g++$(CROSS_COMPILE_SUFFIX) --version)
-actually_is_clang := $(strip $(findstring clang,$(gplusplus_version)))
+ifeq ($(android_force_clang),0)
+  # Determine if the g++ compiler is GCC or Clang.
+  # There are at least 3 assumptions being made here:
+  #  - There is a g++ command to get the version from
+  #  - Clang will have "clang" in the version string
+  #  - If g++ is actually clang, then we can replace that with clang++
+  gplusplus_version = $(shell $(CROSS_COMPILE)g++$(CROSS_COMPILE_SUFFIX) --version)
+  actually_is_clang := $(strip $(findstring clang,$(gplusplus_version)))
+else
+  ifeq ($(android_force_clang),1)
+    actually_is_clang := 1
+  else
+    $(error Invalid value for android_force_clang: $(android_force_clang))
+  endif
+endif
 
 FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
