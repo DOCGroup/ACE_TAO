@@ -135,8 +135,7 @@
 # define ACE_NEEDS_FUNC_DEFINITIONS
 
 // Windows Vista and Windows Server 2008 (same value 0x0600) and newer do
-// have native condition variables. Originally this was commented out
-// because the support in ACE wasn't completed (incl. up to ACE 6.4.2)
+// have native condition variables.
 #if defined (_WIN32_WINNT) && (_WIN32_WINNT >= _WIN32_WINNT_VISTA)
 # define ACE_HAS_WTHREADS_CONDITION_VARIABLE 1
 # undef ACE_LACKS_COND_T
