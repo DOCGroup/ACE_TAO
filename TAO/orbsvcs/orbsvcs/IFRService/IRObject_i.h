@@ -52,18 +52,13 @@ public:
   /// Destructor.
   virtual ~TAO_IRObject_i (void);
 
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// Pure virtual.
-  virtual void destroy (
-    )
-    = 0;
+  virtual void destroy () = 0;
 
   /// Pure virtual - the unlocked version called by the destroy() wrapper.
-  virtual void destroy_i (
-    )
-    = 0;
+  virtual void destroy_i () = 0;
 
   /// Plug in the section key.
   void section_key (ACE_Configuration_Section_Key &key);

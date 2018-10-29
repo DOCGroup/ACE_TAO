@@ -199,7 +199,6 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
 
   // Reset the parser state
   this->reset();
-
 }
 
 int
@@ -1653,7 +1652,7 @@ ACEXML_Parser::parse_element_decl (void)
   count = this->check_for_PE_reference ();
   if (this->skip_whitespace () != '>')
     {
-      this->fatal_error (ACE_TEXT ("Expecting '>' after element defintion"));
+      this->fatal_error (ACE_TEXT ("Expecting '>' after element definition"));
     }
   return 0;
 }
@@ -2644,8 +2643,7 @@ ACEXML_Parser::getProperty (const ACEXML_Char *name)
 }
 
 void
-ACEXML_Parser::setProperty (const ACEXML_Char *name,
-                            void *)
+ACEXML_Parser::setProperty (const ACEXML_Char *name, void *)
 {
   throw ACEXML_SAXNotSupportedException (name);
 }
@@ -2653,36 +2651,29 @@ ACEXML_Parser::setProperty (const ACEXML_Char *name,
 void
 ACEXML_Parser::error (const ACEXML_Char* msg)
 {
-  ACEXML_SAXParseException* exception = 0;
-  ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
+  ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
-      this->error_handler_->error (*exception);
+      this->error_handler_->error (exception);
   else
     throw exception;
-  return;
 }
 
 void
 ACEXML_Parser::warning (const ACEXML_Char* msg)
 {
-  ACEXML_SAXParseException* exception = 0;
-  ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
+  ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
-    this->error_handler_->warning (*exception);
-  delete exception;
-  return;
+    this->error_handler_->warning (exception);
 }
 
 void
 ACEXML_Parser::fatal_error (const ACEXML_Char* msg)
 {
-  ACEXML_SAXParseException* exception = 0;
-  ACE_NEW_NORETURN (exception, ACEXML_SAXParseException (msg));
+  ACEXML_SAXParseException exception(msg);
   if (this->error_handler_)
-    this->error_handler_->fatalError (*exception);
+    this->error_handler_->fatalError (exception);
   this->reset();
   throw exception;
-  return;
 }
 
 void

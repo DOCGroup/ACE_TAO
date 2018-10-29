@@ -1,8 +1,5 @@
 <?xml version='1.0'?>
 <!-- Converted from ./tests/Connect_Strategy_Test/reactor.conf by svcconf-convert.pl -->
 <ACE_Svc_Conf>
- <!--  -->
- <!--   -->
- <!--  -->
  <static id="Client_Strategy_Factory" params="-ORBConnectStrategy Reactive"/>
 </ACE_Svc_Conf>

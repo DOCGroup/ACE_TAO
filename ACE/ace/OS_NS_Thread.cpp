@@ -13,7 +13,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Category.h" // for ACE_ASSERT
-// This is necessary to work around nasty problems with MVS C++.
 #include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
@@ -33,7 +32,7 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
       CreateThread (0, STACKSIZE, (unsigned long (__stdcall *) (void *)) ENTRY_POINT, ARGS, (FLAGS) & (CREATE_SUSPENDED | STACK_SIZE_PARAM_IS_A_RESERVATION), (unsigned long *) THR_ID)
 #elif defined(ACE_HAS_WTHREADS)
-  // Green Hills compiler gets confused when __stdcall is imbedded in
+  // Green Hills compiler gets confused when __stdcall is embedded in
   // parameter list, so we define the type ACE_WIN32THRFUNC_T and use it
   // instead.
   typedef unsigned (__stdcall *ACE_WIN32THRFUNC_T)(void*);
@@ -367,7 +366,6 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 }
 
 // Check for inequality.
-ACE_SPECIAL_INLINE
 bool
 ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
 {
@@ -441,7 +439,7 @@ ACE_TSS_Keys::ACE_TSS_Keys (void)
     }
 }
 
-ACE_SPECIAL_INLINE
+
 void
 ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 {
@@ -3558,7 +3556,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
     thread_args = thread_adapter;
 
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
+#else
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
+#endif /* ACE_HAS_CPP11 */
 
   if (thread_adapter == 0)
     ACE_auto_ptr_reset (auto_thread_args,

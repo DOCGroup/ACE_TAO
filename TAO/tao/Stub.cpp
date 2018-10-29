@@ -334,7 +334,7 @@ TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
   return this_profile->is_equivalent (other_profile);
 }
 
-// Memory managment
+// Memory management
 
 TAO_Profile *
 TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
@@ -456,8 +456,11 @@ TAO_Stub::set_policy_overrides (const CORBA::PolicyList & policies,
                                 CORBA::SetOverrideType set_add)
 {
   // Notice the use of an explicit constructor....
-  auto_ptr<TAO_Policy_Set> policy_manager (
-    new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+#else
+  auto_ptr<TAO_Policy_Set> policy_manager (new TAO_Policy_Set (TAO_POLICY_OBJECT_SCOPE));
+#endif /* ACE_HAS_CPP11 */
 
   if (set_add == CORBA::SET_OVERRIDE)
     {

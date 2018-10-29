@@ -21,8 +21,7 @@ public:
       ::CORBA::Long thread,
       ::CORBA::Long iter,
       ::CORBA::Long obj,
-      ::CORBA::Long req
-   );
+      ::CORBA::Long req);
 
   virtual void shutdownOrb ();
 

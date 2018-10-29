@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.4.2
-%define TAOVER  2.4.2
+%define ACEVER  6.5.2
+%define TAOVER  2.5.2
 
 # Conditional build
 # Default values are
@@ -83,7 +83,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 
 %define _extension .gz
 
-%if 0%{?fedora} || 0%{?rhel_version} || 0%{?centos_version}
+%if 0%{?fedora} || 0%{?rhel}
 BuildRequires: redhat-rpm-config elfutils sendmail
 %endif
 
@@ -112,7 +112,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  bzip2
 %endif
 
-BuildRequires:  perl
+BuildRequires:  perl perl(Data::Dumper)
 
 %if %{?_with_fltk:1}%{!?_with_fltk:0}
 BuildRequires:  fltk-devel
@@ -1132,6 +1132,8 @@ echo ace/QtReactor/QtReactor.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Factory.h >> allhdrs.list
 echo TAO/tao/QtResource/QtResource_Loader.h >> allhdrs.list
 echo TAO/tao/PortableServer/get_arg.h >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_List.{h,inl,cpp} >> allhdrs.list
+echo TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_RB_Tree.{h,inl,cpp} >> allhdrs.list
 %endif
 
 # Install headers and create header lists
@@ -1945,12 +1947,10 @@ fi
 %{_libdir}/libACE_Compression.so.%{ACEVERSO}
 %{_libdir}/libACE_RLECompression.so.%{ACEVERSO}
 
-%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM
 %doc README
-%doc THANKS
 %doc VERSION
 
 # ---------------- ace-devel ----------------
@@ -1988,6 +1988,7 @@ fi
 %endif
 %exclude %{_libdir}/libACEXML*.so
 
+%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM

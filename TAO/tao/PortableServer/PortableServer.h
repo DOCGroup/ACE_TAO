@@ -30,8 +30,7 @@ public:
   static int init (void);
 };
 
-static int
-TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
+static const int TAO_Requires_POA_Initializer = TAO_POA_Initializer::init ();
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

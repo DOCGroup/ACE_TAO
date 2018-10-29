@@ -44,6 +44,7 @@ RANLIB          = @true
 SOFLAGS         += -shared $(CPPFLAGS)
 SOBUILD         = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<
 PRELIB          = @true
+LD_RPATH        = -Wl,-R,
 
 # Get common Solaris settings
 include $(ACE_ROOT)/include/makeinclude/platform_sunos5_common.GNU

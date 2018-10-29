@@ -45,7 +45,6 @@ class TAO_IORInfo
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_IORInfo (TAO_Root_POA *poa);
 
@@ -101,8 +100,7 @@ public:
   void components_established (void);
 
 protected:
-
-  /// Protected destructor to enforce proper memory managment through
+  /// Protected destructor to enforce proper memory management through
   /// the reference counting mechanism.
   ~TAO_IORInfo (void);
 
@@ -115,14 +113,12 @@ protected:
   void check_validity (void);
 
 private:
-
   /// Prevent copying through the copy constructor and the assignment
   /// operator.
   TAO_IORInfo (const TAO_IORInfo &);
   void operator= (const TAO_IORInfo &);
 
 private:
-
   /// Pointer to POA
   TAO_Root_POA * poa_;
 
@@ -135,7 +131,6 @@ private:
    * interception point has been called.
    */
   CORBA::Boolean components_established_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

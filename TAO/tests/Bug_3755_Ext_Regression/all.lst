@@ -1,4 +1,3 @@
-# $Id$
 # List to run all the subtests locally with 'auto_run_tests.pl -Config ZLIB -Config ZIOP -l all.lst'
 
 TAO/tests/Bug_3755_Ext_Regression/run_test.pl : !STATIC

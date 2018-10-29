@@ -31,12 +31,15 @@
 #  define ACE_HAS_NEW_NOTHROW
 #endif /* __GNUC__ >= 3.3 */
 
-#if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
+#if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7)) || defined __clang__
 # if __cplusplus > 199711L
 #  define ACE_HAS_CPP11
 # endif
 # if __cplusplus > 201103L
 #  define ACE_HAS_CPP14
+# endif
+# if __cplusplus > 201402L
+#  define ACE_HAS_CPP17
 # endif
 #endif
 

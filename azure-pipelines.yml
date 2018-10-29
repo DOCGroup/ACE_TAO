@@ -1,0 +1,149 @@
+variables:
+   ACE_ROOT: $(Build.SourcesDirectory)/ACE
+   TAO_ROOT: $(Build.SourcesDirectory)/TAO
+   MPC_ROOT: $(Build.SourcesDirectory)/ACE/MPC
+   system.prefergit: true
+
+resources:
+- repo: self
+  fetchDepth: 1
+
+jobs:
+- job: VisualStudio2017
+  timeoutInMinutes: 90
+  pool:
+    vmImage: vs2017-win2016
+  strategy:
+    maxParallel: 4
+    matrix:
+      Debug64:
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+      Release64:
+        BuildPlatform: x64
+        BuildConfiguration: Release
+      Debug32:
+        BuildPlatform: Win32
+        BuildConfiguration: Debug
+      Release32:
+        BuildPlatform: Win32
+        BuildConfiguration: Release
+  steps:
+  - powershell: |
+      $client = new-object System.Net.WebClient
+      $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
+    displayName: Download perl
+  - task: ExtractFiles@1
+    displayName: Extract perl
+    inputs:
+      archiveFilePatterns: strawberry-perl.zip
+      destinationFolder: perl
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - task: VSBuild@1
+    displayName: Build solution TAO/TAO_ACE.sln
+    inputs:
+      solution: TAO/TAO_ACE.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+  - task: VSBuild@1
+    displayName: Build solution ACE/tests/tests.sln
+    inputs:
+      solution: ACE/tests/tests.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+
+- job: VisualStudio2015
+  timeoutInMinutes: 90
+  pool:
+    vmImage: vs2015-win2012r2
+  steps:
+  - powershell: |
+      $client = new-object System.Net.WebClient
+      $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
+    displayName: Download perl
+  - task: ExtractFiles@1
+    displayName: Extract perl
+    inputs:
+      archiveFilePatterns: strawberry-perl.zip
+      destinationFolder: perl
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - task: VSBuild@1
+    displayName: Build solution TAO\TAO_ACE.sln
+    inputs:
+      solution: TAO\TAO_ACE.sln
+      maximumCpuCount: true
+  - task: VSBuild@1
+    displayName: Build solution ACE\tests\tests.sln
+    inputs:
+      solution: ACE\tests\tests.sln
+      maximumCpuCount: true
+
+- job: Linux
+  timeoutInMinutes: 90
+  pool:
+    vmImage: ubuntu-16.04
+  steps:
+  - script: sudo apt-get --yes update && sudo apt-get --yes install libxerces-c-dev libssl-dev
+    displayName: install system package dependencies
+  - powershell: |
+      '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+    displayName: Create default.features file
+  - powershell: |
+      'xerces3=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'ssl=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+    displayName: Create platform_macros file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - bash: make -j 6 -C TAO
+    displayName: Build TAO project
+  - bash: make -j 6 -C ACE/tests
+    displayName: Build tests project
+
+- job: MacOSX
+  timeoutInMinutes: 90
+  pool:
+    vmImage: macOS-10.13
+  steps:
+  - powershell: |
+      '#include "ace/config-macosx.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
+    displayName: Create platform_macros file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - bash: make -j 6 -C TAO
+    displayName: Build TAO project
+  - bash: make -j 6 -C ACE/tests
+    displayName: Build tests project

@@ -48,13 +48,9 @@ public:
   /// Destructor.
   virtual ~TAO_IDLType_i (void);
   /// Defined in concrete classes.
-  virtual CORBA::TypeCode_ptr type ()
-
-    = 0;
+  virtual CORBA::TypeCode_ptr type () = 0;
   /// Defined in concrete classes.
-  virtual CORBA::TypeCode_ptr type_i ()
-
-    = 0;
+  virtual CORBA::TypeCode_ptr type_i () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

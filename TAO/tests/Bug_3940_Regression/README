@@ -1,0 +1,16 @@
+
+
+This is a compile only test. If it compiles, it's passed.
+
+tao_idl choked on the annotation syntax of IDL4 (and DDS-XTypes)
+because that syntax was unknown to its IDL grammar:
+
+  tao_idl -Wb,pre_include=ace/pre.h -Wb,post_include=ace/post.h -I../.. -Sa -St test.idl
+  syntax error
+  Error - tao_idl: "test.idl", line 3: Illegal syntax following module '{' opener
+  make[1]: *** [testC.h] Error 1
+
+The first patch for this bug adds a rule in the lexer to ignore the annotations
+by consuming them without action.
+Actual processing of annotations is still to be done.
+

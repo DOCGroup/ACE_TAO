@@ -28,22 +28,18 @@ public:
 
   Server_ORBInitializer2 (void);
 
-  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info
-                         );
+  virtual void pre_init (PortableInterceptor::ORBInitInfo_ptr info);
 
-  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info
-                          );
+  virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
   void set_server_iogr (CORBA::Object_ptr obj);
 
 private:
 
   /// Register the necessary interceptors.
-  void register_server_request_interceptors (
-         PortableInterceptor::ORBInitInfo_ptr info
-         );
+  void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 
-  // Private temprorary pointer
+  // Private temporary pointer
   TAO249_ServerRequest_Interceptor2 *sri_;
 };
 

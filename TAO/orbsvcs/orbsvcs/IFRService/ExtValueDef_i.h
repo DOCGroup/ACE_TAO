@@ -46,25 +46,17 @@ public:
   /// Destructor
   virtual ~TAO_ExtValueDef_i (void);
 
-  virtual CORBA::ExtInitializerSeq *ext_initializers (
-    );
+  virtual CORBA::ExtInitializerSeq *ext_initializers ();
 
-  CORBA::ExtInitializerSeq *ext_initializers_i (
-    );
+  CORBA::ExtInitializerSeq *ext_initializers_i ();
 
-  virtual void ext_initializers (
-      const CORBA::ExtInitializerSeq &ext_initializers
-    );
+  virtual void ext_initializers (const CORBA::ExtInitializerSeq &ext_initializers);
 
-  void ext_initializers_i (
-      const CORBA::ExtInitializerSeq &ext_initializers
-    );
+  void ext_initializers_i (const CORBA::ExtInitializerSeq &ext_initializers);
 
-  virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (
-    );
+  virtual CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value (   );
 
-  CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i (
-    );
+  CORBA::ExtValueDef::ExtFullValueDescription *describe_ext_value_i ();
 
   virtual CORBA::ExtAttributeDef_ptr create_ext_attribute (
       const char *id,
@@ -73,8 +65,7 @@ public:
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions
-    );
+      const CORBA::ExceptionDefSeq &set_exceptions);
 
   CORBA::ExtAttributeDef_ptr create_ext_attribute_i (
       const char *id,
@@ -83,8 +74,7 @@ public:
       CORBA::IDLType_ptr type,
       CORBA::AttributeMode mode,
       const CORBA::ExceptionDefSeq &get_exceptions,
-      const CORBA::ExceptionDefSeq &set_exceptions
-    );
+      const CORBA::ExceptionDefSeq &set_exceptions);
 
   //// Public because it's also called from
   //// TAO_Container_i::create_ext_value_i.

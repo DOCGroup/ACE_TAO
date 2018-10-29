@@ -91,13 +91,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     int persistent_id_policy,
     const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
       creation_parameters)
-  : user_id_map_ (0)
-  , servant_map_ (0)
-  , id_uniqueness_strategy_ (0)
-  , lifespan_strategy_ (0)
-  , id_assignment_strategy_ (0)
-  , id_hint_strategy_ (0)
-  , using_active_maps_ (false)
+  : using_active_maps_ (false)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);
 
@@ -122,8 +116,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Uniqueness_Strategy>
-    new_id_uniqueness_strategy (id_uniqueness_strategy);
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
+#else
+  auto_ptr<TAO_Id_Uniqueness_Strategy> new_id_uniqueness_strategy (id_uniqueness_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   TAO_Lifespan_Strategy *lifespan_strategy = 0;
 
@@ -147,7 +144,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
+#else
   auto_ptr<TAO_Lifespan_Strategy> new_lifespan_strategy (lifespan_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   TAO_Id_Assignment_Strategy *id_assignment_strategy = 0;
 
@@ -182,8 +183,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
-  auto_ptr<TAO_Id_Assignment_Strategy>
-    new_id_assignment_strategy (id_assignment_strategy);
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
+#else
+  auto_ptr<TAO_Id_Assignment_Strategy> new_id_assignment_strategy (id_assignment_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   TAO_Id_Hint_Strategy *id_hint_strategy = 0;
   if ((user_id_policy
@@ -205,7 +209,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
+#else
   auto_ptr<TAO_Id_Hint_Strategy> new_id_hint_strategy (id_hint_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   servant_map *sm = 0;
   if (unique_id_policy)
@@ -224,7 +232,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
                       "linear option for "
                       "-ORBUniqueidPolicyReverseDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -239,7 +247,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<servant_map> new_servant_map (sm);
+#else
   auto_ptr<servant_map> new_servant_map (sm);
+#endif /* ACE_HAS_CPP11 */
 
   user_id_map *uim = 0;
   if (user_id_policy
@@ -258,7 +270,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
           TAOLIB_ERROR ((LM_ERROR,
                       "linear option for -ORBUseridPolicyDemuxStrategy "
                       "not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -292,7 +304,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
           TAOLIB_ERROR ((LM_ERROR,
                       "linear and dynamic options for -ORBSystemidPolicyDemuxStrategy "
                       "are not supported with minimum POA maps. "
-                      "Ingoring option to use default...\n"));
+                      "Ignoring option to use default...\n"));
           /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
@@ -309,7 +321,11 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     }
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<user_id_map> new_user_id_map (uim);
+#else
   auto_ptr<user_id_map> new_user_id_map (uim);
+#endif /* ACE_HAS_CPP11 */
 
   id_uniqueness_strategy->set_active_object_map (this);
   lifespan_strategy->set_active_object_map (this);
@@ -317,12 +333,21 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 
   // Finally everything is fine.  Make sure to take ownership away
   // from the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
+  this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
+  this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
+  this->id_hint_strategy_ = std::move(new_id_hint_strategy);
+  this->servant_map_ = std::move(new_servant_map);
+  this->user_id_map_ = std::move(new_user_id_map);
+#else
   this->id_uniqueness_strategy_ = new_id_uniqueness_strategy;
   this->lifespan_strategy_ =  new_lifespan_strategy;
   this->id_assignment_strategy_ = new_id_assignment_strategy;
   this->id_hint_strategy_ = new_id_hint_strategy;
   this->servant_map_ = new_servant_map;
   this->user_id_map_ = new_user_id_map;
+#endif /* ACE_HAS_CPP11 */
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   ACE_NEW (this->monitor_,

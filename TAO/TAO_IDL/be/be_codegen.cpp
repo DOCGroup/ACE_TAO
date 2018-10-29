@@ -331,13 +331,6 @@ TAO_CodeGen::start_client_header (const char *fname)
                         << "\n#error This file should be regenerated with TAO_IDL"
                         << "\n#endif";
 
-  // Generate the TAO_EXPORT_MACRO macro.
-  *this->client_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-  *this->client_header_ << "#undef TAO_EXPORT_MACRO\n";
-  *this->client_header_ << "#endif\n";
-  *this->client_header_ << "#define TAO_EXPORT_MACRO "
-                        << be_global->stub_export_macro ();
-
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
@@ -535,13 +528,6 @@ TAO_CodeGen::start_server_header (const char *fname)
           *this->server_header_ << "\n\n#include /**/ \""
                                 << be_global->skel_export_include ()
                                 << "\"";
-
-          // Generate the TAO_EXPORT_MACRO macro.
-          *this->server_header_ << "\n\n#if defined (TAO_EXPORT_MACRO)\n";
-          *this->server_header_ << "#undef TAO_EXPORT_MACRO\n";
-          *this->server_header_ << "#endif\n";
-          *this->server_header_ << "#define TAO_EXPORT_MACRO "
-                                << be_global->skel_export_macro ();
         }
     }
   else

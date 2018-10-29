@@ -16,7 +16,7 @@ typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
 TAO_EC_ProxyPushConsumer::
     TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* ec)
   : event_channel_ (ec),
-    refcount_ (1),
+    ec_refcount_ (1),
     connected_ (false),
     filter_ (0)
 {
@@ -70,7 +70,7 @@ void
 TAO_EC_ProxyPushConsumer::connected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
-                                          this->refcount_,
+                                          this->ec_refcount_,
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
@@ -83,7 +83,7 @@ void
 TAO_EC_ProxyPushConsumer::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
-                                          this->refcount_,
+                                          this->ec_refcount_,
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
@@ -96,7 +96,7 @@ void
 TAO_EC_ProxyPushConsumer::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
-                                          this->refcount_,
+                                          this->ec_refcount_,
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())
@@ -201,7 +201,7 @@ CORBA::ULong
 TAO_EC_ProxyPushConsumer::_incr_refcnt (void)
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-  return this->refcount_++;
+  return this->ec_refcount_++;
 }
 
 void
@@ -216,9 +216,9 @@ TAO_EC_ProxyPushConsumer::_decr_refcnt (void)
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
-    this->refcount_--;
-    if (this->refcount_ != 0)
-      return this->refcount_;
+    this->ec_refcount_--;
+    if (this->ec_refcount_ != 0)
+      return this->ec_refcount_;
   }
 
   this->refcount_zero_hook ();

@@ -167,7 +167,7 @@ ACE_Object_Manager::shutting_down (void)
 
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS)
 // Instead of popping up a window for exceptions, just print something out
-LONG _stdcall ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
+LONG WINAPI ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
 {
   DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
@@ -893,13 +893,10 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 #if defined (ACE_HAS_THREADS)
 
-// hack to get around errors while compiling using split-cpp
-#if !defined (ACE_IS_SPLITTING)
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
 typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
 static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
-#endif /* ! ACE_IS_SPLITTING */
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
 // But, applications may find it useful for avoiding recursive calls

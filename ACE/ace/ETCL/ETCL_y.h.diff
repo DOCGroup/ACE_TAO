@@ -1,7 +1,6 @@
 --- ETCL_y.h	Mon Nov 12 16:07:25 2001
 +++ ETCL_y.h.safe	Thu Oct 11 20:53:13 2001
 @@ -1,7 +1,4 @@
- // $Id$
 -#ifndef YYSTYPE
 -#define YYSTYPE int
 -#endif
@@ -20,6 +19,6 @@
 @@ -46,5 +43,3 @@
  #define	TAO_ETCL_TYPE_ID	298
  #define	TAO_ETCL_REPOS_ID	299
- 
+
 -
 -extern YYSTYPE yylval;

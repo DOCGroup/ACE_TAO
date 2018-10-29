@@ -12,8 +12,6 @@
 #include "ace/Task.h"
 #include "ace/SString.h"
 
-/// @@Pradeep, pragma please...
-
 #include "ORB_Objects.h"
 #include "tao/RTCORBA/RTCORBA.h"
 

@@ -13,7 +13,7 @@ TAO_EC_Queue::
 }
 
 /// @todo The high water mark and low water mark shouldn't be
-/// hardcoded, check http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=565
+/// hardcoded, check http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=565
 #ifndef TAO_EC_QUEUE_HWM
 #define TAO_EC_QUEUE_HWM 16384
 //#define TAO_EC_QUEUE_HWM 2

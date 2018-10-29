@@ -1,5 +1,3 @@
-
-
 DevGuideExamples/ImplRepo/README
 
 This directory contains a CORBA example illustrating use of the TAO
@@ -16,13 +14,13 @@ $TAO_ROOT/orbsvcs/ImplRepo_Service/ImplRepo_Service -o implrepo.ior
 Register the server's POA name and start-up command with the ImplRepo:
 ----------------------------------------------------------------------
 $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr -ORBInitRef \
-	ImplRepoService=file://implrepo.ior add MessengerService \
-	-c "MessengerServer -ORBUseIMR 1 -ORBInitRef ImplRepoService=file://implrepo.ior"
+  ImplRepoService=file://implrepo.ior add MessengerService \
+  -c "MessengerServer -ORBUseIMR 1 -ORBInitRef ImplRepoService=file://implrepo.ior"
 
 Generate an IMRified Object Reference for the MessengerService:
 ---------------------------------------------------------------
 $TAO_ROOT/orbsvcs/ImplRepo_Service/tao_imr -ORBInitRef \
-	ImplRepoService=file://implrepo.ior ior MessengerService -f Messenger.ior
+  ImplRepoService=file://implrepo.ior ior MessengerService -f Messenger.ior
 
 Run the client (ImplRepo should automatically start the server):
 ----------------------------------------------------------------

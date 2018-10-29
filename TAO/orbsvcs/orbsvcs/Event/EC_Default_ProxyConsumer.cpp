@@ -4,8 +4,6 @@
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 #include "ace/Reverse_Lock_T.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reverse_Lock<ACE_Lock> TAO_EC_Unlock;
@@ -83,7 +81,7 @@ void
 TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
-                                          this->refcount_,
+                                          this->ec_refcount_,
                                           this->event_channel_,
                                           this);
   if (!ace_mon.locked ())

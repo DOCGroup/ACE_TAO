@@ -586,6 +586,13 @@ public:
   /// Set the gen_ostream_operators_ member.
   void gen_ostream_operators (bool val);
 
+  /// Get the gen_static_desc_operations_ member.
+  bool gen_static_desc_operations (void) const;
+
+  /// Set the gen_static_desc_operations_ member.
+  void gen_static_desc_operations (bool val);
+
+
   /**
    * Set the directory where all the IDL-Compiler-Generated files are
    * to be kept. Default is current directory from which the
@@ -1249,6 +1256,9 @@ private:
   /// Generate ostream operators for each type declaration, for
   /// debugging or logging.
   bool gen_ostream_operators_;
+
+  /// Generate static description operations for each interface
+  bool gen_static_desc_operations_;
 
   /**
    * True by default, but a command line option can turn this off so

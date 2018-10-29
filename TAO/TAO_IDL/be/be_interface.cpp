@@ -1855,7 +1855,7 @@ int
 be_interface::gen_gperf_things (const char *flat_name)
 {
   // GPERF can give Binary search, Linear search and Perfect Hash
-  // methods. Generate the class defintion according to that.
+  // methods. Generate the class definition according to that.
 
   TAO_OutStream *os = tao_cg->server_skeletons ();
 

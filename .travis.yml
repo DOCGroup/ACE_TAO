@@ -1,4 +1,5 @@
 sudo: false
+group: travis_latest
 language: cpp
 os:
   - linux
@@ -12,7 +13,7 @@ env:
     - CORBAEMICRO=1 ACEFORTAO=0 TAO=1
     - CORBAECOMPACT=1 ACEFORTAO=0 TAO=1
     - ACEFORTAO=1 TAO=1
-    - ACETESTS=1 ACEFORTAO=0 TAO=1
+    - ACETESTS=1 ACEFORTAO=0 ACE=1 TAO=0
     - USES_WCHAR=1 TAO=1
     - VERSIONED=1 TAO=1
     - ACETESTS=1 FACE=1 ACE=1 TAO=0
@@ -21,7 +22,7 @@ env:
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
-    - COMPILER=g++-6
+    - COMPILER=g++-8
 
 matrix:
   include:
@@ -30,12 +31,56 @@ matrix:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.9
+            - llvm-toolchain-trusty-7
           packages:
             - libxerces-c-dev
             - libssl-dev
-            - clang++-3.9
-      env: COMPILER=clang++-3.9 VERSIONED=1 TAO=1 ACETESTS=1
+            - clang-7
+      env: COMPILER=clang++-7 VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-6.0
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - clang-6.0
+      env: COMPILER=clang++-6.0 VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: clang
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+            - llvm-toolchain-trusty-5.0
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - clang-5.0
+      env: COMPILER=clang++-5.0 VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - g++-7
+      env: COMPILER=g++-7 VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - g++-6
+      env: COMPILER=g++-6 VERSIONED=1 TAO=1 ACETESTS=1
+    - os: osx
+      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
@@ -44,7 +89,7 @@ addons:
     packages:
       - libssl-dev
       - libxerces-c-dev
-      - g++-6
+      - g++-8
 
 before_install:
   - git clone --depth 1 git://github.com/DOCGroup/MPC.git
@@ -73,8 +118,9 @@ before_script:
   - if [ "$CCMNOEVENT" == "1" ]; then echo -e "ccm_noevent=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$USES_WCHAR" == "1" ]; then echo -e "uses_wchar=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$VERSIONED" == "1" ]; then echo -e "versioned_namespace=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
-  - echo -e "xerces3=1\nssl=1\nipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
-  - echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
+  - echo -e "inline=0\nipv6=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - echo -e "TAO/tests/Hello/run_test.pl" >> $TAO_ROOT/bin/travis-ci.lst
   - if [ "$CXX" == "g++" ]; then echo -e "c++11=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then echo -e "include \$(ACE_ROOT)/include/makeinclude/platform_macosx.GNU" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
@@ -94,5 +140,6 @@ before_script:
 script:
   - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
   - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
-  - make -j 2
+  - make -j 6
   - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
+

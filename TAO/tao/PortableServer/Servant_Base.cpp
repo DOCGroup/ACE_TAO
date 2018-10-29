@@ -57,10 +57,10 @@ ACE_TIMEPROBE_EVENT_DESCRIPTIONS (TAO_ServantBase_Timeprobe_Description,
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ServantBase::TAO_ServantBase (void)
+TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table* optable)
   : TAO_Abstract_ServantBase ()
   , ref_count_ (1)
-  , optable_ (0)
+  , optable_ (optable)
 {
 }
 
@@ -74,7 +74,10 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 TAO_ServantBase &
 TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
 {
-  this->optable_ = rhs.optable_;
+  if (this != &rhs)
+  {
+    this->optable_ = rhs.optable_;
+  }
   return *this;
 }
 
@@ -658,7 +661,7 @@ TAO_ServantBase::_add_ref (void)
 void
 TAO_ServantBase::_remove_ref (void)
 {
-  unsigned long const new_count = --this->ref_count_;
+  CORBA::ULong const new_count = --this->ref_count_;
 
   if (new_count == 0)
     {
@@ -669,7 +672,11 @@ TAO_ServantBase::_remove_ref (void)
 CORBA::ULong
 TAO_ServantBase::_refcount_value (void) const
 {
+#if defined (ACE_HAS_CPP11)
+  return this->ref_count_;
+#else
   return this->ref_count_.value ();
+#endif /* ACE_HAS_CPP11 */
 }
 
 void

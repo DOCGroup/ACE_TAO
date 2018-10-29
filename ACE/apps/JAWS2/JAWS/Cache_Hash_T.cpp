@@ -10,10 +10,10 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::hash (const EXT_ID &ext_id) const
   return HASH_FUNC (ext_id) % this->size_;
 }
 
-template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> int
-JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (unsigned long number) const
+template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> bool
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::isprime (size_t number) const
 {
-  unsigned long d = 3;
+  size_t d = 3;
 
   if (number <= 2) return (number == 2);
 

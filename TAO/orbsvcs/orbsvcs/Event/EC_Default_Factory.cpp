@@ -38,8 +38,6 @@
 #include "orbsvcs/Event/EC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)
@@ -468,14 +466,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECPushSupplierSet")) == 0)
-        {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      "EC_Default_Factory - "
-                      "obsolete option <%s>, ignored\n", arg));
-          arg_shifter.consume_arg ();
-        }
-
       else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECQueueFullServiceObject")) == 0)
         {
           arg_shifter.consume_arg ();
@@ -485,22 +475,6 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               this->queue_full_service_object_name_.set(opt);
               arg_shifter.consume_arg ();
             }
-        }
-
-      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECConsumerAdminLock")) == 0)
-        {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      "EC_Default_Factory - "
-                      "obsolete option <%s>, ignored\n", arg));
-          arg_shifter.consume_arg ();
-        }
-
-      else if (ACE_OS::strcasecmp (arg, ACE_TEXT("-ECSupplierAdminLock")) == 0)
-        {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      "EC_Default_Factory - "
-                      "obsolete option <%s>, ignored\n", arg));
-          arg_shifter.consume_arg ();
         }
 
       else if (ACE_OS::strncmp (arg, ACE_TEXT("-EC"), 3) == 0)

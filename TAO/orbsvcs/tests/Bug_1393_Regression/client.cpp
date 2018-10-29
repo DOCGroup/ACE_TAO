@@ -17,8 +17,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::ContainedSeq_var interfaces =
                   repo_->contents (CORBA::dk_Interface,    // Any type of contained object.
-                                   1                       // Exclude parents of interfaces.
-                                   );
+                                   1);                     // Exclude parents of interfaces.
 
       CORBA::ULong length = interfaces->length ();
 

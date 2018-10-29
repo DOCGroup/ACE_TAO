@@ -1,4 +1,3 @@
-// server.cpp
 // This version uses the Implementation Repository.
 
 #include "Test_i.h"
@@ -58,7 +57,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           break;
         case '?':
           ACE_DEBUG ((LM_DEBUG,
-                      "usage: %s "
+                      "Server: usage: %s "
                       "-d <seconds to delay before initializing POA> ",
                       "-n <number of expected requests> \n",
                       argv[0]));
@@ -67,11 +66,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
     ACE_DEBUG ((LM_DEBUG,
-                "Delaying in initialization for %d seconds\n",
+                "(%P|%t) Server: delaying in initialization for <%d> seconds\n",
                 init_delay_secs));
     ACE_OS::sleep (init_delay_secs);
     ACE_DEBUG ((LM_DEBUG,
-                "Done with delay\n"));
+                "(%P|%t) Server: done with delay\n"));
 
     CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
     PortableServer::POA_var root_poa = PortableServer::POA::_narrow(obj.in());
@@ -84,29 +83,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                                  poa_name.c_str ());
 
     PortableServer::Servant_var<Test_i> test_servant =
-      new Test_i(num_requests_expected);
+      new Test_i(orb.in(), num_requests_expected);
 
     PortableServer::ObjectId_var object_id =
       PortableServer::string_to_ObjectId("test_object");
 
-    //
     // Activate the servant with the test POA,
     // obtain its object reference, and get a
     // stringified IOR.
-    //
     test_poa->activate_object_with_id(object_id.in(), test_servant.in());
 
-    //
     // Create binding between "TestService" and
     // the test object reference in the IOR Table.
     // Use a TAO extension to get the non imrified poa
     // to avoid forwarding requests back to the ImR.
-
     TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*>(test_poa.in());
     if (!tpoa)
       {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("Could not cast POA to root POA")
+                    ACE_TEXT ("(%P|%t) Server: Could not cast POA to root POA")
                     ));
         return -1;
       }
@@ -117,7 +112,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     IORTable::Table_var table = IORTable::Table::_narrow(obj.in());
     table->bind(poa_name.c_str (), test_ior.in());
 
-    //
     // This server is now ready to run.
     // This version does not create an IOR
     // file as demonstrated in the
@@ -125,13 +119,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     // users create IORs for the client using
     // the tao_imr utility.
     //
-    //
     // Stop discarding requests.
-    //
     mgr->activate();
 
     ACE_DEBUG ((LM_DEBUG,
-      "\n  Started Server %s \n",
+      "(%P|%t) Server: started <%C>\n",
       poa_name.c_str()));
 
     {
@@ -145,20 +137,23 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(1,1);
     orb->destroy();
 
+    ACE_DEBUG ((LM_DEBUG,
+      "(%P|%t) Server: ended <%C>\n",
+      poa_name.c_str()));
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception ("Server main()");
     return 1;
   }
 
-  bool expected_requests_made = Test_i::expected_requests_made ();
+  bool const expected_requests_made = Test_i::expected_requests_made ();
   if (!expected_requests_made)
     {
       ACE_ERROR ((LM_ERROR,
-                  "ERROR: Expected number of requests were not made\n"));
+                  "(%P|%t) Server: ERROR: Expected number of requests were not made\n"));
     }
 
-  int status = expected_requests_made ? 0 : -1;
+  int const status = expected_requests_made ? 0 : -1;
 
   return status;
 }

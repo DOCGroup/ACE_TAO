@@ -247,7 +247,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           *os << be_nl_2
               << "virtual ::CORBA::ULong length (void) const;"
               << be_nl
-              << "virtual void length ( ::CORBA::ULong);"
+              << "virtual void length (::CORBA::ULong);"
               << be_nl_2
               << "virtual ::CORBA::ULong maximum (void) const;";
         }
@@ -285,14 +285,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           && !be_global->alt_mapping ())
         {
           *os << be_nl_2
-              << "\n\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-              << node->local_name () << " (" << be_idt << be_idt_nl
-              << "::CORBA::ULong length," << be_nl
-              << "const ACE_Message_Block* mb" << be_uidt_nl
-              << ")" << be_uidt_nl
-              << "  : ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
-              << " (length, mb) {}" << "\n"
-              << "#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
+              << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
+              << node->local_name () << " (::CORBA::ULong length, const ACE_Message_Block* mb)"
+              << be_idt_nl
+              << ": ::TAO::unbounded_value_sequence< ::CORBA::Octet>"
+              << " (length, mb) {}" << be_uidt_nl
+              << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
         }
 
       *os << be_uidt_nl

@@ -353,16 +353,10 @@ sub CommandLine ()
         if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "INFO: created run script [",$self->{SCRIPTFILE},"]\n", $run_script;
         }
-        if (defined $self->{TARGET} &&
-            (defined $self->{TARGET}->{TARGET_FSROOT} ||
-             defined $self->{TARGET}->{TEST_ROOT})) {
-           # Already written to proper dir
-        } else {
-          if ($self->{TARGET}->PutFile ($self->{SCRIPTFILE}) == -1) {
-            print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
-                          "> to target \n";
-            return -1;
-          }
+        if ($self->{TARGET}->PutFile ($self->{SCRIPTFILE}) == -1) {
+          print STDERR "ERROR: Failed to copy <", $self->{SCRIPTFILE},
+                        "> to target \n";
+          return -1;
         }
 
         $commandline = "$shell \"source $tgt_exedir/".basename ($self->{SCRIPTFILE})."\"";
@@ -592,6 +586,20 @@ sub WaitKill ($)
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
+
+        if ($ENV{ACE_TEST_LOG_STUCK_STACKS}) {
+            my $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
+            my $commands = ($^O eq 'darwin') ? "-o 'bt all'"
+                : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
+            system "$debugger --batch -p $self->{PROCESS} $commands";
+        }
+
+        if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {
+            system ($^O ne 'darwin') ? "gcore $self->{PROCESS}"
+                : "lldb -b -p $self->{PROCESS} -o " .
+                "'process save-core core.$self->{PROCESS}'";
+        }
+
         $self->Kill ();
     }
 

@@ -320,8 +320,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|%T): send_request : ")
-              ACE_TEXT ("about to call scheduler to inform block\n")
-              ));
+              ACE_TEXT ("about to call scheduler to inform block\n")));
 #endif
 
   kokyu_dispatcher_->update_schedule (guid.in (),

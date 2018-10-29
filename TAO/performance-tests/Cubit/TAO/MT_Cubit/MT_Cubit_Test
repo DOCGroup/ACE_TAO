@@ -1,6 +1,4 @@
 #! /bin/sh
-# $Id$
-#
 # Spawns MT_Cubit server and client executables on a single host.
 
 usage="usage: $0 [-n <iterations>] [-r <host>] [-t] [-l] <# low priority threads>"

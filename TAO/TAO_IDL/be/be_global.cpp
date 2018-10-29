@@ -136,6 +136,7 @@ BE_GlobalData::BE_GlobalData (void)
     use_clonable_in_args_ (false),
     gen_template_export_ (false),
     gen_ostream_operators_ (false),
+    gen_static_desc_operations_ (false),
     gen_custom_ending_ (true),
     gen_unique_guards_ (true),
     gen_ciao_svnt_ (false),
@@ -1362,6 +1363,19 @@ BE_GlobalData::gen_ostream_operators (bool val)
   this->gen_ostream_operators_ = val;
 }
 
+
+bool
+BE_GlobalData::gen_static_desc_operations (void) const
+{
+  return this->gen_static_desc_operations_;
+}
+
+void
+BE_GlobalData::gen_static_desc_operations (bool val)
+{
+  this->gen_static_desc_operations_ = val;
+}
+
 const char*
 BE_GlobalData::anyop_header_ending (void) const
 {
@@ -2305,9 +2319,7 @@ BE_GlobalData::messaging_exceptionholder (void)
       // Notice the valuetype "ExceptionHolder" that it is defined in the
       // "Messaging" module
       this->messaging_exceptionholder_->set_defined_in (msg);
-      this->messaging_exceptionholder_->set_prefix_with_typeprefix (
-                                            "omg.org"
-                                          );
+      this->messaging_exceptionholder_->set_prefix_with_typeprefix ("omg.org");
 
       idl_global->scopes ().pop ();
 
@@ -2798,7 +2810,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-
         break;
       case 'b':
         if (av[i][2] == '\0')
@@ -2843,7 +2854,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-
         break;
       // = Various 's'erver side skeleton file name endings.
       case 's':
@@ -2881,7 +2891,6 @@ BE_GlobalData::parse_args (long &i, char **av)
                 av[i]
               ));
           }
-
         break;
         // Operation lookup strategy.
         // <perfect_hash>, <dynamic_hash> or <binary_search>
@@ -2896,27 +2905,19 @@ BE_GlobalData::parse_args (long &i, char **av)
           }
         else if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_DYNAMIC_HASH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "perfect_hash") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_PERFECT_HASH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_PERFECT_HASH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "binary_search") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_BINARY_SEARCH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_BINARY_SEARCH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "linear_search") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_LINEAR_SEARCH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_LINEAR_SEARCH);
           }
         else
           {
@@ -3212,6 +3213,13 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             // DDS type support IDL generation.
             be_global->gen_dds_typesupport_idl (true);
+
+            break;
+          }
+        else if (av[i][2] == 's' && av[i][3] == 'd')
+          {
+            // Generate static description operations
+            be_global->gen_static_desc_operations (true);
 
             break;
           }

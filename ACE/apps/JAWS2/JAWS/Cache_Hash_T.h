@@ -38,7 +38,7 @@ public:
 protected:
 
   virtual unsigned long hash (const EXT_ID &ext_id) const;
-  int isprime (unsigned long number) const;
+  bool isprime (size_t number) const;
   int new_cachebucket (size_t idx);
 
 private:

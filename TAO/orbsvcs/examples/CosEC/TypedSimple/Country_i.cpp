@@ -36,9 +36,7 @@ Country_i::get_typed_consumer (void)
 }
 
 void
-Country_i::push (const CORBA::Any & /* data */
-                 )
-
+Country_i::push (const CORBA::Any & /* data */)
 {
   //Add your implementation here
 }

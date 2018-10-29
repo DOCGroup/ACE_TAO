@@ -1,42 +1,40 @@
 --- bison_gen\ETCL_y.cpp	2005-07-19 09:56:06.368807400 -0700
 +++ ETCL_y.cpp	2005-07-19 09:45:00.160274900 -0700
 @@ -1,5 +1,6 @@
-+// $Id$
- 
+
 -/*  A Bison parser, made from ETCL.yy
 +/*  A Bison parser, made from ETCL/ETCL.yy
      by GNU Bison version 1.28  */
- 
+
  #define YYBISON 1  /* Identify Bison output.  */
 @@ -48,9 +49,9 @@
  #define	TAO_ETCL_TYPE_ID	298
  #define	TAO_ETCL_REPOS_ID	299
- 
+
 -#line 1 "ETCL.yy"
 +//#line 1 "ETCL/ETCL.yy"
- 
+
 -// ETCL.yy,v 1.3 2002/01/14 19:52:28 parsons Exp
-+// $Id$
  // ========================================================================
  //
  // = LIBRARY
 @@ -70,6 +71,7 @@
  #include "ETCL_Interpreter.h"
- 
+
  extern int yylex (void);
 +extern void yyflush_current_buffer (void);
- 
+
  static void yyerror (const char *)
  {
 @@ -77,9 +79,6 @@
    // Ignore error messages
  }
- 
+
 -#ifndef YYSTYPE
 -#define YYSTYPE int
 -#endif
  #include <stdio.h>
- 
+
  #ifndef __cplusplus
 @@ -293,8 +292,9 @@
      -1,    -1,    29,     3,     4,     5,     6,     7,     8,    -1,
@@ -47,22 +45,22 @@
 +/* -*-C-*-  Note some compilers choke on comments on `//#line' lines.  */
 +//#line 3 "/pkg/gnu/share/bison.simple"
 +/* This file comes from bison-1.28.  */
- 
+
  /* Skeleton output parser for bison,
     Copyright (C) 1984, 1989, 1990 Free Software Foundation, Inc.
 @@ -311,46 +311,66 @@
- 
+
     You should have received a copy of the GNU General Public License
     along with this program; if not, write to the Free Software
 -   Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.  */
 +   Foundation, Inc., 59 Temple Place - Suite 330,
 +   Boston, MA 02111-1307, USA.  */
- 
+
  /* As a special exception, when this file is copied by Bison into a
     Bison output file, you may use that output file without restriction.
     This special exception was added by the Free Software Foundation
     in version 1.24 of Bison.  */
- 
+
 -#ifndef alloca
 +/* This is the parser code that is written into each bison parser
 +  when the %semantic_parser declaration is not specified in the grammar.
@@ -125,7 +123,7 @@
 +#endif /* not GNU C */
 +#endif /* alloca not defined */
 +#endif /* YYSTACK_USE_ALLOCA not defined */
- 
+
 -/* This is the parser code that is written into each bison parser
 -  when the %semantic_parser declaration is not specified in the grammar.
 -  It was written by Richard Stallman by simplifying the hairy parser
@@ -135,7 +133,7 @@
 +#else
 +#define YYSTACK_ALLOC malloc
 +#endif
- 
+
  /* Note: there must be only one dollar sign in this file.
     It is replaced by the list of actions, each action
 @@ -360,8 +380,8 @@
@@ -157,18 +155,18 @@
 +				/*  semantic values from the action	*/
 +				/*  routines				*/
 +
- 
+
  #ifdef YYLSP_NEEDED
  YYLTYPE yylloc;			/*  location data for the lookahead	*/
 @@ -443,11 +467,11 @@
  #define YYMAXDEPTH 10000
  #endif
- 
+
 -/* Prevent warning if -Wstrict-prototypes.  */
 -#ifdef __GNUC__
 -int yyparse (void);
 -#endif
--
+-
 +/* Define __yy_memcpy.  Note that the size argument
 +   should be passed with type unsigned int, because that is what the non-GCC
 +   definitions require.  With GCC, __builtin_memcpy takes an arg
@@ -197,23 +195,23 @@
    ACE_REGISTER char *t = to;
 +  ACE_REGISTER char *f = from;
    ACE_REGISTER int i = count;
- 
+
    while (i-- > 0)
 @@ -486,8 +510,8 @@
- 
+
  #endif
  #endif
--
+-
 -#line 196 "/usr/local/share/bison.simple"
 +
 +//#line 217 "/pkg/gnu/share/bison.simple"
- 
+
  /* The user can define YYPARSE_PARAM as the name of an argument to be passed
     into yyparse.  The argument should have type void *.
 @@ -508,6 +532,15 @@
  #define YYPARSE_PARAM_DECL
  #endif /* not YYPARSE_PARAM */
- 
+
 +/* Prevent warning if -Wstrict-prototypes.  */
 +#ifdef __GNUC__
 +#ifdef YYPARSE_PARAM
@@ -228,22 +226,22 @@
       YYPARSE_PARAM_DECL
 @@ -536,6 +569,7 @@
  #endif
- 
+
    int yystacksize = YYINITDEPTH;
 +  int yyfree_stacks = 0;
- 
+
  #ifdef YYPURE
    int yychar;
 @@ -546,10 +580,6 @@
  #endif
  #endif
- 
+
 -  YYSTYPE yyval;		/*  the variable used to return		*/
 -				/*  semantic values from the action	*/
 -				/*  routines				*/
 -
    int yylen;
- 
+
  #if YYDEBUG != 0
 @@ -620,18 +650,32 @@
        if (yystacksize >= YYMAXDEPTH)
@@ -283,10 +281,10 @@
 +		   size * (unsigned int) sizeof (*yylsp));
  #endif
  #endif /* no yyoverflow */
- 
+
 @@ -792,225 +836,225 @@
    switch (yyn) {
- 
+
  case 3:
 -#line 97 "ETCL.yy"
 +//#line 97 "ETCL/ETCL.yy"
@@ -560,14 +558,14 @@
  }
     /* the action file gets copied in in place of this dollarsign */
 -#line 498 "/usr/local/share/bison.simple"
--
+-
 +//#line 543 "/pkg/gnu/share/bison.simple"
 +
    yyvsp -= yylen;
    yyssp -= yylen;
  #ifdef YYLSP_NEEDED
 @@ -1204,7 +1248,37 @@
- 
+
    yystate = yyn;
    goto yynewstate;
 +
@@ -603,5 +601,5 @@
  }
 -#line 257 "ETCL.yy"
 +//#line 257 "ETCL/ETCL.yy"
- 
- 
+
+

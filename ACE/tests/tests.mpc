@@ -13,7 +13,6 @@ project(Test_Output) : acelib, script {
   Resource_Files {
   }
   Script_Files {
-    run_test.pl
     run_test.lst
   }
 }
@@ -678,7 +677,9 @@ project(Compiler_Features_16_Test) : acetest {
   Source_Files {
     Compiler_Features_16_Test.cpp
   }
-  macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  specific(prop:microsoft) {
+    macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  }
 }
 
 project(Compiler_Features_17_Test) : acetest {
@@ -686,7 +687,9 @@ project(Compiler_Features_17_Test) : acetest {
   Source_Files {
     Compiler_Features_17_Test.cpp
   }
-  macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  specific(prop:microsoft) {
+    macros      += NOMINMAX // Don't #define min and max in Win32 headers
+  }
 }
 
 project(Compiler_Features_18_Test) : acetest {
@@ -830,6 +833,20 @@ project(Compiler_Features_36_Test) : acetest {
   exename = Compiler_Features_36_Test
   Source_Files {
     Compiler_Features_36_Test.cpp
+  }
+}
+
+project(Compiler_Features_37_Test) : acetest {
+  exename = Compiler_Features_37_Test
+  Source_Files {
+    Compiler_Features_37_Test.cpp
+  }
+}
+
+project(Compiler_Features_38_Test) : acetest {
+  exename = Compiler_Features_38_Test
+  Source_Files {
+    Compiler_Features_38_Test.cpp
   }
 }
 
@@ -1598,6 +1615,30 @@ project(Singleton Test) : acetest {
   }
 }
 
+project(Singleton Restart Test) : aceexe {
+  exename = Singleton_Restart_Test
+  after += Test_Output
+  libs += Test_Output
+  Source_Files {
+    Singleton_Restart_Test.cpp
+  }
+  Header_Files {
+  }
+  Template_Files {
+  }
+  Resource_Files {
+  }
+  Svc_Conf_Files {
+  }
+}
+
+project(SOCK Acceptor_Test) : acetest {
+  exename = SOCK_Acceptor_Test
+  Source_Files {
+    SOCK_Acceptor_Test.cpp
+  }
+}
+
 project(SOCK Test) : acetest {
   exename = SOCK_Test
   Source_Files {
@@ -1779,6 +1820,13 @@ project(TSS Test) : acetest {
   exename = TSS_Test
   Source_Files {
     TSS_Test.cpp
+  }
+}
+
+project(TSS Leak Test) : acetest {
+  exename = TSS_Leak_Test
+  Source_Files {
+    TSS_Leak_Test.cpp
   }
 }
 
@@ -2109,7 +2157,7 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qt4reactor {
+project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
   MOC_Files {
     QtReactor_Test.h

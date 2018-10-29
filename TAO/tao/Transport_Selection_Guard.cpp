@@ -53,6 +53,33 @@ namespace TAO
     this->curr_ = 0;
   }
 
+  bool
+  operator== (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs)
+  {
+    return lhs.curr_ == rhs;
+  }
+
+  bool
+  operator== (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs)
+  {
+    return lhs == rhs.curr_;
+  }
+
+  bool
+  operator!= (const Transport_Selection_Guard& lhs,
+              const TAO_Transport* rhs)
+  {
+    return lhs.curr_ != rhs;
+  }
+
+  bool
+  operator!= (const TAO_Transport* lhs,
+              const Transport_Selection_Guard& rhs)
+  {
+    return lhs != rhs.curr_;
+  }
 } /* namespace TAO */
 
 TAO_END_VERSIONED_NAMESPACE_DECL

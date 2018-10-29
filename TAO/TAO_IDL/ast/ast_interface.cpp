@@ -410,8 +410,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               // Only redefinition of the same kind.
               if (i->is_local () != fd->is_local ()
                   || i_nt != fd_nt
-                  || i->is_abstract () != fd->is_abstract ()
-                  )
+                  || i->is_abstract () != fd->is_abstract ())
                 {
                   idl_global->err ()->error2 (UTL_Error::EIDL_REDEF,
                                               i,

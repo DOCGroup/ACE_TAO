@@ -41,6 +41,17 @@ A::u_type_::~u_type_ ()
 
 void A::clear ()
 {
+#if defined __clang__ && \
+    (defined __apple_build_version__ && __apple_build_version__ < 9100000 \
+     || __clang_major__ <= 7)
+#define CLANG_WORKAROUND
+#endif
+
+#ifdef CLANG_WORKAROUND
+  // clang requires one of two workarounds:
+  // 1. the name after ~ must be in scope
+  using std::string;
+#endif
   this->u_.string_member_.std::string::~string ();
 }
 
@@ -49,7 +60,12 @@ struct B {
     std::string m;
   } u_;
   void clear() {
-    u_.m.std::string::~string();
+#ifdef CLANG_WORKAROUND
+    // 2. actual class name instead of typedef
+    u_.m.std::string::~basic_string ();
+#else
+    u_.m.std::string::~string ();
+#endif
   }
 };
 

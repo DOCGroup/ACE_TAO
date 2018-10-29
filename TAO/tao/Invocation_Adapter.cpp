@@ -30,7 +30,7 @@ namespace TAO
   }
 
   void
-  Invocation_Adapter::invoke (TAO::Exception_Data *ex_data,
+  Invocation_Adapter::invoke (const TAO::Exception_Data *ex_data,
                               unsigned long ex_count)
   {
     // Should stub object be refcounted here?

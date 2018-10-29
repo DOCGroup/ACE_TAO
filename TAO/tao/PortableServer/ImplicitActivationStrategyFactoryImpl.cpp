@@ -36,7 +36,7 @@ namespace TAO
 
       if (strategy == 0)
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
+                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %C\n"),
                     strategy_name));
 
       return strategy;
@@ -52,12 +52,10 @@ namespace TAO
   }
 }
 
-
 ACE_FACTORY_NAMESPACE_DEFINE (
   ACE_Local_Service,
   ImplicitActivationStrategyFactoryImpl,
   TAO_VERSIONED_NAMESPACE_NAME::TAO::Portable_Server::ImplicitActivationStrategyFactoryImpl)
-
 
 ACE_STATIC_SVC_DEFINE (
   ImplicitActivationStrategyFactoryImpl,

@@ -1,0 +1,367 @@
+Source: ace
+Section: devel
+Priority: optional
+Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
+Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Johnny Willemsen <jwillemsen@remedy.nl>
+Build-Depends: debhelper, libssl-dev, libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), tk-dev (>= 8.5), libfox-1.6-dev, docbook-to-man, libxerces-c-dev
+Build-Depends-Indep: doxygen, graphviz
+Standards-Version: 4.1.1
+Vcs-Git: git://anonscm.debian.org/pkg-ace/pkg-ace.git
+Vcs-Browser: https://anonscm.debian.org/gitweb/?p=pkg-ace/pkg-ace.git;a=summary
+Homepage: http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+
+Package: mpc-ace
+Architecture: all
+Depends: ${perl:Depends}, ${misc:Depends}
+Recommends: make
+Replaces: libace-dev (= 5.6.3-4)
+Suggests: libace-dev, pkg-config
+Description: makefile, project, and workspace creator
+ This package contains the Makefile, Project, and Workspace Creator (MPC)
+ as distributed with the ACE toolkit.
+ .
+ MPC generates platform- and compiler-specific files to automate the
+ compilation process.
+ .
+ The following programs are included:
+  * mpc-ace: generates project files for a single target
+  * mwc-ace: generates workspace files for a set of projects
+
+Package: libace-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: C++ network programming framework
+ This package contains the ADAPTIVE Communication Environment (ACE)
+ framework.
+ .
+ It provides platform independent C++ wrappers for all forms of IPC,
+ thread- and process-management routines, and much more.
+ .
+ Moreover, it defines patterns for common communication tasks.
+  * Reactor: handles event demultiplexing and dispatching
+  * Proactor: for asynchronous I/O driven programs
+
+Package: libace-dev
+Architecture: any
+Section: libdevel
+Depends: libace-6.5.2 (= ${binary:Version}), ${misc:Depends}
+Suggests: libace-doc, pkg-config
+Replaces: mpc-ace (<< 5.6.3-4)
+Description: C++ network programming framework - development files
+ This package contains the header files and static library for the ACE
+ framework.
+
+Package: libace-doc
+Architecture: all
+Section: doc
+Depends: ${misc:Depends}
+Suggests: libace-dev
+Recommends: doc-base
+Description: C++ network programming framework - documentation
+ This package contains the ACE overview documentation, tutorials,
+ examples, and information regarding upstream development.
+
+Package: libace-ssl-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE secure socket layer library
+ This package contains wrappers that integrate the OpenSSL library in
+ the ACE framework.
+
+Package: libace-ssl-dev
+Architecture: any
+Section: libdevel
+Depends: libace-ssl-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev, ${misc:Depends}
+Description: ACE secure socket layer library - development files
+ This package contains the header files and static library for the ACE
+ SSL library.
+
+Package: libace-rmcast-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE reliable multicast library
+ The RMCast library is a reliable source-ordered multicast protocol
+ implementation.
+ .
+ It uses sequence numbers on messages to ensure ordering, loss
+ detection, and suppression of duplicates.
+
+Package: libace-rmcast-dev
+Architecture: any
+Section: libdevel
+Depends: libace-rmcast-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE reliable multicast library - development files
+ This package contains the header files and static library for the ACE
+ reliable multicast library.
+
+Package: libace-tmcast-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE transactional multicast library
+ The TMCast library is a transactional multicast protocol
+ implementation.
+ .
+ Each message is delivered to multicast group members as a
+ transaction: an atomic, consistent, and isolated action.
+
+Package: libace-tmcast-dev
+Architecture: any
+Section: libdevel
+Depends: libace-tmcast-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE transactional multicast library - development files
+ This package contains the header files and static library for the ACE
+ transactional multicast library.
+
+Package: libace-htbp-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE protocol over HTTP tunneling library
+ The HTTP Tunneling, Bidirectional, Protocol (HTBP) library enables
+ the writing of stream-based protocols over HTTP.
+ .
+ This allows clients behind a firewall to establish a connection with
+ outbound servers using the HTTP protocol.
+
+Package: libace-htbp-dev
+Architecture: any
+Section: libdevel
+Depends: libace-htbp-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE protocol over HTTP tunneling library - development files
+ This package contains the header files and static library for the ACE
+ HTBP library.
+
+Package: libace-inet-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE Inet protocol library
+ This package provides an ACE addon library for clients (and possibly
+ servers at some point) using Inet protocols, such as HTTP or FTP.
+
+Package: libace-inet-dev
+Architecture: any
+Section: libdevel
+Depends: libace-inet-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE Inet protocol library - development files
+ This package contains the header files and static library for the ACE
+ Inet protocol library.
+
+Package: libace-inet-ssl-6.5.2
+Architecture: any
+Section: libs
+Depends: libace-inet-6.5.2, libace-ssl-6.5.2, ${shlibs:Depends}, ${misc:Depends}
+Description: ACE SSL-enabled Inet protocol library
+ This package provides an ACE addon library for clients (and possibly
+ servers at some point) using Inet protocols which support SSL, such as
+ HTTPS or FTPS.
+
+Package: libace-inet-ssl-dev
+Architecture: any
+Section: libdevel
+Depends: libace-inet-ssl-6.5.2 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE SSL-enabled Inet protocol library - development files
+ This package contains the header files and static library for the ACE
+ SSL-enabled Inet protocol library.
+
+Package: ace-gperf
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Breaks: gperf-ace (<< 5.7.7-1)
+Replaces: gperf-ace (<< 5.7.7-1)
+Description: ACE perfect hash function generator
+ ace_gperf is the ACE version of gperf.
+ .
+ Both ace_gperf and gperf were written by the same author, and have
+ basically the same options and functionality. ace_gperf simply takes
+ advantage of some of the features provided by the ACE library.
+
+Package: libacexml-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE SAX based XML parsing library
+ This package provides interfaces for XML parsing based on Simple API
+ for XML (SAX) 2.0, defined by David Megginson. This is an
+ event-driven parsing approach.
+ .
+ ACEXML is a small footprint and portable library. It does not
+ validate XML documents and supports only Unicode encoding.
+
+Package: libacexml-dev
+Architecture: any
+Section: libdevel
+Replaces: libace-dev (<< 5.7.7-4)
+Depends: libacexml-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE SAX based XML parsing library - development files
+ This package contains the header files and static library for the ACE
+ XML parsing library.
+
+Package: libace-xml-utils-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE XML utility classes and methods
+ This package provides useful classes and methods for XML parsing with Xerces,
+ including simplified strings, schema resolution, validation and more.
+ .
+ ACE XML Utils is used by DAnCE and OpenDDS.
+
+Package: libace-xml-utils-dev
+Architecture: any
+Section: libdevel
+Replaces: libace-dev (<< 5.7.7-4)
+Depends: libace-xml-utils-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}, libxerces-c-dev
+Description: ACE XML utility classes and methods - development files
+ This package contains the header files and static library for the ACE XML
+ Utils library
+
+Package: libkokyu-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE scheduling and dispatching library
+ Kokyu is a library designed to provide flexible scheduling and
+ dispatching services.
+ .
+ Currently it provides real-time scheduling and dispatching services
+ for TAO real-time CORBA Event Service.
+
+Package: libkokyu-dev
+Architecture: any
+Section: libdevel
+Depends: libkokyu-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE scheduling and dispatching library - development files
+ This package contains the header files and static library for the ACE
+ scheduling and dispatching library.
+
+Package: libace-xtreactor-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE-GUI reactor integration for Xt
+ Recognizing the need to write reactor-based GUI applications, the ACE
+ community has created several reactor extensions for use with X
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
+ application can remain single threaded yet still respond to both GUI
+ events, such as button presses, and your own application events.
+ .
+ The ACE_XtReactor extends both the ACE_Select_Reactor and the X
+ Toolkit library function XtWaitForMultipleEvents().
+
+Package: libace-xtreactor-dev
+Architecture: any
+Section: libdevel
+Depends: libace-xtreactor-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 4.3.0), ${misc:Depends}
+Description: ACE-GUI reactor integration for Xt - development files
+ This package contains header files and static library for the ACE-Xt
+ reactor integration.
+
+Package: libace-tkreactor-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE-GUI reactor integration for Tk
+ Recognizing the need to write reactor-based GUI applications, the ACE
+ community has created several reactor extensions for use with X
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
+ application can remain single threaded yet still respond to both GUI
+ events, such as button presses, and your own application events.
+ .
+ The ACE_TkReactor provides reactor functionality around the popular
+ Tcl/Tk library. The underlying Tcl/Tk method used is
+ Tcl_DoOneEvent().
+
+Package: libace-tkreactor-dev
+Architecture: any
+Section: libdevel
+Depends: libace-tkreactor-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
+Description: ACE-GUI reactor integration for Tk - development files
+ This package contains header files and static library for the ACE-Tk
+ reactor integration.
+
+Package: libace-flreactor-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE-GUI reactor integration for FLTK
+ Recognizing the need to write reactor-based GUI applications, the ACE
+ community has created several reactor extensions for use with X
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
+ application can remain single threaded yet still respond to both GUI
+ events, such as button presses, and your own application events.
+ .
+ The ACE_FlReactor integrates with the FastLight toolkit's Fl::wait()
+ method.
+
+Package: libace-flreactor-dev
+Architecture: any
+Section: libdevel
+Depends: libace-flreactor-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 1.1.4), ${misc:Depends}
+Description: ACE-GUI reactor integration for FLTK - development files
+ This package contains header files and static library for the ACE-FLTK
+ reactor integration.
+
+Package: libace-foxreactor-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE-GUI reactor integration for FOX
+ Recognizing the need to write reactor-based GUI applications, the ACE
+ community has created several reactor extensions for use with X
+ Window System. Each of these extends the ACE_Select_Reactor to work
+ with a specific toolkit. By using these reactors, your GUI
+ application can remain single threaded yet still respond to both GUI
+ events, such as button presses, and your own application events.
+ .
+ The ACE_FoxReactor integrates with the FOX toolkit.
+
+Package: libace-foxreactor-dev
+Architecture: any
+Section: libdevel
+Depends: libace-foxreactor-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
+Description: ACE-GUI reactor integration for FOX - development files
+ This package contains header files and static library for the ACE-FOX
+ reactor integration.
+
+Package: ace-netsvcs
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE network service implementations
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains driver programs and example configuration
+ files to link the various ACE network services together, either
+ statically or dynamically, and form complete server programs.
+
+Package: libnetsvcs-6.5.2
+Architecture: any
+Section: libs
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: ACE network service implementations - libraries
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains runtime libraries for ACE network services.
+
+Package: libnetsvcs-dev
+Architecture: any
+Section: libdevel
+Depends: libnetsvcs-6.5.2 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Description: ACE network service implementations - development files
+ ACE network services provide reusable components for common
+ distributed system tasks such as logging, naming, locking, and time
+ synchronization.
+ .
+ This package contains header files and static library for the ACE
+ network services library.

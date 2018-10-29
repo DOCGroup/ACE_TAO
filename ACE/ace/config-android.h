@@ -46,14 +46,7 @@
 #define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
 
-#if __ANDROID_API__ < 24
-# define ACE_LACKS_UCONTEXT_H
-#else
-# define ACE_HAS_UCONTEXT_T
-#endif
-
 #define ACE_LACKS_CUSERID
-#define ACE_LACKS_FD_MASK
 #define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETLOADAVG
 #define ACE_LACKS_ISCTYPE
@@ -131,7 +124,7 @@
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
-#elif __ANDROID_API__ >= 24
+#elif __ANDROID_API__ >= 21
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
@@ -337,6 +330,15 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
+
+#if __ANDROID_API__ < 21
+# define ACE_LACKS_UCONTEXT_H
+#else
+# define ACE_HAS_CLOCK_SETTIME
+# define ACE_HAS_UCONTEXT_T
+#endif
+
+#define ACE_LACKS_FD_MASK
 
 #if __ANDROID_API__ >= 9
 # define ACE_HAS_TIMEZONE

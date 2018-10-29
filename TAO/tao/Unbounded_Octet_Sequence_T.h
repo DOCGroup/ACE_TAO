@@ -104,8 +104,8 @@ public:
         ACE_Message_Block msgb (*mb, ACE_CDR::MAX_ALIGNMENT);
 
         // Get the base pointer of the incoming message block
-        char *start = ACE_ptr_align_binary (mb->base (),
-                                            ACE_CDR::MAX_ALIGNMENT);
+        char *const start = ACE_ptr_align_binary (mb->base (),
+                                                  ACE_CDR::MAX_ALIGNMENT);
 
         // Get the read and write displacements in the incoming stream
         size_t const rd_pos = mb->rd_ptr () - start;

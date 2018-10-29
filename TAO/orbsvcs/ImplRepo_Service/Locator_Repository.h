@@ -75,8 +75,8 @@ public:
                   ImplementationRepository::ServerObject_ptr svrobj);
   int add_server_i (Server_Info *si);
 
-  /// create new records for poas that share a server instance. This is
-  /// a two step process, first the base poa must be registered then a
+  /// create new records for POAs that share a server instance. This is
+  /// a two step process, first the base POA must be registered then a
   /// list of peers may be added.
   int link_peers (Server_Info_Ptr base,
                   const CORBA::StringSeq peers);
@@ -100,7 +100,7 @@ public:
 
   /// Returns information related to startup.
   Server_Info_Ptr get_active_server (const ACE_CString& name, int pid = 0);
-  Server_Info_Ptr get_info (const ACE_CString& name);
+
   /// Returns information related to startup.
   Activator_Info_Ptr get_activator (const ACE_CString& name);
 
@@ -119,10 +119,10 @@ public:
   AIMap& activators(void);
   const AIMap& activators(void) const;
 
-  /// indicate the persistence mode for the repository
+  /// Indicate the persistence mode for the repository
   virtual const ACE_TCHAR* repo_mode(void) const = 0;
 
-  /// convert to lower case
+  /// Convert to lower case
   static ACE_CString lcase (const ACE_CString& s);
 
   /// Initialize the repo

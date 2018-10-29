@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# $Id$
-
-
 #####################################################################
 # install_ace: distill the minimal stuff out of the ACE+TAO distribution
 # alias cpio 'xargs -i echo {}'; # just for testing the script

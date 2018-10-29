@@ -13,6 +13,9 @@ project : orbsvcsexe, install, naming_serv, imr_client, svc_utils {
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }
 
 project(NT_Naming_Service) : orbsvcsexe, install, naming_serv, svc_utils {
@@ -23,8 +26,12 @@ project(NT_Naming_Service) : orbsvcsexe, install, naming_serv, svc_utils {
     NT_Naming_Server.cpp
     NT_Naming_Service.cpp
   }
+
   InstallData_Files {
     gendir = tao-naming
     README
+  }
+
+  Documentation_Files {
   }
 }

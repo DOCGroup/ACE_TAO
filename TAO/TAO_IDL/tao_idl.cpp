@@ -415,7 +415,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       idl_global->set_err_count (idl_global->err_count () + 1);
     }
 
-  int retval = idl_global->err_count ();
+  int const retval = idl_global->err_count ();
   DRV_cleanup ();
 
   return retval;

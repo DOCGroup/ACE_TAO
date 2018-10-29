@@ -4,6 +4,7 @@
 /**
  * @file   FT_Naming_Manager.h
  *
+ *
  * @author Kevin Stanley <stanleyk@ociweb.com>
  */
 //=============================================================================
@@ -18,6 +19,7 @@
 
 #include "orbsvcs/FT_NamingManagerS.h"
 #include "orbsvcs/FT_NamingManagerC.h"
+#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Support.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
@@ -39,6 +41,8 @@ namespace TAO
   class Storable_Factory;
 }
 
+class TAO_FT_Naming_Replication_Manager;
+
 /**
  * @class TAO_FT_Naming_Manager
  * @brief Implements the NamingManager interface for the Fault
@@ -58,6 +62,8 @@ public:
 
   /// Constructor.
   TAO_FT_Naming_Manager (void);
+
+  void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
   /**
    * @name FT::NamingManager Methods

@@ -107,7 +107,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
   this->adopt_poa (auto_object_poa.release ());
 
   // Note topology factory is configured separately from the "builder" mediated
-  // objects since it is independant of the "style" of Notification Service.
+  // objects since it is independent of the "style" of Notification Service.
   this->topology_factory_ =
     ACE_Dynamic_Service <TAO_Notify::Topology_Factory>::instance ("Topology_Factory");
 
@@ -318,8 +318,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
             //@@todo: tell the rspm it's an orphan, but we can't during reload
             // we need collect these and come back later to remove them
             ORBSVCS_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) Reload persistent event failed.\n")
-              ));
+              ACE_TEXT ("(%P|%t) Reload persistent event failed.\n")));
           }
         }
       }

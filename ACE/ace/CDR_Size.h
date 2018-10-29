@@ -78,6 +78,10 @@ public:
   ACE_CDR::Boolean write_wstring (const ACE_CDR::WChar *x);
   ACE_CDR::Boolean write_wstring (ACE_CDR::ULong length,
                                   const ACE_CDR::WChar *x);
+  ACE_CDR::Boolean write_string (const std::string &x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+  ACE_CDR::Boolean write_wstring (const std::wstring &x);
+#endif
   //@}
 
   /// @note the portion written starts at <x> and ends
@@ -223,6 +227,12 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CDR::Char* x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
                                                const ACE_CDR::WChar* x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
+                                               const std::string& x);
+#if !defined(ACE_LACKS_STD_WSTRING)
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
+                                               const std::wstring& x);
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

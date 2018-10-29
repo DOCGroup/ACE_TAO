@@ -1,12 +1,8 @@
 <?xml version='1.0'?>
 <ACE_Svc_Conf>
-  <!--  -->
-  <!--   -->
-  <!--  -->
   <!--  ACE will locate the libraries for you automatically by reading your LD -->
   <!--  search path.  Moreover, ACE will automatically insert the correct suffix -->
   <!--  (e.g., ".dll", ".so", etc.). -->
-
 
   <!-- ORB -->
   <dynamic id="DllOrb" type="Service_Object">
@@ -22,12 +18,9 @@
   </dynamic>
   <!-- ORB -->
 
-
   <!-- persistent POA -->
   <dynamic id="PersistentPOA" type="Service_Object">
     <initializer path="Bug_3251" init="_make_PersistentPoa" params="PersistentPOA DllOrb"/>
   </dynamic>
   <!-- persistent POA -->
-
-
 </ACE_Svc_Conf>

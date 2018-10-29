@@ -47,8 +47,7 @@ public:
   virtual ~TAO_FinderDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

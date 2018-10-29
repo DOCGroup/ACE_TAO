@@ -140,8 +140,7 @@ run_service_command (Activator_Options& opts)
                                                  pathname,
                                                  0, // group
                                                  0, // tag
-                                                 DEPENDS_ON
-                                                 );
+                                                 DEPENDS_ON);
           }
         else
           {

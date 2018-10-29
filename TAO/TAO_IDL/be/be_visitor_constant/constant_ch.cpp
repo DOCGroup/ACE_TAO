@@ -80,7 +80,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else if (!be_global->gen_inline_constants ())
         {
-          *os << "TAO_NAMESPACE_STORAGE_CLASS ";
+          *os << "extern " << be_global->stub_export_macro () << " ";
         }
 
       *os << "const ";

@@ -500,7 +500,7 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 #endif /* ACE_HAS_WCHAR */
 #endif /* !ACE_HAS_VASPRINTF */
 
-#ifndef ACE_LACKS_VA_FUNCTIONS
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
 
 #ifdef ACE_LACKS_WCHAR_H
   typedef int wint_t;
@@ -1593,5 +1593,6 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   *sb.buf_ = 0;
   return static_cast<int> (sb.written_);
 }
-#endif // ACE_LACKS_VA_FUNCTIONS
+#endif // ACE_HAS_VSNPRINTF_EMULATION
+
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -1399,7 +1399,7 @@ log2_test (void)
   return error_count;
 }
 
-#ifndef ACE_LACKS_VA_FUNCTIONS
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
 int snprintf_emulation (char *buf, size_t maxlen, const char *format, ...)
 {
   va_list ap;
@@ -1581,7 +1581,7 @@ int snprintf_emulation_test ()
 
   return failed ? 1 : 0;
 }
-#endif // ACE_LACKS_VA_FUNCTIONS
+#endif // ACE_HAS_VSNPRINTF_EMULATION
 
 int
 swab_test (void)
@@ -1648,7 +1648,7 @@ run_main (int, ACE_TCHAR *[])
   if ((result = snprintf_test (ACE_OS::snprintf)) != 0)
     status = result;
 
-#ifndef ACE_LACKS_VA_FUNCTIONS
+#if defined (ACE_HAS_VSNPRINTF_EMULATION)
   if ((result = snprintf_test (snprintf_emulation)) != 0)
     status = result;
 

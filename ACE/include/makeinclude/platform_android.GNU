@@ -118,11 +118,9 @@ endif # ssl
 
 SYSARCH := $(shell uname -m)
 
-PIC      = -fPIC
-AR      ?= ar
-ARFLAGS ?= rsuv
-RANLIB   = @true
-
+# as of API level 16 executables can be linked as Position Independent Executables
+# as of API level 21 PIE is mandatory
+PIE		?= -pie
 PIC      = -fPIC
 AR      ?= ar
 ARFLAGS ?= rsuv
@@ -141,6 +139,7 @@ rwho = 0
 #$TOOLCHAIN/bin in path, $TOOLCHAIN is root of standalone toolchain
 #
 #Optionally ANDROID_ABI can be set to select specific architecture ABIs like armeabi-v7a or neon
+#ANDROID_ABI ?= arm64-v8a
 #
 #Toolchain defaults to arm architecture
 ANDROID_ARCH ?= arm
@@ -164,19 +163,26 @@ pipes ?= 1
 
 # set architecture specific build flags
 ifeq (arm,$(findstring arm,$(ANDROID_ARCH)))
-
+  # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug 
+  # in some Cortex-A8 implementations
+  
   # Set ABI specific flags
   ifeq ($(ANDROID_ABI),armeabi-v7a)
     FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
-    LDFLAGS    += -march=armv7-a
-  endif
-  ifeq ($(ANDROID_ABI),neon)
-    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
-    LDFLAGS    += -march=armv7-a
+    LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
   endif
 
-  # NDK says required for working around a CPU bug in some Cortex-A8 implementations
-  LDFLAGS += -Wl,--fix-cortex-a8
+  ifeq ($(ANDROID_ABI),arm64-v8a)
+    CROSS_COMPILE=aarch64-linux-android-
+    FLAGS_C_CC += -march=armv8-a 
+    LDFLAGS    += -march=armv8-a 
+  endif 
+
+  ifeq ($(ANDROID_ABI),neon)
+    FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
+    LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
+  endif
+
 endif
 
 FLAGS_C_CC += -W -Wall -Wpointer-arith -Wno-psabi
@@ -204,7 +210,7 @@ CPPFLAGS += -D_GNU_SOURCE
 DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 DLD      = $(CXX)
-LD       = $(CXX)
+LD       = $(CXX) $(PIE)
 # make sure to add the required libs for RTTI and exceptions (libsupc++)
 # and a shared STL lib (libgnustl_shared by default)
 static_libs_only ?=

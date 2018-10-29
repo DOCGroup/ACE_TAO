@@ -18,6 +18,10 @@
 
 #include "orbsvcs/Notify/Default_Factory.h"
 
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
+#  pragma option push -w-8022
+#endif
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -45,6 +49,10 @@ public:
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
+
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
+# pragma option pop
+#endif
 
 ACE_FACTORY_DECLARE (TAO_RT_Notify, TAO_Notify_RT_Factory)
 

@@ -115,15 +115,15 @@ TAO_CEC_TypedProxyPushConsumer::supplier_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
-    if (this->is_connected_i () == 0)
+    disconnected = false;
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
     if (CORBA::is_nil (this->nopolicy_typed_supplier_.in ()))
       {
-        return 0;
+        return false;
       }
     supplier = CORBA::Object::_duplicate
       (this->nopolicy_typed_supplier_.in ());
@@ -132,7 +132,7 @@ TAO_CEC_TypedProxyPushConsumer::supplier_non_existent (
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return supplier->_non_existent ();
 #else
-  return 0;
+  return false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -284,7 +284,7 @@ TAO_CEC_TypedProxyPushConsumer::disconnect_push_consumer ()
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       throw CORBA::BAD_INV_ORDER (); // @@ add user exception?
 
     supplier = this->typed_supplier_._retn ();
@@ -374,7 +374,7 @@ TAO_CEC_TypedProxyPushConsumer_Guard::
   // @@ Returning something won't work either, the error should be
   // logged though!
 
-  if (proxy->is_connected_i () == 0)
+  if (!proxy->is_connected_i ())
     return;
 
   this->locked_ = 1;

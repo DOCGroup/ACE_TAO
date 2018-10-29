@@ -2,7 +2,6 @@
                       "http://www.w3.org/TR/html4/loose.dtd">
 <HTML>
   <HEAD>
-    <!-- $Id$ -->
     <TITLE>Footprint Metrics Detailed Results</TITLE>
     <LINK href="Stats.css" rel="stylesheet" type="text/css">
   </HEAD>

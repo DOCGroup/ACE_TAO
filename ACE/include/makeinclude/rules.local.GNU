@@ -115,34 +115,34 @@ nullstring :=
 CC_OUTPUT_FLAG_SEP ?= $(nullstring) #space
 
 %.$(PREPROCESS_SUFFIX): %.c
-	$(PREPROCESS.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(PREPROCESS.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 %.$(PREPROCESS_SUFFIX): %.cpp
-	$(PREPROCESS.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(PREPROCESS.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 $(VDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 	${MVCMD}
 
 $(VDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.c) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 	${MVCMD}
 
 $(VDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 	${MVCMD}
 
 $(VDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 	${MVCMD}
 
 $(VDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 	${MVCMD}
 
 RC_OUTPUT_FLAG ?=
@@ -160,11 +160,11 @@ $(VDIR)%.rc.o: %.rc
 ifndef SOLINK
 $(VSHDIR)%.$(OBJEXT): %.c
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 $(VSHDIR)%.$(OBJEXT): %.C
 	$(mk_obj_out_dir)
-	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.c) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 # I added the "Executable Shared Object (ESO)" define to separate between
 # normal shared object files and executable shared object files (the kind
@@ -182,20 +182,20 @@ $(VSHDIR)%.$(SOEXT): %.cpp
 
 $(VSHDIR)%.$(OBJEXT): %.cc
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 $(VSHDIR)%.$(OBJEXT): %.cpp
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
 $(VSHDIR)%.$(OBJEXT): %.cxx
 	$(mk_obj_out_dir)
-	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $<
+	$(COMPILE.cc) $(PIC) $(CC_OUTPUT_FLAG)$(CC_OUTPUT_FLAG_SEP)$@ $(abspath $<)
 
   ifneq (,$(COMPILE.rc))
 $(VSHDIR)%.rc.$(OBJEXT): %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $(abspath $<)
   endif # COMPILE.rc
 
 $(VSHDIR)%.$(SOEXT): $(VSHDIR)%.$(OBJEXT)

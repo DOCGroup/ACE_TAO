@@ -17,7 +17,6 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Object.h"
 #include "ace/Arg_Shifter.h"
-#include "activity_export.h"
 
 class Activity;
 class Periodic_Task;
@@ -33,7 +32,7 @@ typedef Job_i** JOB_LIST;
  *
  * @brief A service object that creates Tasks, Jobs, POAs.
  */
-class activity_Export Builder : public ACE_Service_Object
+class Builder : public ACE_Service_Object
 {
  public:
   /// = Initialization and termination
@@ -70,8 +69,8 @@ class activity_Export Builder : public ACE_Service_Object
   JOB_LIST job_list_;
 };
 
-ACE_STATIC_SVC_DECLARE_EXPORT (activity, Builder)
+ACE_STATIC_SVC_DECLARE (Builder)
 
-ACE_FACTORY_DECLARE (activity, Builder)
+ACE_FACTORY_DECLARE (ACE_Local_Service, Builder)
 
 #endif /* BUILDER_H */

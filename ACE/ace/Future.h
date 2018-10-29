@@ -94,7 +94,7 @@ protected:
  *
  * @brief ACE_Future_Rep<T>
  *
- * An ACE_Future_Rep<T> object encapsules a pointer to an object
+ * An ACE_Future_Rep<T> object encapsulates a pointer to an object
  * of class T which is the result of an asynchronous method
  * invocation. It is pointed to by ACE_Future<T> object[s] and
  * only accessible through them.

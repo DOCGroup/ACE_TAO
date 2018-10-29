@@ -2,7 +2,7 @@
  * @file Bug_1890_Regression_Test.cpp
  *
  * Reproduces the problems reported in bug 1890
- *   http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1890
+ *   http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1890
  *
  * @author Carlos O'Ryan <coryan@atdesk.com>
  * Based on a test provided by "Vadim" (no further details available)

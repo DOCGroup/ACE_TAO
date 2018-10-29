@@ -19,7 +19,13 @@
 
 #include /**/ "tao/Versioned_Namespace.h"
 
-#include "ace/Atomic_Op.h"
+#include "tao/Basic_Types.h"
+
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -37,21 +43,20 @@ template <class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Base
 {
 public:
-
   virtual ~TAO_Intrusive_Ref_Count_Base (void);
 
   void _add_ref (void);
   void _remove_ref (void);
 
-
 protected:
-
   TAO_Intrusive_Ref_Count_Base (void);
 
-
 private:
-
-  ACE_Atomic_Op<ACE_LOCK, long> ref_count_;
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
+    ACE_Atomic_Op<ACE_LOCK, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
   // Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Base (const TAO_Intrusive_Ref_Count_Base&);

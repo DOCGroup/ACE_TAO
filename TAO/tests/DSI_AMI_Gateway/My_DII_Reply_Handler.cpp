@@ -42,8 +42,7 @@ My_DII_Reply_Handler::handle_response(TAO_InputCDR &incoming)
       this->response_handler_->_tao_byte_order (incoming.byte_order ());
 
       this->response_handler_->invoke_reply (opList.in(),
-                                             0 // result
-                                            );
+                                             0); // result
     }
     catch (const CORBA::SystemException &ex)
     {

@@ -10,6 +10,7 @@ usr/include/ace/*.h
 usr/include/ace/*.inl
 usr/include/ace/*.cpp
 usr/include/ace/os_include
+usr/include/ace/Compression
 usr/lib/libACE.so
 usr/include/ace/ETCL/*.h
 usr/include/ace/ETCL/*.inl
@@ -17,6 +18,8 @@ usr/include/ace/Monitor_Control/*.h
 usr/lib/libACE_ETCL_Parser.so
 usr/lib/libACE_Monitor_Control.so
 usr/lib/libACE_ETCL.so
+usr/lib/libACE_Compression.so
+usr/lib/libACE_RLECompression.so
 usr/lib/pkgconfig/ACE.pc
 usr/lib/pkgconfig/ACE_ETCL.pc
 usr/lib/pkgconfig/ACE_ETCL_Parser.pc

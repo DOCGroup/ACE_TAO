@@ -109,7 +109,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
   if (ACE::debug ())
     ACELIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("ACE (%P|%t) - SCG:<ctor=%@>")
-                ACE_TEXT (" - config=%@ repo=%@ superceded by repo=%@\n"),
+                ACE_TEXT (" - config=%@ repo=%@ superseded by repo=%@\n"),
                 this,
                 this->saved_.get (),
                 this->saved_->repo_,

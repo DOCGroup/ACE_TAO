@@ -314,8 +314,7 @@ void
 CosEC_ServantBase::init_ConsumerQOS (RtecBase::handle_t cons_handle,
                                      ACE_ConsumerQOS_Factory &consumer_qos,
                                      ACE_TCHAR *eventTypeIds,
-                                     ACE_TCHAR *eventSourceIds
-                                     )
+                                     ACE_TCHAR *eventSourceIds)
 {
   // @@ Pradeep: ditto here, make the set of sources (and/or type)
   // a parameter, and make sure the user can specify multiple of

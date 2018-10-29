@@ -969,14 +969,6 @@ run_main (int argc, ACE_TCHAR *argv[])
   for (use_array = 0; use_array < 2; use_array++)
     {
       {
-        CDR_Test<ACE_CDR::Double, DoubleHelper>
-          test (dtotal, niter, use_array);
-      }
-      {
-        CDR_Test<ACE_CDR::Float, FloatHelper>
-          test (ftotal, niter, use_array);
-      }
-      {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
           test (qtotal, niter, use_array);
       }
@@ -991,6 +983,14 @@ run_main (int argc, ACE_TCHAR *argv[])
       {
         CDR_Test<ACE_CDR::Char, CharHelper>
           test (ctotal, niter, use_array);
+      }
+      {
+        CDR_Test<ACE_CDR::Double, DoubleHelper>
+          test (dtotal, niter, use_array);
+      }
+      {
+        CDR_Test<ACE_CDR::Float, FloatHelper>
+          test (ftotal, niter, use_array);
       }
     }
 

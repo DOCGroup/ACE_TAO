@@ -92,7 +92,7 @@ int TestClient::parseCommands (int argc, ACE_TCHAR *argv[])
         "\t-t <number of threads>\n"
         "\t-i <number of iterations per thread>\n"
         "\t-r <r><number of requests per string_to_object>\n"
-        "\t-x 'shutdown server orb at end of a string_to_object'\n"
+        "\t-x shutdown server orb at end of a string_to_object\n"
         "\t-e <h><n> 'catch holding or no profile exceptions'\n"
         "\n",
         argv[0]),

@@ -27,9 +27,16 @@ ACE_OS::uname (ACE_utsname *name)
   /* Since MS found it necessary to deprecate these. */
 #   pragma warning(push)
 #   pragma warning(disable:4996)
+#   if defined(__clang__)
+#     pragma clang diagnostic push
+#     pragma clang diagnostic ignored "-Wdeprecated-declarations"
+#   endif /* __clang__ */
   ACE_TEXT_OSVERSIONINFO vinfo;
   vinfo.dwOSVersionInfoSize = sizeof(ACE_TEXT_OSVERSIONINFO);
   ACE_TEXT_GetVersionEx (&vinfo);
+#   if defined(__clang__)
+#     pragma clang diagnostic pop
+#   endif /* __clang__ */
 #   pragma warning(pop)
 # endif
 

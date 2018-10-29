@@ -1,6 +1,3 @@
-$Id$
-______________________________________________________________________________
-
 This is a 'To Do' list for the TAO versions of the Henning and Vinoski
 examples ($TAO_ROOT/examples/Advanced).   It is an ongoing effort to get
 these examples working with TAO, 'out of the box' with as few changes as

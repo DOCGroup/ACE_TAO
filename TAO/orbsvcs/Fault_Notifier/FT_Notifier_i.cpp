@@ -450,8 +450,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
       this->this_name_.length (1);
       this->this_name_[0].id = CORBA::string_dup (this->ns_name_);
 
-      this->naming_context_->rebind (this->this_name_, this_obj.in()  //CORBA::Object::_duplicate(this_obj)
-                              );
+      this->naming_context_->rebind (this->this_name_, this_obj.in());
     }
   }
 

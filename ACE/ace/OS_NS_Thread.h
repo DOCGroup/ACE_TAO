@@ -810,7 +810,7 @@ class ACE_TSS_Keys;
 class ACE_Export ACE_TSS_Emulation
 {
 public:
-  typedef void (*ACE_TSS_DESTRUCTOR)(void *value) /* throw () */;
+  typedef void (*ACE_TSS_DESTRUCTOR)(void *value);
 
   /// Maximum number of TSS keys allowed over the life of the program.
   enum { ACE_TSS_THREAD_KEYS_MAX = ACE_DEFAULT_THREAD_KEYS };

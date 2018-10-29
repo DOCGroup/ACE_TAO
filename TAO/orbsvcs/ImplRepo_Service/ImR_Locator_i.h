@@ -173,6 +173,7 @@ public:
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (const char *name);
   AsyncAccessManager *find_aam (const char *name, bool active = true);
+  AsyncAccessManager *find_not_running_aam (const char *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
   void make_terminating (AsyncAccessManager_ptr &aam, const char *name, int pid);
   /// Receiving an update from remote peer
@@ -182,9 +183,7 @@ public:
   CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
                                        const ACE_Time_Value& to);
 
-
 private:
-
   bool get_info_for_name (const char *name, Server_Info_Ptr &si);
 
   void  activate_server_i (UpdateableServerInfo& info,

@@ -1966,8 +1966,11 @@ TAO_ORB_Core::root_poa (void)
 
       if (CORBA::is_nil (this->root_poa_.in ()))
         {
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO_Adapter> poa_adapter (factory->create (this));
+#else
           auto_ptr<TAO_Adapter> poa_adapter (factory->create (this));
-
+#endif /* ACE_HAS_CPP11 */
           poa_adapter->open ();
 
           // @@ Not exception safe
@@ -3075,7 +3078,7 @@ TAO_ORB_Core::connector_registry (void)
   return conn;
 }
 
-auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+TAO_GIOP_Fragmentation_Strategy*
 TAO_ORB_Core::fragmentation_strategy (TAO_Transport * transport)
 {
   return
@@ -3601,8 +3604,7 @@ TAO_ORB_Core::valuetype_adapter (void)
             {
               TAO_Valuetype_Adapter_Factory * vt_ap_factory =
                 ACE_Dynamic_Service<TAO_Valuetype_Adapter_Factory>::instance (
-                    TAO_ORB_Core::valuetype_adapter_factory_name ()
-                  );
+                    TAO_ORB_Core::valuetype_adapter_factory_name ());
 
               if (vt_ap_factory)
                 {
