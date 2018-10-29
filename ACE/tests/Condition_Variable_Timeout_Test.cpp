@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Condition_Variable_Timeout_Test.cpp
@@ -14,11 +13,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Condition_T.h"
 #include "ace/Guard_T.h"
-
 
 int
 run_main(int, ACE_TCHAR *[])
