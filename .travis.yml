@@ -156,5 +156,5 @@ script:
 - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
 - perl $ACE_ROOT/bin/mwc.pl -type gnuace -workers 2 travis.mwc
 - make -j 6
-- if [ "$SONAR" == "1"]; then sonar-scanner; fi
+- if [ "$SONAR" == "1" ]; then sonar-scanner; fi
 - perl $ACE_ROOT/bin/auto_run_tests.pl -l $TAO_ROOT/bin/travis-ci.lst
