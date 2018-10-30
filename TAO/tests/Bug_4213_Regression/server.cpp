@@ -22,7 +22,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
       case '?':
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "usage:  %s "
+                           "usage: %s "
                            "-o <iorfile>"
                            "\n",
                            argv [0]),
