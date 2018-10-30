@@ -50,7 +50,7 @@ endif
 
 android_neon ?= 0
 ifeq ($(ANDROID_ABI),armeabi-v7a-with-neon)
-  ANDROID_ABI = armeabi-v7a
+  ANDROID_ABI := armeabi-v7a
   android_neon := 1
 endif
 
@@ -60,7 +60,7 @@ endif
 ifeq ($(ANDROID_ABI),armeabi-v7a)
   CROSS_COMPILE := arm-linux-androideabi-
   FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp
-  ifeq ($(android_neon),0)
+  ifeq ($(android_neon),1)
     FLAGS_C_CC += -mfpu=neon
   else
     FLAGS_C_CC += -mfpu=vfpv3-d16
