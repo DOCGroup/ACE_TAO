@@ -35,8 +35,7 @@ $client->DeleteFile($iorbase);
 $client->DeleteFile($socket_name);
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile -ORBEndpoint uiop://$server_socket");
-#$CL = $client->CreateProcess ("client", "-ORBdebuglevel $cdebug_level -k uioploc:///tmp/endpoint|Hello");
-$CL = $client->CreateProcess ("client", "-ORBdebuglevel $cdebug_level -k 'corbaloc:uiop:/tmp/endpoint|Hello'");
+$CL = $client->CreateProcess ("client", "-ORBdebuglevel $cdebug_level -k corbaloc:uiop:$server_socket|Hello");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
