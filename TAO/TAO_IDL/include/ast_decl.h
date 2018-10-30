@@ -175,11 +175,6 @@ public:
       , NT_param_holder             // Denotes a template param placeholder
       , NT_annotation_decl          // The declaration of an annotation
       , NT_annotation_appl          // Application of an annotation to an IDL element
-      /**
-       * Final product of applying an annotation application to an annotation
-       * declaration.
-       */
-      , NT_annotation
   };
 
   AST_Decl (NodeType type,
