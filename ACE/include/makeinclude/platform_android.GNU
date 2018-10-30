@@ -48,12 +48,23 @@ ifeq ($(ANDROID_ABI), neon)
   ANDROID_ABI := armeabi-v7a-with-neon
 endif
 
+android_neon ?= 0
+ifeq ($(ANDROID_ABI),armeabi-v7a-with-neon)
+  ANDROID_ABI = armeabi-v7a
+  android_neon := 1
+endif
+
 # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug
 # in some Cortex-A8 implementations
 
 ifeq ($(ANDROID_ABI),armeabi-v7a)
   CROSS_COMPILE := arm-linux-androideabi-
-  FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=vfpv3-d16
+  FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp
+  ifeq ($(android_neon),0)
+    FLAGS_C_CC += -mfpu=neon
+  else
+    FLAGS_C_CC += -mfpu=vfpv3-d16
+  endif
   LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
 endif
 
@@ -61,12 +72,6 @@ ifeq ($(ANDROID_ABI),arm64-v8a)
   CROSS_COMPILE := aarch64-linux-android-
   FLAGS_C_CC += -march=armv8-a
   LDFLAGS    += -march=armv8-a
-endif
-
-ifeq ($(ANDROID_ABI),armeabi-v7a-with-neon)
-  CROSS_COMPILE := arm-linux-androideabi-
-  FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp -mfpu=neon
-  LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
 endif
 
 ifeq ($(ANDROID_ABI),x86)
