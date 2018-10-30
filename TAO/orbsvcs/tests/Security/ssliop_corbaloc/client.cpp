@@ -182,7 +182,14 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
-  return test_->execute (naming_client_);
+  this->activate();
+  int rv = test_->execute (naming_client_);
+  {
+    CORBA::ORB_var orb = this->orbmgr_.orb();
+    orb->shutdown();
+  }
+  this->wait();
+  return rv;
 }
 
 CosNaming_Client::~CosNaming_Client (void)
@@ -1058,6 +1065,13 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
       return -1;
     }
 
+  return 0;
+}
+
+int CosNaming_Client::svc()
+{
+  CORBA::ORB_var orb = orbmgr_.orb();
+  orb->run ();
   return 0;
 }
 

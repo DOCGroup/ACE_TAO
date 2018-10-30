@@ -295,7 +295,7 @@ private:
  * the server is hidden in the class.  Just the <run> interface
  * is needed.
  */
-class CosNaming_Client
+class CosNaming_Client : public ACE_Task_Base
 {
 public:
   // = Initialization and termination methods.
@@ -308,6 +308,8 @@ public:
 
   /// Execute client example code.
   int run (void);
+
+  int svc (void);
 
   /// Initialize the client communication endpoint with server.
   int init (int argc, ACE_TCHAR **argv);
