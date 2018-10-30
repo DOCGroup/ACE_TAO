@@ -1,5 +1,3 @@
-
-
 This is a test that exercises the birectional GIOP connection
 implementation in TAO over SSLIOP connection.
 
@@ -24,6 +22,6 @@ would crash itself.
 
 To determine that no new connections have been opened or used the test
 relies on the fact that TAO uses a transport cache. It can provide us
-iwith the number of currently cashed transports before and after making an
+with the number of currently cashed transports before and after making an
 invocation. Both the client and at the server make this check.
 

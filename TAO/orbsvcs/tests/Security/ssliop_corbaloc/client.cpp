@@ -12,12 +12,10 @@
  */
 //=============================================================================
 
-
 #include "client.h"
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
-
-
+#include <orbsvcs/SecurityLevel2C.h>
 
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
@@ -182,7 +180,14 @@ CosNaming_Client::parse_args (void)
 int
 CosNaming_Client::run (void)
 {
-  return test_->execute (naming_client_);
+  this->activate();
+  int rv = test_->execute (naming_client_);
+  {
+    CORBA::ORB_var orb = this->orbmgr_.orb();
+    orb->shutdown();
+  }
+  this->wait();
+  return rv;
 }
 
 CosNaming_Client::~CosNaming_Client (void)
@@ -209,6 +214,21 @@ CosNaming_Client::init (int argc, ACE_TCHAR **argv)
         return -1;
 
       CORBA::ORB_var orb = this->orbmgr_.orb ();
+
+      // In order to allow collocated invocations we need to allow unsecured
+      // collocated invocations to the object else our security manager will
+      // block the collocated invocation unless you explicitly allow it
+      CORBA::Object_var sec_man =
+        orb->resolve_initial_references ("SecurityLevel2:SecurityManager");
+      SecurityLevel2::SecurityManager_var sec2manager =
+        SecurityLevel2::SecurityManager::_narrow (sec_man.in ());
+      SecurityLevel2::AccessDecision_var ad_tmp =
+        sec2manager->access_decision ();
+      TAO::SL2::AccessDecision_var ad =
+        TAO::SL2::AccessDecision::_narrow (ad_tmp.in ());
+      // Allow unsecured collocated invocations
+      ad->default_collocated_decision (true);
+
       return this->naming_client_.init (orb.in ());
     }
   catch (const CORBA::Exception& ex)
@@ -1058,6 +1078,13 @@ Persistent_Test_End::execute (TAO_Naming_Client &root_context)
       return -1;
     }
 
+  return 0;
+}
+
+int CosNaming_Client::svc()
+{
+  CORBA::ORB_var orb = orbmgr_.orb();
+  orb->run ();
   return 0;
 }
 
