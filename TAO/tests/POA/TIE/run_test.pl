@@ -65,14 +65,14 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level " .
                               "-f $server_iorfile6");
 
 $CL1 = $client1->CreateProcess ("client", "-ORBdebuglevel $debug_level " .
-                              "-a $client1_iorfile1 " .
-                              "-b $client1_iorfile2 " .
-                              "-c $client1_iorfile3 " .
-                              "-d $client1_iorfile4");
+                              "-a file://$client1_iorfile1 " .
+                              "-b file://$client1_iorfile2 " .
+                              "-c file://$client1_iorfile3 " .
+                              "-d file://$client1_iorfile4");
 
 $CL2 = $client2->CreateProcess ("client", "-ORBdebuglevel $debug_level " .
-                              "-e $client2_iorfile5 " .
-                              "-f $client2_iorfile6");
+                              "-e file://$client2_iorfile5 " .
+                              "-f file://$client2_iorfile6");
 
 $server_status = $SV->Spawn ();
 
