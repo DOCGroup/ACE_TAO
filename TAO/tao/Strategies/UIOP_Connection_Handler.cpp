@@ -120,7 +120,7 @@ TAO_UIOP_Connection_Handler::open (void*)
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("TAO (%P|%t) UIOP connection to server ")
+                ACE_TEXT ("TAO (%P|%t) - UIOP_Connection_Handler::open, connection to server ")
                 ACE_TEXT ("<%C> on %d\n"),
                 addr.get_path_name (), this->peer ().get_handle ()));
 
