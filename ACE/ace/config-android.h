@@ -200,7 +200,7 @@ There are conflicting versions of semun between ACE and linux/sem.h.
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
-#elif ACE_ANDROID_NDK_AT_LEAST(16, 0) || __ANDROID_API__ >= 21
+#elif ACE_ANDROID_NDK_AT_LEAST(15, 0) || __ANDROID_API__ >= 21
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
