@@ -171,7 +171,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
         continue;
       }
 
-    if (*ior == '/') // found key separator
+    if (*ior == endpoints[ndx].obj_key_sep_) // found key separator
       {
         ++ior;
         break;
