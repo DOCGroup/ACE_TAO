@@ -1,11 +1,10 @@
-
 # This file should allow ACE to be built on Linux, using the clang compiler.
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
-  CC  = clang
-  CXX = clang++
+  CC  ?= clang
+  CXX ?= clang++
 endif
 
 ifndef CXX_VERSION
