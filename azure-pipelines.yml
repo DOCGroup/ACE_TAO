@@ -100,8 +100,14 @@ jobs:
   timeoutInMinutes: 90
   pool:
     vmImage: ubuntu-16.04
+  variables:
+    CC: gcc-8
+    CXX: g++-8
   steps:
-  - script: sudo apt-get --yes update && sudo apt-get --yes install libxerces-c-dev libssl-dev
+  - script: |
+      sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+      sudo apt-get --yes update
+      sudo apt-get --yes install libxerces-c-dev libssl-dev g++-8
     displayName: install system package dependencies
   - powershell: |
       '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
