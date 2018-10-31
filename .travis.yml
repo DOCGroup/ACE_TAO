@@ -22,8 +22,7 @@ env:
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
-    - CXX=g++-8
-    - CC=gcc-8
+    - COMPILER=g++-8
 
 matrix:
   include:
@@ -37,7 +36,7 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - clang-7
-      env: CXX=clang++-7 CC=clang-7 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++-7 VERSIONED=1 TAO=1 ACETESTS=1
     - compiler: clang
       addons:
         apt:
@@ -48,7 +47,7 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - clang-6.0
-      env: CXX=clang++-6.0 CC=clang-6.0 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++-6.0 VERSIONED=1 TAO=1 ACETESTS=1
     - compiler: clang
       addons:
         apt:
@@ -59,7 +58,7 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - clang-5.0
-      env: CXX=clang++-5.0 CC=clang-5.0 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++-5.0 VERSIONED=1 TAO=1 ACETESTS=1
     - compiler: gcc
       addons:
         apt:
@@ -69,7 +68,7 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - g++-7
-      env: CXX=g++-7 CC=gcc-7 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=g++-7 VERSIONED=1 TAO=1 ACETESTS=1
     - compiler: gcc
       addons:
         apt:
@@ -79,9 +78,9 @@ matrix:
             - libxerces-c-dev
             - libssl-dev
             - g++-6
-      env: CXX=g++-6 CC=gcc-6 VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=g++-6 VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
-      env: CXX=clang++ VERSIONED=1 TAO=1 ACETESTS=1
+      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
@@ -136,6 +135,7 @@ before_script:
   - cat $ACE_ROOT/bin/MakeProjectCreator/config/default.features
   - cat $ACE_ROOT/ace/config.h
   - cat $ACE_ROOT/include/makeinclude/platform_macros.GNU
+  - if [[ "${COMPILER}" != "" ]]; then export CXX=${COMPILER}; fi
 
 script:
   - if [ "$FUZZ" == "1" ]; then exec perl $ACE_ROOT/bin/fuzz.pl; fi
