@@ -416,6 +416,9 @@ public:
     UTL_ScopedName *parameter_name,
     FE_Utils::T_Param_Info *info);
 
+  virtual AST_Annotation_Decl * create_annotation_decl (
+    UTL_ScopedName *name);
+
   virtual AST_Annotation_Appl * create_annotation_appl (
     UTL_ScopedName *name,
     AST_Annotation_Appl::Params *params);

@@ -62,6 +62,11 @@ be_visitor_scope::visit_scope (be_scope *node)
                             -1);
         }
 
+      if (d->node_type () == AST_Decl::NT_annotation_decl)
+        {
+          continue;
+        }
+
       be_decl *bd = be_decl::narrow_from_decl (d);
 
       // Set the scope node as "node" in which the code is being

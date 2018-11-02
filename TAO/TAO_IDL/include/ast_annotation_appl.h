@@ -5,7 +5,7 @@
 #ifndef AST_ANNOTATION_APPL_HEADER
 #define AST_ANNOTATION_APPL_HEADER
 
-#include "ast_decl.h"
+#include "ast_annotation_decl.h"
 #include "utl_identifier.h"
 #include "ast_expression.h"
 
@@ -14,7 +14,7 @@
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
  */
-class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Decl
+class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Annotation_Decl
 {
 public:
 
@@ -53,12 +53,10 @@ public:
 
   /**
    * Get name of the annoation as written by the user
-   * to compare to builtin annoations.
    */
   const char* original_name () const;
 
 private:
-
   /// Name of the Annotation as written
   const char *original_name_;
 

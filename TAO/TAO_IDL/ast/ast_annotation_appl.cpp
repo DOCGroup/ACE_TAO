@@ -4,7 +4,13 @@ AST_Decl::NodeType const AST_Annotation_Appl::NT = AST_Decl::NT_annotation_appl;
 
 AST_Annotation_Appl::AST_Annotation_Appl (
   UTL_ScopedName *name, AST_Annotation_Appl::Params *params)
-  : AST_Decl (NT, name), original_name_ (name->get_string_copy ()),
+  : AST_Decl (NT, name),
+    AST_Type (NT, name),
+    AST_ConcreteType (NT, name),
+    UTL_Scope (NT),
+    AST_Structure (name, false, false),
+    AST_Annotation_Decl (name),
+    original_name_ (name->get_string_copy ()),
     params_ (params)
 {
 }
