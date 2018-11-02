@@ -151,6 +151,8 @@ public:
     EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
     EIDL_TEMPLATE_NOT_ALIASED,  // ref to tmpl module scope must be via alias
     EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
+    EIDL_IDL_VERSION_ERROR,     // An error related to differences in IDL version
+    EIDL_UNSUPPORTED,           // Unsupported feature was used in input IDL
     EIDL_OK                     // No error
   };
 
@@ -385,6 +387,22 @@ public:
   // Reference to an item in the scope of a template
   // module was not via an alias.
   void template_scope_ref_not_aliased (AST_Decl *d);
+
+  /**
+   * Report IDL version error, with a given reason.
+   */
+  void idl_version_error (const char *reason);
+
+  /**
+   * Warn about an unsupported feature in the input IDL that can be ignored for
+   * the most part.
+   */
+  void unsupported_warning (const char *reason);
+
+  /**
+   * Report an unsupported feature in the input IDL that can't be ignored.
+   */
+  void unsupported_error (const char *reason);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

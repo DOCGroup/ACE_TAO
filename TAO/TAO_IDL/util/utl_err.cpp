@@ -235,19 +235,39 @@ error_string (UTL_Error::ErrorCode c)
       return "ref to template module scope must be via alias";
     case UTL_Error::EIDL_FIXED_UNSUPPORTED:
       return "fixed data types are not supported";
-  }
+    case UTL_Error::EIDL_IDL_VERSION_ERROR:
+      return "Invalid use of this version of IDL";
+    case UTL_Error::EIDL_UNSUPPORTED:
+      return ""; // Supply Case by Case Message
 
-  return 0;
+    default:
+      return "<This error code is missing a string in error_string "
+        "in utl_err.cpp!>";
+  }
 }
 
-// Print out an error message header on cerr
+/**
+ * Common Error Message Header
+ */
 static void
-idl_error_header (UTL_Error::ErrorCode c,
-                  long lineno,
-                  ACE_CString s)
+idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
+              idl_global->prog_name (),
+              s.c_str (),
+              lineno == -1 ? idl_global->lineno () : lineno,
+              error_string (c)));
+}
+
+/**
+ * Common Warning Message Header
+ */
+static void
+idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
+{
+  ACE_ERROR ((LM_WARNING,
+              "Warning - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
               lineno == -1 ? idl_global->lineno () : lineno,
@@ -787,10 +807,10 @@ UTL_Error::warning0 (UTL_Error::ErrorCode c)
 {
   if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
     {
-      idl_error_header (c,
-                        idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
-      ACE_ERROR ((LM_ERROR,
+      idl_warning_header (c,
+                          idl_global->lineno (),
+                          idl_global->filename ()->get_string ());
+      ACE_ERROR ((LM_WARNING,
                   "\n"));
     }
 }
@@ -801,11 +821,11 @@ UTL_Error::warning1 (UTL_Error::ErrorCode c,
 {
   if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
     {
-      idl_error_header (c,
+      idl_warning_header (c,
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       d->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   "\n"));
     }
 }
@@ -817,14 +837,14 @@ UTL_Error::warning2 (UTL_Error::ErrorCode c,
 {
   if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
     {
-      idl_error_header (c,
+      idl_warning_header (c,
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   ", "));
       d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   "\n"));
     }
 }
@@ -837,17 +857,17 @@ UTL_Error::warning3 (UTL_Error::ErrorCode c,
 {
   if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
     {
-      idl_error_header (c,
+      idl_warning_header (c,
                         idl_global->lineno (),
                         idl_global->filename ()->get_string ());
       d1->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   ", "));
       d2->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   ", "));
       d3->name ()->dump (*ACE_DEFAULT_LOG_STREAM);
-      ACE_ERROR ((LM_ERROR,
+      ACE_ERROR ((LM_WARNING,
                   "\n"));
     }
 }
@@ -1334,12 +1354,12 @@ void
 UTL_Error::name_case_warning (char *b,
                               char *n)
 {
-  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+  if (idl_global->print_warnings ())
     {
-      idl_error_header (EIDL_NAME_CASE_WARNING,
-                        idl_global->lineno (),
-                        idl_global->filename ()->get_string ());
-      ACE_ERROR ((LM_ERROR,
+      idl_warning_header (EIDL_NAME_CASE_WARNING,
+                          idl_global->lineno (),
+                          idl_global->filename ()->get_string ());
+      ACE_ERROR ((LM_WARNING,
                   "\"%C\" and \"%C\"\n",
                   b,
                   n));
@@ -1361,7 +1381,7 @@ UTL_Error::idl_keyword_error (char *n)
 void
 UTL_Error::idl_keyword_warning (char *n)
 {
-  if (! (idl_global->compile_flags () & IDL_CF_NOWARNINGS))
+  if (idl_global->print_warnings ())
     {
       idl_error_header (EIDL_KEYWORD_WARNING,
                         idl_global->lineno (),
@@ -1634,26 +1654,23 @@ UTL_Error::anonymous_type_diagnostic (void)
       return;
     }
 
-  bool aw = idl_global->anon_warning ();
-  bool nw = (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
-
-  if (aw && nw)
+  if (idl_global->anon_warning ())
     {
-      return;
+      if (idl_global->print_warnings ())
+        {
+          idl_warning_header (EIDL_ANONYMOUS_WARNING,
+                              idl_global->lineno (),
+                              idl_global->filename ()->get_string ());
+          idl_global->set_err_count (idl_global->err_count () + 1);
+          ACE_ERROR ((LM_WARNING, "\n"));
+        }
     }
-
-  ErrorCode ec =
-    (aw ? EIDL_ANONYMOUS_WARNING : EIDL_ANONYMOUS_ERROR);
-
-  idl_error_header (ec,
-                    idl_global->lineno (),
-                    idl_global->filename ()->get_string ());
-
-  ACE_ERROR ((LM_ERROR, "\n"));
-
-  if (ec == EIDL_ANONYMOUS_ERROR)
+  else
     {
-      idl_global->set_err_count (idl_global->err_count () + 1);
+      idl_error_header (EIDL_ANONYMOUS_ERROR,
+                        idl_global->lineno (),
+                        idl_global->filename ()->get_string ());
+      ACE_ERROR ((LM_ERROR, "\n"));
     }
 }
 
@@ -1669,3 +1686,38 @@ UTL_Error::template_scope_ref_not_aliased (AST_Decl *d)
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
 
+void
+UTL_Error::idl_version_error (const char *reason)
+{
+  idl_error_header (
+    EIDL_IDL_VERSION_ERROR,
+    idl_global->lineno (), idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR,
+    ACE_TEXT ("\n%C\nCurrent IDL version is %C, use --idl-version VERSION to ")
+    ACE_TEXT ("set the IDL version to use.\n"),
+    reason, idl_global->idl_version_.to_string ()
+    ));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::unsupported_error (const char *reason)
+{
+  idl_error_header (
+    EIDL_UNSUPPORTED,
+    idl_global->lineno (), idl_global->filename ()->get_string ());
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::unsupported_warning (const char *reason)
+{
+  if (idl_global->print_warnings ())
+    {
+      idl_warning_header (
+        EIDL_UNSUPPORTED,
+        idl_global->lineno (), idl_global->filename ()->get_string ());
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+    }
+}
