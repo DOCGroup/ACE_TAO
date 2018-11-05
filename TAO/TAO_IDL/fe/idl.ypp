@@ -194,6 +194,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   AST_Annotation_Appl::Param *annotation_param_val;
   AST_Annotation_Appl::Params *annotation_params_val;
   AST_Decls *decls_val;
+  Decl_Annotations_Pair *decl_annotations_pair_val;
 }
 
 /*
@@ -300,7 +301,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   type_spec simple_type_spec constructed_type_spec
 %type <dcval>   template_type_spec sequence_type_spec string_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
-%type <dcval>   array_declarator op_type_spec seq_head wstring_type_spec
+%type <dcval>   array_declarator op_type_spec wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
 %type <dcval>   fixed_type_spec
 %type <dcval>   definition fixed_definition module const_dcl struct_forward_type
@@ -370,6 +371,8 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <annotation_params_val> annotation_appl_params_maybe annotation_appl_params
 %type <annotation_params_val> named_annotation_appl_params more_named_annotation_appl_params
 %type <annotation_param_val> named_annotation_appl_param
+%type <decl_annotations_pair_val> seq_head
+
 %type <decls_val> member_i;
 %%
 
@@ -385,7 +388,7 @@ definitions
 
 at_least_one_definition
         /*
-         * This is broken up into 2 rules to avoid a grammer abiguity caused
+         * This is broken up into 2 rules to avoid a grammer ambiguity caused
          * by annotations which causes shift/reduce conflicts in bison.
          */
         : definitions at_least_one_annotation definition
@@ -397,12 +400,8 @@ at_least_one_definition
             }
           else
             {
-              ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("WARNING: in %C on line %d: defined element has ")
-                ACE_TEXT ("annotations, but its type does not support them."),
-                idl_global->filename ()->get_string (),
-                idl_global->lineno ()
-                ));
+              idl_global->err ()-> unsupported_warning(
+                "Annotating this type of definition is not supported");
             }
         }
         | definitions definition
@@ -1589,13 +1588,6 @@ scoped_names
         ;
 
 scoped_name
-/*
-scoped_name
-  : id
-  | IDL_SCOPE_DELIMITOR id
-  | scoped_name IDL_SCOPE_DELIMITOR id
-  ;
-*/
         : id
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SN_IDSeen);
@@ -2314,7 +2306,7 @@ at_least_one_annotation
         : annotations_maybe annotation_appl
         {
           AST_Annotation_Appls *annotations = $1;
-          annotations->insert_tail ($2);
+          annotations->push_back ($2);
           $$ = annotations;
         }
         ;
@@ -2323,7 +2315,7 @@ annotations_maybe
         : annotations_maybe annotation_appl
         {
           AST_Annotation_Appls *annotations = $1;
-          annotations->insert_tail ($2);
+          annotations->push_back ($2);
           $$ = annotations;
         }
         | %empty
@@ -2337,18 +2329,11 @@ annotation_appl
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             {
-              ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ERROR: in %C on line %d:\n")
-                ACE_TEXT ("Annotations are an IDL4 feature, ")
-                ACE_TEXT ("they not supported in IDL %C!\n"),
-                idl_global->filename ()->get_string (),
-                idl_global->lineno (),
-                idl_global->idl_version_.to_string ()
-                ));
-              idl_global->err ()->syntax_error (idl_global->parse_state ());
+              idl_global->err ()->idl_version_error (
+                "Annotations are an IDL4 feature");
             }
 
-            $$ = idl_global->gen ()->create_annotation_appl ($2, $3);
+          $$ = idl_global->gen ()->create_annotation_appl ($2, $3);
         }
         ;
 
@@ -2370,7 +2355,7 @@ annotation_appl_params
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = 0;
           param->expr = $1;
-          params->insert_head (param);
+          params->push (param);
           $$ = params;
         }
         | named_annotation_appl_params
@@ -2383,7 +2368,7 @@ named_annotation_appl_params
         : named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $2;
-          params->insert_head ($1);
+          params->push ($1);
           $$ = params;
         }
 
@@ -2391,7 +2376,7 @@ more_named_annotation_appl_params
         : ',' named_annotation_appl_param more_named_annotation_appl_params
         {
           AST_Annotation_Appl::Params *params = $3;
-          params->insert_head ($2);
+          params->push ($2);
           $$ = params;
         }
         | %empty
@@ -2418,7 +2403,7 @@ type_dcl
         }
         type_declarator
         {
-          $$ = 0;
+          $$ = $3;
         }
         | struct_type
         {
@@ -2531,6 +2516,8 @@ type_declarator :
               delete $3;
               $3 = 0;
             }
+
+          $$ = t;
         }
         ;
 
@@ -2904,10 +2891,10 @@ member  :
         {
           if ($3)
             {
-              AST_DeclsIter i (*$3);
-              for (AST_Decl *d = 0; i.next (d); i.advance ())
+              AST_Decls & decls = *$3;
+              for (size_t i = 0; i < decls.size (); i++)
                 {
-                  d->annotation_appls ($2);
+                  decls[i]->annotation_appls ($2);
                 }
             }
         }
@@ -2971,7 +2958,7 @@ member_i :
                                             d->name (),
                                             $<vival>0
                                           );
-                  members->insert_tail (f);
+                  members->push_back (f);
                   (void) s->fe_add_field (f);
                 }
             }
@@ -3069,7 +3056,6 @@ union_type
             {
               AST_ConcreteType *tp =
                 AST_ConcreteType::narrow_from_decl ($7);
-              tp->annotation_appls($6);
 
               if (tp == 0)
                 {
@@ -3088,6 +3074,7 @@ union_type
                   AST_Union *e = AST_Union::narrow_from_scope (top);
 
                   e->redefine (u);
+                  e->disc_annotations ($6); // Set Discriminator Annotations
 
                   u->destroy ();
                   delete u;
@@ -3621,6 +3608,17 @@ sequence_type_spec
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
 
+          AST_Sequence *seq = 0;
+          Decl_Annotations_Pair *seq_head = $1;
+          AST_Decl *type = 0;
+          AST_Annotation_Appls *type_annotations = 0;
+          if (seq_head)
+            {
+              type = seq_head->decl;
+              type_annotations = seq_head->annotations;
+            }
+          delete seq_head;
+
           /*
            * Remove sequence marker from scopes stack.
            */
@@ -3653,15 +3651,10 @@ sequence_type_spec
             {
               idl_global->err ()->coercion_error ($4,
                                                   AST_Expression::EV_ulong);
-              $<dcval>$ = 0;
             }
-          else if (0 == $1)
+          else if (type)
             {
-              $<dcval>$ = 0;
-            }
-          else
-            {
-              AST_Type *tp = AST_Type::narrow_from_decl ($1);
+              AST_Type *tp = AST_Type::narrow_from_decl (type);
 
               if (0 == tp)
                 {
@@ -3673,7 +3666,7 @@ sequence_type_spec
                   UTL_ScopedName sn (&id,
                                      0);
 
-                  $$ =
+                  seq =
                     idl_global->gen ()->create_sequence (
                                             $4,
                                             tp,
@@ -3681,6 +3674,7 @@ sequence_type_spec
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
+                  seq->base_type_annotations (type_annotations);
 
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
@@ -3692,11 +3686,23 @@ sequence_type_spec
 
           delete ev;
           ev = 0;
+          $$ = seq;
         }
         | seq_head
           '>'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceQsSeen);
+
+          AST_Sequence *seq = 0;
+          Decl_Annotations_Pair *seq_head = $1;
+          AST_Decl *type = 0;
+          AST_Annotation_Appls *type_annotations = 0;
+          if (seq_head)
+            {
+              type = seq_head->decl;
+              type_annotations = seq_head->annotations;
+            }
+          delete seq_head;
 
           /*
            * Remove sequence marker from scopes stack.
@@ -3711,13 +3717,9 @@ sequence_type_spec
           /*
            * Create a node representing a sequence.
            */
-          if ($1 == 0)
+          if (type)
             {
-              $$ = 0;
-            }
-          else
-            {
-              AST_Type *tp = AST_Type::narrow_from_decl ($1);
+              AST_Type *tp = AST_Type::narrow_from_decl (type);
 
               if (tp == 0)
                 {
@@ -3729,7 +3731,7 @@ sequence_type_spec
                   UTL_ScopedName sn (&id, 0);
                   ACE_CDR::ULong bound = 0UL;
 
-                  $$ =
+                  seq =
                     idl_global->gen ()->create_sequence (
                         idl_global->gen ()->create_expr (
                                                 bound,
@@ -3740,6 +3742,7 @@ sequence_type_spec
                         s->is_local (),
                         s->is_abstract ()
                       );
+                  seq->base_type_annotations (type_annotations);
 
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
@@ -3748,6 +3751,8 @@ sequence_type_spec
                     }
                 }
             }
+
+          $$ = seq;
         }
         ;
 
@@ -3768,8 +3773,10 @@ seq_head :
         annotations_maybe simple_type_spec
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_SequenceTypeSeen);
-          $6->annotation_appls ($5);
-          $$ = $6;
+          Decl_Annotations_Pair *seq_head = new Decl_Annotations_Pair;
+          seq_head->decl = $6;
+          seq_head->annotations = $5;
+          $$ = seq_head;
         }
         ;
 

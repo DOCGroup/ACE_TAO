@@ -10,7 +10,7 @@ be_annotation_decl::be_annotation_decl (UTL_ScopedName *name)
 }
 
 int
-be_annotation_decl::accept (be_visitor *visitor)
+be_annotation_decl::accept (be_visitor *)
 {
   return 0;
 }

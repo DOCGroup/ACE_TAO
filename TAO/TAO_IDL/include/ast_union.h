@@ -142,8 +142,8 @@ public:
    * Get and Set Annotations on the discriminator
    */
   ///{
-  AST_Annotation_Appls *disc_annotations();
-  void disc_annotations(AST_Annotation_Appls *annotations);
+  AST_Annotation_Appls *disc_annotations ();
+  void disc_annotations (AST_Annotation_Appls *annotations);
   ///}
 
 protected:

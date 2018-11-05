@@ -180,8 +180,9 @@ union YYSTYPE
   AST_Annotation_Appl::Param *annotation_param_val;
   AST_Annotation_Appl::Params *annotation_params_val;
   AST_Decls *decls_val;
+  Decl_Annotations_Pair *decl_annotations_pair_val;
 
-#line 185 "fe/idl.tab.hpp" /* yacc.c:1913  */
+#line 186 "fe/idl.tab.hpp" /* yacc.c:1913  */
 };
 
 typedef union YYSTYPE YYSTYPE;

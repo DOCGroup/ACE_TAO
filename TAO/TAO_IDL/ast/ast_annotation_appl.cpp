@@ -27,18 +27,19 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
   if (params_)
     {
       dump_i (o, "(");
-      size_t param_count = params_->size ();
-      for (size_t i = 0; i < param_count; i++)
+      Params::ITERATOR iter (*params_);
+      Param **i;
+      while (!iter.done ())
         {
-          Param *p;
-          params_->get (p, i);
-          if (p->id)
+          iter.next (i);
+          if ((*i)->id)
             {
-              p->id->dump (o);
+              (*i)->id->dump (o);
               dump_i (o, " = ");
             }
-          p->expr->dump (o);
-          if (i != (param_count - 1))
+          (*i)->expr->dump (o);
+          iter.advance ();
+          if (!iter.done ())
             {
               dump_i (o, ", ");
             }
@@ -61,3 +62,6 @@ const char *AST_Annotation_Appl::original_name () const
 {
   return original_name_;
 }
+
+IMPL_NARROW_FROM_DECL (AST_Annotation_Appl)
+IMPL_NARROW_FROM_SCOPE (AST_Annotation_Appl)

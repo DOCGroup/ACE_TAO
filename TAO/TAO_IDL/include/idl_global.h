@@ -814,6 +814,18 @@ public:
    */
   void print_help ();
 
+  /**
+   * Returns true if warnings are to be shown
+   */
+  bool print_warnings ();
+
+  /**
+   * Eval string as though it was included in the IDL file. Results are added
+   * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
+   * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
+   */
+  void eval (const char *string);
+
 private:
   // Data
   UTL_ScopeStack             pd_scopes;              // Store scopes stack

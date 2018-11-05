@@ -9,7 +9,8 @@
 #include "utl_identifier.h"
 #include "ast_expression.h"
 
-#include "ace/Containers.h"
+#include "ace/Containers_T.h"
+#include "ace/Vector_T.h"
 
 /**
  * Abstract Syntax Tree Node for an application of an annotation.
@@ -17,7 +18,6 @@
 class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Annotation_Decl
 {
 public:
-
   /**
    * Store Optional Annotation Parameters
    */
@@ -26,8 +26,7 @@ public:
     Identifier *id;
     AST_Expression *expr;
   };
-  typedef ACE_DLList<Param> Params;
-  typedef ACE_DLList_Iterator<Param> ParamsIter;
+  typedef ACE_Unbounded_Stack<Param*> Params;
   ///}
 
   /**
@@ -37,8 +36,11 @@ public:
 
   virtual ~AST_Annotation_Appl ();
 
-  // Narrowing
+  /// Narrowing
+  ///{
   DEF_NARROW_FROM_DECL (AST_Annotation_Appl);
+  DEF_NARROW_FROM_SCOPE (AST_Annotation_Appl);
+  ///}
 
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -64,7 +66,11 @@ private:
   Params *params_;
 };
 
-typedef ACE_DLList<AST_Annotation_Appl> AST_Annotation_Appls;
-typedef ACE_DLList_Iterator<AST_Annotation_Appl> AST_Annotation_Appls_Iter;
+typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
+
+struct Decl_Annotations_Pair {
+  AST_Decl *decl;
+  AST_Annotation_Appls *annotations;
+};
 
 #endif

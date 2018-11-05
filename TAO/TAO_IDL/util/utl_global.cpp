@@ -73,10 +73,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "fe_private.h"
 #include "nr_extern.h"
+#include "ast_extern.h"
 
 #include "ast_root.h"
 #include "ast_generator.h"
 #include "ast_valuetype.h"
+#include "ast_annotation_decl.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -1901,4 +1903,39 @@ IDL_GlobalData::print_version ()
 {
   print_version_ = true;
   parse_args_exit (0);
+}
+
+bool
+IDL_GlobalData::print_warnings ()
+{
+  return ! (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
+}
+
+extern void tao_yy_scan_string (const char *);
+extern void tao_yylex_destroy ();
+
+void
+IDL_GlobalData::eval (const char *string)
+{
+
+  UTL_String *utl_string = 0;
+  ACE_NEW (utl_string, UTL_String ("builtin", true));
+  idl_global->idl_src_file (utl_string);
+
+  tao_yy_scan_string (string);
+
+  FE_yyparse ();
+  idl_global->check_primary_keys ();
+  AST_check_fwd_decls ();
+
+  // DRV_refresh
+  tao_yylex_destroy ();
+
+  idl_global->set_err_count (0);
+  idl_global->set_filename (0);
+  idl_global->set_main_filename (0);
+  idl_global->set_real_filename (0);
+  idl_global->set_stripped_filename (0);
+  idl_global->set_lineno (-1);
+  idl_global->reset_flag_seen ();
 }

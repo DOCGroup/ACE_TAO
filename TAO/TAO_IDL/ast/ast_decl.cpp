@@ -1557,9 +1557,9 @@ AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 {
   if (annotation_appls_)
     {
-      AST_Annotation_Appls_Iter i (*annotation_appls_);
-      for (AST_Annotation_Appl *a = 0; i.next (a); i.advance ())
+      for (size_t i = 0; i < annotation_appls_->size (); i++)
         {
+          AST_Annotation_Appl *a = (*annotation_appls_)[i];
           a->dump (o);
           if (print_inline)
             {

@@ -78,7 +78,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
-#include "ace/Containers.h"
+#include "ace/Vector_T.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -88,7 +88,7 @@ class UTL_String;
 class ast_visitor;
 
 class AST_Annotation_Appl;
-typedef ACE_DLList<AST_Annotation_Appl> AST_Annotation_Appls;
+typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
 
 // This class is needed (only for g++) to get around a bug in g++ which
 // causes virtual operations to not be looked up correctly if an operation
@@ -449,7 +449,6 @@ private:
   // Non-top-level version of set_prefix_with_typeprefix.
 };
 
-typedef ACE_DLList<AST_Decl> AST_Decls;
-typedef ACE_DLList_Iterator<AST_Decl> AST_DeclsIter;
+typedef ACE_Vector<AST_Decl*> AST_Decls;
 
 #endif           // _AST_DECL_AST_DECL_HH
