@@ -1911,26 +1911,34 @@ IDL_GlobalData::print_warnings ()
   return ! (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
 }
 
-extern void tao_yy_scan_string (const char *);
-extern void tao_yylex_destroy ();
+/*
+ * These functions are generated in idl.yy.cpp but for some reason they are not
+ * put in the header file, so to use them we must declare them here.
+ */
+struct yy_buffer_state;
+extern yy_buffer_state *tao_yy_scan_string (const char *);
+extern int tao_yylex_destroy ();
 
 void
 IDL_GlobalData::eval (const char *string)
 {
-
+  // Name this pseudo-file "builtin"
   UTL_String *utl_string = 0;
   ACE_NEW (utl_string, UTL_String ("builtin", true));
   idl_global->idl_src_file (utl_string);
 
+  // Set up flex to read from string
   tao_yy_scan_string (string);
 
+  // emulate DRV_drive()
   FE_yyparse ();
   idl_global->check_primary_keys ();
   AST_check_fwd_decls ();
 
-  // DRV_refresh
+  // Have flex Cleanup
   tao_yylex_destroy ();
 
+  // emulate DRV_refresh()
   idl_global->set_err_count (0);
   idl_global->set_filename (0);
   idl_global->set_main_filename (0);
