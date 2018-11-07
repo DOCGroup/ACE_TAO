@@ -80,17 +80,14 @@
 #  define ACE_LACKS_SYS_MSG_H
 #  define ACE_LACKS_SYS_SHM_H
 #  define ACE_LACKS_SYSV_SHMEM
+#else
+#  define ACE_HAS_SEMUN
 #endif
 
 // NDK has telldir() and seekdir() by 15c
 #if ACE_ANDROID_NDK_LESS_THAN(15, 2) || __ANDROID_API__ < 23
 #  define ACE_LACKS_TELLDIR
 #  define ACE_LACKS_SEEKDIR
-#endif
-
-// semun was added to sys/sem.h in r15
-#if ACE_ANDROID_NDK_AT_LEAST(15, 0) || __ANDROID_API__ >= 21
-#  define ACE_HAS_SEMUN
 #endif
 
 // fd_mask was added in r17c
