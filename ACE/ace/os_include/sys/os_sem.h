@@ -29,7 +29,7 @@
 #  include /**/ <sys/sem.h>
 #else
 #  ifdef ACE_HAS_LINUX_SEM_H
-#    include <linux/sem.h>
+#    include /**/ <linux/sem.h>
 #  endif
 #endif /* !ACE_LACKS_SYS_SEM_H */
 

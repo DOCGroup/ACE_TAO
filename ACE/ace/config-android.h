@@ -88,9 +88,10 @@
 #  define ACE_LACKS_SEEKDIR
 #endif
 
-// semun was added to sys/sem.h in r15
+// semun was added to sys/sem.h in r15 but in r13 it does
+// exist as type but isn't usable
 #if __ANDROID_API__ >= 21
-#  if ACE_ANDROID_NDK_AT_LEAST(15, 0)
+#  if ACE_ANDROID_NDK_AT_LEAST(13, 0)
 #   define ACE_HAS_SEMUN
 #  endif
 #endif
