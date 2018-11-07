@@ -90,11 +90,8 @@
 
 // semun was added to sys/sem.h in r15
 #if __ANDROID_API__ >= 21
-#  define ACE_HAS_SEMUN
-#  if ACE_ANDROID_NDK_LESS_THAN(15, 0)
-#    error \
-This combination of Android NDK < r15 and API >= 21 is not supported. \
-There are conflicting versions of semun between ACE and linux/sem.h.
+#  if ACE_ANDROID_NDK_AT_LEAST(15, 0)
+#   define ACE_HAS_SEMUN
 #  endif
 #endif
 
