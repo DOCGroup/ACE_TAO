@@ -88,13 +88,6 @@
 #  define ACE_LACKS_SEEKDIR
 #endif
 
-// semun was added to sys/sem.h in r15
-#if __ANDROID_API__ >= 21
-#  if ACE_ANDROID_NDK_AT_LEAST(15, 0)
-#   define ACE_HAS_SEMUN
-#  endif
-#endif
-
 // fd_mask was added in r17c
 #if ACE_ANDROID_NDK_LESS_THAN(17, 2)
 #  define ACE_LACKS_FD_MASK
