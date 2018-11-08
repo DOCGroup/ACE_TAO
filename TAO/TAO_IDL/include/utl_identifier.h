@@ -111,11 +111,11 @@ public:
   // Cleanup function.
 
 private:
-    // Storage for data.
-    char *pv_string;
+  // Storage for data.
+  char *pv_string;
 
-    // Did the IDL string have a leading underscore?
-    bool escaped_;
+  // Did the IDL string have a leading underscore?
+  bool escaped_;
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH
