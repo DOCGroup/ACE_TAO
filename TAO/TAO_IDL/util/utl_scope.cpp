@@ -1822,7 +1822,9 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 
   if (0 < this->pd_locals_used)
     {
-      o << ACE_TEXT ("\n/* Locally defined types: */\n");
+      o << '\n';
+      idl_global->indent ()->skip_to (o);
+      o << ACE_TEXT ("/* Locally defined types: */\n");
 
       for (UTL_ScopeActiveIterator i (this, IK_localtypes);
            !i.is_done ();
