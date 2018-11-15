@@ -362,16 +362,18 @@ run_main (int, ACE_TCHAR *[])
 
   // A quick user-defined data block test, then the main event
   User_Data *user_data_block = 0; 
-  ACE_NEW_RETURN (user_data_block,
-		  User_Data (),
-		  -1);
+  ACE_NEW_MALLOC_RETURN (user_data_block,
+                         static_cast<User_Data *>(
+                           ACE_Allocator::instance()->malloc(sizeof (User_Data))),
+                         User_Data (),
+                         -1);
 
   // Create a new message block referring to the User_Data block and
   // ensure it is released and freed correctly.
   ACE_Message_Block *wrapper_mb = 0;
   ACE_NEW_RETURN (wrapper_mb,
-		  ACE_Message_Block (user_data_block),
-		  -1);
+                  ACE_Message_Block (user_data_block),
+                  -1);
 
   wrapper_mb->release ();
   wrapper_mb = 0;
