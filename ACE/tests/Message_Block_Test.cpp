@@ -361,7 +361,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
 
   // A quick user-defined data block test, then the main event
-  User_Data *user_data_block = 0; 
+  User_Data *user_data_block = 0;
   ACE_NEW_MALLOC_RETURN (user_data_block,
                          static_cast<User_Data *>(
                            ACE_Allocator::instance()->malloc(sizeof (User_Data))),
