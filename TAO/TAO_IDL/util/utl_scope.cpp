@@ -1229,8 +1229,8 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work = idl_global->root ();
     }
 
-  AST_Decl *first_found_final_parent_decl= 0;
-  const bool searching_module_path= (e->length () != 1);
+  AST_Decl *first_found_final_parent_decl = 0;
+  const bool searching_module_path = (e->length () != 1);
   AST_Decl *d = searching_module_path ?
     work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
     work->lookup_by_name_r (e, full_def_only);
@@ -1832,10 +1832,10 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
         {
           AST_Decl *d = i.item ();
 
-          if (!d->imported ())
+          if (d->should_be_dumped () && !d->imported ())
             {
               idl_global->indent ()->skip_to (o);
-              o << *d << ACE_TEXT ("\n");
+              o << *d << ACE_TEXT (";\n");
             }
         }
     }
@@ -1852,7 +1852,7 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
         {
           AST_Decl *d = j.item ();
 
-          if (!d->imported ())
+          if (d->should_be_dumped () && !d->imported ())
             {
               idl_global->indent ()->skip_to (o);
               o << *d << ACE_TEXT (";\n");

@@ -115,6 +115,9 @@ IDL_GlobalData::IDL_GlobalData (void)
     parse_args_exit_status_ (0),
     print_help_ (false),
     print_version_ (false),
+    in_eval_ (false),
+    dump_builtins_ (false),
+    just_dump_builtins_ (false),
     pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
@@ -537,6 +540,10 @@ IDL_GlobalData::set_compile_flags (long cf)
   if (cf & IDL_CF_ONLY_USAGE)
     {
       print_help ();
+    }
+  if (cf & IDL_CF_DUMP_AST)
+    {
+      syntax_only_ = true;
     }
   this->pd_compile_flags = cf;
 }
@@ -1922,6 +1929,8 @@ extern int tao_yylex_destroy ();
 void
 IDL_GlobalData::eval (const char *string)
 {
+  in_eval_ = true;
+
   // Name this pseudo-file "builtin"
   UTL_String *utl_string = 0;
   ACE_NEW (utl_string, UTL_String ("builtin", true));
@@ -1946,4 +1955,13 @@ IDL_GlobalData::eval (const char *string)
   idl_global->set_stripped_filename (0);
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
+
+  in_eval_ = false;
+}
+
+void
+IDL_GlobalData::dump_ast ()
+{
+  idl_global->set_compile_flags (idl_global->compile_flags ()
+                                 | IDL_CF_DUMP_AST);
 }

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -66,13 +66,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
-// Rock bottom of AST class hierarchy
-//
-// This class is inherited by all classes which represent named entities
-// in IDL. It implements the line and file recording mechanism and also
-// records the type of the node. This may be useful for BEs to be able
-// to distinguish the real type of a node given only a superclass.
-
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
 
@@ -90,12 +83,13 @@ class ast_visitor;
 class AST_Annotation_Appl;
 typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
 
-// This class is needed (only for g++) to get around a bug in g++ which
-// causes virtual operations to not be looked up correctly if an operation
-// is defined in more than one virtual public base class. This class makes
-// the hierarchy rooted in a single class, thereby eliminating the situation
-// that causes the bug to appear
-
+/**
+ * This class is needed (only for g++) to get around a bug in g++ which
+ * causes virtual operations to not be looked up correctly if an operation
+ * is defined in more than one virtual public base class. This class makes
+ * the hierarchy rooted in a single class, thereby eliminating the situation
+ * that causes the bug to appear
+ */
 class TAO_IDL_FE_Export COMMON_Base
 {
 protected:
@@ -120,6 +114,18 @@ protected:
   bool is_abstract_;
 };
 
+/**
+ * AST_Decl is the base class for almost all AST nodes.
+ *
+ * AST_* classes that do not inherit from AST_Decl include AST_Expression and
+ * AST_Union_Label. AST_Decls have a node type (a value from the enum
+ * AST_Decl::NodeType) and a name (a UTL_ScopedName). The node type may be
+ * useful for BEs to be able to distinguish the real type of a node given only
+ * a superclass. Additionally AST_Decl nodes record the scope of definition,
+ * the file name and line number where they were defined, whether this was
+ * defined by the compiler, whether this is the main file or an #include'd
+ * file, among other things.
+ */
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {
 public:
@@ -336,7 +342,8 @@ public:
   /**
    * Dump AST Object to Stream
    *
-   * Uses dump_annotations before dumping if object has annotations
+   * Uses dump_annotations() before dumping if an object has annotations and is
+   * annotatable.
    */
   friend ACE_OSTREAM_TYPE &
   operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d);
@@ -355,6 +362,16 @@ public:
    * Return true if annotations are dumped at all when using <<
    */
   virtual bool auto_dump_annotations () const;
+
+  /**
+   * True if defined using idl_global->eval()
+   */
+  virtual bool builtin () const;
+
+  /**
+   * True if the node should be dumped
+   */
+  virtual bool should_be_dumped () const;
 
 protected:
   // These are not private because they're used by
@@ -386,6 +403,11 @@ protected:
 
   /// Annotations applied to this IDL element
   AST_Annotation_Appls* annotation_appls_;
+
+  /**
+   * True if defined using idl_global->eval()
+   */
+  bool builtin_;
 
 private:
   // Data

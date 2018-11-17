@@ -89,9 +89,11 @@ class UTL_Error;
 class UTL_String;
 class UTL_Indenter;
 
-// idl_global.hh
-//
-// Defines a class containing all front end global data.
+/**
+ * \file Defines a class containing all front end global data.
+ *
+ * Corresponding source file is util/utl_global.cpp.
+ */
 
 class TAO_IDL_FE_Export IDL_GlobalData
 {
@@ -398,6 +400,21 @@ public:
    * Print compiler version when finished processing cli arguments.
    */
   bool print_version_;
+
+  /**
+   * If true, we are inside the eval() function
+   */
+  bool in_eval_;
+
+  /**
+   * Dump contructs defined using eval() if true.
+   */
+  bool dump_builtins_;
+
+  /**
+   * If true, Dump only the IDL defined using eval() and exit
+   */
+  bool just_dump_builtins_;
 
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);
@@ -825,6 +842,11 @@ public:
    * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
    */
   void eval (const char *string);
+
+  /**
+   * Dump AST after parsing files and exit
+   */
+  void dump_ast ();
 
 private:
   // Data

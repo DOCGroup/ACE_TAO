@@ -281,8 +281,8 @@ DRV_drive (const char *s)
 
   if (idl_global->syntax_only_)
     {
-      DRV_cleanup ();
-      exit (0);
+      // Set error count for syntax errors
+      throw Bailout (idl_global->err_count ());
     }
 
   // Call the main entry point for the BE.
@@ -353,18 +353,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("Use \"-h\" or \"--help\" to see valid options.\n")));
             }
-          DRV_cleanup ();
-          return status;
-        }
-
-      // If there are no input files, and we are not using the
-      // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && 0 == idl_global->recursion_start ())
-        {
-          ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IDL: No input files\n")));
-
-          throw Bailout ();
+          throw Bailout (status);
         }
 
       AST_Generator *gen = be_util::generator_init ();
@@ -389,6 +378,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Does various things in various backends.
       BE_post_init (DRV_files, DRV_nfiles);
+
+      // Dump Builtin IDL AST
+      if (idl_global->just_dump_builtins_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+            ACE_TEXT ("Dump Builtin IDL defined by Compiler:\n")));
+          idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
+          throw Bailout (idl_global->err_count ());
+        }
+
+      // If there are no input files, and we are not using the
+      // directory recursion option, there's no sense going any further.
+      if (0 == DRV_nfiles && 0 == idl_global->recursion_start ())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IDL: No input files\n")));
+
+          throw Bailout ();
+        }
 
       FILE *output_file = 0;
 
@@ -421,13 +429,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_OS::unlink (idl_global->big_file_name ());
         }
     }
-  catch (Bailout)
+  catch (const Bailout &bailout)
     {
-      // Incrementing here may be redundant, but the error count
-      // is the exit value, and we want to make sure it isn't 0
-      // if there was in fact an error. If a non-zero value is
-      // off by 1, it's not so important.
-      idl_global->set_err_count (idl_global->err_count () + 1);
+      if (bailout.increment_errors_)
+        {
+          // Incrementing here may be redundant, but the error count
+          // is the exit value, and we want to make sure it isn't 0
+          // if there was in fact an error. If a non-zero value is
+          // off by 1, it's not so important.
+          idl_global->set_err_count (idl_global->err_count () + 1);
+        }
+      else
+        {
+          idl_global->set_err_count (bailout.errors_);
+        }
     }
 
   int const retval = idl_global->err_count ();

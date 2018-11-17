@@ -62,16 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-/*
- * AST_Decl is the base class for all AST nodes except AST_Expression.
- * AST_Decls have a node type (a value from the enum AST_Decl::NodeType)
- * and a name (a UTL_ScopedName).
- * Additionally AST_Decl nodes record the scope of definition, the
- * file name in which they were defined, the line on which they were
- * defined in that file, and a boolean denoting whether this is the
- * main file or an #include'd file.
- */
-
 #include "ast_interface.h"
 #include "ast_module.h"
 #include "ast_array.h"
@@ -142,6 +132,7 @@ AST_Decl::AST_Decl (NodeType nt,
     flat_name_ (0),
     contains_wstring_ (-1),
     annotation_appls_ (0),
+    builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
@@ -1610,4 +1601,17 @@ bool
 AST_Decl::auto_dump_annotations () const
 {
   return true;
+}
+
+bool
+AST_Decl::builtin () const
+{
+  return builtin_;
+}
+
+bool
+AST_Decl::should_be_dumped () const
+{
+  bool is_builtin = builtin ();
+  return !is_builtin || (is_builtin && idl_global->dump_builtins_);
 }

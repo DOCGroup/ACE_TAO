@@ -139,7 +139,7 @@ DRV_usage (void)
     ACE_TEXT ("(default is error)\n")
     ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
     ACE_TEXT ("(default is error)\n")
-    ACE_TEXT (" -d\t\t\tOutputs (to stdout) a dump of the AST\n")
+    ACE_TEXT (" -d | --dump\tPrints a dump of the AST and exits\n")
     ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
     ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
     ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
@@ -156,6 +156,8 @@ DRV_usage (void)
     ACE_TEXT (" --list-idl-versions\tPrint IDL versions supported and exit\n")
     ACE_TEXT (" --syntax-only\t\tJust check the syntax, do not create files\n")
     ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
+    ACE_TEXT (" --dump-builtins\tDump the compiler and user defined IDL.\n")
+    ACE_TEXT (" --just-dump-builtins\tJust dump the compiler defined IDL and exit.\n")
   ));
 
   be_util::usage ();
@@ -425,8 +427,7 @@ DRV_parse_args (long ac, char **av)
                 {
                   UNKNOWN_OPTION;
                 }
-              idl_global->set_compile_flags (idl_global->compile_flags ()
-                                             | IDL_CF_DUMP_AST);
+              idl_global->dump_ast ();
               break;
             case 'v':
               if (av[i][2] != '\0')
@@ -629,6 +630,21 @@ process_long_option(long ac, char **av, long &i)
   else if (!ACE_OS::strcmp (long_option, "version"))
     {
       idl_global->print_version ();
+    }
+  else if (!ACE_OS::strcmp (long_option, "dump-builtins"))
+    {
+      idl_global->dump_builtins_ = true;
+      idl_global->dump_ast ();
+    }
+  else if (!ACE_OS::strcmp (long_option, "just-dump-builtins"))
+    {
+      // Don't use dump_ast because we need to dump before parsing any files.
+      idl_global->dump_builtins_ = true;
+      idl_global->just_dump_builtins_ = true;
+    }
+  else if (!ACE_OS::strcmp (long_option, "dump"))
+    {
+      idl_global->dump_ast ();
     }
   else
     {

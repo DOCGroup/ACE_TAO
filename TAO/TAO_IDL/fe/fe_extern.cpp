@@ -97,7 +97,10 @@ FE_yyparse (void)
   tao_preproc_buffer_length = 0;
   tao_preproc_buffer_pos = 0;
 #else
-  ACE_OS::fclose (tao_yyin);
+  if (tao_yyin)
+    {
+      ACE_OS::fclose (tao_yyin);
+    }
 #endif /* USE_MCPP_BUFFER_LEXING */
 
   return result;
