@@ -4,8 +4,8 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
   ifeq ($(CXX),g++)
-    CC  ?= clang
-    CXX ?= clang++
+    CC  = clang
+    CXX = clang++
   endif
 endif
 
