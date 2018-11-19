@@ -80,6 +80,8 @@ class UTL_String;
 class TAO_IDL_FE_Export UTL_Error
 {
 public:
+  UTL_Error();
+
   enum ErrorCode {
     EIDL_SYNTAX_ERROR,          // Syntax error in IDL input
                                 // More details will be gleaned from examining
@@ -156,6 +158,9 @@ public:
     EIDL_MISC,                  // Very Specific Error or Warning
     EIDL_OK                     // No error
   };
+
+  ErrorCode last_error;
+  ErrorCode last_warning;
 
   // Operations
 

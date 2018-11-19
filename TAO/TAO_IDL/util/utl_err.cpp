@@ -273,6 +273,7 @@ get_lineno (AST_Decl *node = 0)
 static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
+  idl_global->err ()->last_error = c;
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
@@ -295,6 +296,7 @@ idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = 0)
 static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
+  idl_global->err ()->last_warning = c;
   ACE_ERROR ((LM_WARNING,
               "Warning - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
@@ -752,6 +754,12 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   default:
     return "Some syntax error";
   }
+}
+
+UTL_Error::UTL_Error ()
+  : last_error (EIDL_OK),
+    last_warning (EIDL_OK)
+{
 }
 
 // Public methods.
