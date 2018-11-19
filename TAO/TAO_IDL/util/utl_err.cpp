@@ -238,6 +238,7 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_IDL_VERSION_ERROR:
       return "Invalid use of this version of IDL";
     case UTL_Error::EIDL_UNSUPPORTED:
+    case UTL_Error::EIDL_MISC:
       return ""; // Supply Case by Case Message
 
     default:
@@ -717,6 +718,25 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
   default:
     return "Some syntax error";
   }
+}
+
+/**
+ * Get filename from node or from idl_global if node is null.
+ */
+static const char *
+get_filename (AST_Decl *node = 0)
+{
+  return node ?  node->file_name ().c_str()
+    : idl_global->filename ()->get_string ();
+}
+
+/**
+ * Get line number from node or from idl_global if node is null.
+ */
+static long
+get_lineno (AST_Decl *node = 0)
+{
+  return node ? node->line () : idl_global->lineno ();
 }
 
 // Public methods.
@@ -1721,3 +1741,22 @@ UTL_Error::unsupported_warning (const char *reason)
       ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
     }
 }
+
+void
+UTL_Error::misc_error (const char *reason, AST_Decl *node)
+{
+  idl_error_header (EIDL_MISC, get_lineno (node), get_filename (node));
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+  idl_global->set_err_count (idl_global->err_count () + 1);
+}
+
+void
+UTL_Error::misc_warning (const char *reason, AST_Decl *node)
+{
+  if (idl_global->print_warnings ())
+    {
+      idl_warning_header (EIDL_MISC, get_lineno (node), get_filename (node));
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+    }
+}
+

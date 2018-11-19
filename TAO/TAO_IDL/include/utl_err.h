@@ -153,6 +153,7 @@ public:
     EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
     EIDL_IDL_VERSION_ERROR,     // An error related to differences in IDL version
     EIDL_UNSUPPORTED,           // Unsupported feature was used in input IDL
+    EIDL_MISC,                  // Very Specific Error or Warning
     EIDL_OK                     // No error
   };
 
@@ -185,7 +186,7 @@ public:
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
-  // Report clash of declared and referenced indentifiers
+  // Report clash of declared and referenced identifiers
   void redef_error (const char *n, const char *t);
 
   // Report a name being used with different spellings
@@ -202,7 +203,7 @@ public:
   // Same as above, but doesn't increment the error count.
   void idl_keyword_warning (char *n);
 
-  // Report an unsuccesful coercion attempt
+  // Report an unsuccessful coercion attempt
   void coercion_error (AST_Expression *v,
                        AST_Expression::ExprType t);
 
@@ -256,7 +257,7 @@ public:
 
   // A concrete supported interface must inherit from all concrete
   // interfaces supported by the valuetype's ancestors, and all of
-  // those conrete interfaces' ancestors.
+  // those concrete interfaces' ancestors.
   void concrete_supported_inheritance_error (UTL_ScopedName *v,
                                              UTL_ScopedName *i);
 
@@ -403,6 +404,20 @@ public:
    * Report an unsupported feature in the input IDL that can't be ignored.
    */
   void unsupported_error (const char *reason);
+
+  /**
+   * Report a error for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_error (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report a warning for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_warning (const char *reason, AST_Decl *node = 0);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH
