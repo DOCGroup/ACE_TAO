@@ -1,0 +1,369 @@
+commit b0d2c3ec0e1c844aa6f6a1a13dc8859efcbe3879
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 16 11:27:49 2018 +0100
+
+    List new changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 618533091124a97d6dcd4b106e38cb5ca2477b98
+Merge: 764ff58a2e8 40af509ec08
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Nov 6 16:50:01 2018 -0600
+
+    Merge pull request #726 from iguessthislldo/igtd/android
+    
+    Support for Clang based Android NDKs
+
+commit da981b00af6c6ffe6b3cef7df8840eb01ec45812
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 5 15:51:21 2018 +0100
+
+    Doxygen changes and use const int for the statics to resolve the issues with Embarcadero C++ Builder pre compiled header support
+    
+        * TAO/tao/Messaging/Messaging.h:
+        * TAO/tao/Valuetype/Valuetype_Adapter_Factory_Impl.h:
+
+commit ec0df6cbcc64f4a361b4b003fca0c9964dead887
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 5 14:57:41 2018 +0100
+
+    Doxygen changes
+    
+        * TAO/tao/Valuetype/ValueFactory_Map.h:
+
+commit 55dfd83e68b0bdd90b0d29c1ee20a3906156a02e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 17:13:01 2018 -0500
+
+    TAO-INSTALL.html: Formerly not Formally
+
+commit 36e155902a9a386ab7ac80980a30edc11539befb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 13:19:54 2018 -0500
+
+    TAO-INSTALL.html: Rephrasing
+    
+    It makes it sound like TAO supported Windows 95 only until "recently",
+    which is a ambiguous way to phrase it anyway.
+
+commit e3f6c776b0abbdeff7933063e1d7a7a10b073ba1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 15:08:22 2018 +0100
+
+    Add TIE test, bugzilla 4182
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit 91b984bfce503bf61eaa0af03b2d7fdb33b33682
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 15:07:44 2018 +0100
+
+    Fixed IOR file usage in test script
+    
+        * TAO/tests/POA/TIE/run_test.pl:
+
+commit 4256451a9b89b4c8280c0976c8e03a753e003453
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:12:04 2018 +0100
+
+    Removed obsolete files
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/pvtkey-client.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/pvtkey.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/selfsigncert-client.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/selfsigncert.pem:
+          Deleted.
+
+commit 2578fef175f99ce2e03a764514c428e0ca7f7de5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:10:18 2018 +0100
+
+    Use different certificates
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.conf.xml:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.conf:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server.conf.xml:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server.conf:
+
+commit c6e382658aa985f4d2cbb8fb01037c954a31d5bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:10:06 2018 +0100
+
+    Enable ssliop collocated invocation support
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client.cpp:
+
+commit be0958e97b739026684dd5bb3ebd2af92c6e46d3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:09:46 2018 +0100
+
+    Added security libs to linker and use certs from another test which do work
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/cacert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/client_key.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_cert.pem:
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/server_key.pem:
+          Added.
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/corbaloc_ssliop.mpc:
+
+commit 6abc40ce9bd581f82422662543013689944a1f01
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:08:34 2018 +0100
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/Security/ssliop_corbaloc/README:
+
+commit 7661e1085621c5a7548401865f3eb94407520a22
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:08:16 2018 +0100
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/Security/Secure_Invocation/README:
+
+commit a93ce0d1ca4f6fb58e587e3335162396185845a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 12:08:00 2018 +0100
+
+    Layout changes
+    
+        * TAO/orbsvcs/tests/Security/BiDirectional/README:
+
+commit 50c131d843bf9f7c38d00ec0a4c26881756aa9aa
+Merge: 1a7f9bc556a f776ce71367
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 11:46:56 2018 +0100
+
+    Merge branch 'ssliop_corbaloc_parser_comma_fix' of git://github.com/milan-mpathix/ATCD into milan-mpathix-ssliop_corbaloc_parser_comma_fix
+
+commit e6499d3d089f100cb9eb859bf6e3bc3334fc369a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 10:03:22 2018 +0100
+
+    Layout change
+    
+        * TAO/tests/Bug_4213_Regression/server.cpp:
+
+commit 31eec62b48c615088d6c70f0d7ee610d81aa0b9b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 10:03:11 2018 +0100
+
+    Only list the invocation which failed without the necesary fix
+    
+        * TAO/tests/Bug_4213_Regression/run_test.pl:
+
+commit 2c747ee395016bef8bfe0a235063430e580da9c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 10:02:52 2018 +0100
+
+    Add new bug 4213 unit test
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit 8dd037ee00f6274f79652a30ba275136ef2ce053
+Merge: ffaae9ead79 19605786704
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:56:09 2018 +0100
+
+    Merge branch 'bug_4213-uiop_corbaloc_key' of git://github.com/milan-mpathix/ATCD into milan-mpathix-bug_4213-uiop_corbaloc_key
+
+commit ffaae9ead794c3e56e9ef2417ddbecd568b61843
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:52:08 2018 +0100
+
+    Fixed typos
+
+commit 7d6b33e807e9d75a2d28248d0f69b143a18bddc3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:51:53 2018 +0100
+
+    New unit test for bugzilla 4213
+
+commit e56a460c00e39f00c63b4b1192a68cda35f8893f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:34:19 2018 +0100
+
+    Fixed link to OMG ORT spec
+
+commit 690d9efe48328e7605f3565e76b63bbd4ca8d191
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:27:08 2018 +0100
+
+    Fixed incorrect classname in logging statement
+    
+        * TAO/tao/Strategies/SHMIOP_Profile.cpp:
+
+commit 9878a2e603a25a10972a9b5eb23c434f22ec5428
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 09:02:27 2018 +0100
+
+    Use bool instead of int
+    
+        * TAO/tao/CORBALOC_Parser.cpp:
+
+commit 23d91ca6ff4b0e61ac1835c2e3c6cbf757c79d4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 08:58:12 2018 +0100
+
+    Fixed typos
+    
+        * TAO/docs/ORBEndpoint.html:
+        * TAO/docs/pluggable_messaging.html:
+
+commit c619e9ac8bd1fb1ad1e5d0c1a7b2b52f17970914
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 08:57:58 2018 +0100
+
+    Removed commented out operation
+    
+        * TAO/tests/Connection_Purging/test.idl:
+
+commit 1f916302499a56d6de52d61c0c8c8a4b8f4c2d4b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 08:57:40 2018 +0100
+
+    Make formatting of debug message consistent with others in the TAO core
+    
+        * TAO/tao/Strategies/UIOP_Connection_Handler.cpp:
+
+commit ed5755ec9040af82191f6d5b1190f7c7afea6830
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 30 08:48:56 2018 +0100
+
+    Removed empty lines
+    
+        * TAO/tests/Connection_Purging/README:
+
+commit 544206dd28b596155332e41bf70d7e1c00e0e3b0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 21 15:28:55 2018 +0200
+
+    When we have an error parsing our GIOP header we should log a message using an error, not debug
+    
+        * TAO/tao/GIOP_Message_State.cpp:
+
+commit 6881ff62f2d8bc16efb060307bad5deb4fc7a7fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 18 14:36:37 2018 +0200
+
+    Upgraded to latest doxygen configuration file version
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit 01fc7a23cf7e6772d85f9fee367803b3e85a1118
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 18 09:36:39 2018 +0200
+
+    Make x.5.2 public as new release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit f776ce71367a69b891db4164f744d62b2ca06205
+Merge: 287883987b9 ed1925da7c3
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Wed Jan 24 11:21:56 2018 -0500
+
+    Merge tag 'ACE+TAO-6_4_6' into ssliop_corbaloc_parser_comma_fix
+
+commit 1960578670452b98f7636a1e1acfc1528d455765
+Merge: dc5c956f2f0 ed1925da7c3
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Tue Jan 23 19:00:36 2018 -0500
+
+    Merge tag 'ACE+TAO-6_4_6' into bug_4213-uiop_corbaloc_key
+
+commit dc5c956f2f04b92fd28798c66aaddf53a7848d8e
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Mon Apr 25 16:11:14 2016 -0400
+
+    Fixes corbaloc:uiop:/randesvous|KEY to properly parse KEY instead of |KEY
+    
+    Fix for:
+    CORBA_Object_var o = string_to_object("corbaloc:uiop:/tmp/sock|KEY");
+    MyObject_var mo = MyObject::_narrow();
+    
+    _narrow() throws due to "|KEY" sent as object key.
+
+commit 287883987b9e14e78bed1a9074507f88ec6b19d2
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Thu Apr 7 14:36:56 2016 -0400
+
+    Wait for orb thread to terminate
+
+commit 2884c7b4884d6410c44f15fbeffd97b1ee20fcfb
+Merge: 9143adca7bb 6114e2b1df6
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Thu Apr 7 10:08:35 2016 -0400
+
+    Merge branch 'ssliop_corbaloc_test' into ssliop_corbaloc_parser_comma_fix
+
+commit 6114e2b1df60ec798efd27da8bf07ce742cf3b5d
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Wed Apr 6 18:28:37 2016 -0400
+
+    Fail ssliop_corbaloc test for multi-profile corbaloc
+
+commit 4e3888084fc9ebecc71856794c071836adfbc22b
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Wed Apr 6 18:17:07 2016 -0400
+
+    Fix timeout errors in orbsvcs/tests/Security/ssliop_corbaloc, enable the test
+    
+    Apparently, SSLIOP cannot use collocated servants in this test.
+    
+    We have to run the server orb, for all remote invocations to our server
+    to work, even though they are both in the same process (client).
+
+commit 9143adca7bbe21d476c2e4387c056158d7b83a00
+Author: Milan Cvetkovic <milan.cvetkovic@mpathix.com>
+Date:   Tue Apr 5 20:17:51 2016 -0400
+
+    Fixed ssliop corbaloc parser, when there is a comma delimited list
+    
+    ... use the same logic as in TAO/tao/Transport_Connector.cpp
+    
+    Allows using corbaloc:iiop:host:2222,iiop:host:2223/ObjectKey with SSLIOP.
