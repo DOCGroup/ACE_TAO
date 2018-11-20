@@ -3,8 +3,10 @@
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
-  CC  ?= clang
-  CXX ?= clang++
+  ifeq ($(CXX),g++)
+    CC  = clang
+    CXX = clang++
+  endif
 endif
 
 ifndef CXX_VERSION
