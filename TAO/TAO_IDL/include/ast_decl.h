@@ -181,11 +181,22 @@ public:
       , NT_param_holder             // Denotes a template param placeholder
       , NT_annotation_decl          // The declaration of an annotation
       , NT_annotation_appl          // Application of an annotation to an IDL element
+      , NT_annotation_member        // Value Inside an Annotation
   };
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
             bool anonymous = false);
+
+  /**
+   * A sort of copy constructor that creates a copy of the AST_Decl for a new
+   * scope.
+   * The new name must be calculated before hand.
+   * This was created for Annotation Applications and Extended Structs.
+   */
+  AST_Decl (
+    UTL_ScopedName *name,
+    AST_Decl *other);
 
   virtual ~AST_Decl (void);
 

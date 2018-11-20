@@ -171,6 +171,53 @@ AST_Decl::AST_Decl (NodeType nt,
   this->compute_repoID ();
 }
 
+AST_Decl::AST_Decl (
+  UTL_ScopedName *name,
+  AST_Decl *other)
+  : COMMON_Base (),
+    repoID_ (0),
+    flat_name_ (0),
+    contains_wstring_ (-1),
+    annotation_appls_ (0),
+    builtin_ (idl_global->in_eval_),
+    pd_imported (idl_global->imported ()),
+    pd_in_main_file (idl_global->in_main_file ()),
+    pd_defined_in (idl_global->scopes ().depth () > 0
+                     ? idl_global->scopes ().top ()
+                     : 0),
+    pd_node_type (other->node_type ()),
+    pd_line (idl_global->lineno ()),
+    pd_name (0),
+    pd_local_name (name ? name->last_component ()->copy () : 0),
+    pd_original_local_name (0),
+    full_name_ (0),
+    prefix_ (0),
+    version_ (0),
+    anonymous_ (other->anonymous ()),
+    typeid_set_ (false),
+    last_referenced_as_ (0),
+    prefix_scope_ (0),
+    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
+{
+  // If this is the root node, the filename won't have been set yet.
+  UTL_String *fn = idl_global->filename ();
+  this->pd_file_name = (fn ? fn->get_string () : "");
+
+  this->compute_full_name (name);
+
+  char *prefix = 0;
+  idl_global->pragma_prefixes ().top (prefix);
+  this->prefix_ = ACE::strnew (prefix ? prefix : "");
+
+  if (name)
+    {
+      // The function body creates its own copy.
+      this->original_local_name (name->last_component ());
+    }
+
+  this->compute_repoID ();
+}
+
 AST_Decl::~AST_Decl (void)
 {
 }

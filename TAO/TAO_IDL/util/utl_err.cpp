@@ -78,6 +78,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_fixed.h"
 #include "ast_union.h"
 #include "ast_union_label.h"
+#include "ast_annotation_decl.h"
+#include "ast_annotation_member.h"
+#include "ast_annotation_appl.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -237,6 +240,8 @@ error_string (UTL_Error::ErrorCode c)
       return "fixed data types are not supported";
     case UTL_Error::EIDL_IDL_VERSION_ERROR:
       return "Invalid use of this version of IDL";
+    case UTL_Error::EIDL_ANNOTATION_PARAM_ERROR:
+      return "Error in annotation parameter(s): ";
     case UTL_Error::EIDL_UNSUPPORTED:
     case UTL_Error::EIDL_MISC:
       return ""; // Supply Case by Case Message
@@ -1612,3 +1617,69 @@ UTL_Error::misc_warning (const char *reason, AST_Decl *node)
     }
 }
 
+void
+UTL_Error::invalid_annotation_param_error (
+  AST_Annotation_Appl *appl, AST_Annotation_Decl *decl,
+  Identifier *invalid_id)
+{
+  bool is_builtin = decl->builtin ();
+  idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
+    static_cast<AST_Decl*>(appl));
+  invalid_id->dump (*ACE_DEFAULT_LOG_STREAM);;
+  ACE_ERROR ((LM_ERROR, ACE_TEXT (" is not a member of %Cannotation "),
+    is_builtin ? "builtin " : ""));
+  decl->name ()->dump (*ACE_DEFAULT_LOG_STREAM);;
+  if (!is_builtin)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT (" declared in \"%C\" on line %d"),
+        get_filename (decl), get_lineno (decl)));
+    }
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("\n")));
+}
+
+void
+UTL_Error::invalid_annotation_param_type (
+  AST_Annotation_Appl *appl, AST_Annotation_Member *member,
+  AST_Expression *offending_value)
+{
+  bool is_builtin = member->builtin ();
+  idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
+    static_cast<AST_Decl*>(appl));
+  ACE_ERROR ((LM_ERROR,
+    ACE_TEXT ("%Cnnotation member \""),
+    is_builtin ? "Builtin a" : "A"));
+  member->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("\"")));
+  if (!is_builtin)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT (" declared in \"%C\" on line %d"),
+        get_filename (member), get_lineno (member)));
+    }
+  ACE_ERROR ((LM_ERROR, ACE_TEXT (" can not be set to ")));
+  offending_value->dump (*ACE_DEFAULT_LOG_STREAM);;
+  ACE_ERROR ((LM_ERROR, ACE_TEXT (" because the types are incompatible!\n")));
+}
+
+void
+UTL_Error::annotation_param_missing_error (
+  AST_Annotation_Appl *appl, AST_Annotation_Member *member)
+{
+  bool is_builtin = member->builtin ();
+  idl_error_header (EIDL_ANNOTATION_PARAM_ERROR,
+    static_cast<AST_Decl*>(appl));
+  ACE_ERROR ((LM_ERROR,
+    ACE_TEXT ("%Cnnotation member: \""),
+    is_builtin ? "Builtin a" : "A"));
+  member->dump (*ACE_DEFAULT_LOG_STREAM);
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("\"")));
+  if (!is_builtin)
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT (" declared in \"%C\" on line %d"),
+        get_filename (member), get_lineno (member)));
+    }
+  ACE_ERROR ((LM_ERROR,
+    ACE_TEXT (" needs to be defined because it does not have a default value!\n"),
+    get_filename (member), get_lineno (member)));
+}

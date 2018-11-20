@@ -118,6 +118,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     in_eval_ (false),
     dump_builtins_ (false),
     just_dump_builtins_ (false),
+    ignore_files_ (false),
     pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
@@ -1919,24 +1920,33 @@ IDL_GlobalData::print_warnings ()
 }
 
 /*
- * These functions are generated in idl.yy.cpp but for some reason they are not
- * put in the header file, so to use them we must declare them here.
+ * These are generated in idl.yy.cpp but they are not put in the header file,
+ * so to use them we must declare them here.
  */
 struct yy_buffer_state;
 extern yy_buffer_state *tao_yy_scan_string (const char *);
-extern int tao_yylex_destroy ();
+extern void tao_yypush_buffer_state (yy_buffer_state *);
+extern void tao_yypop_buffer_state ();
+extern void tao_yylex_destroy ();
 
 void
 IDL_GlobalData::eval (const char *string)
 {
   in_eval_ = true;
 
-  // Name this pseudo-file "builtin"
-  UTL_String *utl_string = 0;
-  ACE_NEW (utl_string, UTL_String ("builtin", true));
-  idl_global->idl_src_file (utl_string);
+  // Get IDL_Global Context
+  UTL_String *old_filename = filename ();
+  pd_filename = 0;
+  long old_lineno = lineno ();
+  idl_global->set_lineno (-1);
+  UTL_String *old_idl_src_file = idl_src_file ();
 
-  // Set up flex to read from string
+  // Name this pseudo-file "builtin"
+  UTL_String utl_string ("builtin", true);
+  idl_global->idl_src_file (new UTL_String (&utl_string, true));
+  idl_global->set_filename (new UTL_String (&utl_string, true));
+
+  // Set up Flex to read from string
   tao_yy_scan_string (string);
 
   // emulate DRV_drive()
@@ -1944,16 +1954,15 @@ IDL_GlobalData::eval (const char *string)
   idl_global->check_primary_keys ();
   AST_check_fwd_decls ();
 
-  // Have flex Cleanup
+  // Have Flex Cleanup
   tao_yylex_destroy ();
 
-  // emulate DRV_refresh()
-  idl_global->set_err_count (0);
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
-  idl_global->set_lineno (-1);
+  // Restore IDL_Global Context
+  idl_global->set_filename (old_filename);
+  idl_src_file()->destroy ();
+  delete idl_src_file ();
+  idl_src_file (old_idl_src_file);
+  idl_global->set_lineno (old_lineno);
   idl_global->reset_flag_seen ();
 
   in_eval_ = false;

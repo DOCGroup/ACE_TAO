@@ -18,9 +18,11 @@ public:
 
   virtual ~AST_Annotation_Decl ();
 
-  // Narrowing
+  /// Narrowing
+  ///{
   DEF_NARROW_FROM_DECL (AST_Annotation_Decl);
   DEF_NARROW_FROM_SCOPE (AST_Annotation_Decl);
+  ///}
 
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -30,6 +32,20 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /**
+   * Work around for AST node lookup, so that annotations do not conflict with
+   * other IDL types and variables that have the same name. This is done by
+   * prepending '@' to all annotation names.
+   */
+  ///{
+  static void escape_name (Identifier *name);
+  static void escape_name (UTL_ScopedName *name);
+  ///}
+
+  virtual bool annotatable () const;
+
+  virtual AST_Annotation_Member *fe_add_annotation_member (
+    AST_Annotation_Member *annotation_member);
 };
 
 #endif

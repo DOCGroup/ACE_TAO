@@ -205,7 +205,7 @@ oneway          return IDL_ONEWAY;
                   return IDL_SCOPE_DELIMITOR;
                 }
 
-@annotation return IDL_ANNOTATION_DECL;
+@annotation[^A-Za-z0-9_] return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
 @ return IDL_ANNOTATION_SYMBOL;
 
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {

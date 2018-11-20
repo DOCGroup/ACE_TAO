@@ -218,7 +218,11 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
       return;
     }
 
-  o << this->pv_string;
+  /*
+   * Annotation ids are prefixed with '@' to effectively create an alternative
+   * namespace for them. This hides that hack from dumping.
+   */
+  o << ((pv_string[0] == '@') ? pv_string + 1 : pv_string);
 }
 
 void

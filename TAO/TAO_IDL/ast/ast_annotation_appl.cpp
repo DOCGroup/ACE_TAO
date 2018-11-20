@@ -1,4 +1,10 @@
 #include "ast_annotation_appl.h"
+#include "ast_annotation_member.h"
+
+AST_Annotation_Appl::Param::Param ()
+  : used (false)
+{
+}
 
 AST_Decl::NodeType const AST_Annotation_Appl::NT = AST_Decl::NT_annotation_appl;
 
@@ -22,7 +28,6 @@ AST_Annotation_Appl::~AST_Annotation_Appl ()
 
 void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
 {
-  dump_i (o, "@");
   dump_i (o, original_name_);
   if (params_)
     {
@@ -65,3 +70,99 @@ const char *AST_Annotation_Appl::original_name () const
 
 IMPL_NARROW_FROM_DECL (AST_Annotation_Appl)
 IMPL_NARROW_FROM_SCOPE (AST_Annotation_Appl)
+
+bool
+AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
+{
+  // Apply Each Member From the Annotation Declaration
+  for (UTL_ScopeActiveIterator si (
+      decl,
+      UTL_Scope::IK_decls);
+    !si.is_done ();
+    si.next ())
+    {
+      AST_Annotation_Member *member =
+        AST_Annotation_Member::narrow_from_decl (si.item ());
+      if (member)
+        {
+          AST_Annotation_Member *new_member = fe_add_annotation_member (
+              new AST_Annotation_Member (member->name (), member));
+
+          /*
+           * Check to see if we have a parameter that matches this and if not,
+           * also make sure the member has a default.
+           */
+          Param *param = find_param (member->local_name ()->get_string ());
+          if (param)
+            {
+              new_member->value (new AST_Expression (param->expr, member->expr_type()));
+              if (new_member->invalid_value ())
+              {
+                idl_global->err ()->invalid_annotation_param_type (
+                  this, member, param->expr);
+                return false;
+              }
+              param->used = true;
+            }
+          else if (!new_member->value ())
+            {
+              idl_global->err ()->annotation_param_missing_error (
+                this, member);
+              return false;
+            }
+        }
+    }
+
+  // Make sure all the parameters were used
+  Params *parameters = params ();
+  if (parameters)
+    {
+      Param **param;
+      for (Param::Iterator it (*parameters);
+          !it.done (); it.advance ())
+        {
+          it.next (param);
+          if ((*param) && !(*param)->used)
+            {
+              idl_global->err ()->invalid_annotation_param_error (
+                this, decl, (*param)->id);
+              return false;
+            }
+        }
+    }
+
+  return true;
+}
+
+AST_Annotation_Appl::Params *
+AST_Annotation_Appl::params ()
+{
+  return params_;
+}
+
+AST_Annotation_Decl *
+AST_Annotation_Appl::annotation_decl ()
+{
+  return annotation_decl_;
+}
+
+AST_Annotation_Appl::Param *
+AST_Annotation_Appl::find_param (const char *name)
+{
+  Params *parameters = params ();
+  if (parameters)
+    {
+      Param **param;
+      for (Param::Iterator it (*parameters);
+          !it.done (); it.advance ())
+        {
+          it.next (param);
+          if ((*param) && (*param)->id && !ACE_OS::strcmp ((*param)->id->get_string (), name))
+            {
+              return (*param);
+            }
+        }
+    }
+
+  return 0;
+}

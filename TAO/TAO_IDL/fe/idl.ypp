@@ -124,6 +124,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_annotation_appl.h"
 #include "ast_union_branch.h"
 #include "ast_enum_val.h"
+#include "ast_annotation_member.h"
 
 #include "fe_declarator.h"
 #include "fe_interface_header.h"
@@ -143,6 +144,7 @@ extern "C" int tao_yywrap (void);
 extern char tao_yytext[];
 extern int tao_yyleng;
 AST_Enum *tao_enum_constant_decl = 0;
+AST_String *tao_string_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Compile Optional Tracing Output for Parser, can be enabled with --bison-trace
@@ -334,7 +336,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 
 %type <exval>   expression const_expr or_expr xor_expr and_expr shift_expr
 %type <exval>   add_expr mult_expr unary_expr primary_expr literal
-%type <exval>   positive_int_expr array_dim
+%type <exval>   positive_int_expr array_dim annotation_member_default
 
 %type <ulval>   case_label
 
@@ -343,6 +345,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <etval>   const_type integer_type char_type boolean_type
 %type <etval>   floating_pt_type fixed_type any_type signed_int
 %type <etval>   unsigned_int base_type_spec octet_type object_type
+%type <etval>   annotation_member_type
 
 %type <dival>   direction
 
@@ -1103,13 +1106,7 @@ value_def
 valuetype
         : IDL_CUSTOM value_concrete_decl
         {
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("error in %C line %d\n"),
-                       idl_global->filename ()->get_string (),
-                       idl_global->lineno ()));
-           ACE_DEBUG ((LM_DEBUG,
-                       ACE_TEXT ("Sorry, I (TAO_IDL) can't handle")
-                       ACE_TEXT (" custom yet\n")));
+          idl_global->err ()->unsupported_error ("custom is not supported");
         }
         | value_concrete_decl
         ;
@@ -1891,19 +1888,19 @@ const_type
                 {
                   c = AST_PredefinedType::narrow_from_decl (d);
 
-                  $<etval>$ = FE_Utils::PredefinedTypeToExprType (c->pt ());
+                  $$ = FE_Utils::PredefinedTypeToExprType (c->pt ());
                 }
               else if (d->node_type () == AST_Decl::NT_string)
                 {
-                  $<etval>$ = AST_Expression::EV_string;
+                  $$ = AST_Expression::EV_string;
                 }
               else if (d->node_type () == AST_Decl::NT_wstring)
                 {
-                  $<etval>$ = AST_Expression::EV_wstring;
+                  $$ = AST_Expression::EV_wstring;
                 }
               else if (d->node_type () == AST_Decl::NT_enum)
                 {
-                  $<etval>$ = AST_Expression::EV_enum;
+                  $$ = AST_Expression::EV_enum;
                   tao_enum_constant_decl =
                     AST_Enum::narrow_from_decl (d);
                 }
@@ -2247,66 +2244,125 @@ positive_int_expr :
         ;
 
 annotation_dcl
-        : IDL_ANNOTATION_DECL IDENTIFIER '{' annotation_body '}' {
-          if (idl_global->idl_version_ >= IDL_VERSION_4)
+        : IDL_ANNOTATION_DECL defining_id '{'
+        {
+          if (idl_global->idl_version_ < IDL_VERSION_4)
             {
-              ACE_DEBUG ((LM_WARNING,
-                ACE_TEXT ("WARNING: in %C on line %d:\n")
-                ACE_TEXT ("Declaring annotations is not supported at the ")
-                ACE_TEXT ("momment, this annotation is being ignored!\n"),
-                idl_global->filename ()->get_string (),
-                idl_global->lineno ()
-                ));
+              idl_global->err ()->idl_version_error (
+                "Annotations are an IDL4 feature");
             }
-          else
-            {
-              ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("ERROR: in %C on line %d:\n")
-                ACE_TEXT ("Annotations are an IDL4 feature, ")
-                ACE_TEXT ("they not supported in IDL %C!\n"),
-                idl_global->filename ()->get_string (),
-                idl_global->lineno (),
-                idl_global->idl_version_.to_string ()
-                ));
-              idl_global->err()->syntax_error (idl_global->parse_state());
-            }
+
+          Identifier *id = $2;
+          UTL_ScopedName name (id, 0);
+          AST_Annotation_Decl::escape_name (&name);
+          AST_Annotation_Decl *annotation_decl = idl_global->gen ()->
+            create_annotation_decl (&name);
+          idl_global->scopes ().top_non_null ()->
+            fe_add_annotation_decl (annotation_decl);
+          idl_global->scopes ().push (annotation_decl);
+        }
+        annotation_body '}'
+        {
+          Identifier *id = $2;
+          idl_global->scopes ().pop ();
+          id->destroy ();
+          delete id;
         }
         ;
 
 annotation_body
-        : annotation_body annotation_statement ';'
+        : annotation_body annotation_statement
         | %empty
         ;
 
 annotation_statement
         : annotation_member
-        | const_dcl
-        | type_dcl
-        ;
-
-annotation_member_dcl
-        : annotation_member_type simple_declarator
+        | const_dcl ';'
+        | enum_type ';'
+        | IDL_TYPEDEF
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_TypedefSeen);
+          idl_global->in_typedef (true);
+        }
+        type_declarator ';'
         ;
 
 annotation_member_type
-        : const_type /* Also covers scoped_name wanted by the spec grammar */
+        : const_type
         | any_type
         ;
 
-defaulted_annotation_member_dcl
-        : annotation_member_dcl IDL_DEFAULT IDL_CONST const_type
+annotation_member
+        : annotation_member_type defining_id annotation_member_default ';'
+        {
+          UTL_Scope *scope = idl_global->scopes ().top_non_null ();
+          UTL_Scope *root = idl_global->scopes ().bottom ();
+
+          AST_Expression::ExprType type = $1;
+          Identifier *name = $2;
+          UTL_ScopedName scoped_name (name, 0);
+          AST_Expression *default_value = $3;
+
+          AST_Decl * type_obj;
+          switch (type)
+            {
+            case AST_Expression::EV_string:
+            case AST_Expression::EV_wstring:
+              type_obj = tao_string_decl;
+              break;
+            case AST_Expression::EV_enum:
+              type_obj = tao_enum_constant_decl;
+              break;
+            default:
+              type_obj = root->lookup_primitive_type (type);
+            }
+
+          FE_Declarator *declarator = new FE_Declarator (
+            &scoped_name, FE_Declarator::FD_simple, 0);
+          AST_Annotation_Member *member = idl_global->gen ()->
+            create_annotation_member (
+              type, declarator->compose (type_obj), declarator->name ());
+          scope->fe_add_annotation_member (member);
+
+          if (default_value)
+            {
+              // Check if types are compatible, else report error
+              AST_Expression::AST_ExprValue *result =
+                default_value->check_and_coerce (type, tao_enum_constant_decl);
+              tao_enum_constant_decl = 0;
+              if (result)
+                {
+                  member->value (default_value);
+                }
+              else
+                {
+                  idl_global->err ()->coercion_error (default_value, type);
+                }
+              delete result;
+            }
+        }
         ;
 
-annotation_member
-        : annotation_member_dcl
-        | defaulted_annotation_member_dcl
+annotation_member_default
+        : IDL_DEFAULT const_expr
+        {
+          $$ = $2;
+        }
+        | %empty
+        {
+          $$ = 0;
+        }
         ;
 
 at_least_one_annotation
         : annotations_maybe annotation_appl
         {
           AST_Annotation_Appls *annotations = $1;
-          annotations->push_back ($2);
+          AST_Annotation_Appl *annotation = $2;
+          if (annotation)
+            {
+              annotations->push_back (annotation);
+            }
           $$ = annotations;
         }
         ;
@@ -2315,7 +2371,11 @@ annotations_maybe
         : annotations_maybe annotation_appl
         {
           AST_Annotation_Appls *annotations = $1;
-          annotations->push_back ($2);
+          AST_Annotation_Appl *annotation = $2;
+          if (annotation)
+            {
+              annotations->push_back (annotation);
+            }
           $$ = annotations;
         }
         | %empty
@@ -2333,7 +2393,26 @@ annotation_appl
                 "Annotations are an IDL4 feature");
             }
 
-          $$ = idl_global->gen ()->create_annotation_appl ($2, $3);
+          AST_Annotation_Appl *appl = 0;
+          UTL_ScopedName *name = $2;
+          AST_Annotation_Decl::escape_name (name);
+          AST_Annotation_Appl::Params *params = $3;
+
+          // Check for Annotation Declaration
+          AST_Decl *d = idl_global->scopes ().top_non_null ()->
+            lookup_by_name (name);
+          if (!d /*&& !idl_global->ignore_missing_annotations_*/)
+            {
+              idl_global->err ()->lookup_error (name);
+            }
+          else
+            {
+              AST_Annotation_Decl *decl = AST_Annotation_Decl::narrow_from_decl (d);
+              appl = idl_global->gen ()->create_annotation_appl (name, params);
+              appl->apply_from (decl);
+            }
+
+          $$ = appl;
         }
         ;
 
@@ -3820,21 +3899,21 @@ string_type_spec
             }
           else
             {
-              $$ = idl_global->gen ()->create_string ($4);
+              tao_string_decl = idl_global->gen ()->create_string ($4);
+
               /*
                * Add this AST_String to the types defined in the global scope.
                */
-              (void) idl_global->root ()->fe_add_string (
-                                              AST_String::narrow_from_decl (
-                                                  $$
-                                                )
-                                            );
+              idl_global->root ()->fe_add_string (
+                AST_String::narrow_from_decl (
+                  tao_string_decl));
 
-              if (!idl_global->in_typedef ()
-                  && !idl_global->anon_silent ())
+              if (!idl_global->in_typedef () && !idl_global->anon_silent ())
                 {
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
+
+              $$ = tao_string_decl;
             }
 
           delete ev;
@@ -3843,24 +3922,23 @@ string_type_spec
         | string_head
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_StringCompleted);
+
           /*
            * Create a node representing a string.
            */
           ACE_CDR::ULong bound = 0UL;
-
-          $$ =
+          tao_string_decl =
             idl_global->gen ()->create_string (
                 idl_global->gen ()->create_expr (bound,
                                                  AST_Expression::EV_ulong)
               );
+
           /*
            * Add this AST_String to the types defined in the global scope.
            */
-          (void) idl_global->root ()->fe_add_string (
-                                          AST_String::narrow_from_decl (
-                                              $$
-                                            )
-                                        );
+          idl_global->root ()->fe_add_string (
+            AST_String::narrow_from_decl (
+              tao_string_decl));
         }
         ;
 
@@ -3897,19 +3975,21 @@ wstring_type_spec
             }
           else
             {
-              $$ = idl_global->gen ()->create_wstring ($4);
+              AST_String *string = idl_global->gen ()->create_wstring ($4);
+
               /*
                * Add this AST_String to the types defined in the global scope.
                */
-              (void) idl_global->root ()->fe_add_string (
-                                              AST_String::narrow_from_decl ($$)
-                                            );
+              idl_global->root ()->fe_add_string (
+                AST_String::narrow_from_decl (
+                  string));
 
-              if (!idl_global->in_typedef ()
-                  && !idl_global->anon_silent ())
+              if (!idl_global->in_typedef () && !idl_global->anon_silent ())
                 {
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
+
+              $$ = string;
             }
         }
         | wstring_head
@@ -3920,18 +4000,18 @@ wstring_type_spec
            * Create a node representing a wstring.
            */
           ACE_CDR::ULong bound = 0UL;
-
-          $$ =
+          AST_String *string =
             idl_global->gen ()->create_wstring (
                 idl_global->gen ()->create_expr (bound,
                                                  AST_Expression::EV_ulong)
               );
+
           /*
            * Add this AST_String to the types defined in the global scope.
            */
-          (void) idl_global->root ()->fe_add_string (
-                                          AST_String::narrow_from_decl ($$)
-                                        );
+          idl_global->root ()->fe_add_string (
+            AST_String::narrow_from_decl (
+              string));
         }
         ;
 

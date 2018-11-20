@@ -385,6 +385,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG,
             ACE_TEXT ("Dump Builtin IDL defined by Compiler:\n")));
           idl_global->root ()->dump (*ACE_DEFAULT_LOG_STREAM);
+          idl_global->ignore_files_ = true;
+        }
+
+      if (idl_global->ignore_files_)
+        {
           throw Bailout (idl_global->err_count ());
         }
 

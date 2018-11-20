@@ -76,6 +76,8 @@ class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
 class UTL_String;
+class AST_Annotation_Decl;
+class AST_Annotation_Member;
 
 class TAO_IDL_FE_Export UTL_Error
 {
@@ -155,6 +157,7 @@ public:
     EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
     EIDL_IDL_VERSION_ERROR,     // An error related to differences in IDL version
     EIDL_UNSUPPORTED,           // Unsupported feature was used in input IDL
+    EIDL_ANNOTATION_PARAM_ERROR, // Error in Annotation Parameters
     EIDL_MISC,                  // Very Specific Error or Warning
     EIDL_OK                     // No error
   };
@@ -423,6 +426,26 @@ public:
    * If node is not defined the current file and line are reported.
    */
   void misc_warning (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report that an invalid annotation parameter was passed
+   */
+  void invalid_annotation_param_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Decl *decl,
+    Identifier *invalid_id);
+
+  /**
+   * Report that an annotation parameter has an invalid type
+   */
+  void invalid_annotation_param_type (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member,
+    AST_Expression *offending_value);
+
+  /**
+   * Report that an annotation parameter needs to be defined
+   */
+  void annotation_param_missing_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

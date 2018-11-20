@@ -150,6 +150,19 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     }
 }
 
+AST_Field::AST_Field (
+  UTL_ScopedName *name,
+  AST_Field *other)
+  : COMMON_Base (),
+    AST_Decl (name, dynamic_cast<AST_Decl*>(other)),
+    ref_type_ (other->field_type ()),
+    visibility_ (other->visibility ()),
+    owns_base_type_ (false)
+{
+  // We definitely don't own the base type and the param holder check shouldn't
+  // be an issue here.
+}
+
 AST_Field::~AST_Field (void)
 {
 }

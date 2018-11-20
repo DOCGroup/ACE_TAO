@@ -79,6 +79,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_interface_fwd.h"
 #include "utl_scope.h"
 #include "ast_annotation_decl.h"
+#include "ast_annotation_appl.h"
 
 // Narrowing functions for AST
 
@@ -126,6 +127,8 @@ ScopeAsDecl (UTL_Scope *s)
       return AST_Enum::narrow_from_scope (s);
     case AST_Decl::NT_annotation_decl:
       return AST_Annotation_Decl::narrow_from_scope (s);
+    case AST_Decl::NT_annotation_appl:
+      return AST_Annotation_Appl::narrow_from_scope (s);
     default:
       return 0;
   }

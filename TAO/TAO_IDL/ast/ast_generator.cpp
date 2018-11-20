@@ -104,7 +104,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_factory.h"
 #include "ast_finder.h"
 #include "ast_fixed.h"
-#include "ast_annotation_decl.h"
+#include "ast_annotation_appl.h"
+#include "ast_annotation_member.h"
 
 #include "utl_identifier.h"
 
@@ -1175,5 +1176,16 @@ AST_Generator::create_annotation_appl (
 {
   AST_Annotation_Appl *retval = 0;
   ACE_NEW_RETURN (retval, AST_Annotation_Appl (name, params), 0);
+  return retval;
+}
+
+AST_Annotation_Member *
+AST_Generator::create_annotation_member (
+  AST_Expression::ExprType expr_type,
+  AST_Type *type,
+  UTL_ScopedName *name)
+{
+  AST_Annotation_Member *retval = 0;
+  ACE_NEW_RETURN (retval, AST_Annotation_Member (expr_type, type, name), 0);
   return retval;
 }

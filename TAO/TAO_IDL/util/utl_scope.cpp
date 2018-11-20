@@ -2228,3 +2228,15 @@ UTL_ScopeActiveIterator::iteration_stage (void)
 {
   return this->stage;
 }
+
+AST_Annotation_Decl *
+UTL_Scope::fe_add_annotation_decl (AST_Annotation_Decl * /*annotation_decl*/)
+{
+  return 0;
+}
+
+AST_Annotation_Member *
+UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member*/)
+{
+  return 0;
+}

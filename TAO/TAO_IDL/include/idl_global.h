@@ -412,9 +412,15 @@ public:
   bool dump_builtins_;
 
   /**
-   * If true, Dump only the IDL defined using eval() and exit
+   * If true, Dump only the IDL defined using eval() and exit using
+   * ignore_files_
    */
   bool just_dump_builtins_;
+
+  /**
+   * Exit right before parsing input files.
+   */
+  bool ignore_files_;
 
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);
