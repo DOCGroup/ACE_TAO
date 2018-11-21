@@ -10,7 +10,7 @@ resources:
 
 jobs:
 - job: VisualStudio2017
-  timeoutInMinutes: 90
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   strategy:
