@@ -7,7 +7,7 @@ feature (nmake_avoid_Wp64) {
 
 feature (nmake_avoid_Gm) {
   specific(nmake) {
-    add_compile -= /Gm
+    compile_flags -= /Gm
   }
 }
 
