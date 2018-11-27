@@ -90,8 +90,8 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
               new AST_Annotation_Member (member->name (), member));
 
           /*
-           * Check to see if we have a parameter that matches this and if not,
-           * also make sure the member has a default.
+           * Check to see if we have a parameter that matches this. If not,
+           * make sure that the member has a default value.
            */
           Param *param = find_param (member->local_name ()->get_string ());
           if (param)
