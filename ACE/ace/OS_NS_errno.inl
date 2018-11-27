@@ -22,14 +22,14 @@ ACE_OS::last_error (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_INLINE void
+ACE_INLINE int
 ACE_OS::last_error (int error)
 {
   ACE_OS_TRACE ("ACE_OS::last_error");
 #if defined (ACE_WIN32)
   ::SetLastError (error);
 #endif /* ACE_WIN32 */
-  errno = error;
+  return int(errno = error);
 }
 
 ACE_INLINE int

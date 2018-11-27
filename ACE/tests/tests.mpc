@@ -2284,3 +2284,10 @@ project(Missing_Svc_Conf_Test) : acetest {
     Missing_Svc_Conf_Test.cpp
   }
 }
+
+project(Condition_Variable_Timeout_Test) : acetest {
+  exename = *
+  Source_Files {
+    Condition_Variable_Timeout_Test.cpp
+  }
+}

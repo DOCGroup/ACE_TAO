@@ -26,46 +26,34 @@
 #if defined (ACE_WIN32)
 # define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) \
   do { TYPE ace_result_ = (TYPE) OP; \
-      if (ace_result_ == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; return (TYPE) FAILVALUE; } else return ace_result_; \
+      if (ace_result_ == FAILVALUE) { ACE_OS::adapt_last_error(ACE_OS::set_errno_to_wsa_last_error()); return (TYPE) FAILVALUE; } else return ace_result_; \
   } while (0)
 # define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) \
   do { RESULT = (TYPE) OP; \
-      if (RESULT == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; RESULT = FAILVALUE; } \
+      if (RESULT == FAILVALUE) { ACE_OS::adapt_last_error(ACE_OS::set_errno_to_wsa_last_error()); RESULT = FAILVALUE; } \
   } while (0)
 #else
 # define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
 # define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT)
 #endif /* ACE_WIN32 */
 
-#if !defined (ACE_WIN32)
+#define ACE_FAIL_RETVAL(RESULT) (ACE_OS::adapt_last_error(ACE_OS::set_errno_to_last_error()),(RESULT))
+#define ACE_FAIL_RETURN(RESULT) return ACE_FAIL_RETVAL(RESULT)
+
+#if defined (ACE_WIN32)
+// Adapt the Win32 System Calls (which return BOOLEAN values of TRUE
+// and FALSE) into int values expected by the ACE_OSCALL macros.
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) == FALSE ? ACE_FAIL_RETVAL(-1) : 0)
 
 // Adapt the weird threading and synchronization routines (which
 // return errno rather than -1) so that they return -1 and set errno.
 // This is more consistent with the rest of ACE_OS and enables us to
 // use the ACE_OSCALL* macros.
-# if defined (ACE_VXWORKS)
-#   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (errno = RESULT, -1) : 0)
-# else
-#   define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0 ? (errno = RESULT, -1) : 0)
-# endif /* ACE_VXWORKS */
-
-#else /* ACE_WIN32 */
-
-// Adapt the Win32 System Calls (which return BOOLEAN values of TRUE
-// and FALSE) into int values expected by the ACE_OSCALL macros.
-# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) == FALSE ? -1 : 0)
-
-// Perform a mapping of Win32 error numbers into POSIX errnos.
-# define ACE_FAIL_RETURN(RESULT) do { \
-  switch (ACE_OS::set_errno_to_last_error ()) { \
-  case ERROR_NOT_ENOUGH_MEMORY: errno = ENOMEM; break; \
-  case ERROR_FILE_EXISTS:       errno = EEXIST; break; \
-  case ERROR_SHARING_VIOLATION: errno = EACCES; break; \
-  case ERROR_PATH_NOT_FOUND:    errno = ENOENT; break; \
-  } \
-  return RESULT; } while (0)
-
-#endif /* !ACE_WIN32 */
+#elif defined (ACE_VXWORKS)
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != OK ? (ACE_OS::last_error(RESULT), -1) : 0)
+#else
+# define ACE_ADAPT_RETVAL(OP,RESULT) ((RESULT = (OP)) != 0  ? (ACE_OS::last_error(RESULT), -1) : 0)
+#endif /* ACE_WIN32 */
 
 // Helper functions to split large intergers into smaller high-order
 // and low-order parts, and reconstitute them again.  These are
