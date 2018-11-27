@@ -316,57 +316,6 @@ idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = 0)
 }
 ///}
 
-// Convert the type of an AST_Expression to a char *.
-static const char *
-exprtype_to_string (AST_Expression::ExprType t)
-{
-  switch (t) {
-  case AST_Expression::EV_short:
-    return "short";
-  case AST_Expression::EV_ushort:
-    return "unsigned short";
-  case AST_Expression::EV_long:
-    return "long";
-  case AST_Expression::EV_ulong:
-    return "unsigned long";
-  case AST_Expression::EV_float:
-    return "float";
-  case AST_Expression::EV_double:
-    return "double";
-  case AST_Expression::EV_char:
-    return "char";
-  case AST_Expression::EV_octet:
-    return "octet";
-  case AST_Expression::EV_bool:
-    return "boolean";
-  case AST_Expression::EV_string:
-    return "string";
-  case AST_Expression::EV_enum:
-    return "enum";
-  case AST_Expression::EV_void:
-    return "void";
-  case AST_Expression::EV_none:
-    return "none";
-  case AST_Expression::EV_wchar:
-    return "wchar";
-  case AST_Expression::EV_longlong:
-    return "longlong";
-  case AST_Expression::EV_ulonglong:
-    return "ulonglong";
-  case AST_Expression::EV_longdouble:
-    return "longdouble";
-  case AST_Expression::EV_wstring:
-    return "wstring";
-  case AST_Expression::EV_any:
-    return "any";
-  case AST_Expression::EV_object:
-    return "object";
-  case AST_Expression::EV_fixed:
-    return "fixed";
-  }
-  return 0;
-}
-
 // Convert a parse state into a possible error message
 static const char *
 parse_state_to_error_message (IDL_GlobalData::ParseState ps)
@@ -911,7 +860,7 @@ UTL_Error::coercion_error (AST_Expression *v,
   v->dump (*ACE_DEFAULT_LOG_STREAM);
   ACE_ERROR ((LM_ERROR,
               " to %C\n",
-              exprtype_to_string (t)));
+              AST_Expression::exprtype_to_string (t)));
 }
 
 // Report a failed name lookup attempt.

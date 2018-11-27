@@ -3321,3 +3321,54 @@ AST_Expression::set_n (UTL_ScopedName *new_n)
 {
   this->pd_n = new_n;
 }
+
+const char *
+AST_Expression::exprtype_to_string (ExprType t)
+{
+  switch (t) {
+  case AST_Expression::EV_short:
+    return "short";
+  case AST_Expression::EV_ushort:
+    return "unsigned short";
+  case AST_Expression::EV_long:
+    return "long";
+  case AST_Expression::EV_ulong:
+    return "unsigned long";
+  case AST_Expression::EV_float:
+    return "float";
+  case AST_Expression::EV_double:
+    return "double";
+  case AST_Expression::EV_char:
+    return "char";
+  case AST_Expression::EV_octet:
+    return "octet";
+  case AST_Expression::EV_bool:
+    return "boolean";
+  case AST_Expression::EV_string:
+    return "string";
+  case AST_Expression::EV_enum:
+    return "enum";
+  case AST_Expression::EV_void:
+    return "void";
+  case AST_Expression::EV_none:
+    return "none";
+  case AST_Expression::EV_wchar:
+    return "wchar";
+  case AST_Expression::EV_longlong:
+    return "longlong";
+  case AST_Expression::EV_ulonglong:
+    return "ulonglong";
+  case AST_Expression::EV_longdouble:
+    return "longdouble";
+  case AST_Expression::EV_wstring:
+    return "wstring";
+  case AST_Expression::EV_any:
+    return "any";
+  case AST_Expression::EV_object:
+    return "object";
+  case AST_Expression::EV_fixed:
+    return "fixed";
+  default:
+    return "<UNKNOWN TYPE>";
+  }
+}

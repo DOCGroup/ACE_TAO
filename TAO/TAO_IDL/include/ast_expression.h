@@ -290,6 +290,8 @@ public:
   // Accessor for the member.
   AST_Param_Holder *param_holder (void) const;
 
+  static const char *exprtype_to_string (ExprType t);
+
 protected:
   // Evaluate different sets of operators.
   AST_ExprValue *eval_bin_op (EvalKind ek);
