@@ -1,4 +1,5 @@
 // -*- MPC -*-
 workspace {
   cmdline += -include $PWD
+  IDLv4
 }
