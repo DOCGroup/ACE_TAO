@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_string.h"
 #include "utl_err.h"
 #include "utl_indenter.h"
+#include "utl_identifier.h"
 
 #include "ace/Truncate.h"
 
@@ -590,4 +591,42 @@ IMPL_NARROW_FROM_SCOPE(AST_Structure)
 bool AST_Structure::annotatable () const
 {
   return true;
+}
+
+AST_Decl *
+AST_Structure::operator[] (const size_t index)
+{
+  size_t count = member_count_ <= 0 ? 0 : member_count_;
+  if (index >= count)
+    {
+      return 0;
+    }
+  size_t i = 0;
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      if (i == index)
+        {
+          return si.item ();
+        }
+      i++;
+    }
+  return 0;
+}
+
+AST_Decl *
+AST_Structure::operator[] (const char* name)
+{
+  for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
+       !si.is_done ();
+       si.next ())
+    {
+      AST_Decl *field = si.item ();
+      const char *field_name = field->local_name ()->get_string ();
+      if (!ACE_OS::strcmp (name, field_name)) {
+        return field;
+      }
+    }
+  return 0;
 }

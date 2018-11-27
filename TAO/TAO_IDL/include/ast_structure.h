@@ -159,6 +159,12 @@ public:
 
   virtual AST_Field *fe_add_field (AST_Field *f);
 
+  /// Easy Member Access
+  ///{
+  virtual AST_Decl *operator[] (const size_t index);
+  virtual AST_Decl *operator[] (const char* name);
+  ///}
+
 protected:
   friend int tao_yyparse (void);
   // Scope Management Protocol.
