@@ -1925,8 +1925,6 @@ IDL_GlobalData::print_warnings ()
  */
 struct yy_buffer_state;
 extern yy_buffer_state *tao_yy_scan_string (const char *);
-extern void tao_yypush_buffer_state (yy_buffer_state *);
-extern void tao_yypop_buffer_state ();
 extern void tao_yylex_destroy ();
 
 void
