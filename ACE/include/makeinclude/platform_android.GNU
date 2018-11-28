@@ -23,7 +23,7 @@ PIE	?= -pie
 rwho = 0
 
 # Android Studio does not seem to recognize so files with versions
-versioned_so=0
+versioned_so ?= 0
 
 # Only try to use clang, unless this is set to 0, then try to use g++
 android_force_clang ?= 1
