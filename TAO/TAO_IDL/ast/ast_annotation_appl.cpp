@@ -155,6 +155,17 @@ AST_Annotation_Appl::find_param (const char *name)
   Params *parameters = params ();
   if (parameters)
     {
+      // Check for single nameless parameter
+      if (parameters->size () == 1)
+        {
+          Param *top;
+          parameters->top (top);
+          if (top && !top->id && top->expr)
+            {
+              // Don't reuse it if used
+              return top->used ? 0 : top;
+            }
+        }
       Param **param;
       for (Param::Iterator it (*parameters);
           !it.done (); it.advance ())
