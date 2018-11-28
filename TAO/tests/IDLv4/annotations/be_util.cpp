@@ -6,7 +6,7 @@
 #include "ace/OS_NS_strings.h"
 
 void
-be_util::prep_be_arg (char *arg)
+be_util::prep_be_arg (char * /*arg*/)
 {
 }
 
