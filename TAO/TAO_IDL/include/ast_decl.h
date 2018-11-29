@@ -384,6 +384,13 @@ public:
    */
   virtual bool should_be_dumped () const;
 
+  /**
+   * Get Annotation Vector Reference.
+   * If this is a typedef, it includes recursively acquired annotations from
+   * the possible chain of direct typedefs.
+   */
+  virtual AST_Annotation_Appls &annotations ();
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called

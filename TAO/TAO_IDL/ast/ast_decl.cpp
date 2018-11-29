@@ -1662,3 +1662,14 @@ AST_Decl::should_be_dumped () const
   bool is_builtin = builtin ();
   return !is_builtin || (is_builtin && idl_global->dump_builtins_);
 }
+
+AST_Annotation_Appls &
+AST_Decl::annotations ()
+{
+  if (!annotation_appls_)
+    {
+      annotation_appls_ = new AST_Annotation_Appls;
+    }
+
+  return *annotation_appls_;
+}
