@@ -39,7 +39,6 @@ Options::Options ()
 , imr_type_ (STANDALONE_IMR)
 , throw_shutdown_exceptions_ (false)
 , pinger_ (0)
-, threads_ (1)
 , ft_endpoint_ ()
 , ft_update_delay_ (0, DEFAULT_FT_UPDATE_DELAY)
 {
@@ -279,22 +278,6 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
           this->ping_timeout_ =
             ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
-#if 0
-      else if (ACE_OS::strcasecmp (shifter.get_current (),
-                                   ACE_TEXT ("--threads")) == 0)
-        {
-          shifter.consume_arg ();
-
-          if (!shifter.is_anything_left () || shifter.get_current ()[0] == '-')
-            {
-              ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("Error: --threads option needs a value\n")));
-              this->print_usage ();
-              return -1;
-            }
-          this->threads_ = ACE_OS::atoi (shifter.get_current ());
-        }
-#endif
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--ftendpoint")) == 0)
         {
@@ -495,10 +478,6 @@ Options::save_registry_options ()
     (LPBYTE) &this->imr_type_ , sizeof (this->imr_type_));
   ACE_ASSERT (err == ERROR_SUCCESS);
 
-  err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("Threads"), 0, REG_DWORD,
-    (LPBYTE) &this->threads_ , sizeof (this->threads_));
-  ACE_ASSERT (err == ERROR_SUCCESS);
-
   err = ACE_TEXT_RegSetValueEx (key, ACE_TEXT ("FtEndpoint"), 0, REG_SZ,
     (LPBYTE) this->ft_endpoint_.c_str (), (DWORD) this->ft_endpoint_.length () + 1);
   ACE_ASSERT (err == ERROR_SUCCESS);
@@ -657,14 +636,6 @@ Options::load_registry_options ()
       ACE_ASSERT (type == REG_DWORD);
     }
 
-  sz = sizeof(threads_);
-  err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("Threads"), 0, &type,
-    (LPBYTE) &this->threads_, &sz);
-  if (err == ERROR_SUCCESS)
-    {
-      ACE_ASSERT (type == REG_DWORD);
-    }
-
   sz = sizeof(tmpstr);
   err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT ("FtEndpoint"), 0, &type,
     (LPBYTE) tmpstr, &sz);
@@ -807,12 +778,6 @@ Options::ImrType
 Options::imr_type (void) const
 {
   return this->imr_type_;
-}
-
-int
-Options::threads (void) const
-{
-  return this->threads_;
 }
 
 const ACE_CString &

@@ -203,8 +203,6 @@ private:
 
   LiveCheck *pinger_;
 
-  int threads_;
-
   ACE_CString ft_endpoint_;
 
   ACE_Time_Value ft_update_delay_;
