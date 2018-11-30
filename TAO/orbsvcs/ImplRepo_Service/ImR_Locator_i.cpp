@@ -21,22 +21,6 @@
 #include "ace/Vector_T.h"
 #include "ace/Task.h"
 
-class ORB_Runner : public ACE_Task_Base
-{
-public:
-  ORB_Runner (CORBA::ORB_ptr o)
-    : orb_ (CORBA::ORB::_duplicate (o))
-  { }
-
-  int svc (void)
-  {
-    this->orb_->run ();
-    return 0;
-  }
-private:
-  CORBA::ORB_var orb_;
-};
-
 /// We want to give shutdown a little more time to work, so that we
 /// can guarantee to the tao_imr utility that it has shutdown. The tao_imr
 /// utility prints a different message depending on whether shutdown succeeds
@@ -267,14 +251,12 @@ ImR_Locator_i::run (void)
                       ACE_TEXT ("\tPing Interval : %dms\n")
                       ACE_TEXT ("\tStartup Timeout : %ds\n")
                       ACE_TEXT ("\tPersistence : %s\n")
-                      ACE_TEXT ("\tMulticast : %C\n")
-                      ACE_TEXT ("\tThreads : %d\n"),
+                      ACE_TEXT ("\tMulticast : %C\n"),
                       this->opts_->ping_interval ().msec (),
                       this->opts_->startup_timeout ().sec (),
                       this->repository_->repo_mode (),
                       (this->repository_->multicast () != 0 ?
-                       "Enabled" : "Disabled"),
-                      this->opts_->threads () ));
+                       "Enabled" : "Disabled")));
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("\tDebug : %d\n")
                       ACE_TEXT ("\tReadOnly : %C\n\n"),
@@ -283,16 +265,8 @@ ImR_Locator_i::run (void)
     }
   this->auto_start_servers ();
 
-  if (true /* this->opts_->threads () == 1 */)
-    {
-      this->orb_->run ();
-    }
-  else
-    {
-      ORB_Runner runner (this->orb_);
-      runner.activate (THR_NEW_LWP | THR_JOINABLE, this->opts_->threads ());
-      runner.wait ();
-    }
+  this->orb_->run ();
+
   return 0;
 }
 
