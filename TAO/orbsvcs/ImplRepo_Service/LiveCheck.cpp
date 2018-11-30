@@ -291,7 +291,7 @@ LiveEntry::status (LiveStatus l)
   }
   this->update_listeners ();
 
-  if (this->listeners_.size() > 0)
+  if (!this->listeners_.is_empty ())
     {
       if (ImR_Locator_i::debug () > 2)
         {
@@ -341,7 +341,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
   if (this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
-      this->listeners_.size () == 0)
+      this->listeners_.is_empty ())
     {
       if (ImR_Locator_i::debug () > 4)
         {
@@ -423,7 +423,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
                                 ACE_TEXT ("server <%C>\n"),
                                 this->server_.c_str()));
               }
-            if (this->listeners_.size() > 0)
+            if (!this->listeners_.is_empty ())
               {
                 this->update_listeners ();
               }
