@@ -78,13 +78,20 @@ public:
   Identifier (const char *s);
   // Constructor.
 
+  Identifier (const Identifier &other);
+
   virtual ~Identifier (void);
   // Destructor.
 
   // Operations
 
+  /**
+   * Get the underlying string.
+   */
+  ///{
   char *get_string (void);
-  // Get the underlying string.
+  const char *get_string () const;
+  ///}
 
   void replace_string (const char * s);
   // Replace the underlying string and free the old one.
@@ -109,6 +116,8 @@ public:
 
   virtual void destroy (void);
   // Cleanup function.
+
+  bool operator== (const Identifier &other) const;
 
 private:
   // Storage for data.

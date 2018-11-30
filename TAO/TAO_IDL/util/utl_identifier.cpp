@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_string.h"
 
 Identifier::Identifier (void)
   : pv_string (0),
@@ -137,6 +138,11 @@ Identifier::Identifier (const char *s)
     }
 }
 
+Identifier::Identifier (const Identifier &other)
+  : Identifier (other.get_string ())
+{
+}
+
 Identifier::~Identifier (void)
 {
   if (this->pv_string != 0)
@@ -150,6 +156,12 @@ Identifier::~Identifier (void)
 
 char *
 Identifier::get_string (void)
+{
+  return this->pv_string;
+}
+
+const char *
+Identifier::get_string (void) const
 {
   return this->pv_string;
 }
@@ -228,4 +240,10 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
 void
 Identifier::destroy (void)
 {
+}
+
+bool
+Identifier::operator== (const Identifier &other) const
+{
+  return !ACE_OS::strcmp (pv_string, other.get_string ());
 }
