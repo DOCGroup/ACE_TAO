@@ -867,10 +867,22 @@ UTL_Error::coercion_error (AST_Expression *v,
 void
 UTL_Error::lookup_error (UTL_ScopedName *n)
 {
+  if (idl_global->ignore_lookup_errors_) return;
   idl_error_header (EIDL_LOOKUP_ERROR);
   n->dump (*ACE_DEFAULT_LOG_STREAM);;
   ACE_ERROR ((LM_ERROR,
               "\n"));
+}
+
+void
+UTL_Error::lookup_warning (UTL_ScopedName *n)
+{
+  if (idl_global->print_warnings ())
+    {
+      idl_warning_header (EIDL_LOOKUP_ERROR);
+      n->dump (*ACE_DEFAULT_LOG_STREAM);;
+      ACE_ERROR ((LM_ERROR, "\n"));
+    }
 }
 
 // Report an illegal version number assignment.

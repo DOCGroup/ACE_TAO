@@ -195,6 +195,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
   AST_Annotation_Appls *annotations_val;
   AST_Annotation_Appl::Param *annotation_param_val;
   AST_Annotation_Appl::Params *annotation_params_val;
+  AST_Annotation_Decl *annotation_decl_val;
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
 }
@@ -2077,14 +2078,18 @@ primary_expr
            * but only when it is evaluated (such as when it is assigned
            * as a constant value).
            */
+          AST_Expression *expr = 0;
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_Decl *d =
             s->lookup_by_name ($1);
 
           if (d == 0)
             {
-              idl_global->err ()->lookup_error ($1);
-              return 1;
+              if (!idl_global->ignore_lookup_errors_)
+                {
+                  idl_global->err ()->lookup_error ($1);
+                  return 1;
+                }
             }
           else if (d->node_type () == AST_Decl::NT_const)
             {
@@ -2100,8 +2105,7 @@ primary_expr
               AST_Constant *c =
                 AST_Constant::narrow_from_decl (d);
 
-              $<exval>$ =
-                idl_global->gen ()->create_expr (
+              expr = idl_global->gen ()->create_expr (
                   c->constant_value (),
                   c->et ());
             }
@@ -2111,11 +2115,11 @@ primary_expr
               // passed in this constructor, so we copy it
               // and destroy it below no matter which case
               // is followed.
-              $<exval>$ =
-                idl_global->gen ()->create_expr (
+              expr = idl_global->gen ()->create_expr (
                   $1->copy ());
             }
 
+          $<exval>$ = expr;
           $1->destroy ();
           delete $1;
           $1 = 0;
@@ -2385,7 +2389,7 @@ annotations_maybe
         ;
 
 annotation_appl
-        : IDL_ANNOTATION_SYMBOL scoped_name annotation_appl_params_maybe
+        : IDL_ANNOTATION_SYMBOL scoped_name
         {
           if (idl_global->idl_version_ < IDL_VERSION_4)
             {
@@ -2393,23 +2397,64 @@ annotation_appl
                 "Annotations are an IDL4 feature");
             }
 
-          AST_Annotation_Appl *appl = 0;
+          AST_Annotation_Decl *decl = 0;
           UTL_ScopedName *name = $2;
           AST_Annotation_Decl::escape_name (name);
-          AST_Annotation_Appl::Params *params = $3;
 
-          // Check for Annotation Declaration
+          // Check for Matching Annotation Declaration
           AST_Decl *d = idl_global->scopes ().top_non_null ()->
             lookup_by_name (name);
-          if (!d /*&& !idl_global->ignore_missing_annotations_*/)
+          if (d)
             {
-              idl_global->err ()->lookup_error (name);
+              decl = AST_Annotation_Decl::narrow_from_decl (d);
+              if (decl)
+                {
+                  idl_global->scopes ().push (decl);
+                }
             }
           else
             {
-              AST_Annotation_Decl *decl = AST_Annotation_Decl::narrow_from_decl (d);
+              Identifier &id = *name->last_component ();
+              switch (idl_global->unknown_annotations_)
+                {
+                default:
+                case IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE:
+                  if (idl_global->unknown_annotations_seen_.insert (id) == 1)
+                    {
+                      break;
+                    }
+                  idl_global->err ()->lookup_warning (name);
+                  break;
+                case IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL:
+                  idl_global->err ()->lookup_warning (name);
+                  break;
+                case IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR:
+                  idl_global->err ()->lookup_error (name);
+                  break;
+                case IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE:
+                  break;
+                }
+
+              // Ignore lookup errors for parameter values that might depend
+              // on constants or enums from the annotation declaration.
+              idl_global->ignore_lookup_errors_ = true;
+            }
+
+          $<annotation_decl_val>$ = decl;
+        }
+        annotation_appl_params_maybe
+        {
+          idl_global->ignore_lookup_errors_ = false;
+          AST_Annotation_Appl *appl = 0;
+          UTL_ScopedName *name = $2;
+          AST_Annotation_Decl *decl = $<annotation_decl_val>3;
+          AST_Annotation_Appl::Params *params = $4;
+
+          if (decl)
+            {
               appl = idl_global->gen ()->create_annotation_appl (name, params);
               appl->apply_from (decl);
+              idl_global->scopes ().pop ();
             }
 
           $$ = appl;
@@ -3330,7 +3375,10 @@ switch_type_spec :
               $1 = 0;
 
               /* If we don't return here, we'll crash later.*/
-              return 1;
+              if (!idl_global->ignore_lookup_errors_)
+                {
+                  return 1;
+                }
             }
 
           $1->destroy ();
@@ -3939,6 +3987,8 @@ string_type_spec
           idl_global->root ()->fe_add_string (
             AST_String::narrow_from_decl (
               tao_string_decl));
+
+          $$ = tao_string_decl;
         }
         ;
 
@@ -4012,6 +4062,8 @@ wstring_type_spec
           idl_global->root ()->fe_add_string (
             AST_String::narrow_from_decl (
               string));
+
+          $$ = string;
         }
         ;
 

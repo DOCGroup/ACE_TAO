@@ -2850,28 +2850,19 @@ AST_Expression::operator== (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      if (this->pd_ev->u.strval == 0)
-        {
-          return vc->ev ()->u.strval == 0;
-        }
-      else if (vc->ev ()->u.strval == 0)
-        {
-          return false;
-        }
-      else
-        {
-          return this->pd_ev->u.strval == vc->ev ()->u.strval;
-        }
-
+      return !ACE_OS::strcmp (pd_ev->u.strval->get_string (),
+        vc->ev ()->u.strval->get_string ());
+    case EV_wstring:
+      return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:
       return pd_ev->u.llval == vc->ev ()->u.llval;
     case EV_ulonglong:
       return pd_ev->u.ullval == vc->ev ()->u.ullval;
     case EV_fixed:
       return pd_ev->u.fixedval == vc->ev ()->u.fixedval;
-    case EV_longdouble:
-    case EV_wstring:
     case EV_enum:
+      return pd_ev->u.eval == vc->ev ()->u.eval;
+    case EV_longdouble:
     case EV_void:
     case EV_none:
     case EV_any:

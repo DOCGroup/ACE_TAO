@@ -218,6 +218,9 @@ public:
   // Report a failed name lookup attempt.
   void lookup_error (UTL_ScopedName *n);
 
+  /// Report a failed name lookup attempt as a warning.
+  void lookup_warning (UTL_ScopedName *n);
+
   // Report an illegal #pragma version.
   void version_number_error (char *n);
 

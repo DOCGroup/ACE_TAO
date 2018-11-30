@@ -300,6 +300,13 @@ public:
     , PS_AnnotationDeclSeen
   };
 
+  enum Unknown_Annotations {
+    UNKNOWN_ANNOTATIONS_WARN_ONCE,
+    UNKNOWN_ANNOTATIONS_WARN_ALL,
+    UNKNOWN_ANNOTATIONS_ERROR,
+    UNKNOWN_ANNOTATIONS_IGNORE
+  };
+
   // flags for types of declarations seen while parsing.
   bool abstract_iface_seen_;
   bool abstractbase_seen_;
@@ -407,7 +414,7 @@ public:
   bool in_eval_;
 
   /**
-   * Dump contructs defined using eval() if true.
+   * Dump constructs defined using eval() if true.
    */
   bool dump_builtins_;
 
@@ -421,6 +428,21 @@ public:
    * Exit right before parsing input files.
    */
   bool ignore_files_;
+
+  /**
+   * If true, silently ignore lookup errors.
+   */
+  bool ignore_lookup_errors_;
+
+  /**
+   * Reaction to unknown annotations
+   */
+  Unknown_Annotations unknown_annotations_;
+
+  /**
+   * Set of the local names of unkown annotations already seen
+   */
+  ACE_Unbounded_Set<Identifier> unknown_annotations_seen_;
 
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);

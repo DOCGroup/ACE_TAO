@@ -139,7 +139,7 @@ DRV_usage (void)
     ACE_TEXT ("(default is error)\n")
     ACE_TEXT (" -as\t\t\tSilences the anonymous type diagnostic ")
     ACE_TEXT ("(default is error)\n")
-    ACE_TEXT (" -d | --dump\tPrints a dump of the AST and exits\n")
+    ACE_TEXT (" -d | --dump\t\tPrints a dump of the AST and exits\n")
     ACE_TEXT (" -Dname[=value]\t\tdefines name for preprocessor\n")
     ACE_TEXT (" -E\t\t\truns preprocessor only, prints on stdout\n")
     ACE_TEXT (" -Idir\t\t\tincludes dir in search path for preprocessor\n")
@@ -158,6 +158,12 @@ DRV_usage (void)
     ACE_TEXT (" --bison-trace\t\tEnable Bison Tracing (sets yydebug to 1)\n")
     ACE_TEXT (" --dump-builtins\tDump the compiler and user defined IDL.\n")
     ACE_TEXT (" --just-dump-builtins\tJust dump the compiler defined IDL and exit.\n")
+    ACE_TEXT (" --unknown-annotations ARG\t")
+      ACE_TEXT ("Set reaction to unknown annotations. ARG must be one of the following:\n")
+    ACE_TEXT ("\t\t\t\twarn-once\tThe default, warn once per unique local name\n")
+    ACE_TEXT ("\t\t\t\twarn-all\tWarn for all unknown annotations\n")
+    ACE_TEXT ("\t\t\t\terror\t\tCauses the process to exit with a failed return status\n")
+    ACE_TEXT ("\t\t\t\tignore\t\tDon't report unknown annotations\n")
   ));
 
   be_util::usage ();
@@ -581,7 +587,7 @@ process_long_option(long ac, char **av, long &i)
       bool invalid_version = no_more_args;
       if (no_more_args)
         {
-          ACE_DEBUG ((LM_ERROR,
+          ACE_ERROR ((LM_ERROR,
             ACE_TEXT ("--idl-version is missing a required argument, ")
             ACE_TEXT ("the IDL version to use.\n")
             ));
@@ -592,7 +598,7 @@ process_long_option(long ac, char **av, long &i)
           invalid_version = !idl_global->idl_version_.is_valid ();
           if (invalid_version)
             {
-              ACE_DEBUG ((LM_ERROR,
+              ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("\"%C\" is not a valid IDL version supported\n"),
                 av[i]
                 ));
@@ -645,6 +651,57 @@ process_long_option(long ac, char **av, long &i)
   else if (!ACE_OS::strcmp (long_option, "dump"))
     {
       idl_global->dump_ast ();
+    }
+  else if (!ACE_OS::strcmp (long_option, "unknown-annotations"))
+    {
+      bool invalid_argument = no_more_args;
+      if (no_more_args)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("--unknown-annotations is missing its required argument.")
+            ));
+        }
+      else
+        {
+          i++;
+          if (!ACE_OS::strcmp (long_option, "warn-once"))
+            {
+              idl_global->unknown_annotations_ =
+                IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
+            }
+          else if (!ACE_OS::strcmp (long_option, "warn-all"))
+            {
+              idl_global->unknown_annotations_ =
+                IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL;
+            }
+          else if (!ACE_OS::strcmp (long_option, "error"))
+            {
+              idl_global->unknown_annotations_ =
+                IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
+            }
+          else if (!ACE_OS::strcmp (long_option, "ignore"))
+            {
+              idl_global->unknown_annotations_ =
+                IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE;
+            }
+          else
+            {
+              invalid_argument = true;
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("\"%C\" is not a valid argument.\n"),
+                av[i]
+                ));
+            }
+        }
+      if (invalid_argument)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("Use either \"warn-once\", \"warn-all\", ")
+            ACE_TEXT ("\"error\" or \"ignore\".\n"),
+            av[i]
+            ));
+          idl_global->parse_args_exit (1);
+        }
     }
   else
     {

@@ -119,6 +119,8 @@ IDL_GlobalData::IDL_GlobalData (void)
     dump_builtins_ (false),
     just_dump_builtins_ (false),
     ignore_files_ (false),
+    ignore_lookup_errors_ (false),
+    unknown_annotations_ (UNKNOWN_ANNOTATIONS_WARN_ONCE),
     pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
@@ -1936,7 +1938,7 @@ IDL_GlobalData::eval (const char *string)
   UTL_String *old_filename = filename ();
   pd_filename = 0;
   long old_lineno = lineno ();
-  idl_global->set_lineno (-1);
+  idl_global->set_lineno (1);
   UTL_String *old_idl_src_file = idl_src_file ();
 
   // Name this pseudo-file "builtin"
