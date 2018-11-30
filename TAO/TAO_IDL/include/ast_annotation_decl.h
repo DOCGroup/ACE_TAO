@@ -46,6 +46,8 @@ public:
 
   virtual AST_Annotation_Member *fe_add_annotation_member (
     AST_Annotation_Member *annotation_member);
+
+  virtual AST_Constant *fe_add_constant (AST_Constant *t);
 };
 
 #endif

@@ -2,6 +2,7 @@
 #include "ast_annotation_member.h"
 #include "utl_indenter.h"
 #include "utl_identifier.h"
+#include "ast_constant.h"
 
 AST_Decl::NodeType const AST_Annotation_Decl::NT =
   AST_Decl::NT_annotation_decl;
@@ -91,4 +92,10 @@ AST_Annotation_Decl::fe_add_annotation_member (
     }
 
   return AST_Annotation_Member::narrow_from_decl (d);
+}
+
+AST_Constant *
+AST_Annotation_Decl::fe_add_constant (AST_Constant *t)
+{
+  return AST_Constant::narrow_from_decl (fe_add_decl (t));
 }
