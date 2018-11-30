@@ -205,9 +205,8 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
   else
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) ImR_ResponseHandler::send_ior (): Invalid corbaloc ior.\n")
-                  ACE_TEXT ("\t<%C>\n"),
-                  ior.c_str()));
+                  ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Invalid corbaloc ior for key <%C> server_name <%C> IOR <%C>\n"),
+                  key_str_.in (), server_name_.in (), pior));
     }
 
   this->invoke_excep_i (new CORBA::OBJECT_NOT_EXIST

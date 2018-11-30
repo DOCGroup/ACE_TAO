@@ -203,6 +203,13 @@ AsyncAccessManager::remote_state (ImplementationRepository::AAM_Status state)
 void
 AsyncAccessManager::final_state (bool active)
 {
+  if (ImR_Locator_i::debug () > 5)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
+                      ACE_TEXT ("server <%C> active <%d> status <%C>\n"),
+                      this, info_->ping_id (), active, status_name (this->status_)));
+    }
   bool const success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
   this->info_.edit (active)->started (success);
   this->retries_ = this->info_->start_limit_;
@@ -224,8 +231,8 @@ AsyncAccessManager::final_state (bool active)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
-                          ACE_TEXT ("removing this from map, server <%C>\n"),
-                          this, info_->ping_id ()));
+                          ACE_TEXT ("removing this from map, server <%C> remove_on_death_rh_ <%@>\n"),
+                          this, info_->ping_id (), this->remove_on_death_rh_));
         }
       if (this->remove_on_death_rh_ != 0)
         {
@@ -490,9 +497,9 @@ AsyncAccessManager::notify_child_death (int pid)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, pid <%d>, status <%C> ")
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C>, pid <%d>, status <%C> ")
                       ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
-                      this, pid, status_name (status_),
+                      this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
   if (this->info_->pid == pid || this->prev_pid_ == pid)
