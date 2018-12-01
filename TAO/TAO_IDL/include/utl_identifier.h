@@ -93,8 +93,10 @@ public:
   const char *get_string () const;
   ///}
 
-  void replace_string (const char * s);
+  void replace_string (const char *s);
   // Replace the underlying string and free the old one.
+
+  void preprocess_and_replace_string (const char *s);
 
   bool compare (Identifier *other);
   // Compare with other Identifier.

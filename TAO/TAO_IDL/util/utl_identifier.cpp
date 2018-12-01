@@ -82,6 +82,51 @@ Identifier::Identifier (const char *s)
   : pv_string (0),
     escaped_ (false)
 {
+  preprocess_and_replace_string (s);
+}
+
+Identifier::Identifier (const Identifier &other)
+  : pv_string (0),
+    escaped_ (other.escaped ())
+{
+  replace_string (other.get_string ());
+}
+
+Identifier::~Identifier (void)
+{
+  if (this->pv_string != 0)
+    {
+      ACE::strdelete (this->pv_string);
+    }
+}
+
+// Operations.
+
+char *
+Identifier::get_string (void)
+{
+  return this->pv_string;
+}
+
+const char *
+Identifier::get_string (void) const
+{
+  return this->pv_string;
+}
+
+void
+Identifier::replace_string (const char * s)
+{
+  if (pv_string)
+    {
+      delete [] this->pv_string;
+    }
+  this->pv_string = s ? ACE::strnew (s) : 0;
+}
+
+void
+Identifier::preprocess_and_replace_string (const char * s)
+{
   bool shift = false;
 
   if (*s == '_')
@@ -128,49 +173,7 @@ Identifier::Identifier (const char *s)
         }
     }
 
-  if (shift)
-    {
-      this->pv_string = ACE::strnew (s + 1);
-    }
-  else
-    {
-      this->pv_string = ACE::strnew (s);
-    }
-}
-
-Identifier::Identifier (const Identifier &other)
-  : Identifier (other.get_string ())
-{
-}
-
-Identifier::~Identifier (void)
-{
-  if (this->pv_string != 0)
-    {
-      ACE::strdelete (this->pv_string);
-      this->pv_string = 0;
-    }
-}
-
-// Operations.
-
-char *
-Identifier::get_string (void)
-{
-  return this->pv_string;
-}
-
-const char *
-Identifier::get_string (void) const
-{
-  return this->pv_string;
-}
-
-void
-Identifier::replace_string (const char * s)
-{
-  delete [] this->pv_string;
-  this->pv_string = ACE::strnew (s);
+  replace_string (shift ? s + 1 : s);
 }
 
 // Compare two Identifier *
