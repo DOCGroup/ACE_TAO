@@ -307,7 +307,7 @@ public:
         char *node_name = node->name ()->get_string_copy ();
         ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("Annotation Test Error: %C:\n")
-          ACE_TEXT ("%C annotation %d is NULL!\n"),
+          ACE_TEXT ("%C annotation %d is null!\n"),
           name_, node_name, index));
         delete [] node_name;
         failed ();
@@ -426,7 +426,7 @@ public:
         ACE_ERROR ((LM_ERROR,
           ACE_TEXT ("Annotation Test Error: %C:\n")
           ACE_TEXT ("For Annotation Member %C, ")
-          ACE_TEXT ("expected value is NULL, can't compare!\n"),
+          ACE_TEXT ("expected value is null, can't compare!\n"),
           name_, member_name));
         delete [] member_name;
         failed ();
@@ -811,7 +811,7 @@ BE_post_init (char *[], long)
     AST_Annotation_Appls *annotations = seq->base_type_annotations ();
     if (!annotations)
       {
-        t.failed ("base_type_annotations() for test_seq_t returned NULL!");
+        t.failed ("base_type_annotations() for test_seq_t returned null!");
       }
     size_t count = annotations->size ();
     if (count != 1)
@@ -825,7 +825,7 @@ BE_post_init (char *[], long)
     AST_Annotation_Appl *annotation = (*annotations)[0];
     if (!annotation)
       {
-        t.failed ("annotation for test_seq_t base type is NULL!");
+        t.failed ("annotation for test_seq_t base type is null!");
       }
     if (annotation->annotation_decl () != test_annotation_1)
       {
@@ -964,7 +964,7 @@ BE_post_init (char *[], long)
     AST_Annotation_Appl *annotation = (*annotations)[0];
     if (!annotation)
       {
-        t.failed ("annotation for test_seq_t base type is NULL!");
+        t.failed ("annotation for test_seq_t base type is null!");
       }
     if (annotation->annotation_decl () != test_annotation_1)
       {
