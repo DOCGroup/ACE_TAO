@@ -122,8 +122,6 @@ public:
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type(void) const;
 
-  int threads (void) const;
-
   const ACE_CString &ft_endpoint (void) const;
 
   ACE_Time_Value ft_update_delay (void) const;
@@ -202,8 +200,6 @@ private:
   bool throw_shutdown_exceptions_;
 
   LiveCheck *pinger_;
-
-  int threads_;
 
   ACE_CString ft_endpoint_;
 
