@@ -102,7 +102,7 @@ LiveEntry::set_reping_limit (int max)
 }
 
 bool
-LiveEntry::reping_available (void)
+LiveEntry::reping_available (void) const
 {
   return this->repings_ < this->max_retry_;
 }
@@ -331,13 +331,13 @@ LiveEntry::set_pid (int pid)
 }
 
 int
-LiveEntry::pid (void)
+LiveEntry::pid (void) const
 {
   return this->pid_;
 }
 
 bool
-LiveEntry::has_pid (int pid)
+LiveEntry::has_pid (int pid) const
 {
   return this->pid_ == 0 || pid == 0 || pid == this->pid_;
 }

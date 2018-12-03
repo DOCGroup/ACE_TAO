@@ -132,13 +132,13 @@ class Locator_Export LiveEntry
   void do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
   static void set_reping_limit (int max);
-  bool reping_available (void);
+  bool reping_available (void) const;
   int next_reping (void);
   void max_retry_msec (int max);
   const char *server_name (void) const;
   void set_pid (int pid);
-  bool has_pid (int pid);
-  int pid (void);
+  bool has_pid (int pid) const;
+  int pid (void) const;
 
  private:
   LiveCheck *owner_;
@@ -158,7 +158,6 @@ class Locator_Export LiveEntry
 
   static const int reping_msec_ [];
   static int reping_limit_;
-
 };
 
 //---------------------------------------------------------------------------
