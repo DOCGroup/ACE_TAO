@@ -323,8 +323,6 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
       return "INIT";
     case ImplementationRepository::AAM_SERVER_STARTED_RUNNING:
       return "SERVER_STARTED_RUNNING";
-    case ImplementationRepository::AAM_ACTIVATION_SENT:
-      return "ACTIVATION_SENT";
     case ImplementationRepository::AAM_WAIT_FOR_RUNNING:
       return "WAIT_FOR_RUNNING";
     case ImplementationRepository::AAM_WAIT_FOR_PING:
@@ -375,24 +373,25 @@ void
 AsyncAccessManager::update_status (ImplementationRepository::AAM_Status s)
 {
   this->status (s);
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("update_status");
+    }
   this->info_.notify_remote_access (s);
 }
 
 void
-AsyncAccessManager::activator_replied (bool success, int pid)
+AsyncAccessManager::activator_replied_start_running (bool success, int pid)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("activator_replied_start_running");
+    }
+
   if (success)
     {
-      if (pid == 0)
+      if (pid != 0)
         {
-          this->update_status (ImplementationRepository::AAM_WAIT_FOR_RUNNING);
-        }
-      else
-        {
-          if (ImR_Locator_i::debug () > 4)
-            {
-              this->report ("activator_replied");
-            }
           this->update_status (ImplementationRepository::AAM_SERVER_READY);
           this->info_.edit()->pid = pid;
           this->final_state ();
@@ -665,7 +664,7 @@ AsyncAccessManager::send_start_request (void)
                                         startup->cmdline.c_str (),
                                         startup->dir.c_str (),
                                         startup->env_vars);
-  this->update_status (ImplementationRepository::AAM_ACTIVATION_SENT);
+  this->update_status (ImplementationRepository::AAM_WAIT_FOR_RUNNING);
   return true;
 }
 
@@ -702,7 +701,6 @@ ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
 {
 }
 
-
 ActivatorReceiver::~ActivatorReceiver (void)
 {
 }
@@ -710,7 +708,13 @@ ActivatorReceiver::~ActivatorReceiver (void)
 void
 ActivatorReceiver::start_server (void)
 {
-  this->aam_->activator_replied (true, 0);
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server, received start_server reply\n"),
+                      this));
+    }
+
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
 }
@@ -718,6 +722,13 @@ ActivatorReceiver::start_server (void)
 void
 ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, received start_server_excep reply\n"),
+                      this));
+    }
+
   try
     {
       holder->raise_exception ();
@@ -727,11 +738,11 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
       if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
         {
           int const pid = ACE_OS::atoi (ca.reason.in()+4);
-          this->aam_->activator_replied (true, pid);
+          this->aam_->activator_replied_start_running (true, pid);
         }
       else
         {
-          this->aam_->activator_replied (false, 0);
+          this->aam_->activator_replied_start_running (false, 0);
         }
     }
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);

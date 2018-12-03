@@ -102,7 +102,7 @@ LiveEntry::set_reping_limit (int max)
 }
 
 bool
-LiveEntry::reping_available (void)
+LiveEntry::reping_available (void) const
 {
   return this->repings_ < this->max_retry_;
 }
@@ -330,8 +330,14 @@ LiveEntry::set_pid (int pid)
   this->pid_ = pid;
 }
 
+int
+LiveEntry::pid (void) const
+{
+  return this->pid_;
+}
+
 bool
-LiveEntry::has_pid (int pid)
+LiveEntry::has_pid (int pid) const
 {
   return this->pid_ == 0 || pid == 0 || pid == this->pid_;
 }
@@ -389,7 +395,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     case LS_TRANSIENT:
     case LS_LAST_TRANSIENT:
       {
-        int ms = this->next_reping ();
+        int const ms = this->next_reping ();
         if (ms != -1)
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
@@ -660,7 +666,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
     }
 }
 
-bool LC_TimeoutGuard::blocked (void)
+bool LC_TimeoutGuard::blocked (void) const
 {
   return this->blocked_;
 }
@@ -894,8 +900,8 @@ LiveCheck::remove_server (const char *server, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                          ACE_TEXT ("pid <%d> does not match entry\n"),
-                          server, pid));
+                          ACE_TEXT ("pid <%d> does not match entry pid <%d>\n"),
+                          server, pid, entry->pid ()));
         }
     }
 }

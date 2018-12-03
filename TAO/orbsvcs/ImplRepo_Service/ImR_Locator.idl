@@ -49,7 +49,6 @@ module ImplementationRepository
   {
     AAM_INIT,
     AAM_SERVER_STARTED_RUNNING,
-    AAM_ACTIVATION_SENT,
     AAM_WAIT_FOR_RUNNING,
     AAM_WAIT_FOR_PING,
     AAM_WAIT_FOR_ALIVE,
