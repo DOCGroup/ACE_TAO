@@ -251,17 +251,37 @@ also receives other options that are specific to it.<p>
     <th>Remark</th>
   </tr>
   <tr><a NAME="u">
-    <td><tt>-u</tt></td>
+    <td><tt>-h</br>--help</br>-u</tt></td>
 
-    <td>The compiler prints out the options that are given below and exits
-        clean </td>
+    <td>The compiler prints out the arguments it supports and exits</td>
     <td>&nbsp;</td>
   </tr>
 
   <tr> <a NAME="V">
-    <td><tt>-V</tt></td>
+    <td><tt>-V</br>--version</tt></td>
 
     <td>The compiler printouts its version and exits</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--idl-version VERSION</tt></td>
+
+    <td>Set the IDL version to use</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--default-idl-version</tt></td>
+
+    <td>Prints the defautl IDL version for the compiler and exits</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--list-idl-versions</tt></td>
+
+    <td>Lists IDL versions the compiler supports and exits</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -556,10 +576,33 @@ also receives other options that are specific to it.<p>
     <td>&nbsp;</td>
   </tr>
 
-  <tr><a name="d">
-    <td><tt>-d</tt></td>
+  <tr>
+    <td><tt>--syntax-only</tt></td>
 
-    <td>Causes output of a dump of the AST</td>
+    <td>Parse input files, but exit without generating any files.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr><a name="d">
+    <td><tt>--dump </br> -d</tt></td>
+
+    <td>Causes output of a dump of the AST and exits before any files would be
+      created.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--dump-builtins</tt></td>
+
+    <td>Implies --dump, but also dumps IDL defined by the compiler.</td>
+    <td>&nbsp;</td>
+  </tr>
+
+  <tr>
+    <td><tt>--just-dump-builtins</tt></td>
+
+    <td>Dumps IDL defined by the compiler but ignores any files passed and
+      exits.</td>
     <td>&nbsp;</td>
   </tr>
 
@@ -636,7 +679,7 @@ also receives other options that are specific to it.<p>
 
   <tr><a name="in">
     <TD><TT>-in</TT></TD>
-    <TD> To generate #include statements with <>'s for the standard
+    <TD> To generate #include statements with &lt;&gt;'s for the standard
         include files (e.g. tao/corba.h) indicating them as non-changing
         files</TD>
     <td>&nbsp;</td>
@@ -1294,6 +1337,21 @@ also receives other options that are specific to it.<p>
 
     <td>Set tab size for generated files</td>
     <td>Default is 2 spaces</td>
+  </tr>
+
+  <tr>
+    <td><tt>--unknown-annotations ARG</tt></td>
+
+    <td>
+      Controls the reaction when encountering undefined annotations. The valid
+      arguments to this option are "warn-once" (Default), "warn-all", "error",
+      and "ignore".
+    </td>
+    <td>
+      The difference between "warn-once" and "warn-all" is that with
+      "warn-once" using annotations the same local name will not be warned
+      about more than once, while "warn-all" will warn with every usage.
+    </td>
   </tr>
 
 </table> <P>
