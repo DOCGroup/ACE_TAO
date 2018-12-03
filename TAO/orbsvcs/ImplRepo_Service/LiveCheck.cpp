@@ -389,7 +389,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     case LS_TRANSIENT:
     case LS_LAST_TRANSIENT:
       {
-        int ms = this->next_reping ();
+        int const ms = this->next_reping ();
         if (ms != -1)
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);

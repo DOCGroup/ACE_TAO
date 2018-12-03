@@ -497,7 +497,7 @@ ImR_Activator_i::start_server(const char* name,
   // handles. This includes stdin, stdout, logs, etc.
   proc_opts.handle_inheritance (0);
 
-  // We always enable the unicode environmet buffer on Windows.  This works
+  // We always enable the unicode environment buffer on Windows.  This works
   // around a 32kb environment buffer limitation.  This must come before any of
   // the setenv() calls, since the first of those will copy the current
   // process's environment.
