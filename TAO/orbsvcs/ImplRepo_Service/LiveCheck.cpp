@@ -330,6 +330,12 @@ LiveEntry::set_pid (int pid)
   this->pid_ = pid;
 }
 
+int
+LiveEntry::pid (void)
+{
+  return this->pid_;
+}
+
 bool
 LiveEntry::has_pid (int pid)
 {
@@ -660,7 +666,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
     }
 }
 
-bool LC_TimeoutGuard::blocked (void)
+bool LC_TimeoutGuard::blocked (void) const
 {
   return this->blocked_;
 }
@@ -894,8 +900,8 @@ LiveCheck::remove_server (const char *server, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                          ACE_TEXT ("pid <%d> does not match entry\n"),
-                          server, pid));
+                          ACE_TEXT ("pid <%d> does not match entry pid <%d>\n"),
+                          server, pid, entry->pid ()));
         }
     }
 }

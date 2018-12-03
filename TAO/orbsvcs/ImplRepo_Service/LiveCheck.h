@@ -138,6 +138,7 @@ class Locator_Export LiveEntry
   const char *server_name (void) const;
   void set_pid (int pid);
   bool has_pid (int pid);
+  int pid (void);
 
  private:
   LiveCheck *owner_;
@@ -223,7 +224,7 @@ class Locator_Export LC_TimeoutGuard
   ~LC_TimeoutGuard (void);
 
   /// Returns true if the busy flag in the owner was already set.
-  bool blocked (void);
+  bool blocked (void) const;
 
  private:
   LiveCheck *owner_;
@@ -294,6 +295,10 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
+  /// Contains a list of servers which got removed during the handle_timeout,
+  /// these will be removed at the end of the handle_timeout. Be aware that
+  /// between the moment the server has been added to the list and the handling
+  /// of this list the server can already be restarted again.
   NameStack removed_entries_;
 };
 
