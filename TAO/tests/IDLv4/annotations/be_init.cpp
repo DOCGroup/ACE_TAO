@@ -62,7 +62,7 @@ public:
   int error_count_;
   UTL_Error::ErrorCode last_error_, last_warning_;
 
-  Annotation_Test (const char *name)
+  explicit Annotation_Test (const char *name)
     : name_ (name),
       idl_ (0),
       failed_ (false),
@@ -523,10 +523,9 @@ BE_post_init (char *[], long)
     t.assert_annotation_member_count (test_annotation_1, 0);
   } catch (Failed &f) {}
 
-  AST_Annotation_Decl *test_annotation_2 = 0;
   try {
     Annotation_Test t("Annotation Declaration with Members");
-    test_annotation_2 = t.run (
+    AST_Annotation_Decl *test_annotation_2 = t.run (
       "@annotation test_annotation_2 {\n"
       "  short short_value;\n"
       "  char char_value;\n"
@@ -557,10 +556,9 @@ BE_post_init (char *[], long)
     t.assert_annotation_member_no_value (boolean_value);
   } catch (Failed &f) {}
 
-  AST_Annotation_Decl *test_annotation_3 = 0;
   try {
     Annotation_Test t("Annotation Declaration with Defaulted Members");
-    test_annotation_3 = t.run (
+    AST_Annotation_Decl *test_annotation_3 = t.run (
       "@annotation test_annotation_3 {\n"
       "  short short_value default 1;\n"
       "  char char_value default '&';\n"

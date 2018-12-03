@@ -1659,8 +1659,7 @@ AST_Decl::builtin () const
 bool
 AST_Decl::should_be_dumped () const
 {
-  bool is_builtin = builtin ();
-  return !is_builtin || (is_builtin && idl_global->dump_builtins_);
+  return !builtin () || idl_global->dump_builtins_;
 }
 
 AST_Annotation_Appls &
