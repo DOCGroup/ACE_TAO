@@ -2240,3 +2240,13 @@ UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member
 {
   return 0;
 }
+
+AST_Decl *
+UTL_Scope::lookup_by_name (const char *name)
+{
+  AST_Decl *node = 0;
+  UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
+  node = lookup_by_name (scoped_name);
+  delete scoped_name;
+  return node;
+}
