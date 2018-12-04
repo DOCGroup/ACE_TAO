@@ -510,15 +510,6 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
 }
 
 void
-ImR_Locator_i::notify_child_death
-(ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* name)
-{
-  this->child_death_i (name, 0);
-  _tao_rh->notify_child_death ();
-}
-
-void
 ImR_Locator_i::child_death_pid
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
  const char* name, CORBA::Long pid)
