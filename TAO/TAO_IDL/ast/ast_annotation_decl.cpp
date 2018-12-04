@@ -103,5 +103,6 @@ AST_Annotation_Decl::fe_add_constant (AST_Constant *t)
 int
 AST_Annotation_Decl::ast_accept (ast_visitor *visitor)
 {
+  ACE_UNUSED_ARG (visitor);
   return 0;
 }
