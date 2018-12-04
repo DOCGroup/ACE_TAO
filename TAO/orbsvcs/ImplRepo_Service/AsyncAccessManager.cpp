@@ -247,58 +247,75 @@ AsyncAccessManager::final_state (bool active)
 }
 
 void
+AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
+{
+  if (this->status_ == ImplementationRepository::AAM_SERVER_READY)
+    {
+      if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
+        {
+          rh->send_ior (this->partial_ior_.c_str());
+        }
+      else
+        {
+          rh->send_ior (this->info_->partial_ior.c_str());
+        }
+    }
+  else
+    {
+      try
+        {
+          switch (this->status_)
+            {
+            case ImplementationRepository::AAM_NO_ACTIVATOR:
+              throw ImplementationRepository::CannotActivate
+                ("No activator registered for server.");
+            case ImplementationRepository::AAM_NOT_MANUAL:
+              throw ImplementationRepository::CannotActivate
+                ("Cannot implicitly activate MANUAL server.");
+            case ImplementationRepository::AAM_NO_COMMANDLINE:
+              throw ImplementationRepository::CannotActivate
+                ("No command line registered for server.");
+            case ImplementationRepository::AAM_RETRIES_EXCEEDED:
+              throw ImplementationRepository::CannotActivate
+                ("Restart attempt count exceeded.");
+            case  ImplementationRepository::AAM_ACTIVE_TERMINATE:
+              throw ImplementationRepository::CannotActivate
+                ("Server terminating.");
+            default: {
+              ACE_CString reason = ACE_CString ("AAM_Status is ") +
+                status_name (this->status_);
+              throw ImplementationRepository::CannotActivate (reason.c_str());
+            }
+            }
+      }
+      catch (const CORBA::Exception &ex)
+      {
+        rh->send_exception (ex._tao_duplicate());
+      }
+    }
+}
+
+void
 AsyncAccessManager::notify_waiters (void)
 {
   for (size_t i = 0; i < this->rh_list_.size(); i++)
     {
-      ImR_ResponseHandler *rh = this->rh_list_[i];
-      if (rh != 0)
-        {
-          if (this->status_ == ImplementationRepository::AAM_SERVER_READY)
-            {
-              if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
-                {
-                  rh->send_ior (this->partial_ior_.c_str());
-                }
-              else
-                {
-                  rh->send_ior (this->info_->partial_ior.c_str());
-                }
-            }
-          else
-            {
-              try
-                {
-                  switch (this->status_)
-                    {
-                    case ImplementationRepository::AAM_NO_ACTIVATOR:
-                      throw ImplementationRepository::CannotActivate
-                        ("No activator registered for server.");
-                    case ImplementationRepository::AAM_NOT_MANUAL:
-                      throw ImplementationRepository::CannotActivate
-                        ("Cannot implicitly activate MANUAL server.");
-                    case ImplementationRepository::AAM_NO_COMMANDLINE:
-                      throw ImplementationRepository::CannotActivate
-                        ("No command line registered for server.");
-                    case ImplementationRepository::AAM_RETRIES_EXCEEDED:
-                      throw ImplementationRepository::CannotActivate
-                        ("Restart attempt count exceeded.");
-                    case  ImplementationRepository::AAM_ACTIVE_TERMINATE:
-                      throw ImplementationRepository::CannotActivate
-                        ("Server terminating.");
-                    default: {
-                      ACE_CString reason = ACE_CString ("AAM_Status is ") +
-                        status_name (this->status_);
-                      throw ImplementationRepository::CannotActivate (reason.c_str());
-                    }
-                    }
-                }
-              catch (const CORBA::Exception &ex)
-                {
-                  rh->send_exception (ex._tao_duplicate());
-                }
-            }
-        }
+      // Sending the IOR through to the response handler could trigger
+      // an exception which we should catch here and log. This way when
+      // we have multiple waiters we do inform them all and not abort
+      // after the first exception
+      try
+      {
+        ImR_ResponseHandler *rh = this->rh_list_[i];
+        if (rh != 0)
+          {
+            this->notify_waiter (rh);
+          }
+      }
+      catch (const CORBA::Exception& ex)
+      {
+        ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+      }
     }
   this->rh_list_.clear ();
 }
@@ -501,7 +518,7 @@ AsyncAccessManager::notify_child_death (int pid)
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
-  if (this->info_->pid == pid || this->prev_pid_ == pid)
+  if (this->info_->pid == 0 || this->info_->pid == pid || this->prev_pid_ == pid)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)

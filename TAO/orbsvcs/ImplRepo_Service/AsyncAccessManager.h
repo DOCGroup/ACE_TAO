@@ -85,6 +85,7 @@ class Locator_Export AsyncAccessManager
  private:
   void report (const char* operation) const;
   void final_state (bool active = true);
+  void notify_waiter (ImR_ResponseHandler *rh);
   void notify_waiters (void);
   void status (ImplementationRepository::AAM_Status s);
   void update_status (ImplementationRepository::AAM_Status s);
