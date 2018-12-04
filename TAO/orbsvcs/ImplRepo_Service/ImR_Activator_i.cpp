@@ -257,13 +257,13 @@ ImR_Activator_i::fini (void)
   catch (const CORBA::COMM_FAILURE&)
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR.\n")));
     }
   catch (const CORBA::TRANSIENT&)
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
+        ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR.\n")));
     }
   catch (const CORBA::Exception& ex)
@@ -469,7 +469,7 @@ ImR_Activator_i::start_server(const char* name,
     {
       if (debug_ > 0)
         {
-          ORBSVCS_DEBUG((LM_DEBUG,
+          ORBSVCS_ERROR((LM_ERROR,
                         "(%P|%t) ImR Activator: Unique instance already running pid <%d>\n",
                         static_cast<int> (pid)));
         }
@@ -567,7 +567,7 @@ ImR_Activator_i::start_server(const char* name,
                   if (debug_ > 1)
                     {
                       ex._tao_print_exception ("ImR_Activator_i::start_server");
-                      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ORBSVCS_ERROR ((LM_ERROR,
                                       ACE_TEXT ("(%P|%t) ImR Activator: From locator::spawn_pid for server <%C> pid <%d>\n"),
                                       name,
                                       static_cast<int> (pid)));
@@ -621,7 +621,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
           if (debug_ > 1)
             {
               ex._tao_print_exception ("ImR_Activator_i::handle_exit_i");
-              ORBSVCS_DEBUG ((LM_DEBUG,
+              ORBSVCS_ERROR ((LM_ERROR,
                               ACE_TEXT ("(%P|%t) ImR Activator: from locator::child_death_pid for server <%C> pid <%d>\n"),
                               name.c_str (),
                               static_cast<int> (pid)));
