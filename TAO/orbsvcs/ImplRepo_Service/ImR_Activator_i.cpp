@@ -555,10 +555,26 @@ ImR_Activator_i::start_server(const char* name,
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
-                                  ACE_TEXT ("<%C> has started.\n"),
-                                  name));
+                                  ACE_TEXT ("<%C> has started with pid <%d>.\n"),
+                                  name, static_cast<int> (pid)));
                 }
-              this->locator_->spawn_pid (name, pid);
+              try
+                {
+                  this->locator_->spawn_pid (name, pid);
+                }
+              catch (const CORBA::Exception &ex)
+                {
+                  if (debug_ > 1)
+                    {
+                      ex._tao_print_exception ("ImR_Activator_i::start_server");
+                      ORBSVCS_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("(%P|%t) ImR Activator: From locator::spawn_pid for server <%C> pid <%d>\n"),
+                                      name,
+                                      static_cast<int> (pid)));
+
+                      throw ImplementationRepository::CannotActivate(CORBA::string_dup ("Invocation of spawn_pid failed"));
+                    }
+                }
             }
         }
     }
@@ -604,9 +620,9 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
         {
           if (debug_ > 1)
             {
+              ex._tao_print_exception ("ImR_Activator_i::handle_exit_i");
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) ImR Activator: caught <%C> from locator::child_death_pid for server <%C> pid <%d>\n"),
-                              ex._name(),
+                              ACE_TEXT ("(%P|%t) ImR Activator: from locator::child_death_pid for server <%C> pid <%d>\n"),
                               name.c_str (),
                               static_cast<int> (pid)));
             }
