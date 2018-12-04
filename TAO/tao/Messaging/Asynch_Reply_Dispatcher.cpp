@@ -137,7 +137,7 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       catch (const ::CORBA::Exception& ex)
         {
           if (TAO_debug_level >= 4)
-            ex._tao_print_exception ("Exception during reply handler");
+            ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
         }
     }
 
