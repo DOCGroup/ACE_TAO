@@ -617,7 +617,7 @@ process_long_option(long ac, char **av, long &i)
   else if (!ACE_OS::strcmp (long_option, "default-idl-version"))
     {
       ACE_DEBUG ((LM_INFO, ACE_TEXT ("%C\n"),
-        IdlVersion (DEFAULT_IDL_VERSION).to_string ()));
+        idl_global->default_idl_version_.to_string ()));
       idl_global->parse_args_exit (0);
     }
   else if (!ACE_OS::strcmp (long_option, "list-idl-versions"))

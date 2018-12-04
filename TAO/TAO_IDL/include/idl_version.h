@@ -45,10 +45,12 @@ enum TAO_IDL_FE_Export SpecificIdlVersion
   IDL_VERSION_COUNT
 };
 
-/*
- * Default version of IDL to use if no other options are given.
+/**
+ * Default version of IDL to use if BE does not specify a default version.
+ * This is so that BE can control the version without overriding idl_version_
+ * directly and making --default-idl-version incorrect.
  */
-const SpecificIdlVersion DEFAULT_IDL_VERSION = IDL_VERSION_3;
+const SpecificIdlVersion DEFAULT_DEFAULT_IDL_VERSION = IDL_VERSION_3;
 
 /**
  * Class Operations involving SpecificIdlVersion Values
@@ -57,7 +59,7 @@ class TAO_IDL_FE_Export IdlVersion
 {
 public:
   /**
-   * New IdlVersion set to DEFAULT_IDL_VERSION.
+   * New IdlVersion set to DEFAULT_DEFAULT_IDL_VERSION.
    */
   IdlVersion ();
 

@@ -13,7 +13,7 @@ static const char * idlVersionNames[IDL_VERSION_COUNT] = {
   "4"
 };
 
-IdlVersion::IdlVersion () : version_(DEFAULT_IDL_VERSION)
+IdlVersion::IdlVersion () : version_(DEFAULT_DEFAULT_IDL_VERSION)
 {
 }
 

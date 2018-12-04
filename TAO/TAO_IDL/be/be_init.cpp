@@ -18,6 +18,8 @@ BE_init (int &, ACE_TCHAR *[])
                   BE_GlobalData,
                   -1);
 
+  idl_global->default_idl_version_ = IDL_VERSION_3;
+
   return 0;
 }
 

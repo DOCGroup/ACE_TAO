@@ -815,6 +815,13 @@ public:
   IdlVersion idl_version_;
 
   /**
+   * Default version of IDL to enforce. Compilers extending tao_idl coould set
+   * idl_version_ directly, but this allows Can be set to allow
+   * --default-idl-version to print an accuate default IDL version.
+   */
+  IdlVersion default_idl_version_;
+
+  /**
    * Perform the compilation process right up until invoking the backend.
    * In other words just check the syntax of the input files, do not create
    * any output.

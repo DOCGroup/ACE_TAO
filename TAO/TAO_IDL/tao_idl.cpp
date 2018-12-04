@@ -329,6 +329,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
+      // Give BE chance to set default IDL version using BE_init
+      idl_global->idl_version_ = idl_global->default_idl_version_;
+
       // Parse arguments.
       DRV_parse_args (atc.get_argc (), atc.get_ASCII_argv ());
 
