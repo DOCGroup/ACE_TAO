@@ -475,8 +475,7 @@ ImR_Activator_i::start_server(const char* name,
         }
       char reason[32];
       ACE_OS::snprintf (reason,32,"pid:%d",static_cast<int> (pid));
-      throw ImplementationRepository::CannotActivate(
-                                                     CORBA::string_dup (reason));
+      throw ImplementationRepository::CannotActivate(CORBA::string_dup (reason));
     }
 
   size_t const cmdline_buf_len = ACE_OS::strlen(cmdline);
@@ -571,9 +570,8 @@ ImR_Activator_i::start_server(const char* name,
                                       ACE_TEXT ("(%P|%t) ImR Activator: From locator::spawn_pid for server <%C> pid <%d>\n"),
                                       name,
                                       static_cast<int> (pid)));
-
-                      throw ImplementationRepository::CannotActivate(CORBA::string_dup ("Invocation of spawn_pid failed"));
                     }
+                  throw ImplementationRepository::CannotActivate(CORBA::string_dup ("Invocation of spawn_pid failed"));
                 }
             }
         }
