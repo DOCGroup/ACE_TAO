@@ -99,3 +99,9 @@ AST_Annotation_Decl::fe_add_constant (AST_Constant *t)
 {
   return AST_Constant::narrow_from_decl (fe_add_decl (t));
 }
+
+int
+AST_Annotation_Decl::ast_accept (ast_visitor *visitor)
+{
+  return 0;
+}

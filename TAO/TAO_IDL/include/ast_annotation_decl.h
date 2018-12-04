@@ -48,6 +48,8 @@ public:
     AST_Annotation_Member *annotation_member);
 
   virtual AST_Constant *fe_add_constant (AST_Constant *t);
+
+  virtual int ast_accept (ast_visitor *visitor);
 };
 
 #endif
