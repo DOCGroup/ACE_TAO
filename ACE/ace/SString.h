@@ -156,11 +156,11 @@ public:
   /// Default destructor.
   ~ACE_SString (void);
 
-  /// Return the <slot'th> character in the string (doesn't perform
+  /// Return the slot'th character in the string (doesn't perform
   /// bounds checking).
   char operator [] (size_type slot) const;
 
-  /// Return the <slot'th> character by reference in the string
+  /// Return the slot'th character by reference in the string
   /// (doesn't perform bounds checking).
   char &operator [] (size_type slot);
 
