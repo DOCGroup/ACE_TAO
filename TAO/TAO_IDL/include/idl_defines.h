@@ -111,6 +111,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 #define TAO_IDL_HAS_PARSE_ARGS_EXIT
 
+/**
+ * Defined if TAO_IDL has support for annotations
+ */
+#define TAO_IDL_HAS_ANNOTATIONS
+
 #define NAMEBUFSIZE 1024
 // Maximum length of static buffers used to store names.
 
