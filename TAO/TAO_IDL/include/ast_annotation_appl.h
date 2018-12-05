@@ -104,8 +104,6 @@ private:
   AST_Annotation_Decl *annotation_decl_;
 };
 
-typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
-
 struct Decl_Annotations_Pair {
   AST_Decl *decl;
   AST_Annotation_Appls *annotations;
