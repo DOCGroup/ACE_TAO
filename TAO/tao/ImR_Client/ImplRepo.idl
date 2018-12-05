@@ -89,6 +89,7 @@ module ImplementationRepository
     /// just the ObjectKey missing.
     string partial_ior;
 
+    /// Server status
     ServerActiveStatus activeStatus;
   };
 
