@@ -483,7 +483,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
           if (name.find ("JACORB:") == ACE_CString::npos)
             {
               ACE_CString jo_key ("JACORB:");
-              ACE_CString::size_type pos = name.find (':');
+              ACE_CString::size_type const pos = name.find (':');
               if (pos == ACE_CString::npos)
                 {
                   jo_key += name;
@@ -521,7 +521,7 @@ int
 Locator_Repository::remove_server (const ACE_CString& name,
                                    ImR_Locator_i* imr_locator)
 {
-  int err = sync_load ();
+  int const err = sync_load ();
   if (err != 0)
     {
       return err;
@@ -557,7 +557,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
       for (CORBA::ULong i = 0; i < si->peers.length(); i++)
         {
           ACE_CString key;
-          ACE_CString peer (si->peers[i]);
+          ACE_CString const peer (si->peers[i]);
           Server_Info::gen_key (si->server_id, peer, key);
 
           Server_Info_Ptr si2;

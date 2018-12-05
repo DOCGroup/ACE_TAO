@@ -2798,7 +2798,7 @@ TAO_Transport::post_open (size_t id)
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                  ACE_TEXT ("tport id changed from %d to %d\n"), this->id_, id));
+                  ACE_TEXT ("tport id changed from [%d] to [%d]\n"), this->id_, id));
     }
   this->id_ = id;
 
@@ -2852,10 +2852,10 @@ TAO_Transport::post_open (size_t id)
     this->is_connected_ = true;
   }
 
-  if (TAO_debug_level > 9 && !this->cache_map_entry_.entry_)
+  if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
-                            ACE_TEXT (", cache_map_entry_ is 0\n"), this->id_));
+                            ACE_TEXT (", cache_map_entry_ is [%@]\n"), this->id_, this->cache_map_entry_));
     }
 
   this->transport_cache_manager ().mark_connected (this->cache_map_entry_,

@@ -76,10 +76,6 @@ public:
      const char* name,
      CORBA::Long token);
 
-  virtual void notify_child_death
-    (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name);
-
   virtual void child_death_pid
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
      const char* name, CORBA::Long pid);

@@ -67,7 +67,7 @@ class Locator_Export AsyncAccessManager
   ImplementationRepository::AAM_Status status (void) const;
   bool force_remove_rh (ImR_ResponseHandler *rh);
 
-  void activator_replied (bool success, int pid);
+  void activator_replied_start_running (bool success, int pid);
   void server_is_running (const char *partial_ior,
                           ImplementationRepository::ServerObject_ptr ref);
   void server_is_shutting_down (void);
@@ -85,6 +85,7 @@ class Locator_Export AsyncAccessManager
  private:
   void report (const char* operation) const;
   void final_state (bool active = true);
+  void notify_waiter (ImR_ResponseHandler *rh);
   void notify_waiters (void);
   void status (ImplementationRepository::AAM_Status s);
   void update_status (ImplementationRepository::AAM_Status s);

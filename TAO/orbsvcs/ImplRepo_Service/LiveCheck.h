@@ -132,12 +132,13 @@ class Locator_Export LiveEntry
   void do_ping (PortableServer::POA_ptr poa);
   const ACE_Time_Value &next_check (void) const;
   static void set_reping_limit (int max);
-  bool reping_available (void);
+  bool reping_available (void) const;
   int next_reping (void);
   void max_retry_msec (int max);
   const char *server_name (void) const;
   void set_pid (int pid);
-  bool has_pid (int pid);
+  bool has_pid (int pid) const;
+  int pid (void) const;
 
  private:
   LiveCheck *owner_;
@@ -157,7 +158,6 @@ class Locator_Export LiveEntry
 
   static const int reping_msec_ [];
   static int reping_limit_;
-
 };
 
 //---------------------------------------------------------------------------
@@ -223,7 +223,7 @@ class Locator_Export LC_TimeoutGuard
   ~LC_TimeoutGuard (void);
 
   /// Returns true if the busy flag in the owner was already set.
-  bool blocked (void);
+  bool blocked (void) const;
 
  private:
   LiveCheck *owner_;
@@ -283,7 +283,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   ACE_Equal_To<ACE_CString>,
                                   ACE_Null_Mutex> LiveEntryMap;
   typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
-  typedef ACE_Unbounded_Set<ACE_CString> NameStack;
+  typedef std::pair<ACE_CString, int> NamePidPair;
+  typedef ACE_Unbounded_Set<NamePidPair> NamePidStack;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;
@@ -294,7 +295,11 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
-  NameStack removed_entries_;
+  /// Contains a list of servers which got removed during the handle_timeout,
+  /// these will be removed at the end of the handle_timeout. Be aware that
+  /// between the moment the server has been added to the list and the handling
+  /// of this list the server can already be restarted again.
+  NamePidStack removed_entries_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */

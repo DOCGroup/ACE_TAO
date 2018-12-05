@@ -10,7 +10,7 @@ resources:
 
 jobs:
 - job: VisualStudio2017
-  timeoutInMinutes: 90
+  timeoutInMinutes: 120
   pool:
     vmImage: vs2017-win2016
   strategy:
@@ -53,12 +53,13 @@ jobs:
   - powershell: |
       echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - task: VSBuild@1
     displayName: Build solution TAO/TAO_ACE.sln
@@ -94,9 +95,9 @@ jobs:
     displayName: Create config.h file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - task: VSBuild@1
     displayName: Build solution TAO\TAO_ACE.sln
@@ -134,7 +135,30 @@ jobs:
         CXX: g++-8
         PackageDeps: g++-8
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+      CLANG5:
+        CC: clang-5.0
+        CXX: clang++-5.0
+        PackageDeps: clang-5.0
+        Repo: llvm-toolchain-$(lsb_release -cs)-5.0
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+      CLANG6:
+        CC: clang-6.0
+        CXX: clang++-6.0
+        PackageDeps: clang-6.0
+        Repo: llvm-toolchain-$(lsb_release -cs)-6.0
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+      CLANG7:
+        CC: clang-7
+        CXX: clang++-7
+        PackageDeps: clang-7
+        Repo: llvm-toolchain-$(lsb_release -cs)-7
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
   steps:
+  - script: |
+      wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+      sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ $(Repo) main"
+    displayName: Add repository ($(Repo))
+    condition: and(succeeded(), ne(variables['Repo'], ''))
   - script: |
       sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
       sudo apt-get --yes update
@@ -146,6 +170,7 @@ jobs:
   - powershell: |
       'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
       'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'versioned_namespace=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
     displayName: Create default.features file
   - powershell: |
       'xerces3=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
@@ -154,9 +179,9 @@ jobs:
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - bash: make -j 6 -C TAO
     displayName: Build TAO project
@@ -176,9 +201,9 @@ jobs:
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - bash: make -j 6 -C TAO
     displayName: Build TAO project

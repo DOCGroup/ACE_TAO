@@ -430,9 +430,9 @@ public:
 
   /**
    * Set the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.  By default,
+   * notify pipe before breaking out of its recv loop.  By default,
    * this is set to -1, which means "iterate until the pipe is empty."
    * Setting this to a value like "1 or 2" will increase "fairness"
    * (and thus prevent starvation) at the expense of slightly higher
@@ -442,9 +442,9 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_Select_Reactor_Notify::handle_input> method will iterate and
+   * ACE_Select_Reactor_Notify::handle_input() method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
-   * notify pipe before breaking out of its <recv> loop.
+   * notify pipe before breaking out of its recv loop.
    */
   virtual int max_notify_iterations (void);
 
