@@ -163,7 +163,7 @@ AsyncListManager::final_state (void)
     }
 
   bool excepted = false;
-  CORBA::ULong len = this->server_list_.length ();
+  CORBA::ULong const len = this->server_list_.length ();
   ImplementationRepository::ServerInformationList alt_list (this->how_many_);
   ImplementationRepository::ServerInformationList *sil = &this->server_list_;
   if (this->first_ > 0 || this->how_many_ < len)
