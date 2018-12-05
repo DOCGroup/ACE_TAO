@@ -664,22 +664,22 @@ process_long_option(long ac, char **av, long &i)
       else
         {
           i++;
-          if (!ACE_OS::strcmp (long_option, "warn-once"))
+          if (!ACE_OS::strcmp (av[i], "warn-once"))
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
             }
-          else if (!ACE_OS::strcmp (long_option, "warn-all"))
+          else if (!ACE_OS::strcmp (av[i], "warn-all"))
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ALL;
             }
-          else if (!ACE_OS::strcmp (long_option, "error"))
+          else if (!ACE_OS::strcmp (av[i], "error"))
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
             }
-          else if (!ACE_OS::strcmp (long_option, "ignore"))
+          else if (!ACE_OS::strcmp (av[i], "ignore"))
             {
               idl_global->unknown_annotations_ =
                 IDL_GlobalData::UNKNOWN_ANNOTATIONS_IGNORE;
