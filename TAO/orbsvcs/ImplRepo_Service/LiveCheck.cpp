@@ -871,10 +871,16 @@ LiveCheck::set_pid (const char *server, int pid)
 void
 LiveCheck::remove_server (const char *server, int pid)
 {
+  if (ImR_Locator_i::debug () > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d>\n"),
+                      server, pid));
+    }
   ACE_CString s(server);
   LiveEntry *entry = 0;
   int const result = entry_map_.find (s, entry);
-  if (result != -1 && entry->has_pid (pid))
+  if (result != -1 && entry != 0 && entry->has_pid (pid))
     {
       if (!this->in_handle_timeout ())
         {
@@ -888,10 +894,10 @@ LiveCheck::remove_server (const char *server, int pid)
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                              ACE_TEXT ("called during handle_timeout\n"), server));
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> ")
+                              ACE_TEXT ("called during handle_timeout\n"), server, pid));
             }
-          this->removed_entries_.insert_tail (s);
+          this->removed_entries_.insert_tail (std::make_pair (server, pid));
         }
     }
   else
@@ -911,23 +917,26 @@ LiveCheck::remove_deferred_servers (void)
 {
   if (!this->removed_entries_.is_empty ())
     {
-      NameStack::iterator re_end = this->removed_entries_.end();
-      for (NameStack::iterator re = this->removed_entries_.begin();
+      NamePidStack::iterator re_end = this->removed_entries_.end();
+      for (NamePidStack::iterator re = this->removed_entries_.begin();
           re != re_end;
           ++re)
         {
+          NamePidPair const & name_pid_pair = (*re);
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_entries ")
-                              ACE_TEXT ("removing <%C>\n"), (*re).c_str()));
+                              ACE_TEXT ("removing <%C> pid <%d>\n"),
+                              name_pid_pair.first.c_str(), name_pid_pair.second));
             }
-          LiveEntry *entry = 0;
-          int const result = entry_map_.unbind (*re, entry);
-          if (result == 0)
-            {
-              delete entry;
-            }
+          // Now try to remove the server, remove_server
+          // will make sure that we only remove the server when the
+          // name and pid match. These could potentially not
+          // match when the server has already been restarted between the
+          // moment it got in the removed_entries_ stack and this point
+          // where we remove it from the internal administration
+          this->remove_server (name_pid_pair.first.c_str(), name_pid_pair.second);
         }
       this->removed_entries_.reset ();
     }

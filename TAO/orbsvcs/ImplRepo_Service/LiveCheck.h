@@ -283,7 +283,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                   ACE_Equal_To<ACE_CString>,
                                   ACE_Null_Mutex> LiveEntryMap;
   typedef ACE_Unbounded_Set<LiveEntry *> PerClientStack;
-  typedef ACE_Unbounded_Set<ACE_CString> NameStack;
+  typedef std::pair<ACE_CString, int> NamePidPair;
+  typedef ACE_Unbounded_Set<NamePidPair> NamePidStack;
 
   LiveEntryMap entry_map_;
   PerClientStack per_client_;
@@ -298,7 +299,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   /// these will be removed at the end of the handle_timeout. Be aware that
   /// between the moment the server has been added to the list and the handling
   /// of this list the server can already be restarted again.
-  NameStack removed_entries_;
+  NamePidStack removed_entries_;
 };
 
 #endif /* IMR_LIVECHECK_H_  */
