@@ -25,7 +25,7 @@ typedef ACE_Strong_Bound_Ptr<Locator_Repository, ACE_Null_Mutex> Repository_Ptr;
 class UpdateableServerInfo
 {
 public:
-  /// constructor
+  /// Constructor
   /// @param repo the repo to report updates to
   /// @param name the name of the server to retrieve
   /// @param pid an optional process id to further discriminate the server
@@ -33,7 +33,7 @@ public:
                        const ACE_CString& name,
                        int pid = 0);
 
-  /// constructor
+  /// Constructor
   /// @param repo the repo to report updates to
   /// @param si an already retrieved Server_Info_Ptr
   /// @param reset_start_count controls the reset of the start count value
@@ -43,16 +43,16 @@ public:
 
   UpdateableServerInfo(UpdateableServerInfo& other );
 
-  /// destructor (updates repo if needed)
+  /// Destructor (updates repo if needed)
   ~UpdateableServerInfo(void);
 
-  /// explicitly update repo if needed
+  /// Explicitly update repo if needed
   void update_repo(void);
 
-  /// update remote access state
+  /// Update remote access state
   void notify_remote_access (ImplementationRepository::AAM_Status state);
 
-  /// assign a server info
+  /// Assign a server info
   void server_info (const Server_Info_Ptr& si);
 
   /// const Server_Info access
@@ -61,23 +61,23 @@ public:
   /// const Server_Info& access
   const Server_Info& operator*() const;
 
-  /// retrieve smart pointer to non-const Server_Info
+  /// Retrieve smart pointer to non-const Server_Info
   /// and indicate repo update required
   const Server_Info_Ptr& edit(bool active = true);
 
-  /// indicate it Server_Info_Ptr is null
+  /// Indicate it Server_Info_Ptr is null
   bool null(void) const;
 
 private:
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );
 
-  /// the repo
+  /// The repo
   Repository_Ptr repo_;
 
-  /// the retrieved, passed, or non-stored server info
+  /// The retrieved, passed, or non-stored server info
   Server_Info_Ptr si_;
 
-  /// the server info has changes and needs to be updated to the repo
+  /// The server info has changes and needs to be updated to the repo
   bool needs_update_;
 };
 

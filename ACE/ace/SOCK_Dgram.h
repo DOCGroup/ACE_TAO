@@ -43,7 +43,8 @@ public:
   ACE_SOCK_Dgram (const ACE_Addr &local,
                   int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                   int protocol = 0,
-                  int reuse_addr = 0);
+                  int reuse_addr = 0,
+                  int ipv6_only = 0);
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
@@ -56,14 +57,16 @@ public:
                   ACE_Protocol_Info *protocolinfo,
                   ACE_SOCK_GROUP g = 0,
                   u_long flags = 0,
-                  int reuse_addr = 0);
+                  int reuse_addr = 0,
+                  int ipv6_only = 0);
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
   int open (const ACE_Addr &local,
             int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
-            int reuse_addr = 0);
+            int reuse_addr = 0,
+            int ipv6_only = 0);
 
   /**
    * This is a QoS-enabed method for initiating a socket dgram that
@@ -76,7 +79,8 @@ public:
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g = 0,
             u_long flags = 0,
-            int reuse_addr = 0);
+            int reuse_addr = 0,
+            int ipv6_only = 0);
 
   /// Default dtor.
   ~ACE_SOCK_Dgram (void);
@@ -204,7 +208,9 @@ public:
 
 protected:
   /// Open is shared by this and by <LSOCK_Dgram>.
-  int shared_open (const ACE_Addr &local, int protocol_family);
+  int shared_open (const ACE_Addr &local,
+                   int protocol_family,
+                   int ipv6_only = 0);
 
   /// Create a multicast addr/if pair, in format useful for system calls.
   /// If mreq param is NULL, just verify the passed addr/interface specs.

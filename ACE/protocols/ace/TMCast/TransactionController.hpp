@@ -342,7 +342,8 @@ namespace ACE_TMCast
         MessagePtr m (in_.front ());
         in_.pop ();
 
-        if (typeid (*m) == typeid (Send))
+        Message const &msg = *m; // avoid warning for side-effects in typeid
+        if (typeid (msg) == typeid (Send))
         {
           send_ = SendPtr (m);
         }

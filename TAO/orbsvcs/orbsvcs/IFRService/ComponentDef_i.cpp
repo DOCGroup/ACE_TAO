@@ -152,7 +152,7 @@ TAO_ComponentDef_i::describe_i (void)
   ACE_TString holder;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_component",
+                                              ACE_TEXT("base_component"),
                                               holder);
 
   if (status == 0)
@@ -163,7 +163,7 @@ TAO_ComponentDef_i::describe_i (void)
                                            base_key,
                                            0);
       this->repo_->config ()->get_string_value (base_key,
-                                                "id",
+                                                ACE_TEXT("id"),
                                                 holder);
     }
 
@@ -292,12 +292,12 @@ TAO_ComponentDef_i::type_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             name);
 
   return this->repo_->tc_factory ()->create_component_tc (
@@ -436,7 +436,7 @@ TAO_ComponentDef_i::base_component_i (void)
   ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_component",
+                                              ACE_TEXT("base_component"),
                                               base_path);
 
   if (status != 0)

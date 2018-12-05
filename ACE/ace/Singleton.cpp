@@ -101,8 +101,11 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
               ACE_NEW_RETURN (singleton, (ACE_Singleton<TYPE, ACE_LOCK>), 0);
 
               // Register for destruction with ACE_Object_Manager.
+#if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE == 0)
               ACE_Object_Manager::at_exit (singleton, 0, typeid (TYPE).name ());
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
+#else
+              ACE_Object_Manager::at_exit (singleton, &lock,
+                                           typeid (TYPE).name ());
             }
 #endif /* ACE_MT_SAFE */
         }
@@ -112,11 +115,21 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
+ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *param)
 {
   ACE_Object_Manager::remove_at_exit (this);
   delete this;
   ACE_Singleton<TYPE, ACE_LOCK>::instance_i () = 0;
+
+#if !defined ACE_MT_SAFE || ACE_MT_SAFE == 0 || defined ACE_FACE_SAFETY_BASE
+  ACE_UNUSED_ARG (param);
+#else
+  if (param)
+    {
+      ACE_LOCK **lock = static_cast<ACE_LOCK **> (param);
+      *lock = 0;
+    }
+#endif
 }
 
 template <class TYPE, class ACE_LOCK> void

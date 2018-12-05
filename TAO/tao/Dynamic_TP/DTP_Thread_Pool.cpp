@@ -519,7 +519,11 @@ CORBA::ULong
 TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thread_pool)
 {
   // Make sure of safe deletion in case of errors.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (thread_pool);
+#else
   auto_ptr<TAO_DTP_Thread_Pool> safe_thread_pool (thread_pool);
+#endif /* ACE_HAS_CPP11 */
 
   // Open the pool.
   thread_pool->open ();

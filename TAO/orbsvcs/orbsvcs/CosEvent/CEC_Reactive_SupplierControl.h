@@ -70,7 +70,7 @@ private:
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */
@@ -78,7 +78,7 @@ class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
   : public TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_CEC_Reactive_SupplierControl (const ACE_Time_Value &rate,
                                     const ACE_Time_Value &timeout,
@@ -93,8 +93,7 @@ public:
       const ACE_Time_Value &timeout,
       unsigned int retries,
       TAO_CEC_TypedEventChannel *typed_event_channel,
-      CORBA::ORB_ptr orb
-    );
+      CORBA::ORB_ptr orb);
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// destructor...

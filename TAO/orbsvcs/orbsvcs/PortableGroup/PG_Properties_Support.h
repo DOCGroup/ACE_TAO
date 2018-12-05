@@ -68,7 +68,7 @@ namespace TAO
      * Overwriting any value previously set for that property.
      * Leaving all other properties untouched.
      * @param name the name of the property to set
-     * @value an Any containing the value.
+     * @param value an Any containing the value.
      */
     void set_default_property (const char * name,
           const PortableGroup::Value & value);
@@ -101,7 +101,7 @@ namespace TAO
      * property set.  Removal is done by name.  The property values do not
      * have to match.  There is no penalty for attempting to remove a property
      * that does not exist.
-     * @param props a set of propertys to be removed by name.
+     * @param props a set of properties to be removed by name.
      */
     void remove_default_properties (
         const PortableGroup::Properties & props);
@@ -165,7 +165,8 @@ namespace TAO
      * property set.  Removal is done by name.  The property values do not
      * have to match.  There is no penalty for attempting to remove a property
      * that does not exist.
-     * @param props a set of propertys to be removed by name from the type_id set.
+     * @param type_id identifies the set of properties to be removed.
+     * @param props a set of properties to be removed by name from the type_id set.
      */
     void remove_type_properties (
         const char *type_id,

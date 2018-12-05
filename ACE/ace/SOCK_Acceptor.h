@@ -46,12 +46,16 @@ public:
    * @a local_sap is the address that we're going to listen for
    * connections on.  If @a reuse_addr is 1 then we'll use the
    * @c SO_REUSEADDR to reuse this address.
+   * @a ipv6_only is used when opening a IPv6 acceptor. If non-zero,
+   * the socket will only accept connections from IPv6 peers. If zero
+   * the socket will accept both IPv4 and v6 if it is able to.
    */
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      int reuse_addr = 0,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+                     int protocol = 0,
+                     int ipv6_only = 0);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
@@ -62,20 +66,26 @@ public:
                      int reuse_addr,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
-                     int protocol = 0);
+                     int protocol = 0,
+                     int ipv6_only = 0);
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
    * @a local_sap is the address that we're going to listen for
    * connections on.  If @a reuse_addr is 1 then we'll use the
-   * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
+   * @c SO_REUSEADDR to reuse this address.
+   * @a ipv6_only is used when opening a IPv6 acceptor. If non-zero,
+   * the socket will only accept connections from IPv6 peers. If zero
+   * the socket will accept both IPv4 and v6 if it is able to.
+   * @retval Returns 0 on success and
    * -1 on failure.
    */
   int open (const ACE_Addr &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 0,
+            int ipv6_only = 0);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
@@ -86,7 +96,8 @@ public:
             int reuse_addr,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 0,
+            int ipv6_only = 0);
 
   /// Close the socket.  Returns 0 on success and -1 on failure.
   int close (void);
@@ -159,7 +170,8 @@ protected:
    */
   int shared_open (const ACE_Addr &local_sap,
                    int protocol_family,
-                   int backlog);
+                   int backlog,
+                   int ipv6_only);
 
 private:
   /// Do not allow this function to percolate up to this interface...

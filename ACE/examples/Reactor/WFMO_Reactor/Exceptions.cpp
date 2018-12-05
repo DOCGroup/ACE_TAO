@@ -21,8 +21,6 @@
 
 #include "ace/WFMO_Reactor.h"
 
-
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -55,6 +53,8 @@ private:
   ACE_Manual_Event event_;
 };
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 class ACE_WFMO_Reactor_Test
 {
 public:
@@ -80,6 +80,8 @@ public:
       }
   }
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])

@@ -166,7 +166,7 @@ static EC_QueueFullSimpleActions "[wait | discard]"
     <p>
     The
       table below describes all of the options (and values) supported by
-      these factories. 
+      these factories.
     <P>All the event service factory options start with
       <CODE>-EC</CODE></P>
 
@@ -323,7 +323,7 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             The user can disable this feature by selecting the
             <EM>null</EM> strategy;
             whereas the <EM>basic</EM> strategy provides a simple, yet
-            efficient implementation. <EM>reactive</EM> provides a 
+            efficient implementation. <EM>reactive</EM> provides a
             strategy in which an observer that is unreachable is removed
             from the observer list.
             <BR><B>NOTE:<B> The default is to have the feature disabled.
@@ -404,8 +404,8 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
-            <EM>reactive</EM>) to poll the state of the consumers. 
+            consumer control policy (set <EM>ECConsumerControl</EM> to
+            <EM>reactive</EM>) to poll the state of the consumers.
             When set to 0 there is no polling but the
             reactive strategy is in place.
           </TD>
@@ -417,7 +417,7 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
+            supplier control policy (set <EM>ECSupplierControl</EM> to
             <EM>reactive</EM>) to poll the state of the suppliers.
             When set to 0 there is no polling but the
             reactive strategy is in place.
@@ -430,7 +430,7 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            consumer control policy (set <EM>ECConsumerControl</EM> to 
+            consumer control policy (set <EM>ECConsumerControl</EM> to
             <EM>reactive</EM>) to detect a timeout when polling the state
             of the consumers.
           </TD>
@@ -442,13 +442,13 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive
-            supplier control policy (set <EM>ECSupplierControl</EM> to 
-            <EM>reactive</EM>) to detect a timeout when polling the state 
+            supplier control policy (set <EM>ECSupplierControl</EM> to
+            <EM>reactive</EM>) to detect a timeout when polling the state
             of the suppliers.
           </TD>
         </TR>
 
-				<!-- <TR NAME="ECProxyPushConsumerCollection"> -->
+        <!-- <TR NAME="ECProxyPushConsumerCollection"> -->
         <TR>
           <TD><CODE>-ECProxyPushConsumerCollection</CODE>
             <EM>flag[:flags]</EM>
@@ -546,47 +546,22 @@ static EC_QueueFullSimpleActions "[wait | discard]"
           </TD>
         </TR>
 
-        <!-- <TR NAME="ECPushSupplierSet"> -->
-        <TR>
-          <TD><CODE>-ECPushSupplierSet</CODE>
-          </TD>
-          <TD><P>Obsolete option, ignored.
-            </P>
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECConsumerAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECConsumerAdminLock</CODE>
-          </TD>
-          <TD>Obsolete option, ignored in the current version.
-          </TD>
-        </TR>
-
-        <!-- <TR NAME="ECSupplierAdminLock"> -->
-        <TR>
-          <TD><CODE>-ECSupplierAdminLock</CODE>
-          </TD>
-          <TD>Obsolete option, ignored in the current version.
-          </TD>
-        </TR>
-
         <!-- <TR NAME="ECConsumerValidateConnection"> -->
         <TR>
           <TD><CODE>-ECConsumerValidateConnection</CODE>
             <EM>validate_connection: 0 | 1</EM>
           </TD>
-          <TD>When this option is set the connection from the Event Channel 
-            to the consumer will be created during the connect of the 
+          <TD>When this option is set the connection from the Event Channel
+            to the consumer will be created during the connect of the
             consumer, just before the consumer is added to the consumer
-            list. By default 
+            list. By default
             the Event Channel will create the connection to the consumer at
-            the moment the first event is pushed to the consumer. 
-            When the network is heavily loaded during this connect and a new event 
-            is pushed before the connection is establed, a new create connection 
-            request is done. When having very high connection establishment  
+            the moment the first event is pushed to the consumer.
+            When the network is heavily loaded during this connect and a new event
+            is pushed before the connection is establed, a new create connection
+            request is done. When having very high connection establishment
             time (for example running on a WAN) and an interval that is much
-            smaller than the connection establishment time it is wise to 
+            smaller than the connection establishment time it is wise to
             set this option. Else you get dozens of new connection request
             that can result in a stack overflow. Another option is to use BiDIR
             GIOP so that there is only one connection between Rtec and consumer
@@ -678,7 +653,7 @@ static EC_QueueFullSimpleActions "[wait | discard]"
             not require an scheduler.
             If any of the strategies that require an scheduling
             service is selected then this attribute should be set
-            appropiately.
+            appropriately.
           </TD>
         </TR>
 
@@ -710,9 +685,9 @@ static EC_QueueFullSimpleActions "[wait | discard]"
 
     <H3>Configuring the IIOP Gateway</H3>
 
-    <P>The <CODE>TAO_EC_Gateway_IIOP_Factory</CODE> is the factory for 
-      the <CODE>TAO_EC_Gateway_IIOP</CODE> class. This factory can be 
-      used to configure the settings of the IIOP Gateway using the 
+    <P>The <CODE>TAO_EC_Gateway_IIOP_Factory</CODE> is the factory for
+      the <CODE>TAO_EC_Gateway_IIOP</CODE> class. This factory can be
+      used to configure the settings of the IIOP Gateway using the
       svc.conf file. The contents looks like this:
     </P>
 
@@ -737,7 +712,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>policy</EM>
           </TD>
           <TD>Select the consumer ec control policy (<EM>null</EM> or
-            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle 
+            <EM>reactive</EM> or <EM>reconnect</EM>) to detect and handle
              broken consumer ec's.
           </TD>
         </TR>
@@ -747,7 +722,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>period</EM>
           </TD>
           <TD>Set the period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
+            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to
             <EM>reactive</EM> or <EM>reconnect</EM>) to poll the state of the consumer ec.
             When set to 0 there is no polling but the
             reactive strategy is in place.
@@ -760,7 +735,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>timeout</EM>
           </TD>
           <TD>Set the timeout period (in microseconds) used by the reactive and reconnect
-            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to 
+            consumer ec control policy (set <EM>ECGIIOPConsumerECControl</EM> to
             <EM>reactive</EM> or <EM>reconnect</EM>) to detect a timeout when polling the state
             of the consumer ec.
           </TD>
@@ -782,11 +757,11 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPUseTTL</CODE>
             <EM>use_ttl: 0 | 1</EM>
           </TD>
-          <TD>Set whether the IIOP Gateway uses the TTL or not. 
-            This is 1 by default. When set to 0 make sure that 
-            no recursive structure is build between ec's, else an 
+          <TD>Set whether the IIOP Gateway uses the TTL or not.
+            This is 1 by default. When set to 0 make sure that
+            no recursive structure is build between ec's, else an
             event can keep looping for ever. Useful when there are no
-            recursive structures and we want the gateway to 
+            recursive structures and we want the gateway to
             transfer all events independent of their TTL because suppliers
             can be unaware about the maximum number of hops. In case
             this option is 0, the TTL in the event isn't decremented
@@ -799,12 +774,12 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-ECGIIOPUseConsumerProxyMap</CODE>
             <EM>use_consumer_proxy_map: 0 | 1</EM>
           </TD>
-          <TD>Set whether the IIOP Gateway uses a map with a proxy 
+          <TD>Set whether the IIOP Gateway uses a map with a proxy
             push consumer for each unique source id or not. This is 1
-            by default meaning that a map is used. When set to 0 the 
+            by default meaning that a map is used. When set to 0 the
             gateway will just use one proxy push consumer to push
-            events to the consumer ec. This options is useful when 
-            a lot of different source id's are used but there is no 
+            events to the consumer ec. This options is useful when
+            a lot of different source id's are used but there is no
             need for a different proxy push consumer for each source id.
             Setting this option to 0 then improves the performance.
           </TD>
@@ -814,7 +789,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
 
     <H3>The commandline arguments</H3>
 
-    The Event_Service executable has several commandline arguments you can use. 
+    The Event_Service executable has several commandline arguments you can use.
     The following arguments are available.
 
     <P><TABLE BORDER="2" CELLSPACING="2" CELLPADDING="0">
@@ -829,7 +804,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
             <EM>service_name</EM>
           </TD>
           <TD>The name with which the Event Service registers itself in the
-	  Naming Service.
+    Naming Service.
           </TD>
         </TR>
         <!-- <TR NAME="-o"> -->
@@ -884,7 +859,7 @@ static EC_Gateway_IIOP_Factory "-ECGIIOPConsumerECControl null ....."
           <TD><CODE>-s</CODE>
             <EM>global|local|none</EM>
           </TD>
-          <TD>Which scheduler should be used. The default is <CODE>none</CODE>. 
+          <TD>Which scheduler should be used. The default is <CODE>none</CODE>.
           With <CODE>local</CODE> an in process scheduler is created. With
           <CODE>global</CODE> a scheduler is retrieved from the Naming Service
           </TD>

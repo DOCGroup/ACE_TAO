@@ -88,7 +88,7 @@ public:
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
   CORBA::Boolean supplier_non_existent (CORBA::Boolean_out disconnected);
 
@@ -134,14 +134,14 @@ protected:
   /// Release the filter and the supplier
   void cleanup_i (void);
 
-  /// The supplier admin, used for activation and memory managment.
+  /// The supplier admin, used for activation and memory management.
   TAO_EC_Event_Channel_Base* event_channel_;
 
   /// The locking strategy.
   ACE_Lock* lock_;
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong ec_refcount_;
 
   /// The supplier....
   RtecEventComm::PushSupplier_var supplier_;

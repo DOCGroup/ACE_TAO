@@ -195,7 +195,10 @@ ACE_Future_Rep<T>::set (const T &r,
           while (iterator != end)
             {
               OBSERVER *observer = *iterator++;
-              observer->update (caller);
+              if (observer)
+              {
+                observer->update (caller);
+              }
             }
 
           // Signal all the waiting threads.

@@ -1365,7 +1365,7 @@ TAO_IMR_Op_Register::run (void)
               if (!this->quiet_)
                 {
                   ORBSVCS_DEBUG((LM_DEBUG,
-                                 "Server <%C> already registered.\n",
+                                 "(%P|%t) ImR: Server <%C> already registered.\n",
                                  this->server_name_.c_str ()));
                 }
               return ALREADY_REGISTERED;
@@ -1379,7 +1379,7 @@ TAO_IMR_Op_Register::run (void)
             if (!this->quiet_)
               {
                 ORBSVCS_DEBUG((LM_DEBUG,
-                               "Adding Server <%C> on update command.\n",
+                               "(%P|%t) Adding Server <%C> on update command.\n",
                                this->server_name_.c_str ()));
               }
             is_add_ = true;
@@ -1415,8 +1415,8 @@ TAO_IMR_Op_Register::run (void)
           if (!this->quiet_)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              "Updating Server <%C> with default "
-                              "activator of <%C>.\n",
+                              "(%P|%t) ImR: Updating Server <%C> with default "
+                              "activator of <%C>\n",
                               this->server_name_.c_str (),
                               options->activator.in ()));
             }
@@ -1426,13 +1426,13 @@ TAO_IMR_Op_Register::run (void)
       if (!this->quiet_)
         {
           ORBSVCS_DEBUG((LM_DEBUG,
-                         "Successfully registered <%C>.\n",
+                         "(%P|%t) ImR: Successfully registered <%C>\n",
                          this->server_name_.c_str ()));
         }
     }
   catch (const CORBA::NO_PERMISSION&)
     {
-      ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
+      ORBSVCS_ERROR ((LM_ERROR, "(%P|%t) ImR: No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
   catch (const CORBA::Exception& ex)

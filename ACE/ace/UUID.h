@@ -267,7 +267,7 @@ namespace ACE_Utils
 
     bool destroy_lock_;
 
-    /// Initalization state of the generator.
+    /// Initialization state of the generator.
     bool is_init_;
   };
 

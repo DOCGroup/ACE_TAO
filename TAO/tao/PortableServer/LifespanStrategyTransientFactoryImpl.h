@@ -33,13 +33,10 @@ namespace TAO
     {
     public:
       /// Create a new strategy
-      virtual LifespanStrategy* create (
-        ::PortableServer::LifespanPolicyValue value);
+      virtual LifespanStrategy* create (::PortableServer::LifespanPolicyValue value);
 
       /// Cleanup the given strategy instance
-      virtual void destroy (
-        LifespanStrategy *strategy
-       );
+      virtual void destroy (LifespanStrategy *strategy);
     };
   }
 }

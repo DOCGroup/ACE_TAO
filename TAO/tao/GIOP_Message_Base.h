@@ -29,8 +29,6 @@
 #include "tao/CDR.h"
 #include "tao/Incoming_Message_Stack.h"
 
-#include "ace/Auto_Ptr.h"
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
@@ -267,7 +265,7 @@ protected:
   //@{
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
-  auto_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
+  TAO_GIOP_Fragmentation_Strategy* fragmentation_strategy_;
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;

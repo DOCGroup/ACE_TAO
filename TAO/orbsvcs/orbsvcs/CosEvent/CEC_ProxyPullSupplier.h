@@ -40,7 +40,7 @@ class TAO_CEC_ProxyPullConsumer;
  * remember that this class is used to communicate with a
  * PullConsumer, so, in effect, this is the ambassador for a
  * consumer inside the event channel.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * It does not assume ownership of the TAO_CEC_Dispatching object.
  * It makes a copy of the ConsumerQOS and the consumer object
  * reference.
@@ -74,7 +74,7 @@ public:
   /**
    * Return the consumer object reference. It returns nil() if it has
    * not connected yet.
-   * NOTE: This method does not return a new reference!!! Doing so
+   * @note This method does not return a new reference!!! Doing so
    * will increase the locking overhead on the critical path.
    */
   CosEventComm::PullConsumer_ptr consumer (void) const;
@@ -85,7 +85,7 @@ public:
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 

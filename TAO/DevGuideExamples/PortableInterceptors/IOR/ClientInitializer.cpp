@@ -7,18 +7,13 @@ ClientInitializer::ClientInitializer (void)
 }
 
 void
-ClientInitializer::pre_init (
-                             PortableInterceptor::ORBInitInfo_ptr
-                             )
+ClientInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
-ClientInitializer::post_init (
-                              PortableInterceptor::ORBInitInfo_ptr info
-                              )
+ClientInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
-
   // get Codec factory
   IOP::CodecFactory_var codec_factory = info->codec_factory();
 

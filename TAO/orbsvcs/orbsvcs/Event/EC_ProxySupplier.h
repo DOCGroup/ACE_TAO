@@ -119,7 +119,7 @@ public:
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
    * it is disconnected then it returns true and sets the
-   * <disconnected> flag.
+   * @a disconnected flag.
    */
   CORBA::Boolean consumer_non_existent (CORBA::Boolean_out disconnected);
 

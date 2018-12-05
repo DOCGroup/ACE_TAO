@@ -136,7 +136,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     size_t len = 0;
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);
-    int uiop_compatible = 0;
+    bool uiop_compatible = false;
     TAO_ConnectorSetIterator conn_iter = 0;
     for (conn_iter = conn_reg->begin();
          conn_iter != conn_reg->end() &&
@@ -148,8 +148,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
         if (endpoints[ndx].profile_)
           {
-            endpoints[ndx].obj_key_sep_ =
-              (*conn_iter)->object_key_delimiter();
+            endpoints[ndx].obj_key_sep_ = (*conn_iter)->object_key_delimiter();
             uiop_compatible = (endpoints[ndx].obj_key_sep_ == '|');
             this->make_canonical (ior,len,endpoints[ndx].prot_addr_);
             ior += len;
@@ -172,7 +171,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
         continue;
       }
 
-    if (*ior == '/') // found key separator
+    if (*ior == endpoints[ndx].obj_key_sep_) // found key separator
       {
         ++ior;
         break;
@@ -192,7 +191,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     if (TAO_debug_level)
       TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT("TAO (%P|%t) - TAO_CORBALOC_Parser::parse_string ")
-                  ACE_TEXT("could not parse from %C\n"),
+                  ACE_TEXT("could not parse from <%C>\n"),
                   ior));
     throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 10, CORBA::COMPLETED_NO);
   } // end of while
@@ -211,7 +210,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
         obj_key;
       const char * str = full_ep.c_str();
       endpoints[i].profile_->parse_string (str);
-      int share = orb->orb_core()->orb_params()->shared_profile();
+      int const share = orb->orb_core()->orb_params()->shared_profile();
       if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
         endpoints[i].profile_ = 0;
       else

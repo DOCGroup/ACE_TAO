@@ -110,7 +110,11 @@ CORBA::Object::_remove_ref (void)
 CORBA::ULong
 CORBA::Object::_refcount_value(void) const
 {
-  return static_cast<CORBA::ULong> (this->refcount_.value ());
+#if defined (ACE_HAS_CPP11)
+  return this->refcount_;
+#else
+  return this->refcount_.value ();
+#endif /* ACE_HAS_CPP11 */
 }
 
 void
@@ -929,9 +933,8 @@ operator>> (TAO_InputCDR& cdr, CORBA::Object*& x)
               //    profile from the IOR.
               TAOLIB_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) - ERROR: Could not create all ")
-                                 ACE_TEXT ("profiles while extracting object [%d, %d]\n")
-                                 ACE_TEXT ("TAO (%P|%t) - ERROR: reference from the ")
-                                 ACE_TEXT ("CDR stream.\n"),
+                                 ACE_TEXT ("profiles while extracting object [%d, %d] ")
+                                 ACE_TEXT ("reference from the CDR stream.\n"),
                                  mp.profile_count (), profile_count),
                                 false);
             }

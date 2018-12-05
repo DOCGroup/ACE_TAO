@@ -15,7 +15,7 @@ output data as possible.
 
 	This is part of the regression testsuite for:
 
-http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=132
+http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=132
 
 	To run the test use the run_test.pl script:
 

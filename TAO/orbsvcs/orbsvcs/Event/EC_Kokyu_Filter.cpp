@@ -2,8 +2,6 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "orbsvcs/Log_Macros.h"
 
-
-
 TAO_EC_Kokyu_Filter::
     TAO_EC_Kokyu_Filter (const char* name,
                          RtecScheduler::handle_t rt_info,

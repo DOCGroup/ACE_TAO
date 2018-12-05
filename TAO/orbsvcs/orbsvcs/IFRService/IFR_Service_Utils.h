@@ -105,7 +105,7 @@ public:
   typedef int (*name_clash_checker)(const char *);
 
   /// Convert the hex form of an 4-byte unsigned int to a string.
-  static char *int_to_string (CORBA::ULong number);
+  static ACE_TCHAR *int_to_string (CORBA::ULong number);
 
   /// The error-checking methods below all return void because
   /// they throw a spec-defined exception for every error case
@@ -158,16 +158,14 @@ public:
       const char *name,
       name_clash_checker checker,
       const char *version,
-      const char *sub_section_name
-    );
+      const char *sub_section_name);
 
   /// Common to Container::create_value() and ValueDef::supported_interfaces(),
   /// Container::create_component() and Component::supported_interfaces().
   static void set_supported_interfaces (
       const CORBA::InterfaceDefSeq &supported_interfaces,
       ACE_Configuration *config,
-      ACE_Configuration_Section_Key &key
-    );
+      ACE_Configuration_Section_Key &key);
 
   /// Common code for operations, attributes, and valuetype initializers.
   static void set_exceptions (ACE_Configuration *config,
@@ -178,15 +176,14 @@ public:
   /// Implemented here to avoid recursion in the servant classes.
   static CORBA::TypeCode_ptr gen_valuetype_tc_r (
       ACE_Configuration_Section_Key &,
-      TAO_Repository_i *
-    );
+      TAO_Repository_i *);
 
   /// Called from the above function.
   static void fill_valuemember_seq (CORBA::ValueMemberSeq &,
                                     ACE_Configuration_Section_Key &,
                                     TAO_Repository_i *);
 
-  /// Converison from IR Object reference to key location path.
+  /// Conversion from IR Object reference to key location path.
   static char *reference_to_path (CORBA::IRObject_ptr obj);
 
   /// Conversion from key location path to CORBA::DefinitionKind.
@@ -196,8 +193,7 @@ public:
   /// Conversion from IR Object reference to CORBA::DefinitionKind.
   static CORBA::DefinitionKind reference_to_def_kind (
       CORBA::IRObject_ptr obj,
-      TAO_Repository_i *repo
-    );
+      TAO_Repository_i *repo);
 
   /// Converion from key location path to IDLType.
   static TAO_IDLType_i *path_to_idltype (ACE_TString &path,

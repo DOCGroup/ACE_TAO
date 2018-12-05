@@ -35,10 +35,10 @@ class  TAO_Event_Serv_Export TAO_CEC_TypedSupplierAdmin
   : public POA_CosTypedEventChannelAdmin::TypedSupplierAdmin
 {
 public:
-  //Constructor
+  /// Constructor
    TAO_CEC_TypedSupplierAdmin (TAO_CEC_TypedEventChannel* event_channel);
 
-  //Destructor
+  /// Destructor
   virtual ~TAO_CEC_TypedSupplierAdmin (void);
 
   /// For each elements call <worker->work()>.

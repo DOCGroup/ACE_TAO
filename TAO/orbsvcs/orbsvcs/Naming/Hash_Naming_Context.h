@@ -61,7 +61,7 @@ public:
   /**
    * Add a binding with the specified parameters to the table.
    * Return 0 on success and -1 on failure, 1 if there already is a
-   * binding with <id> and <kind>.
+   * binding with @a id and @a kind.
    */
   virtual int bind (const char *id,
                     const char *kind,
@@ -69,7 +69,7 @@ public:
                     CosNaming::BindingType type) = 0;
 
   /**
-   * Overwrite a binding containing <id> and <kind> (or create a new
+   * Overwrite a binding containing @a id and @a kind (or create a new
    * one if one doesn't exist) with the specified parameters.  Returns
    * -1 on failure.
    */
@@ -78,16 +78,16 @@ public:
                       CORBA::Object_ptr obj,
                       CosNaming::BindingType type) = 0;
 
-  /// Remove a binding containing <id> and <kind> from the table.
+  /// Remove a binding containing @a id and @a kind from the table.
   /// Return 0 on success and -1 on failure.
   virtual int unbind (const char * id,
                       const char * kind) = 0;
 
   /**
-   * Find the binding containing <id> and <kind> in the table, and
+   * Find the binding containing @a id and @a kind in the table, and
    * pass binding's type and object back to the caller by reference.
    * Return 0 on success and -1 on failure.   Note: a 'duplicated' object
-   * reference is assigned to <obj>, so the caller is responsible for
+   * reference is assigned to @a obj, so the caller is responsible for
    * its deallocation.
    */
   virtual int find (const char * id,
@@ -141,7 +141,7 @@ public:
   // = CosNaming::NamingContext idl interface methods.
 
   /**
-   * Create a binding for name <n> and object <obj> in the naming
+   * Create a binding for name @a n and object @a obj in the naming
    * context.  Compound names are treated as follows: ctx->bind (<c1;
    * c2; c3; cn>, obj) = (ctx->resolve (<c1; c2; cn-1>))->bind (<cn>,
    * obj) if the there already exists a binding for the specified
@@ -153,7 +153,7 @@ public:
                      CORBA::Object_ptr obj);
 
   /**
-   * This is similar to <bind> operation above, except for when the
+   * This is similar to bind() operation above, except for when the
    * binding for the specified name already exists in the specified
    * context.  In that case, the existing binding is replaced with the
    * new one.
@@ -205,7 +205,7 @@ public:
    * Delete the naming context.  The user should take care to <unbind> any
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking <destroy> operation.
-   * NOTE: <destory> is a no-op on the root context.
+   * NOTE: <destroy> is a no-op on the root context.
    * NOTE: after <destroy> is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */

@@ -83,7 +83,7 @@ public:
   TAO_EC_Timeout_Adapter (void);
 
 private:
-  /// Casts <act> to EC_Filter and dispatches an event to it.
+  /// Casts @a act to EC_Filter and dispatches an event to it.
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *act);
 };

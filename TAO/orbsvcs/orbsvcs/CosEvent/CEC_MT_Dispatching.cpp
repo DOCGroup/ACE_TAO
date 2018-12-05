@@ -1,12 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
 
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
                                                 int thread_creation_flags,

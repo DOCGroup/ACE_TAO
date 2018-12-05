@@ -17,8 +17,6 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 
-
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:
@@ -30,6 +28,8 @@ public:
 
   ACE_Event event_;
 };
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_WFMO_Reactor_Test
 {
@@ -47,6 +47,8 @@ public:
   }
 };
 
+ACE_END_VERSIONED_NAMESPACE_DECL
+
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -54,9 +56,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor reactor;
   ACE_Reactor base_reactor (&reactor);
 
-  //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Time_Value time (1);
-  //FUZZ: enable check_for_lack_ACE_OS
+  ACE_Time_Value sleep_time (1);
 
   int result =
     reactor.register_handler (&handler);
@@ -74,7 +74,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 1);
 
-  result = base_reactor.run_reactor_event_loop (time);
+  result = base_reactor.run_reactor_event_loop (sleep_time);
   ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -87,7 +87,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 0, 0, 0);
 
-  result = base_reactor.run_reactor_event_loop (time);
+  result = base_reactor.run_reactor_event_loop (sleep_time);
   ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -109,7 +109,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 1);
 
-  result = base_reactor.run_reactor_event_loop (time);
+  result = base_reactor.run_reactor_event_loop (sleep_time);
   ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -129,7 +129,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 1, 1, 0, 0);
 
-  result = base_reactor.run_reactor_event_loop (time);
+  result = base_reactor.run_reactor_event_loop (sleep_time);
   ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
@@ -151,7 +151,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,
                                                 0, 0, 0, 1);
 
-  result = base_reactor.run_reactor_event_loop (time);
+  result = base_reactor.run_reactor_event_loop (sleep_time);
   ACE_TEST_ASSERT (result != -1);
 
   ACE_WFMO_Reactor_Test::check_for_valid_state (reactor,

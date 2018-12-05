@@ -64,8 +64,11 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
        factory != end;
        ++factory)
     {
-      auto_ptr <TAO_Connector> connector (
-        (*factory)->factory ()->make_connector ());
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
+#else
+      auto_ptr <TAO_Connector> connector ((*factory)->factory ()->make_connector ());
+#endif /* ACE_HAS_CPP11 */
 
       if (connector.get ())
         {
@@ -79,8 +82,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
                                -1);
            }
 
-         this->connectors_[this->size_++] =
-           connector.release ();
+         this->connectors_[this->size_++] = connector.release ();
         }
       else
         return -1;
@@ -165,8 +167,13 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
   CORBA::ULong tag = 0;
 
   // If there is an error we abort.
-  if ((cdr >> tag) == 0)
+  if (!(cdr >> tag))
+  {
+    TAOLIB_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
+                   ACE_TEXT ("create_profile: Unable to extract tag from CDR stream\n")));
     return 0;
+  }
 
   TAO_Connector *connector =
     this->get_connector (tag);
@@ -195,7 +202,6 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
             }
         }
 
-
       TAO_Profile *pfile = 0;
       ACE_NEW_RETURN (pfile,
                       TAO_Unknown_Profile (tag,
@@ -203,6 +209,9 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
                       0);
       if (pfile->decode (cdr) == -1)
         {
+          TAOLIB_ERROR ((LM_ERROR,
+                        ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
+                        ACE_TEXT ("create_profile: Unable to decode unknown profile from CDR stream\n")));
           pfile->_decr_refcnt ();
           pfile = 0;
         }
@@ -217,18 +226,36 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
   // ProfileData is encoded as a sequence of octet. So first get the
   // length of the sequence.
   CORBA::ULong encap_len = 0;
-  if ((cdr >> encap_len) == 0)
+  if (!(cdr >> encap_len))
+  {
+    TAOLIB_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
+                   ACE_TEXT ("create_profile: Unable to extract encapsulated length from CDR stream\n")));
     return 0;
+  }
 
   // Create the decoding stream from the encapsulation in the buffer,
   // and skip the encapsulation.
   TAO_InputCDR str (cdr, encap_len);
 
-  if (str.good_bit () == 0
-      || cdr.skip_bytes (encap_len) == 0)
+  if (!str.good_bit () || !cdr.skip_bytes (encap_len))
+  {
+    TAOLIB_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
+                   ACE_TEXT ("create_profile: Unable to skip encapsulated stream from CDR stream\n")));
     return 0;
+  }
 
-  return connector->create_profile (str);
+  TAO_Profile* profile = connector->create_profile (str);
+
+  if (!profile)
+  {
+    TAOLIB_ERROR ((LM_ERROR,
+                   ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
+                   ACE_TEXT ("create_profile: Connector returned null profile for tag 0x%x\n"), tag));
+  }
+
+  return profile;
 }
 
 char

@@ -102,17 +102,17 @@
           Make sure your release system has all the needed tools. This can be achieved on Fedora
           using:
           <ul>
-            <li><code>yum install perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool GitPython</code></li>
+            <li><code>yum install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool GitPython</code></li>
             <li><code>yum update</code></li>
           </ul>
           or on OpenSuSE
           <ul>
-            <li><code>zypper install perl screen python-pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython</code></li>
+            <li><code>zypper install perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool python-gitpython</code></li>
             <li><code>zypper update</code></li>
           </ul>
           If you want to perform a full build with qt support, than run:
           <ul>
-            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk git-svn perl svn screen pysvn automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
+            <li><code>yum install deltarpm ntp rubygem-rmagick bison xerces-c-devel psmisc yum-utils gdb unzip glibc-devel libasan bison redhat-lsb perl-Pod-Usage rubygems clang make patch libcgroup-devel ant setuptool system-config-network-tui system-config-firewall-tui lcov gnuplot java-1.8.0-openjdk perl screen automake doxygen bzip2 tar gzip openssh graphviz zip libtool gcc-c++ boost-devel valgrind openssl-devel gcc qt4 fltk-devel bzip2-devel rsync openssl lzo-devel zziplib-devel acpid acpi nfs-utils java xerces-c xerces-c-devel mc qt qt-devel icecream ruby ruby-devel lksctp-tools-devel git telnet GitPython NetworkManager wget mailx</code></li>
           </ul>
           For some optional i686 packages run
           <ul>
@@ -185,9 +185,6 @@
               TAO/tao/Version.h</li>
             ace/Version.h</li> </code>
         </ul>
-        In most cases, a<br>
-        <code>svn revert -R *</code><br>
-        from DOC_ROOT will suffice.<br />
     The tag will also need to be removed (both in Middleware and MPC):
     ACE+TAO-X_Y_Z (where X is the ACE Major version number, and Y & Z are the
     Minor and Micro release numbers of the release that is to be restarted).<p>
@@ -298,7 +295,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_4_5 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_2 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -422,16 +419,13 @@
       <li>
         Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
       <li>
-        Update OpenSuSE Build service using
+        Update openSUSE Build service using<br>
         <code>
-        osc checkout devel:libraries:ACE
-        osc add <new release>
-        cp rpmbuild/ace-tao.spec .
-        cp debian/control debian.control
-        cp debian/dsc ace.dsc
-        cp debian/changelog debian.changelog
-        cp debian/rules debian.rules
-        osc commit
+        osc checkout devel:libraries:ACE:micro ACE<br>
+        cd &quot;devel:libraries:ACE:micro/ACE&quot;<br>
+        osc rm ACE+TAO-src-*.tar.gz<br>
+        cp $DOC_ROOT/package-&lt;PID&gt;/ACE+TAO-src-*.tar.gz .<br>
+        osc commit<br>
         </code>
       </li>
       <li>
@@ -456,8 +450,8 @@
       Tips to being a Build Czar</h2>
     <p><ol>
       <li>Trust no one.</li>
-      <li>Be careful with <a href="http://www.cs.wustl.edu/~schmidt">this guy</a>, he
-      is notorious in breaking builds (and fixing them as well...Rumour has it that
+      <li>Be careful with <a href="http://www.dre.vanderbilt.edu/~schmidt/">this guy</a>, he
+      is notorious in breaking builds (and fixing them as well...rumour has it that
       it's actually a super-scalar, super-pipelined processor capable of out-of-order
       execution, in human incarnation).</li>
       <li>Don't forgive people who break ACE :-)</li>
@@ -467,20 +461,12 @@
       <li>Think of the group who wrote the scoreboard update script, every time you
       catch an otherwise not so obvious error with the help of the scoreboard. Tell <a href="mailto:devo-group@list.isis.vanderbilt.edu">
         DEVO group</a> about it.</li>
-      <li>Send a note to  <a href="mailto:sysadmin@isis.vanderbilt.edu">sysadmin@isis.vanderbilt.edu</a> asking for the repo to be frozen. Provide them a list of names, including yourself and bczar to be granted write permission.
-      </li>
-      <li>Compile once on Win32, Linux and Solaris before cutting a micro.</li>
+      <li>Compile once on Win32 and Linux before cutting a micro.</li>
       <li>Trust the release script when making a release. Don't make tar balls by
       hand.</li>
       <li>When all hell breaks loose, don't wait for the nightly builds to monitor
       improvement. Instead manually start the builds.</li>
-      <li>Maintain private up-to-date workspaces for problem platforms (read as
-      Solaris).</li>
       <li>Don't hesitate to ask for help.</li>
-      <li>When you get an account to access the svn repo, make sure you are added to
-      the correct groups, for example,
-      gid=100(users),5000(doc),5002(acetaodev),5003(cvs). Otherwise you will have
-      problem to checkout various modules.</li>
       <li>Install your public key to the different machines you have frequent access
       to avoid typing password.</li>
       <li>Update this page if you have any more tips for future build czars :-). This

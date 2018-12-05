@@ -57,7 +57,7 @@ public:
    */
   virtual void shutdown (void) = 0;
 
-  /// The consumer represented by <proxy> should receive <event>.
+  /// The consumer represented by @a proxy should receive @a event.
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      const CORBA::Any &event) = 0;
   virtual void push_nocopy (TAO_CEC_ProxyPushSupplier *proxy,

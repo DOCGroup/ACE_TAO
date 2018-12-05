@@ -1,7 +1,5 @@
 #include "orbsvcs/Event/EC_Bitmask_Filter.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Bitmask_Filter::TAO_EC_Bitmask_Filter (CORBA::ULong source_mask,

@@ -32,7 +32,7 @@ namespace TAO
       : public ACE_Service_Object
     {
     public:
-      virtual void strategy_init(TAO_Root_POA *poa ) = 0;
+      virtual void strategy_init(TAO_Root_POA *poa) = 0;
 
       virtual void strategy_cleanup(void) = 0;
 

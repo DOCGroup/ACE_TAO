@@ -179,7 +179,7 @@ public:
   /// TAO_ECG_Dgram_Handler method.
   /**
    * UDP/Multicast Event_Handlers call this method when data is
-   * available at the socket - the <dgram> is ready for reading.
+   * available at the socket - the @a dgram is ready for reading.
    * Data is read from the socket, and, if complete message is
    * received, the event is pushed to the local Event Channel.
    */

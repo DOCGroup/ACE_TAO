@@ -166,6 +166,10 @@ namespace ACE_OS {
   int kill (pid_t pid,
             int signum);
 
+#ifdef pthread_sigmask
+# define ACE_PTHREAD_SIGMASK_MACRO pthread_sigmask
+# undef pthread_sigmask
+#endif
   ACE_NAMESPACE_INLINE_FUNCTION
   int pthread_sigmask (int how,
                        const sigset_t *nsp,

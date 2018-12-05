@@ -1,5 +1,3 @@
-
-
 This directory contains a CORBA example illustrating a simple client and
 a server with a Interface Messenger. The Messenger Interface has
 an operation for sending a message (send_message).  The MessengerClient
@@ -41,6 +39,3 @@ NOTE:
    script via following command:
 
    perl ../run_test.pl
-
-
-

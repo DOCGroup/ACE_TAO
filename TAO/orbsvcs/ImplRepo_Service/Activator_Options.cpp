@@ -322,7 +322,7 @@ Activator_Options::load_registry_options ()
       // If there aren't any saved parameters, then that's ok.
       return 0;
     }
-  char tmpstr[4096];
+  ACE_TCHAR tmpstr[4096];
   DWORD sz = sizeof (tmpstr);
   DWORD type = 0;
   err = ACE_TEXT_RegQueryValueEx (key, ACE_TEXT("ORBInitOptions"), 0, &type,
@@ -331,7 +331,7 @@ Activator_Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->cmdline_ = tmpstr;
+      this->cmdline_ = ACE_TEXT_ALWAYS_CHAR(tmpstr);
     }
 
   sz = sizeof(tmpstr);
@@ -341,7 +341,7 @@ Activator_Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->ior_output_file_ = ACE_TEXT_CHAR_TO_TCHAR(tmpstr);
+      this->ior_output_file_ = tmpstr;
     }
 
   sz = sizeof(debug_);
@@ -359,7 +359,7 @@ Activator_Options::load_registry_options ()
     {
       ACE_ASSERT (type == REG_SZ);
       tmpstr[sz - 1] = '\0';
-      this->name_ = tmpstr;
+      this->name_ = ACE_TEXT_ALWAYS_CHAR(tmpstr);
     }
 
   DWORD tmpint = 0;

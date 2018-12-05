@@ -54,7 +54,7 @@ public:
   /**
    * The basic constructor.
    * The attributes listed as arguments are *required* by the EC, and
-   * no appropiate defaults are available for them.
+   * no appropriate defaults are available for them.
    */
   TAO_EC_Event_Channel_Attributes (PortableServer::POA_ptr supplier_poa,
                                    PortableServer::POA_ptr consumer_poa);

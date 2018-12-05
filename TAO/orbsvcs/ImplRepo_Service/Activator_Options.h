@@ -57,7 +57,7 @@ public:
   bool service (void) const;
 
   /// Notify the ImR when server processes die.
-  /// Note : Currently this only works on Unix.
+  /// @note Currently this only works on Unix.
   bool notify_imr (void) const;
 
   /// When notifying of child death, pause this number of milliseconds
@@ -110,8 +110,12 @@ private:
   /// Should we run as a service?
   bool service_;
 
+  /// Notify the ImR when server processes die.
+  /// @note Currently this only works on Unix.
   bool notify_imr_;
 
+  /// When notifying of child death, pause this number of milliseconds
+  /// to simulate a heavily loaded server.
   unsigned int induce_delay_;
 
   /// SC_NONE, SC_INSTALL, SC_REMOVE, ...

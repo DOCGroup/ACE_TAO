@@ -52,8 +52,7 @@ namespace TAO
 
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
-      /// Constructor. <arg> parameter is used by the Acceptor to pass the
-      /// protocol configuration properties for this connection.
+      /// Constructor.
       Connection_Handler (TAO_ORB_Core *orb_core);
 
       /// Destructor.

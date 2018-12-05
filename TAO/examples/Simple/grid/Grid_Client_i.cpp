@@ -82,7 +82,7 @@ Grid_Client_i::run (const char *name,
                                           height_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) Made the grid succesfully\n")));
+                  ACE_TEXT ("(%P|%t) Made the grid successfully\n")));
 
       // Set a value on the grid
       grid->set (setx_,

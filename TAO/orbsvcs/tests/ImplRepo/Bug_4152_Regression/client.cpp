@@ -79,8 +79,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ex._tao_print_exception ("Client second attempt: ");
           }
       }
-    return 0;
 
+    orb->destroy ();
+
+    return 0;
   }
   catch (const CORBA::Exception& ex)
     {

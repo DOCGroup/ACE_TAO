@@ -62,6 +62,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     // Print the Messenger's reply.
     std::cout << "Reply: " << msg.in() << std::endl;
 
+    orb->destroy();
+
     return 0;
   }
   catch(const CORBA::Exception& ex) {

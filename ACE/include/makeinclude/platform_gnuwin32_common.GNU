@@ -10,10 +10,6 @@ ifneq ($(mingw32),1)
   endif
 endif
 
-# Choose your target CPU (by default we set it to pentiumpro. In your
-# platform_macros.GNU file you can override this to pentium, i486 or i386
-TCPU ?= pentiumpro
-
 # Cygwin/MinGW doesn't allow to add the version number of ACE to the dll name
 # because ace.dll.6.0.1 isn't a valid dll name
 versioned_so = 0
@@ -51,6 +47,10 @@ endif
 ifeq ($(threads),1)
   FLAGS_C_CC += -mthreads
 endif # threads
+
+ifneq ($(CROSS_COMPILE),)
+  COMPARCH ?= $(CROSS_COMPILE)
+endif
 
 CC      = ${COMPARCH}gcc
 CXX     = ${COMPARCH}g++

@@ -4,7 +4,7 @@ This directory houses a collection of tests which exercise TAO support
 for features defined in the RT-CORBA specification. Tests which exercise
 TAO-specific RT features can be found in $TAO_ROOT/performance-tests/RTCorba.
 OMG Real-time CORBA specification is available at:
-http://cgi.omg.org/cgi-bin/doc?ptc/99-05-03 (or check the OMG website
+http://www.omg.org/cgi-bin/doc?ptc/99-05-03 (or check the OMG website
 for a more recent version).
 
 More information on TAO's implementation of RT-CORBA 1.0 specification

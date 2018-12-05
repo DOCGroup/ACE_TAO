@@ -3,7 +3,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 CORBA::ExceptionList::ExceptionList (void)
-  : ref_count_ (1)
+  : refcount_ (1)
 {
 }
 

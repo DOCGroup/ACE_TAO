@@ -49,15 +49,14 @@ namespace CORBA
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * = LOCKING
  * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_SupplierControl
 {
 public:
-  /// Constructor.  It does not assume ownership of the <event_channel>
-  /// parameter.
+  /// Constructor
   TAO_CEC_SupplierControl (void);
 
   /// destructor...

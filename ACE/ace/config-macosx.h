@@ -2,7 +2,9 @@
 #define ACE_CONFIG_MACOSX_ALL_H
 #include <Availability.h>
 
-#if   __MAC_OS_X_VERSION_MAX_ALLOWED >= 101300
+#if   __MAC_OS_X_VERSION_MAX_ALLOWED >= 101400
+#include "config-macosx-mojave.h"
+#elif __MAC_OS_X_VERSION_MAX_ALLOWED >= 101300
 #include "config-macosx-highsierra.h"
 #elif __MAC_OS_X_VERSION_MAX_ALLOWED >= 101200
 #include "config-macosx-sierra.h"

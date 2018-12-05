@@ -69,6 +69,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                  str.c_str ()), -1);
             }
         }
+
+      orb->destroy ();
+
       return 0;
     }
   catch (const CORBA::Exception &ex)

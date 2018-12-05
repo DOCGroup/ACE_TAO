@@ -320,7 +320,7 @@ XML_Backing_Store::load_activator (const ACE_CString& activator_name,
                                    const ACE_CString& ior,
                                    const NameValues& )
 {
-  Activator_Info *ai;
+  Activator_Info *ai = 0;
   ACE_NEW (ai,
            Activator_Info (activator_name, token, ior));
 

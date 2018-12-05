@@ -134,7 +134,7 @@ public class Queue
 class Queue_Node
 {
   public Queue_Node prev_ = null;
-  public Queue_Node next_ = null;;
+  public Queue_Node next_ = null;
   public Object data_;
 
   public Queue_Node(Object data)

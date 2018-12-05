@@ -96,8 +96,14 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
    // Verify that the remote ACE_INET_Addr was initialized properly.
    // Failure can occur if hostname lookup failed when initializing the
    // remote ACE_INET_Addr.
-   if (remote_address.get_type () != AF_INET)
+   switch (remote_address.get_type ())
      {
+     case AF_INET:
+#ifdef ACE_HAS_IPV6
+     case AF_INET6:
+#endif
+       break;
+     default:
        if (TAO_debug_level > 0)
          {
            TAOLIB_ERROR ((LM_ERROR,
@@ -111,7 +117,6 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
      }
 
    return 0;
-
 }
 
 TAO_Transport *

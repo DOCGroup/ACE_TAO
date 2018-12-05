@@ -1,0 +1,283 @@
+commit b1228f4bfd1be92b1590de65fe49c8511c2b71e1
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Mar 13 10:58:36 2018 -0500
+
+    TAO test list: mark tests that won't run with CORBA/e compact
+
+commit 5a4a08e16062d6ecbf0e599fc2bdb26f103e72d3
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Mar 12 11:19:23 2018 -0500
+
+    TAO NEWS for shmiop change
+
+commit 66e84f43246a74b1efadf60ff7aef1146a853c98
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Mar 6 11:06:41 2018 -0600
+
+    Bug 1220 fix applied to SHMIOP (fixed for IIOP long ago).
+    
+    Also added a SHMIOP test, IPv6 compatibility, and fixed wrong indent in Synch_Invocation.cpp.
+
+commit 71a517bfb38858939cecc4e021dc3805663ff07a
+Merge: 7aadef4fc59 d4c520ce4cf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Feb 26 14:12:55 2018 -0600
+
+    Merge pull request #582 from mitza-oci/master
+    
+    NEWS for upcoming release
+
+commit d4c520ce4cf5fc14aa296936e6c80cccbc12757e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Feb 26 11:24:58 2018 -0600
+
+    NEWS for upcoming release
+
+commit 73307efb832657d40b3c39492a2c4ae4b0b47762
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Feb 26 18:20:26 2018 +0100
+
+    Doxygen fixes and fixed some typos
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Hash_Naming_Context.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Naming_Context_Interface.h:
+        * TAO/orbsvcs/orbsvcs/Naming/Storable_Naming_Context.h:
+        * TAO/tests/Bug_2953_Regression/client.cpp:
+        * TAO/tests/Bug_2953_Regression/server.cpp:
+        * TAO/tests/Smart_Proxies/Benchmark/client.cpp:
+        * TAO/tests/Smart_Proxies/Policy/client.cpp:
+        * TAO/tests/Smart_Proxies/client.cpp:
+
+commit dded6e0e48ee7e1c6c39240d60fb0b3111ceddf2
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Fri Feb 23 09:05:06 2018 +0100
+
+    TAO/tests/Bug_3940_Regression/test.idl
+    - Address issue #571 comment by jwillemsen: Disable content of IDL file
+      for Borland C++ Builder. The cpp32 preprocessor apparently strips out
+      all @ characters which inhibits processing of annotations.
+
+commit 35218a474eeb88b4288df227a98f04cbf0865f8b
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Sun Feb 18 02:30:07 2018 +0100
+
+    Address https://github.com/DOCGroup/ACE_TAO/issues/571 :
+    Shift handling of annotation applications from lexer to parser.
+    
+    TAO/TAO_IDL/fe/idl.ll
+    - Remove rule matching annotation applications.
+    
+    TAO/TAO_IDL/fe/idl.ypp
+    - Define %type <idval> defining_id.
+    - Duplicate rule `id' as defining_id.
+      In defining_id allow for annotation applications.
+    - Substitute `id' by defining_id in following rules:
+      template_module_ref, template_module_inst, interface_decl, value_decl,
+      const_dcl, simple_declarator, struct_decl, union_decl, enum_type,
+      array_declarator, exception, component_forward_decl, component_header,
+      home_header, factory_decl, finder_decl, event_concrete_forward_decl,
+      event_abs_forward_decl, event_abs_header, event_custom_header,
+      event_plain_header.
+    - Allow for annotation applications in following rules:
+      definitions, at_least_one_definition, tpl_definitions, member_i,
+      case_branch, case_labels, enumerator, operation, init_decl,
+      porttype_decl, at_least_one_actual_parameter, actual_parameters,
+      connector_header.
+    - New rule `annotations' implements sequence of 0 or more annotation_appl.
+    - New rules annotation_appl, annotation_appl_params, annotation_appl_param
+      implement rules 225, 226, 227 from IDL 4.2 section 7.4.15.3.
+    - New rule at_least_one_annotation_appl_param implements 2nd alternative
+      on RHS of rule 226.
+    - New rule annotation_appl_named_params is auxiliary to
+      at_least_one_annotation_appl_param.
+      It implements a sequence of 0 or more annotation_appl_param.
+    
+    TAO/TAO_IDL/fe/idl.yy.cpp
+    - Regenerate from idl.ll using TAO/TAO_IDL/regen.sh with flex-2.6.4.
+    
+    TAO/TAO_IDL/fe/idl.tab.cpp
+    - Regenerate from idl.ypp using TAO/TAO_IDL/regen.sh with bison-3.0.2.
+
+commit cb29bd46571e428d1d71c860ec9010d29a3a1fe4
+Merge: 4665969af11 d14029823bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 16:05:33 2018 +0100
+
+    Merge pull request #573 from jwillemsen/jwi-taoidlleak
+    
+    Add new C++ compiler test for testing a feature TAO is using
+
+commit 4473a426454c16a2d7af7328778369d603d701ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 10:23:41 2018 +0100
+
+    Fixed typo in comment
+    
+        * TAO/tests/Bug_3683_Regression/Simple_util.h:
+
+commit 0b1e33835dcdb9397c9eeb23eef5db53908d87e0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Feb 16 10:23:28 2018 +0100
+
+    Convert to doxygen style comments
+    
+        * TAO/tests/Bug_3683_Regression/Echo.idl:
+
+commit 4665969af11545a831900244fd4ac6fa6f30a155
+Merge: cbb40b5f6f2 c8d9edf5117
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Feb 15 10:32:39 2018 +0100
+
+    Merge pull request #572 from jwillemsen/jwi-taoidlleak
+    
+    Fixed memory leak when we have a wstrval
+
+commit c8d9edf5117f6aa7334bd63e351e816d4946aece
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Feb 13 19:23:59 2018 +0100
+
+    Fixed memory leak when we have a wstrval
+    
+        * TAO/TAO_IDL/ast/ast_expression.cpp:
+
+commit e1f507ba668b0373e2ef3ab6fb74a9f792374fb3
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Sun Feb 4 19:43:06 2018 +0100
+
+    Followup to commit 3f751cb addresses
+    https://github.com/DOCGroup/ACE_TAO/pull/567#issuecomment-360504123 ,
+    
+    > [...] the Solaris/SunCC build failed because its preprocessor splits
+    > the @ from the following token:
+    >
+    > $ echo '@foo' > /tmp/foo.c && /opt/compilers/suncc5.12/bin/CC -E \
+    >   /tmp/foo.c && rm /tmp/foo.c
+    > #1 "/tmp/foo.c"
+    > @ foo
+    
+    TAO/TAO_IDL/fe/idl.ll
+    - Modify the rule matching annotations to include an optional space
+      after the '@',
+      @ ?[A-Za-z][A-Za-z0-9_]*[ \t]*(\([^)]+\))?
+
+commit be871ac59565386b582b41e48ef129d509c354fc
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Wed Jan 24 22:24:13 2018 +0100
+
+    Followup to PR #565: Address new conversion warning at
+      http://buildlogs.remedy.nl/win_msvc15_opendds_debug/index.html ,
+    > fe\idl.yy.cpp(1383): warning C4267: 'argument': conversion from
+    > 'size_t' to 'int'
+    
+    TAO/TAO_IDL/tao_idl_fe.mpc rule lex.yy
+    - In the sed regexes, replace the fread related substitution by an
+      #include <errno.h> substitution.
+      As a marginal cosmetic improvement, adjust the tab substitution
+      to produce 4 spaces per tab.
+    - In the error message of the else-part, increase the minimum required
+      flex version to 2.6.4.
+    
+    TAO/TAO_IDL/fe/idl.yy.cpp
+    - Regenerate using regen.sh with flex 2.6.4.
+
+commit a2f4310d1beb46927e396cbfb1f563abf390eb8f
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Fri Jan 19 21:43:43 2018 +0100
+
+    Follow suggestion by mitza-oci at
+                https://github.com/DOCGroup/ACE_TAO/pull/565 :
+    > Since it's a compile-only test, it shouldn't need a run_test.pl or a
+    > test.cpp (build a library instead of an executable).
+    
+    TAO/tests/Bug_3940_Regression/Bug_3940_Regression.mpc
+    - Change superproject to taolib_with_idl.
+    - Remove exename and Source_Files.
+    
+    TAO/tests/Bug_3940_Regression/test.cpp
+    TAO/tests/Bug_3940_Regression/run_test.pl
+    - Remove files.
+
+commit 383454e6ee7d814cbfa3e1758f506a90f96b7d13
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Wed Jan 17 22:01:45 2018 +0100
+
+    * TAO/tests/Bug_3940_Regression :
+      New test verifies that tao_idl tolerates IDL4 annotations.
+
+commit 3f751cb31255f9916a5b5ec31f572f4aa1758c96
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Tue Jan 16 22:09:36 2018 +0100
+
+    http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3940#c4
+    Attachment 1524: Patch to make tao_idl ignore IDL4 annotations
+    
+    TAO/TAO_IDL/fe/idl.ll
+    - Add rule @[A-Za-z][A-Za-z0-9_]*[ \t]*(\([^)]+\))? with action "break".
+    
+    TAO/TAO_IDL/fe/idl.tab.cpp
+    TAO/TAO_IDL/fe/idl.tab.hpp
+    TAO/TAO_IDL/fe/idl.yy.cpp
+    - In directory TAO/TAO_IDL execute script regen.sh using flex 2.6.0 and
+      bison 3.0.2.
+    
+    TAO/TAO_IDL/fe/idl.ypp
+    - Fix typo in comment.
+
+commit 2a2491926e1a1e044da01f979dcaa4e1e2032c51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 15 18:14:06 2018 +0100
+
+    Removed reference to CIAO, moved to a separate repo, added msvc 14.1 (Visual Studio 2017)
+    
+        * TAO/TAO-INSTALL.html:
+
+commit 57a3da79bd35109aadaa74110f58440e4a5eab86
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Fri Jan 12 00:03:25 2018 +0100
+
+    - In section "Building and Installing TAO from git", mention that the
+      ACE_ROOT and TAO_ROOT env vars are set different from ACE_wrappers.
+    - Fix a few typos.
+    - Add a few missing </LI> tags.
+
+commit 6fbf5788f0589ae7cde5448baeda0d6e9b1bfc79
+Merge: ac9ffb65e75 4ac686684c6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 2 09:36:50 2018 -0600
+
+    Merge pull request #555 from mitza-oci/singleton-restart
+    
+    ACE_Singleton should work after ACE::fini, ACE::init (fixes issue #554)
+
+commit dff4439b18379b9008ee696303be492d84d794dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 1 11:24:13 2018 +0100
+
+    Updated copyright to 2018
+    
+        * ACE/tests/ACE.bsp:
+          Deleted, not used anymore
+    
+        * ACE/COPYING:
+        * TAO/COPYING:
+
+commit 5bbbaacd283951886642a5113300f0c0543e51c0
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Dec 21 10:18:10 2017 -0600
+
+    fixed issue #554 ACE_Singleton use after ACE::fini, ACE::init
+
+commit 52618c6f2a83446eb15ecd95e98e9d178a013d47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 8 09:38:58 2017 +0100
+
+    Make ACE 6.4.6 and TAO 2.4.6 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/debian/debian.control:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

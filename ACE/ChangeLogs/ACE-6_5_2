@@ -1,0 +1,338 @@
+commit 011bf410fc6819c49497d8adbf8bdcc0d464b7ea
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 12 10:49:55 2018 -0500
+
+    ACE_QtReactor: work-around a Qt5 bug
+
+commit 5fbe132d07ca2fa714f20a5be4ef25e6a32d37dc
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Sep 11 15:01:45 2018 -0500
+
+    Removed qt4=1 from gnuace.features.
+    
+    In order to switch between qt4 and qt5, the actual state of Qt support needs to be known at the time makefiles are generated with MPC.
+
+commit d43bdde22b088d4ba8280c8dbf8947cdf2835c7d
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Sep 11 08:53:48 2018 -0500
+
+    Allow Qt custom file types even when neither supported Qt version is enabled
+
+commit aaeeeb818dff6826cca42d1a5d63eb106fa8ab02
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 11 09:01:13 2018 +0200
+
+    Removed comment at top of mpc file
+
+commit 0de90a8d46631024eb28a800c214129f85550fae
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 11 09:01:01 2018 +0200
+
+    Layou change
+    
+        * ACE/README:
+
+commit 29506289651778c6218c4c65af77b2cc5785c8ec
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 11 09:00:46 2018 +0200
+
+    Small changes to the doc files we package where
+    
+        * ACE/rpmbuild/ace-tao.spec:
+
+commit d8991068db5dfcb98a703323d7469da9615c43e2
+Merge: a752608aaa7 06a00d65352
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 10 18:17:32 2018 -0500
+
+    Merge pull request #697 from mitza-oci/qt5
+    
+    Qt5 support
+
+commit a752608aaa76f8b0939918c920e47ec3ed5ea51f
+Merge: 69e4852390e 141d42047ca
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 10 18:16:01 2018 -0500
+
+    Merge pull request #696 from mitza-oci/warnings
+    
+    Fixed clang warnings
+
+commit 06a00d6535256ddaf2f031d5521c095c3d3cf40e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Sep 10 08:32:47 2018 -0500
+
+    Use qt5 mpc feature
+
+commit 2a4d10f1e13aadcb4735c81064b9cf60d81c8d6a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Sep 10 08:07:56 2018 -0500
+
+    Projects using qtreactor need to be skipped when there's no qt
+    
+    Added NEWS
+
+commit 69e4852390e89fe8c8fe6eadedfaae9348cee091
+Merge: f5890a26e2a b91e4aa764f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Sep 9 10:01:38 2018 +0100
+
+    Merge pull request #698 from jwillemsen/master
+    
+    Removed qt settings to 0 for debian packaging, these are disabled by default
+
+commit b91e4aa764f05f3acc0d05973eade26cfec909d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Sep 8 14:50:24 2018 +0200
+
+    Removed qt settings to 0, these are disabled by default
+    
+        * ACE/debian/default.features:
+        * ACE/debian/platform_macros.GNU:
+
+commit f5890a26e2a40b811f87efaa372affd1771fa1b6
+Merge: a6398b53bd6 23e563b05ff
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Sep 7 16:56:39 2018 -0500
+
+    Merge pull request #684 from iguessthislldo/master
+    
+    Disable Qt5 MPC Feature by Default
+
+commit 95bf013bd3bccdada189c038efbd93c87b774b1b
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 7 16:29:56 2018 -0500
+
+    Qt5 support
+
+commit 141d42047ca42cbd011c01ff1f7cc395b4a1b37f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 7 16:25:09 2018 -0500
+
+    Fixed warning from clang
+
+commit 43f29d07196a29b536b8b0dc934c7877e93d16c7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 7 16:59:33 2018 +0200
+
+    Layout changes
+    
+        * ACE/ace/QtReactor/QtReactor.h:
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.h:
+        * TAO/tao/BiDir_GIOP/BiDir_ORBInitializer.h:
+        * TAO/tao/BiDir_GIOP/BiDir_PolicyFactory.h:
+        * TAO/tao/BiDir_GIOP/BiDir_Policy_i.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_Factory.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h:
+        * TAO/tao/EndpointPolicy/EndpointPolicy_i.h:
+        * TAO/tao/EndpointPolicy/IIOPEndpointValue_i.h:
+        * TAO/tao/IORInterceptor/IORInfo.h:
+        * TAO/tao/QtResource/QtResource_Factory.h:
+
+commit 5739964a26f380fd4051d1d78ca95d1212ac3970
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 7 10:51:52 2018 +0200
+
+    List change
+    
+        * ACE/NEWS:
+
+commit 4a37c070ec51742c8a2e152901e3a47f7093ea55
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 16:40:12 2018 +0200
+
+    Layout change
+    
+        * ACE/ace/Service_Repository.h:
+
+commit fff288bee7bc9a1d1e870ebd5c5d8cfcd11e6db8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 16:23:43 2018 +0200
+
+    Fixed typo in comment
+    
+        * ACE/ace/Service_Config.h:
+        * ACE/ace/Service_Gestalt.cpp:
+        * ACE/ace/TSS_T.h:
+
+commit 16c5af445ef3067bb364d97460fc2d80beb409be
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Sep 3 14:05:58 2018 +0200
+
+    Only define BIO_set_flags when it has not been defined yet
+    
+        * ACE/ace/SSL/SSL_Asynch_BIO.cpp:
+
+commit 9d8f3669be70635e3caceb84241c267cb143d6d0
+Merge: 5b33255ed43 b9b8143d1e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 19:38:30 2018 +0100
+
+    Merge pull request #686 from jwillemsen/jwi-cbuilderx-strtok
+    
+     Corrected version check to also include C++BuilderXE2
+
+commit b9b8143d1e76a10d84e940b7b0845f49cf4a021f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 17:52:00 2018 +0200
+
+    Fixed typo in comment
+    
+        * ACE/ace/Future.h:
+
+commit 72ea4b7804d5f2d193513d7ed20036a778775786
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 17:51:46 2018 +0200
+
+    Corrected version check to also include C++BuilderXE2
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 94a495724845a9e2345dcfe428d5d8c4f05db594
+Merge: c763cbad5ed 037af8d86a7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 31 08:55:34 2018 -0500
+
+    Merge pull request #681 from mitza-oci/gnuace-postbuild
+    
+    gnuace: postbuild step shouldn't run until after exeout/dllout/libout link/copy
+
+commit 18f775e47a7a03530c76935f80fd1c18e66d4c8e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 31 10:23:46 2018 +0200
+
+    Fixed typo
+    
+        * ACE/ace/QtReactor/QtReactor.h:
+
+commit 23e563b05ff215fe82c5f491cca396a4186a152f
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Aug 30 16:53:13 2018 -0500
+
+    Disable Qt5 MPC Feature by Default
+
+commit af38510e83bd5b8cbeb6777c7415677eb0d35e8b
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Thu Aug 30 16:19:32 2018 +0800
+
+    Use RAND_poll instead of RAND_screen that is deprecated in OpenSSL 1.1
+
+commit 037af8d86a759c1970aff32d94c03aac7d88001f
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Aug 29 11:30:05 2018 -0500
+
+    gnuace: postbuild step shouldn't run until after exeout/dllout/libout link/copy
+
+commit 54c418e976e750016877a1c3bcd53e093c1ea824
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 29 11:51:04 2018 +0200
+
+    Check observer pointer before using it
+    
+        * ACE/ace/Future.cpp:
+
+commit 97c91c6f403cca708bfd46f03b0facd04a0c14f1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 16 12:13:05 2018 +0200
+
+    Updated msvc check, works now with Visual Studio 2017
+    
+        * ACE/tests/Compiler_Features_27_Test.cpp:
+
+commit 0bb2f07ae39fd19ad96e8db8895fad69e42e09a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 16 12:12:48 2018 +0200
+
+    Removed empty lines
+    
+        * ACE/examples/Map_Manager/test_hash_map_manager.cpp:
+
+commit 15701d04189a817616d3fa26b69ea5bfccb7f52f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 15 13:01:52 2018 +0200
+
+    Removed empty line
+    
+        * ACE/ace/Service_Object.cpp:
+
+commit f061bb71b6b58cc51aeae57fd99e10e6de286c1c
+Merge: 68381f0376d fb7aa2fd418
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 21:30:29 2018 +0200
+
+    Merge pull request #668 from jwillemsen/jwi-imr-enhancements
+    
+    Logging enhancements to the ImR
+
+commit 9626700e4e3fa997bb1e9e9a2a399eca3960bde6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 10 13:31:24 2018 +0200
+
+    Fixed typos
+    
+        * ACE/ace/Connector.h:
+        * TAO/docs/pluggable_messaging.html:
+        * TAO/examples/Persistent_Grid/Grid_Client_i.cpp:
+        * TAO/examples/Persistent_Grid/Persistent_Client_i.cpp:
+        * TAO/examples/Simple/grid/Grid_Client_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Asynch_Three_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Bidirectional_Flows/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Component_Switching/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Modify_QoS/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Multiple_Flows/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable/ftp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Three_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/sender.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage_With_QoS/sender.cpp:
+        * TAO/tao/ImR_Client/ImplRepo.idl:
+
+commit c173bf51bc1f898964662cb51246e0b7c0109690
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 14:24:49 2018 +0200
+
+    Updated list of Visual Studio versions we pregenerate as part of the release
+    
+        * ACE/docs/Download.html:
+
+commit 24dc765d24cd5544ba3c6239829a7d2ea65a0642
+Merge: f9b4c7aa49e 82c6ba74c4d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 14:23:46 2018 +0200
+
+    Merge branch 'master' into jwi-zapvc12-release
+
+commit 82c6ba74c4d4fb52e07ea8846b5d1abf642cae7c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 10:56:00 2018 +0200
+
+    Updated copy/past text for doxygen gen
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit f9b4c7aa49e674e49ffe12ffc9d8dc3d2f42cf49
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 10:55:29 2018 +0200
+
+    Don't ship vc12 generated solutions, Visual Studio 2015 and 2017 are the ones most used
+    
+        * ACE/bin/make_release.py:
+
+commit f92154b03a1dda2440d9be98219fea996623029b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 9 10:48:41 2018 +0200
+
+    Make x.5.1 public and prepare for the next release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

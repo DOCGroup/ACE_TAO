@@ -170,8 +170,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             ORBSVCS_ERROR ((
                 LM_ERROR,
                 ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                av[i]
-              ));
+                av[i]));
 
             ACE_OS::exit (99);
           }

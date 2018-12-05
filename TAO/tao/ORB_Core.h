@@ -37,12 +37,15 @@
 #include "tao/Service_Context_Handler_Registry.h"
 
 #include "ace/Array_Map.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lock_Adapter_T.h"
 #include "ace/TSS_T.h"
-
 #include "ace/Service_Config.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Data_Block;
@@ -384,7 +387,7 @@ public:
   /// transports.
   ACE_Allocator *transport_message_buffer_allocator (void);
 
-  /// The Message Blocks used for input CDRs must have appropiate
+  /// The Message Blocks used for input CDRs must have appropriate
   /// locking strategies.
   ACE_Data_Block *create_input_cdr_data_block (size_t size);
 
@@ -900,7 +903,7 @@ public:
   ACE_Service_Gestalt* configuration () const;
 
   /// Get outgoing fragmentation strategy.
-  auto_ptr<TAO_GIOP_Fragmentation_Strategy>
+  TAO_GIOP_Fragmentation_Strategy*
   fragmentation_strategy (TAO_Transport * transport);
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
@@ -1208,7 +1211,11 @@ protected:
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
   /// Number of outstanding references to this object.
+#if defined (ACE_HAS_CPP11)
+  std::atomic<uint32_t> refcount_;
+#else
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Registry containing all registered policy factories.
   TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;

@@ -12,7 +12,7 @@ features.  Building and running the tests is straightforward:
 
 2. You then need to run all the tests, e.g., by running the perl script
 
-   ACE_ROOT/tests/run_test.pl
+   $ACE_ROOT/tests/run_test.pl
 
    Naturally, make sure that you've installed perl first!
 

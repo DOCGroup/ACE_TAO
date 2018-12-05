@@ -1,0 +1,96 @@
+commit 5837bc6cf7b1e2b1b71ce318e2748fa37c3d516a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 5 08:57:02 2018 +0200
+
+    Added starter files for MacOSX Mojave
+    
+        * ACE/ace/config-macosx-mojave.h:
+        * ACE/include/makeinclude/platform_macosx_mojave.GNU:
+          Added.
+    
+        * ACE/ace/config-macosx.h:
+        * ACE/include/makeinclude/platform_macosx.GNU:
+
+commit 19536a1a9f180bce5160cfa4c0f3dc22410af6c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 31 14:39:51 2018 +0200
+
+    Removed invalid supp
+    
+        * ACE/bin/valgrind.supp:
+
+commit 51d87f3608962ffe1fb12e7a1de31e4c9fa7d729
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 30 11:51:07 2018 +0200
+
+    Next release will be minor
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 8df6cf5df25f1de0a9a329ed44bc802d0ebf987f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 18 16:35:09 2018 +0200
+
+    Updated suppresion
+        * ACE/bin/valgrind.supp:
+
+commit 5f92d94e30389d3f4bf595ae4d270fb5ef8fbde4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 18 16:03:34 2018 +0200
+
+    Add valgrind suppression
+    
+        * ACE/bin/valgrind.supp:
+
+commit 98b95510000b4da8460034b8936422e98527740f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 16 18:27:21 2018 +0200
+
+    List std::unique_ptr usage
+
+commit 4c6e6ee3e74a866a345e0cb056b549815fcda121
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 16 16:18:24 2018 +0200
+
+    Make use of std::unique_ptr when C++11 is used
+    
+        * ACE/ace/XML_Utils/XML_Helper.h:
+        * ACE/ace/XML_Utils/XSCRT/Elements.hpp:
+
+commit ae77ea225ceb7eb17a8a4a0caaacdb9217bcfef7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 17:13:20 2018 +0200
+
+    Use std::unique_ptr when we have C++11
+    
+        * ACE/ace/Thread_Manager.cpp:
+
+commit 22018c88a84afaad35045c52d74a212092a763f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 17:12:12 2018 +0200
+
+    Use std::unique_ptr when we have C++11
+    
+        * ACE/ace/Proactor.cpp:
+
+commit 0de4dc18e8809c9c0d47ae810ae6d5d087dab087
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 15 17:10:48 2018 +0200
+
+    Make use of std::unique_ptr when we have C++11
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit c560110d8f3206a7866866cff325489eb2ea88db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 14 16:27:08 2018 +0200
+
+    ACE+TAO x.4.8 release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

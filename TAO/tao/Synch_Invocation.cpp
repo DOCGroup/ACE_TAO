@@ -126,18 +126,18 @@ namespace TAO
           {
             if (this->retry_state_ &&
                 this->retry_state_->forward_on_exception_increment(FOE_TRANSIENT))
-                  {
-                    if (TAO_debug_level > 0)
-                      TAOLIB_DEBUG ((LM_INFO,
-                                  ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
-                                  ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
-                                  ACE_TEXT ("exception\n")));
-                    this->retry_state_->next_profile_retry (*this->stub ());
+              {
+                if (TAO_debug_level > 0)
+                  TAOLIB_DEBUG ((LM_INFO,
+                              ACE_TEXT ("TAO (%P|%t) - Synch_Twoway_Invocation::")
+                              ACE_TEXT ("remote_twoway retrying on TRANSIENT ")
+                              ACE_TEXT ("exception\n")));
+                this->retry_state_->next_profile_retry (*this->stub ());
 #if TAO_HAS_INTERCEPTORS == 1
-                    s = this->receive_other_interception ();
+                s = this->receive_other_interception ();
 #endif /* TAO_HAS_INTERCEPTORS */
-                    return TAO_INVOKE_RESTART;
-                  }
+                return TAO_INVOKE_RESTART;
+              }
             else
               {
                 // Way back, we failed to find a profile we could connect to.
@@ -585,7 +585,11 @@ namespace TAO
 
     // We must manage the memory allocated
     // by the call above to alloc().
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr<CORBA::Exception> safety (exception);
+#else
     auto_ptr<CORBA::Exception> safety (exception);
+#endif /* ACE_HAS_CPP11 */
 
     exception->_raise ();
 
@@ -732,7 +736,11 @@ namespace TAO
     // Without this, the call to create_system_exception() above
     // causes a memory leak. On platforms without native exceptions,
     // the CORBA::Environment class manages the memory.
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr<CORBA::SystemException> safety (ex);
+#else
     auto_ptr<CORBA::SystemException> safety (ex);
+#endif /* ACE_HAS_CPP11 */
 
     ex->minor (minor);
     ex->completed (CORBA::CompletionStatus (completion));

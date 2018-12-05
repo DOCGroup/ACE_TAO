@@ -24,12 +24,9 @@ Messenger_i::~Messenger_i (void)
 {
 }
 
-CORBA::Boolean Messenger_i::send_message (
-                                          const char * user_name,
+CORBA::Boolean Messenger_i::send_message (const char * user_name,
                                           const char * subject,
-                                          char *& message
-                                          )
-
+                                          char *& message)
 {
   //Add your implementation here
   std::cerr << "Message from: " << user_name << std::endl;

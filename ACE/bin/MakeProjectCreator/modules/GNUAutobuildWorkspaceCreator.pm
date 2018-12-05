@@ -51,7 +51,7 @@ sub write_project_targets {
             ($chdir ? "cd $dname && " : ''),
             "\$(MAKE) -f ",
             $output_project,
-            " $target &> $output_project.log ; cat $output_project.log ; rm $output_project.log $crlf";
+            " $target > $output_project.log 2>&1 ; cat $output_project.log ; rm $output_project.log $crlf";
   }
 }
 

@@ -2027,7 +2027,11 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     }
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Acceptor_Filter> new_filter (filter);
+#else
   auto_ptr<TAO_Acceptor_Filter> new_filter (filter);
+#endif /* ACE_HAS_CPP11 */
 
   TAO_Stub *data =
     this->create_stub_object (

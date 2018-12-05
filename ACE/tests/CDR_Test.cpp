@@ -35,6 +35,10 @@ struct CDR_Test_Types
   ACE_CDR::Long l;
   const ACE_CDR::Char *str;
   const ACE_CDR::WChar *wstr;
+  const std::string std_str;
+#if !defined(ACE_LACKS_STD_WSTRING)
+  const std::wstring std_wstr;
+#endif
   ACE_CDR::Double d;
   ACE_CDR::Short reps;
   ACE_CDR::UShort repus;
@@ -67,6 +71,10 @@ CDR_Test_Types::CDR_Test_Types (void)
     l (4),
     str ("abc"),
     wstr (0),
+    std_str ("xyz"),
+#if !defined(ACE_LACKS_STD_WSTRING)
+    std_wstr (L"xyz"),
+#endif
     d (8),
     reps (-123),
     repus (456),
@@ -103,6 +111,10 @@ short_stream (void)
   ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
   ACE_CDR::WChar *wstr = wchar2;
   ACE_CString str ("Test String");
+  std::string std_str ("std string");
+#if !defined(ACE_LACKS_STD_WSTRING)
+  std::wstring std_wstr (L"std wstring");
+#endif
   ACE_CDR::Short s = -123;
   ACE_CDR::UShort us =  123;
   ACE_CDR::Long l = -65800L;
@@ -124,6 +136,10 @@ short_stream (void)
   os << fwc;
   os << str;
   os << wstr;
+  os << std_str;
+#if !defined(ACE_LACKS_STD_WSTRING)
+  os << std_wstr;
+#endif
   os << s;
   os << us;
   os << l;
@@ -142,6 +158,10 @@ short_stream (void)
   ss << fwc;
   ss << str;
   ss << wstr;
+  ss << std_str;
+#if !defined(ACE_LACKS_STD_WSTRING)
+  ss << std_wstr;
+#endif
   ss << s;
   ss << us;
   ss << l;
@@ -195,6 +215,10 @@ short_stream (void)
   ACE_CDR::WChar wch1 = '\x00';
   ACE_CDR::WChar *wstr1 = 0;
   ACE_CString str1;
+  std::string std_str1;
+#if !defined(ACE_LACKS_STD_WSTRING)
+  std::wstring std_wstr1;
+#endif
   ACE_CDR::Short s1 = 0;
   ACE_CDR::UShort us1 = 0;
   ACE_CDR::Long l1 = 0L;
@@ -222,6 +246,10 @@ short_stream (void)
   // @todo Lose the ACE_Auto_Array_Ptr.  We should be using a
   //       std::string, or the like.
   ACE_Auto_Array_Ptr<ACE_CDR::WChar> safe_wstr (wstr1);
+  is >> std_str1;
+#if !defined(ACE_LACKS_STD_WSTRING)
+  is >> std_wstr1;
+#endif
   is >> s1;
   is >> us1;
   is >> l1;
@@ -258,6 +286,19 @@ short_stream (void)
                         ACE_TEXT ("wide string transfer error")),
                        1);
 
+  if (std_str1 != std_str)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("std::string transfer error")),
+                      1);
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+  if (std_wstr1 != std_wstr)
+    ACE_ERROR_RETURN ((LM_ERROR,
+                       ACE_TEXT ("%p\n"),
+                       ACE_TEXT ("std::wstring transfer error")),
+                      1);
+#endif
 
   if (s1 != s)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -375,6 +416,19 @@ CDR_Test_Types::test_put (ACE_OutputCDR &cdr)
                            i),
                           1);
 
+      if (cdr.write_string (this->std_str) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("write_string(std)[%d] failed\n"),
+                           i),
+                          1);
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+      if (cdr.write_wstring (this->std_wstr) == 0)
+        ACE_ERROR_RETURN ((LM_ERROR,
+                           ACE_TEXT ("write_wstring(std)[%d] failed\n"),
+                           i),
+                          1);
+#endif
     }
 
   return 0;
@@ -465,6 +519,32 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                             ACE_TEXT ("wstring[%d] differs\n"),
                              i),
                             1);
+
+       std::string std_xstr;
+       if (cdr.read_string (std_xstr) == 0)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("read_string(std)[%d] failed\n"),
+                            i),
+                           1);
+       if (std_xstr != this->std_str)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("std::string[%d] differs\n"),
+                            i),
+                           1);
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+       std::wstring std_xwstr;
+       if (cdr.read_wstring (std_xwstr) == 0)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("read_wstring(std)[%d] failed\n"),
+                            i),
+                           1);
+       if (std_xwstr != this->std_wstr)
+         ACE_ERROR_RETURN ((LM_ERROR,
+                            ACE_TEXT ("std::wstring[%d] differs\n"),
+                            i),
+                           1);
+#endif
     }
   return 0;
 }

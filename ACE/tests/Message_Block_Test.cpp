@@ -28,6 +28,20 @@ static const int ACE_ALLOC_SIZE = 5;
 // Amount of memory block preallocated.
 static const size_t ACE_ALLOC_AMOUNT = 48;
 
+// For the user-defined data block test
+static bool user_data_dtor_called = false;
+class User_Data : public ACE_Data_Block
+{
+public:
+  User_Data() {}
+
+  ~User_Data()
+  {
+    ACE_DEBUG((LM_DEBUG, ACE_TEXT ("User_Data dtor\n")));
+    user_data_dtor_called = true;
+  }
+};
+
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Lock_Adapter_T.h"
@@ -345,6 +359,27 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
+
+  // A quick user-defined data block test, then the main event
+  User_Data *user_data_block = 0;
+  ACE_NEW_MALLOC_RETURN (user_data_block,
+                         static_cast<User_Data *>(
+                           ACE_Allocator::instance()->malloc(sizeof (User_Data))),
+                         User_Data (),
+                         -1);
+
+  // Create a new message block referring to the User_Data block and
+  // ensure it is released and freed correctly.
+  ACE_Message_Block *wrapper_mb = 0;
+  ACE_NEW_RETURN (wrapper_mb,
+                  ACE_Message_Block (user_data_block),
+                  -1);
+
+  wrapper_mb->release ();
+  wrapper_mb = 0;
+  if (!user_data_dtor_called)
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("User-defined data block not freed correctly.\n")));
+
 #if defined (ACE_HAS_THREADS)
   int n_threads = ACE_MAX_THREADS;
 

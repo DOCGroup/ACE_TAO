@@ -1,11 +1,10 @@
-
 # This file should allow ACE to be built on Linux, using the clang compiler.
 
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 ifeq ($(insure),0)
-  CC  = clang
-  CXX = clang++
+  CC  ?= clang
+  CXX ?= clang++
 endif
 
 ifndef CXX_VERSION
@@ -31,19 +30,15 @@ endif
 
 ifeq ($(c++0x),1)
   CCFLAGS += -std=c++0x
-  deprecated_declarations ?= 0
+  no_deprecated ?= 1
 else
   ifeq ($(c++11),1)
     CCFLAGS += -std=c++11
-    deprecated_declarations ?= 0
+    no_deprecated ?= 1
   endif
 endif
 
-# If the user doesn't set a default we default show
-# deprecated declarations
-deprecated_declarations ?= 1
-
-ifeq ($(deprecated_declarations),0)
+ifeq ($(no_deprecated),1)
   CCFLAGS += -Wno-deprecated-declarations
 endif
 

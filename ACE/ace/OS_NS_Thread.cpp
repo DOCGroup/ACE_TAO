@@ -13,7 +13,6 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Category.h" // for ACE_ASSERT
-// This is necessary to work around nasty problems with MVS C++.
 #include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
@@ -3557,7 +3556,11 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
     thread_args = thread_adapter;
 
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
+#else
   auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
+#endif /* ACE_HAS_CPP11 */
 
   if (thread_adapter == 0)
     ACE_auto_ptr_reset (auto_thread_args,

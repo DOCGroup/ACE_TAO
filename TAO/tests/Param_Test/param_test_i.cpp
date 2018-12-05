@@ -664,12 +664,10 @@ Param_Test_i::test_objref (Coffee_ptr o1,
   catch (const CORBA::SystemException& sysex)
     {
       sysex._tao_print_exception ("System Exception");
-      // env.exception (TAO_TRY_ENV.exception ());
     }
   catch (const CORBA::UserException& userex)
     {
       userex._tao_print_exception ("User Exception");
-      // env.exception (TAO_TRY_ENV.exception ());
     }
 
   return ret;

@@ -11,8 +11,6 @@
 #include "ace/Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tt(ACE_Auto_Basic_Ptr)

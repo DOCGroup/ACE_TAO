@@ -134,8 +134,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
 
     do_restart_test ();
-    return 0;
 
+    orb->destroy ();
+
+    return 0;
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception (ACE_TEXT ("client:"));

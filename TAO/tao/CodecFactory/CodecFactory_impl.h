@@ -45,7 +45,6 @@ class TAO_CodecFactory
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_CodecFactory (TAO_ORB_Core * orb_core);
 
@@ -67,7 +66,6 @@ private:
                                  TAO_Codeset_Translator_Base * char_trans,
                                  TAO_Codeset_Translator_Base * wchar_trans);
 private:
-
   /// Pointer to the ORB Core.
   /**
    * Some Codec implementations may need access to the ORB Core with

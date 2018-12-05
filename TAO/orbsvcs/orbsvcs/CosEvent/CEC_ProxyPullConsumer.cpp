@@ -89,7 +89,7 @@ TAO_CEC_ProxyPullConsumer::try_pull_from_supplier (
             CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       return 0; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
@@ -135,7 +135,7 @@ TAO_CEC_ProxyPullConsumer::pull_from_supplier ()
             CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       return 0; // ACE_THROW (CosEventComm::Disconnected ());????
 
     supplier =
@@ -168,15 +168,15 @@ TAO_CEC_ProxyPullConsumer::supplier_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
-    if (this->is_connected_i () == 0)
+    disconnected = false;
+    if (!this->is_connected_i ())
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
     if (CORBA::is_nil (this->nopolicy_supplier_.in ()))
       {
-        return 0;
+        return false;
       }
     supplier = CORBA::Object::_duplicate (this->nopolicy_supplier_.in ());
   }
@@ -184,7 +184,7 @@ TAO_CEC_ProxyPullConsumer::supplier_non_existent (
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   return supplier->_non_existent ();
 #else
-  return 0;
+  return false;
 #endif /* TAO_HAS_MINIMUM_CORBA */
 }
 
@@ -332,7 +332,7 @@ TAO_CEC_ProxyPullConsumer::disconnect_pull_consumer ()
         CORBA::INTERNAL ());
     // @@ CosEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR ());
 
-    if (this->is_connected_i () == 0)
+    if (!this->is_connected_i ())
       throw CORBA::BAD_INV_ORDER (); // @@ add user exception?
 
     supplier = this->supplier_._retn ();

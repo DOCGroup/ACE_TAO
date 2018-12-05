@@ -59,7 +59,7 @@ public:
   /**
    * The basic constructor.
    * The attributes listed as arguments are *required* by the EC, and
-   * no appropiate defaults are available for them.
+   * no appropriate defaults are available for them.
    */
   TAO_CEC_TypedEventChannel_Attributes (PortableServer::POA_ptr typed_supplier_poa,
                                         PortableServer::POA_ptr typed_consumer_poa,
@@ -86,7 +86,7 @@ public:
 
   /**
    * If not zero the event channel will deactive its Impl and call
-   * orb->shutdown(0), when destoy is invoked.
+   * orb->shutdown(0), when destroy is invoked.
    */
   int destroy_on_shutdown;
 
@@ -127,8 +127,8 @@ public:
 
   /**
    * Constructor
-   * If <own_factory> is not 0 it assumes ownership of the factory.
-   * If the factory is <nil> it uses the Service_Configurator to load
+   * If @a own_factory is not 0 it assumes ownership of the factory.
+   * If the @a factory is <nil> it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_CEC_Default_Resource_Factory
    */
   TAO_CEC_TypedEventChannel (const TAO_CEC_TypedEventChannel_Attributes& attributes,

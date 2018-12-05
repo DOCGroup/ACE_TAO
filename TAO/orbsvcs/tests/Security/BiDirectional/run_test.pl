@@ -21,6 +21,7 @@ sub options () {
     my $help = 0;     # handled locally
     my $man = 0;      # handled locally
     my $ssl = 1;      # handled locally
+    my $ecdh = 0;     # handled locally
     my $dotdec = 0;   # handled locally
     my $debug;        # handled locally
     my $shost;        # handled locally
@@ -34,6 +35,7 @@ sub options () {
                 'manual' => \$man,
                 'iter=i' => \$iter,
                 'ssl' => \$ssl,
+                'ecdh' => \$ecdh,
                 'dd=s' => \$dotdec,
                 'shost=s' => \$shost,
                 'chost=s' => \$chost,
@@ -43,8 +45,14 @@ sub options () {
     }
 
     if ($ssl) {
+        if ($ecdh) {
+            $conf_client = " -ORBSvcConf client1$svc_conf";
+            $conf_server = " -ORBSvcConf server1$svc_conf";
+        }
+        else {
         $conf_client = " -ORBSvcConf client$svc_conf";
         $conf_server = " -ORBSvcConf server$svc_conf";
+        }
     }
 
     if ($debug) {

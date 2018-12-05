@@ -1,0 +1,31 @@
+workspace {
+  exclude {
+    TAO
+
+    performance-tests
+
+    examples
+    ACEXML/examples
+    ASNMP
+
+    tests
+    Kokyu/tests
+    ACEXML/tests
+    apps/gperf/tests
+    apps/drwho
+    apps/Gateway
+    apps/AWS
+    apps/JAWS
+    apps/JAWS2
+    apps/JAWS3
+    apps/mkcsregdb
+    apps/soreduce
+
+    websvcs
+    contrib
+    protocols/tests
+    protocols/examples
+
+    netsvcs/clients
+  }
+}

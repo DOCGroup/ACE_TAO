@@ -36,7 +36,7 @@ class TAO_CEC_EventChannel;
  *
  * Implements the ConsumerAdmin interface, i.e. the factory for
  * ProxyPushSupplier objects.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  * It does not assume ownership of the TAO_CEC_EventChannel
  * object; but it *does* assume ownership of the
  * TAO_CEC_ProxyPushSupplier_Set object.
@@ -50,13 +50,13 @@ class TAO_Event_Serv_Export TAO_CEC_ConsumerAdmin
 {
 public:
   /**
-   * constructor. If <supplier_set> is nil then it builds one using
+   * Constructor. If <supplier_set> is nil then it builds one using
    * the @a event_channel argument.
    * In any case it assumes ownership.
    */
   TAO_CEC_ConsumerAdmin (TAO_CEC_EventChannel* event_channel);
 
-  /// destructor...
+  /// Destructor...
   virtual ~TAO_CEC_ConsumerAdmin (void);
 
   /// For each elements call <worker->work()>.

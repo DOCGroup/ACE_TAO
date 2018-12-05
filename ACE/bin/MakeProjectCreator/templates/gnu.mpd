@@ -566,11 +566,11 @@ endif
 SPACE = $(should_be_unset) $(should_be_unset)
 <%foreach(custom_types)%>
 <%if(custom_type->libpath)%>
-DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-LIBPATH           := $(LIBPATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
-PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export DYLD_LIBRARY_PATH := $(DYLD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export LD_LIBRARY_PATH   := $(LD_LIBRARY_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export SHLIB_PATH        := $(SHLIB_PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export LIBPATH           := $(LIBPATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
+export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%custom_type->libpath%>/$(ARCH))
 
 <%endif%>
 <%foreach(custom_type->input_files)%>
@@ -767,10 +767,10 @@ endif
 all: __postbuild__
 
 <%if(exename)%>
-__postbuild__: $(VBIN)
+__postbuild__: $(VBIN) $(INSTALL)
 <%else%>
 <%if(sharedname || staticname)%>
-__postbuild__: $(VLIBS)
+__postbuild__: $(VLIBS) $(INSTALL)
 <%endif%>
 <%endif%>
 

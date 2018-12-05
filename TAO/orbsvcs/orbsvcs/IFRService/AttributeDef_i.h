@@ -1,6 +1,5 @@
 // -*- C++ -*-
 
-
 //=============================================================================
 /**
  *  @file    AttributeDef_i.h
@@ -47,63 +46,42 @@ public:
   virtual ~TAO_AttributeDef_i (void);
 
   /// Return our definition kind.
-  virtual CORBA::DefinitionKind def_kind (
-    );
+  virtual CORBA::DefinitionKind def_kind ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe (
-    );
+  virtual CORBA::Contained::Description *describe ();
 
   /// From Contained_i's pure virtual function.
-  virtual CORBA::Contained::Description *describe_i (
-    );
+  virtual CORBA::Contained::Description *describe_i ();
 
-  virtual CORBA::TypeCode_ptr type (
-    );
+  virtual CORBA::TypeCode_ptr type ();
 
-  CORBA::TypeCode_ptr type_i (
-    );
+  CORBA::TypeCode_ptr type_i ();
 
-  virtual CORBA::IDLType_ptr type_def (
-    );
+  virtual CORBA::IDLType_ptr type_def ();
 
-  CORBA::IDLType_ptr type_def_i (
-    );
+  CORBA::IDLType_ptr type_def_i ();
 
-  virtual void type_def (
-      CORBA::IDLType_ptr type_def
-    );
+  virtual void type_def (CORBA::IDLType_ptr type_def);
 
-  void type_def_i (
-      CORBA::IDLType_ptr type_def
-    );
+  void type_def_i (CORBA::IDLType_ptr type_def);
 
-  virtual CORBA::AttributeMode mode (
-    );
+  virtual CORBA::AttributeMode mode ();
 
-  CORBA::AttributeMode mode_i (
-    );
+  CORBA::AttributeMode mode_i ();
 
-  virtual void mode (
-      CORBA::AttributeMode mode
-    );
+  virtual void mode (CORBA::AttributeMode mode);
 
-  void mode_i (
-      CORBA::AttributeMode mode
-    );
+  void mode_i (CORBA::AttributeMode mode);
 
   /// Common code for InterfaceDef to call in
   /// making its own description.
-  void make_description (
-      CORBA::AttributeDescription &ad
-    );
+  void make_description (CORBA::AttributeDescription &ad);
 
   // These two are called by Contained::move().
-  CORBA::ExceptionDefSeq *get_exceptions (
-    );
+  CORBA::ExceptionDefSeq *get_exceptions ();
 
-  CORBA::ExceptionDefSeq *put_exceptions (
-    );
+  CORBA::ExceptionDefSeq *put_exceptions ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

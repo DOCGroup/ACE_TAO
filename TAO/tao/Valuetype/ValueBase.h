@@ -30,7 +30,11 @@
 #include "ace/Basic_Types.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Thread_Mutex.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 #include "ace/Null_Mutex.h"
 #include "ace/Vector_T.h"
 
@@ -331,7 +335,7 @@ namespace CORBA
     /// (if valuetype T is compiled with optimization for that.) %! (todo)
     void _tao_add_ref (void);
     void _tao_remove_ref (void);
-    CORBA::ULong _tao_refcount_value (void);
+    CORBA::ULong _tao_refcount_value (void) const;
 
   protected:
     DefaultValueRefCountBase (void);
@@ -343,7 +347,11 @@ namespace CORBA
 
   private: // data
     /// Reference counter.
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
   }; // DefaultValueRefCountBase
 
   //  which lock has the lowest memory overhead ?

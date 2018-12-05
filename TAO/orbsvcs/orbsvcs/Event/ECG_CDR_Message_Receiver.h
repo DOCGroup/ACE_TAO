@@ -37,7 +37,7 @@ class TAO_ECG_CDR_Processor
 public:
   virtual ~TAO_ECG_CDR_Processor (void);
 
-  /// Extracts data from <cdr>.  Returns 0 on success, -1 on error.
+  /// Extracts data from @a cdr.  Returns 0 on success, -1 on error.
   virtual int decode (TAO_InputCDR &cdr) = 0;
 };
 

@@ -52,6 +52,10 @@ public:
                                       ACE_CDR::WChar &);
   virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR &,
                                         ACE_CDR::WChar *&);
+#if !defined(ACE_LACKS_STD_WSTRING)
+  virtual ACE_CDR::Boolean read_wstring (ACE_InputCDR&,
+                                         std::wstring &);
+#endif
   virtual ACE_CDR::Boolean read_wchar_array (ACE_InputCDR &,
                                             ACE_CDR::WChar *,
                                             ACE_CDR::ULong);

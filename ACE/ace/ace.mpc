@@ -1,4 +1,4 @@
-//  -*- MPC -*- now wouldn't this be cool...
+//  -*- MPC -*-
 project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, uuid, filecache, versioned_namespace, pkgconfig, support_ostream {
   avoids       = ace_for_tao
   sharedname   = ACE
@@ -467,7 +467,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Version.h
     Versioned_Namespace.h
     ace_wchar.h
-    ace_wchar.inl
     checked_iterator.h
     config-*.h
     config.h
@@ -481,7 +480,6 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
 
   Documentation_Files {
     README
-    ../VERSION
   }
 
   Pkgconfig_Files {

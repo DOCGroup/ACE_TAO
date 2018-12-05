@@ -60,6 +60,8 @@ struct Server_Info
   bool is_server (const char *name) const;
   bool has_peer (const char *name) const;
   bool is_mode (ImplementationRepository::ActivationMode m) const;
+  ImplementationRepository::ActivationMode mode (void) const;
+
   bool is_running (void) const;
   bool start_allowed (void);
   void started (bool success);

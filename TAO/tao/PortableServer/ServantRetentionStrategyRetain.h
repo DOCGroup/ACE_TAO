@@ -139,7 +139,11 @@ namespace TAO
       TAO_Active_Object_Map * get_active_object_map() const;
 
     private:
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr<TAO_Active_Object_Map> active_object_map_;
+#else
       auto_ptr<TAO_Active_Object_Map> active_object_map_;
+#endif /* ACE_HAS_CPP11 */
       CORBA::ULong waiting_servant_deactivation_;
     };
   }

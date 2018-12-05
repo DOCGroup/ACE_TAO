@@ -1,0 +1,19 @@
+#if !defined (__BORLANDC__)
+
+module test {
+
+   @unit("deg")
+   @range(min=0.0, max=360.0)
+   typedef float angle_t;
+
+   @unit("degC") @min(-60) @max(100) typedef short temperature_t;
+
+   struct structure {
+      @key unsigned long key;
+      angle_t degrees;
+      temperature_t celsius;
+   };
+
+};
+
+#endif

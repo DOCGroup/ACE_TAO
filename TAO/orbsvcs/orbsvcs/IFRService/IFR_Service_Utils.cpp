@@ -475,10 +475,10 @@ TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils (void)
 ACE_Configuration_Section_Key
 TAO_IFR_Service_Utils::tmp_key_;
 
-char *
+ACE_TCHAR *
 TAO_IFR_Service_Utils::int_to_string (CORBA::ULong number)
 {
-  static char hex_string[9];
+  static ACE_TCHAR hex_string[9];
   ACE_OS::sprintf (hex_string,
                    "%8.8X",
                    number);

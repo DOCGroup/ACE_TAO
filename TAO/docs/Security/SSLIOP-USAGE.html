@@ -187,6 +187,10 @@ function MM_nbGroup(event, grpName) { //v3.0
       <td><code>-SSLCheckHost</code></td>
       <td>Adds a verification of the peer address to the connection completion process. This feature requires OpenSSL 1.0.2 or newer and performs a reverse DNS lookup to find the originating hostname. If the version of ssl used does not support <code>X509_check_host()</code>, the peer address does not map to a cannonical host name, or the peer did not provide an X.509 certificate, the connection will fail. </td>
     </tr>
+    <tr>
+      <td><code>-SSLEcName</code> <em>curve_name</em></td>
+      <td>Provide the name of the Elliptic Curve to use for ECDH cipher.  To see a list of the available curve names use the command <em>openssl ecparam -list_curves</em> </td>
+    </tr>
 
   </table>
   <h4>Environment variables</h4>

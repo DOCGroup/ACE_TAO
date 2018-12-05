@@ -17,8 +17,8 @@
     </P>
     <P>New ORB developers are expected to read this document and
       document here all the things that they find hard to understand,
-      surprizing or event broken.
-      New members of the ORB core team are expected to fill in details 
+      surprising or event broken.
+      New members of the ORB core team are expected to fill in details
       that were not explained before.
     </P>
 
@@ -30,7 +30,7 @@
       documented at this point.
     </P>
 
-    <P>Assume the application invokes a method on an object reference, 
+    <P>Assume the application invokes a method on an object reference,
       in the generated stub for that method the following sequence is
       started:
     <UL>
@@ -43,7 +43,7 @@
 	<UL>
 	  <LI>finds the profile to use for this invocation
 	  </LI>
-	  <LI>passes the profile to Connector Registry to obtain 
+	  <LI>passes the profile to Connector Registry to obtain
 	    TAO_Transport object (wrapper around Service_Handler)
 	  </LI>
 	  <LI>generates and marshalls GIOP & Request headers for this
@@ -51,12 +51,12 @@
 	  </LI>
 	</UL>
       </LI>
-	
+
       <LI>marshalls request parameters
       </LI>
       <LI>calls invoke method on the invocation object
       </LI>
-  
+
       <LI>TAO_GIOP_Twoway_Invocation::invoke:
 	<UL>
 	  <LI>sets TAO_Reply_Dispatcher (this is used to make both
@@ -79,9 +79,5 @@
 
     <hr>
     <address><a href="mailto:coryan@cs.wustl.edu">Carlos O'Ryan</a></address>
-<!-- Created: Fri Sep 10 16:34:44 CDT 1999 -->
-<!-- hhmts start -->
-Last modified: Fri Sep 10 18:00:18 CDT 1999
-<!-- hhmts end -->
   </body>
 </html>

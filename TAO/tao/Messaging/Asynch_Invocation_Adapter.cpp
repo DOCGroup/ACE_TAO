@@ -104,9 +104,8 @@ namespace TAO
 
   void
   Asynch_Invocation_Adapter::invoke (
-    TAO::Exception_Data *ex,
-    unsigned long ex_count
-    )
+    const TAO::Exception_Data *ex,
+    unsigned long ex_count)
   {
     Invocation_Adapter::invoke (ex, ex_count );
   }

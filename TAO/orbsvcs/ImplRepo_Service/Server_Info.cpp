@@ -13,25 +13,28 @@ Server_Info::Server_Info (const Server_Info &other)
 Server_Info&
 Server_Info::operator= (const Server_Info &other)
 {
-  server_id = other.server_id;
-  poa_name = other.poa_name;
-  is_jacorb = other.is_jacorb;
-  key_name_ = other.key_name_;
-  activator = other.activator;
-  cmdline = other.cmdline;
-  dir = other.dir;
-  activation_mode_ = other.activation_mode_;
-  start_limit_ = other.start_limit_;
-  start_count_ = other.start_count_;
-  partial_ior = other.partial_ior;
-  ior = other.ior;
-  last_ping = other.last_ping;
-  server = other.server;
-  alt_info_ = other.alt_info_;
-  pid = other.pid;
-  death_notify = other.death_notify;
-  peers = other.peers;
-  env_vars = other.env_vars;
+  if (this != &other)
+  {
+    server_id = other.server_id;
+    poa_name = other.poa_name;
+    is_jacorb = other.is_jacorb;
+    key_name_ = other.key_name_;
+    activator = other.activator;
+    cmdline = other.cmdline;
+    dir = other.dir;
+    activation_mode_ = other.activation_mode_;
+    start_limit_ = other.start_limit_;
+    start_count_ = other.start_count_;
+    partial_ior = other.partial_ior;
+    ior = other.ior;
+    last_ping = other.last_ping;
+    server = other.server;
+    alt_info_ = other.alt_info_;
+    pid = other.pid;
+    death_notify = other.death_notify;
+    peers = other.peers;
+    env_vars = other.env_vars;
+  }
   return *this;
 }
 
@@ -117,6 +120,12 @@ bool
 Server_Info::is_mode (ImplementationRepository::ActivationMode m) const
 {
   return this->active_info ()->activation_mode_ == m;
+}
+
+ImplementationRepository::ActivationMode
+Server_Info::mode (void) const
+{
+  return this->active_info ()->activation_mode_;
 }
 
 bool

@@ -166,7 +166,11 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
              No_Hint_Strategy);
 
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
+#else
   auto_ptr<Hint_Strategy> new_hint_strategy (hint_strategy);
+#endif /* ACE_HAS_CPP11 */
 
   new_hint_strategy->object_adapter (this);
 
@@ -183,7 +187,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       TAOLIB_ERROR ((LM_ERROR,
                   "linear option for -ORBPersistentidPolicyDemuxStrategy "
                   "not supported with minimum POA maps. "
-                  "Ingoring option to use default...\n"));
+                  "Ignoring option to use default...\n"));
       /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_DYNAMIC_HASH:
@@ -193,7 +197,11 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       break;
     }
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
+#else
   auto_ptr<persistent_poa_name_map> new_persistent_poa_name_map (ppnm);
+#endif /* ACE_HAS_CPP11 */
 
   transient_poa_map *tpm = 0;
   switch (creation_parameters.poa_lookup_strategy_for_transient_id_policy_)
@@ -213,7 +221,7 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       TAOLIB_ERROR ((LM_ERROR,
                   "linear and dynamic options for -ORBTransientidPolicyDemuxStrategy "
                   "are not supported with minimum POA maps. "
-                  "Ingoring option to use default...\n"));
+                  "Ignoring option to use default...\n"));
       /* FALL THROUGH */
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
     case TAO_ACTIVE_DEMUX:
@@ -223,14 +231,15 @@ TAO_Object_Adapter::TAO_Object_Adapter (const TAO_Server_Strategy_Factory::Activ
       break;
     }
   // Give ownership to the auto pointer.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<transient_poa_map> new_transient_poa_map (tpm);
+#else
   auto_ptr<transient_poa_map> new_transient_poa_map (tpm);
+#endif /* ACE_HAS_CPP11 */
 
-  this->hint_strategy_ =
-    new_hint_strategy.release ();
-  this->persistent_poa_name_map_ =
-    new_persistent_poa_name_map.release ();
-  this->transient_poa_map_ =
-    new_transient_poa_map.release ();
+  this->hint_strategy_ = new_hint_strategy.release ();
+  this->persistent_poa_name_map_ = new_persistent_poa_name_map.release ();
+  this->transient_poa_map_ = new_transient_poa_map.release ();
 }
 
 void

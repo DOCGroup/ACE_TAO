@@ -84,7 +84,7 @@ void
 TAO_Service_Context::set_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   for (CORBA::ULong i = 0; i != this->service_context_.length (); ++i)
     {
       if (context.context_id == this->service_context_[i].context_id)
@@ -119,7 +119,7 @@ void
 TAO_Service_Context::add_context_i (IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong const l = this->service_context_.length ();
   this->service_context_.length (l + 1);
   this->service_context_[l].context_id = context.context_id;
@@ -133,7 +133,7 @@ void
 TAO_Service_Context::add_context_i (const IOP::ServiceContext& context)
 {
   // @@ TODO Some contexts can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong const l = this->service_context_.length ();
   this->service_context_.length (l + 1);
   this->service_context_[l] = context;

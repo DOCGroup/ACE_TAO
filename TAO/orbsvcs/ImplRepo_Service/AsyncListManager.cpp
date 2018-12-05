@@ -300,8 +300,8 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::ping_replied, index = %d ")
-                      ACE_TEXT ("status = %C, server pid = %d, waiters = %d\n"),
+                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::ping_replied, index <%d> ")
+                      ACE_TEXT ("status <%C>, server pid <%d>, waiters <%d>\n"),
                       this,index, LiveEntry::status_name (status), pid, this->waiters_));
     }
   if (evaluate_status (index, status, pid))

@@ -302,66 +302,64 @@ def update_spec_file ():
 
 def update_debianbuild ():
     """ Updates ACE_ROOT/debian directory.
-    - renames all files with version nrs in name to new scheme.
-    - updates version nrs in file debian/control
-    Currently ONLY ACE & TAO stuff is handled here """
+    - renames all files with version numbers in name; if file contains
+      lintian overrides, update version numbers inside file
+    - updates version numbers inside file debian/control
+    Currently ONLY ACE is handled here """
 
     global comp_versions
 
-    import glob
     import re
-    from os.path import basename
-    from os.path import dirname
-    from os.path import join
+    from os import listdir
 
     files = list ()
     prev_ace_ver = None
-    prev_tao_ver = None
 
-    # rename files
-    mask = re.compile ("(libace|libkokyu|libnetsvcs)(.*)(\d+\.\d+\.\d+)(.*)")
-    tao = re.compile ("tao", re.IGNORECASE)
+    dname = doc_root + '/ACE_TAO/ACE/debian/'
 
-    for fname in glob.iglob(doc_root + '/ACE_TAO/ACE/debian/*'):
-        print "Considering " + fname
-        match = None
+    mask = re.compile ("(libace|libACE|libkokyu|libKokyu|libnetsvcs)([^\s,:]*-)(\d+\.\d+\.\d+)([^\s,:]*)")
 
-        fbase = basename (fname)
-
-        match = mask.search (fbase)
-        fnewname = None
-        if match is not None:
-            if tao.search (fbase) is not None:
-                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4))
-                prev_tao_ver = match.group (3)
-            else:
-                fnewname = join (dirname (fname), match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4))
-                prev_ace_ver = match.group (3)
-
-        print prev_ace_ver
-#        print prev_tao_var
-
-        if fnewname is not None:
-            if opts.take_action:
-                print "Rename: " + fname + " to " + fnewname + "\n"
-                ex ("git mv " + fname + " " + fnewname)
-            else:
-                print "Rename: " + fname + " to " + fnewname + "\n"
-
-    # update debianbuild/control
     def update_ver (match):
-        if match.group (1) == 'libtao':
-            return match.group (1) + match.group (2) + comp_versions["TAO_version"] + match.group (4)
-        else:
-            return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
+        return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    with open (doc_root + "/ACE_TAO/ACE/debian/debian.control", 'r+') as control_file:
+    # find files in debian/* matching mask
+    for fname in listdir(dname):
+        match = mask.search (fname)
+        if match is None:
+            continue
+
+        fnewname = update_ver (match)
+        prev_ace_ver = match.group (3)
+
+        # if file contains lintian overrides, update file
+        if match.group (4) == '.lintian-overrides':
+            with open (dname + fname, 'r+') as lintian_overrides_file:
+                new_lintian_overrides = ""
+                for line in lintian_overrides_file.readlines ():
+                    new_lintian_overrides += mask.sub (update_ver, line)
+
+                if opts.take_action:
+                    lintian_overrides_file.seek (0)
+                    lintian_overrides_file.truncate (0)
+                    lintian_overrides_file.writelines (new_lintian_overrides)
+                else:
+                    print "New lintian-overrides file:"
+                    print "".join (new_lintian_overrides)
+
+            files.append (dname + fnewname)
+
+        # rename file
+        print "Rename: " + dname + fname + " to " + dname + fnewname + "\n"
+        if opts.take_action:
+            ex ("git mv " + dname + fname + " " + dname + fnewname)
+
+    # update debian/control
+    with open (dname + "control", 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
             elif re.search ('^Replaces:', line) is not None:
-                print comp_versions["ACE_version"]
                 line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
 
             new_ctrl += line
@@ -374,30 +372,7 @@ def update_debianbuild ():
             print "New control file:"
             print "".join (new_ctrl)
 
-    files.append (doc_root + "/ACE_TAO/ACE/debian/debian.control")
-
-    # rewrite debian/dsc
-    dsc_lines = """Format: 1.0
-Source: ACE+src-%s
-Version: %s
-Binary: ace
-Maintainer: Johnny Willemsen  <jwillemsen@remedy.nl>
-Architecture: any
-Build-Depends: gcc, make, g++, debhelper (>= 5), dpkg-dev, libssl-dev (>= 0.9.7d), dpatch (>= 2.0.10), libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), libqt4-dev (>= 4.4~rc1-4), tk-dev, docbook-to-man, autoconf, automake, libtool, autotools-dev, doxygen, graphviz, libfox-1.6-dev
-Files:
- 65b34001c9605f056713a7e146b052d1 46346654 ACE-src-%s.tar.gz
-
-""" % (comp_versions["ACE_version"], comp_versions["TAO_version"], comp_versions["ACE_version"])
-    if opts.take_action:
-        with open (doc_root + "/ACE_TAO/ACE/debian/ace.dsc", 'r+') as dsc_file:
-            dsc_file.seek (0)
-            dsc_file.truncate (0)
-            dsc_file.writelines (dsc_lines)
-    else:
-        print "New dsc file:\n"
-        print dsc_lines
-
-    files.append (doc_root + "/ACE_TAO/ACE/debian/ace.dsc")
+    files.append (dname + "control")
 
     return files
 
@@ -590,8 +565,13 @@ def tag ():
             # Update latest tag
             if opts.release_type == "major":
                 update_latest_tag ("Major", tagname)
+                update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "minor":
                 update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "micro":
                 update_latest_tag ("Beta", tagname)
                 update_latest_tag ("Micro", tagname)
@@ -886,7 +866,6 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     msvc_exclude_option = ' '
-    vc12_option = ' -name_modifier *_vc12 '
     vc14_option = ' -name_modifier *_vc14 '
     vs2017_option = ' -name_modifier *_vs2017 '
 
@@ -896,9 +875,6 @@ def generate_workspaces (stage_dir):
 
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + workers_option + mpc_option + redirect_option)
-
-    print "\tGenerating VC12 solutions..."
-    ex (mpc_command + " -type vc12 "  + msvc_exclude_option + mpc_option + workers_option + vc12_option + redirect_option)
 
     print "\tGenerating VC14 solutions..."
     ex (mpc_command + " -type vc14 "  + msvc_exclude_option + mpc_option + workers_option + vc14_option + redirect_option)

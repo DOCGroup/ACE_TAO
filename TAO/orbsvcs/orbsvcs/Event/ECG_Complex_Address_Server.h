@@ -60,7 +60,7 @@ public:
   /// Destructor
   virtual ~TAO_ECG_Complex_Address_Server (void);
 
-  /// Initializes the mapping from the <arg> string.  See class notes
+  /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
   int init (const char *arg);
 

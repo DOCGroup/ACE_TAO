@@ -4,8 +4,6 @@
 
 #include <ace/Dynamic_Service.h>
 
-
-
 #if !defined(TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE)
 #define TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE 32
 #endif

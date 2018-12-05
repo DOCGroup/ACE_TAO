@@ -27,7 +27,7 @@
  * A template server definition. This template can be used by
  * single server/client projects for definition of their
  * server/clients.  See the directories time, bank, echo for
- * further details of implemenatation.
+ * further details of implementation.
  */
 template <class Servant>
 class Server

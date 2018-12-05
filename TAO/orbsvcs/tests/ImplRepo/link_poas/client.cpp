@@ -50,8 +50,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     CORBA::Long spid = test->server_pid ();
     ACE_DEBUG ((LM_DEBUG, "client target %c got pid %d\n", target, spid));
-    return 0;
 
+    orb->destroy ();
+
+    return 0;
   }
   catch(const CORBA::Exception& ex) {
     ex._tao_print_exception ("client:");

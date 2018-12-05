@@ -74,8 +74,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyFactoryImpl::destroy (
-      RequestProcessingStrategy *strategy
-      )
+      RequestProcessingStrategy *strategy)
     {
       RequestProcessingStrategyFactory *strategy_factory = 0;
 
@@ -126,8 +125,6 @@ namespace TAO
     }
   }
 }
-
-
 
 ACE_STATIC_SVC_DEFINE (
   RequestProcessingStrategyFactoryImpl,

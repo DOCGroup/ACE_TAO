@@ -30,7 +30,7 @@ public:
   /// Dtor
   virtual ~TAO_EC_TPC_ProxyPushSupplier (void);
 
-  /*! These are overriden from the base class in order to maintain the
+  /*! These are overridden from the base class in order to maintain the
        map in the dispatcher class. */
 
   // = The RtecEventChannelAdmin::ProxyPushSupplier methods...

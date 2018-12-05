@@ -464,9 +464,13 @@ run_main (int, ACE_TCHAR *[])
                     Printer ("I am printer 2"),
                     -1);
 
+#if !defined (ACE_HAS_CPP11)
     // Ownership is transferred from the auto_ptr to the strong pointer.
     auto_ptr<Printer> a (printer2);
     Printer_var r (a);
+#else
+    Printer_var r (printer2);
+#endif /* !ACE_HAS_CPP11 */
 
     for (int i = 0; i < n_loops; i++)
       // Spawn off the methods, which run in a separate thread as

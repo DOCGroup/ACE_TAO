@@ -486,8 +486,7 @@ TAO_AV_TCP_Acceptor::make_svc_handler (TAO_AV_TCP_Flow_Handler *&tcp_handler)
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_AV_TCP_Acceptor::make_svc_handler\n"
-                ));
+                "TAO_AV_TCP_Acceptor::make_svc_handler\n"));
 
   if (this->endpoint_ != 0)
     {

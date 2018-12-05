@@ -225,7 +225,7 @@ ReplicaController::tao_ft_interception_point (
     extract_context (ri));
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) Received request from %s with rid %i\n",
+              "(%P|%t) Received request from %C with rid %i\n",
               ftr->client_id.in (),
               ftr->retention_id));
 
@@ -236,7 +236,7 @@ ReplicaController::tao_ft_interception_point (
   if (log_.contains (rid))
   {
     ACE_DEBUG ((LM_DEBUG,
-                "(%P|%t) Replaying reply for %s with rid %i\n",
+                "(%P|%t) Replaying reply for %C with rid %i\n",
                 ftr->client_id.in (),
                 ftr->retention_id));
 

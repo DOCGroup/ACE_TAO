@@ -267,8 +267,8 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     TAO_AMH_DSI_Exception_Holder *&new_object)
 {
   ::CORBA::ValueBase *base = 0;
-  ::CORBA::Boolean is_indirected = 0;
-  ::CORBA::Boolean is_null_object = 0;
+  ::CORBA::Boolean is_indirected = false;
+  ::CORBA::Boolean is_null_object = false;
   ::CORBA::Boolean const retval =
     ::CORBA::ValueBase::_tao_unmarshal_pre (
         strm,
@@ -281,14 +281,13 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
   ::CORBA::ValueBase_var owner (base);
 
   if (!retval)
-    return 0;
+    return false;
 
   if (is_null_object)
-    return 1;
+    return true;
 
   if (!is_indirected && base != 0 && ! base->_tao_unmarshal_v (strm))
-    return 0;
-
+    return false;
 
   // Now base must be null or point to the unmarshaled object.
   // Align the pointer to the right subobject.
@@ -297,13 +296,17 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
     new_object->_add_ref ();
 
   owner._retn ();
-  return 1;
+  return true;
 }
 
 void
 TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 {
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr< ::CORBA::Exception> safety (this->exception_);
+#else
   auto_ptr< ::CORBA::Exception> safety (this->exception_);
+#endif /* ACE_HAS_CPP11 */
   this->exception_->_raise ();
 }
 

@@ -54,8 +54,7 @@ TAO_CEC_Default_Factory::init_svcs (void)
 {
   return
     ACE_Service_Config::static_svcs ()->insert (
-        &ace_svc_desc_TAO_CEC_Default_Factory
-      );
+        &ace_svc_desc_TAO_CEC_Default_Factory);
 }
 
 int

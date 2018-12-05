@@ -116,7 +116,11 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
                                                 empty_value),
                       false);
 
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr<TAO::Any_SystemException > replacement_safety (replacement);
+#else
       auto_ptr<TAO::Any_SystemException > replacement_safety (replacement);
+#endif /* ACE_HAS_CPP11 */
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =

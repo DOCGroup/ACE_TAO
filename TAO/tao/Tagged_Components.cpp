@@ -171,7 +171,7 @@ void
 TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   for (CORBA::ULong i = 0; i != this->components_.length (); ++i)
     {
       if (component.tag == this->components_[i].tag)
@@ -206,7 +206,7 @@ void
 TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l].tag = component.tag;
@@ -220,7 +220,7 @@ void
 TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
 {
   // @@ TODO Some components can show up multiple times, others
-  //    can't find out and take appropiate action.
+  //    can't find out and take appropriate action.
   CORBA::ULong l = this->components_.length ();
   this->components_.length (l + 1);
   this->components_[l] = component;

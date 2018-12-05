@@ -8,8 +8,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Scheduling::~TAO_EC_Kokyu_Scheduling (void)

@@ -5,9 +5,6 @@ project(Gateway_Peer) :  ace_output, acelib {
     Options.cpp
     Peer.cpp
   }
-  Documentation_Files {
-    svc.conf
-  }
 }
 
 project(gateway_peerd) : aceexe {

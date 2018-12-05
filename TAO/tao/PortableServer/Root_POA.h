@@ -115,7 +115,6 @@ class TAO_PortableServer_Export TAO_Root_POA
     public virtual ::CORBA::LocalObject
 {
 public:
-
   friend class TAO_Object_Adapter;
   friend class TAO::Portable_Server::Servant_Upcall;
   friend class TAO::Portable_Server::Non_Servant_Upcall;

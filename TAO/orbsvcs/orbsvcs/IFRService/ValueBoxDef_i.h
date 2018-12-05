@@ -55,11 +55,9 @@ public:
 
   CORBA::IDLType_ptr original_type_def_i ();
 
-  virtual void original_type_def (
-      CORBA::IDLType_ptr original_type_def);
+  virtual void original_type_def (CORBA::IDLType_ptr original_type_def);
 
-  void original_type_def_i (
-      CORBA::IDLType_ptr original_type_def);
+  void original_type_def_i (CORBA::IDLType_ptr original_type_def);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -51,7 +51,7 @@ TAO_UIPMC_Acceptor::create_profile (
   // The standard mechanism for adding profiles to object references
   // for each pluggable protocol doesn't apply to UIPMC profiles, so
   // this function just returns success without doing anything.  The
-  // appropiate mechanism for getting UIPMC profiles is to call the
+  // appropriate mechanism for getting UIPMC profiles is to call the
   // multicast group manager to get a Group reference.  Invocations
   // sent to this group reference will be dispatched to the servants
   // that belong to that group.

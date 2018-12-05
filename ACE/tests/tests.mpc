@@ -13,7 +13,6 @@ project(Test_Output) : acelib, script {
   Resource_Files {
   }
   Script_Files {
-    run_test.pl
     run_test.lst
   }
 }
@@ -844,6 +843,13 @@ project(Compiler_Features_37_Test) : acetest {
   }
 }
 
+project(Compiler_Features_38_Test) : acetest {
+  exename = Compiler_Features_38_Test
+  Source_Files {
+    Compiler_Features_38_Test.cpp
+  }
+}
+
 project(Config Test) : acetest {
   avoids += ace_for_tao
   exename = Config_Test
@@ -1609,6 +1615,30 @@ project(Singleton Test) : acetest {
   }
 }
 
+project(Singleton Restart Test) : aceexe {
+  exename = Singleton_Restart_Test
+  after += Test_Output
+  libs += Test_Output
+  Source_Files {
+    Singleton_Restart_Test.cpp
+  }
+  Header_Files {
+  }
+  Template_Files {
+  }
+  Resource_Files {
+  }
+  Svc_Conf_Files {
+  }
+}
+
+project(SOCK Acceptor_Test) : acetest {
+  exename = SOCK_Acceptor_Test
+  Source_Files {
+    SOCK_Acceptor_Test.cpp
+  }
+}
+
 project(SOCK Test) : acetest {
   exename = SOCK_Test
   Source_Files {
@@ -2127,7 +2157,7 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qt4reactor {
+project(QtReactor Test) : acetest, ace_qtreactor {
   exename   = QtReactor_Test
   MOC_Files {
     QtReactor_Test.h

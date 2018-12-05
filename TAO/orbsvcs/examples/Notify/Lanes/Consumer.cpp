@@ -70,8 +70,7 @@ TAO_Notify_Lanes_Consumer::disconnect (void)
 
 void
 TAO_Notify_Lanes_Consumer::offer_change (const CosNotification::EventTypeSeq & /*added*/,
-                               const CosNotification::EventTypeSeq & /*removed*/
-                               )
+                               const CosNotification::EventTypeSeq & /*removed*/)
 {
   // No-Op.
 }

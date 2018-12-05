@@ -242,8 +242,7 @@ Test_DynSequence::run_test (void)
 
       DynamicAny::DynAny_var ftc1_base =
         dynany_factory->create_dyn_any_from_type_code (
-                            DynAnyTests::_tc_test_seq
-                          );
+                            DynAnyTests::_tc_test_seq);
 
       DynamicAny::DynSequence_var ftc1 =
         DynamicAny::DynSequence::_narrow (ftc1_base.in ());
@@ -263,8 +262,7 @@ Test_DynSequence::run_test (void)
 
       DynamicAny::DynAny_var da_bool =
         dynany_factory->create_dyn_any_from_type_code (
-                            DynAnyTests::_tc_SeqBoolean
-                          );
+                            DynAnyTests::_tc_SeqBoolean);
 
       DynamicAny::DynSequence_var ds_bool =
         DynamicAny::DynSequence::_narrow (da_bool.in ());
@@ -285,9 +283,7 @@ Test_DynSequence::run_test (void)
         ));
 
       DynamicAny::DynAny_var da_short =
-        dynany_factory->create_dyn_any_from_type_code (
-                            DynAnyTests::_tc_SeqShort
-                          );
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_SeqShort);
 
       DynamicAny::DynSequence_var ds_short =
         DynamicAny::DynSequence::_narrow (da_short.in ());

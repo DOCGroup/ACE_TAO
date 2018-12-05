@@ -1,0 +1,186 @@
+variables:
+   ACE_ROOT: $(Build.SourcesDirectory)/ACE
+   TAO_ROOT: $(Build.SourcesDirectory)/TAO
+   MPC_ROOT: $(Build.SourcesDirectory)/ACE/MPC
+   system.prefergit: true
+
+resources:
+- repo: self
+  fetchDepth: 1
+
+jobs:
+- job: VisualStudio2017
+  timeoutInMinutes: 90
+  pool:
+    vmImage: vs2017-win2016
+  strategy:
+    matrix:
+      Debug64:
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+      Release64:
+        BuildPlatform: x64
+        BuildConfiguration: Release
+        vcpkgarch: x64-windows
+        vcpkglibdir: lib
+      Debug32:
+        BuildPlatform: Win32
+        BuildConfiguration: Debug
+        vcpkgarch: x86-windows
+        vcpkglibdir: debug\lib
+      Release32:
+        BuildPlatform: Win32
+        BuildConfiguration: Release
+        vcpkgarch: x86-windows
+        vcpkglibdir: lib
+  variables:
+    XERCESCROOT: $(Build.SourcesDirectory)\vcpkg\packages\xerces-c_$(vcpkgarch)
+    SSL_ROOT: $(Build.SourcesDirectory)\vcpkg\packages\openssl-windows_$(vcpkgarch)
+    SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
+    XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
+  steps:
+  - powershell: git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
+    displayName: git clone vcpkg
+  - script: .\vcpkg\bootstrap-vcpkg.bat
+    displayName: Bootstrap vcpkg
+  - script: .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+    displayName: vcpkg install dependencies
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+    displayName: Create default.features file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - task: VSBuild@1
+    displayName: Build solution TAO/TAO_ACE.sln
+    inputs:
+      solution: TAO/TAO_ACE.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+  - task: VSBuild@1
+    displayName: Build solution ACE/tests/tests.sln
+    inputs:
+      solution: ACE/tests/tests.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+
+- job: VisualStudio2015
+  timeoutInMinutes: 90
+  pool:
+    vmImage: vs2015-win2012r2
+  steps:
+  - powershell: |
+      $client = new-object System.Net.WebClient
+      $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
+    displayName: Download perl
+  - task: ExtractFiles@1
+    displayName: Extract perl
+    inputs:
+      archiveFilePatterns: strawberry-perl.zip
+      destinationFolder: perl
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - task: VSBuild@1
+    displayName: Build solution TAO\TAO_ACE.sln
+    inputs:
+      solution: TAO\TAO_ACE.sln
+      maximumCpuCount: true
+  - task: VSBuild@1
+    displayName: Build solution ACE\tests\tests.sln
+    inputs:
+      solution: ACE\tests\tests.sln
+      maximumCpuCount: true
+
+- job: Linux
+  timeoutInMinutes: 90
+  pool:
+    vmImage: ubuntu-16.04
+  strategy:
+    matrix:
+      GCC4:
+        CC: gcc
+        CXX: g++
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+      GCC6:
+        CC: gcc-6
+        CXX: g++-6
+        PackageDeps: g++-6
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+      GCC7:
+        CC: gcc-7
+        CXX: g++-7
+        PackageDeps: g++-7
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+      GCC8:
+        CC: gcc-8
+        CXX: g++-8
+        PackageDeps: g++-8
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+  steps:
+  - script: |
+      sudo add-apt-repository ppa:ubuntu-toolchain-r/test -y
+      sudo apt-get --yes update
+      sudo apt-get --yes install libxerces-c-dev libssl-dev $(PackageDeps)
+    displayName: install system package dependencies
+  - powershell: |
+      '#include "ace/config-linux.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+    displayName: Create default.features file
+  - powershell: |
+      'xerces3=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'ssl=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      "$(platform_file)" >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+    displayName: Create platform_macros file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - bash: make -j 6 -C TAO
+    displayName: Build TAO project
+  - bash: make -j 6 -C ACE/tests
+    displayName: Build tests project
+
+- job: MacOSX
+  timeoutInMinutes: 90
+  pool:
+    vmImage: macOS-10.13
+  steps:
+  - powershell: |
+      '#include "ace/config-macosx.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
+    displayName: Create platform_macros file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc
+    displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc
+    displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - bash: make -j 6 -C TAO
+    displayName: Build TAO project
+  - bash: make -j 6 -C ACE/tests
+    displayName: Build tests project

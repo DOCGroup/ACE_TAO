@@ -36,7 +36,7 @@ namespace TAO
         strategy = strategy_factory->create (value);
       else
         TAOLIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %s\n"),
+                    ACE_TEXT ("(%P|%t) ERROR, Unable to get %C\n"),
                     strategy_name));
 
 
@@ -74,8 +74,6 @@ namespace TAO
     }
   }
 }
-
-
 
 ACE_STATIC_SVC_DEFINE (
   LifespanStrategyFactoryImpl,

@@ -25,7 +25,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_27_Test"));
 
   // Visual Studio 2015 has a small issue with this construct
-#if !defined (ACE_WIN32_VC14)
+#if !(defined (_MSC_VER) && (_MSC_VER < 1910))
   Foo any;
   any <<= std::move("abc");
 #endif

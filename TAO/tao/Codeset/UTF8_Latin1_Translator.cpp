@@ -118,6 +118,55 @@ TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
 }
 
 ACE_CDR::Boolean
+TAO_UTF8_Latin1_Translator::read_string (ACE_InputCDR &cdr,
+                                         std::string &x)
+{
+#if defined (ACE_HAS_CPP11)
+  ACE_CDR::ULong len;
+  if (!cdr.read_ulong (len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= cdr.length())
+    {
+      // detract terminating '\0' from length
+      len--;
+      try
+        {
+          x.resize (len);
+        }
+      catch (const std::bad_alloc&)
+        {
+          return false;
+        }
+
+      // pos keeps track of the character position, it will never be
+      // greater than len
+      size_t pos = 0;
+      ACE_CDR::ULong incr = 1;
+      for (ACE_CDR::ULong i = 0; incr > 0 && i < len; i += incr)
+        {
+          incr = this->read_char_i(cdr,x[pos++]);
+        }
+      if (incr > 0)
+      {
+        // read terminating '\0' from stream
+        ACE_CDR::Char c;
+        incr = this->read_char_i(cdr, c);
+        return (incr > 0);
+      }
+    }
+
+  x.clear ();
+  return false;
+#else
+  return this->ACE_Char_Codeset_Translator::read_string (cdr, x);
+#endif
+}
+
+ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::read_char_array (ACE_InputCDR & cdr,
                                         ACE_CDR::Char *x,
                                         ACE_CDR::ULong length)

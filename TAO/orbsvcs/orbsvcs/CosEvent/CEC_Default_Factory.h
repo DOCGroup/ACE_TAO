@@ -37,7 +37,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * can specify which strategies will this factory generate.
  * Since the class can be dynamically loaded the strategies can be
  * set in the service configurator file.
- * = MEMORY MANAGMENT
+ * = MEMORY MANAGEMENT
  */
 class TAO_Event_Serv_Export TAO_CEC_Default_Factory : public TAO_CEC_Factory
 {
@@ -93,26 +93,22 @@ public:
       create_proxy_push_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_ProxyPushConsumer_Collection*
-        );
+          TAO_CEC_ProxyPushConsumer_Collection*);
   virtual TAO_CEC_ProxyPullConsumer_Collection*
       create_proxy_pull_consumer_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_pull_consumer_collection (
-          TAO_CEC_ProxyPullConsumer_Collection*
-        );
+          TAO_CEC_ProxyPullConsumer_Collection*);
   virtual TAO_CEC_ProxyPushSupplier_Collection*
     create_proxy_push_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_push_supplier_collection (
-          TAO_CEC_ProxyPushSupplier_Collection*
-        );
+          TAO_CEC_ProxyPushSupplier_Collection*);
   virtual TAO_CEC_ProxyPullSupplier_Collection*
     create_proxy_pull_supplier_collection (TAO_CEC_EventChannel*);
   virtual void
       destroy_proxy_pull_supplier_collection (
-          TAO_CEC_ProxyPullSupplier_Collection*
-        );
+          TAO_CEC_ProxyPullSupplier_Collection*);
 
   virtual ACE_Lock* create_consumer_lock (void);
   virtual void destroy_consumer_lock (ACE_Lock*);
@@ -151,8 +147,7 @@ public:
       create_proxy_push_consumer_collection (TAO_CEC_TypedEventChannel*);
   virtual void
       destroy_proxy_push_consumer_collection (
-          TAO_CEC_TypedProxyPushConsumer_Collection*
-        );
+          TAO_CEC_TypedProxyPushConsumer_Collection*);
   virtual TAO_CEC_ConsumerControl*
       create_consumer_control (TAO_CEC_TypedEventChannel*);
   virtual TAO_CEC_SupplierControl*

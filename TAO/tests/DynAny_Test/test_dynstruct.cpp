@@ -156,9 +156,7 @@ Test_DynStruct::run_test (void)
                   "testing: constructor(TypeCode)/from_any/to_any\n"));
 
       DynamicAny::DynAny_var ftc1_base =
-        dynany_factory->create_dyn_any_from_type_code (
-                            DynAnyTests::_tc_test_struct
-                          );
+        dynany_factory->create_dyn_any_from_type_code (DynAnyTests::_tc_test_struct);
 
       DynamicAny::DynStruct_var ftc1 =
         DynamicAny::DynStruct::_narrow (ftc1_base.in ());

@@ -33,6 +33,8 @@ ipch/
 /setenv.cmd
 /setenv.sh
 /build
+/ACE/build
+/TAO/build
 
 *.o
 *.res

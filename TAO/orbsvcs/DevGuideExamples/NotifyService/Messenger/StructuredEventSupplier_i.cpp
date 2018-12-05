@@ -9,7 +9,6 @@ StructuredEventSupplier_i::StructuredEventSupplier_i(CORBA::ORB_ptr orb)
 void
 StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 {
-
    CORBA::Object_var obj = orb_->resolve_initial_references ("POACurrent");
    PortableServer::Current_var current =
                           PortableServer::Current::_narrow (obj.in());
@@ -22,8 +21,7 @@ StructuredEventSupplier_i::disconnect_structured_push_supplier ()
 void
 StructuredEventSupplier_i::subscription_change (
                     const CosNotification::EventTypeSeq &,
-                    const CosNotification::EventTypeSeq &
-      )
+                    const CosNotification::EventTypeSeq &)
 {
 }
 

@@ -71,17 +71,26 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_24_Test"));
 
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
-
   FOO::o_r<FOO::A> l = FOO::create();
+
+#if defined __clang__ && \
+    (defined __apple_build_version__ && __apple_build_version__ < 9100000 \
+     || __clang_major__ < 5)
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: This version of clang doesn't")
+                        ACE_TEXT (" compile the C++11 code in this test.\n")));
+  ACE_END_TEST;
+  return 1;
+#else
   FOO::o_r<FOO::A> l2 = FOO::make_f<FOO::A>();
   // next line doesn't compile and shouldn't
   //FOO::o_r<FOO::B> l3 = FOO::make_f<FOO::B>();
 
+  ACE_DEBUG ((LM_INFO,
+              ACE_TEXT ("Compiler Feature 24 Test does compile and run.\n")));
   ACE_END_TEST;
 
   return 0;
+#endif
 }
 
 #else

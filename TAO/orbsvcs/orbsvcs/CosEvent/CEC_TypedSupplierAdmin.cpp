@@ -1,5 +1,4 @@
 #include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
-
 #include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
@@ -54,8 +53,7 @@ TAO_CEC_TypedSupplierAdmin::shutdown (void)
 
 CosTypedEventChannelAdmin::TypedProxyPushConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
-    const char * supported_interface
-  )
+    const char * supported_interface)
 
 {
   int result = this->typed_event_channel_->supplier_register_supported_interface (supported_interface);
@@ -70,8 +68,7 @@ TAO_CEC_TypedSupplierAdmin::obtain_typed_push_consumer (
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
 TAO_CEC_TypedSupplierAdmin::obtain_typed_pull_consumer (
-    const char * /* uses_interface */
-  )
+    const char * /* uses_interface */)
 
 {
   throw CosTypedEventChannelAdmin::NoSuchImplementation ();

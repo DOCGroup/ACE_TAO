@@ -1,18 +1,34 @@
-#ifndef lint
-// static char const
-// yyrcsid[] = "";
-#endif
-#include "ace/os_include/os_stdlib.h"
+/* original parser id follows */
+/* yysccsid[] = "@(#)yaccpar        1.9 (Berkeley) 02/21/93" */
+/* (use YYMAJOR/YYMINOR for ifdefs dependent on parser version) */
+
 #define YYBYACC 1
 #define YYMAJOR 1
 #define YYMINOR 9
-#define YYLEX yylex()
-#define YYEMPTY -1
-#define yyclearin (yychar=(YYEMPTY))
-#define yyerrok (yyerrflag=0)
-#define YYRECOVERING() (yyerrflag!=0)
+#define YYPATCH 20140715
 
+#define YYEMPTY        (-1)
+#define yyclearin      (yychar = YYEMPTY)
+#define yyerrok        (yyerrflag = 0)
+#define YYRECOVERING() (yyerrflag != 0)
+#define YYENOMEM       (-2)
+#define YYEOF          0
 #define YYPREFIX "yy"
+
+#define YYPURE 0
+
+  /* ========================================================================*/
+/**/
+/* = LIBRARY*/
+/*    orbsvcs*/
+/* */
+/* = FILENAME*/
+/*    constraint.y*/
+/**/
+/* = AUTHOR*/
+/*    Seth Widoff <sbw1@cs.wustl.edu>*/
+/**/
+/* ========================================================================*/
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
@@ -22,7 +38,38 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*#define YYDEBUG 1*/
-#define YYERRCODE 256
+
+/* compatibility with bison */
+#ifdef YYPARSE_PARAM
+/* compatibility with FreeBSD */
+# ifdef YYPARSE_PARAM_TYPE
+#  define YYPARSE_DECL() yyparse(YYPARSE_PARAM_TYPE YYPARSE_PARAM)
+# else
+#  define YYPARSE_DECL() yyparse(void *YYPARSE_PARAM)
+# endif
+#else
+# define YYPARSE_DECL() yyparse(void)
+#endif
+
+/* Parameters sent to lex. */
+#ifdef YYLEX_PARAM
+# define YYLEX_DECL() yylex(void *YYLEX_PARAM)
+# define YYLEX yylex(YYLEX_PARAM)
+#else
+# define YYLEX_DECL() yylex(void)
+# define YYLEX yylex()
+#endif
+
+/* Parameters sent to yyerror. */
+#ifndef YYERROR_DECL
+#define YYERROR_DECL() yyerror(const char *s)
+#endif
+#ifndef YYERROR_CALL
+#define YYERROR_CALL(msg) yyerror(msg)
+#endif
+
+extern int YYPARSE_DECL();
+
 #define TAO_GT 257
 #define TAO_GE 258
 #define TAO_LT 259
@@ -57,19 +104,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #define TAO_MIN 288
 #define TAO_FIRST 289
 #define TAO_RANDOM 290
-const short yylhs[] = {                                        -1,
+#define YYERRCODE 256
+typedef short YYINT;
+static const YYINT yylhs[] = {                           -1,
     0,    0,    1,    1,    1,    1,    1,    2,    2,    3,
     3,    4,    4,    4,    4,    4,    4,    4,    5,    5,
     6,    6,    7,    7,    7,    8,    8,    8,    9,    9,
    10,   10,   10,   10,   10,   10,   10,
 };
-const short yylen[] = {                                         2,
+static const YYINT yylen[] = {                            2,
     1,    1,    2,    2,    2,    1,    1,    3,    1,    3,
     1,    3,    3,    3,    3,    3,    3,    1,    3,    1,
     3,    1,    3,    3,    1,    3,    3,    1,    2,    1,
     3,    2,    1,    1,    2,    1,    1,
 };
-const short yydefred[] = {                                      0,
+static const YYINT yydefred[] = {                         0,
     0,    0,   37,    0,   34,    0,   33,   36,    0,    0,
     0,    6,    7,    0,    2,    0,    0,   11,    0,    0,
     0,    0,   28,   30,   32,   29,   35,    0,    0,    0,
@@ -77,10 +126,10 @@ const short yydefred[] = {                                      0,
     0,    0,    0,    0,    0,   31,    0,   10,   14,   15,
    16,   17,   12,   13,   19,    0,    0,    0,   26,   27,
 };
-const short yydgoto[] = {                                      14,
+static const YYINT yydgoto[] = {                         14,
    15,   16,   17,   18,   19,   20,   21,   22,   23,   24,
 };
-const short yysindex[] = {                                   -253,
+static const YYINT yysindex[] = {                      -253,
  -278, -219,    0, -271,    0, -224,    0,    0, -224, -224,
  -224,    0,    0,    0,    0, -256, -252,    0, -195, -244,
  -251, -243,    0,    0,    0,    0,    0, -262, -256, -256,
@@ -88,7 +137,7 @@ const short yysindex[] = {                                   -253,
  -224, -224, -224, -224, -224,    0, -252,    0,    0,    0,
     0,    0,    0,    0,    0, -239, -243, -243,    0,    0,
 };
-const short yyrindex[] = {                                      0,
+static const YYINT yyrindex[] = {                         0,
     0,    0,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,    0,    0,    0,   27,    8,    0,   11,   87,
    61,    1,    0,    0,    0,    0,    0,    0,   38,   40,
@@ -96,11 +145,11 @@ const short yyrindex[] = {                                      0,
     0,    0,    0,    0,    0,    0,   28,    0,    0,    0,
     0,    0,    0,    0,    0,   74,   21,   41,    0,    0,
 };
-const short yygindex[] = {                                      0,
+static const YYINT yygindex[] = {                         0,
     0,   -4,   14,   24,   34,    0,   36,    6,   31,   76,
 };
 #define YYTABLESIZE 363
-const short yytable[] = {                                      25,
+static const YYINT yytable[] = {                         25,
    25,   28,   32,   27,   29,   30,   31,    9,   32,    1,
    18,   33,    2,   46,   55,    3,   41,    4,   42,   43,
    23,    5,   40,    6,    7,    8,    1,    8,   44,   45,
@@ -139,7 +188,7 @@ const short yytable[] = {                                      25,
    20,   20,    0,    0,    0,    0,    0,    0,    0,    0,
     0,    0,   20,
 };
-const short yycheck[] = {                                     278,
+static const YYINT yycheck[] = {                        278,
     0,    6,  265,  275,    9,   10,   11,    0,  265,  263,
     0,  264,  266,  276,  278,  269,  268,  271,  270,  271,
     0,  275,  267,  277,  278,  279,    0,    0,  272,  273,
@@ -183,8 +232,11 @@ const short yycheck[] = {                                     278,
 #define YYDEBUG 0
 #endif
 #define YYMAXTOKEN 290
+#define YYUNDFTOKEN 303
+#define YYTRANSLATE(a) ((a) > YYMAXTOKEN ? YYUNDFTOKEN : (a))
 #if YYDEBUG
-const char * const yyname[] = {
+static const char *const yyname[] = {
+
 "end-of-file",0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -196,9 +248,10 @@ const char * const yyname[] = {
 "TAO_TWIDDLE","TAO_BOOLEAN","TAO_PLUS","TAO_MINUS","TAO_MULT","TAO_DIV",
 "TAO_UMINUS","TAO_NUMBER","TAO_RPAREN","TAO_LPAREN","TAO_IDENT","TAO_STRING",
 "TAO_UNKNOWN","TAO_SIGNED","TAO_UNSIGNED","TAO_DOUBLE","TAO_CONSTRAINT",
-"TAO_SEQUENCE","TAO_WITH","TAO_MAX","TAO_MIN","TAO_FIRST","TAO_RANDOM",
+"TAO_SEQUENCE","TAO_WITH","TAO_MAX","TAO_MIN","TAO_FIRST","TAO_RANDOM",0,0,0,0,
+0,0,0,0,0,0,0,0,"illegal-symbol",
 };
-const char * const yyrule[] = {
+static const char *const yyrule[] = {
 "$accept : constraint",
 "constraint : bool_or",
 "constraint : preference",
@@ -237,103 +290,112 @@ const char * const yyrule[] = {
 "factor : TAO_MINUS TAO_NUMBER",
 "factor : TAO_STRING",
 "factor : TAO_BOOLEAN",
+
 };
 #endif
-#if YYDEBUG
-#include <stdio.h>
-#endif
+
+int      yydebug;
+int      yynerrs;
+
+int      yyerrflag;
+int      yychar;
+YYSTYPE  yyval;
+YYSTYPE  yylval;
+
+/* define the initial stack-sizes */
 #ifdef YYSTACKSIZE
 #undef YYMAXDEPTH
-#define YYMAXDEPTH YYSTACKSIZE
+#define YYMAXDEPTH  YYSTACKSIZE
 #else
 #ifdef YYMAXDEPTH
 #define YYSTACKSIZE YYMAXDEPTH
 #else
 #define YYSTACKSIZE 10000
-#define YYMAXDEPTH 10000
+#define YYMAXDEPTH  10000
 #endif
 #endif
+
 #define YYINITSTACKSIZE 200
-int yydebug;
-int yynerrs;
-int yyerrflag;
-int yychar;
-short *yyssp;
-YYSTYPE *yyvsp;
-YYSTYPE yyval;
-YYSTYPE yylval;
-short *yyss;
-short *yysslim;
-YYSTYPE *yyvs;
-int yystacksize;
+
+typedef struct {
+    unsigned stacksize;
+    YYINT    *s_base;
+    YYINT    *s_mark;
+    YYINT    *s_last;
+    YYSTYPE  *l_base;
+    YYSTYPE  *l_mark;
+} YYSTACKDATA;
+/* variables for the parser stack */
+static YYSTACKDATA yystack;
 
 //extern int yydebug = 1;
+
+#if YYDEBUG
+#include <stdio.h>                /* needed for printf */
+#endif
+
+#include <stdlib.h>        /* needed for malloc, etc */
+#include <string.h>        /* needed for memset */
+
 /* allocate initial stack or double stack size, up to YYMAXDEPTH */
-static int yygrowstack()
+static int yygrowstack(YYSTACKDATA *data)
 {
-    size_t newsize, i;
-    short *newss;
+    int i;
+    unsigned newsize;
+    YYINT *newss;
     YYSTYPE *newvs;
 
-    if ((newsize = yystacksize) == 0)
+    if ((newsize = data->stacksize) == 0)
         newsize = YYINITSTACKSIZE;
     else if (newsize >= YYMAXDEPTH)
-        return -1;
+        return YYENOMEM;
     else if ((newsize *= 2) > YYMAXDEPTH)
         newsize = YYMAXDEPTH;
-    i = yyssp - yyss;
-    newss = yyss ? (short *)ACE_OS::realloc(yyss, newsize * sizeof *newss) :
-      (short *)ACE_OS::malloc(newsize * sizeof *newss);
+
+    i = (int) (data->s_mark - data->s_base);
+    newss = (YYINT *)realloc(data->s_base, newsize * sizeof(*newss));
     if (newss == 0)
-        return -1;
-    yyss = newss;
-    yyssp = newss + i;
-    newvs = yyvs ? (YYSTYPE *)ACE_OS::realloc(yyvs, newsize * sizeof *newvs) :
-      (YYSTYPE *)ACE_OS::malloc(newsize * sizeof *newvs);
+        return YYENOMEM;
+
+    data->s_base = newss;
+    data->s_mark = newss + i;
+
+    newvs = (YYSTYPE *)realloc(data->l_base, newsize * sizeof(*newvs));
     if (newvs == 0)
-        return -1;
-    yyvs = newvs;
-    yyvsp = newvs + i;
-    yystacksize = newsize;
-    yysslim = yyss + newsize - 1;
+        return YYENOMEM;
+
+    data->l_base = newvs;
+    data->l_mark = newvs + i;
+
+    data->stacksize = newsize;
+    data->s_last = data->s_base + newsize - 1;
     return 0;
 }
 
-#define YYABORT goto yyabort
+#if YYPURE || defined(YY_NO_LEAKS)
+static void yyfreestack(YYSTACKDATA *data)
+{
+    free(data->s_base);
+    free(data->l_base);
+    memset(data, 0, sizeof(*data));
+}
+#else
+#define yyfreestack(data) /* nothing */
+#endif
+
+#define YYABORT  goto yyabort
 #define YYREJECT goto yyabort
 #define YYACCEPT goto yyaccept
-#define YYERROR goto yyerrlab
-
-#ifndef YYPARSE_PARAM
-#if defined(__cplusplus) || __STDC__
-#define YYPARSE_PARAM_ARG void
-#define YYPARSE_PARAM_DECL
-#else        /* ! ANSI-C/C++ */
-#define YYPARSE_PARAM_ARG
-#define YYPARSE_PARAM_DECL
-#endif        /* ANSI-C/C++ */
-#else        /* YYPARSE_PARAM */
-#ifndef YYPARSE_PARAM_TYPE
-#define YYPARSE_PARAM_TYPE void *
-#endif
-#if defined(__cplusplus) || __STDC__
-#define YYPARSE_PARAM_ARG YYPARSE_PARAM_TYPE YYPARSE_PARAM
-#define YYPARSE_PARAM_DECL
-#else        /* ! ANSI-C/C++ */
-#define YYPARSE_PARAM_ARG YYPARSE_PARAM
-#define YYPARSE_PARAM_DECL YYPARSE_PARAM_TYPE YYPARSE_PARAM;
-#endif        /* ANSI-C/C++ */
-#endif        /* ! YYPARSE_PARAM */
+#define YYERROR  goto yyerrlab
 
 int
-yyparse (YYPARSE_PARAM_ARG)
-    YYPARSE_PARAM_DECL
+YYPARSE_DECL()
 {
-    register int yym, yyn, yystate;
+    int yym, yyn, yystate;
 #if YYDEBUG
-    register const char *yys;
+    const char *yys;
 
-    if ((yys = ACE_OS::getenv("YYDEBUG")))
+    if ((yys = getenv("YYDEBUG")) != 0)
     {
         yyn = *yys;
         if (yyn >= '0' && yyn <= '9')
@@ -343,26 +405,30 @@ yyparse (YYPARSE_PARAM_ARG)
 
     yynerrs = 0;
     yyerrflag = 0;
-    yychar = (-1);
+    yychar = YYEMPTY;
+    yystate = 0;
 
-    if (yyss == 0 && yygrowstack()) goto yyoverflow;
-    yyssp = yyss;
-    yyvsp = yyvs;
-    *yyssp = yystate = 0;
+#if YYPURE
+    memset(&yystack, 0, sizeof(yystack));
+#endif
+
+    if (yystack.s_base == 0 && yygrowstack(&yystack) == YYENOMEM) goto yyoverflow;
+    yystack.s_mark = yystack.s_base;
+    yystack.l_mark = yystack.l_base;
+    yystate = 0;
+    *yystack.s_mark = 0;
 
 yyloop:
-    if ((yyn = yydefred[yystate])) goto yyreduce;
+    if ((yyn = yydefred[yystate]) != 0) goto yyreduce;
     if (yychar < 0)
     {
-        if ((yychar = yylex()) < 0) yychar = 0;
+        if ((yychar = YYLEX) < 0) yychar = YYEOF;
 #if YYDEBUG
         if (yydebug)
         {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            ACE_OS::printf("%sdebug: state %d, reading %d (%s)\n",
-                           YYPREFIX, yystate, yychar, yys);
+            yys = yyname[YYTRANSLATE(yychar)];
+            printf("%sdebug: state %d, reading %d (%s)\n",
+                    YYPREFIX, yystate, yychar, yys);
         }
 #endif
     }
@@ -371,16 +437,17 @@ yyloop:
     {
 #if YYDEBUG
         if (yydebug)
-          ACE_OS::printf("%sdebug: state %d, shifting to state %d\n",
-                         YYPREFIX, yystate, yytable[yyn]);
+            printf("%sdebug: state %d, shifting to state %d\n",
+                    YYPREFIX, yystate, yytable[yyn]);
 #endif
-        if (yyssp >= yysslim && yygrowstack())
+        if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
         {
             goto yyoverflow;
         }
-        *++yyssp = yystate = yytable[yyn];
-        *++yyvsp = yylval;
-        yychar = (-1);
+        yystate = yytable[yyn];
+        *++yystack.s_mark = yytable[yyn];
+        *++yystack.l_mark = yylval;
+        yychar = YYEMPTY;
         if (yyerrflag > 0)  --yyerrflag;
         goto yyloop;
     }
@@ -391,218 +458,217 @@ yyloop:
         goto yyreduce;
     }
     if (yyerrflag) goto yyinrecovery;
-#if defined(lint) || defined(__GNUC__) || defined (WIN32) || defined (__HP_aCC)
-    goto yynewerror;
-#endif
-yynewerror:
-    yyerror("syntax error");
-#if defined(lint) || defined(__GNUC__) || defined (WIN32) || defined (__HP_aCC)
+
+    YYERROR_CALL("syntax error");
+
     goto yyerrlab;
-#endif
+
 yyerrlab:
     ++yynerrs;
+
 yyinrecovery:
     if (yyerrflag < 3)
     {
         yyerrflag = 3;
         for (;;)
         {
-            if ((yyn = yysindex[*yyssp]) && (yyn += YYERRCODE) >= 0 &&
+            if ((yyn = yysindex[*yystack.s_mark]) && (yyn += YYERRCODE) >= 0 &&
                     yyn <= YYTABLESIZE && yycheck[yyn] == YYERRCODE)
             {
 #if YYDEBUG
                 if (yydebug)
-                  ACE_OS::printf("%sdebug: state %d, error recovery shifting\
- to state %d\n", YYPREFIX, *yyssp, yytable[yyn]);
+                    printf("%sdebug: state %d, error recovery shifting\
+ to state %d\n", YYPREFIX, *yystack.s_mark, yytable[yyn]);
 #endif
-                if (yyssp >= yysslim && yygrowstack())
+                if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
                 {
                     goto yyoverflow;
                 }
-                *++yyssp = yystate = yytable[yyn];
-                *++yyvsp = yylval;
+                yystate = yytable[yyn];
+                *++yystack.s_mark = yytable[yyn];
+                *++yystack.l_mark = yylval;
                 goto yyloop;
             }
             else
             {
 #if YYDEBUG
                 if (yydebug)
-                  ACE_OS::printf("%sdebug: error recovery discarding state %d\n",
-                                 YYPREFIX, *yyssp);
+                    printf("%sdebug: error recovery discarding state %d\n",
+                            YYPREFIX, *yystack.s_mark);
 #endif
-                if (yyssp <= yyss) goto yyabort;
-                --yyssp;
-                --yyvsp;
+                if (yystack.s_mark <= yystack.s_base) goto yyabort;
+                --yystack.s_mark;
+                --yystack.l_mark;
             }
         }
     }
     else
     {
-        if (yychar == 0) goto yyabort;
+        if (yychar == YYEOF) goto yyabort;
 #if YYDEBUG
         if (yydebug)
         {
-            yys = 0;
-            if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-            if (!yys) yys = "illegal-symbol";
-            ACE_OS::printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
-                           YYPREFIX, yystate, yychar, yys);
+            yys = yyname[YYTRANSLATE(yychar)];
+            printf("%sdebug: state %d, error recovery discards token %d (%s)\n",
+                    YYPREFIX, yystate, yychar, yys);
         }
 #endif
-        yychar = (-1);
+        yychar = YYEMPTY;
         goto yyloop;
     }
+
 yyreduce:
 #if YYDEBUG
     if (yydebug)
-      ACE_OS::printf("%sdebug: state %d, reducing by rule %d (%s)\n",
-                     YYPREFIX, yystate, yyn, yyrule[yyn]);
+        printf("%sdebug: state %d, reducing by rule %d (%s)\n",
+                YYPREFIX, yystate, yyn, yyrule[yyn]);
 #endif
     yym = yylen[yyn];
-    yyval = yyvsp[1-yym];
+    if (yym)
+        yyval = yystack.l_mark[1-yym];
+    else
+        memset(&yyval, 0, sizeof yyval);
     switch (yyn)
     {
 case 1:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_CONSTRAINT, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_CONSTRAINT, yystack.l_mark[0].constraint_); }
 break;
 case 2:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 3:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_MIN, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_MIN, yystack.l_mark[0].constraint_); }
 break;
 case 4:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_MAX, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_MAX, yystack.l_mark[0].constraint_); }
 break;
 case 5:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_WITH, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_WITH, yystack.l_mark[0].constraint_); }
 break;
 case 6:
-{ yyval.constraint_ = new TAO_Noop_Constraint(TAO_FIRST); }
+        { yyval.constraint_ = new TAO_Noop_Constraint(TAO_FIRST); }
 break;
 case 7:
-{ yyval.constraint_ = new TAO_Noop_Constraint(TAO_RANDOM); }
+        { yyval.constraint_ = new TAO_Noop_Constraint(TAO_RANDOM); }
 break;
 case 8:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_OR, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_OR, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 9:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 10:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_AND, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_AND, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 11:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 12:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_EQ, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_EQ, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 13:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_NE, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_NE, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 14:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_GT, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_GT, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 15:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_GE, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_GE, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 16:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_LT, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_LT, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 17:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_LE, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_LE, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 18:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 19:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_IN, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_IN, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 20:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 21:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_TWIDDLE, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_TWIDDLE, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 22:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 23:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_PLUS, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_PLUS, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 24:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_MINUS, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_MINUS, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 25:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 26:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_MULT, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_MULT, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 27:
-{ yyval.constraint_ = new TAO_Binary_Constraint(TAO_DIV, yyvsp[-2].constraint_, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Binary_Constraint(TAO_DIV, yystack.l_mark[-2].constraint_, yystack.l_mark[0].constraint_); }
 break;
 case 28:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 29:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_NOT, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_NOT, yystack.l_mark[0].constraint_); }
 break;
 case 30:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 31:
-{ yyval.constraint_ = yyvsp[-1].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[-1].constraint_; }
 break;
 case 32:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_EXIST, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_EXIST, yystack.l_mark[0].constraint_); }
 break;
 case 33:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 34:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 35:
-{ yyval.constraint_ = new TAO_Unary_Constraint(TAO_UMINUS, yyvsp[0].constraint_); }
+        { yyval.constraint_ = new TAO_Unary_Constraint(TAO_UMINUS, yystack.l_mark[0].constraint_); }
 break;
 case 36:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
 case 37:
-{ yyval.constraint_ = yyvsp[0].constraint_; }
+        { yyval.constraint_ = yystack.l_mark[0].constraint_; }
 break;
     }
-    yyssp -= yym;
-    yystate = *yyssp;
-    yyvsp -= yym;
+    yystack.s_mark -= yym;
+    yystate = *yystack.s_mark;
+    yystack.l_mark -= yym;
     yym = yylhs[yyn];
     if (yystate == 0 && yym == 0)
     {
 #if YYDEBUG
         if (yydebug)
-          ACE_OS::printf("%sdebug: after reduction, shifting from state 0 to\
+            printf("%sdebug: after reduction, shifting from state 0 to\
  state %d\n", YYPREFIX, YYFINAL);
 #endif
         yystate = YYFINAL;
-        *++yyssp = YYFINAL;
-        *++yyvsp = yyval;
+        *++yystack.s_mark = YYFINAL;
+        *++yystack.l_mark = yyval;
         if (yychar < 0)
         {
-            if ((yychar = yylex()) < 0) yychar = 0;
+            if ((yychar = YYLEX) < 0) yychar = YYEOF;
 #if YYDEBUG
             if (yydebug)
             {
-                yys = 0;
-                if (yychar <= YYMAXTOKEN) yys = yyname[yychar];
-                if (!yys) yys = "illegal-symbol";
-                ACE_OS::printf("%sdebug: state %d, reading %d (%s)\n",
-                               YYPREFIX, YYFINAL, yychar, yys);
+                yys = yyname[YYTRANSLATE(yychar)];
+                printf("%sdebug: state %d, reading %d (%s)\n",
+                        YYPREFIX, YYFINAL, yychar, yys);
             }
 #endif
         }
-        if (yychar == 0) goto yyaccept;
+        if (yychar == YYEOF) goto yyaccept;
         goto yyloop;
     }
     if ((yyn = yygindex[yym]) && (yyn += yystate) >= 0 &&
@@ -612,21 +678,26 @@ break;
         yystate = yydgoto[yym];
 #if YYDEBUG
     if (yydebug)
-      ACE_OS::printf("%sdebug: after reduction, shifting from state %d \
-to state %d\n", YYPREFIX, *yyssp, yystate);
+        printf("%sdebug: after reduction, shifting from state %d \
+to state %d\n", YYPREFIX, *yystack.s_mark, yystate);
 #endif
-    if (yyssp >= yysslim && yygrowstack())
+    if (yystack.s_mark >= yystack.s_last && yygrowstack(&yystack) == YYENOMEM)
     {
         goto yyoverflow;
     }
-    *++yyssp = yystate;
-    *++yyvsp = yyval;
+    *++yystack.s_mark = (YYINT) yystate;
+    *++yystack.l_mark = yyval;
     goto yyloop;
+
 yyoverflow:
-    yyerror("yacc stack overflow");
+    YYERROR_CALL("yacc stack overflow");
+
 yyabort:
+    yyfreestack(&yystack);
     return (1);
+
 yyaccept:
+    yyfreestack(&yystack);
     return (0);
 }
 TAO_END_VERSIONED_NAMESPACE_DECL

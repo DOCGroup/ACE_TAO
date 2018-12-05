@@ -89,7 +89,6 @@ void
 Echo_Server_Request_Interceptor::send_reply (
     PortableInterceptor::ServerRequestInfo_ptr ri)
 {
-
   CORBA::String_var operation = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,

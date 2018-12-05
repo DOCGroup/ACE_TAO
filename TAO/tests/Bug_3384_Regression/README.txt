@@ -9,7 +9,7 @@ The test verifies if a oneway sent as the first request on a new transport
 gets correctly pushed out as soon as the new transort has connected.
 This is a regression test for:
 
-http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=3384
+http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=3384
 
 	To run the test use the run_test.pl script:
 

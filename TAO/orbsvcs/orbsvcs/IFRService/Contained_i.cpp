@@ -34,7 +34,7 @@ TAO_Contained_i::destroy_i (void)
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             id);
 
   // We'll get the last segment of this below.
@@ -99,7 +99,7 @@ TAO_Contained_i::id_i (void)
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             retval);
 
   return CORBA::string_dup (retval.c_str ());
@@ -122,9 +122,7 @@ TAO_Contained_i::id_i (const char *id)
   if (this->repo_->config ()->get_string_value (
                                   this->repo_->repo_ids_key (),
                                   id,
-                                  tmp
-                                )
-       == 0)
+                                  tmp) == 0)
     {
       // Repository id already exists.
       throw CORBA::BAD_PARAM (CORBA::OMGVMCID | 2, CORBA::COMPLETED_NO);
@@ -133,7 +131,7 @@ TAO_Contained_i::id_i (const char *id)
   // Get the old id.
   ACE_TString old_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT("id"),
                                             old_id);
 
   ACE_TString path;
@@ -173,7 +171,7 @@ TAO_Contained_i::name_i (void)
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT("name"),
                                             retval);
 
   return CORBA::string_dup (retval.c_str ());
@@ -194,7 +192,7 @@ TAO_Contained_i::version_i (void)
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "version",
+                                            ACE_TEXT("version"),
                                             retval);
 
   return CORBA::string_dup (retval.c_str ());
@@ -229,7 +227,7 @@ TAO_Contained_i::name_i (const char *name)
   // Update the absolute name.
   ACE_TString absolute_name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "absolute_name",
+                                            ACE_TEXT("absolute_name"),
                                             absolute_name);
 
   absolute_name = absolute_name.substr (0, absolute_name.rfind (':') + 1);
@@ -276,7 +274,7 @@ TAO_Contained_i::defined_in_i (void)
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT("container_id"),
                                             container_id);
 
   if (container_id == "")
@@ -314,7 +312,7 @@ TAO_Contained_i::absolute_name_i (void)
 {
   ACE_TString absolute_name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "absolute_name",
+                                            ACE_TEXT("absolute_name"),
                                             absolute_name);
 
   return CORBA::string_dup (absolute_name.c_str ());
@@ -362,7 +360,7 @@ TAO_Contained_i::name_exists (const char *name)
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT("container_id"),
                                             container_id);
 
   if (container_id == "")
@@ -409,7 +407,7 @@ TAO_Contained_i::name_exists (const char *name)
 
     ACE_TString defn_name;
     this->repo_->config ()->get_string_value (defn_key,
-                                              "name",
+                                              ACE_TEXT("name"),
                                               defn_name);
 
     if (defn_name == name)
@@ -451,7 +449,7 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 
       ACE_TString name;
       this->repo_->config ()->get_string_value (defn_key,
-                                                "name",
+                                                ACE_TEXT("name"),
                                                 name);
 
       ACE_TString absolute_name = stem + "::" + name;
@@ -889,7 +887,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
       ACE_Configuration_Section_Key parent_key;
 
       this->repo_->config ()->get_string_value (old_section_key,
-                                                "container_id",
+                                                ACE_TEXT("container_id"),
                                                 container_id);
 
       if (container_id == "")
@@ -902,8 +900,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
           this->repo_->config ()->get_string_value (
                                       this->repo_->repo_ids_key (),
                                       container_id.c_str (),
-                                      parent_path
-                                    );
+                                      parent_path);
 
           this->repo_->config ()->expand_path (this->repo_->root_key (),
                                                parent_path,
@@ -959,12 +956,12 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
 
       ACE_TString ref_name;
       this->repo_->config ()->get_string_value (ref_key,
-                                                "name",
+                                                ACE_TEXT("name"),
                                                 ref_name);
 
       ACE_TString path;
       this->repo_->config ()->get_string_value (ref_key,
-                                                "path",
+                                                ACE_TEXT("path"),
                                                 path);
 
       if (ref_name == name && path == contained_path)
@@ -1012,15 +1009,15 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
           if (status == 0)
             {
               this->repo_->config ()->get_string_value (defn_key,
-                                                        "name",
+                                                        ACE_TEXT("name"),
                                                         name);
 
               this->repo_->config ()->get_string_value (defn_key,
-                                                        "version",
+                                                        ACE_TEXT("version"),
                                                         version);
               u_int kind = 0;
               this->repo_->config ()->get_integer_value (defn_key,
-                                                         "def_kind",
+                                                         ACE_TEXT("def_kind"),
                                                          kind);
               CORBA::DefinitionKind def_kind =
                 static_cast<CORBA::DefinitionKind> (kind);
@@ -1066,11 +1063,11 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
                                                     attr_key);
 
               this->repo_->config ()->get_string_value (attr_key,
-                                                        "name",
+                                                        ACE_TEXT("name"),
                                                         name);
 
               this->repo_->config ()->get_string_value (attr_key,
-                                                        "version",
+                                                        ACE_TEXT("version"),
                                                         version);
 
               TAO_AttributeDef_i impl (this->repo_);
