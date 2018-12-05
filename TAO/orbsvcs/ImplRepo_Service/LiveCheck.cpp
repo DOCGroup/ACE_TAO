@@ -897,7 +897,7 @@ LiveCheck::remove_server (const char *server, int pid)
                               ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> ")
                               ACE_TEXT ("called during handle_timeout\n"), server, pid));
             }
-          this->removed_entries_.insert_tail (std::make_pair (server, pid));
+          this->removed_entries_.insert_tail (std::make_pair (s, pid));
         }
     }
   else
