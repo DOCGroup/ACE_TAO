@@ -314,7 +314,10 @@ AsyncAccessManager::notify_waiters (void)
       }
       catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+        if (ImR_Locator_i::debug () > 1)
+          {
+            ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+          }
       }
     }
   this->rh_list_.clear ();
@@ -516,9 +519,9 @@ AsyncAccessManager::notify_child_death (int pid)
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C>, pid <%d>, status <%C> ")
                       ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
                       this, info_->ping_id (), pid, status_name (status_),
-                      this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
+                      this->info_->pid, this->prev_pid_, this->rh_list_.size()));
     }
-  if (this->info_->pid == 0 || this->info_->pid == pid || this->prev_pid_ == pid)
+  if (this->info_->pid == pid || this->prev_pid_ == pid)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)
@@ -529,6 +532,17 @@ AsyncAccessManager::notify_child_death (int pid)
       this->status (ImplementationRepository::AAM_SERVER_DEAD);
       this->final_state ();
       return true;
+    }
+  else
+    {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C>, pid <%d> does not match ")
+                          ACE_TEXT ("this info_.pid <%d> prev_pid <%d>\n"),
+                          this, info_->ping_id (), pid,
+                          this->info_->pid, this->prev_pid_));
+        }
     }
   return false;
 }
