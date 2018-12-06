@@ -918,18 +918,31 @@ void
 ImR_Locator_i::remove_server_i (const Server_Info_Ptr &info)
 {
   if (debug_ > 1)
+  {
     ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) ImR: Removing Server <%C>...\n"),
                     info->key_name_.c_str()));
+  }
 
   ACE_CString poa_name = info->poa_name;
   if (this->repository_->remove_server (info->key_name_, this) == 0)
     {
       this->destroy_poa (poa_name);
       if (debug_ > 0)
+      {
         ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%P|%t) ImR: Removed Server <%C>.\n"),
                         info->key_name_.c_str()));
+      }
+    }
+  else
+    {
+      if (debug_ > 0)
+      {
+        ORBSVCS_ERROR ((LM_ERROR,
+                        ACE_TEXT ("(%P|%t) ImR: Cannot find server <%C>.\n"),
+                        info->key_name_.c_str()));
+      }
     }
 }
 
