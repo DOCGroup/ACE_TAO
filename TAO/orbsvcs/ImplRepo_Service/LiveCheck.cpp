@@ -882,6 +882,12 @@ LiveCheck::remove_server (const char *server, int pid)
   int const result = entry_map_.find (s, entry);
   if (result != -1 && entry != 0 && entry->has_pid (pid))
     {
+      if (ImR_Locator_i::debug () > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d>")
+                          ACE_TEXT ("called during handle_timeout\n"), server, pid, entry->pid ()));
+        }
       if (!this->in_handle_timeout ())
         {
           if (entry_map_.unbind (s, entry) == 0)
@@ -891,13 +897,16 @@ LiveCheck::remove_server (const char *server, int pid)
         }
       else
         {
+          // pid can be zero when the server does inform us that it is shutting down, because
+          // of that we need to store the entry pid for removal later, not that we remove
+          // the wrong entry later on
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> ")
-                              ACE_TEXT ("called during handle_timeout\n"), server, pid));
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d> ")
+                              ACE_TEXT ("called during handle_timeout\n"), server, pid, entry->pid ()));
             }
-          this->removed_entries_.insert_tail (std::make_pair (s, pid));
+          this->removed_entries_.insert_tail (std::make_pair (s, entry->pid ()));
         }
     }
   else
