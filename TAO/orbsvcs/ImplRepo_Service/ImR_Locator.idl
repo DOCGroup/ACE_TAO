@@ -6,18 +6,20 @@ module ImplementationRepository
 
   interface Locator : AdministrationExt
   {
-    /// returns a token that can be used (along with activator name) to
+    /// Register an activator
+    /// @return Returns a token that can be used (along with activator name) to
     /// unregister the activator.
     long register_activator (in string name, in Activator act);
 
-    /// You must pass in the token returned from register_activator.
+    /// Unregister an activator. You must pass in the token
+    /// returned from register_activator.
     void unregister_activator (in string name, in long token);
 
-    /// Newer Activators call this method to notify death of child
+    /// Activators call this method to notify death of child
     /// process including pid to disambiguate child instances
     void child_death_pid (in string name, in long pid);
 
-    /// Newer Activators call this method to notify spawn of child
+    /// Activators call this method to notify spawn of child
     /// process to supply pid for reference
     void spawn_pid (in string name, in long pid);
   };
