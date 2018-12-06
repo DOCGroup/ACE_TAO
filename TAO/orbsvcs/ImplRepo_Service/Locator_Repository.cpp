@@ -331,7 +331,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
                             ACE_TEXT ("(%P|%t) ImR: reuse address <%C> so remove server <%C>\n"),
                             info->partial_ior.c_str (), info->poa_name.c_str ()));
           }
-        imr_locator->pinger ().remove_server (info->key_name_.c_str());
+        imr_locator->pinger ().remove_server (info->key_name_.c_str(), info->pid);
         AsyncAccessManager_ptr aam = imr_locator->find_aam (info->key_name_.c_str ());
         if (!aam.is_nil())
           {

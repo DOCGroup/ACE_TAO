@@ -260,7 +260,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref);
   void set_pid (const char *server, int pid);
-  void remove_server (const char *server, int pid = 0);
+  void remove_server (const char *server, int pid);
   bool remove_per_client_entry (LiveEntry *entry);
   bool add_listener (LiveListener *listener);
   bool add_poll_listener (LiveListener *listener);

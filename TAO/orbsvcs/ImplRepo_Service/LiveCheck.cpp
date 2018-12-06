@@ -885,7 +885,7 @@ LiveCheck::remove_server (const char *server, int pid)
       if (ImR_Locator_i::debug () > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d>")
+                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d> ")
                           ACE_TEXT ("called during handle_timeout\n"), server, pid, entry->pid ()));
         }
       if (!this->in_handle_timeout ())
@@ -897,16 +897,13 @@ LiveCheck::remove_server (const char *server, int pid)
         }
       else
         {
-          // pid can be zero when the server does inform us that it is shutting down, because
-          // of that we need to store the entry pid for removal later, not that we remove
-          // the wrong entry later on
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d> ")
                               ACE_TEXT ("called during handle_timeout\n"), server, pid, entry->pid ()));
             }
-          this->removed_entries_.insert_tail (std::make_pair (s, entry->pid ()));
+          this->removed_entries_.insert_tail (std::make_pair (s, pid));
         }
     }
   else
@@ -926,28 +923,42 @@ LiveCheck::remove_deferred_servers (void)
 {
   if (!this->removed_entries_.is_empty ())
     {
-      NamePidStack::iterator re_end = this->removed_entries_.end();
-      for (NamePidStack::iterator re = this->removed_entries_.begin();
-          re != re_end;
-          ++re)
+      // When we are in handle_timeout we can't remove deferred servers
+      if (!this->in_handle_timeout ())
         {
-          NamePidPair const & name_pid_pair = (*re);
+          NamePidStack::iterator re_end = this->removed_entries_.end();
+          for (NamePidStack::iterator re = this->removed_entries_.begin();
+              re != re_end;
+              ++re)
+            {
+              NamePidPair const & name_pid_pair = (*re);
+              if (ImR_Locator_i::debug () > 0)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers ")
+                                  ACE_TEXT ("removing <%C> pid <%d>\n"),
+                                  name_pid_pair.first.c_str(), name_pid_pair.second));
+                }
+              // Now try to remove the server, remove_server
+              // will make sure that we only remove the server when the
+              // name and pid match. These could potentially not
+              // match when the server has already been restarted between the
+              // moment it got in the removed_entries_ stack and this point
+              // where we remove it from the internal administration
+              this->remove_server (name_pid_pair.first.c_str(), name_pid_pair.second);
+            }
+          this->removed_entries_.reset ();
+        }
+      else
+        {
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_entries ")
-                              ACE_TEXT ("removing <%C> pid <%d>\n"),
-                              name_pid_pair.first.c_str(), name_pid_pair.second));
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers ")
+                              ACE_TEXT ("Can't remove <%d> servers because we are still in handle timeout\n"),
+                              this->removed_entries_.size ()));
             }
-          // Now try to remove the server, remove_server
-          // will make sure that we only remove the server when the
-          // name and pid match. These could potentially not
-          // match when the server has already been restarted between the
-          // moment it got in the removed_entries_ stack and this point
-          // where we remove it from the internal administration
-          this->remove_server (name_pid_pair.first.c_str(), name_pid_pair.second);
         }
-      this->removed_entries_.reset ();
     }
 }
 

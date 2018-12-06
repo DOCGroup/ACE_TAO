@@ -182,8 +182,9 @@ ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
         {
           // We have read an existing configuration from the repository
           // and when a server is not alive we reset it, it could have
-          // been shutdown when we where offline
-          this->pinger_.remove_server (active->ping_id());
+          // been shutdown when we where offline. We don't know its process
+          // id so pass zero
+          this->pinger_.remove_server (active->ping_id(), 0);
           info.edit()->reset_runtime ();
           active->reset_runtime ();
           continue;
@@ -1387,7 +1388,7 @@ ImR_Locator_i::server_is_shutting_down
 
   if (!info->is_mode(ImplementationRepository::PER_CLIENT))
     {
-      this->pinger_.remove_server (info->ping_id());
+      this->pinger_.remove_server (info->ping_id(), info->pid);
       {
         AsyncAccessManager_ptr aam = this->find_aam (info->ping_id (), false);
         if (aam.is_nil())
