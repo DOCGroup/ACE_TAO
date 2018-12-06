@@ -482,9 +482,11 @@ void
 ImR_Locator_i::child_death_i (const char* name, int pid)
 {
   if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Server[%d] has died <%C>.\n"),
-                    pid, name));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ImR: Server<%d> has died <%C>.\n"),
+                      pid, name));
+    }
 
   this->pinger_.remove_server (name, pid);
   AsyncAccessManager_ptr aam (this->find_aam (name, false));
@@ -502,10 +504,11 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
   else
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Failed to find server/pid in repository.\n")));
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ImR: Failed to find server/pid in repository.\n")));
+        }
     }
-
 }
 
 void

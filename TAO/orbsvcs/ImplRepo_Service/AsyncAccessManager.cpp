@@ -315,9 +315,9 @@ AsyncAccessManager::notify_waiters (void)
       catch (const CORBA::Exception& ex)
       {
         if (ImR_Locator_i::debug () > 1)
-        {
-          ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
-        }
+          {
+            ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+          }
       }
     }
   this->rh_list_.clear ();
@@ -521,7 +521,7 @@ AsyncAccessManager::notify_child_death (int pid)
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size() ));
     }
-  if (this->info_->pid == 0 || this->info_->pid == pid || this->prev_pid_ == pid)
+  if (this->info_->pid == pid || this->prev_pid_ == pid)
     {
       if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
           this->rh_list_.size() > 0)
