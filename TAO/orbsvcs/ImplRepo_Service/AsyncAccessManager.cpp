@@ -207,8 +207,8 @@ AsyncAccessManager::final_state (bool active)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
-                      ACE_TEXT ("server <%C> active <%d> status <%C>\n"),
-                      this, info_->ping_id (), active, status_name (this->status_)));
+                      ACE_TEXT ("server <%C> active <%d> status <%C> waiters <%d>\n"),
+                      this, info_->ping_id (), active, status_name (this->status_), this->rh_list_.size()));
     }
   bool const success = this->status_ == ImplementationRepository::AAM_SERVER_READY;
   this->info_.edit (active)->started (success);
