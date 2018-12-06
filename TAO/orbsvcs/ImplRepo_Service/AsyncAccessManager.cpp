@@ -314,7 +314,10 @@ AsyncAccessManager::notify_waiters (void)
       }
       catch (const CORBA::Exception& ex)
       {
-        ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+        if (ImR_Locator_i::debug () > 1)
+        {
+          ex._tao_print_exception ("AsyncAccessManager::notify_waiters");
+        }
       }
     }
   this->rh_list_.clear ();

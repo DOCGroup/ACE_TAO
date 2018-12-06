@@ -313,8 +313,7 @@ ImR_Locator_i::shutdown
               ++shutdown_errs;
               if (debug_ > 1)
                 {
-                  ex._tao_print_exception (
-                                           ACE_TEXT ("(%P|%t) ImR: shutdown activator"));
+                  ex._tao_print_exception (ACE_TEXT ("(%P|%t) ImR: shutdown activator"));
                 }
             }
         }
@@ -716,8 +715,10 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
     }
   catch (const CORBA::Exception& ex)
     {
-      ex._tao_print_exception (
-                               ACE_TEXT ("(%P|%t) ImR_Locator_i::set_timeout_policy ()"));
+      if (debug_ > 0)
+        {
+          ex._tao_print_exception (ACE_TEXT ("(%P|%t) ImR_Locator_i::set_timeout_policy ()"));
+        }
     }
 
   return ret._retn ();

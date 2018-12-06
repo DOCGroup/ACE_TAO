@@ -952,9 +952,7 @@ TAO_IMR_Op_Autostart::run (void)
             }
           catch (const CORBA::Exception& ex)
             {
-              ex._tao_print_exception (
-                server_list[i].server.in (
-                  ));
+              ex._tao_print_exception (server_list[i].server.in ());
               // Ignore exception
             }
         }

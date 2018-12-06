@@ -117,7 +117,9 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
   catch (const CORBA::Exception& ex)
     {
       if (debug_ > 1)
-        ex._tao_print_exception ("ImR Activator: Can't register with ImR.");
+        {
+          ex._tao_print_exception ("ImR Activator: Can't register with ImR.");
+        }
     }
 
   if (debug_ > 0)
