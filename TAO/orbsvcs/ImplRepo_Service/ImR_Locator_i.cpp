@@ -505,7 +505,7 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
     {
       if (debug_ > 1)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG,
+          ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) ImR: Failed to find server/pid in repository.\n")));
         }
     }
@@ -554,9 +554,11 @@ ImR_Locator_i::spawn_pid
   else
     {
       if (debug_ > 1)
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) ImR: Failed to find server <%C> in repository\n"),
-                        name));
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ImR: Failed to find server <%C> in repository\n"),
+                          name));
+        }
     }
   this->pinger_.set_pid (name, pid);
 
