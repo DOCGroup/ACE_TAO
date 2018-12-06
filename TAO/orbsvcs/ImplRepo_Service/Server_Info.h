@@ -130,7 +130,7 @@ struct Server_Info
 
   /// Last known process ID reported by the activator
   int pid;
-  /// the locator should expect a notification on server death from activator
+  /// The locator should expect a notification on server death from activator
   bool death_notify;
 };
 
