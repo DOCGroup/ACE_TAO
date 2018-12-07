@@ -32,6 +32,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start client main\n"));
+
   try {
     // Initialize orb
     CORBA::ORB_var orb = CORBA::ORB_init( argc, argv );
@@ -92,12 +94,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy ();
 
-    return 0;
   }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("client:");
+      return -1;
     }
 
-  return -1;
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) End server main\n"));
+
+  return 0;
 }

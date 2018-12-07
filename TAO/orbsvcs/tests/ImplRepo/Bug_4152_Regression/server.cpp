@@ -65,7 +65,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ORB_Runner *runner = new ORB_Runner (orb);
   int poa_delay = 10;
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start main\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start server main\n"));
 
   try
     {
