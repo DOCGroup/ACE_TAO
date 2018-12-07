@@ -92,16 +92,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
       }
 
-    orb->destroy ();
-
-  }
+      orb->destroy ();
+    }
   catch (const CORBA::Exception& ex)
     {
       ex._tao_print_exception ("client:");
       return -1;
     }
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) End server main\n"));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) End client main\n"));
 
   return 0;
 }
