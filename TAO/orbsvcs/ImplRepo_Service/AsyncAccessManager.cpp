@@ -285,13 +285,13 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
               ACE_CString reason = ACE_CString ("AAM_Status is ") +
                 status_name (this->status_);
               throw ImplementationRepository::CannotActivate (reason.c_str());
+              }
             }
-            }
-      }
+        }
       catch (const CORBA::Exception &ex)
-      {
-        rh->send_exception (ex._tao_duplicate());
-      }
+        {
+          rh->send_exception (ex._tao_duplicate());
+        }
     }
 }
 
@@ -528,8 +528,7 @@ AsyncAccessManager::notify_child_death (int pid)
     }
   if (this->info_->pid == pid || this->prev_pid_ == pid)
     {
-      if (this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH &&
-          this->rh_list_.size() > 0)
+      if (this->rh_list_.size() > 0)
         {
           this->send_start_request ();
           return true;
@@ -604,7 +603,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
                   {
                     ORBSVCS_DEBUG ((LM_DEBUG,
                                     ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid = %d,")
-                                    ACE_TEXT (" transition to WAIT_FOR_DEATH\n"),
+                                    ACE_TEXT (" transition to <WAIT_FOR_DEATH>\n"),
                                     this, this->info_->pid));
                   }
                 this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
