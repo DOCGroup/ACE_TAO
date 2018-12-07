@@ -65,6 +65,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ORB_Runner *runner = new ORB_Runner (orb);
   int poa_delay = 10;
 
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start main\n"));
+
   try
     {
       ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:?"));
@@ -105,14 +107,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Test_var tva = Test::_narrow (obj.in());
 
-      ACE_DEBUG ((LM_DEBUG, "Started Server pid = %d poa delay %d\n", ACE_OS::getpid (), poa_delay));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Started Server pid = %d poa delay %d\n", ACE_OS::getpid (), poa_delay));
 
       {
         ACE_CString status_file = base + ACE_CString(".status");
         ofstream out(status_file.c_str (), ios_base::app);
         if (!out.good())
           {
-            ACE_DEBUG ((LM_DEBUG, "server did not get good bit from %s\n", status_file.c_str()));
+            ACE_DEBUG ((LM_DEBUG, "(%P|%t) server did not get good bit from %s\n", status_file.c_str()));
           }
         out << ACE_OS::getpid () << endl;
         out.close ();
@@ -121,7 +123,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (tv);
       activatePOAs ();
 
-      ACE_DEBUG ((LM_DEBUG, "Activated POA pid = %d \n", ACE_OS::getpid ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid = %d\n", ACE_OS::getpid ()));
 
       TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*> (poa_a.in ());
       ACE_ASSERT (tpoa != 0);
@@ -134,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_ior = orb->object_to_string (tva.in());
       base += "_a";
-      ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:\n%s\n", base.c_str(), test_ior.in()));
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
@@ -149,7 +151,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   delete runner;
   orb = CORBA::ORB::_nil ();
-  ACE_DEBUG ((LM_DEBUG, "Exiting Server pid = %d \n",
+
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Exiting Server pid = %d \n",
               ACE_OS::getpid ()));
 
   return 0;
