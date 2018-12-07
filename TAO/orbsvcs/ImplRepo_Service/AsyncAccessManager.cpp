@@ -298,6 +298,11 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
 void
 AsyncAccessManager::notify_waiters (void)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("notify_waiters");
+    }
+
   for (size_t i = 0; i < this->rh_list_.size(); i++)
     {
       // Sending the IOR through to the response handler could trigger
@@ -516,7 +521,7 @@ AsyncAccessManager::notify_child_death (int pid)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C>, pid <%d>, status <%C> ")
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C> pid <%d> status <%C> ")
                       ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size()));
@@ -538,7 +543,7 @@ AsyncAccessManager::notify_child_death (int pid)
       if (ImR_Locator_i::debug () > 1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C>, pid <%d> does not match ")
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C> pid <%d> does not match ")
                           ACE_TEXT ("this info_.pid <%d> prev_pid <%d>\n"),
                           this, info_->ping_id (), pid,
                           this->info_->pid, this->prev_pid_));
@@ -565,7 +570,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied <%C>,")
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied <%C>")
                       ACE_TEXT (" this status <%C>\n"),
                       this, LiveEntry::status_name (server), status_name (this->status_)));
     }
@@ -635,8 +640,8 @@ AsyncAccessManager::send_start_request (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, manual_start <%d>\n"),
-                      this, this->manual_start_));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> manual_start <%d>\n"),
+                      this, this->info_->ping_id(), this->manual_start_));
     }
 
   if ((this->locator_.opts ()->lockout () && !this->info_.edit ()->start_allowed ()) ||

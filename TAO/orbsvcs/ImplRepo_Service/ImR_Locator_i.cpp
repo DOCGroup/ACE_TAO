@@ -485,8 +485,8 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server<%d> has died <%C>.\n"),
-                      pid, name));
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> has died with pid <%d>.\n"),
+                      name, pid));
     }
 
   this->pinger_.remove_server (name, pid);
@@ -527,8 +527,10 @@ ImR_Locator_i::spawn_pid
  const char* name, CORBA::Long pid)
 {
   if (debug_ > 1)
-    ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server<%d> spawned <%C>.\n"),
-                    pid, name));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server <%C> spawned with pid <%d>.\n"),
+                      name, pid));
+    }
 
   UpdateableServerInfo info(this->repository_, name);
   if (!info.null ())
@@ -536,8 +538,8 @@ ImR_Locator_i::spawn_pid
       if (debug_ > 4)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) ImR: Spawn_pid prev pid was <%d> becoming <%d>\n"),
-                          info.edit ()->active_info ()->pid, pid));
+                          ACE_TEXT ("(%P|%t) ImR: Server <%C> spawn_pid prev pid was <%d> becoming <%d>\n"),
+                          name, info.edit ()->active_info ()->pid, pid));
         }
 
       AsyncAccessManager_ptr aam (this->find_aam (name, true));
@@ -775,7 +777,7 @@ ImR_Locator_i::add_or_update_server
   if (debug_ > 1)
     {
       // Note : The info var may be null, so we use options.
-      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server: %C\n")
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) ImR: Server: <%C>\n")
                       ACE_TEXT ("\tActivator: <%C>\n")
                       ACE_TEXT ("\tCommand Line: <%C>\n")
                       ACE_TEXT ("\tWorking Directory: <%C>\n")
@@ -1303,7 +1305,7 @@ ImR_Locator_i::server_is_running
           return;
         }
       info.server_info (si);
-      this->pinger_.add_server (si->ping_id (), this->opts_->ping_external (), srvobj.in());
+      this->pinger_.add_server (si->ping_id (), this->opts_->ping_external (), srvobj.in(), info->active_info ()->pid);
 
       ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
       AsyncAccessManager_ptr aam (this->create_aam (info, true));
@@ -1323,7 +1325,8 @@ ImR_Locator_i::server_is_running
           info.edit ()->set_contact (partial_ior, sior.in(), srvobj.in());
 
           info.update_repo();
-          this->pinger_.add_server (info->ping_id(), true, srvobj.in());
+          // Add the server to our pinger list
+          this->pinger_.add_server (info->ping_id(), true, srvobj.in(), info->pid);
 
           aam = this->find_aam (info->ping_id ());
         }
@@ -1382,9 +1385,11 @@ ImR_Locator_i::server_is_shutting_down
     }
 
   if (debug_ > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("(%P|%t) ImR: Server <%C> is shutting down\n"),
-                    fqname));
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> is shutting down\n"),
+                      fqname));
+    }
 
   if (!info->is_mode(ImplementationRepository::PER_CLIENT))
     {
@@ -1571,7 +1576,8 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
         {
           this->pinger_.add_server (sip->key_name_.c_str(),
                                     this->opts_->ping_external (),
-                                    sip->server.in());
+                                    sip->server.in(),
+                                    sip->pid);
         }
       return; // already connected
     }
@@ -1609,7 +1615,8 @@ ImR_Locator_i::connect_server (UpdateableServerInfo& info)
                         sip->key_name_.c_str ()));
       this->pinger_.add_server (sip->key_name_.c_str(),
                                 this->opts_->ping_external (),
-                                sip->server.in());
+                                sip->server.in(),
+                                sip->pid);
 
 
     }

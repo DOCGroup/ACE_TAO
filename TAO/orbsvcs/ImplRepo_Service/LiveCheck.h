@@ -114,7 +114,8 @@ class Locator_Export LiveEntry
   LiveEntry (LiveCheck *owner,
              const char *server,
              bool may_ping,
-             ImplementationRepository::ServerObject_ptr ref);
+             ImplementationRepository::ServerObject_ptr ref,
+             int pid);
   ~LiveEntry (void);
 
   void release_callback (void);
@@ -214,15 +215,15 @@ typedef ACE_INT32 LC_token_type;
 class Locator_Export LC_TimeoutGuard
 {
  public:
-  /// construct a new stack-based guard. This sets a flag in the owner that will
+  /// Construct a new stack-based guard. This sets a flag in the owner that will
   /// be cleared on destruction.
   LC_TimeoutGuard (LiveCheck *owner, LC_token_type token);
 
-  /// releases the flag. If the LiveCheck received any requests for an immediate
-  /// or defered ping during this time, schedule it now.
+  /// Releases the flag. If the LiveCheck received any requests for an immediate
+  /// or deferred ping during this time, schedule it now.
   ~LC_TimeoutGuard (void);
 
-  /// Returns true if the busy flag in the owner was already set.
+  /// Returns true if the in handle timeout in the owner was already set.
   bool blocked (void) const;
 
  private:
@@ -258,7 +259,8 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   bool has_server (const char *server);
   void add_server (const char *server,
                    bool may_ping,
-                   ImplementationRepository::ServerObject_ptr ref);
+                   ImplementationRepository::ServerObject_ptr ref,
+                   int pid);
   void set_pid (const char *server, int pid);
   void remove_server (const char *server, int pid);
   bool remove_per_client_entry (LiveEntry *entry);
@@ -292,13 +294,13 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   ACE_Time_Value ping_interval_;
   bool running_;
   LC_token_type token_;
+  /// Flag to check whether we are in handle timeout. Because this can be
+  /// called re-entrant it is zero when we are not in handle timeout
   int handle_timeout_busy_;
   bool want_timeout_;
   ACE_Time_Value deferred_timeout_;
   /// Contains a list of servers which got removed during the handle_timeout,
-  /// these will be removed at the end of the handle_timeout. Be aware that
-  /// between the moment the server has been added to the list and the handling
-  /// of this list the server can already be restarted again.
+  /// these will be removed at the end of the handle_timeout.
   NamePidStack removed_entries_;
 };
 

@@ -509,7 +509,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) ImR: get_active_server could not")
-                          ACE_TEXT (" find <%C>, pid <%d> != <%d>\n"),
+                          ACE_TEXT (" find <%C> pid <%d> != <%d>\n"),
                           name.c_str(), pid, si->pid));
         }
       si.reset ();
