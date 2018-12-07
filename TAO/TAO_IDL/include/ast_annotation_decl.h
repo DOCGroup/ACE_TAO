@@ -50,6 +50,11 @@ public:
   virtual AST_Constant *fe_add_constant (AST_Constant *t);
 
   virtual int ast_accept (ast_visitor *visitor);
+
+  /**
+   * Should AMI visit this node? (NO)
+   */
+  virtual bool ami_visit ();
 };
 
 #endif

@@ -1672,3 +1672,9 @@ AST_Decl::annotations ()
 
   return *annotation_appls_;
 }
+
+bool
+AST_Decl::ami_visit ()
+{
+  return true;
+}

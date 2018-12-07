@@ -106,3 +106,9 @@ AST_Annotation_Decl::ast_accept (ast_visitor *visitor)
   ACE_UNUSED_ARG (visitor);
   return 0;
 }
+
+bool
+AST_Annotation_Decl::ami_visit ()
+{
+  return false;
+}
