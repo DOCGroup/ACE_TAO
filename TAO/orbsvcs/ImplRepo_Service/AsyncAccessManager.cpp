@@ -531,7 +531,6 @@ AsyncAccessManager::notify_child_death (int pid)
       if ((this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH) &&
           this->rh_list_.size() > 0)
         {
-          this->retries_ = this->info_->start_limit_;
           this->send_start_request ();
           return true;
         }
