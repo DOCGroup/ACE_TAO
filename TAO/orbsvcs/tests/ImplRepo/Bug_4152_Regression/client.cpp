@@ -62,8 +62,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     catch (const CORBA::Exception &ex)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Client caught: %C on first attempt, retrying\n",
-                    ex._name ()));
+                    "(%P|%t) Client caught: %C on first attempt, retrying killit %d\n",
+                    ex._name (), killit));
         try
           {
             if (CORBA::is_nil (test.in()))
