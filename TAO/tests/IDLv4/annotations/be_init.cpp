@@ -23,6 +23,7 @@
 #include "ast_union.h"
 #include "ast_enum_val.h"
 #include "utl_string.h"
+#include "ast_array.h"
 
 void
 BE_version ()
@@ -1125,6 +1126,52 @@ BE_post_init (char *[], long)
     annotation = t.assert_annotation_appl (value, 2, constant_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (member, 100);
+  } catch (Failed &f) {}
+
+  try {
+    Annotation_Test t("Annotate Array Base Type");
+    AST_Typedef *thetypedef = AST_Typedef::narrow_from_decl (t.run (
+      "typedef struct12 struct12Array @test_annotation_1 [12];\n"
+    ).assert_node ("::struct12Array"));
+    AST_Array *struct12Array =
+      dynamic_cast<AST_Array*> (thetypedef->base_type ());
+
+    // Verify Annotation on Base Type
+    AST_Annotation_Appls *annotations =
+      struct12Array->base_type_annotations ();
+    if (!annotations)
+      {
+        t.failed ("base_type_annotations() for struct12Array returned null!");
+      }
+    size_t count = annotations->size ();
+    if (count != 1)
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
+          ACE_TEXT ("expected one annotation on struct12Array base type, ")
+          ACE_TEXT ("it has %d annotations!\n"),
+          t.name_, count));
+        t.failed ();
+      }
+    AST_Annotation_Appl *annotation = (*annotations)[0];
+    if (!annotation)
+      {
+        t.failed ("annotation for struct12Array base type is null!");
+      }
+    if (annotation->annotation_decl () != test_annotation_1)
+      {
+        UTL_ScopedName *scopedname = annotation->name ();
+        const char *name = scopedname ?
+          scopedname-> get_string_copy () : "UNKNOWN";
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
+          ACE_TEXT ("expected annotation for struct12Array base type to be ")
+          ACE_TEXT ("test_annotation_1, but it was %C\n"),
+          t.name_, name));
+        if (scopedname)
+          {
+            delete [] name;
+          }
+        t.failed ();
+      }
   } catch (Failed &f) {}
 
   /* -------------------------------------------------------------------------

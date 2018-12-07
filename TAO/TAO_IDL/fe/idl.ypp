@@ -4079,30 +4079,30 @@ array_declarator :
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayIDSeen);
         }
-        at_least_one_array_dim
+        annotations_maybe at_least_one_array_dim
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_ArrayCompleted);
+
+          AST_Array *array = 0;
+          AST_Annotation_Appls *base_type_annotations = $3;
+          UTL_ExprList *array_dims = $4;
 
           /*
            * Create a node representing an array.
            */
-          if ($3 != 0)
+          if (array_dims)
             {
               UTL_ScopedName sn ($1,
                                  0);
-              $$ =
+              array =
                 idl_global->gen ()->create_array (
                                         &sn,
-                                        $3->length (),
-                                        $3,
+                                        array_dims->length (),
+                                        array_dims,
                                         0,
                                         0
                                       );
-
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
-
+              array->base_type_annotations (base_type_annotations);
               sn.destroy ();
 
               if (!idl_global->in_typedef ()
@@ -4111,13 +4111,18 @@ array_declarator :
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
+
+          array_dims->destroy ();
+          delete array_dims;
+
+          $$ = array;
         }
         ;
 
 at_least_one_array_dim :
         array_dim array_dims
         {
-          ACE_NEW_RETURN ($<elval>$,
+          ACE_NEW_RETURN ($$,
                           UTL_ExprList ($1,
                                         $2),
                           1);
@@ -4135,17 +4140,17 @@ array_dims
 
           if ($1 == 0)
             {
-              $<elval>$ = el;
+              $$ = el;
             }
           else
             {
               $1->nconc (el);
-              $<elval>$ = $1;
+              $$ = $1;
             }
         }
         | %empty
         {
-          $<elval>$ = 0;
+          $$ = 0;
         }
         ;
 
