@@ -3,34 +3,38 @@
 ## Topics
 
 - [Historical Document Describing How to Write a Backend](WRITING_A_BE).
+- [Creating Annotations for IDLv4](annotations.md)
 - [Less Relevant Historical Documents from Sun](historical)
 
-## TAO\_IDL File Layout
+## TAO\_IDL Layout
 
 TAO\_IDL is broken up into a few different modules, these can be generalized
 as:
 
-- AST
+- `AST`
   - "Abstract Syntax Tree"
   - Nodes representing the Abstract Syntax Tree
-- FE
+- `FE`
   - "Front End"
   - Parsing functionality that generates the Abstract Syntax Tree.
   - Among other things, contains the Bison grammar `fe/idl.ypp` and Flex
     token `fe/idl.ll` files.
-- BE
+- `BE`
   - "Back End"
   - Transformed Abstract Syntax Tree
-- UTL
+- `UTL`
   - "Util"
   - Utility Classes and Functions.
-  - Contains `idl_global` class which is made up of `include/idl_global.h` and
-    `utl/utl_global.cpp`.
-- DRV
+  - Contains class for the `idl_global` singleton which is made up of
+    `include/idl_global.h` and `utl/utl_global.cpp`.
+- `DRV`
   - "Driver"
   - The `tao_idl` program it self which drives the other modules.
 
-These are broken into these places on the file system:
+Lacking namespaces for the most part, in TAO\_IDL function and class names
+generally start with these modules, using the "C" way of emulating namespaces.
+
+The modules are broken into these places on the file system:
 
 - `include`
   - Contains the header files for AST, FE, and UTL modules.
