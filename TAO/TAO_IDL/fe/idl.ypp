@@ -2117,6 +2117,11 @@ primary_expr
               // is followed.
               expr = idl_global->gen ()->create_expr (
                   $1->copy ());
+              if (d->node_type () == AST_Decl::NT_enum_val)
+                {
+                  AST_EnumVal *enumval = AST_EnumVal::narrow_from_decl (d);
+                  expr->enum_parent (enumval->enum_parent ());
+                }
             }
 
           $<exval>$ = expr;
@@ -3713,6 +3718,7 @@ enumerator :
                                               c->next_enum_val (),
                                               &n
                                             );
+                  e->enum_parent (c);
                   e->annotation_appls ($1);
                 }
 

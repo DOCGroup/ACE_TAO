@@ -110,6 +110,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const { return true; }
+
 private:
   friend int tao_yyparse (void);
 
@@ -124,8 +126,6 @@ private:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
   // Scope Management.
-
-  virtual bool annotatable () const { return true; }
 };
 
 #endif           // _AST_ENUM_AST_ENUM_HH

@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_param_holder.h"
 #include "ast_visitor.h"
 #include "ast_generator.h"
+#include "ast_enum_val.h"
 
 #include "utl_err.h"
 #include "utl_scope.h"
@@ -93,6 +94,7 @@ AST_Expression::fill_definition_details (void)
                           : 0 ;
   this->pd_line = idl_global->lineno ();
   this->pd_file_name = idl_global->filename ();
+  enum_parent (0);
 }
 
 // An AST_Expression denoting a symbolic name.
@@ -131,6 +133,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
 {
   AST_Param_Holder *ph = v->param_holder_;
   this->fill_definition_details ();
+  enum_parent (v->enum_parent ());
 
   // If we are here because one string constant has
   // another one as its rhs, we must copy the UTL_String
@@ -2511,6 +2514,12 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
       return 0;
     }
 
+  if (d->node_type () == AST_Decl::NT_enum_val)
+    {
+      AST_EnumVal *enumval = AST_EnumVal::narrow_from_decl (d);
+      enum_parent (enumval->enum_parent ());
+    }
+
   // OK, now evaluate the constant we just got, to produce its value.
   c = AST_Constant::narrow_from_decl (d);
 
@@ -3362,4 +3371,16 @@ AST_Expression::exprtype_to_string (ExprType t)
   default:
     return "<UNKNOWN TYPE>";
   }
+}
+
+AST_Enum *
+AST_Expression::enum_parent ()
+{
+  return enum_parent_;
+}
+
+void
+AST_Expression::enum_parent (AST_Enum *node)
+{
+  enum_parent_ = node;
 }

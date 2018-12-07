@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_constant.h"
 
+class AST_Enum;
+
 // An enumerator is a constant of type unsigned long.
 
 class TAO_IDL_FE_Export AST_EnumVal : public virtual AST_Constant
@@ -90,6 +92,15 @@ public:
   static AST_Decl::NodeType const NT;
 
   virtual bool annotatable () const { return true; }
+
+  /// Parent Enum of this value
+  ///{
+  AST_Enum *enum_parent ();
+  void enum_parent (AST_Enum* node);
+  ///)
+
+private:
+  AST_Enum *enum_parent_;
 };
 
 #endif           // _AST_ENUM_VAL_AST_ENUM_VAL_HH

@@ -102,6 +102,16 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
   return visitor->visit_enum_val (this);
 }
 
-
-
 IMPL_NARROW_FROM_DECL(AST_EnumVal)
+
+AST_Enum *
+AST_EnumVal::enum_parent ()
+{
+  return enum_parent_;
+}
+
+void
+AST_EnumVal::enum_parent (AST_Enum *node)
+{
+  enum_parent_ = node;
+}
