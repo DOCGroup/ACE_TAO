@@ -1144,8 +1144,20 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
                                                         DEFAULT_SHUTDOWN_TIMEOUT);
       ImplementationRepository::ServerObject_var server =
         ImplementationRepository::ServerObject::_unchecked_narrow (obj.in ());
-      server->shutdown ();
-      return true;
+      if (CORBA::is_nil(server.in ()))
+        {
+          if (debug_ > 1)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) ImR: ServerObject reference with timeout is nil.\n")));
+              return false;
+            }
+        }
+      else
+        {
+          server->shutdown ();
+          return true;
+        }
     }
   catch (const CORBA::TIMEOUT &ex)
     {
@@ -1179,7 +1191,7 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
     }
   catch (const CORBA::TRANSIENT& ex)
     {
-      CORBA::ULong minor = ex.minor () & TAO_MINOR_MASK;
+      CORBA::ULong const minor = ex.minor () & TAO_MINOR_MASK;
       if (minor != TAO_POA_DISCARDING && minor != TAO_POA_HOLDING)
         {
           info.edit ()->reset_runtime ();
