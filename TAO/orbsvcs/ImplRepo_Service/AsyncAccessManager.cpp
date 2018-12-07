@@ -528,8 +528,12 @@ AsyncAccessManager::notify_child_death (int pid)
     }
   if (this->info_->pid == pid || this->prev_pid_ == pid)
     {
+      // We are informed that our child has died, when we have waiters for this
+      // child we need to send a new start request, we do have to be sure that
+      // we reset our retries
       if (this->rh_list_.size() > 0)
         {
+          this->retries_ = this->info_->start_limit_;
           this->send_start_request ();
           return true;
         }
@@ -639,8 +643,8 @@ AsyncAccessManager::send_start_request (void)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> manual_start <%d>\n"),
-                      this, this->info_->ping_id(), this->manual_start_));
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> manual_start <%d> retries <%d>\n"),
+                      this, this->info_->ping_id(), this->manual_start_, this->retries_));
     }
 
   if ((this->locator_.opts ()->lockout () && !this->info_.edit ()->start_allowed ()) ||
