@@ -945,7 +945,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
   this->create_server (server_started, si);
   if (was_started && !is_started)
     {
-      this->opts_.pinger ()->remove_server (si->key_name_.c_str ());
+      this->opts_.pinger ()->remove_server (si->key_name_.c_str (), 0);
     }
   if (!was_started && is_started)
     {
@@ -955,7 +955,8 @@ Shared_Backing_Store::load_server (Server_Info *info,
       si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
       this->opts_.pinger ()->add_server (si->key_name_.c_str (),
                                          this->opts_.ping_external (),
-                                         si->server.in ());
+                                         si->server.in (),
+                                         si->pid);
     }
 
 }
@@ -1089,7 +1090,7 @@ Shared_Backing_Store::process_updates (void)
               }
             else
               {
-                this->opts_.pinger ()->remove_server (name.c_str());
+                this->opts_.pinger ()->remove_server (name.c_str(), 0);
                 this->servers().unbind (name);
               }
             break;
