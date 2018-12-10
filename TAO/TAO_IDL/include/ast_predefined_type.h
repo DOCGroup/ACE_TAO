@@ -95,8 +95,6 @@ public:
       , PT_abstract     // Predefined type "CORBA::AbstractBase"
       , PT_void         // Predefined type "void"
       , PT_pseudo       // Predefined type for pseudo objects
-      , PT_string
-      , PT_enum
     };
 
   AST_PredefinedType (PredefinedType t,
