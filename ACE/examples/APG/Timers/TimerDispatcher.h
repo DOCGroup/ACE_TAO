@@ -4,8 +4,8 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"  // needed for ACE_Event
-#include "ace/Timer_Queue.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Timer_Queuefwd.h"
 
 // Listing 1 code/ch20
 class Timer_Dispatcher

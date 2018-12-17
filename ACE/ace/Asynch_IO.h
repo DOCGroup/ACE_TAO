@@ -33,17 +33,12 @@
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Synch_Traits.h"
-#if defined (ACE_HAS_THREADS)
-#  include "ace/Thread_Mutex.h"
-#else
-#  include "ace/Null_Mutex.h"
-#endif /* ACE_HAS_THREADS */
-#include "ace/Refcounted_Auto_Ptr.h"
-
 #include "ace/os_include/os_signal.h"
 #include "ace/os_include/sys/os_socket.h"
 #include "ace/os_include/sys/os_types.h"
+
+#include "ace/Refcounted_Auto_Ptr.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

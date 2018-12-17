@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ace/WIN32_Asynch_IO.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \

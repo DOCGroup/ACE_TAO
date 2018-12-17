@@ -62,6 +62,8 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
+  ACE_ASSERT (element != 0);
+
   // Check to see that we not at the high water mark.
   if (this->mode_ == ACE_PURE_FREE_LIST
       || this->size_ < this->hwm_)

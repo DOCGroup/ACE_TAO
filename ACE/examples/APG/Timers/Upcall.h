@@ -11,13 +11,17 @@
 // Listing 1 code/ch20
 class UpcallHandler;
 
-typedef ACE_Timer_Queue_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-  PTimerQueue;
+typedef ACE_Timer_Queue_T<PCB,
+                          UpcallHandler,
+                          ACE_SYNCH_NULL_MUTEX,
+                          ACE_Default_Time_Policy> PTimerQueue;
 
 // Create a special heap-based timer queue that allows you to
 // control exactly how timer evetns are handled.
-typedef ACE_Timer_Heap_T<PCB*, UpcallHandler, ACE_Null_Mutex>
-  PTimerHeap;
+typedef ACE_Timer_Heap_T<PCB,
+                         UpcallHandler,
+                         ACE_SYNCH_NULL_MUTEX,
+                         ACE_Default_Time_Policy> PTimerHeap;
 // Listing 1
 
 class UpcallHandler

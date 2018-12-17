@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ace/Asynch_Pseudo_Task.h"
 
 #include "ace/OS_NS_errno.h"

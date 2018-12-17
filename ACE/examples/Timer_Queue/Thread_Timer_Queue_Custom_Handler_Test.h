@@ -16,31 +16,32 @@
 #ifndef _THREAD_TIMER_QUEUE_TEST_H_
 #define _THREAD_TIMER_QUEUE_TEST_H_
 
-#include "ace/Task.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
+#include "ace/svc_export.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Task.h"
 #include "ace/Timer_Heap_T.h"
 #include "ace/Timer_Queue_Adapters.h"
-#include "ace/svc_export.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+
 #include "Driver.h"
 #include "Custom_Handler.h"
 
 // These typedefs ensure that we use the minimal amount of locking
 // necessary.
-typedef ACE_Timer_Heap_T<Custom_Handler*,
+typedef ACE_Timer_Heap_T<Custom_Handler,
                          Custom_Handler_Upcall,
-                         ACE_Null_Mutex>
+                         ACE_SYNCH_NULL_MUTEX,
+                         ACE_Default_Time_Policy>
         Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<Custom_Handler*,
+typedef ACE_Timer_Heap_Iterator_T<Custom_Handler,
                                   Custom_Handler_Upcall,
-                                  ACE_Null_Mutex>
+                                  ACE_SYNCH_NULL_MUTEX,
+                                  ACE_Default_Time_Policy>
         Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap, Custom_Handler*>
+typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap, Custom_Handler>
         Thread_Timer_Queue;
 
 // Forward declaration.

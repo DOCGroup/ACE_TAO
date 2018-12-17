@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
+ACE_Timer_Node_T<TYPE>::set (TYPE *type,
                              const void *a,
                              const ACE_Time_Value &t,
                              const ACE_Time_Value &i,
@@ -18,7 +18,7 @@ ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
+ACE_Timer_Node_T<TYPE>::set (TYPE *type,
                              const void *a,
                              const ACE_Time_Value &t,
                              const ACE_Time_Value &i,
@@ -35,14 +35,14 @@ ACE_Timer_Node_T<TYPE>::set (const TYPE &type,
   this->timer_id_ = timer_id;
 }
 
-template <class TYPE> ACE_INLINE TYPE &
+template <class TYPE> ACE_INLINE TYPE *
 ACE_Timer_Node_T<TYPE>::get_type (void)
 {
   return this->type_;
 }
 
 template <class TYPE> ACE_INLINE void
-ACE_Timer_Node_T<TYPE>::set_type (TYPE &type)
+ACE_Timer_Node_T<TYPE>::set_type (TYPE *type)
 {
   this->type_ = type;
 }

@@ -20,14 +20,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
+#include "ace/Basic_Types.h"
+#include "ace/Condition_Attributes.h"
 #include "ace/Containers.h"
 #include "ace/Free_List.h"
-#include "ace/Singleton.h"
 #include "ace/Log_Category.h"
+#include "ace/Singleton.h"
+#include "ace/Synch.h"
 #include "ace/Synch_Traits.h"
-#include "ace/Basic_Types.h"
+#include "ace/Unbounded_Queue.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
@@ -1238,17 +1239,17 @@ protected:
 
   // = ACE_Thread_Mutex and condition variable for synchronizing termination.
 #if defined (ACE_HAS_THREADS)
-  /// Serialize access to the zero_cond_.
-  ACE_Thread_Mutex lock_;
+  /// Serialize access to the <zero_cond_>.
+  ACE_SYNCH_MUTEX     lock_;
 
   /// Keep track of when there are no more threads.
-  ACE_Condition_Thread_Mutex zero_cond_;
+  ACE_SYNCH_CONDITION zero_cond_;
 #endif /* ACE_HAS_THREADS */
 
   ACE_Locked_Free_List<ACE_Thread_Descriptor, ACE_SYNCH_MUTEX> thread_desc_freelist_;
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
-  ACE_Condition_Thread_Mutex join_cond_;
+  ACE_SYNCH_CONDITION join_cond_;
 #endif
 
 private:

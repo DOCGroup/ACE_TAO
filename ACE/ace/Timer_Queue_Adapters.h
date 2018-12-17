@@ -13,15 +13,18 @@
 #define ACE_TIMER_QUEUE_ADAPTERS_H
 #include /**/ "ace/pre.h"
 
-#include "ace/Task.h"
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include "ace/Event_Handler.h"
+#include "ace/OS_NS_Thread.h"
 #include "ace/Signal.h"
 #include "ace/Sig_Handler.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Task.h"
+#include "ace/Thread_Manager.h"
+#include "ace/Time_Value.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 #  include "ace/Unbounded_Queue.h"
@@ -32,7 +35,62 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-class ACE_Sig_Set;
+/**
+  * @class ACE_Timer_Queue_Adapter_Base
+  *
+  * @brief interface common to the available timer queue adapter strategies
+  *
+  * @note used mainly for testing purposes
+  *
+  */
+template <class TYPE = ACE_Event_Handler>
+class ACE_Timer_Queue_Adapter_Base
+{
+public:
+  virtual ~ACE_Timer_Queue_Adapter_Base (void) {};
+
+  /**
+    * Schedule @a type that will expire at @a future_time,
+    * which is specified in absolute time.  If it expires then @a act is
+    * passed in as the value to the <functor>.  If @a interval is != to
+    * ACE_Time_Value::zero then it is used to reschedule the @a type
+    * automatically, using relative time to the current <gettimeofday>.
+    * This method returns a <timer_id> that is a pointer to a token
+    * which stores information about the event. This <timer_id> can be
+    * used to cancel the timer before it expires.  Returns -1 on
+    * failure.
+    */
+  virtual long schedule (TYPE *handler,
+                         const void *act,
+                         const ACE_Time_Value &future_time,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero) = 0;
+
+  /**
+    * Cancel all timer associated with @a type.  If <dont_call> is 0
+    * then the <functor> will be invoked.  Returns number of timers
+    * cancelled.
+    */
+  virtual int cancel (TYPE *type,
+                      int dont_call = 1);
+
+  /**
+    * Cancel the single timer that matches the @a timer_id value (which
+    * was returned from the <schedule> method).  If act is non-NULL
+    * then it will be set to point to the ``magic cookie'' argument
+    * passed in when the timer was registered.  This makes it possible
+    * to free up the memory and avoid memory leaks.  If <dont_call> is
+    * 0 then the <functor> will be invoked.  Returns 1 if cancellation
+    * succeeded and 0 if the @a timer_id wasn't found.
+    */
+  virtual int cancel (long timer_id,
+                      const void **act = 0,
+                      int dont_call = 1) = 0;
+
+  /**
+    * Retrieve the time of day (according to the TIME POLICY of the timer queue)
+    */
+  virtual ACE_Time_Value gettimeofday (void) = 0;
+};
 
 /**
  * @class ACE_Async_Timer_Queue_Adapter
@@ -47,11 +105,13 @@ class ACE_Sig_Set;
  *
  * @todo This adapter does not automatically reschedule repeating timers.
  */
-template <class TQ, class TYPE = ACE_Event_Handler*>
-class ACE_Async_Timer_Queue_Adapter : public ACE_Event_Handler
+template <class TQ, class TYPE = ACE_Event_Handler>
+class ACE_Async_Timer_Queue_Adapter
+ : public ACE_Timer_Queue_Adapter_Base<TYPE>
+ , public ACE_Event_Handler
 {
 public:
-  typedef TQ TIMER_QUEUE;
+  typedef TQ TIMER_QUEUE_T;
 
   /// Constructor
   /**
@@ -68,14 +128,21 @@ public:
    * calling expire().  Note that interval timers are not implemented
    * yet.
    */
-  long schedule (TYPE type,
-                 const void *act,
-                 const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (TYPE *handler,
+                         const void *act,
+                         const ACE_Time_Value &future_time,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
 
   /// Cancel the @a timer_id and pass back the @a act if an address is
-  /// passed in.
-  int cancel (long timer_id, const void **act = 0);
+  /// passed in. If <dont_call> is 0 then the <functor> will be invoked.
+  virtual int cancel (long timer_id,
+                      const void **act = 0,
+                      int dont_call = 1);
+
+  /**
+  * Retrieve the time of day (according to the TIME POLICY of the timer queue)
+  */
+  virtual ACE_Time_Value gettimeofday (void);
 
   /// Dispatch all timers with expiry time at or before the current time.
   /// Returns the number of timers expired.
@@ -116,12 +183,14 @@ private:
  * (IMHO) the effort and portability problems discourage their
  * use.
  */
-template <class TQ, class TYPE = ACE_Event_Handler*>
-class ACE_Thread_Timer_Queue_Adapter : public ACE_Task_Base
+template <class TQ, class TYPE = ACE_Event_Handler>
+class ACE_Thread_Timer_Queue_Adapter
+ : public ACE_Timer_Queue_Adapter_Base<TYPE>
+ , public ACE_Task_Base
 {
 public:
   /// Trait for the underlying queue type.
-  typedef TQ TIMER_QUEUE;
+  typedef TQ TIMER_QUEUE_T;
 
 # if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
 
@@ -142,14 +211,30 @@ public:
 
   /// Schedule the timer according to the semantics of the <TQ>; wakes
   /// up the dispatching thread.
-  long schedule (TYPE handler,
-                 const void *act,
-                 const ACE_Time_Value &future_time,
-                 const ACE_Time_Value &interval = ACE_Time_Value::zero);
+  virtual long schedule (TYPE *handler,
+                         const void *act,
+                         const ACE_Time_Value &future_time,
+                         const ACE_Time_Value &interval = ACE_Time_Value::zero);
+
+  /**
+    * Cancel all timer associated with @a type.  If <dont_call> is 0
+    * then the <functor> will be invoked.  Returns number of timers
+    * cancelled.
+    */
+  virtual int cancel (TYPE *handler,
+                      int dont_call = 1);
 
   /// Cancel the @a timer_id and return the @a act parameter if an
   /// address is passed in. Also wakes up the dispatching thread.
-  int cancel (long timer_id, const void **act = 0);
+  /// If <dont_call> is 0 then the <functor> will be invoked.
+  virtual int cancel (long timer_id,
+                      const void **act = 0,
+                      int dont_call = 1);
+
+  /**
+    * Retrieve the time of day (according to the TIME POLICY of the timer queue)
+    */
+  virtual ACE_Time_Value gettimeofday (void);
 
   /// Runs the dispatching thread.
   virtual int svc (void);

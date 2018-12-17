@@ -34,16 +34,15 @@
 // necessary.
 typedef ACE_Event_Handler_Handle_Timeout_Upcall
         Upcall;
-typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
+typedef ACE_Timer_Heap_T<ACE_Event_Handler,
                          Upcall,
-                         ACE_Null_Mutex>
-        Timer_Heap;
-typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler *,
+                         ACE_SYNCH_NULL_MUTEX,
+                         ACE_Default_Time_Policy> Timer_Heap;
+typedef ACE_Timer_Heap_Iterator_T<ACE_Event_Handler,
                                   Upcall,
-                                  ACE_Null_Mutex>
-        Timer_Heap_Iterator;
-typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap>
-        Thread_Timer_Queue;
+                                  ACE_SYNCH_NULL_MUTEX,
+                                  ACE_Default_Time_Policy> Timer_Heap_Iterator;
+typedef ACE_Thread_Timer_Queue_Adapter<Timer_Heap> Thread_Timer_Queue;
 
 // Forward declaration.
 class Thread_Timer_Queue_Test_Driver;

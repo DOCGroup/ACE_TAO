@@ -8,10 +8,12 @@
  */
 //=============================================================================
 
-#include "ace/Timer_Wheel.h"
-#include "ace/Timer_Queue_Adapters.h"
-#include "ace/Truncate.h"
 #include "test_config.h"
+
+#include "ace/Synch_Traits.h"
+#include "ace/Timer_Queue_Adapters.h"
+#include "ace/Timer_Wheel.h"
+#include "ace/Truncate.h"
 
 #if defined (ACE_HAS_THREADS)
 
@@ -51,10 +53,10 @@ class ICustomEventHandler
 class CCustomEventHandlerUpcall
 {
     public:
-
-        typedef ACE_Timer_Queue_T<ICustomEventHandler*,
+        typedef ACE_Timer_Queue_T<ICustomEventHandler,
                                   CCustomEventHandlerUpcall,
-                                  ACE_Null_Mutex> TTimerQueue;
+                                  ACE_SYNCH_NULL_MUTEX,
+                                  ACE_Default_Time_Policy> TTimerQueue;
 
         /// Default constructor
         CCustomEventHandlerUpcall()
@@ -162,14 +164,16 @@ class CTestEventHandler : public ICustomEventHandler
 };
 
 // Used for the actual timer queue thread adapter
-typedef ACE_Timer_Wheel_T <ICustomEventHandler*,
+typedef ACE_Timer_Wheel_T <ICustomEventHandler,
                            CCustomEventHandlerUpcall,
-                           ACE_Null_Mutex> TTimerWheel;
-typedef ACE_Timer_Wheel_Iterator_T <ICustomEventHandler*,
+                           ACE_SYNCH_NULL_MUTEX,
+                           ACE_Default_Time_Policy> TTimerWheel;
+typedef ACE_Timer_Wheel_Iterator_T <ICustomEventHandler,
                                     CCustomEventHandlerUpcall,
-                                    ACE_Null_Mutex> TTimerWheelIterator;
+                                    ACE_SYNCH_NULL_MUTEX,
+                                    ACE_Default_Time_Policy> TTimerWheelIterator;
 typedef ACE_Thread_Timer_Queue_Adapter<TTimerWheel,
-                                       ICustomEventHandler*> TTimerWheelThreadAdapter;
+                                       ICustomEventHandler> TTimerWheelThreadAdapter;
 
 #endif /* ACE_HAS_THREADS */
 
@@ -189,14 +193,14 @@ run_main (int, ACE_TCHAR *[])
         // Create a test event handler
         long iCallCount = 0;
         CTestEventHandler* p_TestEventHandler = 0;
-        ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
+        ACE_NEW_RETURN (p_TestEventHandler, CTestEventHandler (&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
             ACE_TEXT("%I(%t) Scheduling timer...\n")));
 
-        TimerWheelThreadAdapter.schedule(p_TestEventHandler,
-            (void*) 1,
-            ACE_OS::gettimeofday() + ACE_Time_Value(1, 0));
+        TimerWheelThreadAdapter.schedule (p_TestEventHandler,
+                                          (void*)1,
+                                          ACE_OS::gettimeofday () + ACE_Time_Value (1, 0));
 
         ACE_OS::sleep(ACE_Time_Value(1, 100 * 1000));
         ACE_TEST_ASSERT(iCallCount == 1);

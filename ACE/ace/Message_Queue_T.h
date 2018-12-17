@@ -13,15 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/Message_Queue.h"
-#include "ace/Dynamic_Message_Strategy.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Guard_T.h"
-#include "ace/Time_Policy.h"
-#include "ace/Time_Value_T.h"
 #if defined (ACE_HAS_THREADS)
 # include "ace/Condition_Attributes.h"
 #endif
+#include "ace/Dynamic_Message_Strategy.h"
+#include "ace/Guard_T.h"
+#include "ace/Message_Queue.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Time_Policy.h"
+#include "ace/Time_Value_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

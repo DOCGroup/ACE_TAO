@@ -42,7 +42,7 @@ class ACE_Proactor_Impl;
 class ACE_Proactor_Timer_Handler;
 
 /// Type def for the timer queue.
-typedef ACE_Abstract_Timer_Queue<ACE_Handler *> ACE_Proactor_Timer_Queue;
+typedef ACE_Abstract_Timer_Queue<ACE_Handler> ACE_Proactor_Timer_Queue;
 
 /**
  * @class ACE_Proactor_Handle_Timeout_Upcall
@@ -129,31 +129,37 @@ class ACE_Export ACE_Proactor
 {
   // = Here are the private typedefs that the ACE_Proactor uses.
 
-  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler *>
+  typedef ACE_Timer_Queue_Iterator_T<ACE_Handler>
     TIMER_QUEUE_ITERATOR;
-  typedef ACE_Timer_List_T<ACE_Handler *,
+  typedef ACE_Timer_List_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_LIST;
-  typedef ACE_Timer_List_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_List_Iterator_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_LIST_ITERATOR;
-  typedef ACE_Timer_Heap_T<ACE_Handler *,
+  typedef ACE_Timer_Heap_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_HEAP;
-  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_Heap_Iterator_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_HEAP_ITERATOR;
-  typedef ACE_Timer_Wheel_T<ACE_Handler *,
+  typedef ACE_Timer_Wheel_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_WHEEL;
-  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler *,
+  typedef ACE_Timer_Wheel_Iterator_T<ACE_Handler,
     ACE_Proactor_Handle_Timeout_Upcall,
-    ACE_SYNCH_RECURSIVE_MUTEX>
+    ACE_SYNCH_RECURSIVE_MUTEX,
+    ACE_Default_Time_Policy>
   TIMER_WHEEL_ITERATOR;
 
   // = Friendship.
@@ -182,7 +188,7 @@ public:
 
   /// Set pointer to a process-wide ACE_Proactor and return existing
   /// pointer.
-  static ACE_Proactor *instance (ACE_Proactor * proactor,
+  static ACE_Proactor *instance (ACE_Proactor *proactor,
                                  bool delete_proactor = false);
 
   /// Delete the dynamically allocated Singleton.
@@ -301,11 +307,11 @@ public:
    * with accidentally deleting the wrong timer.  Returns -1 on
    * failure (which is guaranteed never to be a valid <timer_id>).
    */
-  long schedule_timer (ACE_Handler &handler,
+  long schedule_timer (ACE_Handler *handler,
                        const void *act,
                        const ACE_Time_Value &time);
 
-  long schedule_repeating_timer (ACE_Handler &handler,
+  long schedule_repeating_timer (ACE_Handler *handler,
                                  const void *act,
                                  const ACE_Time_Value &interval);
 
@@ -314,14 +320,14 @@ public:
 
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
-  long schedule_timer (ACE_Handler &handler,
+  long schedule_timer (ACE_Handler *handler,
                        const void *act,
                        const ACE_Time_Value &time,
                        const ACE_Time_Value &interval);
 
   /// Cancel all timers associated with this @a handler.  Returns number
   /// of timers cancelled.
-  int cancel_timer (ACE_Handler &handler,
+  int cancel_timer (ACE_Handler *handler,
                     int dont_call_handle_close = 1);
 
   /**

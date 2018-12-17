@@ -23,7 +23,7 @@ class ACE_Timer_Node_Dispatch_Info_T
 {
 public:
   /// The type of object held in the queue
-  TYPE type_;
+  TYPE* type_;
 
   /// Asynchronous completion token associated with the timer.
   const void *act_;
@@ -51,7 +51,7 @@ public:
   typedef ACE_Timer_Node_Dispatch_Info_T <TYPE> DISPATCH_INFO;
 
   /// Singly linked list
-  void set (const TYPE &type,
+  void set (TYPE *type,
             const void *a,
             const ACE_Time_Value &t,
             const ACE_Time_Value &i,
@@ -59,7 +59,7 @@ public:
             long timer_id);
 
   /// Doubly linked list version
-  void set (const TYPE &type,
+  void set (TYPE *type,
             const void *a,
             const ACE_Time_Value &t,
             const ACE_Time_Value &i,
@@ -70,10 +70,10 @@ public:
   // = Accessors
 
   /// Get the type.
-  TYPE &get_type (void);
+  TYPE *get_type (void);
 
   /// Set the type.
-  void set_type (TYPE &type);
+  void set_type (TYPE *type);
 
   /// Get the asynchronous completion token.
   const void *get_act (void);
@@ -126,7 +126,7 @@ public:
 
 private:
   /// Type of object stored in the Queue
-  TYPE type_;
+  TYPE* type_;
 
   /// Asynchronous completion token associated with the timer.
   const void *act_;

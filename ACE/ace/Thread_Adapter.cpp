@@ -1,9 +1,11 @@
 #include "ace/Thread_Adapter.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Thread_Exit.h"
-#include "ace/Thread_Hook.h"
+
 #include "ace/Object_Manager_Base.h"
 #include "ace/Service_Config.h"
+#include "ace/Synch.h"
+#include "ace/Thread_Exit.h"
+#include "ace/Thread_Hook.h"
+#include "ace/Thread_Manager.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # include "ace/Thread_Adapter.inl"

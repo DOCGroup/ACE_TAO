@@ -3,12 +3,14 @@
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms with Asynchronous IO
 
-#include "ace/Proactor.h"
-#include "ace/Message_Block.h"
-#include "ace/INET_Addr.h"
 #include "ace/Asynch_IO_Impl.h"
-#include "ace/os_include/os_errno.h"
+#include "ace/INET_Addr.h"
+#include "ace/Message_Block.h"
+#include "ace/Synch.h"
+#include "ace/Proactor.h"
 #include "ace/Truncate.h"
+
+#include "ace/os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

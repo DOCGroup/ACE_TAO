@@ -3,7 +3,8 @@
 */
 
 #include "Logging_Event_Handler_Ex.h"
-#include "ace/Timer_Queue.h"
+
+#include "ace/Abstract_Timer_Queue.h"
 
 int Logging_Event_Handler_Ex::handle_input (ACE_HANDLE h) {
   time_of_last_log_record_ =

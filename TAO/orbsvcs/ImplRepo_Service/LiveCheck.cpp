@@ -4,11 +4,13 @@
 
 #include "orbsvcs/Log_Macros.h"
 
-#include "tao/ORB_Core.h"
+#include "ace/Abstract_Timer_Queue.h"
 #include "ace/Reactor.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Queue_Iterator.h"
+
+#include "tao/ORB_Core.h"
 
 LiveListener::LiveListener (const char *server)
   : server_ (server),
@@ -1167,7 +1169,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
       ACE_Timer_Queue *tq = this->reactor ()->timer_queue ();
       if (!tq->is_empty ())
         {
-          for (ACE_Timer_Queue_Iterator_T<ACE_Event_Handler*> &i = tq->iter ();
+          for (ACE_Timer_Queue_Iterator_T<ACE_Event_Handler> &i = tq->iter ();
                !i.isdone (); i.next())
             {
               if (i.item ()->get_type () == this)

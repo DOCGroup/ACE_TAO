@@ -100,7 +100,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   // Register a 2 second timer.
   ACE_Time_Value foo_tv (2);
-  if (proactor.schedule_timer (handler,
+  if (proactor.schedule_timer (&handler,
                                (void *) "Proactor",
                                ACE_Time_Value::zero,
                                foo_tv) == -1)

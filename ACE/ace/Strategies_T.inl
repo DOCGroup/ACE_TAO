@@ -165,19 +165,6 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::ACE_Schedule_All_Reactive_Strat
     this->reactor_ = scheduler->reactor ();
 }
 
-template <class SVC_HANDLER> ACE_INLINE
-ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy
-  (SVC_HANDLER *scheduler)
-  : ACE_Scheduling_Strategy<SVC_HANDLER> (scheduler)
-{
-  ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::ACE_Schedule_All_Threaded_Strategy");
-
-  if (scheduler == 0 || scheduler->thr_mgr () == 0)
-    this->thr_mgr_ = ACE_Thread_Manager::instance ();
-  else
-    this->thr_mgr_ = scheduler->thr_mgr ();
-}
-
 template <class T> ACE_INLINE
 ACE_Refcounted_Hash_Recyclable<T>::ACE_Refcounted_Hash_Recyclable (void)
   : ACE_Refcountable_T<ACE_Null_Mutex> (0),

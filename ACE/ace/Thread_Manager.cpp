@@ -1,12 +1,14 @@
-#include "ace/TSS_T.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
-#include "ace/Dynamic.h"
-#include "ace/Object_Manager.h"
-#include "ace/Singleton.h"
+
 #include "ace/Auto_Ptr.h"
+#include "ace/Dynamic.h"
 #include "ace/Guard_T.h"
-#include "ace/Time_Value.h"
+#include "ace/Object_Manager.h"
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Singleton.h"
+#include "ace/Time_Value.h"
+#include "ace/TSS_T.h"
 #include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
@@ -366,12 +368,12 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t prealloc,
   : grp_id_ (1),
     automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
-    , zero_cond_ (lock_)
+  , zero_cond_ (lock_)
 #endif /* ACE_HAS_THREADS */
-    , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
-                             prealloc, lwm, hwm, inc)
+  , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
+                           prealloc, lwm, hwm, inc)
 #if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
-    , join_cond_ (this->lock_)
+  , join_cond_ (lock_)
 #endif
 {
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
@@ -385,12 +387,12 @@ ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attribut
   : grp_id_ (1),
     automatic_wait_ (1)
 #if defined (ACE_HAS_THREADS)
-    , zero_cond_ (lock_, attributes)
+  , zero_cond_ (lock_, attributes)
 #endif /* ACE_HAS_THREADS */
-    , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
-                             prealloc, lwm, hwm, inc)
+  , thread_desc_freelist_ (ACE_FREE_LIST_WITH_POOL,
+                           prealloc, lwm, hwm, inc)
 #if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_PTHREAD_JOIN)
-    , join_cond_ (this->lock_)
+  , join_cond_ (lock_)
 #endif
 {
 #if !defined (ACE_HAS_THREADS)
@@ -1895,10 +1897,17 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                 return -1;
               }
 # endif
-            ACE_SET_BITS (iter.next ()->thr_state_,
-                          ACE_THR_JOINING);
+            ACE_SET_BITS (iter.next ()->thr_state_, ACE_THR_JOINING);
+            this->thr_to_be_removed_.enqueue_tail (iter.next ());
             copy_table[copy_count++] = *iter.next ();
           }
+      }
+
+    if (!this->thr_to_be_removed_.is_empty ())
+      {
+        ACE_Thread_Descriptor *td = 0;
+        while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+          this->remove_thr (td, 0); // *NOTE*: ACE_OS::thr_join() calls ::CloseHandle()
       }
 
 #if !defined (ACE_HAS_VXTHREADS)

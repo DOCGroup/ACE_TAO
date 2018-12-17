@@ -2,8 +2,9 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE void
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
-                                      size_t wm_size)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks (
+  ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds cmd,
+  size_t wm_size)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks");
   if (cmd == ACE_IO_Cntl_Msg::SET_LWM)
@@ -13,28 +14,33 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::water_marks (ACE_IO_Cntl_Msg::ACE_IO_Cntl_
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::getq (ACE_Message_Block *&mb, ACE_Time_Value *tv)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::getq (
+  ACE_Message_Block *&mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::getq");
   return this->msg_queue_->dequeue_head (mb, tv);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::putq (ACE_Message_Block *mb, ACE_Time_Value *tv)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::putq (
+  ACE_Message_Block *mb, ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::putq");
   return this->msg_queue_->enqueue_tail (mb, tv);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ungetq (ACE_Message_Block *mb, ACE_Time_Value *tv)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ungetq (
+  ACE_Message_Block *mb,
+  ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::ungetq");
   return this->msg_queue_->enqueue_head (mb, tv);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush (u_long f)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush (
+  u_long f)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush");
   if (ACE_BIT_ENABLED (f, ACE_Task_Flags::ACE_FLUSHALL))
@@ -44,7 +50,8 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::flush (u_long f)
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE void
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue (
+  ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::msg_queue");
   if (this->delete_msg_queue_)
@@ -74,14 +81,17 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::gettimeofday (void) const
 
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 void
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (TIME_POLICY const & rhs)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::set_time_policy (
+  TIME_POLICY const & rhs)
 {
   if (this->msg_queue_ != 0)
     this->msg_queue_->set_time_policy (rhs);
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::reply (ACE_Message_Block *mb, ACE_Time_Value *tv)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::reply (
+  ACE_Message_Block *mb,
+  ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::reply");
   return this->sibling ()->put_next (mb, tv);
@@ -95,7 +105,8 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next (void)
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE void
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next (
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next");
   this->next_ = q;
@@ -104,7 +115,9 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY>
 // Transfer msg to the next ACE_Task.
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::put_next (ACE_Message_Block *msg, ACE_Time_Value *tv)
+ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::put_next (
+  ACE_Message_Block *msg,
+  ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::put_next");
   return this->next_ == 0 ? -1 : this->next_->put (msg, tv);

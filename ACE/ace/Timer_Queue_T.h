@@ -20,13 +20,82 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
 #include "ace/Abstract_Timer_Queue.h"
+#include "ace/Copy_Disabled.h"
+#include "ace/Synch_Traits.h"
 #include "ace/Timer_Queue_Iterator.h"
 #include "ace/Time_Policy.h"
-#include "ace/Copy_Disabled.h"
+#include "ace/Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
+/**
+  * @class ACE_Timer_Queue_Functor
+  *
+  * @brief Functor for timer queues.
+  *
+  * This class defines the functor base-class required by a timer
+  * queue to call <handle_timeout> on event handlers.
+  * Note that polymorphism isn't currently used for performance
+  * reasons (FUNCTORs are implemented as type traits for now, see below)
+  */
+template <class TQ_TYPE, class TYPE>
+class ACE_Timer_Queue_Functor
+{
+public:
+  // = Initialization and termination methods.
+  /// Constructor.
+  ACE_Timer_Queue_Functor (void);
+
+  /// Destructor.
+  virtual ~ACE_Timer_Queue_Functor (void);
+
+  /// This method is called when a timer is registered.
+  int registration (TQ_TYPE &timer_queue,
+                    TYPE *handler,
+                    const void *arg);
+
+  /// This method is called before the timer expires.
+  int preinvoke (TQ_TYPE &timer_queue,
+                 TYPE *handler,
+                 const void *arg,
+                 int recurring_timer,
+                 const ACE_Time_Value &cur_time,
+                 const void *&upcall_act);
+
+  /// This method is called when the timer expires.
+  int timeout (TQ_TYPE &timer_queue,
+               TYPE *handler,
+               const void *arg,
+               int recurring_timer,
+               const ACE_Time_Value &cur_time);
+
+  /// This method is called after the timer expires.
+  int postinvoke (TQ_TYPE &timer_queue,
+                  TYPE *handler,
+                  const void *arg,
+                  int recurring_timer,
+                  const ACE_Time_Value &cur_time,
+                  const void *upcall_act);
+
+  /// This method is called when a handler is cancelled
+  int cancel_type (TQ_TYPE &timer_queue,
+                   TYPE *handler,
+                   int dont_call,
+                   int &requires_reference_counting);
+
+  /// This method is called when a timer is cancelled
+  int cancel_timer (TQ_TYPE &timer_queue,
+                    TYPE *handler,
+                    int dont_call,
+                    int requires_reference_counting);
+
+  /// This method is called when the timer queue is destroyed and
+  /// the timer is still contained in it
+  int deletion (TQ_TYPE &timer_queue,
+                TYPE *handler,
+                const void *arg);
+};
 
 /**
  * @class ACE_Timer_Queue_Upcall_Base
@@ -36,20 +105,27 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * namely the ACE_Proactor needs to set a backpointer in the upcall
  * functor.
  */
-template<typename TYPE, typename FUNCTOR>
+template <typename FUNCTOR>
 class ACE_Timer_Queue_Upcall_Base
-  : public ACE_Abstract_Timer_Queue<TYPE>
-  , private ACE_Copy_Disabled
+ : private ACE_Copy_Disabled
 {
 public:
   // Constructor
-  explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = 0);
+  explicit ACE_Timer_Queue_Upcall_Base (FUNCTOR *upcall_functor = 0);
 
   /// Destructor
   virtual ~ACE_Timer_Queue_Upcall_Base (void);
 
   /// Accessor to the upcall functor
   FUNCTOR & upcall_functor (void);
+
+  /// Setter to the upcall functor
+  void upcall_functor (FUNCTOR *upcall_functor,
+                       bool delete_upcall_functor = false);
+
+  /// Make default upcall functor
+  /// Note: return value needs to be freed !
+  static FUNCTOR *make_functor (void);
 
 protected:
   /// Upcall functor
@@ -70,7 +146,8 @@ protected:
  */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Timer_Queue_T
-  : public ACE_Timer_Queue_Upcall_Base<TYPE,FUNCTOR>
+ : public ACE_Abstract_Timer_Queue<TYPE>
+ , public ACE_Timer_Queue_Upcall_Base<FUNCTOR>
 {
 public:
   // = Initialization and termination methods.
@@ -81,8 +158,8 @@ public:
    * timer nodes.  If 0, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = 0,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = 0,
-                    TIME_POLICY const & time_policy = TIME_POLICY());
+                     ACE_Free_List<ACE_Timer_Node_T<TYPE> > *freelist = 0,
+                     TIME_POLICY const & time_policy = TIME_POLICY ());
 
   /// Destructor - make virtual for proper destruction of inherited
   /// classes.
@@ -92,7 +169,7 @@ public:
    * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule () with the right
    * locking strategy.
    */
-  virtual long schedule (const TYPE &type,
+  virtual long schedule (TYPE *type,
                          const void *act,
                          const ACE_Time_Value &future_time,
                          const ACE_Time_Value &interval = ACE_Time_Value::zero);
@@ -104,7 +181,7 @@ public:
    */
   virtual int expire (const ACE_Time_Value &current_time);
   virtual int expire (void);
-  virtual int expire_single(ACE_Command_Base & pre_dispatch_command);
+  virtual int expire_single (ACE_Command_Base &pre_dispatch_command);
   //@}
 
   /**
@@ -132,14 +209,12 @@ public:
    */
   virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
 
-  /// Implement an inlined, non-abstract version of gettimeofday(),
-  /// through this  member function the internals of the class can
-  /// make calls to  ACE_OS::gettimeofday() with zero overhead.
-  ACE_Time_Value gettimeofday_static();
+  /// Retrieve the current time of day (according to the TIME_POLICY).
+  ACE_Time_Value gettimeofday_static ();
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
-  void set_time_policy(TIME_POLICY const & time_policy);
+  void set_time_policy (TIME_POLICY const & time_policy);
 
   /// Determine the next event to timeout.  Returns @a max if there are
   /// no pending timers or if all pending timers are longer than max.
@@ -151,7 +226,6 @@ public:
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max);
   virtual ACE_Time_Value *calculate_timeout (ACE_Time_Value *max,
                                              ACE_Time_Value *the_timeout);
-  virtual ACE_Time_Value current_time();
   //@}
 
   /// Set the timer skew for the Timer_Queue.
@@ -185,9 +259,8 @@ public:
                    const void *upcall_act);
 
 protected:
-
   /// Schedule a timer.
-  virtual long schedule_i (const TYPE &type,
+  virtual long schedule_i (TYPE *handler,
                            const void *act,
                            const ACE_Time_Value &future_time,
                            const ACE_Time_Value &interval) = 0;

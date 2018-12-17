@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/config-all.h"
+#include "ace/config-lite.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Event_Handler;
 template <class TYPE> class ACE_Abstract_Timer_Queue;
-typedef ACE_Abstract_Timer_Queue<ACE_Event_Handler*> ACE_Timer_Queue;
+typedef ACE_Abstract_Timer_Queue<ACE_Event_Handler> ACE_Timer_Queue;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
