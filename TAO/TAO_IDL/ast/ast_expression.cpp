@@ -532,13 +532,16 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
       return 0;
     }
 
+  if (t == ev->et)
+    {
+      return ev;
+    }
+
   switch (t)
     {
     case AST_Expression::EV_short:
       switch (ev->et)
         {
-        case AST_Expression::EV_short:
-          return ev;
         case AST_Expression::EV_ushort:
           if (ev->u.usval > (unsigned short) ACE_INT16_MAX)
             {
@@ -627,6 +630,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.sval = (short) ev->u.oval;
           ev->et = AST_Expression::EV_short;
           return ev;
+        case AST_Expression::EV_int8:
+          ev->u.sval = (short) ev->u.int8val;
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.sval = (short) ev->u.uint8val;
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -641,8 +652,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
           ev->u.usval = (unsigned short) ev->u.sval;
           ev->et = AST_Expression::EV_ushort;
-          return ev;
-        case AST_Expression::EV_ushort:
           return ev;
         case AST_Expression::EV_long:
           if (ev->u.lval > (long) ACE_UINT16_MAX
@@ -723,6 +732,15 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.usval = (unsigned short) ev->u.oval;
           ev->et = AST_Expression::EV_ushort;
           return ev;
+        case AST_Expression::EV_int8:
+          if (ev->u.int8val < 0) return 0;
+          ev->u.usval = static_cast<unsigned short> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.usval = static_cast<unsigned short> (ev->u.uint8val);
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -736,8 +754,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ushort:
           ev->u.lval = (long) ev->u.usval;
           ev->et = AST_Expression::EV_long;
-          return ev;
-        case AST_Expression::EV_long:
           return ev;
         case AST_Expression::EV_ulong:
           if (ev->u.ulval > (unsigned long) ACE_INT32_MAX)
@@ -802,6 +818,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.lval = (long) ev->u.oval;
           ev->et = AST_Expression::EV_long;
           return ev;
+        case AST_Expression::EV_int8:
+          ev->u.lval = static_cast<long>(ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.lval = static_cast<long>(ev->u.uint8val);
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -829,8 +853,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
           ev->u.ulval = (unsigned long) ev->u.lval;
           ev->et = AST_Expression::EV_ulong;
-          return ev;
-        case AST_Expression::EV_ulong:
           return ev;
         case AST_Expression::EV_longlong:
           if (ev->u.llval > (ACE_CDR::LongLong) ACE_UINT32_MAX
@@ -891,6 +913,15 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.ulval = (unsigned long) ev->u.oval;
           ev->et = AST_Expression::EV_ulong;
           return ev;
+        case AST_Expression::EV_int8:
+          if (ev->u.int8val < 0) return 0;
+          ev->u.ulval = static_cast<unsigned long> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.ulval = static_cast<unsigned long> (ev->u.uint8val);
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -912,8 +943,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_ulong:
           ev->u.llval = (ACE_CDR::LongLong) ev->u.ulval;
           ev->et = AST_Expression::EV_longlong;
-          return ev;
-        case AST_Expression::EV_longlong:
           return ev;
         case AST_Expression::EV_ulonglong:
           if (ev->u.ullval > ACE_INT64_MAX)
@@ -961,6 +990,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.llval = (ACE_CDR::LongLong) ev->u.oval;
           ev->et = AST_Expression::EV_longlong;
           return ev;
+        case AST_Expression::EV_int8:
+          ev->u.llval = static_cast<ACE_CDR::LongLong> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.llval = static_cast<ACE_CDR::LongLong> (ev->u.int8val);
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -1002,8 +1039,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.ullval =
             static_cast<ACE_CDR::LongLong> (ev->u.llval);
           ev->et = AST_Expression::EV_ulonglong;
-          return ev;
-        case AST_Expression::EV_ulonglong:
           return ev;
         case AST_Expression::EV_bool:
           ev->u.ullval = ev->u.bval;
@@ -1048,6 +1083,15 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.ullval = ev->u.oval;
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
+        case AST_Expression::EV_int8:
+          if (ev->u.int8val < 0) return 0;
+          ev->u.ullval = static_cast<ACE_UINT64> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.ullval = static_cast<ACE_UINT64> (ev->u.uint8val);
+          ev->et = t;
+          return ev;
         default:
           return 0;
         }
@@ -1078,8 +1122,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.bval = (ev->u.ullval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
           return ev;
-        case AST_Expression::EV_bool:
-          return ev;
         case AST_Expression::EV_float:
           ev->u.bval = ACE::is_equal (ev->u.fval, 0.0f) ? false : true;
           ev->et = AST_Expression::EV_bool;
@@ -1099,6 +1141,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_octet:
           ev->u.bval = (ev->u.oval == 0) ? false : true;
           ev->et = AST_Expression::EV_bool;
+          return ev;
+        case AST_Expression::EV_int8:
+          ev->u.bval = ev->u.int8val ? true : false;
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.bval = ev->u.uint8val ? true : false;
+          ev->et = t;
           return ev;
         default:
          return 0;
@@ -1139,8 +1189,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.fval = (float) ((ev->u.bval == true) ? 1.0 : 0.0);
           ev->et = AST_Expression::EV_float;
           return ev;
-        case AST_Expression::EV_float:
-          return ev;
         case AST_Expression::EV_double:
           if (ev->u.dval > ACE_FLT_MAX
               || ev->u.dval < -(ACE_FLT_MAX))
@@ -1162,6 +1210,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_octet:
           ev->u.fval = (float) ev->u.oval;
           ev->et = AST_Expression::EV_float;
+          return ev;
+        case AST_Expression::EV_int8:
+          ev->u.fval = static_cast<float> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.fval = static_cast<float> (ev->u.uint8val);
+          ev->et = t;
           return ev;
         default:
           return 0;
@@ -1208,8 +1264,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.dval = (double) ev->u.fval;
           ev->et = AST_Expression::EV_double;
           return ev;
-        case AST_Expression::EV_double:
-          return ev;
         case AST_Expression::EV_char:
           ev->u.dval = (double) ev->u.cval;
           ev->et = AST_Expression::EV_double;
@@ -1221,6 +1275,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_octet:
           ev->u.dval = (double) ev->u.oval;
           ev->et = AST_Expression::EV_double;
+          return ev;
+        case AST_Expression::EV_int8:
+          ev->u.fval = static_cast<double> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.fval = static_cast<double> (ev->u.uint8val);
+          ev->et = t;
           return ev;
         default:
           return 0;
@@ -1309,8 +1371,6 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.cval = (char) ev->u.dval;
           ev->et = AST_Expression::EV_char;
           return ev;
-        case AST_Expression::EV_char:
-          return ev;
         case AST_Expression::EV_wchar:
           if (ev->u.wcval > (ACE_CDR::WChar) ACE_CHAR_MAX)
             {
@@ -1328,6 +1388,14 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
           ev->u.cval = (char) ev->u.oval;
           ev->et = AST_Expression::EV_char;
+          return ev;
+        case AST_Expression::EV_int8:
+          ev->u.cval = static_cast<char> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.cval = static_cast<char> (ev->u.uint8val);
+          ev->et = t;
           return ev;
         default:
           return 0;
@@ -1419,11 +1487,17 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.wcval = (ACE_CDR::WChar) ev->u.cval;
           ev->et = AST_Expression::EV_wchar;
           return ev;
-        case AST_Expression::EV_wchar:
-          return ev;
         case AST_Expression::EV_octet:
           ev->u.wcval = (ACE_CDR::WChar) ev->u.oval;
           ev->et = AST_Expression::EV_wchar;
+          return ev;
+        case AST_Expression::EV_int8:
+          ev->u.wcval = static_cast<ACE_CDR::WChar> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.wcval = static_cast<ACE_CDR::WChar> (ev->u.uint8val);
+          ev->et = t;
           return ev;
         default:
           return 0;
@@ -1530,7 +1604,13 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->u.oval = (unsigned char) ev->u.wcval;
           ev->et = AST_Expression::EV_octet;
           return ev;
-        case AST_Expression::EV_octet:
+        case AST_Expression::EV_int8:
+          ev->u.oval = reinterpret_cast<unsigned char> (ev->u.int8val);
+          ev->et = t;
+          return ev;
+        case AST_Expression::EV_uint8:
+          ev->u.oval = ev->u.uint8val; // Same Type
+          ev->et = t;
           return ev;
         default:
           return 0;
@@ -1538,34 +1618,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
     case AST_Expression::EV_enum:
       switch (ev->et)
         {
-        case AST_Expression::EV_enum:
         case AST_Expression::EV_ulong:
-          return ev;
-        default:
-          return 0;
-        }
-    case AST_Expression::EV_void:
-      switch (ev->et)
-        {
-        case AST_Expression::EV_void:
-          return ev;
-        default:
-          return 0;
-        }
-    case AST_Expression::EV_none:
-      return 0;
-    case AST_Expression::EV_string:
-      switch (ev->et)
-        {
-        case AST_Expression::EV_string:
-          return ev;
-        default:
-          return 0;
-        }
-    case AST_Expression::EV_fixed:
-      switch (ev->et)
-        {
-        case AST_Expression::EV_fixed:
           return ev;
         default:
           return 0;
@@ -1593,6 +1646,8 @@ incompatible_types (AST_Expression::ExprType t1,
     case AST_Expression::EV_ulonglong:
     case AST_Expression::EV_octet:
     case AST_Expression::EV_bool:
+    case AST_Expression::EV_int8:
+    case AST_Expression::EV_uint8:
       switch (t2)
       {
         case AST_Expression::EV_short:
@@ -1603,9 +1658,11 @@ incompatible_types (AST_Expression::ExprType t1,
         case AST_Expression::EV_ulonglong:
         case AST_Expression::EV_octet:
         case AST_Expression::EV_bool:
-          return 0;
+        case AST_Expression::EV_int8:
+        case AST_Expression::EV_uint8:
+          return false;
         default:
-          return 1;
+          return true;
       }
     case AST_Expression::EV_float:
     case AST_Expression::EV_double:
@@ -1615,23 +1672,14 @@ incompatible_types (AST_Expression::ExprType t1,
         case AST_Expression::EV_float:
         case AST_Expression::EV_double:
         case AST_Expression::EV_longdouble:
-          return 0;
+          return false;
         default:
-          return 1;
+          return true;
       }
     case AST_Expression::EV_fixed:
       return t2 != AST_Expression::EV_fixed;
-    case AST_Expression::EV_char:
-    case AST_Expression::EV_wchar:
-    case AST_Expression::EV_string:
-    case AST_Expression::EV_wstring:
-    case AST_Expression::EV_enum:
-    case AST_Expression::EV_any:
-    case AST_Expression::EV_object:
-    case AST_Expression::EV_void:
-    case AST_Expression::EV_none:
     default:
-      return 0;
+      return false;
   }
 }
 
@@ -1693,6 +1741,12 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
       break;
     case AST_Expression::EK_fixed_point:
       retval = coerce_value (newval, AST_Expression::EV_fixed);
+      break;
+    case AST_Expression::EK_int8:
+      retval = coerce_value (newval, AST_Expression::EV_int8);
+      break;
+    case AST_Expression::EK_uint8:
+      retval = coerce_value (newval, AST_Expression::EV_uint8);
       break;
     default:
       break;
@@ -2612,6 +2666,12 @@ AST_Expression::coerce (AST_Expression::ExprType t)
   // If already evaluated, return the result.
   switch (t)
   {
+    case EV_int8:
+      tmp = this->eval_internal (EK_int8);
+      break;
+    case EV_uint8:
+      tmp = this->eval_internal (EK_uint8);
+      break;
     case EV_short:
       tmp = this->eval_internal (EK_short);
       break;
@@ -2718,6 +2778,12 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_fixed:
       copy->u.fixedval = this->pd_ev->u.fixedval;
       break;
+    case EV_int8:
+      copy->u.int8val = this->pd_ev->u.int8val;
+      break;
+    case EV_uint8:
+      copy->u.uint8val = this->pd_ev->u.uint8val;
+      break;
     default:
       break;
   }
@@ -2818,6 +2884,12 @@ AST_Expression::evaluate (EvalKind ek)
 bool
 AST_Expression::operator== (AST_Expression *vc)
 {
+  return compare(vc);
+}
+
+bool
+AST_Expression::compare (AST_Expression *vc)
+{
   if (this->pd_ec != vc->ec ())
     {
       return false;
@@ -2871,91 +2943,13 @@ AST_Expression::operator== (AST_Expression *vc)
       return pd_ev->u.fixedval == vc->ev ()->u.fixedval;
     case EV_enum:
       return pd_ev->u.eval == vc->ev ()->u.eval;
-    case EV_longdouble:
-    case EV_void:
-    case EV_none:
-    case EV_any:
-    case EV_object:
+    case EV_int8:
+      return pd_ev->u.int8val = vc->ev ()->u.int8val;
+    case EV_uint8:
+      return pd_ev->u.uint8val = vc->ev ()->u.uint8val;
+    default:
       return false;
     }
-
-  return false;
-}
-
-long
-AST_Expression::compare (AST_Expression *vc)
-{
-  if (this->pd_ec != vc->ec ())
-    {
-      return false;
-    }
-
-  this->evaluate (EK_const);
-  vc->evaluate (EK_const);
-
-  if (this->pd_ev == 0 || vc->ev () == 0)
-    {
-      return false;
-    }
-
-  if (this->pd_ev->et != vc->ev ()->et)
-    {
-      return false;
-    }
-
-  switch (this->pd_ev->et)
-    {
-    case EV_short:
-      return this->pd_ev->u.sval == vc->ev ()->u.sval;
-    case EV_ushort:
-      return this->pd_ev->u.usval == vc->ev ()->u.usval;
-    case EV_long:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval;
-    case EV_ulong:
-      return this->pd_ev->u.ulval == vc->ev ()->u.ulval;
-    case EV_float:
-      return ACE::is_equal (this->pd_ev->u.fval, vc->ev ()->u.fval);
-    case EV_double:
-      return ACE::is_equal (this->pd_ev->u.dval, vc->ev ()->u.dval);
-    case EV_char:
-      return this->pd_ev->u.cval == vc->ev ()->u.cval;
-    case EV_wchar:
-      return this->pd_ev->u.wcval == vc->ev ()->u.wcval;
-    case EV_octet:
-      return this->pd_ev->u.oval == vc->ev ()->u.oval;
-    case EV_bool:
-      return this->pd_ev->u.lval == vc->ev ()->u.lval;
-    case EV_string:
-      if (this->pd_ev->u.strval == 0)
-        {
-          return vc->ev ()->u.strval == 0;
-        }
-      else if (vc->ev ()->u.strval == 0)
-        {
-          return false;
-        }
-      else
-        {
-          return this->pd_ev->u.strval == vc->ev ()->u.strval;
-        }
-
-    case EV_longlong:
-      return this->pd_ev->u.llval == vc->ev ()->u.llval;
-    case EV_ulonglong:
-      return this->pd_ev->u.ullval == vc->ev ()->u.ullval;
-    case EV_fixed:
-      return this->pd_ev->u.fixedval == vc->ev ()->u.fixedval;
-    case EV_longdouble:
-    case EV_wstring:
-    case EV_enum:
-    case EV_void:
-    case EV_none:
-    case EV_any:
-    case EV_object:
-      return false;
-    }
-
-  return false;
 }
 
 AST_Decl *
@@ -3002,6 +2996,27 @@ dump_unary_expr (ACE_OSTREAM_TYPE &o,
   e->dump (o);
 }
 
+void
+dump_nibble (ACE_OSTREAM_TYPE &o, short value)
+{
+  value = value & 0x0000000F;
+  if (value < 0xA) {
+    o << value;
+  } else if (value == 0xA) {
+    o << 'A';
+  } else if (value == 0xB) {
+    o << 'B';
+  } else if (value == 0xC) {
+    o << 'C';
+  } else if (value == 0xD) {
+    o << 'D';
+  } else if (value == 0xE) {
+    o << 'E';
+  } else if (value == 0xF) {
+    o << 'F';
+  }
+}
+
 // Dump the supplied AST_ExprValue to the ostream o.
 static void
 dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
@@ -3033,7 +3048,8 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
       o << ev->u.wcval;
       break;
     case AST_Expression::EV_octet:
-      o << static_cast<int> (ev->u.oval);
+      dump_nibble (o, ev->u.wcval);
+      dump_nibble (o, ev->u.wcval >> 4);
       break;
     case AST_Expression::EV_bool:
       o << (ev->u.bval == true ? "TRUE" : "FALSE");
@@ -3048,6 +3064,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
           o << "(null string)";
         }
       break;
+    case AST_Expression::EV_enum:
     case AST_Expression::EV_longlong:
       o << ev->u.llval;
       break;
@@ -3057,7 +3074,12 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
     case AST_Expression::EV_fixed:
       o << ev->u.fixedval;
       break;
-    case AST_Expression::EV_enum:
+    case AST_Expression::EV_int8:
+      o << reinterpret_cast<short> (ev->u.int8val);
+      break;
+    case AST_Expression::EV_uint8:
+      o << reinterpret_cast<unsigned short> (ev->u.uint8val);
+      break;
     default:
       o << "(Can not dump this type)";
     }
@@ -3368,6 +3390,10 @@ AST_Expression::exprtype_to_string (ExprType t)
     return "object";
   case AST_Expression::EV_fixed:
     return "fixed";
+  case AST_Expression::EV_uint8:
+    return "uint8";
+  case AST_Expression::EV_int8:
+    return "int8";
   default:
     return "<UNKNOWN TYPE>";
   }
