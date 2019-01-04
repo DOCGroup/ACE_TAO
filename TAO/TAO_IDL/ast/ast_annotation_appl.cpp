@@ -34,9 +34,9 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
     {
       dump_i (o, "(");
       Params::ITERATOR iter (*params_);
-      Param **i = 0;
       while (!iter.done ())
         {
+          Param **i = 0;
           iter.next (i);
           if ((*i)->id)
             {
@@ -114,13 +114,12 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
     }
 
   // Make sure all the parameters were used
-  Params *parameters = params ();
-  if (parameters)
+  if (params_)
     {
-      Param **param = 0;
-      for (Param::Iterator it (*parameters);
+      for (Param::Iterator it (*params_);
           !it.done (); it.advance ())
         {
+          Param **param = 0;
           it.next (param);
           if ((*param) && !(*param)->used)
             {
@@ -151,24 +150,23 @@ AST_Annotation_Appl::annotation_decl ()
 AST_Annotation_Appl::Param *
 AST_Annotation_Appl::find_param (const char *name)
 {
-  Params *parameters = params ();
-  if (parameters)
+  if (params_)
     {
       // Check for single nameless parameter
-      if (parameters->size () == 1)
+      if (params_->size () == 1)
         {
-          Param *top;
-          parameters->top (top);
+          Param *top = 0;
+          params_->top (top);
           if (top && !top->id && top->expr)
             {
               // Don't reuse it if used
               return top->used ? 0 : top;
             }
         }
-      Param **param;
-      for (Param::Iterator it (*parameters);
+      for (Param::Iterator it (*params_);
           !it.done (); it.advance ())
         {
+          Param **param = 0;
           it.next (param);
           if ((*param) && (*param)->id && !ACE_OS::strcmp ((*param)->id->get_string (), name))
             {
