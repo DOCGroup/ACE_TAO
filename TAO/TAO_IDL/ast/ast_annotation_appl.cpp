@@ -34,7 +34,7 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
     {
       dump_i (o, "(");
       Params::ITERATOR iter (*params_);
-      Param **i;
+      Param **i = 0;
       while (!iter.done ())
         {
           iter.next (i);
@@ -54,9 +54,8 @@ void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)
     }
 }
 
-int AST_Annotation_Appl::ast_accept (ast_visitor *visitor)
+int AST_Annotation_Appl::ast_accept (ast_visitor *)
 {
-  ACE_UNUSED_ARG (visitor);
   return 0;
 }
 
@@ -118,7 +117,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
   Params *parameters = params ();
   if (parameters)
     {
-      Param **param;
+      Param **param = 0;
       for (Param::Iterator it (*parameters);
           !it.done (); it.advance ())
         {

@@ -44,10 +44,7 @@ AST_Annotation_Member::AST_Annotation_Member (
 
 AST_Annotation_Member::~AST_Annotation_Member ()
 {
-  if (value_)
-    {
-      delete value_;
-    }
+  delete value_;
 }
 
 void
