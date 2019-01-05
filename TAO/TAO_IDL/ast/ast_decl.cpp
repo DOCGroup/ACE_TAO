@@ -62,16 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-/*
- * AST_Decl is the base class for all AST nodes except AST_Expression.
- * AST_Decls have a node type (a value from the enum AST_Decl::NodeType)
- * and a name (a UTL_ScopedName).
- * Additionally AST_Decl nodes record the scope of definition, the
- * file name in which they were defined, the line on which they were
- * defined in that file, and a boolean denoting whether this is the
- * main file or an #include'd file.
- */
-
 #include "ast_interface.h"
 #include "ast_module.h"
 #include "ast_array.h"
@@ -88,6 +78,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_scope.h"
 #include "utl_err.h"
 #include "ace/OS_NS_stdio.h"
+#include "ast_annotation_appl.h"
+#include "utl_indenter.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -139,6 +131,8 @@ AST_Decl::AST_Decl (NodeType nt,
     repoID_ (0),
     flat_name_ (0),
     contains_wstring_ (-1),
+    annotation_appls_ (0),
+    builtin_ (idl_global->in_eval_),
     pd_imported (idl_global->imported ()),
     pd_in_main_file (idl_global->in_main_file ()),
     pd_defined_in (idl_global->scopes ().depth () > 0
@@ -172,6 +166,53 @@ AST_Decl::AST_Decl (NodeType nt,
     {
       // The function body creates its own copy.
       this->original_local_name (n->last_component ());
+    }
+
+  this->compute_repoID ();
+}
+
+AST_Decl::AST_Decl (
+  UTL_ScopedName *name,
+  AST_Decl *other)
+  : COMMON_Base (),
+    repoID_ (0),
+    flat_name_ (0),
+    contains_wstring_ (-1),
+    annotation_appls_ (0),
+    builtin_ (idl_global->in_eval_),
+    pd_imported (idl_global->imported ()),
+    pd_in_main_file (idl_global->in_main_file ()),
+    pd_defined_in (idl_global->scopes ().depth () > 0
+                     ? idl_global->scopes ().top ()
+                     : 0),
+    pd_node_type (other->node_type ()),
+    pd_line (idl_global->lineno ()),
+    pd_name (0),
+    pd_local_name (name ? name->last_component ()->copy () : 0),
+    pd_original_local_name (0),
+    full_name_ (0),
+    prefix_ (0),
+    version_ (0),
+    anonymous_ (other->anonymous ()),
+    typeid_set_ (false),
+    last_referenced_as_ (0),
+    prefix_scope_ (0),
+    in_tmpl_mod_not_aliased_ (idl_global->in_tmpl_mod_no_alias ())
+{
+  // If this is the root node, the filename won't have been set yet.
+  UTL_String *fn = idl_global->filename ();
+  this->pd_file_name = (fn ? fn->get_string () : "");
+
+  this->compute_full_name (name);
+
+  char *prefix = 0;
+  idl_global->pragma_prefixes ().top (prefix);
+  this->prefix_ = ACE::strnew (prefix ? prefix : "");
+
+  if (name)
+    {
+      // The function body creates its own copy.
+      this->original_local_name (name->last_component ());
     }
 
   this->compute_repoID ();
@@ -805,12 +846,6 @@ AST_Decl::node_type_to_string (NodeType nt)
       return "consumes";
 
     // No useful output for these.
-    case NT_enum_val:
-    case NT_field:
-    case NT_union_branch:
-    case NT_op:
-    case NT_argument:
-    case NT_root:
     default:
       return "";
     }
@@ -1533,3 +1568,113 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 //Narrowing methods for AST_Decl.
 
 IMPL_NARROW_FROM_DECL(AST_Decl)
+
+
+void AST_Decl::annotation_appls (AST_Annotation_Appls *annotations)
+{
+  if (annotatable ())
+    {
+      annotation_appls_ = annotations;
+    }
+  else
+    {
+      ACE_ERROR ((LM_ERROR,
+        ACE_TEXT ("WARNING: %C is annotated but its type can't be annotated!\n"),
+        full_name ()
+        ));
+    }
+}
+
+AST_Annotation_Appls *AST_Decl::annotation_appls ()
+{
+  return annotation_appls_;
+}
+
+void
+AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
+{
+  if (annotation_appls_)
+    {
+      for (size_t i = 0; i < annotation_appls_->size (); i++)
+        {
+          AST_Annotation_Appl *a = (*annotation_appls_)[i];
+          a->dump (o);
+          if (print_inline)
+            {
+              dump_i (o, " ");
+            }
+          else
+            {
+              dump_i (o, "\n");
+              // We need to indent the next line (or not if we are not indented)
+              idl_global->indent ()->skip_to (o);
+            }
+        }
+    }
+}
+
+void
+AST_Decl::dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations)
+{
+  if (annotatable () && auto_dump_annotations())
+    {
+      dump_annotations (o, inline_annotations);
+    }
+
+  dump (o);
+}
+
+ACE_OSTREAM_TYPE &
+operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d)
+{
+  d.dump_with_annotations (o, d.dump_annotations_inline ());
+
+  return o;
+}
+
+bool
+AST_Decl::annotatable () const
+{
+  return false;
+}
+
+bool
+AST_Decl::dump_annotations_inline () const
+{
+  return false;
+}
+
+bool
+AST_Decl::auto_dump_annotations () const
+{
+  return true;
+}
+
+bool
+AST_Decl::builtin () const
+{
+  return builtin_;
+}
+
+bool
+AST_Decl::should_be_dumped () const
+{
+  return !builtin () || idl_global->dump_builtins_;
+}
+
+AST_Annotation_Appls &
+AST_Decl::annotations ()
+{
+  if (!annotation_appls_)
+    {
+      annotation_appls_ = new AST_Annotation_Appls;
+    }
+
+  return *annotation_appls_;
+}
+
+bool
+AST_Decl::ami_visit ()
+{
+  return true;
+}

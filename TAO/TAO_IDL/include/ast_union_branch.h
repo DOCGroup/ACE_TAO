@@ -118,6 +118,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool auto_dump_annotations () const { return false; }
+
 private:
   // list of labels.
   UTL_LabelList *pd_ll;

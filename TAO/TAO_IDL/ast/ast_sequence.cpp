@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_expression.h"
 #include "ast_param_holder.h"
 #include "ast_visitor.h"
+#include "ast_annotation_appl.h"
 
 #include "utl_identifier.h"
 #include "utl_err.h"
@@ -104,7 +105,8 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     pd_max_size (ms),
     pd_base_type (bt),
     unbounded_ (true),
-    owns_base_type_ (false)
+    owns_base_type_ (false),
+    base_type_annotations_ (0)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
@@ -211,6 +213,16 @@ void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "sequence <");
+  if (base_type_annotations ())
+    {
+      size_t count = base_type_annotations ()->size ();
+      for (size_t i = 0; i < count; i++)
+        {
+          AST_Annotation_Appl *a = (*base_type_annotations ())[i];
+          a->dump (o);
+          dump_i (o, " ");
+        }
+    }
   this->pd_base_type->dump (o);
   this->dump_i (o, ", ");
   this->pd_max_size->dump (o);
@@ -273,3 +285,15 @@ AST_Sequence::destroy (void)
 }
 
 IMPL_NARROW_FROM_DECL(AST_Sequence)
+
+AST_Annotation_Appls *
+AST_Sequence::base_type_annotations()
+{
+  return base_type_annotations_;
+}
+
+void
+AST_Sequence::base_type_annotations(AST_Annotation_Appls *annotations)
+{
+  base_type_annotations_ = annotations;
+}

@@ -1,0 +1,6 @@
+project: aceexe {
+  exename = *
+  after += TAO_IDL_FE
+  libs += TAO_IDL_FE
+  includes += . $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)/TAO_IDL/fe $(TAO_ROOT)
+}

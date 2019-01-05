@@ -642,3 +642,10 @@ AST_Module::reset_last_in_same_parent_scope (void)
   this->last_in_same_parent_scope_ = this;
 }
 
+AST_Annotation_Decl *
+AST_Module::fe_add_annotation_decl (
+  AST_Annotation_Decl *annotation_decl)
+{
+  return AST_Annotation_Decl::narrow_from_decl (
+    fe_add_decl (annotation_decl));
+}

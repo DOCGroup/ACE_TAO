@@ -78,16 +78,25 @@ public:
   Identifier (const char *s);
   // Constructor.
 
+  Identifier (const Identifier &other);
+
   virtual ~Identifier (void);
   // Destructor.
 
   // Operations
 
+  /**
+   * Get the underlying string.
+   */
+  ///{
   char *get_string (void);
-  // Get the underlying string.
+  const char *get_string () const;
+  ///}
 
-  void replace_string (const char * s);
+  void replace_string (const char *s);
   // Replace the underlying string and free the old one.
+
+  void preprocess_and_replace_string (const char *s);
 
   bool compare (Identifier *other);
   // Compare with other Identifier.
@@ -110,12 +119,14 @@ public:
   virtual void destroy (void);
   // Cleanup function.
 
-private:
-    // Storage for data.
-    char *pv_string;
+  bool operator== (const Identifier &other) const;
 
-    // Did the IDL string have a leading underscore?
-    bool escaped_;
+private:
+  // Storage for data.
+  char *pv_string;
+
+  // Did the IDL string have a leading underscore?
+  bool escaped_;
 };
 
 #endif          // _UTL_IDENTIFIER_UTL_IDENTIFIER_HH

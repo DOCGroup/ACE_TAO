@@ -73,6 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum.h"
 #include "ast_enum_val.h"
 #include "ast_visitor.h"
+#include "utl_indenter.h"
 
 #include "utl_labellist.h"
 #include "fe_extern.h"
@@ -103,7 +104,8 @@ AST_UnionBranch::~AST_UnionBranch (void)
 void
 AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
 {
-  for (unsigned long i = 0; i < this->label_list_length (); ++i)
+  unsigned long l = this->label_list_length ();
+  for (unsigned long i = 0; i < l; ++i)
     {
       this->dump_i (o, "case ");
 
@@ -111,9 +113,14 @@ AST_UnionBranch::dump (ACE_OSTREAM_TYPE &o)
       ul->dump (o);
 
       this->dump_i (o, ":\n");
+      if (i != l - 1) idl_global->indent ()->skip_to (o);
     }
 
+  idl_global->indent ()->increase ();
+  idl_global->indent ()->skip_to (o);
+  AST_Field::dump_annotations (o, true /* print inline */);
   AST_Field::dump (o);
+  idl_global->indent ()->decrease ();
 }
 
 int

@@ -116,9 +116,21 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool dump_annotations_inline () const { return true; }
+
+  /**
+   * Recursively acquired annotations from typedefs.
+   */
+  virtual AST_Annotation_Appls &annotations ();
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
+
+  /**
+   * Cache of Recursively acquired annotations from typedefs.
+   */
+  AST_Annotation_Appls *cached_annotations_;
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

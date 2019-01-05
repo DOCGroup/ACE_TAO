@@ -198,8 +198,8 @@ UTL_IdList::compare (UTL_IdList *other)
 void
 UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 {
-  long first = true;
-  long second = false;
+  bool first = true;
+  bool second = false;
 
   for (UTL_IdListActiveIterator i (this);
        !i.is_done ();
@@ -214,18 +214,25 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
           first = second = false;
         }
 
-      i.item ()->dump (o);
-
-      if (first)
+      if (i.item ()->get_string ())
         {
-          if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+          i.item ()->dump (o);
+
+          if (first)
             {
-              first = false;
+              if (ACE_OS::strcmp (i.item ()->get_string (), "::") != 0)
+                {
+                  first = false;
+                }
+              else
+                {
+                  second = true;
+                }
             }
-          else
-            {
-              second = true;
-            }
+        }
+      else
+        {
+          o << "(null string)";
         }
     }
 }
@@ -263,4 +270,57 @@ UTL_IdListActiveIterator::item (void)
       }
 
     return ((UTL_IdList *) source)->head ();
+}
+
+char *
+UTL_IdList::get_string_copy ()
+{
+  /*
+   * Absolute Names have "::" as the first item in the idlist, so delimiters
+   * have to start be inserted depending on if the name is absolute or not
+   */
+  size_t delimiter_start = is_absolute () ? 1 : 0;
+
+  // Get buffer of the correct size
+  size_t n = 0;
+  size_t size = 1;
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
+    {
+      if (n > delimiter_start)
+        {
+          size += 2; // For delimiter
+        }
+      const char *item = i.item ()->get_string ();
+      size += ACE_OS::strlen (item);
+      n++;
+    }
+  char *buffer = new char[size];
+  buffer[0] = '\0';
+
+  // Fill buffer
+  n = 0;
+  for (UTL_IdListActiveIterator i (this);
+       !i.is_done ();
+       i.next ())
+    {
+      if (n > delimiter_start)
+        {
+          ACE_OS::strncat (buffer, "::", 2);
+        }
+      const char *item = i.item ()->get_string ();
+      ACE_OS::strcat (buffer, item);
+      n++;
+    }
+
+  buffer[size - 1] = '\0';
+
+  return buffer;
+}
+
+bool
+UTL_IdList::is_absolute ()
+{
+  return !ACE_OS::strcmp (first_component ()->get_string (), "::");
 }

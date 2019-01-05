@@ -84,6 +84,8 @@ public:
 
   // Narrowing.
   DEF_NARROW_FROM_DECL(AST_ConcreteType);
+
+  virtual bool annotatable () const { return true; }
 };
 
 #endif           // _AST_CONCRETE_TYPE_AST_CONCRETE_TYPE_HH

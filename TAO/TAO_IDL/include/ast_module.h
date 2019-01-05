@@ -230,11 +230,17 @@ public:
   virtual
   AST_PortType *fe_add_porttype (AST_PortType *pt);
 
+  virtual
+  AST_Annotation_Decl *fe_add_annotation_decl (
+    AST_Annotation_Decl *annotation_decl);
+
   // Reset the last_in_same_parent_scope_ member to ourself
   // (called by AST_Root::destroy on the CORBA module containing
   // the basic types, since it isn't destroyed between processing
   // multiple IDL files.
   void reset_last_in_same_parent_scope (void);
+
+  virtual bool annotatable () const { return true; }
 
 private: // Data
   bool pd_has_nested_valuetype_;
