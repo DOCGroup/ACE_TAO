@@ -34,7 +34,7 @@ BE_version ()
 }
 
 int
-BE_init (int&, ACE_TCHAR*[])
+BE_init (int &, ACE_TCHAR *[])
 {
   ACE_NEW_RETURN (be_global, BE_GlobalData, -1);
 
@@ -83,7 +83,7 @@ public:
           ACE_TEXT ("FAILED because of syntax error in:\n%C\n")
           ACE_TEXT ("Check Syntax Error Message Above For More Infomation\n"),
           name_, idl_));
-        failed_test_count++;
+        ++failed_test_count;
       }
     else if (!failed_)
       {
@@ -92,7 +92,7 @@ public:
       }
   }
 
-  void failed (const char * message = 0)
+  void failed (const char *message = 0)
   {
     if (message)
       {
@@ -105,7 +105,7 @@ public:
       name_, idl_));
     failed_test_count++;
     failed_ = true;
-    throw Failed();
+    throw Failed ();
   }
 
   Annotation_Test &error_count (int error_count)
@@ -234,7 +234,7 @@ public:
 
   AST_Annotation_Decl *assert_annotation_decl (const char *name)
   {
-    AST_Annotation_Decl *node = dynamic_cast<AST_Annotation_Decl*>(
+    AST_Annotation_Decl *node = dynamic_cast<AST_Annotation_Decl *>(
       assert_node (name));
 
     if (node->node_type () != AST_Decl::NT_annotation_decl)
@@ -360,7 +360,7 @@ public:
     AST_Annotation_Appl *anno_appl, size_t count)
   {
     assert_annotation_member_count (
-      dynamic_cast<AST_Annotation_Decl*>(anno_appl), count);
+      dynamic_cast<AST_Annotation_Decl *>(anno_appl), count);
   }
 
   AST_Annotation_Member *get_annotation_member (
@@ -368,7 +368,7 @@ public:
   {
     AST_Decl *decl = (*anno_decl)[name];
     AST_Annotation_Member *member = decl ?
-        AST_Annotation_Member::narrow_from_decl(decl) : 0;
+        AST_Annotation_Member::narrow_from_decl (decl) : 0;
     if (!member)
       {
         ACE_ERROR ((LM_ERROR,
@@ -384,7 +384,7 @@ public:
     AST_Annotation_Appl *anno_appl, const char *name)
   {
     return get_annotation_member(
-      dynamic_cast<AST_Annotation_Decl*>(anno_appl), name);
+      dynamic_cast<AST_Annotation_Decl *>(anno_appl), name);
   }
 
   void assert_annotation_member_type (
@@ -516,16 +516,16 @@ BE_post_init (char *[], long)
 
   AST_Annotation_Decl *test_annotation_1 = 0;
   try {
-    Annotation_Test t("Annotation Declaration with No Members");
+    Annotation_Test t ("Annotation Declaration with No Members");
     test_annotation_1 = t.run (
       "@annotation test_annotation_1 {\n"
       "};\n"
     ).assert_annotation_decl ("::@test_annotation_1");
     t.assert_annotation_member_count (test_annotation_1, 0);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Declaration with Members");
+    Annotation_Test t ("Annotation Declaration with Members");
     AST_Annotation_Decl *test_annotation_2 = t.run (
       "@annotation test_annotation_2 {\n"
       "  short short_value;\n"
@@ -555,10 +555,10 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_2, "boolean_value");
     t.assert_annotation_member_type (boolean_value, AST_Expression::EV_bool);
     t.assert_annotation_member_no_value (boolean_value);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Declaration with Defaulted Members");
+    Annotation_Test t ("Annotation Declaration with Defaulted Members");
     AST_Annotation_Decl *test_annotation_3 = t.run (
       "@annotation test_annotation_3 {\n"
       "  short short_value default 1;\n"
@@ -588,11 +588,11 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_3, "boolean_value");
     t.assert_annotation_member_type (boolean_value, AST_Expression::EV_bool);
     t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (boolean_value, false);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   AST_Annotation_Decl *test_annotation_4 = 0;
   try {
-    Annotation_Test t("Annotation Declaration with Mixed Members");
+    Annotation_Test t ("Annotation Declaration with Mixed Members");
     test_annotation_4 = t.run (
       "@annotation test_annotation_4 {\n"
       "  short x;\n"
@@ -610,11 +610,11 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_4, "y");
     t.assert_annotation_member_type (y, AST_Expression::EV_short);
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 0);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   AST_Annotation_Decl *test_annotation_in_module = 0;
   try {
-    Annotation_Test t("Annotation Declaration In Module");
+    Annotation_Test t ("Annotation Declaration In Module");
     test_annotation_in_module = t.run (
       "module module_with_annotation_decl {\n"
       "  @annotation test_annotation {\n"
@@ -623,14 +623,14 @@ BE_post_init (char *[], long)
     ).assert_annotation_decl (
       "::module_with_annotation_decl::@test_annotation");
     t.assert_annotation_member_count (test_annotation_in_module, 0);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   AST_Annotation_Decl *enum_annotation = 0;
   AST_Expression *enum_annotation_a = 0;
   AST_Expression *enum_annotation_b = 0;
   AST_Expression *enum_annotation_c = 0;
   try {
-    Annotation_Test t("Annotation Declaration with Enum");
+    Annotation_Test t ("Annotation Declaration with Enum");
     enum_annotation = t.run (
       "@annotation enum_annotation {\n"
       "  enum Enum_t {\n"
@@ -659,11 +659,11 @@ BE_post_init (char *[], long)
     enum_annotation_c = c->constant_value();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   AST_Annotation_Decl *string_annotation = 0;
   try {
-    Annotation_Test t("Annotation Declaration with String");
+    Annotation_Test t ("Annotation Declaration with String");
     string_annotation = t.run (
       "@annotation string_annotation {\n"
       "  string value default \"This is some text\";\n"
@@ -676,13 +676,13 @@ BE_post_init (char *[], long)
     UTL_String test_string("This is some text");
     t.assert_annotation_member_value<UTL_String*, UTL_String*>
       (value, &test_string);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   AST_Expression *constant_annotation_x = 0;
   AST_Expression *constant_annotation_y = 0;
   AST_Annotation_Decl *constant_annotation = 0;
   try {
-    Annotation_Test t("Annotation Declaration with Constant");
+    Annotation_Test t ("Annotation Declaration with Constant");
     constant_annotation = t.run (
       "@annotation constant_annotation {\n"
       "  const short X = 4;\n"
@@ -704,7 +704,7 @@ BE_post_init (char *[], long)
     constant_annotation_y = y->constant_value();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   /* -------------------------------------------------------------------------
    * Annotations Applications
@@ -714,7 +714,7 @@ BE_post_init (char *[], long)
    */
 
   try {
-    Annotation_Test t("Module Annotation Application");
+    Annotation_Test t ("Module Annotation Application");
     AST_Decl *module1 = t.run (
       "@test_annotation_1\n"
       "module module1 {\n"
@@ -725,10 +725,10 @@ BE_post_init (char *[], long)
     ).assert_node ("::module1");
     t.assert_annotation_appl_count (module1, 1);
     t.assert_annotation_appl (module1, 0, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Struct Annotation Application");
+    Annotation_Test t ("Struct Annotation Application");
     AST_Decl *struct1 = t.run (
       "@test_annotation_1\n"
       "struct struct1 {\n"
@@ -737,10 +737,10 @@ BE_post_init (char *[], long)
     ).assert_node ("::struct1");
     t.assert_annotation_appl_count (struct1, 1);
     t.assert_annotation_appl (struct1, 0, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Typedef Annotation Application");
+    Annotation_Test t ("Typedef Annotation Application");
     t.run (
       "@enum_annotation\n"
       "typedef short short_int;\n"
@@ -765,7 +765,7 @@ BE_post_init (char *[], long)
       {
         t.failed ("Could Not Get member");
       }
-    AST_Decl* type = dynamic_cast<AST_Decl*> (member->field_type ());
+    AST_Decl* type = dynamic_cast<AST_Decl *> (member->field_type ());
 
     // Assert type has enum_annotation, string_annotation, and
     // test_annotation_1.
@@ -773,10 +773,10 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl (type, 0, enum_annotation);
     t.assert_annotation_appl (type, 1, string_annotation);
     t.assert_annotation_appl (type, 2, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Sequence Type Parameter Annotation Application");
+    Annotation_Test t ("Sequence Type Parameter Annotation Application");
     AST_Decl *value_decl = t.run (
       "typedef sequence<@test_annotation_1 short, 5> test_seq_t;\n"
       "struct struct7 {\n"
@@ -792,13 +792,13 @@ BE_post_init (char *[], long)
           "Could Not Convert struct7::value from AST_Decl into AST_Field");
       }
     AST_Typedef *typedef_node =
-      dynamic_cast<AST_Typedef*> (value->field_type ());
+      dynamic_cast<AST_Typedef *> (value->field_type ());
     if (!typedef_node)
       {
         t.failed (
           "Could Not Convert test_seq_t from AST_Decl into AST_Typedef");
       }
-    AST_Decl *seq_decl = dynamic_cast<AST_Decl*>(typedef_node->base_type ());
+    AST_Decl *seq_decl = dynamic_cast<AST_Decl *>(typedef_node->base_type ());
     AST_Sequence *seq = AST_Sequence::narrow_from_decl (seq_decl);
     if (!seq)
       {
@@ -841,20 +841,20 @@ BE_post_init (char *[], long)
           }
         t.failed ();
       }
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Constant Declarations Annotation Application");
+    Annotation_Test t ("Constant Declarations Annotation Application");
     AST_Decl *test_const = t.run (
       "@test_annotation_1\n"
       "const short test_const = 5;\n"
     ).assert_node ("test_const");
     t.assert_annotation_appl_count (test_const, 1);
     t.assert_annotation_appl (test_const, 0, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Multiple Annotation Applications");
+    Annotation_Test t ("Multiple Annotation Applications");
     AST_Decl *struct3 = t.run (
       "@test_annotation_1\n"
       "@test_annotation_1\n"
@@ -865,10 +865,10 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl_count (struct3, 2);
     t.assert_annotation_appl (struct3, 0, test_annotation_1);
     t.assert_annotation_appl (struct3, 1, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Application with a Single Parameter");
+    Annotation_Test t ("Annotation Application with a Single Parameter");
     AST_Decl *struct4 = t.run (
       "@test_annotation_4 (100)\n"
       "struct struct4 {\n"
@@ -885,10 +885,10 @@ BE_post_init (char *[], long)
 
     AST_Annotation_Member *y = t.get_annotation_member (appl, "y");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 0);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Application with Named Parameters");
+    Annotation_Test t ("Annotation Application with Named Parameters");
     AST_Decl *struct2 = t.run (
       "@test_annotation_4 (x = 101, y = 102)\n"
       "struct struct2 {\n"
@@ -905,10 +905,10 @@ BE_post_init (char *[], long)
 
     AST_Annotation_Member *y = t.get_annotation_member (appl, "y");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 102);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Applications with Scoped Names");
+    Annotation_Test t ("Annotation Applications with Scoped Names");
     AST_Decl *struct5 = t.run (
       "@module_with_annotation_decl::test_annotation\n"
       "@::module_with_annotation_decl::test_annotation\n"
@@ -919,10 +919,10 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl_count (struct5, 2);
     t.assert_annotation_appl (struct5, 0, test_annotation_in_module);
     t.assert_annotation_appl (struct5, 1, test_annotation_in_module);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Applications on/in Unions");
+    Annotation_Test t ("Annotation Applications on/in Unions");
     AST_Decl *test_union_decl = t.run (
       /* Annotations on the union and the discriminator */
       "@test_annotation_1\n"
@@ -986,10 +986,10 @@ BE_post_init (char *[], long)
       t.assert_node ("test_union::union_member_1");
     t.assert_annotation_appl_count (union_member_1, 1);
     t.assert_annotation_appl (union_member_1, 0, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Applications on/in Enums");
+    Annotation_Test t ("Annotation Applications on/in Enums");
     AST_Decl *Test_Enum = t.run (
       /* Annotation on the enum */
       "@test_annotation_1\n"
@@ -1010,10 +1010,10 @@ BE_post_init (char *[], long)
       t.assert_node ("Test_Enum::TEST_ENUM_MEMBER_2");
     t.assert_annotation_appl_count (TEST_ENUM_MEMBER_2, 1);
     t.assert_annotation_appl (TEST_ENUM_MEMBER_2, 0, test_annotation_1);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("By Default, Unknown Annotation Application Causes Warning");
+    Annotation_Test t ("By Default, Unknown Annotation Application Causes Warning");
     t.last_warning (UTL_Error::EIDL_LOOKUP_ERROR);
     t.run (
       "struct struct11 {\n"
@@ -1021,12 +1021,12 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};\n"
     );
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
-    Annotation_Test t("Optionally, Unknown Annotation Application Causes Err");
+    Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err");
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
     t.run (
       "struct struct10 {\n"
@@ -1037,10 +1037,10 @@ BE_post_init (char *[], long)
     // Restore Default Behaivor
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Application with Enum");
+    Annotation_Test t ("Annotation Application with Enum");
     AST_Decl *value = t.run (
       "struct struct8 {\n"
       "  @enum_annotation\n" // A
@@ -1066,10 +1066,10 @@ BE_post_init (char *[], long)
       t.assert_annotation_appl (value, 2, enum_annotation);
     member = t.get_annotation_member (third, "value");
     t.assert_annotation_member_value (member, enum_annotation_c);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Application with String");
+    Annotation_Test t ("Annotation Application with String");
     AST_Decl *value = t.run (
       "struct struct9 {\n"
       "  @string_annotation\n" // A
@@ -1085,24 +1085,24 @@ BE_post_init (char *[], long)
     UTL_String first_string("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String*, UTL_String*>
+    t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &first_string);
 
     UTL_String second_string("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String*, UTL_String*>
+    t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &second_string);
 
     UTL_String third_string("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
-    t.assert_annotation_member_value <UTL_String*, UTL_String*>
+    t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &third_string);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Application with Constant");
+    Annotation_Test t ("Annotation Application with Constant");
     AST_Decl *value = t.run (
       "struct struct12 {\n"
       "  @constant_annotation\n" // A
@@ -1126,15 +1126,15 @@ BE_post_init (char *[], long)
     annotation = t.assert_annotation_appl (value, 2, constant_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (member, 100);
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotate Array Base Type");
+    Annotation_Test t ("Annotate Array Base Type");
     AST_Typedef *thetypedef = AST_Typedef::narrow_from_decl (t.run (
       "typedef struct12 struct12Array @test_annotation_1 [12];\n"
     ).assert_node ("::struct12Array"));
     AST_Array *struct12Array =
-      dynamic_cast<AST_Array*> (thetypedef->base_type ());
+      dynamic_cast<AST_Array *> (thetypedef->base_type ());
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls *annotations =
@@ -1172,7 +1172,7 @@ BE_post_init (char *[], long)
           }
         t.failed ();
       }
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   /* -------------------------------------------------------------------------
    * Annotation Names
@@ -1182,7 +1182,7 @@ BE_post_init (char *[], long)
    */
 
   try {
-    Annotation_Test t("Annotation and Non-Annotation Names Can't Clash");
+    Annotation_Test t ("Annotation and Non-Annotation Names Can't Clash");
     t.run (
       "@annotation samename {\n"
       "};\n"
@@ -1190,19 +1190,19 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};"
     );
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Names Can't Be \"annotation\"");
+    Annotation_Test t ("Annotation Names Can't Be \"annotation\"");
     t.last_error (UTL_Error::EIDL_MISC).error_count (1);
     t.run (
       "@annotation annotation {\n"
       "};\n"
     );
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   try {
-    Annotation_Test t("Annotation Names Can Start with \"annotation\"");
+    Annotation_Test t ("Annotation Names Can Start with \"annotation\"");
     t.run (
       "@annotation annotationannotation {\n"
       "};\n"
@@ -1211,7 +1211,7 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};\n"
     ).assert_annotation_decl ("::@annotationannotation");
-  } catch (Failed &) {}
+  } catch (Failed const &) {}
 
   // Done, Print Overall Results
   if (failed_test_count)
