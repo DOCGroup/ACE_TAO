@@ -1950,9 +1950,12 @@ IDL_GlobalData::eval (const char *string)
   tao_yy_scan_string (string);
 
   // emulate DRV_drive()
+  u_long const flags = ACE_LOG_MSG->flags ();
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
   FE_yyparse ();
   idl_global->check_primary_keys ();
   AST_check_fwd_decls ();
+  ACE_LOG_MSG->set_flags (flags);
 
   // Have Flex Cleanup
   tao_yylex_destroy ();
