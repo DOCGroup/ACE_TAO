@@ -522,7 +522,7 @@ BE_post_init (char *[], long)
       "};\n"
     ).assert_annotation_decl ("::@test_annotation_1");
     t.assert_annotation_member_count (test_annotation_1, 0);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Declaration with Members");
@@ -555,7 +555,7 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_2, "boolean_value");
     t.assert_annotation_member_type (boolean_value, AST_Expression::EV_bool);
     t.assert_annotation_member_no_value (boolean_value);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Declaration with Defaulted Members");
@@ -588,7 +588,7 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_3, "boolean_value");
     t.assert_annotation_member_type (boolean_value, AST_Expression::EV_bool);
     t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (boolean_value, false);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   AST_Annotation_Decl *test_annotation_4 = 0;
   try {
@@ -610,7 +610,7 @@ BE_post_init (char *[], long)
       t.get_annotation_member (test_annotation_4, "y");
     t.assert_annotation_member_type (y, AST_Expression::EV_short);
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 0);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   AST_Annotation_Decl *test_annotation_in_module = 0;
   try {
@@ -623,7 +623,7 @@ BE_post_init (char *[], long)
     ).assert_annotation_decl (
       "::module_with_annotation_decl::@test_annotation");
     t.assert_annotation_member_count (test_annotation_in_module, 0);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   AST_Annotation_Decl *enum_annotation = 0;
   AST_Expression *enum_annotation_a = 0;
@@ -659,7 +659,7 @@ BE_post_init (char *[], long)
     enum_annotation_c = c->constant_value();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   AST_Annotation_Decl *string_annotation = 0;
   try {
@@ -676,7 +676,7 @@ BE_post_init (char *[], long)
     UTL_String test_string("This is some text");
     t.assert_annotation_member_value<UTL_String*, UTL_String*>
       (value, &test_string);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   AST_Expression *constant_annotation_x = 0;
   AST_Expression *constant_annotation_y = 0;
@@ -704,7 +704,7 @@ BE_post_init (char *[], long)
     constant_annotation_y = y->constant_value();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   /* -------------------------------------------------------------------------
    * Annotations Applications
@@ -725,7 +725,7 @@ BE_post_init (char *[], long)
     ).assert_node ("::module1");
     t.assert_annotation_appl_count (module1, 1);
     t.assert_annotation_appl (module1, 0, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Struct Annotation Application");
@@ -737,7 +737,7 @@ BE_post_init (char *[], long)
     ).assert_node ("::struct1");
     t.assert_annotation_appl_count (struct1, 1);
     t.assert_annotation_appl (struct1, 0, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Typedef Annotation Application");
@@ -773,7 +773,7 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl (type, 0, enum_annotation);
     t.assert_annotation_appl (type, 1, string_annotation);
     t.assert_annotation_appl (type, 2, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Sequence Type Parameter Annotation Application");
@@ -841,7 +841,7 @@ BE_post_init (char *[], long)
           }
         t.failed ();
       }
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Constant Declarations Annotation Application");
@@ -851,7 +851,7 @@ BE_post_init (char *[], long)
     ).assert_node ("test_const");
     t.assert_annotation_appl_count (test_const, 1);
     t.assert_annotation_appl (test_const, 0, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Multiple Annotation Applications");
@@ -865,7 +865,7 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl_count (struct3, 2);
     t.assert_annotation_appl (struct3, 0, test_annotation_1);
     t.assert_annotation_appl (struct3, 1, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Application with a Single Parameter");
@@ -885,7 +885,7 @@ BE_post_init (char *[], long)
 
     AST_Annotation_Member *y = t.get_annotation_member (appl, "y");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 0);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Application with Named Parameters");
@@ -905,7 +905,7 @@ BE_post_init (char *[], long)
 
     AST_Annotation_Member *y = t.get_annotation_member (appl, "y");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (y, 102);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Applications with Scoped Names");
@@ -919,7 +919,7 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl_count (struct5, 2);
     t.assert_annotation_appl (struct5, 0, test_annotation_in_module);
     t.assert_annotation_appl (struct5, 1, test_annotation_in_module);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Applications on/in Unions");
@@ -986,7 +986,7 @@ BE_post_init (char *[], long)
       t.assert_node ("test_union::union_member_1");
     t.assert_annotation_appl_count (union_member_1, 1);
     t.assert_annotation_appl (union_member_1, 0, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Applications on/in Enums");
@@ -1010,7 +1010,7 @@ BE_post_init (char *[], long)
       t.assert_node ("Test_Enum::TEST_ENUM_MEMBER_2");
     t.assert_annotation_appl_count (TEST_ENUM_MEMBER_2, 1);
     t.assert_annotation_appl (TEST_ENUM_MEMBER_2, 0, test_annotation_1);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("By Default, Unknown Annotation Application Causes Warning");
@@ -1021,12 +1021,12 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};\n"
     );
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
-    Annotation_Test t("Optionally, Unknown Annotation Application Causes Error");
+    Annotation_Test t("Optionally, Unknown Annotation Application Causes Err");
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
     t.run (
       "struct struct10 {\n"
@@ -1037,7 +1037,7 @@ BE_post_init (char *[], long)
     // Restore Default Behaivor
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_WARN_ONCE;
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Application with Enum");
@@ -1066,7 +1066,7 @@ BE_post_init (char *[], long)
       t.assert_annotation_appl (value, 2, enum_annotation);
     member = t.get_annotation_member (third, "value");
     t.assert_annotation_member_value (member, enum_annotation_c);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Application with String");
@@ -1099,7 +1099,7 @@ BE_post_init (char *[], long)
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String*, UTL_String*>
       (member, &third_string);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Application with Constant");
@@ -1126,7 +1126,7 @@ BE_post_init (char *[], long)
     annotation = t.assert_annotation_appl (value, 2, constant_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value<short, ACE_CDR::Short> (member, 100);
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotate Array Base Type");
@@ -1172,7 +1172,7 @@ BE_post_init (char *[], long)
           }
         t.failed ();
       }
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   /* -------------------------------------------------------------------------
    * Annotation Names
@@ -1190,7 +1190,7 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};"
     );
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Names Can't Be \"annotation\"");
@@ -1199,7 +1199,7 @@ BE_post_init (char *[], long)
       "@annotation annotation {\n"
       "};\n"
     );
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   try {
     Annotation_Test t("Annotation Names Can Start with \"annotation\"");
@@ -1211,7 +1211,7 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};\n"
     ).assert_annotation_decl ("::@annotationannotation");
-  } catch (Failed &f) {}
+  } catch (Failed &) {}
 
   // Done, Print Overall Results
   if (failed_test_count)
