@@ -74,6 +74,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 AST_Decl::NodeType const
 AST_Typedef::NT = AST_Decl::NT_typedef;
 
@@ -153,7 +156,7 @@ AST_Typedef::owns_base_type (bool val)
 
 // Dump this AST_Typedef node to the ostream o.
 void
-AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
+AST_Typedef::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "typedef ");
   o << *ref_type_;
