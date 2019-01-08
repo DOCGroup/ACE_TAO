@@ -17,7 +17,7 @@
  * NOTE: If updated, idlVersionNames in util/idl_version.cpp must be updated
  * as well!
  */
-enum TAO_IDL_FE_Export SpecificIdlVersion
+enum SpecificIdlVersion
 {
   /// Invalid Version Value
   IDL_VERSION_INVALID,
