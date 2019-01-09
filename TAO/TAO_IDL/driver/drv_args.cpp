@@ -705,10 +705,6 @@ process_long_option(long ac, char **av, long &i)
     }
   else
     {
-      ACE_DEBUG ((LM_ERROR,
-        ACE_TEXT ("Unknown long option: %C\n"),
-        long_option
-        ));
-      idl_global->parse_args_exit (1);
+      be_global->parse_args (i, av);
     }
 }
