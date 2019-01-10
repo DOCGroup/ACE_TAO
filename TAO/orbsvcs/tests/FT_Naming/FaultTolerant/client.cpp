@@ -656,7 +656,7 @@ do_failover_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
@@ -1291,7 +1291,7 @@ do_persistence_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
@@ -1876,7 +1876,7 @@ do_equivalence_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (const CosNaming::NamingContext::NotFound&)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")

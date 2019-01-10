@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           hello->check_extended_context ();
         }
-      catch (Test::MyException& my_ex)
+      catch (const Test::MyException&)
         {
           ACE_DEBUG ((LM_ERROR, "Error - REGRESSION - extended format service context not transmitted\n"));
           result = 1;
@@ -129,7 +129,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "Test failed (Not regression) because unexpected exception caught:");
       return 1;
     }
-
 
   if (result)
     {
