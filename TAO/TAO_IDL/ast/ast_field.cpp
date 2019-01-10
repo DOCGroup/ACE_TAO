@@ -222,6 +222,12 @@ AST_Field::visibility (void) const
   return this->visibility_;
 }
 
+void
+AST_Field::visibility (AST_Field::Visibility val)
+{
+  visibility_ = val;
+}
+
 int
 AST_Field::contains_wstring (void)
 {
