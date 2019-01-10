@@ -44,16 +44,15 @@ const char * IdlVersion::to_string () const
 
 void IdlVersion::from_string (const char * version)
 {
-  if (!version)
+  if (version)
     {
-      version_ = IDL_VERSION_INVALID;
-    }
-  for (int i = 0; i < IDL_VERSION_COUNT; i++)
-    {
-      if (!ACE_OS::strcmp (version, idlVersionNames[i]))
+      for (int i = 0; i < IDL_VERSION_COUNT; i++)
         {
-          version_ = static_cast<SpecificIdlVersion> (i);
-          return;
+          if (!ACE_OS::strcmp (version, idlVersionNames[i]))
+            {
+              version_ = static_cast<SpecificIdlVersion> (i);
+              return;
+            }
         }
     }
   version_ = IDL_VERSION_INVALID;
