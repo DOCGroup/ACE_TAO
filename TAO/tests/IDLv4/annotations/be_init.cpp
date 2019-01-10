@@ -1026,7 +1026,8 @@ BE_post_init (char *[], long)
   try {
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
-    Annotation_Test t ("Optionally, Unknown Annotation Application Causes Error");
+    Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err");
+                // Any mention of "Error" will be picked up by scoreboard ^^^
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
     t.run (
       "struct struct10 {\n"
