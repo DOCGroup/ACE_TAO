@@ -62,7 +62,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-
 #include "idl_defines.h"
 #include "idl_global.h"
 #include "global_extern.h"
@@ -84,13 +83,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_unistd.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
 
 // Define an increment for the size of the array used to store names of
 // included files.
 #undef INCREMENT
 #define INCREMENT 64
 
-static long *pSeenOnce= 0;
+static long *pSeenOnce = 0;
 
 #if defined (ACE_OPENVMS)
 #include <unixlib.h>
@@ -1949,12 +1950,19 @@ IDL_GlobalData::eval (const char *string)
   // Set up Flex to read from string
   tao_yy_scan_string (string);
 
-  // emulate DRV_drive()
+  // Disable Output
+  std::streambuf *default_streambuf = ACE_DEFAULT_LOG_STREAM->rdbuf ();
+  ACE_DEFAULT_LOG_STREAM->rdbuf (0);
   u_long const flags = ACE_LOG_MSG->flags ();
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+
+  // emulate DRV_drive()
   FE_yyparse ();
   idl_global->check_primary_keys ();
   AST_check_fwd_decls ();
+
+  // Renable Output
+  ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf);
   ACE_LOG_MSG->set_flags (flags);
 
   // Have Flex Cleanup
