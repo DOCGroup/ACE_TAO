@@ -63,7 +63,7 @@ void
 AST_Annotation_Member::dump (ACE_OSTREAM_TYPE &o)
 {
   AST_Field::dump (o);
-  if (value_)
+  if (field_type () && value_)
     {
       dump_i (o, " default ");
       if (field_type ()->node_type () == AST_Decl::NT_enum)

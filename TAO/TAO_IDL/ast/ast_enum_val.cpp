@@ -79,7 +79,8 @@ AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
     AST_Constant (AST_Expression::EV_ulong,
                   AST_Decl::NT_enum_val,
                   new AST_Expression (v),
-                  n)
+                  n),
+    enum_parent_ (0)
 {
 }
 
