@@ -378,6 +378,7 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <decl_annotations_pair_val> seq_head
 
 %type <decls_val> member_i;
+%type <vival> visibility;
 %%
 
 /*
@@ -1451,22 +1452,32 @@ value_element
         ';'
         ;
 
-state_member
+visibility
         : IDL_PUBLIC
         {
-          /* is $0 to member_i */
-          $<vival>$ = AST_Field::vis_PUBLIC;
-        }
-        member_i
-        {
+          $$ = AST_Field::vis_PUBLIC;
         }
         | IDL_PRIVATE
         {
-          /* is $0 to member_i */
-          $<vival>$ = AST_Field::vis_PRIVATE;
+          $$ = AST_Field::vis_PRIVATE;
         }
-        member_i
+        ;
+
+state_member
+        : visibility member_i
         {
+          if ($2)
+            {
+              AST_Decls &decls = *$2;
+              for (size_t i = 0; i < decls.size (); i++)
+                {
+                  AST_Field * field = dynamic_cast<AST_Field*>(decls[i]);
+                  if (field)
+                    {
+                      field->visibility ($1);
+                    }
+                }
+            }
         }
         ;
 
@@ -3011,19 +3022,15 @@ members
         | %empty
         ;
 
-member  :
+member
+        : annotations_maybe member_i
         {
-          /* is $0 to member_i */
-          $<vival>$ = AST_Field::vis_NA;
-        }
-        annotations_maybe member_i
-        {
-          if ($3)
+          if ($1)
             {
-              AST_Decls & decls = *$3;
+              AST_Decls &decls = *$2;
               for (size_t i = 0; i < decls.size (); i++)
                 {
-                  decls[i]->annotation_appls ($2);
+                  decls[i]->annotation_appls ($1);
                 }
             }
         }
@@ -3080,13 +3087,7 @@ member_i :
                       continue;
                     }
 
-                  /* $0 denotes Visibility, must be on yacc reduction stack. */
-                  f =
-                    idl_global->gen ()->create_field (
-                                            tp,
-                                            d->name (),
-                                            $<vival>0
-                                          );
+                  f = idl_global->gen ()->create_field (tp, d->name ());
                   members->push_back (f);
                   (void) s->fe_add_field (f);
                 }

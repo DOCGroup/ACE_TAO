@@ -1027,6 +1027,7 @@ BE_post_init (char *[], long)
     idl_global->unknown_annotations_ =
       IDL_GlobalData::UNKNOWN_ANNOTATIONS_ERROR;
     Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err");
+                // Any mention of "Error" will be picked up by scoreboard ^^^
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
     t.run (
       "struct struct10 {\n"
@@ -1211,6 +1212,39 @@ BE_post_init (char *[], long)
       "  short member;\n"
       "};\n"
     ).assert_annotation_decl ("::@annotationannotation");
+  } catch (Failed const &) {}
+
+  /* -------------------------------------------------------------------------
+   * Struct Field Visibility Must be vis_NA
+   * -------------------------------------------------------------------------
+   * Test for: https://github.com/DOCGroup/ACE_TAO/issues/784
+   *
+   * In the bison file, visibility for valuetype state members (which are the
+   * same class as normal fields) was being passed through the bison stack.
+   * When adding support for annotations, the grammar was changed and it was
+   * broken, causing bogus data to be passed to regular struct field as their
+   * visibility.
+   *
+   * This is a test to assert that struct fields have vis_NA. This can't be put
+   * anywhere else at the moment because this is the only test that's an
+   * instance of the idl compiler.
+   */
+  try {
+    Annotation_Test t ("Struct Field Visibility Must be vis_NA");
+    AST_Decl *member_decl = t.assert_node ("struct1::member");
+    AST_Field *member = AST_Field::narrow_from_decl (member_decl);
+    if (!member)
+      {
+        t.failed ("Could Not Get member");
+      }
+    if (member->visibility() != AST_Field::vis_NA)
+      {
+        char buffer[100];
+        ACE_OS::snprintf (&buffer[0], 100,
+          "struct field visibility is %u, which is not equal to vis_NA",
+          static_cast<unsigned> (member->visibility ()));
+        t.failed (&buffer[0]);
+      }
   } catch (Failed const &) {}
 
   // Done, Print Overall Results
