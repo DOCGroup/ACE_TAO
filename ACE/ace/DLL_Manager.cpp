@@ -148,7 +148,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
               // mask it.
               // @TODO: If we've found our DLL _and_ it's
               // broken, should we continue at all?
-              if ((errno != 0) && (errno != ENOENT) && (errors || ACE::debug ()))
+              if ((errno != ENOENT) && (errors || ACE::debug ()))
                 {
                   ACE_TString errtmp;
                   if (errors)
@@ -208,7 +208,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                   //
                   // @TODO: If we've found our DLL _and_ it's broken,
                   // should we continue at all?
-                  if ((errno != 0) && (errno != ENOENT) && (errors || ACE::debug ()))
+                  if ((errno != ENOENT) && (errors || ACE::debug ()))
                     {
                       ACE_TString errtmp;
                       if (errors)
