@@ -6,6 +6,7 @@
 
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
 #  include "ace/streams.h"
