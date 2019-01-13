@@ -330,7 +330,7 @@ Sender::pace_data (void)
 
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent succesfully\n",
+                      "Sender::pace_data frame %d was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.

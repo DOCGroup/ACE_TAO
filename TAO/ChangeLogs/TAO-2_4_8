@@ -1,0 +1,262 @@
+commit 8e254f653cf8820f37003989764939592a840a34
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 14 09:09:22 2018 +0200
+
+    Document changes
+
+commit 8a255fc4ed1cbc37d608e93536ffbaf40a194fc9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 2 14:32:56 2018 +0200
+
+    Catch exception by reference
+    
+        * TAO/tao/Storable_File_Guard.cpp:
+
+commit c0ff874332e13f5c2f4bb76235dad1b6c7d1598a
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Apr 18 10:13:54 2018 -0500
+
+    A few more MPC "duplicated files" issues
+
+commit 6e99fc7a46b1ae2ce212998e65a21eb55dc28711
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Apr 17 17:29:00 2018 -0500
+
+    Invocation_Retry_Params.h: add required #include
+
+commit ccdabd4707ec683bd704f3ca82162fab92b8c1e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 14:25:50 2018 +0200
+
+    Documentation and whitespace changes
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_CDR_Message_Receiver.h:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_CDR_Message_Sender.h:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_Complex_Address_Server.h:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_UDP_EH.h:
+        * TAO/orbsvcs/orbsvcs/Event/ECG_UDP_Receiver.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_And_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Basic_Filter_Builder.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Bitmask_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Conjunction_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ConsumerControl.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_ProxyConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Disjunction_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Dispatching.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Event_Channel.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Filter_Builder.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Group_Scheduling.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Filter.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Kokyu_Scheduling.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxySupplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_Dispatching.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_TPC_ProxySupplier.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Timeout_Generator.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connection_Handler.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connector.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Connector_Impl.h:
+
+commit 3612891a2307281151d9789fd7418e0465cea8c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 12:45:54 2018 +0200
+
+    Whitespace changes
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Dispatching_Task.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Pulling_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_Pulling_Strategy.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.cpp:
+
+commit 025dcfb3852fe64b3b69689ea1dc85deb1ef6837
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 12:39:48 2018 +0200
+
+    Doxygen fix
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+
+commit 657865f97f242c1377304d0970b592df4f45f2ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 12:29:03 2018 +0200
+
+    Use true/false instead of 1/0 for connected checks
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Factory.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.inl:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.inl:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.inl:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.cpp:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.inl:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.cpp:
+
+commit fe1fa2d58972d22ccc6b228060279ac6bcbeb929
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 10:39:43 2018 +0200
+
+    Fixed links
+
+commit 2c6096185f882b3b685d80520697180ec3da5d6c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 10:35:14 2018 +0200
+
+    Removed trailing whitespaces and corrected links to bugzilla
+
+commit 6a04b1e7cedd54f78f779750d98579f97dccdfba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 10:30:19 2018 +0200
+
+    Fixed typo
+
+commit b3177982ce28246e24576046a2a19b52392c7983
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 10:28:55 2018 +0200
+
+    Remove obsolete options
+    
+        * TAO/docs/ec_options.html:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Default_Factory.cpp:
+
+commit 23c29ff162fdf719920cfb3db1ef944ed1228d3a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 10:07:13 2018 +0200
+
+    Fixed typos
+    
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Factory.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+
+commit d2ef61d179632c2c98917a423d3ce9a3d2b613af
+Merge: db9809559cd bedd53e8747
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 09:53:08 2018 +0200
+
+    gerge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit db9809559cd9351a3c783e56de6340e82e434f37
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 09:52:42 2018 +0200
+
+    Documentation changes, fixed some typos
+    
+        * TAO/docs/ec_options.html:
+        * TAO/docs/pluggable_protocols/index.html:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Dispatching.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_EventChannel.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_MT_Dispatching.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullConsumer.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPullSupplier.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_ProxyPushSupplier.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_SupplierControl.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedEventChannel.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h:
+        * TAO/orbsvcs/orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h:
+        * TAO/orbsvcs/orbsvcs/ESF/ESF_Proxy_Collection.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Event_Channel_Base.h:
+        * TAO/orbsvcs/orbsvcs/Event/EC_ProxyConsumer.h:
+        * TAO/orbsvcs/orbsvcs/Notify/Validate_Client_Task.h:
+        * TAO/orbsvcs/orbsvcs/PortableGroup/UIPMC_Acceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/Sched/Config_Scheduler.cpp:
+        * TAO/tao/IORInterceptor/IORInfo.h:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/Service_Context.cpp:
+        * TAO/tao/Stub.cpp:
+        * TAO/tao/Tagged_Components.cpp:
+
+commit 31740fc585aa2c0fcdad4bfbde110fabd31796f2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 12 14:06:48 2018 +0200
+
+    Don't use auto_ptr for the fragmentation strategy, that was the only one that used this in the ORB interface. With C++17 auto_ptr has been removed completely
+    
+        * TAO/tao/AnyTypeCode/Any_Array_Impl_T.cpp:
+        * TAO/tao/CodecFactory/CDR_Encaps_Codec.cpp:
+        * TAO/tao/GIOP_Fragmentation_Strategy.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/GIOP_Message_Base.h:
+        * TAO/tao/IIOP_Acceptor.cpp:
+        * TAO/tao/ORB_Core.cpp:
+        * TAO/tao/ORB_Core.h:
+        * TAO/tao/Resource_Factory.h:
+        * TAO/tao/default_resource.cpp:
+        * TAO/tao/default_resource.h:
+
+commit 2855e7d3bebfcab8a443d923224e6412968f02ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 10 09:54:43 2018 +0200
+
+    Combine two logging lines into one
+    
+        * TAO/tao/Object.cpp:
+
+commit 7053d9eede98769be570c1ac192298270f71eb11
+Merge: e6349f5df34 17cb3ec57b3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 19:45:08 2018 +0200
+
+    Merge pull request #611 from jwillemsen/jwi-connectorregistry
+    
+    Add some more error logic for the cases the create_profile fails
+
+commit 17cb3ec57b3b9dd537fea4d156384623360d1ae8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 18:30:56 2018 +0200
+
+    Add some more error logic for the cases the create_profile fails
+    
+        * TAO/tao/Connector_Registry.cpp:
+
+commit effd803b7b9badcd4414e1dc1d8dfdf6021a99e8
+Merge: b085ae3be0e 6f8b356f4ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 4 18:01:47 2018 +0200
+
+    Merge pull request #607 from jwillemsen/master
+    
+    Small docu changes and only set no_deprecated=1 in our GNU make rules when it is not set yet
+
+commit 110a761b4731a561fbc04a62f98bc35863d4a64f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 4 11:03:29 2018 +0200
+
+    Minor documentation changes and remove old cvs date tags
+
+commit 6d5ecfa9873a5612940057f2ee852a3c6ec08660
+Author: reicesar <reicesar@gmail.com>
+Date:   Wed Mar 28 11:07:58 2018 -0300
+
+    Fix 64bit issue on load registry data

@@ -661,7 +661,7 @@ TAO_ServantBase::_add_ref (void)
 void
 TAO_ServantBase::_remove_ref (void)
 {
-  unsigned long const new_count = --this->ref_count_;
+  CORBA::ULong const new_count = --this->ref_count_;
 
   if (new_count == 0)
     {
@@ -672,7 +672,11 @@ TAO_ServantBase::_remove_ref (void)
 CORBA::ULong
 TAO_ServantBase::_refcount_value (void) const
 {
+#if defined (ACE_HAS_CPP11)
+  return this->ref_count_;
+#else
   return this->ref_count_.value ();
+#endif /* ACE_HAS_CPP11 */
 }
 
 void

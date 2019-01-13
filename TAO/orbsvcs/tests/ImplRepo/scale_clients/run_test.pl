@@ -9,9 +9,10 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
 $status = 0;
-$debug_level = '0';
+my $debug_level = '0';
+my $imr_debug_level = '1';
 
-# Allow for manually launching ImpleRepo for debugging purposes.
+# Allow for manually launching ImplRepo for debugging purposes.
 my $no_imr = 0;
 
 my $clients_count = 6;
@@ -21,51 +22,61 @@ my $server_reply_delay = 0;
 my $rt_timeout_msecs = 0;
 my $max_rt_tries = 1;
 my $asynch_loc = "";
+my $activationmode = "normal";
+my $shutdownserver = 0;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-	    $debug_level = '10';
-	    $i++;
-	}
-	elsif ($ARGV[$i] eq "-clients") {
-	    $i++;
-	    $clients_count = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-rt_timeout") {
-	    $i++;
-	    $rt_timeout_msecs = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-secs_between_clients") {
-	    $i++;
-	    $secs_between_clients = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-server_init_delay") {
-	    $i++;
-	    $server_init_delay = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-server_reply_delay") {
-	    $i++;
-	    $server_reply_delay = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-rt_timeout") {
-	    $i++;
-	    $rt_timeout_msecs = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-max_rt_tries") {
-	    $i++;
-	    $max_rt_tries = $ARGV[$i];
-	}
-	elsif ($ARGV[$i] eq "-no_imr") {
-	    $no_imr = 1;
-	}
-        elsif ($ARGV[$i] eq "-asynch") {
-            $asynch_loc = "--use_dsi";
-        }
-	else {
-	    usage();
-	    exit 1;
-	}
+      if ($ARGV[$i] eq '-debug') {
+        $debug_level = '10';
+        $i++;
+      }
+      elsif ($ARGV[$i] eq "-imrdebug") {
+        $i++;
+        $imr_debug_level = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-activationmode") {
+        $i++;
+        $activationmode = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-clients") {
+        $i++;
+        $clients_count = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-rt_timeout") {
+        $i++;
+        $rt_timeout_msecs = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-secs_between_clients") {
+        $i++;
+        $secs_between_clients = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-server_init_delay") {
+        $i++;
+        $server_init_delay = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-server_reply_delay") {
+        $i++;
+        $server_reply_delay = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-rt_timeout") {
+        $i++;
+        $rt_timeout_msecs = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-max_rt_tries") {
+        $i++;
+        $max_rt_tries = $ARGV[$i];
+      }
+      elsif ($ARGV[$i] eq "-no_imr") {
+        $no_imr = 1;
+      }
+      elsif ($ARGV[$i] eq "-asynch") {
+        $asynch_loc = "--use_dsi";
+      }
+      else {
+        usage();
+        exit 1;
+      }
     }
 }
 
@@ -128,34 +139,36 @@ sub scale_clients_test
     my $result = 0;
     my $start_time = time();
 
-    $IMR->Arguments ("-d 1 -o $imr_imriorfile -orbendpoint iiop://:$port $asynch_loc ");
-#		     "-ORBDebugLevel 10 -ORBVerboseLogging");
+    if ($activationmode eq "per_client") {
+      $shutdownserver = 1;
+    }
+
+    $IMR->Arguments ("-d $imr_debug_level -o $imr_imriorfile -orbendpoint iiop://:$port $asynch_loc -ORBDebugLevel $debug_level");
 
     if ($no_imr) {
-	print STDERR "IMR assumed to be manually launched in way that is ".
-	    "compatbile with:\n";
-	print STDERR $IMR->CommandLine () . "\n";
+      print STDERR "IMR assumed to be manually launched in way that is ".
+        "compatible with:\n";
+      print STDERR $IMR->CommandLine () . "\n";
     } else {
+      print ">>> " . $IMR->CommandLine () . "\n";
 
-	print ">>> " . $IMR->CommandLine () . "\n";
+      ##### Start ImplRepo #####
+      $IMR_status = $IMR->Spawn ();
+      if ($IMR_status != 0) {
+        print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
+        return 1;
+      }
+      if ($imr->WaitForFileTimed ($imriorfile, $imr->ProcessStartWaitInterval()) == -1) {
+        print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
+        $IMR->Kill (); $IMR->TimedWait (1);
+        return 1;
+      }
 
-	##### Start ImplRepo #####
-	$IMR_status = $IMR->Spawn ();
-	if ($IMR_status != 0) {
-	    print STDERR "ERROR: ImplRepo Service returned $IMR_status\n";
-	    return 1;
-	}
-	if ($imr->WaitForFileTimed ($imriorfile, $imr->ProcessStartWaitInterval()) == -1) {
-	    print STDERR "ERROR: cannot find file <$imr_imriorfile>\n";
-	    $IMR->Kill (); $IMR->TimedWait (1);
-	    return 1;
-	}
-
-	if ($imr->GetFile ($imriorfile) == -1) {
-	    print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
-	    $IMR->Kill (); $IMR->TimedWait (1);
-	    return 1;
-	}
+      if ($imr->GetFile ($imriorfile) == -1) {
+        print STDERR "ERROR: cannot retrieve file <$imr_imriorfile>\n";
+        $IMR->Kill (); $IMR->TimedWait (1);
+        return 1;
+      }
     }
 
     if ($act->PutFile ($imriorfile) == -1) {
@@ -174,19 +187,26 @@ sub scale_clients_test
         return 1;
     }
 
-    $ACT->Arguments ("-d 1 -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
+    $ACT->Arguments ("-d $imr_debug_level -o $act_actiorfile -ORBInitRef ImplRepoService=file://$act_imriorfile");
     print ">>> " . $ACT->CommandLine () . "\n";
 
     $ACT_status = $ACT->Spawn ();
     if ($ACT_status != 0) {
-	print STDERR "ERROR: ImR Activator returned $ACT_status\n";
-	return 1;
+      print STDERR "ERROR: ImR Activator returned $ACT_status\n";
+      return 1;
     }
     if ($act->WaitForFileTimed ($actiorfile,$act->ProcessStartWaitInterval()) == -1) {
-	print STDERR "ERROR: cannot find file <$act_imriorfile>\n";
-	$ACT->Kill (); $ACT->TimedWait (1);
-	$IMR->Kill (); $IMR->TimedWait (1);
-	return 1;
+      print STDERR "ERROR: cannot find file <$act_imriorfile>\n";
+      $ACT->Kill (); $ACT->TimedWait (1);
+      $IMR->Kill (); $IMR->TimedWait (1);
+      return 1;
+    }
+
+    # In a per client mode each server should get one request, in all other
+    # modes the server gets a request for each client started
+    $expected_requests = $clients_count;
+    if ($activationmode eq "per_client") {
+      $expected_requests = 1;
     }
 
     ##### Add server to activator #####
@@ -195,18 +215,18 @@ sub scale_clients_test
     $srv->DeleteFile ($srv_status_file);
 
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-		    "add $objprefix" . " -c \"".
-		    $srv_server_cmd . " ".
-		    "-ORBUseIMR 1 -d $server_init_delay -n $clients_count ".
-		    "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
+        "add $objprefix" . " -a $activationmode -c \"".
+        $srv_server_cmd . " ".
+        "-ORBUseIMR 1 -d $server_init_delay -n $expected_requests ".
+        "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
     print ">>> " . $TI->CommandLine () . "\n";
     $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
     if ($TI_status != 0) {
-	print STDERR "ERROR: tao_imr returned $TI_status\n";
-	$ACT->Kill (); $ACT->TimedWait (1);
-	$IMR->Kill (); $IMR->TimedWait (1);
-	return 1;
+      print STDERR "ERROR: tao_imr returned $TI_status\n";
+      $ACT->Kill (); $ACT->TimedWait (1);
+      $IMR->Kill (); $IMR->TimedWait (1);
+      return 1;
     }
 
     # Why is this sleep needed?
@@ -214,20 +234,21 @@ sub scale_clients_test
 
     ##### Run clients #####
     for(my $i = 0; $i < $clients_count; $i++ ) {
-	# Make sure server has started by looking for its status file
+      # Make sure server has started by looking for its status file
 
-	$CLI[$i]->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" .
-			     " -d $server_reply_delay".
-                             " -r $rt_timeout_msecs".
-			     " -m $max_rt_tries");
-	print ">>> " . $CLI[$i]->CommandLine () . "\n";
-	$CLI_status = $CLI[$i]->Spawn ();
-	if ($CLI_status != 0) {
-	    print STDERR "ERROR: client returned $CLI_status during spawn\n";
-	    $status = 1;
-	    last;
-	}
-	sleep($secs_between_clients);
+      $CLI[$i]->Arguments ("-ORBInitRef Test=corbaloc::localhost:$port/$objprefix" .
+            " -d $server_reply_delay".
+            " -x $shutdownserver " .
+            " -r $rt_timeout_msecs".
+            " -m $max_rt_tries");
+      print ">>> " . $CLI[$i]->CommandLine () . "\n";
+      $CLI_status = $CLI[$i]->Spawn ();
+      if ($CLI_status != 0) {
+        print STDERR "ERROR: client returned $CLI_status during spawn\n";
+        $status = 1;
+        last;
+      }
+      sleep($secs_between_clients);
     }
 
     sleep (server_request_delay);
@@ -235,8 +256,7 @@ sub scale_clients_test
     ##### Stop clients #####
     print STDERR "Waiting for clients to stop\n";
     for(my $i = 0; $i < $clients_count; $i++ ) {
-        my $CLI_status = $CLI[$i]->WaitKill ($cli[$i]->ProcessStartWaitInterval() +
-					     $server_init_delay + $server_reply_delay);
+        my $CLI_status = $CLI[$i]->WaitKill ($cli[$i]->ProcessStartWaitInterval() + $server_init_delay + $server_reply_delay);
         if ($CLI_status != 0) {
             print STDERR "ERROR: Client $i returned $CLI_status\n";
             return 1;
@@ -248,27 +268,29 @@ sub scale_clients_test
     $srv->DeleteFile ($status_file_name);
 
     # Shutting down any server object within the server will shutdown the whole server
-    $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
-		    "shutdown $objprefix");
-    print ">>> " . $TI->CommandLine () . "\n";
-    $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
-    if ($TI_status != 0) {
-	print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
-	$status = 1;
+    # This can not be done with per client activation mode
+    if ($activationmode ne "per_client") {
+      $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile shutdown $objprefix");
+      print ">>> " . $TI->CommandLine () . "\n";
+      $TI_status = $TI->SpawnWaitKill ($ti->ProcessStartWaitInterval());
+      if ($TI_status != 0) {
+        print STDERR "ERROR: tao_imr shutdown returned $TI_status\n";
+        $status = 1;
+      }
     }
 
     my $ACT_status = $ACT->TerminateWaitKill ($act->ProcessStopWaitInterval());
     if ($ACT_status != 0) {
-	print STDERR "ERROR: IMR Activator returned $ACT_status\n";
-	$status = 1;
+      print STDERR "ERROR: IMR Activator returned $ACT_status\n";
+      $status = 1;
     }
 
     if (!$no_imr) {
-	my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
-	if ($IMR_status != 0) {
-	    print STDERR "ERROR: IMR returned $IMR_status\n";
-	    $status = 1;
-	}
+      my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
+      if ($IMR_status != 0) {
+        print STDERR "ERROR: IMR returned $IMR_status\n";
+        $status = 1;
+      }
     }
 
     my $test_time = time() - $start_time;
@@ -280,14 +302,16 @@ sub scale_clients_test
 
 sub usage() {
     print "Usage: run_test.pl ".
-	"[-clients <num=$clients_count>] ".
-	"[-secs_between_clients <seconds=$secs_between_clients>] ".
-	"[-server_init_delay <seconds=$server_init_delay>] ".
-	"[-server_reply_delay <seconds=$server_reply_delay] ".
-	"[-rt_timeout <round-trip-timeout-msecs=$rt_timeout_msecs>] ".
-	"[-max_rt_tries <max-client-requests=$max_rt_tries>] ".
-	"[-no_imr] ".
-	"\n";
+      "[-clients <num=$clients_count>] ".
+      "[-secs_between_clients <seconds=$secs_between_clients>] ".
+      "[-server_init_delay <seconds=$server_init_delay>] ".
+      "[-server_reply_delay <seconds=$server_reply_delay] ".
+      "[-rt_timeout <round-trip-timeout-msecs=$rt_timeout_msecs>] ".
+      "[-max_rt_tries <max-client-requests=$max_rt_tries>] ".
+      "[-no_imr] ".
+      "[-imrdebug <level=$imr_debug_level>]" .
+      "[-activationmode <activationmode=$activationmode]" .
+      "\n";
 }
 
 ###############################################################################

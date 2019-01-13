@@ -42,7 +42,7 @@ project(ImR_Activator_IDL) : orbsvcslib, orbsvcs_output, conv_lib, valuetype, dy
               -I$(TAO_ROOT)/tao/ImR_Client
 
   idl_files {
-    idlflags    += -GH -GC
+    idlflags += -GH -GC
     ImR_Activator.idl
   }
   source_files {

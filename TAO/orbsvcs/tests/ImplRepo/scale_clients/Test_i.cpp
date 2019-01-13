@@ -5,8 +5,9 @@
 
 /* static */ bool Test_i::expected_requests_made_ = false;
 
-Test_i::Test_i (CORBA::Short num_requests_expected)
-  : num_requests_expected_ (num_requests_expected)
+Test_i::Test_i (CORBA::ORB_ptr orb, CORBA::Short num_requests_expected)
+  : orb_ (CORBA::ORB::_duplicate(orb))
+  , num_requests_expected_ (num_requests_expected)
   , num_requests_made_ (0)
 {
 }
@@ -28,4 +29,10 @@ bool
 Test_i::expected_requests_made ()
 {
   return Test_i::expected_requests_made_;
+}
+
+void
+Test_i::shutdown ()
+{
+  orb_->shutdown(0);
 }

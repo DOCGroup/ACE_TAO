@@ -87,7 +87,7 @@ void Config_Backing_Store::loadActivators ()
 
           const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
-          Activator_Info* ai;
+          Activator_Info* ai = 0;
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
 
           Activator_Info_Ptr info (ai);

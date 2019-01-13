@@ -112,7 +112,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 const char *name = tc->name ();
 
                 CORBA::ULong length = 0;
-                // tc->length (TAO_TRY_ENV);
 
                 if (TAO_debug_level > 0)
                   {

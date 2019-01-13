@@ -1,10 +1,14 @@
 // -*- C++ -*-
-// The following configuration file is designed to work for Android
-// platforms using GNU C++.
+// Config Header file for Android NDK
 
 #ifndef ACE_CONFIG_ANDROID_H
 #define ACE_CONFIG_ANDROID_H
 #include /**/ "ace/pre.h"
+
+// NOTE: We must be careful from now on to distinguish between the API level
+// and NDK version.
+// There is a large number of combinations of these two that can lead to
+// problems.
 
 // Location of the __ANDROID_API__ define
 // #include $NDK_ROOT/sysroot/usr/include/android/api-level.h
@@ -15,6 +19,88 @@
 #endif
 
 #define ACE_ANDROID
+#define ACE_PLATFORM_CONFIG config-android.h
+
+/*
+ * Android NDK Revision Macros
+ *
+ * Revsions Scheme Work Like This:
+ * Revision | __NDK_MAJOR__ | __NDK_MINOR__
+ * r16      | 16            | 0
+ * r16b     | 16            | 1
+ * r16c     | 16            | 2
+ *
+ * After r16, NDK version macros are defined in android/ndk-version.h Before
+ * that they must be defined in platform_macros.GNU before the include of
+ * platform_android.GNU.
+ */
+#define ACE_ANDROID_NDK_AT_LEAST(MAJ, MIN) \
+  (__NDK_MAJOR__ > (MAJ) || (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ >= (MIN)))
+
+#define ACE_ANDROID_NDK_EXACTLY(MAJ, MIN) \
+  (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ == (MIN))
+
+#define ACE_ANDROID_NDK_LESS_THAN(MAJ, MIN) \
+  (__NDK_MAJOR__ < (MAJ) || (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ < (MIN)))
+
+#ifdef ACE_ANDROID_NDK_HAS_NDK_VERSION_H
+#  include "android/ndk-version.h"
+#else
+#  ifndef __NDK_MAJOR__
+#    error ndk-version.h is missing, __NDK_MAJOR__ for Android NDK must be defined!
+#  endif
+#  ifndef __NDK_MINOR__
+#    error ndk-version.h is missing, __NDK_MINOR__ for Android NDK must be defined!
+#  endif
+#endif
+
+// ucontext.h and clock_settime() were added in r10c
+#if ACE_ANDROID_NDK_AT_LEAST(10, 2)
+#  define ACE_HAS_UCONTEXT_T
+#  define ACE_HAS_CLOCK_SETTIME
+#else
+#  define ACE_LACKS_UCONTEXT_H
+#endif
+
+// NDK has these by r12b
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1)
+#  define ACE_LACKS_GETHOSTENT
+#  define ACE_LACKS_LOCALECONV
+#  define ACE_LACKS_WCHAR_STD_NAMESPACE
+#endif
+
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 18
+#  define ACE_LACKS_LOG2
+#endif
+
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 21
+#  define ACE_LACKS_SEARCH_H
+#  define ACE_LACKS_SYS_SEM_H
+#  define ACE_LACKS_SEMBUF_T
+#  define ACE_LACKS_SYS_MSG_H
+#  define ACE_LACKS_SYS_SHM_H
+#  define ACE_LACKS_SYSV_SHMEM
+#else
+#  define ACE_HAS_SEMUN
+#endif
+
+// NDK has telldir() and seekdir() by 15c
+#if ACE_ANDROID_NDK_LESS_THAN(15, 2) || __ANDROID_API__ < 23
+#  define ACE_LACKS_TELLDIR
+#  define ACE_LACKS_SEEKDIR
+#endif
+
+// fd_mask was added in r17c
+#if ACE_ANDROID_NDK_LESS_THAN(17, 2)
+#  define ACE_LACKS_FD_MASK
+#endif
+
+#if __ANDROID_API__ < 21
+#  define ACE_LACKS_RAND_R
+#  define ACE_LACKS_WCSTOLL
+#  define ACE_LACKS_WCSTOULL
+#  define ACE_LACKS_CONDATTR_SETCLOCK
+#endif
 
 #define ACE_HAS_SSIZE_T
 
@@ -38,35 +124,18 @@
 #define ACE_USES_ULONG_FOR_STAT_TIME
 
 #define ACE_LACKS_NEW_H
-#define ACE_LACKS_SEARCH_H
 #define ACE_LACKS_SIGINFO_H
 #define ACE_LACKS_STROPTS_H
-#define ACE_LACKS_SYS_SEM_H
-#define ACE_LACKS_SYS_MSG_H
-#define ACE_LACKS_SYS_SHM_H
 #define ACE_LACKS_SYS_SYSCTL_H
 
-#define ACE_LACKS_CUSERID
-#define ACE_LACKS_GETHOSTENT
 #define ACE_LACKS_GETLOADAVG
 #define ACE_LACKS_ISCTYPE
-#define ACE_LACKS_LOG2
-#define ACE_LACKS_LOCALECONV
 #define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
 #define ACE_LACKS_PWD_FUNCTIONS
-#define ACE_LACKS_PTHREAD_CANCEL
-#define ACE_LACKS_SEEKDIR
-#define ACE_LACKS_SEMBUF_T
-#define ACE_LACKS_SETINHERITSCHED
 #define ACE_LACKS_STRRECVFD
+#define ACE_LACKS_PTHREAD_CANCEL // posix_limits.h explicitly says this
+#define ACE_LACKS_SETINHERITSCHED // posix_limits.h explicitly says this
 #define ACE_LACKS_SWAB
-#define ACE_LACKS_SYSV_SHMEM
-#define ACE_LACKS_TELLDIR
-#define ACE_LACKS_WCHAR_STD_NAMESPACE
-#define ACE_LACKS_WCSTOLL
-#define ACE_LACKS_WCSTOULL
-
-#define ACE_LACKS_RAND_R
 
 // Android seems to have 64 keys of which Android itself use 5
 #define ACE_DEFAULT_THREAD_KEYS 59
@@ -79,8 +148,6 @@
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
 #endif
-
-#define ACE_PLATFORM_CONFIG config-android.h
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
@@ -118,13 +185,14 @@
 #define ACE_HAS_P_READ_WRITE
 // Use ACE's alternate cuserid() implementation since the use of the
 // system cuserid() is discouraged.
+#define ACE_LACKS_CUSERID
 #define ACE_HAS_ALT_CUSERID
 
 #if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 3)
 # define ACE_HAS_ISASTREAM_PROTOTYPE
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 # define ACE_HAS_CPU_SET_T
-#elif __ANDROID_API__ >= 21
+#elif ACE_ANDROID_NDK_AT_LEAST(15, 0) || __ANDROID_API__ >= 21
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
@@ -330,32 +398,7 @@
 #define ACE_HAS_RECURSIVE_THR_EXIT_SEMANTICS
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
-
-#if __ANDROID_API__ < 21
-# define ACE_LACKS_UCONTEXT_H
-#else
-# define ACE_HAS_CLOCK_SETTIME
-# define ACE_HAS_UCONTEXT_T
-#endif
-
-#define ACE_LACKS_FD_MASK
-
-#if __ANDROID_API__ >= 9
-# define ACE_HAS_TIMEZONE
-#endif
-
-#if __ANDROID_API__ < 14
-# define ACE_LACKS_STD_WSTRING
-# define ACE_LACKS_GETIPNODEBYADDR
-# define ACE_LACKS_GETIPNODEBYNAME
-#endif
-
-#if __ANDROID_API__ == 3
-# error Unsupported Android release 3
-#elif __ANDROID_API__ == 8
-# define ACE_LACKS_REGEX_H 1
-# define ACE_LACKS_CONDATTR 1
-#endif
+#define ACE_HAS_TIMEZONE
 
 #if !defined ACE_DEFAULT_TEMP_DIR
 # define ACE_DEFAULT_TEMP_DIR "/data/tmp"

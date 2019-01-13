@@ -52,7 +52,7 @@ public:
 
   virtual ~TAO_EndpointPolicy_i ();
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this>
   virtual TAO_EndpointPolicy_i *clone (void) const;
 
   // = The EndpointPolicy::Policy methods

@@ -1475,7 +1475,7 @@ ip_check (int &ipvn_enabled, int pf)
 #if defined (ACE_WIN32)
       // as of the release of Windows 2008, even hosts that have IPv6 interfaces disabled
       // will still permit the creation of a PF_INET6 socket, thus rendering the socket
-      // creation test inconsistent. The reccommended solution is to get the list of
+      // creation test inconsistent. The recommended solution is to get the list of
       // endpoint addresses and see if any match the desired family.
       ACE_INET_Addr *if_addrs = 0;
       size_t if_cnt = 0;

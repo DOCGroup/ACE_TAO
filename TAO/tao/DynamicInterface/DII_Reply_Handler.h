@@ -103,7 +103,6 @@ public:
   ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &))
   ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &))
 #endif
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

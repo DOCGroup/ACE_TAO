@@ -138,6 +138,14 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /**
+   * Get and Set Annotations on the discriminator
+   */
+  ///{
+  AST_Annotation_Appls *disc_annotations ();
+  void disc_annotations (AST_Annotation_Appls *annotations);
+  ///}
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
@@ -195,6 +203,11 @@ private:
 
   int default_index_;
   // Default label index (zero based indexing).
+
+  /**
+   * Annotations on the discriminator
+   */
+  AST_Annotation_Appls *disc_annotations_;
 };
 
 #endif           // _AST_UNION_AST_UNION_HH

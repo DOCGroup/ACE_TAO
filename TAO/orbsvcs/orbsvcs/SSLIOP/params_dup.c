@@ -2,7 +2,6 @@
 
 #include <openssl/asn1.h>
 
-
 DSA *
 DSAPARAMS_DUP_WRAPPER_NAME (DSA * dsa)
 {

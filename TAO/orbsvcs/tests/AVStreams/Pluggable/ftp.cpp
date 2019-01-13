@@ -373,7 +373,7 @@ Client::pace_data (void)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "send failed:%p","FTP_Client_Flow_Handler::send\n"),
                               -1);
-          ACE_DEBUG ((LM_DEBUG,"Client::pace_data buffer sent succesfully\n"));
+          ACE_DEBUG ((LM_DEBUG,"Client::pace_data buffer sent successfully\n"));
 
           // Reset the mb.
           this->mb.reset ();

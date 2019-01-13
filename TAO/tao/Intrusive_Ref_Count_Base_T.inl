@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <typename T>
 ACE_INLINE
 TAO_Intrusive_Ref_Count_Base<T>::TAO_Intrusive_Ref_Count_Base (void)
-  : ref_count_(1)
+  : refcount_(1)
 {}
 
 
@@ -13,7 +13,7 @@ ACE_INLINE
 void
 TAO_Intrusive_Ref_Count_Base<T>::_add_ref (void)
 {
-  ++this->ref_count_;
+  ++this->refcount_;
 }
 
 
@@ -22,7 +22,7 @@ ACE_INLINE
 void
 TAO_Intrusive_Ref_Count_Base<T>::_remove_ref (void)
 {
-  long const new_count = --this->ref_count_;
+  CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count != 0)
     {

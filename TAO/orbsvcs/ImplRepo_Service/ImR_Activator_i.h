@@ -158,6 +158,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   pid_t active_check_pid_;
 };
 
+#if defined (ACE_WIN32)
 class Active_Pid_Setter
 {
 public:
@@ -167,6 +168,6 @@ public:
   ImR_Activator_i &owner_;
 
 };
-
+#endif /* ACE_WIN32 */
 
 #endif /* IMR_ACTIVATOR_I_H */

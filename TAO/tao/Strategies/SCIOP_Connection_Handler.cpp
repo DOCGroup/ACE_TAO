@@ -238,7 +238,7 @@ TAO_SCIOP_Connection_Handler::open (void*)
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - SCIOP_Connection_Handler::open, SCIOP ")
-                  ACE_TEXT ("connection to peer <%s> on %d\n"),
+                  ACE_TEXT ("connection to peer <%s> on [%d]\n"),
                   client, this->peer ().get_handle ()));
     }
 

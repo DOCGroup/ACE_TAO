@@ -4,12 +4,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_Operation_Details::TAO_Operation_Details (const char *name,
-                                              CORBA::ULong len,
+                                              const CORBA::ULong len,
                                               TAO::Argument **args,
-                                              CORBA::ULong num,
-                                              CORBA::Boolean has_in_args,
-                                              TAO::Exception_Data *data,
-                                              CORBA::ULong count)
+                                              const CORBA::ULong num,
+                                              const CORBA::Boolean has_in_args,
+                                              const TAO::Exception_Data *data,
+                                              const CORBA::ULong count)
   : opname_ (name)
     , opname_len_ (len)
     , request_id_ (0)

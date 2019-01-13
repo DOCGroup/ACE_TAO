@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_ERROR, "REGRESSION - Test has failed !!!\n"));
           result = 1;
         }
-      catch (const CORBA::TRANSIENT my_ex)
+      catch (const CORBA::TRANSIENT& my_ex)
         {
           ACE_UNUSED_ARG (my_ex);
           ACE_DEBUG ((LM_DEBUG, "Client catches a TRANSIENT, as expected. No problem !\n"));

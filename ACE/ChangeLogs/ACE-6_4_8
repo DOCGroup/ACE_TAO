@@ -1,0 +1,401 @@
+commit 6229f4500eae90370ec6ae3799d992b1cb27d1d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 14 16:16:02 2018 +0200
+
+    List some more changes to ACE
+
+commit 3af62afe62ee636f3f5c3b17351c7fe6da8f26a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 12 21:09:20 2018 +0200
+
+    List changes
+    
+        * ACE/NEWS:
+
+commit c546c63d12554c5b4b8e0b4641b02cd2ab0b15df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 23 16:58:35 2018 +0200
+
+    Get rid of ACE_HAS_NONCONST_FD_ISSET, not used anymore, related to issue #609
+    
+        * ACE/ace/config-android.h:
+        * ACE/ace/config-macosx-leopard.h:
+
+commit a8ea2ce0ab23614064dc07707e215761aecd708e
+Merge: 3abc2a0a218 f160e4078d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 23 16:57:23 2018 +0200
+
+    Merge pull request #609 from dskyle/master
+    
+    * Fix ACE_Handle_Set::is_set to support platforms with both …
+
+commit d90fc5d87565a9f2e6cb7bd2cb616c0cc4803aa9
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Apr 17 17:28:15 2018 -0500
+
+    gnuace MPC type: Environment variables must be "exported" to impact child processes
+
+commit 86658bfdb75efd76b043e637a8ddc9e254fa5524
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Tue Apr 17 17:27:52 2018 -0500
+
+    GNUAutobuild MPC type:
+    
+    Use POSIX-compliant redirection to work with all shells
+
+commit f160e4078d8d1591d71e36c3dc0d32c7f65c0880
+Author: David Kyle <david.kyle@gmail.com>
+Date:   Fri Apr 13 17:39:19 2018 -0400
+
+    Always const_cast for FD_ISSET. Remove intra-statement #if
+
+commit b08762b114014d42ba557ed8763aba8253ad1612
+Merge: 4b277a6f3ea 76b8f305025
+Author: David Kyle <david.kyle@gmail.com>
+Date:   Fri Apr 13 17:34:05 2018 -0400
+
+    Merge branch 'master' of github.com:dskyle/ACE_TAO
+
+commit 4b277a6f3ea98b5c6b1e4a4b9a96001bf9a43dbb
+Merge: 4e72f72ed0b 439c9e0c867
+Author: David Kyle <david.kyle@gmail.com>
+Date:   Fri Apr 13 17:33:28 2018 -0400
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit bedd53e87472824b2ce78ba1dc661e18301157f9
+Merge: e467545f4ed b41eee5bece
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 07:53:33 2018 +0200
+
+    Merge pull request #608 from mitza-oci/ace-mpc
+    
+    No need to list ace_wchar.inl twice in the MPC file.
+
+commit e467545f4ed86697096c6cfa79bdc9d9308e4642
+Merge: ac7a1dae17e 4414c7bd3e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Apr 13 07:52:37 2018 +0200
+
+    Merge pull request #616 from jwillemsen/jwi-acevs2017_2
+    
+    Only list VERSION once
+
+commit 4414c7bd3e896b84dd030e983b9f40a17cc7be99
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 12 20:37:06 2018 +0200
+
+    Only list VERSION once
+
+commit ceb273ea994e3718d2e7197454839bf7c1fcce34
+Merge: 3718261cb81 29c5bc48b96
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Apr 10 18:59:38 2018 -0400
+
+    Merge out from master
+
+commit 3718261cb814c3cc598de91fa2bee7ddcdfffc7b
+Author: Steve Huston <shuston@riverace.com>
+Date:   Tue Apr 10 18:43:02 2018 -0400
+
+    Pull changes from master; remove addr_any restriction from ipv6_only UDP
+
+commit 3ead9df51912321ed0040cf193127eb254adbdf5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 10 08:32:23 2018 +0200
+
+    Don't use inline assembly with clang compilers
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 3653b7c9b62e2e8c9fc49e98d3b82bccd3424a58
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 10 08:28:07 2018 +0200
+
+    Enable intel assembly when using the Embarcadero clang compilers
+    
+        * ACE/ace/CDR_Base.cpp:
+        * ACE/ace/config-win32-borland.h:
+
+commit 76b8f30502577cea23ccc31813f3c5e40f2b0c05
+Author: David Kyle <dskyle@sei.cmu.edu>
+Date:   Mon Apr 9 20:44:16 2018 -0400
+
+    * Fix Handle_Set.inl for Visual Studio
+
+commit e6349f5df343ef089ffadcbc6448ca5f9f2eb5d2
+Merge: 7374b0209e7 85cc6bae8a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 12:41:47 2018 +0200
+
+    Merge pull request #610 from jwillemsen/jwi-builtinbswap
+    
+    Make use of builtin_bswap(16|32|64) with Embarcadero C++ Builder clang
+
+commit 85cc6bae8a7187b9b5a4c41264aea2f9d8620922
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 10:33:37 2018 +0200
+
+    Removed accidental change
+    
+        * ACE/ace/CDR_Base.inl:
+
+commit e9839d1b9f1d42cd15aaabb04fe015eb25bee9e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 09:20:19 2018 +0200
+
+    Test double/float as last, they are more complex so could easier fail
+    
+        * ACE/tests/CDR_Array_Test.cpp:
+
+commit 95fff62248ae45054a36ffc3b569a34b86c6d151
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Apr 9 08:15:19 2018 +0100
+
+    Make use of builtin_bswap(16|32|64)
+
+commit 4e72f72ed0b30b373564e45e8462412f443e1255
+Author: David Kyle <david.kyle@gmail.com>
+Date:   Sun Apr 8 16:51:22 2018 -0400
+
+    * Fix ACE_Handle_Set::is_set to support platforms with both ACE_HAS_BIG_FD_SET
+    and ACE_HAS_NONCONST_FD_ISSET.
+    * Add ACE_HAS_NONCONST_FD_ISSET to compile for recent android NDKs.
+
+commit b41eee5bece55292f12d5eec78966a0a80812d27
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Apr 5 15:20:46 2018 -0500
+
+    No need to list ace_wchar.inl twice in the MPC file.
+
+commit 7374b0209e7ac3b6e22bfd86246d02f419d6fbb4
+Merge: effd803b7b9 b901665ea61
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Apr 4 11:02:37 2018 -0500
+
+    Merge pull request #606 from mitza-oci/perlace-stacktrace
+    
+    Process_Unix.pm: optional stack traces and core file generation for stuck processes
+
+commit effd803b7b9badcd4414e1dc1d8dfdf6021a99e8
+Merge: b085ae3be0e 6f8b356f4ac
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 4 18:01:47 2018 +0200
+
+    Merge pull request #607 from jwillemsen/master
+    
+    Small docu changes and only set no_deprecated=1 in our GNU make rules when it is not set yet
+
+commit 6f8b356f4acd034ff8996f515a81b789abeef715
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 4 16:48:42 2018 +0200
+
+    Only set no_deprecated to 1 when it not has been set
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit 110a761b4731a561fbc04a62f98bc35863d4a64f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Apr 4 11:03:29 2018 +0200
+
+    Minor documentation changes and remove old cvs date tags
+
+commit b901665ea61fc8d923ec498d708909c777967cdb
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Mar 28 15:21:39 2018 -0500
+
+    Process_Unix.pm: optional stack traces and core file generation for stuck processes
+
+commit 0f82fa2d40bc0a82a92a8cb809c74727eac78a66
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 29 14:31:58 2018 -0500
+
+    Compiler_Features_32_Test for clang 6
+    
+    No different than clang 5
+
+commit 8903deb76a7129defc2849125165f95ab2235692
+Author: brewmanz(75) <brewmanz@gmail.com>
+Date:   Thu Mar 29 20:54:02 2018 +1300
+
+    Add missing $ prefix to ACE_ROOT
+
+commit d7e67f3d37c23b4b46875d9c810c3fa44a64ac8b
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:05:50 2018 -0400
+
+    Update my e-mail address
+
+commit b7d5b823a788467d79b12c27f9771f5d407746f3
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:05:44 2018 -0400
+
+    Update instructions for adding a release to openSUSE Build Service
+
+commit 30f4c6e7312ac0941b4eeadaa2b0916de4918399
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:04:39 2018 -0400
+
+    Fix handling of Debian packaging files in ACE/bin/make_release.py
+    
+    Remove unused code to handle TAO, which is not packaged for Debian.
+    
+    Remove code to handle ACE/debian/ace.dsc which was deleted. (A .dsc
+    file is produced automatically by building a Debian source package.)
+    
+    Examine ACE/debian/control instead of ACE/debian/debian.control.
+    
+    Update the version inside ACE/debian/*-<version>.lintain-overrides
+    files, in addition to renaming these files.
+    
+    Adjust a regular expression to avoid matching on whitespace or other
+    characters past the end of the file or package name. This had caused
+    version updates to occur in the wrong places in ACE/debian/control.
+
+commit c6def22a0b87bb608496721bcf8c4dc0a4b121b4
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:04:24 2018 -0400
+
+    Exclude TAO in ACE/debian/ACE-DPKG.mwc
+    
+    This provides consistency with ACE/ACE.mwc, which excludes TAO (as
+    seen in both the ACE-only and ACE+TAO source distributions).
+    
+    Adding this exclusion allows Debian package builds to succeed from
+    either source distribution, rather than failing if it contains TAO.
+    In turn, this allows the openSUSE Build Service to produce both RPM
+    and Debian packages from a single ACE+TAO source distribution.
+
+commit ad5f2b013459dc63d98aee4b0533e5c4d1b14878
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:04:11 2018 -0400
+
+    Include appropriate file from ChangeLogs directory in Debian packages
+    
+    Use the ACE version number to determine the file in the ChangeLogs
+    directory to install in Debian packages. (The variable definitions
+    are copied from ACE/include/makeinclude/wrapper_macros.GNU for the
+    non-Windows case.)
+
+commit be271a0a0fd77a77cbfd35c989abdbb84bd537d4
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:03:44 2018 -0400
+
+    Synchronize ACE/debian with contents of Debian source repository
+    
+    Incorporate changes from the Debian source repository [1], but keep
+    the package version current (and where the package version is wrong,
+    correct it). Also fix corrupted version checks for external package
+    dependencies.
+    
+    This does not introduce additional scripts from the repository that
+    are unused when building packages.
+    
+    [1]: git://anonscm.debian.org/pkg-ace/pkg-ace.git
+
+commit 4ad608f47c5b15468dee6384823312a9425b4e44
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:03:34 2018 -0400
+
+    Remove unused file ACE/rpmbuild/ace-tao-macros.patch
+
+commit 9910eb31a3e742a9734b526b27370cc8280a1ac8
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:03:25 2018 -0400
+
+    Improve test for RHEL or CentOS in RPM packaging
+    
+    The %{rhel_version} and %{centos_version} RPM macros are specific
+    to the openSUSE Build Service. Use the %{rhel} macro to test for
+    these distributions instead, which supports local builds.
+
+commit 1d3807c4da1e3cadf16b71192d2e41fac3488814
+Author: David Ward <david.ward@ll.mit.edu>
+Date:   Sun Mar 25 19:03:15 2018 -0400
+
+    Explicitly require Data::Dumper Perl module to build RPM packages
+    
+    In Fedora, this Perl module is located in a separate package that
+    may not be installed automatically in a minimal build environment
+    (for example, when building packages with Mock [1]). This module
+    is used by MPC during the build.
+    
+    This change adds the virtual package name "perl(Data::Dumper)" to
+    the BuildRequires: tag, which ensures that the package containing
+    this module is installed for any RPM-based distribution. This was
+    tested with the openSUSE Build Service.
+    
+    [1]: https://github.com/rpm-software-management/mock/wiki
+
+commit 9850ed266139718f636331a75db49f9605b62e6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Mar 25 20:36:36 2018 +0200
+
+    Remove workarounds for vc6 and old gcc versions
+    
+        * ACE/ace/XML_Utils/XSCRT/Elements.hpp:
+
+commit c3ba4e68c86219610841d08d0506c8bbd66c3034
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Mar 25 18:26:25 2018 +0200
+
+    Minor improvements to the XML utils classes
+    
+        * ACE/ace/UUID.h:
+        * ACE/ace/XML_Utils/XMLSchema/id_map.hpp:
+        * ACE/ace/XML_Utils/XSCRT/Elements.hpp:
+
+commit 4e39b7db8eed8cddbb4ec1a97ae2870f842f7976
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 21 11:22:24 2018 +0100
+
+    Documentation improvements
+    
+        * ACE/docs/index.html:
+        * ACE/docs/msvc_notes.txt:
+
+commit 2867697ce480fda37af565f38c729a3dbc13e6ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Mar 21 08:30:59 2018 +0100
+
+    Add get_idref that works wit a string&
+    
+        * ACE/ace/XML_Utils/XMLSchema/Types.hpp:
+        * ACE/ace/XML_Utils/XSCRT/Elements.hpp:
+
+commit 92d0806c151f4be4735a516aecfedd81f3876196
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Mar 18 10:55:07 2018 +0100
+
+    Remove empty ipp files
+    
+        * ACE/ace/XML_Utils/XMLSchema/Traversal.ipp:
+        * ACE/ace/XML_Utils/XMLSchema/TypeInfo.ipp:
+        * ACE/ace/XML_Utils/XMLSchema/Types.ipp:
+        * ACE/ace/XML_Utils/XMLSchema/Writer.ipp:
+          Deleted.
+    
+        * ACE/ace/XML_Utils/XMLSchema/Traversal.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/TypeInfo.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/Types.hpp:
+        * ACE/ace/XML_Utils/XMLSchema/Writer.hpp:
+
+commit 16e8495dd2f69b3c89d4fcd13b8e0c3096931c41
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 16 16:32:16 2018 +0100
+
+    Instead of using [0] a [0L] has to be used, that is the correct fix
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 1a40037d09b677b680a6ecbf6f3386aec5871807
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Mar 16 08:46:32 2018 +0100
+
+    ACE/TAO x.4.7 release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:

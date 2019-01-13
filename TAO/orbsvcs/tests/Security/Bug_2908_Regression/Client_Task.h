@@ -1,4 +1,3 @@
-
 #ifndef COLLOCATED_TEST_CLIENT_TASK_H
 #define COLLOCATED_TEST_CLIENT_TASK_H
 #include /**/ "ace/pre.h"
@@ -15,7 +14,6 @@
 class Client_Task : public ACE_Task_Base
 {
 public:
-
   /// Constructor
   Client_Task (CORBA::ORB_ptr corb,
                Messenger_ptr messenger,

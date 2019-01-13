@@ -62,7 +62,6 @@ namespace TAO
   }
 }
 
-
 ACE_STATIC_SVC_DEFINE (
   RequestProcessingStrategyServantLocatorFactoryImpl,
   ACE_TEXT ("RequestProcessingStrategyServantLocatorFactory"),

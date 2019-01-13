@@ -236,9 +236,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
         // Get reference to initial naming context.
         CosNaming::NamingContext_var inc
-            = resolve_init<CosNaming::NamingContext>(
-                    orb.in(), "NameService"
-              );
+            = resolve_init<CosNaming::NamingContext>(orb.in(), "NameService");
 
         // Look for controller in the Naming Service.
         CosNaming::Name n;

@@ -64,6 +64,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                     n));
       }
 
+    orb->destroy ();
+
     return 0;
 
   }

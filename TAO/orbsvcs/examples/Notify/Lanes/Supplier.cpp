@@ -135,8 +135,7 @@ TAO_Notify_Lanes_Supplier::deactivate (void)
 
 void
 TAO_Notify_Lanes_Supplier::subscription_change (const CosNotification::EventTypeSeq & added,
-                                      const CosNotification::EventTypeSeq & /*removed */
-                                      )
+                                      const CosNotification::EventTypeSeq & /*removed */)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
 

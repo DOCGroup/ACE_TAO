@@ -72,8 +72,7 @@ public ::CORBA::LocalObject
 
 
   virtual EDF_Scheduling::SchedulingParameterPolicy_ptr
-    create_scheduling_parameter (const EDF_Scheduling::SchedulingParameter & value
-                                 );
+    create_scheduling_parameter (const EDF_Scheduling::SchedulingParameter & value);
 
   void shutdown (void);
 

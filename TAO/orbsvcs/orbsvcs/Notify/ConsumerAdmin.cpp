@@ -151,8 +151,7 @@ TAO_Notify_ConsumerAdmin::load_proxy (
 
 CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_Notify_ConsumerAdmin::obtain_notification_push_supplier (CosNotifyChannelAdmin::ClientType ctype,
-                                                         CosNotifyChannelAdmin::ProxyID_out proxy_id
-                                                         )
+                                                         CosNotifyChannelAdmin::ProxyID_out proxy_id)
 {
   CosNotification::QoSProperties initial_qos;
 
@@ -168,8 +167,7 @@ TAO_Notify_ConsumerAdmin::obtain_notification_push_supplier (CosNotifyChannelAdm
 CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_Notify_ConsumerAdmin::obtain_notification_push_supplier_with_qos (CosNotifyChannelAdmin::ClientType ctype,
                                                                   CosNotifyChannelAdmin::ProxyID_out proxy_id,
-                                                                  const CosNotification::QoSProperties & initial_qos
-                                                                  )
+                                                                  const CosNotification::QoSProperties & initial_qos)
 {
   CosNotifyChannelAdmin::ProxySupplier_var proxy =
     TAO_Notify_PROPERTIES::instance()->builder()->build_proxy (this
@@ -237,8 +235,7 @@ TAO_Notify_ConsumerAdmin::get_qos (void)
 
 void
 TAO_Notify_ConsumerAdmin::subscription_change (const CosNotification::EventTypeSeq & added,
-                                           const CosNotification::EventTypeSeq & removed
-                                           )
+                                           const CosNotification::EventTypeSeq & removed)
 {
   TAO_Notify_EventTypeSeq seq_added (added);
   TAO_Notify_EventTypeSeq seq_removed (removed);
@@ -333,8 +330,7 @@ TAO_Notify_ConsumerAdmin::obtain_notification_pull_supplier (CosNotifyChannelAdm
 
 void
 TAO_Notify_ConsumerAdmin::validate_qos (const CosNotification::QoSProperties & /*required_qos*/,
-                                    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/
-                                    )
+                                    CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

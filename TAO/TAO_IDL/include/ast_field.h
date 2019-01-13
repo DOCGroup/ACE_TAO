@@ -99,11 +99,26 @@ public:
              UTL_ScopedName *n,
              Visibility vis = vis_NA);
 
+  /**
+   * A sort of copy constructor that creates a copy of the AST_Field for a new
+   * scope.
+   * The new name must be calculated before hand.
+   * This was created for Annotation Instances and Extended Structs.
+   */
+  AST_Field (
+    UTL_ScopedName *name,
+    AST_Field *other);
+
   virtual ~AST_Field (void);
 
   // Data Accessors.
   AST_Type *field_type (void) const;
-  Visibility visibility (void) const;
+
+  /// Get and Set Visibility
+  ///{
+  Visibility visibility () const;
+  void visibility (Visibility val);
+  ///}
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);
@@ -127,6 +142,8 @@ public:
   virtual void destroy (void);
 
   static AST_Decl::NodeType const NT;
+
+  virtual bool annotatable () const;
 
 protected:
   // Data.

@@ -2,8 +2,6 @@
 #include "Client_Task.h"
 #include "MessengerC.h"
 
-
-
 Client_Task::Client_Task (
         CORBA::ORB_ptr corb,
         Messenger_ptr messenger,
@@ -23,7 +21,7 @@ Client_Task::svc (void)
       // call message
       messenger_->call_message("user");
     }
-  catch(const CORBA::NO_PERMISSION ex)
+  catch(const CORBA::NO_PERMISSION& ex)
     {
       result_ = 1;
       ex._tao_print_exception ("ERROR: Caught CORBA::NO_PERMISSION exception");

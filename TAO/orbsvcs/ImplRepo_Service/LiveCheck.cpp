@@ -35,7 +35,7 @@ LiveListener::_add_ref (void)
   if (ImR_Locator_i::debug () > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("LiveListener::add_ref, %s, count = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveListener::add_ref <%C> count <%d>\n"),
                       server_.c_str(), refcount_));
     }
   return this;
@@ -51,7 +51,7 @@ LiveListener::_remove_ref (void)
     if (ImR_Locator_i::debug () > 5)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT  ("LiveListener::remove_ref, %s, count = %d\n"),
+                        ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
                         server_.c_str(), count));
       }
   }
@@ -67,31 +67,31 @@ LiveListener::_remove_ref (void)
 const int LiveEntry::reping_msec_[] = {10, 100, 500, 1000, 1000, 2000, 2000, 5000, 5000};
 int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 
-const ACE_TCHAR *
+const char *
 LiveEntry::status_name (LiveStatus s)
 {
   switch (s)
     {
     case LS_INIT:
-      return ACE_TEXT ("INIT");
+      return "INIT";
     case LS_UNKNOWN:
-      return ACE_TEXT ("UNKNOWN");
+      return "UNKNOWN";
     case LS_PING_AWAY:
-      return ACE_TEXT ("PING_AWAY");
+      return "PING_AWAY";
     case LS_DEAD:
-      return ACE_TEXT ("DEAD");
+      return "DEAD";
     case LS_ALIVE:
-      return ACE_TEXT ("ALIVE");
+      return "ALIVE";
     case LS_TRANSIENT:
-      return ACE_TEXT ("TRANSIENT");
+      return "TRANSIENT";
     case LS_LAST_TRANSIENT:
-      return ACE_TEXT ("LAST_TRANSIENT");
+      return "LAST_TRANSIENT";
     case LS_TIMEDOUT:
-      return ACE_TEXT ("TIMEDOUT");
+      return "TIMEDOUT";
     case LS_CANCELED:
-      return ACE_TEXT ("CANCELED");
+      return "CANCELED";
     }
-  return ACE_TEXT ("<undefined status>");
+  return "<undefined status>";
 }
 
 void
@@ -102,7 +102,7 @@ LiveEntry::set_reping_limit (int max)
 }
 
 bool
-LiveEntry::reping_available (void)
+LiveEntry::reping_available (void) const
 {
   return this->repings_ < this->max_retry_;
 }
@@ -129,7 +129,8 @@ LiveEntry::max_retry_msec (int msec)
 LiveEntry::LiveEntry (LiveCheck *owner,
                       const char *server,
                       bool may_ping,
-                      ImplementationRepository::ServerObject_ptr ref)
+                      ImplementationRepository::ServerObject_ptr ref,
+                      int pid)
   : owner_ (owner),
     server_ (server),
     ref_ (ImplementationRepository::ServerObject::_duplicate (ref)),
@@ -141,13 +142,13 @@ LiveEntry::LiveEntry (LiveCheck *owner,
     listeners_ (),
     lock_ (),
     callback_ (0),
-    pid_ (0)
+    pid_ (pid)
 {
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server = <%C>, may_ping = %d\n"),
-                      server, may_ping));
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C> may_ping <%d> pid <%d>\n"),
+                      server, may_ping, pid));
     }
 }
 
@@ -174,7 +175,14 @@ LiveEntry::add_listener (LiveListener *ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   LiveListener_ptr llp(ll->_add_ref());
-  this->listeners_.insert (llp);
+  int const result = this->listeners_.insert (llp);
+  if (ImR_Locator_i::debug() > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::add_listener server <%C> result <%d>\n"),
+                      this->server_.c_str(),
+                      result));
+    }
 }
 
 void
@@ -182,11 +190,12 @@ LiveEntry::remove_listener (LiveListener *ll)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
   LiveListener_ptr llp(ll->_add_ref());
-  int result = this->listeners_.remove (llp);
+  int const result = this->listeners_.remove (llp);
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener, result = %d\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::remove_listener server <%C> result <%d>\n"),
+                      this->server_.c_str(),
                       result));
     }
 }
@@ -206,8 +215,8 @@ LiveEntry::reset_status (void)
   if (ImR_Locator_i::debug () > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::reset_status this = %x, ")
-                      ACE_TEXT ("server = %C status = %s\n"),
+                      ACE_TEXT ("(%P|%t) LiveEntry::reset_status this <%x> ")
+                      ACE_TEXT ("server <%C> status <%C>\n"),
                       this, this->server_.c_str(),
                       status_name (this->liveliness_)));
     }
@@ -283,13 +292,13 @@ LiveEntry::status (LiveStatus l)
   }
   this->update_listeners ();
 
-  if (this->listeners_.size() > 0)
+  if (!this->listeners_.is_empty ())
     {
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::status change, ")
-                          ACE_TEXT ("server = %C status = %s\n"),
+                          ACE_TEXT ("server <%C> status <%C>\n"),
                           this->server_.c_str(),
                           status_name (this->liveliness_)));
         }
@@ -322,8 +331,14 @@ LiveEntry::set_pid (int pid)
   this->pid_ = pid;
 }
 
+int
+LiveEntry::pid (void) const
+{
+  return this->pid_;
+}
+
 bool
-LiveEntry::has_pid (int pid)
+LiveEntry::has_pid (int pid) const
 {
   return this->pid_ == 0 || pid == 0 || pid == this->pid_;
 }
@@ -333,15 +348,15 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
   if (this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
-      this->listeners_.size () == 0)
+      this->listeners_.is_empty ())
     {
       if (ImR_Locator_i::debug () > 4)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("= %s, listeners = %d server %C\n"),
+                          ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
-                          this->server_.c_str()));
+                          this->server_.c_str(), this->pid_));
         }
       return false;
     }
@@ -359,10 +374,10 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                          ACE_TEXT ("status = %s, listeners = %d, ")
-                          ACE_TEXT ("msec = %d server %C\n"),
+                          ACE_TEXT ("status <%C> listeners <%d> ")
+                          ACE_TEXT ("msec <%d> server <%C> pid <%d>\n"),
                           status_name (this->liveliness_), this->listeners_.size (),
-                          msec, this->server_.c_str()));
+                          msec, this->server_.c_str(), this->pid_));
         }
       return false;
     }
@@ -381,7 +396,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     case LS_TRANSIENT:
     case LS_LAST_TRANSIENT:
       {
-        int ms = this->next_reping ();
+        int const ms = this->next_reping ();
         if (ms != -1)
           {
             ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, false);
@@ -395,9 +410,9 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
-                                ACE_TEXT ("transient, reping in %d ms, ")
-                                ACE_TEXT ("server %C\n"),
-                                ms, this->server_.c_str()));
+                                ACE_TEXT ("transient, reping in <%d> ms, ")
+                                ACE_TEXT ("server <%C> pid <%d>\n"),
+                                ms, this->server_.c_str(), this->pid_));
               }
           }
         else
@@ -412,10 +427,10 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, ")
                                 ACE_TEXT ("transient, no more repings, ")
-                                ACE_TEXT ("server %C\n"),
-                                this->server_.c_str()));
+                                ACE_TEXT ("server <%C> pid <%d>\n"),
+                                this->server_.c_str(), this->pid_));
               }
-            if (this->listeners_.size() > 0)
+            if (!this->listeners_.is_empty ())
               {
                 this->update_listeners ();
               }
@@ -447,7 +462,8 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
-                          ACE_TEXT ("sendc_ping returned OK\n")));
+                          ACE_TEXT ("sendc_ping for server <%C> returned OK\n"),
+                          this->server_.c_str()));
         }
     }
   catch (const CORBA::Exception &ex)
@@ -456,7 +472,8 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
-                          ACE_TEXT ("sendc_ping threw %C\n"), ex._name()));
+                          ACE_TEXT ("sendc_ping for server <%C> threw <%C>\n"),
+                          this->server_.c_str(), ex._name()));
         }
       this->status (LS_DEAD);
     }
@@ -480,13 +497,13 @@ PingReceiver::cancel (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      const char *server = "<not available>";
+      const char *server = "not available";
       if (this->entry_ != 0)
         {
           server = this->entry_->server_name ();
         }
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server = <%C>\n"),
+                      ACE_TEXT ("(%P|%t) PingReceiver::cancel server <%C>\n"),
                       server));
     }
 
@@ -501,7 +518,7 @@ PingReceiver::cancel (void)
       if (ImR_Locator_i::debug () > 4)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::cancel caught <%C>\n"),
                           ex._name ()));
         }
     }
@@ -515,7 +532,7 @@ PingReceiver::ping (void)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::ping received from %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping received from <%C>\n"),
                           this->entry_->server_name ()));
         }
       this->entry_->release_callback ();
@@ -534,7 +551,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) PingReceiver::ping_excep received from %C\n"),
+                          ACE_TEXT ("(%P|%t) PingReceiver::ping_excep received from <%C>\n"),
                           this->entry_->server_name ()));
         }
       excep_holder->raise_exception ();
@@ -599,20 +616,31 @@ LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
    token_ (token),
    blocked_ (owner->in_handle_timeout ())
 {
-  if (!blocked_)
+  if (ImR_Locator_i::debug () > 3)
     {
-      owner_->enter_handle_timeout ();
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::ctor, ")
+                      ACE_TEXT ("blocked <%d>\n"),
+                      this->token_, this->blocked_));
     }
+  owner_->enter_handle_timeout ();
 }
 
 LC_TimeoutGuard::~LC_TimeoutGuard (void)
 {
-  if (blocked_)
-    {
-      return;
-    }
-
   owner_->exit_handle_timeout ();
+
+  if (blocked_)
+  {
+    if (ImR_Locator_i::debug () > 3)
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG,
+                        ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
+                        ACE_TEXT ("doing nothing because our owner is blocked\n"),
+                        this->token_));
+      }
+    return;
+  }
 
   owner_->remove_deferred_servers ();
 
@@ -621,7 +649,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       ACE_Time_Value delay = ACE_Time_Value::zero;
       if (owner_->deferred_timeout_ != ACE_Time_Value::zero)
         {
-          ACE_Time_Value now (ACE_OS::gettimeofday());
+          ACE_Time_Value const now (ACE_OS::gettimeofday());
           if (owner_->deferred_timeout_ > now)
             delay = owner_->deferred_timeout_ - now;
         }
@@ -629,7 +657,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor,")
+                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
                           ACE_TEXT ("scheduling new timeout(%d), delay = %d,%d\n"),
                           this->token_, owner_->token_, delay.sec(), delay.usec()));
         }
@@ -643,14 +671,14 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
       if (ImR_Locator_i::debug () > 3)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor,")
+                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
                           ACE_TEXT ("no pending timeouts requested\n"),
                           this->token_));
         }
     }
 }
 
-bool LC_TimeoutGuard::blocked (void)
+bool LC_TimeoutGuard::blocked (void) const
 {
   return this->blocked_;
 }
@@ -662,7 +690,7 @@ LiveCheck::LiveCheck ()
   :ping_interval_(),
    running_ (false),
    token_ (100),
-   handle_timeout_busy_ (1),
+   handle_timeout_busy_ (0),
    want_timeout_ (false),
    deferred_timeout_ (0,0)
 {
@@ -687,19 +715,19 @@ LiveCheck::~LiveCheck (void)
 void
 LiveCheck::enter_handle_timeout (void)
 {
-  --this->handle_timeout_busy_;
+  ++this->handle_timeout_busy_;
 }
 
 void
 LiveCheck::exit_handle_timeout (void)
 {
-  ++this->handle_timeout_busy_;
+  --this->handle_timeout_busy_;
 }
 
 bool
 LiveCheck::in_handle_timeout (void)
 {
-  return this->handle_timeout_busy_ == 0;
+  return this->handle_timeout_busy_ != 0;
 }
 
 void
@@ -736,7 +764,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d), ")
-                      ACE_TEXT ("running = %d\n"),
+                      ACE_TEXT ("running <%d>\n"),
                       token, this->running_));
     }
   if (!this->running_)
@@ -759,8 +787,8 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
-                              ACE_TEXT (", ping sent\n"),
-                              token));
+                              ACE_TEXT (", ping sent to server <%C>\n"),
+                              token, entry->server_name ()));
             }
         }
       else
@@ -769,8 +797,8 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
-                              ACE_TEXT (", ping skipped\n"),
-                              token));
+                              ACE_TEXT (", ping skipped for server <%C>\n"),
+                              token, entry->server_name ()));
             }
         }
     }
@@ -787,7 +815,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               entry->do_ping (poa_.in ());
             }
-          LiveStatus status = entry->status ();
+          LiveStatus const status = entry->status ();
           if (status != LS_PING_AWAY && status != LS_TRANSIENT)
             {
               this->per_client_.remove (entry);
@@ -804,21 +832,30 @@ LiveCheck::has_server (const char *server)
 {
   ACE_CString s (server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   return (result == 0 && entry != 0);
 }
 
 void
 LiveCheck::add_server (const char *server,
                        bool may_ping,
-                       ImplementationRepository::ServerObject_ptr ref)
+                       ImplementationRepository::ServerObject_ptr ref,
+                       int pid)
 {
+  if (ImR_Locator_i::debug () > 2)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::add_server <%C> ")
+                      ACE_TEXT ("running <%d> pid <%d>\n"),
+                      server, this->running_, pid));
+    }
+
   if (!this->running_)
     return;
 
   ACE_CString s (server);
   LiveEntry *entry = 0;
-  ACE_NEW (entry, LiveEntry (this, server, may_ping, ref));
+  ACE_NEW (entry, LiveEntry (this, server, may_ping, ref, pid));
   int result = entry_map_.bind (s, entry);
   if (result != 0)
     {
@@ -835,25 +872,52 @@ LiveCheck::add_server (const char *server,
 void
 LiveCheck::set_pid (const char *server, int pid)
 {
+  if (ImR_Locator_i::debug () > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::set_pid <%C> pid <%d>\n"),
+                      server, pid));
+    }
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   if (result != -1 && entry != 0)
     {
       entry->set_pid (pid);
+    }
+  else
+    {
+      if (ImR_Locator_i::debug () > 0)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveCheck::set_pid <%C> pid <%d> cannot find entry\n"),
+                          server, pid));
+        }
     }
 }
 
 void
 LiveCheck::remove_server (const char *server, int pid)
 {
+  if (ImR_Locator_i::debug () > 0)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d>\n"),
+                      server, pid));
+    }
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
-  if (result != -1 && entry->has_pid (pid))
+  int const result = entry_map_.find (s, entry);
+  if (result != -1 && entry != 0 && entry->has_pid (pid))
     {
       if (!this->in_handle_timeout ())
         {
+          if (ImR_Locator_i::debug () > 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server removing <%C> pid <%d> entry pid <%d> status <%C>\n "),
+                              server, pid, entry->pid (), LiveEntry::status_name (entry->status ())));
+            }
           if (entry_map_.unbind (s, entry) == 0)
             {
               delete entry;
@@ -861,23 +925,38 @@ LiveCheck::remove_server (const char *server, int pid)
         }
       else
         {
+          // We got a request to remove the server but we are in handle timeout, so we have to postpone
+          // the remove. We do set the status to dead so that we make sure that we only remove later
+          // on the dead server and not a possible restart
+          entry->status (LS_DEAD);
+
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                              ACE_TEXT ("called during handle_timeout\n"), server));
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> pid <%d> entry pid <%d> status <%C> ")
+                              ACE_TEXT ("called during handle_timeout\n"), server, pid, entry->pid (), LiveEntry::status_name (entry->status ())));
             }
-          this->removed_entries_.insert_tail (s);
+          this->removed_entries_.insert_tail (std::make_pair (s, pid));
         }
     }
   else
     {
-      if (entry != 0 && ImR_Locator_i::debug () > 0)
+      if (ImR_Locator_i::debug () > 0)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
-                          ACE_TEXT ("pid %d does not match entry\n"),
-                          server, pid));
+          if (entry == 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
+                              ACE_TEXT ("Can't find server entry, server probably already removed earlier\n"),
+                              server));
+            }
+          else
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server <%C> ")
+                              ACE_TEXT ("pid <%d> does not match entry pid <%d>\n"),
+                              server, pid, entry->pid ()));
+            }
         }
     }
 }
@@ -885,29 +964,91 @@ LiveCheck::remove_server (const char *server, int pid)
 void
 LiveCheck::remove_deferred_servers (void)
 {
-  if (this->removed_entries_.size () == 0)
-    return;
-
-  NameStack::iterator re_end = this->removed_entries_.end();
-  for (NameStack::iterator re = this->removed_entries_.begin();
-       re != re_end;
-       ++re)
+  if (!this->removed_entries_.is_empty ())
     {
-      if (ImR_Locator_i::debug () > 0)
+      // When we are in handle_timeout we can't remove deferred servers
+      if (!this->in_handle_timeout ())
         {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_entries ")
-                          ACE_TEXT ("removing %s\n"), (*re).c_str()));
+          NamePidStack::iterator re_end = this->removed_entries_.end();
+          for (NamePidStack::iterator re = this->removed_entries_.begin();
+              re != re_end;
+              ++re)
+            {
+              NamePidPair const & name_pid_pair = (*re);
+              if (ImR_Locator_i::debug () > 4)
+                {
+                  ORBSVCS_DEBUG ((LM_DEBUG,
+                                  ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers ")
+                                  ACE_TEXT ("removing <%C> pid <%d>\n"),
+                                  name_pid_pair.first.c_str(), name_pid_pair.second));
+                }
+              // Now try to remove the server, we have to make sure
+              // that we only remove the server when the
+              // name and pid match. These could potentially not
+              // match when the server has already been restarted between the
+              // moment it got in the removed_entries_ stack and this point
+              // where we remove it from the internal administration
+              LiveEntry *entry = 0;
+              int const result = entry_map_.find (name_pid_pair.first, entry);
+              if (result != -1 && entry != 0)
+                {
+                  if (entry->pid () == name_pid_pair.second)
+                    {
+                      if (entry->status () == LS_DEAD)
+                        {
+                          // We have a matched process id
+                          if (ImR_Locator_i::debug () > 4)
+                            {
+                              ORBSVCS_DEBUG ((LM_DEBUG,
+                                              ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers <%C> ")
+                                              ACE_TEXT ("removing dead server using matched pid <%d>\n"),
+                                              name_pid_pair.first.c_str(), name_pid_pair.second));
+                            }
+                          if (entry_map_.unbind (name_pid_pair.first, entry) == 0)
+                            {
+                              delete entry;
+                            }
+                        }
+                      else
+                        {
+                          ORBSVCS_DEBUG ((LM_DEBUG,
+                                          ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers <%C> ")
+                                          ACE_TEXT ("matched pid <%d> but is not dead but <%C>\n"),
+                                          name_pid_pair.first.c_str(), name_pid_pair.second, LiveEntry::status_name (entry->status ())));
+                        }
+                    }
+                  else
+                    {
+                      ORBSVCS_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers <%C> ")
+                                      ACE_TEXT ("pid <%d> does not match entry pid <%d>\n"),
+                                      name_pid_pair.first.c_str(), name_pid_pair.second, entry->pid ()));
+                    }
+                }
+              else
+                {
+                  if (ImR_Locator_i::debug () > 0)
+                    {
+                      ORBSVCS_DEBUG ((LM_DEBUG,
+                                      ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers <%C> ")
+                                      ACE_TEXT ("Can't find server entry, server probably already removed earlier\n"),
+                                      name_pid_pair.first.c_str()));
+                    }
+                }
+            }
+          this->removed_entries_.reset ();
         }
-      LiveEntry *entry = 0;
-      int result = entry_map_.unbind (*re, entry);
-      if (result == 0)
+      else
         {
-          delete entry;
+          if (ImR_Locator_i::debug () > 0)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_deferred_servers ")
+                              ACE_TEXT ("Can't remove <%d> servers because we are still in handle timeout\n"),
+                              this->removed_entries_.size ()));
+            }
         }
     }
-  this->removed_entries_.reset ();
-
 }
 
 bool
@@ -924,7 +1065,7 @@ LiveCheck::add_per_client_listener (LiveListener *l,
     return false;
 
   LiveEntry *entry = 0;
-  ACE_NEW_RETURN (entry, LiveEntry (this, 0, true, ref), false);
+  ACE_NEW_RETURN (entry, LiveEntry (this, l->server (), true, ref, 0), false);
 
   if (this->per_client_.insert_tail(entry) == 0)
     {
@@ -955,7 +1096,7 @@ LiveCheck::add_poll_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == 0)
     {
       return false;
@@ -975,7 +1116,7 @@ LiveCheck::add_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result == -1 || entry == 0)
     {
       return false;
@@ -993,7 +1134,7 @@ LiveCheck::remove_listener (LiveListener *l)
 
   LiveEntry *entry = 0;
   ACE_CString key (l->server());
-  int result = entry_map_.find (key, entry);
+  int const result = entry_map_.find (key, entry);
   if (result != -1 && entry != 0)
     {
       entry->remove_listener (l);
@@ -1006,16 +1147,16 @@ LiveCheck::schedule_ping (LiveEntry *entry)
   if (!this->running_)
     return false;
 
-  LiveStatus status = entry->status();
+  LiveStatus const status = entry->status();
   if (status == LS_PING_AWAY || status == LS_DEAD)
     {
       return status != LS_DEAD;
     }
 
-  ACE_Time_Value now (ACE_OS::gettimeofday());
-  ACE_Time_Value next = entry->next_check ();
+  ACE_Time_Value const now (ACE_OS::gettimeofday());
+  ACE_Time_Value const next = entry->next_check ();
 
-  if (!this->in_handle_timeout () )
+  if (!this->in_handle_timeout ())
     {
       ACE_Time_Value delay = ACE_Time_Value::zero;
       if (next > now)
@@ -1062,7 +1203,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping deferred")));
+                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping deferred because we are in handle timeout\n")));
         }
       if (!this->want_timeout_ || next < this->deferred_timeout_)
         {
@@ -1086,7 +1227,7 @@ LiveCheck::is_alive (const char *server)
 
   ACE_CString s(server);
   LiveEntry *entry = 0;
-  int result = entry_map_.find (s, entry);
+  int const result = entry_map_.find (s, entry);
   if (result == 0 && entry != 0)
     {
       return entry->status ();

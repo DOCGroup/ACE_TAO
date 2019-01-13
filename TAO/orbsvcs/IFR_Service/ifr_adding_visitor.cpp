@@ -87,8 +87,7 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_scope -")
-                  ACE_TEXT (" bad node in this scope\n")
-                ),
+                  ACE_TEXT (" bad node in this scope\n")),
                 -1
               );
             }
@@ -106,8 +105,7 @@ ifr_adding_visitor::visit_scope (UTL_Scope *node)
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
                   ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_scope -")
-                  ACE_TEXT (" failed to accept visitor\n")
-                ),
+                  ACE_TEXT (" failed to accept visitor\n")),
                 -1
               );
             }
@@ -125,9 +123,7 @@ ifr_adding_visitor::visit_predefined_type (AST_PredefinedType *node)
   try
     {
       this->ir_current_ =
-      be_global->repository ()->get_primitive (
-                                    this->predefined_type_to_pkind (node)
-                                  );
+      be_global->repository ()->get_primitive (this->predefined_type_to_pkind (node));
     }
   catch (const CORBA::Exception& ex)
     {

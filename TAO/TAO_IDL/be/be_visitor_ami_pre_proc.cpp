@@ -837,7 +837,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
       // Continue until each element is visited.
       while (elem_number < number_of_elements)
         {
-          AST_Decl *d = elements[elem_number];
+          AST_Decl *d = elements[elem_number++];
 
           if (!d)
             {
@@ -850,6 +850,11 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 
             }
 
+          if (!d->ami_visit())
+            {
+              continue;
+            }
+
           be_decl *bd = be_decl::narrow_from_decl (d);
 
           // Set the scope node as "node" in which the code is being
@@ -859,8 +864,6 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
 
           // Set the node to be visited.
           this->ctx_->node (bd);
-          ++elem_number;
-
 
           // Send the visitor.
           if (bd == 0 ||  bd->accept (this) == -1)

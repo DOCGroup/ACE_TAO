@@ -237,22 +237,46 @@ public:
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id map.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<user_id_map> user_id_map_;
+#else
   auto_ptr<user_id_map> user_id_map_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Servant map.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<servant_map> servant_map_;
+#else
   auto_ptr<servant_map> servant_map_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Id uniqueness strategy.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Uniqueness_Strategy> id_uniqueness_strategy_;
+#else
   auto_ptr<TAO_Id_Uniqueness_Strategy> id_uniqueness_strategy_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Lifespan strategy.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Lifespan_Strategy> lifespan_strategy_;
+#else
   auto_ptr<TAO_Lifespan_Strategy> lifespan_strategy_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Id assignment strategy.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Assignment_Strategy> id_assignment_strategy_;
+#else
   auto_ptr<TAO_Id_Assignment_Strategy> id_assignment_strategy_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Id hint strategy.
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<TAO_Id_Hint_Strategy> id_hint_strategy_;
+#else
   auto_ptr<TAO_Id_Hint_Strategy> id_hint_strategy_;
+#endif /* ACE_HAS_CPP11 */
 
   /// Flag to see if we are using active maps in this active object
   /// map.

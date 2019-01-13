@@ -141,7 +141,6 @@ TAO_ClientRequestInfo::received_exception (void)
   // The spec says that if it is a user exception which can't be
   // inserted then the UNKNOWN exception needs to be thrown with minor
   // code 1.
-
   CORBA::Any * temp = 0;
 
   ACE_NEW_THROW_EX (temp,
@@ -367,7 +366,7 @@ TAO_ClientRequestInfo::request_id (void)
 
   // @@ The following request ID generator prevents the
   //    PortableInterceptor::ClientRequestInterceptor::send_request()
-  //    interception point from occuring before the call to connect,
+  //    interception point from occurring before the call to connect,
   //    thus preventing us from adding an optimization that itself
   //    prevents a connection from being unnecessarily performed.
   //    Thus, the ClientRequestInfo object is forced to have its own

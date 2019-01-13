@@ -209,6 +209,7 @@ TAO/tests/Bug_4010_Regression/run_test.pl:
 TAO/tests/Bug_4059_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_4082_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_4097_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRRO
+TAO/tests/Bug_4213_Regression/run_test.pl: !Win32
 TAO/tests/DIOP/run_test.pl: !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/DIOP/run_test_ipv6.pl: IPV6 !ST !NO_DIOP !ACE_FOR_TAO !CORBA_E_MICRO
 TAO/tests/RTCORBA/Activate_Object_Multiple_ORBs/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST
@@ -330,6 +331,7 @@ TAO/tests/POA/On_Demand_Loading/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_
 TAO/tests/POA/Reference_Counted_Servant/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/tests/POA/Loader/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !STATIC !ACE_FOR_TAO
 TAO/tests/POA/RootPOA/run_test.pl:
+TAO/tests/POA/TIE/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DiffServ/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/IORManipulation/run_test.pl:
 TAO/tests/IORManipulation/filter/run_test.pl:
@@ -503,3 +505,4 @@ TAO/DevGuideExamples/ValueTypes/Messenger/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/ValueTypes/Bank/run_test.pl: !MINIMUM !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/DevGuideExamples/AMH_AMI/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
+TAO/tests/IDLv4/annotations/run_test.pl

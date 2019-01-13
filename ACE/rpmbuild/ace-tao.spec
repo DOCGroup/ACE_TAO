@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.4.7
-%define TAOVER  2.4.7
+%define ACEVER  6.5.3
+%define TAOVER  2.5.3
 
 # Conditional build
 # Default values are
@@ -1947,12 +1947,10 @@ fi
 %{_libdir}/libACE_Compression.so.%{ACEVERSO}
 %{_libdir}/libACE_RLECompression.so.%{ACEVERSO}
 
-%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM
 %doc README
-%doc THANKS
 %doc VERSION
 
 # ---------------- ace-devel ----------------
@@ -1990,6 +1988,7 @@ fi
 %endif
 %exclude %{_libdir}/libACEXML*.so
 
+%doc ACE-INSTALL.html
 %doc AUTHORS
 %doc COPYING
 %doc PROBLEM-REPORT-FORM

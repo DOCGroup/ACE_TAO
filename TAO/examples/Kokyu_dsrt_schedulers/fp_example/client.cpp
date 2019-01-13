@@ -123,8 +123,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (errno == ENOTSUP)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("getprio not supported\n")
-                     ));
+                     ACE_TEXT ("getprio not supported\n")));
         }
       else
         {
@@ -303,8 +302,7 @@ Worker::svc (void)
       if (errno == ENOTSUP)
         {
           ACE_ERROR((LM_ERROR,
-                     ACE_TEXT ("getprio not supported\n")
-                     ));
+                     ACE_TEXT ("getprio not supported\n")));
         }
       else
         {

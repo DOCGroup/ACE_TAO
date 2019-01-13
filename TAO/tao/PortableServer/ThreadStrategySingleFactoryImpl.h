@@ -34,8 +34,7 @@ namespace TAO
     {
     public:
       /// Create a new thread strategy
-      virtual ThreadStrategy* create (
-        ::PortableServer::ThreadPolicyValue value);
+      virtual ThreadStrategy* create (::PortableServer::ThreadPolicyValue value);
 
       virtual void destroy (ThreadStrategy *strategy);
     };

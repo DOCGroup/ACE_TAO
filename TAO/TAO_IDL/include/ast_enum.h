@@ -110,6 +110,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const { return true; }
+
 private:
   friend int tao_yyparse (void);
 

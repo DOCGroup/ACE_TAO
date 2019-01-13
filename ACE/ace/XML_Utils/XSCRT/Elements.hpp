@@ -148,7 +148,11 @@ namespace XSCRT
     {
       if (map_.get () == 0)
       {
+#if defined (ACE_HAS_CPP11)
+        map_ = std::unique_ptr<Map_> (new Map_);
+#else
         map_ = std::auto_ptr<Map_> (new Map_);
+#endif /* ACE_HAS_CPP11 */
       }
 
       if (!map_->insert (std::pair<IdentityProvider const*, Type*> (&id, t)).second)
@@ -262,7 +266,11 @@ namespace XSCRT
     std::map<IdentityProvider const*, Type*, IdentityComparator>
     Map_;
 
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr<Map_> map_;
+#else
     std::auto_ptr<Map_> map_;
+#endif /* ACE_HAS_CPP11 */
   };
 
   // Fundamental types template.

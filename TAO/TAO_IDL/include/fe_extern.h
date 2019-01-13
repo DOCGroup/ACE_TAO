@@ -82,6 +82,9 @@ TAO_IDL_FE_Export int
 FE_yyparse (void);
 
 TAO_IDL_FE_Export void
+FE_yydebug (bool);
+
+TAO_IDL_FE_Export void
 #ifdef USE_MCPP_BUFFER_LEXING
 FE_set_yyin (char *);    // Set yyin
 #else
@@ -99,12 +102,30 @@ FE_new_UTL_Error (void);
 TAO_IDL_FE_Export UTL_Indenter *
 FE_new_UTL_Indenter (void);
 
-// Exception thrown when exiting prematurely in the front end.
-// Also used when command line options limit the output to
-// usage, version or preprocessed files. Catch block is just
-// before front end cleanup and exit.
+/**
+ * Exception thrown when exiting prematurely in the front end.
+ * Also used when command line options limit the output to
+ * usage, version or preprocessed files. Catch block is just
+ * before front end cleanup and exit.
+ *
+ * By default it increments the error count by 1. The status can also be set
+ * mannually.
+ */
 class TAO_IDL_FE_Export Bailout
 {
+public:
+  bool increment_errors_;
+  int errors_;
+  Bailout()
+    : increment_errors_ (true),
+      errors_ (-1) // (Invalid)
+  {
+  }
+  Bailout(int errors)
+    : increment_errors_ (false),
+      errors_ (errors)
+  {
+  }
 };
 
 #endif           // _FE_EXTERN_FE_EXTERN_HH

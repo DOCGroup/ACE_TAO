@@ -72,7 +72,7 @@ TAO_AttributeDef_i::type_i (void)
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   TAO_IDLType_i *impl =
@@ -97,7 +97,7 @@ TAO_AttributeDef_i::type_def_i (void)
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "type_path",
+                                            ACE_TEXT("type_path"),
                                             type_path);
 
   CORBA::Object_var obj =
@@ -126,8 +126,8 @@ TAO_AttributeDef_i::type_def_i (CORBA::IDLType_ptr type_def)
     TAO_IFR_Service_Utils::reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR(type_path));
 }
 
 CORBA::AttributeMode
@@ -145,7 +145,7 @@ TAO_AttributeDef_i::mode_i (void)
 {
   u_int mode = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              mode);
 
   return static_cast<CORBA::AttributeMode> (mode);
@@ -165,14 +165,13 @@ void
 TAO_AttributeDef_i::mode_i (CORBA::AttributeMode mode)
 {
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "mode",
+                                             ACE_TEXT("mode"),
                                              mode);
 }
 
 void
 TAO_AttributeDef_i::make_description (
-    CORBA::AttributeDescription &ad
-  )
+    CORBA::AttributeDescription &ad)
 {
   ad.name = this->name_i ();
 
@@ -180,10 +179,10 @@ TAO_AttributeDef_i::make_description (
 
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT("container_id"),
                                             container_id);
 
-  ad.defined_in = container_id.c_str ();
+  ad.defined_in = ACE_TEXT_ALWAYS_CHAR(container_id.c_str ());
 
   ad.version = this->version_i ();
 
@@ -203,7 +202,7 @@ TAO_AttributeDef_i::get_exceptions (void)
   ACE_Configuration_Section_Key get_excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "get_excepts",
+                                          ACE_TEXT("get_excepts"),
                                           0,
                                           get_excepts_key);
 
@@ -254,7 +253,7 @@ TAO_AttributeDef_i::get_exceptions (void)
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                               this->repo_);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());
@@ -274,7 +273,7 @@ TAO_AttributeDef_i::put_exceptions (void)
   ACE_Configuration_Section_Key put_excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "put_excepts",
+                                          ACE_TEXT("put_excepts"),
                                           0,
                                           put_excepts_key);
 
@@ -325,7 +324,7 @@ TAO_AttributeDef_i::put_exceptions (void)
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR(path.c_str ()),
                                               this->repo_);
 
       retval[i] = CORBA::ExceptionDef::_narrow (obj.in ());

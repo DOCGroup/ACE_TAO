@@ -71,7 +71,7 @@ namespace TAO
     void invoke (Messaging::ReplyHandler_ptr reply_handler_ptr,
                  const TAO_Reply_Handler_Stub &reply_handler_stub);
 
-    virtual void invoke (TAO::Exception_Data *ex, unsigned long ex_count);
+    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
   protected:
 
     virtual Invocation_Status invoke_twoway (

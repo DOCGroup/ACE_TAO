@@ -1,5 +1,25 @@
 #if !defined (__BORLANDC__)
 
+@annotation unit {
+  string value;
+};
+
+@annotation range {
+  double min;
+  double max;
+};
+
+@annotation min {
+  long value;
+};
+
+@annotation max {
+  long value;
+};
+
+@annotation key {
+};
+
 module test {
 
    @unit("deg")

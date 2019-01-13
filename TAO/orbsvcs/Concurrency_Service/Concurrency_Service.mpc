@@ -9,4 +9,7 @@ project : orbsvcsexe, install, concurrency_serv, naming, utils, svc_utils {
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }

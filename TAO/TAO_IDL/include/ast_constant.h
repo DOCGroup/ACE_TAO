@@ -126,6 +126,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const { return true; }
+
 protected:
   AST_Expression *pd_constant_value;
   // The value.

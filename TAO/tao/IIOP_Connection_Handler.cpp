@@ -349,7 +349,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - IIOP_Connection_Handler::open, IIOP ")
-                  ACE_TEXT ("connection to peer <%s> on %d\n"),
+                  ACE_TEXT ("connection to peer <%s> on [%d]\n"),
                   client_addr, this->peer ().get_handle ()));
     }
 

@@ -50,13 +50,13 @@ public:
   int rebind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
-  /// Removes entry for repo_id from the map and sets factory to
+  /// Removes entry for @a repo_id from the map and sets factory to
   /// the tied one.
   int unbind (const char *repo_id,
               CORBA::ValueFactory &factory);
 
   /**
-   * Lookup a matching factory for repo_id.
+   * Lookup a matching factory for @a repo_id.
    * Invokes _add_ref () on the factory if found.
    * Returns -1 on failure and 0 on success.
    */

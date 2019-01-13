@@ -58,7 +58,6 @@ class TAO_EndpointPolicy_Export  IIOPEndpointValue_i :
   public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Default Constructor. It is acceptable to create an empty value
   /// and modify the state via the attributes.
   IIOPEndpointValue_i ();

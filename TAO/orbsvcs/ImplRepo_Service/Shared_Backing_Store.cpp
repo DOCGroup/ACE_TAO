@@ -90,7 +90,7 @@ namespace {
         ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
         (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
       this->filename_ = file;
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
       this->file_ = ACE_OS::fopen (file.c_str(), flags_str);
 #else
       this->file_lock_.reset
@@ -111,7 +111,7 @@ namespace {
       ACE_OS::fflush (this->file_);
       ACE_OS::fclose (this->file_);
       this->file_ = 0;
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
       if (this->unlink_in_destructor_)
         {
           ACE_OS::unlink (this->filename_.c_str ());
@@ -122,7 +122,7 @@ namespace {
 
     void lock (void)
     {
-#ifndef ACE_WIN32
+#if !defined (ACE_WIN32)
       if (this->locked_)
         return;
 
@@ -161,7 +161,11 @@ namespace {
 #endif
     }
 
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr <ACE_File_Lock> file_lock_;
+#else
     auto_ptr<ACE_File_Lock> file_lock_;
+#endif
     FILE* file_;
     int flags_;
     bool locked_;
@@ -610,7 +614,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
       else
         {
           const ACE_Vector<ACE_TString>& filenames = listings->filenames();
-          size_t sz = filenames.size ();
+          size_t const sz = filenames.size ();
           for (CORBA::ULong i = 0; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
@@ -659,7 +663,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     }
 
   const ACE_Vector<ACE_TString>& filenames = listings->filenames ();
-  size_t sz = filenames.size ();
+  size_t const sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
@@ -731,7 +735,7 @@ Shared_Backing_Store::sync_load ()
     }
   else if (this->sync_needed_ == INC_SYNC)
     {
-      if (this->sync_files_.size () == 0)
+      if (this->sync_files_.empty ())
         {
           return 0;
         }
@@ -941,7 +945,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
   this->create_server (server_started, si);
   if (was_started && !is_started)
     {
-      this->opts_.pinger ()->remove_server (si->key_name_.c_str ());
+      this->opts_.pinger ()->remove_server (si->key_name_.c_str (), 0);
     }
   if (!was_started && is_started)
     {
@@ -951,7 +955,8 @@ Shared_Backing_Store::load_server (Server_Info *info,
       si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
       this->opts_.pinger ()->add_server (si->key_name_.c_str (),
                                          this->opts_.ping_external (),
-                                         si->server.in ());
+                                         si->server.in (),
+                                         si->pid);
     }
 
 }
@@ -1042,7 +1047,7 @@ Shared_Backing_Store::process_updates (void)
             if (this->opts_.debug() > 4)
               {
                 ORBSVCS_DEBUG ((LM_INFO,
-                                ACE_TEXT("(%P|%t) notify_access_state_update, %C now %s\n"),
+                                ACE_TEXT("(%P|%t) notify_access_state_update, <%C> now <%C>\n"),
                                 entity.name.in (),
                                 AsyncAccessManager::status_name (entity.action.state ())));
               }
@@ -1085,7 +1090,7 @@ Shared_Backing_Store::process_updates (void)
               }
             else
               {
-                this->opts_.pinger ()->remove_server (name.c_str());
+                this->opts_.pinger ()->remove_server (name.c_str(), 0);
                 this->servers().unbind (name);
               }
             break;
@@ -1146,7 +1151,7 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
       // give back the original pointer and don't clean it up
       ft_imr_ior = ior._retn();
       ORBSVCS_ERROR((LM_ERROR,
-        "ERROR: Failed to create Fault Tolerant ImR, reason=%s\n",
+        "ERROR: Failed to create Fault Tolerant ImR, reason=%C\n",
         reason.in()));
       throw ImplementationRepository::InvalidPeer(reason.in());
     }
@@ -1263,11 +1268,11 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
   Locator_Repository::SIMap::CONST_ITERATOR siit (this->unmatched_servers_);
   for (; siit.next (sientry); siit.advance() )
     {
-      int ret = repo.servers().unbind (sientry->ext_id_);
+      int const ret = repo.servers().unbind (sientry->ext_id_);
       if (ret != 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-            ACE_TEXT ("ERROR: could not remove server: %s\n"),
+            ACE_TEXT ("ERROR: could not remove server: %C\n"),
             sientry->int_id_->key_name_.c_str()));
         }
     }
@@ -1280,7 +1285,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
       if (ret != 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-            ACE_TEXT ("ERROR: could not remove activator: %s\n"),
+            ACE_TEXT ("ERROR: could not remove activator: %C\n"),
             aientry->int_id_->name.c_str()));
         }
     }

@@ -28,6 +28,7 @@ $input_file1 = $server->LocalFile ("local_inarg.idl");
 $input_file2 = $server->LocalFile ("local_inoutarg.idl");
 $input_file3 = $server->LocalFile ("local_outarg.idl");
 $input_file4 = $server->LocalFile ("local_rettype.idl");
+$input_file5 = $server->LocalFile ("issue570.idl");
 
 # Compile the IDL
 $SV = $server->CreateProcess ("$tao_idl", "$input_file1");
@@ -49,6 +50,11 @@ $SV = $server->CreateProcess ("$tao_idl", "$input_file4");
 
 $server_status4 = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
 
+# Compile the IDL
+$SV = $server->CreateProcess ("$tao_idl", "$input_file5");
+
+$server_status5 = $SV->SpawnWaitKill ($server->ProcessStartWaitInterval());
+
 open (STDOUT, ">&OLDOUT");
 open (STDERR, ">&OLDERR");
 
@@ -69,6 +75,11 @@ if ($server_status3 == 0) {
 
 if ($server_status4 == 0) {
     print STDERR "ERROR: tao_idl returned $server_status4 for $input_file4, should have failed\n";
+    $status = 1;
+}
+
+if ($server_status5 == 0) {
+    print STDERR "ERROR: tao_idl returned $server_status5 for $input_file5, should have failed\n";
     $status = 1;
 }
 

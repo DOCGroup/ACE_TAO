@@ -1684,6 +1684,146 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
   return false;
 }
 
+// As of C++11 std::string guarantees contiguous memory storage.
+// That provides the opportunity to optimize CDR streaming.
+ACE_CDR::Boolean
+ACE_InputCDR::read_string (std::string& x)
+{
+#if defined (ACE_HAS_CPP11)
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->char_translator_ != 0)
+    {
+      this->good_bit_ = this->char_translator_->read_string (*this, x);
+      return this->good_bit_;
+    }
+
+  ACE_CDR::ULong len = 0;
+
+  if (!this->read_ulong (len))
+    return false;
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= this->length())
+    {
+      try
+        {
+          x.resize (len-1); // no need to include the terminating '\0' here
+        }
+      catch (const std::bad_alloc&)
+        {
+          return false;
+        }
+
+      if (len == 0 || this->read_char_array (&x[0], len-1))
+      {
+        return this->skip_char (); // skip the terminating '\0'
+      }
+    }
+
+  this->good_bit_ = false;
+  x.clear ();
+  return false;
+#else
+  ACE_CDR::Char *buf = 0;
+  ACE_CDR::Boolean const marshal_flag = this->read_string (buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+#endif
+}
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_CDR::Boolean
+ACE_InputCDR::read_wstring (std::wstring& x)
+{
+#if defined (ACE_HAS_CPP11)
+  // @@ This is a slight violation of "Optimize for the common case",
+  // i.e. normally the translator will be 0, but OTOH the code is
+  // smaller and should be better for the cache ;-) ;-)
+  if (this->wchar_translator_ != 0)
+    {
+      this->good_bit_ = this->wchar_translator_->read_wstring (*this, x);
+      return this->good_bit_;
+    }
+  if (ACE_OutputCDR::wchar_maxbytes_ == 0)
+    {
+      errno = EACCES;
+      return (this->good_bit_ = false);
+    }
+
+  ACE_CDR::ULong len = 0;
+
+  if (!this->read_ulong (len))
+    {
+      return false;
+    }
+
+  // A check for the length being too great is done later in the
+  // call to read_char_array but we want to have it done before
+  // the memory is allocated.
+  if (len > 0 && len <= this->length ())
+    {
+      if (static_cast<ACE_CDR::Short> (this->major_version_) == 1
+          && static_cast<ACE_CDR::Short> (this->minor_version_) == 2)
+        {
+          len /=
+            ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+              ACE_OutputCDR::wchar_maxbytes_);
+
+          try
+            {
+              x.resize (len);
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (this->read_wchar_array (&x[0], len))
+            {
+              return true;
+            }
+        }
+      else
+        {
+          try
+            {
+              x.resize (len-1); // no need to include the terminating '\0' here
+            }
+          catch (const std::bad_alloc&)
+            {
+              return false;
+            }
+
+          if (len == 1 || this->read_wchar_array (&x[0], len-1))
+            {
+              return this->skip_wchar (); // skip the terminating '\0'
+            }
+        }
+    }
+  else if (len == 0)
+    {
+      x.clear ();
+      return true;
+    }
+
+  this->good_bit_ = false;
+  x.clear ();
+  return false;
+#else
+  ACE_CDR::WChar *buf = 0;
+  ACE_CDR::Boolean const marshal_flag = this->read_wstring (buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+#endif
+}
+#endif
+
 ACE_CDR::Boolean
 ACE_InputCDR::read_array (void* x,
                           size_t size,
@@ -2227,11 +2367,35 @@ ACE_Char_Codeset_Translator::~ACE_Char_Codeset_Translator (void)
 {
 }
 
+ACE_CDR::Boolean
+ACE_Char_Codeset_Translator::read_string (ACE_InputCDR &cdr,
+                                          std::string &x)
+{
+  ACE_CDR::Char *buf = 0;
+  ACE_CDR::Boolean const marshal_flag = this->read_string (cdr, buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+}
+
 // --------------------------------------------------------------
 
 ACE_WChar_Codeset_Translator::~ACE_WChar_Codeset_Translator (void)
 {
 }
+
+#if !defined(ACE_LACKS_STD_WSTRING)
+ACE_CDR::Boolean
+ACE_WChar_Codeset_Translator::read_wstring (ACE_InputCDR &cdr,
+                                            std::wstring &x)
+{
+  ACE_CDR::WChar *buf = 0;
+  ACE_CDR::Boolean const marshal_flag = this->read_wstring (cdr, buf);
+  x.assign (buf);
+  ACE::strdelete (buf);
+  return marshal_flag;
+}
+#endif
 
 // --------------------------------------------------------------
 

@@ -1,4 +1,4 @@
-// This may look like C, but it's really -*- C++ -*-
+// -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -66,18 +66,12 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_DECL_AST_DECL_HH
 #define _AST_DECL_AST_DECL_HH
 
-// Rock bottom of AST class hierarchy
-//
-// This class is inherited by all classes which represent named entities
-// in IDL. It implements the line and file recording mechanism and also
-// records the type of the node. This may be useful for BEs to be able
-// to distinguish the real type of a node given only a superclass.
-
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
+#include "ace/Vector_T.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -86,12 +80,16 @@ class UTL_Scope;
 class UTL_String;
 class ast_visitor;
 
-// This class is needed (only for g++) to get around a bug in g++ which
-// causes virtual operations to not be looked up correctly if an operation
-// is defined in more than one virtual public base class. This class makes
-// the hierarchy rooted in a single class, thereby eliminating the situation
-// that causes the bug to appear
+class AST_Annotation_Appl;
+typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
 
+/**
+ * This class is needed (only for g++) to get around a bug in g++ which
+ * causes virtual operations to not be looked up correctly if an operation
+ * is defined in more than one virtual public base class. This class makes
+ * the hierarchy rooted in a single class, thereby eliminating the situation
+ * that causes the bug to appear
+ */
 class TAO_IDL_FE_Export COMMON_Base
 {
 protected:
@@ -116,6 +114,18 @@ protected:
   bool is_abstract_;
 };
 
+/**
+ * AST_Decl is the base class for almost all AST nodes.
+ *
+ * AST_* classes that do not inherit from AST_Decl include AST_Expression and
+ * AST_Union_Label. AST_Decls have a node type (a value from the enum
+ * AST_Decl::NodeType) and a name (a UTL_ScopedName). The node type may be
+ * useful for BEs to be able to distinguish the real type of a node given only
+ * a superclass. Additionally AST_Decl nodes record the scope of definition,
+ * the file name and line number where they were defined, whether this was
+ * defined by the compiler, whether this is the main file or an #include'd
+ * file, among other things.
+ */
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {
 public:
@@ -169,11 +179,24 @@ public:
       , NT_mirror_port              // Denotes a mirror port
       , NT_connector                // Denotes a CCM connector
       , NT_param_holder             // Denotes a template param placeholder
+      , NT_annotation_decl          // The declaration of an annotation
+      , NT_annotation_appl          // Application of an annotation to an IDL element
+      , NT_annotation_member        // Value Inside an Annotation
   };
 
   AST_Decl (NodeType type,
             UTL_ScopedName *n,
             bool anonymous = false);
+
+  /**
+   * A sort of copy constructor that creates a copy of the AST_Decl for a new
+   * scope.
+   * The new name must be calculated before hand.
+   * This was created for Annotation Applications and Extended Structs.
+   */
+  AST_Decl (
+    UTL_ScopedName *name,
+    AST_Decl *other);
 
   virtual ~AST_Decl (void);
 
@@ -308,6 +331,71 @@ public:
   bool in_tmpl_mod_not_aliased (void) const;
   void in_tmpl_mod_not_aliased (bool val);
 
+  /// Set and get annotations for this IDL element
+  ///{
+  virtual void annotation_appls (AST_Annotation_Appls *annotations);
+  AST_Annotation_Appls *annotation_appls ();
+  ///}
+
+  /**
+   * Dump Annotations AST
+   *
+   * By default print each annotation on its own line. If print_inline is true,
+   * it prints them with spaces separating them instead.
+   */
+  void dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline = false);
+
+  /**
+   * Dump Object with Annotations
+   */
+  void dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations= false);
+
+  /**
+   * Dump AST Object to Stream
+   *
+   * Uses dump_annotations() before dumping if an object has annotations and is
+   * annotatable.
+   */
+  friend ACE_OSTREAM_TYPE &
+  operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d);
+
+  /**
+   * Returns true if annotations are valid to use on this
+   */
+  virtual bool annotatable () const;
+
+  /**
+   * Return true if annotations are dumped inline when using <<
+   */
+  virtual bool dump_annotations_inline () const;
+
+  /**
+   * Return true if annotations are dumped at all when using <<
+   */
+  virtual bool auto_dump_annotations () const;
+
+  /**
+   * True if defined using idl_global->eval()
+   */
+  virtual bool builtin () const;
+
+  /**
+   * True if the node should be dumped
+   */
+  virtual bool should_be_dumped () const;
+
+  /**
+   * Get Annotation Vector Reference.
+   * If this is a typedef, it includes recursively acquired annotations from
+   * the possible chain of direct typedefs.
+   */
+  virtual AST_Annotation_Appls &annotations ();
+
+  /**
+   * Should AMI visit this node?
+   */
+  virtual bool ami_visit ();
+
 protected:
   // These are not private because they're used by
   // be_predefined_type' constructor and can be called
@@ -322,7 +410,6 @@ protected:
   int contains_wstring_;
   // If we are a scope, do we contain a wstring at some level?
 
-protected:
   void dump_i (ACE_OSTREAM_TYPE &o, const char *s) const ;
 
   void compute_repoID (void);
@@ -336,6 +423,14 @@ protected:
 
   const char *node_type_to_string (NodeType nt);
   // Convert a NodeType to a string for dumping.
+
+  /// Annotations applied to this IDL element
+  AST_Annotation_Appls* annotation_appls_;
+
+  /**
+   * True if defined using idl_global->eval()
+   */
+  bool builtin_;
 
 private:
   // Data
@@ -391,7 +486,6 @@ private:
   bool in_tmpl_mod_not_aliased_;
   // false by default - if true, we can't be referenced.
 
-private:
   void compute_full_name (UTL_ScopedName *n);
   // Compute the full name of an AST node.
 
@@ -399,5 +493,7 @@ private:
                                      UTL_Scope *appeared_in);
   // Non-top-level version of set_prefix_with_typeprefix.
 };
+
+typedef ACE_Vector<AST_Decl*> AST_Decls;
 
 #endif           // _AST_DECL_AST_DECL_HH

@@ -170,8 +170,7 @@ public:
                     const PortableServer::ObjectId & oid,
                     PortableServer::POA_ptr          poa,
                     const char *                     operation,
-                    void * &                         cookie
-                );
+                    void * &                         cookie);
 
     virtual void
                 postinvoke(
@@ -179,8 +178,7 @@ public:
                     PortableServer::POA_ptr          /* poa */,
                     const char *                     /* operation */,
                     void *                           /* cookie */,
-                    PortableServer::Servant          /* servant */
-                ) {}
+                    PortableServer::Servant          /* servant */) {}
 
 private:
     Controller_impl *                   m_ctrl;

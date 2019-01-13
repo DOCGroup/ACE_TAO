@@ -118,6 +118,14 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /**
+   * Get and Set Annotations on the base type
+   */
+  ///{
+  AST_Annotation_Appls *base_type_annotations ();
+  void base_type_annotations (AST_Annotation_Appls *annotations);
+  ///}
+
 private:
   // Data.
   AST_Expression *pd_max_size;
@@ -132,6 +140,11 @@ private:
   bool owns_base_type_;
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
+
+  /**
+   * Annotations on the base type
+   */
+  AST_Annotation_Appls *base_type_annotations_;
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

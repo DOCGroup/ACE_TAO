@@ -565,8 +565,13 @@ def tag ():
             # Update latest tag
             if opts.release_type == "major":
                 update_latest_tag ("Major", tagname)
+                update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "minor":
                 update_latest_tag ("Minor", tagname)
+                update_latest_tag ("Beta", tagname)
+                update_latest_tag ("Micro", tagname)
             elif opts.release_type == "micro":
                 update_latest_tag ("Beta", tagname)
                 update_latest_tag ("Micro", tagname)
@@ -861,7 +866,6 @@ def generate_workspaces (stage_dir):
     mpc_option = ' -recurse -hierarchy -relative ACE_ROOT=' + stage_dir + '/ACE_wrappers '
     mpc_option += ' -relative TAO_ROOT=' + stage_dir + '/ACE_wrappers/TAO '
     msvc_exclude_option = ' '
-    vc12_option = ' -name_modifier *_vc12 '
     vc14_option = ' -name_modifier *_vc14 '
     vs2017_option = ' -name_modifier *_vs2017 '
 
@@ -871,9 +875,6 @@ def generate_workspaces (stage_dir):
 
     print "\tGenerating GNUmakefiles...."
     ex (mpc_command + " -type gnuace " + exclude_option + workers_option + mpc_option + redirect_option)
-
-    print "\tGenerating VC12 solutions..."
-    ex (mpc_command + " -type vc12 "  + msvc_exclude_option + mpc_option + workers_option + vc12_option + redirect_option)
 
     print "\tGenerating VC14 solutions..."
     ex (mpc_command + " -type vc14 "  + msvc_exclude_option + mpc_option + workers_option + vc14_option + redirect_option)

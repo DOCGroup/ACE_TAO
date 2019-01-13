@@ -24,9 +24,12 @@
 
 #include "tao/OctetSeqC.h"
 #include "tao/Pseudo_VarOut_T.h"
-
 #include "ace/Thread_Mutex.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,7 +94,11 @@ namespace CORBA
 
   private:
     /// Reference counter.
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
   };
 }  // End CORBA namespace
 

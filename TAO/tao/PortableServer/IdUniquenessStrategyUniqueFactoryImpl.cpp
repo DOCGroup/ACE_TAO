@@ -44,7 +44,6 @@ namespace TAO
   }
 }
 
-
 ACE_STATIC_SVC_DEFINE (
   IdUniquenessStrategyUniqueFactoryImpl,
   ACE_TEXT ("IdUniquenessStrategyUniqueFactory"),

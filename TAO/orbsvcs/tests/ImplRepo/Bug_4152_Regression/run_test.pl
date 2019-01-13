@@ -16,16 +16,16 @@ $poa_delay = 3;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
-	if ($ARGV[$i] eq '-debug') {
-	    $debug_level = 10;
-	}
+        if ($ARGV[$i] eq '-debug') {
+          $debug_level = 10;
+        }
         elsif ($ARGV[$i] eq '-no_dns') {
             $no_dns = 1;
         }
-	else {
-	    usage();
-	    exit 1;
-	}
+        else {
+          usage();
+          exit 1;
+        }
     }
 }
 
@@ -348,8 +348,8 @@ sub double_server_test
 
     my $IMR_status = $IMR->TerminateWaitKill ($imr->ProcessStopWaitInterval());
     if ($IMR_status != 0) {
-	print STDERR "ERROR: IMR returned $IMR_status\n";
-	$status = 1;
+      print STDERR "ERROR: IMR returned $IMR_status\n";
+      $status = 1;
     }
 
     $status = validate_servers();
@@ -363,7 +363,7 @@ sub double_server_test
 
 sub usage() {
     print "Usage: run_test.pl ".
-	"[-debug]\n";
+          "[-debug]\n";
 }
 
 ###############################################################################

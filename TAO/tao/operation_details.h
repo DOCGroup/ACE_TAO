@@ -71,12 +71,12 @@ public:
 
   /// Constructor
   TAO_Operation_Details (const char *name,
-                         CORBA::ULong len,
+                         const CORBA::ULong len,
                          TAO::Argument **args = 0,
-                         CORBA::ULong num_args = 0,
-                         CORBA::Boolean has_in_args = true,
-                         TAO::Exception_Data *ex_data = 0,
-                         CORBA::ULong ex_count = 0);
+                         const CORBA::ULong num_args = 0,
+                         const CORBA::Boolean has_in_args = true,
+                         const TAO::Exception_Data *ex_data = 0,
+                         const CORBA::ULong ex_count = 0);
 
   /// Operation name
   const char* opname (void) const;
@@ -181,7 +181,7 @@ private:
   const char *opname_;
 
   /// Precalculated length of opname_.
-  CORBA::ULong opname_len_;
+  const CORBA::ULong opname_len_;
 
   /// Request ID of this operation.
   CORBA::ULong request_id_;
@@ -207,16 +207,16 @@ private:
   TAO::Argument **args_;
 
   /// Number of arguments including the return value
-  CORBA::ULong num_args_;
+  const CORBA::ULong num_args_;
 
   /// A flag indicating any args are sent with the request
-  CORBA::Boolean has_in_args_;
+  const CORBA::Boolean has_in_args_;
 
   /// The type of exceptions that the operations can throw.
-  TAO::Exception_Data *ex_data_;
+  const TAO::Exception_Data *ex_data_;
 
   /// Count of the exceptions that operations can throw.
-  CORBA::ULong ex_count_;
+  const CORBA::ULong ex_count_;
 
   /// Boolean flag to indicate whether in the skeletons the stub arguments
   /// stored in these operation details should be used or not.

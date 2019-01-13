@@ -1,4 +1,3 @@
-sudo: false
 group: travis_latest
 language: cpp
 os:
@@ -22,21 +21,30 @@ env:
     - TAO_ROOT=$TRAVIS_BUILD_DIR/TAO
     - MPC_ROOT=$TRAVIS_BUILD_DIR/MPC
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
-    - COMPILER=g++-7
+    - COMPILER=g++-8
 
 matrix:
   include:
-    - compiler: clang
+    - compiler: gcc
       addons:
         apt:
           sources:
             - ubuntu-toolchain-r-test
-            - llvm-toolchain-trusty-5.0
           packages:
             - libxerces-c-dev
             - libssl-dev
-            - clang++-5.0
-      env: COMPILER=clang++-5.0 VERSIONED=1 TAO=1 ACETESTS=1
+            - g++-7
+      env: COMPILER=g++-7 VERSIONED=1 TAO=1 ACETESTS=1
+    - compiler: gcc
+      addons:
+        apt:
+          sources:
+            - ubuntu-toolchain-r-test
+          packages:
+            - libxerces-c-dev
+            - libssl-dev
+            - g++-6
+      env: COMPILER=g++-6 VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
       env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
@@ -47,7 +55,7 @@ addons:
     packages:
       - libssl-dev
       - libxerces-c-dev
-      - g++-7
+      - g++-8
 
 before_install:
   - git clone --depth 1 git://github.com/DOCGroup/MPC.git

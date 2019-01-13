@@ -49,16 +49,14 @@ public:
       const char *name,
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces
-    );
+      const CORBA::InterfaceDefSeq &supports_interfaces);
 
   CORBA::ComponentIR::ComponentDef_ptr create_component_i (
       const char *id,
       const char *name,
       const char *version,
       CORBA::ComponentIR::ComponentDef_ptr base_component,
-      const CORBA::InterfaceDefSeq &supports_interfaces
-    );
+      const CORBA::InterfaceDefSeq &supports_interfaces);
 
   virtual CORBA::ComponentIR::HomeDef_ptr create_home (
       const char *id,
@@ -67,8 +65,7 @@ public:
       CORBA::ComponentIR::HomeDef_ptr base_home,
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
-      CORBA::ValueDef_ptr primary_key
-    );
+      CORBA::ValueDef_ptr primary_key);
 
   CORBA::ComponentIR::HomeDef_ptr create_home_i (
       const char *id,
@@ -77,8 +74,7 @@ public:
       CORBA::ComponentIR::HomeDef_ptr base_home,
       CORBA::ComponentIR::ComponentDef_ptr managed_component,
       const CORBA::InterfaceDefSeq &supports_interfaces,
-      CORBA::ValueDef_ptr primary_key
-    );
+      CORBA::ValueDef_ptr primary_key);
 
   virtual CORBA::ComponentIR::EventDef_ptr create_event (
       const char *id,
@@ -90,8 +86,7 @@ public:
       CORBA::Boolean is_truncatable,
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
-    );
+      const CORBA::ExtInitializerSeq &initializers);
 
   CORBA::ComponentIR::EventDef_ptr create_event_i (
       const char *id,
@@ -103,8 +98,7 @@ public:
       CORBA::Boolean is_truncatable,
       const CORBA::ValueDefSeq &abstract_base_values,
       const CORBA::InterfaceDefSeq &supported_interfaces,
-      const CORBA::ExtInitializerSeq &initializers
-    );
+      const CORBA::ExtInitializerSeq &initializers);
 
   /// Called from TAO_IFR_Service_Utils::name_exisits.
   static int same_as_tmp_name (const char *name);

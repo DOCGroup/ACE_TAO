@@ -27,6 +27,9 @@ project(Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monito
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }
 
 project(NT_Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_monitor_control {
@@ -43,5 +46,7 @@ project(NT_Notify_Service) : orbsvcsexe, install, tao_notify_service, notify_mon
   InstallData_Files {
     gendir = tao-notify
     README
+  }
+  Documentation_Files {
   }
 }

@@ -1426,9 +1426,13 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value (void)
+CORBA::DefaultValueRefCountBase::_tao_refcount_value (void) const
 {
+#if defined (ACE_HAS_CPP11)
+  return this->refcount_;
+#else
   return this->refcount_.value ();
+#endif /* ACE_HAS_CPP11 */
 }
 
 // ===========================================================

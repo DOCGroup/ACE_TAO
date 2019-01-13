@@ -37,10 +37,9 @@ public:
 private:
 
   /// Register the necessary interceptors.
-  void register_server_request_interceptors (
-         PortableInterceptor::ORBInitInfo_ptr info);
+  void register_server_request_interceptors (PortableInterceptor::ORBInitInfo_ptr info);
 
-  // Private temprorary pointer
+  // Private temporary pointer
   TAO249_ServerRequest_Interceptor2 *sri_;
 };
 

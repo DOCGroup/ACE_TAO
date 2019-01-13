@@ -549,19 +549,13 @@ defaults to 1.
   // Create new RT_Info descriptors for three events.
 
   RtecScheduler::handle_t handle1 =
-    server->create ("event_1",              // Name of entry point
-                    TAO_TRY_ENV             // Environment
-                   );
+    server->create ("event_1");             // Name of entry point
 
   RtecScheduler::handle_t handle2 =
-    server->create ("event_2",              // Name of entry point
-                    TAO_TRY_ENV             // Environment
-                   );
+    server->create ("event_2");             // Name of entry point
 
   RtecScheduler::handle_t handle3 =
-    server->create ("event_3",              // Name of entry point
-                    TAO_TRY_ENV             // Environment
-                   );
+    server->create ("event_3");             // Name of entry point
 
 
   // Register as a consumer/supplier: act as a supplier of event_1 but with
@@ -576,8 +570,7 @@ defaults to 1.
                RtecScheduler::LOW_IMPORTANCE,     // Importance
                0,                           // Quantum (unused)
                0,                           // Threads - will depend on event_3
-               RtecScheduler::OPERATION,          // Info type
-               TAO_TRY_ENV);
+               RtecScheduler::OPERATION);   // Info type
 
   // Register as a producer of event_2.
   server->set (handle2,                     // RT_Info handle
@@ -589,8 +582,7 @@ defaults to 1.
                RtecScheduler::LOW_IMPORTANCE,     // Importance
                0,                           // Quantum (unused)
                1,                           // Threads
-               RtecScheduler::OPERATION,          // Info type
-               TAO_TRY_ENV);
+               RtecScheduler::OPERATION);   // Info type
 
   // Register as a consumer of event_3.
   server->set (handle3,                     // RT_Info handle
@@ -602,17 +594,13 @@ defaults to 1.
                RtecScheduler::LOW_IMPORTANCE,     // Importance
                0,                           // Quantum (unused)
                0,                           // Threads - will depend on supplier
-               RtecScheduler::OPERATION,          // Info type
-               TAO_TRY_ENV);
+               RtecScheduler::OPERATION);   // Info type
 
 
   // Establish a dependency of event_1 on event_3.
   server->add_dependency (handle1,          // handle that depends
                           handle3,          // handle that is depended on
-                          1,                // number of calls per event occurance
-                          TAO_TRY_ENV       // environment
-                         );
-
+                          1);               // number of calls per event occurrence
 
 </pre>
 </table>
@@ -738,8 +726,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       // Initialize the ORB reference.
       this->orb_ =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "");
 
       // Initialize the root POA reference.
       CORBA::Object_var poa_object =
@@ -751,13 +738,11 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       // Obtain the narrowed root POA reference.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Obtain a reference to the POA manager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager ();
 
        // Now some boiler plate code to obtain a reference to the
        // naming service.....
@@ -772,8 +757,7 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       // Narrow the naming service reference.
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       // Use the Naming Service to locate the Scheduling Service and
       // use the Scheduler_Factory to keep a global pointer to the
@@ -792,27 +776,22 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
 
       // Resolve a reference to the event service.
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        naming_context->resolve (name);
 
       // Narrow the reference to the event service.
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-                                                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
       // Activate the POA so we can start receiving requests...
 
       // Activate the POA manager.
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate ();
 
       // Connect consumers to the event service.
-      this->connect_consumers (channel.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->connect_consumers (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected consumer(s)\n"));
       ACE_DEBUG ((LM_DEBUG, "running the test\n"));
@@ -825,22 +804,19 @@ ECT_Consumer_Driver::run (int argc, char* argv[])
       this->dump_results ();
 
       // Disconnect consumers from the event service.
-      this->disconnect_consumers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->disconnect_consumers ();
 
       // Destroy the event service.
-      channel->destroy (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      channel->destroy ();
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      sys_ex.print_exception ("SYS_EX");
     }
-  TAO_CATCHANY
+  catch (const CORBA::Exception& any_ex)
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      any_ex.print_exception ("NON SYS EX");
     }
-  TAO_ENDTRY;
   return 0;
 }
 
@@ -1038,14 +1014,10 @@ server.
   // Create new RT_Info descriptors for two events.
 
   RtecScheduler::handle_t handle0 =
-    server->create ("event_0",              // Name of entry point
-                    TAO_TRY_ENV             // Environment
-                   );
+    server->create ("event_0");              // Name of entry point
 
   RtecScheduler::handle_t handle1 =
-    server->create ("event_1",              // Name of entry point
-                    TAO_TRY_ENV             // Environment
-                   );
+    server->create ("event_1");             // Name of entry point
 
   // Register as a producer of event_0.
   server->set (handle0,                     // RT_Info handle
@@ -1057,8 +1029,7 @@ server.
                RtecScheduler::LOW_IMPORTANCE,     // Importance
                0,                           // Quantum (unused)
                1,                           // Threads
-               RtecScheduler::OPERATION,          // Info type
-               TAO_TRY_ENV);
+               RtecScheduler::OPERATION);   // Info type
 
   // Register as a producer of event_1.
   server->set (handle1,                     // RT_Info handle
@@ -1070,8 +1041,7 @@ server.
                RtecScheduler::LOW_IMPORTANCE,     // Importance
                0,                           // Quantum (unused)
                1,                           // Threads
-               RtecScheduler::OPERATION,          // Info type
-               TAO_TRY_ENV);
+               RtecScheduler::OPERATION);   // Info type
 
 </pre>
 </table>
@@ -1228,8 +1198,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       // Initialize the ORB reference.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "");
 
       // Initialize the root POA reference.
       CORBA::Object_var poa_object =
@@ -1241,14 +1210,11 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       // Obtain the narrowed root POA reference.
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       // Obtain a reference to the POA manager.
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
-
+        root_poa->the_POAManager ();
 
        // Now some boiler plate code to obtain a reference to the
        // naming service.....
@@ -1263,8 +1229,7 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       // Narrow the naming service reference.
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       // Use the Naming Service to locate the Scheduling Service and
       // use the Scheduler_Factory to keep a global pointer to the
@@ -1283,33 +1248,27 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
 
       // Resolve a reference to the event service.
       CORBA::Object_var ec_obj =
-        naming_context->resolve (name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        naming_context->resolve (name);
 
       // Narrow the reference to the event service.
       RtecEventChannelAdmin::EventChannel_var channel;
       if (CORBA::is_nil (ec_obj.in ()))
         channel = RtecEventChannelAdmin::EventChannel::_nil ();
       else
-        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in (),
-                                                                TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        channel = RtecEventChannelAdmin::EventChannel::_narrow (ec_obj.in ());
 
       // Activate the POA so we can start receiving requests...
 
       // Activate the POA manager.
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate ();
 
       // Connect suppliers to the event service.
-      this->connect_suppliers (channel.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->connect_suppliers (channel.in ());
 
       ACE_DEBUG ((LM_DEBUG, "connected supplier(s)\n"));
 
       // Activate the supplier objects
-      this->activate_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->activate_suppliers ();
 
       ACE_DEBUG ((LM_DEBUG, "suppliers are active\n"));
 
@@ -1325,18 +1284,16 @@ ECT_Supplier_Driver::run (int argc, char* argv[])
       this->dump_results ();
 
       // Disconnect suppliers from the event service.
-      this->disconnect_suppliers (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->disconnect_suppliers ();
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  catch (const CORBA::SystemException& sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      sys_ex.print_exception ("SYS_EX");
     }
-  TAO_CATCHANY
+  catch (const CORBA::Exception& any_ex)
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      any_ex.print_exception ("NON SYS EX");
     }
-  TAO_ENDTRY;
   return 0;
 }
 
@@ -1411,9 +1368,7 @@ Test_Supplier::svc ()
                 event[0].header.type = this->event_b_;
 
               // ACE_DEBUG ((LM_DEBUG, "(%t) supplier push event\n"));
-              this->consumer_proxy ()->push (event, TAO_TRY_ENV);
-
-              TAO_CHECK_ENV;
+              this->consumer_proxy ()->push (event);
             }
 
           // Sleep until it's time to send the next burst.
@@ -1425,20 +1380,18 @@ Test_Supplier::svc ()
 
       // Send one event shutdown from each supplier
       event[0].header.type = ACE_ES_EVENT_SHUTDOWN;
-      this->consumer_proxy ()->push(event, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      this->consumer_proxy ()->push(event);
       this->timer_.stop ();
 
     }
-  TAO_CATCH (CORBA::SystemException, sys_ex)
+  catch (CORBA::SystemException& sys_ex)
     {
-      TAO_TRY_ENV.print_exception ("SYS_EX");
+      sys_ex.print_exception ("SYS_EX");
     }
-  TAO_CATCHANY
+  catch (CORBA::Exception& any_ex)
     {
-      TAO_TRY_ENV.print_exception ("NON SYS EX");
+      any_ex.print_exception ("NON SYS EX");
     }
-  TAO_ENDTRY;
   return 0;
 }
 
@@ -1530,8 +1483,7 @@ int main (int argc, char *argv[])
 
       // Initialize ORB.
       CORBA::ORB_var orb =
-        CORBA::ORB_init (argc, argv, "internet", TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CORBA::ORB_init (argc, argv, "internet");
 
       if (parse_args (argc, argv) == -1)
         return 1;
@@ -1544,12 +1496,10 @@ int main (int argc, char *argv[])
                           1);
 
       PortableServer::POA_var root_poa =
-        PortableServer::POA::_narrow (poa_object.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        PortableServer::POA::_narrow (poa_object.in ());
 
       PortableServer::POAManager_var poa_manager =
-        root_poa->the_POAManager (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        root_poa->the_POAManager ();
 
       CORBA::Object_var naming_obj =
         orb->resolve_initial_references ("NameService");
@@ -1559,8 +1509,7 @@ int main (int argc, char *argv[])
                           1);
 
       CosNaming::NamingContext_var naming_context =
-        CosNaming::NamingContext::_narrow (naming_obj.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        CosNaming::NamingContext::_narrow (naming_obj.in ());
 
       // Notice the use of auto_ptr<> to automagically manage the
       // destruction of the servant.  When the auto_ptr goes out
@@ -1587,19 +1536,15 @@ int main (int argc, char *argv[])
           scheduler_impl =
             auto_ptr<POA_RtecScheduler::Scheduler>(new ACE_Config_Scheduler);
           if (scheduler_impl.get () == 0)
-	    return 1;
-          scheduler = scheduler_impl->_this (TAO_TRY_ENV);
-          TAO_CHECK_ENV;
+            return 1;
+          scheduler = scheduler_impl->_this ();
 
-	  CORBA::String_var str =
-	    orb->object_to_string (scheduler.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	  ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
-		      str.in ()));
+          CORBA::String_var str =
+            orb->object_to_string (scheduler.in ());
+          ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%C>\n", str.in ()));
 
-	  // Register the servant with the Naming Context....
-	  naming_context->bind (schedule_name, scheduler.in (), TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
+          // Register the servant with the Naming Context....
+          naming_context->bind (schedule_name, scheduler.in ());
         }
 
       ACE_Scheduler_Factory::use_config (naming_context.in ());
@@ -1626,29 +1571,25 @@ int main (int argc, char *argv[])
 
       // Obtain an object reference to the new channel.
       RtecEventChannelAdmin::EventChannel_var ec =
-        ec_impl._this (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+        ec_impl._this ();
 
       // Convert the EC object reference to a string.
       CORBA::String_var str =
-        orb->object_to_string (ec.in (), TAO_TRY_ENV);
+        orb->object_to_string (ec.in ());
 
       // Output the EC object reference string (debug only).
-      ACE_DEBUG ((LM_DEBUG,
-		  "The EC IOR is <%s>\n", str.in ()));
+      ACE_DEBUG ((LM_DEBUG,	"The EC IOR is <%C>\n", str.in ()));
 
       // Register the EC with the Naming Service.
       CosNaming::Name channel_name (1);
       channel_name.length (1);
       channel_name[0].id = CORBA::string_dup (service_name);
-      naming_context->bind (channel_name, ec.in (), TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      naming_context->bind (channel_name, ec.in ());
 
       // Activate the POA so we can start receiving requests...
 
       // Activate the POA manager.
-      poa_manager->activate (TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      poa_manager->activate ();
 
       // Run the ORB event loop
       ACE_DEBUG ((LM_DEBUG, "%s; running event service\n", __FILE__));
@@ -1663,22 +1604,18 @@ int main (int argc, char *argv[])
       // Remove the event service and the scheduling service from
       // the Naming Service.
 
-      naming_context->unbind (channel_name, TAO_TRY_ENV);
-      TAO_CHECK_ENV;
+      naming_context->unbind (channel_name);
 
       if (global_scheduler == 0)
-	{
-	  naming_context->unbind (schedule_name, TAO_TRY_ENV);
-	  TAO_CHECK_ENV;
-	}
+      {
+        naming_context->unbind (schedule_name);
+      }
 
     }
-  TAO_CATCHANY
+  catch (const CORBA::Exception& ex)
     {
-      TAO_TRY_ENV.print_exception ("EC");
+      ex.print_exception ("EC");
     }
-  TAO_ENDTRY;
-
 
   return 0;
 }

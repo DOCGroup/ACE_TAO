@@ -38,7 +38,6 @@ class TAO_BiDirPolicy_Validator;
 class TAO_BIDIRGIOP_Export TAO_BiDirGIOP_Loader : public TAO_BiDir_Adapter
 {
 public:
-
   /// Constructor
   TAO_BiDirGIOP_Loader (void);
 
@@ -55,7 +54,6 @@ public:
   static int Initializer (void);
 
 private:
-
   /// Flag to indicate whether the BiDirGIOP library has been
   /// activated.
   bool initialized_;

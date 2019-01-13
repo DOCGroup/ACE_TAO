@@ -1,0 +1,367 @@
+commit c7ef18e4589dd6a16a5d35f7eee45f1f761e5a87
+Merge: 01ff2f9dcd8 776b9cc8e60
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Nov 16 10:22:09 2018 -0500
+
+    Merge pull request #749 from DOCGroup/issue-748
+    
+    Add a test case exercising user-allocated ACE_Data_Block-derived object controlled by ACE_Message_Block.
+
+commit 94ce9b72ac6cc07ac73f02368c0bed7a5ea4c80e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 16 16:00:05 2018 +0100
+
+    List more changes
+
+commit ac1259a122c71dbc1a34fc06bf9289ffe5288d66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 16 11:28:02 2018 +0100
+
+    Fixed typo in comment
+    
+        * ACE/ace/Message_Block.h:
+
+commit b0d2c3ec0e1c844aa6f6a1a13dc8859efcbe3879
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 16 11:27:49 2018 +0100
+
+    List new changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 776b9cc8e609a4ddfe9e61efacb7bc8135890832
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri Nov 16 00:23:16 2018 +0000
+
+    Remove trailing whitespace per fuzz
+
+commit bd3b3d8cab87cf43a15c9196858291c8a0e5965c
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Nov 15 21:07:48 2018 +0000
+
+    Use correct ACE_Allocator for user-defined data block per API requirements
+
+commit 5c8a5f3056270427afe82cdc95750b1abd8541ba
+Author: Steve Huston <shuston@riverace.com>
+Date:   Thu Nov 15 17:58:07 2018 +0000
+
+    Add user-defined ACE_Data_Block test case
+
+commit 0d16c9482cc00ee70f3c8115ced0154170db748e
+Merge: e222083eee8 2bc4eca4e2b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 8 09:27:43 2018 +0100
+
+    Merge pull request #746 from mitza-oci/clang-compiler-test
+    
+    Update compiler test for clang
+
+commit e222083eee80bec572611f4257315e5ddaefca30
+Merge: f6b983b175a aeb6cb47d17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 18:25:50 2018 +0100
+
+    Merge pull request #747 from jwillemsen/master
+    
+    semun is not available on Android with NDK less 12.1b or API level 21…
+
+commit aeb6cb47d17fd0f39ae09c16ef981eec4b5bc5c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 18:25:08 2018 +0100
+
+    semun is not available on Android with NDK less 12.1b or API level 21. With NDK >= 12.1 or API level >= 21 we include sys/sem.h which defines semun
+    
+        * ACE/ace/config-android.h:
+
+commit 2bc4eca4e2bd4ea75433c2d5699781590df996e4
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Nov 7 10:45:32 2018 -0600
+
+    Current versions of clang claim to have this fixed, its bugzilla bug is closed
+
+commit 43a8c6c45a904664d0ca322c24cdba724c59b1af
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 15:10:48 2018 +0100
+
+    Removed experiment for using linux/sem.h
+    
+        * ACE/ace/os_include/sys/os_sem.h:
+
+commit 677136f06ad184103e5df1270b68cee572e900d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 15:06:37 2018 +0100
+
+    Android API or NDK>=15 do have a senum so don't let ACE define its version
+    
+        * ACE/ace/config-android.h:
+
+commit 857dc18761d04c4fa3e88302f5090b0f0e09b108
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 15:03:00 2018 +0100
+
+    Revert "Android NDK13 does ship a senum type, isn't usable, but ACE shouldn't…"
+
+commit 950dd74dd9ac2379c6b4ec1365738d6393313ce1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 14:56:01 2018 +0100
+
+    Removed define of ACE_HAS_SEMUN, when not set ACE will define a senum type, it shouldn't do that on Android
+    
+        * ACE/ace/config-android.h:
+
+commit 901f33ca78dc15ff64922e42a401ee18c074a4c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 14:51:14 2018 +0100
+
+    Android NDK13 does ship a senum type, isn't usable, but ACE shouldn't define its own version
+    
+        * ACE/ace/config-android.h:
+        * ACE/ace/os_include/sys/os_sem.h:
+
+commit 1f110c0861392f44ff76335cd3a7ac64d9c4fdb3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 12:47:42 2018 +0100
+
+    Only define ACE_HAS_SEMUN when we have API >= 12 and at least NDK 15, if not, we just not define it
+    
+        * ACE/ace/config-android.h:
+
+commit 646f3913692ea052a3f28b5c41637a3705dc0115
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 7 12:46:51 2018 +0100
+
+    Fixed typo
+    
+        * ACE/include/makeinclude/platform_android.GNU:
+
+commit 618533091124a97d6dcd4b106e38cb5ca2477b98
+Merge: 764ff58a2e8 40af509ec08
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Nov 6 16:50:01 2018 -0600
+
+    Merge pull request #726 from iguessthislldo/igtd/android
+    
+    Support for Clang based Android NDKs
+
+commit 097e1e7f880b2e9f55a5cf557f373a44035e0b93
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 2 09:14:22 2018 +0100
+
+    Use SSL_INCDIR and SSL_LIBDIR as they are now generated by MPC
+
+commit ad1c781d9f20082620aaf27f69ccbd829991017e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 31 12:17:01 2018 +0100
+
+    Only set CXX and CC when they are not set by the user
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 40af509ec08305295db1db5e8c4ed6b74eb13ec8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 17:19:29 2018 -0500
+
+    platform_android.GNU: Fix android_neon
+
+commit f50935c83e7c627ab0b17c76c825ea081a2487ce
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 16:47:51 2018 -0500
+
+    ACE-INSTALL.html: Update Android Section
+    
+    Also made other small changes throughout the file. The largest of these
+    is changing the style of pre and code tags to stand out more with a grey
+    background, and any changes to fix broken html revealed by that style
+    change.
+
+commit d39c21045d5747b1cfec09653038c9f09fa305b1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 15:24:54 2018 -0500
+
+    config-android.h: Adjust a NDK version macro
+
+commit c1f4fbaa1b07651b2e212f1bd568bb6abe6751d9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 11:39:23 2018 -0500
+
+    platform_android.GNU: Combine arm7 marcos
+
+commit 02ab4d6ef4606ad7fea5f9c0a87aee3b2e06ee53
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 29 17:29:40 2018 -0500
+
+    config-android.h: Fix error message
+
+commit ef125b3b256e85068b74f2e74755139caada6ecb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 29 17:15:48 2018 -0500
+
+    platform_android.GNU: Force clang by default
+    
+    This tries to fix a problem with NDKs where the transision between GCC
+    and clang is causing problems using g++. android_force_clang will have
+    to be set to 0 to use g++, which can be GCC or clang.
+
+commit cddb2d2bb178b0d618c3f4ea6be1a1351ad3998e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 29 16:01:49 2018 -0500
+
+    Error if Android NDK < r15 and Android API >= 21
+
+commit baf54e97e1f00d18c90d2241e3d75ec3298c6475
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Oct 24 21:47:18 2018 -0500
+
+    Force Non-Versioned SOs on Android
+
+commit 5f8a64354dc7293591caf4f011f16f4f9e98239f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 22 10:52:27 2018 +0200
+
+    Layout changes
+    
+        * ACE/ace/Reactor.h:
+        * ACE/ace/Select_Reactor_T.h:
+        * ACE/ace/Select_Reactor_T.inl:
+
+commit 6d77d231876be9f18e8e54dc4fd43d5a9c7177e5
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu Oct 18 15:22:43 2018 -0500
+
+    Try to fix semaphores in older Android NDKs
+
+commit cc9d5d4d536cc031253b986b5fbd4abd07f3652e
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Oct 17 20:24:30 2018 -0500
+
+    config-android.h: Update for Newer NDK
+
+commit 85291bed9f9e941d64e3e2b91c36e9761908f55c
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Oct 16 18:00:31 2018 -0500
+
+    Update platform make files to support android clang
+
+commit 10983a559cf292c3c3255c869de8d024769cbe57
+Merge: f44396b9b5a 09adcb36020
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 9 17:05:33 2018 +0100
+
+    Merge pull request #722 from jwillemsen/master
+    
+    Const enhancements
+
+commit 09adcb360201488de3635baf7d662f4e28ad0927
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 9 11:42:22 2018 +0200
+
+    Const enhancements
+    
+        * ACE/ace/Time_Value.cpp:
+
+commit f44396b9b5a3f0f7496e207a554798616fde0c7d
+Merge: 40998af8327 cefeaac755c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Oct 7 09:14:18 2018 +0100
+
+    Merge pull request #703 from likema/feature/rpath
+    
+    Fix AIX and Solaris linking rpath errors.
+
+commit 1b27e1d8bb7c9246b7f7ffd53532fb1d1123e896
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 26 09:05:14 2018 -0500
+
+    clang 7
+
+commit b12d3a7598f4017b864af9ae6b49b2067e262f6e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 20 14:34:38 2018 +0200
+
+    Fixed typo
+
+commit 8de28a4880d600d2ed08aa414aadf2f2576e3acc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 20 14:31:54 2018 +0200
+
+    Removed broken links
+    
+        * ACE/docs/ACE-subsets.html:
+
+commit bac61a111f3c0e22275a07f7098f1bd9356882c5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 20 14:21:30 2018 +0200
+
+    Removed broken link
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 6881ff62f2d8bc16efb060307bad5deb4fc7a7fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 18 14:36:37 2018 +0200
+
+    Upgraded to latest doxygen configuration file version
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit d6adab822decfad3e7408d6f4538490f5566c0d8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 18 11:40:28 2018 +0200
+
+    Use https links to OBS and remove link to Ken Sedgwick's RPMs because these are not updated anymore
+    
+        * ACE/docs/Download.html:
+
+commit 01fc7a23cf7e6772d85f9fee367803b3e85a1118
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 18 09:36:39 2018 +0200
+
+    Make x.5.2 public as new release
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit cefeaac755c65d4a6969163733e2e92928dff849
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Sep 12 19:40:38 2018 +0800
+
+    Fix AIX and Solaris linking rpath errors.

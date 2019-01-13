@@ -2319,9 +2319,7 @@ BE_GlobalData::messaging_exceptionholder (void)
       // Notice the valuetype "ExceptionHolder" that it is defined in the
       // "Messaging" module
       this->messaging_exceptionholder_->set_defined_in (msg);
-      this->messaging_exceptionholder_->set_prefix_with_typeprefix (
-                                            "omg.org"
-                                          );
+      this->messaging_exceptionholder_->set_prefix_with_typeprefix ("omg.org");
 
       idl_global->scopes ().pop ();
 
@@ -2811,8 +2809,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
-
         break;
       case 'b':
         if (av[i][2] == '\0')
@@ -2827,6 +2825,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
         break;
       // = Various 'c'lient side stub file_name_endings.
@@ -2856,8 +2855,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
-
         break;
       // = Various 's'erver side skeleton file name endings.
       case 's':
@@ -2894,8 +2893,8 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
-
         break;
         // Operation lookup strategy.
         // <perfect_hash>, <dynamic_hash> or <binary_search>
@@ -2907,30 +2906,23 @@ BE_GlobalData::parse_args (long &i, char **av)
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("no selection for -H option\n")));
+            idl_global->parse_args_exit (1);
           }
         else if (ACE_OS::strcmp (av[i+1], "dynamic_hash") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_DYNAMIC_HASH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_DYNAMIC_HASH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "perfect_hash") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_PERFECT_HASH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_PERFECT_HASH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "binary_search") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_BINARY_SEARCH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_BINARY_SEARCH);
           }
         else if (ACE_OS::strcmp (av[i + 1], "linear_search") == 0)
           {
-            be_global->lookup_strategy (
-                BE_GlobalData::TAO_LINEAR_SEARCH
-              );
+            be_global->lookup_strategy (BE_GlobalData::TAO_LINEAR_SEARCH);
           }
         else
           {
@@ -2938,6 +2930,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("%C: unknown operation lookup <%C>\n"),
                         av[0],
                         av[i + 1]));
+            idl_global->parse_args_exit (1);
           }
 
         ++i;
@@ -2968,6 +2961,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else
@@ -2977,6 +2971,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3005,6 +3000,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3031,8 +3027,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" specified by -o option\n"),
                     av[i + 1]
                   ));
-
-                break;
+                idl_global->parse_args_exit (1);
               }
 
             be_global->output_dir (av[i + 1]);
@@ -3060,7 +3055,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         av[i + 1]
                       ));
 
-                    break;
+                    idl_global->parse_args_exit (1);
                   }
 
                 be_global->anyop_output_dir (av[i + 1]);
@@ -3074,6 +3069,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'E')
@@ -3098,7 +3094,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         av[i + 1]
                       ));
 
-                    break;
+                    idl_global->parse_args_exit (1);
                   }
 
                 be_global->exec_output_dir (av[i + 1]);
@@ -3112,25 +3108,27 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'N')
-           {
-             if (av[i][3] == '\0')
-               {
-                 // Don't overwrite exec files.
-                 be_global->overwrite_not_exec (true);
-               }
-             else
-               {
-                 ACE_ERROR ((
-                     LM_ERROR,
-                     ACE_TEXT ("IDL: I don't understand")
-                     ACE_TEXT (" the '%C' option\n"),
-                     av[i]
-                   ));
-               }
-           }
+          {
+            if (av[i][3] == '\0')
+              {
+                // Don't overwrite exec files.
+                be_global->overwrite_not_exec (true);
+              }
+            else
+              {
+                ACE_ERROR ((
+                    LM_ERROR,
+                    ACE_TEXT ("IDL: I don't understand")
+                    ACE_TEXT (" the '%C' option\n"),
+                    av[i]
+                  ));
+                idl_global->parse_args_exit (1);
+              }
+          }
         else if (av[i][2] == 'S')
           {
             if (av[i][3] == '\0')
@@ -3153,7 +3151,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         av[i + 1]
                       ));
 
-                    break;
+                    idl_global->parse_args_exit (1);
                   }
 
                 be_global->skel_output_dir (av[i + 1]);
@@ -3167,6 +3165,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT (" the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else
@@ -3177,6 +3176,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT (" the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3279,6 +3279,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
 
             break;
@@ -3309,6 +3310,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                             ACE_TEXT ("the '%s' option\n"),
                             av[i]
                           ));
+                        idl_global->parse_args_exit (1);
                       }
 
                     break;
@@ -3329,6 +3331,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT ("the '%s' option\n"),
                         av[i]
                       ));
+                    idl_global->parse_args_exit (1);
                   }
 
                 break;
@@ -3341,6 +3344,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
 
             break;
@@ -3360,6 +3364,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
 
             break;
@@ -3389,6 +3394,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
             break;
           }
@@ -3407,6 +3413,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
             break;
           }
@@ -3434,6 +3441,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%s' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
 
             break;
@@ -3453,6 +3461,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'o')
@@ -3470,6 +3479,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'I')
@@ -3526,11 +3536,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                         ACE_TEXT (" the '%C' option\n"),
                         av[i]
                       ));
-
-                    idl_global->set_compile_flags (
-                        idl_global->compile_flags ()
-                        | IDL_CF_ONLY_USAGE
-                      );
+                    idl_global->parse_args_exit (1);
                   }
               }
           }
@@ -3547,6 +3553,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3633,6 +3640,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'm')
@@ -3655,6 +3663,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 's')
@@ -3676,6 +3685,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                     ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                     av[i]
                   ));
+                idl_global->parse_args_exit (1);
               }
           }
         else if (av[i][2] == 'e')
@@ -3696,6 +3706,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3713,6 +3724,7 @@ BE_GlobalData::parse_args (long &i, char **av)
                 ACE_TEXT ("IDL: I don't understand the '%C' option\n"),
                 av[i]
               ));
+            idl_global->parse_args_exit (1);
           }
 
         break;
@@ -3723,9 +3735,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             av[i]
           ));
 
-        idl_global->set_compile_flags (idl_global->compile_flags ()
-                                       | IDL_CF_ONLY_USAGE);
-        break;
+        idl_global->parse_args_exit (1);
     }
 }
 

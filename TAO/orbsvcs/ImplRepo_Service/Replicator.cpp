@@ -341,7 +341,7 @@ Replicator::send_registration (char *&imr_ior)
   catch (const ImplementationRepository::InvalidPeer& ip)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-        ACE_TEXT("Error: Replicator::send_registration invalid ImR replica because %s\n"),
+        ACE_TEXT("Error: Replicator::send_registration invalid ImR replica because %C\n"),
         ip.reason.in()), -1);
     }
 
@@ -362,7 +362,7 @@ Replicator::init_peer (const ACE_CString &replica_ior_file)
   if (this->debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_INFO,
-                      ACE_TEXT("Resolving ImR replica %s\n"),
+                      ACE_TEXT("Resolving ImR replica %C\n"),
                       replica_ior_file.c_str()));
     }
 

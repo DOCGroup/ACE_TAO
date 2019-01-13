@@ -30,7 +30,6 @@ TAO_Acceptor_Filter_Factory::initialize (void)
     (ace_svc_desc_TAO_Acceptor_Filter_Factory);
 }
 
-
 ACE_FACTORY_DEFINE (TAO_PortableServer, TAO_Acceptor_Filter_Factory)
 ACE_STATIC_SVC_DEFINE (TAO_Acceptor_Filter_Factory,
                        ACE_TEXT ("TAO_Acceptor_Filter_Factory"),

@@ -387,8 +387,7 @@ Subscribe_StructuredPushSupplier::disconnect (void)
 void
 Subscribe_StructuredPushSupplier::subscription_change
    (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */
-    )
+    const CosNotification::EventTypeSeq & /*removed */)
 {
   //No-Op.
 }

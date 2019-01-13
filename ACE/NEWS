@@ -1,5 +1,57 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.2 and ACE-6.5.3
+====================================================
+
+. Enhance Android support
+
+. Fix AIX and Solaris linking rpath errors
+
+. Add support for SSL_INCDIR/SSL_LIBDIR and XERCESC_INCDIR/XERCESC_LIBDIR
+  to specify a custom include/lib dir as required for vcpkg versions of
+  openssl/xercesc
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.1 and ACE-6.5.2
+====================================================
+
+. Enhanced C++Builder XE2 support
+
+. ACE_QtReactor can be built with Qt version 5 using the qt5 MPC feature
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.0 and ACE-6.5.1
+====================================================
+
+. At the moment C++11 or newer is enabled ACE_Strong_Bound_Ptr
+  doesn't provide the convenience functions to use a
+  std::auto_ptr anymore
+
+. Optimized CDR std::(w)string insertion and extraction
+  when C++11 or newer is enabled
+
+. Solved Visual Studio 2017 solution loading due to duplicate
+  files generated in a project file
+
+USER VISIBLE CHANGES BETWEEN ACE-6.4.8 and ACE-6.5.0
+====================================================
+
+. The ACE core libraries now use std::unique_ptr instead
+  of std::auto_ptr when C++11 or newer is enabled
+
 USER VISIBLE CHANGES BETWEEN ACE-6.4.7 and ACE-6.4.8
 ====================================================
+
+. Enhanced Embarcadero C++ Builder support
+
+. ACE XML_Utils enhancements
+
+. Debian packaging enhancements
+
+. Support for clang6 and gcc8
+
+. Enhanced Android support
+
+. Remove addr_any restriction from ipv6_only UDP
 
 USER VISIBLE CHANGES BETWEEN ACE-6.4.6 and ACE-6.4.7
 ====================================================

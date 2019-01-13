@@ -58,8 +58,8 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
 
   // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
-  CORBA::ULong max = params.svc_ctx_.maximum ();
-  CORBA::ULong len = params.svc_ctx_.length ();
+  CORBA::ULong const max = params.svc_ctx_.maximum ();
+  CORBA::ULong const len = params.svc_ctx_.length ();
   IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
@@ -78,7 +78,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
     {
       if (TAO_debug_level >= 4)
         {
-          ex._tao_print_exception ("Exception during reply handler");
+          ex._tao_print_exception ("TAO_Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
         }
     }
 
@@ -167,8 +167,8 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
 
   // Steal the buffer, that way we don't do any unnecessary copies of
   // this data.
-  CORBA::ULong max = params.svc_ctx_.maximum ();
-  CORBA::ULong len = params.svc_ctx_.length ();
+  CORBA::ULong const max = params.svc_ctx_.maximum ();
+  CORBA::ULong const len = params.svc_ctx_.length ();
   IOP::ServiceContext* context_list = params.svc_ctx_.get_buffer (1);
   this->reply_service_info_.replace (max, len, context_list, 1);
 
@@ -191,7 +191,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
     {
       if (TAO_debug_level >= 4)
         {
-          ex._tao_print_exception ("Exception during reply handler");
+          ex._tao_print_exception ("TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
         }
     }
   // This was dynamically allocated. Now the job is done.

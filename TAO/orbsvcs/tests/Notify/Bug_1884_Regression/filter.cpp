@@ -96,7 +96,7 @@ void match_structure_test (const CosNotifyFilter::Filter_var& filter,
   try{
     bResult = filter->match_structured(event);
   }
-  catch(CosNotifyFilter::UnsupportedFilterableData)
+  catch(CosNotifyFilter::UnsupportedFilterableData&)
   {
     std::cerr << "UnsupportedFilterableData!" << std::endl;
   }

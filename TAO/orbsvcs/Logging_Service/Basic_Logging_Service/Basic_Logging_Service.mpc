@@ -8,4 +8,7 @@ project: namingexe, iortable, install, dslogadmin_serv, valuetype {
   InstallData_Files {
     README
   }
+
+  Documentation_Files {
+  }
 }

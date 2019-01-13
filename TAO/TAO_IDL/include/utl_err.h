@@ -76,10 +76,14 @@ class AST_Fixed;
 class AST_Union;
 class AST_UnionLabel;
 class UTL_String;
+class AST_Annotation_Decl;
+class AST_Annotation_Member;
 
 class TAO_IDL_FE_Export UTL_Error
 {
 public:
+  UTL_Error();
+
   enum ErrorCode {
     EIDL_SYNTAX_ERROR,          // Syntax error in IDL input
                                 // More details will be gleaned from examining
@@ -151,8 +155,15 @@ public:
     EIDL_MISMATCHED_SEQ_PARAM,  // 'sequence<T>' must match a previous param
     EIDL_TEMPLATE_NOT_ALIASED,  // ref to tmpl module scope must be via alias
     EIDL_FIXED_UNSUPPORTED,     // fixed data type is not supported
+    EIDL_IDL_VERSION_ERROR,     // An error related to differences in IDL version
+    EIDL_UNSUPPORTED,           // Unsupported feature was used in input IDL
+    EIDL_ANNOTATION_PARAM_ERROR, // Error in Annotation Parameters
+    EIDL_MISC,                  // Very Specific Error or Warning
     EIDL_OK                     // No error
   };
+
+  ErrorCode last_error;
+  ErrorCode last_warning;
 
   // Operations
 
@@ -183,7 +194,7 @@ public:
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 
-  // Report clash of declared and referenced indentifiers
+  // Report clash of declared and referenced identifiers
   void redef_error (const char *n, const char *t);
 
   // Report a name being used with different spellings
@@ -200,12 +211,15 @@ public:
   // Same as above, but doesn't increment the error count.
   void idl_keyword_warning (char *n);
 
-  // Report an unsuccesful coercion attempt
+  // Report an unsuccessful coercion attempt
   void coercion_error (AST_Expression *v,
                        AST_Expression::ExprType t);
 
   // Report a failed name lookup attempt.
   void lookup_error (UTL_ScopedName *n);
+
+  /// Report a failed name lookup attempt as a warning.
+  void lookup_warning (UTL_ScopedName *n);
 
   // Report an illegal #pragma version.
   void version_number_error (char *n);
@@ -254,7 +268,7 @@ public:
 
   // A concrete supported interface must inherit from all concrete
   // interfaces supported by the valuetype's ancestors, and all of
-  // those conrete interfaces' ancestors.
+  // those concrete interfaces' ancestors.
   void concrete_supported_inheritance_error (UTL_ScopedName *v,
                                              UTL_ScopedName *i);
 
@@ -385,6 +399,56 @@ public:
   // Reference to an item in the scope of a template
   // module was not via an alias.
   void template_scope_ref_not_aliased (AST_Decl *d);
+
+  /**
+   * Report IDL version error, with a given reason.
+   */
+  void idl_version_error (const char *reason);
+
+  /**
+   * Warn about an unsupported feature in the input IDL that can be ignored for
+   * the most part.
+   */
+  void unsupported_warning (const char *reason);
+
+  /**
+   * Report an unsupported feature in the input IDL that can't be ignored.
+   */
+  void unsupported_error (const char *reason);
+
+  /**
+   * Report a error for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_error (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report a warning for a specific situation
+   *
+   * If node is not defined the current file and line are reported.
+   */
+  void misc_warning (const char *reason, AST_Decl *node = 0);
+
+  /**
+   * Report that an invalid annotation parameter was passed
+   */
+  void invalid_annotation_param_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Decl *decl,
+    Identifier *invalid_id);
+
+  /**
+   * Report that an annotation parameter has an invalid type
+   */
+  void invalid_annotation_param_type (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member,
+    AST_Expression *offending_value);
+
+  /**
+   * Report that an annotation parameter needs to be defined
+   */
+  void annotation_param_missing_error (
+    AST_Annotation_Appl *appl, AST_Annotation_Member *member);
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

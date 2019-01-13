@@ -33,12 +33,9 @@ namespace TAO
     {
     public:
       /// Create a new servant retention strategy
-      virtual ImplicitActivationStrategy* create (
-        ::PortableServer::ImplicitActivationPolicyValue value);
+      virtual ImplicitActivationStrategy* create (::PortableServer::ImplicitActivationPolicyValue value);
 
-      virtual void destroy (
-        ImplicitActivationStrategy *strategy
-       );
+      virtual void destroy (ImplicitActivationStrategy *strategy);
     };
   }
 }

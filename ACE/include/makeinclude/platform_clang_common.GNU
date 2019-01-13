@@ -1,6 +1,30 @@
 # -*- Makefile -*-
-#
-# Common file help turn on/off explicit template instantiation
+
+# Compiling TAO requires relaxing strict 2-phase name lookup rules:
+CCFLAGS += -fdelayed-template-parsing
+
+ifneq ($(CROSS_COMPILE),)
+  CROSS-COMPILE = 1
+  # Build using the cross-tools
+  CC  = ${CROSS_COMPILE}clang${CROSS_COMPILE_SUFFIX}
+  CXX = ${CROSS_COMPILE}clang++${CROSS_COMPILE_SUFFIX}
+  AR  = ${CROSS_COMPILE}ar${CROSS_COMPILE_SUFFIX}
+  # Cross-linker requires this for linked in shared libs that depend
+  # themselves on other shared libs (not directly linked in)
+  LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
+  ifneq (,$(HOST_ROOT))
+    TAO_IDLFLAGS += -g $(HOST_ROOT)/bin/ace_gperf
+    TAO_IDL = $(HOST_ROOT)/bin/tao_idl
+    TAO_IDL_DEP = $(TAO_IDL)
+    TAO_IDL3_TO_IDL2 = $(HOST_ROOT)/bin/tao_idl3_to_idl2
+    TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
+    TAO_IDL3_TO_XMI = $(HOST_ROOT)/bin/tao_idl3_to_xmi
+    TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
+    # make sure to use the target compiler, not the cross-compiler
+    # as preprocessor for the cross-compiled idl tools
+    TAO_IDL_PREPROCESSOR = clang
+  endif
+endif
 
 ifeq ($(openmp),1)
 FLAGS_C_CC += -fopenmp

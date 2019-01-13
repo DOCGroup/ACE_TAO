@@ -74,7 +74,7 @@ Grid_Client_i::run (const char *name,
                                          height_);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) Made the grid succesfully\n"));
+                  "(%P|%t) Made the grid successfully\n"));
 
       for (CORBA::Short index_ = 0; index_ < width_; index_++)
         {

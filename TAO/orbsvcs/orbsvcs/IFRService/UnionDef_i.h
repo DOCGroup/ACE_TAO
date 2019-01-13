@@ -75,11 +75,9 @@ public:
 
   CORBA::UnionMemberSeq *members_i ();
 
-  virtual void members (
-    const CORBA::UnionMemberSeq &members);
+  virtual void members (const CORBA::UnionMemberSeq &members);
 
-  void members_i (
-    const CORBA::UnionMemberSeq &members);
+  void members_i (const CORBA::UnionMemberSeq &members);
 
 private:
   /// Used by members() to get each member's label value.

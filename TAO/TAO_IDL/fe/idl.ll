@@ -64,7 +64,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  */
 
 /*
- * idl.ll - Lexical scanner for IDL 3.1
+ * idl.ll - Lexical scanner for IDL
  */
 
 #include "global_extern.h"
@@ -87,6 +87,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_home_header.h"
 #include "fe_private.h"
 #include "fe_extern.h"
+#include "ast_annotation_appl.h"
 #include "idl.tab.hpp"
 
 static char *               idl_wstring_escape_reader (char *);
@@ -203,6 +204,9 @@ oneway          return IDL_ONEWAY;
                   tao_yylval.strval = ACE::strnew ("::");
                   return IDL_SCOPE_DELIMITOR;
                 }
+
+@annotation[^A-Za-z0-9_] return IDL_ANNOTATION_DECL; // Allow annotation names that start with "annotation"
+@ return IDL_ANNOTATION_SYMBOL;
 
 [a-ij-rs-zA-IJ-RS-Z_][a-ij-rs-zA-IJ-RS-Z0-9_]* {
   // Make sure that this identifier is not a C++ keyword. If it is,

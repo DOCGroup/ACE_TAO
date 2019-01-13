@@ -74,6 +74,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ace/Log_Msg.h"
 
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
+
 AST_Decl::NodeType const
 AST_Typedef::NT = AST_Decl::NT_typedef;
 
@@ -89,12 +92,17 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
               n),
     AST_Field (AST_Decl::NT_typedef,
                bt,
-               n)
+               n),
+    cached_annotations_ (0)
 {
 }
 
 AST_Typedef::~AST_Typedef (void)
 {
+  if (!cached_annotations_)
+    {
+      delete cached_annotations_;
+    }
 }
 
 // Given a typedef node, traverse the chain of base types until they are no
@@ -148,10 +156,10 @@ AST_Typedef::owns_base_type (bool val)
 
 // Dump this AST_Typedef node to the ostream o.
 void
-AST_Typedef::dump (ACE_OSTREAM_TYPE&o)
+AST_Typedef::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "typedef ");
-  this->ref_type_->dump (o);
+  o << *ref_type_;
   this->dump_i (o, " ");
   this->local_name ()->dump (o);
 }
@@ -193,3 +201,35 @@ AST_Typedef::destroy (void)
 }
 
 IMPL_NARROW_FROM_DECL(AST_Typedef)
+
+AST_Annotation_Appls &
+AST_Typedef::annotations ()
+{
+  if (!cached_annotations_)
+    {
+      cached_annotations_ = new AST_Annotation_Appls;
+
+      if (base_type ())
+        {
+          AST_Annotation_Appls &next = base_type ()->annotations ();
+          for (size_t i = 0; i < next.size (); i++)
+            {
+              cached_annotations_->push_back (next[i]);
+            }
+        }
+
+      /*
+       * Done after so it's easier for later annotations to override
+       * older ones.
+       */
+      if (annotation_appls ()) {
+        AST_Annotation_Appls &appls = *annotation_appls ();
+        for (size_t i = 0; i < appls.size (); i++)
+          {
+            cached_annotations_->push_back (appls[i]);
+          }
+      }
+    }
+
+  return *cached_annotations_;
+}

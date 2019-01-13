@@ -435,7 +435,11 @@ CORBA::NVList::evaluate (void)
 
   if (this->incoming_ != 0)
     {
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr<TAO_InputCDR> incoming (this->incoming_);
+#else
       auto_ptr<TAO_InputCDR> incoming (this->incoming_);
+#endif /* ACE_HAS_CPP11 */
       this->incoming_ = 0;
 
       this->_tao_decode (*(incoming.get ()), this->incoming_flag_);

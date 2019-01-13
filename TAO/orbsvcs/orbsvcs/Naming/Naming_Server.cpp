@@ -484,7 +484,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
           TAO::Storable_Factory* pf = 0;
           ACE_CString directory (ACE_TEXT_ALWAYS_CHAR (persistence_location));
           ACE_NEW_RETURN (pf, TAO::Storable_FlatFileFactory (directory), -1);
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO::Storable_Factory> persFactory(pf);
+#else
           auto_ptr<TAO::Storable_Factory> persFactory(pf);
+#endif /* ACE_HAS_CPP11 */
 
           // Use an auto_ptr to ensure that we clean up the factory in the case
           // of a failure in creating and registering the Activator.
@@ -492,7 +496,11 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             this->storable_naming_context_factory (context_size);
           // Make sure we got a factory
           if (cf == 0) return -1;
+#if defined (ACE_HAS_CPP11)
+          std::unique_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+#else
           auto_ptr<TAO_Storable_Naming_Context_Factory> contextFactory (cf);
+#endif /* ACE_HAS_CPP11 */
 
           // This instance will either get deleted after recreate all or,
           // in the case of a servant activator's use, on destruction of the

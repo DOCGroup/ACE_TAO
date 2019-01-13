@@ -472,12 +472,15 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // explicitly take care of both cases (platforms with
   // and without native exception support).
   *os << be_nl
-      << "{" << be_nl
+      << "{"
+      << "\n#if defined (ACE_HAS_CPP11)" << be_idt_nl
+      << "std::unique_ptr< ::CORBA::Exception> safety (this->exception);"
+      << "\n#else" << be_nl
       << "auto_ptr< ::CORBA::Exception> safety (this->exception);"
-      << be_nl
+      << "\n#endif /* ACE_HAS_CPP11 */" << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
       << "}"
-      << be_uidt_nl;
+      << be_nl;
 
   return 0;
 }

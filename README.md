@@ -1,7 +1,9 @@
+[![Lastest release](https://img.shields.io/github/release/docgroup/ace_tao.svg)](https://github.com/DOCGroup/ACE_TAO/releases/latest)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/9a20abe6590a4b3ca946d7634d9f51af)](https://www.codacy.com/app/DOCGroup/ACE_TAO?utm_source=github.com&utm_medium=referral&utm_content=DOCGroup/ACE_TAO&utm_campaign=badger)
-[![Build Status](https://travis-ci.org/DOCGroup/ACE_TAO.svg?branch=master)](https://travis-ci.org/DOCGroup/ACE_TAO)
+[![Build Status](https://travis-ci.com/DOCGroup/ACE_TAO.svg?branch=master)](https://travis-ci.com/DOCGroup/ACE_TAO)
 [![Build Status](https://ci.appveyor.com/api/projects/status/umif8ghl2fg8rtx6/branch/master?svg=true)](https://ci.appveyor.com/project/jwillemsen/ace-tao)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
+[![Azure DevOps](https://dev.azure.com/docgroup/ACE_TAO/_apis/build/status/DOCGroup.ACE_TAO)](https://dev.azure.com/docgroup/ACE_TAO/_build/latest?definitionId=1)
 
 # ACE/TAO #
 

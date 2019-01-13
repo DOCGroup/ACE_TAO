@@ -30,7 +30,11 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h
@@ -340,7 +344,12 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
+#if defined (ACE_HAS_CPP11)
+# define TAO_OBJECT_USES_STD_ATOMIC_REFCOUNT
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
   private:
 

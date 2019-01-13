@@ -52,8 +52,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivatorFactoryImpl::destroy (
-      RequestProcessingStrategy *strategy
-      )
+      RequestProcessingStrategy *strategy)
     {
       strategy->strategy_cleanup ();
 
@@ -61,7 +60,6 @@ namespace TAO
     }
   }
 }
-
 
 ACE_STATIC_SVC_DEFINE (
   RequestProcessingStrategyServantActivatorFactoryImpl,

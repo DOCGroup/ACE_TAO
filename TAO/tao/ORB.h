@@ -35,7 +35,11 @@
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
-#include "ace/Atomic_Op.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -577,7 +581,11 @@ namespace CORBA
 
     /// Maintains a reference count of number of instantiations of the
     /// ORB.
+#if defined (ACE_HAS_CPP11)
+    std::atomic<uint32_t> refcount_;
+#else
     ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
+#endif /* ACE_HAS_CPP11 */
 
     /// The ORB_Core that created us....
     TAO_ORB_Core * orb_core_;

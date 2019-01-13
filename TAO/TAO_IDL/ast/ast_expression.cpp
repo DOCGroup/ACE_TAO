@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_param_holder.h"
 #include "ast_visitor.h"
 #include "ast_generator.h"
+#include "ast_enum_val.h"
 
 #include "utl_err.h"
 #include "utl_scope.h"
@@ -93,6 +94,7 @@ AST_Expression::fill_definition_details (void)
                           : 0 ;
   this->pd_line = idl_global->lineno ();
   this->pd_file_name = idl_global->filename ();
+  enum_parent (0);
 }
 
 // An AST_Expression denoting a symbolic name.
@@ -131,6 +133,7 @@ AST_Expression::AST_Expression (AST_Expression *v,
 {
   AST_Param_Holder *ph = v->param_holder_;
   this->fill_definition_details ();
+  enum_parent (v->enum_parent ());
 
   // If we are here because one string constant has
   // another one as its rhs, we must copy the UTL_String
@@ -2511,6 +2514,12 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
       return 0;
     }
 
+  if (d->node_type () == AST_Decl::NT_enum_val)
+    {
+      AST_EnumVal *enumval = AST_EnumVal::narrow_from_decl (d);
+      enum_parent (enumval->enum_parent ());
+    }
+
   // OK, now evaluate the constant we just got, to produce its value.
   c = AST_Constant::narrow_from_decl (d);
 
@@ -2850,28 +2859,19 @@ AST_Expression::operator== (AST_Expression *vc)
     case EV_bool:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_string:
-      if (this->pd_ev->u.strval == 0)
-        {
-          return vc->ev ()->u.strval == 0;
-        }
-      else if (vc->ev ()->u.strval == 0)
-        {
-          return false;
-        }
-      else
-        {
-          return this->pd_ev->u.strval == vc->ev ()->u.strval;
-        }
-
+      return !ACE_OS::strcmp (pd_ev->u.strval->get_string (),
+        vc->ev ()->u.strval->get_string ());
+    case EV_wstring:
+      return !ACE_OS::strcmp (pd_ev->u.wstrval, vc->ev ()->u.wstrval);
     case EV_longlong:
       return pd_ev->u.llval == vc->ev ()->u.llval;
     case EV_ulonglong:
       return pd_ev->u.ullval == vc->ev ()->u.ullval;
     case EV_fixed:
       return pd_ev->u.fixedval == vc->ev ()->u.fixedval;
-    case EV_longdouble:
-    case EV_wstring:
     case EV_enum:
+      return pd_ev->u.eval == vc->ev ()->u.eval;
+    case EV_longdouble:
     case EV_void:
     case EV_none:
     case EV_any:
@@ -3004,8 +3004,7 @@ dump_unary_expr (ACE_OSTREAM_TYPE &o,
 
 // Dump the supplied AST_ExprValue to the ostream o.
 static void
-dump_expr_val (ACE_OSTREAM_TYPE &o,
-               AST_Expression::AST_ExprValue *ev)
+dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
 {
   switch (ev->et)
     {
@@ -3041,24 +3040,26 @@ dump_expr_val (ACE_OSTREAM_TYPE &o,
       break;
     case AST_Expression::EV_string:
       if (ev->u.strval != 0)
-        ev->u.strval->dump(o);
+        {
+          ev->u.strval->dump (o);
+        }
+      else
+        {
+          o << "(null string)";
+        }
+      break;
     case AST_Expression::EV_longlong:
-//      o << ev->u.llval;
-    break;
+      o << ev->u.llval;
+      break;
     case AST_Expression::EV_ulonglong:
-//      o << ev->u.ullval;
+      o << ev->u.ullval;
       break;
     case AST_Expression::EV_fixed:
       o << ev->u.fixedval;
       break;
-    case AST_Expression::EV_longdouble:
-    case AST_Expression::EV_wstring:
     case AST_Expression::EV_enum:
-    case AST_Expression::EV_none:
-    case AST_Expression::EV_void:
-    case AST_Expression::EV_any:
-    case AST_Expression::EV_object:
-      break;
+    default:
+      o << "(Can not dump this type)";
     }
 }
 
@@ -3069,8 +3070,7 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
   // See if it was a constant or was evaluated already.
   if (this->pd_ev != 0)
     {
-      dump_expr_val (o,
-                     this->pd_ev);
+      dump_expr_val (o, this->pd_ev);
       return;
     }
 
@@ -3320,4 +3320,67 @@ void
 AST_Expression::set_n (UTL_ScopedName *new_n)
 {
   this->pd_n = new_n;
+}
+
+const char *
+AST_Expression::exprtype_to_string (ExprType t)
+{
+  switch (t) {
+  case AST_Expression::EV_short:
+    return "short";
+  case AST_Expression::EV_ushort:
+    return "unsigned short";
+  case AST_Expression::EV_long:
+    return "long";
+  case AST_Expression::EV_ulong:
+    return "unsigned long";
+  case AST_Expression::EV_float:
+    return "float";
+  case AST_Expression::EV_double:
+    return "double";
+  case AST_Expression::EV_char:
+    return "char";
+  case AST_Expression::EV_octet:
+    return "octet";
+  case AST_Expression::EV_bool:
+    return "boolean";
+  case AST_Expression::EV_string:
+    return "string";
+  case AST_Expression::EV_enum:
+    return "enum";
+  case AST_Expression::EV_void:
+    return "void";
+  case AST_Expression::EV_none:
+    return "none";
+  case AST_Expression::EV_wchar:
+    return "wchar";
+  case AST_Expression::EV_longlong:
+    return "longlong";
+  case AST_Expression::EV_ulonglong:
+    return "ulonglong";
+  case AST_Expression::EV_longdouble:
+    return "longdouble";
+  case AST_Expression::EV_wstring:
+    return "wstring";
+  case AST_Expression::EV_any:
+    return "any";
+  case AST_Expression::EV_object:
+    return "object";
+  case AST_Expression::EV_fixed:
+    return "fixed";
+  default:
+    return "<UNKNOWN TYPE>";
+  }
+}
+
+AST_Enum *
+AST_Expression::enum_parent ()
+{
+  return enum_parent_;
+}
+
+void
+AST_Expression::enum_parent (AST_Enum *node)
+{
+  enum_parent_ = node;
 }

@@ -62,6 +62,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
+#include "idl_defines.h"
 #include "idl_global.h"
 #include "global_extern.h"
 #include "utl_identifier.h"
@@ -71,22 +72,26 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "fe_private.h"
 #include "nr_extern.h"
+#include "ast_extern.h"
 
 #include "ast_root.h"
 #include "ast_generator.h"
 #include "ast_valuetype.h"
+#include "ast_annotation_decl.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
+// FUZZ: disable check_for_streams_include
+#include "ace/streams.h"
 
 // Define an increment for the size of the array used to store names of
 // included files.
 #undef INCREMENT
 #define INCREMENT 64
 
-static long *pSeenOnce= 0;
+static long *pSeenOnce = 0;
 
 #if defined (ACE_OPENVMS)
 #include <unixlib.h>
@@ -106,7 +111,18 @@ char* IDL_GlobalData::translateName(const char* name, char *name_buf)
 #endif
 
 IDL_GlobalData::IDL_GlobalData (void)
-  : pd_root (0),
+  : syntax_only_ (false),
+    parse_args_exit_ (false),
+    parse_args_exit_status_ (0),
+    print_help_ (false),
+    print_version_ (false),
+    in_eval_ (false),
+    dump_builtins_ (false),
+    just_dump_builtins_ (false),
+    ignore_files_ (false),
+    ignore_lookup_errors_ (false),
+    unknown_annotations_ (UNKNOWN_ANNOTATIONS_WARN_ONCE),
+    pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
     pd_err (0),
@@ -525,6 +541,14 @@ IDL_GlobalData::compile_flags (void)
 void
 IDL_GlobalData::set_compile_flags (long cf)
 {
+  if (cf & IDL_CF_ONLY_USAGE)
+    {
+      print_help ();
+    }
+  if (cf & IDL_CF_DUMP_AST)
+    {
+      syntax_only_ = true;
+    }
   this->pd_compile_flags = cf;
 }
 
@@ -1869,4 +1893,95 @@ void
 IDL_GlobalData::in_tmpl_mod_alias (bool val)
 {
   this->in_tmpl_mod_alias_ = val;
+}
+
+void
+IDL_GlobalData::parse_args_exit (int status)
+{
+  parse_args_exit_ = true;
+  parse_args_exit_status_ = status;
+}
+
+void
+IDL_GlobalData::print_help ()
+{
+  print_help_ = true;
+  parse_args_exit (0);
+}
+
+void
+IDL_GlobalData::print_version ()
+{
+  print_version_ = true;
+  parse_args_exit (0);
+}
+
+bool
+IDL_GlobalData::print_warnings ()
+{
+  return ! (idl_global->compile_flags () & IDL_CF_NOWARNINGS);
+}
+
+/*
+ * These are generated in idl.yy.cpp but they are not put in the header file,
+ * so to use them we must declare them here.
+ */
+struct yy_buffer_state;
+extern yy_buffer_state *tao_yy_scan_string (const char *);
+extern int tao_yylex_destroy ();
+
+void
+IDL_GlobalData::eval (const char *string)
+{
+  in_eval_ = true;
+
+  // Get IDL_Global Context
+  UTL_String *old_filename = filename ();
+  pd_filename = 0;
+  long old_lineno = lineno ();
+  idl_global->set_lineno (1);
+  UTL_String *old_idl_src_file = idl_src_file ();
+
+  // Name this pseudo-file "builtin"
+  UTL_String utl_string ("builtin", true);
+  idl_global->idl_src_file (new UTL_String (&utl_string, true));
+  idl_global->set_filename (new UTL_String (&utl_string, true));
+
+  // Set up Flex to read from string
+  tao_yy_scan_string (string);
+
+  // Disable Output
+  std::streambuf *default_streambuf = ACE_DEFAULT_LOG_STREAM->rdbuf ();
+  ACE_DEFAULT_LOG_STREAM->rdbuf (0);
+  u_long const flags = ACE_LOG_MSG->flags ();
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+
+  // emulate DRV_drive()
+  FE_yyparse ();
+  idl_global->check_primary_keys ();
+  AST_check_fwd_decls ();
+
+  // Renable Output
+  ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf);
+  ACE_LOG_MSG->set_flags (flags);
+
+  // Have Flex Cleanup
+  tao_yylex_destroy ();
+
+  // Restore IDL_Global Context
+  idl_global->set_filename (old_filename);
+  idl_src_file()->destroy ();
+  delete idl_src_file ();
+  idl_src_file (old_idl_src_file);
+  idl_global->set_lineno (old_lineno);
+  idl_global->reset_flag_seen ();
+
+  in_eval_ = false;
+}
+
+void
+IDL_GlobalData::dump_ast ()
+{
+  idl_global->set_compile_flags (idl_global->compile_flags ()
+                                 | IDL_CF_DUMP_AST);
 }

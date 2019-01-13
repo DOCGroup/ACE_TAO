@@ -35,8 +35,7 @@ Sender_StreamEndPoint::set_protocol_object (const char *,
 
 CORBA::Boolean
 Sender_StreamEndPoint::modify_QoS (AVStreams::streamQoS &new_qos,
-                                   const AVStreams::flowSpec &/* the_flows */
-                                   )
+                                   const AVStreams::flowSpec &/* the_flows */)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Sender_StreamEndPoint::modify_QoS\n"));
@@ -327,7 +326,7 @@ Sender::pace_data (void)
                               -1);
 
           ACE_DEBUG ((LM_DEBUG,
-                      "Sender::pace_data frame %d was sent succesfully\n",
+                      "Sender::pace_data frame %d was sent successfully\n",
                       ++this->frame_count_));
 
           // Reset the message block.

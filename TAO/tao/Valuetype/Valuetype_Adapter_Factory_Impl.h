@@ -47,10 +47,8 @@ public:
   static int Initializer (void);
 };
 
-static int
-TAO_Requires_ValueType_Initializer =
+static const int TAO_Requires_ValueType_Initializer =
   TAO_Valuetype_Adapter_Factory_Impl::Initializer ();
-
 
 ACE_STATIC_SVC_DECLARE (TAO_Valuetype_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_Valuetype, TAO_Valuetype_Adapter_Factory_Impl)

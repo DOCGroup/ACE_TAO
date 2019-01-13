@@ -1,0 +1,4 @@
+// Reproducer IDL for issue 570
+// https://github.com/DOCGroup/ACE_TAO/issues/570
+
+struct X { _; };

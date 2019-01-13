@@ -141,7 +141,7 @@ protected:
   ACE_Lock* lock_;
 
   /// The reference count.
-  CORBA::ULong refcount_;
+  CORBA::ULong ec_refcount_;
 
   /// The supplier....
   RtecEventComm::PushSupplier_var supplier_;

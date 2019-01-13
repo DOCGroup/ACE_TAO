@@ -110,7 +110,6 @@ namespace TAO
                       TAO::Argument * const * args,
                       size_t nargs);
   };
-
 }  // End namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -147,48 +147,66 @@ BE_GlobalData::spawn_options (void)
   return this->orb_args_ + idl_global->idl_flags ();
 }
 
+#define UNKNOWN_OPTION \
+  ORBSVCS_ERROR (( \
+      LM_ERROR, \
+      ACE_TEXT ("IDL: I don't understand the '%s' option\n"), \
+      av[i])); \
+  idl_global->parse_args_exit (1);
+
 void
 BE_GlobalData::parse_args (long &i, char **av)
 {
   switch (av[i][1])
     {
       case 'L':
-        be_global->enable_locking (true);
+        if (av[i][2] == '\0')
+          {
+            be_global->enable_locking (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'r':
-        be_global->removing (true);
+        if (av[i][2] == '\0')
+          {
+            be_global->removing (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
       case 'S':
         // Suppress ...
-        if (av[i][2] == 'i')
+        if (av[i][2] == 'i' && av[i][3] == '\0')
           {
             // ... processing of included IDL files.
             be_global->do_included_files (0);
           }
         else
           {
-            ORBSVCS_ERROR ((
-                LM_ERROR,
-                ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-                av[i]
-              ));
-
-            ACE_OS::exit (99);
+            UNKNOWN_OPTION;
           }
         break;
-      case 'T':
-        be_global->allow_duplicate_typedefs (true);
-        break;
-      default:
-        ORBSVCS_ERROR ((
-            LM_ERROR,
-            ACE_TEXT ("IDL: I don't understand the '%s' option\n"),
-            av[i]
-          ));
 
-        idl_global->set_compile_flags (idl_global->compile_flags ()
-                                       | IDL_CF_ONLY_USAGE);
+      case 'T':
+        if (av[i][2] == '\0')
+          {
+            be_global->allow_duplicate_typedefs (true);
+          }
+        else
+          {
+            UNKNOWN_OPTION;
+          }
         break;
+
+      default:
+        UNKNOWN_OPTION;
     }
 }
 

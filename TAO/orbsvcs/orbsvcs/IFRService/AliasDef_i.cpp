@@ -62,9 +62,9 @@ TAO_AliasDef_i::type_i (void)
 
   CORBA::TypeCode_var tc = impl->type_i ();
 
-  return this->repo_->tc_factory ()->create_alias_tc (id.c_str (),
-                                                      name.c_str (),
-                                                      ACE_TEXT_ALWAYS_CHAR (tc.in ()));
+  return this->repo_->tc_factory ()->create_alias_tc (ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                                      ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+                                                      tc.in ());
 }
 
 CORBA::IDLType_ptr
@@ -110,7 +110,7 @@ TAO_AliasDef_i::original_type_def_i (CORBA::IDLType_ptr original_type_def)
 
   this->repo_->config ()->set_string_value (this->section_key_,
                                             ACE_TEXT("original_type"),
-                                            original_type);
+                                            ACE_TEXT_CHAR_TO_TCHAR(original_type));
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
