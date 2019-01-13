@@ -1,4 +1,4 @@
 // -*- MPC -*-
-project: ace_qt5 {
+project: qt5_gui {
   macros += ACE_HAS_QT5
 }
