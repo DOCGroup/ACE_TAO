@@ -58,6 +58,7 @@ project(SSLIOP) : orbsvcslib, orbsvcs_output, install, security, ssl, pi_server,
     idlflags += -Sci -Gp -Gd -Sa -Sorb \
                 -o SSLIOP
     idlflags -= -St
+    gendir = SSLIOP
     SSLIOP/ssl_endpoints.pidl
   }
 }
