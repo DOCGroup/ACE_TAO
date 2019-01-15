@@ -16,6 +16,7 @@ project: build_files {
     libpath              = $(ACE_ROOT)/lib
     inputext             = .idl
     keyword idlflags     = commandflags
+    output_follows_input = 0
 
     optional(header_outputext) {
       commandflags(!-Sch || !-Ssh || -GC) = .h, .hpp, .hxx, .hh
