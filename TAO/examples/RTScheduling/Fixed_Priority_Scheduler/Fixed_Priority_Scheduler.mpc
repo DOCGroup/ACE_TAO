@@ -17,6 +17,7 @@ project(*test) : namingexe, rtscheduling_server {
   idlflags += -SS -St -o ..
 
   IDL_Files {
+    gendir = ..
     ../FP_Scheduling.idl
   }
 
