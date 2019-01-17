@@ -2,7 +2,7 @@
 
 @page Oneway_Buffering Test README File
 
- regression test for oneway buffering.  The test verifies
+A regression test for oneway buffering.  The test verifies
 that the TAO::BufferingConstraint policies are respected by the
 ORB. Three separate tests are possible:
 
