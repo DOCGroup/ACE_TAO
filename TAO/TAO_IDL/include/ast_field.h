@@ -113,7 +113,12 @@ public:
 
   // Data Accessors.
   AST_Type *field_type (void) const;
-  Visibility visibility (void) const;
+
+  /// Get and Set Visibility
+  ///{
+  Visibility visibility () const;
+  void visibility (Visibility val);
+  ///}
 
   // Are we or do we contain a wstring?
   virtual int contains_wstring (void);

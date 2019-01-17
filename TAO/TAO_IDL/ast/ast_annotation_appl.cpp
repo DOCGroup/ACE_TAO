@@ -2,7 +2,9 @@
 #include "ast_annotation_member.h"
 
 AST_Annotation_Appl::Param::Param ()
-  : used (false)
+  : id (0),
+    expr (0),
+    used (false)
 {
 }
 

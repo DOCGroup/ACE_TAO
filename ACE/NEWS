@@ -1,6 +1,10 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
+. Fix ACE_Vector::end(), which now correctly
+  represents the end of the elements of the vector
+  instead of the end of the base array.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.2 and ACE-6.5.3
 ====================================================
 
