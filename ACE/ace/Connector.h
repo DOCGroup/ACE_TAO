@@ -59,7 +59,6 @@ template <class SVC_HANDLER>
 class ACE_NonBlocking_Connect_Handler : public ACE_Event_Handler
 {
 public:
-
   /// Constructor.
   ACE_NonBlocking_Connect_Handler (ACE_Connector_Base<SVC_HANDLER> &connector,
                                    SVC_HANDLER *,
@@ -124,7 +123,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Connector base.
   ACE_Connector_Base<SVC_HANDLER> &connector_;
 
