@@ -13,7 +13,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Shared_Memory_MM.h"
 #include "ace/SV_Semaphore_Simple.h"
@@ -23,8 +22,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
-
-
 
 #if !defined (ACE_LACKS_MMAP)
 
