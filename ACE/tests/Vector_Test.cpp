@@ -9,10 +9,9 @@
  */
 //=============================================================================
 
+#include <algorithm>
 
 #include "test_config.h"
-
-
 
 #include "ace/Vector_T.h"
 
@@ -156,6 +155,34 @@ int run_main (int, ACE_TCHAR *[])
   v1.swap (v2);
   if (v2.size () != 3)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("v2's size should be 3\n")));
+
+  // Assert that vector standard iterators work
+  {
+    VECTOR vector;
+    const size_t size = 200;
+    const size_t offset = 5;
+
+    ACE_TEST_ASSERT (vector.begin () == vector.end ());
+
+    size_t i;
+    for (i = 0; i < size; i++)
+      {
+        vector.push_back (i + offset);
+      }
+
+    i = 0;
+    for (VECTOR::iterator it = vector.begin (); it != vector.end (); ++it)
+      {
+        ACE_TEST_ASSERT (*it == i++ + offset);
+      }
+
+    std::reverse (vector.begin (), vector.end());
+    i = size - 1;
+    for (VECTOR::iterator it = vector.begin (); it != vector.end (); ++it)
+      {
+        ACE_TEST_ASSERT (*it == i-- + offset);
+      }
+  }
 
   ACE_END_TEST;
 

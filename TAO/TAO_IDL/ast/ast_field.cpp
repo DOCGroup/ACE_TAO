@@ -150,11 +150,23 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
     }
 }
 
+AST_Field::AST_Field (
+  UTL_ScopedName *name,
+  AST_Field *other)
+  : COMMON_Base (),
+    AST_Decl (name, dynamic_cast<AST_Decl*>(other)),
+    ref_type_ (other->field_type ()),
+    visibility_ (other->visibility ()),
+    owns_base_type_ (false)
+{
+  // We definitely don't own the base type and the param holder check shouldn't
+  // be an issue here.
+}
+
 AST_Field::~AST_Field (void)
 {
 }
 
-// Dump this AST_Field node to the ostream o.
 void
 AST_Field::dump (ACE_OSTREAM_TYPE &o)
 {
@@ -210,6 +222,12 @@ AST_Field::visibility (void) const
   return this->visibility_;
 }
 
+void
+AST_Field::visibility (AST_Field::Visibility val)
+{
+  visibility_ = val;
+}
+
 int
 AST_Field::contains_wstring (void)
 {
@@ -217,3 +235,8 @@ AST_Field::contains_wstring (void)
 }
 
 IMPL_NARROW_FROM_DECL(AST_Field)
+
+bool AST_Field::annotatable () const
+{
+  return true;
+}

@@ -17,12 +17,6 @@ using namespace std;
 #define BROKEN_TEMPLATE_TEMPLATE
 #endif
 
-// clang version 2.9 crashes when trying to compile the test
-// http://llvm.org/bugs/show_bug.cgi?id=9643
-#ifdef __clang__
-#define BROKEN_TEMPLATE_TEMPLATE
-#endif
-
 #ifdef __SUNPRO_CC
 #define BROKEN_TEMPLATE_TEMPLATE
 #endif

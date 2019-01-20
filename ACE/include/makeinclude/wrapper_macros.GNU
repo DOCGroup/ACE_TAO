@@ -677,8 +677,16 @@ ifeq ($(ssl),0)
 else
   ifneq ($(SSL_ROOT), /usr)
     ifneq ($(SSL_ROOT),)
-      PLATFORM_SSL_CPPFLAGS += -I$(SSL_ROOT)/include
-      PLATFORM_SSL_LDFLAGS  += -L$(SSL_ROOT)/lib
+      ifneq ($(SSL_INCDIR),)
+        PLATFORM_SSL_CPPFLAGS += -I$(SSL_INCDIR)
+      else
+        PLATFORM_SSL_CPPFLAGS += -I$(SSL_ROOT)/include
+      endif
+      ifneq ($(SSL_LIBDIR),)
+        PLATFORM_SSL_LDFLAGS  += -L$(SSL_LIBDIR)
+      else
+        PLATFORM_SSL_LDFLAGS  += -L$(SSL_ROOT)/lib
+      endif
     endif
   endif
   PLATFORM_SSL_LIBS ?= -lssl -lcrypto

@@ -94,6 +94,10 @@ class AST_Param_Holder;
 class AST_Finder;
 class AST_Fixed;
 
+#include "ast_annotation_appl.h"
+
+class AST_Annotation_Member;
+
 // Defines base class for node generators.
 
 class TAO_IDL_FE_Export AST_Generator
@@ -413,6 +417,18 @@ public:
   AST_Param_Holder *create_param_holder (
     UTL_ScopedName *parameter_name,
     FE_Utils::T_Param_Info *info);
+
+  virtual AST_Annotation_Decl * create_annotation_decl (
+    UTL_ScopedName *name);
+
+  virtual AST_Annotation_Member * create_annotation_member (
+    AST_Expression::ExprType expr_type,
+    AST_Type *type,
+    UTL_ScopedName *name);
+
+  virtual AST_Annotation_Appl * create_annotation_appl (
+    UTL_ScopedName *name,
+    AST_Annotation_Appl::Params *params);
 };
 
 #endif           // _AST_GENERATOR_AST_GENERATOR_HH

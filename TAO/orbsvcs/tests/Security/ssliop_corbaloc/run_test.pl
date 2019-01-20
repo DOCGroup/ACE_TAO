@@ -120,6 +120,8 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
 @opts = (
          "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
+         "-s -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port,iiop:$TARGETHOSTNAME:$ns_orb_port/NameService"
+                . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-t -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
                 . " -ORBSvcConf $cli_cliconffile $orb_debug_level",
          "-i -ORBInitRef NameService=corbaloc:ssliop:$TARGETHOSTNAME:$ns_ssl_port/NameService"
@@ -142,11 +144,13 @@ $orb_debug_level =  ($quiet || $debug_level == 0) ? "" : "-ORBDebugLevel $debug_
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
                         . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
-
+                "-ORBEndpoint iiop://$TARGETHOSTNAME:$ns_orb_port/ssl_port=$ns_ssl_port"
+                        . " -ORBSvcConf $ns_nsconffile $orb_debug_level",
                 );
 
 @comments = (
              "(SSL) Simple Test:",
+             "(SSL) Simple Multi-Profile Corbaloc Test:",
              "(SSL) Tree Test:",
              "(SSL) Iterator Test:",
              "(SSL) Exceptions Test:",

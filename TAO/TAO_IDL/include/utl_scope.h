@@ -131,6 +131,8 @@ class AST_Mirror_Port;
 class AST_Connector;
 class UTL_StrList;
 class UTL_NameList;
+class AST_Annotation_Decl;
+class AST_Annotation_Member;
 
 // Forward declaration of active iterator for UTL_Scope.
 class UTL_ScopeActiveIterator;
@@ -195,6 +197,8 @@ public:
 
   // Look up one of the pseudo-object types.
   AST_Decl *lookup_pseudo (Identifier *);
+
+  AST_Decl *lookup_by_name (const char *name);
 
   virtual AST_Decl *look_in_prev_mods_local (Identifier *e,
                                              bool ignore_fwd = false);
@@ -491,6 +495,14 @@ public:
 
   virtual
   AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *mp);
+
+  virtual
+  AST_Annotation_Decl *fe_add_annotation_decl (
+    AST_Annotation_Decl *annotation_decl);
+
+  virtual
+  AST_Annotation_Member *fe_add_annotation_member (
+    AST_Annotation_Member *annotation_member);
 
 protected:
   /// Quick check on the head of a name to see if it's global.

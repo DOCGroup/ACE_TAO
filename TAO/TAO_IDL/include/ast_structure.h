@@ -155,6 +155,16 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const;
+
+  virtual AST_Field *fe_add_field (AST_Field *f);
+
+  /// Easy Member Access
+  ///{
+  virtual AST_Decl *operator[] (const size_t index);
+  virtual AST_Decl *operator[] (const char* name);
+  ///}
+
 protected:
   friend int tao_yyparse (void);
   // Scope Management Protocol.
@@ -163,8 +173,6 @@ protected:
 
   virtual AST_Structure *fe_add_structure (AST_Structure *s);
 
-  virtual AST_Field *fe_add_field (AST_Field *f);
-
   virtual AST_Enum *fe_add_enum (AST_Enum *e);
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
@@ -172,7 +180,6 @@ protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
 
-protected:
   ACE_Unbounded_Queue<AST_Field *> fields_;
   // Container for this struct's field nodes. Excludes nodes included
   // in member_count, i.e., enum values of an enum declared inside

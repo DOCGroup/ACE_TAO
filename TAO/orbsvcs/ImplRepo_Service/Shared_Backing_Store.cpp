@@ -161,7 +161,11 @@ namespace {
 #endif
     }
 
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr <ACE_File_Lock> file_lock_;
+#else
     auto_ptr<ACE_File_Lock> file_lock_;
+#endif
     FILE* file_;
     int flags_;
     bool locked_;
@@ -610,7 +614,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
       else
         {
           const ACE_Vector<ACE_TString>& filenames = listings->filenames();
-          size_t sz = filenames.size ();
+          size_t const sz = filenames.size ();
           for (CORBA::ULong i = 0; i < sz; ++i)
             {
               if (this->opts_.debug() > 9)
@@ -659,7 +663,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     }
 
   const ACE_Vector<ACE_TString>& filenames = listings->filenames ();
-  size_t sz = filenames.size ();
+  size_t const sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) persistent_load %d files\n"), sz));
@@ -731,7 +735,7 @@ Shared_Backing_Store::sync_load ()
     }
   else if (this->sync_needed_ == INC_SYNC)
     {
-      if (this->sync_files_.size () == 0)
+      if (this->sync_files_.empty ())
         {
           return 0;
         }
@@ -941,7 +945,7 @@ Shared_Backing_Store::load_server (Server_Info *info,
   this->create_server (server_started, si);
   if (was_started && !is_started)
     {
-      this->opts_.pinger ()->remove_server (si->key_name_.c_str ());
+      this->opts_.pinger ()->remove_server (si->key_name_.c_str (), 0);
     }
   if (!was_started && is_started)
     {
@@ -951,7 +955,8 @@ Shared_Backing_Store::load_server (Server_Info *info,
       si->server = ImplementationRepository::ServerObject::_narrow (obj.in ());
       this->opts_.pinger ()->add_server (si->key_name_.c_str (),
                                          this->opts_.ping_external (),
-                                         si->server.in ());
+                                         si->server.in (),
+                                         si->pid);
     }
 
 }
@@ -1085,7 +1090,7 @@ Shared_Backing_Store::process_updates (void)
               }
             else
               {
-                this->opts_.pinger ()->remove_server (name.c_str());
+                this->opts_.pinger ()->remove_server (name.c_str(), 0);
                 this->servers().unbind (name);
               }
             break;

@@ -74,6 +74,7 @@ class UTL_Scope;
 class ast_visitor;
 class AST_Decl;
 class AST_Param_Holder;
+class AST_Enum;
 
 // Representation of expression values.
 
@@ -290,6 +291,14 @@ public:
   // Accessor for the member.
   AST_Param_Holder *param_holder (void) const;
 
+  static const char *exprtype_to_string (ExprType t);
+
+  /// Pointer to enum of this value if applicable
+  ///{
+  AST_Enum *enum_parent ();
+  void enum_parent (AST_Enum *node);
+  ///}
+
 protected:
   // Evaluate different sets of operators.
   AST_ExprValue *eval_bin_op (EvalKind ek);
@@ -335,12 +344,14 @@ private:
   AST_Param_Holder *param_holder_;
   // Non-zero if we were created from a reference template param.
 
-private:
   // Fill out the lineno, filename and definition scope details.
   void fill_definition_details (void);
 
   // Internal evaluation.
   virtual AST_ExprValue *eval_internal (EvalKind ek);
+
+  /// Pointer to enum of this value if applicable
+  AST_Enum *enum_parent_;
 };
 
 #endif           // _AST_EXPR_VAL_AST_EXPR_VAL_HH

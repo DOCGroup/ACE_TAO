@@ -39,7 +39,7 @@ Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
 static void convertEnvList (const Locator_XMLHandler::EnvList& in,
                             ImplementationRepository::EnvironmentList& out)
 {
-  CORBA::ULong sz = static_cast<CORBA::ULong> (in.size ());
+  CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
   for (CORBA::ULong i = 0; i < sz; ++i)
     {
@@ -51,7 +51,7 @@ static void convertEnvList (const Locator_XMLHandler::EnvList& in,
 static void convertPeerList (const Locator_XMLHandler::PeerList& in,
                              CORBA::StringSeq& out)
 {
-  CORBA::ULong sz = static_cast<CORBA::ULong> (in.size ());
+  CORBA::ULong const sz = static_cast<CORBA::ULong> (in.size ());
   out.length (sz);
   for (CORBA::ULong i = 0; i < sz; ++i)
     {

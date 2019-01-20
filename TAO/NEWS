@@ -1,5 +1,41 @@
+USER VISIBLE CHANGES BETWEEN TAO-2.5.3 and TAO-2.5.4
+====================================================
+
+. Enhanced the ImR to better handle a huge number
+  of servers which use the ImR heavily and each of
+  them does a frequent shutdown/start cycle
+
+. The TAO_IDL frontend library now parses all IDL4
+  annotation-related syntax: using and defining annotations.
+  Use the tao_idl command-line options --idl-version and
+  --unknown-annotations to control annotation parsing.
+  Documentation on this feature is located in
+  TAO/TAO_IDL/docs/annotations.md.
+
+. TAO_IDL now will return an error status code when
+  passing an invalid command line argument.
+  Backends will have to support this behavior
+  explicitly, see TAO/TAO_IDL/include/idl_defines.h
+  for details.
+  TAO_IDL also accepts new options such as -h,
+  --help, --version, and --syntax-only, the latter
+  of which won't generate any files, just check
+  syntax of the IDL file(s).
+  See tao_idl -h for details.
+
+. When using IDL_Files in MPC, generated files will
+  now be placed in the current directory by default,
+  instead of the directory of the IDL file.
+  Use
+    idlflags += -o <IDL_FILE_DIR>
+    gendir = <IDL_FILE_DIR>
+  to output generated files to where the IDL file
+  is.
+
 USER VISIBLE CHANGES BETWEEN TAO-2.5.2 and TAO-2.5.3
 ====================================================
+
+. Enhance ssliop and uiop corbaloc parsers
 
 USER VISIBLE CHANGES BETWEEN TAO-2.5.1 and TAO-2.5.2
 ====================================================

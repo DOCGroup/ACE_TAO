@@ -74,8 +74,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_expression.h"
 #include "ast_predefined_type.h"
+#include "utl_identifier.h"
 #include "utl_stack.h"
 #include "fe_utils.h"
+#include "idl_version.h"
 
 class AST_Root;
 class AST_Module;
@@ -88,9 +90,11 @@ class UTL_Error;
 class UTL_String;
 class UTL_Indenter;
 
-// idl_global.hh
-//
-// Defines a class containing all front end global data.
+/**
+ * \file Defines a class containing all front end global data.
+ *
+ * Corresponding source file is util/utl_global.cpp.
+ */
 
 class TAO_IDL_FE_Export IDL_GlobalData
 {
@@ -294,72 +298,18 @@ public:
     , PS_PorttypeSqSeen         // Seen '{' for porttype
     , PS_PorttypeQsSeen         // Seen '}' for porttype
     , PS_PorttypeBodySeen       // Seen complete porttype body
+    , PS_AnnotationDeclSeen
   };
 
-  // flags for types of declarations seen while parsing.
-  bool abstract_iface_seen_;
-  bool abstractbase_seen_;
-  bool aggregate_seen_;
-  bool ambiguous_type_seen_;
-  bool any_arg_seen_;
-  bool any_seen_;
-  bool any_seq_seen_;
-  bool array_seen_;
-  bool array_seq_seen_;
-  bool base_object_seen_;
-  bool basic_type_seen_;
-  bool bd_string_seen_;
-  bool boolean_seq_seen_;
-  bool char_seq_seen_;
-  bool component_seen_;
-  bool connector_seen_;
-  bool double_seq_seen_;
-  bool enum_seen_;
-  bool exception_seen_;
-  bool fixed_array_decl_seen_;
-  bool fixed_size_decl_seen_;
-  bool float_seq_seen_;
-  bool fwd_iface_seen_;
-  bool fwd_valuetype_seen_;
-  bool iface_seq_seen_;
-  bool interface_seen_;
-  bool local_iface_seen_;
-  bool long_seq_seen_;
-  bool longdouble_seq_seen_;
-  bool longlong_seq_seen_;
-  bool non_local_fwd_iface_seen_;
-  bool non_local_iface_seen_;
-  bool non_local_op_seen_;
-  bool object_arg_seen_;
-  bool octet_seq_seen_;
-  bool operation_seen_;
-  bool pseudo_seq_seen_;
-  bool recursive_type_seen_;
-  bool seq_seen_;
-  bool short_seq_seen_;
-  bool special_basic_decl_seen_;
-  bool string_seen_;
-  bool string_member_seen_;
-  bool string_seq_seen_;
-  bool typecode_seen_;
-  bool ub_string_seen_;
-  bool ulong_seq_seen_;
-  bool ulonglong_seq_seen_;
-  bool union_seen_;
-  bool ushort_seq_seen_;
-  bool valuebase_seen_;
-  bool valuefactory_seen_;
-  bool valuetype_seen_;
-  bool var_array_decl_seen_;
-  bool var_size_decl_seen_;
-  bool vt_seq_seen_;
-  bool wchar_seq_seen_;
-  bool wstring_seq_seen_;
-  bool dds_connector_seen_;
-  bool ami_connector_seen_;
-
-  // flag to force generation of skeleton includes (see bug #2419).
-  bool need_skeleton_includes_;
+  /**
+   * Choices for how to react to unkown annotations
+   */
+  enum Unknown_Annotations {
+    UNKNOWN_ANNOTATIONS_WARN_ONCE,
+    UNKNOWN_ANNOTATIONS_WARN_ALL,
+    UNKNOWN_ANNOTATIONS_ERROR,
+    UNKNOWN_ANNOTATIONS_IGNORE
+  };
 
   IDL_GlobalData (void);
   ~IDL_GlobalData (void);
@@ -757,6 +707,187 @@ public:
   bool in_tmpl_mod_alias (void) const;
   void in_tmpl_mod_alias (bool val);
   // Accessors for the member.
+
+  /**
+   * Convenience function that causes the program to exit with the given return
+   * status after returning from parsing arguments.
+   */
+  void parse_args_exit (int status);
+
+  /**
+   * Convenience function that causes the program to print version and exit
+   * with an success return code after returning from parsing arguments.
+   */
+  void print_version ();
+
+  /**
+   * Convenience function that causes the program to print help and exit
+   * with an success return code after returning from parsing arguments.
+   */
+  void print_help ();
+
+  /**
+   * Returns true if warnings are to be shown
+   */
+  bool print_warnings ();
+
+  /**
+   * Eval string as though it was included in the IDL file. Results are added
+   * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
+   * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
+   */
+  void eval (const char *string);
+
+  /**
+   * Dump AST after parsing files and exit
+   */
+  void dump_ast ();
+
+  /// flags for types of declarations seen while parsing.
+  ///{
+  bool abstract_iface_seen_;
+  bool abstractbase_seen_;
+  bool aggregate_seen_;
+  bool ambiguous_type_seen_;
+  bool any_arg_seen_;
+  bool any_seen_;
+  bool any_seq_seen_;
+  bool array_seen_;
+  bool array_seq_seen_;
+  bool base_object_seen_;
+  bool basic_type_seen_;
+  bool bd_string_seen_;
+  bool boolean_seq_seen_;
+  bool char_seq_seen_;
+  bool component_seen_;
+  bool connector_seen_;
+  bool double_seq_seen_;
+  bool enum_seen_;
+  bool exception_seen_;
+  bool fixed_array_decl_seen_;
+  bool fixed_size_decl_seen_;
+  bool float_seq_seen_;
+  bool fwd_iface_seen_;
+  bool fwd_valuetype_seen_;
+  bool iface_seq_seen_;
+  bool interface_seen_;
+  bool local_iface_seen_;
+  bool long_seq_seen_;
+  bool longdouble_seq_seen_;
+  bool longlong_seq_seen_;
+  bool non_local_fwd_iface_seen_;
+  bool non_local_iface_seen_;
+  bool non_local_op_seen_;
+  bool object_arg_seen_;
+  bool octet_seq_seen_;
+  bool operation_seen_;
+  bool pseudo_seq_seen_;
+  bool recursive_type_seen_;
+  bool seq_seen_;
+  bool short_seq_seen_;
+  bool special_basic_decl_seen_;
+  bool string_seen_;
+  bool string_member_seen_;
+  bool string_seq_seen_;
+  bool typecode_seen_;
+  bool ub_string_seen_;
+  bool ulong_seq_seen_;
+  bool ulonglong_seq_seen_;
+  bool union_seen_;
+  bool ushort_seq_seen_;
+  bool valuebase_seen_;
+  bool valuefactory_seen_;
+  bool valuetype_seen_;
+  bool var_array_decl_seen_;
+  bool var_size_decl_seen_;
+  bool vt_seq_seen_;
+  bool wchar_seq_seen_;
+  bool wstring_seq_seen_;
+  bool dds_connector_seen_;
+  bool ami_connector_seen_;
+  ///}
+
+  /// flag to force generation of skeleton includes (see bug #2419).
+  bool need_skeleton_includes_;
+
+  /**
+   * Version of IDL to enforce
+   */
+  IdlVersion idl_version_;
+
+  /**
+   * Default version of IDL to enforce. Compilers extending tao_idl coould set
+   * idl_version_ directly, but this allows Can be set to allow
+   * --default-idl-version to print an accuate default IDL version.
+   */
+  IdlVersion default_idl_version_;
+
+  /**
+   * Perform the compilation process right up until invoking the backend.
+   * In other words just check the syntax of the input files, do not create
+   * any output.
+   */
+  bool syntax_only_;
+
+  /**
+   * Exit when finished processing cli arguments
+   * Default is false.
+   */
+  bool parse_args_exit_;
+
+  /**
+   * If parse_args_exit_ is true, this is the program status to return from
+   * main.
+   * Default is 0.
+   */
+  int parse_args_exit_status_;
+
+  /**
+   * Print command line argument help message when finished processing
+   * cli arguments.
+   */
+  bool print_help_;
+
+  /**
+   * Print compiler version when finished processing cli arguments.
+   */
+  bool print_version_;
+
+  /**
+   * If true, we are inside the eval() function
+   */
+  bool in_eval_;
+
+  /**
+   * Dump constructs defined using eval() if true.
+   */
+  bool dump_builtins_;
+
+  /**
+   * If true, Dump only the IDL defined using eval() and exit using
+   * ignore_files_
+   */
+  bool just_dump_builtins_;
+
+  /**
+   * Exit right before parsing input files.
+   */
+  bool ignore_files_;
+
+  /**
+   * If true, silently ignore lookup errors.
+   */
+  bool ignore_lookup_errors_;
+
+  /**
+   * Reaction to unknown annotations
+   */
+  Unknown_Annotations unknown_annotations_;
+
+  /**
+   * Set of the local names of unkown annotations already seen
+   */
+  ACE_Unbounded_Set<Identifier> unknown_annotations_seen_;
 
 private:
   // Data

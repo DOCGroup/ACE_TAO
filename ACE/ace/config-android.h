@@ -80,6 +80,8 @@
 #  define ACE_LACKS_SYS_MSG_H
 #  define ACE_LACKS_SYS_SHM_H
 #  define ACE_LACKS_SYSV_SHMEM
+#else
+#  define ACE_HAS_SEMUN
 #endif
 
 // NDK has telldir() and seekdir() by 15c

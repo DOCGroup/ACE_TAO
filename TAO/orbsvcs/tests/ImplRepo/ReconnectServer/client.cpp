@@ -146,11 +146,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     if (task.test_passed ())
     {
-      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)Client test passed \n")));
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Client test passed \n")));
     }
     else
     {
-      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t)Client test failed.\n")), 1);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Client test failed.\n")), 1);
     }
   }
   catch (const CORBA::Exception &ex)

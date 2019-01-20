@@ -1229,8 +1229,8 @@ UTL_Scope::lookup_by_name (UTL_ScopedName *e,
       work = idl_global->root ();
     }
 
-  AST_Decl *first_found_final_parent_decl= 0;
-  const bool searching_module_path= (e->length () != 1);
+  AST_Decl *first_found_final_parent_decl = 0;
+  const bool searching_module_path = (e->length () != 1);
   AST_Decl *d = searching_module_path ?
     work->lookup_by_name_r (e, full_def_only, first_found_final_parent_decl) :
     work->lookup_by_name_r (e, full_def_only);
@@ -1822,7 +1822,9 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
 
   if (0 < this->pd_locals_used)
     {
-      o << ACE_TEXT ("\n/* Locally defined types: */\n");
+      o << '\n';
+      idl_global->indent ()->skip_to (o);
+      o << ACE_TEXT ("/* Locally defined types: */\n");
 
       for (UTL_ScopeActiveIterator i (this, IK_localtypes);
            !i.is_done ();
@@ -1830,18 +1832,19 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
         {
           AST_Decl *d = i.item ();
 
-          if (!d->imported ())
+          if (d->should_be_dumped () && !d->imported ())
             {
               idl_global->indent ()->skip_to (o);
-              d->dump (o);
-              o << ACE_TEXT ("\n");
+              o << *d << ACE_TEXT (";\n");
             }
         }
     }
 
   if (0 < this->pd_decls_used)
     {
-      o << ACE_TEXT ("\n/* Declarations: */\n");
+      o << '\n';
+      idl_global->indent ()->skip_to (o);
+      o << ACE_TEXT ("/* Declarations: */\n");
 
       for (UTL_ScopeActiveIterator j (this, IK_decls);
            !j.is_done ();
@@ -1849,11 +1852,10 @@ UTL_Scope::dump (ACE_OSTREAM_TYPE &o)
         {
           AST_Decl *d = j.item ();
 
-          if (!d->imported ())
+          if (d->should_be_dumped () && !d->imported ())
             {
               idl_global->indent ()->skip_to (o);
-              d->dump (o);
-              o << ACE_TEXT (";\n");
+              o << *d << ACE_TEXT (";\n");
             }
         }
     }
@@ -2225,4 +2227,26 @@ UTL_Scope::ScopeIterationKind
 UTL_ScopeActiveIterator::iteration_stage (void)
 {
   return this->stage;
+}
+
+AST_Annotation_Decl *
+UTL_Scope::fe_add_annotation_decl (AST_Annotation_Decl * /*annotation_decl*/)
+{
+  return 0;
+}
+
+AST_Annotation_Member *
+UTL_Scope::fe_add_annotation_member (AST_Annotation_Member * /*annotation_member*/)
+{
+  return 0;
+}
+
+AST_Decl *
+UTL_Scope::lookup_by_name (const char *name)
+{
+  AST_Decl *node = 0;
+  UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
+  node = lookup_by_name (scoped_name);
+  delete scoped_name;
+  return node;
 }

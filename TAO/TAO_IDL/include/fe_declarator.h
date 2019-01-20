@@ -70,7 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class AST_Decl;
 class AST_Type;
 
-class FE_Declarator
+class TAO_IDL_FE_Export FE_Declarator
 {
 public:
   // Enum to denote types of declarators.

@@ -894,7 +894,7 @@ TAO_IMR_Op_Activate::run (void)
       if (!this->quiet_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          "Cannot activate server <%C>, reason: <%C>\n",
+                          "Cannot activate server <%C> reason <%C>\n",
                           this->server_name_.c_str (),
                           ex.reason.in ()));
         }
@@ -952,9 +952,7 @@ TAO_IMR_Op_Autostart::run (void)
             }
           catch (const CORBA::Exception& ex)
             {
-              ex._tao_print_exception (
-                server_list[i].server.in (
-                  ));
+              ex._tao_print_exception (server_list[i].server.in ());
               // Ignore exception
             }
         }
@@ -1090,7 +1088,7 @@ TAO_IMR_Op_Kill::run (void)
       if (!this->quiet_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          "Cannot complete kill of <%C>, reason: <%C>\n",
+                          "Cannot complete kill of <%C> reason <%C>\n",
                           this->server_name_.c_str (),
                           ex.reason.in ()));
         }
@@ -1134,7 +1132,7 @@ TAO_IMR_Op_Link::run (void)
   catch (const ImplementationRepository::CannotComplete& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                      "Cannot complete kill of <%C>, reason: <%C>\n",
+                      "Cannot complete kill of <%C> reason <%C>\n",
                       this->server_name_.c_str (),
                       ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_COMPLETE;

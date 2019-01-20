@@ -84,6 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "utl_indenter.h"
 #include "global_extern.h"
+#include "ast_annotation_appl.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -104,7 +105,8 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     AST_Structure (n,
                    local,
                    abstract),
-    default_index_ (-2)
+    default_index_ (-2),
+    disc_annotations_ (0)
 {
   this->default_value_.computed_ = -2;
 
@@ -969,6 +971,16 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
   o << "union ";
   this->local_name ()->dump (o);
   o << " switch (";
+  if (disc_annotations ())
+    {
+      size_t count = disc_annotations ()->size ();
+      for (size_t i = 0; i < count; i++)
+        {
+          AST_Annotation_Appl *a = (*disc_annotations ())[i];
+          a->dump (o);
+          dump_i (o, " ");
+        }
+    }
   this->pd_disc_type->local_name ()->dump (o);
   o << ") {\n";
   UTL_Scope::dump (o);
@@ -1036,3 +1048,15 @@ AST_Union::udisc_type (void)
 
 IMPL_NARROW_FROM_DECL(AST_Union)
 IMPL_NARROW_FROM_SCOPE(AST_Union)
+
+AST_Annotation_Appls *
+AST_Union::disc_annotations()
+{
+  return disc_annotations_;
+}
+
+void
+AST_Union::disc_annotations(AST_Annotation_Appls *annotations)
+{
+  disc_annotations_ = annotations;
+}

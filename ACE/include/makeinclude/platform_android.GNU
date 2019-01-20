@@ -22,8 +22,8 @@ PIE	?= -pie
 #No rwho on Android
 rwho = 0
 
-# Android Studio does not seem to reconize so files with versions
-versioned_so=0
+# Android Studio does not seem to recognize so files with versions
+versioned_so ?= 0
 
 # Only try to use clang, unless this is set to 0, then try to use g++
 android_force_clang ?= 1

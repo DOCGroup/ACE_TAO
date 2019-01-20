@@ -715,7 +715,7 @@ public:
    */
   char *mark (void) const;
 
-  // = Message size is the total amount of space allotred.
+  // = Message size is the total amount of space allocated.
 
   /// Get the total amount of allotted space in the message.  The amount of
   /// allotted space may be less than allocated space.

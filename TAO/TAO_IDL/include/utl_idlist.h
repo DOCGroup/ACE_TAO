@@ -113,6 +113,17 @@ public:
 
   int compare (UTL_IdList *other);
   // Compares each component for equality.
+
+  /**
+   * Return a copy of the contents as a string
+   */
+  char *get_string_copy ();
+
+  /**
+   * Return true if the list begins with "::"
+   */
+  bool is_absolute ();
+
 private:
   Identifier *pd_car_data;
 };

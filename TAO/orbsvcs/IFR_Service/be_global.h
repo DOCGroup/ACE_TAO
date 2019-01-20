@@ -78,7 +78,7 @@ public:
   /// implementations in IDL and IFR backends.
   ACE_CString spawn_options (void);
 
-  /// Parse args that affect the backend.
+  /// Parse an argument that might affect the backend.
   void parse_args (long &i, char **av);
 
 private:

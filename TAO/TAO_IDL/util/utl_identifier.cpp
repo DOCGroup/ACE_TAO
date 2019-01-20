@@ -70,6 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
+#include "ace/OS_NS_string.h"
 
 Identifier::Identifier (void)
   : pv_string (0),
@@ -80,6 +81,51 @@ Identifier::Identifier (void)
 Identifier::Identifier (const char *s)
   : pv_string (0),
     escaped_ (false)
+{
+  preprocess_and_replace_string (s);
+}
+
+Identifier::Identifier (const Identifier &other)
+  : pv_string (0),
+    escaped_ (other.escaped ())
+{
+  replace_string (other.get_string ());
+}
+
+Identifier::~Identifier (void)
+{
+  if (this->pv_string != 0)
+    {
+      ACE::strdelete (this->pv_string);
+    }
+}
+
+// Operations.
+
+char *
+Identifier::get_string (void)
+{
+  return this->pv_string;
+}
+
+const char *
+Identifier::get_string (void) const
+{
+  return this->pv_string;
+}
+
+void
+Identifier::replace_string (const char * s)
+{
+  if (pv_string)
+    {
+      delete [] this->pv_string;
+    }
+  this->pv_string = s ? ACE::strnew (s) : 0;
+}
+
+void
+Identifier::preprocess_and_replace_string (const char * s)
 {
   bool shift = false;
 
@@ -127,38 +173,7 @@ Identifier::Identifier (const char *s)
         }
     }
 
-  if (shift)
-    {
-      this->pv_string = ACE::strnew (s + 1);
-    }
-  else
-    {
-      this->pv_string = ACE::strnew (s);
-    }
-}
-
-Identifier::~Identifier (void)
-{
-  if (this->pv_string != 0)
-    {
-      ACE::strdelete (this->pv_string);
-      this->pv_string = 0;
-    }
-}
-
-// Operations.
-
-char *
-Identifier::get_string (void)
-{
-  return this->pv_string;
-}
-
-void
-Identifier::replace_string (const char * s)
-{
-  delete [] this->pv_string;
-  this->pv_string = ACE::strnew (s);
+  replace_string (shift ? s + 1 : s);
 }
 
 // Compare two Identifier *
@@ -218,10 +233,20 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
       return;
     }
 
-  o << this->pv_string;
+  /*
+   * Annotation ids are prefixed with '@' to effectively create an alternative
+   * namespace for them. This hides that hack from dumping.
+   */
+  o << ((pv_string[0] == '@') ? pv_string + 1 : pv_string);
 }
 
 void
 Identifier::destroy (void)
 {
+}
+
+bool
+Identifier::operator== (const Identifier &other) const
+{
+  return !ACE_OS::strcmp (pv_string, other.get_string ());
 }

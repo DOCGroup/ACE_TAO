@@ -120,6 +120,14 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  /**
+   * Get and Set Annotations on the base type
+   */
+  ///{
+  AST_Annotation_Appls *base_type_annotations ();
+  void base_type_annotations (AST_Annotation_Appls *annotations);
+  ///}
+
 protected:
   virtual int compute_size_type (void);
   // Compute the size type if it is unknown.
@@ -140,11 +148,14 @@ private:
   // If our base type is anonymous array or sequence, we're
   // responsible for destroying it.
 
-private:
-
   // Compute how many dimensions.
   AST_Expression **compute_dims (UTL_ExprList *dims,
                                  ACE_CDR::ULong ndims);
+
+  /**
+   * Annotations on the base type
+   */
+  AST_Annotation_Appls *base_type_annotations_;
 };
 
 #endif           // _AST_ARRAY_AST_ARRAY_HH

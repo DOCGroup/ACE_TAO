@@ -1,8 +1,8 @@
-/* A Bison parser, made by GNU Bison 3.0.2.  */
+/* A Bison parser, made by GNU Bison 3.1.  */
 
 /* Bison interface for Yacc-like parsers in C
 
-   Copyright (C) 1984, 1989-1990, 2000-2013 Free Software Foundation, Inc.
+   Copyright (C) 1984, 1989-1990, 2000-2015, 2018 Free Software Foundation, Inc.
 
    This program is free software: you can redistribute it and/or modify
    it under the terms of the GNU General Public License as published by
@@ -127,16 +127,18 @@ extern int tao_yydebug;
     IDL_LEFT_SHIFT = 337,
     IDL_RIGHT_SHIFT = 338,
     IDL_WCHAR_LITERAL = 339,
-    IDL_WSTRING_LITERAL = 340
+    IDL_WSTRING_LITERAL = 340,
+    IDL_ANNOTATION_DECL = 341,
+    IDL_ANNOTATION_SYMBOL = 342
   };
 #endif
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
+
 union YYSTYPE
 {
-#line 152 "fe/idl.ypp" /* yacc.c:1909  */
+#line 158 "fe/idl.ypp" /* yacc.c:1913  */
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -173,9 +175,18 @@ union YYSTYPE
   FE_Utils::T_Param_Info        *pival;         /* Template interface param */
   FE_Utils::T_PARAMLIST_INFO    *plval;         /* List of template params */
   FE_Utils::T_ARGLIST           *alval;         /* List of template args */
+  AST_Annotation_Appl *annotation_val;
+  AST_Annotation_Appls *annotations_val;
+  AST_Annotation_Appl::Param *annotation_param_val;
+  AST_Annotation_Appl::Params *annotation_params_val;
+  AST_Annotation_Decl *annotation_decl_val;
+  AST_Decls *decls_val;
+  Decl_Annotations_Pair *decl_annotations_pair_val;
 
-#line 178 "fe/idl.tab.hpp" /* yacc.c:1909  */
+#line 187 "fe/idl.tab.hpp" /* yacc.c:1913  */
 };
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

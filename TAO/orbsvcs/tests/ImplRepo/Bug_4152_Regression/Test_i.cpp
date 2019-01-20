@@ -13,5 +13,6 @@ Test_i::get_server_num (void)
 void
 Test_i::terminate (void)
 {
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Server received terminate and going to exit\n"));
   exit (0);
 }
