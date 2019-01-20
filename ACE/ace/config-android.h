@@ -88,14 +88,8 @@
 #  define ACE_LACKS_SEEKDIR
 #endif
 
-// semun was added to sys/sem.h in r15
 #if __ANDROID_API__ >= 21
 #  define ACE_HAS_SEMUN
-#  if ACE_ANDROID_NDK_LESS_THAN(15, 0)
-#    error \
-This combination of Android NDK < r15 and API >= 21 is not supported. \
-There are conflicting versions of semun between ACE and linux/sem.h.
-#  endif
 #endif
 
 // fd_mask was added in r17c
@@ -108,6 +102,12 @@ There are conflicting versions of semun between ACE and linux/sem.h.
 #  define ACE_LACKS_WCSTOLL
 #  define ACE_LACKS_WCSTOULL
 #  define ACE_LACKS_CONDATTR_SETCLOCK
+#endif
+
+// These were available before r18, but in r18 they are restricted to API >= 28 ¯\_(ツ)_/¯
+#if __ANDROID_API__ < 28
+#  define ACE_LACKS_SETHOSTENT
+#  define ACE_LACKS_ENDHOSTENT
 #endif
 
 #define ACE_HAS_SSIZE_T
