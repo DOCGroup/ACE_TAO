@@ -102,6 +102,12 @@
 #  define ACE_LACKS_CONDATTR_SETCLOCK
 #endif
 
+// These were available before r18, but in r18 they are restricted to API >= 28 ¯\_(ツ)_/¯
+#if __ANDROID_API__ < 28
+#  define ACE_LACKS_SETHOSTENT
+#  define ACE_LACKS_ENDHOSTENT
+#endif
+
 #define ACE_HAS_SSIZE_T
 
 // system errorno is a volatile int
