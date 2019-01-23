@@ -1530,8 +1530,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         timeout_encountered = true;
         if (byte_count == 0)
         {
-          //This request has timed out and none of it was sent to the transport
-          //We can't return -1 here, since that would end up closing the tranpsort
+          // This request has timed out and none of it was sent to the transport
+          // We can't return -1 here, since that would end up closing the transport
           if (TAO_debug_level > 2)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -1660,8 +1660,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                 {
                   if (sent_byte == sent_byte_count_) // if nothing was actually flushed
                     {
-                      //This request has timed out and none of it was sent to the transport
-                      //We can't return -1 here, since that would end up closing the tranpsort
+                      // This request has timed out and none of it was sent to the transport
+                      // We can't return -1 here, since that would end up closing the transport
                       if (TAO_debug_level > 2)
                         {
                           TAOLIB_DEBUG ((LM_DEBUG,
