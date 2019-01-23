@@ -1645,7 +1645,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                           this->id ()));
             }
 
-          size_t sent_byte = sent_byte_count_;
+          size_t const sent_byte = sent_byte_count_;
           int ret = 0;
           {
             typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
