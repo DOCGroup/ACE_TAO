@@ -30,7 +30,6 @@ static const char copyright[] =
 " *       Washington University\n"
 " *       St. Louis, MO\n"
 " *       USA\n"
-" *       http://www.cs.wustl.edu/~schmidt/doc-center.html\n"
 " * and\n"
 " *       Distributed Object Computing Laboratory\n"
 " *       University of California at Irvine\n"
