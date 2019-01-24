@@ -184,7 +184,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
-                      ACE_TEXT ("create_profile: Unknown profile tag 0x%x\n"),
+                      ACE_TEXT ("create_profile: Unknown profile tag <0x%x>\n"),
                       tag));
         }
 
@@ -252,7 +252,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
   {
     TAOLIB_ERROR ((LM_ERROR,
                    ACE_TEXT ("TAO (%P|%t) - TAO_Connector_Registry::")
-                   ACE_TEXT ("create_profile: Connector returned null profile for tag 0x%x\n"), tag));
+                   ACE_TEXT ("create_profile: Connector returned null profile for tag <0x%x>\n"), tag));
   }
 
   return profile;
