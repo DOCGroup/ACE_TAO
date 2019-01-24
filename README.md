@@ -13,5 +13,4 @@ See [Douglas C. Schmidt website](http://www.dre.vanderbilt.edu/~schmidt)  for mo
 networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
 implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard. The main home page
 is [here](http://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are
-available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html) and the
-Bugzilla for issues is [here](http://bugzilla.dre.vanderbilt.edu/).
+available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html).
