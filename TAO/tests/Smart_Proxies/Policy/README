@@ -84,4 +84,4 @@ While in send portion of the output, the smart proxy is used only once, that is 
 first time around and the default proxy is called upon the second time.  This is because
 the smart proxy factory gets unregistered since the "one-shot" policy is disabled.
 
-For details, please see: http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf
+For details, please see: http://www.dre.vanderbilt.edu/~schmidt/PDF/COOTS-00.pdf
