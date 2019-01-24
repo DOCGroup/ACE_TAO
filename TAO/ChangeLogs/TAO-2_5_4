@@ -1,0 +1,1353 @@
+commit 48931304d502d07a97338b807e92af66a30a6200
+Merge: ee4532a129f e97d2951848
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 12:35:52 2019 +0100
+
+    Merge pull request #795 from jwillemsen/master
+    
+    Docu layout changes
+
+commit e97d295184827d11bbd1eddf86472688bf9311df
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 09:41:55 2019 +0100
+
+    Correction
+    
+        * TAO/tests/Oneway_Buffering/README:
+
+commit 47ebe37397d86044278d2c39e7d2df38f5940877
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 09:39:48 2019 +0100
+
+    Layout changes
+    
+        * TAO/tests/Hello/README:
+        * TAO/tests/Oneway_Buffering/README:
+
+commit 6eadd3351c6a5fb94de46a0abd70b8f269242d9b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jan 16 15:40:49 2019 -0600
+
+    Update test mpc files for taobaseidldefaults.mpb change
+
+commit 8fbaf7831826810a30c8c1c765370d2c869864ac
+Merge: 95c147c08ea 03acf701dbb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 15 15:40:10 2019 -0800
+
+    Merge pull request #791 from iguessthislldo/igtd/taompc
+    
+    Support IDL output in places other than the IDL file location
+
+commit 03acf701dbb3674fd4c7c7a3a22f08d9213163e5
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Jan 15 12:14:07 2019 -0600
+
+    Fix orbsvcs for IDL_Files changes
+
+commit d55b73e08a69f9e747ac6102f90ce60a589d708b
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Jan 15 12:12:58 2019 -0600
+
+    Update ACE/NEWS and TAO/NEWS
+
+commit 73ad2ab8a7dcc0badf0cb45983aeea2a20319da6
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Mon Jan 14 17:46:25 2019 -0600
+
+    Allow IDL output in places other than IDL file loc
+    
+    Using "output_follows_input = 0", set IDL output location to be the
+    current directory when using "IDL_Files" in MPC.
+
+commit 95c147c08eaad4f651347ccf898c88b3a5fca705
+Merge: af929ed4aae 849f3e62b06
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jan 12 09:33:01 2019 +0100
+
+    Merge pull request #790 from iguessthislldo/igtd/issue_784
+    
+    annotest_idl: Guarantee snprintf is included
+
+commit 849f3e62b0625a276438ffd038c69db301b16f8f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 11 17:59:48 2019 -0600
+
+    annotest_idl: Guarantee snprintf is included
+
+commit af929ed4aae8cd6a888c2c21cf0e0ae07b733f51
+Merge: a4955ef7377 b05f90050da
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 11 06:37:28 2019 -0800
+
+    Merge pull request #788 from iguessthislldo/igtd/issue_784
+    
+    Fix for invalid valuetype member state visibility
+
+commit a4955ef73778cf37948939656122f55347802935
+Merge: 5d12213921c 67becca4ce1
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 11 06:37:18 2019 -0800
+
+    Merge pull request #787 from iguessthislldo/igtd/tao_idl_fixes
+    
+    tao_idl: Fixes for Coverity caused by #723
+
+commit b05f90050dafb6a073c259e2b1efe48ae6d3bb1d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 10 15:31:02 2019 -0600
+
+    annotest_idl: turn Error back to Err
+
+commit b11058f61dd743d2ffad8d96a71e74daaaf5cd09
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 10 15:22:47 2019 -0600
+
+    tao_idl: disable ACE_DEFAULT_LOG_STREAM for eval too
+
+commit 08d09101fd98d25957c94a7a8778e4b1ddec771c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 10 15:06:53 2019 -0600
+
+    annotest_idl: Add test for #723
+
+commit 5d12213921c474e44aeb4a89f3ef3ee671fdb0df
+Merge: a2f9a9ef8bf fec796bd6ad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 10 10:28:47 2019 +0100
+
+    Merge pull request #789 from jwillemsen/master
+    
+    Fixed local variable not used warnings
+
+commit fec796bd6ad79e40a42b9e95021edeecd883739d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 10 08:22:04 2019 +0100
+
+    Fixed local variable not used warnings
+    
+        * TAO/orbsvcs/tests/Bug_3216_Regression/client.cpp:
+        * TAO/orbsvcs/tests/FT_Naming/FaultTolerant/client.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_1884_Regression/supplier.cpp:
+        * TAO/orbsvcs/tests/Notify/Bug_3688_Regression/supplier.cpp:
+
+commit 3507f3c21ac55d6ffe1806a1b46fcbc7113bba55
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jan 9 19:42:15 2019 -0600
+
+    Fix for invalid valuetype visibility
+    
+    Fix for #784 revealed after #723
+    In tao_idl, do not pass member visibility via the Bison stack indirectly.
+
+commit 67becca4ce1755da0a63e68f894dacb351d337ff
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jan 9 18:57:46 2019 -0600
+
+    ast_annotation_appl.cpp: Fix member init order
+
+commit d122c6f05077d992b14d3b89b40efd74528c273c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jan 9 18:45:48 2019 -0600
+
+    tao_idl: Initial Fixes for Coverity
+    
+    Everything except for the resource leaks
+
+commit a2f9a9ef8bf6b76a631e748ee89467926d2781ac
+Merge: e2b3556f1fb b5da4d91c90
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jan 9 13:33:30 2019 -0800
+
+    Merge pull request #786 from DOCGroup/news-tao
+    
+    NEWS for TAO_IDL changes
+
+commit e2b3556f1fb20e611414fbbcf6e4f735d80dedb5
+Merge: 140f1ea6ef6 4d428266b38
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jan 9 13:33:20 2019 -0800
+
+    Merge pull request #785 from iguessthislldo/igtd/tao_idl_fixes
+    
+    tao_idl: pass unknown options to backend to process
+
+commit b5da4d91c90f26584953b37383d98338016ea51d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jan 9 11:04:16 2019 -0600
+
+    NEWS for TAO_IDL changes
+
+commit bd80345d8735d8847a899b03410bd50ff6a52adf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 8 20:24:52 2019 +0100
+
+    Removed unnecessary export macro, triggers a lot of warnings with mingw
+    
+        * TAO/TAO_IDL/include/idl_version.h:
+
+commit d69030d2e0fe3d0f7c226ecd837b03cd514d796a
+Merge: 931bfaa02c8 a06c24a9f21
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jan 7 15:19:56 2019 -0800
+
+    Merge pull request #782 from mitza-oci/taoidl-install-static
+    
+    make install for tao_idl: don't link to shared libraries if they're not built
+
+commit a06c24a9f213f269a4ca41504bb115ce77b0dc92
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 15:14:14 2019 -0600
+
+    make install for tao_idl: don't link to shared libraries if they're not built
+
+commit 9319eee5830a164896b799228a97897f2a7c6f72
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 14:46:02 2019 -0600
+
+    annotations test: style and usage fixes
+
+commit 4d428266b38547baf4d8f7c4c79b7ce811f28777
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jan 7 12:44:12 2019 -0600
+
+    tao_idl: defer to backend for unknown long option
+
+commit c666447a97ed81c1d83df8773654c92f5669fd26
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 11:39:59 2019 -0600
+
+    TAO_IDL eval: disable stderr logging during eval
+
+commit 50215baf3520095259c69c88f7bb770510962c23
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 11:05:49 2019 -0600
+
+    annotations test: fixed warnings and Perl script
+
+commit a04e905b622542ee93ffbed59e3fe521c921a346
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 10:50:31 2019 -0600
+
+    test 3940: adapt to new IDL4 capabilities
+
+commit e79f3a06d218860ac8f6d767df121fa8da006fd2
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Mon Jan 7 10:49:55 2019 -0600
+
+    TAO_IDL: make recent changes work with older MSVC
+
+commit 8bc095556b48dabfd29989936186d158fc835236
+Merge: e16c38577de a4933207212
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 4 16:34:35 2019 -0800
+
+    Merge pull request #723 from iguessthislldo/igtd/xtypes
+    
+    Annotation support in the tao_idl front end
+
+commit a4933207212e4ea0958fc1d77d897613fa75b0d7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 4 16:07:38 2019 -0600
+
+    ast_annotation_appl.cpp: Reduce Variable Scopes
+
+commit b6cf7c9390396281e48c98c19dfc066a9fd5ae75
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 4 15:23:09 2019 -0600
+
+    tao_idl: Small fixes
+
+commit 0feb70a073028df03019c48530c71482b00a3e27
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 3 16:37:42 2019 -0600
+
+    TAO/test/IDLv4: Removed unnecessary MPC stuff
+
+commit d4d222ee6621759ed2d88fb491dd84ada3ab98a1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jan 3 16:36:25 2019 -0600
+
+    tao_idl: Remove unused be_annotation_decl
+
+commit 2691dc01f2add99feab54ed25c3512b7e94f69e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 31 10:10:55 2018 +0100
+
+    Updated copyright year
+
+commit c6216da46eb63125464c6292a0c6a2711c6ffaa2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 14 10:48:32 2018 +0100
+
+    Remove workarounds for ancient IBM compiler
+    
+        * TAO/TAO_IDL/be/be_visitor_field/cdr_op_cs.cpp:
+        * TAO/tao/Fixed_Array_Argument_T.inl:
+
+commit 6be3af751a1904ca8ed596bf54bce39544876b40
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Dec 10 12:25:40 2018 -0600
+
+    ast_predefined_type.h: Remove unused enumerators
+
+commit 8f86cef8b53478ec54d0c9400a472e661d46b829
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 7 16:38:12 2018 -0600
+
+    tao_idl: Easier to get enum name from expr
+
+commit 8e4b693d25779c27ce06fe31d1e5ddc63715dceb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 7 16:34:13 2018 -0600
+
+    tao_idl: Fix AMI trying to visit annotation decl
+
+commit 949dd8e0748d0594046a31116dce5bee155b9fe9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 7 14:21:40 2018 -0600
+
+    tao_idl: Annotate Array Base Type
+
+commit 0fe080e49f7734773c6bc8787bd04691a03a620f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 7 13:27:05 2018 -0600
+
+    tao_idl: docs/annotations.md
+
+commit 2b27b3a143b52dd4b04a63d8dfe12f7946cc7674
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 16:26:29 2018 +0100
+
+    List ImR changes
+    
+        * TAO/NEWS:
+
+commit 174c72b87155f82acd7433100548388b7f75a985
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 15:33:59 2018 +0100
+
+    Remove start limit change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 84724dff18a39c238052988ae442946ee03536da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 15:21:25 2018 +0100
+
+    When we start a new server we need to reset our process id so that we can ignore a possible child death which can happen after we do a restart
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 9e55b59eaa61b334c152b546db0efb64e9bcfc13
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 14:59:13 2018 +0100
+
+    Need to check some more status in child_on_death
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit e155dafc030188fb43fc380bbff0d42899c433e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 14:49:53 2018 +0100
+
+    Set the retries back to its default when we restart on a child death
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 76a2f3897dac74e50c18c6f9852a2ffeeaedf969
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 14:13:15 2018 +0100
+
+    When we are informed of a child death and we have waiters we start a new server
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 4ce83165baf2778e7db2eaa03d35d3cd4e4a1b8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 13:40:31 2018 +0100
+
+    Check whether reference is not nil before using it
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit bb112b520a36138ff0d63d001348feee21159d9c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 13:40:09 2018 +0100
+
+    Logging fix
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+
+commit d5cc9f28ddd6c6a9954c1ad78b5e0fec0fbad4a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 12:49:31 2018 +0100
+
+    Fixed typo
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/README:
+
+commit 4020b08a997e5566125b240786b2515991f9ee63
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 12:45:21 2018 +0100
+
+    Logging enhancements to main
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit 7f964c9ad40d20a75490ef144a4387e8e46e14fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 12:42:16 2018 +0100
+
+    Add logging
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test_i.h:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+
+commit e7133be5c2912e78c2c467490f686162552af713
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 12:37:57 2018 +0100
+
+    Test logging enhancements
+    
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test.idl:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/Test_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/client.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/run_test.pl:
+        * TAO/orbsvcs/tests/ImplRepo/Bug_4152_Regression/server.cpp:
+
+commit c705f7f14705177dd3b77fb7078e548ffdcf03aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Dec 7 12:06:55 2018 +0100
+
+    At the moment we have a deferred remove we mark the server as dead so that on the real remove we can check status and pid
+    When the server is reported as started pass the process id to the checker, it can be that the activator has informed us of of the process id already earlier
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+commit b0132099959c23e3ca2c3160dcaf18184584d0c8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 15:04:20 2018 +0100
+
+    Remove default argument of 0 to remove_server, when we know the process id, we pass it, this way when the server itself invokes server_is_shutting_down we need to retrieve the current process id and use it
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit 0c248242a20b6b480a9514d1ea16ff05c1034890
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 15:03:10 2018 +0100
+
+    Extended logging
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit cce5c8ba446f71c436bb60a7f5b0a6c34c999f5e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 13:56:41 2018 +0100
+
+    When remove_server is called during a handle timeout we need to use the entry pid, when the server informs us that it is shutting down it only tells its id, not the pid
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit aa140409913dadc41f5ab00b67ece0631d977938
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 13:54:17 2018 +0100
+
+    Layout change
+    
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/client.cpp:
+
+commit 5a570d753c089b7239dc79cddc25313eee96c1e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 13:53:07 2018 +0100
+
+    Log an error when we can't find a server
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit b8972d31829d3ca39464d4e5ecdcdecbc1660c30
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 12:29:52 2018 +0100
+
+    In notify_child_death log an error when the pid does not match current or prev pid
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+
+commit 30c014691164a82b69d919a51c2a4bcc06fbabca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 12:19:37 2018 +0100
+
+    Doxygen change
+    
+        * TAO/orbsvcs/ImplRepo_Service/Server_Info.h:
+
+commit 2cb0dcac2cb148ca4dc94a5c74ef51433bdf6f6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 12:00:15 2018 +0100
+
+    Some debug message should be an error, not just debug
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/tests/ImplRepo/ReconnectServer/README.txt:
+
+commit d715f65ef80a6c7d7be8ac5da315750efacbee26
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 11:35:14 2018 +0100
+
+    In notify_child_death check for a valid pid, not zero
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+
+commit 217a5c33ac844f9f37796daf1e9feb681b02b718
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 6 11:06:07 2018 +0100
+
+    Log some exceptions only when debugging is enabled and some layout changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/tao_imr_i.cpp:
+
+commit 3f0cbd96bdae207baf50ec7dd14a6e49b23d3f79
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 5 14:38:51 2018 -0600
+
+    tao_idl: Util functions for geting anno. members
+
+commit 005043fc09a2985ff485cae68d61caf714ef1121
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 13:42:27 2018 +0100
+
+    Layout
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImplRepo_Service.mpc:
+
+commit 3b5c42530791574cb7512998869c71a85e835ecc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 13:42:13 2018 +0100
+
+    Doxygen addition
+    
+        * TAO/tao/ImR_Client/ImplRepo.idl:
+
+commit a3ad627e224f890e8eb6c6ca68e020988d55a157
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 13:17:32 2018 +0100
+
+    Const change
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncListManager.cpp:
+
+commit a15d4b768a6018924ac1cf6aaa0f45de0fa64349
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 13:17:15 2018 +0100
+
+    Doxygen changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+
+commit 50e1e0f88b2ed66d22b24cbed35a806758f58654
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 12:04:49 2018 +0100
+
+    Just use s as argument
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+
+commit ae3f22860a533dbe736a87f956a8d28907f43f50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 12:02:38 2018 +0100
+
+    When we get a remove server during handle timeout we need to store name and pid and check that before really removing the server, the server can already be restarted and have a new pid
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit 1d9c5f7d66aee059354d85cccbfa389b001c0ba4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 18:49:01 2018 -0600
+
+    tao_idl: define TAO_IDL_HAS_ANNOTATIONS
+
+commit 26afdcc05de17f3675aa214cdbeadea8d174faf6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 18:25:39 2018 -0600
+
+    tao_idl: Fix argument
+
+commit ee5e5763132fc3341a914728548120cc9fce8483
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 15:50:27 2018 -0600
+
+    tao_idl: Lookup Node by string
+
+commit dcdd3ea3ae77fba0c8e987d844b795b2bc438fc4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 15:46:52 2018 -0600
+
+    tao_idl: Reorganize Documenting Files
+
+commit 152544af498e493c6887c2cd67df5285859b4ec4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 12:48:03 2018 -0600
+
+    tao_idl: Acknowledge Unused Argument
+
+commit 09cd46ab639c77bb4bf8c9ce575142f12cf83208
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 12:47:14 2018 -0600
+
+    tao_idl: create default IDL version variable
+
+commit aae3b9ad2545c2941122c58c1be52d7c19496ae3
+Merge: 8b4ad16cc26 791a3e0ca87
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 18:33:44 2018 +0100
+
+    Merge pull request #767 from jwillemsen/jwi-imrnotifywaiter
+    
+     Add try/catch around the notify of a single waiter within notify_wait…  …ers so that when we get an exception we still inform all other waiters instead of exiting the loop on the first exception
+
+commit 8b4ad16cc2691199e860306e8d6e3b405309f2d4
+Merge: 7101d6e994b 49eb50c2590
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 18:33:18 2018 +0100
+
+    Merge pull request #766 from jwillemsen/jwi-imrremovenotifychilddeath
+    
+     Remove notify_child_death, it is not used, issue #765
+
+commit 96e4c7daeb8b3a762418a3c9004169b147c955c3
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 4 11:17:08 2018 -0600
+
+    tao_idl: no op visitor for annotation decl
+
+commit 21764761cadd82f2aefdbd00037c4500bb863d6d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Dec 3 12:25:31 2018 -0600
+
+    tao_idl: Move variables to conventional place
+
+commit fc93d7734a2329d756cd90b2e1aaf99018c6824f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 15:18:17 2018 +0100
+
+    Moved throw outside of debug check
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 791a3e0ca8710e22c7aa4e601eaf39c97b23c542
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 14:06:09 2018 +0100
+
+    Add try/catch around the notify of a single waiter within notify_waiters so that when we get an exception we still inform all other waiters instead of exiting the loop on the first exception
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+
+commit 49eb50c25907afefbc20907aafeebcab69aa0ed5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 14:03:25 2018 +0100
+
+    Remove notify_child_death, it is not used, issue #765
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.h:
+
+commit 3d51ee9c9198600b863e9eeee9c9d112d34dc406
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 13:13:35 2018 +0100
+
+    Log error messages with an error macro
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 86bae273c777f0a57d2f4b92df86003882d12b68
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 12:45:20 2018 +0100
+
+    When invocation of spawn_pid fails log an error and throw back an exception to the locator with more helpful information
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+
+commit 0c62602a2fca96d202998151f57c3ddf2ed35f28
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Dec 4 12:06:15 2018 +0100
+
+    Const enhancements and log where we get the exception during the reply handler so that we can better follow an error case in a log file
+    
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/Messaging/Asynch_Reply_Dispatcher.cpp:
+
+commit e320ae9e534eb11cccd3e89444fcae50b793222f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Dec 3 11:29:22 2018 -0600
+
+    TAO/docs/compiler.html spelling
+
+commit f76be6dce5062afd03eefc65faec7c358ce1cd40
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Dec 3 11:19:08 2018 -0600
+
+    Update TAO/docs/compiler.html
+
+commit 88084b099ceba7bea4246f990b6e421833d7c21b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 3 16:32:52 2018 +0100
+
+    Const enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit a38c8bee8324936f8f836fa2210c7e7a41453d41
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 3 15:29:07 2018 +0100
+
+    Const changes, log the pid we compare with in a check and added some docu
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.h:
+
+commit 94a67e4036a94c460d7be1159833a2f88d1eb1dd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 3 14:22:03 2018 +0100
+
+    Removed AAM_ACTIVATION_SENT status, at the moment we do an AMI start_server we just ignore the successful AMI reply and don't update the status, when the system is very very busy it can be that the server is already running before our AMI reply from start_server gets invoked, putting the pid to 0 at that moment causes the server status to go from running back to wait_for_reply
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.h:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Activator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator.idl:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Repository.cpp:
+
+commit 12f999aa008be447f4a505eeeb184d03af6630cb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sun Dec 2 19:09:15 2018 -0600
+
+    Changes for Codacy
+
+commit 35a0a8f64120cf179d589aec9c7919a3d0de51e9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 18:29:43 2018 -0600
+
+    Remove Delegating Constructor from tao_idl
+
+commit 7e492b143685e4704f3698c8888139dc5f03f068
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 18:05:32 2018 -0600
+
+    tests/IDLv4: s/NULL/null/g
+
+commit b7d165df421dd05e8cbbed567327e4329f4ade82
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 18:04:16 2018 -0600
+
+    Fix yylex_destroy()
+
+commit cb7d44f54c60f4271ad56ce79273fcb1b94db143
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 16:33:42 2018 -0600
+
+    Complete Annotation Test
+    
+    - Finsished Currently Planned Cases
+    - Created run_test.pl
+    - Added to test list
+
+commit 3ed4ba195d80e96a502d5b157610549696d29f23
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 16:27:50 2018 -0600
+
+    tao_idl: Update Grammer File
+    
+    - Fixed Seg Fault when compiling TAO caused by not setting action result
+    in string template actions in Grammer File.
+    - Support for referencing Enums and Constants from the annotation in the
+    annotation parameters.
+    - Unknown annotations, by default, will now just be a warning, and only
+    once per unique local annotation name. Added Options to warn about all,
+    error, and ignore them.
+
+commit 3c91f4dcc4281659f23b7597e5abff6b97b58f03
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 16:22:38 2018 -0600
+
+    tao_idl: Add some functionality to string
+
+commit 1647e63b93d70567dfb0f4662c49824d9a365ef8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 30 16:21:06 2018 -0600
+
+    tao_idl: Support Constant Annotation Parameters
+
+commit 5001c090fd8f9b7eca70dce82666de288f2121db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 30 13:47:46 2018 +0100
+
+    Removed last bits for threads_ member
+    
+        * TAO/orbsvcs/ImplRepo_Service/ImR_Locator_i.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.h:
+
+commit 42a32d0127961bf9f02d55f7de39f0ad1c881245
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 30 13:36:41 2018 +0100
+
+    Make use of std::unique_ptr with C++11, use empty instead of checking size, const changes
+    
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_XMLHandler.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Shared_Backing_Store.cpp:
+
+commit 4a70970a04ed81a12eed86d923a75d8860273d98
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 30 13:01:47 2018 +0100
+
+    Remove threads argument, is never completed and commentedo ut
+    
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Locator_Options.h:
+
+commit cbcb1be5f2e72e8ed528ca0b1fa41a3d8b6532c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 30 13:00:33 2018 +0100
+
+    Logging enhancements
+    
+        * TAO/orbsvcs/ImplRepo_Service/AsyncAccessManager.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/Forwarder.cpp:
+        * TAO/orbsvcs/ImplRepo_Service/LiveCheck.cpp:
+        * TAO/tao/IIOP_Connection_Handler.cpp:
+        * TAO/tao/Strategies/SCIOP_Connection_Handler.cpp:
+        * TAO/tao/Transport.cpp:
+
+commit f34da7a658ccfa94718480b02d84abf5f27a4fed
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Nov 28 18:17:40 2018 -0600
+
+    tao_idl: Access Annotations From Typedef Chains
+
+commit aff2102e09a4d64c23d0d858794a7ecd196ab4fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 28 15:33:22 2018 +0100
+
+    Documentation updates
+
+commit 2ff6c3fd080f8c1bc31910b80bc80c49b6dc24c0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 19:12:44 2018 -0600
+
+    annotest_idl: Mostly Complete Test Cases
+
+commit 80ac0c1e3cf3ea61c1853927c9c568704f21dab0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 18:56:34 2018 -0600
+
+    Removed Annotations.idl
+    
+    All cases have been moved into annotest_idl.
+
+commit 9e917ac7c86bd331ed71519b4e25a965fcb5a688
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 18:51:38 2018 -0600
+
+    tao_idl: Allow Single Nameless Anno. Param.
+
+commit 37d93f76dcc5a0c0c3dfbf17e7c4d8ad3f212e10
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 14:52:19 2018 -0600
+
+    tao_idl: Add [] ops for struct
+
+commit ecd8ba485cddba1fa3b3e3129c5c25cc6e96167b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 14:50:14 2018 -0600
+
+    tao_idl: Move exprtype_to_string into AST_Expression
+
+commit 5b2915c2a072cfda1ec6db0bddc52d818dfe02b6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 13:09:08 2018 -0600
+
+    ast_annotation_appl.cpp: Reword Comment
+
+commit f954c1479ffd7a5edef500af97c8cb4e3791b177
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 13:01:48 2018 -0600
+
+    Include annotest_idl when building TAO tests
+
+commit 3cbf9eda0a476964cc6266af8c62bfd45d61937d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 12:59:57 2018 -0600
+
+    Expand Annotation Test README
+
+commit 06747540e2d574a20907e813092ffbc47ad6aac4
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 12:57:02 2018 -0600
+
+    utl_global.cpp: Remove Unneeded Flex Functions
+
+commit 82b4aeda506c34953859cb97f5819639ed0b7a3b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 12:55:58 2018 -0600
+
+    ast_annotation_appl.cpp: Set Missing Value
+
+commit 9e0138f8a722ea9c0c14a5e79647c267666a27a6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 27 12:54:57 2018 -0600
+
+    Move annotest_idl
+
+commit 0d28bd6b2fd84f863e9c9c650325125865ebe33f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 19 18:58:12 2018 -0600
+
+    tao_idl: annotation declarations
+    
+    This makes implements annotation declarations and makes it so
+    Annotations are subclasses of AST_Struct and Annotation Members are
+    subclasses of AST_Field. Parameters are applied and cause an error if
+    they don't line up with the declaration or a annotation member does not
+    have a value after everything is said and done.
+
+commit cc6c48e0eadb21ca721b5f44147392e549c8f562
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 19 15:58:57 2018 -0600
+
+    UTL_Error: Last warning and error codes
+
+commit 6d036b342abc5b29b7c785b41603e30434ef03a8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 19 15:50:50 2018 -0600
+
+    utl_err.cpp: Reduce Boilerplate
+
+commit 4b9064d4fa721b73fefdb4f10cefce162339f8ab
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 19 10:08:41 2018 -0600
+
+    UTL_Error: Misc Error and Warning Functions
+
+commit a56bb23d78658d5a99f8c9fadbe245a283a3c85b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 19 11:25:05 2018 +0100
+
+    Make x.5.3 public and prepare for the next release
+    
+        * ACE/bin/copy-local-script.sh:
+          Added.
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 1f8524e93eb5d549f29f3041e54f6be8c8d15815
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 16 18:30:12 2018 -0600
+
+    tao_idl: Don't Dump Builtin IDL By Default
+    
+    Do not dump IDL defined by the compiler (builtins) using eval() by
+    default.
+    This can be controlled using:
+    --dump-builtins which dumps builtins along with the user IDL.
+    --just-dump-builtins which just dumps the builtins regardless of files
+    passed.
+    
+    Dump (-d) now has a long alias (--dump) and now implies --syntax-only,
+    which means it doesn't produce any files.
+
+commit 48d5bbb8ea421015ebbce4c9e9c7114a806ee5a9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Nov 8 11:57:48 2018 -0600
+
+    utl_identifier.h: Fix Indent
+
+commit d9bb824b3591990ebc7ef37eda371da853bff943
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Nov 8 11:56:08 2018 -0600
+
+    tao_idl: Fix a indent in dump
+
+commit 5bcc80c0f2836b00f32be70527c3985fa8e25283
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 6 17:51:10 2018 -0600
+
+    tao_idl: Make signature of functions match exactly
+    
+    Fix for linking errors on Windows
+    Also added some more comments to explain the eval function.
+
+commit b635a37c787c373aaf940189e3e4cb325a0f928b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Nov 5 10:57:01 2018 -0600
+
+    tao_idl: Include recent changes in bison file
+    
+    - Replaced ACE Double Linked List
+    - Fix Annotations on Sequence Base Types and Union Discriminators
+    - Annotations on Typedefs
+    - Make use of new error/warning suff
+    - Added IDL eval function `idl_global->eval(const char *)`
+
+commit 14a5f9908b3901d19170346615139f5a24762117
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 2 14:53:07 2018 -0500
+
+    tao_idl: Sequence Type Annotations
+    
+    Attach them to the Sequence instead of the base type.
+
+commit df3921c8c4d78e78f0bb51be638e7777cde9d436
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 2 14:50:43 2018 -0500
+
+    tao_idl: Double annotation dump on consts
+
+commit 9340ad0de099f6028ccbe797aaf27278531813ef
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 2 12:05:39 2018 -0500
+
+    tao_idl: Union Disc. Annotations
+    
+    Attach them to the Union instead of the type.
+
+commit 2955dbe9f7af433f2c11405e414e9c996676e04d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 2 12:03:59 2018 -0500
+
+    tao_idl: Add new warning and error types/funcs
+
+commit 6fcf6063220769fe0697a3601522f6ca8f5ffc13
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Nov 2 11:54:47 2018 -0500
+
+    tao_idl: Annotation Decl and annotest_idl
+
+commit 2957226fff2d67dd91522373ebe042ac23c2a6b0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 30 17:30:45 2018 -0500
+
+    ast_decl.h: Remove enum member that wont be used
+
+commit 0d5e5654c8ed9a6dd17267af43c024e25f22a79f
+Merge: 7a71614caf0 c3d8419f105
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 26 18:00:20 2018 -0500
+
+    Merge remote-tracking branch 'origin/igtd/xtypes' into igtd/xtypes
+
+commit 7a71614caf06f3dbf3691ff370262ee0b6caef3b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 26 17:55:55 2018 -0500
+
+    Add typedef annotation to test
+
+commit cb128f6373084b8b5370c29b208f6f67ba5399ce
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 26 17:54:54 2018 -0500
+
+    tao_idl: Some of the changes made for  PR
+
+commit c3d8419f105b20487b4fecccdb0668e8fdc194d6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 18 11:19:46 2018 -0500
+
+    tao_idl: Spelling
+
+commit 80d7d4e9453b964cd58857dce416453b4d052266
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 12 17:11:13 2018 -0500
+
+    Added Annotation Test
+
+commit 685ee110316a410feba4c635204738ad1a77ffc8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 12 16:35:37 2018 -0500
+
+    Update parse_args in IFR_Service to match tao_idl
+
+commit f8cf4c24c5fbae346bdd4e28e96228998fd9628e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 12 15:09:05 2018 -0500
+
+    tao_idl: AST_Annotation -> AST_Annotation_Appl
+    
+    This was renamed to clarify what it is and allow for the possibility of
+    creating a different AST_Annotation which might be the final form of the
+    annotation data once fully processed.
+
+commit c6b09a9bceee1b7b8b29b3fd89f90f91a5d523e0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 12 12:04:55 2018 -0500
+
+    tao_idl: Fix struct member grammer
+    
+    Also add sequence type parameter annoation
+
+commit 3a4ee93ec0a1dbf3dea2b7664d5b5eeaf02011dc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Oct 12 10:38:59 2018 -0500
+
+    tao_idl: fix parse_args in be
+
+commit f1437fbcef26e375c3a5d5cb0ba4d70e9e87c8b1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 11 18:08:52 2018 -0500
+
+    tao_idl: Force Reduce/Reduce Conflicts to Error
+
+commit 55eddc8d3492cc5ab9dfbe6538f9f1cdbb3d4b97
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 11 18:06:05 2018 -0500
+
+    tao_idl: Fix compatibility in FE/BE API
+
+commit cea90cecf7876229a0dafbdfdcbe6670c7c7908a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 11 12:07:49 2018 -0500
+
+    tao_idl: improvments to annoation util code
+
+commit 0da6fa4b0c674b903adcbbe3630d33c5b99e7b3d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 9 15:58:22 2018 -0500
+
+    IDL_Test: simplify gitignore
+
+commit 04a023cdc0c54b95ff6959d2ca3fb191c3c436c1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 9 15:42:35 2018 -0500
+
+    tao_idl: Fix Grammar
+    
+    Implementing annotations before this commit broke structs and probably
+    other constructs. This changes brings annotations grammar rule to the
+    top level definitions rules, although it only still works for
+    definitions of constants, structs, unions, enums, and modules.
+    
+    Also:
+     - Removed Grammar Rules Comments that were to go into the generated
+       bison file, as they were annoying to deal with when reading and editing
+       the grammar file. It would be better if this was a feature in Bison.
+     - Replaced /* EMPTY */ in rules with %empty which cause %empty to
+       become required.
+     - Fix indents of ';' Tokens
+
+commit d7d61e225a907ef50d00cf807c82c24439418b59
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 9 15:38:56 2018 -0500
+
+    Add idl argument error return to IFR_Service
+
+commit fd01bfeb662021662c80bd9343a9faef7e93c36e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Oct 9 15:37:50 2018 -0500
+
+    tao_idl: Fixes for AST dump and annotations
+
+commit 6913f1423f87f25a7ab4f76b4dd37379b3e6d129
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 8 17:40:26 2018 -0500
+
+    tao_idl: Fix some AST dump problems
+
+commit ca129c45aa72ae231e07eefdd113caa8aab38835
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 4 17:44:11 2018 -0500
+
+    tao_idl: Add option to turn on bison tracing
+
+commit e4ae885e34b251c54bb47e62a16e44bf60539b82
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 4 17:17:42 2018 -0500
+
+    tao_idl: Make error msg a little less confusing
+
+commit 923a7a5b52d97d99d421f3af7f73167a2184dfff
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 4 16:22:01 2018 -0500
+
+    tao_idl: Improvments to Command Line Arguments
+
+commit 0876856455a8047607efa333e65f92667ac5cbcc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Oct 4 13:46:45 2018 -0500
+
+    tao_idl: Make Various IDL Constructs Annotatable
+    
+    Add annotations to tao_idl front end to be available to the back end.
+    These are not used yet except in AST dump.
+    
+    - Modules definitions
+    - const value definitions
+    - union
+      - whole union
+      - discriminator
+      - members
+    - enum
+      - whole union
+      - members
+    
+    NOTE: This does not include forward declarations of these or struct
+    forward declarations.
+    
+    - Also improve AST Dumps
+
+commit 85a1c3db902ee98e7cd8c5c2f0b1a508e6c0ae2b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Oct 3 17:50:38 2018 -0500
+
+    tao_idl: optionally dump annotations inline
+
+commit 7f787631b8d005da689d38bc6df0945e50286041
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Oct 3 14:22:44 2018 -0500
+
+    tao_idl: remove some warnings
+
+commit 5573e41b132ec068f84b365555143d07a21c1f90
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Oct 3 13:32:12 2018 -0500
+
+    tao_idl: annotation params in AST
+
+commit dc3866740bb9742a704992835e071ce51340d2bc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 1 17:24:01 2018 -0500
+
+    tao_idl: Add annotations to structs ast
+
+commit 99b33004d366439aa592692cd2ae8ccc0683451e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Oct 1 16:57:35 2018 -0500
+
+    tao_idl: Simple Annotations in AST
+    
+    For now only simple annotations on member fields are put into the AST
+    and dumped when "-d" is used.
+
+commit 33ab4db3030031a0368cd9d049c380c0a2df4025
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 19 16:14:04 2018 -0500
+
+    tao_idl: Update Bison/Flex generated code
+
+commit 1fdc730a5b27747a2f90500f836a1304e21a6f61
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 19 16:12:16 2018 -0500
+
+    tao_idl: Fix IDL version enum other small things
+
+commit e552c6c73b3f7946e3a2de224ad341196ee2e3b9
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 19 16:11:16 2018 -0500
+
+    tao_idl: Fix test annotation def
+
+commit 019fbd45e9355e90c7a17f97b5298e442d97195d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 19 16:00:18 2018 -0500
+
+    tao_idl: Add basic test for defining annotations
+
+commit 9f545f8536807bfaeffc081c18f88fca6bbc73d2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 19 15:59:42 2018 -0500
+
+    tao_idl: optionally produce bison debug info
+
+commit 4017febd5f8ebb264312377c1615be10d542e0d0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Sep 13 16:58:04 2018 -0500
+
+    tao_idl: set idl3 as default version
+
+commit c984f2da077ae4a2058e67c4d2e36ac7aa4682d8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Sep 13 14:02:50 2018 -0500
+
+    tao_idl: Clean up idl_version
+
+commit 6f644553b651e2b230d0324c015cdb0877b1d9f5
+Merge: 151287b24c0 d11d134bd32
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Sep 13 12:26:13 2018 -0500
+
+    Merge remote-tracking branch 'adam/idl' into igtd/xtypes
+
+commit 151287b24c08dec5ba171f0f2f51da02a7bfe489
+Merge: 1b92c0fdf5f cf17fe5fa40
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Sep 13 11:14:09 2018 -0500
+
+    Merge branch 'master' into igtd/xtypes
+
+commit 1b92c0fdf5f508113ed57afc6a3d4e82754c40ac
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Sep 13 00:02:43 2018 -0500
+
+    tao_idl: syntax-only option (no output files)
+
+commit eb85ceeca32fd9b0bb7ce3c6642b978394361bf8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 12 23:25:22 2018 -0500
+
+    tao_idl: Attempt at stubing annotation decl
+
+commit 13f5d2f47eb886f9d8e32cdfaf3757dd18e9cabb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Sep 12 23:11:19 2018 -0500
+
+    tao_idl: idl version arguments
+
+commit bfb31c964dbee9f1dc82dac800cdda8b603db696
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Sep 11 19:12:36 2018 -0500
+
+    tao_idl: Add IDL version management
+
+commit d11d134bd32ec8899e6fd06cd7c3ea9642b18f1e
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Fri Sep 7 09:06:53 2018 -0500
+
+    set execute bit on script
+
+commit 0b2138caf4bf2dd5e9d9215e4b8bb6d302e936da
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Wed Sep 5 15:04:56 2018 -0500
+
+    Test for various IDLv4 constructs.  Not yet compiled since these aren't parsed.
+
+commit 0bb6ef1096c12967f5489d5479d33d017a828127
+Author: Adam Mitz <mitza@ociweb.com>
+Date:   Thu Aug 30 12:49:16 2018 -0500
+
+    TAO_IDL: simplified parser code generation
+    
+    regenerated with slightly newer bison to avoid compiler warnings in generated code

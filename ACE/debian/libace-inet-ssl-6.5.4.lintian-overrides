@@ -1,0 +1,4 @@
+libace-inet-ssl-6.5.4: no-symbols-control-file usr/lib/libACE_INet_SSL-6.5.4.so
+
+# It's Bison-generate code covered by the GNU Bison GPL-exception
+libace-inet-ssl-6.5.4: possible-gpl-code-linked-with-openssl
