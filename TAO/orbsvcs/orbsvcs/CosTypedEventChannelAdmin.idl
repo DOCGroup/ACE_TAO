@@ -4,7 +4,7 @@
 *  @file  CosTypedEventChannelAdmin.idl
 *
 *  @brief Part of the Event Service
-*          See http://www.omg.org/docs/formal/01-03-01.pdf
+*          See https://www.omg.org/spec/EVNT
 */
 //=============================================================================
 
