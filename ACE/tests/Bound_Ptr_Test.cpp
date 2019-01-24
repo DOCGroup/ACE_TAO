@@ -6,7 +6,7 @@
  *  <ACE_Weak_Bound_Ptr> and illustrates how they may be dispersed
  *  between multiple threads using an implementation of the Active
  *  Object pattern, which is available in the POSA2 book
- *  <http://www.cs.wustl.edu/~schmidt/POSA>.
+ *  <http://www.dre.vanderbilt.edu/~schmidt/POSA>.
  *
  *  @author Christopher Kohlhoff <chris@kohlhoff.com>
  */
