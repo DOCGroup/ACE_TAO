@@ -6,7 +6,7 @@
  *    This test exercises the <ACE_Asynch_Timer_Queue_Adapter>
  *    using an <ACE_Timer_Heap>.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
 

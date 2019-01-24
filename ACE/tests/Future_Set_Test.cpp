@@ -10,7 +10,7 @@
  *  are prime.
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Per Andersson <pera@ipso.se> and Johnny Tucker <jtucker@infoglide.com>
  */
 //=============================================================================

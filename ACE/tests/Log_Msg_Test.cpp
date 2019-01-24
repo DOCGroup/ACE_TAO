@@ -8,7 +8,7 @@
  *   writing to stderr and to a file.  It also tests writing to user
  *   defined callback objects.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

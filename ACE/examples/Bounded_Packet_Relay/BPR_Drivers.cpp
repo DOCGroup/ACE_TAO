@@ -6,7 +6,7 @@
  *  This code builds an abstraction to factor out common code for
  *  the different implementations of the Timer_Queue.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <schmidt@cs.wustl.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
 

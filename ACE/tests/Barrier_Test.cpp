@@ -6,7 +6,7 @@
  *   This program illustrates how the ACE barrier synchronization
  *   mechanisms work.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

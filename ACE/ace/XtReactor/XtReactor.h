@@ -6,7 +6,7 @@
  *
  *  @author Eric C. Newton <ecn@clark.net>
  *  @author Kirill Rybaltchenko <Kirill.Rybaltchenko@cern.ch>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

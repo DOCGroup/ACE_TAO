@@ -5,7 +5,7 @@
  *  @file    Method_Request.h
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

@@ -25,7 +25,7 @@
  *   # Run the server in multi-processes
  *   % Process_Strategy_Test -c PROCESS
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
 //=============================================================================
 

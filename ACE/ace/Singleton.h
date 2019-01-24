@@ -7,7 +7,7 @@
  *  @brief
  *
  *  @author Tim Harrison <harrison@cs.wustl.edu>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Chris Lahey
  *  @author Rich Christy
  *  @author David Levine <levine@cs.wustl.edu>

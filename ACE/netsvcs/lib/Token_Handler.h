@@ -4,7 +4,7 @@
 /**
  *  @file    Token_Handler.h
  *
- *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  *          Tim Harrison (harrison@cs.wustl.edu)
  */
 //=============================================================================

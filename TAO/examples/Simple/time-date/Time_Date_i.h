@@ -6,7 +6,7 @@
  *
  *  This class implements the Time_Date IDL interface.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Michael Kircher.
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Michael Kircher.
  */
 //=============================================================================
 

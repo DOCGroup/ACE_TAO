@@ -8,7 +8,7 @@
  *   and reverse iterators.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Kirthika Parameswaran  <kirthika@cs.wustl.edu>
  */
 //=============================================================================

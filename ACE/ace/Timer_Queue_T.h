@@ -4,7 +4,7 @@
 /**
  *  @file    Timer_Queue_T.h
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu> and
  *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
  */

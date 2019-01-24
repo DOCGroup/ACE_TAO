@@ -8,7 +8,7 @@
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu>
  *  @author Detlef Becker <Detlef.Becker@med.siemens.de>
- *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

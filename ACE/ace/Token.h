@@ -7,7 +7,7 @@
  *  @author Original author
  *  @author Karl-Heinz Dorn (kdorn@erlh.siemens.de)
  *  @author Ported to ACE by
- *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu)
+ *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
  */
 //=============================================================================
 

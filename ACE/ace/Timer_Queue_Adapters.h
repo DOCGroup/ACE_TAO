@@ -4,7 +4,7 @@
 /**
  *  @file    Timer_Queue_Adapters.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
