@@ -10,7 +10,7 @@
  *    It was added to test for bugs with the ACE_OS recursive
  *    condition implementation.
  *
- *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

@@ -7,7 +7,7 @@
  *  Define a portable C++ interface to ACE_OS_Dirent directory-entry
  *  manipulation.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

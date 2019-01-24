@@ -6,7 +6,7 @@
  *
  *  @author Irfan Pyrali <irfan@cs.wustl.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Bill Fulton <bill_a_fulton@raytheon.com>
  *  @author Don Hinton <dhinton@objectsciences.com>
  */

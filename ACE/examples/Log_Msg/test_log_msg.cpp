@@ -6,7 +6,7 @@
  *   This program tests the ACE_Log_Msg abstraction and demontrates
  *   several common use cases.
  *
- *  @author Douglas Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

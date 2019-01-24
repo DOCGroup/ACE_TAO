@@ -5,7 +5,7 @@
 /**
  *  @file    Channel_Clients_T.h
  *
- *  @author Tim Harrison (harrison@cs.wustl.edu) and Douglas Schmidt (schmidt@cs.wustl.edu)
+ *  @author Tim Harrison (harrison@cs.wustl.edu) and Douglas Schmidt (d.schmidt@vanderbilt.edu)
  *
  *  These classes allow applications to be consumer, suppliers, and
  *  consumer suppliers, as well as being active objects.  This is

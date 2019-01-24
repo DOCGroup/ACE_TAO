@@ -8,7 +8,7 @@
  *  Options.  Some compilers need it in a .h file for template
  *  instantiation (such as AIX C Set ++).
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu> and Kevin Boyle <kboyle@sanwafp.com>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu> and Kevin Boyle <kboyle@sanwafp.com>
  */
 //=============================================================================
 

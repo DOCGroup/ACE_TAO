@@ -5,7 +5,7 @@
  *  @file    Naming_Context.h
  *
  *  @author Gerhard Lenzer
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Prashant Jain <pjain@uci.edu>
  */
 //==========================================================================

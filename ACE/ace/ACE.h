@@ -11,7 +11,7 @@
  * in order to manage the namespace better.  These functions are put
  * here rather than in @c ACE_OS in order to separate concerns.
  *
- * @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

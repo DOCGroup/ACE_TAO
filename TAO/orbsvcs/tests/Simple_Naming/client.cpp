@@ -8,7 +8,7 @@
  *
  *  @author   Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  *  @author   Marina Spivak <marina@cs.wustl.edu>
- *  @author and   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author and   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

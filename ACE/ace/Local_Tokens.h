@@ -5,7 +5,7 @@
  *  @file    Local_Tokens.h
  *
  *  @author Karl-Heinz Dorn <kdorn@erlh.siemens.de>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Tim Harrison <harrison@cs.wustl.edu>
  *
  * This file contains definitions for the following classes:

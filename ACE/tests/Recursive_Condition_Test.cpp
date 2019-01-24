@@ -7,7 +7,7 @@
  *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
  *    specialization.
  *
- *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
