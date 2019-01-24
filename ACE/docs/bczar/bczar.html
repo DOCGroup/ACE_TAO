@@ -37,11 +37,6 @@
       The builds don't cover all the possible configurations. If you get a bug report
       about a compile error in a particular configuration, try setting up a build to
       make sure that it doesn't show up again if it has been fixed.
-      <li>
-        Keep an eye on the <a href="http://bugzilla.dre.vanderbilt.edu/">bugzilla
-        </a>
-      entries that are registered by users and developers. Decide on the bugs that
-      need to be fixed for the micro and pain developers for an ETA.
     </p>
     <P>
       The document <a href="./privileges.html">here </a>talks about the powers of a
@@ -295,7 +290,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_3 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_4 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -310,81 +305,44 @@
       <li>
         While doxygen churns, format a release announcement, including the release
         notes gathered from developers.
-        <ul>
-          <li>Get from bugzilla the bugs fixed. Use the following
-              <a href="http://bugzilla.dre.vanderbilt.edu/buglist.cgi?bug_status=RESOLVED&bug_status=VERIFIED&bug_status=CLOSED&chfield=resolution&chfieldfrom=2015-09-07&chfieldto=Now&chfieldvalue=FIXED&list_id=452&product=ACE&product=TAO&query_format=advanced">query</a> as start query and update the start date.</li>
-          <li>
-            Let <a href="mailto:d.schmidt@vanderbilt.edu">Doug Schmidt</a> review these before
-            you do anything with them.</li></ul>
-
       <li>
-        Make sure the new version is available in Bugzilla.</li>
+        On <b>naboo.dre.vanderbilt.edu</b> once the doxygen generation has finished, update the documentation at www.dre.vanderbilt.edu/Doxygen.</li>
       <ul>
         <li>
-          We now have a bczar Bugzilla user (bczar@dre.vanderbilt.edu) with full
-          privileges which points to the bczar user at ISIS. To gain access to this
-          account as a new build czar, you could update the ~/.forward file on one of the
-          ISIS hosts (for example bczar@naboo.dre.vanderbilt.edu) with your own email
-          address (but be aware that if you leave this ~/.forward file in effect, you
-          will get innundated with cron mail messages from all of the ISIS lab build
-          machines, so it is probably best to remove it after obtaining the Bugzilla
-          password). From the "Bugzilla - Main Page"
-          (http://bugzilla.dre.vanderbilt.edu/index.cgi) click on one of the various
-          "LogIn" links, and from this login page you should be able to "Submit Request"
-          to change a forgotten password. If you enter bczar@dre.vanderbilt.edu and click
-          "Submit Request" this will email you the password change link to
-          bczar@dre.vanderbilt.edu, which will then in turn be forwarded to your own
-          email account. Simply copy this link into your browser to set your own bczar
-          password for the next steps.</li>
+          Create a temporary directory. eg. tmp and change Directory to this- </li>
         <li>
-          here is the description of how to add a new version through Bugzilla.</li>
-        <li>
-          go to any Bugzilla "Query" page, you should see a grey box at the bottom. click
-          "Log in" link to log in as bczar@dre.vanderbilt.edu.</li>
-        <li>
-          look at the grey box at bottom again. You will see several links following
-          "Edit". Click on the "Product" link.</li>
-        <li>
-          you are then at "Select product" page. You should see a list components, i.e.,
-          ACE TAO. Click on the product you want to edit.</li>
-        <li>
-          you are then at "Edit product" page. Scroll down a bit, you should see a list
-          of all versions coming with this product. At the very beginning of the list,
-          you should see "Edit versions" link. Click this link.</li>
-        <li>
-          you should see a "Add a new version" text box and a "Add" link just above the
-          grey box at the bottom. Click on this link</li>
-        <li>
-          you are then at "Add version of [Name of the product]" page.</li>
-        <li>
-          you are able to add the new version now.</li>
-      </ul><br>
-      <li>
-        Back on <b>naboo.dre.vanderbilt.edu</b> once the doxygen generation has finished, update the documentation at www.dre.vanderbilt.edu/Doxygen.</li>
-      <ul>
-        <li>
-          <code>cd /web/www/Doxygen</code></li>
-        <li>
-          Create a temporary directory. eg. tmp and change Directory to this- <br><code>mkdir tmp</code><br><code>cd tmp</code></li>
-        <li>
-          scp file from the download server -<br><code>scp
-          bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .</code>
+          scp file from the download server
           </li>
         <li>
-          Unzip and untar the files - <br><code>bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar</code></li>
-        <li>back out of the temporary directory<br>
-          <code>cd ..</code></li>
+          Unzip and untar the files</li>
+        <li>back out of the temporary directory
+          </li>
         <li>
-          Create directory 'Current Version No' for example 6.3.4 and change directory into this new one<br><code>mkdir 6.3.4<br>cd 6.3.4</code></li>
+          Create directory 'Current Version No' for example 6.3.4 and change directory into this new one
         <li>
-          Move contents of the temporary directory's html to this directory -<br><code>mv ../tmp/html .</code></li>
+          Move contents of the temporary directory's html to this directory -</li>
         <li>
-          Now back our of this directory and remove the already existing softlink to the "Micro" directory -<br><code>cd ..<br>rm Micro</code></li>
+          Now back our of this directory and remove the already existing softlink to the "Micro" directory -</li>
         <li>
-          Create softlink "Micro" linking it to new Documentation using -<br><code>ln -s 6.3.4/html
-          Micro</code>. If this is a minor release also update the <code>Stable</code> link.</li>
+          Create softlink "Micro" linking it to new Documentation using -. If this is a minor release also update the <code>Stable</code> link.</li>
         <li>
-        Remove the directory tmp -<br><code>rm -rf tmp</code></lib>
+        Remove the directory tmp</li>
+        <code>
+        cd /web/www/Doxygen<br>
+        mkdir tmp<br>
+        cd tmp<br>
+        scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .<br>
+        bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar<br>
+        cd ..<br>
+        mkdir 6.5.4<br>
+        cd 6.5.4<br>
+        mv ../tmp/html .<br>
+        cd ..<br>
+        rm Micro<br>
+        ln -s 6.5.4/html Micro<br>
+        rm -rf tmp<br>
+        </code>
+
       </ul><br>
       <li>
         On <b>download.dre.vanderbilt.edu</b> where the kit was uploaded to and once <b>BOTH</b> the kit
@@ -401,6 +359,10 @@
           <li>
             Update the copy_script.sh file for the new micro release</li>
         </ul><br>
+      <li>
+        Update ACE_wrappers/bin/copy-local-script.sh for use the latest version number and use this script to rename all packages
+        locally to include the version number. After this is done upload the versioned packages to the github release page
+      </li>
       <li>
         Validate the packages on the webserver whether they are really containing the new release. Make at least
         one build where you run the TAO Hello world test and check if the libraries are having the
@@ -419,6 +381,8 @@
       <li>
         Update the ACE/NEWS and TAO/NEWS files to have a new section for the next release.</li>
       <li>
+        Put the release details also on the github release page for this latest release, see https://github.com/DOCGroup/ACE_TAO/releases</li>
+      <li>
         Update openSUSE Build service using<br>
         <code>
         osc checkout devel:libraries:ACE:micro ACE<br>
@@ -433,6 +397,9 @@
       </li>
       <li>
         Make a new pull request to Microsoft vcpkg to update ACE to the new release, see https://github.com/Microsoft/vcpkg/tree/master/ports/ace
+      </li>
+      <li>
+        Make a new pull request to OpenDDS to update the configure script to use the new release, see https://github.com/objectcomputing/OpenDDS/blob/master/configure
       </li>
       <li>
         Mail the approved release announcement out to, at minimum the following:
