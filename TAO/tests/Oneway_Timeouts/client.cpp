@@ -369,7 +369,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       // can connect immediately and some may take longer time. With the flag on,
       // the test sets the SYNC_NONE scope and sends a request so the transport
       // queue is not empty for some SYNC_DELAYED_BUFFERING test case and hence
-      // the requests are all queued and will be received by server continueously
+      // the requests are all queued and will be received by server continuously
       // during a short period.
       if (make_request_queued)
       {
