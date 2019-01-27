@@ -268,6 +268,9 @@ AST_Decl::destroy (void)
 
   delete [] this->flat_name_;
   this->flat_name_ = 0;
+
+  delete this->annotation_appls_;
+  this->annotation_appls_ = 0;
 }
 
 AST_Decl *
