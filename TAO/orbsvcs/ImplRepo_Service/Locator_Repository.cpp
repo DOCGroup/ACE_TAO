@@ -438,7 +438,6 @@ void
 Locator_Repository::notify_remote_access (const char *,
                                           ImplementationRepository::AAM_Status)
 {
-  // no-op default impl
 }
 
 Server_Info_Ptr

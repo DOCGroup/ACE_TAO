@@ -60,7 +60,6 @@ Grid_i::Grid_i (CORBA::Short x,
 
 Grid_i::~Grid_i (void)
 {
-  // no-op.
 }
 
 //  Set a value in the grid.
@@ -148,7 +147,6 @@ Grid_Factory_i::Grid_Factory_i (void)
     pool_name_ (0),
     pool_t_ (0)
 {
-  // no-op
 }
 
 // Destructor
@@ -156,7 +154,6 @@ Grid_Factory_i::Grid_Factory_i (void)
 Grid_Factory_i::~Grid_Factory_i (void)
 {
   delete this->pool_t_;
-  // no-op
 }
 
 // Make a <Grid>.

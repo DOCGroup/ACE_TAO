@@ -7,7 +7,6 @@
 AccountManager_i::AccountManager_i (void) :
   orb_manager_ (0)
 {
-  // no-op
 }
 
 // Destructor

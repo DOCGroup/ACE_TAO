@@ -4,12 +4,10 @@
 
 ACEXML_DefaultHandler::ACEXML_DefaultHandler (void)
 {
-  // no-op
 }
 
 ACEXML_DefaultHandler::~ACEXML_DefaultHandler (void)
 {
-  // no-op
 }
 
 void
@@ -17,13 +15,11 @@ ACEXML_DefaultHandler::characters (const ACEXML_Char *,
                                    size_t,
                                    size_t)
 {
-  // No-op.
 }
 
 void
 ACEXML_DefaultHandler::endDocument (void)
 {
-  // No-op.
 }
 
 void
@@ -31,7 +27,6 @@ ACEXML_DefaultHandler::endElement (const ACEXML_Char *,
                                    const ACEXML_Char *,
                                    const ACEXML_Char *)
 {
-  // No-op.
 }
 
 void

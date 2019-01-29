@@ -7,7 +7,6 @@
 Simple_Server_i::Simple_Server_i (void)
   :orb_ (0)
 {
-  // no-op
 }
 
 void

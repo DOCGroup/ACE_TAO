@@ -16,11 +16,9 @@ template <class Servant>
 Server<Servant>::Server (void)
     : ior_output_file_ (0)
 {
-  // no-op.
 }
 
 // Destructor.
-
 template <class Servant>
 Server<Servant>::~Server (void)
 {

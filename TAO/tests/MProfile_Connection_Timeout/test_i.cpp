@@ -15,7 +15,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 Simple_Server_i::Simple_Server_i (void)
   : orb_ (0)
 {
-  // no-op
 }
 
 CORBA::ULongLong

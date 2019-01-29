@@ -116,7 +116,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 TAO::Transport::Stats::~Stats ()
 {
-  // no-op
 }
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 

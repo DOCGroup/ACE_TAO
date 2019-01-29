@@ -25,7 +25,6 @@ Notifier_Input_Handler::Notifier_Input_Handler (void)
     argv_ (0),
     using_naming_service_ (1)
 {
-  // no-op.
 }
 
 // Destructor.

@@ -6,14 +6,12 @@
 // Constructor.
 Notifier_Server::Notifier_Server (void)
 {
-  // no-op.
 }
 
 // Destructor.
 
 Notifier_Server::~Notifier_Server (void)
 {
-  // no-op.
 }
 
 int

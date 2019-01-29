@@ -239,7 +239,7 @@ TAO_FlowSpec_Entry::parse_address (const char *address,
                                    TAO_AV_Core::Flow_Component flow_comp)
 {
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%s]\n", address));
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowSpec_Entry::parse_address [%C]\n", address));
 
   if (address == 0)
     return 0;
@@ -491,7 +491,6 @@ TAO_FlowSpec_Entry::get_local_addr_str (void)
 // default constructor.
 TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (void)
 {
-  // no-op.
 }
 
 // constructor to construct the entry from the arguments.
@@ -510,7 +509,6 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
                        address,
                        control_address)
 {
-  // no-op.
 }
 
 // constructor to construct the entry from the arguments.
@@ -525,12 +523,10 @@ TAO_Forward_FlowSpec_Entry::TAO_Forward_FlowSpec_Entry (const char *flowname,
                        flow_protocol,
                        address)
 {
-  // no-op.
 }
 
 TAO_Forward_FlowSpec_Entry::~TAO_Forward_FlowSpec_Entry (void)
 {
-  // no-op.
 }
 
 int
@@ -542,7 +538,7 @@ TAO_Forward_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_Forward_FlowSpec_Entry::parse [%s]\n",
+                  "TAO_Forward_FlowSpec_Entry::parse [%C]\n",
                   flowSpec_entry));
 
   if (tokenizer [TAO_AV_DIRECTION] != 0)
@@ -815,7 +811,7 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
                    "No peer address specified\n"));
 
   if (TAO_debug_level > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %s\n",this->entry_.c_str()));
+    ORBSVCS_DEBUG ((LM_DEBUG,"Forward entry_to_string: entry = %C\n",this->entry_.c_str()));
 
   return this->entry_.c_str();
 }
@@ -827,7 +823,6 @@ TAO_Forward_FlowSpec_Entry::entry_to_string (void)
 //default constructor.
 TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (void)
 {
-  // no-op
 }
 
 // constructor to construct an entry from the arguments.
@@ -846,7 +841,6 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
                        address,
                        control_address)
 {
-  // no-op
 }
 
 // constructor to construct an entry from the arguments.
@@ -861,12 +855,10 @@ TAO_Reverse_FlowSpec_Entry::TAO_Reverse_FlowSpec_Entry (const char *flowname,
                        flow_protocol,
                        address)
 {
-  // no-op.
 }
 
 TAO_Reverse_FlowSpec_Entry::~TAO_Reverse_FlowSpec_Entry (void)
 {
-  // no-op.
 }
 
 TAO_FlowSpec_Entry::Role
@@ -895,7 +887,7 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
 
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,
-                "TAO_Reverse_FlowSpec_Entry::parse [%s]\n",
+                "TAO_Reverse_FlowSpec_Entry::parse [%C]\n",
                 flowSpec_entry));
 
   if (tokenizer [TAO_AV_ADDRESS] != 0)
@@ -905,12 +897,6 @@ TAO_Reverse_FlowSpec_Entry::parse (const char *flowSpec_entry)
   if (tokenizer [TAO_AV_FLOW_PROTOCOL] != 0)
     if (this->parse_flow_protocol_string (tokenizer [TAO_AV_FLOW_PROTOCOL]) < 0)
       return -1;
-
-//  if (tokenizer [TAO_AV_DIRECTION] != 0)
-//    this->set_direction (tokenizer [TAO_AV_DIRECTION]);
-
-//  if (tokenizer [TAO_AV_FORMAT] != 0)
-//    this->format_ = tokenizer [TAO_AV_FORMAT];
 
   return 0;
 }
@@ -1004,12 +990,8 @@ TAO_Reverse_FlowSpec_Entry::entry_to_string (void)
   this->entry_ += address_str;
   this->entry_ += "\\";
   this->entry_ += this->flow_protocol_;
-//  this->entry_ += "\\";
-//  this->entry_ += this->direction_str_;
-//  this->entry_ += "\\";
-//  this->entry_ += format_;
 
-  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %s\n",this->entry_.c_str() ));
+  if (TAO_debug_level > 0) ORBSVCS_DEBUG ((LM_DEBUG,"Reverse entry_to_string: entry = %C\n",this->entry_.c_str() ));
   return this->entry_.c_str();
 }
 

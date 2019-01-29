@@ -7,13 +7,11 @@ UDP_i::UDP_i (void)
   : messages_count_ (0)
   , wrong_messages_count_ (0)
 {
-  // no-op
 }
 
 // Destructor
 UDP_i::~UDP_i (void)
 {
-  // no-op
 }
 
 // Set the ORB pointer.

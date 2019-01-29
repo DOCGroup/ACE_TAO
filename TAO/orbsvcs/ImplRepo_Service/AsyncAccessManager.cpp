@@ -792,25 +792,21 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
 void
 ActivatorReceiver::shutdown (void)
 {
-  // no-op, just satisfy virtual function
 }
 
 void
 ActivatorReceiver::shutdown_excep (Messaging::ExceptionHolder * )
 {
-  // no-op, just satisfy virtual function
 }
 
 void
 ActivatorReceiver::kill_server (CORBA::Boolean )
 {
-  // no-op, just satisfy virtual function
 }
 
 void
 ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 {
-  // no-op, just satisfy virtual function
 }
 
 
