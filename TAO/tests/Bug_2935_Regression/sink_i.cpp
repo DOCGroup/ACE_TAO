@@ -7,14 +7,11 @@ Sink_i::Sink_i (CORBA::ORB_ptr orb)
 , tickCount_(0)
 , tockCount_(0)
 {
-  // no-op
 }
 
 // Destructor
-
 Sink_i::~Sink_i ()
 {
-  // no-op
 }
 
 bool

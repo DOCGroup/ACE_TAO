@@ -9,7 +9,6 @@ Big_Reply_i::Big_Reply_i (CORBA::ORB_ptr orb,
 
 Big_Reply_i::~Big_Reply_i (void)
 {
-  // no-op
 }
 
 Test::Octet_Seq *

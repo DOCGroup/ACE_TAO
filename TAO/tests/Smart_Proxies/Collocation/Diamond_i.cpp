@@ -2,12 +2,10 @@
 
 Top_i::Top_i ()
 {
-  // no-op.
 }
 
 Top_i::~Top_i ()
 {
-  // No-op.
 }
 
 char *
@@ -40,12 +38,10 @@ Left_i::color (void)
 
 Right_i::Right_i ()
 {
-  // no-op.
 }
 
 Right_i::~Right_i ()
 {
-  // no-op.
 }
 
 char *
@@ -69,12 +65,10 @@ Right_i::width (void)
 
 Buttom_i::Buttom_i ()
 {
-  // no-op.
 }
 
 Buttom_i::~Buttom_i ()
 {
-  // no-op.
 }
 
 char *

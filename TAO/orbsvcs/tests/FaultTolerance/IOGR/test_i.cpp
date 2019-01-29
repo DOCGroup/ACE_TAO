@@ -4,8 +4,6 @@
 //#include "test_i.i"
 #endif /* __ACE_INLINE__ */
 
-
-
 Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
@@ -14,7 +12,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb)
 Simple_Server_i::Simple_Server_i (void)
   : orb_ (0)
 {
-  // no-op
 }
 
 void

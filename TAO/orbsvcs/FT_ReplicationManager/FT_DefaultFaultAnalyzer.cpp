@@ -157,7 +157,6 @@ int TAO::FT_DefaultFaultAnalyzer::analyze_fault_event (
     ));
   }
 
-  // no-op
   return 0;
 }
 

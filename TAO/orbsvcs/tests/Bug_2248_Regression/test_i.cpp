@@ -12,7 +12,6 @@ Simple_Server_i::Simple_Server_i (CORBA::ORB_ptr orb, const char* key)
 Simple_Server_i::Simple_Server_i (void)
   : orb_ (0)
 {
-  // no-op
 }
 
 char*

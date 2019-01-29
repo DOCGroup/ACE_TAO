@@ -4,22 +4,18 @@
 #include "ace/OS_NS_stdio.h"
 
 // Constructor.
-
 Server_i::Server_i (void)
   : ior_output_file_ (0),
     ins_ (0)
 {
-  // no-op.
 }
 
 // Destructor.
-
 Server_i::~Server_i (void)
 {
 }
 
 // Parse the command-line arguments and set options.
-
 int
 Server_i::parse_args (void)
 {

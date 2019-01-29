@@ -7,13 +7,11 @@
 // Constructor.
 Time_Date_Client_i::Time_Date_Client_i (void)
 {
-  // no-op
 }
 
 //Destructor.
 Time_Date_Client_i::~Time_Date_Client_i (void)
 {
-  // no-op
 }
 
 int

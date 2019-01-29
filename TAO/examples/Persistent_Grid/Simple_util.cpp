@@ -14,7 +14,6 @@ Server<Servant>::Server (void)
   : ior_output_file_ (0),
     mem_pool_name_ (0)
 {
-  // no-op.
 }
 
 // Destructor.

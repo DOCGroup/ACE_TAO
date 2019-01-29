@@ -15,7 +15,6 @@
 
 Collocation_Test::Collocation_Test (void)
 {
-  // no-op.
 }
 
 void
