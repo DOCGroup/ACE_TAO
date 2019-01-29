@@ -40,13 +40,13 @@ ACE_MEM_Addr::get_port_number (void) const
   return this->internal_.get_port_number ();
 }
 
-// Return the dotted Internet address.
+// Return the "dotted decimal" external address.
 
 ACE_INLINE const char *
 ACE_MEM_Addr::get_host_addr (void) const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_addr");
-  return this->internal_.get_host_addr ();
+  return this->external_.get_host_addr ();
 }
 
 // Return the 4-byte IP address, converting it into host byte order.
