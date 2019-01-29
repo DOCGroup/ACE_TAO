@@ -46,6 +46,14 @@ ACE_MEM_Addr::get_host_addr (void) const
   return this->external_.get_host_addr ();
 }
 
+/// Return the "dotted decimal" external address.
+ACE_INLINE const char *
+ACE_MEM_Addr::get_host_addr (char *addr, int addr_size) const
+{
+  ACE_TRACE ("ACE_MEM_Addr::get_host_addr");
+  return this->external_.get_host_addr (addr, addr_size);
+}
+
 /// Return the 4-byte IP address, converting it into host byte order.
 ACE_INLINE ACE_UINT32
 ACE_MEM_Addr::get_ip_address (void) const
