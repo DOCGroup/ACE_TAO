@@ -5,8 +5,6 @@ compiler that uses `tao_idl`.**
 
 **Table of Contents:**
 
-<!-- vim-markdown-toc GFM -->
-
 * [IDL Annotations](#idl-annotations)
   * [Special Cases of Annotations](#special-cases-of-annotations)
     * [Unions Discriminators](#unions-discriminators)
@@ -23,8 +21,6 @@ compiler that uses `tao_idl`.**
     * [Base Types in Sequences](#base-types-in-sequences-1)
     * [Base Types in Arrays](#base-types-in-arrays-1)
 * [Limitations](#limitations)
-
-<!-- vim-markdown-toc -->
 
 ## IDL Annotations
 
@@ -436,7 +432,7 @@ of the same type, or read all the annotations, we will have to do what
   for (AST_Annotation_Appls::iterator i = annotations.begin ();
     i != annotations.end (); ++i)
     {
-      AST_Annotation_Appl *appl = *i;
+      AST_Annotation_Appl *appl = i->get ();
       if (appl && appl->annotation_decl () == annotation)
         {
           // Do work with annotation application
