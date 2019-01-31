@@ -14,13 +14,9 @@
  */
 ///{
 TAO_IDL_FE_Export AST_Annotation_Appl *UTL_find_annotation (
-  AST_Annotation_Appls &annotations, AST_Annotation_Decl *annotation);
+  AST_Annotation_Appls& annotations, AST_Annotation_Decl *annotation);
 TAO_IDL_FE_Export AST_Annotation_Appl *UTL_find_annotation (
-  AST_Annotation_Appls *annotations, AST_Annotation_Decl *annotation);
-TAO_IDL_FE_Export AST_Annotation_Appl *UTL_find_annotation (
-  AST_Annotation_Appls &annotations, const char *annotation);
-TAO_IDL_FE_Export AST_Annotation_Appl *UTL_find_annotation (
-  AST_Annotation_Appls *annotations, const char *annotation);
+  AST_Annotation_Appls& annotations, const char *annotation);
 ///}
 
 #endif

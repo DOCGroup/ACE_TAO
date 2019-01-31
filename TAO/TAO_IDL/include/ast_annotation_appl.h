@@ -28,6 +28,7 @@ public:
   ///{
   struct Param {
     Param ();
+    ~Param ();
     Identifier *id;
     AST_Expression *expr;
     bool used;
@@ -35,6 +36,9 @@ public:
   };
   typedef ACE_Unbounded_Stack<Param*> Params;
   ///}
+
+  /// Delete Annotation Parameters
+  static void delete_params (Params* params);
 
   /**
    * Create an Annotation using it's name and parameters

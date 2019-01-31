@@ -89,7 +89,7 @@ Identifier::Identifier (const Identifier &other)
   : pv_string (0),
     escaped_ (other.escaped ())
 {
-  replace_string (other.get_string ());
+  *this = other;
 }
 
 Identifier::~Identifier (void)
@@ -249,4 +249,11 @@ bool
 Identifier::operator== (const Identifier &other) const
 {
   return !ACE_OS::strcmp (pv_string, other.get_string ());
+}
+
+Identifier &
+Identifier::operator= (const Identifier &other)
+{
+  replace_string (other.get_string ());
+  return *this;
 }

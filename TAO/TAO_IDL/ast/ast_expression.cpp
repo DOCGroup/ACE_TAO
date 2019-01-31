@@ -511,6 +511,7 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
 
 AST_Expression::~AST_Expression (void)
 {
+  destroy ();
 }
 
 AST_Expression::AST_ExprValue::AST_ExprValue (void)
@@ -3193,7 +3194,6 @@ AST_Expression::destroy (void)
           this->pd_ev->u.wstrval = 0;
         }
     }
-
   delete this->pd_ev;
   this->pd_ev = 0;
 
@@ -3201,15 +3201,13 @@ AST_Expression::destroy (void)
     {
       this->pd_v1->destroy ();
     }
+  delete this->pd_v1;
+  this->pd_v1 = 0;
 
   if (this->pd_v2 != 0)
     {
       this->pd_v2->destroy ();
     }
-
-  delete this->pd_v1;
-  this->pd_v1 = 0;
-
   delete this->pd_v2;
   this->pd_v2 = 0;
 
@@ -3217,7 +3215,6 @@ AST_Expression::destroy (void)
     {
       this->pd_n->destroy ();
     }
-
   delete this->pd_n;
   this->pd_n = 0;
 

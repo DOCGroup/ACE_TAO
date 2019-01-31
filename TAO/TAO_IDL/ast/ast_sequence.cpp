@@ -105,8 +105,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     pd_max_size (ms),
     pd_base_type (bt),
     unbounded_ (true),
-    owns_base_type_ (false),
-    base_type_annotations_ (0)
+    owns_base_type_ (false)
 {
   FE_Utils::tmpl_mod_ref_check (this, bt);
 
@@ -213,15 +212,13 @@ void
 AST_Sequence::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "sequence <");
-  if (base_type_annotations ())
+  AST_Annotation_Appls::iterator i,
+    finished = base_type_annotations ().end ();
+  for (i = base_type_annotations ().begin (); i != finished; ++i)
     {
-      size_t count = base_type_annotations ()->size ();
-      for (size_t i = 0; i < count; i++)
-        {
-          AST_Annotation_Appl *a = (*base_type_annotations ())[i];
-          a->dump (o);
-          dump_i (o, " ");
-        }
+      AST_Annotation_Appl *a = i->get ();
+      a->dump (o);
+      dump_i (o, " ");
     }
   this->pd_base_type->dump (o);
   this->dump_i (o, ", ");
@@ -286,14 +283,14 @@ AST_Sequence::destroy (void)
 
 IMPL_NARROW_FROM_DECL(AST_Sequence)
 
-AST_Annotation_Appls *
-AST_Sequence::base_type_annotations()
+AST_Annotation_Appls &
+AST_Sequence::base_type_annotations ()
 {
   return base_type_annotations_;
 }
 
 void
-AST_Sequence::base_type_annotations(AST_Annotation_Appls *annotations)
+AST_Sequence::base_type_annotations (const AST_Annotation_Appls &annotations)
 {
   base_type_annotations_ = annotations;
 }

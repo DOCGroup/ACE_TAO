@@ -97,8 +97,7 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                       n),
     pd_n_dims (nd),
     pd_base_type (0),
-    owns_base_type_ (false),
-    base_type_annotations_ (0)
+    owns_base_type_ (false)
 {
   this->pd_dims = this->compute_dims (ds,
                                       nd);
@@ -273,14 +272,14 @@ AST_Array::set_dims (AST_Expression **ds,
 
 IMPL_NARROW_FROM_DECL(AST_Array)
 
-AST_Annotation_Appls *
-AST_Array::base_type_annotations()
+AST_Annotation_Appls &
+AST_Array::base_type_annotations ()
 {
   return base_type_annotations_;
 }
 
 void
-AST_Array::base_type_annotations(AST_Annotation_Appls *annotations)
+AST_Array::base_type_annotations (const AST_Annotation_Appls &annotations)
 {
   base_type_annotations_ = annotations;
 }

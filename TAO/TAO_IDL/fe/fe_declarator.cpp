@@ -200,9 +200,12 @@ FE_Declarator::compose (AST_Decl *d)
 void
 FE_Declarator::destroy (void)
 {
-  this->pd_name->destroy ();
-  delete this->pd_name;
-  this->pd_name = 0;
+  if (pd_name)
+    {
+      this->pd_name->destroy ();
+      delete this->pd_name;
+      this->pd_name = 0;
+    }
 }
 
 // Data accessors.
