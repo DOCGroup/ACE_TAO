@@ -12,6 +12,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -177,11 +178,25 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
               if (ACE_TString::npos != name->strstr (ACE_TEXT (".a")))
                 {
                   ACE_TCHAR aix_pathname[MAXPATHLEN + 1];
-                  ACE_OS::strncpy (aix_pathname,
-                                   name->c_str (),
-                                   name->length ());
-                  aix_pathname[name->length ()] = '\0';
-                  ACE_OS::strcat (aix_pathname, ACE_TEXT ("(shr.o)"));
+                  if (ACE_OS::snprintf (aix_pathname, sizeof (aix_pathname),
+                                        ACE_TEXT ("%s(shr.o)"),
+                                        name->c_str ()) >= sizeof (aix_pathname))
+                    {
+                      if (errors)
+                        {
+                          errors->push ("path is too long");
+                        }
+
+                      if (ACE::debug ())
+                        {
+                          ACELIB_ERROR ((LM_ERROR,
+                                ACE_TEXT ("ACE (%P|%t) DLL_Handle::open: ")
+                                ACE_TEXT ("('%s(shr.o)') is too long\n"),
+                                name->c_str()));
+                        }
+
+                      return -1;
+                    }
                   open_mode |= RTLD_MEMBER;
 
                   if (ACE::debug ())
