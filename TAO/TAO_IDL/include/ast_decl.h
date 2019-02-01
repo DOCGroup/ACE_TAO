@@ -68,12 +68,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
+#include "ast_annotation_appls.h"
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
 #include "ace/Vector_T.h"
-#include "ace/Mutex.h"
-#include "ace/Bound_Ptr.h"
 
 // This is for AIX w/IBM C++
 class Identifier;
@@ -81,53 +80,6 @@ class Identifier;
 class UTL_Scope;
 class UTL_String;
 class ast_visitor;
-
-class AST_Annotation_Appl;
-
-/**
- * Container for AST_Annotation_Appl
- *
- * Uses ACE_Strong_Bound_Ptr because they can be shared between AST_Decl
- */
-class TAO_IDL_FE_Export AST_Annotation_Appls {
-public:
-  typedef ACE_Strong_Bound_Ptr<AST_Annotation_Appl, ACE_Mutex> AST_Annotation_Appl_Ptr;
-  typedef ACE_Vector<AST_Annotation_Appl_Ptr> AST_Annotation_Appl_Ptrs;
-  typedef AST_Annotation_Appl_Ptrs::iterator iterator;
-  typedef AST_Annotation_Appl_Ptrs::const_iterator const_iterator;
-
-  AST_Annotation_Appls ();
-  AST_Annotation_Appls (const AST_Annotation_Appls& other);
-  ~AST_Annotation_Appls ();
-
-  /**
-   * Releases any Appls we have and copies the other vector.
-   */
-  AST_Annotation_Appls &operator= (const AST_Annotation_Appls& other);
-
-  /**
-   * Add a Appl to the vector. This class assumes ownership of the pointer
-   * which is managed by ACE_Strong_Bound_Ptr.
-   */
-  void add (AST_Annotation_Appl *appl);
-
-  /**
-   * Add all the Appls from another AST_Annotation_Appls to the this one.
-   */
-  void add (const AST_Annotation_Appls& other);
-
-  bool empty () const;
-  size_t size () const;
-
-  iterator begin ();
-  iterator end ();
-  const_iterator begin () const;
-  const_iterator end () const;
-  AST_Annotation_Appl *operator[](size_t index);
-
-private:
-  AST_Annotation_Appl_Ptrs vector_;
-};
 
 /**
  * This class is needed (only for g++) to get around a bug in g++ which

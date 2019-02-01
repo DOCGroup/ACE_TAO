@@ -10,16 +10,16 @@ AST_Annotation_Appl::Param::Param ()
 
 AST_Annotation_Appl::Param::~Param ()
 {
-    if (id)
-      {
-        id->destroy ();
-      }
-    delete id;
-    if (expr)
-      {
-        expr->destroy ();
-      }
-    delete expr;
+  if (id)
+    {
+      id->destroy ();
+    }
+  delete id;
+  if (expr)
+    {
+      expr->destroy ();
+    }
+  delete expr;
 }
 
 void
