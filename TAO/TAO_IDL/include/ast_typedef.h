@@ -130,7 +130,10 @@ protected:
   /**
    * Cache of Recursively acquired annotations from typedefs.
    */
-  AST_Annotation_Appls *cached_annotations_;
+  ///{
+  AST_Annotation_Appls cached_annotations_;
+  bool has_cached_annotations_;
+  ///}
 };
 
 #endif           // _AST_TYPEDEF_AST_TYPEDEF_HH

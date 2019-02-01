@@ -68,6 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 #include "idl_narrow.h"
+#include "ast_annotation_appls.h"
 
 #include "ace/os_include/sys/os_types.h"
 #include "ace/SString.h"
@@ -79,9 +80,6 @@ class Identifier;
 class UTL_Scope;
 class UTL_String;
 class ast_visitor;
-
-class AST_Annotation_Appl;
-typedef ACE_Vector<AST_Annotation_Appl*> AST_Annotation_Appls;
 
 /**
  * This class is needed (only for g++) to get around a bug in g++ which
@@ -333,8 +331,8 @@ public:
 
   /// Set and get annotations for this IDL element
   ///{
-  virtual void annotation_appls (AST_Annotation_Appls *annotations);
-  AST_Annotation_Appls *annotation_appls ();
+  void annotation_appls (const AST_Annotation_Appls &annotations);
+  AST_Annotation_Appls &annotation_appls ();
   ///}
 
   /**
@@ -385,7 +383,7 @@ public:
   virtual bool should_be_dumped () const;
 
   /**
-   * Get Annotation Vector Reference.
+   * Get Annotation Vector
    * If this is a typedef, it includes recursively acquired annotations from
    * the possible chain of direct typedefs.
    */
@@ -425,7 +423,7 @@ protected:
   // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
-  AST_Annotation_Appls* annotation_appls_;
+  AST_Annotation_Appls *annotation_appls_;
 
   /**
    * True if defined using idl_global->eval()

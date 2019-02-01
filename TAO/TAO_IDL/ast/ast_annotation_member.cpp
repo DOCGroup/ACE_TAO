@@ -54,6 +54,7 @@ AST_Annotation_Member::destroy ()
     {
       value_->destroy ();
     }
+  AST_Field::destroy ();
 }
 
 IMPL_NARROW_FROM_DECL (AST_Annotation_Member);

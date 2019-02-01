@@ -121,6 +121,8 @@ public:
 
   bool operator== (const Identifier &other) const;
 
+  Identifier &operator= (const Identifier &other);
+
 private:
   // Storage for data.
   char *pv_string;

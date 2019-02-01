@@ -122,8 +122,8 @@ public:
    * Get and Set Annotations on the base type
    */
   ///{
-  AST_Annotation_Appls *base_type_annotations ();
-  void base_type_annotations (AST_Annotation_Appls *annotations);
+  AST_Annotation_Appls &base_type_annotations ();
+  void base_type_annotations (const AST_Annotation_Appls &annotations);
   ///}
 
 private:
@@ -144,7 +144,7 @@ private:
   /**
    * Annotations on the base type
    */
-  AST_Annotation_Appls *base_type_annotations_;
+  AST_Annotation_Appls base_type_annotations_;
 };
 
 #endif           // _AST_SEQUENCE_AST_SEQUENCE_HH

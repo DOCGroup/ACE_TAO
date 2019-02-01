@@ -120,6 +120,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
 
 AST_Structure::~AST_Structure (void)
 {
+  destroy ();
 }
 
 // Are we or the parameter node involved in any recursion?

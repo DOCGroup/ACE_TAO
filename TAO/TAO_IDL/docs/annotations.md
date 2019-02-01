@@ -5,8 +5,6 @@ compiler that uses `tao_idl`.**
 
 **Table of Contents:**
 
-<!-- vim-markdown-toc GFM -->
-
 * [IDL Annotations](#idl-annotations)
   * [Special Cases of Annotations](#special-cases-of-annotations)
     * [Unions Discriminators](#unions-discriminators)
@@ -23,8 +21,8 @@ compiler that uses `tao_idl`.**
     * [Base Types in Sequences](#base-types-in-sequences-1)
     * [Base Types in Arrays](#base-types-in-arrays-1)
 * [Limitations](#limitations)
-
-<!-- vim-markdown-toc -->
+* [History](#history)
+  * [TAO 2.5.5](#tao-255)
 
 ## IDL Annotations
 
@@ -34,11 +32,12 @@ similar to some uses of `#pragma`, but are more powerful because they are
 integrated with IDL and are more expressive. In the latest IDL specification as
 of writing, version 4.2, they are described in section 7.4.15.1.
 
-Annotations exist in other languages like Java, Python (as decorators), and C#
-(as attributes). Like Java and Python, annotations can appear in front of
-declarations, have `@` at the beginning, and can look like function call.
+The concept behind annotations exists in other languages like Java and Python,
+as decorators, and in C++11 and C#, as attributes. Like Java and Python,
+annotations can appear in front of declarations, have `@` at the beginning, and
+can look like function call.
 
-Here is what an example of IDL using some OMG standard annotations might look
+Here is an example of what IDL using some OMG standard annotations might look
 like:
 
 ```
@@ -88,6 +87,8 @@ compiler use these kinds of annotations.
 
 #### Unions Discriminators
 
+**[See Compiler Example](#unions-discriminators-1)**
+
 ```
 enum GradeType {
   PASS_FAIL,
@@ -106,6 +107,8 @@ default:
 
 #### Base Types in Sequences
 
+**[See Compiler Example](#base-types-in-sequences-1)**
+
 ```
 struct Event {
   short data;
@@ -114,6 +117,8 @@ typedef sequence<@external Report, 12> Dozen_Events;
 ```
 
 #### Base Types in Arrays
+
+**[See Compiler Example](#base-types-in-arrays-1)**
 
 ```
 struct Event {
@@ -180,7 +185,7 @@ void BE_post_init (char *[], long)
 
 The new lines aren't strictly necessary but might help if a syntax error occurs
 because it will refer to the line number of this string as though it was a file
-called "builtin". This might not be helpful as it could be, because it won't
+called `builtin`. This might not be helpful as it could be, because it won't
 distinguish between multiple calls to `eval` when reporting an error.
 
 By default TAO\_IDL uses IDL3 and this will cause an error when parsing the
@@ -282,26 +287,33 @@ inside it.
 
 ## Reading Annotations in the AST
 
-To get the annotations for most nodes types, get a reference or pointer to the
-`ACE_Vector` of Annotations using `node->annotations()` and pass it to
-`UTL_find_annotation` to get the annotation. From there use index operators
-`[]` on the annotation to get the individual members and `value()` to get the
-value. The last part is not straightforward, as we have to deal with the
-`AST_Expression` class which is the internal class of TAO\_IDL that holds
-constant values.
+To get the annotations for most nodes types, use
+`node->annotations ().find (annotation_decl)` where `annotation_decl` can be the
+annotation declaration or its canonical name. This will return the last
+`AST_Annotation_Appl*` of that type on the node or `NULL` if there no
+annotation of that type.
 
 Internally, annotation local names are prefixed with `@` to prevent clashes
 with other elements in IDL with the same name. For example when trying to use
-`UTL_find_annotation` with annotation named `bar` in a module named `foo`, the
-proper internal scoped name to pass as the second argument is either
-`foo::@bar` or `::foo::@bar` if we want to be explicit that `foo` is in the
-root module.
+`AST_Annotation_Appls::find (const char*)` with annotation named `bar` in a module
+named `foo`, the proper internal scoped name to pass as the second argument is
+either `foo::@bar` or `::foo::@bar` if we want to be explicit that `foo` is in
+the root module. In IDL, this annotation's full name would be `@foo::bar`or
+`@::foo::bar`.
+
+After that check, you can use index operators `[const char*]` on the annotation
+to get the individual members and `value()` to get the value.
+
+The last part is not straightforward, as the value is a `AST_Expression` object
+and `AST_Expression` is a complex class that handles constant values in
+TAO\_IDL. There are examples below but see `AST_Expression::AST_ExprValue` for
+how values can be accessed.
 
 ### Reading `@document` Annotations
 
 In this example we will use the [`@document` annotation defined
 above](#document-example) to generate Doxygen comments in the C++ code
-generated. For simplicity's sake, we will limit this example to structs defined
+generated. For simplicity's sake, we will limit this example to `struct`s defined
 in TAO client headers. This can be accomplished by modifying the struct
 visitor in `be/be_visitor_structure/structure_ch.cpp`.
 
@@ -309,7 +321,6 @@ At the top of the file, these includes should be added:
 
 ```C++
 #include "ast_annotation_member.h"
-#include "utl_annotations.h"
 #include "utl_string.h"
 #include "ast_enum_val.h"
 ```
@@ -324,8 +335,7 @@ right before
 these lines would also need to be added:
 
 ```C++
-  AST_Annotation_Appl *document =
-    UTL_find_annotation (node->annotations (), "::@document");
+  AST_Annotation_Appl *document = node->annotations ().find ("::@document");
   if (document)
     {
       const char *comment =
@@ -340,7 +350,7 @@ these lines would also need to be added:
        * This is more complicated because we are trying to get the name of
        * the enumerator. If we just wanted the number value, we could treat the
        * AST_Expresssion from the annotation member as a unsigned long by using
-       * ev()->u.ulval.
+       * ev ()->u.ulval.
        */
       const char *api_type = 0;
       AST_Expression *api_type_val =
@@ -424,19 +434,19 @@ struct  struct3
 
 #### Reading Annotations Manually
 
-`UTL_find_annotation` is convenient but only returns the last annotation of the
-passed annotation type. If we want the first one, handle multiple annotations
-of the same type, or read all the annotations, we will have to do what
-`UTL_find_annotation` is doing for us, which is just iterating over the
-`ACE_Vector` of `AST_Annotation_Appl`.
+`AST_Annotation_Appls::find ()` is convenient but only returns the last
+annotation of the passed annotation type. If we want the first one, handle
+multiple annotations of the same type, read all the annotations, or some other
+subset, we will have to do what `find ()` is doing for us, which is just
+iterating over the `AST_Annotation_Appl`s and checking `annotation_decl ()`.
 
 ```C++
-  AST_Annotation_Appls &annotations;
-  AST_Annotation_Decl *annotation;
+  AST_Annotation_Appls &annotations = /* ... */;
+  AST_Annotation_Decl *annotation = /* ... */;
   for (AST_Annotation_Appls::iterator i = annotations.begin ();
     i != annotations.end (); ++i)
     {
-      AST_Annotation_Appl *appl = *i;
+      AST_Annotation_Appl *appl = i->get ();
       if (appl && appl->annotation_decl () == annotation)
         {
           // Do work with annotation application
@@ -462,9 +472,8 @@ to read these special cases.
 **[See IDL Example](#unions-discriminators)**
 
 ```C++
-  AST_Union *node;
-  AST_Annotation_Appl *document =
-    UTL_find_annotation (node->disc_annotations (), "::@anno");
+  AST_Union *node = /* ... */;
+  AST_Annotation_Appl *document = node->disc_annotations ().find ("::@key");
 ```
 
 #### Base Types in Sequences
@@ -472,9 +481,8 @@ to read these special cases.
 **[See IDL Example](#base-types-in-sequences)**
 
 ```C++
-  AST_Sequence *node;
-  AST_Annotation_Appl *document =
-    UTL_find_annotation (node->base_type_annotations (), "::@anno");
+  AST_Sequence *node = /* ... */;
+  AST_Annotation_Appl *document = node->base_type_annotations ().find ("::@external");
 ```
 
 #### Base Types in Arrays
@@ -482,9 +490,8 @@ to read these special cases.
 **[See IDL Example](#base-types-in-arrays)**
 
 ```C++
-  AST_Array *node;
-  AST_Annotation_Appl *document =
-    UTL_find_annotation (node->base_type_annotations (), "::@anno");
+  AST_Array *node = /* ... */;
+  AST_Annotation_Appl *document = node->base_type_annotations ().find ("::@external");
 ```
 
 ## Limitations
@@ -500,3 +507,15 @@ The current limitations exist in TAO\_IDL annotation implementation as of writin
 2. Even though this is implicitly allowed by the IDL specification, Annotations
    whose local names clash with IDL keywords are not supported. This includes
    the OMG standard annotations `default` and `oneway`.
+
+## History
+
+### TAO 2.5.5
+
+**Any usage of `UTL_find_annotation(X, Y)` should be replaced with `X.find(Y)`.**
+
+After TAO 2.5.4 was released, which introduced annotations, there was a change
+to fix memory leaks caused by annotations. This change involved replacing
+`typedef ACE_Vector<AST_Annotation_Appl> AST_Annotation_Appls` with a class of
+the same name. This also allowed for moving `UTL_find_annotation` into
+`AST_Annotation_Appls` as `find` for a nicer design.
