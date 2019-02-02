@@ -333,7 +333,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
 # if defined (ACE_USES_WCHAR)
   if (procenv)
-    delete procenv;
+    delete [] procenv;
 # endif /* ACE_USES_WCHAR */
 
   // restore STD file descriptors (if necessary)

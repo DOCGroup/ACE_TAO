@@ -100,8 +100,8 @@ CE_ARGV::CE_ARGV(wchar_t* cmdLine)
         }
     }
 
-    delete argv_strlen;
-    delete formattedCmdLine;
+    delete [] argv_strlen;
+    delete [] formattedCmdLine;
 }
 
 
