@@ -21,7 +21,7 @@ public:
     ACE_UNUSED_ARG (item);
   }
 
-  const Element_Counter & operator = (const Element_Counter & ec)
+  Element_Counter & operator = (const Element_Counter & ec)
   {
     this->count_ = ec.count_;
     return *this;
