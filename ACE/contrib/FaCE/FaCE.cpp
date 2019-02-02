@@ -88,7 +88,7 @@ void ParameterList::addParameter(char* newParameter)
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, newParameter, -1, w_output, len);
     this->addParameter(w_output);
 
-    delete w_output;
+    delete [] w_output;
 #else
     this->addParameter(ACE_TEXT_CHAR_TO_TCHAR(newParameter));
 #endif  // NO_ACE

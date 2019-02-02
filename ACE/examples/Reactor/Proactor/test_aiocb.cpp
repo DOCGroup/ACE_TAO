@@ -74,7 +74,7 @@ Test_Aio::~Test_Aio (void)
   delete aiocb_write_;
   delete aiocb_read_;
   delete buffer_write_;
-  delete buffer_read_;
+  delete [] buffer_read_;
 }
 
 // Init the output file and init the buffer.

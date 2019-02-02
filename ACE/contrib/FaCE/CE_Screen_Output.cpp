@@ -82,7 +82,7 @@ CE_Screen_Output& CE_Screen_Output::operator << (const char* output)
     MultiByteToWideChar(CP_OEMCP, MB_PRECOMPOSED, output, -1, w_output, len);
     *this << w_output;
 
-    delete w_output;
+    delete [] w_output;
     return *this;
 }
 
