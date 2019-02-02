@@ -58,7 +58,7 @@ class ACE_Proactor_Timer_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   /// Constructor.
-  ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
+  explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
   /// Destructor.
   virtual ~ACE_Proactor_Timer_Handler (void);
