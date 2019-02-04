@@ -452,13 +452,13 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
       // change the CTX directly.
       STACK_OF (X509_NAME) * cert_names = 0;
       cert_names = ::SSL_CTX_get_client_CA_list (this->context_);
-      bool error = false;
 
       // Add CAs from both the file and dir, if specified. There should
       // already be a STACK_OF(X509_NAME) in the CTX, but if not, we create
       // one.
       if (ca_file)
         {
+          bool error = false;
           if (cert_names == 0)
             {
               if ((cert_names = ::SSL_load_client_CA_file (ca_file)) != 0)
