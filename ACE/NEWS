@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 ====================================================
 
+. Fixed several broken links due to the removal of
+  Douglas Schmidt website at WashU
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
