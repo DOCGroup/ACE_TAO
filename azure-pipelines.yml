@@ -41,12 +41,11 @@ jobs:
     SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
     XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
   steps:
-  - powershell: git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
-    displayName: git clone vcpkg
-  - script: .\vcpkg\bootstrap-vcpkg.bat
-    displayName: Bootstrap vcpkg
-  - script: .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
-    displayName: vcpkg install dependencies
+  - script: |
+      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
+      .\vcpkg\bootstrap-vcpkg.bat
+      .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+    displayName: vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
