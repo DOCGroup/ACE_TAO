@@ -41,7 +41,7 @@ jobs:
     SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
     XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
   steps:
-  - script: |
+  - powershell: |
       git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
       .\vcpkg\bootstrap-vcpkg.bat
       .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
