@@ -789,10 +789,6 @@ ACE_Service_Gestalt::process_directives_i (ACE_Svc_Conf_Param *param)
                 : param->source.directive));
 #endif
 
-  // AC 970827 Skip the heap check because yacc allocates a buffer
-  // here which will be reported as a memory leak for some reason.
-  ACE_NO_HEAP_CHECK
-
   // Were we called in the context of the current instance?
   ACE_ASSERT (this == param->config);
 

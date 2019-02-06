@@ -125,7 +125,6 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
 
       if (!key_created_)
         {
-          ACE_NO_HEAP_CHECK;
           if (ACE_OS::thr_keycreate_native (&native_tss_key_,
                                      &ACE_TSS_Emulation_cleanup) != 0)
             {
@@ -160,8 +159,6 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
       // storage array.
       if (ts_storage == 0)
         {
-          ACE_NO_HEAP_CHECK;
-
 #ifdef ACE_HAS_ALLOC_HOOKS
           const size_t n = ACE_TSS_THREAD_KEYS_MAX * sizeof (void *);
           ACE_Allocator *const alloc = ACE_Allocator::instance ();
