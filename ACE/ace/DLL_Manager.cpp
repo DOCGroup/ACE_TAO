@@ -12,7 +12,6 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -172,15 +171,20 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                 }
 
 #if defined (AIX)
+# define SHR_O ACE_TEXT("(shr.o)")
+# define SHR_O_LEN (sizeof (SHR_O) / sizeof(ACE_TCHAR) - 1)
               // AIX often puts the shared library file (most often named
               // shr.o) inside an archive library. If this is an archive
               // library name, then try appending [shr.o] and retry.
               if (ACE_TString::npos != name->strstr (ACE_TEXT (".a")))
                 {
                   ACE_TCHAR aix_pathname[MAXPATHLEN + 1];
-                  if (ACE_OS::snprintf (aix_pathname, sizeof (aix_pathname),
-                                        ACE_TEXT ("%s(shr.o)"),
-                                        name->c_str ()) >= sizeof (aix_pathname))
+                  if (name->length () + SHR_O_LEN <= MAXPATHLEN)
+                    {
+                      ACE_OS::strcpy (aix_pathname, name->c_str());
+                      ACE_OS::strcat (aix_pathname, SHR_O);
+                    }
+                  else
                     {
                       if (errors)
                         {
