@@ -79,24 +79,37 @@ jobs:
   timeoutInMinutes: 90
   pool:
     vmImage: vs2015-win2012r2
+  strategy:
+    matrix:
+      Debug64:
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+      Release64:
+        BuildPlatform: x64
+        BuildConfiguration: Release
+        vcpkgarch: x64-windows
+        vcpkglibdir: lib
   steps:
   - powershell: |
-      $client = new-object System.Net.WebClient
-      $client.DownloadFile("http://strawberryperl.com/download/5.28.0.1/strawberry-perl-5.28.0.1-64bit.zip","strawberry-perl.zip");
-    displayName: Download perl
-  - task: ExtractFiles@1
-    displayName: Extract perl
-    inputs:
-      archiveFilePatterns: strawberry-perl.zip
-      destinationFolder: perl
+      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
+      .\vcpkg\bootstrap-vcpkg.bat
+      .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+    displayName: vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
+  - powershell: |
+      echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+    displayName: Create default.features file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl/perl/bin/perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vc14 $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - task: VSBuild@1
     displayName: Build solution TAO\TAO_ACE.sln
