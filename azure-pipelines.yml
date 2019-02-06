@@ -91,6 +91,11 @@ jobs:
         BuildConfiguration: Release
         vcpkgarch: x64-windows
         vcpkglibdir: lib
+  variables:
+    XERCESCROOT: $(Build.SourcesDirectory)\vcpkg\packages\xerces-c_$(vcpkgarch)
+    SSL_ROOT: $(Build.SourcesDirectory)\vcpkg\packages\openssl-windows_$(vcpkgarch)
+    SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
+    XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
   steps:
   - powershell: |
       git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
