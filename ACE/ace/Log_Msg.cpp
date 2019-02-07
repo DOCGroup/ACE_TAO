@@ -479,14 +479,13 @@ ACE_Log_Msg::close (void)
          // unload of libACE, by a program not linked with libACE,
          // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
          // See Bugzilla 2980 for lots of details.
-         ACE_Log_Msg *tss_log_msg = 0;
          void *temp = 0;
 
          // Get the tss_log_msg from thread-specific storage.
          if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
              && temp)
            {
-             tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
+             ACE_Log_Msg *tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
              // we haven't been cleaned up
              ACE_TSS_CLEANUP_NAME(tss_log_msg);
              if (ACE_Thread::setspecific(*(log_msg_tss_key()),
