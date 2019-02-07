@@ -84,7 +84,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_ERROR_RETURN(X, Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X;                                              \
@@ -104,7 +104,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_ERROR(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
@@ -123,7 +123,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_DEBUG(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
