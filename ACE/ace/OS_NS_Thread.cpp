@@ -595,7 +595,7 @@ public:
     USE,
     DESTROY
   };
-  TSS_Cleanup_Instance (Purpose purpose = USE);
+  explicit TSS_Cleanup_Instance (Purpose purpose = USE);
   ~TSS_Cleanup_Instance();
 
   bool valid();
