@@ -162,7 +162,7 @@
 #endif /* THREAD */
 
 #ifdef ACE_ANDROID
-#  define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::SYSLOG
+#  define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::SYSLOG
 #else
 #  define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
 #endif
