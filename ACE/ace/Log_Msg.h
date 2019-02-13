@@ -161,10 +161,12 @@
 # undef THREAD
 #endif /* THREAD */
 
-#ifdef ACE_ANDROID
-#  define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::SYSLOG
-#else
-#  define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
+#ifndef ACE_DEFAULT_LOG_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
+#  endif
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

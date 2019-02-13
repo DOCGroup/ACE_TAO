@@ -138,13 +138,15 @@ private:
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = 0;
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ = 0;
 
-#ifdef ACE_ANDROID
-#  define DEFAULT_LOG_BACKEND_FLAGS ACE_Log_Msg::SYSLOG
-#else
-#  define DEFAULT_LOG_BACKEND_FLAGS 0
+#ifndef ACE_DEFAULT_LOG_BACKEND_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
+#  endif
 #endif
 
-u_long ACE_Log_Msg_Manager::log_backend_flags_ = DEFAULT_LOG_BACKEND_FLAGS;
+u_long ACE_Log_Msg_Manager::log_backend_flags_ = ACE_DEFAULT_LOG_BACKEND_FLAGS;
 
 int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 {

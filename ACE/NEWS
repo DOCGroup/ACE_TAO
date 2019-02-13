@@ -7,7 +7,11 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 . On Android, ACE_Log_Msg (and therefore ACE_DEBUG and ACE_ERROR) now uses
   Android's logging system (aka Logcat) by default in addition to stderr
   because stdout and stderr are discarded under normal circumstances.
-  Use ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SYSLOG) to disable this.
+  To disable this at runtime, run:
+    ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SYSLOG)
+  To disable this at compile time include these lines in config.h:
+    #define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
+    #define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
