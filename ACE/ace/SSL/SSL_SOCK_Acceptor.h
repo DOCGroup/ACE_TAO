@@ -70,7 +70,8 @@ public:
                          int reuse_addr = 0,
                          int protocol_family = PF_UNSPEC,
                          int backlog = ACE_DEFAULT_BACKLOG,
-                         int protocol = 0);
+                         int protocol = 0,
+                         int ipv6_only = 0);
 
   /**
    * Initiate a passive-mode QoS-enabled acceptor socket.
@@ -89,7 +90,8 @@ public:
                          int reuse_addr,
                          int protocol_family = PF_UNSPEC,
                          int backlog = ACE_DEFAULT_BACKLOG,
-                         int protocol = 0);
+                         int protocol = 0,
+                         int ipv6_only = 0);
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
@@ -107,7 +109,8 @@ public:
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
-            int protocol = 0);
+            int protocol = 0,
+            int ipv6_only = 0);
 
   /// Close the listening socket.
   int close (void);
