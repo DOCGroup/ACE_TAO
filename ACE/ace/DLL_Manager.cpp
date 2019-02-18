@@ -171,17 +171,36 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                 }
 
 #if defined (AIX)
+# define SHR_O ACE_TEXT("(shr.o)")
+# define SHR_O_LEN (sizeof (SHR_O) / sizeof(ACE_TCHAR) - 1)
               // AIX often puts the shared library file (most often named
               // shr.o) inside an archive library. If this is an archive
               // library name, then try appending [shr.o] and retry.
               if (ACE_TString::npos != name->strstr (ACE_TEXT (".a")))
                 {
                   ACE_TCHAR aix_pathname[MAXPATHLEN + 1];
-                  ACE_OS::strncpy (aix_pathname,
-                                   name->c_str (),
-                                   name->length ());
-                  aix_pathname[name->length ()] = '\0';
-                  ACE_OS::strcat (aix_pathname, ACE_TEXT ("(shr.o)"));
+                  if (name->length () + SHR_O_LEN <= MAXPATHLEN)
+                    {
+                      ACE_OS::strcpy (aix_pathname, name->c_str());
+                      ACE_OS::strcat (aix_pathname, SHR_O);
+                    }
+                  else
+                    {
+                      if (errors)
+                        {
+                          errors->push ("path is too long");
+                        }
+
+                      if (ACE::debug ())
+                        {
+                          ACELIB_ERROR ((LM_ERROR,
+                                ACE_TEXT ("ACE (%P|%t) DLL_Handle::open: ")
+                                ACE_TEXT ("('%s(shr.o)') is too long\n"),
+                                name->c_str()));
+                        }
+
+                      return -1;
+                    }
                   open_mode |= RTLD_MEMBER;
 
                   if (ACE::debug ())
