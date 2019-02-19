@@ -68,6 +68,20 @@ run_main (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("argshifter 2 test failed\n")), -1);
     }
 
+#ifdef ACE_USES_WCHAR
+  const char *args3[] = {
+    "-ORBDebugLevel 0",
+    "-o",
+    "server.ior",
+  };
+  int argc3 = sizeof args3 / sizeof args3[0];
+  ACE_Arg_Shifter_T<char> arg_shifter_char (argc3, args3);
+  if (15 != arg_shifter_char.cur_arg_strncasecmp ("-ORBDebugLevel"))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("argshifter<char> failed\n")), -1);
+    }
+#endif
+
   ACE_END_TEST;
   return 0;
 }
