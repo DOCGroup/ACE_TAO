@@ -225,6 +225,12 @@ private:
   /// <condition_>.
   ACE_SYNCH_RECURSIVE_MUTEX mutex_;
 
+  /// Attributes to initialize condition with.
+  /* We only need this because some crappy compilers can't
+     properly handle initializing the conditions with
+     temporary objects. */
+  ACE_Condition_Attributes_T<TQ::time_policy_t> cond_attr_;
+
   /**
    * The dispatching thread sleeps on this condition while waiting to
    * dispatch the next timer; it is used to wake it up if there is a
