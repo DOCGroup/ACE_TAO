@@ -229,7 +229,7 @@ private:
   /* We only need this because some crappy compilers can't
      properly handle initializing the conditions with
      temporary objects. */
-  ACE_Condition_Attributes_T<TQ::time_policy_t> cond_attr_;
+  ACE_Condition_Attributes_T<typename TQ::time_policy_t> cond_attr_;
 
   /**
    * The dispatching thread sleeps on this condition while waiting to
