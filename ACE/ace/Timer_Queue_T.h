@@ -185,7 +185,6 @@ public:
                    const void *upcall_act);
 
 protected:
-
   /// Schedule a timer.
   virtual long schedule_i (const TYPE &type,
                            const void *act,
@@ -223,7 +222,6 @@ protected:
   bool const delete_free_list_;
 
 private:
-
   /// Returned by <calculate_timeout>.
   ACE_Time_Value timeout_;
 
