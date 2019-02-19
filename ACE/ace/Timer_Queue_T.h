@@ -73,6 +73,9 @@ class ACE_Timer_Queue_T
   : public ACE_Timer_Queue_Upcall_Base<TYPE,FUNCTOR>
 {
 public:
+  /// Type of time policy
+  typedef TIME_POLICY time_policy_t;
+
   // = Initialization and termination methods.
   /**
    * Default constructor. @a upcall_functor is the instance of the
