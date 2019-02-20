@@ -203,6 +203,8 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                     }
                   open_mode |= RTLD_MEMBER;
 
+                  this->handle_ = ACE_OS::dlopen (aix_pathname, open_mode);
+
                   if (ACE::debug ())
                     {
                       ACE_TString err;
@@ -217,7 +219,6 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                                   this->error(err).c_str()));
                     }
 
-                  this->handle_ = ACE_OS::dlopen (aix_pathname, open_mode);
                   if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
                     break;
 
