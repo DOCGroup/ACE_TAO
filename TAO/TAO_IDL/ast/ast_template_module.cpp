@@ -69,18 +69,15 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
       FE_Utils::T_Param_Info *param = 0;
       (void) this->template_params_->get (param, slot);
-      const char *s = 0;
 
-      if (! this->match_one_param (param, d))
+      if (!this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
-
+          const char *s = 0;
           if (n == 0)
             {
-              AST_Constant *c =
-                AST_Constant::narrow_from_decl (d);
-
-              s = c->exprtype_to_string ();
+              AST_Constant *c = AST_Constant::narrow_from_decl (d);
+              s = AST_Expression::exprtype_to_string (c->et ());
             }
           else
             {
