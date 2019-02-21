@@ -58,6 +58,20 @@
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_BOTH */
 
+#if defined (IP_RECVDSTADDR)
+#define ACE_RECVPKTINFO IP_RECVDSTADDR
+#elif defined (IP_PKTINFO)
+#define ACE_RECVPKTINFO IP_PKTINFO
+#endif
+
+#if defined (ACE_HAS_IPV6)
+#if defined (IPV6_PKTINFO)
+#define ACE_RECVPKTINFO6 IPV6_PKTINFO
+#elif defined (IPV6_RECVPKTINFO)
+#define ACE_RECVPKTINFO6 IPV6_RECVPKTINFO
+#endif
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Accept_QoS_Params;
