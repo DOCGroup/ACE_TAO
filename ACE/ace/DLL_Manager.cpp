@@ -117,58 +117,14 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           this->get_dll_names (dll_name, dll_names);
 #endif
 
-          ACE_Array_Iterator<ACE_TString> name_iter (dll_names);
           ACE_TString *name = 0;
-          while (name_iter.next (name))
+          for (ACE_Array_Iterator<ACE_TString> name_iter (dll_names);
+               name_iter.next (name); name_iter.advance ())
             {
-              // The ACE_SHLIB_HANDLE object is obtained.
-              this->handle_ = ACE_OS::dlopen (name->c_str (),
-                                              open_mode);
-
-              if (ACE::debug ())
-                {
-                  ACE_TString err;
-                  ACELIB_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
-                              ACE_TEXT ("(\"%s\", 0x%x) -> %s: %s\n"),
-                              name->c_str (),
-                              open_mode,
-                              ((this->handle_ != ACE_SHLIB_INVALID_HANDLE)
-                               ? ACE_TEXT ("succeeded")
-                               : ACE_TEXT ("failed")),
-                              this->error (err).c_str()));
-                }
-
-              if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)   // Good one?
+              if (this->open_i (name->c_str (), open_mode))
                 break;
 
-              // If errno is ENOENT we just skip over this one,
-              // anything else - like an undefined symbol, for
-              // instance must be flagged here or the next error will
-              // mask it.
-              // @TODO: If we've found our DLL _and_ it's
-              // broken, should we continue at all?
-              if ((errno != ENOENT) && (errors || ACE::debug ()))
-                {
-                  ACE_TString errtmp;
-                  if (errors)
-                    {
-                      errors->push (this->error (errtmp));
-                    }
-
-                  if (ACE::debug ())
-                    {
-                      if (!errors)
-                        this->error (errtmp);
-                      ACELIB_ERROR ((LM_ERROR,
-                                  ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
-                                  ACE_TEXT ("(\'%s\') failed, errno=")
-                                  ACE_TEXT ("%d: <%s>\n"),
-                                  name->c_str (),
-                                  ACE_ERRNO_GET,
-                                  errtmp.c_str ()));
-                    }
-                }
+              this->log_error (name->c_str (), errors);
 
 #if defined (AIX)
 # define SHR_O ACE_TEXT("(shr.o)")
@@ -203,56 +159,12 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                     }
                   open_mode |= RTLD_MEMBER;
 
-                  if (ACE::debug ())
-                    {
-                      ACE_TString err;
-                      ACELIB_DEBUG ((LM_DEBUG,
-                                  ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
-                                  ACE_TEXT ("(\"%s\", 0x%x) -> %s: %s\n"),
-                                  aix_pathname,
-                                  open_mode,
-                                  (this->handle_ != ACE_SHLIB_INVALID_HANDLE
-                                                ? ACE_TEXT ("succeeded")
-                                                : ACE_TEXT ("failed")),
-                                  this->error(err).c_str()));
-                    }
-
-                  this->handle_ = ACE_OS::dlopen (aix_pathname, open_mode);
-                  if (this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+                  if (this->open_i (name->c_str (), open_mode))
                     break;
 
-                  // If errno is ENOENT we just skip over this one, anything
-                  // else - like an undefined symbol, for instance
-                  // must be flagged here or the next error will mask it.
-                  //
-                  // @TODO: If we've found our DLL _and_ it's broken,
-                  // should we continue at all?
-                  if ((errno != ENOENT) && (errors || ACE::debug ()))
-                    {
-                      ACE_TString errtmp;
-                      if (errors)
-                        {
-                          errors->push (this->error (errtmp));
-                        }
-
-                      if (ACE::debug ())
-                        {
-                          if (!errors)
-                            this->error (errtmp);
-                          ACELIB_ERROR ((LM_ERROR,
-                                      ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
-                                      ACE_TEXT ("(\'%s\') failed, errno=")
-                                      ACE_TEXT ("%d: <%s>\n"),
-                                      name->c_str (),
-                                      ACE_ERRNO_GET,
-                                      errtmp.c_str ()));
-                        }
-                    }
-
+                  this->log_error (name->c_str (), errors);
                 }
 #endif /* AIX */
-
-              name_iter.advance ();
             }
 
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
@@ -557,6 +469,62 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
         }
     }
   return;
+}
+
+bool
+ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode)
+{
+  // The ACE_SHLIB_HANDLE object is obtained.
+  this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
+
+  if (ACE::debug ())
+    {
+      ACE_TString err;
+      ACELIB_DEBUG ((LM_DEBUG,
+                  ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
+                  ACE_TEXT ("(\"%s\", 0x%x) -> %s: %s\n"),
+                  dll_name,
+                  open_mode,
+                  ((this->handle_ != ACE_SHLIB_INVALID_HANDLE)
+                   ? ACE_TEXT ("succeeded")
+                   : ACE_TEXT ("failed")),
+                  this->error (err).c_str()));
+    }
+
+  return this->handle_ != ACE_SHLIB_INVALID_HANDLE;
+}
+
+void
+ACE_DLL_Handle::log_error (const ACE_TCHAR *dll_name, ERROR_STACK *errors)
+{
+  // If errno is ENOENT we just skip over this one, anything
+  // else - like an undefined symbol, for instance
+  // must be flagged here or the next error will mask it.
+  //
+  // @TODO: If we've found our DLL _and_ it's broken,
+  // should we continue at all?
+  if (errno != ENOENT && (errors || ACE::debug ()))
+    {
+      ACE_TString errtmp;
+      if (errors)
+        {
+          errors->push (this->error (errtmp));
+        }
+
+      if (ACE::debug ())
+        {
+          if (!errors)
+            this->error (errtmp);
+
+          ACELIB_ERROR ((LM_ERROR,
+                      ACE_TEXT ("ACE (%P|%t) DLL_Handle::open ")
+                      ACE_TEXT ("(\'%s\') failed, errno=")
+                      ACE_TEXT ("%d: <%s>\n"),
+                      dll_name,
+                      ACE_ERRNO_GET,
+                      errtmp.c_str ()));
+        }
+    }
 }
 
 /******************************************************************/

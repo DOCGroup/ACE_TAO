@@ -15,6 +15,9 @@
 #include "ace/SOCK.h"
 #include "ace/INET_Addr.h"
 
+// Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
+#include "ace/OS_NS_sys_socket.h"
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -120,11 +123,16 @@ public:
                 int flags = 0) const;
 
   /// Recv an <iovec> of size @a n to the datagram socket (uses
-  /// <recvmsg(3)>).
+  /// <recvmsg(3)>).  The IP destination address will be placed in @a
+  /// *to_addr if it is not null and set_option has been called with
+  /// 1) level IPPROTO_IP, option ACE_RECVPKTINFO, and value 1 for
+  /// IPV4 addresses or 2) IPPROTO_IPV6, option ACE_RECVPKTINFO6, and
+  /// value 1 for IPV6 addresses.
   ssize_t recv (iovec iov[],
                 int n,
                 ACE_Addr &addr,
-                int flags = 0) const;
+                int flags = 0,
+                ACE_INET_Addr *to_addr = 0) const;
 
   /**
    * Wait up to @a timeout amount of time to receive a datagram into
