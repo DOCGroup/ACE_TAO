@@ -8,6 +8,73 @@ resources:
 - repo: self
   fetchDepth: 1
 
+  jobs:
+- job: VisualStudio2019
+  timeoutInMinutes: 120
+  pool:
+    vmImage: windows-2019
+  strategy:
+    matrix:
+      Debug64:
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+      Release64:
+        BuildPlatform: x64
+        BuildConfiguration: Release
+        vcpkgarch: x64-windows
+        vcpkglibdir: lib
+      Debug32:
+        BuildPlatform: Win32
+        BuildConfiguration: Debug
+        vcpkgarch: x86-windows
+        vcpkglibdir: debug\lib
+      Release32:
+        BuildPlatform: Win32
+        BuildConfiguration: Release
+        vcpkgarch: x86-windows
+        vcpkglibdir: lib
+  variables:
+    XERCESCROOT: $(Build.SourcesDirectory)\vcpkg\packages\xerces-c_$(vcpkgarch)
+    SSL_ROOT: $(Build.SourcesDirectory)\vcpkg\packages\openssl-windows_$(vcpkgarch)
+    SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
+    XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
+  steps:
+  - powershell: |
+      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
+      .\vcpkg\bootstrap-vcpkg.bat
+      .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+    displayName: vcpkg
+  - powershell: |
+      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+    displayName: Create config.h file
+  - powershell: |
+      echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+    displayName: Create default.features file
+  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+    displayName: git clone MPC
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc -workers 4
+    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+  - task: VSBuild@1
+    displayName: Build solution TAO/TAO_ACE.sln
+    inputs:
+      solution: TAO/TAO_ACE.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+  - task: VSBuild@1
+    displayName: Build solution ACE/tests/tests.sln
+    inputs:
+      solution: ACE/tests/tests.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+
 jobs:
 - job: VisualStudio2017
   timeoutInMinutes: 120
