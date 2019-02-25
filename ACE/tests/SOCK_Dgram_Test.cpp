@@ -88,7 +88,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return;
+        return 0;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
