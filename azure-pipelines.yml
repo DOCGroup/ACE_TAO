@@ -56,9 +56,9 @@ resources:
     displayName: Create default.features file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2019 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2019 $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - task: VSBuild@1
     displayName: Build solution TAO/TAO_ACE.sln
