@@ -131,7 +131,8 @@ client (void *arg)
       ACE_INET_Addr to_addr = local_addr;
 
       iovec iov[1];
-      iov[0].iov_base = buf;
+      // Some platforms define iov_base as char* instead of void*.
+      iov[0].iov_base = (char *)buf;
       iov[0].iov_len = 20;
 
       ssize_t rcv_cnt = cli_dgram.recv (iov,
