@@ -8,7 +8,7 @@ resources:
 - repo: self
   fetchDepth: 1
 
-  jobs:
+jobs:
 - job: VisualStudio2019
   timeoutInMinutes: 120
   pool:
@@ -75,7 +75,6 @@ resources:
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
 
-jobs:
 - job: VisualStudio2017
   timeoutInMinutes: 120
   pool:
