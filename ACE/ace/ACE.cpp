@@ -3240,11 +3240,18 @@ ACE::strndup (const wchar_t *str, size_t n)
        len++)
     continue;
 
+  size_t const size = (len + 1) * sizeof (wchar_t);
   wchar_t *s;
+#if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
-                        static_cast<wchar_t *> (
-            ACE_OS::malloc ((len + 1) * sizeof (wchar_t))),
+                        static_cast<wchar_t*> (
+                          ACE_Allocator::instance ()->malloc (size)),
                         0);
+#else
+  ACE_ALLOCATOR_RETURN (s,
+                        static_cast<wchar_t*> (ACE_OS::malloc (size)),
+                        0);
+#endif /* ACE_HAS_ALLOC_HOOKS */
   return ACE_OS::strsncpy (s, str, len + 1);
 }
 #endif /* ACE_HAS_WCHAR */
@@ -3346,10 +3353,19 @@ ACE::strnew (const wchar_t *s)
 {
   if (s == 0)
     return 0;
+
+  size_t const n = ACE_OS::strlen (s) + 1;
   wchar_t *t = 0;
-  ACE_NEW_RETURN (t,
-                  wchar_t[ACE_OS::strlen (s) + 1],
-                  0);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_ALLOCATOR_RETURN (t,
+                        static_cast<wchar_t*> (
+                          ACE_Allocator::instance ()->malloc (
+                            sizeof (wchar_t) * (n))),
+                        0);
+#else
+  ACE_NEW_RETURN (t, wchar_t[n], 0);
+#endif  /* ACE_HAS_ALLOC_HOOKS */
+
   return ACE_OS::strcpy (t, s);
 }
 #endif /* ACE_HAS_WCHAR */
