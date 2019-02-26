@@ -326,6 +326,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     u_char padding6[CMSG_SPACE(sizeof (struct in6_pktinfo))];
 #endif
   } cbuf;
+#else
+  ACE_UNUSED_ARG (to_addr);
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   recv_msg.msg_iov = (iovec *) iov;

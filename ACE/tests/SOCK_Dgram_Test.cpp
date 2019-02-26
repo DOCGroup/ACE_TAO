@@ -88,7 +88,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IPV6, ACE_RECVPKTINFO6, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return;
+        return 0;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -131,7 +131,8 @@ client (void *arg)
       ACE_INET_Addr to_addr = local_addr;
 
       iovec iov[1];
-      iov[0].iov_base = buf;
+      // Some platforms define iov_base as char* instead of void*.
+      iov[0].iov_base = (char *)buf;
       iov[0].iov_len = 20;
 
       ssize_t rcv_cnt = cli_dgram.recv (iov,
