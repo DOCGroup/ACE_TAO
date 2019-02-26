@@ -60,7 +60,7 @@ jobs:
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
-  - script: |
+  - powershell: |
       echo $(OptionalFeatures) | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Add optional features ($(OptionalFeatures))
     condition: and(succeeded(), ne(variables['OptionalFeatures'], ''))
