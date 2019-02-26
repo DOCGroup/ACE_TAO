@@ -54,7 +54,7 @@ jobs:
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
-  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
+  - powershell: git clone --depth 1 --branch jwi-vs2019 https://github.com/jwillemsen/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
   - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2019 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
