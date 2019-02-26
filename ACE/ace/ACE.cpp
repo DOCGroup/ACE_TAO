@@ -3241,7 +3241,7 @@ ACE::strndup (const wchar_t *str, size_t n)
     continue;
 
   size_t const size = (len + 1) * sizeof (wchar_t);
-  wchar_t *s;
+  wchar_t *s = 0;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (s,
                         static_cast<wchar_t*> (
