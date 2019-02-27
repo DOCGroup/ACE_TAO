@@ -20,7 +20,7 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        OptionalFeatures: uses_wchar=1
+        OptionalFeatures: uses_wchar=1 xerces3=0
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
