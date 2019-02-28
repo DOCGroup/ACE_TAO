@@ -15,6 +15,12 @@ jobs:
     vmImage: vs2017-win2016
   strategy:
     matrix:
+      WChar:
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+        OptionalFeatures: uses_wchar=1 xerces3=0
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
@@ -54,6 +60,10 @@ jobs:
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
+  - powershell: |
+      echo $(OptionalFeatures) | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+    displayName: Add optional features ($(OptionalFeatures))
+    condition: and(succeeded(), ne(variables['OptionalFeatures'], ''))
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
   - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
