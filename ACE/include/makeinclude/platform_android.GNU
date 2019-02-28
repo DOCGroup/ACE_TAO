@@ -174,3 +174,6 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
+
+# Link To Android Logging Library for Log_Msg_Android_Logcat
+LIBS += -llog
