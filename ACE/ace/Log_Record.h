@@ -45,9 +45,8 @@ public:
     ALIGN_WORDB  = 8,
 
     /// Size used by verbose mode.
-    /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type)
-    ///           + 4 (@) ... + ? (progname)
-    VERBOSE_LEN = 128,
+    /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type) + 4 (@)
+    VERBOSE_LEN = 59,
 
     /// Maximum size of a logging message with the verbose headers
     MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN
