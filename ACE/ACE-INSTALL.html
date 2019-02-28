@@ -463,24 +463,13 @@ State Perl.</a></p>
 Microsoft Visual Studio</a></h3>
 
 <p>ACE contains project files for
-Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
-Visual Studio 2005 supports building for
-desktop/server Windows as well as for Windows CE and Windows Mobile. Since
-not all users will be interested in the CE/Mobile capability, these platforms
-have separate solution and project files from the desktop/server Windows.
-Furthermore, VC7.1, VC8, VC9, and 10 use different file formats but the same file
+Visual Studio 2015 (vc14), and Visual Studio 2017 (vc141).
+Visual Studio 2015 and 2017 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
 development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
-
-<p>
-The free Visual C++ 2008 Express Edition will work in place of the traditional
-Visual Studio editions.  All the other notes in this document
-that are for VC8 / VC9 also apply to the express edition.  MFC, 64-bit, and
-CE/mobile options are not available with the express edition.  64-bit binaries
-can be built with the compiler and linker included in the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en">Windows SDK</a>, using nmake as the build system (generate nmake makefiles with mwc.pl -type nmake).</p>
 
 <table width="400">
 <caption><b>Mapping of Platform to Solution/Project File Name</b></caption>
@@ -491,28 +480,13 @@ can be built with the compiler and linker included in the <a href="http://www.mi
   </tr>
 </thead><tbody>
   <tr>
-    <th>VC7.1</th>
-    <td><i>name</i><code>_vc71</code>
+    <th>Visual Studio 2015</th>
+    <td><i>name</i><code>_vc14</code>
     </td>
   </tr>
   <tr>
-    <th>VC8 for desktop/server</th>
-    <td><i>name</i><code>_vc8</code>
-    </td>
-  </tr>
-  <tr>
-    <th>VC8 for Windows CE/Mobile</th>
-    <td><i>name</i><code>_WinCE</code>
-    </td>
-  </tr>
-  <tr>
-    <th>VC9 for desktop/server</th>
-    <td><i>name</i><code>_vc9</code>
-    </td>
-  </tr>
-  <tr>
-    <th>VC10 for desktop/server</th>
-    <td><i>name</i><code>_vc10</code>
+    <th>Visual Studio 2017</th>
+    <td><i>name</i><code>_vs2017</code>
     </td>
   </tr>
 </tbody></table>
@@ -524,15 +498,8 @@ comments of
 <a href="include/makeinclude/platform_win32_msvc.GNU">platform_win32_msvc.GNU</a>.
 </p>
 
-<p>If you happen to open a VC7.1 file from within VC8, it will offer to convert
-the file to the newer format for you. With the stock VC8, do not do this;
-Visual Studio will crash while attempting to convert the large
-solution and project files to build ACE. Simply refuse the conversion and
-open the file with the correct format. Note that Microsoft has fixed this
-problem. See
-<a href="https://msdn.microsoft.com/visualc/downloads/default.aspx">
-https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
-</p>
+<p>If you happen to open an older file Visual Studio solution from a newer one, it will offer to convert
+the file to the newer format for you
 
 <ol>
   <li>Uncompress the ACE distribution into a directory, where it will
@@ -1537,29 +1504,32 @@ Tornado II make (version 3.74)</p>
 Control Panel-&gt; System -&gt; Environment)</p>
 <p>I added following Environment variable entries to PATH </p>
 
-<p>C:\Perl\bin\;</p>
-<p>C:\tornado\host\x86-win32\bin;</p>
-<p>C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;</p>
-<p>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;</p>
-<p>C:\Corba\Ace_wrappers\bin;</p>
-<p>C:\Cygwin\bin;</p>
-<p>C:\Cygwin\usr\bin;</p>
-<p>C:\bin</p>
+<pre>
+C:\Perl\bin\;
+C:\tornado\host\x86-win32\bin;
+C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;
+C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;
+C:\Corba\Ace_wrappers\bin;
+C:\Cygwin\bin;
+C:\Cygwin\usr\bin;
+C:\bin
+</pre>
 
 <p>Additional Environmental variables and the values,</p>
-<p>CPU=PPC860</p>
-<p>LD_LIBRARY_PATH=</p>
-<p>SHELL=/bin/sh.exe</p>
-
-<p>ACE_ROOT=/Corba/ACE_wrappers</p>
-<p>WIND_BASE=/tornado</p>
-<p>SHELL=/bin/sh.exe</p>
-<p>TERM=pcbios</p>
-<p>TAO_ROOT=/Corba/ACE_wrapper/Tao</p>
-<p>CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe</p>
-<p>GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/</p>
-<p>WIND_HOST_TYPE=x86-win32</p>
-<p>PERL_PATH=/perl/bin/perl.exe</p>
+<pre>
+CPU=PPC860
+LD_LIBRARY_PATH=
+SHELL=/bin/sh.exe
+ACE_ROOT=/Corba/ACE_wrappers
+WIND_BASE=/tornado
+SHELL=/bin/sh.exe
+TERM=pcbios
+TAO_ROOT=/Corba/ACE_wrapper/Tao
+CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe
+GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/
+WIND_HOST_TYPE=x86-win32
+PERL_PATH=/perl/bin/perl.exe
+</pre>
 
 <b><p>Directories of importance</p>
 </b><p>C:\Corba         &lt;-- Ace_wrappers (uzipped)</p>
@@ -1577,20 +1547,22 @@ Control Panel-&gt; System -&gt; Environment)</p>
 <b><p>Create Files</p>
 </b><p>1) C:\Corba\ACE_Wrappers\ace\config.h</p>
 <p>with entry</p>
-<p>#if defined (_MSC_VER) || (__BORLANDC__)</p>
-<p>     #include "ace/config-win32.h"</p>
-<p>#else</p>
-<p>     #define ACE_HAS_IP_MULTICAST </p>
-<p>     #include "ace/config-vxworks5.x.h"</p>
-<p>#endif</p>
+<pre>
+#if defined (_MSC_VER) || (__BORLANDC__)
+  #include "ace/config-win32.h"
+#else
+  #define ACE_HAS_IP_MULTICAST
+  #include "ace/config-vxworks5.x.h"
+#endif
+</pre>
 
 <p>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</p>
-<p>WIND_BASE = /tornado</p>
-<p>WIND_HOST_TYPE = x86-win32</p>
-<p>include
-$(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU</p>
-<p>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
-library that supports TAO)</p>
+<pre>
+WIND_BASE = /tornado
+WIND_HOST_TYPE = x86-win32
+include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU
+ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE library that supports TAO)
+</pre>
 
 <p></p>
 <b><p>Steps to Build</p>
@@ -3114,12 +3086,12 @@ quickly.
   and associated utility libraries with GNUmakefiles, you must
   generate GNUmakefiles with MPC:<p>
   <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p>
-  <p>On Windows, with Visual C++ 8, you must generate solution and project files with MPC:<p>
+  <p>On Windows, with Visual Studio 2015, you must generate solution and project files with MPC:<p>
 
-  <code> $ACE_ROOT/bin/mwc.pl -type vc8 ACE.mwc </code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vc14 ACE.mwc </code> </p><p>
 
-  On Windows, with Visual C++ 7, you must generate solution and project files with MPC:<p>
-  <code> $ACE_ROOT/bin/mwc.pl -type vc71 ACE.mwc </code> </p>
+  On Windows, with Visual Studio 2017, you must generate solution and project files with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vs2017 ACE.mwc </code> </p>
   </li><li>If you want to build TAO and its associated libraries
   please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a> for details.
 </li></ul>
