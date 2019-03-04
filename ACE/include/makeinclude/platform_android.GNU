@@ -171,3 +171,6 @@ OCCFLAGS ?= -O3
 ifeq ($(ssl),1)
   PLATFORM_SSL_LDFLAGS += --exclude-libs libcrypto.a,libssl.a
 endif
+
+# Link To Android Logging Library for Log_Msg_Android_Logcat
+LIBS += -llog

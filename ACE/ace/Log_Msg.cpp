@@ -47,7 +47,9 @@
 #include "ace/Log_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-
+#ifdef ACE_ANDROID
+#  include "ace/Log_Msg_Android_Logcat.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -80,11 +82,11 @@ public:
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
+#elif defined (ACE_ANDROID)
+#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_Android_Logcat
 #elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
-#else
-#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
-#endif /* ! ACE_WIN32 */
+#endif
 
 // When doing ACE_OS::s[n]printf() calls in log(), we need to update
 // the space remaining in the output buffer based on what's returned from
@@ -136,7 +138,15 @@ private:
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = 0;
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ = 0;
 
-u_long ACE_Log_Msg_Manager::log_backend_flags_ = 0;
+#ifndef ACE_DEFAULT_LOG_BACKEND_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
+#  endif
+#endif
+
+u_long ACE_Log_Msg_Manager::log_backend_flags_ = ACE_DEFAULT_LOG_BACKEND_FLAGS;
 
 int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 {
@@ -166,14 +176,14 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 
   if (ACE_Log_Msg_Manager::log_backend_ == 0)
     {
-#if (defined (WIN32) || !defined (ACE_LACKS_UNIX_SYSLOG)) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#ifdef ACE_LOG_MSG_SYSLOG_BACKEND
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_LOG_MSG_SYSLOG_BACKEND,
                         -1);
       else
-#endif /* defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP) */
+#endif
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_Log_Msg_IPC,
                         -1);
@@ -425,7 +435,7 @@ const ACE_TCHAR *ACE_Log_Msg::local_host_ = 0;
 const ACE_TCHAR *ACE_Log_Msg::program_name_ = 0;
 
 /// Default is to use stderr.
-u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
+u_long ACE_Log_Msg::flags_ = ACE_DEFAULT_LOG_FLAGS;
 
 /// Current offset of msg_[].
 ptrdiff_t ACE_Log_Msg::msg_off_ = 0;

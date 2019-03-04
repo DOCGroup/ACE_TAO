@@ -109,7 +109,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr <ACE_Message_Block> header (header_p);
+#else
   auto_ptr <ACE_Message_Block> header (header_p);
+#endif /* ACE_HAS_CPP11 */
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -217,7 +221,11 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr <ACE_Message_Block> payload (payload_p);
+#else
   auto_ptr <ACE_Message_Block> payload (payload_p);
+#endif /* ACE_HAS_CPP11 */
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);

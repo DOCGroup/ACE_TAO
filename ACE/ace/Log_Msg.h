@@ -161,6 +161,14 @@
 # undef THREAD
 #endif /* THREAD */
 
+#ifndef ACE_DEFAULT_LOG_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
+#  endif
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Log_Msg_Callback;
@@ -234,7 +242,7 @@ public:
     SYSLOG = 128,
     /// Write messages to the user provided backend
     CUSTOM = 256
- };
+  };
 
   // = Initialization and termination routines.
 
@@ -284,7 +292,7 @@ public:
    *                       @a logger_key is 0, @a prog_name is used.
    */
   int open (const ACE_TCHAR *prog_name,
-            u_long options_flags = ACE_Log_Msg::STDERR,
+            u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
             const ACE_TCHAR *logger_key = 0);
 
   // = Set/get the options flags.

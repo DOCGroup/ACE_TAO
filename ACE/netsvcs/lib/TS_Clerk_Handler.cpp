@@ -245,8 +245,8 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
       switch (n)
         {
         case -1:
-          // FALLTHROUGH
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("****************** recv_reply returned -1\n")));
+          // FALLTHROUGH
         default:
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                       ACE_TEXT ("recv failed"), n, bytes_expected));

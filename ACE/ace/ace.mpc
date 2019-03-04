@@ -92,6 +92,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Lock.cpp
     Log_Category.cpp
     Log_Msg.cpp
+    Log_Msg_Android_Logcat.cpp
     Log_Msg_Backend.cpp
     Log_Msg_Callback.cpp
     Log_Msg_IPC.cpp
