@@ -50,7 +50,6 @@ jobs:
   - powershell: |
       vcpkg install --recurse --triplet $(vcpkgarch) openssl xerces-c
     displayName: Install additional packages using vcpkg
-    displayName: vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
