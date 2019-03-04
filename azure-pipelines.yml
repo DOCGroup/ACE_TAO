@@ -44,7 +44,7 @@ jobs:
   variables:
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
     XERCESC_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkglibdir)
-    SSL_INCDIR: $(VCPKG_ROOT\installed\$(vcpkgarch)\include
+    SSL_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
     SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkglibdir)
   steps:
   - powershell: |
