@@ -67,6 +67,8 @@
 #  define ACE_LACKS_GETHOSTENT
 #  define ACE_LACKS_LOCALECONV
 #  define ACE_LACKS_WCHAR_STD_NAMESPACE
+// Used in tests/Sequence_Unit_Tests/string_sequence_tester.hpp
+#  define TAO_LACKS_WCHAR_CXX_STDLIB
 #endif
 
 #if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 18
@@ -157,8 +159,6 @@
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
-
-#define ACE_HAS_PTHREADS_UNIX98_EXT
 
 #include "ace/config-posix.h"
 
