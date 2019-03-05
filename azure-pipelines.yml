@@ -42,16 +42,15 @@ jobs:
         vcpkgarch: x86-windows
         vcpkglibdir: lib
   variables:
-    XERCESCROOT: $(Build.SourcesDirectory)\vcpkg\packages\xerces-c_$(vcpkgarch)
-    SSL_ROOT: $(Build.SourcesDirectory)\vcpkg\packages\openssl-windows_$(vcpkgarch)
-    SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
-    XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
+    VCPKG_ROOT: C:\vcpkg
+    XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
+    XERCESC_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
+    SSL_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
+    SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
   steps:
   - powershell: |
-      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
-      .\vcpkg\bootstrap-vcpkg.bat
-      .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
-    displayName: vcpkg
+      vcpkg install --recurse --triplet $(vcpkgarch) openssl xerces-c
+    displayName: Install additional packages using vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
