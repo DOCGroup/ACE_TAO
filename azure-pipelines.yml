@@ -36,6 +36,7 @@ jobs:
         vcpkgarch: x86-windows
         vcpkglibdir: lib
   variables:
+    VCPKG_ROOT: C:\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
     XERCESC_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkglibdir)
     SSL_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
