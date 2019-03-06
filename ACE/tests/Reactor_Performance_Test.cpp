@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"
 #include "ace/Profile_Timer.h"
@@ -24,8 +23,6 @@
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
-
-
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 

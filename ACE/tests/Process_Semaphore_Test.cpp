@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Mutex.h"
 #include "ace/Process.h"
@@ -29,8 +28,6 @@
 #include "ace/os_include/os_dirent.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/SString.h"
-
-
 
 #if !defined (ACE_LACKS_FORK)
 static int iterations = 10;
