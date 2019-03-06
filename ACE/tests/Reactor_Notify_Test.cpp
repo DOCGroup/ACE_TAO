@@ -14,7 +14,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Synch_Traits.h"
@@ -24,8 +23,6 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Semaphore.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

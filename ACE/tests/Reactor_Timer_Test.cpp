@@ -12,7 +12,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
 #include "ace/Reactor.h"
@@ -22,8 +21,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Auto_Ptr.h"
-
-
 
 static int done = 0;
 static int the_count = 0;

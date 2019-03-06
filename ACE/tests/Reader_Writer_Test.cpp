@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread.h"
 #include "ace/Thread_Manager.h"
@@ -21,8 +20,6 @@
 #include "ace/Guard_T.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
