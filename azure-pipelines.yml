@@ -20,7 +20,8 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        OptionalFeatures: uses_wchar=1 xerces3=0
+        vcpkgxercesfeature: [xmlch_wchar]
+        OptionalFeatures: uses_wchar=1
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
@@ -49,7 +50,7 @@ jobs:
     SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
   steps:
   - powershell: |
-      vcpkg install --recurse --triplet $(vcpkgarch) openssl xerces-c
+      vcpkg install --recurse --triplet $(vcpkgarch) openssl xerces-c$(vcpkgxercesfeature)
     displayName: Install additional packages using vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
