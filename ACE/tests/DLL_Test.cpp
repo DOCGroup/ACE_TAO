@@ -16,6 +16,7 @@
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/SString.h"
+#include "ace/OS_NS_dlfcn.h"
 #include "DLL_Test.h"
 
 
@@ -167,6 +168,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_HAS_DYNAMIC_LINKING */
+
+  ACE_TEST_ASSERT (ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, "open"));
 
   ACE_END_TEST;
   return retval == 0 ? 0 : 1;
