@@ -20,7 +20,7 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c[xmlch_wchar]
+        vcpkgpackages: 'openssl xerces-c[xmlch_wchar]'
         OptionalFeatures: uses_wchar=1
       Debug64:
         BuildPlatform: x64
