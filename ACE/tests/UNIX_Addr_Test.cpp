@@ -34,8 +34,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.set (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
 
   // Set longer path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -43,8 +43,8 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () > origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
 
   // Set shorter path by ACE_UNIX_Addr::string_to_addr
   origin = addr.get_size ();
@@ -52,8 +52,27 @@ int run_main (int, ACE_TCHAR *[])
   addr.string_to_addr (path);
   ACE_TEST_ASSERT (addr.get_size () < origin);
   ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
-  ACE_TEST_ASSERT (strcmp(path, addr.get_path_name ()) == 0);
+  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (strcmp (path, addr.get_path_name ()) == 0);
+
+#if defined(ACE_LINUX)
+  // Set abstract path by set.
+  path = "@/tmp/ace.test";
+  addr.set (path);
+  ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
+  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
+  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+
+  // Set abstract path by string_to_addr.
+  path = "@/tmp/unix_addr_test";
+  addr.string_to_addr (path);
+  ACE_TEST_ASSERT (addr.addr_to_string (buf, sizeof (buf)) == 0);
+  ACE_TEST_ASSERT (strcmp (path, ACE_TEXT_ALWAYS_CHAR(buf)) == 0);
+  ACE_TEST_ASSERT (*addr.get_path_name () == '\0');
+  ACE_TEST_ASSERT (strcmp (path + 1, addr.get_path_name () + 1) == 0);
+#endif // ACE_LINUX
+
 #endif // ! ACE_LACKS_UNIX_DOMAIN_SOCKETS
 
   ACE_END_TEST;
