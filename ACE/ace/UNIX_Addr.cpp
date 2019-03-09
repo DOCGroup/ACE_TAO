@@ -41,6 +41,10 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 {
   ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
                     sizeof this->unix_addr_.sun_path);
+
+  this->set_size (sizeof this->unix_addr_ -
+                  sizeof (this->unix_addr_.sun_path) +
+                  ACE_OS::strlen (this->unix_addr_.sun_path));
   return 0;
 }
 
@@ -71,7 +75,8 @@ ACE_UNIX_Addr::dump (void) const
 // Do nothing constructor.
 
 ACE_UNIX_Addr::ACE_UNIX_Addr (void)
-  : ACE_Addr (AF_UNIX, sizeof this->unix_addr_)
+  : ACE_Addr (AF_UNIX,
+              sizeof this->unix_addr_ - sizeof (this->unix_addr_.sun_path))
 {
   (void) ACE_OS::memset ((void *) &this->unix_addr_,
                          0,
