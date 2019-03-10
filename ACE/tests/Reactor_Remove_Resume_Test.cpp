@@ -13,7 +13,6 @@
  * @author  Ossama Othman
  */
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"

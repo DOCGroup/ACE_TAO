@@ -130,6 +130,13 @@ client (void *arg)
 
       ACE_INET_Addr to_addr = local_addr;
 
+#if defined(ACE_LACKS_RECVMSG)
+      ssize_t rcv_cnt = cli_dgram.recv (buf,
+                                        sizeof (buf),
+                                        peer_addr,
+                                        0,
+                                        &timeout);
+#else
       iovec iov[1];
       // Some platforms define iov_base as char* instead of void*.
       iov[0].iov_base = (char *)buf;
@@ -140,6 +147,8 @@ client (void *arg)
                                         peer_addr,
                                         0,
                                         &to_addr);
+#endif
+
       if (rcv_cnt == -1)
         {
           if (errno == ETIME)

@@ -67,7 +67,11 @@ int Consumer::svc ()
   while(this->getq (pMsg)!=-1)
   {
     ACE_TEST_ASSERT (pMsg!=0);
+#if defined (ACE_HAS_CPP11)
+    std::unique_ptr<User_Defined_Msg> pAuto(pMsg);
+#else
     auto_ptr<User_Defined_Msg> pAuto(pMsg);
+#endif /* ACE_HAS_CPP11 */
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
                pMsg->msg_id ()));

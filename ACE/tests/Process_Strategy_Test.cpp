@@ -29,7 +29,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
@@ -48,8 +47,6 @@
 
 // Counting_Service and Options in here
 #include "Process_Strategy_Test.h"
-
-
 
 // This test does not function properly when fork() is used on HP-UX
 #if defined(__hpux)

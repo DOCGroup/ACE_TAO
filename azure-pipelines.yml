@@ -85,36 +85,43 @@ jobs:
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
-        OptionalFeatures: uses_wchar=1 xerces3=0
+        vcpkgpackages: 'openssl xerces-c[xmlch_wchar]'
+        OptionalFeatures: uses_wchar=1
       Debug64:
         BuildPlatform: x64
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
+        vcpkgpackages: openssl xerces-c
       Release64:
         BuildPlatform: x64
         BuildConfiguration: Release
         vcpkgarch: x64-windows
         vcpkglibdir: lib
+        vcpkgpackages: openssl xerces-c
       Debug32:
         BuildPlatform: Win32
         BuildConfiguration: Debug
         vcpkgarch: x86-windows
         vcpkglibdir: debug\lib
+        vcpkgpackages: openssl xerces-c
       Release32:
         BuildPlatform: Win32
         BuildConfiguration: Release
         vcpkgarch: x86-windows
         vcpkglibdir: lib
+        vcpkgpackages: openssl xerces-c
   variables:
-    VCPKG_ROOT: C:\vcpkg
+    VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
     XERCESC_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
     SSL_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
     SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
   steps:
   - powershell: |
-      vcpkg install --recurse --triplet $(vcpkgarch) openssl xerces-c
+      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
+      $(VCPKG_ROOT)\bootstrap-vcpkg.bat
+      $(VCPKG_ROOT)\vcpkg install --recurse --triplet $(vcpkgarch) $(vcpkgpackages)
     displayName: Install additional packages using vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h

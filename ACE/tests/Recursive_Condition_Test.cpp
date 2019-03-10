@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
@@ -20,8 +19,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
