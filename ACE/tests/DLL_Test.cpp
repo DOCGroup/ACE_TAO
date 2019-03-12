@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/DLL.h"
 #include "ace/Auto_Ptr.h"
@@ -18,8 +17,6 @@
 #include "ace/SString.h"
 #include "ace/OS_NS_dlfcn.h"
 #include "DLL_Test.h"
-
-
 
 #if defined (ACE_LD_DECORATOR_STR)
 # define OBJ_SUFFIX ACE_LD_DECORATOR_STR ACE_DLL_SUFFIX
@@ -169,7 +166,7 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_HAS_DYNAMIC_LINKING */
 
-  ACE_TEST_ASSERT (ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, "open"));
+  ACE_TEST_ASSERT (ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open")));
 
   ACE_END_TEST;
   return retval == 0 ? 0 : 1;
