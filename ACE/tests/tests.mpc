@@ -2284,3 +2284,10 @@ project(Missing_Svc_Conf_Test) : acetest {
     Missing_Svc_Conf_Test.cpp
   }
 }
+
+project(UNIX Addr Test) : acetest {
+  exename = UNIX_Addr_Test
+  Source_Files {
+    UNIX_Addr_Test.cpp
+  }
+}
