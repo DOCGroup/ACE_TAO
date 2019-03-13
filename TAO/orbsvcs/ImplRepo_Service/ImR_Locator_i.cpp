@@ -1465,7 +1465,6 @@ ImR_Locator_i::list
  CORBA::ULong how_many,
  CORBA::Boolean active)
 {
-
   AsyncListManager *l = 0;
   try
     {
