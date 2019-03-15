@@ -1668,7 +1668,7 @@ defined by two things:</p>
     <p><b>
       It should be noted that starting in August 2019, the Google Play
       Store will require new apps to have 64-bit libraries if they have native
-      libraries. 32-bit native libraries will still supported but they must also
+      libraries. 32-bit native libraries will still be supported but they must also
       have 64-bit libraries. Look up any restrictions that may affect
       apps you want to publish on the Play Store, including minimum API
       level.
@@ -1809,6 +1809,44 @@ directory.  The native application can also be uploaded using the Software
 Development Kit's ADB tool.  This method requires uploading the native
 application to a directory that allows execution and having any output
 directed to a writable directory.</p>
+
+<h3>Logging</h3>
+<p>
+On Android, <code>ACE_Log_Msg</code> (and therefore <code>ACE_DEBUG</code> and
+<code>ACE_ERROR</code>) uses Android's logging system (aka Logcat) by default
+in addition to <code>stderr</code> because <code>stdout</code> and
+<code>stderr</code> are discarded under normal circumstances. To disable this
+at runtime, run:
+</p>
+
+<p class="indent">
+<code>ACE_LOG_MSG-&gt;clr_flags (ACE_Log_Msg::SYSLOG);</code>
+</p>
+
+<p>To disable this at compile time include these lines in <code>config.h</code>:</p>
+
+<code class="indent">
+#define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR<br>
+</code>
+<code class="indent">
+#define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
+</code>
+
+<h3>OpenSSL</h3>
+<p>
+  Depending on the features of ACE, TAO, or other software desired, you might need
+  OpenSSL. On Android, OpenSSL isn't part of the NDK Library and Android
+  preloads the system SSL library (either OpenSSL or BoringSSL) for the Java
+  Android API. This means OpenSSL <b>MUST</b> be statically linked to avoid
+  conflicts with the almost certianly incompatible system SSL library.
+
+  To build OpenSSL for Android, please read <code>NOTES.ANDROID</code> that comes
+  with OpenSSL's source code. The static libraries will used if the shared
+  libraries are not found. This can be accomplished by either disabling the
+  generation of the shared libraries by passing <code>no-shared</code> to
+  OpenSSL's <code>Configure</code> script or just deleting the so files after
+  building OpenSSL.
+</p>
 
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
