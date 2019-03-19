@@ -49,7 +49,7 @@ ACE_Log_Msg_Android_Logcat::~ACE_Log_Msg_Android_Logcat (void)
 }
 
 int
-ACE_Log_Msg_Android_Logcat::open (const ACE_TCHAR * logger_key)
+ACE_Log_Msg_Android_Logcat::open (const ACE_TCHAR *)
 {
   return 0;
 }
