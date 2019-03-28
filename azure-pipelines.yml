@@ -54,7 +54,7 @@ jobs:
     SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
   steps:
   - powershell: |
-      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
+      git clone -q --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
       $(VCPKG_ROOT)\bootstrap-vcpkg.bat
       $(VCPKG_ROOT)\vcpkg install --recurse --triplet $(vcpkgarch) $(vcpkgpackages)
     displayName: Install additional packages using vcpkg
