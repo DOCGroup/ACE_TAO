@@ -13,6 +13,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
     #define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
     #define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
 
+. Add initial support for Visual Studio 2019
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
