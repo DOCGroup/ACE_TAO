@@ -463,8 +463,8 @@ State Perl.</a></p>
 Microsoft Visual Studio</a></h3>
 
 <p>ACE contains project files for
-Visual Studio 2015 (vc14), and Visual Studio 2017 (vc141).
-Visual Studio 2015 and 2017 use different file formats but the same file
+Visual Studio 2015 (vc14), Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
+Visual Studio 2015/2017/2019 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
 development and target platforms. The platform/name mapping is shown below.
@@ -487,6 +487,11 @@ a <code>.vcproj</code> suffix.</p>
   <tr>
     <th>Visual Studio 2017</th>
     <td><i>name</i><code>_vs2017</code>
+    </td>
+  </tr>
+  <tr>
+    <th>Visual Studio 2019</th>
+    <td><i>name</i><code>_vs2019</code>
     </td>
   </tr>
 </tbody></table>
@@ -3092,18 +3097,16 @@ quickly.
 
   On Windows, with Visual Studio 2017, you must generate solution and project files with MPC:<p>
   <code> $ACE_ROOT/bin/mwc.pl -type vs2017 ACE.mwc </code> </p>
+
+  On Windows, with Visual Studio 2019, you must generate solution and project files with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vs2019 ACE.mwc </code> </p>
   </li><li>If you want to build TAO and its associated libraries
   please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a> for details.
 </li></ul>
 
 <hr><p>
-
 Back to the <a href="https://www.dre.vanderbilt.edu/~schmidt/ACE.html">ACE</a>
 home page.
-
-
-
-
 </p><p>
 <!--<EM>
 Visitor #
