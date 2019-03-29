@@ -20,6 +20,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 
 . minizip has been moved from ACE to DANCE
 
+. Add initial support for Visual Studio 2019
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
