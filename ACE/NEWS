@@ -24,6 +24,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 
 . Validated ACE for usage SLES15.0 x86_64 using 32bit g++ compiler
 
+. Add optional argument for the receive address in ACE_SOCK_Dgram::recv
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
