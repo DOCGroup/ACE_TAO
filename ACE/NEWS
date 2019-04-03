@@ -22,6 +22,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 
 . Add initial support for Visual Studio 2019
 
+. Validated ACE for usage SLES15.0 x86_64 using 32bit g++ compiler
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.3 and ACE-6.5.4
 ====================================================
 
