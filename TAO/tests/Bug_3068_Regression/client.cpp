@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Client callback activated as <%C>\n",
                             ior.in ()));
 
-      // Send the calback object to the server
+      // Send the callback object to the server
       server->callback_object (callback.in ());
 
       int pre_call_connections =
