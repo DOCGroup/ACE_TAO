@@ -915,7 +915,7 @@ LiveCheck::remove_server (const char *server, int pid)
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server removing <%C> pid <%d> entry pid <%d> status <%C>\n "),
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server removing <%C> pid <%d> entry pid <%d> status <%C>\n"),
                               server, pid, entry->pid (), LiveEntry::status_name (entry->status ())));
             }
           if (entry_map_.unbind (s, entry) == 0)
