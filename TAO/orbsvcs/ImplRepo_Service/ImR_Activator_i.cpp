@@ -472,8 +472,8 @@ ImR_Activator_i::start_server(const char* name,
       if (debug_ > 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-                        "(%P|%t) ImR Activator: Unique instance already running pid <%d>\n",
-                        static_cast<int> (pid)));
+                        "(%P|%t) ImR Activator: Unique instance for <%C> already running pid <%d>\n",
+                        name, static_cast<int> (pid)));
         }
       char reason[32];
       ACE_OS::snprintf (reason,32,"pid:%d",static_cast<int> (pid));
