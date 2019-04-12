@@ -449,6 +449,10 @@
 
 #endif /* __UCLIBC__ */
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION (2,4,11))
+#  define ACE_HAS_GETTID // See ACE_OS::thr_gettid()
+#endif
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */

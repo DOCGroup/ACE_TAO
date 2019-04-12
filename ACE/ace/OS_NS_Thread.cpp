@@ -17,6 +17,7 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
+#include "ace/OS_NS_sys_resource.h"
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
@@ -4803,6 +4804,18 @@ ACE_OS::unique_name (const void *object,
   // <object>.
   ACE_OS::snprintf (name, length, ACE_TEXT ("%p%d"), object,
                     static_cast<int> (ACE_OS::getpid ()));
+}
+#endif
+
+#ifdef ACE_HAS_GETTID
+pid_t
+ACE_OS::thr_gettid ()
+{
+#  ifdef ACE_LINUX
+  return syscall (SYS_gettid);
+#  else
+#    error "No implementation for thr_gettid(), please disable ACE_HAS_GETTID"
+#  endif
 }
 #endif
 
