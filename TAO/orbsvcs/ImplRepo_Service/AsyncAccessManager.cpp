@@ -775,6 +775,12 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
     }
   catch (const ImplementationRepository::CannotActivate &ca)
     {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, reason <%C>\n"),
+                          this, ca.reason.in ()));
+        }
       if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
         {
           int const pid = ACE_OS::atoi (ca.reason.in()+4);
@@ -785,6 +791,14 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
           this->aam_->activator_replied_start_running (false, 0);
         }
     }
+  catch (const CORBA::Exception& ex)
+    {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ex._tao_print_exception ("ActivatorReceiver::start_server_excep");
+        }
+    }
+
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
 }
