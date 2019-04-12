@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 
+. Shorten output from `%t` (current thread id) for ACE_Log_Msg on non-Windows
+  systems
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 ====================================================
 
