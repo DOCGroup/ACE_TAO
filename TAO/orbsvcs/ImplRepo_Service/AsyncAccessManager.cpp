@@ -230,7 +230,7 @@ AsyncAccessManager::final_state (bool active)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
                           ACE_TEXT ("removing this from map, server <%C> remove_on_death_rh_ <%@>\n"),
                           this, info_->ping_id (), this->remove_on_death_rh_));
         }
@@ -253,10 +253,24 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
     {
       if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
         {
+          if (ImR_Locator_i::debug () > 5)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::notify_waiter - ")
+                              ACE_TEXT ("For unique server <%C> reporting back IOR <%C>\n"),
+                              this, info_->ping_id (), this->partial_ior_.c_str()));
+            }
           rh->send_ior (this->partial_ior_.c_str());
         }
       else
         {
+          if (ImR_Locator_i::debug () > 5)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::notify_waiter - ")
+                              ACE_TEXT ("For server <%C> reporting back IOR <%C>\n"),
+                              this, info_->ping_id (), this->info_->partial_ior.c_str()));
+            }
           rh->send_ior (this->info_->partial_ior.c_str());
         }
     }
@@ -775,6 +789,12 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
     }
   catch (const ImplementationRepository::CannotActivate &ca)
     {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) ActivatorReceiver(%@)::start_server_excep, reason <%C>\n"),
+                          this, ca.reason.in ()));
+        }
       if (ACE_OS::strstr (ca.reason.in(),"pid:") == ca.reason.in())
         {
           int const pid = ACE_OS::atoi (ca.reason.in()+4);
@@ -785,6 +805,14 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
           this->aam_->activator_replied_start_running (false, 0);
         }
     }
+  catch (const CORBA::Exception& ex)
+    {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ex._tao_print_exception ("ActivatorReceiver::start_server_excep");
+        }
+    }
+
   PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
   poa_->deactivate_object (oid.in());
 }

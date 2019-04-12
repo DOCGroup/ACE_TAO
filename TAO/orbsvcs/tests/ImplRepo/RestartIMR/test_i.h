@@ -31,15 +31,9 @@ public:
   // Destructor
   virtual ~Test_Time_i (void);
 
-  virtual
-  ::CORBA::Long current_time (
-      void
-    );
+  virtual ::CORBA::Long current_time (void);
 
-  virtual
-  void shutdown (
-      void
-    );
+  virtual void shutdown (void);
 };
 
 

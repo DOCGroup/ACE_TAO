@@ -107,7 +107,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
             locator_->register_activator (name_.c_str (), activator);
 
           if (debug_ > 0)
-            ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: Registered with ImR.\n"));
+            ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: Registered with ImR\n"));
 
           return;
         }
@@ -123,7 +123,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
     }
 
   if (debug_ > 0)
-    ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Not registered with ImR.\n"));
+    ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Not registered with ImR\n"));
 }
 
 int
@@ -260,13 +260,13 @@ ImR_Activator_i::fini (void)
     {
       if (debug_ > 1)
         ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR.\n")));
+                        ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR\n")));
     }
   catch (const CORBA::TRANSIENT&)
     {
       if (debug_ > 1)
         ORBSVCS_ERROR ((LM_ERROR,
-                        ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR.\n")));
+                        ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR\n")));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -279,7 +279,7 @@ ImR_Activator_i::fini (void)
       this->orb_->destroy ();
 
       if (debug_ > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shut down successfully.\n"));
+        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shut down successfully\n"));
     }
   catch (const CORBA::Exception& ex)
     {
@@ -323,7 +323,9 @@ ImR_Activator_i::shutdown (bool signaled)
   if (signaled && this->in_upcall ())
     {
       if (debug_ > 0)
-        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: ignoring signal during upcall.\n"));
+      {
+        ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: ignoring signal during upcall\n"));
+      }
       return;
     }
   if (! CORBA::is_nil (this->locator_.in ()) && this->registration_token_ != 0)
@@ -472,8 +474,8 @@ ImR_Activator_i::start_server(const char* name,
       if (debug_ > 0)
         {
           ORBSVCS_ERROR((LM_ERROR,
-                        "(%P|%t) ImR Activator: Unique instance already running pid <%d>\n",
-                        static_cast<int> (pid)));
+                        "(%P|%t) ImR Activator: Unique instance for <%C> already running pid <%d>\n",
+                        name, static_cast<int> (pid)));
         }
       char reason[32];
       ACE_OS::snprintf (reason,32,"pid:%d",static_cast<int> (pid));
@@ -556,7 +558,7 @@ ImR_Activator_i::start_server(const char* name,
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                                   ACE_TEXT ("(%P|%t) ImR Activator: Notifying ImR that ")
-                                  ACE_TEXT ("<%C> has started with pid <%d>.\n"),
+                                  ACE_TEXT ("<%C> has started with pid <%d>\n"),
                                   name, static_cast<int> (pid)));
                 }
               try
