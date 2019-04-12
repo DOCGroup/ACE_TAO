@@ -230,7 +230,7 @@ AsyncAccessManager::final_state (bool active)
       if (ImR_Locator_i::debug () > 5)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state ")
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::final_state - ")
                           ACE_TEXT ("removing this from map, server <%C> remove_on_death_rh_ <%@>\n"),
                           this, info_->ping_id (), this->remove_on_death_rh_));
         }
@@ -253,10 +253,24 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
     {
       if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
         {
+          if (ImR_Locator_i::debug () > 5)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::notify_waiter - ")
+                              ACE_TEXT ("For unique server <%C> reporting back IOR <%C>\n"),
+                              this, info_->ping_id (), this->partial_ior_.c_str()));
+            }
           rh->send_ior (this->partial_ior_.c_str());
         }
       else
         {
+          if (ImR_Locator_i::debug () > 5)
+            {
+              ORBSVCS_DEBUG ((LM_DEBUG,
+                              ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::notify_waiter - ")
+                              ACE_TEXT ("For server <%C> reporting back IOR <%C>\n"),
+                              this, info_->ping_id (), this->info_->partial_ior.c_str()));
+            }
           rh->send_ior (this->info_->partial_ior.c_str());
         }
     }

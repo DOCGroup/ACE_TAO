@@ -485,7 +485,7 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
   if (debug_ > 1)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) ImR: Server <%C> has died with pid <%d>.\n"),
+                      ACE_TEXT ("(%P|%t) ImR: Server <%C> has died with pid <%d>\n"),
                       name, pid));
     }
 

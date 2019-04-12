@@ -150,7 +150,7 @@ run_service_command (Activator_Options& opts)
           }
       if (ret != -1)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service installed.\n"));
+          ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service installed\n"));
           opts.save_registry_options ();
         }
       else
@@ -163,7 +163,7 @@ run_service_command (Activator_Options& opts)
   else if (opts.service_command () == Activator_Options::SC_REMOVE)
     {
       int ret = SERVICE::instance ()->remove ();
-      ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed.\n"));
+      ORBSVCS_DEBUG ((LM_DEBUG, "ImR Activator: Service removed\n"));
       if (ret == 0)
         return 1; // If successful, then we don't want to continue.
     }

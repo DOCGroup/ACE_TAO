@@ -199,7 +199,7 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
-                      ACE_TEXT ("reference is nil.\n")));
+                      ACE_TEXT ("reference is nil\n")));
         }
     }
   else
