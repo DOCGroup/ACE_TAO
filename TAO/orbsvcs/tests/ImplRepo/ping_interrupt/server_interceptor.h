@@ -17,28 +17,27 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
+/// Server-side echo interceptor.  For checking interceptor visually only.
 class Ping_Death_Request_Interceptor
   : public virtual PortableInterceptor::ServerRequestInterceptor,
     public virtual ::CORBA::LocalObject
 {
-  // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Ping_Death_Request_Interceptor (int *counter);
   // cotr.
+  Ping_Death_Request_Interceptor (int *counter);
 
-  ~Ping_Death_Request_Interceptor ();
   // dotr.
+  ~Ping_Death_Request_Interceptor ();
   void set_poa (PortableServer::POA_ptr poa);
 
-  virtual char * name (void);
   // Canonical name of the interceptor.
+  virtual char * name (void);
 
   virtual void destroy (void);
 
   virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
 
-  virtual void receive_request_service_contexts (
-        PortableInterceptor::ServerRequestInfo_ptr);
+  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
 
   virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
 
