@@ -28,12 +28,5 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
                           new RTCORBA_Setup (orb,
                                              rt_class,
                                              nthreads));
-
-#if 0
-      ACE_auto_ptr_reset (this->priorityband_setup_,
-                          new PriorityBand_Setup (orb,
-                                                  *this->rtcorba_setup_));
-
-#endif /* 0 */
     }
 }
