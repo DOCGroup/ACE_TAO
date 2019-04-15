@@ -12,9 +12,14 @@
 class  Test_i : public virtual POA_Test
 {
 public:
+  Test_i (CORBA::ORB_ptr orb);
   virtual CORBA::Short get_server_num (void);
 
   virtual void terminate (void);
+
+  virtual void shutdown (void);
+private:
+  CORBA::ORB_var orb_;
 };
 
 #endif /* TEST_I_H_ */

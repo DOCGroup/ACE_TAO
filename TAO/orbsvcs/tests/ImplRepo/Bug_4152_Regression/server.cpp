@@ -15,7 +15,7 @@
 class ORB_Runner : public ACE_Task_Base
 {
 public:
-  ORB_Runner (CORBA::ORB_var orb) : orb_(orb) {}
+  ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
   int svc (void)
   {
     this->orb_->run ();
@@ -62,7 +62,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-  ORB_Runner *runner = new ORB_Runner (orb);
+  ORB_Runner *runner = new ORB_Runner (orb.in ());
   int poa_delay = 10;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start server main\n"));
@@ -97,7 +97,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_CString base = ACE_CString ("TestObject");
       createPOAs (base);
 
-      PortableServer::Servant_var<Test_i> test_servant = new Test_i;
+      PortableServer::Servant_var<Test_i> test_servant = new Test_i (orb.in ());
 
       PortableServer::ObjectId_var object_id =
         PortableServer::string_to_ObjectId (base.c_str());
@@ -136,7 +136,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_ior = orb->object_to_string (tva.in());
       base += "_a";
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:\n%s\n", base.c_str(), test_ior.in()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %C:\n%C\n", base.c_str(), test_ior.in()));
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
