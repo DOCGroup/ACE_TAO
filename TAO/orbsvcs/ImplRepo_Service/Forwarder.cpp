@@ -186,8 +186,7 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
     {
       ior += this->key_str_.in();
 
-      CORBA::Object_var forward_obj =
-        this->orb_->string_to_object (ior.c_str ());
+      CORBA::Object_var forward_obj = this->orb_->string_to_object (ior.c_str ());
 
       if (!CORBA::is_nil (forward_obj.in ()))
         {
@@ -197,16 +196,23 @@ ImR_DSI_ResponseHandler::send_ior (const char *pior)
         }
       else
         {
-          ORBSVCS_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
-                      ACE_TEXT ("reference is nil\n")));
+          if (ImR_Locator_i::debug () > 1)
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Forward_to ")
+                          ACE_TEXT ("reference is nil for key <%C> server_name <%C>\n"),
+                          key_str_.in (), server_name_.in ()));
+            }
         }
     }
   else
     {
-      ORBSVCS_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Invalid corbaloc ior for key <%C> server_name <%C> IOR <%C>\n"),
-                  key_str_.in (), server_name_.in (), pior));
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) ImR_DSI_ResponseHandler::send_ior (): Invalid corbaloc ior for key <%C> server_name <%C> IOR <%C>\n"),
+                      key_str_.in (), server_name_.in (), pior));
+        }
     }
 
   this->invoke_excep_i (new CORBA::OBJECT_NOT_EXIST
@@ -226,7 +232,7 @@ ImR_DSI_ResponseHandler::invoke_excep_i (CORBA::Exception *ex)
 void
 ImR_DSI_ResponseHandler::send_exception (CORBA::Exception *ex)
 {
-  //discard the exception, always throw a transient:
+  // Discard the exception, always throw a transient:
   delete ex;
 
   this->invoke_excep_i (new CORBA::TRANSIENT
