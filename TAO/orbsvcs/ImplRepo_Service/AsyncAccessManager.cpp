@@ -576,7 +576,7 @@ AsyncAccessManager::notify_child_death (int pid)
       if (ImR_Locator_i::debug () > 1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C> pid <%d> does not match ")
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), notify_child_death, server <%C> pid <%d> does not match ")
                           ACE_TEXT ("this info_.pid <%d> prev_pid <%d>\n"),
                           this, info_->ping_id (), pid,
                           this->info_->pid, this->prev_pid_));
