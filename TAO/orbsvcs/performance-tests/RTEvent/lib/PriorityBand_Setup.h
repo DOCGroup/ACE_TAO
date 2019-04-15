@@ -35,8 +35,4 @@ public:
   ~PriorityBand_Setup (void);
 };
 
-#if defined(__ACE_INLINE__)
-#include "PriorityBand_Setup.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_PERF_RTEC_PRIORITYBAND_SETUP_H */

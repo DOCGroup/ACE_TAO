@@ -38,8 +38,4 @@ private:
   RtecEventChannelAdmin::EventChannel_var ec_;
 };
 
-#if defined(__ACE_INLINE__)
-#include "EC_Destroyer.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_PERF_RTEC_EC_DESTROYER_H */
