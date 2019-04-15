@@ -13,6 +13,7 @@ $debug_level = 0;
 $no_dns = 0;
 $imrhost = "127.0.0.1";
 $poa_delay = 3;
+$shutdown_delay = 0;
 
 if ($#ARGV >= 0) {
     for (my $i = 0; $i <= $#ARGV; $i++) {
@@ -21,6 +22,14 @@ if ($#ARGV >= 0) {
         }
         elsif ($ARGV[$i] eq '-no_dns') {
             $no_dns = 1;
+        }
+        elsif ($ARGV[$i] eq "-s") {
+            $i++;
+            $shutdown_delay = $ARGV[$i];
+        }
+        elsif ($ARGV[$i] eq "-c") {
+            $i++;
+            $shutdown_delay = $ARGV[$i];
         }
         else {
           usage();
@@ -137,7 +146,7 @@ sub register_server
     $TI->Arguments ($ti_cmd_base.
                     "add TestObject_a -c \"".
                     $srv_server_cmd .
-                    " -ORBUseIMR 1 -p $poa_delay -ORBLingerTimeout 0 " .
+                    " -ORBUseIMR 1 -p $poa_delay -s $shutdown_delay -ORBLingerTimeout 0 " .
                     "$debugarg $endpointarg " .
                     "-ORBInitRef ImplRepoService=file://$imr_imriorfile\"");
 
@@ -257,7 +266,7 @@ sub validate_servers
 sub double_server_test
 {
     print "Running slow servers errant duplicate test\n";
-    my $debugarg = "-d 5 -ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $imrlogfile " if ($debug_level > 0);
+    my $debugarg = "-d 10 -ORBVerboseLogging 1 -ORBDebugLevel $debug_level -ORBLogfile $imrlogfile " if ($debug_level > 0);
     my $endpointarg = "-orbdotteddecimaladdresses 1" if ($no_dns == 1);
 
     my $result = 0;
@@ -310,9 +319,13 @@ sub double_server_test
     manual_start_server();
 
     if ($status == 0) {
-
-        print "Initial client request to kill server\n";
-        run_client ("-k");
+        if ($shutdown_delay = 0) {
+          print "Initial client request to kill server\n";
+          run_client ("-k");
+        } else {
+          print "Initial client request to shutdown server\n";
+          run_client ("-s");
+        }
         sleep (1);
 
         print "Second client request to reactivate server \n";
