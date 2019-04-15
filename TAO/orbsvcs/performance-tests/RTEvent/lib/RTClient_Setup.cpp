@@ -21,7 +21,6 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
   : use_rt_corba_ (use_rt_corba)
   , syncscope_setup_ (orb)
 {
-
   if (use_rt_corba)
     {
       ACE_auto_ptr_reset (this->rtcorba_setup_,
