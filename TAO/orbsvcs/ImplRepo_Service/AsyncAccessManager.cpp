@@ -594,7 +594,6 @@ AsyncAccessManager::listener_disconnected (void)
     }
 
   this->status (ImplementationRepository::AAM_SERVER_DEAD);
-
 }
 
 void
