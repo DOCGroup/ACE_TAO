@@ -12,6 +12,7 @@
 #include "ImR_Locator_i.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
+#include "orbsvcs/Log_Macros.h"
 
 INS_Locator::INS_Locator (ImR_Locator_i& loc)
 : imr_locator_ (loc)
@@ -63,7 +64,7 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
 //----------------------------------------------------------------------------------------
 INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
                             ::IORTable::Locate_ResponseHandler handler)
-  : key_(key),
+  : key_str_(key),
     rh_ (handler)
 {
 }
@@ -72,8 +73,36 @@ void
 INS_Loc_ResponseHandler::send_ior (const char *pior)
 {
   ACE_CString ior = pior;
-  ior += key_;
-  rh_->forward_ior (ior.c_str(), false);
+
+  // Check that the returned ior is the expected partial ior with
+  // missing ObjectKey.
+  if (ior.find ("corbaloc:") == 0 && ior[ior.length () -1] == '/')
+    {
+      ior += key_str_;
+
+      if (ImR_Locator_i::debug () > 5)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) INS_Loc_ResponseHandler::send_ior (): Forwarding ")
+                      ACE_TEXT ("key <%C> to IOR <%C>\n"),
+                      key_str_.in (), ior.c_str ()));
+        }
+      rh_->forward_ior (ior.c_str(), false);
+    }
+  else
+    {
+      if (ImR_Locator_i::debug () > 1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) INS_Loc_ResponseHandler::send_ior (): Invalid corbaloc ior for key <%C> IOR <%C>\n"),
+                      key_str_.in (), pior));
+        }
+
+      rh_->raise_excep (CORBA::OBJECT_NOT_EXIST (CORBA::SystemException::_tao_minor_code
+                            ( TAO_IMPLREPO_MINOR_CODE, 0),
+                            CORBA::COMPLETED_NO));
+    }
+
   delete this;
 }
 
