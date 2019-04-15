@@ -116,18 +116,6 @@ jobs:
         vcpkgarch: x64-windows
         vcpkglibdir: lib
         vcpkgpackages: openssl xerces-c
-      Debug32:
-        BuildPlatform: Win32
-        BuildConfiguration: Debug
-        vcpkgarch: x86-windows
-        vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c
-      Release32:
-        BuildPlatform: Win32
-        BuildConfiguration: Release
-        vcpkgarch: x86-windows
-        vcpkglibdir: lib
-        vcpkgpackages: openssl xerces-c
   variables:
     VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
@@ -271,6 +259,12 @@ jobs:
         CXX: clang++-7
         PackageDeps: clang-7
         Repo: llvm-toolchain-$(lsb_release -cs)-7
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+      CLANG8:
+        CC: clang-8
+        CXX: clang++-8
+        PackageDeps: clang-8
+        Repo: llvm-toolchain-$(lsb_release -cs)-8
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
   steps:
   - script: |
