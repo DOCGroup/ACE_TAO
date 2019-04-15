@@ -211,7 +211,6 @@ private:
                           bool force);
 
 private:
-
   static int debug_;
 
   // The class that handles the forwarding.
@@ -333,7 +332,6 @@ private:
   Loc_Operation_Id op_id_;
   ImplementationRepository::AMH_AdministrationResponseHandler_var resp_;
   ImplementationRepository::AMH_AdministrationExtResponseHandler_var ext_;
-
 };
 
 #include /**/ "ace/post.h"
