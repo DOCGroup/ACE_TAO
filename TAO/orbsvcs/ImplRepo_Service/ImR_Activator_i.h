@@ -166,7 +166,6 @@ public:
   ~Active_Pid_Setter();
 
   ImR_Activator_i &owner_;
-
 };
 #endif /* ACE_WIN32 */
 
