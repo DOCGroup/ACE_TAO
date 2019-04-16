@@ -26,7 +26,6 @@ private:
   CORBA::ORB_var orb_;
 };
 
-
 PortableServer::POA_var root_poa;
 PortableServer::POA_var poa_a;
 
