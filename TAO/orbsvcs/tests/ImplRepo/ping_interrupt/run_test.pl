@@ -220,8 +220,7 @@ sub interrupt_ping_test
 }
 
 sub usage() {
-    print "Usage: run_test.pl ".
-  "[-debug]\n";
+    print "Usage: run_test.pl [-debug]\n";
 }
 
 ###############################################################################
