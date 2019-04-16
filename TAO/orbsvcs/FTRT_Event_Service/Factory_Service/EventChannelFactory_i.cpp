@@ -106,7 +106,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   options.setenv(ACE_TEXT("EventChannelFactoryAddr"), buf);
 
   // extract the object ID from the criteria
-  for (size_t i = 0; i < the_criteria.length(); ++i)
+  for (CORBA::ULong i = 0; i < the_criteria.length(); ++i)
   {
     const CosNaming::Name& name = the_criteria[i].nam;
     if (name.length() > 0) {
