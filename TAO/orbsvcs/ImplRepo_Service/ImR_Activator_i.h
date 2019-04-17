@@ -20,6 +20,9 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+#if defined (ACE_WIN32)
+# include "ace/Task.h"
+#endif /* ACE_WIN32 */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,14 +48,27 @@ struct ACE_Equal_To_pid_t
   }
 };
 
-
 #if (ACE_SIZEOF_VOID_P == 8)
 typedef ACE_INT64 Act_token_type;
 #else
 typedef ACE_INT32 Act_token_type;
 #endif
 
+#if defined (ACE_WIN32)
 class Active_Pid_Setter;
+
+class Watchdog : public ACE_Task_Base
+{
+public:
+	Watchdog (ACE_Process_Manager& procman);
+	virtual int svc ();
+	bool start ();
+	void stop ();
+private:
+	bool stop_;
+	ACE_Process_Manager &procman_;
+};
+#endif /* ACE_WIN32 */
 
 /**
  * @class ImR_Activator_i
@@ -154,6 +170,9 @@ private:
 
   bool detach_child_;
   pid_t active_check_pid_;
+#if defined (ACE_WIN32)
+	Watchdog process_watcher_;
+#endif /* ACE_WIN32 */
 };
 
 #if defined (ACE_WIN32)
