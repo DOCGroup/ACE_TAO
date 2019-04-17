@@ -41,26 +41,21 @@ public:
   // Run the test
 
 protected:
-
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_;
   // The proxy_supplier id.
 
   // = Methods
 
-  // Destructor
-
   // = NotifyPublish method
-    virtual void offer_change (
+  virtual void offer_change (
         const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
-virtual void push (const CORBA::Any &event);
+  virtual void push (const CORBA::Any &event);
 
 
-  virtual void disconnect_push_consumer (
-        );
+  virtual void disconnect_push_consumer ();
 
 private:
   CORBA::ULong event_count_;

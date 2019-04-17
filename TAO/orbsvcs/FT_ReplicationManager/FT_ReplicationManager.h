@@ -154,21 +154,17 @@ namespace TAO
 
     /// Registers the Fault Notifier with the Replication Manager.
     virtual void register_fault_notifier (
-        FT::FaultNotifier_ptr fault_notifier
-      );
+        FT::FaultNotifier_ptr fault_notifier);
 
     /// Returns the reference of the Fault Notifier.
-    virtual FT::FaultNotifier_ptr get_fault_notifier (
-      );
+    virtual FT::FaultNotifier_ptr get_fault_notifier ();
 
     /// TAO-specific find factory registry
     virtual ::PortableGroup::FactoryRegistry_ptr get_factory_registry (
-        const PortableGroup::Criteria & selection_criteria
-      );
+        const PortableGroup::Criteria & selection_criteria);
 
     /// TAO-specific shutdown operation.
-    virtual void shutdown (
-      );
+    virtual void shutdown ();
 
     //@}
 
@@ -294,8 +290,7 @@ namespace TAO
      * Return the ObjectGroup reference for the given ObjectGroupId.
      */
      virtual PortableGroup::ObjectGroup_ptr get_object_group_ref_from_id (
-          PortableGroup::ObjectGroupId group_id
-        );
+          PortableGroup::ObjectGroupId group_id);
 
     /**
      * Return the reference corresponding to the Replica of a given

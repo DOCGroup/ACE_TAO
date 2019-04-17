@@ -69,11 +69,10 @@ protected:
   virtual Proxy_Traits_PTR obtain_proxy (Admin_Ext_Traits_PTR admin_ptr
                                          , CosNotification::QoSProperties& qos);
 
-    // = NotifySubscribe
-    virtual void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+  // = NotifySubscribe
+  virtual void subscription_change (
+      const CosNotification::EventTypeSeq & added,
+      const CosNotification::EventTypeSeq & removed);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

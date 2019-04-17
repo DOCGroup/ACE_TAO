@@ -101,15 +101,11 @@ public:
 
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
-  virtual void push (
-        const CORBA::Any & data
-      );
+  virtual void push (const CORBA::Any & data);
 
-  virtual void disconnect_push_consumer (
-    );
+  virtual void disconnect_push_consumer ();
 
   size_t received () const;
   void set_expectations (size_t expecte, size_t fail, size_t serial_number, bool verbose);
