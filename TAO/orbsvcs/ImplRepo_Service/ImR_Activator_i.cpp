@@ -69,7 +69,6 @@ Watchdog::stop()
   this->stop_ = true;
   this->wait();
 }
-
 #endif /* ACE_WIN32 */
 
 ImR_Activator_i::ImR_Activator_i (void)
@@ -82,7 +81,9 @@ ImR_Activator_i::ImR_Activator_i (void)
   , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
   , detach_child_ (false)
   , active_check_pid_ (ACE_INVALID_PID)
+#if defined (ACE_WIN32)
   , process_watcher_ (process_mgr_)
+#endif /* ACE_WIN32 */
 {
 }
 
