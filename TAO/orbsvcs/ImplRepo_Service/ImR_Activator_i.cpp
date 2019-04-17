@@ -122,10 +122,6 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
       if (this->debug_ > 1)
         ORBSVCS_DEBUG( (LM_DEBUG, "(%P|%t) ImR Activator: Contacting ImplRepoService...\n"));
 
-      // First, resolve the ImR, without this we can go no further
-      CORBA::Object_var obj =
-        orb_->resolve_initial_references ("ImplRepoService");
-
 #if defined (ACE_WIN32)
       // On Windows the notify of a death of a child process requires the
       // WFMO reactor which is not the default ORB reactor type so on
@@ -144,6 +140,10 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
                                this->orb_->orb_core ()->reactor ());
 #endif /* ACE_WIN32 */
 
+      // First, resolve the ImR, without this we can go no further
+      CORBA::Object_var obj =
+        orb_->resolve_initial_references ("ImplRepoService");
+
       locator_ = ImplementationRepository::Locator::_narrow (obj.in ());
 
       if (!CORBA::is_nil (locator_.in ()))
@@ -155,8 +155,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
                              ior.in()));
             }
 
-          this->registration_token_ =
-            locator_->register_activator (name_.c_str (), activator);
+          this->registration_token_ = locator_->register_activator (name_.c_str (), activator);
 
           if (debug_ > 0)
             ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: Registered with ImR\n"));
