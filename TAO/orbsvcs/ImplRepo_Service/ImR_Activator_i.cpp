@@ -36,38 +36,38 @@ Active_Pid_Setter::~Active_Pid_Setter()
 }
 
 Watchdog::Watchdog(ACE_Process_Manager& procman) :
-	stop_(false),
-	procman_(procman)
+  stop_(false),
+  procman_(procman)
 {
 }
 
-int 
+int
 Watchdog::svc()
 {
-	while (!this->stop_)
-	{
-		if (this->procman_.managed() > 0)
-		{
-			this->procman_.wait(0, ACE_Time_Value(0, 25000));
-		}
-		else
-		{
-			ACE_OS::sleep (ACE_Time_Value(0, 25000));
-		}
-	}
-	return 0;
+  while (!this->stop_)
+  {
+    if (this->procman_.managed() > 0)
+    {
+      this->procman_.wait(0, ACE_Time_Value(0, 25000));
+    }
+    else
+    {
+      ACE_OS::sleep (ACE_Time_Value(0, 25000));
+    }
+  }
+  return 0;
 }
 
-bool 
+bool
 Watchdog::start()
 {
-	return this->activate() == 0;
+  return this->activate() == 0;
 }
-void 
+void
 Watchdog::stop()
 {
-	this->stop_ = true;
-	this->wait();
+  this->stop_ = true;
+  this->wait();
 }
 
 #endif /* ACE_WIN32 */
@@ -82,7 +82,7 @@ ImR_Activator_i::ImR_Activator_i (void)
   , max_env_vars_ (Activator_Options::ENVIRONMENT_MAX_VARS)
   , detach_child_ (false)
   , active_check_pid_ (ACE_INVALID_PID)
-	, process_watcher_ (process_mgr_)
+  , process_watcher_ (process_mgr_)
 {
 }
 
@@ -127,18 +127,18 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
         orb_->resolve_initial_references ("ImplRepoService");
 
 #if defined (ACE_WIN32)
-			// On Windows the notify of a death of a child process requires the
-			// WFMO reactor which is not the default ORB reactor type so on
-			// Windows we are using a separate task to detect a child death
-			if (!this->process_watcher_.start ())
-			{
-				if (this->debug_ > 1)
-				{
-					ORBSVCS_ERROR ((LM_ERROR, "(%P|%t) ImR Activator: Failed to start process watchdog\n"));
-				}
-			}
+      // On Windows the notify of a death of a child process requires the
+      // WFMO reactor which is not the default ORB reactor type so on
+      // Windows we are using a separate task to detect a child death
+      if (!this->process_watcher_.start ())
+      {
+        if (this->debug_ > 1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, "(%P|%t) ImR Activator: Failed to start process watchdog\n"));
+        }
+      }
 
-			this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE);
+      this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE);
 #else
       this->process_mgr_.open (ACE_Process_Manager::DEFAULT_SIZE,
                                this->orb_->orb_core ()->reactor ());
@@ -287,8 +287,8 @@ ImR_Activator_i::fini (void)
         ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shutting down...\n"));
 
 #if defined (ACE_WIN32)
-			// Stop our process watcher task
-			this->process_watcher_.stop ();
+      // Stop our process watcher task
+      this->process_watcher_.stop ();
 #endif /* ACE_WIN32 */
 
       this->process_mgr_.close ();
@@ -701,13 +701,13 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
   else
     {
 #if defined (ACE_WIN32)
-		// On Windows this is called from the context of the watchdog thread
-		// so we are using the reactor here to trigger a thread switch so that
-		// handle_exit_i is called from the reactor thread
-		ACE_Reactor *r = this->orb_->orb_core ()->reactor ();
-		pid_t const pid = process->getpid ();
-		Act_token_type token = static_cast<Act_token_type>(pid);
-		r->schedule_timer (this, reinterpret_cast<void *>(token), ACE_Time_Value ());
+    // On Windows this is called from the context of the watchdog thread
+    // so we are using the reactor here to trigger a thread switch so that
+    // handle_exit_i is called from the reactor thread
+    ACE_Reactor *r = this->orb_->orb_core ()->reactor ();
+    pid_t const pid = process->getpid ();
+    Act_token_type token = static_cast<Act_token_type>(pid);
+    r->schedule_timer (this, reinterpret_cast<void *>(token), ACE_Time_Value ());
 #else
       this->handle_exit_i (process->getpid());
 #endif /* ACE_WIN32 */

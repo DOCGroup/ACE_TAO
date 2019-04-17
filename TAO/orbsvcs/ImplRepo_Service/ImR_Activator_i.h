@@ -60,13 +60,13 @@ class Active_Pid_Setter;
 class Watchdog : public ACE_Task_Base
 {
 public:
-	Watchdog (ACE_Process_Manager& procman);
-	virtual int svc ();
-	bool start ();
-	void stop ();
+  Watchdog (ACE_Process_Manager& procman);
+  virtual int svc ();
+  bool start ();
+  void stop ();
 private:
-	bool stop_;
-	ACE_Process_Manager &procman_;
+  bool stop_;
+  ACE_Process_Manager &procman_;
 };
 #endif /* ACE_WIN32 */
 
@@ -171,7 +171,7 @@ private:
   bool detach_child_;
   pid_t active_check_pid_;
 #if defined (ACE_WIN32)
-	Watchdog process_watcher_;
+  Watchdog process_watcher_;
 #endif /* ACE_WIN32 */
 };
 
