@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Timer_Cancellation_Test.cpp
@@ -9,14 +8,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Task.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
@@ -116,8 +112,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Timer_Cancellation_Test"));
 
-  ACE_Reactor reactor (new ACE_TP_Reactor,
-                       1);
+  ACE_Reactor reactor (new ACE_TP_Reactor, true);
 
   Deadlock deadlock;
   deadlock.reactor (&reactor);

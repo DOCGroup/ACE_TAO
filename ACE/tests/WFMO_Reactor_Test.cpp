@@ -10,13 +10,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Pipe.h"
-
-
 
 #if defined (ACE_WIN32)
 
@@ -26,13 +23,11 @@ static int number_of_closes = 0;
 class Event_Handler : public ACE_Event_Handler
 {
 public:
-
   Event_Handler (ACE_Reactor &reactor);
 
   ~Event_Handler (void);
 
   ACE_Pipe pipe_;
-
 };
 
 Event_Handler::Event_Handler (ACE_Reactor &reactor)
@@ -78,7 +73,7 @@ test (void)
   int result = 0;
   int i = 0;
 
-  ACE_Reactor reactor (new ACE_WFMO_Reactor, 1);
+  ACE_Reactor reactor (new ACE_WFMO_Reactor, true);
 
   ACE_Event_Handler_var *safe_event_handlers =
     new ACE_Event_Handler_var[number_of_handlers];
