@@ -140,7 +140,6 @@ sub server_setup ()
         return 1;
     }
 
-
     $TI->Arguments ("-ORBInitRef ImplRepoService=file://$ti_imriorfile ".
                     "start $objprefix");
 
@@ -153,7 +152,6 @@ sub server_setup ()
     }
     $TI_status = 0;
 }
-
 
 sub interrupt_ping_test
 {

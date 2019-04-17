@@ -405,7 +405,7 @@ ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Shor
 CORBA::Boolean
 ImR_Activator_i::still_alive (CORBA::Long pid)
 {
-  pid_t pt = static_cast<pid_t>(pid);
+  pid_t const pt = static_cast<pid_t>(pid);
   bool is_running =  this->process_map_.find (pt) == 0;
 #if defined (ACE_WIN32)
   if (is_running)
@@ -659,7 +659,6 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
     }
   return 0;
 }
-
 
 int
 ImR_Activator_i::handle_timeout (const ACE_Time_Value &, const void * tok)

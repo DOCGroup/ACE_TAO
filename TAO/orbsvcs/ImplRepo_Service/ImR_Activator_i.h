@@ -66,7 +66,7 @@ class Active_Pid_Setter;
 class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::ActivatorExt,
                                          public ACE_Event_Handler
 {
- public:
+public:
   friend class Active_Pid_Setter;
 
   ImR_Activator_i (void);
@@ -96,8 +96,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   /// Shutdown the orb.
   void shutdown (bool signaled);
 
- private:
-
+private:
   int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts);
 
   void register_with_imr(ImplementationRepository::Activator_ptr activator);
@@ -111,8 +110,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
 
   bool in_upcall (void);
 
- private:
-
+private:
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
 
   typedef ACE_Hash_Map_Manager_Ex<pid_t,
