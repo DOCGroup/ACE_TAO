@@ -4812,8 +4812,10 @@ ACE_OS::thr_gettid ()
 {
 #if defined(ACE_LINUX) && defined(ACE_HAS_GETTID)
   return syscall (SYS_gettid);
-#else
+#elif !defined(ACE_HAS_OPAQUE_PTHREAD_T)
   return static_cast<pid_t> (ACE_OS::thr_self ());
+#else
+  return 0;
 #endif
 }
 
