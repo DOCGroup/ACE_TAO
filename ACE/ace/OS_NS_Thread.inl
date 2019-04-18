@@ -3178,20 +3178,18 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
 #else /* ACE_HAS_OPAQUE_PTHREAD_T */
   return ACE_OS::snprintf (buffer,
                            buffer_length,
-                           "%lx",
+                           "%lu",
                            (unsigned long) t_id);
 #endif /* ACE_HAS_OPAQUE_PTHREAD_T */
 #endif /* WIN32 */
 }
 
-#ifdef ACE_HAS_GETTID
 ACE_INLINE ssize_t
 ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
 {
   return ACE_OS::snprintf (buffer, buffer_length, "%u",
     static_cast<unsigned> (ACE_OS::thr_gettid()));
 }
-#endif
 
 ACE_INLINE ACE_thread_t
 ACE_OS::thr_self (void)

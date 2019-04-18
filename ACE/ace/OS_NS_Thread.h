@@ -1754,13 +1754,16 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t thr_id (char buffer[], size_t buffer_length);
 
-#ifdef ACE_HAS_GETTID
   /**
-   * Wrapper for pid_t gettid(). For systems that support it (only Linux as of
-   * writing), get the system-wide thread id (TID) for the current thread.
+   * For systems that support it (Only Linux as of writing), this is wrapper
+   * for pid_t gettid().
    *
-   * These are similar to PIDs and, on x86 Linux at least, are much shorter
-   * than the what is returned from thr_id(), which is represents a address.
+   * It returns the system-wide thread id (TID) for the current thread. These
+   * are similar to PIDs and, for x86 Linux at least, are much shorter than
+   * what is returned from thr_self(), which is an address.
+   *
+   * For older Linux (pre 2.4.11) and other systems that don't have gettid(),
+   * this returns thr_self().
    */
   pid_t thr_gettid ();
 
@@ -1770,7 +1773,6 @@ namespace ACE_OS {
    */
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t thr_gettid (char buffer[], size_t buffer_length);
-#endif
 
   /// State is THR_CANCEL_ENABLE or THR_CANCEL_DISABLE
   ACE_NAMESPACE_INLINE_FUNCTION

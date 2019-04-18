@@ -4807,17 +4807,15 @@ ACE_OS::unique_name (const void *object,
 }
 #endif
 
-#ifdef ACE_HAS_GETTID
 pid_t
 ACE_OS::thr_gettid ()
 {
-#  ifdef ACE_LINUX
+#if defined(ACE_LINUX) && defined(ACE_HAS_GETTID)
   return syscall (SYS_gettid);
-#  else
-#    error "No implementation for thr_gettid(), please disable ACE_HAS_GETTID"
-#  endif
-}
+#else
+  return static_cast<pid_t> (ACE_OS::thr_self ());
 #endif
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
