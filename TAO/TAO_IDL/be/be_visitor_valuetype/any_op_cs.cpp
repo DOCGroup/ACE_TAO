@@ -91,9 +91,9 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       // emit  nested variation of any operators
       *os << "/// Copying insertion." << be_nl
           << "void" << be_nl
-          << "operator<<= (" << be_idt << be_idt_nl
+          << "operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << node->local_name () << " *_tao_elem)" << be_uidt
+          << node->local_name () << " *_tao_elem)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "#ifdef TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE" << be_idt_nl
@@ -110,18 +110,18 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
       *os << "/// Non-copying insertion." << be_nl
           << "void" << be_nl
-          << "operator<<= (" << be_idt << be_idt_nl
+          << "operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << node->local_name () << " **_tao_elem)" << be_uidt
+          << node->local_name () << " **_tao_elem)"
           << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::Any_Impl_T<" << node->local_name () << ">::insert ("
-          << be_idt << be_idt_nl
+          << be_idt_nl
           << "_tao_any," << be_nl
           << node->local_name () << "::_tao_any_destructor," << be_nl
           << node->tc_name ()->last_component () << "," << be_nl
           << "*_tao_elem);" << be_uidt
-          << be_uidt << be_uidt_nl
+          << be_uidt_nl
           << "}" << be_nl_2;
 
       *os << "::CORBA::Boolean" << be_nl
@@ -151,9 +151,9 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   *os << "/// Copying insertion." << be_nl
       << "void" << be_nl
-      << "operator<<= (" << be_idt << be_idt_nl
+      << "operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " *_tao_elem)" << be_uidt
+      << node->full_name () << " *_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "#ifdef TAO_VALUETYPE_COPYING_ANY_INSERTION_USES_COPY_VALUE" << be_idt_nl
@@ -170,18 +170,18 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
 
   *os << "/// Non-copying insertion." << be_nl
       << "void" << be_nl
-      << "operator<<= (" << be_idt << be_idt_nl
+      << "operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->full_name () << " **_tao_elem)" << be_uidt
+      << node->full_name () << " **_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Impl_T<" << node->name () << ">::insert ("
-      << be_idt << be_idt_nl
+      << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
       << node->tc_name () << "," << be_nl
       << "*_tao_elem);" << be_uidt
-      << be_uidt << be_uidt_nl
+      << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean" << be_nl
