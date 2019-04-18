@@ -85,9 +85,9 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << tiename << " (" << be_idt << be_idt_nl
       << "T *tp," << be_nl
       << "PortableServer::POA_ptr poa," << be_nl
-      << "::CORBA::Boolean release = true" << be_uidt_nl
-      << ");" << be_uidt_nl
-      << "/// dtor" << be_nl_2
+      << "::CORBA::Boolean release = true);" << be_uidt
+      << be_uidt_nl
+      << "/// dtor" << be_nl
       << "~" << tiename << " (void);" << be_nl
       << "// TIE specific functions" << be_nl
       << "/// return the underlying object" << be_nl
