@@ -32,7 +32,6 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, avoids_minimum_corba, 
 
   Documentation_Files {
     README
-    FT_App.mpc
     run_test_basic.pl           // can the client talk to the server
     run_test_detector.pl        // does a detector notice a server fault
     run_test_notifier.pl        // does the notification get to an analyzer
