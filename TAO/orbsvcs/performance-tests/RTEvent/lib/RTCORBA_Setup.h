@@ -10,7 +10,6 @@
 #include "rtec_perf_export.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "ace/Auto_Ptr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,8 +37,7 @@ public:
   RTCORBA::Priority process_priority (void) const;
 
 private:
-  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane
- );
+  void setup_lane (int priority, RTCORBA::ThreadpoolLane &lane);
 
 private:
   RTCORBA::PriorityMappingManager_var priority_mapping_manager_;

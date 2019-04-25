@@ -30,15 +30,6 @@ project(*Server): taoserver, fault_tolerance, orbsvcsexe, avoids_minimum_corba, 
 
   Documentation_Files {
     README
-    FT_App.mpc
-    run_test_basic.pl           // can the client talk to the server
-    run_test_detector.pl        // does a detector notice a server fault
-    run_test_notifier.pl        // does the notification get to an analyzer
-    run_test_fault_consumer.pl  // Is the notification analyzed correctly
-    run_test_registry.pl        // does the stand-along factory registry work
-    run_test_rmregistry.pl      // does the factory registry in the RM work
-    run_test_replication_mgr.pl //
-    run_test_demo.pl            // test it all together
   }
 
   IDL_Files {

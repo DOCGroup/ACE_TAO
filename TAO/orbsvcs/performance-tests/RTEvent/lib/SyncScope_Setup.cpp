@@ -8,10 +8,6 @@
 #include "RIR_Narrow.h"
 #include "tao/AnyTypeCode/Any.h"
 
-#if !defined(__ACE_INLINE__)
-#include "SyncScope_Setup.inl"
-#endif /* __ACE_INLINE__ */
-
 SyncScope_Setup::SyncScope_Setup (CORBA::ORB_ptr orb,
                                   Messaging::SyncScope value)
 {

@@ -40,8 +40,4 @@ private:
              Messaging::SyncScope value);
 };
 
-#if defined(__ACE_INLINE__)
-#include "SyncScope_Setup.inl"
-#endif /* __ACE_INLINE__ */
-
 #endif /* TAO_PERF_RTEC_SYNCSCOPE_SETUP_H */

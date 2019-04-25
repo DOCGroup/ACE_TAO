@@ -21,19 +21,11 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
   : use_rt_corba_ (use_rt_corba)
   , syncscope_setup_ (orb)
 {
-
   if (use_rt_corba)
     {
       ACE_auto_ptr_reset (this->rtcorba_setup_,
                           new RTCORBA_Setup (orb,
                                              rt_class,
                                              nthreads));
-
-#if 0
-      ACE_auto_ptr_reset (this->priorityband_setup_,
-                          new PriorityBand_Setup (orb,
-                                                  *this->rtcorba_setup_));
-
-#endif /* 0 */
     }
 }
