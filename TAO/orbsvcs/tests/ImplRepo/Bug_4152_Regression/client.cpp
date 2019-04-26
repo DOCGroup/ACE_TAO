@@ -4,11 +4,12 @@
 #include "ace/OS_NS_unistd.h"
 
 bool killit = false;
+bool shutdown_server = false;
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("k"));
+  ACE_Get_Opt get_opts (argc, argv, ACE_TEXT("ks"));
   int c;
 
   while ((c = get_opts ()) != -1)
@@ -16,6 +17,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
       {
       case 'k':
         killit = true;
+        break;
+      case 's':
+        shutdown_server = true;
         break;
       case '?':
       default:
@@ -53,6 +57,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_DEBUG ((LM_DEBUG,
                         "(%P|%t) Client send terminate request\n"));
           }
+        else if (shutdown_server)
+          {
+            test->shutdown ();
+            ACE_DEBUG ((LM_DEBUG,
+                        "(%P|%t) Client send shutdown request\n"));
+          }
         else
           {
             CORBA::Short const n = test->get_server_num ();
@@ -64,8 +74,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     catch (const CORBA::Exception &ex)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    "(%P|%t) Client caught: %C on first attempt, retrying killit %d\n",
-                    ex._name (), killit));
+                    "(%P|%t) Client caught: %C on first attempt, retrying killit <%d> shutdown <%d>\n",
+                    ex._name (), killit, shutdown_server));
         try
           {
             if (CORBA::is_nil (test.in()))
@@ -77,6 +87,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 test->terminate ();
                 ACE_DEBUG ((LM_DEBUG,
                             "(%P|%t) Client send terminate request on second attempt\n"));
+              }
+            else if (shutdown_server)
+              {
+                test->shutdown ();
+                ACE_DEBUG ((LM_DEBUG,
+                            "(%P|%t) Client send shutdown request on second attempt\n"));
               }
             else
               {

@@ -1138,9 +1138,7 @@ Consumer_Main::find_notify_factory (void)
       this->naming_context_->resolve (name);
 
     this->ecf_ =
-      CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-                                                      obj.in ()
-                                                    );
+      CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
   }
   return ! CORBA::is_nil (this->ecf_.in ());
 }
@@ -1399,9 +1397,7 @@ Consumer_Main::init_structured_proxy_supplier (void)
   {
     try
     {
-      proxy = this->sa_->get_proxy_supplier (
-                           this->structured_proxy_id_
-                        );
+      proxy = this->sa_->get_proxy_supplier (this->structured_proxy_id_);
       ok = ! CORBA::is_nil (proxy.in ());
       if (this->verbose_)
       {

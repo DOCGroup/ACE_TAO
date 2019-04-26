@@ -1,7 +1,7 @@
 *.vcxproj*
 *.tlog
 *.log
-*.obj
+*.obj*
 *.ilk
 *.exe
 *.dll
@@ -15,6 +15,7 @@
 *S_T.cpp
 *S_T.h
 *S_T.inl
+*.bmak
 
 .depend.*
 GNUmakefile*
@@ -39,4 +40,6 @@ ipch/
 *.o
 *.res
 *.opendb
-*.VC.db
+*.VC.db*
+*.tds
+*.*codeanalysis*

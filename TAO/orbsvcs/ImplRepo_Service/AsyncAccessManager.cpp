@@ -465,11 +465,30 @@ AsyncAccessManager::server_is_shutting_down (void)
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      this->report ("server_is_shutting_down");
+      this->report ("server_is_shutting_down-start");
     }
+  // We are informed directly by the server that it is shutting down. This doesn't
+  // imply that the server is dead at this point, there can be some time between
+  // the POA destroy and the server process exit so we have to wait for the death
+  // of the process before we can mark this server as dead
   this->prev_pid_ = this->info_->pid;
-  this->status (ImplementationRepository::AAM_SERVER_DEAD);
-  this->final_state ();
+  if (this->info_->death_notify)
+    {
+      // We get a death notify of the activator so we can wait on the death
+      // of the process
+      this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
+    }
+  else
+    {
+      // We don't get a death notify of the activator so we have to assume at
+      // this point the server is death
+      this->status (ImplementationRepository::AAM_SERVER_DEAD);
+      this->final_state ();
+    }
+  if (ImR_Locator_i::debug () > 4)
+    {
+      this->report ("server_is_shutting_down-end");
+    }
 }
 
 void
@@ -535,7 +554,7 @@ AsyncAccessManager::notify_child_death (int pid)
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C> pid <%d> status <%C> ")
+                      ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), notify_child_death, server <%C> pid <%d> status <%C> ")
                       ACE_TEXT ("this info_.pid <%d> prev_pid <%d> waiter count <%d>\n"),
                       this, info_->ping_id (), pid, status_name (status_),
                       this->info_->pid, this->prev_pid_, this->rh_list_.size()));
@@ -545,8 +564,12 @@ AsyncAccessManager::notify_child_death (int pid)
       if ((this->status_ == ImplementationRepository::AAM_WAIT_FOR_DEATH) &&
           this->rh_list_.size() > 0)
         {
-          this->send_start_request ();
-          return true;
+          // When we have successfully made another start request we just let the
+          // waiters wait on the result of the new start request
+          if (this->send_start_request ())
+            {
+              return true;
+            }
         }
       this->status (ImplementationRepository::AAM_SERVER_DEAD);
       this->final_state ();
@@ -557,7 +580,7 @@ AsyncAccessManager::notify_child_death (int pid)
       if (ImR_Locator_i::debug () > 1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), child death, server <%C> pid <%d> does not match ")
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@), notify_child_death, server <%C> pid <%d> does not match ")
                           ACE_TEXT ("this info_.pid <%d> prev_pid <%d>\n"),
                           this, info_->ping_id (), pid,
                           this->info_->pid, this->prev_pid_));
@@ -574,8 +597,18 @@ AsyncAccessManager::listener_disconnected (void)
       this->report ("listener_disconnected");
     }
 
-  this->status (ImplementationRepository::AAM_SERVER_DEAD);
-
+  if (this->info_->death_notify)
+    {
+      // We get a death notify of the activator so we can wait on the death
+      // of the process
+      this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
+    }
+  else
+    {
+      // We don't get a death notify of the activator so we have to assume at
+      // this point the server is death
+      this->status (ImplementationRepository::AAM_SERVER_DEAD);
+    }
 }
 
 void
@@ -661,6 +694,12 @@ AsyncAccessManager::send_start_request (void)
   if ((this->locator_.opts ()->lockout () && !this->info_.edit ()->start_allowed ()) ||
       (this->retries_ == 0))
     {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> not started because retries exceeded\n"),
+                          this, this->info_->ping_id()));
+        }
       this->status (ImplementationRepository::AAM_RETRIES_EXCEEDED);
       return false;
     }
@@ -670,6 +709,12 @@ AsyncAccessManager::send_start_request (void)
   if (this->info_->is_mode (ImplementationRepository::MANUAL) &&
       !this->manual_start_)
     {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> not started because only a manual start is allowed\n"),
+                          this, this->info_->ping_id()));
+        }
       this->status (ImplementationRepository::AAM_NOT_MANUAL);
       return false;
     }
@@ -678,6 +723,12 @@ AsyncAccessManager::send_start_request (void)
 
   if (startup->cmdline.length () == 0)
     {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> not started because no commandline has been configured\n"),
+                          this, this->info_->ping_id()));
+        }
       this->status (ImplementationRepository::AAM_NO_COMMANDLINE);
       return false;
     }
@@ -687,6 +738,12 @@ AsyncAccessManager::send_start_request (void)
 
   if (ainfo.null () || CORBA::is_nil (ainfo->activator.in ()))
     {
+      if (ImR_Locator_i::debug () > 4)
+        {
+          ORBSVCS_ERROR ((LM_ERROR,
+                          ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::send_start_request, server <%C> not started because no activator has been found\n"),
+                          this, this->info_->ping_id()));
+        }
       this->status (ImplementationRepository::AAM_NO_ACTIVATOR);
       return false;
     }

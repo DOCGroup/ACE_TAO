@@ -10,14 +10,12 @@ Server_ORBInitializer::Server_ORBInitializer (int *counter)
 }
 
 void
-Server_ORBInitializer::pre_init (
-    PortableInterceptor::ORBInitInfo_ptr)
+Server_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
 void
-Server_ORBInitializer::post_init (
-    PortableInterceptor::ORBInitInfo_ptr info)
+Server_ORBInitializer::post_init (    PortableInterceptor::ORBInitInfo_ptr info)
 {
   if (this->intr_ != 0)
     {

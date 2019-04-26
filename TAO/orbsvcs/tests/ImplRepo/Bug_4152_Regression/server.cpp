@@ -15,7 +15,7 @@
 class ORB_Runner : public ACE_Task_Base
 {
 public:
-  ORB_Runner (CORBA::ORB_var orb) : orb_(orb) {}
+  ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
   int svc (void)
   {
     this->orb_->run ();
@@ -25,7 +25,6 @@ public:
 private:
   CORBA::ORB_var orb_;
 };
-
 
 PortableServer::POA_var root_poa;
 PortableServer::POA_var poa_a;
@@ -62,14 +61,15 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
-  ORB_Runner *runner = new ORB_Runner (orb);
+  ORB_Runner *runner = new ORB_Runner (orb.in ());
   int poa_delay = 10;
+  int shutdown_delay = 0;
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Start server main\n"));
 
   try
     {
-      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:?"));
+      ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("p:s:?"));
       int c;
 
       while ((c = get_opts ()) != -1)
@@ -78,11 +78,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           case 'p':
             poa_delay = ACE_OS::atoi (get_opts.opt_arg ());
             break;
+          case 's':
+            shutdown_delay = ACE_OS::atoi (get_opts.opt_arg ());
+            break;
           case '?':
             ACE_DEBUG ((LM_DEBUG,
                         "usage: %s "
                         "-d <seconds to delay before initializing POA> "
-                        "-n Number of the server\n",
+                        "-s <seconds to delay before exiting main after the ORB destroy>\n",
                         argv[0]));
             return 1;
             break;
@@ -97,7 +100,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_CString base = ACE_CString ("TestObject");
       createPOAs (base);
 
-      PortableServer::Servant_var<Test_i> test_servant = new Test_i;
+      PortableServer::Servant_var<Test_i> test_servant = new Test_i (orb.in ());
 
       PortableServer::ObjectId_var object_id =
         PortableServer::string_to_ObjectId (base.c_str());
@@ -107,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Test_var tva = Test::_narrow (obj.in());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Started Server pid = %d poa delay %d\n", ACE_OS::getpid (), poa_delay));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Started Server pid <%d> poa delay <%d> shutdown delay <%d>\n", ACE_OS::getpid (), poa_delay, shutdown_delay));
 
       {
         ACE_CString status_file = base + ACE_CString(".status");
@@ -123,7 +126,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (tv);
       activatePOAs ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid = %d\n", ACE_OS::getpid ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid <%d>\n", ACE_OS::getpid ()));
 
       TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*> (poa_a.in ());
       ACE_ASSERT (tpoa != 0);
@@ -136,10 +139,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       test_ior = orb->object_to_string (tva.in());
       base += "_a";
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %s:\n%s\n", base.c_str(), test_ior.in()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) %C:\n%C\n", base.c_str(), test_ior.in()));
       table->bind (base.c_str (), test_ior.in ());
 
       runner->wait ();
+
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Destroying POA pid <%d>\n", ACE_OS::getpid ()));
+
       root_poa->destroy(1,1);
       orb->destroy();
     }
@@ -151,6 +157,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   delete runner;
   orb = CORBA::ORB::_nil ();
+
+  ACE_OS::sleep (shutdown_delay);
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Exiting Server pid = %d \n",
               ACE_OS::getpid ()));

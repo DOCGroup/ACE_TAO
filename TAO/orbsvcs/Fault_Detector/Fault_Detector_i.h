@@ -68,8 +68,7 @@ namespace TAO
       FT::FTDomainId domain_id,
       const PortableGroup::Location & object_location,
       PortableGroup::TypeId object_type,
-      PortableGroup::ObjectGroupId group_id
-      );
+      PortableGroup::ObjectGroupId group_id);
     /**
      * destructor.
      * Non-virtual because this class does not take part in

@@ -28,8 +28,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::obtain_proxy (typename TAO_Notify_
 
   CosNotifyChannelAdmin::ProxyConsumer_var proxy_consumer =
     admin_ptr->obtain_notification_push_consumer (traits.type_
-                                                  , this->proxy_id_
-                                                  );
+                                                  , this->proxy_id_);
 
 
   ACE_ASSERT (!CORBA::is_nil (proxy_consumer.in ()));

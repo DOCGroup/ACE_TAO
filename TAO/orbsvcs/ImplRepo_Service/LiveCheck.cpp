@@ -360,9 +360,9 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
         }
       return false;
     }
-  ACE_Time_Value now (ACE_OS::gettimeofday());
-  ACE_Time_Value diff = this->next_check_ - now;
-  long msec = diff.msec();
+  ACE_Time_Value const now (ACE_OS::gettimeofday());
+  ACE_Time_Value const diff = this->next_check_ - now;
+  long const msec = diff.msec();
   if (msec > 0)
     {
       if (!want_reping || this->next_check_ < next)
@@ -404,7 +404,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               {
                 this->liveliness_ = LS_TRANSIENT;
               }
-            ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
+            ACE_Time_Value const next (ms / 1000, (ms % 1000) * 1000);
             this->next_check_ = now + next;
             if (ImR_Locator_i::debug () > 4)
               {

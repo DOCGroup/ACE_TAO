@@ -9,7 +9,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Test_i : public virtual POA_Test
 {
 public:
@@ -24,7 +23,6 @@ public:
 private:
   CORBA::Short server_num_;
   CORBA::Short reply_delay_secs_;
-
 };
 
 #endif /* TEST_I_H_ */

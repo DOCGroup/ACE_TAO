@@ -20,6 +20,9 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SString.h"
+#if defined (ACE_WIN32)
+# include "ace/Task.h"
+#endif /* ACE_WIN32 */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,14 +48,27 @@ struct ACE_Equal_To_pid_t
   }
 };
 
-
 #if (ACE_SIZEOF_VOID_P == 8)
 typedef ACE_INT64 Act_token_type;
 #else
 typedef ACE_INT32 Act_token_type;
 #endif
 
+#if defined (ACE_WIN32)
 class Active_Pid_Setter;
+
+class Watchdog : public ACE_Task_Base
+{
+public:
+  Watchdog (ACE_Process_Manager& procman);
+  virtual int svc ();
+  bool start ();
+  void stop ();
+private:
+  bool stop_;
+  ACE_Process_Manager &procman_;
+};
+#endif /* ACE_WIN32 */
 
 /**
  * @class ImR_Activator_i
@@ -66,7 +82,7 @@ class Active_Pid_Setter;
 class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::ActivatorExt,
                                          public ACE_Event_Handler
 {
- public:
+public:
   friend class Active_Pid_Setter;
 
   ImR_Activator_i (void);
@@ -96,8 +112,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
   /// Shutdown the orb.
   void shutdown (bool signaled);
 
- private:
-
+private:
   int init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opts);
 
   void register_with_imr(ImplementationRepository::Activator_ptr activator);
@@ -111,8 +126,7 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
 
   bool in_upcall (void);
 
- private:
-
+private:
   typedef ACE_Unbounded_Set<ACE_CString> UniqueServerList;
 
   typedef ACE_Hash_Map_Manager_Ex<pid_t,
@@ -156,6 +170,9 @@ class Activator_Export ImR_Activator_i : public POA_ImplementationRepository::Ac
 
   bool detach_child_;
   pid_t active_check_pid_;
+#if defined (ACE_WIN32)
+  Watchdog process_watcher_;
+#endif /* ACE_WIN32 */
 };
 
 #if defined (ACE_WIN32)
@@ -166,7 +183,6 @@ public:
   ~Active_Pid_Setter();
 
   ImR_Activator_i &owner_;
-
 };
 #endif /* ACE_WIN32 */
 
