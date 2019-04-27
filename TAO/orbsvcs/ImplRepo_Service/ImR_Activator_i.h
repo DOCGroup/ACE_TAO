@@ -57,7 +57,7 @@ typedef ACE_INT32 Act_token_type;
 #if defined (ACE_WIN32)
 class Active_Pid_Setter;
 
-class Watchdog : public ACE_Task_Base
+class Activator_Export Watchdog : public ACE_Task_Base
 {
 public:
   Watchdog (ACE_Process_Manager& procman);
