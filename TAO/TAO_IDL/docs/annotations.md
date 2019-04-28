@@ -85,7 +85,7 @@ applied in the following cases. See ["Reading Special Cases of
 Annotations"](#reading-special-cases-of-annotations) for how to have the
 compiler use these kinds of annotations.
 
-#### Unions Discriminators
+#### Union Discriminators
 
 **[See Compiler Example](#unions-discriminators-1)**
 
@@ -95,7 +95,7 @@ enum GradeType {
   PASS_70,
   PASS_80
 };
-union Grade (@key GradeType) {
+union Grade switch (@key GradeType) {
 case PASS_FAIL:
   boolean pass;
 case PASS_70:
@@ -140,9 +140,9 @@ annotation notation.
 
 ### `@document` Example
 
-As a simple example, If we wanted to make a annotation that inserted comments
+As a simple example, if we wanted to make an annotation that inserted comments
 into the product files for documentation purposes, we could design an
-annotation like this this:
+annotation like this:
 
 ```
 @annotation document {
@@ -277,7 +277,7 @@ so it will be ignored. To make the program aware of the annotations, see
 
 ### What Can Go in Annotations
 
-- Annotations members can be of any type that constants can be. This includes
+- Annotation members can be of any type that constants can be. This includes
 booleans, integers, floats, enumerations, characters, and strings.
 - Enumerations, constants, and typedefs can be declared inside the annotation
 declaration, however they can not used outside the annotation expect for when
@@ -349,7 +349,7 @@ these lines would also need to be added:
       /*
        * This is more complicated because we are trying to get the name of
        * the enumerator. If we just wanted the number value, we could treat the
-       * AST_Expresssion from the annotation member as a unsigned long by using
+       * AST_Expresssion from the annotation member as an unsigned long by using
        * ev ()->u.ulval.
        */
       const char *api_type = 0;
@@ -460,7 +460,7 @@ Annotations placed before a definition in a scope are interpreted as annotating
 the node that is being defined. Annotations in other places require special
 grammar and special handling in the API.
 
-The following cases shows how to get the last annotation called `anno` from
+The following cases show how to get the last annotation called `anno` from
 these special cases.
 
 If a type is `typedef`-ed, resolve it completely using `AST_Type
