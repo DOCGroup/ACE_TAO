@@ -242,6 +242,11 @@ jobs:
         CXX: g++-8
         PackageDeps: g++-8
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+      GCC9:
+        CC: gcc-9
+        CXX: g++-9
+        PackageDeps: g++-9
+        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
       CLANG5:
         CC: clang-5.0
         CXX: clang++-5.0
