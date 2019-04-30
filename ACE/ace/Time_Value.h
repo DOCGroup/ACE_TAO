@@ -271,7 +271,7 @@ public:
   /// Assign @a tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &) = default;
   ACE_Time_Value &operator = (ACE_Time_Value &&)  = default;
-#endif /* ACE_HAS_CPP11)
+#endif /* ACE_HAS_CPP11 */
 
   /// Assign @a tv to this
   ACE_Time_Value &operator = (time_t tv);
