@@ -4810,12 +4810,10 @@ ACE_OS::unique_name (const void *object,
 pid_t
 ACE_OS::thr_gettid ()
 {
-#if defined(ACE_LINUX) && defined(ACE_HAS_GETTID)
+#if defined (ACE_LINUX) && defined (ACE_HAS_GETTID)
   return syscall (SYS_gettid);
-#elif !defined(ACE_HAS_OPAQUE_PTHREAD_T)
-  return reinterpret_cast<pid_t> (ACE_OS::thr_self ());
 #else
-  return 0;
+  ACE_NOTSUP_RETURN (-1);
 #endif
 }
 

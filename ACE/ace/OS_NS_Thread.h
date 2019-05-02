@@ -1755,7 +1755,7 @@ namespace ACE_OS {
   ssize_t thr_id (char buffer[], size_t buffer_length);
 
   /**
-   * For systems that support it (Only Linux as of writing), this is wrapper
+   * For systems that support it (Only Linux as of writing), this is a wrapper
    * for pid_t gettid().
    *
    * It returns the system-wide thread id (TID) for the current thread. These
@@ -1763,7 +1763,7 @@ namespace ACE_OS {
    * what is returned from thr_self(), which is an address.
    *
    * For older Linux (pre 2.4.11) and other systems that don't have gettid(),
-   * this returns thr_self().
+   * this uses ACE_NOTSUP_RETURN (-1).
    */
   pid_t thr_gettid ();
 

@@ -3187,8 +3187,8 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
 ACE_INLINE ssize_t
 ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
 {
-  return ACE_OS::snprintf (buffer, buffer_length, "%u",
-    static_cast<unsigned> (ACE_OS::thr_gettid()));
+  return ACE_OS::snprintf (buffer, buffer_length, "%d",
+    static_cast<int> (ACE_OS::thr_gettid ()));
 }
 
 ACE_INLINE ACE_thread_t
