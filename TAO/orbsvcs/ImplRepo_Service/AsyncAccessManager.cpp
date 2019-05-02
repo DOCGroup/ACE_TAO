@@ -650,8 +650,8 @@ AsyncAccessManager::ping_replied (LiveStatus server)
                 if (ImR_Locator_i::debug () > 4)
                   {
                     ORBSVCS_DEBUG ((LM_DEBUG,
-                                    ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid = %d,")
-                                    ACE_TEXT (" transition to <WAIT_FOR_DEATH>\n"),
+                                    ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid <%d>,")
+                                    ACE_TEXT (" waiting on ping, transition to <WAIT_FOR_DEATH>\n"),
                                     this, this->info_->pid));
                   }
                 this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
@@ -660,7 +660,7 @@ AsyncAccessManager::ping_replied (LiveStatus server)
             if (ImR_Locator_i::debug () > 4)
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,
-                                ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid = %d,")
+                                ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid <%d>,")
                                 ACE_TEXT (" trying to restart server\n"),
                                 this, this->info_->pid));
               }
@@ -671,7 +671,31 @@ AsyncAccessManager::ping_replied (LiveStatus server)
           }
         else
           {
-            this->status (ImplementationRepository::AAM_SERVER_DEAD);
+            // If we get a death notify we wait for the death of the process, the fact that the
+            // ping failed doesn't mean the process itself is already death
+            if (this->info_->death_notify && this->info_->pid != 0)
+              {
+                if (ImR_Locator_i::debug () > 4)
+                  {
+                    ORBSVCS_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid <%d>,")
+                                    ACE_TEXT (" transition to <WAIT_FOR_DEATH>\n"),
+                                    this, this->info_->pid));
+                  }
+                this->status (ImplementationRepository::AAM_WAIT_FOR_DEATH);
+                return;
+              }
+            else
+              {
+                if (ImR_Locator_i::debug () > 4)
+                  {
+                    ORBSVCS_DEBUG ((LM_DEBUG,
+                                    ACE_TEXT ("(%P|%t) AsyncAccessManager(%@)::ping_replied pid <%d>,")
+                                    ACE_TEXT (" transition to <SERVER_DEAD>\n"),
+                                    this, this->info_->pid));
+                  }
+                this->status (ImplementationRepository::AAM_SERVER_DEAD);
+              }
           }
       }
       break;

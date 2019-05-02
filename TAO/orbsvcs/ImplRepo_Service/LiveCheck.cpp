@@ -346,18 +346,19 @@ LiveEntry::has_pid (int pid) const
 bool
 LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
+                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
+                      status_name (this->liveliness_), this->listeners_.size (),
+                      this->server_.c_str(), this->pid_));
+    }
+
   if (this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
       this->listeners_.is_empty ())
     {
-      if (ImR_Locator_i::debug () > 4)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
-                          status_name (this->liveliness_), this->listeners_.size (),
-                          this->server_.c_str(), this->pid_));
-        }
       return false;
     }
   ACE_Time_Value const now (ACE_OS::gettimeofday());
