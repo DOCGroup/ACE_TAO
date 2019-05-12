@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
@@ -20,12 +19,9 @@
 #include "ace/Pipe.h"
 #include "ace/ACE.h"
 
-
-
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
-static const char *message =
-"Hello there! Hope you get this message";
+static const char *message = "Hello there! Hope you get this message";
 
 class Handler : public ACE_Event_Handler
 {

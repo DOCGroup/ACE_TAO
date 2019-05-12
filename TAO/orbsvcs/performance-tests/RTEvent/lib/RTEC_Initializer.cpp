@@ -12,6 +12,7 @@
 #include "orbsvcs/Event/EC_RTCORBA_Factory.h"
 
 #include "ace/Dynamic_Service.h"
+#include "ace/Auto_Ptr.h"
 
 TAO_EC_Event_Channel *
 RTEC_Initializer::create (PortableServer::POA_ptr consumer_poa,

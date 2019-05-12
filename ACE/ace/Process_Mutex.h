@@ -7,7 +7,7 @@
  *   A wrapper for mutexes that can be used across processes on the
  *   same host machine, as well as within a process, of course.
  *
- * @author Douglas C. Schmidt <schmidt@uci.edu>
+ * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

@@ -4,7 +4,7 @@
 /**
  *  @file    Get_Opt.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Don Hinton <dhinton@gmx.net> (added long option support)
  */
 //==========================================================================

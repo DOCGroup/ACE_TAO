@@ -162,7 +162,6 @@ Grid_Factory_i::shutdown (void)
 // Constructor
 Grid_Factory_i::Grid_Factory_i (void)
 {
-  // no-op
 }
 
 // Destructor

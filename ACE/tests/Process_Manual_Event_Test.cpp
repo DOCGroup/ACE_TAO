@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Process.h"
 #include "ace/Manual_Event.h"
@@ -22,7 +21,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_dirent.h"
-
 
 #if (!defined (ACE_LACKS_FORK) || defined (ACE_WIN32)) && \
   (defined (ACE_WIN32) || \

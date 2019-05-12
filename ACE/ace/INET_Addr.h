@@ -4,7 +4,7 @@
 /**
  *  @file    INET_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -57,10 +57,14 @@ public:
 
   /**
    * Initializes an ACE_INET_Addr from the @a address, which can be
-   * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the @a address it
-   * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
+   * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
+   * with the IP address being INADDR_ANY.
    */
   explicit ACE_INET_Addr (const char address[],
                           int address_family = AF_UNSPEC);
@@ -174,11 +178,15 @@ public:
            const char protocol[] = "tcp");
 
   /**
-   * Initializes an ACE_INET_Addr from the @a addr, which can be
-   * "ip-number:port-number" (e.g., "tango.cs.wustl.edu:1234" or
-   * "128.252.166.57:1234").  If there is no ':' in the @a address it
-   * is assumed to be a port number, with the IP address being
-   * INADDR_ANY.
+   * Initializes an ACE_INET_Addr from the @a address, which can be
+   * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
+   * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
+   * with the IP address being INADDR_ANY.
    */
   int set (const char addr[], int address_family = AF_UNSPEC);
 
@@ -216,8 +224,8 @@ public:
   /**
    * Transform the current ACE_INET_Addr address into string format.
    * If @a ipaddr_format is true this produces "ip-number:port-number"
-   * (e.g., "128.252.166.57:1234"), whereas if @a ipaddr_format is false
-   * this produces "ip-name:port-number" (e.g.,
+   * (e.g., "128.252.166.57:1234" or "[2001:db8::57]:1234"), whereas
+   * if @a ipaddr_format is false this produces "ip-name:port-number" (e.g.,
    * "tango.cs.wustl.edu:1234").  Returns -1 if the @a size of the
    * @a buffer is too small, else 0.
    */
@@ -229,9 +237,11 @@ public:
    * Initializes an ACE_INET_Addr from the @a address, which can be
    * "ip-addr:port-number" (e.g., "tango.cs.wustl.edu:1234"),
    * "ip-addr:port-name" (e.g., "tango.cs.wustl.edu:telnet"),
-   * "ip-number:port-number" (e.g., "128.252.166.57:1234"), or
-   * "ip-number:port-name" (e.g., "128.252.166.57:telnet").  If there
-   * is no ':' in the @a address it is assumed to be a port number,
+   * "ip-number:port-number" (e.g., "128.252.166.57:1234"),
+   * "ip-number:port-name" (e.g., "128.252.166.57:telnet"),
+   * "[ipv6-number]:port-number (e.g, "[2001:db8::57]:1234") or
+   * "[ipv6-number]:port-name (e.g, "[2001:db8::57]:telnet").
+   * If there is no ':' in the @a address it is assumed to be a port number,
    * with the IP address being INADDR_ANY.
    */
   virtual int string_to_addr (const char address[],

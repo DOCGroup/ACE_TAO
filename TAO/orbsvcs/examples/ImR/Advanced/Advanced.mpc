@@ -15,8 +15,6 @@ project(*Manager): orbsvcsexe, portableserver {
     ManagerC.cpp
   }
   Documentation_Files {
-    Advanced.mpc
-    run_test.pl
     README
     drivers/*
   }

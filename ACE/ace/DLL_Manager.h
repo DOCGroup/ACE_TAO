@@ -154,6 +154,31 @@ private:
   void get_dll_names (const ACE_TCHAR *dll_name,
                       ACE_Array<ACE_TString> &try_names);
 
+  /**
+   * This method opens and dynamically links a library/DLL.
+   * @param dll_name  The filename or path of the DLL to load.
+   * @param open_mode  Flags to alter the actions taken when loading the DLL.
+   *        The possible values are:
+   *        @li @c RTLD_LAZY (this the default): loads identifier symbols but
+   *            not the symbols for functions, which are loaded dynamically
+   *            on demand.
+   *        @li @c RTLD_NOW: performs all necessary relocations when
+   *            @a dll_name is first loaded
+   *        @li @c RTLD_GLOBAL: makes symbols available for relocation
+   *            processing of any other DLLs.
+   * @retval false On failure
+   * @retval true On success.
+   */
+  bool open_i (const ACE_TCHAR *dll_name, int open_mode);
+
+  /**
+   * This method logs error of opening the DLL.
+   * @param dll_name  The filename or path of the DLL to load.
+   * @param errors Optional address of an error stack to collect any errors
+   *        encountered.
+   */
+  void log_error (const ACE_TCHAR *dll_name, ERROR_STACK *errors);
+
   /// Disallow copying and assignment since we don't handle them.
   ACE_DLL_Handle (const ACE_DLL_Handle &);
   void operator= (const ACE_DLL_Handle &);

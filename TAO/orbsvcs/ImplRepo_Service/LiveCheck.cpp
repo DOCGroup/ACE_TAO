@@ -346,23 +346,24 @@ LiveEntry::has_pid (int pid) const
 bool
 LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
 {
+  if (ImR_Locator_i::debug () > 4)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
+                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
+                      status_name (this->liveliness_), this->listeners_.size (),
+                      this->server_.c_str(), this->pid_));
+    }
+
   if (this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
       this->listeners_.is_empty ())
     {
-      if (ImR_Locator_i::debug () > 4)
-        {
-          ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                          ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
-                          status_name (this->liveliness_), this->listeners_.size (),
-                          this->server_.c_str(), this->pid_));
-        }
       return false;
     }
-  ACE_Time_Value now (ACE_OS::gettimeofday());
-  ACE_Time_Value diff = this->next_check_ - now;
-  long msec = diff.msec();
+  ACE_Time_Value const now (ACE_OS::gettimeofday());
+  ACE_Time_Value const diff = this->next_check_ - now;
+  long const msec = diff.msec();
   if (msec > 0)
     {
       if (!want_reping || this->next_check_ < next)
@@ -404,7 +405,7 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
               {
                 this->liveliness_ = LS_TRANSIENT;
               }
-            ACE_Time_Value next (ms / 1000, (ms % 1000) * 1000);
+            ACE_Time_Value const next (ms / 1000, (ms % 1000) * 1000);
             this->next_check_ = now + next;
             if (ImR_Locator_i::debug () > 4)
               {
@@ -915,7 +916,7 @@ LiveCheck::remove_server (const char *server, int pid)
           if (ImR_Locator_i::debug () > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server removing <%C> pid <%d> entry pid <%d> status <%C>\n "),
+                              ACE_TEXT ("(%P|%t) LiveCheck::remove_server removing <%C> pid <%d> entry pid <%d> status <%C>\n"),
                               server, pid, entry->pid (), LiveEntry::status_name (entry->status ())));
             }
           if (entry_map_.unbind (s, entry) == 0)

@@ -8,7 +8,7 @@
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>
- *  @author and Douglas C. Schmidt <schmidt@cs.wustl.edu>.
+ *  @author and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
 //=============================================================================
 

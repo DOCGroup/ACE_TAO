@@ -48,7 +48,9 @@
 #include "ace/Log_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-
+#ifdef ACE_ANDROID
+#  include "ace/Log_Msg_Android_Logcat.h"
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,11 +83,11 @@ public:
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_NT_Event_Log
+#elif defined (ACE_ANDROID)
+#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_Android_Logcat
 #elif !defined (ACE_LACKS_UNIX_SYSLOG) && !defined (ACE_HAS_WINCE)
 #  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_UNIX_Syslog
-#else
-#  define ACE_LOG_MSG_SYSLOG_BACKEND ACE_Log_Msg_IPC
-#endif /* ! ACE_WIN32 */
+#endif
 
 // When doing ACE_OS::s[n]printf() calls in log(), we need to update
 // the space remaining in the output buffer based on what's returned from
@@ -137,7 +139,15 @@ private:
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::log_backend_ = 0;
 ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ = 0;
 
-u_long ACE_Log_Msg_Manager::log_backend_flags_ = 0;
+#ifndef ACE_DEFAULT_LOG_BACKEND_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
+#  endif
+#endif
+
+u_long ACE_Log_Msg_Manager::log_backend_flags_ = ACE_DEFAULT_LOG_BACKEND_FLAGS;
 
 int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 {
@@ -167,16 +177,14 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 
   if (ACE_Log_Msg_Manager::log_backend_ == 0)
     {
-      ACE_NO_HEAP_CHECK;
-
-#if (defined (WIN32) || !defined (ACE_LACKS_UNIX_SYSLOG)) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
+#ifdef ACE_LOG_MSG_SYSLOG_BACKEND
       // Allocate the ACE_Log_Msg_Backend instance.
       if (ACE_BIT_ENABLED (ACE_Log_Msg_Manager::log_backend_flags_, ACE_Log_Msg::SYSLOG))
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_LOG_MSG_SYSLOG_BACKEND,
                         -1);
       else
-#endif /* defined (WIN32) && !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP) */
+#endif
         ACE_NEW_RETURN (ACE_Log_Msg_Manager::log_backend_,
                         ACE_Log_Msg_IPC,
                         -1);
@@ -196,8 +204,6 @@ ACE_Log_Msg_Manager::get_lock (void)
   // to grab another one here.
   if (ACE_Log_Msg_Manager::lock_ == 0)
     {
-      ACE_NO_HEAP_CHECK;
-
       ACE_NEW_RETURN (ACE_Log_Msg_Manager::lock_,
                       ACE_Recursive_Thread_Mutex,
                       0);
@@ -307,21 +313,18 @@ ACE_Log_Msg::instance (void)
           // Allocate the Singleton lock.
           ACE_Log_Msg_Manager::get_lock ();
 
-          {
-            ACE_NO_HEAP_CHECK;
-            if (ACE_Thread::keycreate (log_msg_tss_key (),
-                                       &ACE_TSS_CLEANUP_NAME) != 0)
-              {
-                if (1 == ACE_OS_Object_Manager::starting_up())
-                  //This function is called before ACE_OS_Object_Manager is
-                  //initialized.  So the lock might not be valid.  Assume it's
-                  //single threaded and so don't need the lock.
-                  ;
-                else
-                  ACE_OS::thread_mutex_unlock (lock);
-                return 0; // Major problems, this should *never* happen!
-              }
-          }
+          if (ACE_Thread::keycreate (log_msg_tss_key (),
+                                      &ACE_TSS_CLEANUP_NAME) != 0)
+            {
+              if (1 == ACE_OS_Object_Manager::starting_up())
+                //This function is called before ACE_OS_Object_Manager is
+                //initialized.  So the lock might not be valid.  Assume it's
+                //single threaded and so don't need the lock.
+                ;
+              else
+                ACE_OS::thread_mutex_unlock (lock);
+              return 0; // Major problems, this should *never* happen!
+            }
 
           ACE_Log_Msg::key_created_ = true;
         }
@@ -348,26 +351,20 @@ ACE_Log_Msg::instance (void)
   if (tss_log_msg == 0)
     {
       // Allocate memory off the heap and store it in a pointer in
-      // thread-specific storage (on the stack...).  Stop heap
-      // checking, the memory will always be freed by the thread
-      // rundown because of the TSS callback set up when the key was
-      // created. This prevents from getting these blocks reported as
-      // memory leaks.
-      {
-        ACE_NO_HEAP_CHECK;
+      // thread-specific storage (on the stack...).  The memory will
+      // always be freed by the thread rundown because of the TSS
+      // callback set up when the key was created.
+      ACE_NEW_RETURN (tss_log_msg,
+                      ACE_Log_Msg,
+                      0);
+      // Store the dynamically allocated pointer in thread-specific
+      // storage.  It gets deleted via the ACE_TSS_cleanup function
+      // when the thread terminates.
 
-        ACE_NEW_RETURN (tss_log_msg,
-                        ACE_Log_Msg,
-                        0);
-        // Store the dynamically allocated pointer in thread-specific
-        // storage.  It gets deleted via the ACE_TSS_cleanup function
-        // when the thread terminates.
-
-        if (ACE_Thread::setspecific (*(log_msg_tss_key()),
-                                     reinterpret_cast<void *> (tss_log_msg))
-            != 0)
-          return 0; // Major problems, this should *never* happen!
-      }
+      if (ACE_Thread::setspecific (*(log_msg_tss_key()),
+                                    reinterpret_cast<void *> (tss_log_msg))
+          != 0)
+        return 0; // Major problems, this should *never* happen!
     }
 
   return tss_log_msg;
@@ -439,7 +436,7 @@ const ACE_TCHAR *ACE_Log_Msg::local_host_ = 0;
 const ACE_TCHAR *ACE_Log_Msg::program_name_ = 0;
 
 /// Default is to use stderr.
-u_long ACE_Log_Msg::flags_ = ACE_Log_Msg::STDERR;
+u_long ACE_Log_Msg::flags_ = ACE_DEFAULT_LOG_FLAGS;
 
 /// Current offset of msg_[].
 ptrdiff_t ACE_Log_Msg::msg_off_ = 0;
@@ -493,14 +490,13 @@ ACE_Log_Msg::close (void)
          // unload of libACE, by a program not linked with libACE,
          // ACE_TSS_cleanup will be invoked after libACE has been unloaded.
          // See Bugzilla 2980 for lots of details.
-         ACE_Log_Msg *tss_log_msg = 0;
          void *temp = 0;
 
          // Get the tss_log_msg from thread-specific storage.
          if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
              && temp)
            {
-             tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
+             ACE_Log_Msg *tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
              // we haven't been cleaned up
              ACE_TSS_CLEANUP_NAME(tss_log_msg);
              if (ACE_Thread::setspecific(*(log_msg_tss_key()),
@@ -549,14 +545,7 @@ ACE_Log_Msg::sync (const ACE_TCHAR *prog_name)
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      // Stop heap checking, block will be freed by the destructor when
-      // the last ACE_Log_Msg instance is deleted.
-      // Heap checking state will be restored when the block is left.
-      {
-        ACE_NO_HEAP_CHECK;
-
-        ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
-      }
+      ACE_Log_Msg::program_name_ = ACE_OS::strdup (prog_name);
     }
 
   ACE_Log_Msg::msg_off_ = 0;
@@ -800,19 +789,12 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
       ACE_OS::free ((void *) ACE_Log_Msg::program_name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      // Stop heap checking, block will be freed by the destructor.
-      {
-        ACE_NO_HEAP_CHECK;
-
-        ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
-                              ACE_OS::strdup (prog_name),
-                              -1);
-      }
+      ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
+                            ACE_OS::strdup (prog_name),
+                            -1);
     }
   else if (ACE_Log_Msg::program_name_ == 0)
     {
-      // Stop heap checking, block will be freed by the destructor.
-      ACE_NO_HEAP_CHECK;
       ACE_ALLOCATOR_RETURN (ACE_Log_Msg::program_name_,
                             ACE_OS::strdup (ACE_TEXT ("<unknown>")),
                             -1);
@@ -3196,11 +3178,8 @@ ACE_Log_Msg::local_host (const ACE_TCHAR *s)
 #else
       ACE_OS::free ((void *) ACE_Log_Msg::local_host_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      {
-        ACE_NO_HEAP_CHECK;
 
-        ACE_ALLOCATOR (ACE_Log_Msg::local_host_, ACE_OS::strdup (s));
-      }
+      ACE_ALLOCATOR (ACE_Log_Msg::local_host_, ACE_OS::strdup (s));
     }
 }
 

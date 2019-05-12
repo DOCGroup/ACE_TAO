@@ -20,7 +20,7 @@ interface. A proxy packages the request which gets marshalled and
 sent to the target object.  A paper that describes TAO's <A
 HREF="interceptors.html">portable interceptor</A> and smart proxy
 support is available <A
-HREF="http://www.cs.wustl.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.</p></p>
+HREF="http://www.dre.vanderbilt.edu/~schmidt/PDF/smart_proxies.pdf">online</A>.</p></p>
 
 <Hr><P>
 <h3><a name="toc">Table of Contents</a></h3>
@@ -384,7 +384,7 @@ created from then on will be the default one.
 <p> To use this feature in TAO, one must do the following:
 (1) Generate smart proxy classes using the IDL compiler option of
 -Gsp and (2) Link client and server to the TAO_SmartProxies library, in
-$ACE_ROOT/TAO/tao/SmartProxies.
+$TAO_ROOT/tao/SmartProxies.
 A new smart proxy option has been added to the design: one-shot or
 permanent versus per-object smart proxy.  The one-shot smart proxy
 option denotes that the smart proxy factory is registered permanently
@@ -392,7 +392,7 @@ and so for all object instances the same kind of proxy is used.  On
 disabling this default option one can achieve the use of different
 smart proxies for every object instead of every interface.
 For details please see the paper on
-<a href="http://www.cs.wustl.edu/~schmidt/PDF/COOTS-00.pdf">
+<a href="http://www.dre.vanderbilt.edu/~schmidt/PDF/COOTS-00.pdf">
 Meta-programming Mechanisms for ORB Middleware as well as the test at
 $TAO_ROOT/tests/Smart_Proxies/Policy.
 
@@ -400,7 +400,7 @@ $TAO_ROOT/tests/Smart_Proxies/Policy.
 <h3><a name="Acknowledgements">Acknowledgements</a></h3>
 
 <P><a href="mailto:nanbor@cs.wustl.edu">Nanbor Wang</a> and <a
-href="mailto:schmidt@cs.wustl.edu">Dr.Schmidt</a> for their help in
+href="mailto:d.schmidt@vanderbilt.edu">Dr.Schmidt</a> for their help in
 designing and discussing this feature. <P>
 
 <P><a href="mailto:brian.wallis@ot.com.au">Brian Wallis</a> for

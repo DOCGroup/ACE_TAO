@@ -10,7 +10,7 @@
  *   ACE_Thread_Manager.  Note how the use of these reusable
  *   components reduces the reliance on global variables.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

@@ -4,14 +4,11 @@
 UDP_i::UDP_i (CORBA::ORB_ptr o) :
   orb_(CORBA::ORB::_duplicate (o))
 {
-  // no-op
 }
 
 // Destructor
-
 UDP_i::~UDP_i (void)
 {
-  // no-op
 }
 
 void

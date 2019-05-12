@@ -7,7 +7,7 @@
  *   ACE_Thread_Mutex. The test acquires and releases mutexes. No
  *   command line arguments are needed to run the test.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

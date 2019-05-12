@@ -388,7 +388,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
               ACE_OS::exit (errno);
             }
 #   endif /* ACE_HAS_WCHAR */
-
+          return result;
         default:
           // Server process.  The fork succeeded.
           return result;

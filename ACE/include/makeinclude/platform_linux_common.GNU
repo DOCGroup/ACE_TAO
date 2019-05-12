@@ -107,11 +107,11 @@ ifeq ($(ssl),1)
   PLATFORM_SSL_CPPFLAGS += -I/usr/kerberos/include
 endif # ssl
 
-PLATFORM_LARGEFILE_CFLAGS := $(shell getconf LFS_CFLAGS 2> /dev/null || echo Unknown)
+PLATFORM_LARGEFILE_CFLAGS := $(shell getconf LFS_CFLAGS 2> /dev/null)
 ifdef PLATFORM_LARGEFILE_CFLAGS
   # Large file support
   CPPFLAGS += $(PLATFORM_LARGEFILE_CFLAGS)
-endif #largefile
+endif
 
 SYSARCH := $(shell uname -m)
 
@@ -119,3 +119,13 @@ PIC      = -fPIC
 AR      ?= ar
 ARFLAGS ?= rsuv
 RANLIB   = @true
+
+# Added line below to support "Executable Shared Object" files (as
+# needed by the service configurator).
+# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ifeq ($(threads),1)
+    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
+    ifndef PRELIB
+       PRELIB = @true
+    endif # ! PRELIB
+endif

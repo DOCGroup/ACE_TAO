@@ -5,12 +5,11 @@
  *  This example tests the <ACE_Refcounted_Auto_Ptr> and illustrates
  *  how they may be dispersed between multiple threads using an
  *  implementation of the Active Object pattern, which is available
- *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.
+ *  at <http://www.dre.vanderbilt.edu/~schmidt/PDF/Act-Obj.pdf>.
  *
  *  @author Johnny Tucker <johnny_tucker@yahoo.com>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/ACE.h"

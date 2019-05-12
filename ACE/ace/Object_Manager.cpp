@@ -27,7 +27,8 @@
 
 #include "ace/Guard_T.h"
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
-  #include "ace/OS_NS_stdlib.h"
+# include "ace/OS_NS_stdlib.h"
+# include /**/ <crtdbg.h>
 #endif // ACE_DISABLE_WIN32_ERROR_WINDOWS
 
 #if ! defined (ACE_APPLICATION_PREALLOCATED_OBJECT_DEFINITIONS)

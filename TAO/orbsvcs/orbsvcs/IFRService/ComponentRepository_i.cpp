@@ -58,20 +58,17 @@ TAO_ComponentRepository_i::create_servants_and_poas (
   // Request Processing Policy.
   policies[2] =
     this->root_poa_->create_request_processing_policy (
-        PortableServer::USE_DEFAULT_SERVANT
-      );
+        PortableServer::USE_DEFAULT_SERVANT);
 
   // Servant Retention Policy.
   policies[3] =
     this->root_poa_->create_servant_retention_policy (
-        PortableServer::NON_RETAIN
-      );
+        PortableServer::NON_RETAIN);
 
   // Id Uniqueness Policy.
   policies[4] =
     this->root_poa_->create_id_uniqueness_policy (
-        PortableServer::MULTIPLE_ID
-      );
+        PortableServer::MULTIPLE_ID);
 
   PortableServer::POAManager_var poa_manager =
     this->root_poa_->the_POAManager ();

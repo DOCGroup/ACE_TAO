@@ -89,35 +89,28 @@ namespace TAO
     // See IDL for documentation
 
     virtual void push_structured_fault (
-        const CosNotification::StructuredEvent & event
-      );
+        const CosNotification::StructuredEvent & event);
 
     virtual void push_sequence_fault (
-      const CosNotification::EventBatch & events
-    );
+      const CosNotification::EventBatch & events);
 
     virtual ::CosNotifyFilter::Filter_ptr create_subscription_filter (
-      const char * constraint_grammar
-    );
+      const char * constraint_grammar);
 
     virtual FT::FaultNotifier::ConsumerId connect_structured_fault_consumer (
       CosNotifyComm::StructuredPushConsumer_ptr push_consumer,
-      CosNotifyFilter::Filter_ptr filter
-    );
+      CosNotifyFilter::Filter_ptr filter);
 
     virtual FT::FaultNotifier::ConsumerId connect_sequence_fault_consumer (
       CosNotifyComm::SequencePushConsumer_ptr push_consumer,
-      CosNotifyFilter::Filter_ptr filter
-    );
+      CosNotifyFilter::Filter_ptr filter);
 
     virtual void disconnect_consumer (
-      FT::FaultNotifier::ConsumerId connection
-    );
+      FT::FaultNotifier::ConsumerId connection);
 
     //////////////////////////////////////////
     // CORBA interface PullMonitorable methods
     virtual CORBA::Boolean is_alive (void);
-
 
     /////////////////////////////////////////
     // Override CORBA servant virtual methods

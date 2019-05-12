@@ -7,7 +7,7 @@
  *    intra-process communication.
  *
  *  @author Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author and Prashant Jain <pjain@cs.wustl.edu>
  */
 //=============================================================================

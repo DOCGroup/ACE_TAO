@@ -14,7 +14,7 @@
  *
  * Specific-pid and generic exit-handler functions are also tested.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
 //=============================================================================
 

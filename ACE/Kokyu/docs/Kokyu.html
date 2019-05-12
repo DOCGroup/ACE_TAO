@@ -31,7 +31,7 @@ Real-time CORBA (DSRTCORBA) schedulers</a>
 Kokyu is a portable middleware scheduling framework designed to provide
 flexible scheduling and dispatching services within the context of higher-level
 middleware. Kokyu currently provides real-time scheduling and dispatching
-services for TAO’s real-time CORBA Event Service, which mediates supplier-consumer
+services for TAOï¿½s real-time CORBA Event Service, which mediates supplier-consumer
 relationships between application operations. Kokyu consists primarily
 of two cooperating infrastructure segments, illustrated in Figure 1:
 <center>
@@ -54,7 +54,7 @@ are ordered, by assigning priority levels and rates to tasks, and producing
 a configuration specification for the dispatching mechanism. The dispatcher
 is responsible for enforcing the ordering of operation dispatches using
 different threads, requests queues, and timers configured according to
-the scheduler’s specification. The combined framework provides an implicit
+the schedulerï¿½s specification. The combined framework provides an implicit
 projection of scheduling heuristics into appropriate dispatching infrastructure
 configurations, so that the scheduling and dispatching infrastructure segments
 can be optimized both separately and in combination.
@@ -72,7 +72,7 @@ within a fixed CORBA IDL interface, thereby enabling different strategies
 to be configured independently from applications that use them.
 <h3>
 <a NAME="FlexDispatch"></a>Flexible Dispatching Framework</h3>
-The right side of Figure 1 shows the essential features of Kokyu’s flexible
+The right side of Figure 1 shows the essential features of Kokyuï¿½s flexible
 task dispatching infrastructure. Key features of the dispatching infrastructure
 that are essential to performing our optimizations are as follows:
 <p><b>Dispatching queues:</b> Each task is assigned by our strategized
@@ -96,16 +96,16 @@ the highest is at the head of the queue at the point when one is to be
 dequeued. We consider three disciplines:
 <ul>
 <li>
-Static – Tasks are ordered by a static subpriority value – results in FIFO
+Static ï¿½ Tasks are ordered by a static subpriority value ï¿½ results in FIFO
 ordering if all static subpriorities are made the same; static queues at
 different priority levels can be used to implement an RMS scheduling strategy.</li>
 
 <li>
-Deadline – Tasks are ordered by time to deadline; a single deadline queue
+Deadline ï¿½ Tasks are ordered by time to deadline; a single deadline queue
 can be used to implement the earliest deadline first (EDF) scheduling strategy.</li>
 
 <li>
-Laxity – Tasks are ordered by slack time, or laxity – the time to deadline
+Laxity ï¿½ Tasks are ordered by slack time, or laxity ï¿½ the time to deadline
 minus the execution time; a single laxity queue can be used to implement
 the minimum laxity first (MLF) scheduling strategy; laxity queues at different
 priority levels can be used to implement the maximum urgency first (MUF)
@@ -125,7 +125,7 @@ in the Kokyu dispatching framework.
 the Kokyu scheduling framework is used to configure and operate a dispatching
 module. During system initialization, each dispatching module obtains the
 thread priority and dispatching type for each of its queues, typically
-from the scheduling service’s output interface. Next, each queue is assigned
+from the scheduling serviceï¿½s output interface. Next, each queue is assigned
 a unique dispatching priority number, a unique thread priority, and an
 enumerated dispatching type. Finally, each dispatching module has an ordered
 queue of pending dispatches per dispatching priority. To preserve QoS guarantees,
@@ -140,18 +140,18 @@ the dispatching type:
 <ul>
 <li>
 <b>STATIC DISPATCHING</b>: This type specifies a queue that only considers
-the static portion of an operation’s dispatching subpriority.</li>
+the static portion of an operationï¿½s dispatching subpriority.</li>
 
 <li>
 <b>DEADLINE DISPATCHING</b>: This type specifies a queue that considers
-the dynamic and static portions of an operation’s dispatching subpriority,
+the dynamic and static portions of an operationï¿½s dispatching subpriority,
 and updates the dynamic portion according to the time remaining until the
-operation’s deadline.</li>
+operationï¿½s deadline.</li>
 
 <li>
 <b>LAXITY DISPATCHING</b>: This type specifies a queue that considers the
-dynamic and static portions of an operation’s dispatching subpriority,
-and updates the dynamic portion according to the operation’s laxity.</li>
+dynamic and static portions of an operationï¿½s dispatching subpriority,
+and updates the dynamic portion according to the operationï¿½s laxity.</li>
 </ul>
 
 <h3>
@@ -406,7 +406,7 @@ special issue on Real-Time Middleware, guest editor Wei Zhao, March 2001,
 Vol. 20 No. 2</li>
 
 <li>
-Christopher D. Gill, Douglas C. Schmidt, and Ron Cytron, <a href="http://www.cs.wustl.edu/~schmidt/PDF/embedded_sched.pdf">Multi-Paradigm
+Christopher D. Gill, Douglas C. Schmidt, and Ron Cytron, <a href="http://www.dre.vanderbilt.edu/~schmidt/PDF/embedded_sched.pdf">Multi-Paradigm
 Scheduling for Distributed Real-Time Embedded Computing</a>, IEEE Proceedings
 Special Issue on Modeling and Design of Embedded Systems, Volume 91, Number
 1, January 2003.</li>

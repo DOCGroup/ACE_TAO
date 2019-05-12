@@ -31,8 +31,8 @@ Standard_Event_Persistence::get_factory ()
   {
     ACE_NEW_NORETURN (
       this->factory_,
-      Standard_Event_Persistence_Factory ()
-      );
+      Standard_Event_Persistence_Factory ());
+
     if (this->factory_ != 0)
     {
       if (!this->factory_->open (this->filename_.c_str ()))

@@ -12,7 +12,7 @@
  *   will fail since we're overrunning the size of the listen queue
  *   for the acceptor-mode socket.
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

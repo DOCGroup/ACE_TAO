@@ -8,10 +8,9 @@
  *    handling expired timers and cancelling scheduled timers are
  *    all exercised in this test.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Timer_Queue.h"
@@ -22,8 +21,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Auto_Ptr.h"
-
-
 
 static int done = 0;
 static int the_count = 0;

@@ -3,7 +3,6 @@
 // Constructor
 Account_i::Account_i (void)
 {
-  // no-op
 }
 
 Account_i::Account_i (const char *name,

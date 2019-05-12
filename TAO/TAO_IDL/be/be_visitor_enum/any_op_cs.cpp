@@ -96,34 +96,33 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
 
           be_util::gen_nested_namespace_begin (os, module);
 
-
           // Generate the Any <<= and >>= operator declarations
           // Any <<= and >>= operators.
           *os << "void operator<<= (" << be_idt << be_idt_nl
               << "::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " _tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
+              << "::" << node->name () << " _tao_elem)" << be_uidt
+              << be_uidt_nl
               << "{" << be_idt_nl
               << "TAO::Any_Basic_Impl_T< ::" << node->name () << ">::insert ("
               << be_idt << be_idt_nl
               << "_tao_any," << be_nl
               << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem" << be_uidt_nl
-              << ");" << be_uidt << be_uidt_nl
+              << "_tao_elem);" << be_uidt
+              << be_uidt << be_uidt_nl
               << "}" << be_nl_2;
 
           *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
               << "const ::CORBA::Any &_tao_any," << be_nl
-              << "::" << node->name () << " &_tao_elem" << be_uidt_nl
-              << ")" << be_uidt_nl
+              << "::" << node->name () << " &_tao_elem)" << be_uidt
+              << be_uidt_nl
               << "{" << be_idt_nl
               << "return" << be_idt_nl
               << "TAO::Any_Basic_Impl_T< ::" << node->name () << ">::extract ("
               << be_idt << be_idt_nl
               << "_tao_any," << be_nl
               << "::" << node->tc_name () << "," << be_nl
-              << "_tao_elem " << be_uidt_nl
-              << ");" << be_uidt << be_uidt << be_uidt_nl
+              << "_tao_elem);" << be_uidt
+              << be_uidt << be_uidt << be_uidt_nl
               << "}";
 
           be_util::gen_nested_namespace_end (os, module);
@@ -140,29 +139,29 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
   // Any <<= and >>= operators.
   *os << "void operator<<= (" << be_idt << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->name () << " _tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->name () << " _tao_elem)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "TAO::Any_Basic_Impl_T<" << node->name () << ">::insert ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->tc_name () << "," << be_nl
-      << "_tao_elem" << be_uidt_nl
-      << ");" << be_uidt << be_uidt_nl
+      << "_tao_elem);" << be_uidt
+      << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "::CORBA::Boolean operator>>= (" << be_idt << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl
-      << node->name () << " &_tao_elem" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->name () << " &_tao_elem)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "TAO::Any_Basic_Impl_T<" << node->name () << ">::extract ("
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->tc_name () << "," << be_nl
-      << "_tao_elem " << be_uidt_nl
-      << ");" << be_uidt << be_uidt << be_uidt_nl
+      << "_tao_elem);" << be_uidt
+      << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;

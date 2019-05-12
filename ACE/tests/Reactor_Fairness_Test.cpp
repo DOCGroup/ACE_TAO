@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Synch.h"
 #include "Reactor_Fairness_Test.h"
@@ -29,8 +28,6 @@
 #include "ace/Signal.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Mutex.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

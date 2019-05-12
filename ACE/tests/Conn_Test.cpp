@@ -10,7 +10,7 @@
  *   how the <ACE_Strategy_Connector> works by showing how you can
  *   cache connections on the client.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Chris Cleeland <cleeland@cs.wustl.edu>
  *  @author and Irfan Pyarali <irfan@cs.wustl.edu>
  */

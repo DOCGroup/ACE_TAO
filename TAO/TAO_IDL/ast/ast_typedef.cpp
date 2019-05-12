@@ -93,16 +93,12 @@ AST_Typedef::AST_Typedef (AST_Type *bt,
     AST_Field (AST_Decl::NT_typedef,
                bt,
                n),
-    cached_annotations_ (0)
+    has_cached_annotations_ (false)
 {
 }
 
 AST_Typedef::~AST_Typedef (void)
 {
-  if (!cached_annotations_)
-    {
-      delete cached_annotations_;
-    }
 }
 
 // Given a typedef node, traverse the chain of base types until they are no
@@ -205,31 +201,21 @@ IMPL_NARROW_FROM_DECL(AST_Typedef)
 AST_Annotation_Appls &
 AST_Typedef::annotations ()
 {
-  if (!cached_annotations_)
+  if (!has_cached_annotations_)
     {
-      cached_annotations_ = new AST_Annotation_Appls;
-
       if (base_type ())
         {
-          AST_Annotation_Appls &next = base_type ()->annotations ();
-          for (size_t i = 0; i < next.size (); i++)
-            {
-              cached_annotations_->push_back (next[i]);
-            }
+          cached_annotations_.add (base_type ()->annotations ());
         }
 
       /*
        * Done after so it's easier for later annotations to override
        * older ones.
        */
-      if (annotation_appls ()) {
-        AST_Annotation_Appls &appls = *annotation_appls ();
-        for (size_t i = 0; i < appls.size (); i++)
-          {
-            cached_annotations_->push_back (appls[i]);
-          }
-      }
+      cached_annotations_.add (annotation_appls ());
+
+      has_cached_annotations_ = true;
     }
 
-  return *cached_annotations_;
+  return cached_annotations_;
 }

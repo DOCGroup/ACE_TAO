@@ -6,7 +6,7 @@
  *  compiler "features" related to template instantiation...  It is
  *  only used by Malloc_Test.cpp.
  *
- *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

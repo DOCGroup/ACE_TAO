@@ -2,6 +2,7 @@
 *.tlog
 *.log
 *.[i]obj
+*.obj*
 *.ilk
 *.exe
 *.dll
@@ -19,6 +20,7 @@
 ipch/
 Debug/
 Release/
+*.bmak
 
 .depend.*
 GNUmakefile*
@@ -43,4 +45,6 @@ build/
 *.o
 *.res
 *.opendb
-*.VC.db
+*.VC.db*
+*.tds
+*.*codeanalysis*

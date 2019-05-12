@@ -6,8 +6,11 @@
  * call a destructor, which is related to DR244 (see
  * http://wg21.cmeerw.net/cwg/issue244)
  *
- * This is fixed May 2014 in clang, see
+ * This is partly fixed May 2014 in clang, see
  * http://llvm.org/viewvc/llvm-project?view=revision&revision=209319
+ *
+ * Currently the using is required, see
+ * https://bugs.llvm.org/show_bug.cgi?id=12350
  */
 
 #include "test_config.h"
@@ -43,7 +46,7 @@ void A::clear ()
 {
 #if defined __clang__ && \
     (defined __apple_build_version__ && __apple_build_version__ < 9100000 \
-     || __clang_major__ <= 7)
+     || __clang_major__ <= 8)
 #define CLANG_WORKAROUND
 #endif
 

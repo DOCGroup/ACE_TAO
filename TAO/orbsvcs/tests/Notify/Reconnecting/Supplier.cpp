@@ -534,9 +534,7 @@ Supplier_Main::find_notify_factory (void)
       this->naming_context_->resolve (name);
 
     this->ecf_ =
-      CosNotifyChannelAdmin::EventChannelFactory::_narrow (
-                                                      obj.in ()
-                                                    );
+      CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
   }
   return ! CORBA::is_nil (this->ecf_.in ());
 }

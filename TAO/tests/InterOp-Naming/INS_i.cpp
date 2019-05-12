@@ -4,17 +4,14 @@
 
 INS_i::INS_i (void)
 {
-  // no-op
 }
 
 // Destructor
-
 INS_i::~INS_i (void)
 {
 }
 
 // Set the ORB pointer.
-
 void
 INS_i::orb (CORBA::ORB_ptr o)
 {

@@ -991,7 +991,7 @@ Foo::bar ()
 </ul>
 
 <hr>
-<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
+<h3><a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-overview.html">ACE</a>
   Shared Libary Guidelines</h3>
     <ul>
       <li>
@@ -1113,7 +1113,7 @@ public:
 
 
 <hr>
-<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">ACE</a>
+<h3><a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-overview.html">ACE</a>
   Usage Guidelines</h3>
 <ul>
   <li>Always use the <strong><code>ACE_OS</code></strong>
@@ -1247,33 +1247,16 @@ public:
 
 
 <hr>
-<h3><a href="http://www.cs.wustl.edu/~schmidt/ACE-overview.html">Other
+<h3><a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-overview.html">Other
   ACE</a> and
-  <a href="http://www.cs.wustl.edu/~schmidt/TAO-overview.html">TAO</a>
+  <a href="http://www.dre.vanderbilt.edu/~schmidt/TAO-overview.html">TAO</a>
   Guidelines</h3>
 <ul>
   <li>When enhancing, updating, or fixing ACE or TAO, always:
   <ol>
-    <li>Test your change on at least Windows and Linux before commiting.
-      After commiting watch the scoreboard to catch errors your change
+    <li>Test your change on at least Windows and Linux before committing.
+      After committing watch the scoreboard to catch errors your change
       may be related to on other platforms.
-    <li>Add an entry to the appropriate ChangeLog.  TAO and some
-      ACE subdirectories, such as <a href="../ASNMP">ASNMP</a>,
-      <a href="../apps/JAWS">JAWS</a>, and
-      <a href="../apps/gperf">gperf,</a> have their
-      own ChangeLogs.  If you don't use one of those, use the
-      <a href="../ChangeLog">ChangeLog</a> in the top-level
-      <a href="..">ACE_wrappers</a> directory. A ChangeLog entry should
-      have the form:
-      <pre>&lt;tab&gt; * dir/file.ext [(methods)]: description...</pre>
-      If you have a number of files, the names should be on separate lines.
-      In this case, it's also ok to start the description on a new line
-      indented to "dir."
-    <li>Commit your change using a message of this form:<p>
-<code>
-ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
- &lt;levine@cs.wustl.edu&gt;
-</code>
     <li>If the change is in response to a request by someone else:
     <ol>
       <li>Make sure that person is acknowledged in
@@ -1292,11 +1275,11 @@ ChangeLogTag: Thu Jul 22 09:55:10 UTC 1999  David L. Levine
 
 
 <hr>
-<h3>SVN Usage Guidelines</h3>
+<h3>Git Usage Guidelines</h3>
 <ul>
   <li>Always make sure that a change builds and executes correctly
-    on at least one platform before checking it into the SVN repository.
-    All changes <strong>must</strong> be tested with g++ before commiting.
+    on at least one platform before checking it into the git repository.
+    All changes <strong>must</strong> be tested with g++ before committing.
     That means you may need to test on at least two platforms.<p>
 </ul>
 

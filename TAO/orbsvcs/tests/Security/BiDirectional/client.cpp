@@ -132,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) Client callback activated as <%C>\n"), ior.in ()));
 
-      // Send the calback object to the server
+      // Send the callback object to the server
       server->callback_object (callback.in ());
 
       // This is a non-portable, but the only currently available way of

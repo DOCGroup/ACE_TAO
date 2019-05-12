@@ -7,7 +7,7 @@
  *    various OS platforms that support sending signals between
  *    processes.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

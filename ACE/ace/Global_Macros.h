@@ -4,7 +4,7 @@
 /**
  *  @file   Global_Macros.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -37,40 +37,6 @@
 # else
 #   define ACE_DB(X) X
 # endif /* ACE_NDEBUG */
-
-// ACE_NO_HEAP_CHECK macro can be used to suppress false report of
-// memory leaks. It turns off the built-in heap checking until the
-// block is left. The old state will then be restored Only used for
-// Win32 (in the moment).
-# if defined (ACE_WIN32)
-
-#   if defined (_DEBUG) && !defined (ACE_HAS_WINCE) && !defined (__BORLANDC__)
-# include /**/ <crtdbg.h>
-
-// Open versioned namespace, if enabled by the user.
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-
-class ACE_Export ACE_No_Heap_Check
-{
-public:
-  ACE_No_Heap_Check (void)
-    : old_state (_CrtSetDbgFlag (_CRTDBG_REPORT_FLAG))
-  { _CrtSetDbgFlag (old_state & ~_CRTDBG_ALLOC_MEM_DF);}
-  ~ACE_No_Heap_Check (void) { _CrtSetDbgFlag (old_state);}
-private:
-  int old_state;
-};
-
-// Close versioned namespace, if enabled by the user.
-ACE_END_VERSIONED_NAMESPACE_DECL
-
-#     define ACE_NO_HEAP_CHECK ACE_No_Heap_Check ____no_heap;
-#   else /* !_DEBUG */
-#     define ACE_NO_HEAP_CHECK
-#   endif /* _DEBUG */
-# else /* !ACE_WIN32 */
-#   define ACE_NO_HEAP_CHECK
-# endif /* ACE_WIN32 */
 
 // Turn a number into a string.
 # define ACE_ITOA(X) #X
@@ -513,9 +479,9 @@ typedef void (*ACE_Service_Object_Exterminator)(void *);
  *
  * The following macros are used to define helper objects used in
  * ACE's Service Configurator framework, which is described in
- * Chapter 5 of C++NPv2 <www.cs.wustl.edu/~schmidt/ACE/book2/>.  This
+ * Chapter 5 of C++NPv2 <www.dre.vanderbilt.edu/~schmidt/ACE/book2/>.  This
  * framework implements the Component Configurator pattern, which is
- * described in Chapter 2 of POSA2 <www.cs.wustl.edu/~schmidt/POSA/>.
+ * described in Chapter 2 of POSA2 <www.dre.vanderbilt.edu/~schmidt/POSA/>.
  * The intent of this pattern is to allow developers to dynamically
  * load and configure services into a system.  With a little help from
  * this macros statically linked services can also be dynamically

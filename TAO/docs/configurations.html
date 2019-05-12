@@ -21,11 +21,11 @@ documentation, various components in TAO can be customized by
 specifying options for those components.  This document illustrates
 how to combine these options to affect the behavior and performance of
 a TAO ORB, particularly its <a
-href="http://www.cs.wustl.edu/~schmidt/PDF/CACM-arch.pdf">concurrency
+href="http://www.dre.vanderbilt.edu/~schmidt/PDF/CACM-arch.pdf">concurrency
 model</a>.  </p>
 
 <p> TAO configures itself using the <a
-href="http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
+href="http://www.dre.vanderbilt.edu/~schmidt/PDF/Svc-Conf.pdf">ACE Service
 Configurator</a> framework.  Options are therefore specified using the
 <tt>svc.conf</tt> file (if you want to use a different file name, use
 the <tt><a href="Options.html#svcfonf">-ORBSvcConf</a></tt> option).
@@ -165,7 +165,7 @@ Roadmap</h3>
             i.e., the ORB runs in one thread and service multiple
             requests/connections simultaneously using the
             <A
-            HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#reactor">
+            HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#reactor">
             ACE_Reactor</A>, which uses <tt>select</TT> or a similar
             event demultiplexing mechanism supported by the
             platform. </li> <P>

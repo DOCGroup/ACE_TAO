@@ -8,24 +8,18 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
 // Constructor.
 Server_i::Server_i (void)
   : ior_output_file_ (0)
 {
-  // no-op.
 }
 
 // Destructor.
-
 Server_i::~Server_i (void)
 {
-  // no-op.
 }
 
 // Parse the command-line arguments and set options.
-
 int
 Server_i::parse_args (int argc,
                       ACE_TCHAR* argv[])

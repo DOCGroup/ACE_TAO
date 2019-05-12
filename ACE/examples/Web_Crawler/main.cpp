@@ -6,7 +6,7 @@
  *   This program implements a Web crawler that can be configured to
  *   apply various strategies to URLs that it visits.
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

@@ -35,7 +35,7 @@ For Borland C++ Builder:
 
 *) Obtain, make and install wxWindows. See http://www.wxwindows.org.
 
-*) Obtain ACE/TAO. See http://www.cs.wustl.edu/~schmidt/ACE.html.
+*) Obtain ACE/TAO. See https://www.dre.vanderbilt.edu/~schmidt/ACE.html.
 
 *) Build the the dynamically linked release version of ACE and TAO. See
 http://www.tenermerx.com/programming/corba/tao_bcb/index.html.
@@ -51,7 +51,7 @@ For linux/gcc:
 
 *) Obtain, make and install wxWindows. See http://www.wxwindows.org.
 
-*) Obtain ACE/TAO. See http://www.cs.wustl.edu/~schmidt/ACE.html.
+*) Obtain ACE/TAO. See https://www.dre.vanderbilt.edu/~schmidt/ACE.html.
 
 *) Build the the dynamically linked release version of ACE and TAO.
 

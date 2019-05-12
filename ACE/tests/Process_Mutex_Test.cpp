@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Mutex.h"
 #include "ace/Process.h"
@@ -19,8 +18,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_dirent.h"
-
-
 
 static int release_mutex = 1;
 static int child_process = 0;

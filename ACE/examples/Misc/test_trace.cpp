@@ -24,7 +24,7 @@
  *  2. Add #define ACE_NTRACE 0 in config.h
  *  3. Build your app with tracing.
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Irfan Pyarali <irfan@cs.wustl.edu>
  */
 //=============================================================================
 

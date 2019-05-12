@@ -71,8 +71,7 @@ protected:
 
   // = NotifyPublish method
   virtual void offer_change (const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed
-      );
+        const CosNotification::EventTypeSeq & removed);
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -10,16 +10,16 @@
  *    It was added to test for bugs with the ACE_OS recursive
  *    condition implementation.
  *
- *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Leonid Kvetnyi <leonidk@nice.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
 #include "ace/Synch.h"
 #include "ace/Activation_Queue.h"
+
 #include "test_config.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Task_T.h"
-#include "ace/Activation_Queue.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
 #include "ace/Condition_Recursive_Thread_Mutex.h"

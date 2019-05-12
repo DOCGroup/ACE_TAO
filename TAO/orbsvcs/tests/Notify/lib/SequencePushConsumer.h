@@ -79,8 +79,7 @@ protected:
 
  /// Default does nothing.
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 };
 
 #if defined (__ACE_INLINE__)
