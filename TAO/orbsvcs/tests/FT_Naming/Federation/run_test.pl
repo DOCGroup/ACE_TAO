@@ -55,7 +55,6 @@ sub init_naming_context_directory($$)
     }
 }
 
-
 # Variables for command-line arguments to client and server
 # executables.
 my $ns_orb_primary_port1 = 9931;
@@ -92,7 +91,7 @@ $ns2->DeleteFile ($ns2_ior);
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
 $CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level");
 
-my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
+my $tao_ft_naming = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
 
 my $name_dir1 = "NameService1";
 my $name_dir2 = "NameService2";
