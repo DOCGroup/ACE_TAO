@@ -88,8 +88,8 @@ my $imr_host = $imr->HostName ();
 my $port = 12345;
 my $endpoint = "-ORBEndpoint " . "$protocol" . "://:" . $port;
 
-my $IMR = $imr->CreateProcess ("../../ImplRepo_Service/tao_imr_locator");
-my $ACT = $act->CreateProcess ("../../ImplRepo_Service/tao_imr_activator");
+my $IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
+my $ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
 my $TI = $ti->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_imr");
 
 # We want the tao_imr executable to be found exactly in the path
@@ -100,7 +100,7 @@ $TI->IgnoreExeSubDir (1);
 
 my $replica_IMR;
 if ($replica) {
-    $replica_IMR = $replica_imr->CreateProcess ("../../ImplRepo_Service/tao_imr_locator");
+    $replica_IMR = $replica_imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 }
 
 my @airplaneiorfile;

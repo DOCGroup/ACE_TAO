@@ -46,10 +46,10 @@ $nfs->DeleteFile ($nfsiorfile);
 $nfs->DeleteFile ($persistent_xml);
 $nfs->DeleteFile ($persistent_000);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                 "-o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBSvcConf $nfs_svc_conf -ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile ";
 
 $SUP = $sup->CreateProcess ("supplier");

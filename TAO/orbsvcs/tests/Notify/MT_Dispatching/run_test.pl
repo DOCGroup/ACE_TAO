@@ -67,10 +67,10 @@ $con->DeleteFile ($coniorfile);
    },
 );
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                 "-o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile ".
             " -IORoutput $nfs_nfsiorfile";
 

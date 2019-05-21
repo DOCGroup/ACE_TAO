@@ -38,7 +38,7 @@ my $client_ior1file = $client->LocalFile ($ior1file);
 $client->DeleteFile($ior1file);
 
 
-$SV1 = $server1->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                               " $nice " .
                               "-ORBdebuglevel $debug_level " .
                               "-o $server1_ior1file " .

@@ -38,7 +38,7 @@ $server->DeleteFile($iorbase);
 $client->DeleteFile ($persistent_file_xml);
 $client->DeleteFile ($persistent_file_000);
 
-$SV = $server->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                               "-ORBdebuglevel $debug_level " .
                               "-NoNameSvc " .
                               "-IORoutput $server_iorfile " .

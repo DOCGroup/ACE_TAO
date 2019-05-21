@@ -15,7 +15,7 @@ if ($^O eq "MSWin32"){
    $tao_ifr = "$ENV{ACE_ROOT}/bin/tao_ifr";
 }
 else{
-   $tao_ifr = "../../../IFR_Service/tao_ifr";
+   $tao_ifr = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr";
 }
 
 my %isa = ();
@@ -70,7 +70,7 @@ $test->DeleteFile ($log3);
 my $test_iorfile = $test->LocalFile ($iorbase);
 $test->DeleteFile($iorbase);
 
-$SV1 = $test->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+$SV1 = $test->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                               " -o $test_iorfile " .
                               "-ORBLogFile $log1_test");
 

@@ -37,11 +37,11 @@ my $act_actiorfile = $act->LocalFile ($actiorfile);
 my $ns_nsiorfile = $ns->LocalFile ($nsiorfile);
 my $test_nsiorfile = $test->LocalFile ($nsiorfile);
 
-$IMR = $imr->CreateProcess ("../../../ImplRepo_Service/tao_imr_locator");
+$IMR = $imr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_locator");
 
-$ACT = $act->CreateProcess ("../../../ImplRepo_Service/tao_imr_activator");
+$ACT = $act->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/ImplRepo_Service/tao_imr_activator");
 
-$NS = $ns->CreateProcess ("../../../Notify_Service/tao_cosnotification");
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 my $ns_cmd = $NS->Executable();
 my $ns_ns_cmd = $imr->LocalFile ($ns_cmd);
 

@@ -43,7 +43,7 @@ $supplier->DeleteFile ($consumer_ior);
 $consumer->DeleteFile ($naming_ior);
 $consumer->DeleteFile ($consumer_ior);
 
-$NM = $nm_service->CreateProcess ("../../../../../../Naming_Service/tao_cosnaming",
+$NM = $nm_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level -o $nm_service_nmiorfile");
 
 $SP = $supplier->CreateProcess ("../../../../Driver/Notify_Tests_Driver",

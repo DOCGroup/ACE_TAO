@@ -18,7 +18,6 @@
 #include "ace/SString.h"
 #include "orbsvcs/CosNotifyChannelAdminC.h"
 #include "Command.h"
-//#include "../../../orbsvcs/Notify/CosNotify_Initializer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Service;

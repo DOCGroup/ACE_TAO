@@ -40,7 +40,7 @@ $hostname = $server1->HostName ();
 $port = $server1->RandomPort ();
 
 
-$SV1 = $server1->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$SV1 = $server1->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level " .
                               "-ORBEndpoint iiop://$hostname:$port " .
                               "-o $server1_ior1file");

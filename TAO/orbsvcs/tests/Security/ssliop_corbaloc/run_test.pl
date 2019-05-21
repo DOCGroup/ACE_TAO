@@ -65,7 +65,7 @@ $cli->DeleteFile ($nsiorfile);
 sub name_server
 {
     my $args = "-ORBNameServicePort $ns_multicast_port -o $ns_nsiorfile -m 1 @_";
-    my $prog = "../../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
     $NS = $ns->CreateProcess ($prog, $args);
 
     $ns->DeleteFile ($nsiorfile);
