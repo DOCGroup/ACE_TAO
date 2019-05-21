@@ -20,7 +20,7 @@ my $ifr_service = PerlACE::TestTarget::create_target (1) || die "Create target 1
 my $tao_ifr = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
 # The location of the implementation repository binaries
-my $ifr_bin_path = "../../IFR_Service";
+my $ifr_bin_path = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service";
 
 # The location of the tao_ifr IFR utility
 my $tao_ifr_bin_path = "$ENV{ACE_ROOT}/bin";

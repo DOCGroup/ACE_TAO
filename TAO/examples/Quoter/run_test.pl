@@ -88,10 +88,10 @@ $cltarget->DeleteFile($nsiorbase);
 # Programs that are run
 
 $NS = $nstarget->CreateProcess (
-    "../../orbsvcs/Naming_Service/tao_cosnaming",
+    "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
     "-o $nstarget_nsiorfile");
 $LC = $lctarget->CreateProcess (
-    "../../orbsvcs/LifeCycle_Service/tao_coslifecycle",
+    "$ENV{TAO_ROOT}/orbsvcs/LifeCycle_Service/tao_coslifecycle",
     "$debug -ORBInitRef NameService=file://$lctarget_nsiorfile");
 
 $SV = $svtarget->CreateProcess (

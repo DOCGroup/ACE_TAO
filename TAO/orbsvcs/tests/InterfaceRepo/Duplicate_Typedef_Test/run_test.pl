@@ -22,7 +22,7 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                               " $nice " .
                               " -o $server_iorfile " .
                               " $locking");
@@ -111,7 +111,7 @@ $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                               " $nice " .
                               " -o $server_iorfile " .
                               " $locking");

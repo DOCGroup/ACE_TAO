@@ -55,7 +55,7 @@ for ($i = 0; $i <= $#nstargets; $i++) {
     }
 
     my $NS = $nstargets[$i]->CreateProcess (
-        "../../orbsvcs/Naming_Service/tao_cosnaming",
+        "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
         "-ORBListenEndpoints iiop://$TARGETHOSTNAME:$ns_orb_ports[$i] ".
         "-o $ns_iorfile -m 0");
 

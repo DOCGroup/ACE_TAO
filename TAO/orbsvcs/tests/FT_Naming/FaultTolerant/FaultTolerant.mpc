@@ -11,11 +11,11 @@ project(*server): ftnaming {
   after += *idl
   exename = server
   Source_Files {
-	TestC.cpp
-	TestS.cpp
-	server.cpp
-	LB_server.cpp
-	Basic.cpp
+    TestC.cpp
+    TestS.cpp
+    server.cpp
+    LB_server.cpp
+    Basic.cpp
   }
   IDL_Files {
   }

@@ -33,7 +33,7 @@ sub idl_filenames {
 # Input: array of idl file names
 # Output: array of idl file names that had a failure
 sub phase1 {
-    my $SVC = $ifr_service->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+    my $SVC = $ifr_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                                            "-o $ifr_service_iorfile");
 
     my $CMP = $tao_ifr->CreateProcess ("$ENV{ACE_ROOT}/bin/tao_ifr",

@@ -44,7 +44,7 @@ if ($#ARGV >= 0 && $ARGV[0] eq '-p') {
     $consumer_runtime = 20;
 }
 
-my $NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification",
+my $NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                "-ORBDebugLevel $debug_level ".
                                "-NoNameSvc -IORoutput $nfs_nfsiorfile $svcconf " .
                                "-ORBEndpoint iiop://$host:$port");

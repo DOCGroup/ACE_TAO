@@ -42,7 +42,7 @@ $server->DeleteFile($database);
 
 $LI = $server->CreateProcess ("list_interfaces");
 $GI = $server->CreateProcess ("generate_ior");
-$CI = $server->CreateProcess ("../../utils/catior/tao_catior",
+$CI = $server->CreateProcess ("$ENV{TAO_ROOT}/utils/catior/tao_catior",
                               "-f $server_iorfile");
 
 open (OLDOUT, ">&STDOUT");

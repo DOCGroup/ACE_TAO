@@ -40,7 +40,7 @@ $SV1 = $server1->CreateProcess ("server",
                                 "-ORBdebuglevel $debug_level " .
                                 "-o $server1_iorfile1");
 
-$SV2 = $server2->CreateProcess ("../../../utils/monitor/monitor_client",
+$SV2 = $server2->CreateProcess ("$ENV{TAO_ROOT}/utils/monitor/monitor_client",
                                 "-k \"file://$server2_iorfile2\" " .
                                 "-p \"Output CDR Buffer\" " .
                                 "-p \"OS/Processor/CPULoad\" " .

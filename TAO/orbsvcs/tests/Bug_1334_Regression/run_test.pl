@@ -33,7 +33,7 @@ $CLI = $ns->CreateProcess ("client");
 
 # Fire up the Name Service
 #
-$NS = $ns->CreateProcess ("../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           "-ORBDebugLevel $debug_level ".
                           "-o $ns_nsiorfile");
 $NS_status = $NS->Spawn ();

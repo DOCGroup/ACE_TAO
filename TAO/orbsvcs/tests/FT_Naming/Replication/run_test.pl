@@ -11,8 +11,6 @@ use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 use Cwd;
 
-$startdir = getcwd();
-
 $quiet = 0;
 
 # check for -q flag
@@ -106,7 +104,7 @@ my $args = "-orbdebuglevel 1 -orbverboselogging 1 -ORBLogFile primary.log -ORBEn
            "-v $groups_persistence_dir " .
            "-n 100 " .
            "--primary";
-my $prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
@@ -137,9 +135,9 @@ $args = "-ORBEndPoint $ns_endpoint2 " .
         "-orbdebuglevel 1 -orbverboselogging 1  -ORBLogFile backup.log " .
         "--backup";
 
-$prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+$prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
-print STDERR "Starting Backup: $prog $args\n in $startdir\n";
+print STDERR "Starting Backup: $prog $args\n\n";
 
 $NS2 = $test->CreateProcess ("$prog", "$args");
 
@@ -162,7 +160,7 @@ $args = "-p corbaloc:iiop:$hostname:$ns_orb_port1/NameService " .
         "-b 4 " .
         "-d 4 " .
         "-t 100";
-$prog = "$startdir/client";
+$prog = "client";
 
 print STDERR "Starting Client: $prog $args\n";
 
@@ -186,7 +184,7 @@ $NS1->Kill ();
 
 print STDERR "Printing Naming Tree from combined Name Service pair.\n";
 
-$prog = "$startdir/../../../../utils/nslist/tao_nslist";
+$prog = "$ENV{TAO_ROOT}/utils/nslist/tao_nslist";
 $args = "--ns file://$combined_ns_iorfile";
 
 $NSL = $test->CreateProcess("$prog", "$args");

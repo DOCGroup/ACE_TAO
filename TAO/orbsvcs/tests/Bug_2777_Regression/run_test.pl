@@ -35,7 +35,7 @@ my $ns_list_iorfile = $ns_list->LocalFile ($iorbase);
 $ns_service->DeleteFile($iorbase);
 $ns_list->DeleteFile($iorbase);
 
-$NS = $ns_service->CreateProcess ("../../../../TAO/orbsvcs/Naming_Service/tao_cosnaming",
+$NS = $ns_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                   "-ORBdebuglevel $debug_level -o $ns_service_iorfile ".
                                   "-ORBObjRefStyle URL -ORBEndpoint shmiop:// -ORBSvcConfDirective ".
                                   "\"dynamic SHMIOP_Factory Service_Object ".

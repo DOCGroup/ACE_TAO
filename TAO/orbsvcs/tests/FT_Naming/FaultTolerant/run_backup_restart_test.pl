@@ -10,7 +10,6 @@ use Cwd;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
-my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
@@ -26,19 +25,15 @@ foreach $i (@ARGV) {
 my $server  = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-
 # Variables for command-line arguments to client and server
 # executables.
 my $hostname = $server->HostName ();
-
 
 my $ns_orb_port1 = 10001;
 my $ns_orb_port2 = 10002;
 
 my $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 my $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
-
-
 
 # References to both naming services
 my $default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1,iiop:$hostname:$ns_orb_port2";
@@ -315,7 +310,6 @@ sub backup_restart_test()
                    "-v $group_dir";
 
     my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
-
     my $client_args = "--failover " .
                       "-ORBDebugLevel $debug_level " .
                       "-p file://$server_ns_iorfile " .
@@ -323,7 +317,7 @@ sub backup_restart_test()
                       "-b 4 " .
                       "-d 4 " ;
 
-    my $client_prog = "$startdir/client";
+    my $client_prog = "client";
 
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns1_args);
     $NS2 = $server->CreateProcess ($tao_ft_naming, $ns2_args);
