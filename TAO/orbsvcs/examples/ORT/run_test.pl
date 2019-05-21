@@ -50,9 +50,9 @@ if ($^O eq "MSWin32") {
     $exec_extn=".exe";
 }
 
-$tao_ifr = "../../../../bin/tao_ifr";
+$tao_ifr = "$ENV{ACE_ROOT}/bin/tao_ifr";
 if (! -e $tao_ifr . $exec_extn ) {
-    $tao_ifr = "../../../IFR_Service/tao_ifr";
+    $tao_ifr = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr";
     if (! -e $tao_ifr . $exec_extn ) {
         print STDERR "ERROR: tao_ifr compiler not found.\n";
         exit 1;
@@ -72,7 +72,7 @@ for ($i = 0; $i <= $#ARGV; $i++) {
 }
 
 $TI = $ti->CreateProcess ($tao_ifr);
-$IFR = $ifr->CreateProcess ("../../IFR_Service/tao_ifr_service",
+$IFR = $ifr->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                             "-o $ifr_ifriorfile");
 $GWS = $gws->CreateProcess ("gateway_server",
                             "-o $gws_gwsiorfile ".
