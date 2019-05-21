@@ -106,7 +106,7 @@ my $args = "-orbdebuglevel 1 -orbverboselogging 1 -ORBLogFile primary.log -ORBEn
            "-v $groups_persistence_dir " .
            "-n 100 " .
            "--primary";
-my $prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Primary: $prog $args\n";
 
@@ -137,7 +137,7 @@ $args = "-ORBEndPoint $ns_endpoint2 " .
         "-orbdebuglevel 1 -orbverboselogging 1  -ORBLogFile backup.log " .
         "--backup";
 
-$prog = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+$prog = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
 
 print STDERR "Starting Backup: $prog $args\n in $startdir\n";
 

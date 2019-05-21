@@ -154,7 +154,7 @@ sub run_test
 }
 
 @server_exes = ("../../Naming_Service/tao_cosnaming",
-                "../../FT_Naming_Service/tao_ft_naming");
+                "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming");
 
 foreach $e (@server_exes) {
     print STDERR "Testing Naming Service Executable: $e\n";

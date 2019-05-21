@@ -314,7 +314,7 @@ sub backup_restart_test()
                    "-r $name_dir ".
                    "-v $group_dir";
 
-    my $tao_ft_naming = "$startdir/../../../FT_Naming_Service/tao_ft_naming";
+    my $tao_ft_naming = "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming";
     my $client_args = "--failover " .
                       "-ORBDebugLevel $debug_level " .
                       "-p file://$server_ns_iorfile " .
