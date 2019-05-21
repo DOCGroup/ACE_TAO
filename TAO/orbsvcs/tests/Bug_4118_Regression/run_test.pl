@@ -10,7 +10,6 @@ use Cwd;
 
 ## Save the starting directory
 $status = 0;
-$startdir = getcwd();
 
 my $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 
@@ -47,7 +46,7 @@ sub cleanup
 sub start_name_server
 {
     my $args = "-ORBCollocation no -ORBListenEndpoints iiop://$hostname:$ns_orb_port -o $test_iorfile -n 5 -u $persistence_dir";
-    my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
     $SV->Spawn ();

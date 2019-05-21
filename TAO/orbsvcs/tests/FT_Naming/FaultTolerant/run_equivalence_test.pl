@@ -10,7 +10,6 @@ use Cwd;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
-my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
@@ -344,8 +343,7 @@ sub redundant_equivalency_test()
                       "-b 4 " .
                       "-d 4 ";
 
-    my $client_prog = "$startdir/client";
-
+    my $client_prog = "client";
 
     $NS1 = $server->CreateProcess ($tao_ft_naming, $ns1_args);
     $NS2 = $server->CreateProcess ($tao_ft_naming, $ns2_args);
