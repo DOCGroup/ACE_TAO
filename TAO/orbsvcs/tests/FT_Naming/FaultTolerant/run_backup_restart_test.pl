@@ -25,19 +25,15 @@ foreach $i (@ARGV) {
 my $server  = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 
-
 # Variables for command-line arguments to client and server
 # executables.
 my $hostname = $server->HostName ();
-
 
 my $ns_orb_port1 = 10001;
 my $ns_orb_port2 = 10002;
 
 my $ns_endpoint1 = "iiop://$hostname:$ns_orb_port1";
 my $ns_endpoint2 = "iiop://$hostname:$ns_orb_port2";
-
-
 
 # References to both naming services
 my $default_init_ref = "-ORBDefaultInitRef corbaloc:iiop:$hostname:$ns_orb_port1,iiop:$hostname:$ns_orb_port2";
