@@ -155,7 +155,7 @@ namespace CORBA
     void handle_response (TAO_InputCDR &incoming, GIOP::ReplyStatusType reply_status);
 
 #if defined (TAO_HAS_AMI)
-    /// The 'asychronous' send method. The object is a DSI based callback
+    /// The 'asynchronous' send method. The object is a DSI based callback
     /// handler. This handler must implement Messaging::ReplyHandler
     void sendc (CORBA::Object_ptr handler);
 
@@ -218,7 +218,6 @@ namespace CORBA
     ~Request (void);
 
   private:
-
     /// Target object.
     CORBA::Object_ptr target_;
 

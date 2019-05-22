@@ -2,7 +2,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
-// Placing the include of Messanging.h at this point
+// Placing the include of Messaging.h at this point
 // allows for successful compilation if versioned namespaces
 // are enabled.
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0

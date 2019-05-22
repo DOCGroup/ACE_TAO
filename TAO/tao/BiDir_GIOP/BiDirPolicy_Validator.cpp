@@ -11,7 +11,6 @@ TAO_BiDirPolicy_Validator::TAO_BiDirPolicy_Validator (TAO_ORB_Core &orb_core)
 {
 }
 
-
 void
 TAO_BiDirPolicy_Validator::validate_impl (TAO_Policy_Set &policies)
 {
