@@ -726,7 +726,7 @@ namespace TAO
           {
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::fill_set_i, ")
-              ACE_TEXT ("current_size = %d, cache_maximum = %d\n"),
+              ACE_TEXT ("current_size [%d], cache_maximum [%d]\n"),
               current_size, cache_maximum));
           }
 
