@@ -95,10 +95,8 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state)
+        Invocation_Retry_State *)
   {
-    ACE_UNUSED_ARG (retry_state);
-
     // Simple sanity check
     if (this->mode_ != TAO_DII_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
@@ -220,10 +218,8 @@ namespace TAO
       CORBA::Object_var &effective_target,
       Profile_Transport_Resolver &r,
       ACE_Time_Value *&max_wait_time,
-      Invocation_Retry_State *retry_state)
+      Invocation_Retry_State *)
   {
-    ACE_UNUSED_ARG (retry_state);
-
     // Simple sanity check
     if (this->mode_ != TAO_DII_DEFERRED_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
