@@ -477,7 +477,7 @@ TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
   if (this->peer ().get_remote_addr (addr) == -1)
     return -1;
 
-  // Construct an  IIOP_Endpoint object
+  // Construct an IIOP_Endpoint object
   TAO_IIOP_Endpoint endpoint (
       addr,
       this->orb_core()->orb_params()->cache_incoming_by_dotted_decimal_address ());

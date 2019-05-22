@@ -108,7 +108,6 @@ TAO_LF_CH_Event::validate_state_change (LFS_STATE new_state)
   return;
 }
 
-
 bool
 TAO_LF_CH_Event::successful_i (void) const
 {

@@ -95,10 +95,8 @@ namespace TAO
         CORBA::Object_var &effective_target,
         Profile_Transport_Resolver &r,
         ACE_Time_Value *&max_wait_time,
-        Invocation_Retry_State *retry_state)
+        Invocation_Retry_State *)
   {
-    ACE_UNUSED_ARG (retry_state);
-
     // Simple sanity check
     if (this->mode_ != TAO_DII_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
@@ -220,10 +218,8 @@ namespace TAO
       CORBA::Object_var &effective_target,
       Profile_Transport_Resolver &r,
       ACE_Time_Value *&max_wait_time,
-      Invocation_Retry_State *retry_state)
+      Invocation_Retry_State *)
   {
-    ACE_UNUSED_ARG (retry_state);
-
     // Simple sanity check
     if (this->mode_ != TAO_DII_DEFERRED_INVOCATION ||
         this->type_ != TAO_TWOWAY_INVOCATION)
@@ -254,7 +250,7 @@ namespace TAO
     // forward requested byte order
     synch._tao_byte_order (this->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_invocation (max_wait_time);
+    Invocation_Status const status = synch.remote_invocation (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART)
       {

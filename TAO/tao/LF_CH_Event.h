@@ -56,7 +56,6 @@ public:
 
   //@{
 protected:
-
   /// Check whether we have reached the final state..
   virtual bool is_state_final (void) const;
 
@@ -114,7 +113,6 @@ private:
   virtual int unbind (TAO_LF_Follower *follower);
 
 private:
-
   /// The previous state that the LF_CH_Event was in
   LFS_STATE prev_state_;
 

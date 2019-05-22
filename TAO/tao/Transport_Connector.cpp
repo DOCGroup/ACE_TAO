@@ -944,7 +944,7 @@ TAO_Connector::wait_for_connection_completion (
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Transport_Connector::")
                       ACE_TEXT ("wait_for_connection_completion, ")
-                      ACE_TEXT ("transport [%d]\n"),
+                      ACE_TEXT ("winner transport [%d]\n"),
                       the_winner->id ()));
         }
     }

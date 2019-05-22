@@ -34,7 +34,6 @@ class TAO_GIOP_Message_Generator_Parser_12 :
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
-
   /// Write the request header in to @a msg
   virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
@@ -89,9 +88,7 @@ public:
   virtual size_t fragment_header_length (void) const;
 
 private:
-
   /// Marshall the TargetSpecification
-
   /// This method may be required for other GIOP version coming out
   /// later than 1.2. We need to share this method
   bool marshall_target_spec (TAO_Target_Specification &spec,

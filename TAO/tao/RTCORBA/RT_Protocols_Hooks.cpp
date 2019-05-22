@@ -486,8 +486,7 @@ TAO_RT_Protocols_Hooks::get_selector_bands_policy_hook (
     CORBA::Short priority,
     CORBA::Short &min_priority,
     CORBA::Short &max_priority,
-    bool &in_range
-  )
+    bool &in_range)
 {
   RTCORBA::PriorityBandedConnectionPolicy_var bands_policy_ptr =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands_policy);
@@ -583,8 +582,7 @@ TAO_RT_Protocols_Hooks::get_thread_implicit_CORBA_priority (CORBA::Short &priori
 int
 TAO_RT_Protocols_Hooks::restore_thread_CORBA_and_native_priority (
     CORBA::Short priority,
-    CORBA::Short native_priority
-  )
+    CORBA::Short native_priority)
 {
   // Only used for restoration of values that were previously set /
   // checked when so no need to re-apply the mapping.

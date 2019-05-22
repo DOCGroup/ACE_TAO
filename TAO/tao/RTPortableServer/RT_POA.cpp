@@ -37,8 +37,7 @@ TAO_RT_POA::TAO_RT_POA (const TAO_Root_POA::String &name,
                         ACE_Lock &lock,
                         TAO_SYNCH_MUTEX &thread_lock,
                         TAO_ORB_Core &orb_core,
-                        TAO_Object_Adapter *object_adapter
-                        )
+                        TAO_Object_Adapter *object_adapter)
   : TAO_Regular_POA (name,
                      poa_manager,
                      policies,
@@ -77,8 +76,7 @@ TAO_RT_POA::new_POA (const String &name,
                                 lock,
                                 thread_lock,
                                 orb_core,
-                                object_adapter
-                               ),
+                                object_adapter),
                     CORBA::NO_MEMORY ());
 
   return poa;
@@ -299,8 +297,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
   // POA.  If there are no bands, all the thread lanes are used.
   CORBA::Policy_var bands =
     this->policies ().get_cached_policy (
-      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION
-     );
+      TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION);
 
   RTCORBA::PriorityBandedConnectionPolicy_var priority_bands
     = RTCORBA::PriorityBandedConnectionPolicy::_narrow (bands.in ());

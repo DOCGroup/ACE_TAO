@@ -81,7 +81,6 @@ namespace TAO
     virtual Dynamic::ParameterList *arguments (void);
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
