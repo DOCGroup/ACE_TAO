@@ -50,7 +50,7 @@ TAO_Muxed_TMS::request_id (void)
 
   if (TAO_debug_level > 4)
     TAOLIB_DEBUG ((LM_DEBUG,
-                "TAO (%P|%t) - Muxed_TMS[%d]::request_id, <%d>\n",
+                "TAO (%P|%t) - Muxed_TMS[%d]::request_id, [%d]\n",
                 this->transport_->id (),
                 this->request_id_generator_));
 
@@ -85,7 +85,7 @@ TAO_Muxed_TMS::bind_dispatcher (CORBA::ULong request_id,
       if (TAO_debug_level > 0)
         TAOLIB_ERROR ((LM_ERROR,
                     ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::bind_dispatcher, ")
-                    ACE_TEXT ("bind dispatcher failed: result = %d, request id = %d\n"),
+                    ACE_TEXT ("bind dispatcher failed: result = %d, request id [%d]\n"),
                     result, request_id));
 
       return -1;
@@ -185,7 +185,7 @@ TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
-                      ACE_TEXT ("id = %d\n"),
+                      ACE_TEXT ("id [%d]\n"),
                       request_id));
         }
 
@@ -202,7 +202,7 @@ TAO_Muxed_TMS::reply_timed_out (CORBA::ULong request_id)
       if (TAO_debug_level > 0)
         TAOLIB_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::reply_timed_out, ")
-                    ACE_TEXT ("unbind dispatcher failed, id %d: result = %d\n"),
+                    ACE_TEXT ("unbind dispatcher failed, id [%d] result = %d\n"),
                     request_id,
                     result));
 

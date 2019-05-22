@@ -34,7 +34,6 @@ class TAO_GIOP_Message_Generator_Parser_12 :
   public TAO_GIOP_Message_Generator_Parser
 {
 public:
-
   /// Write the request header in to @a msg
   virtual bool write_request_header (
       const TAO_Operation_Details &opdetails,
