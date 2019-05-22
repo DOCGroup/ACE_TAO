@@ -70,7 +70,6 @@ namespace CORBA
   class TAO_DynamicInterface_Export Request
   {
   public:
-
     /// Return the target of this request.
     CORBA::Object_ptr target (void) const;
 

@@ -44,7 +44,6 @@ namespace CORBA
     : public CORBA::UserException
   {
   public:
-
     /// Constructor.
     UnknownUserException (void);
 
@@ -85,9 +84,7 @@ namespace CORBA
   };
 
   // The CORBA::UnknownUserException TypeCode.
-  extern TAO_DynamicInterface_Export TypeCode_ptr const
-    _tc_UnknownUserException;
-
+  extern TAO_DynamicInterface_Export TypeCode_ptr const _tc_UnknownUserException;
 } // End CORBA namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

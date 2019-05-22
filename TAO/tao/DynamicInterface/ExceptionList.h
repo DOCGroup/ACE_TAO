@@ -56,8 +56,6 @@ namespace CORBA
   class TAO_DynamicInterface_Export ExceptionList
   {
   public:
-    // = Intialization and termination methods.
-
     /// Constructor.
     ExceptionList (void);
 
