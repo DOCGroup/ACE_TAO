@@ -308,6 +308,9 @@ TAO/orbsvcs/DevGuideExamples/PortableInterceptors/PICurrent_NameService/run_test
 TAO/utils/nsgroup/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !STATIC !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/FT_Naming/Load_Balancing/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/FT_Naming/Replication/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
-TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_failover_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_persistence_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_equivalence_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
+TAO/orbsvcs/tests/FT_Naming/FaultTolerant/run_backup_restart_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/FT_Naming/Federation/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
 TAO/orbsvcs/tests/FT_Naming/stress_storable/run_test.pl: !Win32 !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO !LynxOS !ST
