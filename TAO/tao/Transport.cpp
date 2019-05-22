@@ -2796,7 +2796,7 @@ TAO_Transport::post_open (size_t id)
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                  ACE_TEXT ("tport id changed from [%d] to [%d]\n"), this->id_, id));
+                  ACE_TEXT ("transport id changed from [%d] to [%d]\n"), this->id_, id));
     }
   this->id_ = id;
 
