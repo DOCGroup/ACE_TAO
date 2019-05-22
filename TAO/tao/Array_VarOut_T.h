@@ -145,8 +145,7 @@ public:
 
   TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (_slice_type *);
   TAO_FixedArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_FixedArray_Var_T<T,T_slice,TAG> &
-    );
+      const TAO_FixedArray_Var_T<T,T_slice,TAG> &);
 
   _out_type     out (void);
 
@@ -175,8 +174,7 @@ public:
 
   TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (_slice_type *);
   TAO_VarArray_Var_T<T,T_slice,TAG> &operator= (
-      const TAO_VarArray_Var_T<T,T_slice,TAG> &
-    );
+      const TAO_VarArray_Var_T<T,T_slice,TAG> &);
 
   _out_type     out (void);
 
@@ -206,8 +204,7 @@ public:
   TAO_Array_Out_T (const TAO_Array_Out_T<T,T_var,T_slice,TAG> &);
 
   TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (
-      const TAO_Array_Out_T<T,T_var,T_slice,TAG> &
-    );
+      const TAO_Array_Out_T<T,T_var,T_slice,TAG> &);
   TAO_Array_Out_T<T,T_var,T_slice,TAG> &operator= (_slice_type *);
 
   operator _slice_type *& ();

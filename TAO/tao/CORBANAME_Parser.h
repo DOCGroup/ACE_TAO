@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {
 public:
-
   /// The destructor
   virtual ~TAO_CORBANAME_Parser (void);
 
@@ -52,8 +51,7 @@ public:
  private:
    virtual CORBA::Object_ptr
    parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
-                                        ACE_CString &key_string
-                                        );
+                                        ACE_CString &key_string);
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_CORBANAME_Parser)
