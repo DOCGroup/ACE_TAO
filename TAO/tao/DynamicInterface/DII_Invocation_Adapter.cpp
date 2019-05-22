@@ -250,7 +250,7 @@ namespace TAO
     // forward requested byte order
     synch._tao_byte_order (this->_tao_byte_order ());
 
-    Invocation_Status status = synch.remote_invocation (max_wait_time);
+    Invocation_Status const status = synch.remote_invocation (max_wait_time);
 
     if (status == TAO_INVOKE_RESTART)
       {
