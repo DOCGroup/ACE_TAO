@@ -67,7 +67,7 @@ TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
   if (TAO_debug_level >= 4)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply:\n")));
+                  ACE_TEXT ("TAO (%P|%t) - DII_Deferred_Reply_Dispatcher::dispatch_reply, id [%d]\n"), params.request_id_));
     }
 
   try

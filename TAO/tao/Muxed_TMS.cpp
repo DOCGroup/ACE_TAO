@@ -136,7 +136,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         if (TAO_debug_level > 8)
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("id = %d\n"),
+                      ACE_TEXT ("id [%d]\n"),
                       params.request_id_));
 
         // Dispatch the reply.
@@ -148,7 +148,7 @@ TAO_Muxed_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
         if (TAO_debug_level > 0)
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - TAO_Muxed_TMS::dispatch_reply, ")
-                      ACE_TEXT ("unbind dispatcher failed, id %d: result = %d\n"),
+                      ACE_TEXT ("unbind dispatcher failed, id [%d], result = %d\n"),
                       params.request_id_,
                       result));
 
