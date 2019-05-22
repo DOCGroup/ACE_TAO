@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_GIOP_Message_Generator_Parser_Impl
 {
 public:
-
   /// Performs a check of the revision numbers
   static CORBA::Boolean check_revision (CORBA::Octet incoming_major,
                                         CORBA::Octet incoming_minor);

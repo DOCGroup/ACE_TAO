@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_GIOP_Message_State
 {
 public:
-
   /// Constructor
   TAO_GIOP_Message_State (void);
 
