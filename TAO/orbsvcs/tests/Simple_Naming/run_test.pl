@@ -96,7 +96,7 @@ sub name_server
 sub client
 {
     my $args = "@_"." ";
-    my $prog = "client";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/tests/Simple_Naming/client";
 
     $CL = $test->CreateProcess ("$prog", "$args");
 
