@@ -95,7 +95,6 @@ sub client
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
-
 }
 
 ## The options below have been reordered due to a
