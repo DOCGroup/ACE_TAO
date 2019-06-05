@@ -1795,13 +1795,15 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
 #  ifdef ACE_HAS_GETTID
 #    define ACE_LOG_MSG_GET_THREAD_ID ACE_OS::thr_gettid
+#    define ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE 8
 #  else
 #    define ACE_LOG_MSG_GET_THREAD_ID ACE_OS::thr_id
+#    define ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE 32
 #  endif
 
 #  if defined ACE_USES_WCHAR
                   {
-                    char tid_buf[32] = {};
+                    char tid_buf[ACE_LOG_MSG_GET_THREAD_ID_BUFFER_SIZE] = {};
                     ACE_LOG_MSG_GET_THREAD_ID (tid_buf, sizeof tid_buf);
                     this_len = ACE_OS::strlen (tid_buf);
                     ACE_OS::strncpy (bp, ACE_TEXT_CHAR_TO_TCHAR (tid_buf),
