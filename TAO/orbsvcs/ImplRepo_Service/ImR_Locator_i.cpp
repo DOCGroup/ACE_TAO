@@ -1340,7 +1340,7 @@ ImR_Locator_i::server_is_running
 
           info.update_repo();
           // Add the server to our pinger list
-          this->pinger_.add_server (info->ping_id(), this->opts_->ping_external (), srvobj.in(), info->pid);
+          this->pinger_.add_server (info->ping_id(), true, srvobj.in(), info->pid);
 
           aam = this->find_aam (info->ping_id ());
         }
