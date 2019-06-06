@@ -310,7 +310,6 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
         {
           this->final_state ();
         }
-      return;
     }
 }
 
