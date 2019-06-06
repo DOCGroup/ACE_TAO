@@ -112,7 +112,7 @@
 #  define ACE_LACKS_WCSTOULL
 #  define ACE_LACKS_CONDATTR_SETCLOCK
 #  ifdef ACE_HAS_EVENT_POLL
-#    undef ACE_HAS_EVEN_POLL
+#    undef ACE_HAS_EVENT_POLL
 #  endif
 #endif
 
