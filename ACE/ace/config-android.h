@@ -88,6 +88,13 @@
 #  define ACE_HAS_SEMUN
 #endif
 
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0) && __ANDROID_API__ < 21
+// NOTE: The && is correct, SYS_GETTID is present in API 16 in r15 onwards
+#  ifdef ACE_HAS_GETTID
+#    undef ACE_HAS_GETTID
+#  endif
+#endif
+
 // NDK has telldir() and seekdir() by 15c
 #if ACE_ANDROID_NDK_LESS_THAN(15, 2) || __ANDROID_API__ < 23
 #  define ACE_LACKS_TELLDIR
