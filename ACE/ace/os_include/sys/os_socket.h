@@ -28,6 +28,10 @@
 #  include /**/ <sys/socket.h>
 #endif /* !ACE_LACKS_SYS_SOCKET_H */
 
+#if defined (ACE_USES_SOCKET_H)
+#  include /**/ <socket.h>
+#endif /* ACE_USES_SOCKET_H */
+
 #if defined (ACE_USES_SOCKLIB_H)
 #  include /**/ <sockLib.h>
 #endif /* ACE_USES_SOCKLIB_H */
@@ -215,6 +219,7 @@ extern "C"
 #define ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE SSIZE_MAX
 #endif /* ACE_HAS_SOCK_BUF_SIZE_MAX_VALUE */
 
+#if !defined (ACE_SOCKET_LEN)
 #if defined (ACE_HAS_SOCKLEN_T)
 #  if defined (__hpux)
   /*
@@ -240,6 +245,7 @@ typedef size_t ACE_SOCKET_LEN;
 #else
 typedef int ACE_SOCKET_LEN;
 #endif /* ACE_HAS_SIZET_SOCKET_LEN */
+#endif /* ACE_SOCKET_LEN */
 
 #if defined (ACE_HAS_NETLINK)
 #  include /**/ <asm/types.h>

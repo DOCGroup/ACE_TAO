@@ -1679,6 +1679,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
                                      count), int, -1);

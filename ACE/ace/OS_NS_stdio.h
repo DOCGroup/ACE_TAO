@@ -126,6 +126,9 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 # if defined (fileno)
   return (ACE_HANDLE)fileno (fp);
 # undef fileno
+# elif defined (ACE_LACKS_FILENO)
+  ACE_UNUSED_ARG (fp);
+  return ACE_INVALID_HANDLE;
 # else
   return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
 # endif /* defined (fileno) */

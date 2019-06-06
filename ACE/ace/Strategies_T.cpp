@@ -436,7 +436,7 @@ ACE_Process_Strategy<SVC_HANDLER>::activate_svc_handler (SVC_HANDLER *svc_handle
   // If <flags_> is non-0 then we won't create zombies.
   switch (ACE::fork (ACE_TEXT ("child"), this->flags_))
     {
-    case -1:
+    case static_cast<pid_t>(-1):
       {
         ACE_Errno_Guard error (errno);
         svc_handler->close ();
