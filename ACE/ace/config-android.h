@@ -94,6 +94,13 @@
 #  define ACE_LACKS_SEEKDIR
 #endif
 
+// strbuf was added by r16
+#if ACE_ANDROID_NDK_LESS_THAN(16, 0)
+#  ifdef ACE_HAS_STRBUF_T
+#    undef ACE_HAS_STRBUF_T
+#  endif
+#endif
+
 // fd_mask was added in r17c
 #if ACE_ANDROID_NDK_LESS_THAN(17, 2)
 #  define ACE_LACKS_FD_MASK
