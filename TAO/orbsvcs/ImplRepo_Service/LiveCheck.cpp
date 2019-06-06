@@ -474,7 +474,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
                           ACE_TEXT ("sendc_ping for server <%C> threw <%C>\n"),
-                          this->server_.c_str(), ex._name()));
+                          this->server_.c_str(), ex._info ().c_str ()));
         }
       this->status (LS_DEAD);
     }
@@ -520,7 +520,7 @@ PingReceiver::cancel (void)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) PingReceiver::cancel caught <%C>\n"),
-                          ex._name ()));
+                          ex._info ().c_str ()));
         }
     }
 }
