@@ -111,6 +111,9 @@
 #  define ACE_LACKS_WCSTOLL
 #  define ACE_LACKS_WCSTOULL
 #  define ACE_LACKS_CONDATTR_SETCLOCK
+#  ifdef ACE_HAS_EVENT_POLL
+#    undef ACE_HAS_EVEN_POLL
+#  endif
 #endif
 
 // These were available before r18, but in r18 they are restricted to API >= 28 ¯\_(ツ)_/¯
