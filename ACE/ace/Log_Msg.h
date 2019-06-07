@@ -411,7 +411,6 @@ public:
    * @note Be aware that because of the current architecture there is
    * no guarantee that open (), reset () and close () will be called
    * on a backend object.
-   *
    */
   static ACE_Log_Msg_Backend *msg_backend (ACE_Log_Msg_Backend *b);
   static ACE_Log_Msg_Backend *msg_backend (void);
@@ -766,7 +765,6 @@ private:
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
-
 
 #ifdef ACE_LACKS_VA_FUNCTIONS
 class ACE_Time_Value;

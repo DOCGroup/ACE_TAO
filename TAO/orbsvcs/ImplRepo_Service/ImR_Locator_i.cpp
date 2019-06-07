@@ -250,10 +250,12 @@ ImR_Locator_i::run (void)
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Implementation Repository: Running\n")
                       ACE_TEXT ("\tPing Interval : %dms\n")
+                      ACE_TEXT ("\tPing Timeout : %dms\n")
                       ACE_TEXT ("\tStartup Timeout : %ds\n")
                       ACE_TEXT ("\tPersistence : %s\n")
                       ACE_TEXT ("\tMulticast : %C\n"),
                       this->opts_->ping_interval ().msec (),
+                      this->opts_->ping_timeout ().msec (),
                       this->opts_->startup_timeout ().sec (),
                       this->repository_->repo_mode (),
                       (this->repository_->multicast () != 0 ?

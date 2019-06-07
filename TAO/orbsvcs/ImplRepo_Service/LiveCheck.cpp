@@ -147,8 +147,8 @@ LiveEntry::LiveEntry (LiveCheck *owner,
   if (ImR_Locator_i::debug () > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C> may_ping <%d> pid <%d>\n"),
-                      server, may_ping, pid));
+                      ACE_TEXT ("(%P|%t) LiveEntry::ctor server <%C> status <%C> may_ping <%d> pid <%d>\n"),
+                      server, status_name (this->liveliness_), may_ping, pid));
     }
 }
 
@@ -231,8 +231,8 @@ LiveEntry::status (void) const
       return LS_ALIVE;
     }
 
-  if ( this->liveliness_ == LS_ALIVE &&
-       this->owner_->ping_interval() != ACE_Time_Value::zero )
+  if (this->liveliness_ == LS_ALIVE &&
+      this->owner_->ping_interval() != ACE_Time_Value::zero)
     {
       ACE_Time_Value now (ACE_OS::gettimeofday());
       if (now >= this->next_check_)
@@ -350,9 +350,9 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d>\n"),
+                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d> want_reping <%d>\n"),
                       status_name (this->liveliness_), this->listeners_.size (),
-                      this->server_.c_str(), this->pid_));
+                      this->server_.c_str(), this->pid_, want_reping));
     }
 
   if (this->liveliness_ == LS_PING_AWAY ||
@@ -458,6 +458,13 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
   }
   try
     {
+      if (ImR_Locator_i::debug () > 3)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
+                          ACE_TEXT ("starting sendc_ping for server <%C>\n"),
+                          this->server_.c_str()));
+        }
       this->ref_->sendc_ping (cb.in());
       if (ImR_Locator_i::debug () > 3)
         {
@@ -474,7 +481,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
                           ACE_TEXT ("sendc_ping for server <%C> threw <%C>\n"),
-                          this->server_.c_str(), ex._name()));
+                          this->server_.c_str(), ex._info ().c_str ()));
         }
       this->status (LS_DEAD);
     }
@@ -520,7 +527,7 @@ PingReceiver::cancel (void)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) PingReceiver::cancel caught <%C>\n"),
-                          ex._name ()));
+                          ex._info ().c_str ()));
         }
     }
 }
@@ -693,7 +700,7 @@ LiveCheck::LiveCheck ()
    token_ (100),
    handle_timeout_busy_ (0),
    want_timeout_ (false),
-   deferred_timeout_ (0,0)
+   deferred_timeout_ (ACE_Time_Value::zero)
 {
 }
 
@@ -847,8 +854,8 @@ LiveCheck::add_server (const char *server,
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveCheck::add_server <%C> ")
-                      ACE_TEXT ("running <%d> pid <%d>\n"),
-                      server, this->running_, pid));
+                      ACE_TEXT ("may_ping <%d> running <%d> pid <%d>\n"),
+                      server, may_ping, this->running_, pid));
     }
 
   if (!this->running_)
@@ -1192,7 +1199,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping (%d),")
-                          ACE_TEXT (" delay = %d,%d\n"),
+                          ACE_TEXT (" delay <%d,%d>\n"),
                           this->token_, delay.sec(), delay.usec()));
         }
       this->reactor()->schedule_timer (this,

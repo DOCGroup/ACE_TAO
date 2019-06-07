@@ -157,7 +157,7 @@ Replicator::svc (void)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                          ACE_TEXT ("(%P|%t) Replicator::svc caught %C\n"),
-                          ex._name ()));
+                          ex._info ().c_str ()));
         }
     }
   return 0;

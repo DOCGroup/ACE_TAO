@@ -770,7 +770,6 @@ ACE_Log_Msg::cleanup_ostream ()
 }
 
 // Open the sender-side of the message queue.
-
 int
 ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
                    u_long flags,

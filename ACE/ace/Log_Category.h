@@ -282,7 +282,6 @@ public:
   /// Set the process ACE_Log_Priority mask, returns original mask.
   u_long priority_mask (u_long);
 
-
   static ACE_Log_Category& ace_lib();
 
 private:
@@ -308,7 +307,6 @@ private:
   ACE_Log_Category_TSS per_thr_obj_;
 #endif // defined (ACE_HAS_THREADS)
 };
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
