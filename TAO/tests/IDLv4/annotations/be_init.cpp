@@ -718,7 +718,7 @@ BE_post_init (char *[], long)
     Annotation_Test t ("Annotation Declaration with Single Boolean");
     boolean_annotation = t.run (
       "@annotation boolean_annotation {\n"
-      "  boolean value default FALSE;\n"
+      "  boolean value default TRUE;\n"
       "};\n"
     ).assert_annotation_decl ("@boolean_annotation");
     t.assert_annotation_member_count (boolean_annotation, 1);
