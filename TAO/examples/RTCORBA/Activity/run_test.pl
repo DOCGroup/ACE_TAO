@@ -42,7 +42,7 @@ $client1->DeleteFile($iorfile);
 my $client2_iorfile = $client2->LocalFile ($iorfile);
 $client2->DeleteFile($iorfile);
 
-$SV = $server->CreateProcess ("../../../orbsvcs/Naming_Service/tao_cosnaming",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBdebuglevel $debug_level " .
                               "-o $server_iorfile");
 

@@ -96,9 +96,7 @@ override_dh_install:
 
 # ACE+TAO has different changelogs. Use the right one in every package.
 override_dh_installchangelogs:
-	dh_installchangelogs -pace-gperf -pgperf-ace apps/gperf/ChangeLog
 	dh_installchangelogs -pmpc-ace MPC/ChangeLog
-	dh_installchangelogs $(addprefix -p,$(ALL_ACEXML)) ACEXML/ChangeLog
 	dh_installchangelogs --remaining-packages \
 	        ChangeLogs/ACE-$(ACE_MAJOR_VERSION)_$(ACE_MINOR_VERSION)_$(ACE_MICRO_VERSION)
 

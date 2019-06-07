@@ -2,7 +2,7 @@
 
 /** @file   URL_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Krishnakumar B <kitty@cs.wustl.edu>
  */
 
@@ -74,10 +74,10 @@ public:
                               int ipaddr_format = 1) const;
 
   /**
-   *  Transform the current <ACE_INET_Addr> address into string format. If
-   *  <ipaddr_format> is non-0 this produces
+   *  Transform the current ACE_INET_Addr address into string format. If
+   *  @a ipaddr_format is non-0 this produces
    *  "ip-number:port-number/path-name" (e.g.,
-   *  "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0 this
+   *  "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0 this
    *  produces "ip-name:port-number" (e.g.,
    *  "www.cs.wustl.edu:80/~schmidt/"). Uses dynamic memory, which is
    *  allocated on demand and deallocated when the object is destroyed.

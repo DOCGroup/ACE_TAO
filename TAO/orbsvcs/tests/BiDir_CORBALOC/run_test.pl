@@ -29,7 +29,7 @@ my $iorbase = "test.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../Naming_Service/tao_cosnaming",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                               "-ORBEndpoint iiop://$host:$orb_port -o $server_iorfile");
 $CL = $client->CreateProcess ("TimeServer",
                               "-ORBInitRef NameService=corbaloc:iiop:$host:$orb_port/NameService");

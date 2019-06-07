@@ -1,0 +1,245 @@
+commit a2cf8d6d317716cf2d7451b799855f11f6349b51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 23 19:55:20 2019 +0100
+
+    Fixed several broken links and updated bugzilla to github
+
+commit 2a3014308377c2a88aea497e2de072ab103302cb
+Merge: 46188d9eea8 3e3b0884478
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 21 08:53:44 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 46188d9eea8cc340073fb8ef29f4564060870d66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 21 08:52:58 2019 +0100
+
+    Update clang version check for android which has clang 8.0.2, see #796
+    
+        * ACE/tests/Compiler_Features_32_Test.cpp:
+
+commit 3e3b0884478587a57e24cc10a58e4094cf3b17cd
+Merge: a9684938b38 3cd2852488a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 20 18:12:27 2019 +0100
+
+    Merge pull request #797 from jwillemsen/master
+    
+    Removed some empty lines
+
+commit 92289dde25e21c35161e8f1de70291afaebcb0a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jan 20 10:51:18 2019 +0100
+
+    Zapped multiple empty lines
+
+commit 5845c114751e79e8cbd5955ec9c16f1c55e41121
+Merge: 320b8f9c136 560f112ae96
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Jan 19 23:57:28 2019 -0600
+
+    Merge remote-tracking branch 'upstream/master' into igtd/android
+
+commit 320b8f9c1365484b5e1d4f20301a39fa3a72f97c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Jan 19 23:56:52 2019 -0600
+
+    config-android.h: Should've grabbed latest first
+
+commit 709a23441a1e90b4689c1cfa9e5e745431c8939e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Jan 19 23:45:49 2019 -0600
+
+    Fixes for ACE Tests on Android
+
+commit 560f112ae96729e18e2980653ab12b8c399eaabe
+Merge: 48931304d50 76451eb994c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 20:37:28 2019 +0100
+
+    Merge pull request #794 from jwillemsen/jwi-getconffailre
+    
+    When getconf fails don't set the value to unknown, that gives a stran…
+
+commit 5c2dfef4413bf4480fded248269ee111a11e020d
+Merge: 3cd2852488a 48931304d50
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 12:36:32 2019 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 3cd2852488a6cdff8ebd19752d1566b08a3b13b4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 12:36:18 2019 +0100
+
+    Removed some empty lines
+    
+        * ACE/ace/Connection_Recycling_Strategy.h:
+        * ACE/ace/Connector.h:
+
+commit 76451eb994cf44aacb93b8f4925db5c5c0aed2c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 17 09:39:18 2019 +0100
+
+    When getconf fails don't set the value to unknown, that gives a strange error to our users, issue #792
+    
+        * ACE/include/makeinclude/platform_linux_common.GNU:
+
+commit d55b73e08a69f9e747ac6102f90ce60a589d708b
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Jan 15 12:12:58 2019 -0600
+
+    Update ACE/NEWS and TAO/NEWS
+
+commit ad33e68bf640bed32d212e0a94d7b8b5af600327
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Jan 2 20:08:32 2019 +0800
+
+    Fix typo.
+
+commit 2691dc01f2add99feab54ed25c3512b7e94f69e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 31 10:10:55 2018 +0100
+
+    Updated copyright year
+
+commit 83782cebd09e06d3117aad09ae73c5e9e96152fc
+Merge: 130b7d62d9f 0fc30571a28
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Dec 27 18:52:00 2018 +0100
+
+    Merge pull request #777 from iguessthislldo/igtd/vector
+    
+    Fix end() on ACE_Vector
+
+commit 0fc30571a28d5eb0bb1153a4f827069a15508ca8
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 26 15:46:46 2018 -0600
+
+    Add std iterator subtest to Vector_Test
+
+commit 38497d0e9a3ec28c47898fb6546158e54f25afca
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 21 17:11:16 2018 -0600
+
+    Fix end() on ACE_Vector
+    
+    It was based on the the base array, not the actual elements in the
+    array.
+
+commit 5541b85383a479fc69f013d424ba085c3f825094
+Merge: 1edd850772f b0a5f56d66b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 12 07:47:28 2018 +0000
+
+    Merge pull request #775 from iguessthislldo/igtd/android
+    
+    Update ACE-INSTALL.html
+
+commit b0a5f56d66bf00204c5b73adcd5c2a079b903443
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 11 16:58:31 2018 -0600
+
+    Update ACE-INSTALL.html
+    
+    Remove statement about semun that turned out only to apply to OpenDDS.
+
+commit 6ba0c55d8c99a8bd8a91cc0a717a267c1d3ddc18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 16:19:48 2018 +0100
+
+    Doxygen change
+
+commit 9947f5abc8035487ee810fd56c63ec312dbe291f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Dec 5 13:17:42 2018 +0100
+
+    Doxygen change
+    
+        * ACE/ace/SString.h:
+
+commit 2d69fdc296b9b3eb1410c4759527f292d8d8fdc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Dec 3 14:12:24 2018 +0100
+
+    Doxygen enhancements
+    
+        * ACE/ace/Dev_Poll_Reactor.h:
+        * ACE/ace/Reactor_Impl.h:
+        * ACE/ace/Select_Reactor_T.h:
+        * ACE/ace/WFMO_Reactor.h:
+
+commit 20b898b5b40a1b3e9f137fe045153d0727db7664
+Merge: 60d114824f5 9bc2d68ce78
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 28 17:00:26 2018 +0100
+
+    Merge pull request #757 from jwillemsen/jwi-androidversioned
+    
+    Only set versioned_so to 0 when it is not set, it is possible to use …
+
+commit 9bc2d68ce78e25c118cf0f6e48b3e50e6c3abc3d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 28 15:23:36 2018 +0100
+
+    Only set versioned_so to 0 when it is not set, it is possible to use this so let the user enable it when necessary
+    
+        * ACE/include/makeinclude/platform_android.GNU:
+
+commit a228d9286d033695fb4fd68d738c6d54b3520e3f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 22 09:04:19 2018 +0100
+
+    Should modify compile_flags to remove /Gm
+    
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+
+commit 05dd8913aa5e3e78e7c5d76f91601eece4142b7c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 21 08:02:29 2018 +0100
+
+    Visual Studio 2017 marks now /Gm (enable minimal rebuild) as deprecated so we remove it from the compiler flags
+    
+        * ACE/bin/MakeProjectCreator/config/vs2017nmake.mpb:
+
+commit 99f16383bdc9851c2b4d1c98e5f5bb953a7eedd0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 19 21:02:34 2018 +0100
+
+    Should assign CXX and CC unconditionally
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit d2ee56620d75abe4733978c145929f01cf999525
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 19 20:47:37 2018 +0100
+
+    Move CXX check inside the insure=0 block
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit 5f1ec6c104b2dbf6aa5a105e6683a1bf84c783d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 19 16:46:56 2018 +0100
+
+    CXX is set by default to g++, in that case we set CXX to clang++ and CC to clang
+    
+        * ACE/include/makeinclude/platform_linux_clang.GNU:
+
+commit a56bb23d78658d5a99f8c9fadbe245a283a3c85b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Nov 19 11:25:05 2018 +0100
+
+    Make x.5.3 public and prepare for the next release
+    
+        * ACE/bin/copy-local-script.sh:
+          Added.
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

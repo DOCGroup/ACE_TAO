@@ -119,3 +119,13 @@ PIC      = -fPIC
 AR      ?= ar
 ARFLAGS ?= rsuv
 RANLIB   = @true
+
+# Added line below to support "Executable Shared Object" files (as
+# needed by the service configurator).
+# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
+ifeq ($(threads),1)
+    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
+    ifndef PRELIB
+       PRELIB = @true
+    endif # ! PRELIB
+endif

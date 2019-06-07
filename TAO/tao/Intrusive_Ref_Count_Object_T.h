@@ -36,7 +36,6 @@ template <class OBJ, class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_LOCK>
 {
 public:
-
   /// take ownership of obj.
   TAO_Intrusive_Ref_Count_Object (OBJ* obj);
   virtual ~TAO_Intrusive_Ref_Count_Object (void);
@@ -44,7 +43,6 @@ public:
   OBJ* get () const;
 
 private:
-
   // Prevent default constructor used.
   TAO_Intrusive_Ref_Count_Object (void);
 

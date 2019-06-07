@@ -10,8 +10,6 @@
 #include "ace/Sig_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 #if defined (ACE_HAS_SIG_C_FUNC)
 
 extern "C" void

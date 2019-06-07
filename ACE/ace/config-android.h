@@ -67,6 +67,8 @@
 #  define ACE_LACKS_GETHOSTENT
 #  define ACE_LACKS_LOCALECONV
 #  define ACE_LACKS_WCHAR_STD_NAMESPACE
+// Used in tests/Sequence_Unit_Tests/string_sequence_tester.hpp
+#  define TAO_LACKS_WCHAR_CXX_STDLIB
 #endif
 
 #if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 18
@@ -158,8 +160,6 @@
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
 
-#define ACE_HAS_PTHREADS_UNIX98_EXT
-
 #include "ace/config-posix.h"
 
 // @todo JW, test if this works
@@ -209,13 +209,6 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
-
-# define ACE_HAS_CUSTOM_EXPORT_MACROS
-# define ACE_Proper_Export_Flag
-# define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
-# define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
-# define ACE_HAS_EXPLICIT_TEMPLATE_CLASS_INSTANTIATION
-
 #elif defined (__GNUC__)
 /**
  * GNU C compiler.

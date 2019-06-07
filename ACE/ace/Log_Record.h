@@ -4,7 +4,7 @@
 /**
  *  @file    Log_Record.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -68,7 +68,6 @@ public:
 
   /// Default dtor.
   ~ACE_Log_Record (void);
-
 
   /// Write the contents of the logging record to the appropriate
   /// FILE if the corresponding type is enabled.

@@ -43,7 +43,6 @@ private:
   int use_rt_corba_;
 
   auto_ptr<RTCORBA_Setup> rtcorba_setup_;
-  auto_ptr<PriorityBand_Setup> priorityband_setup_;
   SyncScope_Setup syncscope_setup_;
 };
 

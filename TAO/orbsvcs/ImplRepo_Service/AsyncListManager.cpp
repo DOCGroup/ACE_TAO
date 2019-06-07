@@ -91,8 +91,8 @@ AsyncListManager::init_list (void)
   if (ImR_Locator_i::debug() > 4)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::init_list, %d waiters")
-                      ACE_TEXT (" out of %d regsitered servers\n"),
+                      ACE_TEXT ("(%P|%t) AsyncListManager(%@)::init_list, <%d> waiters")
+                      ACE_TEXT (" out of <%d> registered servers\n"),
                       this, this->waiters_, len));
     }
 }
@@ -310,7 +310,6 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
         {
           this->final_state ();
         }
-      return;
     }
 }
 

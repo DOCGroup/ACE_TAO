@@ -6,7 +6,7 @@
  *    using an <ACE_Timer_Heap>. It also demonstrates using a custom handler for
  *    timer events.
  *
- *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu> and Alon Diamant <diamant.alon@gmail.com>
+ *  @author Carlos O'Ryan <coryan@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Alon Diamant <diamant.alon@gmail.com>
  */
 //=============================================================================
 

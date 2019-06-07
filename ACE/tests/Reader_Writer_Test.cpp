@@ -7,10 +7,9 @@
  *    implementation of readers/writer locks on Win32 and Posix
  *    pthreads.
  *
- *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Prashant Jain <pjain@cs.wustl.edu> and Doug C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/Thread.h"
@@ -21,8 +20,6 @@
 #include "ace/Guard_T.h"
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Time_Value.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

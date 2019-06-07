@@ -4,13 +4,11 @@
 // Constructor
 Time_i::Time_i (void)
 {
-  // no-op
 }
 
 // Destructor
 Time_i::~Time_i (void)
 {
-  // no-op
 }
 
 // Set the ORB pointer.

@@ -4,7 +4,7 @@
 /**
  *  @file    Time_Value.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -84,6 +84,9 @@ public:
   explicit ACE_Time_Value (const timespec_t &t);
 
 #if defined (ACE_HAS_CPP11)
+  ACE_Time_Value (const ACE_Time_Value&) = default;
+  ACE_Time_Value (ACE_Time_Value&&) = default;
+
   /// Construct the ACE_Time_Value object from a chrono duration.
   template< class Rep, class Period >
   explicit ACE_Time_Value (const std::chrono::duration<Rep, Period>& duration)
@@ -264,8 +267,11 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value &operator += (time_t tv);
 
+#if defined (ACE_HAS_CPP11)
   /// Assign @a tv to this
-  ACE_Time_Value &operator = (const ACE_Time_Value &tv);
+  ACE_Time_Value &operator = (const ACE_Time_Value &) = default;
+  ACE_Time_Value &operator = (ACE_Time_Value &&)  = default;
+#endif /* ACE_HAS_CPP11 */
 
   /// Assign @a tv to this
   ACE_Time_Value &operator = (time_t tv);

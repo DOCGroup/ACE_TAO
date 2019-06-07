@@ -17,15 +17,12 @@
 #include "ace/OS_NS_string.h"
 
 Servant_Locator::Servant_Locator (CORBA::ORB_ptr orb_ptr)
-
   : orb_var_ (CORBA::ORB::_duplicate (orb_ptr))
 {
-  // no-op
 }
 
 Servant_Locator::~Servant_Locator ()
 {
-  //delete servant_ptr_;
 }
 
 

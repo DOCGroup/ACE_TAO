@@ -192,19 +192,19 @@ ACE_TS_Server_Handler::dispatch (void)
 ACE_TS_Server_Handler::recv_request (void)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::recv_request");
-  ssize_t bytes_expected = this->time_request_.size ();
+  ssize_t const bytes_expected = this->time_request_.size ();
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t n = this->peer ().recv ((void *) &this->time_request_, bytes_expected);
+  ssize_t const n = this->peer ().recv ((void *) &this->time_request_, bytes_expected);
   if (n != bytes_expected)
     {
       switch (n)
         {
         case -1:
-          /* FALLTHROUGH */
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("****************** recv_request returned -1\n")));
+          /* FALLTHROUGH */
         default:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),

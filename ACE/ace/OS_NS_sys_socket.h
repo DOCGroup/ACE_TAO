@@ -4,7 +4,7 @@
 /**
  *  @file   OS_NS_sys_socket.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -57,6 +57,20 @@
 #else
 #define ACE_SHUTDOWN_BOTH 2
 #endif /* SD_BOTH */
+
+#if defined (IP_RECVDSTADDR)
+#define ACE_RECVPKTINFO IP_RECVDSTADDR
+#elif defined (IP_PKTINFO)
+#define ACE_RECVPKTINFO IP_PKTINFO
+#endif
+
+#if defined (ACE_HAS_IPV6)
+#if defined (IPV6_PKTINFO)
+#define ACE_RECVPKTINFO6 IPV6_PKTINFO
+#elif defined (IPV6_RECVPKTINFO)
+#define ACE_RECVPKTINFO6 IPV6_RECVPKTINFO
+#endif
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

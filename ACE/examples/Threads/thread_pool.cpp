@@ -7,7 +7,7 @@
 //
 // This code is original based on a test program written by Karlheinz
 // Dorn <Karlheinz.Dorn@med.siemens.de>.  It was modified to utilize
-// more ACE features by Doug Schmidt <schmidt@cs.wustl.edu>.
+// more ACE features by Doug Schmidt <d.schmidt@vanderbilt.edu>.
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"

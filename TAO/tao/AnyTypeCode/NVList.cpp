@@ -1,4 +1,3 @@
-
 // Implementation of Named Value List and NamedValue classes
 
 #include "tao/AnyTypeCode/NVList.h"
@@ -23,7 +22,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object
-
 CORBA::ULong
 CORBA::NamedValue::_incr_refcount (void)
 {
@@ -369,7 +367,7 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
   if (TAO_debug_level > 3)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode\n")));
+                  ACE_TEXT ("TAO (%P|%t) - NVList::_tao_decode\n")));
     }
 
   // Then unmarshal each "in" and "inout" parameter.
@@ -394,13 +392,12 @@ CORBA::NVList::_tao_decode (TAO_InputCDR &incoming, int flag)
       if (TAO_debug_level > 3)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) : NVList::_tao_decode - %C\n"),
+                      ACE_TEXT ("TAO (%P|%t) - NVList::_tao_decode - <%C>\n"),
                       nv->name ()? nv->name () : "(no name given)" ));
         }
 
       CORBA::Any_ptr any = nv->value ();
-      any->impl ()->_tao_decode (incoming
-                                );
+      any->impl ()->_tao_decode (incoming);
     }
 }
 

@@ -66,7 +66,7 @@ $test->DeleteFile($persistent_ior_file);
 sub name_server
 {
     my $args = "-ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
 
@@ -95,7 +95,6 @@ sub client
         print STDERR "ERROR: client returned $client_status\n";
         $status = 1;
     }
-
 }
 
 ## The options below have been reordered due to a

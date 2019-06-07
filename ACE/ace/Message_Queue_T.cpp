@@ -2715,7 +2715,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
                                      (int) current_status),
                                     -1);
                 }
-              /* FALLTHRU */
+              /* FALLTHROUGH */
             }
           else
             {

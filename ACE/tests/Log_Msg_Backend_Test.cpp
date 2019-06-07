@@ -11,14 +11,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Log_Msg_Backend.h"
 #include "ace/Log_Record.h"
-
-
 
 class Backend : public ACE_Log_Msg_Backend
 {

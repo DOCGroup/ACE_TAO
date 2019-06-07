@@ -13,10 +13,9 @@
  *    an integer argument specifying how long to "process" (actually,
  *    the child just sleeps for the specified length of time).
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu> and Dave Madden <dhm@mersenne.com>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Dave Madden <dhm@mersenne.com>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/SString.h"
@@ -29,8 +28,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/Thread.h"
 #include "ace/Reactor.h"
-
-
 
 static u_int debug_test = 0;
 #if defined (ACE_HAS_WIN32_PRIORITY_CLASS)
@@ -361,7 +358,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     test_status = result;
 
   // Try the explicit <ACE_Process_Manager::wait> functions
-
   ACE_Process_Manager mgr;
 
   mgr.register_handler (new Exit_Handler ("default"));

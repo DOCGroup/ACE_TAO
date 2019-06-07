@@ -55,7 +55,6 @@ sub init_naming_context_directory($$)
     }
 }
 
-
 # Variables for command-line arguments to client and server
 # executables.
 my $ns_orb_primary_port1 = 9931;

@@ -11,7 +11,7 @@ iiop://127.0.0.1:1192.
 If the port number must be changed at some point in the future, one
 will have to generate a new IOR file as well.  The original was
 generated using the "server" from the "Hello" test
-($ACE_ROOT/TAO/tests/Hello) with ORB arguments
+($TAO_ROOT/tests/Hello) with ORB arguments
 
     -ORBDottedDecimalAddresses 1 -ORBendpoint iiop://127.0.0.1:1192
 

@@ -12,7 +12,7 @@ $status = 0;
 my @generated_files = ("testC.h", "testC.cpp", "testC.inl", "testS.h", "testS.cpp");
 
 # The location of the IFR_Service binary
-my $ifr_service_bin = "../../IFR_Service";
+my $ifr_service_bin = "$ENV{TAO_ROOT}/orbsvcs/IFR_Service";
 
 # The location of the tao_ifr utility binary
 my $tao_ifr_bin = "$ENV{ACE_ROOT}/bin";

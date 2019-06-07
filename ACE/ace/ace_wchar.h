@@ -228,6 +228,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_CreateFileMapping               ::CreateFileMappingW
 #define ACE_TEXT_CreateMutex                     ::CreateMutexW
 #define ACE_TEXT_CreateProcess                   ::CreateProcessW
+#define ACE_TEXT_CreateProcessAsUser             ::CreateProcessAsUserW
 #define ACE_TEXT_CreateSemaphore                 ::CreateSemaphoreW
 #define ACE_TEXT_CreateService                   ::CreateServiceW
 #define ACE_TEXT_ExpandEnvironmentStrings        ::ExpandEnvironmentStringsW
@@ -288,6 +289,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_TEXT_CreateFileMapping               ::CreateFileMappingA
 #define ACE_TEXT_CreateMutex                     ::CreateMutexA
 #define ACE_TEXT_CreateProcess                   ::CreateProcessA
+#define ACE_TEXT_CreateProcessAsUser             ::CreateProcessAsUserA
 #define ACE_TEXT_CreateSemaphore                 ::CreateSemaphoreA
 #define ACE_TEXT_CreateService                   ::CreateServiceA
 #define ACE_TEXT_ExpandEnvironmentStrings        ::ExpandEnvironmentStringsA

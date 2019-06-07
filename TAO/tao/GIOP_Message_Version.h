@@ -37,7 +37,6 @@ class TAO_ORB_Core;
 class TAO_Export TAO_GIOP_Message_Version
 {
 public:
-
   /// Major version number
   CORBA::Octet major;
 

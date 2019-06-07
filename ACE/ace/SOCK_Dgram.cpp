@@ -308,10 +308,27 @@ ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
                       int n,
                       ACE_Addr &addr,
-                      int flags) const
+                      int flags,
+                      ACE_INET_Addr *to_addr) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
   msghdr recv_msg;
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  union control_buffer {
+    cmsghdr control_msg_header;
+#if defined (IP_RECVDSTADDR)
+    u_char padding[CMSG_SPACE(sizeof (struct in_addr))];
+#elif defined (IP_PKTINFO)
+    u_char padding[CMSG_SPACE(sizeof (struct in_pktinfo))];
+#endif
+#if defined (ACE_HAS_IPV6)
+    u_char padding6[CMSG_SPACE(sizeof (struct in6_pktinfo))];
+#endif
+  } cbuf;
+#else
+  ACE_UNUSED_ARG (to_addr);
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
@@ -323,8 +340,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   recv_msg.msg_namelen = addr.get_size ();
 
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-  recv_msg.msg_control = 0 ;
-  recv_msg.msg_controllen = 0 ;
+  recv_msg.msg_control = to_addr ? &cbuf : 0;
+  recv_msg.msg_controllen = to_addr ? sizeof (cbuf) : 0;
 #elif !defined ACE_LACKS_SENDMSG
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;
@@ -335,6 +352,49 @@ ACE_SOCK_Dgram::recv (iovec iov[],
                                     flags);
   addr.set_size (recv_msg.msg_namelen);
   addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
+
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+  if (to_addr) {
+    this->get_local_addr (*to_addr);
+    if (to_addr->get_type() == AF_INET) {
+#if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
+      for (cmsghdr *ptr = CMSG_FIRSTHDR (&recv_msg); ptr != 0; ptr = CMSG_NXTHDR (&recv_msg, ptr)) {
+#if defined (IP_RECVDSTADDR)
+        if (ptr->cmsg_level == IPPROTO_IP &&
+            ptr->cmsg_type == IP_RECVDSTADDR) {
+          to_addr->set_address ((const char *)(CMSG_DATA (ptr)),
+                                sizeof (struct in_addr),
+                                0);
+          break;
+        }
+#else
+        if (ptr->cmsg_level == IPPROTO_IP &&
+            ptr->cmsg_type == IP_PKTINFO) {
+          to_addr->set_address ((const char *)&(((struct in_pktinfo *)(CMSG_DATA (ptr)))->ipi_addr),
+                                sizeof (struct in_addr),
+                                0);
+          break;
+        }
+#endif
+      }
+#endif
+    }
+#if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
+    else if (to_addr->get_type() == AF_INET6) {
+      for (cmsghdr *ptr = CMSG_FIRSTHDR (&recv_msg); ptr != 0; ptr = CMSG_NXTHDR (&recv_msg, ptr)) {
+        if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
+          to_addr->set_address ((const char *)&(((struct in6_pktinfo *)(CMSG_DATA (ptr)))->ipi6_addr),
+                                sizeof (struct in6_addr),
+                                0);
+
+          break;
+        }
+      }
+    }
+#endif
+  }
+#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+
   return status;
 }
 

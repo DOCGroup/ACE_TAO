@@ -7,14 +7,14 @@ communication mechanisms, the Reactor event demultiplexor, and the
 Service Configurator dynamic service configuration framework.  To gain
 a deeper understanding of what is going on, you should read the the
 Wrapper Facade, Reactor, and Component Configurator patterns in POSA2
-<http://www.cs.wustl.edu/~schmidt/POSA/> and check out the following
+<http://www.dre.vanderbilt.edu/~schmidt/POSA/> and check out the following
 papers on the ACE framework components:
 
-http://www.cs.wustl.edu/~schmidt/PDF/IPC_SAP-92.pdf
-http://www.cs.wustl.edu/~schmidt/PDF/Reactor1-93.pdf
-http://www.cs.wustl.edu/~schmidt/PDF/Reactor2-93.pdf
-http://www.cs.wustl.edu/~schmidt/PDF/reactor-rules.pdf
-http://www.cs.wustl.edu/~schmidt/PDF/Svc-Conf.pdf
+http://www.dre.vanderbilt.edu/~schmidt/PDF/IPC_SAP-92.pdf
+http://www.dre.vanderbilt.edu/~schmidt/PDF/Reactor1-93.pdf
+http://www.dre.vanderbilt.edu/~schmidt/PDF/Reactor2-93.pdf
+http://www.dre.vanderbilt.edu/~schmidt/PDF/reactor-rules.pdf
+http://www.dre.vanderbilt.edu/~schmidt/PDF/Svc-Conf.pdf
 
 The key to running these client/server tests is to understand the
 purpose of the svc.conf file located in the

@@ -1,16 +1,13 @@
 # -*- Makefile -*-
 
-# This file should allow ACE to be built for Android 2.3.1 (API Level 9)
-# or greater, by cross compiling on Linux.
+# This file allows ACE and applications using ACE GNU Makefiles to be built for
+# Android by cross compiling on Linux.
 
 # We always include config-android.h on Android platforms.
 ACE_PLATFORM_CONFIG ?= config-android.h
 
 # Common Linux Functionality
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
-
-# The standalone gcc compilers in NDK r6-r9 have issues with the visibility.
-no_hidden_visibility ?= 1
 
 # as of NDK r6 inlining is required
 inline ?= 1
@@ -165,12 +162,15 @@ endif
 OCFLAGS ?= -O3
 OCCFLAGS ?= -O3
 
-# Added line below to support "Executable Shared Object" files (as
-# needed by the service configurator).
-# Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
-ifeq ($(threads),1)
-    ESOBUILD = $(COMPILEESO.cc) $(PIC) -shared -o $(VSHDIR)$*.so $<
-    ifndef PRELIB
-       PRELIB = @true
-    endif # ! PRELIB
+# Android preloads the (almost certainly incompatible) system SSL library
+# (either OpenSSL or BoringSSL) for the Java Android API, so we must:
+#   1. Statically link OpenSSL to this library
+#   2. Keep our OpenSSL symbols internal
+# Number 1 is described in ACE-INSTALL.html.
+# We are doing number 2 here.
+ifeq ($(ssl),1)
+  PLATFORM_SSL_LDFLAGS += --exclude-libs libcrypto.a,libssl.a
 endif
+
+# Link To Android Logging Library for Log_Msg_Android_Logcat
+LIBS += -llog

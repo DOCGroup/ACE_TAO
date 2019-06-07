@@ -73,7 +73,6 @@ namespace CORBA
   class TAO_DynamicInterface_Export Context
   {
   public:
-
     Context (void);
 
     ~Context (void);

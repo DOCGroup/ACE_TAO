@@ -11,7 +11,6 @@
 ACEXML_SAXPrint_Handler::ACEXML_SAXPrint_Handler (const ACEXML_Char* filename)
   : indent_ (0),  fileName_(ACE::strnew (filename)), locator_ (0)
 {
-  // no-op
 }
 
 ACEXML_SAXPrint_Handler::~ACEXML_SAXPrint_Handler (void)

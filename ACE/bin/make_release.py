@@ -868,6 +868,7 @@ def generate_workspaces (stage_dir):
     msvc_exclude_option = ' '
     vc14_option = ' -name_modifier *_vc14 '
     vs2017_option = ' -name_modifier *_vs2017 '
+    vs2019_option = ' -name_modifier *_vs2019 '
 
     redirect_option = str ()
     if not opts.verbose:
@@ -881,6 +882,9 @@ def generate_workspaces (stage_dir):
 
     print "\tGenerating VS2017 solutions..."
     ex (mpc_command + " -type vs2017 "  + msvc_exclude_option + mpc_option + workers_option + vs2017_option + redirect_option)
+
+    print "\tGenerating VS2019 solutions..."
+    ex (mpc_command + " -type vs2019 "  + msvc_exclude_option + mpc_option + workers_option + vs2019_option + redirect_option)
 
     print "\tCorrecting permissions for all generated files..."
     ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")

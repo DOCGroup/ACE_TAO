@@ -23,12 +23,10 @@ ACEXML_Svcconf_Handler::ACEXML_Svcconf_Handler (void)
     stream_svc_type_ (0),
     stream_ (0)
 {
-  // no-op
 }
 
 ACEXML_Svcconf_Handler::~ACEXML_Svcconf_Handler (void)
 {
-  // no-op
 }
 
 void
@@ -36,13 +34,11 @@ ACEXML_Svcconf_Handler::characters (const ACEXML_Char *,
                                     int,
                                     int)
 {
-  // no-op
 }
 
 void
 ACEXML_Svcconf_Handler::endDocument (void)
 {
-  // no-op
 }
 
 void
@@ -268,7 +264,6 @@ ACEXML_Svcconf_Handler::endElement (const ACEXML_Char *,
 void
 ACEXML_Svcconf_Handler::endPrefixMapping (const ACEXML_Char *)
 {
-  // no-op
 }
 
 void
@@ -276,14 +271,12 @@ ACEXML_Svcconf_Handler::ignorableWhitespace (const ACEXML_Char *,
                                              int,
                                              int)
 {
-  // no-op
 }
 
 void
 ACEXML_Svcconf_Handler::processingInstruction (const ACEXML_Char *,
                                                const ACEXML_Char *)
 {
-  // no-op
 }
 
 void
@@ -295,13 +288,11 @@ ACEXML_Svcconf_Handler::setDocumentLocator (ACEXML_Locator* locator)
 void
 ACEXML_Svcconf_Handler::skippedEntity (const ACEXML_Char *)
 {
-  // no-op
 }
 
 void
 ACEXML_Svcconf_Handler::startDocument (void)
 {
-  // no-op
 }
 
 void

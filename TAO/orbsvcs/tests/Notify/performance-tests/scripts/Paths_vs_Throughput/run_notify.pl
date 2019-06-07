@@ -65,10 +65,10 @@ $nm_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nm_ior);
 $nt_service->DeleteFile($nt_ior);
 
-$NM_SV = $nm_service->CreateProcess ("../../../../../Naming_Service/tao_cosnaming",
+$NM_SV = $nm_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                                      "-ORBDebugLevel $debug_level -o $nm_service_nm_ior");
 
-$NT_SV = $nt_service->CreateProcess ("../../../../../Notify_Service/tao_cosnotification",
+$NT_SV = $nt_service->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification",
                                      "-ORBInitRef NameService=file://$nt_service_nm_ior ".
                                      "-IORoutput $nt_service_nt_ior ".
                                      "-ORBSvcConf $nt_service_nt_conf ".

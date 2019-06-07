@@ -57,7 +57,7 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
     }
   catch (const CORBA::Exception &ex)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%P) deactivate raised %s\n",
+      ACE_DEBUG ((LM_DEBUG, "(%P) deactivate raised %C\n",
                   ex._name()));
     }
   throw ::CORBA::TRANSIENT
@@ -65,7 +65,6 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
       CORBA::COMPLETED_NO);
 
 }
-
 
 void
 Ping_Death_Request_Interceptor::receive_request (

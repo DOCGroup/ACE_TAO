@@ -5,7 +5,7 @@
  *
  *    This test illustrates the use of <ACE_DLList>.
  *
- *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 

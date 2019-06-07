@@ -50,10 +50,10 @@ $nfs->DeleteFile ($nfsiorfile);
 $sup->DeleteFile ($supiorfile);
 $con->DeleteFile ($supiorfile);
 
-$NS = $ns->CreateProcess ("../../../Naming_Service/tao_cosnaming",
+$NS = $ns->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
                           " -o $ns_nsiorfile");
 
-$NFS = $nfs->CreateProcess ("../../../Notify_Service/tao_cosnotification");
+$NFS = $nfs->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/Notify_Service/tao_cosnotification");
 $NFS_Args = "-ORBInitRef NameService=file://$nfs_nsiorfile -IORoutput $nfs_nfsiorfile -ORBSvcConf $nfs_nfsconffile";
 
 $SUP = $sup->CreateProcess ("../Driver/Notify_Tests_Driver");

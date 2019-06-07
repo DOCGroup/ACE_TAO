@@ -77,10 +77,8 @@ protected:
   // = PushConsumer methods
   virtual void disconnect_push_consumer (void);
 
- /// Default does nothing.
-    void push (
-        const CORBA::Any & data
-      );
+  /// Default does nothing.
+  void push (const CORBA::Any & data);
 };
 
 #if defined (__ACE_INLINE__)

@@ -702,14 +702,14 @@ version_test (void)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
 
-  int code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_MICRO_VERSION);
-  bool run_time_check = code == ACE_VERSION_CODE;
+  int const code = ACE_MAKE_VERSION_CODE(ACE_MAJOR_VERSION, ACE_MINOR_VERSION, ACE_MICRO_VERSION);
+  bool const run_time_check = code == ACE_VERSION_CODE;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE release time version code: %d, runtime version code: %d, %s\n"),
               ACE_VERSION_CODE, code, run_time_check ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
 
   // Compile time check. Check we have ACE version 6.x
 #if ACE_VERSION_CODE > ACE_MAKE_VERSION_CODE(5, 88, 99)
-  bool compile_time_check = true;
+  bool const compile_time_check = true;
 #else
   bool compile_time_check = false;
 #endif
@@ -736,7 +736,7 @@ ctime_r_test (void)
   ACE_Time_Value cur_time =
     ACE_OS::gettimeofday ();
 
-  time_t secs = cur_time.sec ();
+  time_t const secs = cur_time.sec ();
   if (ACE_OS::ctime_r (&secs, buf, 26) == 0)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -798,7 +798,7 @@ string_strsncpy_test (void)
                 ACE_TEXT ("Testing strsncpy (char version)\n")));
     //FUZZ: enable check_for_lack_ACE_OS
 
-    char strsncpy1[] =  "abcdefghijklmnopqrstuvwxyzabc";
+    char const strsncpy1[] =  "abcdefghijklmnopqrstuvwxyzabc";
     char strsncpy2[36];
 
     // strsncpy() where the max. length doesn't matter
@@ -868,7 +868,7 @@ string_strsncpy_test (void)
                 ACE_TEXT ("Testing strsncpy (wchar_t version)\n")));
      //FUZZ: enable check_for_lack_ACE_OS
 
-    wchar_t strsncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
+    wchar_t const strsncpy1[] = ACE_TEXT_WIDE ("abcdefghijklmnopqrstuvwxyzabc");
     wchar_t strsncpy2[36];
 
     // strsncpy() where the max. length doesn't matter
@@ -1019,8 +1019,8 @@ cpu_info_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing cpu info methods\n")));
 
-  long number_processors = ACE_OS::num_processors();
-  long number_processors_online = ACE_OS::num_processors_online();
+  long const number_processors = ACE_OS::num_processors();
+  long const number_processors_online = ACE_OS::num_processors_online();
 
   if (number_processors == -1)
     {
@@ -1217,8 +1217,8 @@ ceilf_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceilf method\n")));
 
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-2.0, -1.0, 2.0, 3.0};
+  float const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  float const results[] = {-2.0, -1.0, 2.0, 3.0};
   float result = 0.0;
   int error_count = 0;
 
@@ -1245,8 +1245,8 @@ floorf_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floorf method\n")));
 
-  float values[]  = {-2.5, -1.5, 1.5, 2.5};
-  float results[] = {-3.0, -2.0, 1.0, 2.0};
+  float const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  float const results[] = {-3.0, -2.0, 1.0, 2.0};
   float result = 0.0;
   int error_count = 0;
 
@@ -1271,8 +1271,8 @@ ceil_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceil method\n")));
 
-  double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  double results[] = {-2.0, -1.0, 2.0, 3.0};
+  double const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  double const results[] = {-2.0, -1.0, 2.0, 3.0};
   double result = 0.0;
   int error_count = 0;
 
@@ -1299,8 +1299,8 @@ floor_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floor method\n")));
 
-  double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  double results[] = {-3.0, -2.0, 1.0, 2.0};
+  double const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  double const results[] = {-3.0, -2.0, 1.0, 2.0};
   double result = 0.0;
   int error_count = 0;
 
@@ -1327,8 +1327,8 @@ ceill_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceill method\n")));
 
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-2.0, -1.0, 2.0, 3.0};
+  long double const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  long double const results[] = {-2.0, -1.0, 2.0, 3.0};
   long double result = 0.0;
   int error_count = 0;
 
@@ -1355,8 +1355,8 @@ floorl_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floorl method\n")));
 
-  long double values[]  = {-2.5, -1.5, 1.5, 2.5};
-  long double results[] = {-3.0, -2.0, 1.0, 2.0};
+  long double const values[]  = {-2.5, -1.5, 1.5, 2.5};
+  long double const results[] = {-3.0, -2.0, 1.0, 2.0};
   long double result = 0.0;
   int error_count = 0;
 
@@ -1381,7 +1381,7 @@ log2_test (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing log2 method\n")));
 
-  double values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
+  double const values[] = {1.0, 2.0, 4.0, 8.0, 1048576.0};
   int const results[] = {0, 1, 2, 3, 20};
   int result = 0;
   int error_count = 0;
@@ -1590,7 +1590,7 @@ swab_test (void)
               ACE_TEXT ("Testing swab method\n")));
 
   int error_count = 0;
-  char from[] =   "BADCFEHGJILKNMPORQTSVUXWZY";
+  char const from[] =   "BADCFEHGJILKNMPORQTSVUXWZY";
   char to[] =     "..........................";
   char expect[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 

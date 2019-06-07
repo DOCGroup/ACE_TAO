@@ -93,8 +93,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
     PortableServer::POA_var poa_a = rootPOA->create_POA ("poaB",
         poa_manager.in (),
-        policies
-        );
+        policies);
 
     for (CORBA::ULong i = 0;
       i < policies.length ();

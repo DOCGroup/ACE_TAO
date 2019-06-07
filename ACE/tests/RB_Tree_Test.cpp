@@ -19,15 +19,11 @@
  */
 //=============================================================================
 
-
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/RB_Tree.h"
 #include "ace/SString.h"
 #include "ace/Null_Mutex.h"
-
 #include "RB_Tree_Test.h"
-
-
 
 // Type definitions for the four distinct parameterizations of the
 // test.

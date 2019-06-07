@@ -409,15 +409,17 @@ at_least_one_definition
         : definitions at_least_one_annotation definition
         {
           AST_Decl *d = $3;
+          AST_Annotation_Appls *annotations = $2;
           if (d)
             {
-              d->annotation_appls ($2);
+              d->annotation_appls (*annotations);
             }
           else
             {
               idl_global->err ()-> unsupported_warning(
                 "Annotating this type of definition is not supported");
             }
+          delete annotations;
         }
         | definitions definition
         {
@@ -1488,6 +1490,7 @@ state_member
                     }
                 }
             }
+          delete $2;
         }
         ;
 
@@ -2330,7 +2333,7 @@ annotation_member
 
           AST_Expression::ExprType type = $1;
           Identifier *name = $2;
-          UTL_ScopedName scoped_name (name, 0);
+          UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
           AST_Expression *default_value = $3;
 
           AST_Decl * type_obj;
@@ -2348,11 +2351,14 @@ annotation_member
             }
 
           FE_Declarator *declarator = new FE_Declarator (
-            &scoped_name, FE_Declarator::FD_simple, 0);
+            scoped_name, FE_Declarator::FD_simple, 0);
           AST_Annotation_Member *member = idl_global->gen ()->
             create_annotation_member (
               type, declarator->compose (type_obj), declarator->name ());
           scope->fe_add_annotation_member (member);
+
+          declarator->destroy ();
+          delete declarator;
 
           if (default_value)
             {
@@ -2391,7 +2397,7 @@ at_least_one_annotation
           AST_Annotation_Appl *annotation = $2;
           if (annotation)
             {
-              annotations->push_back (annotation);
+              annotations->add (annotation);
             }
           $$ = annotations;
         }
@@ -2404,7 +2410,7 @@ annotations_maybe
           AST_Annotation_Appl *annotation = $2;
           if (annotation)
             {
-              annotations->push_back (annotation);
+              annotations->add (annotation);
             }
           $$ = annotations;
         }
@@ -2481,6 +2487,16 @@ annotation_appl
               appl = idl_global->gen ()->create_annotation_appl (name, params);
               appl->apply_from (decl);
               idl_global->scopes ().pop ();
+            }
+          else
+            {
+              AST_Annotation_Appl::delete_params (params);
+            }
+
+          if (name)
+            {
+              name->destroy ();
+              delete name;
             }
 
           $$ = appl;
@@ -3067,14 +3083,17 @@ members
 member
         : annotations_maybe member_i
         {
-          if ($1)
+          AST_Annotation_Appls *annotations = $1;
+          AST_Decls *members = $2;
+          if (annotations && members)
             {
-              AST_Decls &decls = *$2;
-              for (size_t i = 0; i < decls.size (); i++)
+              for (size_t i = 0; i < members->size (); i++)
                 {
-                  decls[i]->annotation_appls ($1);
+                  (*members)[i]->annotation_appls (*annotations);
                 }
             }
+          delete annotations;
+          delete members;
         }
         ;
 
@@ -3216,6 +3235,7 @@ union_type
            */
           UTL_Scope *top = idl_global->scopes ().top_non_null ();
           idl_global->scopes ().pop ();
+          AST_Annotation_Appls *disc_annotations = $6;
 
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           UTL_ScopedName n ($1, 0);
@@ -3246,7 +3266,7 @@ union_type
                   AST_Union *e = AST_Union::narrow_from_scope (top);
 
                   e->redefine (u);
-                  e->disc_annotations ($6); // Set Discriminator Annotations
+                  e->disc_annotations (*disc_annotations); // Set Discriminator Annotations
 
                   u->destroy ();
                   delete u;
@@ -3261,6 +3281,8 @@ union_type
           $1->destroy ();
           delete $1;
           $1 = 0;
+
+          delete disc_annotations;
         }
         '{'
         {
@@ -3455,6 +3477,7 @@ case_branch :
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           AST_UnionBranch *b = 0;
+          AST_Annotation_Appls *annotations = $3;
           AST_Field *f = $4;
           idl_global->set_parse_state (IDL_GlobalData::PS_UnionElemCompleted);
 
@@ -3470,7 +3493,7 @@ case_branch :
                                         f->field_type (),
                                         f->name ()
                                       );
-              b->annotation_appls ($3);
+              b->annotation_appls (*annotations);
               (void) s->fe_add_union_branch (b);
 
               // f has passed its field type to the union branch,
@@ -3479,6 +3502,8 @@ case_branch :
               delete f;
               f = 0;
             }
+
+          delete annotations;
         }
         | error
         {
@@ -3739,6 +3764,7 @@ enumerator :
         annotations_maybe IDENTIFIER
         {
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
+          AST_Annotation_Appls *annotations = $1;
           Identifier id ($2);
           ACE::strdelete ($2);
           $2 = 0;
@@ -3762,11 +3788,13 @@ enumerator :
                                               &n
                                             );
                   e->enum_parent (c);
-                  e->annotation_appls ($1);
+                  e->annotation_appls (*annotations);
                 }
 
               (void) s->fe_add_enum_val (e);
             }
+
+          delete annotations;
         }
         ;
 
@@ -3850,7 +3878,7 @@ sequence_type_spec
                                             s->is_local (),
                                             s->is_abstract ()
                                           );
-                  seq->base_type_annotations (type_annotations);
+                  seq->base_type_annotations (*type_annotations);
 
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
@@ -3860,6 +3888,7 @@ sequence_type_spec
                 }
             }
 
+          delete type_annotations;
           delete ev;
           ev = 0;
           $$ = seq;
@@ -3918,7 +3947,7 @@ sequence_type_spec
                         s->is_local (),
                         s->is_abstract ()
                       );
-                  seq->base_type_annotations (type_annotations);
+                  seq->base_type_annotations (*type_annotations);
 
                   if (!idl_global->in_typedef ()
                       && !idl_global->anon_silent ())
@@ -3928,6 +3957,7 @@ sequence_type_spec
                 }
             }
 
+          delete type_annotations;
           $$ = seq;
         }
         ;
@@ -4151,7 +4181,7 @@ array_declarator :
                                         0,
                                         0
                                       );
-              array->base_type_annotations (base_type_annotations);
+              array->base_type_annotations (*base_type_annotations);
               sn.destroy ();
 
               if (!idl_global->in_typedef ()
@@ -4163,6 +4193,8 @@ array_declarator :
 
           array_dims->destroy ();
           delete array_dims;
+
+          delete base_type_annotations;
 
           $$ = array;
         }
@@ -4561,6 +4593,8 @@ operation :
            * Push the operation scope onto the scopes stack.
            */
           idl_global->scopes ().push (o);
+
+          delete $4;
         }
         parameter_list
         {
@@ -4675,6 +4709,8 @@ init_decl
            * Push the operation scope onto the scopes stack.
            */
           idl_global->scopes ().push (factory);
+
+          delete $3;
         }
         init_parameter_list
         {
@@ -6623,6 +6659,8 @@ porttype_decl
 
           // Push it on the scopes stack.
           idl_global->scopes ().push (p);
+
+          delete $3;
         }
         '{'
         {
@@ -6807,6 +6845,7 @@ at_least_one_actual_parameter
                               1);
             }
 
+          delete $1;
           $3->enqueue_head ($2);
           $<alval>$ = $3;
         }
@@ -6822,6 +6861,7 @@ actual_parameters
                               1);
             }
 
+          delete $3;
           $1->enqueue_tail ($4);
           $<alval>$ = $1;
         }
@@ -6954,6 +6994,8 @@ connector_header
               // Push it on the scopes stack.
               idl_global->scopes ().push (c);
            }
+
+          delete $3;
         }
         ;
 

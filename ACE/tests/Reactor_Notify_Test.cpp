@@ -10,10 +10,9 @@
  *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
  *    test will also exercise this feature.
  *
- *  @author   Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author   Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -24,8 +23,6 @@
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Semaphore.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

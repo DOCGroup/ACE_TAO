@@ -67,9 +67,7 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.
-  int make_mprofile (const char *ior,
-                     TAO_MProfile &mprofile
-                    );
+  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
 
   /// Create a profile based on the contents of @a cdr
   TAO_Profile* create_profile (TAO_InputCDR& cdr);

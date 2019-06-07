@@ -175,17 +175,34 @@ ACE_Process::spawn (ACE_Process_Options &options)
     }
 # endif
 
-  BOOL fork_result =
-    ACE_TEXT_CreateProcess (0,
-                            options.command_line_buf (),
-                            options.get_process_attributes (),
-                            options.get_thread_attributes (),
-                            options.handle_inheritance (),
-                            flags,
-                            env_buf, // environment variables
-                            options.working_directory (),
-                            options.startup_info (),
-                            &this->process_info_);
+  BOOL fork_result;
+  if (options.get_user_token () == ACE_INVALID_HANDLE)
+    {
+      fork_result = ACE_TEXT_CreateProcess (0,
+                                            options.command_line_buf (),
+                                            options.get_process_attributes (),
+                                            options.get_thread_attributes (),
+                                            options.handle_inheritance (),
+                                            flags,
+                                            env_buf, // environment variables
+                                            options.working_directory (),
+                                            options.startup_info (),
+                                            &this->process_info_);
+    }
+  else
+    {
+      fork_result = ACE_TEXT_CreateProcessAsUser (options.get_user_token (),
+                                                  0,
+                                                  options.command_line_buf (),
+                                                  options.get_process_attributes (),
+                                                  options.get_thread_attributes (),
+                                                  options.handle_inheritance (),
+                                                  flags,
+                                                  env_buf, // environment variables
+                                                  options.working_directory (),
+                                                  options.startup_info (),
+                                                  &this->process_info_);
+    }
 
 # if defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
   if (options.use_unicode_environment ())
@@ -333,7 +350,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
 # if defined (ACE_USES_WCHAR)
   if (procenv)
-    delete procenv;
+    delete [] procenv;
 # endif /* ACE_USES_WCHAR */
 
   // restore STD file descriptors (if necessary)
@@ -811,6 +828,8 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     environment_inherited_ (0),
     process_attributes_ (0),
     thread_attributes_ (0),
+    user_token_ (ACE_INVALID_HANDLE),
+    close_user_token_ (false),
 #else /* ACE_WIN32 */
     stdin_ (ACE_INVALID_HANDLE),
     stdout_ (ACE_INVALID_HANDLE),
@@ -1246,6 +1265,13 @@ ACE_Process_Options::~ACE_Process_Options (void)
 #else
   delete [] command_line_argv_;
 #endif /* ACE_HAS_ALLOC_HOOKS */
+
+#if defined (ACE_WIN32)
+  if (user_token_ != ACE_INVALID_HANDLE && close_user_token_)
+    {
+      ::CloseHandle(user_token_);
+    }
+#endif /* ACE_WIN32 */
 }
 
 int
@@ -1438,5 +1464,19 @@ ACE_Managed_Process::unmanage (void)
 {
   delete this;
 }
+
+#if defined (ACE_WIN32)
+void
+ACE_Process_Options::set_user_token (HANDLE token, bool close_token)
+{
+  if (user_token_ != ACE_INVALID_HANDLE && close_user_token_)
+    {
+      ::CloseHandle(user_token_);
+    }
+
+  user_token_ = token;
+  close_user_token_ = close_token;
+}
+#endif /* ACE_WIN32 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

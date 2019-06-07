@@ -116,7 +116,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 TAO::Transport::Stats::~Stats ()
 {
-  // no-op
 }
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 
@@ -1530,8 +1529,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
         timeout_encountered = true;
         if (byte_count == 0)
         {
-          //This request has timed out and none of it was sent to the transport
-          //We can't return -1 here, since that would end up closing the tranpsort
+          // This request has timed out and none of it was sent to the transport
+          // We can't return -1 here, since that would end up closing the transport
           if (TAO_debug_level > 2)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
@@ -1645,7 +1644,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                           this->id ()));
             }
 
-          size_t sent_byte = sent_byte_count_;
+          size_t const sent_byte = sent_byte_count_;
           int ret = 0;
           {
             typedef ACE_Reverse_Lock<ACE_Lock> TAO_REVERSE_LOCK;
@@ -1660,8 +1659,8 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
                 {
                   if (sent_byte == sent_byte_count_) // if nothing was actually flushed
                     {
-                      //This request has timed out and none of it was sent to the transport
-                      //We can't return -1 here, since that would end up closing the tranpsort
+                      // This request has timed out and none of it was sent to the transport
+                      // We can't return -1 here, since that would end up closing the transport
                       if (TAO_debug_level > 2)
                         {
                           TAOLIB_DEBUG ((LM_DEBUG,
@@ -2797,7 +2796,7 @@ TAO_Transport::post_open (size_t id)
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport::post_open, ")
-                  ACE_TEXT ("tport id changed from [%d] to [%d]\n"), this->id_, id));
+                  ACE_TEXT ("transport id changed from [%d] to [%d]\n"), this->id_, id));
     }
   this->id_ = id;
 

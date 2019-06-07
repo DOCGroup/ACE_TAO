@@ -3,7 +3,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-
 bool killit = false;
 
 int

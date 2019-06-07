@@ -268,6 +268,9 @@ AST_Decl::destroy (void)
 
   delete [] this->flat_name_;
   this->flat_name_ = 0;
+
+  delete annotation_appls_;
+  annotation_appls_ = 0;
 }
 
 AST_Decl *
@@ -1570,11 +1573,12 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 IMPL_NARROW_FROM_DECL(AST_Decl)
 
 
-void AST_Decl::annotation_appls (AST_Annotation_Appls *annotations)
+void
+AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)
 {
   if (annotatable ())
     {
-      annotation_appls_ = annotations;
+      annotation_appls () = annotations;
     }
   else
     {
@@ -1585,30 +1589,34 @@ void AST_Decl::annotation_appls (AST_Annotation_Appls *annotations)
     }
 }
 
-AST_Annotation_Appls *AST_Decl::annotation_appls ()
+AST_Annotation_Appls&
+AST_Decl::annotation_appls ()
 {
-  return annotation_appls_;
+  if (!annotation_appls_)
+    {
+      annotation_appls_ = new AST_Annotation_Appls ();
+    }
+  return *annotation_appls_;
 }
 
 void
 AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 {
-  if (annotation_appls_)
+  AST_Annotation_Appls::iterator
+    i = annotation_appls_->begin (),
+    finished = annotation_appls_->end ();
+  for (; i != finished; ++i)
     {
-      for (size_t i = 0; i < annotation_appls_->size (); i++)
+      AST_Annotation_Appl* a = i->get ();
+      a->dump (o);
+      if (print_inline)
         {
-          AST_Annotation_Appl *a = (*annotation_appls_)[i];
-          a->dump (o);
-          if (print_inline)
-            {
-              dump_i (o, " ");
-            }
-          else
-            {
-              dump_i (o, "\n");
-              // We need to indent the next line (or not if we are not indented)
-              idl_global->indent ()->skip_to (o);
-            }
+          dump_i (o, " ");
+        }
+      else
+        {
+          dump_i (o, "\n");
+          idl_global->indent ()->skip_to (o);
         }
     }
 }
@@ -1665,12 +1673,7 @@ AST_Decl::should_be_dumped () const
 AST_Annotation_Appls &
 AST_Decl::annotations ()
 {
-  if (!annotation_appls_)
-    {
-      annotation_appls_ = new AST_Annotation_Appls;
-    }
-
-  return *annotation_appls_;
+  return annotation_appls ();
 }
 
 bool

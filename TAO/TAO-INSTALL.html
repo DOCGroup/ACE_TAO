@@ -31,7 +31,7 @@ to run TAO on:<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Solaris 9, Windows (Microsoft Visual C++ 7.1, 9.0, 10.0, 11.0, 12, 14.0, and 14.1),
+    <td>Windows (Microsoft Visual C++ 7.1, 9.0, 10.0, 11.0, 12, 14.0, 14.1, and 14.2),
         Linux/Intel (Redhat, Debian, and SuSe), Android
     </td>
   </tr>
@@ -42,7 +42,7 @@ to run TAO on:<P>
   </tr>
   <tr valign=top>
     <td><b>Partially supported, i.e., infrequently tested</b></td>
-    <td> FreeBSD, NetBSD, Windows CE, MacOSX, Linux/Alpha (RedHat, SuSE, and Debian), and AIX 5.x
+    <td>Solaris 9, FreeBSD, NetBSD, Windows CE, MacOSX, Linux/Alpha (RedHat, SuSE, and Debian), and AIX 5.x
     </td>
   </tr>
   <tr valign=top bgcolor="#AFAFAF">
@@ -62,12 +62,11 @@ to run TAO on:<P>
 TAO.  If you have <A
 HREF="../docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the TAO along with ACE
-wrappers on the platforms shown above please send email to either the
-<A HREF="news:comp.soft-sys.ace">Newsgroup</A> or to the <A
-HREF="mailto:tao-users@list.isis.vanderbilt.edu">TAO mailing list</A> and we'll
-try to help you fix the problems.  You can also submit bug reports and
-enhancement requests in our
-<a href="../docs/usage-bugzilla.html">bug tracking system</a>.<P>
+wrappers on the platforms shown above please send email to the <A
+HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO-mail.html">TAO mailing list</A> and we'll
+try to help you fix the problems.  You can also submit issues and
+enhancement requests through
+<a href="https://github.com/DOCGroup/ACE_TAO">github</a>.<P>
 
 TAO can be obtained <A
 HREF="http://download.dre.vanderbilt.edu">electronically</A>
@@ -394,7 +393,7 @@ you need to have <code>TAO_IDL</code> compiled.
 <H4>Visual C++ 7.1 and newer</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
-<CODE>ACE_wrappers\TAO</CODE> because the Visual C++ 7.1 Project files
+<CODE>ACE_wrappers\TAO</CODE> because the Visual Studio Project files
 are setup up to work in this configuration. If you move it, then make
 sure you regenerate the project files to look for the include and
 library files in the correct place. The default place for placing the
@@ -410,7 +409,7 @@ project </a> file.</P>
       compiler under MSVC.  If you intend to also use the release
       version of the libraries in the same workspace you have to be
       careful, since the executable name for TAO_IDL is same in debug
-      and release builds. You can use only or the oethr in the same
+      and release builds. You can use only or the other in the same
       workspace. This shouldn't be an issue since the projects for
       tests and examples are set up to transparently use one or the
       other.
@@ -425,15 +424,6 @@ project </a> file.</P>
       <CODE>tests\tests.sln</CODE>
       and build both client and server. <P>
 </OL>
-
-<H4>Visual C++ 7.0</H4>
-The DOC group doesn't support TAO on VC++ 7.0 since the libraries that
-were shipped with VC++ 7.0 did not work well. The DOC group supports
-only VC++ 7.1, which is used by their sponsors. The above mentioned
-points are also relevant to users who are trying to use TAO with VC++
-7.1. Additionally, all required options are set for the generated .sln
-files. If something is missing then it is probably a bug with
-MPC. Please report such bugs to the tao-users newsgroups.
 
 <H4>Upgrading From Older Releases</H4>
 
@@ -472,10 +462,6 @@ The correct way is:
 <P>Several of TAO's tests and examples contain perl scripts that automate the
 execution of these tests. The scripts are found as "run_test.pl" in the
 directory of the test.</p>
-
-<P> The versions of perl that we use are 5.005_02 on NT and 5.003 on Solaris.
-The scripts may work on earlier versions of perl, but we cannot say for sure
-that they do.</P>
 
 <HR>
 <P>

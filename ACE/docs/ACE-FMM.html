@@ -99,7 +99,7 @@
 	<b>solution</b>
 </td>
 <td align=left valign=top>
-	Move your Task activations and other thread-spawning activites
+	Move your Task activations and other thread-spawning activities
 	<b>out</b> of the constructor.
 </td>
 <tr><td colspan=2><hr noshade></td></tr>
@@ -150,10 +150,10 @@
 	<b>probable cause</b>
 </td>
 <td align=left valign=top>
-	On some platforms, thread ids are numeric, and on some, they aren't. On some 
+	On some platforms, thread ids are numeric, and on some, they aren't. On some
 	implementations, simple a == b comparisons
 	are legal and sane.  Some are not.
- 
+
 </td>
 </tr>
 <tr>
@@ -171,7 +171,7 @@
 	<b>symptom</b>
 </td>
 <td align=left valign=top>
-	ACE_Reactor::run_event_loop() does not seem to function correctly 
+	ACE_Reactor::run_event_loop() does not seem to function correctly
 	for a Reactor created in your application.
 </td>
 </tr>
@@ -191,7 +191,7 @@
 </td>
 <td align=left valign=top>
 	Use the <b>ACE_Reactor::instance(ACE_Reactor *,
-        int delete_reactor = 0)</b> static method to install your reactor as the global 
+        int delete_reactor = 0)</b> static method to install your reactor as the global
 	Singleton before calling run_event_loop().
 </td>
 <tr><td colspan=2><hr noshade></td></tr>

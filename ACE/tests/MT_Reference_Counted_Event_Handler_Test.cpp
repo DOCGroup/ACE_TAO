@@ -19,7 +19,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
@@ -35,8 +34,6 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_NS_unistd.h"
-
-
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
@@ -1313,8 +1310,7 @@ test<REACTOR_IMPL>::test (int ignore_nested_upcalls,
           if (!test_configs[i][1] && require_event_loop_thread)
             continue;
 
-          ACE_Reactor reactor (new REACTOR_IMPL,
-                               1);
+          ACE_Reactor reactor (new REACTOR_IMPL, true);
 
           testing (&reactor,
                    test_configs[i][0],

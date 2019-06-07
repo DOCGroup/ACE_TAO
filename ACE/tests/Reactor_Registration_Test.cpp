@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Pipe.h"
 #include "ace/Reactor.h"

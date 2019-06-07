@@ -7,10 +7,9 @@
  *    ACE_Condition<ACE_Recursive_Thread_Mutex> template
  *    specialization.
  *
- *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Stephen Howard <stephen.e.howard@lmco.com> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
-
 
 #include "test_config.h"
 #include "ace/OS_NS_unistd.h"
@@ -20,8 +19,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

@@ -96,7 +96,6 @@ namespace TAO
     virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
 
   protected:
-
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,
@@ -111,7 +110,6 @@ namespace TAO
         Collocation_Strategy strat);
 
   private:
-
     CORBA::ExceptionList *exception_list_;
 
     CORBA::Request *request_;

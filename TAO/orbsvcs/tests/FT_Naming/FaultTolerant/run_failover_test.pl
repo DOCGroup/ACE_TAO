@@ -10,7 +10,6 @@ use Cwd;
 
 #$ENV{ACE_TEST_VERBOSE} = "1";
 
-my $startdir = getcwd();
 my $debug_level = '0';
 my $redirection_enabled = 0;
 
@@ -322,7 +321,7 @@ sub failover_test()
                       "-b 4 " .
                       "-d 4 " ;
 
-    my $client_prog = "$startdir/client";
+    my $client_prog = "client";
 
     print STDERR "$tao_ft_naming $ns1_args\n";
     print STDERR "$tao_ft_naming $ns2_args\n";

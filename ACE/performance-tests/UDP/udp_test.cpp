@@ -604,7 +604,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             ACE_ERROR_RETURN ((LM_ERROR,
                                "\nBuffer size must be greater than 0!\n\n"),
                               1);
-
+          break;
         case 'n':
           nsamples = ACE_OS::atoi (getopt.opt_arg ());
           if (nsamples <= 0)

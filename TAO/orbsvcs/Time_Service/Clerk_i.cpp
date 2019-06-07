@@ -10,10 +10,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
 // Constructor.
-
 Clerk_i::Clerk_i (void)
   : ior_output_file_ (0),
     timer_value_ (3),
@@ -21,19 +18,15 @@ Clerk_i::Clerk_i (void)
     server_ (Clerk_i::DEFAULT_SERVER_COUNT),
     ior_fp_ (0)
 {
-  // no-op.
 }
 
 // Destructor.
-
 Clerk_i::~Clerk_i (void)
 {
-  // no-op.
 }
 
 // Reads the Time Service Server iors from a file instead of using a
 // naming service.
-
 int
 Clerk_i::read_ior (const ACE_TCHAR* filename)
 {

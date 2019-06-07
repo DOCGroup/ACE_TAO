@@ -75,12 +75,10 @@ namespace TAO
       virtual CORBA::Any * label (void) const;
       virtual bool marshal_label (TAO_OutputCDR & cdr) const;
       virtual bool equal_label (CORBA::ULong index,
-                                CORBA::TypeCode_ptr tc
-                                ) const;
+                                CORBA::TypeCode_ptr tc) const;
       //@}
 
     private:
-
       /// IDL @c union case/member label value.
       ::CORBA::ULong const label_;
 

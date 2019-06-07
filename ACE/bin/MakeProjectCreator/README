@@ -1,5 +1,3 @@
-
-
 This directory contains ACE- and TAO-specific extensions of MPC.  All
 the base projects in the config directory are ACE- and TAO-specific,
 along with the perl modules for the gnuace and vxtest types and the
@@ -34,6 +32,4 @@ directory based build that was used up until April of 2006.
 For more information about MPC, see the README and USAGE files in the
 MPC docs directory.
 
-You can anonymously check-out MPC using Subversion:
-
-svn co svn://svn.dre.vanderbilt.edu/DOC/MPC/trunk MPC
+MPC is available from github, see https://github.com/DOCGroup/MPC

@@ -390,7 +390,7 @@ Options::print_usage (void) const
     ACE_TEXT ("  -s              Run as a service\n")
     ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
     ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
-    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = 10ms)\n")
+    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = 1000ms)\n")
     ACE_TEXT ("  -i              Ping servers started without activators too.\n")
     ACE_TEXT ("  --lockout       Prevent excessive restart attempts until manual reset.\n")
     ACE_TEXT ("  --UnregisterIfAddressReused,\n")

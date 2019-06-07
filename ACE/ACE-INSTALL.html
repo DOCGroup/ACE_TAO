@@ -38,22 +38,22 @@ pre, code {
 The file explains how to build and install ACE, its Network Services,
 test suite and examples on the various OS platforms and compilers that
 it has been ported to.  Please consult the <a href="NEWS">NEWS</a> and
-<a href="ChangeLog">ChangeLog</a> files to see whether any recent changes
+<a href="ChangeLogs">ChangeLogs</a> files to see whether any recent changes
 to the release will affect your code.  In addition, you should check
 out our <a
 href="docs/ACE-development-process.html">development
 process</a>.  As you start working with ACE, we suggest you get copies
 of the <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book1/">C++NPv1</a>, <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE/book2/">C++NPv2</a>, and
+href="http://www.dre.vanderbilt.edu/~schmidt/ACE/book1/">C++NPv1</a>, <a
+href="http://www.dre.vanderbilt.edu/~schmidt/ACE/book1/">C++NPv2</a>, and
 <a href="http://www.riverace.com/acebooks/">APG</a> books to help
 guide you after you've built and installed ACE.  You should also
 consult the <a
 href="docs/ACE-FMM.html">ACE
 Frequently Made Mistakes page</a>.  If you encounter any problems or
-would like to request an enhancement, then use our <a
-href="docs/usage-bugzilla.html">bug
-tracking system</a> to submit a report in accordance with our <a
+would like to request an enhancement, then use <a
+href="https://github.com/DOCGroup/ACE_TAO">github
+</a> to submit an issue in accordance with our <a
 href="docs/ACE-bug-process.html">bug
 report process</a>.<p>
 
@@ -85,7 +85,7 @@ compilers over the years.
 The <a href="http://www.dre.vanderbilt.edu/">DOC group</a>,
 <a href="http://www.riverace.com/">Riverace</a>,
 <a href="http://www.theaceorb.com/">OCI</a>,
-<a href="http://www.remedy.nl/">Remedy IT</a>, and members of the ACE
+<a href="https://www.remedy.nl/">Remedy IT</a>, and members of the ACE
 user community have all contributed ports to make ACE the successful
 and far-reaching toolkit it is today.  Any UNIX/POSIX/Windows
 variation is probably an easy target platform for ACE.  If you have
@@ -93,9 +93,8 @@ variation is probably an easy target platform for ACE.  If you have
 compiling the ACE source distribution, please contact one of the
 commercial support companies, or send a copy of the
 <a href="PROBLEM-REPORT-FORM">PROBLEM-REPORT-FORM</a>, located in the
-ACE_wrappers directory, to either the <a href="news:comp.soft-sys.ace">ACE
-Newsgroup</a> or the <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users
-mailing list</a>.
+ACE_wrappers directory to <a href="mailto:ace-users@list.isis.vanderbilt.edu">ace-users
+mailing list</a> or create a <a href="https://github.com/DOCGroup/ACE_TAO/issues">github issue</a>.
 The DOC groups at Washington University, UC Irvine, and Vanderbilt
 University provide only "best effort" support for non-sponsors for the
 latest release, as described in <a href="docs/ACE-bug-process.html">
@@ -147,12 +146,11 @@ document</a>.</p><p>
 </thead><tbody>
   <tr>
     <th>DOC Group</th>
-    <td>Windows 2000, XP (MSVC++ 7.1, 8, 9, and 10);
-        many versions of Linux/Intel (many compilers).
+    <td>
     </td>
     <td>DOC sites at <a href="http://www.dre.vanderbilt.edu/">ISIS</a>,
-        <a href="http://doc.ece.uci.edu/">UCI</a> and
-        <a href="http://tao.doc.wustl.edu/">Washington University</a>
+        <a href="http://www.uci.edu/">UCI</a> and
+        <a href="https://wustl.edu//">Washington University</a>
     </td>
   </tr>
   <tr>
@@ -189,7 +187,7 @@ document</a>.</p><p>
         The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
     </td>
-    <td>Remedy IT <a href="http://www.remedy.nl/">web site</a> and
+    <td>Remedy IT <a href="https://www.remedy.nl/">web site</a> and
         the TAO <a href="TAO/TAO-INSTALL.html">install document</a>
     </td>
   </tr>
@@ -232,19 +230,19 @@ over the years, ACE's success has greatly increased the amount of
 effort required to keep up with its maintenance, answer users'
 questions, and give design guidance. Riverace offers world-class
 commercial services to support ACE users.  OCI, PrismTech, and Remedy
-offer similar services for TAO, allowing the DOC group's primary focus
+offer similar services for ACE and TAO, allowing the DOC group's primary focus
 to shift back to their main goal: <em>research</em>. The DOC group is
 fundamentally focused on (and <a
-href="http://www.cs.wustl.edu/%7Eschmidt/resume-grants.html">funded
+href="http://www.dre.vanderbilt.edu/~schmidt/resume-grants.html">funded
 by</a>) advanced R&amp;D projects. The group continues to be
 intimately involved in ACE+TAO development and maintenance, but with
 revised priorities for maintenance. The <a
 href="docs/ACE-bug-process.html">bug
 fixing policies</a> followed by the DOC group are designed to strike a
 balance between their many <a
-href="http://www.cs.wustl.edu/%7Eschmidt/research.html">research
+href="http://www.dre.vanderbilt.edu/~schmidt/research.html">research
 projects</a> and their commitment to the ACE+TAO <a
-href="http://www.cs.wustl.edu/%7Eschmidt/ACE-users.html">user
+href="http://www.dre.vanderbilt.edu/~schmidt/ACE-users.html">user
 community</a>.  Naturally, we will be happy to accept well-tested
 patches from the ACE+TAO user community for any platforms that aren't
 supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
@@ -253,10 +251,10 @@ supported by the DOC group, Riverace, OCI or Remedy IT. </p><p>
 </p><h2><a name="installpre">Installation prerequisites</a></h2>
 
 <p> ACE (as well as TAO and CIAO) use <A
-HREF="http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html">MPC</A>
+HREF="http://htmlpreview.github.io/?https://github.com/DOCGroup/MPC/blob/master/docs/html/MakeProjectCreator.html">MPC</A>
 (MakeProjectCreator) to generate files used by all supported build
 tools (such as GNUmakefiles for UNIX based platforms, sln and vcproj
-files for VC71/VC8 and Embarcadero makefiles) on various platforms. To
+files for Visual Studio and Embarcadero makefiles) on various platforms. To
 help new users to bootstrap quickly the release bundles of ACE (as
 well as TAO) include all needed files to use the build
 instructions in this document.
@@ -422,8 +420,8 @@ INSTALL_PREFIX = /usr/local
       As a sanity check, you might also want to build and run the
       automated <a href="tests/README">"one-button" tests</a> in
       <code>$ACE_ROOT/tests</code>. Finally, if you're also
-      planning on building <a href="http://www.cs.wustl.edu/%7Eschmidt/TAO.html">TAO</a>, you
-      should build the <a href="http://www.cs.wustl.edu/%7Eschmidt/PDF/gperf.pdf">gperf</a>
+      planning on building <a href="https://www.dre.vanderbilt.edu/~schmidt/TAO.html">TAO</a>, you
+      should build the <a href="http://www.dre.vanderbilt.edu/~schmidt/PDF/gperf.pdf">gperf</a>
       perfect hash function generator application in
       <code>$ACE_ROOT/apps/gperf</code>.
   </li>
@@ -465,24 +463,13 @@ State Perl.</a></p>
 Microsoft Visual Studio</a></h3>
 
 <p>ACE contains project files for
-Visual Studio 2009 (VC9), and Visual Studio 2010 (VC10).
-Visual Studio 2005 supports building for
-desktop/server Windows as well as for Windows CE and Windows Mobile. Since
-not all users will be interested in the CE/Mobile capability, these platforms
-have separate solution and project files from the desktop/server Windows.
-Furthermore, VC7.1, VC8, VC9, and 10 use different file formats but the same file
+Visual Studio 2015 (vc14), Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
+Visual Studio 2015/2017/2019 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
 development and target platforms. The platform/name mapping is shown below.
 All solution files have a <code>.sln</code> suffix and all project files have
 a <code>.vcproj</code> suffix.</p>
-
-<p>
-The free Visual C++ 2008 Express Edition will work in place of the traditional
-Visual Studio editions.  All the other notes in this document
-that are for VC8 / VC9 also apply to the express edition.  MFC, 64-bit, and
-CE/mobile options are not available with the express edition.  64-bit binaries
-can be built with the compiler and linker included in the <a href="http://www.microsoft.com/downloads/details.aspx?FamilyID=E6E1C3DF-A74F-4207-8586-711EBE331CDC&displaylang=en">Windows SDK</a>, using nmake as the build system (generate nmake makefiles with mwc.pl -type nmake).</p>
 
 <table width="400">
 <caption><b>Mapping of Platform to Solution/Project File Name</b></caption>
@@ -493,28 +480,18 @@ can be built with the compiler and linker included in the <a href="http://www.mi
   </tr>
 </thead><tbody>
   <tr>
-    <th>VC7.1</th>
-    <td><i>name</i><code>_vc71</code>
+    <th>Visual Studio 2015</th>
+    <td><i>name</i><code>_vc14</code>
     </td>
   </tr>
   <tr>
-    <th>VC8 for desktop/server</th>
-    <td><i>name</i><code>_vc8</code>
+    <th>Visual Studio 2017</th>
+    <td><i>name</i><code>_vs2017</code>
     </td>
   </tr>
   <tr>
-    <th>VC8 for Windows CE/Mobile</th>
-    <td><i>name</i><code>_WinCE</code>
-    </td>
-  </tr>
-  <tr>
-    <th>VC9 for desktop/server</th>
-    <td><i>name</i><code>_vc9</code>
-    </td>
-  </tr>
-  <tr>
-    <th>VC10 for desktop/server</th>
-    <td><i>name</i><code>_vc10</code>
+    <th>Visual Studio 2019</th>
+    <td><i>name</i><code>_vs2019</code>
     </td>
   </tr>
 </tbody></table>
@@ -526,15 +503,8 @@ comments of
 <a href="include/makeinclude/platform_win32_msvc.GNU">platform_win32_msvc.GNU</a>.
 </p>
 
-<p>If you happen to open a VC7.1 file from within VC8, it will offer to convert
-the file to the newer format for you. With the stock VC8, do not do this;
-Visual Studio will crash while attempting to convert the large
-solution and project files to build ACE. Simply refuse the conversion and
-open the file with the correct format. Note that Microsoft has fixed this
-problem. See
-<a href="https://msdn.microsoft.com/visualc/downloads/default.aspx">
-https://msdn.microsoft.com/visualc/downloads/default.aspx</a> for information.
-</p>
+<p>If you happen to open an older file Visual Studio solution from a newer one, it will offer to convert
+the file to the newer format for you
 
 <ol>
   <li>Uncompress the ACE distribution into a directory, where it will
@@ -1103,7 +1073,7 @@ applications that use it.  Please see below for more information on
 
 A few notes on VxWorks builds (thanks to
 <a href="mailto:Paul_von_Behren@stortek.com">Paul von Behren</a> and
-<a href="http://www.remedy.nl">Remedy IT</a> for these notes):</p>
+<a href="https://www.remedy.nl">Remedy IT</a> for these notes):</p>
 <p>
 </p><ul>
   <li>VxWorks builds are done with a cross compiler, i.e., the compiles
@@ -1539,29 +1509,32 @@ Tornado II make (version 3.74)</p>
 Control Panel-&gt; System -&gt; Environment)</p>
 <p>I added following Environment variable entries to PATH </p>
 
-<p>C:\Perl\bin\;</p>
-<p>C:\tornado\host\x86-win32\bin;</p>
-<p>C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;</p>
-<p>C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;</p>
-<p>C:\Corba\Ace_wrappers\bin;</p>
-<p>C:\Cygwin\bin;</p>
-<p>C:\Cygwin\usr\bin;</p>
-<p>C:\bin</p>
+<pre>
+C:\Perl\bin\;
+C:\tornado\host\x86-win32\bin;
+C:\tornado\host\x86-win32\powerpc-wrs-vxworks\bin;
+C:\tornado\host\x86-win32\lib\gcc-lib\powerpc-wrs-vxworks\cygnus-2.7.2-960126;
+C:\Corba\Ace_wrappers\bin;
+C:\Cygwin\bin;
+C:\Cygwin\usr\bin;
+C:\bin
+</pre>
 
 <p>Additional Environmental variables and the values,</p>
-<p>CPU=PPC860</p>
-<p>LD_LIBRARY_PATH=</p>
-<p>SHELL=/bin/sh.exe</p>
-
-<p>ACE_ROOT=/Corba/ACE_wrappers</p>
-<p>WIND_BASE=/tornado</p>
-<p>SHELL=/bin/sh.exe</p>
-<p>TERM=pcbios</p>
-<p>TAO_ROOT=/Corba/ACE_wrapper/Tao</p>
-<p>CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe</p>
-<p>GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/</p>
-<p>WIND_HOST_TYPE=x86-win32</p>
-<p>PERL_PATH=/perl/bin/perl.exe</p>
+<pre>
+CPU=PPC860
+LD_LIBRARY_PATH=
+SHELL=/bin/sh.exe
+ACE_ROOT=/Corba/ACE_wrappers
+WIND_BASE=/tornado
+SHELL=/bin/sh.exe
+TERM=pcbios
+TAO_ROOT=/Corba/ACE_wrapper/Tao
+CPP_LOCATION=/Program Files/Microsoft Visual Studio/VC98/Bin/CL.exe
+GCC_EXEC_PREFIX=/tornado/host/x86-win32/lib/gcc-lib/
+WIND_HOST_TYPE=x86-win32
+PERL_PATH=/perl/bin/perl.exe
+</pre>
 
 <b><p>Directories of importance</p>
 </b><p>C:\Corba         &lt;-- Ace_wrappers (uzipped)</p>
@@ -1579,20 +1552,22 @@ Control Panel-&gt; System -&gt; Environment)</p>
 <b><p>Create Files</p>
 </b><p>1) C:\Corba\ACE_Wrappers\ace\config.h</p>
 <p>with entry</p>
-<p>#if defined (_MSC_VER) || (__BORLANDC__)</p>
-<p>     #include "ace/config-win32.h"</p>
-<p>#else</p>
-<p>     #define ACE_HAS_IP_MULTICAST </p>
-<p>     #include "ace/config-vxworks5.x.h"</p>
-<p>#endif</p>
+<pre>
+#if defined (_MSC_VER) || (__BORLANDC__)
+  #include "ace/config-win32.h"
+#else
+  #define ACE_HAS_IP_MULTICAST
+  #include "ace/config-vxworks5.x.h"
+#endif
+</pre>
 
 <p>2) C:\Corba\ACE_wrappers\include\makeinclude\platform_macros.GNU</p>
-<p>WIND_BASE = /tornado</p>
-<p>WIND_HOST_TYPE = x86-win32</p>
-<p>include
-$(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU</p>
-<p>ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE
-library that supports TAO)</p>
+<pre>
+WIND_BASE = /tornado
+WIND_HOST_TYPE = x86-win32
+include $(ACE_ROOT)/include/makeinclude/platform_vxworks5.5.x.GNU
+ACE_COMPONENTS=FOR_TAO (you may choose this option to build ACE library that supports TAO)
+</pre>
 
 <p></p>
 <b><p>Steps to Build</p>
@@ -1698,7 +1673,7 @@ defined by two things:</p>
     <p><b>
       It should be noted that starting in August 2019, the Google Play
       Store will require new apps to have 64-bit libraries if they have native
-      libraries. 32-bit native libraries will still supported but they must also
+      libraries. 32-bit native libraries will still be supported but they must also
       have 64-bit libraries. Look up any restrictions that may affect
       apps you want to publish on the Play Store, including minimum API
       level.
@@ -1840,10 +1815,48 @@ Development Kit's ADB tool.  This method requires uploading the native
 application to a directory that allows execution and having any output
 directed to a writable directory.</p>
 
+<h3>Logging</h3>
+<p>
+On Android, <code>ACE_Log_Msg</code> (and therefore <code>ACE_DEBUG</code> and
+<code>ACE_ERROR</code>) uses Android's logging system (aka Logcat) by default
+in addition to <code>stderr</code> because <code>stdout</code> and
+<code>stderr</code> are discarded under normal circumstances. To disable this
+at runtime, run:
+</p>
+
+<p class="indent">
+<code>ACE_LOG_MSG-&gt;clr_flags (ACE_Log_Msg::SYSLOG);</code>
+</p>
+
+<p>To disable this at compile time include these lines in <code>config.h</code>:</p>
+
+<code class="indent">
+#define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR<br>
+</code>
+<code class="indent">
+#define ACE_DEFAULT_LOG_BACKEND_FLAGS 0
+</code>
+
+<h3>OpenSSL</h3>
+<p>
+  Depending on the features of ACE, TAO, or other software desired, you might need
+  OpenSSL. On Android, OpenSSL isn't part of the NDK Library and Android
+  preloads the system SSL library (either OpenSSL or BoringSSL) for the Java
+  Android API. This means OpenSSL <b>MUST</b> be statically linked to avoid
+  conflicts with the almost certianly incompatible system SSL library.
+
+  To build OpenSSL for Android, please read <code>NOTES.ANDROID</code> that comes
+  with OpenSSL's source code. The static libraries will used if the shared
+  libraries are not found. This can be accomplished by either disabling the
+  generation of the shared libraries by passing <code>no-shared</code> to
+  OpenSSL's <code>Configure</code> script or just deleting the so files after
+  building OpenSSL.
+</p>
+
 <hr>
 <h1><a name="svcsinstall">Building and Installing ACE Network Services</a></h1>
 
-The following explains how to build the ACE <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">network services</a> on <a href="#unixsvcs">UNIX</a> and <a href="#win32svcs">Win32</a>.
+The following explains how to build the ACE <a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-netsvcs.html">network services</a> on <a href="#unixsvcs">UNIX</a> and <a href="#win32svcs">Win32</a>.
 
 <p></p><hr align="left" width="50%"><p>
 </p><h2><a name="unixsvcs">Building and Installing ACE Network Services on UNIX</a></h2>
@@ -1876,10 +1889,10 @@ Here's what you need to do:<p>
       file.  During your editing, you should update information (such as the
       default service port numbers) that affects the initialization of
       services in this file.  Refer to the
-      <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/ACE-papers.html#config">Service Configurator</a>
+      <a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#config">Service Configurator</a>
       documentation to learn how the configuration file is parsed and
       how the services are dynamically linked and executed.  In
-      addition, refer to the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE-netsvcs.html">Network
+      addition, refer to the <a href="http://www.dre.vanderbilt.edu/~schmidt/ACE-netsvcs.html">Network
       Services</a> documentation to learn more about how to configure
       each network service.<p>
 
@@ -2306,7 +2319,7 @@ libraries.
       &lt;<a href="mailto:michael.meissnitzer@siemens.at">
       michael.meissnitzer@siemens.at</a>&gt;, Christian Klepp &lt;
       <a href="mailto:christian.klepp@siemens.at">christian.klepp@siemens.at
-      </a>&gt; and Engelbert Staller &lt;<a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/engelbert.staller@siemens.at">
+      </a>&gt; and Engelbert Staller &lt;<a href="mailto:engelbert.staller@siemens.at">
       engelbert.staller@siemens.at</a>&gt;
       Building ACE (and TAO) on Unixware 7.1.0 requires a very specific
       g++ build environment.  In particular, you must build and install
@@ -2370,15 +2383,14 @@ libraries.
 
   </li><li><strong>VxWorks</strong><p>
 
-      <a href="http://www.cs.wustl.edu/%7Elevine/">David Levine</a>
-      &lt;<a href="mailto:levine@cs.wustl.edu">levine@cs.wustl.edu</a>&gt; has
+      David Levine has
       ported ACE to VxWorks 5.2/5.3/5.3.1/5.4 with the GreenHills
       1.8.8/1.8.9, g++ and diab compilers that are distributed with
       VxWorks/Tornado. It is not possible to use VxWorks 5.4
       and earlier with ACE anymore because the compilers delivered with
       5.4 and earlier don't support the C++ features ACE needs.</p><p>
 
-      At this moment <a href="http://www.remedy.nl">Remedy IT</a> is upgrading
+      At this moment <a href="https://www.remedy.nl">Remedy IT</a> is upgrading
       and stabilizing ACE/TAO support for Tornado 2.2/VxWorks 5.5.1.
       Since the existing support for previous VxWorks version has been unsupported
       and broken for some time and most (potential) users seem to have upgraded to
@@ -2481,7 +2493,7 @@ libraries.
 
   </p></li><li><strong><a name="rtems">RTEMS</a></strong><p>
 
-      The support for RTEMS has been reviVed from version x.5.4. This version
+      The support for RTEMS has been revived from version x.5.4. This version
       was the first version that build again out of the box on RTEMS. Compilation
       and testing was done for RTEMS with and without networking support. The
       ACE GNU makefiles do automatically detect whether networking support
@@ -2733,7 +2745,7 @@ well, try 'make realclean'.</p><p>
 
 <p>
 The <A HREF="
-http://downloads.ociweb.com/MPC/docs/html/MakeProjectCreator.html">
+http://htmlpreview.github.io/?https://github.com/DOCGroup/MPC/blob/master/docs/html/MakeProjectCreator.html">
 Makefile Project Creator (MPC)</A> is a tool that takes platform and
 building tool generic files (mpc files) as input, which describe basic
 information needed to generate a "project" file for various build
@@ -2864,7 +2876,6 @@ The Eclipse CDT C++ development environment can be used to develop ACE applicati
   </li><li><a href="#cloning">Cloning the Source Tree</a>
   </li><li><a href="#mvs">Additional Build Tips for MVS</a>
   </li><li><a href="#flags">Makefile Flags</a>
-  </li><li><a href="http://www.cs.wustl.edu/%7Elevine/CVS.html">Version Control</a>
   </li><li><a href="docs/ACE-SSL.html">ACE SSL effort</a>
 </li></ul>
 
@@ -3118,24 +3129,22 @@ quickly.
   and associated utility libraries with GNUmakefiles, you must
   generate GNUmakefiles with MPC:<p>
   <code> $ACE_ROOT/bin/mwc.pl -type gnuace ACE.mwc</code> </p>
-  <p>On Windows, with Visual C++ 8, you must generate solution and project files with MPC:<p>
+  <p>On Windows, with Visual Studio 2015, you must generate solution and project files with MPC:<p>
 
-  <code> $ACE_ROOT/bin/mwc.pl -type vc8 ACE.mwc </code> </p><p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vc14 ACE.mwc </code> </p><p>
 
-  On Windows, with Visual C++ 7, you must generate solution and project files with MPC:<p>
-  <code> $ACE_ROOT/bin/mwc.pl -type vc71 ACE.mwc </code> </p>
+  On Windows, with Visual Studio 2017, you must generate solution and project files with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vs2017 ACE.mwc </code> </p>
+
+  On Windows, with Visual Studio 2019, you must generate solution and project files with MPC:<p>
+  <code> $ACE_ROOT/bin/mwc.pl -type vs2019 ACE.mwc </code> </p>
   </li><li>If you want to build TAO and its associated libraries
   please see <a href="TAO/TAO-INSTALL.html">TAO-INSTALL</a> for details.
 </li></ul>
 
 <hr><p>
-
-Back to the <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE.html">ACE</a>
+Back to the <a href="https://www.dre.vanderbilt.edu/~schmidt/ACE.html">ACE</a>
 home page.
-
-
-
-
 </p><p>
 <!--<EM>
 Visitor #

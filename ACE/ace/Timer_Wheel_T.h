@@ -169,7 +169,6 @@ public:
   virtual ACE_Timer_Node_T<TYPE>* get_first (void);
 
 protected:
-
   /// Schedules a timer.
   virtual long schedule_i (const TYPE& type,
                            const void* act,

@@ -4,7 +4,7 @@
 /**
  *  @file    Log_Msg.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -84,7 +84,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_ERROR_RETURN(X, Y) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, Y, __ace_error); \
     ace___->log X;                                              \
@@ -104,7 +104,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_ERROR(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, -1, __ace_error); \
     ace___->log X; \
@@ -123,7 +123,7 @@
 # else /* ACE_LACKS_VA_FUNCTIONS */
 #  define ACE_DEBUG(X) \
   do { \
-    int __ace_error = ACE_Log_Msg::last_error_adapter (); \
+    int const __ace_error = ACE_Log_Msg::last_error_adapter (); \
     ACE_Log_Msg *ace___ = ACE_Log_Msg::instance (); \
     ace___->conditional_set (__FILE__, __LINE__, 0, __ace_error); \
     ace___->log X; \
@@ -160,6 +160,14 @@
 #if defined (THREAD)
 # undef THREAD
 #endif /* THREAD */
+
+#ifndef ACE_DEFAULT_LOG_FLAGS
+#  ifdef ACE_ANDROID
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR | ACE_Log_Msg::SYSLOG
+#  else
+#    define ACE_DEFAULT_LOG_FLAGS ACE_Log_Msg::STDERR
+#  endif
+#endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -234,7 +242,7 @@ public:
     SYSLOG = 128,
     /// Write messages to the user provided backend
     CUSTOM = 256
- };
+  };
 
   // = Initialization and termination routines.
 
@@ -284,7 +292,7 @@ public:
    *                       @a logger_key is 0, @a prog_name is used.
    */
   int open (const ACE_TCHAR *prog_name,
-            u_long options_flags = ACE_Log_Msg::STDERR,
+            u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
             const ACE_TCHAR *logger_key = 0);
 
   // = Set/get the options flags.
@@ -403,7 +411,6 @@ public:
    * @note Be aware that because of the current architecture there is
    * no guarantee that open (), reset () and close () will be called
    * on a backend object.
-   *
    */
   static ACE_Log_Msg_Backend *msg_backend (ACE_Log_Msg_Backend *b);
   static ACE_Log_Msg_Backend *msg_backend (void);
@@ -758,7 +765,6 @@ private:
   ACE_Log_Msg &operator= (const ACE_Log_Msg &);
   ACE_Log_Msg (const ACE_Log_Msg &);
 };
-
 
 #ifdef ACE_LACKS_VA_FUNCTIONS
 class ACE_Time_Value;

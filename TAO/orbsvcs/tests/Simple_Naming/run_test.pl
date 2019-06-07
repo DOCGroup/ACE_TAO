@@ -75,7 +75,7 @@ $test->DeleteFile($persistent_log_file);
 sub name_server
 {
     my $args = "-ORBMulticastDiscoveryEndpoint $multicast:$ns_multicast_port -o $test_iorfile -m 1 @_";
-    my $prog = "$startdir/../../Naming_Service/tao_cosnaming";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
     $SV = $test->CreateProcess ("$prog", "$args");
 
@@ -96,7 +96,7 @@ sub name_server
 sub client
 {
     my $args = "@_"." ";
-    my $prog = "$startdir/client";
+    my $prog = "$ENV{TAO_ROOT}/orbsvcs/tests/Simple_Naming/client";
 
     $CL = $test->CreateProcess ("$prog", "$args");
 

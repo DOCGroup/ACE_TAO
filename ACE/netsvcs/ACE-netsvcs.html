@@ -29,7 +29,7 @@ standard library</A> of network services:<P>
 <LI><A HREF="#server-logging-overview">Server Logging Service</A>
 <LI><A HREF="#client-logging-overview">Client Logging Service</A>
 <LI><A HREF="#logging-strategy-overview">Logging Strategy Service</A>
-</UL> 
+</UL>
 </TD>
 </TABLE>
 
@@ -39,16 +39,16 @@ These services play two roles in ACE:<P>
 <LI> They provide reusable components for common distributed system
      tasks such as logging, naming, locking, and time synchronization.<P>
 <LI> They illustrate how to utilize ACE features such as the <A
-     HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#ipc">IPC
-wrappers</A>, <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#reactor">Reactor</A>,
-     <A HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#config">Service Configurator</A>, <A
-     HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#initialize">Service
+     HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#ipc">IPC
+wrappers</A>, <A HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#reactor">Reactor</A>,
+     <A HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#config">Service Configurator</A>, <A
+     HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#initialize">Service
 Initialization</A>, and <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#concurrency">Concurrency</A>
+HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#concurrency">Concurrency</A>
 components. <P> </UL>
 
 The heart of the ACE network services is the <A
-HREF="http://www.cs.wustl.edu/~schmidt/ACE-papers.html#config">Service
+HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE-papers.html#config">Service
 Configurator</A>, which is an object-oriented framework that automates
 the configuration and reconfiguration of multi-service daemons.  All
 the ACE network services are configured using the Service
@@ -243,8 +243,8 @@ server at port 20222 using NET_LOCAL naming context with database
 called MYDATABSE located in directory /tmp:
 
 <PRE> <CODE>
-dynamic Naming_Service Service_Object * 
-  ../lib/netsvcs:_make_ACE_Name_Acceptor() 
+dynamic Naming_Service Service_Object *
+  ../lib/netsvcs:_make_ACE_Name_Acceptor()
   "-p 20222 -c NET_LOCAL -l /tmp -s MYDATABASE"
 </PRE> </CODE>
 
@@ -253,8 +253,8 @@ client that connects to a Name Server running on host
 tango.cs.wustl.edu at port 20222:
 
 <PRE> <CODE>
-dynamic Naming_Service_Client Service_Object * 
-  ../lib/netsvcs:_make_Client_Test() 
+dynamic Naming_Service_Client Service_Object *
+  ../lib/netsvcs:_make_Client_Test()
   "-h tango.cs.wustl.edu -p 20222"
 </PRE> </CODE>
 </OL>
@@ -288,14 +288,14 @@ Time Service provides accurate, fault-tolerant clock synchronization
 for computers collaborating in local area networks and wide area
 networks.  Synchronized time services are important in distributed
 systems that require multiple hosts to maintain accurate global
-time. The architecture of the distributed time service contains the 
+time. The architecture of the distributed time service contains the
 following Time Server, Clerk, and Client components: <P>
 
 <UL>
 <LI> <I> Time Server </I> answers queries about the time made by
 Clerks. <P>
 
-<LI> <I> Clerk </I> queries one or more Time Servers to determine 
+<LI> <I> Clerk </I> queries one or more Time Servers to determine
 the correct time, calculates the approximate correct time using one of
 several distributed time algorithms and updates its own local system
 time. <P>
@@ -392,18 +392,18 @@ using the -b flag.
 server at port 20202:
 
 <PRE> <CODE>
-dynamic Time_Service Service_Object * 
-  ../lib/netsvcs:_make_ACE_TS_Server_Acceptor() 
+dynamic Time_Service Service_Object *
+  ../lib/netsvcs:_make_ACE_TS_Server_Acceptor()
   "-p 20202"
 </PRE> </CODE>
 
 <LI> Here is what a config file would look like for starting up a
 clerk that needs to connect to two servers, one at tango and one at
-lambada: 
+lambada:
 
 <PRE> <CODE>
 dynamic Time_Server_test Service_Object *
-  ../lib/netsvcs:_make_ACE_TS_Clerk_Connector () 
+  ../lib/netsvcs:_make_ACE_TS_Clerk_Connector ()
   "-h tango:20202 -h lambada:20202 -t 4"
 </PRE> </CODE>
 </OL>
@@ -461,7 +461,7 @@ synchronization primitives are listed below:<P>
        acquisition, FIFO waiter ordering, and deadlock detection.  It
        depends on the Token Server for its distributed synchronization
        semantics.<p>
-       
+
   <LI> <B><TT>ACE_Local_RLock</TT></B><P>
 
        This class implements the reader interface to canonical
@@ -500,7 +500,7 @@ synchronization primitives are listed below:<P>
        other participants (readers or writers) may hold the lock.
        ACE_Remote_RLock depends on the ACE Token Server for its
        distributed synchronization semantics.<P>
-       
+
   <LI> <B><TT>ACE_Remote_RLock</TT></B><P>
 
        This is the remote equivalent to ACE_Local_WLock.<P>
@@ -543,11 +543,11 @@ The following describes how to configure the Token Server:<P>
 
       Here is an example svc.conf entry that dynamically loads the
       Token Server specifying port number to listen on for client
-      connections:<P> 
+      connections:<P>
 
        <code><pre>
-        dynamic Token_Service Service_Object * 
-          ../lib/netsvcs:_make_ACE_Token_Acceptor() 
+        dynamic Token_Service Service_Object *
+          ../lib/netsvcs:_make_ACE_Token_Acceptor()
           "-p 10202"
        </code></pre>
        <P>
@@ -613,11 +613,11 @@ The following describes how to configure the Logging Server:<P>
 
       Here is an example svc.conf entry that dynamically loads the
       Logging Server specifying port number to listen on for client
-      connections:<P> 
+      connections:<P>
 
       <PRE> <CODE>
-      dynamic Server_Logging_Service Service_Object * 
-        ../lib/netsvcs:_make_ACE_Server_Logging_Acceptor() 
+      dynamic Server_Logging_Service Service_Object *
+        ../lib/netsvcs:_make_ACE_Server_Logging_Acceptor()
         "-p 10202"
       </PRE></CODE>
       <P>
@@ -672,7 +672,7 @@ The following describes how to configure the Logging Client:<P>
 
 Configuring a Logging Client requires specifying all or some of the
 following parameters. These parameters can be passed in to main
-through command line as follows:<P> 
+through command line as follows:<P>
 
 <TABLE cellpadding = 10 cellspacing = 0 border = 5>
 <TD VALIGN = TOP ALIGN = LEFT>
@@ -724,8 +724,8 @@ ACE_DEFAULT_RENDEZVOUS
       Logging Server: <P>
 
       <PRE> <CODE>
-      dynamic Client_Logging_Service Service_Object * 
-        ../lib/netsvcs:_make_ACE_Client_Logging_Connector() 
+      dynamic Client_Logging_Service Service_Object *
+        ../lib/netsvcs:_make_ACE_Client_Logging_Connector()
         "-h tango.cs.wustl.edu -p 10202"
       </PRE></CODE>
       <P>
@@ -761,7 +761,7 @@ default behavior is required, the Logging Strategy Service need not be
 invoked or it can be invoked with no parameters. <P>
 
 The following describes how to configure the Logging Strategy
-Service:<p> 
+Service:<p>
 
 <UL>
 <LI> <b>Startup configuration</B><P>
@@ -800,7 +800,7 @@ Strategy Service: <P>
 </TD>
 <TD VALIGN = TOP ALIGN = LEFT>
     Write messages to the ostream that gets created by specifying a
-    filename (see below) <BR> 
+    filename (see below) <BR>
 </TD>
 <TR>
 <TD VALIGN = TOP ALIGN = LEFT>
@@ -834,12 +834,12 @@ write the output to. <P>
 
 <LI> <B> Examples: </B> <P>
       Here is an example svc.conf entry that dynamically loads the
-      Logging Strategy Service specifying that the output be sent 
+      Logging Strategy Service specifying that the output be sent
       to STDERR: <P>
 
       <PRE> <CODE>
-      dynamic Logging_Strategy_Service Service_Object * 
-        ../lib/netsvcs:_make_ACE_Logging_Strategy() 
+      dynamic Logging_Strategy_Service Service_Object *
+        ../lib/netsvcs:_make_ACE_Logging_Strategy()
         "-f STDERR"
       </PRE></CODE>
       <P>
@@ -875,5 +875,5 @@ to look for the shared object files or dlls.
 Back to the <A HREF="http://www.dre.vanderbilt.edu/~schmidt/ACE.html">
 ACE</A> home page.
 <!--#include virtual="/~schmidt/cgi-sig.html" -->
-</BODY> 
+</BODY>
 </HTML>

@@ -53,7 +53,6 @@ TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (void)
   :transport_ (0),
    callback_ (0)
 {
-  // no-op.
 }
 
 TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
@@ -61,7 +60,6 @@ TAO_AV_Protocol_Object::TAO_AV_Protocol_Object (TAO_AV_Callback *callback,
   :transport_ (transport),
    callback_ (callback)
 {
-  // no-op.
 }
 
 int

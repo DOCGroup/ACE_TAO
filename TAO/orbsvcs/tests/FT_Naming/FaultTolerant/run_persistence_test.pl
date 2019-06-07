@@ -23,14 +23,11 @@ foreach $i (@ARGV) {
     if ($i eq '-verbose') {
         $redirection_enabled = 0;
     }
-
 }
 
 my $server  = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 my $client  = PerlACE::TestTarget::create_target (2) || die "Create target 2 failed\n";
 my $server2 = PerlACE::TestTarget::create_target (3) || die "Create target 3 failed\n";
-
-
 
 # Variables for command-line arguments to client and server
 # executables.
@@ -95,12 +92,12 @@ sub compare_file_with_backup($)
     my $file = shift;
     my $backup = $file . ".bak";
     unless (-e $backup) {
-	print STDERR "ERROR: Backup file $backup does not exist\n";
-	return 1;
+      print STDERR "ERROR: Backup file $backup does not exist\n";
+      return 1;
     }
     my $result = compare ($file, $backup);
     if ($result != 0) {
-	print STDERR "ERROR: Backup file $backup does not agree with $file\n";
+      print STDERR "ERROR: Backup file $backup does not agree with $file\n";
     }
     return $result;
 }
@@ -537,25 +534,25 @@ sub backup_restore_test ()
     print_msg("Verifying naming context backup files");
     $file = $name_dir . "/NameService";
     if (compare_file_with_backup ($file) != 0) {
-	$status = 1;
+      $status = 1;
     }
     for ($i = 0; $i < $num_child_contexts; $i++) {
-	$file = $name_dir . "/NameService_$i";
-	if (compare_file_with_backup ($file) != 0) {
-	    $status = 1;
-	}
+      $file = $name_dir . "/NameService_$i";
+      if (compare_file_with_backup ($file) != 0) {
+          $status = 1;
+      }
     }
 
     print_msg("Verifying object group backup files");
     $file = $group_dir . "/ObjectGroup_global";
     if (compare_file_with_backup ($file) != 0) {
-	$status = 1;
+      $status = 1;
     }
     for ($i = 0; $i < $num_object_groups; $i++) {
-	$file = $group_dir . "/ObjectGroup_$i";
-	if (compare_file_with_backup ($file) != 0) {
-	    $status = 1;
-	}
+      $file = $group_dir . "/ObjectGroup_$i";
+      if (compare_file_with_backup ($file) != 0) {
+        $status = 1;
+      }
     }
 
     ##6. Replace some of the data files with corrupt files
@@ -567,7 +564,7 @@ sub backup_restore_test ()
     @allfiles = grep(/^NameService/, readdir(NAMEDIR));
     closedir(NAMEDIR);
     foreach $file (@allfiles) {
-	copy ($corrupt_name_dir . $file, $name_dir . "/" . $file) or die "Copy failed: $!\n";
+      copy ($corrupt_name_dir . $file, $name_dir . "/" . $file) or die "Copy failed: $!\n";
     }
 
     my $corrupt_group_dir = $corrupt_data_dir . $group_dir . "/";
@@ -575,7 +572,7 @@ sub backup_restore_test ()
     @allfiles = grep(/^ObjectGroup/, readdir(GROUPDIR));
     closedir(GROUPDIR);
     foreach $file (@allfiles) {
-	copy ($corrupt_group_dir . $file, $group_dir . "/" . $file) or die "Copy failed: $!\n";
+      copy ($corrupt_group_dir . $file, $group_dir . "/" . $file) or die "Copy failed: $!\n";
     }
 
     ##7. Start a new instance of the tao_ft_naming server
@@ -606,8 +603,8 @@ sub backup_restore_test ()
     }
 
     if ($restore_status == 1) {
-	cat_file($client_stderr_file);
-	cat_file($client_stdout_file);
+      cat_file($client_stderr_file);
+      cat_file($client_stdout_file);
     }
 
     print_msg("INFO: terminating test server");

@@ -788,7 +788,6 @@ TAO_IIOP_Connector::cancel_svc_handler (
   return -1;
 }
 
-
 //@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
 
 TAO_END_VERSIONED_NAMESPACE_DECL

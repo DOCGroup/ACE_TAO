@@ -14,7 +14,7 @@ The following describes how to run the TAO Naming Service.
                          [-b base_address]
                          [-d ]
                          [-f persistence_file_name]
-			 [-m (1=enable multicast responses,0=disable(default)]
+                         [-m (1=enable multicast responses,0=disable(default)]
                          [-n number_of_threads]
                          [-o ior_output_file]
                          [-p pid_file_name]
@@ -22,7 +22,7 @@ The following describes how to run the TAO Naming Service.
                          [-s context_size]
                          [-t time]
                          [-u directory]
-			 [-z time]
+                         [-z time]
 
 
 2. Optional Command-line Arguments
@@ -49,15 +49,15 @@ The following describes how to run the TAO Naming Service.
                 option, Naming Service is started in non-persistent
                 mode.
 
-	-m <0|1>
+        -m <0|1>
                 TAO offers a simple, very non-standard method for
                 clients to discover the initial reference for the
                 Naming Service.  However, since it can be inadequate and cause
-		unexpected results if, for example, there are multiple
-		naming services running on the network, the DEFAULT
-		behavior is for the Naming Service to NOT RESPOND to
-		such multicast queries (use the Interoperable Naming
-		Service bootstrap options instead).
+                unexpected results if, for example, there are multiple
+                naming services running on the network, the DEFAULT
+                behavior is for the Naming Service to NOT RESPOND to
+                such multicast queries (use the Interoperable Naming
+                Service bootstrap options instead).
 
         -n number_of_threads
                 Specify a number of threads to be used to run the ORB.

@@ -7,7 +7,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 class  Test_Dummy_i
   : public virtual POA_taoimrtest::reconnectserver::Dummy
 {
@@ -31,17 +30,10 @@ public:
   // Destructor
   virtual ~Test_Time_i (void);
 
-  virtual
-  ::CORBA::Long current_time (
-      void
-    );
+  virtual ::CORBA::Long current_time (void);
 
-  virtual
-  void shutdown (
-      void
-    );
+  virtual void shutdown (void);
 };
-
 
 #endif /* IMR_RECONNECTSERVER_H  */
 

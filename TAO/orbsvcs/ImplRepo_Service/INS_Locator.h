@@ -35,7 +35,7 @@ public:
   virtual void send_exception (CORBA::Exception *ex);
 
 private:
-  ACE_CString key_;
+  CORBA::String_var key_str_;
   TAO_AMH_Locate_ResponseHandler_var rh_;
 };
 

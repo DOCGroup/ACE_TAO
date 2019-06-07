@@ -13,8 +13,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::In_Fixed_Array_Argument_T<S_forany,Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   return cdr << this->x_;
 }

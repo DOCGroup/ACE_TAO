@@ -4,7 +4,7 @@
 /**
  *  @file    Obstack_T.h
  *
- *  @author Doug Schmidt <schmidt@cs.wustl.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
 //=============================================================================

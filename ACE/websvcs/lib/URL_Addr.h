@@ -4,7 +4,7 @@
 /**
  *  @file    URL_Addr.h
  *
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -54,7 +54,7 @@ public:
   /**
    * Initializes from the scheme specific address, for instance: if
    * the address is an http URL it will initialize the address from
-   * an string such as "www.cs.wustl.edu/~schmidt"
+   * an string such as "www.dre.vanderbilt.edu/~schmidt/"
    */
   virtual int string_to_addr (const ACE_TCHAR *address);
 

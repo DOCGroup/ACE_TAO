@@ -5,7 +5,7 @@
  *
  *  This example tests the ACE Future.
  *
- *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Andres Kruse <Andres.Kruse@cern.ch> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -218,7 +218,11 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
+#if defined (ACE_HAS_CPP11)
+      std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+#else
       auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+#endif /* ACE_HAS_CPP11 */
 
       ACE_DEBUG ((LM_DEBUG, "(%t) calling method object\n"));
       // Call it.

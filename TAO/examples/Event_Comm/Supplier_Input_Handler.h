@@ -6,7 +6,7 @@
  *
  *  Handle input from the keyboard.
  *
- *  @author Douglas C. Schmidt (schmidt@cs.wustl.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
+ *  @author Douglas C. Schmidt (d.schmidt@vanderbilt.edu) and Pradeep Gore (pradeep@cs.wustl.edu)
  */
 //=============================================================================
 

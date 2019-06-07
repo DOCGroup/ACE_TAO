@@ -37,7 +37,7 @@ $persistent_ior_file = "pns.ior";
 
 my $test_iorfile = $test->LocalFile ($iorfile);
 my $test_persistent_ior_file = $test->LocalFile ($persistent_ior_file);
-my $prog = "../../Naming_Service/tao_cosnaming";
+my $prog = "$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming";
 
 $test->DeleteFile($iorfile);
 $test->DeleteFile($persistent_ior_file);
@@ -153,8 +153,8 @@ sub run_test
     $test->DeleteFile($iorfile);
 }
 
-@server_exes = ("../../Naming_Service/tao_cosnaming",
-                "../../FT_Naming_Service/tao_ft_naming");
+@server_exes = ("$ENV{TAO_ROOT}/orbsvcs/Naming_Service/tao_cosnaming",
+                "$ENV{TAO_ROOT}/orbsvcs/FT_Naming_Service/tao_ft_naming");
 
 foreach $e (@server_exes) {
     print STDERR "Testing Naming Service Executable: $e\n";

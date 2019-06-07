@@ -559,6 +559,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                "\nbufsz must be <= %d\n",
                                BUFSIZ),
                               1);
+          break;
 
         case 'i':
           nsamples = ACE_OS::atoi (get_opt.opt_arg ());

@@ -8,6 +8,37 @@ AST_Annotation_Appl::Param::Param ()
 {
 }
 
+AST_Annotation_Appl::Param::~Param ()
+{
+  if (id)
+    {
+      id->destroy ();
+    }
+  delete id;
+  if (expr)
+    {
+      expr->destroy ();
+    }
+  delete expr;
+}
+
+void
+AST_Annotation_Appl::delete_params (AST_Annotation_Appl::Params* params)
+{
+  if (params)
+    {
+      Params::ITERATOR iter (*params);
+      while (!iter.done ())
+        {
+          Param **i = 0;
+          iter.next (i);
+          delete *i;
+          iter.advance ();
+        }
+      delete params;
+    }
+}
+
 AST_Decl::NodeType const AST_Annotation_Appl::NT = AST_Decl::NT_annotation_appl;
 
 AST_Annotation_Appl::AST_Annotation_Appl (
@@ -27,6 +58,8 @@ AST_Annotation_Appl::AST_Annotation_Appl (
 AST_Annotation_Appl::~AST_Annotation_Appl ()
 {
   delete [] original_name_;
+  delete_params (params_);
+  AST_Structure::destroy ();
 }
 
 void AST_Annotation_Appl::dump (ACE_OSTREAM_TYPE &o)

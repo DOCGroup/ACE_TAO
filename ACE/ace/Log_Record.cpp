@@ -125,15 +125,14 @@ ACE_Log_Record::msg_data (const ACE_TCHAR *data)
   size_t const newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
   if (newlen > this->msg_data_size_)
     {
-      ACE_TCHAR *new_msg_data = 0;
+      this->msg_data_size_ = 0;
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_ALLOCATOR_RETURN (new_msg_data, static_cast<ACE_TCHAR*>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * newlen)), -1);
       ACE_Allocator::instance()->free(this->msg_data_);
+      ACE_ALLOCATOR_RETURN (this->msg_data_, static_cast<ACE_TCHAR*>(ACE_Allocator::instance()->malloc(sizeof(ACE_TCHAR) * newlen)), -1);
 #else
-      ACE_NEW_RETURN (new_msg_data, ACE_TCHAR[newlen], -1);
       delete [] this->msg_data_;
+      ACE_NEW_RETURN (this->msg_data_, ACE_TCHAR[newlen], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      this->msg_data_ = new_msg_data;
       this->msg_data_size_ = newlen;
     }
   ACE_OS::strcpy (this->msg_data_, data);

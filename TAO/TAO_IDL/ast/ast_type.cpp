@@ -93,6 +93,7 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
 
 AST_Type::~AST_Type (void)
 {
+  destroy ();
 }
 
 // Public operations.

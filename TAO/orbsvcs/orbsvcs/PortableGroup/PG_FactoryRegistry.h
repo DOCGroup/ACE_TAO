@@ -129,31 +129,24 @@ namespace TAO
     virtual void register_factory (
         const char * role,
         const char * type_id,
-        const PortableGroup::FactoryInfo & factory_info
-      );
+        const PortableGroup::FactoryInfo & factory_info);
 
     virtual void unregister_factory (
         const char * role,
-        const PortableGroup::Location & location
-    );
+        const PortableGroup::Location & location);
 
-    virtual void unregister_factory_by_role (
-        const char * role
-      );
+    virtual void unregister_factory_by_role (const char * role);
 
 
     virtual void unregister_factory_by_location (
-      const PortableGroup::Location & location
-    );
+      const PortableGroup::Location & location);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_role (
         const char * role,
-        CORBA::String_out type_id
-      );
+        CORBA::String_out type_id);
 
     virtual ::PortableGroup::FactoryInfos * list_factories_by_location (
-      const PortableGroup::Location & location
-    );
+      const PortableGroup::Location & location);
 
     /////////////////////////
     // Implementation methods

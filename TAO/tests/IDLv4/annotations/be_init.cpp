@@ -229,7 +229,12 @@ public:
         failed ();
       }
 
-    delete scoped_name;
+    if (scoped_name)
+      {
+        scoped_name->destroy ();
+        delete scoped_name;
+      }
+
     return node;
   }
 
@@ -808,12 +813,8 @@ BE_post_init (char *[], long)
       }
 
     // Verify Annotation on Base Type
-    AST_Annotation_Appls *annotations = seq->base_type_annotations ();
-    if (!annotations)
-      {
-        t.failed ("base_type_annotations() for test_seq_t returned null!");
-      }
-    size_t count = annotations->size ();
+    AST_Annotation_Appls &annotations = seq->base_type_annotations ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -822,7 +823,7 @@ BE_post_init (char *[], long)
           t.name_, count));
         t.failed ();
       }
-    AST_Annotation_Appl *annotation = (*annotations)[0];
+    AST_Annotation_Appl *annotation = annotations[0];
     if (!annotation)
       {
         t.failed ("annotation for test_seq_t base type is null!");
@@ -947,12 +948,8 @@ BE_post_init (char *[], long)
     t.assert_annotation_appl (test_union_decl, 0, test_annotation_1);
 
     // Annotation On Discriminator
-    AST_Annotation_Appls *annotations = test_union->disc_annotations ();
-    if (!annotations)
-      {
-        t.failed ("test_union discriminator annotations is null!");
-      }
-    size_t count = annotations->size ();
+    AST_Annotation_Appls &annotations = test_union->disc_annotations ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -961,7 +958,7 @@ BE_post_init (char *[], long)
           t.name_, count));
         t.failed ();
       }
-    AST_Annotation_Appl *annotation = (*annotations)[0];
+    AST_Annotation_Appl *annotation = annotations[0];
     if (!annotation)
       {
         t.failed ("annotation for test_seq_t base type is null!");
@@ -1139,13 +1136,9 @@ BE_post_init (char *[], long)
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
 
     // Verify Annotation on Base Type
-    AST_Annotation_Appls *annotations =
+    AST_Annotation_Appls &annotations =
       struct12Array->base_type_annotations ();
-    if (!annotations)
-      {
-        t.failed ("base_type_annotations() for struct12Array returned null!");
-      }
-    size_t count = annotations->size ();
+    size_t count = annotations.size ();
     if (count != 1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("Annotation Test Error: %C:\n")
@@ -1154,7 +1147,7 @@ BE_post_init (char *[], long)
           t.name_, count));
         t.failed ();
       }
-    AST_Annotation_Appl *annotation = (*annotations)[0];
+    AST_Annotation_Appl *annotation = annotations[0];
     if (!annotation)
       {
         t.failed ("annotation for struct12Array base type is null!");

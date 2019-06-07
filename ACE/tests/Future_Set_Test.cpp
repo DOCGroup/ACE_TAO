@@ -5,12 +5,12 @@
  *
  *  This example tests the ACE Future Set and illustrates an
  *  implementation of the Active Object pattern, which is available
- *  at <http://www.cs.wustl.edu/~schmidt/PDF/Act-Obj.pdf>.  The
+ *  at <http://www.dre.vanderbilt.edu/~schmidt/PDF/Act-Obj.pdf>.  The
  *  Active Object itself is very simple -- it determines if numbers
  *  are prime.
  *
  *  @author Andres Kruse <Andres.Kruse@cern.ch>
- *  @author Douglas C. Schmidt <schmidt@cs.wustl.edu>
+ *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Per Andersson <pera@ipso.se> and Johnny Tucker <jtucker@infoglide.com>
  */
 //=============================================================================

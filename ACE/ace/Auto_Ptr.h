@@ -4,7 +4,7 @@
 /**
  *  @file    Auto_Ptr.h
  *
- *  @author Doug Schmidt <schmidt@uci.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  *  @author Jack Reeves <jack@fx.com>
  *  @author Dr. Harald M. Mueller <mueller@garwein.hai.siemens.co.at>

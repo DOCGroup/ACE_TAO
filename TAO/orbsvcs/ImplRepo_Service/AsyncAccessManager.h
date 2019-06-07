@@ -60,7 +60,7 @@ class Locator_Export AsyncAccessManager
 
   bool is_terminating (void) const;
   bool is_running (void) const;
-  bool has_server (const char *name) const ;
+  bool has_server (const char *name) const;
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);

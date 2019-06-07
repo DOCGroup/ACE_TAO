@@ -112,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       Callback_var callback =
         Callback::_narrow (object_act.in ());
 
-      // Send the calback object to the server
+      // Send the callback object to the server
       server->callback_object (callback.in ());
 
       // A  method to kickstart callbacks from the server

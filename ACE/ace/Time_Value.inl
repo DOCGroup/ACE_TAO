@@ -344,15 +344,6 @@ ACE_Time_Value::operator+= (time_t tv)
 }
 
 ACE_INLINE ACE_Time_Value &
-ACE_Time_Value::operator= (const ACE_Time_Value &tv)
-{
-  // ACE_OS_TRACE ("ACE_Time_Value::operator=");
-  this->sec (tv.sec ());
-  this->usec (tv.usec ());
-  return *this;
-}
-
-ACE_INLINE ACE_Time_Value &
 ACE_Time_Value::operator= (time_t tv)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator=");

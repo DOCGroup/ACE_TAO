@@ -90,8 +90,11 @@ public:
     while (1)
       {
         // Dequeue the next method object
-        auto_ptr<ACE_Method_Request>
-          request (this->activation_queue_.dequeue ());
+#if defined (ACE_HAS_CPP11)
+        std::unique_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
+#else
+        auto_ptr<ACE_Method_Request> request (this->activation_queue_.dequeue ());
+#endif /* ACE_HAS_CPP11 */
 
         // Invoke the method request.
         if (request->call () == -1)

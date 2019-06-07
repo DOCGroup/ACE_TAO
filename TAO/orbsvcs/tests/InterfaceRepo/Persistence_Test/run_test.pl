@@ -37,7 +37,7 @@ $server->DeleteFile($iorbase);
 $server->DeleteFile($backing_file);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("../../../IFR_Service/tao_ifr_service",
+$SV = $server->CreateProcess ("$ENV{TAO_ROOT}/orbsvcs/IFR_Service/tao_ifr_service",
                               " -o $server_iorfile " .
                               " $persistent");
 
