@@ -160,8 +160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ACE_OS::sleep (shutdown_delay);
 
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Exiting Server pid = %d \n",
-              ACE_OS::getpid ()));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) Exiting Server pid <%P>\n"));
 
   return 0;
 }
