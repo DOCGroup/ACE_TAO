@@ -122,8 +122,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         out << ACE_OS::getpid () << endl;
         out.close ();
       }
-      ACE_Time_Value tv (poa_delay);
-      ACE_OS::sleep (tv);
+      ACE_OS::sleep (poa_delay);
       activatePOAs ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid <%P>\n"));
