@@ -123,13 +123,21 @@ extern int tao_yydebug;
     IDL_FIXED_PT_LITERAL = 333,
     IDL_TRUETOK = 334,
     IDL_FALSETOK = 335,
-    IDL_SCOPE_DELIMITOR = 336,
-    IDL_LEFT_SHIFT = 337,
-    IDL_RIGHT_SHIFT = 338,
-    IDL_WCHAR_LITERAL = 339,
-    IDL_WSTRING_LITERAL = 340,
-    IDL_ANNOTATION_DECL = 341,
-    IDL_ANNOTATION_SYMBOL = 342
+    IDL_INT8 = 336,
+    IDL_UINT8 = 337,
+    IDL_INT16 = 338,
+    IDL_UINT16 = 339,
+    IDL_INT32 = 340,
+    IDL_UINT32 = 341,
+    IDL_INT64 = 342,
+    IDL_UINT64 = 343,
+    IDL_SCOPE_DELIMITOR = 344,
+    IDL_LEFT_SHIFT = 345,
+    IDL_RIGHT_SHIFT = 346,
+    IDL_WCHAR_LITERAL = 347,
+    IDL_WSTRING_LITERAL = 348,
+    IDL_ANNOTATION_DECL = 349,
+    IDL_ANNOTATION_SYMBOL = 350
   };
 #endif
 
@@ -183,7 +191,7 @@ union YYSTYPE
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
 
-#line 187 "fe/idl.tab.hpp" /* yacc.c:1913  */
+#line 195 "fe/idl.tab.hpp" /* yacc.c:1913  */
 };
 
 typedef union YYSTYPE YYSTYPE;
