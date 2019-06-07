@@ -598,7 +598,7 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
       break;
     case AST_Expression::EV_octet:
-      this->TAO_OutStream::print ("%d", ev->u.oval);
+      this->TAO_OutStream::print ("0x%x", ev->u.oval);
       break;
     case AST_Expression::EV_bool:
       this->TAO_OutStream::print ("%s", ev->u.bval ? "true" : "false");
@@ -611,6 +611,12 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_enum:
       this->print (expr->n ());
+      break;
+    case AST_Expression::EV_int8:
+      this->TAO_OutStream::print ("%d", ev->u.int8val);
+      break;
+    case AST_Expression::EV_uint8:
+      this->TAO_OutStream::print ("%u", ev->u.uint8val);
       break;
     default:
       break;
