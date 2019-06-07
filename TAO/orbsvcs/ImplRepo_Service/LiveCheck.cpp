@@ -355,7 +355,10 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
                       this->server_.c_str(), this->pid_, want_reping));
     }
 
-  if (this->liveliness_ == LS_PING_AWAY ||
+  // When we have no ping interval specified we never
+  // have to ping this server
+  if (owner_->ping_interval() == ACE_Time_Value::zero ||
+      this->liveliness_ == LS_PING_AWAY ||
       this->liveliness_ == LS_DEAD ||
       this->listeners_.is_empty ())
     {
