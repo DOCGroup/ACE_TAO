@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Test_var tva = Test::_narrow (obj.in());
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Started Server pid <%d> poa delay <%d> shutdown delay <%d>\n", ACE_OS::getpid (), poa_delay, shutdown_delay));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Started Server pid <%P> poa delay <%d> shutdown delay <%d>\n", poa_delay, shutdown_delay));
 
       {
         ACE_CString status_file = base + ACE_CString(".status");
@@ -126,7 +126,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (tv);
       activatePOAs ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid <%d>\n", ACE_OS::getpid ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Activated POA pid <%P>\n"));
 
       TAO_Root_POA* tpoa = dynamic_cast<TAO_Root_POA*> (poa_a.in ());
       ACE_ASSERT (tpoa != 0);
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       runner->wait ();
 
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Destroying POA pid <%d>\n", ACE_OS::getpid ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) Destroying POA pid <%P>\n"));
 
       root_poa->destroy(1,1);
       orb->destroy();
