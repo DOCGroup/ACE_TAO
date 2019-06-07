@@ -4684,7 +4684,7 @@ yyreduce:
 
           AST_Expression::ExprType type = (yyvsp[-3].etval);
           Identifier *name = (yyvsp[-2].idval);
-          // Annotation Member Names Can't Class with C++ keywords
+          // Annotation Member Names Can't Clash with C++ keywords
           FE_Utils::original_local_name (name);
           UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
           AST_Expression *default_value = (yyvsp[-1].exval);
@@ -4943,7 +4943,7 @@ yyreduce:
     {
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = (yyvsp[-2].idval);
-          // Annotation Member Names Can't Class with C++ keywords
+          // Annotation Member Names Can't Clash with C++ keywords
           FE_Utils::original_local_name (param->id);
           param->expr = (yyvsp[0].exval);
           (yyval.annotation_param_val) = param;

@@ -2323,7 +2323,7 @@ annotation_member
 
           AST_Expression::ExprType type = $1;
           Identifier *name = $2;
-          // Annotation Member Names Can't Class with C++ keywords
+          // Annotation Member Names Can't Clash with C++ keywords
           FE_Utils::original_local_name (name);
           UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
           AST_Expression *default_value = $3;
@@ -2548,7 +2548,7 @@ named_annotation_appl_param
         {
           AST_Annotation_Appl::Param *param = new AST_Annotation_Appl::Param;
           param->id = $1;
-          // Annotation Member Names Can't Class with C++ keywords
+          // Annotation Member Names Can't Clash with C++ keywords
           FE_Utils::original_local_name (param->id);
           param->expr = $3;
           $$ = param;
