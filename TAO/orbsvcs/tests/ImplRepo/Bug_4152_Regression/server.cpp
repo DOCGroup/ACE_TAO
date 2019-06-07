@@ -15,7 +15,7 @@
 class ORB_Runner : public ACE_Task_Base
 {
 public:
-  ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
+  explicit ORB_Runner (CORBA::ORB_ptr orb) : orb_(CORBA::ORB::_duplicate(orb)) {}
   int svc (void)
   {
     this->orb_->run ();
