@@ -526,3 +526,8 @@ to fix memory leaks caused by annotations. This change involved replacing
 `typedef ACE_Vector<AST_Annotation_Appl> AST_Annotation_Appls` with a class of
 the same name. This also allowed for moving `UTL_find_annotation` into
 `AST_Annotation_Appls` as `find` for a nicer design.
+
+### TAO 2.5.6
+
+The TAO IDL Frontend no longer internally prefixes annotation names and
+annotation member names with `_cxx_` if they are also a C++ keyword.
