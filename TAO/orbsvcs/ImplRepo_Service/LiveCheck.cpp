@@ -12,8 +12,7 @@
 
 LiveListener::LiveListener (const char *server)
   : server_ (server),
-    refcount_ (1),
-    lock_ ()
+    refcount_ (1)
 {
 }
 
@@ -30,13 +29,12 @@ LiveListener::server (void) const
 LiveListener *
 LiveListener::_add_ref (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-  ++this->refcount_;
+  int const refcount = ++this->refcount_;
   if (ImR_Locator_i::debug () > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveListener::add_ref <%C> count <%d>\n"),
-                      server_.c_str(), refcount_));
+                      server_.c_str(), refcount));
     }
   return this;
 }
@@ -44,17 +42,13 @@ LiveListener::_add_ref (void)
 void
 LiveListener::_remove_ref (void)
 {
-  int count = 0;
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    count = --this->refcount_;
-    if (ImR_Locator_i::debug () > 5)
-      {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
-                        server_.c_str(), count));
-      }
-  }
+  int const count = --this->refcount_;
+  if (ImR_Locator_i::debug () > 5)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
+                      server_.c_str(), count));
+    }
   if (count == 0)
     {
       delete this;
