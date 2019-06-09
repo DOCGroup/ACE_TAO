@@ -45,7 +45,7 @@ AsyncListManager::poa (void)
 void
 AsyncListManager::init_list (void)
 {
-  CORBA::ULong len =
+  CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
