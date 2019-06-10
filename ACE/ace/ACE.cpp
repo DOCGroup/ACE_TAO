@@ -2793,7 +2793,7 @@ ACE::fork (const ACE_TCHAR *program_name,
             {
             case 0: // grandchild returns 0.
               return 0;
-            case -1: // assumes all errnos are < 256
+            case static_cast<pid_t>(-1): // assumes all errnos are < 256
               ACE_OS::_exit (errno);
             default:  // child terminates, orphaning grandchild
               ACE_OS::_exit (0);

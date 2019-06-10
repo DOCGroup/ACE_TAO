@@ -26,6 +26,7 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_inttypes.h"
+#include "ace/os_include/os_errno.h"
 #include /**/ "ace/ACE_export.h"
 
 /* OPENVMS needs unistd for cuserid() */
@@ -128,7 +129,7 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 # undef fileno
 # elif defined (ACE_LACKS_FILENO)
   ACE_UNUSED_ARG (fp);
-  return ACE_INVALID_HANDLE;
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # else
   return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
 # endif /* defined (fileno) */

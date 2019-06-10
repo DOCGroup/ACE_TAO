@@ -22,7 +22,7 @@
 # undef read
 # undef write
 #endif
-   
+
 struct stat;
 typedef struct stat ACE_stat;
 

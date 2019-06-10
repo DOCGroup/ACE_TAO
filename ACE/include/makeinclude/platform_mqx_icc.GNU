@@ -1,5 +1,3 @@
-# $Id$
-
 # This file should allow ACE to be built on Windows, using the IAR compiler.
 
 MQX_CPU = PSP_CPU_MK70F120M
