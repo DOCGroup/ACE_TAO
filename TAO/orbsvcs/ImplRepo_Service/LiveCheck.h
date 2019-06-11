@@ -148,6 +148,7 @@ class Locator_Export LiveEntry
   void set_pid (int pid);
   bool has_pid (int pid) const;
   int pid (void) const;
+  bool may_ping (void) const;
 
  private:
   LiveCheck *owner_;
