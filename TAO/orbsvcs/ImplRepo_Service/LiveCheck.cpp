@@ -474,15 +474,28 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
                           this->server_.c_str()));
         }
     }
+  catch (const CORBA::TIMEOUT &ex)
+    {
+      if (ImR_Locator_i::debug () > 3)
+        {
+          ORBSVCS_DEBUG ((LM_DEBUG,
+                          ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
+                          ACE_TEXT ("sendc_ping for server <%C> threw <%C> marking as timed out\n"),
+                          this->server_.c_str(), ex._info ().c_str ()));
+        }
+      this->release_callback ();
+      this->status (LS_TIMEDOUT);
+    }
   catch (const CORBA::Exception &ex)
     {
       if (ImR_Locator_i::debug () > 3)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
-                          ACE_TEXT ("sendc_ping for server <%C> threw <%C>\n"),
+                          ACE_TEXT ("sendc_ping for server <%C> threw <%C> marking as dead\n"),
                           this->server_.c_str(), ex._info ().c_str ()));
         }
+      this->release_callback ();
       this->status (LS_DEAD);
     }
 }
