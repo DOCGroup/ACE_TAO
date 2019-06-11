@@ -21,8 +21,7 @@ AsyncListManager::AsyncListManager (const Locator_Repository *repo,
    first_ (0),
    how_many_ (0),
    waiters_ (0),
-   refcount_ (1),
-   lock_ ()
+   refcount_ (1)
 {
 }
 
@@ -45,7 +44,7 @@ AsyncListManager::poa (void)
 void
 AsyncListManager::init_list (void)
 {
-  CORBA::ULong len =
+  CORBA::ULong const len =
     static_cast<CORBA::ULong> (this->repo_->servers ().current_size ());
   Locator_Repository::SIMap::ENTRY* entry = 0;
   Locator_Repository::SIMap::CONST_ITERATOR it (this->repo_->servers ());
@@ -78,7 +77,7 @@ AsyncListManager::init_list (void)
             {
               if (!evaluate_status (i, l->status(), info->pid))
                 {
-                  this->waiters_++;
+                  ++this->waiters_;
                 }
               else
                 {
@@ -316,7 +315,6 @@ AsyncListManager::ping_replied (CORBA::ULong index, LiveStatus status, int pid)
 AsyncListManager *
 AsyncListManager::_add_ref (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
   ++this->refcount_;
   return this;
 }
@@ -324,11 +322,8 @@ AsyncListManager::_add_ref (void)
 void
 AsyncListManager::_remove_ref (void)
 {
-  int count = 0;
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    count = --this->refcount_;
-  }
+  int const count = --this->refcount_;
+
   if (count == 0)
     {
       delete this;
@@ -360,7 +355,7 @@ ListLiveListener::~ListLiveListener (void)
 bool
 ListLiveListener::start (void)
 {
-  bool rtn = this->pinger_.add_poll_listener (this);
+  bool const rtn = this->pinger_.add_poll_listener (this);
   this->started_ = true;
   return rtn;
 }
@@ -388,7 +383,9 @@ ListLiveListener::status_changed (LiveStatus status)
   else
     {
       if (this->started_)
-        this->owner_->ping_replied (this->index_, status, this->pid_);
+        {
+          this->owner_->ping_replied (this->index_, status, this->pid_);
+        }
     }
   return true;
 }

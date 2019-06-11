@@ -10,6 +10,7 @@
 #include "ace/Arg_Shifter.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_time.h"
 
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
@@ -261,7 +262,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ping_interval_ =
-            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-n")) == 0)
@@ -276,7 +277,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ping_timeout_ =
-            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--ftendpoint")) == 0)
@@ -305,7 +306,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ft_update_delay_ =
-            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
         }
       else
         {
@@ -388,14 +389,16 @@ Options::print_usage (void) const
     ACE_TEXT ("  --backup        Replicate the ImplRepo as the backup ImR\n")
     ACE_TEXT ("  -r              Use the registry for storing/loading settings\n")
     ACE_TEXT ("  -s              Run as a service\n")
-    ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
-    ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
-    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = 1000ms)\n")
+    ACE_TEXT ("  -t secs         Server startup timeout.(Default = %ds)\n")
+    ACE_TEXT ("  -v msecs        Server verification interval.(Default = %dms)\n")
+    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = %dms)\n")
     ACE_TEXT ("  -i              Ping servers started without activators too.\n")
     ACE_TEXT ("  --lockout       Prevent excessive restart attempts until manual reset.\n")
     ACE_TEXT ("  --UnregisterIfAddressReused,\n")
-    ACE_TEXT ("  -u              Unregister server if its endpoint is used by another\n")
-              ));
+    ACE_TEXT ("  -u              Unregister server if its endpoint is used by another\n"),
+    DEFAULT_START_TIMEOUT,
+    DEFAULT_PING_INTERVAL * ACE_U_ONE_SECOND_IN_MSECS,
+    DEFAULT_PING_TIMEOUT * ACE_U_ONE_SECOND_IN_MSECS));
 }
 
 int

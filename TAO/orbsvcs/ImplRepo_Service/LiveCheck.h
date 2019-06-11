@@ -22,6 +22,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#if defined (ACE_HAS_CPP11)
+# include <atomic>
+#else
+# include "ace/Atomic_Op.h"
+#endif /* ACE_HAS_CPP11 */
 
 class LiveCheck;
 class LiveEntry;
@@ -81,7 +86,7 @@ class Locator_Export LiveListener
   /// is received. Returns true if finished listening
   virtual bool status_changed (LiveStatus status) = 0;
 
-  /// accessor for the server name. Used by the LiveCheck to associate a listener
+  /// Accessor for the server name. Used by the LiveCheck to associate a listener
   const char *server (void) const;
 
   LiveListener *_add_ref (void);
@@ -91,8 +96,11 @@ class Locator_Export LiveListener
   ACE_CString server_;
 
  private:
-  int refcount_;
-  TAO_SYNCH_MUTEX lock_;
+#if defined (ACE_HAS_CPP11)
+  std::atomic<int> refcount_;
+#else
+  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> refcount_;
+#endif /* ACE_HAS_CPP11 */
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<LiveListener> LiveListener_ptr;
@@ -140,6 +148,7 @@ class Locator_Export LiveEntry
   void set_pid (int pid);
   bool has_pid (int pid) const;
   int pid (void) const;
+  bool may_ping (void) const;
 
  private:
   LiveCheck *owner_;
