@@ -262,7 +262,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ping_interval_ =
-            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("-n")) == 0)
@@ -277,7 +277,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ping_timeout_ =
-            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
       else if (ACE_OS::strcasecmp (shifter.get_current (),
                                    ACE_TEXT ("--ftendpoint")) == 0)
@@ -306,7 +306,7 @@ Options::parse_args (int &argc, ACE_TCHAR *argv[])
               return -1;
             }
           this->ft_update_delay_ =
-            ACE_Time_Value (0, ACE_U_ONE_SECOND_IN_MSECS * ACE_OS::atoi (shifter.get_current ()));
+            ACE_Time_Value (0, 1000 * ACE_OS::atoi (shifter.get_current ()));
         }
       else
         {
