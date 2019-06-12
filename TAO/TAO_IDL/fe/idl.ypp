@@ -2323,7 +2323,7 @@ annotation_member
 
           AST_Expression::ExprType type = $1;
           Identifier *name = $2;
-          // Annotation Member Names Can't Clash with C++ keywords
+          // Annotation member names can't clash with C++ keywords
           FE_Utils::original_local_name (name);
           UTL_ScopedName *scoped_name = new UTL_ScopedName (name, 0);
           AST_Expression *default_value = $3;

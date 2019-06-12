@@ -292,7 +292,7 @@ To get the annotations for most nodes types, use
 `AST_Annotation_Decl` object or its canonical internal TAO IDL name (see next
 paragraph). This will return the last `AST_Annotation_Appl*` of that type on
 the node or `NULL` if there no annotation of that type. Because
-`AST_Annotation_Appls::find` can take a `AST_Annotation_Decl`, they can looked
+`AST_Annotation_Appls::find` can take a `AST_Annotation_Decl`, they can be looked
 up after `idl_eval` creates them and cached for a slightly faster
 `find`.
 
@@ -313,7 +313,7 @@ TAO\_IDL. There are examples below but see `AST_Expression::AST_ExprValue` for
 how values can be accessed.
 
 See `include/ast_expression.h` and `ast/ast_expression.cpp` for how
-`AST_Expression` ultimately works.
+to use `AST_Expression`.
 
 ### Reading `@document` Annotations
 
