@@ -1508,19 +1508,21 @@ UTL_Error::anonymous_type_diagnostic (void)
     {
       return;
     }
-
-  if (idl_global->anon_warning ())
+  if (idl_global->idl_version_ < IDL_VERSION_4)
     {
-      if (idl_global->print_warnings ())
+      if (idl_global->anon_warning ())
         {
-          idl_warning_header (EIDL_ANONYMOUS_WARNING);
-          ACE_ERROR ((LM_WARNING, "\n"));
+          if (idl_global->print_warnings ())
+            {
+              idl_warning_header (EIDL_ANONYMOUS_WARNING);
+              ACE_ERROR ((LM_WARNING, "\n"));
+            }
         }
-    }
-  else
-    {
-      idl_error_header (EIDL_ANONYMOUS_ERROR);
-      ACE_ERROR ((LM_ERROR, "\n"));
+      else
+        {
+          idl_error_header (EIDL_ANONYMOUS_ERROR);
+          ACE_ERROR ((LM_ERROR, "\n"));
+        }
     }
 }
 
