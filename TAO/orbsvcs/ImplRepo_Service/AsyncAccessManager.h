@@ -119,7 +119,6 @@ typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_pt
  *
  * @brief callback for handling asynch server startup requests
  */
-
 class ActivatorReceiver :
   public virtual POA_ImplementationRepository::AMI_ActivatorHandler
 {
