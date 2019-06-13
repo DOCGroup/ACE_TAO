@@ -82,7 +82,8 @@ public:
         ACE_DEBUG ((LM_DEBUG,
           ACE_TEXT ("Annotation Test: %C: ")
           ACE_TEXT ("FAILED because of syntax error in:\n%C\n")
-          ACE_TEXT ("Check Syntax Error Message Above For More Infomation\n"),
+          ACE_TEXT ("Check syntax error message above for more information.\n"),
+          ACE_TEXT ("Failures beyond this might be false positives.\n"),
           name_, idl_));
         ++failed_test_count;
       }
@@ -712,6 +713,21 @@ BE_post_init (char *[], long)
     t.assert_annotation_member_value (value, constant_annotation_x);
   } catch (Failed const &) {}
 
+  AST_Annotation_Decl *boolean_annotation = 0;
+  try {
+    Annotation_Test t ("Annotation Declaration with Single Boolean");
+    boolean_annotation = t.run (
+      "@annotation boolean_annotation {\n"
+      "  boolean value default TRUE;\n"
+      "};\n"
+    ).assert_annotation_decl ("@boolean_annotation");
+    t.assert_annotation_member_count (boolean_annotation, 1);
+    AST_Annotation_Member *value =
+      t.get_annotation_member (boolean_annotation, "value");
+    t.assert_annotation_member_type (value, AST_Expression::EV_bool);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (value, true);
+  } catch (Failed const &) {}
+
   /* -------------------------------------------------------------------------
    * Annotations Applications
    * -------------------------------------------------------------------------
@@ -1167,6 +1183,62 @@ BE_post_init (char *[], long)
           }
         t.failed ();
       }
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotation Application with Single Boolean");
+    t.run (
+      "struct struct13 {\n"
+      "  @boolean_annotation\n"
+      "  short test_member_1;\n"
+      "  @boolean_annotation (TRUE)\n"
+      "  short test_member_2;\n"
+      "  @boolean_annotation (FALSE)\n"
+      "  short test_member_3;\n"
+      "  @boolean_annotation (value = TRUE)\n"
+      "  short test_member_4;\n"
+      "  @boolean_annotation (value = FALSE)\n"
+      "  short test_member_5;\n"
+      "};\n"
+    );
+
+    AST_Decl *struct_member = 0;
+    AST_Annotation_Appl *appl = 0;
+
+    struct_member = t.assert_node ("struct13::test_member_1");
+    t.assert_annotation_appl_count (struct_member, 1);
+    appl = t.assert_annotation_appl (struct_member, 0, boolean_annotation);
+    t.assert_annotation_member_count (appl, 1);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
+      t.get_annotation_member (appl, "value"), true);
+
+    struct_member = t.assert_node ("struct13::test_member_2");
+    t.assert_annotation_appl_count (struct_member, 1);
+    appl = t.assert_annotation_appl (struct_member, 0, boolean_annotation);
+    t.assert_annotation_member_count (appl, 1);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
+      t.get_annotation_member (appl, "value"), true);
+
+    struct_member = t.assert_node ("struct13::test_member_3");
+    t.assert_annotation_appl_count (struct_member, 1);
+    appl = t.assert_annotation_appl (struct_member, 0, boolean_annotation);
+    t.assert_annotation_member_count (appl, 1);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
+      t.get_annotation_member (appl, "value"), false);
+
+    struct_member = t.assert_node ("struct13::test_member_4");
+    t.assert_annotation_appl_count (struct_member, 1);
+    appl = t.assert_annotation_appl (struct_member, 0, boolean_annotation);
+    t.assert_annotation_member_count (appl, 1);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
+      t.get_annotation_member (appl, "value"), true);
+
+    struct_member = t.assert_node ("struct13::test_member_5");
+    t.assert_annotation_appl_count (struct_member, 1);
+    appl = t.assert_annotation_appl (struct_member, 0, boolean_annotation);
+    t.assert_annotation_member_count (appl, 1);
+    t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
+      t.get_annotation_member (appl, "value"), false);
   } catch (Failed const &) {}
 
   /* -------------------------------------------------------------------------
