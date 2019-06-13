@@ -771,6 +771,8 @@ __postbuild__: $(VBIN) $(INSTALL)
 <%else%>
 <%if(sharedname || staticname)%>
 __postbuild__: $(VLIBS) $(INSTALL)
+<%else%>
+__postbuild__: $(GENERATED_DIRTY)
 <%endif%>
 <%endif%>
 
