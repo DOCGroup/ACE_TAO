@@ -933,6 +933,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'Z': print an ACE_OS::WChar character string
  *   ':': print a time_t value as an integral number
  *   '%': format a single percent sign, '%'
+ *   'K': print category name or empty string if there is no category
  */
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Priority log_priority,
@@ -2087,6 +2088,26 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                                                 va_arg (argp, size_t));
                   ACE_UPDATE_COUNT (bspace, this_len);
                   break;
+
+                case 'K':
+                {
+				  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+                  
+				  const char *catname = category ? category -> name() : 0;
+				  
+                  if (can_check)
+                    this_len = ACE_OS::snprintf (bp, bspace,
+                                                 format,
+                                                 catname ? catname : "");
+                  else
+                    this_len = ACE_OS::sprintf (bp,
+                                                format,
+                                                catname ? catname : "");
+                  
+				  
+				  ACE_UPDATE_COUNT (bspace, this_len);
+                  break;
+				}
 
                 case ':':
                   {
