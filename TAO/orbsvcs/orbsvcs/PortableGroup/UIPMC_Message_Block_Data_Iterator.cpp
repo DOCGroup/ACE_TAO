@@ -38,7 +38,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
         {
           // Let the caller use the first part of this
           // message block.
-          block.iov_len  = max_length;
+          block.iov_len  = static_cast<u_long> (max_length);
           block.iov_base = this->iov_[this->iov_index_].iov_base;
 
           // Break up the block.
@@ -57,7 +57,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
       if (this->iov_len_left_ <= max_length)
         {
           // Return everything that's left in the block.
-          block.iov_len  = this->iov_len_left_;
+          block.iov_len  = static_cast<u_long> (this->iov_len_left_);
           block.iov_base = this->iov_ptr_;
 
           // Go to the next block.
@@ -71,7 +71,7 @@ UIPMC_Message_Block_Data_Iterator::next_block (size_t max_length,
       else
         {
           // Split a little more off the block.
-          block.iov_len  = max_length;
+          block.iov_len  = static_cast<u_long> (max_length);
           block.iov_base = this->iov_ptr_;
 
           this->iov_len_left_ -= max_length;
