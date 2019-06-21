@@ -354,7 +354,6 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This LM_DEBUG message should not print!\n")));
-
 }
 
 // For testing how many log records has been output
