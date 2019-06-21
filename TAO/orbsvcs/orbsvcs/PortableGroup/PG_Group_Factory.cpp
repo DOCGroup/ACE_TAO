@@ -299,7 +299,7 @@ TAO::PG_Group_Factory::groups_at_location (
     const PortableGroup::Location & the_location)
 {
   Group_Map & group_map = this->get_group_map ();
-  size_t upper_limit = group_map.current_size ();
+  CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());
   PortableGroup::ObjectGroups * result = 0;
   ACE_NEW_THROW_EX (
     result,
@@ -308,7 +308,7 @@ TAO::PG_Group_Factory::groups_at_location (
 
   result->length(upper_limit);
 
-  size_t group_count = 0;
+  CORBA::ULong group_count = 0;
   for (Group_Map_Iterator it = group_map.begin ();
     it != group_map.end ();
     ++it)
@@ -328,7 +328,7 @@ PortableGroup::ObjectGroups *
 TAO::PG_Group_Factory::all_groups (void)
 {
   Group_Map & group_map = this->get_group_map ();
-  size_t upper_limit = group_map.current_size ();
+  CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());
   PortableGroup::ObjectGroups * result = 0;
   ACE_NEW_THROW_EX (
     result,
@@ -337,7 +337,7 @@ TAO::PG_Group_Factory::all_groups (void)
 
   result->length(upper_limit);
 
-  size_t group_count = 0;
+  CORBA::ULong group_count = 0;
   for (Group_Map_Iterator it = group_map.begin ();
     it != group_map.end ();
     ++it)
