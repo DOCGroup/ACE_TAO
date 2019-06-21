@@ -17,6 +17,9 @@
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
+#ifdef ACE_HAS_GETTID
+#  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
+#endif
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
@@ -4805,6 +4808,16 @@ ACE_OS::unique_name (const void *object,
                     static_cast<int> (ACE_OS::getpid ()));
 }
 #endif
+
+pid_t
+ACE_OS::thr_gettid ()
+{
+#ifdef ACE_HAS_GETTID
+  return syscall (SYS_gettid);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

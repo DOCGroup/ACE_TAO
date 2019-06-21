@@ -3184,6 +3184,13 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
 #endif /* WIN32 */
 }
 
+ACE_INLINE ssize_t
+ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
+{
+  return ACE_OS::snprintf (buffer, buffer_length, "%d",
+    static_cast<int> (ACE_OS::thr_gettid ()));
+}
+
 ACE_INLINE ACE_thread_t
 ACE_OS::thr_self (void)
 {
