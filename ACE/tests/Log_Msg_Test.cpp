@@ -354,6 +354,7 @@ test_log_msg_features (const ACE_TCHAR *program)
               ACE_TEXT ("This LM_INFO message should not print!\n")));
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This LM_DEBUG message should not print!\n")));
+			  
 }
 
 // For testing how many log records has been output
@@ -682,6 +683,28 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
             ++this->fail_;
           }
       }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l7:"), 3) == 0)
+      {
+        //  After 17: there should be "NAME: EMPTY"
+        b += 3;
+        if (ACE_OS::strncmp (b, ACE_TEXT ("NAME: EMPTY"), 11) != 0)
+        {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed\n"),
+                       log_record.msg_data ()));
+            ++this->fail_;
+        }
+      }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l8:"), 3) == 0)
+      {
+        //  After 18: there should be "NAME:CATEGORY NOT EMPTY"
+        b += 3;
+        if (ACE_OS::strncmp (b, ACE_TEXT ("NAME:CATEGORY NOT EMPTY"), 23) != 0)
+        {
+            ACE_ERROR ((LM_ERROR, ACE_TEXT ("ERROR: Test %s failed\n"),
+                       log_record.msg_data ()));
+            ++this->fail_;
+        }
+      }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -712,7 +735,7 @@ Log_Spec_Verify::result (void)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("%d logging specifier tests failed!\n"),
                 this->fail_));
 
-  if (this->tests_ != 19)
+  if (this->tests_ != 21)
   {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 19!\n"),
                 this->tests_));
@@ -797,6 +820,12 @@ test_format_specs (void)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%T\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l6:%#T\n"), &tv));
+
+  // Category name specifier:
+  ACE_Log_Category cat("CATEGORY");
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l7:NAME:%K EMPTY\n")));
+  cat.per_thr_obj() 
+    -> log(LM_DEBUG, ACE_TEXT ("l8:NAME:%K NOT EMPTY\n"));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (0);

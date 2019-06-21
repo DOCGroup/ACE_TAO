@@ -567,6 +567,7 @@ public:
    *  - ':': print a time_t value as an integral number
    *  - '%': print out a single percent sign, '%'
    *  - '?': print out stack trace (see Stack_Trace.h header comments)
+   *  - 'K': print category name or empty string if there is no category
    */
   ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
 

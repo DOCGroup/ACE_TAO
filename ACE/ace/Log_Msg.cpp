@@ -2091,23 +2091,21 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'K':
                 {
-				  ACE_OS::strcpy (fp, ACE_TEXT ("s"));
-                  
-				  const char *catname = category ? category -> name() : 0;
-				  
-                  if (can_check)
-                    this_len = ACE_OS::snprintf (bp, bspace,
-                                                 format,
-                                                 catname ? catname : "");
-                  else
-                    this_len = ACE_OS::sprintf (bp,
-                                                format,
-                                                catname ? catname : "");
-                  
-				  
-				  ACE_UPDATE_COUNT (bspace, this_len);
-                  break;
-				}
+                    ACE_OS::strcpy (fp, ACE_TEXT ("s"));
+                    const char *catname = category ? category -> name() : 0;
+
+                    if (can_check)
+                        this_len = ACE_OS::snprintf (bp, bspace,
+                                                     format,
+                                                     catname ? catname : "");
+                    else
+                        this_len = ACE_OS::sprintf (bp,
+                                                    format,
+                                                    catname ? catname : "");
+
+                    ACE_UPDATE_COUNT (bspace, this_len);
+                    break;
+                }
 
                 case ':':
                   {
