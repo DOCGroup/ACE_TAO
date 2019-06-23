@@ -823,7 +823,7 @@ test_format_specs (void)
   // Category name specifier:
   ACE_Log_Category cat("CATEGORY");
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l7:NAME:%K EMPTY\n")));
-  cat.per_thr_obj() 
+  cat.per_thr_obj()
     -> log(LM_DEBUG, "l8:NAME:%K NOT EMPTY\n");
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
