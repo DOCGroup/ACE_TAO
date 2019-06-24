@@ -292,7 +292,7 @@
 #  define THR_EXPLICIT_SCHED      0x00800000
 #  define THR_SCHED_IO            0x01000000
 
-#  if !defined (ACE_HAS_STHREADS)
+#  if !defined (ACE_HAS_STHREADS) && !defined (ACE_MQX)
 #    if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 
 // This needs to be moved out of here.

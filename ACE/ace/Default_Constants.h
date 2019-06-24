@@ -584,5 +584,9 @@
 #   define ACE_SYSCALL_FAILED -1
 # endif /* ACE_WIN32 */
 
+#if !defined (ACE_DEFAULT_ACCEPTOR_USE_SELECT)
+# define ACE_DEFAULT_ACCEPTOR_USE_SELECT 1
+#endif /* ACE_DEFAULT_ACCEPTOR_USE_SELECT */
+
 #include /**/ "ace/post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

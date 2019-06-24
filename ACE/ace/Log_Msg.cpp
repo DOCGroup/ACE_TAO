@@ -19,7 +19,7 @@
 #include "ace/os_include/os_typeinfo.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager_Base.h"
+# include "ace/Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
@@ -999,7 +999,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #else
   // External decls.
 
-  typedef void (*PTF)(...);
+  typedef void (*PointerToFunction)(...);
 
   // Check if there were any conditional values set.
   bool const conditional_values = this->conditional_values_.is_set_;
@@ -1671,7 +1671,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                       }
                     ACE_Log_Msg::msg_off_ =  bp - this->msg_;
 
-                    (*va_arg (argp, PTF))();
+                    (*va_arg (argp, PointerToFunction))();
 
                     if (ACE_BIT_ENABLED (flags,
                                          ACE_Log_Msg::SILENT) &&

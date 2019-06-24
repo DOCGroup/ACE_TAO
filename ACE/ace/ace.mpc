@@ -121,6 +121,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Message_Queue_Vx.cpp
     Method_Request.cpp
     MMAP_Memory_Pool.cpp
+    MQX_Filesystem.cpp
     Msg_WFMO_Reactor.cpp
     Monitor_Admin.cpp
     Monitor_Admin_Manager.cpp

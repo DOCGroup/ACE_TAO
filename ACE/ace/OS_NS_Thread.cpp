@@ -1156,7 +1156,7 @@ ACE_OS::cond_broadcast (ACE_cond_t *cv)
         result = -1;
       // Wait for all the awakened threads to acquire their part of
       // the counting semaphore.
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
       else if (ACE_OS::sema_wait (&cv->waiters_done_) == -1)
 #   else
       else if (ACE_OS::event_wait (&cv->waiters_done_) == -1)
@@ -1180,7 +1180,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 # if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS)
   ACE_OS::event_destroy (&cv->waiters_done_);
-#   elif defined (ACE_VXWORKS)
+#   elif defined (ACE_VXWORKS) || defined (ACE_MQX)
   ACE_OS::sema_destroy (&cv->waiters_done_);
 #   endif /* ACE_VXWORKS */
   int result = 0;
@@ -1230,7 +1230,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #   else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
@@ -1260,7 +1260,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
     result = -1;
   else if (ACE_OS::thread_mutex_init (&cv->waiters_lock_) == -1)
     result = -1;
-#     if defined (ACE_VXWORKS)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX)
   else if (ACE_OS::sema_init (&cv->waiters_done_, 0, type) == -1)
 #     else
   else if (ACE_OS::event_init (&cv->waiters_done_) == -1)
@@ -1391,7 +1391,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
   // If we're the last waiter thread during this particular broadcast
   // then let all the other threads proceed.
   else if (last_waiter)
-#   if defined (ACE_VXWORKS)
+#   if defined (ACE_VXWORKS) || defined (ACE_MQX)
     ACE_OS::sema_post (&cv->waiters_done_);
 #   else
     ACE_OS::event_signal (&cv->waiters_done_);
@@ -1419,7 +1419,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
   // Handle the easy case first.
   if (timeout == 0)
     return ACE_OS::cond_wait (cv, external_mutex);
-#   if defined (ACE_HAS_WTHREADS) || defined (ACE_VXWORKS)
+#   if defined (ACE_HAS_WTHREADS) || defined (ACE_VXWORKS) || defined (ACE_MQX)
 
   // Prevent race conditions on the <waiters_> count.
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
@@ -1481,6 +1481,8 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
       int const ticks_per_sec = ::sysClkRateGet ();
       int const ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
       result = ::semTake (cv->sema_.sema_, ticks);
+#     else
+      result = ACE_OS::sema_wait (&cv->sema_, timeout);
 #     endif /* ACE_WIN32 || VXWORKS */
     }
 

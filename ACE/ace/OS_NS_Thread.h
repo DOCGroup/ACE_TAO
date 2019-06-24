@@ -356,7 +356,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (ACE_VXWORKS)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
@@ -391,10 +391,12 @@ struct ACE_Export ACE_condattr_t
   int type;
 };
 
+#if !defined (ACE_MQX)
 struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

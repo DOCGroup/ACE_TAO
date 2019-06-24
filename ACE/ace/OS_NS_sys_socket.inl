@@ -128,7 +128,7 @@ ACE_INLINE int
 ACE_OS::closesocket (ACE_HANDLE handle)
 {
   ACE_OS_TRACE ("ACE_OS::closesocket");
-#if defined (ACE_WIN32)
+#if defined (ACE_WIN32) || defined (ACE_MQX)
   // @note Do not shutdown the write end here.  Doing so will break
   //       applications that duplicate a handle on fork(), for
   //       example, and expect to continue writing in the fork()ed
@@ -274,6 +274,10 @@ ACE_OS::getsockname (ACE_HANDLE handle,
 #endif /* ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO */
 }
 
+#if !defined(ACE_SOCKOPT_LEN)
+#define ACE_SOCKOPT_LEN ACE_SOCKET_LEN
+#endif
+
 ACE_INLINE int
 ACE_OS::getsockopt (ACE_HANDLE handle,
                     int level,
@@ -294,7 +298,7 @@ ACE_OS::getsockopt (ACE_HANDLE handle,
                                      level,
                                      optname,
                                      optval,
-                                     (ACE_SOCKET_LEN *) optlen),
+                                     (ACE_SOCKOPT_LEN *) optlen),
                        int,
                        -1);
 #endif /* ACE_LACKS_GETSOCKOPT */
@@ -589,7 +593,11 @@ ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
     return result;
 
 #else
+# if defined (ACE_MQX)
+  ssize_t const ace_result_ = ::send ((ACE_SOCKET) handle, (void*)buf, len, flags);
+#else
   ssize_t const ace_result_ = ::send ((ACE_SOCKET) handle, buf, len, flags);
+#endif
 
 # if !(defined (EAGAIN) && defined (EWOULDBLOCK) && EAGAIN == EWOULDBLOCK)
   // Optimize this code out if we can detect that EAGAIN ==
@@ -682,6 +690,14 @@ ACE_OS::sendto (ACE_HANDLE handle,
   ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
                                  buf,
                                  static_cast<int> (len),
+                                 flags,
+                                 const_cast<struct sockaddr *> (addr),
+                                 addrlen),
+                       ssize_t, -1);
+#elif defined (ACE_MQX)
+  ACE_SOCKCALL_RETURN (::sendto ((ACE_SOCKET) handle,
+                                 (void*)buf,
+                                 len,
                                  flags,
                                  const_cast<struct sockaddr *> (addr),
                                  addrlen),
@@ -823,6 +839,40 @@ ACE_OS::sendv (ACE_HANDLE handle,
 
   return (ssize_t) bytes_sent;
 
+#elif defined (ACE_MQX)
+  ssize_t bytes_sent = 0;
+  for (int i = 0; i < n; ++i)
+    {
+      ssize_t result = ACE_OS::send (handle, buffers[i].iov_base,
+                                     buffers[i].iov_len, 0);
+
+      if (result == -1)
+        {
+          // There is a subtle difference in behaviour depending on
+          // whether or not any data was sent.  If no data was sent,
+          // then always return -1.  Otherwise return bytes_sent.
+          // This gives the caller an opportunity to keep track of
+          // bytes that have already been sent.
+          if (bytes_sent > 0)
+            break;
+          else
+            {
+              // errno should already be set from the ACE_OS::send call.
+              return -1;
+            }
+        }
+      else
+        {
+          // Gets ignored on error anyway
+          bytes_sent += result;
+
+          // If the transfer isn't complete just drop out of the loop.
+          if (result < buffers[i].iov_len)
+            break;
+        }
+    }
+
+  return bytes_sent;
 #elif defined (ACE_HAS_SOCK_BUF_SIZE_MAX)
 
   // Platform limits the maximum socket message size.  Pare down the

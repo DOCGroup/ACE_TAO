@@ -380,7 +380,11 @@ TAO_IIOP_Connection_Handler::close_connection (void)
     {
       struct linger lval;
       lval.l_onoff = 1;
+#if defined(ACE_HAS_LINGER_MS)
+      lval.l_linger_ms = linger * 1000;
+#else
       lval.l_linger = (u_short)linger;
+#endif
       if (this->peer ().set_option(SOL_SOCKET,
                                    SO_LINGER,
                                    (void*) &lval,
@@ -662,9 +666,8 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 void
 TAO_IIOP_Connection_Handler::abort (void)
 {
-  struct linger lval;
+  struct linger lval = { 0 };
   lval.l_onoff = 1;
-  lval.l_linger = 0;
 
   if (this->peer ().set_option(SOL_SOCKET,
                                SO_LINGER,

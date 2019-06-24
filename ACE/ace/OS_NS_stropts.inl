@@ -123,6 +123,9 @@ ACE_OS::ioctl (ACE_HANDLE handle,
 #elif defined (ACE_HAS_IOCTL_INT_3_PARAM)
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, reinterpret_cast<int> (val)),
                      int, -1);
+#elif defined (ACE_MQX)
+  // TBD: See if there is a way to provide this functionality
+  ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::ioctl (handle, cmd, val), int, -1);
 #endif /* ACE_WIN32 */

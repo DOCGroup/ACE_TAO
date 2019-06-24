@@ -548,6 +548,9 @@ string_emulation_test (void)
     // ========================================================================
     // Test strtok (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
+#  ifdef ACE_LACKS_WCSTOK
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Skipped because platform lacks wcstok\n")));
+#  else
     //FUZZ: enable check_for_lack_ACE_OS
 
     wchar_t strtok_r1[] = ACE_TEXT_WIDE ("A string of tokens");
@@ -565,6 +568,7 @@ string_emulation_test (void)
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("tokens") ) == 0);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
+#  endif /* ACE_LACKS_WCSTOK */
 
 
   }

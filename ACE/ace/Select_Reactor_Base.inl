@@ -6,21 +6,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
 ACE_Select_Reactor_Handler_Repository::size (void) const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.total_size ();
 #else
   return this->event_handlers_.size ();
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
 ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.current_size ();
 #else
   return this->max_handlep1_;
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 ACE_INLINE int
@@ -50,11 +50,11 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
       if (pos != this->event_handlers_.end ())
         {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
           eh = (*pos).item ();
 #else
           eh = *pos;
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
         }
     }
   // Don't bother setting errno.  It isn't used in the select()-based
@@ -72,12 +72,12 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 ACE_INLINE bool
 ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->current_ == this->rep_->event_handlers_.end ();
 #else
   return this->current_ == (this->rep_->event_handlers_.begin ()
                             + this->rep_->max_handlep1 ());
-#endif /* ACE_WIN32 */
+#endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 // ------------------------------------------------------------------
