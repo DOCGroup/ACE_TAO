@@ -669,6 +669,11 @@ TAO_IIOP_Connection_Handler::abort (void)
   struct linger lval = { 0 };
   lval.l_onoff = 1;
 
+#if !defined(ACE_HAS_LINGER_MS)
+  // Redundantly set the l_linger member to appease gcc
+  lval.l_linger = 0;
+#endif
+
   if (this->peer ().set_option(SOL_SOCKET,
                                SO_LINGER,
                                (void*) &lval,
