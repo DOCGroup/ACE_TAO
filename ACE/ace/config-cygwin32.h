@@ -56,12 +56,6 @@
 #define ACE_LACKS_SWAB
 #define ACE_LACKS_STD_WSTRING
 
-// Recommend adding the following #define to config.h to get around compile warnings related to
-// the use of auto_ptr which is deprecated in C++ 11, since Cygwin now uses
-// GNU C++ compiler version 7.4.0.
-//
-// #define ACE_HAS_CPP11
-
 #endif
 
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
