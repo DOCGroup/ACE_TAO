@@ -54,8 +54,8 @@ TAO::PG_Property_Set::decode (const PortableGroup::Properties & property_set)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
 
-  size_t count = property_set.length ();
-  for (size_t nItem = 0; nItem < count; ++nItem)
+  CORBA::ULong const count = property_set.length ();
+  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
   {
     const PortableGroup::Property & property = property_set[nItem];
     const CosNaming::Name & nsName = property.nam;
@@ -112,8 +112,8 @@ void TAO::PG_Property_Set::clear ()
 void TAO::PG_Property_Set::remove (const PortableGroup::Properties & property_set)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
-  size_t count = property_set.length ();
-  for (size_t nItem = 0; nItem < count; ++nItem)
+  CORBA::ULong const count = property_set.length ();
+  for (CORBA::ULong nItem = 0; nItem < count; ++nItem)
   {
     const PortableGroup::Property & property = property_set[nItem];
     const CosNaming::Name & nsName = property.nam;
@@ -170,9 +170,9 @@ void TAO::PG_Property_Set::export_properties(PortableGroup::Properties & propert
   ValueMap merged_values;
   this->merge_properties (merged_values);
 
-  property_set.length (merged_values.current_size ());
+  property_set.length (static_cast<CORBA::ULong> (merged_values.current_size ()));
 
-  size_t pos = 0;
+  CORBA::ULong pos = 0;
   for (ValueMapIterator it = merged_values.begin ();
         it != merged_values.end ();
         ++it)

@@ -46,6 +46,7 @@ IMPL_NARROW_FROM_SCOPE (AST_Annotation_Decl)
 void
 AST_Annotation_Decl::escape_name (Identifier *name)
 {
+  FE_Utils::original_local_name (name); // Annotations can't clash with C++ keywords
   char *old_name = name->get_string ();
   char *new_name = new char [ACE_OS::strlen (old_name) + 2]; // '@' and '\0'
   if (new_name)

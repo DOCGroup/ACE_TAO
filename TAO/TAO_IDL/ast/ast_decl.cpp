@@ -1603,8 +1603,8 @@ void
 AST_Decl::dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline)
 {
   AST_Annotation_Appls::iterator
-    i = annotation_appls_->begin (),
-    finished = annotation_appls_->end ();
+    i = annotation_appls ().begin (),
+    finished = annotation_appls ().end ();
   for (; i != finished; ++i)
     {
       AST_Annotation_Appl* a = i->get ();

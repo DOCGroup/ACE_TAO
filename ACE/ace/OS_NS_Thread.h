@@ -356,7 +356,7 @@ public:
   /// Queue up threads waiting for the condition to become signaled.
   ACE_sema_t sema_;
 
-#     if defined (ACE_VXWORKS)
+#     if defined (ACE_VXWORKS) || defined (ACE_MQX)
   /**
    * A semaphore used by the broadcast/signal thread to wait for all
    * the waiting thread(s) to wake up and be released from the
@@ -391,10 +391,12 @@ struct ACE_Export ACE_condattr_t
   int type;
 };
 
+#if !defined (ACE_MQX)
 struct ACE_Export ACE_mutexattr_t
 {
   int type;
 };
+#endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
@@ -1753,6 +1755,26 @@ namespace ACE_OS {
   /// returns the size of this thread id in bytes.
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t thr_id (char buffer[], size_t buffer_length);
+
+  /**
+   * For systems that support it (Only Linux as of writing), this is a wrapper
+   * for pid_t gettid().
+   *
+   * It returns the system-wide thread id (TID) for the current thread. These
+   * are similar to PIDs and, for x86 Linux at least, are much shorter than
+   * what is returned from thr_self(), which is an address.
+   *
+   * For older Linux (pre 2.4.11) and other systems that don't have gettid(),
+   * this uses ACE_NOTSUP_RETURN (-1).
+   */
+  pid_t thr_gettid ();
+
+  /**
+   * Puts the string representation of pid_t thr_gettid() into the buffer and
+   * returns number of bytes added.
+   */
+  ACE_NAMESPACE_INLINE_FUNCTION
+  ssize_t thr_gettid (char buffer[], size_t buffer_length);
 
   /// State is THR_CANCEL_ENABLE or THR_CANCEL_DISABLE
   ACE_NAMESPACE_INLINE_FUNCTION

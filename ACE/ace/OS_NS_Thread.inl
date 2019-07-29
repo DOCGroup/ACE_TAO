@@ -1679,6 +1679,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
                                      count), int, -1);
@@ -3182,6 +3183,13 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
                            (unsigned long) t_id);
 #endif /* ACE_HAS_OPAQUE_PTHREAD_T */
 #endif /* WIN32 */
+}
+
+ACE_INLINE ssize_t
+ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
+{
+  return ACE_OS::snprintf (buffer, buffer_length, "%d",
+    static_cast<int> (ACE_OS::thr_gettid ()));
 }
 
 ACE_INLINE ACE_thread_t

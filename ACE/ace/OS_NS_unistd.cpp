@@ -357,7 +357,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 
       switch (result)
         {
-        case -1:
+        case static_cast<pid_t>(-1):
           // Error.
           return -1;
         case 0:

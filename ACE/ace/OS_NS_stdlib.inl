@@ -27,6 +27,8 @@ ACE_OS::_exit (int status)
   ::exit (status);
 #elif defined (ACE_HAS_WINCE)
   ::TerminateProcess (::GetCurrentProcess (), status);
+#elif defined (ACE_MQX)
+   _mqx_exit (status);
 #elif !defined (ACE_LACKS__EXIT)
    ::_exit (status);
 #else

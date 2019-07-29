@@ -47,6 +47,10 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int set_errno_to_wsa_last_error (void);
 
+#ifdef ACE_MQX
+  int mqx_error_to_errno(int mqx_error);
+#endif
+
 } /* namespace ACE_OS */
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)

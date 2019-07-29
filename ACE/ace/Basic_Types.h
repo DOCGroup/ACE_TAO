@@ -393,8 +393,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_IDL_NSTOHL(X) ((X) << 16)
 # endif /* ACE_LITTLE_ENDIAN */
 
-#define ACE_HTONS(x) htons(x)
-#define ACE_NTOHS(x) ntohs(x)
+// MQX doesn't define these macros correctly.
+# if defined (ACE_LITTLE_ENDIAN) && defined (ACE_MQX)
+#   define ACE_HTONS(x) x
+#   define ACE_NTOHS(x) x
+# else
+#   define ACE_HTONS(x) htons(x)
+#   define ACE_NTOHS(x) ntohs(x)
+# endif
 
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
      reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))

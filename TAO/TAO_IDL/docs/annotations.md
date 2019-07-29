@@ -7,7 +7,7 @@ compiler that uses `tao_idl`.**
 
 * [IDL Annotations](#idl-annotations)
   * [Special Cases of Annotations](#special-cases-of-annotations)
-    * [Unions Discriminators](#unions-discriminators)
+    * [Union Discriminators](#union-discriminators)
     * [Base Types in Sequences](#base-types-in-sequences)
     * [Base Types in Arrays](#base-types-in-arrays)
 * [Defining Annotations](#defining-annotations)
@@ -17,7 +17,7 @@ compiler that uses `tao_idl`.**
   * [Reading `@document` Annotations](#reading-document-annotations)
     * [Reading Annotations Manually](#reading-annotations-manually)
   * [Reading Special Cases of Annotations](#reading-special-cases-of-annotations)
-    * [Unions Discriminators](#unions-discriminators-1)
+    * [Union Discriminators](#union-discriminators-1)
     * [Base Types in Sequences](#base-types-in-sequences-1)
     * [Base Types in Arrays](#base-types-in-arrays-1)
 * [Limitations](#limitations)
@@ -65,7 +65,7 @@ struct Report {
   unsigned long index;
 
   @optional
-  Expiration_t expiration;
+  Time_t expiration;
 
   @optional
   Urgency_t urgency;
@@ -87,15 +87,15 @@ compiler use these kinds of annotations.
 
 #### Union Discriminators
 
-**[See Compiler Example](#unions-discriminators-1)**
+**[See Compiler Example](#union-discriminators-1)**
 
 ```
-enum GradeType {
+enum GradingSystem_t {
   PASS_FAIL,
   PASS_70,
   PASS_80
 };
-union Grade switch (@key GradeType) {
+union Grade_t switch (@key GradingSystem_t) {
 case PASS_FAIL:
   boolean pass;
 case PASS_70:
@@ -289,9 +289,12 @@ inside it.
 
 To get the annotations for most nodes types, use
 `node->annotations ().find (annotation_decl)` where `annotation_decl` can be the
-annotation declaration or its canonical name. This will return the last
-`AST_Annotation_Appl*` of that type on the node or `NULL` if there no
-annotation of that type.
+`AST_Annotation_Decl` object or its canonical internal TAO IDL name (see next
+paragraph). This will return the last `AST_Annotation_Appl*` of that type on
+the node or `NULL` if there no annotation of that type. Because
+`AST_Annotation_Appls::find` can take a `AST_Annotation_Decl`, they can be looked
+up after `idl_eval` creates them and cached for a slightly faster
+`find`.
 
 Internally, annotation local names are prefixed with `@` to prevent clashes
 with other elements in IDL with the same name. For example when trying to use
@@ -304,10 +307,13 @@ the root module. In IDL, this annotation's full name would be `@foo::bar`or
 After that check, you can use index operators `[const char*]` on the annotation
 to get the individual members and `value()` to get the value.
 
-The last part is not straightforward, as the value is a `AST_Expression` object
+The last part is not straightforward, as the value is an `AST_Expression` object
 and `AST_Expression` is a complex class that handles constant values in
 TAO\_IDL. There are examples below but see `AST_Expression::AST_ExprValue` for
 how values can be accessed.
+
+See `include/ast_expression.h` and `ast/ast_expression.cpp` for how
+to use `AST_Expression`.
 
 ### Reading `@document` Annotations
 
@@ -463,13 +469,14 @@ grammar and special handling in the API.
 The following cases show how to get the last annotation called `anno` from
 these special cases.
 
-If a type is `typedef`-ed, resolve it completely using `AST_Type
-*primitive_base_type ()` and `dynamic_cast` to the correct type before trying
-to read these special cases.
+To access these methods on a type that has been "`typedef`-ed", it must be
+resolved completely using `AST_Type *primitive_base_type ()` and a
+`dynamic_cast` to the correct type as these methods are specific to these
+classes.
 
-#### Unions Discriminators
+#### Union Discriminators
 
-**[See IDL Example](#unions-discriminators)**
+**[See IDL Example](#union-discriminators)**
 
 ```C++
   AST_Union *node = /* ... */;
@@ -519,3 +526,8 @@ to fix memory leaks caused by annotations. This change involved replacing
 `typedef ACE_Vector<AST_Annotation_Appl> AST_Annotation_Appls` with a class of
 the same name. This also allowed for moving `UTL_find_annotation` into
 `AST_Annotation_Appls` as `find` for a nicer design.
+
+### TAO 2.5.6
+
+The TAO IDL Frontend no longer internally prefixes annotation names and
+annotation member names with `_cxx_` if they are also a C++ keyword.

@@ -453,7 +453,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
 
   switch (this->child_id_)
     {
-    case -1:
+    case static_cast<pid_t>(-1):
       // Error.
       return ACE_INVALID_PID;
     case 0:
