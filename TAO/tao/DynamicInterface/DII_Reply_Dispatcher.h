@@ -85,7 +85,6 @@ public:
   virtual void connection_closed (void);
 
 private:
-
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
