@@ -772,7 +772,16 @@ __postbuild__: $(VBIN) $(INSTALL)
 <%if(sharedname || staticname)%>
 __postbuild__: $(VLIBS) $(INSTALL)
 <%else%>
+<%foreach(requires)%>
+ifeq ($(<%require%>),1)
+<%endfor%>
+<%foreach(avoids)%>
+ifneq ($(<%avoid%>),1)
+<%endfor%>
 __postbuild__: $(GENERATED_DIRTY)
+<%foreach(avoids requires)%>
+endif
+<%endfor%>
 <%endif%>
 <%endif%>
 
