@@ -1,3 +1,5 @@
+#include "seq_indirection_bin.h"
+
 #include "testC.h"
 #include "tao/IFR_Client/IFR_BaseC.h"
 #include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
@@ -225,6 +227,23 @@ recursive_union_test ()
   if (TAO_debug_level >= 1)
     ACE_DEBUG ((LM_INFO,
                 "> Anys destructed\n"));
+
+
+  ACE_DEBUG ((LM_INFO,
+              "* Indirected sequnce demarshaling\n"));
+  {
+
+  TAO_InputCDR strm((const char*)a_raw, a_raw_len, 0, 1, 2); // big endian, IIOP 1.2
+
+   Test::StructuredEvent notifications;
+   if ((strm >> notifications) == 0)
+   {
+      ACE_DEBUG ((LM_INFO,
+         " !!!!! Failed to demarshal indirected sequence\n"));
+	throw Test::Sequnce_Indirection_Test_Failed();
+   }
+
+  }
 
   return rc;
 }
