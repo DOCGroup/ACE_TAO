@@ -230,7 +230,7 @@ recursive_union_test ()
 
 
   ACE_DEBUG ((LM_INFO,
-              "* Indirected sequnce demarshaling\n"));
+              "* Indirected sequence type demarshaling\n"));
   {
   TAO_InputCDR strm((const char*)a_raw, a_raw_len, 0, 1, 2); // big endian, IIOP 1.2
 
@@ -239,7 +239,7 @@ recursive_union_test ()
    {
       ACE_ERROR ((LM_ERROR,
          "ERROR: Failed to demarshal indirected sequence\n"));
-      throw Test::Sequnce_Indirection_Test_Failed();
+      throw Test::Sequence_Indirection_Test_Failed();
    }
   }
 
