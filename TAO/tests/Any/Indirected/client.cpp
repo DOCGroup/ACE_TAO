@@ -237,8 +237,8 @@ recursive_union_test ()
    Test::StructuredEvent notifications;
    if ((strm >> notifications) == 0)
    {
-      ACE_DEBUG ((LM_INFO,
-         " !!!!! Failed to demarshal indirected sequence\n"));
+      ACE_ERROR ((LM_ERROR,
+         "ERROR: Failed to demarshal indirected sequence\n"));
       throw Test::Sequnce_Indirection_Test_Failed();
    }
   }

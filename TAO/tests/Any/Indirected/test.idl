@@ -15,7 +15,7 @@ module Test
           RecursiveUnion3 uni;
   };
 
-// Sequnce indireciton test
+// Sequnce indirection test
   exception Sequnce_Indirection_Test_Failed {};
 
    typedef string Istring;
