@@ -1391,12 +1391,24 @@ namespace
         // Only struct, union, event and valuetype TypeCodes may be
         // recursive. However non-recursive ALIAS may be indirected.
         || !(kind == CORBA::tk_struct
+             || kind == CORBA::tk_sequence
              || kind == CORBA::tk_union
              || kind == CORBA::tk_value
              || kind == CORBA::tk_event
              || kind == CORBA::tk_alias))
       {
         return false;
+      }
+
+    if (CORBA::tk_sequence == kind)  // @todo 1. check if recursion is properly handled 2. check need for other complex types
+      {
+        using namespace TAO::TypeCodeFactory;
+
+        return tc_sequence_factory (static_cast<CORBA::TCKind> (kind),
+                              indir_stream,
+                              tc,
+                              indirect_infos,
+                              direct_infos);
       }
 
       // Currently all recursive TypeCodes have complex parameter
