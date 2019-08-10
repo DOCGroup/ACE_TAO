@@ -466,12 +466,15 @@ ssize_t
 ACE_SOCK_Dgram::recv (iovec iov[],
                       int n,
                       ACE_Addr &addr,
-                      int flags) const
+                      int flags,
+                      ACE_INET_Addr *to_addr) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 
   ssize_t length = 0;
   int i;
+
+  ACE_UNUSED_ARG (to_addr);
 
   for (i = 0; i < n; i++)
 #if ! (defined(__BORLANDC__) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))

@@ -49,10 +49,8 @@ ACE_SOCK_SEQPACK_Association::abort (void)
   // setsockopt() SO_LINGER configures socket to reap immediately.
   // Normal close then aborts the association.
   //
-  linger slinger;
-
+  linger slinger = { 0, 0 };
   slinger.l_onoff = 1;
-  slinger.l_linger = 0;
 
   if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                 SOL_SOCKET,

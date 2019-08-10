@@ -1,5 +1,15 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
+
+. On Linux, the ACE_Log_Msg format specifier `%t` is now replaced with the
+  system thread id provided by gettid(), instead of the much longer pthread id.
+
+. Added support for MQX
+
+. Enhanced Android support
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.4 and ACE-6.5.5
 ====================================================

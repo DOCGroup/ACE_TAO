@@ -94,7 +94,7 @@ TAO_UIPMC_Profile::decode (TAO_InputCDR& cdr)
 {
   // The following is a selective reproduction of TAO_Profile::decode
 
-  CORBA::ULong encap_len = cdr.length ();
+  CORBA::ULong const encap_len = static_cast<CORBA::ULong> (cdr.length ());
 
   // Read and verify major, minor versions, ignoring profiles
   // whose versions we don't understand.

@@ -4,6 +4,14 @@ variables:
    MPC_ROOT: $(Build.SourcesDirectory)/ACE/MPC
    system.prefergit: true
 
+schedules:
+- cron: "0 7 * * SUN"
+  displayName: Weekly Sunday
+  branches:
+    include:
+    - master
+  always: true
+
 resources:
 - repo: self
   fetchDepth: 1
@@ -182,11 +190,12 @@ jobs:
     SSL_ROOT: $(Build.SourcesDirectory)\vcpkg\packages\openssl-windows_$(vcpkgarch)
     SSL_LIBDIR: $(SSL_ROOT)\$(vcpkglibdir)
     XERCESC_LIBDIR: $(XERCESCROOT)\$(vcpkglibdir)
+    VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
   steps:
   - powershell: |
-      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(Build.SourcesDirectory)\vcpkg
-      .\vcpkg\bootstrap-vcpkg.bat
-      .\vcpkg\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
+      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
+      $(VCPKG_ROOT)\bootstrap-vcpkg.bat
+      $(VCPKG_ROOT)\vcpkg.exe install --recurse --triplet $(vcpkgarch) openssl xerces-c
     displayName: vcpkg
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h

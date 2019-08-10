@@ -22,18 +22,13 @@
 
 #include "tao/orbconf.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
+#include "tao/DynamicInterface/Request.h"
 
 #if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Messaging.h"
 #endif /* TAO_HAS_AMI */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace CORBA
-{
-  class Request;
-  typedef Request *Request_ptr;
-}
 
 class TAO_ORB_Core;
 
@@ -46,7 +41,7 @@ class TAO_DynamicInterface_Export TAO_DII_Deferred_Reply_Dispatcher
   : public TAO_Asynch_Reply_Dispatcher_Base
 {
 public:
-  TAO_DII_Deferred_Reply_Dispatcher (const CORBA::Request_ptr req,
+  TAO_DII_Deferred_Reply_Dispatcher (CORBA::Request_ptr req,
                                      TAO_ORB_Core *orb_core);
 
   /// The Reply_Dispatcher methods
@@ -67,7 +62,7 @@ protected:
 
 private:
   /// Where the reply needs to go.
-  const CORBA::Request_ptr req_;
+  CORBA::Request_var req_;
 };
 
 #if defined (TAO_HAS_AMI)
@@ -90,7 +85,6 @@ public:
   virtual void connection_closed (void);
 
 private:
-
   /// The buffer that is used to initialise the data block
   char buf_[ACE_CDR::DEFAULT_BUFSIZE];
 
