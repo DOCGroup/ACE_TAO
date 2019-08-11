@@ -468,7 +468,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
-        //  Allowed EC groups as colon separated list, as described in 
+        //  Allowed EC groups as colon separated list, as described in
         //  https://www.openssl.org/docs/manmaster/man3/SSL_CTX_set1_curves_list.html
         //  Example: -SSLECparams secp384r1:brainpoolP384r1:prime256v1
       else if (ACE_OS::strcasecmp (argv[curarg],
