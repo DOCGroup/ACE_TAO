@@ -468,6 +468,53 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
             }
         }
 
+        //  Allowed EC groups as colon separated list, as described in 
+        //  https://www.openssl.org/docs/manmaster/man3/SSL_CTX_set1_curves_list.html
+        //  Example: -SSLECparams secp384r1:brainpoolP384r1:prime256v1
+      else if (ACE_OS::strcasecmp (argv[curarg],
+                                   ACE_TEXT("-SSLECparams")) == 0)
+        {
+          curarg++;
+          if (curarg < argc)
+            {
+                const char *curveList = ACE_TEXT_ALWAYS_CHAR(argv[curarg]);
+                if(!curveList)
+                {
+                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   "ERROR: Empty -SSLECparams "
+                                   "value\n"),
+                                  -1);
+                }
+                //  Any reasonable security limit on curveList length ?
+
+                //  SSL_CTX_set1_curves_list() was added in OpenSSL 1.0.2
+#if (OPENSSL_VERSION_NUMBER >= 0x10002000L)
+                //  'curves' - since OpenSSL 1.0.2, 'groups' since OpenSSL 1.1.1 and recommended
+                long ret = 0;
+#if (OPENSSL_VERSION_NUMBER < 0x10101000L)
+                ret = ::SSL_CTX_set1_curves_list(ssl_ctx->context (), curveList);
+#else
+                ret = ::SSL_CTX_set1_groups_list(ssl_ctx->context (), curveList);
+#endif
+                if(ret != 1)
+                {
+                    ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   "ERROR: SSL_CTX_set1_groups_list failed (%d) for list: "
+                                   "%s.\n",
+                                   ret,
+                                   curveList),
+                                  -1);
+                }
+
+                ::SSL_CTX_set_options(ssl_ctx->context (), SSL_OP_SINGLE_ECDH_USE);
+#else
+              ORBSVCS_DEBUG ((LM_WARNING,
+                          ACE_TEXT ("WARNING: Ignoring SSLECparams parameter, OpenSSL version too low: %X, at least 1.0.2 required\n"),
+                          OPENSSL_VERSION_NUMBER));
+#endif
+            }
+        }
+
       else if (ACE_OS::strcasecmp (argv[curarg],
                                    ACE_TEXT("-SSLCAfile")) == 0)
         {
