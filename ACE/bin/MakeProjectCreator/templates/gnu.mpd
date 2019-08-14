@@ -679,7 +679,7 @@ endif
 
 <%endif%>
 <%if(idl_files)%>
-ADDITIONAL_IDL_TARGETS +=<%foreach(idl_files)%> <%if(flag_overrides(idl_file, gendir))%><%if(!compares(flag_overrides(idl_file, gendir),.))%><%flag_overrides(idl_file, gendir)%>/<%endif%><%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%else%><%basenoextension(idl_file)%>$(IDL_CLIENT_HDR_EXT)<%endif%><%endfor%>
+ADDITIONAL_IDL_TARGETS += $(GENERATED_DIRTY)
 idl_stubs: $(ADDITIONAL_IDL_TARGETS)
 <%if(source_files)%>
 
