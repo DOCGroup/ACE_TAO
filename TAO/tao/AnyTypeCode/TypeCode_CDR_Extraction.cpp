@@ -1400,7 +1400,7 @@ namespace
         return false;
       }
 
-    if (CORBA::tk_sequence == kind)  // @todo 1. check if recursion is properly handled 2. check need for other complex types
+    if (CORBA::tk_sequence == kind || CORBA::tk_array == kind)  // @todo 1. check if recursion is properly handled 2. check need for other complex types
       {
         using namespace TAO::TypeCodeFactory;
 
