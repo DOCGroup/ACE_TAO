@@ -63,7 +63,6 @@ public:
   static const int DEFAULT_SELECTOR;
   static const int DEFAULT_PKT_SIZE;
 
-  // = Initializattion and termination methods.
   /// Default constructor.
   ACE_ATM_QoS(int = DEFAULT_PKT_SIZE);
 

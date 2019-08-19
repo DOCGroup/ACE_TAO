@@ -26,8 +26,6 @@ class TAO_Notify_ThreadPool_Supplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-  // = Initialization and Termination code
-
   /// Constructor.
   TAO_Notify_ThreadPool_Supplier (TAO_Notify_ORB_Objects& orb_objects);
 

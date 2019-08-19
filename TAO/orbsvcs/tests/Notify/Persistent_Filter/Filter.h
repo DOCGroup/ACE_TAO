@@ -36,9 +36,7 @@ class Filter_StructuredPushSupplier;
  */
 class FilterClient
 {
-
  public:
-  // = Initialization and Termination
   /// Constructor
   FilterClient (void);
 
@@ -166,9 +164,7 @@ class FilterClient
  */
 class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
 {
-
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
 
@@ -221,8 +217,7 @@ protected:
   */
 class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier
 {
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   Filter_StructuredPushSupplier (const char* my_name);
 

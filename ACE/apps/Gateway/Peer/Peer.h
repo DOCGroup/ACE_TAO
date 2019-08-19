@@ -202,7 +202,6 @@ template class ACE_Svc_Export ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
 class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  // = Initialization method.
   /**
    * Initialize the <Peer_Connector>.  NOTE:  the arguments are
    * ignored.  They are only provided to avoid a compiler warning

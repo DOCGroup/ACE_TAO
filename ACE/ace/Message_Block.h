@@ -125,7 +125,6 @@ public:
     USER_FLAGS = 0x1000
   };
 
-  // = Initialization and termination.
   /// Create an empty message.
   ACE_Message_Block (ACE_Allocator *message_block_allocator = 0);
 

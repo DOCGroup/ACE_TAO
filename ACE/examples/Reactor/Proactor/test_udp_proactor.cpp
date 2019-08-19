@@ -45,7 +45,6 @@ static int done = 0;
 class Receiver : public ACE_Service_Handler
 {
 public:
-  // = Initialization and termination.
   Receiver (void);
   ~Receiver (void);
 

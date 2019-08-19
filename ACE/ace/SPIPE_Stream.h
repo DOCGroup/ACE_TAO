@@ -54,7 +54,6 @@ public:
   friend class ACE_SPIPE_Acceptor;
   friend class ACE_SPIPE_Connector;
 
-  // = Initialization method.
   /// Default constructor.
   ACE_SPIPE_Stream (void);
 

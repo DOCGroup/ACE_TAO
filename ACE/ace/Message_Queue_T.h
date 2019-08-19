@@ -649,7 +649,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Message_Queue_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Message_Queue_Iterator (ACE_Message_Queue <ACE_SYNCH_USE, TIME_POLICY> &queue);
 
   // = Iteration methods.
@@ -687,7 +686,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Message_Queue_Reverse_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Message_Queue_Reverse_Iterator (ACE_Message_Queue <ACE_SYNCH_USE, TIME_POLICY> &queue);
 
   // = Iteration methods.
@@ -1414,7 +1412,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Message_Queue_Ex_Iterator (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue);
 
   // = Iteration methods.
@@ -1449,7 +1446,6 @@ template <class ACE_MESSAGE_TYPE, ACE_SYNCH_DECL, class TIME_POLICY = ACE_System
 class ACE_Message_Queue_Ex_Reverse_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Message_Queue_Ex_Reverse_Iterator (ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY> & queue);
 
   // = Iteration methods.

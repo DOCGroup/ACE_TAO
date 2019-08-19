@@ -203,7 +203,6 @@ template <class T>
 class ACE_Array_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Array_Iterator (ACE_Array_Base<T> &);
 
   // = Iteration methods.

@@ -70,8 +70,6 @@ public:
   /// Destructor.
   virtual ~ACE_Task_Base (void);
 
-  // = Initialization and termination hooks.
-
   // These methods should be overridden by subclasses if you'd like to
   // provide <Task>-specific initialization and termination behavior.
 

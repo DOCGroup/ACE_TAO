@@ -97,7 +97,6 @@ private:
 class ACE_Export ACE_Sig_Action
 {
 public:
-  // = Initialization methods.
   /// Default constructor.  Initializes everything to 0.
   ACE_Sig_Action (void);
 

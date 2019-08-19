@@ -36,7 +36,6 @@ template <class T>
 class ACE_Unbounded_Queue_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Unbounded_Queue_Iterator (ACE_Unbounded_Queue<T> &q, int end = 0);
 
   // = Iteration methods.
@@ -79,7 +78,6 @@ template <class T>
 class ACE_Unbounded_Queue_Const_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Unbounded_Queue_Const_Iterator (const ACE_Unbounded_Queue<T> &q, int end = 0);
 
   // = Iteration methods.

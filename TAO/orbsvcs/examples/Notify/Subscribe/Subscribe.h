@@ -29,9 +29,7 @@ class Subscribe_StructuredPushSupplier;
  */
 class Subscribe
 {
-
- public:
-  // = Initialization and Termination
+public:
   Subscribe (void);
   ~Subscribe ();
 
@@ -123,9 +121,7 @@ class Subscribe_StructuredPushConsumer
   // = DESCRIPTION
   //   Consumer for the Subscribe example.
   //
-
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   Subscribe_StructuredPushConsumer (Subscribe* subscribe);
 
@@ -179,8 +175,7 @@ class Subscribe_StructuredPushSupplier
   // = DESCRIPTION
   //   Supplier for the SUBSCRIBE example.
   //
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   Subscribe_StructuredPushSupplier (void);
 

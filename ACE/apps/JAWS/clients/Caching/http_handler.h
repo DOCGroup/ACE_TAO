@@ -30,7 +30,6 @@
 class HTTP_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization methods.
   HTTP_Handler (void);
   HTTP_Handler (const char * path);
 

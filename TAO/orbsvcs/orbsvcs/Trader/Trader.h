@@ -318,8 +318,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
-
-  // = Initialization and termination methods.
   TAO_Trading_Components_i (TAO_Lockable &locker);
   ~TAO_Trading_Components_i (void);
 

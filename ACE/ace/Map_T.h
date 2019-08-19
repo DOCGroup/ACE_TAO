@@ -1125,7 +1125,6 @@ public:
   typedef ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>
           implementation;
 
-  // = Initialization and termination methods.
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
   ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = 0);
 

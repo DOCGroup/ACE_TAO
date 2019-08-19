@@ -449,7 +449,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Iterator_Base (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
@@ -508,7 +507,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Const_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Map_Const_Iterator_Base (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
@@ -571,7 +569,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Map_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                     int pass_end = 0);
 
@@ -618,7 +615,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Const_Iterator : public ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Map_Const_Iterator (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                           int pass_end = 0);
 
@@ -665,7 +661,6 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Reverse_Iterator : public ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Map_Reverse_Iterator (ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
                             int pass_end = 0);
 

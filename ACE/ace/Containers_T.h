@@ -310,7 +310,6 @@ class ACE_DNode
   friend class ACE_Ordered_MultiSet_Iterator<T>;
 
 public:
-
   /// This isn't necessary, but it keeps some compilers happy.
   ~ACE_DNode (void);
 
@@ -318,8 +317,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
-  // = Initialization methods
   ACE_DNode (const T &i, ACE_DNode<T> *n = 0, ACE_DNode<T> *p = 0);
 
   /// Pointer to next element in the list of {ACE_DNode}s.
@@ -506,7 +503,6 @@ template <class T>
 class ACE_Unbounded_Stack_Iterator
 {
 public:
-  // = Initialization method.
   /// Move to the first element in the {stack}.
   ACE_Unbounded_Stack_Iterator (ACE_Unbounded_Stack<T> &stack);
 
@@ -587,8 +583,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Initialization methods.
-
   /// Constructor
   ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
 
@@ -652,7 +646,6 @@ template <class T>
 class ACE_Double_Linked_List_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
 {
 public:
-  // = Initialization method.
   ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &);
 
   /**
@@ -721,7 +714,6 @@ template <class T>
 class ACE_Double_Linked_List_Reverse_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
 {
 public:
-  // = Initialization method.
   ACE_Double_Linked_List_Reverse_Iterator (ACE_Double_Linked_List<T> &);
 
   /**
@@ -1131,13 +1123,10 @@ public:
 template <class T>
 class ACE_DLList_Iterator : public ACE_Double_Linked_List_Iterator <ACE_DLList_Node>
 {
-
   friend class ACE_DLList<T>;
   friend class ACE_DLList_Node;
 
 public:
-
-  // = Initialization method.
   ACE_DLList_Iterator (ACE_DLList<T> &l);
 
   /**
@@ -1194,13 +1183,10 @@ private:
 template <class T>
 class ACE_DLList_Reverse_Iterator : public ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>
 {
-
   friend class ACE_DLList<T>;
   friend class ACE_DLList_Node;
 
 public:
-
-  // = Initialization method.
   ACE_DLList_Reverse_Iterator (ACE_DLList<T> &l);
 
   /**
@@ -1273,7 +1259,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  // = Initialization method.
   ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
   /// Set we are iterating over.
@@ -1305,7 +1290,6 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
-  // = Initialization method.
   ACE_Fixed_Set_Iterator (ACE_Fixed_Set<T, ACE_SIZE> &s);
 
   // = Iteration methods.
@@ -1341,7 +1325,6 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Const_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
-  // = Initialization method.
   ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s);
 
   // = Iteration methods.
@@ -1513,7 +1496,6 @@ template <class T>
 class ACE_Bounded_Set_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Bounded_Set_Iterator (ACE_Bounded_Set<T> &s);
 
   // = Iteration methods.
@@ -1722,7 +1704,6 @@ class ACE_Ordered_MultiSet_Iterator
 public:
   friend class ACE_Ordered_MultiSet<T>;
 
-  // = Initialization method.
   ACE_Ordered_MultiSet_Iterator (ACE_Ordered_MultiSet<T> &s);
 
   // = Iteration methods.

@@ -144,10 +144,7 @@ template <class ACE_LOCK, typename TYPE>
 class ACE_Atomic_Op_Ex
 {
 public:
-
   typedef typename ACE_Type_Traits<TYPE>::parameter_type arg_type;
-
-  // = Initialization methods.
 
   /// Initialize @c value_ to 0.
   ACE_Atomic_Op_Ex (ACE_LOCK & mtx);

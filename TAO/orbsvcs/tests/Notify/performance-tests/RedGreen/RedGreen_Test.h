@@ -170,8 +170,7 @@ class RedGreen_Test_StructuredPushConsumer
   //   Consumer for the RedGreen_Test example.
   //
 
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
 
@@ -255,8 +254,7 @@ class RedGreen_Test_StructuredPushSupplier
   // = DESCRIPTION
   //   Supplier for the RedGreen_Test example.
   //
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   RedGreen_Test_StructuredPushSupplier (void);
 

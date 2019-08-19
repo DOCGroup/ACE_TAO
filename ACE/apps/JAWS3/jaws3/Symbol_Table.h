@@ -35,14 +35,10 @@
 class JAWS_Symbol_Table;
 
 class JAWS_Export JAWS_Symbol_Table : public JAWS_SYMBOL_TABLE_BASE
-
 // = TITLE
 //     A class the associates a string with another string.
 {
 public:
-
-  // = Initialization methods
-
   JAWS_Symbol_Table (size_t size = 211);
   // Hash table <size> should be a prime.
 

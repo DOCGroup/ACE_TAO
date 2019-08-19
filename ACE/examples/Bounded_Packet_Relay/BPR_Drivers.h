@@ -66,8 +66,6 @@ public:
   /// Command entry point type definition.
   typedef int (Bounded_Packet_Relay::*ACTION) (void *);
 
-  // = Initialization method
-
   /// Constructor.
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                         Input_Device_Wrapper_Base *input_wrapper,

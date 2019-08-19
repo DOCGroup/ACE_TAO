@@ -20,7 +20,6 @@ class Handle_Thr_Acceptor : public ACE_Strategy_Acceptor<SVC_HANDLER, ACE_PEER_A
   //   configured <ACE_Thread_Strategy>.
 {
 public:
-  // = Initialization and termination.
   Handle_Thr_Acceptor (void);
   ~Handle_Thr_Acceptor (void);
 
