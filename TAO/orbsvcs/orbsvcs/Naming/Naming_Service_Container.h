@@ -67,6 +67,7 @@ template <class T>
 class ACE_Unbounded_List_Iterator
 {
 public:
+  ACE_Unbounded_List_Iterator (ACE_Unbounded_List<T> &s, int end = 0);
   // = Iteration methods.
 
   /// Pass back the <next_item> that hasn't been seen in the List.
