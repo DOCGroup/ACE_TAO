@@ -25,7 +25,6 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   My_Test_Object (CORBA::Short id = 0);
 

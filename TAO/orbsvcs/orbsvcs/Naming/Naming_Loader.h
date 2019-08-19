@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
 public:
-
   /// Constructor
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
@@ -53,7 +52,7 @@ public:
                                            int argc,
                                            ACE_TCHAR *argv[]);
 
- protected:
+protected:
   /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
   TAO_Naming_Server* naming_server_;

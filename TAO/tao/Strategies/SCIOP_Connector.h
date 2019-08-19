@@ -47,7 +47,6 @@ class TAO_SCIOP_Endpoint;
 class TAO_Strategies_Export TAO_SCIOP_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_SCIOP_Connector (void);
 

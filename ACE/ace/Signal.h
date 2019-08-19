@@ -223,7 +223,6 @@ private:
 class ACE_Export ACE_Sig_Guard
 {
 public:
-  // = Initialization and termination methods.
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated

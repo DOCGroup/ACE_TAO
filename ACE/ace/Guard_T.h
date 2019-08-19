@@ -65,8 +65,6 @@ template <class ACE_LOCK>
 class ACE_Guard
 {
 public:
-
-  // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
@@ -244,8 +242,6 @@ template <class ACE_LOCK>
 class ACE_TSS_Guard
 {
 public:
-  // = Initialization and termination methods.
-
   /// Implicitly and automatically acquire the thread-specific lock.
   ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
 

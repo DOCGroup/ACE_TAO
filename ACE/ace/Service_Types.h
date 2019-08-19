@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Service_Type_Impl
 {
 public:
-  // = Initialization and termination methods.
   ACE_Service_Type_Impl (void *object,
                          const ACE_TCHAR *s_name,
                          u_int flags = 0,

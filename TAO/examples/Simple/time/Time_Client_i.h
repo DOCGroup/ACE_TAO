@@ -28,7 +28,6 @@
 class Time_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Time_Client_i (void);
 

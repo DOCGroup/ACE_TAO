@@ -154,7 +154,6 @@ public:
   typedef ACE_Unbounded_Queue_Iterator<T> ITERATOR;
   typedef ACE_Unbounded_Queue_Const_Iterator<T> CONST_ITERATOR;
 
-  // = Initialization and termination methods.
   /// Construction.  Use user specified allocation strategy
   /// if specified.
   /**

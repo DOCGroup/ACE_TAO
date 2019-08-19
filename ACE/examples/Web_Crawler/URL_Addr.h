@@ -29,7 +29,6 @@
 class ACE_URL_Addr : public ACE_INET_Addr
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_URL_Addr (void);
 

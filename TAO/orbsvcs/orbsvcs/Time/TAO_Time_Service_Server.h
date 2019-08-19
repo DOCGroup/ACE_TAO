@@ -36,7 +36,6 @@ class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeSer
 {
 
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Time_Service_Server (void);
 

@@ -59,8 +59,6 @@ public:
 
   ACE_DECLARE_STL_REVERSE_ITERATORS
 
-  // = Initialization and termination methods.
-
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,
                   ACE_Allocator * the_allocator = 0);

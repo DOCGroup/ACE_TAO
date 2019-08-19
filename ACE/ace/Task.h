@@ -64,7 +64,6 @@ namespace ACE_Task_Flags
 class ACE_Export ACE_Task_Base : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Task_Base (ACE_Thread_Manager * = 0);
 

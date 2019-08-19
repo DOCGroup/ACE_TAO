@@ -232,7 +232,6 @@ public:
   typedef const_value_type *  const_pointer;
   typedef ptrdiff_t           difference_type;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   /**

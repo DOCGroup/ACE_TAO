@@ -34,7 +34,6 @@ template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
                       const INT_ID &int_id,
@@ -173,8 +172,6 @@ public:
   typedef value_type const *                 const_pointer;
   typedef ptrdiff_t                          difference_type;
   typedef size_t                             size_type;
-
-  // = Initialization and termination methods.
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with a default number of elements.

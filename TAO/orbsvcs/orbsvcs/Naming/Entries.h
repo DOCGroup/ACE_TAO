@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_ENTRIES_H
 #define TAO_ENTRIES_H
 #include /**/ "ace/pre.h"
@@ -41,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_IntId (void);
 
@@ -82,8 +80,6 @@ public:
 class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_ExtId (void);
 
@@ -124,10 +120,10 @@ public:
 
   // = Accessors
 
-  /// Return <id_> in a const char * format.
+  /// Return id_ in a const char * format.
   const char * id (void);
 
-  /// Return <kind_> in a const char * format.
+  /// Return kind_ in a const char * format.
   const char * kind (void);
 };
 

@@ -52,7 +52,6 @@ public:
   typedef ACE_Unbounded_Set<INT_ID> VALUE_SET;
   typedef ACE_Unbounded_Set_Iterator<INT_ID> VALUE_SET_ITERATOR;
 
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
                             const ACE_Unbounded_Set<INT_ID> &int_id_set,
@@ -166,8 +165,6 @@ public:
           const_iterator;
   typedef ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           reverse_iterator;
-
-  // = Initialization and termination methods.
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with default size elements.

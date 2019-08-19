@@ -7,12 +7,11 @@
 class TReceiverImplementation : public POA_Receiver
 {
 public:
-  // = Initialization and termination methods.
-  TReceiverImplementation (void);
   // Constructor.
+  TReceiverImplementation (void);
 
-  ~TReceiverImplementation (void);
   // Destructor.
+  ~TReceiverImplementation (void);
 
   virtual void message (const char* msg);
 

@@ -38,7 +38,6 @@
 class Concurrency_Service : public TAO_ORB_Manager
 {
 public:
-  // = Initialization and termination methods.
   /// Default Constructor.
   Concurrency_Service (void);
 

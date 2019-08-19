@@ -185,7 +185,6 @@ private:
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
 

@@ -53,7 +53,6 @@ template <typename CHAR_TYPE>
 class ACE_Arg_Shifter_T
 {
 public:
-  // = Initialization and termination methods.
   /**
    * Initialize the ACE_Arg_Shifter to the vector over which to
    * iterate. Optionally, also provide the temporary array for

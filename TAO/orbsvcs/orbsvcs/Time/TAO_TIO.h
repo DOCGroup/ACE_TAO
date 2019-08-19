@@ -34,7 +34,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_TIO : public POA_CosTime::TIO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_TIO (TimeBase::TimeT lower,
            TimeBase::TimeT upper);

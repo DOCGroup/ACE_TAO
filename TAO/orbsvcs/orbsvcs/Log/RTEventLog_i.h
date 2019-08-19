@@ -54,8 +54,6 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLog_i :
   public POA_RTEventLogAdmin::EventLog
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_RTEventLog_i (CORBA::ORB_ptr orb,
                     PortableServer::POA_ptr poa,

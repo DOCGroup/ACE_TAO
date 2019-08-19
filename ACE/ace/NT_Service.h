@@ -96,9 +96,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_Export ACE_NT_Service : public ACE_Task<ACE_MT_SYNCH>
 {
-
 public:
-  // = Initialization and termination methods.
   /// Constructor primarily for use when running the service.
   ACE_NT_Service (DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,

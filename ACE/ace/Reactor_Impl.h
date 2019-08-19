@@ -45,7 +45,6 @@ class ACE_Sig_Set;
 class ACE_Export ACE_Reactor_Notify : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue *timer_queue = 0,
                     int disable_notify = 0) = 0;

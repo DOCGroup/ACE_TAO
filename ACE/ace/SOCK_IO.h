@@ -47,8 +47,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SOCK_IO : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   ACE_SOCK_IO (void);
 

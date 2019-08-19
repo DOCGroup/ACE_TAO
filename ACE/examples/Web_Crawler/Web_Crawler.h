@@ -34,7 +34,6 @@ class URL_Visitor_Factory;
 class Web_Crawler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Web_Crawler (void);
 

@@ -8,13 +8,11 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_BINDINGS_ITERATOR_T_H
 #define TAO_BINDINGS_ITERATOR_T_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

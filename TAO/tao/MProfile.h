@@ -53,7 +53,6 @@ typedef CORBA::ULong TAO_PHandle;
 class TAO_Export TAO_MProfile
 {
 public:
-  // = Initialization and termination methods.
   TAO_MProfile (CORBA::ULong sz = 0);
 
   /**

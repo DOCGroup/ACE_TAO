@@ -63,8 +63,6 @@ public:
     int cnt;
   };
 
-
-  // = Initialization and termination methods.
   ///  Default constructor.
   TAO_PortableGroup_Acceptor_Registry (void);
 

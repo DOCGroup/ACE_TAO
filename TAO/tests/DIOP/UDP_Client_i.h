@@ -29,7 +29,6 @@ class UDP_Client_i
   //    This class wrapps the client functionality into one class
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_Client_i (CORBA::ORB_ptr orb,
                 UDP_ptr udp,

@@ -828,7 +828,6 @@ public:
   typedef ACE_Double_Linked_List_Iterator<T> ITERATOR;
   typedef ACE_Double_Linked_List_Reverse_Iterator<T> REVERSE_ITERATOR;
 
-  // = Initialization and termination methods.
   /// construction.  Use user specified allocation strategy
   /// if specified.
   /**
@@ -1406,7 +1405,6 @@ public:
   typedef ACE_Fixed_Set_Iterator<T, ACE_SIZE> ITERATOR;
   typedef ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE> CONST_ITERATOR;
 
-  // = Initialization and termination methods.
   /// Default Constructor.
   /**
    * Creates an empy set
@@ -1600,7 +1598,6 @@ public:
     DEFAULT_SIZE = 10
   };
 
-  // = Initialization and termination methods.
   /// Construct a Bounded_Set using the default size.
   /**
    * The default constructor initializes the Bounded_Set to a maximum size
@@ -1814,7 +1811,6 @@ public:
   // Trait definition.
   typedef ACE_Ordered_MultiSet_Iterator<T> ITERATOR;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   /**

@@ -139,7 +139,6 @@ public:
   /// Destructor.
   virtual ~ACE_Select_Reactor_Notify (void);
 
-  // = Initialization and termination methods.
   /// Initialize.
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue * = 0,
@@ -319,7 +318,6 @@ public:
 
   typedef map_type::size_type size_type;
 
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 

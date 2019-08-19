@@ -34,8 +34,6 @@ public:
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Persistent_Naming_Context::HASH_MAP HASH_MAP;
 
-  // = Initialization and termination methods.
-
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  Derived class from TAO_Persistent_Naming_Context

@@ -36,7 +36,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_UTILS_Export TAO_ORB_Manager
 {
 public:
-  // = Initialization and termination methods.
   /** Constructor.
    *
    *  @param orb  pointer to an ORB which is duplicated an stored

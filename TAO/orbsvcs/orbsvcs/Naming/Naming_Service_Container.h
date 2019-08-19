@@ -110,7 +110,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_NS_Node<T> *current_;
 
@@ -137,7 +136,6 @@ public:
   typedef ACE_Unbounded_List_Iterator<T> ITERATOR;
   typedef ACE_Unbounded_List_Iterator<T> iterator;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   ACE_Unbounded_List (ACE_Allocator *alloc = 0);

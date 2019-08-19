@@ -33,7 +33,6 @@
 class UDP_i: public POA_UDP
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_i (CORBA::ORB_ptr o);
 

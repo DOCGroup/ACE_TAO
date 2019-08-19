@@ -93,7 +93,6 @@ public:
 
   typedef ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY> Base_Time_Policy;
 
-  // = Initialization and termination methods.
   /**
    * The Constructor creates a heap with specified number of elements.
    * This can also take in a upcall functor and freelist (if 0, then

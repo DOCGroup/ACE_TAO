@@ -22,7 +22,6 @@ class TAO_CosEC_PushConsumerWrapper :
   //   class wraps the Cos PushConsumer to make it look like a Rtec
   //   PushConsumer.
 public:
-  // = Initialization and termination methods.
   TAO_CosEC_PushConsumerWrapper (CosEventComm::PushConsumer_ptr consumer);
   // Constructor.
 

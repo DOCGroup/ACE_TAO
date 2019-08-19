@@ -29,7 +29,6 @@
 class Echo_i : public POA_Echo
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Echo_i (void);
 

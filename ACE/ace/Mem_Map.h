@@ -39,8 +39,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Mem_Map : private ACE_Copy_Disabled
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor.
   ACE_Mem_Map (void);
 

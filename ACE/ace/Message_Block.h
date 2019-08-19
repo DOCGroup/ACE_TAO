@@ -675,7 +675,6 @@ private:
 class ACE_Export ACE_Data_Block
 {
 public:
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Data_Block (void);
 

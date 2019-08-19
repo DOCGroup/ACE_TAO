@@ -56,7 +56,6 @@ public:
     DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE
   };
 
-  // = Initialization and termination methods.
   /// Initialize the repository.
   ACE_Service_Repository (size_t size = DEFAULT_SIZE);
 
@@ -220,7 +219,6 @@ protected:
 class ACE_Export ACE_Service_Repository_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor initializes the iterator.
   ACE_Service_Repository_Iterator (ACE_Service_Repository &sr,
                                    bool ignored_suspended = true);

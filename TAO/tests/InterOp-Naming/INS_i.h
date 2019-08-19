@@ -18,9 +18,7 @@
 
 class INS_i : public POA_INS
 {
-
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   INS_i (void);
 

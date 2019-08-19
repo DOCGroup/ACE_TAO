@@ -84,7 +84,6 @@ public:
     int use_active_hint_in_poa_names_;
   };
 
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Server_Strategy_Factory (void);
 

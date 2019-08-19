@@ -144,7 +144,6 @@ public:
   typedef ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> const_iterator;
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
 
-  // = Initialization and termination methods.
   /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Map_Manager (ACE_Allocator *alloc = 0);
 

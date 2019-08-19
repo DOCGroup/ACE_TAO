@@ -36,7 +36,6 @@ template <class ACE_CHAR_T>
 class ACE_Obstack_T
 {
 public:
-  // = Initialization and termination methods.
   ACE_Obstack_T (size_t size = (4096 * sizeof (ACE_CHAR_T)) - sizeof (ACE_Obchunk),
                  ACE_Allocator *allocator_strategy = 0);
   ~ACE_Obstack_T (void);

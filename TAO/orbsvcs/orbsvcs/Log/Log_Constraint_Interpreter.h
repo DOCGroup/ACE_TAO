@@ -37,9 +37,6 @@ class TAO_Log_Serv_Export TAO_Log_Constraint_Interpreter :
   public ETCL_Interpreter
 {
 public:
-
-  // = Initialization and termination methods.
-
   /**
    * This constructor builds an expression tree representing the
    * constraint specified in <constraints>, and throws an Illegal

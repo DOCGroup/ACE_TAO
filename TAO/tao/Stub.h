@@ -431,7 +431,6 @@ protected:
 class TAO_Export TAO_Stub_Auto_Ptr
 {
 public:
-  // = Initialization and termination methods.
   explicit TAO_Stub_Auto_Ptr (TAO_Stub *p = 0);
   TAO_Stub_Auto_Ptr (TAO_Stub_Auto_Ptr &ap);
   TAO_Stub_Auto_Ptr &operator= (TAO_Stub_Auto_Ptr &rhs);

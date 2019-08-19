@@ -67,11 +67,9 @@ typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
  */
 class Scheduler : public ACE_Task<ACE_SYNCH>
 {
-
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Scheduler (Scheduler * = 0);
 

@@ -30,7 +30,6 @@
 class Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Server_i (void);
 
