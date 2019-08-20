@@ -35,20 +35,22 @@ sub run_command ($$) {
   my $command = shift;
   my $print_error = shift;
   my $result = 0;
-  if (system($command) and $print_error) {
-    my $error_message;
+  if (system($command)) {
     $result = $? >> 8;
-    if ($? == -1) {
-      $error_message = "failed to run: $!";
+    if ($print_error) {
+      my $error_message;
+      if ($? == -1) {
+        $error_message = "failed to run: $!";
+      }
+      elsif ($? & 127) {
+        $error_message = sprintf("exited on signal %d", ($? & 127));
+        $error_message .= " and created coredump" if ($? & 128);
+      }
+      else {
+        $error_message = sprintf ("returned with status %d", $result);
+      }
+      print "Error: $test $error_message\n";
     }
-    elsif ($? & 127) {
-      $error_message = sprintf("exited on signal %d", ($? & 127));
-      $error_message .= " and created coredump" if ($? & 128);
-    }
-    else {
-      $error_message = sprintf ("returned with status %d", $result);
-    }
-    print "Error: $test $error_message\n";
   }
   return $result;
 }
