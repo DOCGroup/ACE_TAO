@@ -34,7 +34,6 @@ template <typename CHAR_TYPE>
 class ACE_ARGV_Queue_Entry_T
 {
 public:
-  // = Initialization and termination.
   /// Initialize a ACE_ARGV_Queue_Entry_T.
   ACE_ARGV_Queue_Entry_T (void);
 
@@ -94,7 +93,6 @@ template <typename CHAR_TYPE>
 class ACE_ARGV_T
 {
 public:
-  // = Initialization and termination.
   /**
    * Splits the specified string into an argument vector. Arguments in the
    * string are delimited by whitespace. Whitespace-containing arguments

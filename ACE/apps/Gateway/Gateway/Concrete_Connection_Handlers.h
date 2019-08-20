@@ -29,7 +29,6 @@
 class Supplier_Handler : public Connection_Handler
 {
 public:
-  // = Initialization method.
   Supplier_Handler (const Connection_Config_Info &);
 
 protected:
@@ -66,7 +65,6 @@ protected:
 class Consumer_Handler : public Connection_Handler
 {
 public:
-  // = Initialization method.
   Consumer_Handler (const Connection_Config_Info &);
 
   /// Send an event to a Consumer (may be queued if necessary).

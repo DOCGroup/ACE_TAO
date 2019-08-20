@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_UIPMC_Connector (void);
 

@@ -54,7 +54,6 @@ public:
 
   typedef ACE_Rusage Rusage;
 
-  // = Initialization and termination methods.
   /// Default constructor. Clears all time values to 0.
   ACE_Profile_Timer (void);
 

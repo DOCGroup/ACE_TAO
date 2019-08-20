@@ -27,7 +27,6 @@
 class CM_Client : public Comm_Manager
 {
 public:
-  // = Initialization and termination.
   /// Constructor.
   CM_Client (void);
 

@@ -71,7 +71,6 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class ACE_Svc_Export Peer_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination methods.
   /// Initialize the peer.
   Peer_Handler (void);
 
@@ -164,7 +163,6 @@ template class ACE_Svc_Export ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  // = Initialization and termination methods.
   /// Default initialization.
   Peer_Acceptor (void);
 
@@ -204,7 +202,6 @@ template class ACE_Svc_Export ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
 class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  // = Initialization method.
   /**
    * Initialize the <Peer_Connector>.  NOTE:  the arguments are
    * ignored.  They are only provided to avoid a compiler warning

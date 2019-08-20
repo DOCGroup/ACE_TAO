@@ -38,7 +38,6 @@ public:
     ACE_NOWAIT = IPC_NOWAIT
   };
 
-  // = Initialization and termination operations.
   ACE_Typed_SV_Message_Queue (void);
   ACE_Typed_SV_Message_Queue (key_t external_id,
                               int create = ACE_OPEN,

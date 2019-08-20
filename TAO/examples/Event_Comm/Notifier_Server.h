@@ -26,7 +26,6 @@
 class Notifier_Server
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Notifier_Server (void);
 

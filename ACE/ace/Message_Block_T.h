@@ -36,7 +36,6 @@ template <class ACE_LOCK>
 class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Locked_Data_Block (void);
 

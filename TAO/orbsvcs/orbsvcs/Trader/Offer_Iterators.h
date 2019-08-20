@@ -44,8 +44,6 @@ class TAO_Offer_Iterator
   //   interface.
   // END SPEC
 public:
-  // = Initialization and termination methods.
-
   TAO_Offer_Iterator (const TAO_Property_Filter& property_filter);
 
   virtual ~TAO_Offer_Iterator (void);
@@ -119,8 +117,6 @@ class TAO_Query_Only_Offer_Iterator
   //
 {
 public:
-  // = Initialization and termination methods.
-
   TAO_Query_Only_Offer_Iterator (const TAO_Property_Filter& pfilter);
 
   virtual ~TAO_Query_Only_Offer_Iterator (void);

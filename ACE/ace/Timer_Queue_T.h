@@ -76,7 +76,6 @@ public:
   /// Type of time policy
   typedef TIME_POLICY time_policy_t;
 
-  // = Initialization and termination methods.
   /**
    * Default constructor. @a upcall_functor is the instance of the
    * FUNCTOR to be used by the queue. If @a upcall_functor is 0, Timer

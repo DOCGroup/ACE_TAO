@@ -41,10 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_SHMIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   friend class TAO_SHMIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_SHMIOP_Endpoint (void);

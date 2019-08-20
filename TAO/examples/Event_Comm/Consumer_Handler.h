@@ -31,7 +31,6 @@
 class Consumer_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Consumer_Handler (void);
 

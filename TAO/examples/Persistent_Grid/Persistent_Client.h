@@ -28,7 +28,6 @@
 class Persistent_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Persistent_Client_i (void);
 

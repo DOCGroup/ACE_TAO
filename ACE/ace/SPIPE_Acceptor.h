@@ -45,7 +45,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_SPIPE_Acceptor : public ACE_SPIPE
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_SPIPE_Acceptor (void);
 

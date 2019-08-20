@@ -41,8 +41,6 @@ class ACE_DLL_Handle;
 class ACE_Export ACE_DLL
 {
 public:
-  // = Initialization and termination methods.
-
   /**
    * Default constructor.  By default, the close() operation on the
    * object will be invoked before it is destroyed.

@@ -44,12 +44,9 @@ class TAO_SCIOP_Connection_Handler;
 class TAO_Strategies_Export TAO_SCIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   // @todo Lose these friends!
   friend class TAO_SCIOP_Profile;
   friend class TAO_SSLIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_SCIOP_Endpoint (void);

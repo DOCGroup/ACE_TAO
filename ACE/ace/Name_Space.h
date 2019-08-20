@@ -34,7 +34,6 @@ typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 class ACE_Export ACE_Name_Binding
 {
 public:
-  // = Initialization and termination.
   /// Main constructor that initializes all the fields.
   ACE_Name_Binding (const ACE_NS_WString &n,
                     const ACE_NS_WString &v,

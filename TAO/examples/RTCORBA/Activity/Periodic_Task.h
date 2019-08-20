@@ -32,7 +32,6 @@ class Task_Stats;
 class Periodic_Task : public ACE_Task <ACE_SYNCH>
 {
  public:
-  /// = Initialization and termination code.
   Periodic_Task (void);
   ~Periodic_Task ();
 

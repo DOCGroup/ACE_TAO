@@ -36,7 +36,6 @@ class Supplier_Timer_Handler;
 class Supplier
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Supplier (void);
 

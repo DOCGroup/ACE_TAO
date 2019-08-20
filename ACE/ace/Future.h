@@ -237,7 +237,6 @@ template <class T>
 class ACE_Future
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Future (void);
 

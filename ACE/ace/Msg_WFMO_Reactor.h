@@ -40,7 +40,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Msg_WFMO_Reactor : public ACE_WFMO_Reactor
 {
 public:
-  // = Initialization and termination methods.
   /// Initialize <ACE_Msg_WFMO_Reactor> with the default size.
   ACE_Msg_WFMO_Reactor (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);

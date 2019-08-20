@@ -52,10 +52,7 @@ template class ACE_Svc_Export ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
 class ACE_Svc_Export ACE_Client_Logging_Handler :
   public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
 {
-
 public:
-  // = Initialization and termination.
-
   /// Default constructor. @a handle is where the output is sent.
   ACE_Client_Logging_Handler (ACE_HANDLE handle = ACE_STDERR);
 

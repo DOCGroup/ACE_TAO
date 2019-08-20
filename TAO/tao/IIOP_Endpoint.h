@@ -45,14 +45,11 @@ class TAO_IIOP_Profile;
 class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
 
   // @todo Lose these friends!
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_IIOP_Endpoint (void);

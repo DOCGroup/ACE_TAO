@@ -36,8 +36,6 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 class ACE_Svc_Export ACE_TS_Server_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination.
-
   /// Default constructor.
   ACE_TS_Server_Handler (ACE_Thread_Manager * = 0);
 

@@ -29,8 +29,7 @@ class Event_Logging_Service
   // = DESCRIPTION
   //   Implementation of the Telecom Log Service
 
- public:
-  // = Initialization and termination methods.
+public:
   Event_Logging_Service (void);
   // Constructor.
 

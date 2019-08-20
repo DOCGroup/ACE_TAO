@@ -43,7 +43,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_SOCK_SEQPACK_Acceptor : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_SOCK_SEQPACK_Acceptor (void);
 

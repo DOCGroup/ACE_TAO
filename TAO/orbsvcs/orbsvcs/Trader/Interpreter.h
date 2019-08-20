@@ -31,7 +31,6 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Interpreter (void);
 

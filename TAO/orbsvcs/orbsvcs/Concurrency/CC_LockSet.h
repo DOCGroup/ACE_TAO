@@ -75,8 +75,6 @@ typedef enum {CC_EM=-1, CC_IR=0, CC_R, CC_U, CC_IW, CC_W} CC_LockModeEnum;
 class TAO_Concurrency_Serv_Export CC_LockSet :  public POA_CosConcurrencyControl::LockSet
 {
 public:
-
-  // = Initialization and termination methods.
   /// Default constructor
   CC_LockSet (void);
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    notifier.h
@@ -6,9 +5,6 @@
  *  This class implements notifier  driver for the Publish/Subscribe example
  */
 //=============================================================================
-
-
-
 
  /**
   * @class Notifier
@@ -20,7 +16,6 @@
 class Notifier : public ACE_Event_Handler
 {
  public:
-  // = Initialization and termination methods.
   /// Constructor.
   Notifier (int argc, ACE_TCHAR *argv[]);
 

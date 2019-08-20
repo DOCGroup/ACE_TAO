@@ -63,7 +63,6 @@ public:
       NET_LOCAL
     };
 
-  // = Initialization and termination methods.
   /// "Do-nothing" constructor.
   ACE_Naming_Context (void);
 
@@ -277,7 +276,6 @@ private:
 class ACE_Export ACE_Name_Options
 {
 public:
-  // = Initialization and termination methods.
   ACE_Name_Options (void);
   ~ACE_Name_Options (void);
 

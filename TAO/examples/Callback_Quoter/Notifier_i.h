@@ -37,7 +37,6 @@
 class Notifier_i : public POA_Notifier
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Notifier_i (void);
 

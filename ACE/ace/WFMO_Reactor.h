@@ -662,8 +662,6 @@ public:
     DEFAULT_SIZE = MAXIMUM_WAIT_OBJECTS - 2
   };
 
-  // = Initialization and termination methods.
-
   /// Initialize ACE_WFMO_Reactor with the default size.
   ACE_WFMO_Reactor (ACE_Sig_Handler * = 0,
                     ACE_Timer_Queue * = 0,

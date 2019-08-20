@@ -40,8 +40,6 @@
 class Logger_Client
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   Logger_Client (void);
 

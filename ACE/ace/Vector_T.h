@@ -226,7 +226,6 @@ template <class T, size_t DEFAULT_SIZE = ACE_VECTOR_DEFAULT_SIZE>
 class ACE_Vector_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &);
 
   // = Iteration methods.

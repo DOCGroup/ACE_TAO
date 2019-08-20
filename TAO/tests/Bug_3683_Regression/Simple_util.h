@@ -33,8 +33,6 @@ template <class Servant>
 class Server
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   Server (void);
 
@@ -95,8 +93,6 @@ template <class ServerInterface>
 class Client
 {
 public:
-
-  // = Initialization and termination methods.
   /// Constructor.
   Client (void);
 

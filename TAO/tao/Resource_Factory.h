@@ -133,7 +133,6 @@ public:
       TAO_LAZY
     };
 
-  // = Initialization and termination methods.
   TAO_Resource_Factory (void);
   virtual ~TAO_Resource_Factory (void);
 

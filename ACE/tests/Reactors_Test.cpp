@@ -32,7 +32,6 @@ static const int MAX_TASKS = 20;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  // = Initialization and termination methods.
   Test_Task (void);
   ~Test_Task (void);
 

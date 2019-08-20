@@ -35,7 +35,6 @@ typedef Job_i** JOB_LIST;
 class Builder : public ACE_Service_Object
 {
  public:
-  /// = Initialization and termination
   Builder ();
   ~Builder ();
 

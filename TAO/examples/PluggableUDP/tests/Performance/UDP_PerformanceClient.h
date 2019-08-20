@@ -30,7 +30,6 @@ class UDP_PerformanceClient
   //    This class wrapps the client functionality into one class
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor
   UDP_PerformanceClient (CORBA::ORB_ptr orb,
                          UDP_ptr udp,

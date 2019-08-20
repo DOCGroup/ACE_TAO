@@ -10,7 +10,6 @@
 class Consumer : public ACE_Event_Handler, public ShutdownCallback
 {
 public:
-  // = Initialization and termination methods.
   Consumer (void);
   // Constructor.
 

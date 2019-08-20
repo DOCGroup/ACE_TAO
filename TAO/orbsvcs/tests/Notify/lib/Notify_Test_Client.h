@@ -31,9 +31,7 @@ class TAO_Notify_Tests_Peer;
  */
 class TAO_NOTIFY_TEST_Export Notify_Test_Client
 {
-
 public:
-  // = Initialization and Termination
   Notify_Test_Client (void);
   virtual ~Notify_Test_Client ();
 

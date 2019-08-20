@@ -53,9 +53,6 @@ template <class ACE_SELECT_REACTOR_TOKEN>
 class ACE_Select_Reactor_T : public ACE_Select_Reactor_Impl
 {
 public:
-
-  // = Initialization and termination methods.
-
   /// If @a disable_notify_pipe is non-0 then the reactor will
   /// not create a notification pipe, which will save two I/O handles
   /// but will elide the notify() feature.  If @a mask_signals is

@@ -1022,8 +1022,6 @@ protected:
 class ACE_Export ACE_Local_RLock : public ACE_Token_Proxy
 {
 public:
-  // = Initialization and termination.
-
   /**
    * Constructor.
    * @param token_name Uniquely id's the token.
@@ -1079,8 +1077,6 @@ protected:
 class ACE_Export ACE_Local_WLock : public ACE_Token_Proxy
 {
 public:
-  // = Initialization and termination.
-
   /**
    * Constructor.
    * @param token_name Uniquely id's the token.

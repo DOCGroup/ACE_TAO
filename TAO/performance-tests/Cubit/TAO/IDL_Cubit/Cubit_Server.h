@@ -38,7 +38,6 @@
 class Cubit_Server
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
   Cubit_Server (void);
 

@@ -63,7 +63,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination methods.
   ACE_Message_Queue_Vx (size_t max_messages,
                         size_t max_message_length,
                         ACE_Notification_Strategy * = 0);

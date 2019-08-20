@@ -28,7 +28,6 @@
 class Basic
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Basic (void);
 

@@ -30,9 +30,7 @@
  */
 class RtEC_Based_CosEC : public CosEC_ServantBase
 {
-
  public:
-  // = Initialization and termination methods.
   /// Constructor.
   RtEC_Based_CosEC (void);
 

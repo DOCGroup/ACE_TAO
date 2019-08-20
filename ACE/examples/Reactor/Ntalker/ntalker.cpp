@@ -10,8 +10,6 @@
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 
-
-
 #if defined (ACE_HAS_IP_MULTICAST)
 // Network interface to subscribe to.  This is hardware specific.  use
 // netstat(1M) to find whether your interface is le0 or ie0
@@ -25,7 +23,6 @@ class Handler : public ACE_Event_Handler
   // = TITLE
   //     Handle both multicast and stdin events.
 public:
-  // = Initialization and termination methods.
   Handler (u_short udp_port,
            const char *ip_addr,
            const ACE_TCHAR *a_interface,

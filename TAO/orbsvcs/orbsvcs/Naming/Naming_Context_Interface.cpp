@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file   Naming_Context_Interface.cpp
@@ -6,7 +5,6 @@
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 #include "ace/ACE.h"

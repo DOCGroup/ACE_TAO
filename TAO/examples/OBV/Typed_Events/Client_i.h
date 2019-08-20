@@ -32,7 +32,6 @@ CORBA::Float random_number (double min, double max);
 class Checkpoint_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Checkpoint_Client_i (void);
 

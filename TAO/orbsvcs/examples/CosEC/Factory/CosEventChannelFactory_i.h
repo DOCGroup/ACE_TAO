@@ -27,7 +27,6 @@ class TAO_CosEventChannelFactory_i :
   public virtual POA_CosEventChannelFactory::ChannelFactory
 {
  public:
-  // = Initialization and termination code.
   /// Constructor.
   TAO_CosEventChannelFactory_i (void);
 

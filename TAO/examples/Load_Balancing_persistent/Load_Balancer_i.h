@@ -48,9 +48,6 @@ class  Object_Group_Factory_i :
   //    round robin groups).
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_Factory_i (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
@@ -185,9 +182,6 @@ class Object_Group_i
   //   different load balancing policies.
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_i (const char * id,
                   PortableServer::POA_ptr poa);

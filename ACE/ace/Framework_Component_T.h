@@ -36,8 +36,6 @@ template <class Concrete>
 class ACE_Framework_Component_T : public ACE_Framework_Component
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   ACE_Framework_Component_T (Concrete *concrete);
 

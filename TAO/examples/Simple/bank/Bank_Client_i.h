@@ -28,7 +28,6 @@
 class Bank_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Bank_Client_i (void);
 

@@ -24,7 +24,6 @@
 class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
-  // = Initialization and Termination methods.
   /// Constructor.
   Sender_QoS_Event_Handler (void);
 

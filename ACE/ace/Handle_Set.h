@@ -57,8 +57,6 @@ class ACE_Export ACE_Handle_Set
 public:
   friend class ACE_Handle_Set_Iterator;
 
-  // = Initialization and termination.
-
   enum
   {
     MAXSIZE = ACE_DEFAULT_SELECT_REACTOR_SIZE

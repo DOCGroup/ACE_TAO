@@ -56,9 +56,6 @@ class TAO_EventLog_i :
   public POA_DsEventLogAdmin::EventLog
 {
 public:
-
-  // = Initialization and Termination.
-
   /// Constructor.
   TAO_EventLog_i (CORBA::ORB_ptr orb,
                   PortableServer::POA_ptr poa,

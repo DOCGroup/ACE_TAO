@@ -35,10 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Log_Serv_Export TAO_LogRecordStore
 {
- public:
-
-  // = Initialization and termination methods
-
+public:
   /// Destructor.
   virtual ~TAO_LogRecordStore (void);
 

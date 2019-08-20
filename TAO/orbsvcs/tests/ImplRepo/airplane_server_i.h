@@ -27,7 +27,6 @@
 class Airplane_Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
   Airplane_Server_i (void);
 

@@ -42,8 +42,6 @@ class TAO_Property_Serv_Export CosProperty_Hash_Key
   //     Key for the Hash Table. The EXT_ID of the
   //     ACE_Hash_Map_Manager.
 public:
-  // = Initialization and termination methods.
-
   CosProperty_Hash_Key (void);
   // Default constructor.
 
@@ -77,8 +75,6 @@ class TAO_Property_Serv_Export CosProperty_Hash_Value
   //     This will be the value part in the Hash_Table. The INT_ID of
   //     the ACE_Hash_Map_Manager.
 public:
-  // = Initialization and termination methods.
-
   CosProperty_Hash_Value (void);
   // Default constructor.
 
@@ -116,8 +112,6 @@ class TAO_Property_Serv_Export TAO_PropertySetFactory :  public virtual POA_CosP
   // = DESCRIPTION
   //     The object may be created with some predfined properties.
 public:
-  // = Initialization and termination methods.
-
   TAO_PropertySetFactory (void);
   // Constructor.
 
@@ -162,8 +156,6 @@ class TAO_Property_Serv_Export TAO_PropertySetDefFactory : public virtual POA_Co
   // = DESCRIPTION
   //     The object creation may be done with some predefined properties.
 public:
-  // = Initialization and termination methods.
-
   TAO_PropertySetDefFactory(void);
   // Constructor.
 
@@ -205,10 +197,8 @@ public:
   friend class TAO_PropertyNamesIterator;
   friend class TAO_PropertiesIterator;
 
-  // = Initialization and termination methods.
-
+  /// Default constructor.
   TAO_PropertySet (void);
-  // Default constructor.
 
   TAO_PropertySet (const CosPropertyService::PropertyTypes allowed_property_types,
                    const CosPropertyService::Properties allowed_properties);
@@ -328,7 +318,6 @@ class TAO_Property_Serv_Export TAO_PropertySetDef : public virtual POA_CosProper
   //     provide more client access and control of the characteristics
   //     (metadata) of a PropertySet.
 public:
-  // = Initialization and termination methods.
   TAO_PropertySetDef (void);
   // Constructor.
 
@@ -419,7 +408,6 @@ class TAO_Property_Serv_Export TAO_PropertyNamesIterator
   //     get_all_property_names operation returns an object supporting
   //     the PropertyNamesIterator interface with the additional names.
 public:
-  // = Initialization and termination methods.
   TAO_PropertyNamesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
@@ -476,7 +464,6 @@ class TAO_Property_Serv_Export TAO_PropertiesIterator
   //     operation returns an object supporting the PropertiesIterator
   //     interface with the additional properties.
 public:
-  // = Initialization and termination methods.
   TAO_PropertiesIterator (TAO_PropertySet &property_set);
   // Constructor.
 
