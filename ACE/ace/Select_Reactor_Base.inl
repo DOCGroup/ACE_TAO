@@ -134,14 +134,14 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
 #  pragma warning (pop)
 #endif
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Select_Reactor_Impl::supress_notify_renew (void)
 {
   return this->supress_renew_;
 }
 
 ACE_INLINE void
-ACE_Select_Reactor_Impl::supress_notify_renew (int sr)
+ACE_Select_Reactor_Impl::supress_notify_renew (bool sr)
 {
   this->supress_renew_ = sr;
 }
