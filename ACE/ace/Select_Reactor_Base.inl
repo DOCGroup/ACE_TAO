@@ -125,7 +125,7 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   , initialized_ (false)
   , restart_ (false)
   , requeue_position_ (-1) // Requeue at end of waiters by default.
-  , owner_ (ACE_OS::NULL_thread),
+  , owner_ (ACE_OS::NULL_thread)
   , state_changed_ (false)
   , mask_signals_ (ms)
   , supress_renew_ (0)
