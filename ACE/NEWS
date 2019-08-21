@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 ====================================================
 
+. Fixed compile problem with glibc 2.30 and newer
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 
