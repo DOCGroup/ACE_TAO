@@ -79,6 +79,10 @@ namespace TAO_PG
     TAO_UIPMC_Mcast_Transport::Packets_Map &packets
   )
   {
+     // bound_ is in milliseconds.
+     ACE_Time_Value const delay (0, 1000 * this->bound_);
+     ACE_Time_Value const now = ACE_OS::gettimeofday ();
+
     for (HASH_MAP_ITER iter = packets.begin ();
          iter != packets.end ();)
       {
@@ -86,10 +90,6 @@ namespace TAO_PG
         // unbound at the end of the loop leaving the iterator pointing
         // to removed entry.
         HASH_MAP_ITER cur_iter = iter++;
-
-        // bound_ is in milliseconds.
-        ACE_Time_Value const delay (0, 1000 * this->bound_);
-        ACE_Time_Value const now = ACE_OS::gettimeofday ();
 
         if ((*cur_iter).item ()->started () != ACE_Time_Value::zero &&
             now <= (*cur_iter).item ()->started () + delay)
