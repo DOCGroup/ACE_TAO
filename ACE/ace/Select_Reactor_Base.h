@@ -588,14 +588,13 @@ protected:
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.
-  int supress_notify_renew (void);
-  void supress_notify_renew (int sr);
+  bool supress_notify_renew (void);
+  void supress_notify_renew (bool sr);
 
 private:
-
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
-  int supress_renew_;
+  bool supress_renew_;
 
   /// Deny access since member-wise won't work...
   ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);
