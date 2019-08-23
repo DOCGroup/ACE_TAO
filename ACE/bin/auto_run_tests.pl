@@ -31,6 +31,30 @@ if (!defined $DDS_ROOT && -d "$ACE_ROOT/TAO/DDS") {
     $DDS_ROOT = "$ACE_ROOT/TAO/DDS";
 }
 
+sub run_command ($$) {
+  my $command = shift;
+  my $print_error = shift;
+  my $result = 0;
+  if (system($command)) {
+    $result = $? >> 8;
+    if ($print_error) {
+      my $error_message;
+      if ($? == -1) {
+        $error_message = "failed to run: $!";
+      }
+      elsif ($? & 127) {
+        $error_message = sprintf("exited on signal %d", ($? & 127));
+        $error_message .= " and created coredump" if ($? & 128);
+      }
+      else {
+        $error_message = sprintf ("returned with status %d", $result);
+      }
+      print "Error: $test $error_message\n";
+    }
+  }
+  return $result;
+}
+
 ################################################################################
 
 if (!getopts ('adl:os:r:tCd') || $opt_h) {
@@ -228,14 +252,14 @@ foreach my $test_lst (@file_list) {
             if (! -e $1) {
                 print STDERR "ERROR: $directory.$1 does not exist\n";
                 next;
-              }
-          }
+            }
+        }
         else {
             if (! -e $program) {
                 print STDERR "ERROR: $directory.$program does not exist\n";
                 next;
-              }
-          }
+            }
+        }
 
         ### Generate the -ExeSubDir and -Config options
         my $inherited_options = " -ExeSubDir $PerlACE::Process::ExeSubDir ";
@@ -262,16 +286,12 @@ foreach my $test_lst (@file_list) {
         }
         else {
             $start_time = time();
-            $result = system ($cmd);
+            $result = run_command($cmd, !$is_ace_test);
             $time = time() - $start_time;
 
             # see note about tests/run_test.pl printing reports for ace tests individually
-            if (! $is_ace_test) {
-                if ($result != 0) {
-                    print "Error: $test returned with status $result\n";
-                }
-
-                print "\nauto_run_tests_finished: $test Time:$time"."s Result:$result\n";
+            if (!$is_ace_test) {
+                print "\nauto_run_tests_finished: $test Time: $time"."s Result: $result\n";
                 print "==============================================================================\n";
             }
         }
