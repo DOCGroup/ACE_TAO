@@ -95,8 +95,6 @@ ACE_SSL_Asynch_Stream::ACE_SSL_Asynch_Stream (
   : type_         (s_type),
     proactor_     (0),
     ext_handler_  (0),
-    ext_read_result_ (0),
-    ext_write_result_(0),
     flags_        (0),
     ssl_          (0),
     handshake_complete_(false),
@@ -151,6 +149,15 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream (void)
   // leave that to the application developer? We do not reference
   // count reactors (for example) and following some simple rules
   // seems to work fine!
+
+  while (!ext_read_result_queue_.empty()) {
+    delete ext_read_result_queue_.front();
+    ext_read_result_queue_.pop_front();
+  }
+  while (!ext_write_result_queue_.empty()) {
+    delete ext_write_result_queue_.front();
+    ext_write_result_queue_.pop_front();
+  }
 }
 
 // ************************************************************
@@ -332,14 +339,9 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
 
-  // only one read operation is allowed now
-  // later it will be possible to make a queue
-
-  if (this->ext_read_result_ != 0)
-    return -1;
-
+  ACE_SSL_Asynch_Read_Stream_Result* result = NULL;
   // create result for future notification
-  ACE_NEW_RETURN (this->ext_read_result_,
+  ACE_NEW_RETURN (result,
                   ACE_SSL_Asynch_Read_Stream_Result (
                     *this->ext_handler_,
                     this->handle (),
@@ -350,6 +352,8 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
                     priority,
                     signal_number),
                   -1);
+
+  ext_read_result_queue_.push_back(result);
 
   this->do_SSL_state_machine (); // ignore return code
 
@@ -375,14 +379,9 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
 
-  // only one read operation is allowed now
-  // later it will be possible to make a queue
-
-  if (this->ext_write_result_ != 0)
-    return -1;
-
+  ACE_SSL_Asynch_Write_Stream_Result* result = NULL;
   // create result for future notification
-  ACE_NEW_RETURN (this->ext_write_result_,
+  ACE_NEW_RETURN (result,
                   ACE_SSL_Asynch_Write_Stream_Result (
                     *this->ext_handler_,
                     this->handle (),
@@ -393,6 +392,9 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
                     priority,
                     signal_number),
                   -1);
+
+
+  ext_write_result_queue_.push_back(result);
 
   this->do_SSL_state_machine ();
 
@@ -565,7 +567,7 @@ ACE_SSL_Asynch_Stream::post_handshake_check (void)
 int
 ACE_SSL_Asynch_Stream::do_SSL_read (void)
 {
-  if (this->ext_read_result_ == 0)  // nothing to do
+  if (this->ext_read_result_queue_.empty())  // nothing to do
     {
       return 0;
     }
@@ -576,8 +578,8 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
       return -1;
     }
 
-  ACE_Message_Block & mb = this->ext_read_result_->message_block ();
-  size_t bytes_req = this->ext_read_result_->bytes_to_read ();
+  ACE_Message_Block & mb = this->ext_read_result_queue_.front()->message_block ();
+  size_t bytes_req = this->ext_read_result_queue_.front()->bytes_to_read ();
 
   ERR_clear_error ();
 
@@ -627,7 +629,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read (void)
 int
 ACE_SSL_Asynch_Stream::do_SSL_write (void)
 {
-  if (this->ext_write_result_ == 0)  // nothing to do
+  if (ext_write_result_queue_.empty())  // nothing to do
     {
       return 0;
     }
@@ -638,8 +640,8 @@ ACE_SSL_Asynch_Stream::do_SSL_write (void)
       return -1;
     }
 
-  ACE_Message_Block & mb = this->ext_write_result_->message_block ();
-  size_t       bytes_req = this->ext_write_result_->bytes_to_write ();
+  ACE_Message_Block & mb = ext_write_result_queue_.front()->message_block ();
+  size_t       bytes_req = ext_write_result_queue_.front()->bytes_to_write ();
 
   ERR_clear_error ();
 
@@ -729,18 +731,18 @@ int
 ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
                                     int error)
 {
-  if (ext_read_result_ == 0) //nothing to notify
+  if (ext_read_result_queue_.empty()) //nothing to notify
     return 1;
 
-  this->ext_read_result_->set_bytes_transferred (bytes_transferred);
-  this->ext_read_result_->set_error (error);
+  this->ext_read_result_queue_.front()->set_bytes_transferred (bytes_transferred);
+  this->ext_read_result_queue_.front()->set_error (error);
 
   int retval =
-    this->ext_read_result_->post_completion (proactor_->implementation ());
+    this->ext_read_result_queue_.front()->post_completion (proactor_->implementation ());
 
   if (retval == 0)
     {
-      this->ext_read_result_ = 0;
+      this->ext_read_result_queue_.pop_front();
       return 0;  // success
     }
 
@@ -759,19 +761,19 @@ int
 ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
                                      int error)
 {
-  if (this->ext_write_result_ == 0) //nothing to notify
+  if (this->ext_write_result_queue_.empty()) //nothing to notify
     return 1;
 
-  this->ext_write_result_->set_bytes_transferred (bytes_transferred);
-  this->ext_write_result_->set_error (error);
+  this->ext_write_result_queue_.front()->set_bytes_transferred (bytes_transferred);
+  this->ext_write_result_queue_.front()->set_error (error);
 
   int retval =
-    this->ext_write_result_->post_completion (
+    this->ext_write_result_queue_.front()->post_completion (
       this->proactor_->implementation ());
 
   if (retval == 0)
     {
-      this->ext_write_result_ = 0;
+      this->ext_write_result_queue_.pop_front();
       return 0;  // success
     }
 
