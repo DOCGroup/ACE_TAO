@@ -291,7 +291,7 @@ foreach my $test_lst (@file_list) {
 
             # see note about tests/run_test.pl printing reports for ace tests individually
             if (!$is_ace_test) {
-                print "\nauto_run_tests_finished: $test Time: $time"."s Result: $result\n";
+                print "\nauto_run_tests_finished: $test Time:$time"."s Result:$result\n";
                 print "==============================================================================\n";
             }
         }
