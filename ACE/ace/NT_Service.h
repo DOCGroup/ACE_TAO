@@ -275,7 +275,7 @@ public:
    * Requests the service to stop.  Will wait up to @a wait_time for
    * the service to actually stop.  If not specified, the function
    * waits until the service either stops or gets stuck in some other
-   * state before it stops.  If <svc_state> is specified, it receives
+   * state before it stops.  If @a svc_state is specified, it receives
    * the last reported state of the service.  Returns 0 if the request
    * was made successfully, -1 if not.
    */
