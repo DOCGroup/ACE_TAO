@@ -107,6 +107,7 @@ namespace ACE_OS
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
 
+#if defined (ACE_LACKS_STAT)
     ACE_HANDLE const h = ACE_OS::open (filename, O_RDONLY);
     if (h != ACE_INVALID_HANDLE)
       {
@@ -116,6 +117,11 @@ namespace ACE_OS
       }
     else
       return -1;
+#else /* !ACE_LACKS_STAT */
+    ACE_stat sb;
+    return ACE_OS::stat (filename, &sb) == -1 ?
+                    static_cast<ACE_OFF_T> (-1) : sb.st_size;
+#endif /* ACE_LACKS_STAT */
   }
 
   ACE_INLINE int
