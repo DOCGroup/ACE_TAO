@@ -1,30 +1,33 @@
-#include "tao/Version.h"
-#include "global_extern.h"
-#include "be_extern.h"
-#include "drv_extern.h"
-#include "idl_version.h"
+#include <tao/Version.h>
 
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include <global_extern.h>
+#include <drv_extern.h>
+#include <idl_version.h>
+
+#include "be_extern.h"
+
+#include <ace/OS_NS_stdlib.h>
+#include <ace/OS_NS_string.h>
+#include <ace/OS_NS_stdio.h>
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
-#  include "ace/streams.h"
+#  include <ace/streams.h>
 #endif
 
-#include "utl_identifier.h"
-#include "ast_generator.h"
-#include "utl_scope.h"
-#include "fe_declarator.h"
-#include "ast_field.h"
-#include "ast_annotation_decl.h"
-#include "ast_annotation_member.h"
-#include "ast_typedef.h"
-#include "ast_sequence.h"
-#include "ast_union.h"
-#include "ast_enum_val.h"
-#include "utl_string.h"
-#include "ast_array.h"
+#include <utl_identifier.h>
+#include <ast_generator.h>
+#include <utl_scope.h>
+#include <fe_declarator.h>
+#include <ast_field.h>
+#include <ast_annotation_decl.h>
+#include <ast_annotation_member.h>
+#include <ast_typedef.h>
+#include <ast_sequence.h>
+#include <ast_union.h>
+#include <ast_enum_val.h>
+#include <utl_string.h>
+#include <ast_array.h>
+#include <ast_interface.h>
 
 void
 BE_version ()
@@ -63,6 +66,7 @@ public:
   bool failed_;
   int error_count_;
   UTL_Error::ErrorCode last_error_, last_warning_;
+  UTL_Scope *scope_;
 
   explicit Annotation_Test (const char *name)
     : name_ (name),
@@ -70,7 +74,8 @@ public:
       failed_ (false),
       error_count_ (0),
       last_error_ (UTL_Error::EIDL_OK),
-      last_warning_ (UTL_Error::EIDL_OK)
+      last_warning_ (UTL_Error::EIDL_OK),
+      scope_ (0)
   {
     total_test_count++;
   }
@@ -214,7 +219,7 @@ public:
     AST_Decl *node = 0;
     UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
 
-    UTL_Scope *scope = from ? from : idl_global->scopes ().bottom ();
+    UTL_Scope *scope = from ? from : (scope_ ? scope_ : idl_global->scopes ().bottom ());
 
     if (scoped_name)
       {
@@ -493,6 +498,19 @@ public:
         failed ();
       }
   }
+
+  void set_scope (AST_Decl *scope_node)
+  {
+    scope_ = dynamic_cast<UTL_Scope *> (scope_node);
+    if (!scope_)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("Annotation Test Error: %C:\n")
+          ACE_TEXT ("Node passed to set_scope isn't a valid UTL_Scope!\n"),
+          name_));
+        failed ();
+      }
+  }
 };
 
 void
@@ -649,20 +667,20 @@ BE_post_init (char *[], long)
       "};\n"
     ).assert_annotation_decl ("@enum_annotation");
     t.assert_annotation_member_count (enum_annotation, 1);
-    UTL_Scope *scope = dynamic_cast<UTL_Scope*>(enum_annotation);
+    t.set_scope(enum_annotation);
     AST_Annotation_Member *value =
       t.get_annotation_member (enum_annotation, "value");
 
     AST_EnumVal *a = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("A", scope));
+      t.assert_node ("A"));
     enum_annotation_a = a->constant_value();
 
     AST_EnumVal *b = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("B", scope));
+      t.assert_node ("B"));
     enum_annotation_b = b->constant_value();
 
     AST_EnumVal *c = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("C", scope));
+      t.assert_node ("C"));
     enum_annotation_c = c->constant_value();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
@@ -698,16 +716,14 @@ BE_post_init (char *[], long)
       "};\n"
     ).assert_annotation_decl ("@constant_annotation");
     t.assert_annotation_member_count (constant_annotation, 1);
-    UTL_Scope *scope = dynamic_cast<UTL_Scope*>(constant_annotation);
+    t.set_scope (constant_annotation);
     AST_Annotation_Member *value =
       t.get_annotation_member (constant_annotation, "value");
 
-    AST_Constant *x = AST_Constant::narrow_from_decl(
-      t.assert_node ("X", scope));
+    AST_Constant *x = dynamic_cast<AST_Constant *> (t.assert_node ("X"));
     constant_annotation_x = x->constant_value();
 
-    AST_Constant *y = AST_Constant::narrow_from_decl(
-      t.assert_node ("Y", scope));
+    AST_Constant *y = dynamic_cast<AST_Constant *> (t.assert_node ("Y"));
     constant_annotation_y = y->constant_value();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
@@ -1239,6 +1255,53 @@ BE_post_init (char *[], long)
     t.assert_annotation_member_count (appl, 1);
     t.assert_annotation_member_value<bool, ACE_CDR::Boolean> (
       t.get_annotation_member (appl, "value"), false);
+  } catch (Failed const &) {}
+
+  try {
+    Annotation_Test t ("Annotations on and in Interfaces");
+    t.run (
+      "@test_annotation_1\n"
+      "interface interface1 {\n"
+      "  @test_annotation_1\n"
+      "  struct struct_in_interface1 {\n"
+      "    short value;\n"
+      "  };\n"
+      "  @test_annotation_1\n"
+      "  void operation();\n"
+      "  @test_annotation_1\n"
+      "  const short const_value = 3;\n"
+      "  @test_annotation_1\n"
+      "  attribute short rw_attribute;\n"
+      "  @test_annotation_1\n"
+      "  readonly attribute short ro_attribute;\n"
+      "};\n"
+    );
+
+    AST_Interface *interface1 = dynamic_cast<AST_Interface *> (t.assert_node ("interface1"));
+    t.assert_annotation_appl_count (interface1, 1);
+    t.assert_annotation_appl (interface1, 0, test_annotation_1);
+
+    t.set_scope (interface1);
+
+    AST_Decl *struct_in_interface1 = t.assert_node ("struct_in_interface1");
+    t.assert_annotation_appl_count (struct_in_interface1, 1);
+    t.assert_annotation_appl (struct_in_interface1, 0, test_annotation_1);
+
+    AST_Decl *operation = t.assert_node ("operation");
+    t.assert_annotation_appl_count (operation, 1);
+    t.assert_annotation_appl (operation, 0, test_annotation_1);
+
+    AST_Decl *const_value = t.assert_node ("const_value");
+    t.assert_annotation_appl_count (const_value, 1);
+    t.assert_annotation_appl (const_value, 0, test_annotation_1);
+
+    AST_Decl *rw_attribute = t.assert_node ("rw_attribute");
+    t.assert_annotation_appl_count (rw_attribute, 1);
+    t.assert_annotation_appl (rw_attribute, 0, test_annotation_1);
+
+    AST_Decl *ro_attribute = t.assert_node ("ro_attribute");
+    t.assert_annotation_appl_count (ro_attribute, 1);
+    t.assert_annotation_appl (ro_attribute, 0, test_annotation_1);
   } catch (Failed const &) {}
 
   /* -------------------------------------------------------------------------

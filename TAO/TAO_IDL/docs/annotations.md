@@ -6,6 +6,7 @@ compiler that uses `tao_idl`.**
 **Table of Contents:**
 
 * [IDL Annotations](#idl-annotations)
+* [What Can Be Annotated](#what-can-be-annotated)
   * [Special Cases of Annotations](#special-cases-of-annotations)
     * [Union Discriminators](#union-discriminators)
     * [Base Types in Sequences](#base-types-in-sequences)
@@ -20,9 +21,12 @@ compiler that uses `tao_idl`.**
     * [Union Discriminators](#union-discriminators-1)
     * [Base Types in Sequences](#base-types-in-sequences-1)
     * [Base Types in Arrays](#base-types-in-arrays-1)
+* [Extending Annotation Support](#extending-annotation-support)
 * [Limitations](#limitations)
 * [History](#history)
   * [TAO 2.5.5](#tao-255)
+  * [TAO 2.5.6](#tao-256)
+  * [TAO 2.5.7](#tao-257)
 
 ## IDL Annotations
 
@@ -35,7 +39,7 @@ of writing, version 4.2, they are described in section 7.4.15.1.
 The concept behind annotations exists in other languages like Java and Python,
 as decorators, and in C++11 and C#, as attributes. Like Java and Python,
 annotations can appear in front of declarations, have `@` at the beginning, and
-can look like function call.
+look like function calls.
 
 Here is an example of what IDL using some OMG standard annotations might look
 like:
@@ -74,16 +78,42 @@ struct Report {
 };
 ```
 
-### Special Cases of Annotations
+## What Can Be Annotated
 
 Annotations "may be applied to any IDL constructs or sub-constructs", as
 defined by the OMG. This is very vague and the OMG has not clarified this as of
-IDL 4.2. [(Also see Limitation #1)](#limitation1). What can be said about it
-though is that other than before normal declarations, like before structs,
-typedefs, and constants, in TAO\_IDL as of writing, annotations can also be
-applied in the following cases. See ["Reading Special Cases of
-Annotations"](#reading-special-cases-of-annotations) for how to have the
-compiler use these kinds of annotations.
+IDL 4.2 [(Limitation #1)](#limitation1). Because of the lack of standardization
+of what can be annotated and how, annotations for specific IDL elements have to
+be added on a as-needed basis.
+
+As of writing you can put annotations before the following things in IDL and a
+backend using TAO IDL should be able to read them:
+
+- modules
+- `typedef`s
+- constants
+- structures and their member values
+- unions and their cases
+- enumerations and their enumerators
+- interfaces and their operations and attributes
+
+These are the general cases. The rest of the cases are defined in the next
+section. If an annotation application isn't listed in the general case list or
+the special case section, it is almost certainly not supported and might cause
+warnings if the usage is a general case and syntax errors if the usage a
+special case. See ["Extending Annotation
+Support"](#extending-annotation-support) if you're interested in adding it and
+are familar with GNU Bison.
+
+### Special Cases of Annotations
+
+The annotations on all the elements in the list above can be accessed using the
+`annotations()` method covered later in [Reading Annotations in the
+AST](#reading-annotations-in-the-ast). In the cases listed below, the
+annotation is used within the declaration and therefore require special access
+methods. See ["Reading Special Cases of
+Annotations"](#reading-special-cases-of-annotations) for how to have a backend
+read these kinds of annotations.
 
 #### Union Discriminators
 
@@ -345,11 +375,11 @@ these lines would also need to be added:
   if (document)
     {
       const char *comment =
-        AST_Annotation_Member::narrow_from_decl ((*document)["comment"])->
+        dynamic_cast<AST_Annotation_Member *> ((*document)["comment"])->
           value ()->ev ()->u.strval->get_string ();
 
       bool deprecated =
-        AST_Annotation_Member::narrow_from_decl ((*document)["deprecated"])->
+        dynamic_cast<AST_Annotation_Member *> ((*document)["deprecated"])->
           value ()->ev ()->u.bval;
 
       /*
@@ -360,7 +390,7 @@ these lines would also need to be added:
        */
       const char *api_type = 0;
       AST_Expression *api_type_val =
-        AST_Annotation_Member::narrow_from_decl ((*document)["api_type"])->
+        dynamic_cast<AST_Annotation_Member *> ((*document)["api_type"])->
           value ();
       AST_Enum *api_type_enum = api_type_val->enum_parent();
       if (api_type_enum)
@@ -407,7 +437,7 @@ inserted into the client header file:
  *
  * API_TYPE: INTERNAL_API
  */
-struct  struct1
+struct struct1
 {
   // ...
 };
@@ -419,7 +449,7 @@ struct  struct1
  *
  * API_TYPE: USER_API
  */
-struct  struct2
+struct struct2
 {
   // ...
 };
@@ -431,7 +461,7 @@ struct  struct2
  *
  * \deprecated This is deprecated
  */
-struct  struct3
+struct struct3
 {
   // ...
 };
@@ -466,11 +496,10 @@ Annotations placed before a definition in a scope are interpreted as annotating
 the node that is being defined. Annotations in other places require special
 grammar and special handling in the API.
 
-The following cases show how to get the last annotation called `anno` from
-these special cases.
+The following cases show how to read annotations from these special cases.
 
-To access these methods on a type that has been "`typedef`-ed", it must be
-resolved completely using `AST_Type *primitive_base_type ()` and a
+**NOTE:** To access these methods on a type that has been "`typedef`-ed", it
+must be resolved completely using `AST_Type *primitive_base_type ()` and a
 `dynamic_cast` to the correct type as these methods are specific to these
 classes.
 
@@ -501,6 +530,37 @@ classes.
   AST_Annotation_Appl *document = node->base_type_annotations ().find ("::@external");
 ```
 
+## Extending Annotation Support
+
+**NOTE: This section assumes familarity with GNU Bison and only covers the
+general concept of extending annotation support.**
+
+How to extend support for annotations on a particular IDL element depends on a
+few things. In the `fe/idl.ypp` bison file, if the annotation would be matched
+by the `at_least_one_definition` token, like it would when annotating a
+structure, or by the `at_least_one_export` token, like it will be when
+annotating a interface operation, the change is simple in principal:
+
+1. Make sure the `AST_Decl*` node of what you want to annotate is being passed
+   up the generic annotation code in `at_least_one_export` or
+   `at_least_one_definition`.
+
+1. Implement `virutal bool annotatable() const` in the `AST_*` files of the
+   node type to return `true`. The default implementation of `AST_Decl` returns
+   `false`.
+
+If you want to implement a annotation that goes within an IDL element, like on
+it does a union discriminator, that is more complicated and will involve
+modifying the grammar and adding a special cases method to the node's class,
+like in ["Reading Special Cases of Annotations"](#reading-special-cases-of-annotations).
+
+Finally, if you do extend annotation support, please update the annotation test
+in `$TAO_ROOT/tests/IDLv4/annotations/be_init.cpp` and this file, specifically
+the ["What Can Be Annotated"](#what-can-be-annotated) and ["History"](#history)
+sections. Also update [Reading Special Cases of
+Annotations](#reading-special-cases-of-annotations) if you've added support for
+a special case.
+
 ## Limitations
 
 The current limitations exist in TAO\_IDL annotation implementation as of writing:
@@ -509,7 +569,8 @@ The current limitations exist in TAO\_IDL annotation implementation as of writin
 1. Because of lack of a proper grammar specification in IDL for where
    annotations can go, annotations in places other than before declarations in
    scopes and other places listed above will result in syntax errors, even if
-   they work with other IDL tools.
+   they work with other IDL tools. See ["What Can be
+   Annotated"](#what-can-be-annotated) for details.
 
 2. Even though this is implicitly allowed by the IDL specification, Annotations
    whose local names clash with IDL keywords are not supported. This includes
@@ -531,3 +592,11 @@ the same name. This also allowed for moving `UTL_find_annotation` into
 
 The TAO IDL Frontend no longer internally prefixes annotation names and
 annotation member names with `_cxx_` if they are also a C++ keyword.
+
+### TAO 2.5.7
+
+- The TAO IDL Frontend now supports annotations on interfaces, operations, and
+  attributes.
+
+- Expanded documentation on what can be annotated and how to extend annotation
+  support.

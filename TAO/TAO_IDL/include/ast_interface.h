@@ -173,6 +173,8 @@ public:
   static AST_Decl::NodeType const NT;
   typedef AST_InterfaceFwd FWD_TYPE;
 
+  virtual bool annotatable () const;
+
 protected:
   // Data.
 
