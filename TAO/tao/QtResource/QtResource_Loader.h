@@ -33,6 +33,9 @@
 #endif // !QAPPLICATION_TYPE
 #else
 #include <qapplication.h>
+#ifndef QAPPLICATION_TYPE
+#define QAPPLICATION_TYPE QApplication
+#endif // !QAPPLICATION_TYPE
 #endif
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
