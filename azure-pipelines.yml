@@ -152,8 +152,8 @@ jobs:
       '#include "ace/config-macosx.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
   - powershell: |
-      'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
-      'qt5=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'qt5=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
