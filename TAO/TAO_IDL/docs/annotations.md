@@ -103,7 +103,7 @@ the special case section, it is almost certainly not supported and might cause
 warnings if the usage is a general case and syntax errors if the usage a
 special case. See ["Extending Annotation
 Support"](#extending-annotation-support) if you're interested in adding it and
-are familar with GNU Bison.
+are familiar with GNU Bison.
 
 ### Special Cases of Annotations
 
@@ -538,27 +538,28 @@ general concept of extending annotation support.**
 How to extend support for annotations on a particular IDL element depends on a
 few things. In the `fe/idl.ypp` bison file, if the annotation would be matched
 by the `at_least_one_definition` token, like it would when annotating a
-structure, or by the `at_least_one_export` token, like it will be when
-annotating a interface operation, the change is simple in principal:
+structure, or by the `at_least_one_export` token, like it would be when
+annotating a interface operation, the change is simple in principle:
 
 1. Make sure the `AST_Decl*` node of what you want to annotate is being passed
-   up the generic annotation code in `at_least_one_export` or
+   up the to generic annotation code in `at_least_one_export` or
    `at_least_one_definition`.
 
 1. Implement `virutal bool annotatable() const` in the `AST_*` files of the
    node type to return `true`. The default implementation of `AST_Decl` returns
    `false`.
 
-If you want to implement a annotation that goes within an IDL element, like on
-it does a union discriminator, that is more complicated and will involve
-modifying the grammar and adding a special cases method to the node's class,
-like in ["Reading Special Cases of Annotations"](#reading-special-cases-of-annotations).
+If you want to implement a annotation that goes within an IDL element, like
+annotating a union discriminator, that is more complicated. It will involve
+modifying the grammar to accept the annotations and adding a special cases
+method to the node's class, like in ["Reading Special Cases of
+Annotations"](#reading-special-cases-of-annotations).
 
 Finally, if you do extend annotation support, please update the annotation test
 in `$TAO_ROOT/tests/IDLv4/annotations/be_init.cpp` and this file, specifically
 the ["What Can Be Annotated"](#what-can-be-annotated) and ["History"](#history)
-sections. Also update [Reading Special Cases of
-Annotations](#reading-special-cases-of-annotations) if you've added support for
+sections. Also update ["Reading Special Cases of
+Annotations"](#reading-special-cases-of-annotations) if you've added support for
 a special case.
 
 ## Limitations
@@ -566,11 +567,10 @@ a special case.
 The current limitations exist in TAO\_IDL annotation implementation as of writing:
 
 <a name="limitation1"></a>
-1. Because of lack of a proper grammar specification in IDL for where
-   annotations can go, annotations in places other than before declarations in
-   scopes and other places listed above will result in syntax errors, even if
-   they work with other IDL tools. See ["What Can be
-   Annotated"](#what-can-be-annotated) for details.
+1. Because of lack of any specification in IDL for where annotations can go,
+   annotations in places other than what's listed in ["What Can be
+   Annotated"](#what-can-be-annotated) can cause syntax errors, even if the IDL
+   works with other IDL tools.
 
 2. Even though this is implicitly allowed by the IDL specification, Annotations
    whose local names clash with IDL keywords are not supported. This includes
