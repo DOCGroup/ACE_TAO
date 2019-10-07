@@ -55,7 +55,7 @@ jobs:
   - powershell: |
       New-Item -ItemType "directory" -Path "c:\Temp\Qt5"
       Invoke-WebRequest -Uri "http://mirrors.ocf.berkeley.edu/qt/online/qtsdkrepository/windows_x86/desktop/qt5_5130/qt.qt5.5130.win64_msvc2017_64/5.13.0-0-201906171525qtbase-Windows-Windows_10-MSVC2017-Windows-Windows_10-X86_64.7z" -OutFile "C:\Temp\Qt5\qt.7z"
-      C:\ProgramData\chocolatey\bin\7z.exe x C:\Temp\Qt5\qt.7z -o:C:\Temp\Qt5 -r
+      C:\ProgramData\chocolatey\bin\7z.exe x C:\Temp\Qt5\qt.7z -o C:\Temp\Qt5 -r
     displayName: Download and extract Qt5 base archive
   - powershell: |
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
