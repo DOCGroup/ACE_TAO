@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  QtResource_Loader::QtResource_Loader (QAPPLICATION_TYPE *qapp)
+  QtResource_Loader::QtResource_Loader (ACE_QApplication *qapp)
   {
     QtResource_Factory *tmp = 0;
 

@@ -21,22 +21,7 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#ifdef ACE_HAS_QT5
-#include <QtCore/QCoreApplication>
-#ifndef QAPPLICATION_TYPE
-#define QAPPLICATION_TYPE QCoreApplication
-#endif // !QAPPLICATION_TYPE
-#elif defined ACE_HAS_QT4
-#include <QtGui/qapplication.h>
-#ifndef QAPPLICATION_TYPE
-#define QAPPLICATION_TYPE QApplication
-#endif // !QAPPLICATION_TYPE
-#else
-#include <qapplication.h>
-#ifndef QAPPLICATION_TYPE
-#define QAPPLICATION_TYPE QApplication
-#endif // !QAPPLICATION_TYPE
-#endif
+#include "ace/QtReactor/QtReactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +45,7 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Loader
   {
   public:
-    QtResource_Loader (QAPPLICATION_TYPE *qapp);
+    QtResource_Loader (ACE_QApplication *qapp);
     virtual ~QtResource_Loader (void);
   };
 }

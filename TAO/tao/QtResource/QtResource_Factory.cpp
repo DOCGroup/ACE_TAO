@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  QtResource_Factory::QtResource_Factory (QAPPLICATION_TYPE *qapp)
+  QtResource_Factory::QtResource_Factory (ACE_QApplication *qapp)
     : reactor_impl_ (0)
     , qapp_ (qapp)
   {
@@ -18,7 +18,7 @@ namespace TAO
     if (this->qapp_ == 0)
       {
         TAOLIB_ERROR ((LM_ERROR,
-                    "TAO (%P|%t) - QApplication is undefined.",
+                    "TAO (%P|%t) - ACE_QApplication is undefined.",
                     " Cannot create ACE_QtReactor\n"));
         return 0;
       }

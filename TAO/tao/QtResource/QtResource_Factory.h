@@ -40,7 +40,7 @@ namespace TAO
   class TAO_QtResource_Export QtResource_Factory : public GUIResource_Factory
   {
   public:
-    QtResource_Factory (QAPPLICATION_TYPE *qapp_);
+    QtResource_Factory (ACE_QApplication *qapp_);
 
   protected:
     /// Create or obtain current reactor implementation
@@ -51,7 +51,7 @@ namespace TAO
     ACE_QtReactor *reactor_impl_;
 
     /// QApplication running reactor
-    QAPPLICATION_TYPE *qapp_;
+    ACE_QApplication *qapp_;
   };
 }
 
