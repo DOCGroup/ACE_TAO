@@ -67,6 +67,7 @@ public:
   int error_count_;
   UTL_Error::ErrorCode last_error_, last_warning_;
   UTL_Scope *scope_;
+  bool disable_output_;
 
   explicit Annotation_Test (const char *name)
     : name_ (name),
@@ -75,7 +76,8 @@ public:
       error_count_ (0),
       last_error_ (UTL_Error::EIDL_OK),
       last_warning_ (UTL_Error::EIDL_OK),
-      scope_ (0)
+      scope_ (0),
+      disable_output_ (false)
   {
     total_test_count++;
   }
@@ -142,7 +144,7 @@ public:
 
     // Eval IDL
     idl_ = idl;
-    idl_global->eval (idl);
+    idl_global->eval (idl, disable_output_);
 
     // Look at Results
     if (idl_global->err_count () != error_count_)
@@ -510,6 +512,11 @@ public:
           name_));
         failed ();
       }
+  }
+
+  void disable_output ()
+  {
+    disable_output_ = true;
   }
 };
 
@@ -1045,6 +1052,7 @@ BE_post_init (char *[], long)
   try {
     Annotation_Test t ("By Default, Unknown Annotation Application Causes Warning");
     t.last_warning (UTL_Error::EIDL_LOOKUP_ERROR);
+    t.disable_output ();
     t.run (
       "struct struct11 {\n"
       "  @fake_annotation(fake_param=FAKE_CONSTANT)\n"
@@ -1059,6 +1067,7 @@ BE_post_init (char *[], long)
     Annotation_Test t ("Optionally, Unknown Annotation Application Causes Err");
                 // Any mention of "Error" will be picked up by scoreboard ^^^
     t.last_error (UTL_Error::EIDL_LOOKUP_ERROR).error_count (1);
+    t.disable_output ();
     t.run (
       "struct struct10 {\n"
       "  @fake_annotation(fake_param=FAKE_CONSTANT)\n"
@@ -1325,6 +1334,7 @@ BE_post_init (char *[], long)
   try {
     Annotation_Test t ("Annotation Names Can't Be \"annotation\"");
     t.last_error (UTL_Error::EIDL_MISC).error_count (1);
+    t.disable_output ();
     t.run (
       "@annotation annotation {\n"
       "};\n"
