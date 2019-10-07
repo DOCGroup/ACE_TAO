@@ -2157,7 +2157,7 @@ project(SOCK_SEQPACK_SCTP_Test) : acetest {
   }
 }
 
-project(QtReactor Test) : acetest, ace_qtreactor {
+project(QtReactor Test) : acetest, ace_qtreactor, qt5_widgets {
   exename   = QtReactor_Test
   MOC_Files {
     QtReactor_Test.h
