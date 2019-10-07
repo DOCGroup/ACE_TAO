@@ -191,6 +191,20 @@ public:
                  AST_Decl *t2,
                  AST_Decl *t3);
 
+  /**
+   * Report an error that can be out of context of IDL parsing.
+   */
+  void direct_error (
+    const char *reason, ACE_CString filename, long lineno,
+    ErrorCode error_code = EIDL_MISC);
+
+  /**
+   * Report an warning that can be out of context of IDL parsing.
+   */
+  void direct_warning (
+    const char *reason, ACE_CString filename, long lineno,
+    ErrorCode error_code = EIDL_MISC);
+
   // Report a syntax error in IDL input
   void syntax_error (IDL_GlobalData::ParseState ps);
 

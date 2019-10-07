@@ -1644,3 +1644,22 @@ UTL_Error::annotation_param_missing_error (
     ACE_TEXT (" needs to be defined because it does not have a default value!\n"),
     get_filename (member), get_lineno (member)));
 }
+
+void
+UTL_Error::direct_error (
+  const char *reason, ACE_CString filename, long lineno, UTL_Error::ErrorCode error_code)
+{
+  idl_error_header (error_code, lineno, filename);
+  ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
+}
+
+void
+UTL_Error::direct_warning (
+  const char *reason, ACE_CString filename, long lineno, UTL_Error::ErrorCode error_code)
+{
+  if (idl_global->print_warnings ())
+    {
+      idl_warning_header (error_code, lineno, filename);
+      ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
+    }
+}
