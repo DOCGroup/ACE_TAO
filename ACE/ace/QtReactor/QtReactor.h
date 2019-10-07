@@ -30,11 +30,11 @@
 // QT toolkit specific includes.
 #ifdef ACE_HAS_QT5
 #include /**/ <QtCore/QCoreApplication>
-#define QAPPLICATION_TYPE QCoreApplication
+typedef QCoreApplication ACE_QApplication;
 #define ACE_QT_HANDLE_TYPE qintptr
 #else
 #include /**/ <QtGui/QApplication>
-#define QAPPLICATION_TYPE QApplication
+typedef QApplication ACE_QApplication;
 #define ACE_QT_HANDLE_TYPE int
 #endif
 #include /**/ <QtCore/QObject>
@@ -99,9 +99,9 @@ class ACE_QtReactor_Export ACE_QtReactor
 
 public:
     /** \brief Constructor follows  @ACE_Select_Reactor
-        \param QAPPLICATION_TYPE *qapp, qapplication which runs events loop
+        \param ACE_QApplication *qapp, qapplication which runs events loop
     */
-    explicit ACE_QtReactor (QAPPLICATION_TYPE *qapp = 0,
+    explicit ACE_QtReactor (ACE_QApplication *qapp = 0,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
         int disable_notify_pipe = 0,
@@ -113,7 +113,7 @@ public:
         \param QApplication *qapp, qapplication which runs events loop
     */
     explicit ACE_QtReactor (size_t size,
-        QAPPLICATION_TYPE *qapp = 0,
+        ACE_QApplication *qapp = 0,
         bool restart = false,
         ACE_Sig_Handler * = 0,
         ACE_Timer_Queue * = 0,
@@ -124,7 +124,7 @@ public:
 
     virtual ~ACE_QtReactor (void);
 
-    void qapplication (QAPPLICATION_TYPE *qapp);
+    void qapplication (ACE_QApplication *qapp);
 
     // = Timer operations.
     virtual long schedule_timer (ACE_Event_Handler *handler,
@@ -179,7 +179,7 @@ protected:
     // Wait for Qt events to occur
 
     /// Some Qt stuff that we need to have
-    QAPPLICATION_TYPE *qapp_ ;
+    ACE_QApplication *qapp_ ;
 
     /// Typedef of a map.
     typedef ACE_Map_Manager<ACE_HANDLE, QSocketNotifier *, ACE_Null_Mutex> MAP;

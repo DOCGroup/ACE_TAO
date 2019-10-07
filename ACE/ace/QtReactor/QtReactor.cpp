@@ -6,7 +6,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held
 
-ACE_QtReactor::ACE_QtReactor (QAPPLICATION_TYPE *qapp ,
+ACE_QtReactor::ACE_QtReactor (ACE_QApplication *qapp ,
     ACE_Sig_Handler *sh,
     ACE_Timer_Queue *tq,
     int disable_notify_pipe,
@@ -23,7 +23,7 @@ ACE_QtReactor::ACE_QtReactor (QAPPLICATION_TYPE *qapp ,
 
 // Must be called with lock held
 ACE_QtReactor::ACE_QtReactor (size_t size,
-    QAPPLICATION_TYPE *qapp,
+    ACE_QApplication *qapp,
     bool restart,
     ACE_Sig_Handler *sh,
     ACE_Timer_Queue *tq,
@@ -108,7 +108,7 @@ ACE_QtReactor::~ACE_QtReactor (void)
 }
 
 void
-ACE_QtReactor::qapplication (QAPPLICATION_TYPE *qapp)
+ACE_QtReactor::qapplication (ACE_QApplication *qapp)
 {
   // reparent QSocketNotifiers and QTimer
   qapp_ = qapp ;
