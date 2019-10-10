@@ -9,7 +9,12 @@ use PerlACE::Run_Test;
 
 my $annotest_idl = new PerlACE::Process("annotest_idl", "");
 print $annotest_idl->CommandLine ();
-$annotest_idl->Spawn ();
+my $pid = $annotest_idl->Spawn ();
+
+if ($pid == -1) {
+    exit 1
+}
+
 my $annotest_idl_result = $annotest_idl->WaitKill (10);
 if ($annotest_idl_result > 0) {
   print STDERR "ERROR: annotest_idl returned $annotest_idl_result\n";
