@@ -310,6 +310,13 @@ AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
 %type <dcval>   definition fixed_definition module const_dcl struct_forward_type
 %type <dcval>   interface_def interface interface_forward
 %type <dcval>   export operation attribute attribute_readonly attribute_readwrite
+%type <dcval>   template_module template_module_inst annotation_dcl typeid_dcl
+%type <dcval>   typeprefix_dcl exception component home_decl
+%type <dcval>   event_decl event_abs_decl event_forward_decl
+%type <dcval>   event_abs_forward_decl event_concrete_forward_decl
+%type <dcval>   porttype_decl connector_decl value_def
+%type <dcval>   valuetype value_abs_decl value_forward_decl value_box_decl
+%type <dcval>   value_concrete_decl component_forward_decl component_decl
 
 %type <idlist>  scoped_name interface_type component_inheritance_spec
 %type <idlist>  home_inheritance_spec primary_key_spec module_header
@@ -420,17 +427,8 @@ at_least_one_definition
 
 definition
         : fixed_definition
-        {
-          $$ = $1;
-        }
         | template_module ';'
-        {
-          $$ = 0;
-        }
         | template_module_inst ';'
-        {
-          $$ = 0;
-        }
         ;
 
 fixed_definition
@@ -441,7 +439,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | type_dcl
         {
@@ -450,7 +447,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | typeid_dcl
         {
@@ -459,7 +455,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | typeprefix_dcl
         {
@@ -468,7 +463,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | const_dcl
         {
@@ -477,7 +471,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | exception
         {
@@ -486,7 +479,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | interface_def
         {
@@ -495,7 +487,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | module
         {
@@ -504,7 +495,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | value_def
         {
@@ -513,7 +503,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | component
         {
@@ -522,7 +511,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | home_decl
         {
@@ -531,7 +519,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | event
         {
@@ -540,7 +527,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | porttype_decl
         {
@@ -549,7 +535,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | connector_decl
         {
@@ -558,7 +543,6 @@ fixed_definition
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | error
         {
@@ -729,6 +713,8 @@ template_module
           // Clear the pointer so scoped name lookup will know
           // that we are no longer in a template module scope.
           idl_global->current_params (0);
+
+          $$ = 0;
         }
         ;
 
@@ -909,18 +895,14 @@ template_module_inst
 
               idl_global->set_err_count (idl_global->err_count () + 1);
             }
+
+          $$ = 0;
         }
         ;
 
 interface_def
         : interface
-        {
-          $$ = $1;
-        }
         | interface_forward
-        {
-          $$ = $1;
-        }
         ;
 
 interface
@@ -935,7 +917,7 @@ interface
           /*
            * Make a new interface node and add it to its enclosing scope.
            */
-          if (s != 0 && header)
+          if (s && header)
             {
               i = idl_global->gen ()->create_interface (
                 header->name (),
@@ -1120,6 +1102,7 @@ valuetype
         : IDL_CUSTOM value_concrete_decl
         {
           idl_global->err ()->unsupported_error ("custom is not supported");
+          $$ = 0;
         }
         | value_concrete_decl
         ;
@@ -1194,6 +1177,8 @@ value_concrete_decl :
            * Done with this value type - pop it off the scopes stack
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -1258,6 +1243,8 @@ value_abs_decl :
            * Done with this valuetype - pop it off the scopes stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -1384,6 +1371,8 @@ value_forward_decl :
           $1->destroy ();
           delete $1;
           $1 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -1448,6 +1437,8 @@ value_box_decl
           $1->destroy ();
           delete $1;
           $1 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -1527,7 +1518,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | typeid_dcl
         {
@@ -1536,7 +1526,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | typeprefix_dcl
         {
@@ -1545,7 +1534,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | const_dcl
         {
@@ -1554,7 +1542,6 @@ export
         ';'
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | exception
         {
@@ -1563,7 +1550,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = 0;
         }
         | attribute
         {
@@ -1572,7 +1558,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | operation
         {
@@ -1581,7 +1566,6 @@ export
         ';'
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_NoState);
-          $$ = $1;
         }
         | error
         {
@@ -2330,6 +2314,8 @@ annotation_dcl
           idl_global->scopes ().pop ();
           id->destroy ();
           delete id;
+
+          $$ = 0;
         }
         ;
 
@@ -4511,6 +4497,8 @@ exception :
            * Done with this exception. Pop its scope from the scope stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -5154,6 +5142,8 @@ typeid_dcl
           $3->destroy ();
           delete $3;
           $3 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -5191,6 +5181,8 @@ typeprefix_dcl
           $3->destroy ();
           delete $3;
           $3 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -5224,6 +5216,8 @@ component_forward_decl :
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -5283,6 +5277,8 @@ component_decl :
            * Done with this component - pop it off the scopes stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -5917,6 +5913,8 @@ home_decl :
            * Done with this component - pop it off the scopes stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -6197,6 +6195,8 @@ event_concrete_forward_decl :
           $2->destroy ();
           delete $2;
           $2 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -6225,6 +6225,8 @@ event_abs_forward_decl :
           $3->destroy ();
           delete $3;
           $3 = 0;
+
+          $$ = 0;
         }
         ;
 
@@ -6290,6 +6292,8 @@ event_abs_decl :
            * Done with this eventtype - pop it off the scopes stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -6433,6 +6437,8 @@ event_decl :
            * Done with this eventtype - pop it off the scopes stack.
            */
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -6662,6 +6668,8 @@ porttype_decl
 
           // Done with this port type - pop it off the scopes stack.
           idl_global->scopes ().pop ();
+
+          $$ = 0;
         }
         ;
 
@@ -6918,6 +6926,9 @@ actual_parameter
 
 connector_decl
         : connector_header connector_body
+        {
+          $$ = 0;
+        }
         ;
 
 connector_header

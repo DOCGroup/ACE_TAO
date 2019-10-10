@@ -86,8 +86,8 @@ IDL 4.2 [(Limitation #1)](#limitation1). Because of the lack of standardization
 of what can be annotated and how, annotations for specific IDL elements have to
 be added on a as-needed basis.
 
-As of writing you can put annotations before the following things in IDL and a
-backend using TAO IDL should be able to read them:
+You can put annotations before the following things in IDL and a backend using
+TAO IDL's fround-end library can read them:
 
 - modules
 - `typedef`s

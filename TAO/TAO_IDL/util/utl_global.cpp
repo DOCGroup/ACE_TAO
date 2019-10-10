@@ -1943,9 +1943,11 @@ IDL_GlobalData::eval (const char *string, bool disable_output)
   UTL_String *old_idl_src_file = idl_src_file ();
 
   // Name this pseudo-file "builtin-N"
-  static char buffer[64];
+#define BUILTIN_NAME_BUFFER_SIZE 64
+  static char buffer[BUILTIN_NAME_BUFFER_SIZE];
   static unsigned n = 1;
-  ACE_OS::sprintf (&buffer[0], "builtin-%d", n++);
+  ACE_OS::snprintf (&buffer[0], BUILTIN_NAME_BUFFER_SIZE, "builtin-%u", n++);
+#undef BUILTIN_NAME_BUFFER_SIZE
   UTL_String utl_string (&buffer[0], true);
   idl_global->idl_src_file (new UTL_String (&utl_string, true));
   idl_global->set_filename (new UTL_String (&utl_string, true));
