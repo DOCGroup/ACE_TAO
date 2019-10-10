@@ -1647,7 +1647,7 @@ UTL_Error::annotation_param_missing_error (
 
 void
 UTL_Error::direct_error (
-  const char *reason, ACE_CString filename, long lineno, UTL_Error::ErrorCode error_code)
+  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
 {
   idl_error_header (error_code, lineno, filename);
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C\n"), reason));
@@ -1655,7 +1655,7 @@ UTL_Error::direct_error (
 
 void
 UTL_Error::direct_warning (
-  const char *reason, ACE_CString filename, long lineno, UTL_Error::ErrorCode error_code)
+  const char *reason, const ACE_CString &filename, long lineno, UTL_Error::ErrorCode error_code)
 {
   if (idl_global->print_warnings ())
     {
