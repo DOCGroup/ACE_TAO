@@ -87,7 +87,7 @@ of what can be annotated and how, annotations for specific IDL elements have to
 be added on a as-needed basis.
 
 You can put annotations before the following things in IDL and a backend using
-TAO IDL's fround-end library can read them:
+TAO IDL's front-end library can read them:
 
 - modules
 - `typedef`s
