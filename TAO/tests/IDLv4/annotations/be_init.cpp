@@ -1,33 +1,33 @@
-#include <tao/Version.h>
+#include "tao/Version.h"
 
-#include <global_extern.h>
-#include <drv_extern.h>
-#include <idl_version.h>
+#include "global_extern.h"
+#include "drv_extern.h"
+#include "idl_version.h"
 
 #include "be_extern.h"
 
-#include <ace/OS_NS_stdlib.h>
-#include <ace/OS_NS_string.h>
-#include <ace/OS_NS_stdio.h>
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_string.h"
+#include "ace/OS_NS_stdio.h"
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
-#  include <ace/streams.h>
+#  include "ace/streams.h"
 #endif
 
-#include <utl_identifier.h>
-#include <ast_generator.h>
-#include <utl_scope.h>
-#include <fe_declarator.h>
-#include <ast_field.h>
-#include <ast_annotation_decl.h>
-#include <ast_annotation_member.h>
-#include <ast_typedef.h>
-#include <ast_sequence.h>
-#include <ast_union.h>
-#include <ast_enum_val.h>
-#include <utl_string.h>
-#include <ast_array.h>
-#include <ast_interface.h>
+#include "utl_identifier.h"
+#include "ast_generator.h"
+#include "utl_scope.h"
+#include "fe_declarator.h"
+#include "ast_field.h"
+#include "ast_annotation_decl.h"
+#include "ast_annotation_member.h"
+#include "ast_typedef.h"
+#include "ast_sequence.h"
+#include "ast_union.h"
+#include "ast_enum_val.h"
+#include "utl_string.h"
+#include "ast_array.h"
+#include "ast_interface.h"
 
 void
 BE_version ()
