@@ -736,7 +736,7 @@ public:
    * to the Abstract Syntax Tree. It was added for use in be_post_init. THIS
    * SHOULD NOT BE CALLED WHILE IN THE MIDDLE OF PARSING.
    */
-  void eval (const char *string);
+  void eval (const char *string, bool disable_output = false);
 
   /**
    * Dump AST after parsing files and exit
