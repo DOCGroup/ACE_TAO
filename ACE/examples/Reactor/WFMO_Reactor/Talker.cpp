@@ -151,7 +151,6 @@ typedef ACE_Task<ACE_MT_SYNCH> MT_TASK;
 class Peer_Handler : public MT_TASK, public ACE_Handler
 {
 public:
-  // = Initialization methods.
   Peer_Handler (int argc, ACE_TCHAR *argv[]);
   ~Peer_Handler (void);
 

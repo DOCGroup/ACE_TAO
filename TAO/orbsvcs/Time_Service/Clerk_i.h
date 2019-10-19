@@ -37,7 +37,6 @@ public:
     DEFAULT_SERVER_COUNT = 8
   };
 
-  // = Initialization and termination methods.
   /// Constructor.
   Clerk_i (void);
 

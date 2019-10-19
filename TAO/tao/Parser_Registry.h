@@ -44,7 +44,6 @@ class TAO_IOR_Parser;
 class TAO_Export TAO_Parser_Registry
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   TAO_Parser_Registry (void);
 

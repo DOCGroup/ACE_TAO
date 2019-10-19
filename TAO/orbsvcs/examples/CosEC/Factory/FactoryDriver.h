@@ -34,7 +34,6 @@
 class FactoryDriver
 {
  public:
-  // = Initialization and termination code.
   /// Constructor.
   FactoryDriver (const ACE_TCHAR* factory = ACE_TEXT("CosEC_Factory"));
 

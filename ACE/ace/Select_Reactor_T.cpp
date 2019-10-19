@@ -190,7 +190,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  if (this->supress_notify_renew () == 0)
+  if (!this->supress_notify_renew ())
     this->token_.renew (this->requeue_position_);
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }

@@ -58,7 +58,6 @@ static const int watermark_iterations = 2 * default_high_water_mark;
 class Message_Handler : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  // = Initialization and termination.
   /// Constructor.
   Message_Handler (ACE_Reactor &reactor);
 

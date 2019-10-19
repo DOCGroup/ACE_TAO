@@ -170,7 +170,6 @@ private:
 class ACE_Export ACE_MEM_IO : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_MEM_IO (void);
 

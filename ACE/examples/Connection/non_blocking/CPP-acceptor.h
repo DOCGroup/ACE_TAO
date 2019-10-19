@@ -18,7 +18,6 @@ class Svc_Handler : public ACE_Svc_Handler <PEER_STREAM, ACE_NULL_SYNCH>
   //     This class does the work once the <ACE_Oneshot_Acceptor> has
   //     accepted a connection.
 public:
-  // = Initialization method.
   Svc_Handler (ACE_Reactor *r);
 
   virtual int open (void *);
@@ -44,7 +43,6 @@ class IPC_Server : public ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>
   // = TITLE
   //     This class illustrates how the <ACE_Oneshot_Acceptor> works.
 public:
-  // = Initialization and termination.
   IPC_Server (void);
   // Constructor.
 

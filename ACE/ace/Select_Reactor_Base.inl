@@ -123,9 +123,10 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   , delete_signal_handler_ (false)
   , delete_notify_handler_ (false)
   , initialized_ (false)
-  , restart_ (0)
+  , restart_ (false)
   , requeue_position_ (-1) // Requeue at end of waiters by default.
-  , state_changed_ (0)
+  , owner_ (ACE_OS::NULL_thread)
+  , state_changed_ (false)
   , mask_signals_ (ms)
   , supress_renew_ (0)
 {
@@ -134,14 +135,14 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
 #  pragma warning (pop)
 #endif
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Select_Reactor_Impl::supress_notify_renew (void)
 {
   return this->supress_renew_;
 }
 
 ACE_INLINE void
-ACE_Select_Reactor_Impl::supress_notify_renew (int sr)
+ACE_Select_Reactor_Impl::supress_notify_renew (bool sr)
 {
   this->supress_renew_ = sr;
 }

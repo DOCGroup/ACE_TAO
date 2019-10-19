@@ -33,8 +33,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Multihomed_INET_Addr : public ACE_INET_Addr
 {
 public:
-  // = Initialization methods.
-
   /// Default constructor.
   ACE_Multihomed_INET_Addr (void);
 

@@ -37,8 +37,6 @@ public:
   typedef ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>
           REVERSE_ITERATOR;
 
-  // = Initialization and termination methods.
-
   /// Constructor.
   ACE_RB_Tree_Test (int entry_count,
                     EXT_ID key_array [],

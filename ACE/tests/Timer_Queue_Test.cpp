@@ -586,7 +586,6 @@ test_unique_timer_heap_ids (void)
 class Timer_Queue_Stack
 {
 public:
-  // = Initialization method
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
     const ACE_TCHAR *name,
     Timer_Queue_Stack *next = 0)

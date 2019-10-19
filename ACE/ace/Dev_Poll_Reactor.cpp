@@ -2543,7 +2543,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire_quietly (ACE_Time_Value *max_wait)
     }
 
   // We got the token and so let us mark ourselves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }
@@ -2578,7 +2578,7 @@ ACE_Dev_Poll_Reactor::Token_Guard::acquire (ACE_Time_Value *max_wait)
     }
 
   // We got the token and so let us mark ourseleves as owner
-  this->owner_ = 1;
+  this->owner_ = true;
 
   return result;
 }

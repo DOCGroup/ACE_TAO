@@ -36,8 +36,6 @@ class TAO_Concurrency_Serv_Export CC_LockSetFactory
   : public POA_CosConcurrencyControl::LockSetFactory
 {
 public:
-
-  // = Initialization and termination methods.
   /// Default constructor.
   CC_LockSetFactory (void);
 

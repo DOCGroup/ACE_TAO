@@ -36,7 +36,6 @@ class TAO_Export TAO_Default_Client_Strategy_Factory
   : public TAO_Client_Strategy_Factory
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Default_Client_Strategy_Factory (void);
 

@@ -33,7 +33,6 @@
 class Notifier_Input_Handler : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Notifier_Input_Handler (void);
 

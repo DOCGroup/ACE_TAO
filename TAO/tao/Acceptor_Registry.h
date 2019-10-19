@@ -59,7 +59,6 @@ typedef TAO_Acceptor** TAO_AcceptorSetIterator;
 class TAO_Export TAO_Acceptor_Registry
 {
 public:
-  // = Initialization and termination methods.
   ///  Default constructor.
   TAO_Acceptor_Registry (void);
 

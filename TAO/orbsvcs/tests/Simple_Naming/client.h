@@ -72,8 +72,6 @@ public:
 class MT_Test : public Naming_Test, public ACE_Task_Base
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer and number of threads to spawn.
   MT_Test (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa,
@@ -236,8 +234,6 @@ private:
 class Persistent_Test_Begin : public Naming_Test
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer.
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          PortableServer::POA_ptr poa,
@@ -273,8 +269,6 @@ private:
 class Persistent_Test_End : public Naming_Test
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer and the ior received from
   /// <Persistent_Test_Begin>.
   Persistent_Test_End (CORBA::ORB_ptr orb,
@@ -309,8 +303,6 @@ private:
 class Persistent_List_Test : public Naming_Test
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer.
   Persistent_List_Test (CORBA::ORB_ptr orb,
                         PortableServer::POA_ptr poa);
@@ -342,8 +334,6 @@ private:
 class CosNaming_Client
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   CosNaming_Client (void);
 

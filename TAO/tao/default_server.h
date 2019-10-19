@@ -36,7 +36,6 @@ class TAO_Export TAO_Default_Server_Strategy_Factory
   : public TAO_Server_Strategy_Factory
 {
 public:
-  // = Initialization and termination methods.
   TAO_Default_Server_Strategy_Factory (void);
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 

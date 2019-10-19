@@ -25,8 +25,6 @@ class Time_Date_i
   // = DESCRIPTION
   //    Time_Date object implementation
 public:
-  // = Initialization and termination methods.
-
   /// Obtain the time and date in binary format.
   virtual void bin_date (CORBA::Long_out time_date);
 

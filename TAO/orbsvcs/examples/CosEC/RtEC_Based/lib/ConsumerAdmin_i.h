@@ -30,7 +30,6 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ConsumerAdmin_i :
   //   This implementation of the ConsumerAdmin uses the
   //   RtecEventChannelAdmin::ConsumerAdmin.
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_CosEC_ConsumerAdmin_i (void);
 

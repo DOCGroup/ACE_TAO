@@ -38,7 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Concurrency_Serv_Export TAO_Concurrency_Server
 {
 public:
-  // = Initialization and termination methods.
   ///Default constructor.
   TAO_Concurrency_Server (void);
 

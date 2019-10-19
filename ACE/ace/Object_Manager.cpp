@@ -170,12 +170,12 @@ ACE_Object_Manager::shutting_down (void)
 // Instead of popping up a window for exceptions, just print something out
 LONG WINAPI ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
 {
-  DWORD dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
+  DWORD const dwExceptionCode = pExceptionInfo->ExceptionRecord->ExceptionCode;
 
   if (dwExceptionCode == EXCEPTION_ACCESS_VIOLATION)
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: ACCESS VIOLATION\n")));
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: ACCESS VIOLATION\n")));
   else
-    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\nERROR: UNHANDLED EXCEPTION\n")));
+    ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("\n(%P|%t) ERROR: UNHANDLED EXCEPTION\n")));
 
   return EXCEPTION_EXECUTE_HANDLER;
 }

@@ -35,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_MEM_Connector : public ACE_SOCK_Connector
 {
 public:
-  // = Initialization methods.
   /// Default constructor.
   ACE_MEM_Connector (void);
 

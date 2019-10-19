@@ -46,7 +46,6 @@ public:
   /// Unbounded set of IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,

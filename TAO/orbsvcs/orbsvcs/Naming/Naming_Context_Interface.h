@@ -45,8 +45,6 @@ class TAO_Naming_Serv_Export TAO_Naming_Context :
   public virtual POA_CosNaming::NamingContextExt
 {
 public:
-
-  // = Initialization and termination methods.
   /// Constructor.  Initializes <impl_> with a concrete implementation.
   TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
@@ -185,7 +183,6 @@ public:
   virtual PortableServer::POA_ptr _default_POA (void);
 
 private:
-
   enum Hint
     {
       HINT_ID,
@@ -354,7 +351,6 @@ public:
    * persistence support.
    */
   virtual bool stale (void);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

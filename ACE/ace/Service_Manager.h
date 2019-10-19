@@ -50,7 +50,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object
 {
 public:
-  // = Initialization and termination hooks.
   /// Constructor.
   ACE_Service_Manager (void);
 

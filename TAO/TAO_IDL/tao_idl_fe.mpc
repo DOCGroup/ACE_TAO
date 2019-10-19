@@ -33,7 +33,7 @@ project(TAO_IDL_GEN) {
     "	@echo '         generate it using:'"
     "	@echo '    make y.tab'"
 
-    debug_bison: BISON_FLAGS += --report all
+    debug_bison: BISON_FLAGS += --report=all --report-file=bison_report
     debug_bison: y.tab
 
     .PHONY: y.tab

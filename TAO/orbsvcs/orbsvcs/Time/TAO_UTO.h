@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_UTO : public POA_CosTime::UTO
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_UTO (TimeBase::TimeT time,
            TimeBase::InaccuracyT inaccuracy,

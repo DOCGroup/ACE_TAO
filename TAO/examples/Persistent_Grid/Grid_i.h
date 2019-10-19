@@ -29,7 +29,6 @@ typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex> pool_t;
 class Grid_Factory_i : public POA_Grid_Factory
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Grid_Factory_i (void);
 
@@ -76,8 +75,6 @@ private:
 class Grid_i: public POA_Grid
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor
   Grid_i (void);
 

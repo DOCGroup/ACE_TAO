@@ -35,7 +35,6 @@ class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
-  // = Initialization and termination methods.
   /**
    * Initialize the dynamic hash operation table with a database of
    * operation names. The hash table size may be different from the

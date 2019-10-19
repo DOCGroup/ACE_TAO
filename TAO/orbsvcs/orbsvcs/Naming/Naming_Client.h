@@ -38,8 +38,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Export TAO_Naming_Client
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor.
   TAO_Naming_Client (void);
 

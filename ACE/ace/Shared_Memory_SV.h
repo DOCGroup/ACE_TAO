@@ -41,7 +41,6 @@ public:
       ACE_OPEN = 0
     };
 
-  // = Initialization and termination methods.
   ACE_Shared_Memory_SV (void);
   ACE_Shared_Memory_SV (key_t id,
                         size_t length,

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_FACTORY_H
 #include /**/ "ace/pre.h"
@@ -33,8 +32,6 @@ class TAO_Persistent_Naming_Context;
 class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context_Factory
 {
 public:
-
-  // = Initialization and termination methods.
   /// Data structure used by TAO_Persistent_Context_Index - typedef for ease of use.
   typedef TAO_Persistent_Naming_Context::HASH_MAP HASH_MAP;
 

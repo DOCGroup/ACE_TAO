@@ -61,8 +61,6 @@ public:
     }
 
 
-  // = Initialization and termination methods.
-
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
   ACE_Intrusive_Auto_Ptr (X *p = 0, bool addref = true);

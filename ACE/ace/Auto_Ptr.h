@@ -45,7 +45,6 @@ class ACE_Auto_Basic_Ptr
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit ACE_Auto_Basic_Ptr (X * p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
@@ -93,7 +92,6 @@ class auto_ptr : public ACE_Auto_Basic_Ptr<X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit auto_ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
   auto_ptr (auto_ptr<X> & ap) : ACE_Auto_Basic_Ptr<X> (ap.release ()) {}
 
@@ -114,7 +112,6 @@ class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit ACE_Auto_Ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
 
   X *operator-> () const;
@@ -134,7 +131,6 @@ class ACE_Auto_Basic_Array_Ptr
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods.
   explicit ACE_Auto_Basic_Array_Ptr (X * p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> & ap);
@@ -170,7 +166,6 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods.
   explicit ACE_Auto_Array_Ptr (X *p = 0)
     : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 

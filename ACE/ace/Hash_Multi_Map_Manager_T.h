@@ -52,7 +52,6 @@ public:
   typedef ACE_Unbounded_Set<INT_ID> VALUE_SET;
   typedef ACE_Unbounded_Set_Iterator<INT_ID> VALUE_SET_ITERATOR;
 
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
                             const ACE_Unbounded_Set<INT_ID> &int_id_set,
@@ -166,8 +165,6 @@ public:
           const_iterator;
   typedef ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           reverse_iterator;
-
-  // = Initialization and termination methods.
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with default size elements.
@@ -613,7 +610,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Multi_Map_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -680,7 +676,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -751,7 +746,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                int tail = 0);
 
@@ -797,7 +791,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Const_Iterator (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                      int tail = 0);
 
@@ -850,7 +843,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Bucket_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Bucket_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                       const EXT_ID &ext_id,
                                       int tail = 0);
@@ -919,7 +911,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Reverse_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Reverse_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                        int head = 0);
 

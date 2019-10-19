@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Persistent_Entries.cpp
@@ -6,7 +5,6 @@
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #include "orbsvcs/Naming/Persistent_Entries.h"
 #include "ace/SString.h"

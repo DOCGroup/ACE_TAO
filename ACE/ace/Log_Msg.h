@@ -244,8 +244,6 @@ public:
     CUSTOM = 256
   };
 
-  // = Initialization and termination routines.
-
   /// Returns a pointer to the Singleton.
   static ACE_Log_Msg *instance (void);
 

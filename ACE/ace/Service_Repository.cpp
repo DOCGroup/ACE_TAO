@@ -275,25 +275,21 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
                                 bool ignore_suspended) const
 {
   ACE_TRACE ("ACE_Service_Repository::find_i");
-  size_t i = 0;
-  array_type::const_iterator element = this->service_array_.end ();
+  array_type::const_iterator iter;
 
-  for (i = 0; i < this->service_array_.size(); i++)
+  for (iter = this->service_array_.begin(); iter != this->service_array_.end(); ++iter)
     {
-      array_type::const_iterator iter = this->service_array_.find (i);
-      if (iter != this->service_array_.end ()
-          && (*iter).second != 0 // skip any empty slots
+      if ((*iter).second != 0 // skip any empty slots
           && ACE_OS::strcmp (name, (*iter).second->name ()) == 0)
       {
-        element = iter;
         break;
       }
     }
 
-  if (element != this->service_array_.end ())
+  if (iter != this->service_array_.end ())
     {
-      slot = i;
-      if ((*element).second->fini_called ())
+      slot = (*iter).first;
+      if ((*iter).second->fini_called ())
         {
           if (srp != 0)
             *srp = 0;
@@ -301,10 +297,10 @@ ACE_Service_Repository::find_i (const ACE_TCHAR name[],
         }
 
       if (srp != 0)
-        *srp = (*element).second;
+        *srp = (*iter).second;
 
       if (ignore_suspended
-          && (*element).second->active () == 0)
+          && (*iter).second->active () == 0)
         return -2;
 
       return 0;

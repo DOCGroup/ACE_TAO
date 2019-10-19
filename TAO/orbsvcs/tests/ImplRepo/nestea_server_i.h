@@ -28,7 +28,6 @@
 class Nestea_Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
   Nestea_Server_i (const char *filename = "nestea.dat");
 

@@ -28,7 +28,6 @@
 class Account_i : public POA_Bank::Account
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Account_i (void);
 

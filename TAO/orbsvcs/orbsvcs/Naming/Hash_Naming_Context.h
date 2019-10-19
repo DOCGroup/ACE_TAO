@@ -114,12 +114,11 @@ public:
 class TAO_Naming_Serv_Export TAO_Hash_Naming_Context :public TAO_Naming_Context_Impl
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Hash_Naming_Context (PortableServer::POA_ptr poa,
                            const char *poa_id);
 
-  /// Set our <interface_> pointer.
+  /// Set our interface_ pointer.
   void interface (TAO_Naming_Context *i);
 
   /// Destructor.
@@ -127,7 +126,7 @@ public:
 
   // = Accessors.
 
-  /// Get the pointer to our <interface>.
+  /// Get the pointer to our interface.
   TAO_Naming_Context *interface (void);
 
   /// Returns true if this Naming Context is a root Naming Context for

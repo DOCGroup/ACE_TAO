@@ -34,7 +34,6 @@ class TAO_NT_Notify_Service : public ACE_NT_Service
 public:
   typedef TAO_SYNCH_RECURSIVE_MUTEX MUTEX;
 
-  // = Initialization and termination hooks.
   TAO_NT_Notify_Service (void);
   virtual ~TAO_NT_Notify_Service (void);
 

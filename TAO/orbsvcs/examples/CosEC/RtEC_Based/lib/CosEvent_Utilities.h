@@ -33,7 +33,6 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   //   create and manage a CosEC servant.
   //   Clients can derive from this class and create servants.
  public:
-  // = Initialization method.
   /// Constructor.
   CosEC_ServantBase (void);
 

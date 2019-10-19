@@ -44,7 +44,6 @@ class ACE_Export ACE_Service_Object
     public ACE_Shared_Object
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Service_Object (ACE_Reactor * = 0);
 
@@ -92,7 +91,6 @@ public:
       INVALID_TYPE = -1
     };
 
-  // = Initialization and termination methods.
   ACE_Service_Type (const ACE_TCHAR *n,
                     ACE_Service_Type_Impl *o,
                     const ACE_DLL &dll,
@@ -168,7 +166,6 @@ private:
 class ACE_Export ACE_Service_Object_Ptr
 {
 public:
-  // = Initialization and termination methods.
   /// Acquire ownership of the @a so.
   ACE_Service_Object_Ptr (ACE_Service_Object *so);
 

@@ -39,9 +39,6 @@ template <class MAP_LOCK_TYPE>
 class TAO_Register_Offer_Iterator : public TAO_Offer_Iterator
 {
 public:
-
-  // = Initialization and termination methods.
-
   /// Takes service type and trader reference in order to
   /// later locate offers using their ids.
   TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,

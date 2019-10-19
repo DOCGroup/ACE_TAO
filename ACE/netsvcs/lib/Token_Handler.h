@@ -45,8 +45,6 @@ class ACE_Svc_Export ACE_Token_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,
 {
 
 public:
-  // = Initialization and termination.
-
   /// Default constructor.
   ACE_Token_Handler (ACE_Thread_Manager * = 0);
 

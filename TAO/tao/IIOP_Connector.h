@@ -50,7 +50,6 @@ class TAO_IIOP_Endpoint;
 class TAO_Export TAO_IIOP_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_IIOP_Connector (void);
 

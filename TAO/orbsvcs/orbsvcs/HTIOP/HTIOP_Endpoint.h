@@ -49,8 +49,6 @@ namespace TAO
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
-      // = Initialization and termination methods.
-
       /// Default constructor.
       Endpoint (void);
 

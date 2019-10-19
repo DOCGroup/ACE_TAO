@@ -34,12 +34,9 @@ class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context_Factory :
   public TAO_Storable_Naming_Context_Factory
 {
 public:
-
   /// Data structure used by TAO_Persistent_Context_Index -
   /// typedef for ease of use.
   typedef TAO_Storable_Naming_Context_Factory::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_FT_Storable_Naming_Context_Factory (

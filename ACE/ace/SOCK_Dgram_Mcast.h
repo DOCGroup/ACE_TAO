@@ -191,8 +191,6 @@ public:
     DEFOPTS = DEFOPT_BINDADDR | DEFOPT_NULLIFACE
   };
 
-  // = Initialization routines.
-
   /// Create an unitialized instance and define per-instance optional
   /// functionality.
   /**
