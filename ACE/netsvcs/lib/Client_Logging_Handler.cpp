@@ -436,7 +436,6 @@ class ACE_Client_Logging_Acceptor : public ACE_Acceptor<ACE_Client_Logging_Handl
   //     This class contains the service-specific methods that can't
   //     easily be factored into the <ACE_Acceptor>.
 public:
-  // = Initialization method.
   ACE_Client_Logging_Acceptor (void);
   // Default constructor.
 

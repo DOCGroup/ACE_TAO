@@ -169,9 +169,7 @@ class RedGreen_Test_StructuredPushConsumer
   // = DESCRIPTION
   //   Consumer for the RedGreen_Test example.
   //
-
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   RedGreen_Test_StructuredPushConsumer (RedGreen_Test* RedGreen_Test);
 
@@ -183,9 +181,7 @@ class RedGreen_Test_StructuredPushConsumer
   virtual void disconnect (void);
 
   /// Accessor for the Proxy that we're connected to.
-  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (
-      void
-    );
+  CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier (void);
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;
@@ -220,16 +216,13 @@ protected:
   // = NotifyPublish method
   virtual void offer_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier methods
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-    );
+      const CosNotification::StructuredEvent & notification);
 
-  virtual void disconnect_structured_push_consumer (
-    );
+  virtual void disconnect_structured_push_consumer ();
 };
 
 /*****************************************************************/
@@ -240,10 +233,8 @@ public:
   SlowConsumer (RedGreen_Test* RedGreen_Test);
 
   virtual void push_structured_event (
-      const CosNotification::StructuredEvent & notification
-    );
+      const CosNotification::StructuredEvent & notification);
 };
-
 
 /*****************************************************************/
 class RedGreen_Test_StructuredPushSupplier
@@ -255,8 +246,7 @@ class RedGreen_Test_StructuredPushSupplier
   // = DESCRIPTION
   //   Supplier for the RedGreen_Test example.
   //
- public:
-  // = Initialization and Termination code
+public:
   /// Constructor.
   RedGreen_Test_StructuredPushSupplier (void);
 
@@ -295,12 +285,10 @@ protected:
   // = NotifyRedGreen_Test
   virtual void subscription_change (
       const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed
-    );
+      const CosNotification::EventTypeSeq & removed);
 
   // = StructuredPushSupplier method
-  virtual void disconnect_structured_push_supplier (
-    );
+  virtual void disconnect_structured_push_supplier ();
 };
 
 /*****************************************************************/

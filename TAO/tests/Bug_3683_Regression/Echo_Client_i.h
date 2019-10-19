@@ -28,7 +28,6 @@
 class Echo_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Echo_Client_i (void);
 

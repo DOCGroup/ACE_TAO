@@ -210,7 +210,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &sr);
 
   // = Iteration methods.

@@ -40,10 +40,10 @@ static const char copyright[] =
 " *       Vanderbilt University\n"
 " *       Nashville, TN\n"
 " *       USA\n"
-" *       http://www.isis.vanderbilt.edu/\n"
+" *       https://www.isis.vanderbilt.edu/\n"
 " *\n"
 " * Information about TAO is available at:\n"
-" *     http://www.dre.vanderbilt.edu/~schmidt/TAO.html\n"
+" *     https://www.dre.vanderbilt.edu/~schmidt/TAO.html\n"
 " **/";
 
 TAO_NL::TAO_NL (void)

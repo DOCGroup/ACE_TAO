@@ -56,7 +56,6 @@ class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
   // = TITLE
   //   This class illustrates how the <ACE_Connector> works.
 public:
-  // = Initialization and termination methods.
   IPC_Client (void);
   // Constructor.
 

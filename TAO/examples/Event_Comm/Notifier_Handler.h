@@ -30,7 +30,6 @@
 class Notifier_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// This constructor gets the notifier object from the Naming
   /// Service.
   Notifier_Handler (void);

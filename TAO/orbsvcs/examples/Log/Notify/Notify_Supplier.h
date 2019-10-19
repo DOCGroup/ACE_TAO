@@ -72,7 +72,6 @@ class Filter_StructuredPushSupplier
   //   Supplier for the filter example.
   //
  public:
-  // = Initialization and Termination code
   Filter_StructuredPushSupplier (void);
   // Constructor.
 

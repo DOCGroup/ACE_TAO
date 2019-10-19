@@ -97,7 +97,6 @@ private:
 class ACE_Export ACE_Sig_Action
 {
 public:
-  // = Initialization methods.
   /// Default constructor.  Initializes everything to 0.
   ACE_Sig_Action (void);
 
@@ -223,7 +222,6 @@ private:
 class ACE_Export ACE_Sig_Guard
 {
 public:
-  // = Initialization and termination methods.
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated

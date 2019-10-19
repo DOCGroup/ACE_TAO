@@ -76,7 +76,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Module : public ACE_Module_Base
 {
 public:
-  // = Initialization and termination methods.
   /// Create an empty Module.
   ACE_Module (void);
 

@@ -32,7 +32,6 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushSupplier_i :
   //   This implementation of the ProxyPushSupplier uses the
   //   RtecEventChannelAdmin::ProxyPushSupplier.
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_CosEC_ProxyPushSupplier_i (const RtecEventChannelAdmin::ConsumerQOS &qos,
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);

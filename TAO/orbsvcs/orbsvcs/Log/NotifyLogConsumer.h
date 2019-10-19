@@ -51,8 +51,6 @@ class TAO_Notify_LogConsumer :
   public virtual POA_CosNotifyComm::PushConsumer
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Notify_LogConsumer (TAO_NotifyLog_i *log);
 

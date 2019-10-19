@@ -55,7 +55,6 @@ public:
 class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
-  // = Initialization and termination methods.
   ACE_XtReactor (XtAppContext context = 0,
                  size_t size = DEFAULT_SIZE,
                  bool restart = false,

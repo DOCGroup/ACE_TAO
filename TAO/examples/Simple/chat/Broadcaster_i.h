@@ -34,7 +34,6 @@
 class Broadcaster_i : public POA_Broadcaster
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Broadcaster_i (void);
 

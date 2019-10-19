@@ -33,7 +33,6 @@ class FilterClient
 {
 
  public:
-  // = Initialization and Termination
   /// Constructor
   FilterClient (void);
 
@@ -136,7 +135,6 @@ class Filter_StructuredPushConsumer
   //
 
  public:
-  // = Initialization and Termination code
   /// Constructor.
   Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
 
@@ -190,7 +188,6 @@ class Filter_StructuredPushSupplier
   //   Supplier for the filter example.
   //
  public:
-  // = Initialization and Termination code
   /// Constructor.
   Filter_StructuredPushSupplier (const char* my_name);
 

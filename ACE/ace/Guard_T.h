@@ -65,8 +65,6 @@ template <class ACE_LOCK>
 class ACE_Guard
 {
 public:
-
-  // = Initialization and termination methods.
   ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
@@ -144,8 +142,6 @@ template <class ACE_LOCK>
 class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
-  // = Initialization method.
-
   /// Implicitly and automatically acquire a write lock.
   ACE_Write_Guard (ACE_LOCK &m);
 
@@ -190,8 +186,6 @@ template <class ACE_LOCK>
 class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
-  // = Initialization methods.
-
   /// Implicitly and automatically acquire a read lock.
   ACE_Read_Guard (ACE_LOCK& m);
 
@@ -244,8 +238,6 @@ template <class ACE_LOCK>
 class ACE_TSS_Guard
 {
 public:
-  // = Initialization and termination methods.
-
   /// Implicitly and automatically acquire the thread-specific lock.
   ACE_TSS_Guard (ACE_LOCK &lock, bool block = true);
 
@@ -308,8 +300,6 @@ template <class ACE_LOCK>
 class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
-  // = Initialization method.
-
   /// Implicitly and automatically acquire the thread-specific write lock.
   ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
@@ -353,7 +343,6 @@ template <class ACE_LOCK>
 class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
-  // = Initialization method.
   /// Implicitly and automatically acquire the thread-specific read lock.
   ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 

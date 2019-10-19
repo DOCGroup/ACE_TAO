@@ -39,7 +39,6 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_ProxyPushConsumer_i :
   //   so we assume that publications[0] is initialized.
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_CosEC_ProxyPushConsumer_i (const RtecEventChannelAdmin::SupplierQOS &qos,
                                  RtecEventChannelAdmin::ProxyPushConsumer_ptr proxypushconsumer);

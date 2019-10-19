@@ -37,7 +37,6 @@ class ACE_Accept_QoS_Params;
 class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_SOCK_Acceptor (void);
 

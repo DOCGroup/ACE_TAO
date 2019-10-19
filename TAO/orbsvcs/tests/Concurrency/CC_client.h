@@ -48,7 +48,6 @@ extern FILE *ace_cc_yyin;
 class CC_Client
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   CC_Client (void);
 

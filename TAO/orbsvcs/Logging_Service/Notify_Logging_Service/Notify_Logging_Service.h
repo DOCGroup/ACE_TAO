@@ -34,7 +34,6 @@ class Notify_Logging_Service
   //   Implementation of the Telecom Log Service
 
  public:
-  // = Initialization and termination methods.
   Notify_Logging_Service (void);
   // Constructor.
 

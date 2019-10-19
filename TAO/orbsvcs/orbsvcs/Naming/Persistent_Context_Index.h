@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_CONTEXT_INDEX_H
 #define TAO_PERSISTENT_CONTEXT_INDEX_H
 #include /**/ "ace/pre.h"
@@ -61,8 +60,6 @@ public:
   /// Allocator we will be using to make the Naming Service persistent.
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MMAP_MEMORY_POOL, TAO_SYNCH_MUTEX>
   > ALLOCATOR;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Persistent_Context_Index (

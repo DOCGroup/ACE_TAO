@@ -28,7 +28,6 @@
 class Consumer_i : public POA_Callback_Quoter::Consumer
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Consumer_i (void);
 

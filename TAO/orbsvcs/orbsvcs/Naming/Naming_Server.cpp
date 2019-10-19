@@ -1,4 +1,3 @@
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 

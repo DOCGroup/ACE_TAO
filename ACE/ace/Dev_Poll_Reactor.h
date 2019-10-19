@@ -1003,7 +1003,6 @@ protected:
   short reactor_mask_to_poll_event (ACE_Reactor_Mask mask);
 
 protected:
-
   /// Has the reactor been initialized.
   bool initialized_;
 
@@ -1119,7 +1118,7 @@ protected:
 
     /// Returns whether the thread that created this object owns the
     /// token or not.
-    int is_owner (void);
+    bool is_owner (void);
 
     /// A helper method that acquires the token 1) at a low priority, and
     /// 2) wait quietly for the token, not waking another thread. This
@@ -1137,16 +1136,14 @@ protected:
     Token_Guard (void);
 
   private:
-
     /// The Reactor token.
     ACE_Dev_Poll_Reactor_Token &token_;
 
     /// Flag that indicate whether the thread that created this object
-    /// owns the token or not. A value of 0 indicates that this class
-    /// hasn't got the token (and hence the thread) and a value of 1
+    /// owns the token or not. A value of false indicates that this class
+    /// hasn't got the token (and hence the thread) and a value of true
     /// vice-versa.
-    int owner_;
-
+    bool owner_;
   };
 };
 

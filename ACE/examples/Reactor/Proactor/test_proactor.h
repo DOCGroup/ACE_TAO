@@ -14,7 +14,6 @@ class Receiver : public ACE_Service_Handler
   //     connections arrive.  This class will then receive data from
   //     the network connection and dump it to a file.
 public:
-  // = Initialization and termination.
   Receiver (void);
   ~Receiver (void);
 

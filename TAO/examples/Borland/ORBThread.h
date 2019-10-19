@@ -8,12 +8,11 @@ class PACKAGE TORBThread : public TThread
 {
   // Class for running the orb in a separate thread.
 public:
-  // = Initialization and termination methods.
-  __fastcall TORBThread (CORBA::ORB_ptr orb);
   // Constructor.
+  __fastcall TORBThread (CORBA::ORB_ptr orb);
 
-  __fastcall ~TORBThread ();
   // Destructor.
+  __fastcall ~TORBThread ();
 
 protected:
   void __fastcall Execute ();

@@ -34,8 +34,6 @@
 class Echo_Handler : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor
   Echo_Handler (void);
 

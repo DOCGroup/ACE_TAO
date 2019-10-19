@@ -237,9 +237,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
               << "::CORBA::Boolean release = false);" << be_uidt;
       }
 
-      *os << be_nl
-          << node->local_name () << " (const " << node->local_name ()
-          << " &);" << be_nl;
+      // Default copy/move constructor and assignment operators
+      *os << "\n#if defined (ACE_HAS_CPP11)" << be_nl
+          << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
+          << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
+          << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
+          << "\n#endif /* ACE_HAS_CPP11 */" << be_nl;
+
       *os << "virtual ~" << node->local_name () << " (void);";
 
       if (be_global->alt_mapping () && node->unbounded ())

@@ -55,7 +55,6 @@ public:
     ACE_OPEN = 0
   };
 
-  // = Initialization and termination methods.
   ACE_SV_Semaphore_Simple (void);
   ACE_SV_Semaphore_Simple (key_t key,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,

@@ -2052,7 +2052,6 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::notify (void)
     return this->notification_strategy_->notify ();
 }
 
-// = Initialization and termination methods.
 template <ACE_SYNCH_DECL, class TIME_POLICY>
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::ACE_Dynamic_Message_Queue (ACE_Dynamic_Message_Strategy & message_strategy,
                                                                      size_t hwm,

@@ -32,7 +32,6 @@ class Logging_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 //     utilize the <ACE_Reactor> timer mechanisms, as well.
 {
 public:
-  // = Initialization and termination methods.
   Logging_Handler (void);
 
   // = Hooks for opening and closing handlers.

@@ -139,7 +139,6 @@ public:
   /// Destructor.
   virtual ~ACE_Select_Reactor_Notify (void);
 
-  // = Initialization and termination methods.
   /// Initialize.
   virtual int open (ACE_Reactor_Impl *,
                     ACE_Timer_Queue * = 0,
@@ -319,7 +318,6 @@ public:
 
   typedef map_type::size_type size_type;
 
-  // = Initialization and termination methods.
   /// Default "do-nothing" constructor.
   ACE_Select_Reactor_Handler_Repository (ACE_Select_Reactor_Impl &);
 
@@ -421,7 +419,6 @@ public:
   typedef
     ACE_Select_Reactor_Handler_Repository::map_type::const_iterator const_base_iterator;
 
-  // = Initialization method.
   explicit ACE_Select_Reactor_Handler_Repository_Iterator (
     ACE_Select_Reactor_Handler_Repository const * s);
 
@@ -591,14 +588,13 @@ protected:
 
   /// Controls/access whether the notify handler should renew the
   /// Select_Reactor's token or not.
-  int supress_notify_renew (void);
-  void supress_notify_renew (int sr);
+  bool supress_notify_renew (void);
+  void supress_notify_renew (bool sr);
 
 private:
-
   /// Determine whether we should renew Select_Reactor's token after handling
   /// the notification message.
-  int supress_renew_;
+  bool supress_renew_;
 
   /// Deny access since member-wise won't work...
   ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);

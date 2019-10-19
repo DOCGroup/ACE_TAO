@@ -136,8 +136,6 @@ class ACE_Export ACE_MMAP_Memory_Pool : public ACE_Event_Handler
 public:
   typedef ACE_MMAP_Memory_Pool_Options OPTIONS;
 
-  // = Initialization and termination methods.
-
   /// Initialize the pool.
   ACE_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                         const OPTIONS *options = 0);

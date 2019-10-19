@@ -28,8 +28,7 @@ class Basic_Logging_Service
   // = DESCRIPTION
   //   Implementation of the Telecom Log Service
 
- public:
-  // = Initialization and termination methods.
+public:
   Basic_Logging_Service (void);
   // Constructor.
 

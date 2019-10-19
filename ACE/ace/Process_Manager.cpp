@@ -385,7 +385,7 @@ ACE_Process_Manager::handle_signal (int,
     {
       // <GetExitCodeProcess> failed.
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("GetExitCodeProcess failed")),
+                         ACE_TEXT ("GetExitCodeProcess failed\n")),
                         -1); // return -1: unregister
     }
 #else /* !ACE_WIN32 */

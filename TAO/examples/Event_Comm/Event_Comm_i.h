@@ -50,7 +50,6 @@ public:
 class Consumer_i : public POA_Event_Comm::Consumer
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Consumer_i (void);
 

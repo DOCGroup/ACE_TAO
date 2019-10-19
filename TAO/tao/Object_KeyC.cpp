@@ -76,15 +76,6 @@ TAO::ObjectKey::ObjectKey (
     (max, length, buffer, release)
 {}
 
-TAO::ObjectKey::ObjectKey (
-    const ObjectKey &seq
-  )
-  : TAO::unbounded_value_sequence<
-        CORBA::Octet
-      >
-    (seq)
-{}
-
 TAO::ObjectKey::~ObjectKey (void)
 {}
 

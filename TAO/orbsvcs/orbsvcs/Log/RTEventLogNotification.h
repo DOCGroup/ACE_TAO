@@ -47,8 +47,6 @@ class TAO_RTEventLog_Serv_Export TAO_RTEventLogNotification :
   public POA_RtecEventComm::PushSupplier
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_RTEventLogNotification (RtecEventChannelAdmin::EventChannel_ptr);
 

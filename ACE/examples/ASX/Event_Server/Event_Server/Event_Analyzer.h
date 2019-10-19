@@ -21,7 +21,6 @@ class Event_Analyzer : public ACE_Task<ACE_SYNCH>
   //     In a "real" event service, application-specific processing
   //     would be done in the <put> (or <svc>) method in this class.
 public:
-  // = Initialization hooks called by <ACE_Stream> (not used).
   virtual int open (void *a = 0);
   virtual int close (u_long flags = 0);
 

@@ -50,7 +50,6 @@ public:
   typedef ITERATOR iterator;
   typedef REVERSE_ITERATOR reverse_iterator;
 
-  // = Initialization and termination methods.
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
   ACE_Active_Map_Manager (ACE_Allocator *alloc = 0);
 

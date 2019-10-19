@@ -59,10 +59,7 @@ class TAO_LogMgr_i;
 class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   : public TAO_LogRecordStore
 {
- public:
-
-  // = Initialization and termination methods
-
+public:
   /// Constructor.
   TAO_Hash_LogRecordStore (TAO_LogMgr_i* logmgr,
                            DsLogAdmin::LogId id,

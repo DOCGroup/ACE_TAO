@@ -143,7 +143,6 @@ public:
 class TAO_Trading_Serv_Export TAO_Support_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
   TAO_Support_Attributes_i (TAO_Lockable &locker);
   ~TAO_Support_Attributes_i ();
 
@@ -195,8 +194,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Link_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
-
   TAO_Link_Attributes_i (TAO_Lockable &locker);
   ~TAO_Link_Attributes_i ();
 
@@ -226,10 +223,7 @@ private:
 class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
-  // = Initialization and termination methods.
-
   TAO_Import_Attributes_i (TAO_Lockable &locker);
-
   ~TAO_Import_Attributes_i (void);
 
   // = Accessor methods.
@@ -324,12 +318,8 @@ private:
 class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
-
-  // = Initialization and termination methods.
   TAO_Trading_Components_i (TAO_Lockable &locker);
   ~TAO_Trading_Components_i (void);
-
-  // = CosTrading::TraderComponents methods.
 
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.

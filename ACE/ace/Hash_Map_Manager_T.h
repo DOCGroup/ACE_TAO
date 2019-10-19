@@ -34,7 +34,6 @@ template <class EXT_ID, class INT_ID>
 class ACE_Hash_Map_Entry
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Hash_Map_Entry (const EXT_ID &ext_id,
                       const INT_ID &int_id,
@@ -173,8 +172,6 @@ public:
   typedef value_type const *                 const_pointer;
   typedef ptrdiff_t                          difference_type;
   typedef size_t                             size_type;
-
-  // = Initialization and termination methods.
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with a default number of elements.
@@ -603,7 +600,6 @@ public:
   typedef typename container_type::pointer         pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   /// Constructor.
   /**
    *  If @a head != @c false, the iterator constructed is positioned
@@ -702,7 +698,6 @@ public:
   typedef typename container_type::const_pointer   pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   /// Constructor.  If head the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Map_Const_Iterator_Base_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -784,7 +779,6 @@ public:
   typedef typename container_type::pointer         pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   ACE_Hash_Map_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                             int tail = 0);
 
@@ -854,7 +848,6 @@ public:
   typedef typename container_type::pointer         pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   ACE_Hash_Map_Const_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                   int tail = 0);
 
@@ -918,7 +911,6 @@ public:
   typedef typename container_type::pointer         pointer;
   typedef typename container_type::difference_type difference_type;
 
-  // = Initialization method.
   ACE_Hash_Map_Bucket_Iterator (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                 const EXT_ID &ext_id,
                                 int tail = 0);
@@ -1002,7 +994,6 @@ public:
   ACE_Hash_Map_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                     bool head = false);
 
-  // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance (void);
@@ -1059,7 +1050,6 @@ public:
   ACE_Hash_Map_Const_Reverse_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                           bool head = false);
 
-  // = Iteration methods.
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
   int advance (void);
@@ -1193,7 +1183,6 @@ public:
   typedef typename ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type
           difference_type;
 
-  // = Initialization method.
   /// Construct from map
   ACE_Hash_Map_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                          int tail = 0);
@@ -1235,7 +1224,6 @@ public:
   typedef typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type
           difference_type;
 
-  // = Initialization method.
   /// Construct from map
   ACE_Hash_Map_Const_Iterator (const ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                int tail = 0);
@@ -1277,7 +1265,6 @@ public:
   typedef typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type
           difference_type;
 
-  // = Initialization method.
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                  bool head = false);
 

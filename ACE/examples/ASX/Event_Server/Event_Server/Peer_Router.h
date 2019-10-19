@@ -59,7 +59,6 @@ class Peer_Router_Context : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
   //     This class also serves as an <ACE_Acceptor>, which creates
   //     <Peer_Handlers> when Peers connect.
 public:
-  // = Initialization and termination methods.
   Peer_Router_Context (u_short port);
   // Constructor.
 

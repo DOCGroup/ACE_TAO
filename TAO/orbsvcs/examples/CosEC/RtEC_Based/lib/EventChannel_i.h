@@ -35,7 +35,6 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   //   the real-time implementation.
   //
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_CosEC_EventChannel_i (void);
 

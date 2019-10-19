@@ -78,10 +78,9 @@ private:
  */
 class TAO_Notify_Service_Export TAO_Notify_Service_Driver : public ACE_Service_Object
 {
- friend class LoggingWorker;
+friend class LoggingWorker;
 
- public:
-  // = Initialization and termination methods.
+public:
   /// Constructor.
   TAO_Notify_Service_Driver (void);
 

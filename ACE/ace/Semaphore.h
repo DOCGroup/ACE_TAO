@@ -34,7 +34,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_Semaphore
 {
 public:
-  // = Initialization and termination.
   /// Initialize the semaphore, with initial value of "count".
   ACE_Semaphore (unsigned int count = 1, // By default make this unlocked.
                  int type = USYNC_THREAD,

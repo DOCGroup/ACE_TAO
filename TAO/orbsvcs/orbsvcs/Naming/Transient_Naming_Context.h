@@ -36,11 +36,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Transient_Bindings_Map : public TAO_Bindings_Map
 {
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef ACE_Hash_Map_Manager<TAO_ExtId, TAO_IntId, ACE_Null_Mutex> HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Transient_Bindings_Map (size_t hash_table_size);
@@ -130,13 +127,9 @@ private:
  */
 class TAO_Naming_Serv_Export TAO_Transient_Naming_Context : public TAO_Hash_Naming_Context
 {
-
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Transient_Bindings_Map::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Transient_Naming_Context (PortableServer::POA_ptr poa,

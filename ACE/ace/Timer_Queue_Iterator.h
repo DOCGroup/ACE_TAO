@@ -162,7 +162,6 @@ template <class TYPE>
 class ACE_Timer_Queue_Iterator_T
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Timer_Queue_Iterator_T (void);
 

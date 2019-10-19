@@ -44,7 +44,6 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints);
 
@@ -85,7 +84,6 @@ public:
 class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference);
 

@@ -6,7 +6,6 @@
  */
 //=============================================================================
 
-
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

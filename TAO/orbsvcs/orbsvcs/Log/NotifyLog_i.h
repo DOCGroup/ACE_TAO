@@ -53,8 +53,6 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLog_i :
   public POA_DsNotifyLogAdmin::NotifyLog
 {
 public:
-  // = Initialization and Termination.
-
   /// Constructor.
   TAO_NotifyLog_i (CORBA::ORB_ptr orb,
                    PortableServer::POA_ptr poa,

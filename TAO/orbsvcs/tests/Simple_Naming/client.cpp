@@ -17,8 +17,6 @@
 #include "tao/debug.h"
 #include "ace/Get_Opt.h"
 
-
-
 #if defined (_MSC_VER)
 # pragma warning (disable : 4250)
 #endif /* _MSC_VER */
@@ -27,7 +25,6 @@ class My_Test_Object :
   public virtual POA_Test_Object
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   My_Test_Object (CORBA::Short id = 0);
 

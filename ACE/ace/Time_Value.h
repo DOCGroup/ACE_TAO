@@ -53,7 +53,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Time_Value
 {
 public:
-
   /// Constant "0".
   static const ACE_Time_Value zero;
 
@@ -66,8 +65,6 @@ public:
    * class.
    */
   static const ACE_Time_Value max_time;
-
-  // = Initialization methods.
 
   /// Default Constructor.
   ACE_Time_Value (void);

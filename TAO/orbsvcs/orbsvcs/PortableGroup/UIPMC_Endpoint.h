@@ -39,8 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor.
   TAO_UIPMC_Endpoint (void);
 

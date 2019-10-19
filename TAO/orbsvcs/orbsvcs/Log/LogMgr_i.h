@@ -39,9 +39,6 @@ class TAO_Log_Serv_Export TAO_LogMgr_i
   : public virtual POA_DsLogAdmin::LogMgr
 {
 public:
-
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_LogMgr_i ();
 

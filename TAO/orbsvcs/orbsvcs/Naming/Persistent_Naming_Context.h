@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_PERSISTENT_NAMING_CONTEXT_H
 #define TAO_PERSISTENT_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
@@ -34,11 +33,8 @@ class TAO_Naming_Serv_Export TAO_Persistent_Bindings_Map
   : public TAO_Bindings_Map
 {
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef ACE_Hash_Map_With_Allocator<TAO_Persistent_ExtId, TAO_Persistent_IntId> HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Persistent_Bindings_Map (CORBA::ORB_ptr orb);
@@ -164,8 +160,6 @@ class TAO_Naming_Serv_Export TAO_Persistent_Naming_Context : public TAO_Hash_Nam
 public:
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Persistent_Bindings_Map::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Allocate the underlying data structure from persistent storage.
   /// Returns 0 on success and -1 on failure.

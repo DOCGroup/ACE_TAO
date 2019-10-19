@@ -29,7 +29,6 @@ class Multiple
   //   Base class for suppliers and consumers to send/receive events
   //   via the Cos Event Service.
  public:
-  // = Initialization and termination methods.
   /// Constructor.
   Multiple (void);
 

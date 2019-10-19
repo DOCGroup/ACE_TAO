@@ -31,7 +31,6 @@
 class URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// "virtual" destructor.
   virtual int destroy (void);
 
@@ -53,7 +52,6 @@ protected:
 class HTML_Body_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   HTML_Body_Iterator (URL &url);
 
@@ -78,7 +76,6 @@ private:
 class HTTP_Header_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   HTTP_Header_Iterator (URL &url);
 
@@ -109,7 +106,6 @@ private:
 class URL_Download_Iterator : public URL_Iterator
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   URL_Download_Iterator (URL &url);
 

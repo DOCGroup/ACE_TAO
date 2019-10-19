@@ -39,9 +39,6 @@ class  Object_Group_Factory_i :
   //    round robin groups).
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_Factory_i (void);
 
@@ -150,9 +147,6 @@ class Object_Group_i : public virtual POA_Load_Balancer::Object_Group
   //   different load balancing policies.
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_i (const char * id,
                   Object_Group_Factory_i * my_factory);

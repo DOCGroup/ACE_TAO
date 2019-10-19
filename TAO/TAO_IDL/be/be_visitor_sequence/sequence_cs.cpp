@@ -201,30 +201,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
           << "{}";
   }
 
-  // Copy constructor.
-  *os << be_nl_2
-      << node->name () << "::" << node->local_name ()
-      << " (" << be_idt << be_idt_nl
-      << "const " << node->local_name ()
-      << " &seq)" << be_uidt << be_uidt_nl
-      << "  : " << be_idt << be_idt;
-
-  // Pass it to the base constructor.
-  if (node->gen_base_class_name (os,
-                                 "",
-                                 this->ctx_->scope ()->decl ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_sequence_cs::")
-                         ACE_TEXT ("visit_sequence - ")
-                         ACE_TEXT ("codegen for base ")
-                         ACE_TEXT ("sequence class\n")),
-                        -1);
-    }
-
-  *os << " (seq)" << be_uidt << be_uidt_nl
-      << "{}";
-
   // Destructor.
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()

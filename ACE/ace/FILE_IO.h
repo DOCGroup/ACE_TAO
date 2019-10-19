@@ -44,7 +44,6 @@ class ACE_Export ACE_FILE_IO : public ACE_FILE
 public:
   friend class ACE_FILE_Connector;
 
-  // = Initialization method.
   /// Default constructor.
   ACE_FILE_IO (void);
 

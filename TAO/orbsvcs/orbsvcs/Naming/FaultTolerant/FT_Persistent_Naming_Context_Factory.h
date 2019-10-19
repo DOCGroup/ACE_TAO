@@ -29,9 +29,6 @@ class TAO_FtNaming_Export TAO_FT_Persistent_Naming_Context_Factory
   : public TAO_Persistent_Naming_Context_Factory
 {
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_FT_Persistent_Naming_Context_Factory (void);
 

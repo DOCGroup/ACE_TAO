@@ -47,7 +47,6 @@ public:
   ~ACE_NS_Node (void);
 
 private:
-  // = Initialization methods
   ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
   ACE_NS_Node (ACE_NS_Node<T> *n = 0, int = 0);
   ACE_NS_Node (const ACE_NS_Node<T> &n);
@@ -68,9 +67,7 @@ template <class T>
 class ACE_Unbounded_List_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Unbounded_List_Iterator (ACE_Unbounded_List<T> &s, int end = 0);
-
   // = Iteration methods.
 
   /// Pass back the <next_item> that hasn't been seen in the List.
@@ -110,7 +107,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_NS_Node<T> *current_;
 
@@ -137,7 +133,6 @@ public:
   typedef ACE_Unbounded_List_Iterator<T> ITERATOR;
   typedef ACE_Unbounded_List_Iterator<T> iterator;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   ACE_Unbounded_List (ACE_Allocator *alloc = 0);

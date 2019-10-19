@@ -36,7 +36,6 @@
 class PP_Test_Server
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor
   PP_Test_Server (void);
 
