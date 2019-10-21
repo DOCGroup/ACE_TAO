@@ -629,15 +629,17 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 #if !defined (ACE_LACKS_SENDMSG)
 # if (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0))
   DWORD bytes_sent = 0;
-  int result = ::WSASendTo ((SOCKET) handle,
-                            (WSABUF *) msg->msg_iov,
-                            msg->msg_iovlen,
-                            &bytes_sent,
-                            flags,
-                            msg->msg_name,
-                            msg->msg_namelen,
-                            0,
-                            0);
+  int const result = msg->msg_control
+    ? sendmsg_win32_i (handle, msg, flags, bytes_sent)
+    : ::WSASendTo ((SOCKET) handle,
+                   (WSABUF *) msg->msg_iov,
+                   msg->msg_iovlen,
+                   &bytes_sent,
+                   flags,
+                   msg->msg_name,
+                   msg->msg_namelen,
+                   0,
+                   0);
 
   if (result != 0)
     {

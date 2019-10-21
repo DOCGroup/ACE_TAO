@@ -296,6 +296,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_accrightslen = 0;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
+#ifdef ACE_WIN32
+  send_msg.msg_control = 0;
+  send_msg.msg_controllen = 0;
+#endif
+
   return ACE_OS::sendmsg (this->get_handle (),
                           &send_msg,
                           flags);

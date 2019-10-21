@@ -314,6 +314,42 @@ int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
 
   return 0;
 }
+
+int ACE_OS::sendmsg_win32_i (ACE_HANDLE handle,
+                             msghdr const *msg,
+                             int flags,
+                             unsigned long &bytes_sent)
+{
+#  if _WIN32_WINNT >= 0x0600
+  WSAMSG wsaMsg =
+  {
+    msg->msg_name,
+    msg->msg_namelen,
+    reinterpret_cast<WSABUF *> (msg->msg_iov),
+    static_cast<unsigned long> (msg->msg_iovlen),
+    {
+      static_cast<unsigned long> (msg->msg_controllen),
+      static_cast<char *> (msg->msg_control),
+    },
+    static_cast<unsigned long> (flags),
+  };
+
+  SOCKET const sock = reinterpret_cast<SOCKET> (handle);
+  if (::WSASendMsg (sock, &wsaMsg, wsaMsg.dwFlags, &bytes_sent, 0, 0))
+    {
+      ACE_OS::set_errno_to_wsa_last_error ();
+      return -1;
+    }
+
+  return 0;
+#  else
+  ACE_UNUSED_ARG (handle);
+  ACE_UNUSED_ARG (msg);
+  ACE_UNUSED_ARG (flags);
+  ACE_UNUSED_ARG (bytes_sent);
+  ACE_NOTSUP_RETURN (-1);
+#  endif
+}
 #endif
 
 ACE_END_VERSIONED_NAMESPACE_DECL
