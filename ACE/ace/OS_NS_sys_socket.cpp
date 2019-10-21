@@ -271,4 +271,49 @@ ACE_OS::send_partial_i (ACE_HANDLE handle,
 #endif /* ACE_LACKS_SEND && ACE_WIN32 */
 }
 
+#if !defined ACE_LACKS_RECVMSG && defined ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2
+int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
+                             msghdr *msg,
+                             int flags,
+                             unsigned long &bytes_received)
+{
+  static GUID wsaRcvMsgGuid = WSAID_WSARECVMSG;
+  LPFN_WSARECVMSG wsaRcvMsg = 0;
+  unsigned long ioctlN = 0;
+  SOCKET const sock = reinterpret_cast<SOCKET> (handle);
+  if (::WSAIoctl (sock, SIO_GET_EXTENSION_FUNCTION_POINTER,
+                  &wsaRcvMsgGuid, sizeof wsaRcvMsgGuid,
+                  &wsaRcvMsg, sizeof wsaRcvMsg,
+                  &ioctlN, 0, 0))
+    {
+      ACE_OS::set_errno_to_wsa_last_error ();
+      return -1;
+    }
+
+  if (!wsaRcvMsg)
+    ACE_NOTSUP_RETURN (-1);
+
+  WSAMSG wsaMsg =
+  {
+    msg->msg_name,
+    msg->msg_namelen,
+    reinterpret_cast<WSABUF *> (msg->msg_iov),
+    static_cast<unsigned long> (msg->msg_iovlen),
+    {
+      static_cast<unsigned long> (msg->msg_controllen),
+      static_cast<char *> (msg->msg_control),
+    },
+    static_cast<unsigned long> (flags),
+  };
+
+  if (wsaRcvMsg (sock, &wsaMsg, &bytes_received, 0, 0))
+    {
+      ACE_OS::set_errno_to_wsa_last_error ();
+      return -1;
+    }
+
+  return 0;
+}
+#endif
+
 ACE_END_VERSIONED_NAMESPACE_DECL
