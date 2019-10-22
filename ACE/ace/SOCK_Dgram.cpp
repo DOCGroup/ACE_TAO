@@ -334,7 +334,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   } cbuf;
 #else
   ACE_UNUSED_ARG (to_addr);
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
@@ -351,7 +351,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #elif !defined ACE_LACKS_SENDMSG
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   ssize_t status = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
@@ -397,7 +397,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     }
 #endif
   }
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   return status;
 }
