@@ -82,6 +82,24 @@
 # define ACE_HAS_MONITOR_POINTS 0
 #endif
 
+#if defined (ACE_LACKS_CLOCK_MONOTONIC) || defined (ACE_LACKS_MONOTONIC_TIME)
+#  if !defined (ACE_LACKS_CLOCK_MONOTONIC)
+#    define ACE_LACKS_CLOCK_MONOTONIC
+#  endif
+#  if !defined (ACE_LACKS_MONOTONIC_TIME)
+#    define ACE_LACKS_MONOTONIC_TIME
+#  endif
+#  if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#    undef ACE_HAS_CLOCK_GETTIME_MONOTONIC
+#  endif
+#endif
+
+#if defined (ACE_LACKS_CONDATTR_SETCLOCK) || defined (ACE_LACKS_CONDATTR)
+#  if defined (ACE_HAS_CONDATTR_SETCLOCK)
+#    undef ACE_HAS_CONDATTR_SETCLOCK
+#  endif
+#endif
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"

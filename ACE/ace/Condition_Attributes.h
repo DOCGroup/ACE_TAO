@@ -22,6 +22,18 @@
 
 #include "ace/OS_NS_Thread.h"
 
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#  if !defined (ACE_HAS_POSIX_MONOTONIC_CONDITIONS)
+#    define ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#  endif
+#endif
+
+#if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_MONOTONIC_CONDITIONS)
+#  if !defined (ACE_HAS_MONOTONIC_CONDITIONS)
+#    define ACE_HAS_MONOTONIC_CONDITIONS
+#  endif
+#endif
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class ACE_Export ACE_Condition_Attributes
