@@ -296,6 +296,11 @@ ACE_SOCK_Dgram::send (const iovec iov[],
   send_msg.msg_accrightslen = 0;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
+#ifdef ACE_WIN32
+  send_msg.msg_control = 0;
+  send_msg.msg_controllen = 0;
+#endif
+
   return ACE_OS::sendmsg (this->get_handle (),
                           &send_msg,
                           flags);
@@ -314,21 +319,22 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
   msghdr recv_msg;
 
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG) || defined ACE_WIN32
+#define ACE_USE_MSG_CONTROL
   union control_buffer {
     cmsghdr control_msg_header;
 #if defined (IP_RECVDSTADDR)
-    u_char padding[CMSG_SPACE(sizeof (struct in_addr))];
+    u_char padding[ACE_CMSG_SPACE (sizeof (in_addr))];
 #elif defined (IP_PKTINFO)
-    u_char padding[CMSG_SPACE(sizeof (struct in_pktinfo))];
+    u_char padding[ACE_CMSG_SPACE (sizeof (in_pktinfo))];
 #endif
 #if defined (ACE_HAS_IPV6)
-    u_char padding6[CMSG_SPACE(sizeof (struct in6_pktinfo))];
+    u_char padding6[ACE_CMSG_SPACE (sizeof (in6_pktinfo))];
 #endif
   } cbuf;
 #else
   ACE_UNUSED_ARG (to_addr);
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   recv_msg.msg_iov = (iovec *) iov;
   recv_msg.msg_iovlen = n;
@@ -339,13 +345,13 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 #endif /* ACE_HAS_SOCKADDR_MSG_NAME */
   recv_msg.msg_namelen = addr.get_size ();
 
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+#ifdef ACE_USE_MSG_CONTROL
   recv_msg.msg_control = to_addr ? &cbuf : 0;
   recv_msg.msg_controllen = to_addr ? sizeof (cbuf) : 0;
 #elif !defined ACE_LACKS_SENDMSG
   recv_msg.msg_accrights = 0;
   recv_msg.msg_accrightslen = 0;
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   ssize_t status = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
@@ -353,24 +359,22 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   addr.set_size (recv_msg.msg_namelen);
   addr.set_type (((sockaddr_in *) addr.get_addr())->sin_family);
 
-#if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
+#ifdef ACE_USE_MSG_CONTROL
   if (to_addr) {
     this->get_local_addr (*to_addr);
     if (to_addr->get_type() == AF_INET) {
 #if defined (IP_RECVDSTADDR) || defined (IP_PKTINFO)
-      for (cmsghdr *ptr = CMSG_FIRSTHDR (&recv_msg); ptr != 0; ptr = CMSG_NXTHDR (&recv_msg, ptr)) {
+      for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
 #if defined (IP_RECVDSTADDR)
-        if (ptr->cmsg_level == IPPROTO_IP &&
-            ptr->cmsg_type == IP_RECVDSTADDR) {
-          to_addr->set_address ((const char *)(CMSG_DATA (ptr)),
+        if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
+          to_addr->set_address ((const char *) (ACE_CMSG_DATA (ptr)),
                                 sizeof (struct in_addr),
                                 0);
           break;
         }
 #else
-        if (ptr->cmsg_level == IPPROTO_IP &&
-            ptr->cmsg_type == IP_PKTINFO) {
-          to_addr->set_address ((const char *)&(((struct in_pktinfo *)(CMSG_DATA (ptr)))->ipi_addr),
+        if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
+          to_addr->set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
                                 sizeof (struct in_addr),
                                 0);
           break;
@@ -381,9 +385,9 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     }
 #if defined (ACE_HAS_IPV6) && defined (IPV6_PKTINFO)
     else if (to_addr->get_type() == AF_INET6) {
-      for (cmsghdr *ptr = CMSG_FIRSTHDR (&recv_msg); ptr != 0; ptr = CMSG_NXTHDR (&recv_msg, ptr)) {
+      for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
         if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
-          to_addr->set_address ((const char *)&(((struct in6_pktinfo *)(CMSG_DATA (ptr)))->ipi6_addr),
+          to_addr->set_address ((const char *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
                                 sizeof (struct in6_addr),
                                 0);
 
@@ -393,7 +397,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     }
 #endif
   }
-#endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
+#endif
 
   return status;
 }
