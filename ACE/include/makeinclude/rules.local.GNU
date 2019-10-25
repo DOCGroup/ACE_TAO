@@ -49,6 +49,7 @@ ifeq ($(use_pwd_call),)
   endif
 endif
 
+.PHONY: makefile_name.local
 ifneq ($(use_pwd_call),1)
 makefile_name.local:
 	@echo
