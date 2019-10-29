@@ -305,4 +305,10 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
   return t;
 }
 
+bool
+AST_Attribute::annotatable () const
+{
+  return true;
+}
+
 IMPL_NARROW_FROM_DECL(AST_Attribute)

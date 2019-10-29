@@ -128,7 +128,7 @@ client (void *arg)
         }
 #endif /* ACE_HAS_IPV6 */
 
-      ACE_INET_Addr to_addr = local_addr;
+      ACE_INET_Addr to_addr(9999);
 
 #if defined(ACE_LACKS_RECVMSG)
       ssize_t rcv_cnt = cli_dgram.recv (buf,
@@ -195,10 +195,11 @@ client (void *arg)
                         ACE_TEXT ("(%P|%t) recv addr size %d; should be %d\n"),
                         peer_addr.get_size (),
                         server_addr.get_size ()));
-          if (local_addr != to_addr) {
+#if defined ACE_RECVPKTINFO6 || defined ACE_RECVPKTINFO
+          if (local_addr != to_addr)
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("(%P|%t) local addr is not equal to server addr\n")));
-          }
+#endif
         }
     }
 

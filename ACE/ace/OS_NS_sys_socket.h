@@ -193,6 +193,14 @@ namespace ACE_OS
                    struct msghdr *msg,
                    int flags);
 
+#if !defined ACE_LACKS_RECVMSG && defined ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2
+  extern ACE_Export
+  int recvmsg_win32_i (ACE_HANDLE handle,
+                       msghdr *msg,
+                       int flags,
+                       unsigned long &bytes_received);
+#endif
+
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t recvv (ACE_HANDLE handle,
                  iovec *iov,
@@ -216,6 +224,14 @@ namespace ACE_OS
   ssize_t sendmsg (ACE_HANDLE handle,
                    const struct msghdr *msg,
                    int flags);
+
+#if !defined ACE_LACKS_RECVMSG && defined ACE_HAS_WINSOCK2 && ACE_HAS_WINSOCK2
+  extern ACE_Export
+  int sendmsg_win32_i (ACE_HANDLE handle,
+                       msghdr const *msg,
+                       int flags,
+                       unsigned long &bytes_sent);
+#endif
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendto (ACE_HANDLE handle,
