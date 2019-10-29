@@ -148,7 +148,7 @@ private:
 
   static const char* basic_log_factory_name_;
 
-  static const char* naming_sevice_name_;
+  static const char* naming_service_name_;
   // strings for log factory and naming service
 
 };
