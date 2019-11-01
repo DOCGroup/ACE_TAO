@@ -116,8 +116,8 @@ extern "C"
 
 #ifdef ACE_WIN32
 #  define ACE_CMSG_SPACE WSA_CMSG_SPACE
-#  define ACE_CMSG_FIRSTHDR(msg)                     \
-     (((msg)->msg_controllen >= sizeof (WSACMSGHDR)) \
+#  define ACE_CMSG_FIRSTHDR(msg)                                \
+     (((unsigned) (msg)->msg_controllen >= sizeof (WSACMSGHDR)) \
       ? (LPWSACMSGHDR) (msg)->msg_control : (LPWSACMSGHDR) 0)
 #  define ACE_CMSG_NXTHDR(msg, cmsg)                               \
       (((cmsg) == 0) ? ACE_CMSG_FIRSTHDR (msg)                     \
