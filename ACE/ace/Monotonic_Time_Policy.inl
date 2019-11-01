@@ -18,7 +18,7 @@ ACE_Monotonic_Time_Policy::operator()() const
   else
     return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
 #  else
-#    error "ACE_HAS_MONOTONIC_TIME_POLICY is defined, no implementation is valid"
+#    error "ACE_HAS_MONOTONIC_TIME_POLICY is defined, but no implementation is valid"
 #  endif /* ACE_WIN32 */
 #else /* !ACE_HAS_MONOTONIC_TIME_POLICY */
   return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);

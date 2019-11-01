@@ -253,6 +253,7 @@
 #define ACE_LACKS_CLOCKID_T
 #define ACE_LACKS_CLOCK_REALTIME
 #define ACE_LACKS_CLOCK_MONOTONIC
+#define ACE_HAS_MONOTONIC_CONDITIONS
 
 /* LACKS gid/pid/sid/uid facilities */
 #define ACE_LACKS_GETPGID
