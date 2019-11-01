@@ -3,6 +3,13 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 
 . Fixed compile problem with glibc 2.30 and newer
 
+. Removed references to the ACE_LACKS_MONOTONIC_TIME preprocessor macro because
+  it was equivalent to ACE_LACKS_CLOCK_MONOTONIC.
+
+. Exposed support status of monotonic times features using these preprocessor
+  macros. See "Testing for Monotonic Time Support" in
+  docs/ACE-monotonic-timer.html.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 
