@@ -77,6 +77,7 @@ int Options::argc_;
 ACE_TCHAR **Options::argv_;
 int Options::iterations_;
 char Options::key_positions_[MAX_KEY_POS];
+bool Options::only_record_arguments_;
 
 /// Prints program usage to standard error stream.
 void
@@ -86,6 +87,7 @@ Options::usage (void)
               "Usage: %n [-abBcCdDef[num]gGhH<hashname>i<init>IjJ"
               "k<keys>K<keyname>lL<language>mMnN<function name>o"
               "Oprs<size>S<switches>tTvVZ<class name>].\n"
+              "[--only-record-arguments]\n"
               "(type %n -h for help)\n"));
 }
 
@@ -95,11 +97,10 @@ Options::print_options (void)
 {
   ACE_OS::printf ("/* Command-line: ");
 
-  for (int i = 0; i < argc_; i++)
-    ACE_OS::printf ("%s ",
-                    ACE_TEXT_ALWAYS_CHAR (argv_[i]));
+  for (int i = only_record_arguments_ ? 1 : 0; i < argc_; i++)
+    ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (argv_[i]));
 
-  ACE_OS::printf (" */");
+  ACE_OS::printf ("*/\n");
 }
 
 /// Sorts the key positions *IN REVERSE ORDER!!* This makes further
@@ -147,6 +148,7 @@ Options::Options (void)
   class_name_ = DEFAULT_CLASS_NAME;
   total_switches_ = size_ = 1;
   initial_asso_value_ = iterations_ = 0;
+  only_record_arguments_ = false;
 }
 
 /// Dumps option status when debug is set.
@@ -254,11 +256,17 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
     return -1;
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT("abBcCdDe:Ef:F:gGhH:i:IJj:k:K:lL:mMnN:oOprs:S:tTvVZ:"));
+  if (get_opt.long_option (ACE_TEXT ("only-record-arguments")) == -1)
+  {
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not setup long option --only-record-arguments\n")), -1);
+  }
 
   argc_ = argc;
   argv_ = argv;
 
   int option_char;
+  const ACE_TCHAR* long_option = 0;
+  bool valid_option = true;
   while ((option_char = get_opt ()) != -1)
     {
       switch (option_char)
@@ -346,6 +354,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Displays a list of helpful Options to the user.
         case 'h':
           {
+            Options::usage ();
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
                              "-b\tGenerate code for Linear Search.\n"
@@ -434,10 +443,11 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-v\tPrints out the current version number and exits with a value of 0\n"
                              "-V\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
-                             "\tname is `Perfect_Hash.'\n",
+                             "\tname is `Perfect_Hash.'\n"
+                             "--only-record-arguments\tDo not record the gperf executable filename path\n"
+                             "\t\t\tin the result, just the arguments.\n",
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
-            Options::usage ();
             return -1;
           }
         // Sets the name for the hash function.
@@ -679,10 +689,29 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             break;
           }
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%r",
-                             &Options::usage),
-                            -1);
+          long_option = get_opt.long_option ();
+          if (long_option)
+            {
+              if (!ACE_OS::strcmp (long_option, ACE_TEXT ("only-record-arguments")))
+                {
+                  only_record_arguments_ = true;
+                }
+              else
+                {
+                  valid_option = false;
+                }
+            }
+          else
+            {
+              valid_option = false;
+            }
+
+          if (!valid_option)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Invalid Option: %s\n"), get_opt.last_option()));
+              usage();
+              return -1;
+            }
         }
 
     }

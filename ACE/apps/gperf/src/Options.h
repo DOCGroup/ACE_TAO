@@ -181,6 +181,12 @@ private:
 
   /// Prints proper program usage.
   static void usage (void);
+
+  /**
+   * Don't record the gperf executable filename path (argv[0]) in the result,
+   * just the arguments.
+   */
+  static bool only_record_arguments_;
 };
 
 /// Global option coordinator for the entire program.
