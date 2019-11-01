@@ -42,7 +42,7 @@
 which provide support to use monotonic timers for condition and event
 variables to solve the problem of system timeshift vulnerability of
 the ACE Condition and Event variable timeout functionality.</P>
-<H3 CLASS="western">Background</H3>
+<H2 CLASS="western">Background</H2>
 <P>ACE Condition and Event variables implement an API to wait for the
 condition or event to be signalled with a maximum wait timeout value.
 This timeout value must be specified as <B>absolute time</B><SPAN STYLE="font-weight: normal">
@@ -77,11 +77,11 @@ values which are correct relative to previously returned time values
 (at least within the lifetime of a single running process).</P>
 <P STYLE="font-weight: normal">The customer encountered this problem
 while making use of the ACE_Message_Queue classes in the
-implementation of their application. The enqueu/dequeue functionality
+implementation of their application. The enqueue/dequeue functionality
 of the message queues makes heavy use of the ACE Condition variable
 timed wait support. The customer also used ACE_Event derived classes
 which suffer from the same vulnerability.</P>
-<H3 CLASS="western">Requirements</H3>
+<H2 CLASS="western">Requirements</H2>
 <P STYLE="font-weight: normal">Prerequisites for the solution are:</P>
 <UL>
 	<LI><P STYLE="font-weight: normal">maintain backward compatibility
@@ -115,10 +115,8 @@ values.</P>
 it is now possible to set up message queues that support monotonic
 time values for timed wait methods in a portable way as will be shown
 in the following section.</P>
-<H3 CLASS="western"><BR><BR>
-</H3>
-<H3 CLASS="western" STYLE="page-break-before: always"><B>User Code
-Changes</B></H3>
+<BR><BR>
+<H2 CLASS="western" STYLE="page-break-before: always">User Code Changes</H2>
 <P STYLE="font-weight: normal">The following are examples of user
 code changes required to update an application to support monotonic
 timed message queues.</P>
@@ -168,7 +166,7 @@ timeout_ = msg_queue_.gettimeofday ();</PRE><P STYLE="font-weight: normal">
 </P>
 <P STYLE="font-weight: normal">The return type of this method is a
 time policy specific time value as follows:</P>
-<PRE CLASS="western" STYLE="font-weight: normal">tempate &lt;ACE_SYNCH_DECL, class TIME_POLICY&gt;
+<PRE CLASS="western" STYLE="font-weight: normal">template &lt;ACE_SYNCH_DECL, class TIME_POLICY&gt;
 class ACE_Message_Queue : public ACE_Message_Queue_Base
 {
 …
@@ -178,7 +176,7 @@ ACE_Time_Value_T&lt;TIME_POLICY&gt; gettimeofday () const;
 <BR><BR>
 </P>
 <P STYLE="font-weight: normal">To define a wait timeout of 5 sec and
-execute an enqueu operation the following would apply:</P>
+execute an enqueue operation the following would apply:</P>
 <PRE CLASS="western" STYLE="font-weight: normal">...
 ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;
 timeout_ = msg_queue_.gettimeofday ();
@@ -258,6 +256,23 @@ can be found in the following regression tests</P>
 	<LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Message_Queue_Test</P>
   <LI><P STYLE="font-style: normal; font-weight: normal">$ACE_ROOT/tests/Monotonic_Manual_Event_Test</P>
 </UL>
+
+<h2 class="western">Testing for Monotonic Time Support</h2>
+
+<ul>
+<li>
+  The <code>ACE_HAS_MONOTONIC_TIME_POLICY</code> preprocessor is defined
+  when <code>ACE_Monotonic_Time_Policy</code> should be supported. It is
+  defined in <code>Monotonic_Time_Policy.h</code>.
+</li>
+<li>
+  The <code>ACE_HAS_MONOTONIC_CONDITIONS</code> preprocessor macro is
+  defined when conditions support waiting for a point in time defined in
+  monotonic terms should be supported. It is defined by ACE platform
+  macros.
+</li>
+</ul>
+
 <DIV TYPE=FOOTER>
 	<P STYLE="margin-top: 0.2in; margin-bottom: 0in"><BR>
 	</P>
