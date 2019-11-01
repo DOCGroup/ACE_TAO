@@ -3,6 +3,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 
 . Fixed compile problem with glibc 2.30 and newer
 
+. gnuace makefiles: Updated handling of generated files and
+  use requires/avoids to make postbuild steps conditional
+
 . Removed references to the ACE_LACKS_MONOTONIC_TIME preprocessor macro because
   it was equivalent to ACE_LACKS_CLOCK_MONOTONIC.
 

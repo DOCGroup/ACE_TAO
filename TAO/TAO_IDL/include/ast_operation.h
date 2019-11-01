@@ -149,6 +149,8 @@ public:
 
   static AST_Decl::NodeType const NT;
 
+  virtual bool annotatable () const;
+
 protected:
   // Data.
 

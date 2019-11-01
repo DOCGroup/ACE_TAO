@@ -1931,7 +1931,7 @@ extern yy_buffer_state *tao_yy_scan_string (const char *);
 extern int tao_yylex_destroy ();
 
 void
-IDL_GlobalData::eval (const char *string)
+IDL_GlobalData::eval (const char *string, bool disable_output)
 {
   in_eval_ = true;
 
@@ -1942,8 +1942,13 @@ IDL_GlobalData::eval (const char *string)
   idl_global->set_lineno (1);
   UTL_String *old_idl_src_file = idl_src_file ();
 
-  // Name this pseudo-file "builtin"
-  UTL_String utl_string ("builtin", true);
+  // Name this pseudo-file "builtin-N"
+#define BUILTIN_NAME_BUFFER_SIZE 64
+  static char buffer[BUILTIN_NAME_BUFFER_SIZE];
+  static unsigned n = 1;
+  ACE_OS::snprintf (&buffer[0], BUILTIN_NAME_BUFFER_SIZE, "builtin-%u", n++);
+#undef BUILTIN_NAME_BUFFER_SIZE
+  UTL_String utl_string (&buffer[0], true);
   idl_global->idl_src_file (new UTL_String (&utl_string, true));
   idl_global->set_filename (new UTL_String (&utl_string, true));
 
@@ -1952,9 +1957,12 @@ IDL_GlobalData::eval (const char *string)
 
   // Disable Output
   std::streambuf *default_streambuf = ACE_DEFAULT_LOG_STREAM->rdbuf ();
-  ACE_DEFAULT_LOG_STREAM->rdbuf (0);
-  u_long const flags = ACE_LOG_MSG->flags ();
-  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+  const unsigned long flags = ACE_LOG_MSG->flags ();
+  if (disable_output)
+    {
+      ACE_DEFAULT_LOG_STREAM->rdbuf (0);
+      ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+    }
 
   // emulate DRV_drive()
   FE_yyparse ();
@@ -1962,8 +1970,11 @@ IDL_GlobalData::eval (const char *string)
   AST_check_fwd_decls ();
 
   // Renable Output
-  ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf);
-  ACE_LOG_MSG->set_flags (flags);
+  if (disable_output)
+    {
+      ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf);
+      ACE_LOG_MSG->set_flags (flags);
+    }
 
   // Have Flex Cleanup
   tao_yylex_destroy ();
