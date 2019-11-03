@@ -1,3 +1,4 @@
+dist: bionic
 group: travis_latest
 language: cpp
 os:
@@ -25,33 +26,11 @@ env:
 
 matrix:
   include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - libxerces-c-dev
-            - libssl-dev
-            - g++-7
-      env: COMPILER=g++-7 VERSIONED=1 TAO=1 ACETESTS=1
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - libxerces-c-dev
-            - libssl-dev
-            - g++-6
-      env: COMPILER=g++-6 VERSIONED=1 TAO=1 ACETESTS=1
     - os: osx
       env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
 
 addons:
   apt:
-    sources:
-      - ubuntu-toolchain-r-test
     packages:
       - libssl-dev
       - libxerces-c-dev
