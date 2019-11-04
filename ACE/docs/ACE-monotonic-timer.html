@@ -24,7 +24,7 @@
 		H3 { margin-bottom: 0.08in }
 		H3.western { font-family: "Liberation Sans", sans-serif; font-size: 13pt }
 		H3.cjk { font-family: "Droid Sans Fallback" }
-		PRE { margin-left: 0.49in; border-top: none; border-bottom: none; border-left: 1.05pt solid #808080; border-right: none; padding-top: 0in; padding-bottom: 0in; padding-left: 0.02in; padding-right: 0in }
+		PRE { margin-left: 0.20in; margin-bottom: 0.20in; border-top: none; border-bottom: none; border-left: 1.05pt solid #808080; border-right: none; padding-top: 0in; padding-bottom: 0in; padding-left: 0.02in; padding-right: 0in }
 		PRE.cjk { font-family: "Droid Sans Fallback", monospace }
 	-->
 	</STYLE>
@@ -115,7 +115,6 @@ values.</P>
 it is now possible to set up message queues that support monotonic
 time values for timed wait methods in a portable way as will be shown
 in the following section.</P>
-<BR><BR>
 <H2 CLASS="western" STYLE="page-break-before: always">User Code Changes</H2>
 <P STYLE="font-weight: normal">The following are examples of user
 code changes required to update an application to support monotonic
@@ -128,11 +127,9 @@ values the new ACE_Monotonic_Time_Policy should be used.
 <P STYLE="font-weight: normal">So, where an existing application
 declared a Message_Queue as:</P>
 <PRE CLASS="western" STYLE="font-weight: normal">ACE_Message_Queue&lt;ACE_MT_SYNCH&gt; msg_queue_;</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">this would need to change to:</P>
 <PRE CLASS="western" STYLE="font-weight: normal">ACE_Message_Queue&lt;ACE_MT_SYNCH, ACE_Monotonic_Time_Policy&gt; msg_queue_;</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">The changes for task are similar:</P>
 <PRE CLASS="western" STYLE="font-weight: normal">class MyTask : public ACE_Task&lt;ACE_MT_SYNCH&gt;
@@ -144,7 +141,6 @@ should change to:</P>
 {
   …
 };</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">To specify timeout values to these
 message queues on the enqueue/dequeue operations you would have to
@@ -152,7 +148,6 @@ use time values that are Time_Policy aware. To that end a templated
 derivative of ACE_Time_Value has been implemented allowing one to
 declare a time value as:</P>
 <PRE CLASS="western" STYLE="font-weight: normal">ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">The updated Message_Queue and Task
 classes provide a convenience method to initialize such a  time value
@@ -162,7 +157,6 @@ with the time policy based time of day as follows:</P>
 <B>// or</B>
 ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_;
 timeout_ = msg_queue_.gettimeofday ();</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">The return type of this method is a
 time policy specific time value as follows:</P>
@@ -173,7 +167,6 @@ class ACE_Message_Queue : public ACE_Message_Queue_Base
 ACE_Time_Value_T&lt;TIME_POLICY&gt; gettimeofday () const;
 …
 };</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">To define a wait timeout of 5 sec and
 execute an enqueue operation the following would apply:</P>
@@ -183,7 +176,6 @@ timeout_ = msg_queue_.gettimeofday ();
 timeout_ += ACE_Time_Value (5,0);
 msg_queue_.enqueue (msg_block, &amp;timeout_);
 …</PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-weight: normal">Similar changes apply to the refactored ACE_Event classes. In
 addition to the added support for time policies also a new base class is introduced to allow
@@ -208,7 +200,6 @@ evt.wait (&amp;timeout_);
 ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; timeout_ (5,0);
 evt.wait (&amp;timeout_, 0);
 </PRE><P STYLE="font-weight: normal">
-<BR><BR>
 </P>
 <P><B>NOTE:</B><SPAN STYLE="font-weight: normal"> To function
 properly the ACE_Time_Value pointer passed to the timed wait methods
@@ -246,7 +237,6 @@ ACE_Time_Value_T&lt;ACE_Monotonic_Time_Policy&gt; tv;
 // now () returns an ACE_Time_Value representing current time according
 // to the active time policy of tv
 tv = tv.now () + tdiff;</PRE><P STYLE="font-style: normal; font-weight: normal">
-<BR><BR>
 </P>
 <P STYLE="font-style: normal; font-weight: normal">More examples code
 can be found in the following regression tests</P>
@@ -259,18 +249,21 @@ can be found in the following regression tests</P>
 
 <h2 class="western">Testing for Monotonic Time Support</h2>
 
+<p>Support for monotonic time in ACE can be determined by testing for the
+existence of these two preprocessor macros that would be defined by ACE
+platform headers:</p>
+
 <ul>
-<li>
-  The <code>ACE_HAS_MONOTONIC_TIME_POLICY</code> preprocessor is defined
-  when <code>ACE_Monotonic_Time_Policy</code> should be supported. It is
-  defined in <code>Monotonic_Time_Policy.h</code>.
-</li>
-<li>
-  The <code>ACE_HAS_MONOTONIC_CONDITIONS</code> preprocessor macro is
-  defined when conditions support waiting for a point in time defined in
-  monotonic terms should be supported. It is defined by ACE platform
-  macros.
-</li>
+<li><p>
+  The <code>ACE_HAS_MONOTONIC_TIME_POLICY</code> preprocessor macro is defined
+  when <code>ACE_Monotonic_Time_Policy</code> by itself should be supported.
+</p></li>
+<li><p>
+  The <code>ACE_HAS_MONOTONIC_CONDITIONS</code> preprocessor macro is defined
+  when <code>ACE_Condition</code>s should support waiting for a monotonic point
+  in time using
+  <code>ACE_Condition_Attributes&lt;ACE_Monotonic_Time_Policy&gt;</code>.
+</p></li>
 </ul>
 
 <DIV TYPE=FOOTER>
