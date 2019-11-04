@@ -22,15 +22,13 @@
 #include "ace/Task_T.h"
 #include "ace/Truncate.h"
 
-# if defined (ACE_WIN32) || \
-     (defined (_POSIX_MONOTONIC_CLOCK) && !defined (ACE_LACKS_MONOTONIC_TIME)) || \
-     defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
 
-#   if defined (ACE_WIN32)
-#     include "ace/Date_Time.h"
-#   endif
+#    if defined (ACE_WIN32)
+#      include "ace/Date_Time.h"
+#    endif
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
@@ -59,10 +57,10 @@ public:
   int start (int num_threads);
   int stop (void);
   ACE_Reactor* get_reactor ();
-  int  create_reactor (void);
+  int create_reactor (void);
 
 private:
-  int  delete_reactor (void);
+  int delete_reactor (void);
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Reactor *my_reactor_;
@@ -230,7 +228,7 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   // reset system clock 4 seconds backwards
   ACE_Time_Value curtime = ACE_OS::gettimeofday ();
   curtime -= ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   ACE_Date_Time curdt (curtime);
   SYSTEMTIME sys_time;
   sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -241,11 +239,11 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
   sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
   sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
   if (!::SetLocalTime (&sys_time))
-# else
+#    else
   timespec_t curts;
   curts = curtime;
   if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-# endif
+#    endif
     {
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -290,7 +288,7 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       // reset system clock to correct time
       curtime = ACE_OS::gettimeofday ();
       curtime += ACE_Time_Value (4, 0);
-# if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
       curdt.update (curtime);
       SYSTEMTIME sys_time;
       sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -301,10 +299,10 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
       sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
       sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
       if (!::SetLocalTime (&sys_time))
-# else
+#    else
       curts = curtime;
       if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-# endif
+#    endif
         {
           ACE_DEBUG((LM_INFO,
                       "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -319,13 +317,13 @@ bool test_timer (ACE_Condition_Thread_Mutex& condition_, ACE_Time_Value& waittim
 
   return status;
 }
-# endif
+#  endif
 
 int
 run_main (int , ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_4055_Regression_Test"));
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
   int status = 1;
 
   ACE_Thread_Mutex mutex_;
@@ -349,9 +347,9 @@ run_main (int , ACE_TCHAR *[])
         status = 0;
     }
   }
-# else
+#  else
   int status = 0;
-# endif
+#  endif
   ACE_END_TEST;
   return status;
 }
