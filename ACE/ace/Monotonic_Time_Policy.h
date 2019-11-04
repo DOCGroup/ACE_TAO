@@ -16,12 +16,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if defined (ACE_WIN32) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
-#  if !defined (ACE_HAS_MONOTONIC_TIME_POLICY)
-#    define ACE_HAS_MONOTONIC_TIME_POLICY
-#  endif
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
