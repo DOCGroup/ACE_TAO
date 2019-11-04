@@ -530,6 +530,7 @@ endif
 #       Local targets
 #----------------------------------------------------------------------------
 <%marker(local)%>
+.PHONY: lib_warning
 lib_warning:
 	@echo <%project_name%> will not be built due to the following missing library: $(LIBCHECK) >&2
 
@@ -539,6 +540,7 @@ ifneq ($(<%require%>),1)
 requires_disabled_macros += <%require%>
 endif
 <%endfor%>
+.PHONY: require_warning
 require_warning:
 	@echo <%project_name%> will not be built due to the following disabled make macros: $(requires_disabled_macros)>&2
 
@@ -549,6 +551,7 @@ ifeq ($(<%avoid%>),1)
 avoids_enabled_macros += <%avoid%>
 endif
 <%endfor%>
+.PHONY: avoid_warning
 avoid_warning:
 	@echo <%project_name%> will not be built due to the following enabled make macros: $(avoids_enabled_macros)>&2
 
