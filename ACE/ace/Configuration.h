@@ -453,7 +453,8 @@ public:
    * base registry key to attach to.  This class takes ownership of
    * hKey, it will invoke <RegCloseKey> on it upon destruction.
    */
-  explicit ACE_Configuration_Win32Registry (HKEY hKey);
+  explicit ACE_Configuration_Win32Registry (HKEY hKey,
+                                            u_long security_access = KEY_ALL_ACCESS);
 
   /// Destructor
   virtual ~ACE_Configuration_Win32Registry (void);
@@ -520,7 +521,8 @@ public:
    */
   static HKEY resolve_key (HKEY hKey,
                            const ACE_TCHAR* path,
-                           int create = 1);
+                           int create = 1,
+                           u_long security_access = KEY_ALL_ACCESS);
   virtual bool operator== (const ACE_Configuration_Win32Registry &rhs) const;
   virtual bool operator!= (const ACE_Configuration_Win32Registry &rhs) const;
 
@@ -533,6 +535,8 @@ protected:
   ACE_Configuration_Win32Registry (void);
   ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
   ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
+
+  const u_long security_access_;
 };
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
 
