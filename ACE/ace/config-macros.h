@@ -700,4 +700,22 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 # define ACE_LACKS_CONDATTR_PSHARED
 #endif
 
+#ifdef ACE_LACKS_CONDATTR_SETCLOCK
+#  ifdef ACE_HAS_CONDATTR_SETCLOCK
+#    undef ACE_HAS_CONDATTR_SETCLOCK
+#  endif
+#  ifdef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#  endif
+#  ifdef ACE_HAS_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_MONOTONIC_CONDITIONS
+#  endif
+#endif
+
+#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC) && !defined (ACE_LACKS_CLOCK_MONOTONIC)
+#  ifndef ACE_HAS_MONOTONIC_TIME_POLICY
+#    define ACE_HAS_MONOTONIC_TIME_POLICY
+#  endif
+#endif
+
 #endif /* ACE_CONFIG_MACROS_H */

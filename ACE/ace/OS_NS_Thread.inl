@@ -143,24 +143,24 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
-#   if !defined (ACE_LACKS_CONDATTR)
-#     if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
+#     if !defined (ACE_LACKS_CONDATTR)
+#       if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
   ACE_OS::memset (&attributes, 0, sizeof (attributes));
-#     endif
+#       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
+#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ACE_ADAPT_RETVAL (pthread_condattr_setpshared (&attributes, type),
                            result) == 0
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
+#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
       )
-#   else
+#     else
   if (type == USYNC_THREAD)
-#   endif /* !ACE_LACKS_CONDATTR */
+#     endif /* !ACE_LACKS_CONDATTR */
      result = 0;
   else
     {
@@ -218,31 +218,18 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
-# if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_CONDATTR)
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK) && \
+  !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   int result = -1;
-
-#   if defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id),
                                        result),
                      int, -1);
-#   else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-#   endif /* _POSIX_CLOCK_SELECTION) && !ACE_LACKS_CONDATTR_SETCLOCK */
-
   return result;
-#   else
+#else
   ACE_UNUSED_ARG (clock_id);
   ACE_UNUSED_ARG (attributes);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PTHREADS && !ACE_LACKS_CONDATTR */
-
-# else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+#endif
 }
 
 #if !defined (ACE_LACKS_COND_T)
