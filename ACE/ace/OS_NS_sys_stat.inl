@@ -76,7 +76,6 @@ namespace ACE_OS
 
   // This function returns the number of bytes in the file referenced by
   // FD.
-
   ACE_INLINE ACE_OFF_T
   filesize (ACE_HANDLE handle)
   {
@@ -111,7 +110,7 @@ namespace ACE_OS
     ACE_HANDLE const h = ACE_OS::open (filename, O_RDONLY);
     if (h != ACE_INVALID_HANDLE)
       {
-        ACE_OFF_T size = ACE_OS::filesize (h);
+        ACE_OFF_T const size = ACE_OS::filesize (h);
         ACE_OS::close (h);
         return size;
       }
@@ -217,9 +216,7 @@ namespace ACE_OS
     ACE_TEXT_WIN32_FIND_DATA fdata;
 
     int rc = 0;
-    HANDLE fhandle;
-
-    fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
+    HANDLE const fhandle = ::FindFirstFile (ACE_TEXT_CHAR_TO_TCHAR (file), &fdata);
     if (fhandle == INVALID_HANDLE_VALUE)
       {
         ACE_OS::set_errno_to_last_error ();
@@ -261,9 +258,7 @@ namespace ACE_OS
     WIN32_FIND_DATAW fdata;
 
     int rc = 0;
-    HANDLE fhandle;
-
-    fhandle = ::FindFirstFileW (file, &fdata);
+    HANDLE const fhandle = ::FindFirstFileW (file, &fdata);
     if (fhandle == INVALID_HANDLE_VALUE)
       {
         ACE_OS::set_errno_to_last_error ();
@@ -305,7 +300,7 @@ namespace ACE_OS
     ACE_NOTSUP_RETURN ((mode_t)-1);
 # elif defined (ACE_HAS_TR24731_2005_CRT)
     int old_mode;
-    int new_mode = static_cast<int> (cmask);
+    int const new_mode = static_cast<int> (cmask);
     ACE_SECURECRTCALL (_umask_s (new_mode, &old_mode), mode_t, -1, old_mode);
     return static_cast<mode_t> (old_mode);
 # elif defined (ACE_WIN32) && !defined (__BORLANDC__)
