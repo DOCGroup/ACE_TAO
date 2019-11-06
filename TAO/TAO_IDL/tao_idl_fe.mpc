@@ -9,7 +9,7 @@ project(TAO_IDL_GEN) {
     GPERF ?= $(ACE_ROOT)/bin/ace_gperf
     fe/fe_lookup.cpp: fe/keywords.dat
     "	cp fe/lookup_starter.txt $@"
-    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ --only-record-arguments | sed -f fe/post_gperf.sed >> $@"
+    "	$(GPERF) -M -J -c -C -D -E -T -f 0 -a -o -t -p -K keyword_ -L C++ -Z TAO_IDL_CPP_Keyword_Table -N lookup -k1,2,$$ $^ | sed -f fe/post_gperf.sed >> $@"
 
     fe/idl.yy.cpp: fe/idl.ll
     "	@echo 'WARNING: Potentially outdated $@'"
