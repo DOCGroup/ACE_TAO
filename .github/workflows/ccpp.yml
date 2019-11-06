@@ -23,7 +23,7 @@ jobs:
       run: |
         echo ${env:ACE_ROOT}
         echo ${env:GITHUB_WORKSPACE}
-        '#include "ace/config-win32.h"' > ${env:GITHUB_WORKSPACE}/ACE/ace/config.h
+        '#include "ace/config-win32.h"' > ACE/ace/config.h
       shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
