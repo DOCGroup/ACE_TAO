@@ -6,10 +6,6 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 . gnuace makefiles: Updated handling of generated files and
   use requires/avoids to make postbuild steps conditional
 
-. Add --only-record-arguments to gperf. If desired, this options keeps gperf
-  from printing the whole path of the gperf executable in the result. It only
-  prints the arguments. (#984)
-
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 
