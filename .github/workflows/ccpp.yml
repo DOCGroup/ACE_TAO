@@ -21,8 +21,8 @@ jobs:
         fetch-depth: 1
     - name: create $ACE_ROOT/ace/config.h
       run: |
-        echo ${ACE_ROOT}
-        '#include "ace/config-win32.h"' > ${ACE_ROOT}/ace/config.h
+        echo ${env:ACE_ROOT}
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
