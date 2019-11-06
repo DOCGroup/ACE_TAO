@@ -107,7 +107,7 @@ int
 ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
                                 const ACE_TString& path_in,
                                 ACE_Configuration_Section_Key& key_out,
-                                int create)
+                                bool create)
 {
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
@@ -476,7 +476,7 @@ ACE_Configuration_Win32Registry::~ACE_Configuration_Win32Registry (void)
 int
 ACE_Configuration_Win32Registry::open_section (const ACE_Configuration_Section_Key& base,
                                                const ACE_TCHAR* sub_section,
-                                               int create,
+                                               bool create,
                                                ACE_Configuration_Section_Key& result)
 {
   if (validate_name (sub_section, 1))
@@ -980,7 +980,7 @@ ACE_Configuration_Win32Registry::load_key (const ACE_Configuration_Section_Key& 
 HKEY
 ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
                                               const ACE_TCHAR* path,
-                                              int create,
+                                              bool create,
                                               u_long security_access)
 {
   HKEY result = 0;
@@ -1524,7 +1524,7 @@ ACE_Configuration_Heap::section_open_helper (size_t hash_table_size,
 int
 ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
                                       const ACE_TCHAR* sub_section,
-                                      int create,
+                                      bool create,
                                       ACE_Configuration_Section_Key& result)
 {
   ACE_ASSERT (this->allocator_);
@@ -1551,7 +1551,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 int
 ACE_Configuration_Heap::open_simple_section (const ACE_Configuration_Section_Key& base,
                                              const ACE_TCHAR* sub_section,
-                                             int create,
+                                             bool create,
                                              ACE_Configuration_Section_Key& result)
 {
   ACE_TString section (0, 0, false);
