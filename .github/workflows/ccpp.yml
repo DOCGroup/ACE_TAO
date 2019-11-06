@@ -6,9 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ACE_ROOT: ${GITHUB_WORKSPACE}/ACE
-      TAO_ROOT: ${GITHUB_WORKSPACE}/TAO
-      MPC_ROOT: ${GITHUB_WORKSPACE}/MPC
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
           
     steps:
     - name: checkout ACE/TAO
@@ -31,7 +31,7 @@ jobs:
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: | 
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:GITHUB_WORKSPACE}/TAO/TAO_ACE.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
       shell: pwsh
     - name: Build TAO project
       run: |
