@@ -6,7 +6,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ACE_ROOT: ${${GITHUB_WORKSPACE}/ACE}
+      ACE_ROOT: ${env:GITHUB_WORKSPACE}/ACE
       TAO_ROOT: ${GITHUB_WORKSPACE}/TAO
       MPC_ROOT: ${GITHUB_WORKSPACE}/MPC
           
@@ -22,6 +22,7 @@ jobs:
     - name: create $ACE_ROOT/ace/config.h
       run: |
         echo ${env:ACE_ROOT}
+        echo ${env:GITHUB_WORKSPACE}
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
