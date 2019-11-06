@@ -20,18 +20,18 @@ jobs:
         ref: master
     - name: create $ACE_ROOT/ace/config.h
       run: |
-        '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
-        'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >  $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+        'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: | 
-        perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
       shell: pwsh
     - name: Build TAO project
       run: |
-        make -j 6 -C TAO
+        make -j 6 -C ${env:TAO_ROOT}
     
     
