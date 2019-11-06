@@ -1,6 +1,6 @@
 name: C/C++ CI
 
-on: [push]
+on: [push, pull_request]
 
 jobs:
   build:
@@ -36,6 +36,6 @@ jobs:
     - name: Build TAO project
       run: |
         make -j 6 -C ${env:TAO_ROOT}/TAO
-        shell: pwsh
+      shell: pwsh
     
     
