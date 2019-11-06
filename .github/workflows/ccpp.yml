@@ -1,0 +1,22 @@
+name: C/C++ CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACE_ROOT: $GITHUB_WORKSPACE/ACE
+      TAO_ROOT: $GITHUB_WORKSPACE/TAO
+      MPC_ROOT: $GITHUB_WORKSPACE/MPC
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: checkout MPC
+      uses: actions/checkout@v1
+      with:
+        repository: DOCGroup/MPC
+    - name: create config.h
+      run: |
+        echo '#include "ace/config-linux.h"' > $ACE_ROOT/ace/config.h
+    
