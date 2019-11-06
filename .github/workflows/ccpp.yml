@@ -6,9 +6,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      ACE_ROOT: ${GITHUB_WORKSPACE}/ACE
-      TAO_ROOT: ${GITHUB_WORKSPACE}/TAO
-      MPC_ROOT: ${GITHUB_WORKSPACE}/MPC
+      ACE_ROOT: ${env:GITHUB_WORKSPACE}/ACE
+      TAO_ROOT: ${env:GITHUB_WORKSPACE}/TAO
+      MPC_ROOT: ${env:GITHUB_WORKSPACE}/MPC
           
     steps:
     - name: checkout ACE/TAO
