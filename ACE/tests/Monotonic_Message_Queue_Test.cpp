@@ -32,18 +32,13 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 
-#if defined (ACE_WIN32) || \
-    (defined (ACE_HAS_CLOCK_GETTIME) && \
-     !defined (ACE_LACKS_MONOTONIC_TIME) && \
-     !defined (ACE_LACKS_CONDATTR) && \
-     (defined (_POSIX_MONOTONIC_CLOCK) || defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)) && \
-     defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK))
+#if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
 
-# if defined (ACE_WIN32)
-#   include "ace/Date_Time.h"
-# endif
+#  if defined (ACE_WIN32)
+#    include "ace/Date_Time.h"
+#  endif
 
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
 typedef ACE_Message_Queue<ACE_MT_SYNCH, ACE_Monotonic_Time_Policy> SYNCH_QUEUE;
 
 // Create timer queue with hr support
@@ -226,7 +221,7 @@ bool TestHandler::trigger_in(const ACE_Time_Value &delay)
 
 void set_system_time(const ACE_Time_Value& tv)
 {
-#   if defined (ACE_WIN32)
+#    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);
   SYSTEMTIME sys_time;
   sys_time.wDay = ACE_Utils::truncate_cast <WORD> (curdt.day ());
@@ -237,11 +232,11 @@ void set_system_time(const ACE_Time_Value& tv)
   sys_time.wSecond = ACE_Utils::truncate_cast <WORD> (curdt.second ());
   sys_time.wMilliseconds = ACE_Utils::truncate_cast <WORD> (curdt.microsec () / 1000);
   if (!::SetLocalTime (&sys_time))
-#   else
+#    else
   timespec_t curts;
   curts = tv;
   if (ACE_OS::clock_settime (CLOCK_REALTIME, &curts) != 0)
-#   endif
+#    endif
     {
       ACE_DEBUG((LM_INFO,
                   "(%P|%t) Unable to reset OS time. Insufficient privileges or not supported.\n"));
@@ -340,7 +335,7 @@ timeout_test (void)
 
   return status;
 }
-# endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
 
 int
 run_main (int , ACE_TCHAR *[])
@@ -349,7 +344,7 @@ run_main (int , ACE_TCHAR *[])
 
   int status = 0;
 
-# if defined (ACE_HAS_THREADS)
+#  if defined (ACE_HAS_THREADS)
   if (!timeout_test ())
     {
       ACE_ERROR ((LM_ERROR,
@@ -357,7 +352,7 @@ run_main (int , ACE_TCHAR *[])
                   ACE_TEXT ("test failed")));
       status = 1;
     }
-# endif /* ACE_HAS_THREADS */
+#  endif /* ACE_HAS_THREADS */
 
   ACE_END_TEST;
   return status;
