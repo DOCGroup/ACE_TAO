@@ -35,7 +35,7 @@ jobs:
       shell: pwsh
     - name: Build TAO project
       run: |
-        make -j 6 -C ${env:TAO_ROOT}/TAO
+        make -j 6 -C ${env:TAO_ROOT}
       shell: pwsh
     
     
