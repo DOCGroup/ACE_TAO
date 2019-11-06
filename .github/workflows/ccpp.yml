@@ -33,9 +33,15 @@ jobs:
       run: | 
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
       shell: pwsh
-    - name: Build TAO project
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: | 
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
       run: |
         make -j 6 -C ${env:TAO_ROOT}
       shell: pwsh
-    
-    
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh
