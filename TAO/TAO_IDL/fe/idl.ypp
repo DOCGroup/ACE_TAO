@@ -2193,7 +2193,10 @@ literal
         }
         | IDL_WSTRING_LITERAL
         {
-          $$ = idl_global->gen ()->create_expr ($1);
+          char *wide_string = $1;
+          $$ = idl_global->gen ()->create_expr (wide_string);
+          ACE_OS::free (wide_string);
+          $1 = 0;
         }
         | IDL_CHARACTER_LITERAL
         {
