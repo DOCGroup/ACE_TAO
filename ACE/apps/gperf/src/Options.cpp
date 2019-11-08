@@ -437,7 +437,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-V\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
                              "\tname is `Perfect_Hash.'\n"
-                             "\t\t\tin the result, just the arguments.\n",
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
             return -1;
@@ -681,8 +680,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             break;
           }
         default:
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Invalid Option: %s\n"), get_opt.last_option()));
-          usage();
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Invalid Option: %s\n"), get_opt.last_option ()));
+          usage ();
           return -1;
         }
 
