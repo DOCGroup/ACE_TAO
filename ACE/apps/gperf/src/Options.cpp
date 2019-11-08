@@ -436,7 +436,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "-v\tPrints out the current version number and exits with a value of 0\n"
                              "-V\tExits silently with a value of 0.\n"
                              "-Z\tAllow user to specify name of generated C++ class.  Default\n"
-                             "\tname is `Perfect_Hash.'\n"
+                             "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
             return -1;
