@@ -271,11 +271,13 @@ jobs:
         CC: clang-7
         CXX: clang++-7
         PackageDeps: clang-7
+        Repo: llvm-toolchain-$(lsb_release -cs)-7
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG8:
         CC: clang-8
         CXX: clang++-8
         PackageDeps: clang-8
+        Repo: llvm-toolchain-$(lsb_release -cs)-8
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG9:
         CC: clang-9
