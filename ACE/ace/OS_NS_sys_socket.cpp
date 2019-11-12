@@ -312,6 +312,7 @@ int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
       return -1;
     }
 
+  msg->msg_namelen = wsaMsg.namelen;
   return 0;
 }
 
