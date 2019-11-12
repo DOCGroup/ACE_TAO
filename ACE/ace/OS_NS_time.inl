@@ -317,9 +317,9 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   u_long most;
   u_long least;
 
-#if defined (ghs)
+#  if defined (ghs)
   ACE_OS::readPPCTimeBase (most, least);
-#else
+#  else
   u_long scratch;
 
   do {
@@ -328,7 +328,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
           "mftbu %2"
           : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
-#endif
+#  endif
 
   return 0x100000000llu * most  +  least;
 
@@ -338,11 +338,11 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   struct timespec ts;
 
   ACE_OS::clock_gettime (
-#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#  if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
          CLOCK_MONOTONIC,
-#else
+#  else
          CLOCK_REALTIME,
-#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
+#  endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
          &ts);
 
   // Carefully create the return value to avoid arithmetic overflow

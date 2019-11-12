@@ -6,6 +6,13 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 . gnuace makefiles: Updated handling of generated files and
   use requires/avoids to make postbuild steps conditional
 
+. Removed references to the ACE_LACKS_MONOTONIC_TIME preprocessor macro because
+  it was equivalent to ACE_LACKS_CLOCK_MONOTONIC.
+
+. Exposed support status of monotonic times features using preprocessor macros.
+  See "Testing for Monotonic Time Support" in docs/ACE-monotonic-timer.html for
+  details.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 

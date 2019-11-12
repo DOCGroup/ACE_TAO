@@ -488,7 +488,7 @@ AST_Expression::AST_Expression (char *sv)
            AST_ExprValue);
 
   this->pd_ev->et = EV_wstring;
-  this->pd_ev->u.wstrval = sv;
+  this->pd_ev->u.wstrval = ACE::strnew (sv);
 }
 
 AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)

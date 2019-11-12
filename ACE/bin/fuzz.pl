@@ -2447,7 +2447,7 @@ if (!getopts ('cdx:hl:t:s:mv') || $opt_h) {
            check_for_bad_ace_trace
            check_for_changelog_errors
            check_for_ptr_arith_t
-           check_for_include
+           check_for_include (disabled by default)
            check_for_non_bool_operators
            check_for_long_file_names
            check_for_refcountservantbase
@@ -2542,7 +2542,6 @@ check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
 check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
-check_for_include () if ($opt_l >= 5);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l >= 1);
 check_for_improper_main_declaration () if ($opt_l >= 1);
