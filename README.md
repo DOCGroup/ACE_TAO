@@ -13,6 +13,3 @@ networked applications, [TAO](https://www.dre.vanderbilt.edu/~schmidt/TAO.html) 
 implementation of the OMG's [CORBA](https://www.omg.org/spec/CORBA/) standard. The main home page
 is [here](https://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are
 available [here](https://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html).
-
-[TAOX11][https://www.taox11.org] is an open source implementation of the IDL to C++11 language mapping
-which builds on the core of TAO.
