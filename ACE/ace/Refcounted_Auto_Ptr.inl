@@ -128,9 +128,9 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator !() const
 }
 
 template<class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator bool () const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator unspecified_bool_type () const
 {
-  return this->rep_->get () != 0;
+  return this->rep_->get () != 0 ? unspecified_bool : 0;
 }
 
 template <class X, class ACE_LOCK> inline X*
