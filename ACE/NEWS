@@ -13,6 +13,12 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
   See "Testing for Monotonic Time Support" in docs/ACE-monotonic-timer.html for
   details.
 
+. Added support for ARM and ARM64 stack traces with Microsoft Visual C++.
+
+. The "optional argument for the receive address in ACE_SOCK_Dgram::recv"
+  feature from ACE-6.5.5 is now supported on Windows.  This includes enhanced
+  support for sendmsg/recvmsg on Windows.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.5 and ACE-6.5.6
 ====================================================
 
