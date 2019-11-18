@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE ACE_Time_Value_T<ACE_Monotonic_Time_Policy>
 ACE_Monotonic_Time_Policy::operator()() const
 {
-#if defined (ACE_HAS_MONOTONIC_TIME_POLICY)
+#if defined (ACE_MONOTONIC_TIME_POLICY) && (ACE_MONOTONIC_TIME_POLICY >= 0)
 #  if defined (ACE_WIN32)
   return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_High_Res_Timer::gettimeofday_hr ());
 #  elif defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
@@ -18,9 +18,9 @@ ACE_Monotonic_Time_Policy::operator()() const
   else
     return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
 #  else
-#    error "ACE_HAS_MONOTONIC_TIME_POLICY is defined, but no implementation is valid"
-#  endif /* ACE_WIN32 */
-#else /* !ACE_HAS_MONOTONIC_TIME_POLICY */
+#    error "No ACE_Monotonic_Time_Policy implementation is valid for this platform"
+#  endif /* defined(ACE_WIN32) */
+#else /* defined (ACE_MONOTONIC_TIME_POLICY) && (ACE_MONOTONIC_TIME_POLICY >= 0) */
   return ACE_Time_Value_T<ACE_Monotonic_Time_Policy> (ACE_Time_Value::zero);
 #endif
 }

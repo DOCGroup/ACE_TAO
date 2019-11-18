@@ -23,10 +23,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implement a monotonic time policy for ACE.
  *
- * This class implements support for returning monotonic time values
- * on platforms that support that.
- * If a platform does not support monotonic time ACE_HAS_MONOTONIC_TIME_POLICY
- * isn't defined and the policy returns ACE_Time_Value::zero.
+ * This class implements support for returning monotonic time values on
+ * platforms that support that. Support can be tested at compile time by seeing
+ * if ACE_MONOTONIC_TIME_POLICY macro is defined and is non-negative. At run
+ * time ACE_Time_Value::zero will be returned if there is no support.
  */
 class ACE_Export ACE_Monotonic_Time_Policy
 {

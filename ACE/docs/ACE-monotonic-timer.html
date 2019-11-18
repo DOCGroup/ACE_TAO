@@ -249,18 +249,17 @@ can be found in the following regression tests</P>
 
 <h2 class="western">Testing for Monotonic Time Support</h2>
 
-<p>Support for monotonic time in ACE can be determined by testing for the
-existence of these two preprocessor macros that would be defined by ACE
-platform headers:</p>
+<p>Support for monotonic time in ACE can be determined by testing these two
+preprocessor macros:</p>
 
 <ul>
 <li><p>
-  The <code>ACE_HAS_MONOTONIC_TIME_POLICY</code> preprocessor macro is defined
-  when <code>ACE_Monotonic_Time_Policy</code> by itself should be supported.
+  When <code>ACE_MONOTONIC_TIME_POLICY</code> is defined and is non-negative,
+  <code>ACE_Monotonic_Time_Policy</code> should be supported.
 </p></li>
 <li><p>
-  The <code>ACE_HAS_MONOTONIC_CONDITIONS</code> preprocessor macro is defined
-  when <code>ACE_Condition</code>s should support waiting for a monotonic point
+  When <code>ACE_MONOTONIC_CONDITIONS</code> is defined and is non-negative,
+  <code>ACE_Condition</code>s should support waiting for a monotonic point
   in time using
   <code>ACE_Condition_Attributes&lt;ACE_Monotonic_Time_Policy&gt;</code>.
 </p></li>

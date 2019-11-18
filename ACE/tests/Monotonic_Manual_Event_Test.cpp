@@ -21,7 +21,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Atomic_Op.h"
 
-#if defined (ACE_HAS_MONOTONIC_TIME_POLICY) && defined (ACE_HAS_MONOTONIC_CONDITIONS)
+#if (defined (ACE_MONOTONIC_TIME_POLICY) && ACE_MONOTONIC_TIME_POLICY >= 0) && \
+    (defined (ACE_MONOTONIC_CONDITIONS) && ACE_MONOTONIC_CONDITIONS >= 0)
 #  include "ace/Monotonic_Time_Policy.h"
 #  if defined (ACE_WIN32)
 #    include "ace/Date_Time.h"
