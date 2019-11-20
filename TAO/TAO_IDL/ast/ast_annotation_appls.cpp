@@ -102,7 +102,13 @@ AST_Annotation_Appls::find (const char *annotation)
       return 0;
     }
 
-  AST_Decl* decl = idl_global->scopes ().bottom ()->lookup_by_name (annotation);
+  UTL_Scope* bottom = idl_global->scopes ().bottom ();
+  if (!bottom)
+    {
+      return 0;
+    }
+
+  AST_Decl* decl = bottom->lookup_by_name (annotation);
   if (!decl)
     {
       return 0;
