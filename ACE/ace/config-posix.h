@@ -58,7 +58,7 @@
 #       define ACE_HAS_PTHREADS
 #     endif /* ACE_HAS_PTHREADS */
 
-#     if defined (_POSIX_CLOCK_SELECTION) && (_POSIX_POSIX_CLOCK_SELECTION-0 != -1)
+#     if defined (_POSIX_CLOCK_SELECTION) && (_POSIX_CLOCK_SELECTION-0 != -1)
 #       if !defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
 #         define ACE_HAS_CONDATTR_SETCLOCK
 #       endif
