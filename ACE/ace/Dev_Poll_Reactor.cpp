@@ -448,7 +448,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::handle_in_range (
     return true;
   else
     {
-      errno = EINVAL;
+      errno = ERANGE;
       return false;
     }
 }
@@ -520,7 +520,6 @@ ACE_Dev_Poll_Reactor::Handler_Repository::find (ACE_HANDLE handle)
   // Only bother to search for the <handle> if it's in range.
   if (!this->handle_in_range (handle))
     {
-      errno = ERANGE;
       return 0;
     }
 
