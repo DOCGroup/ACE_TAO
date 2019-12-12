@@ -313,6 +313,7 @@ int ACE_OS::recvmsg_win32_i (ACE_HANDLE handle,
     }
 
   msg->msg_namelen = wsaMsg.namelen;
+  msg->msg_controllen = static_cast<int> (wsaMsg.Control.len);
   return 0;
 }
 
