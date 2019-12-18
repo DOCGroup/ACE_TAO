@@ -54,7 +54,7 @@ ACE_Synch_Options::set (unsigned long options,
   // its bits have a value of 0.
   if (timeout_ !=
 #ifdef ACE_INITIALIZE_MEMORY_BEFORE_USE
-      ACE_Time_Value(0) // For satisfying clang's undefined behavior sanitizer
+      ACE_Time_Value (0) // For satisfying clang's undefined behavior sanitizer
 #else
       ACE_Time_Value::zero
 #endif
