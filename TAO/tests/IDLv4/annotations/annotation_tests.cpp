@@ -18,7 +18,7 @@
  */
 
 void
-annotation_tests()
+annotation_tests ()
 {
   /* -------------------------------------------------------------------------
    * Annotations Declarations
@@ -154,21 +154,18 @@ annotation_tests()
       "};\n"
     ).assert_annotation_decl ("@enum_annotation");
     t.assert_annotation_member_count (enum_annotation, 1);
-    t.set_scope(enum_annotation);
+    t.set_scope (enum_annotation);
     AST_Annotation_Member *value =
       t.get_annotation_member (enum_annotation, "value");
 
-    AST_EnumVal *a = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("A"));
-    enum_annotation_a = a->constant_value();
+    AST_EnumVal *a = t.assert_node<AST_EnumVal> ("A");
+    enum_annotation_a = a->constant_value ();
 
-    AST_EnumVal *b = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("B"));
-    enum_annotation_b = b->constant_value();
+    AST_EnumVal *b = t.assert_node<AST_EnumVal> ("B");
+    enum_annotation_b = b->constant_value ();
 
-    AST_EnumVal *c = AST_EnumVal::narrow_from_decl(
-      t.assert_node ("C"));
-    enum_annotation_c = c->constant_value();
+    AST_EnumVal *c = t.assert_node<AST_EnumVal> ("C");
+    enum_annotation_c = c->constant_value ();
 
     t.assert_annotation_member_value (value, enum_annotation_a);
   } catch (Failed const &) {}
@@ -185,7 +182,7 @@ annotation_tests()
     AST_Annotation_Member *value =
       t.get_annotation_member (string_annotation, "value");
 
-    UTL_String test_string("This is some text");
+    UTL_String test_string ("This is some text");
     t.assert_annotation_member_value<UTL_String*, UTL_String*>
       (value, &test_string);
   } catch (Failed const &) {}
@@ -207,11 +204,8 @@ annotation_tests()
     AST_Annotation_Member *value =
       t.get_annotation_member (constant_annotation, "value");
 
-    AST_Constant *x = dynamic_cast<AST_Constant *> (t.assert_node ("X"));
-    constant_annotation_x = x->constant_value();
-
-    AST_Constant *y = dynamic_cast<AST_Constant *> (t.assert_node ("Y"));
-    constant_annotation_y = y->constant_value();
+    constant_annotation_x = t.assert_node<AST_Constant> ("X")->constant_value ();
+    constant_annotation_y = t.assert_node<AST_Constant> ("Y")->constant_value ();
 
     t.assert_annotation_member_value (value, constant_annotation_x);
   } catch (Failed const &) {}
@@ -284,13 +278,8 @@ annotation_tests()
     t.assert_annotation_appl (short_int, 0, enum_annotation);
 
     // Get type of member
-    AST_Decl *member_decl = t.assert_node ("struct6::member");
-    AST_Field *member = AST_Field::narrow_from_decl (member_decl);
-    if (!member)
-      {
-        t.failed ("Could Not Get member");
-      }
-    AST_Decl* type = dynamic_cast<AST_Decl *> (member->field_type ());
+    AST_Field *member= t.assert_node<AST_Field> ("struct6::member");
+    AST_Type* type = member->field_type ();
 
     // Assert type has enum_annotation, string_annotation, and
     // test_annotation_1.
@@ -302,34 +291,18 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Sequence Type Parameter Annotation Application");
-    AST_Decl *value_decl = t.run (
+    AST_Field *value = t.run (
       "typedef sequence<@test_annotation_1 short, 5> test_seq_t;\n"
       "struct struct7 {\n"
       "  test_seq_t value;\n"
       "};\n"
-    ).assert_node ("::struct7::value");
+    ).assert_node<AST_Field> ("::struct7::value");
 
     // Get Sequence
-    AST_Field *value = AST_Field::narrow_from_decl (value_decl);
-    if (!value)
-      {
-        t.failed (
-          "Could Not Convert struct7::value from AST_Decl into AST_Field");
-      }
-    AST_Typedef *typedef_node =
-      dynamic_cast<AST_Typedef *> (value->field_type ());
-    if (!typedef_node)
-      {
-        t.failed (
-          "Could Not Convert test_seq_t from AST_Decl into AST_Typedef");
-      }
-    AST_Decl *seq_decl = dynamic_cast<AST_Decl *>(typedef_node->base_type ());
-    AST_Sequence *seq = AST_Sequence::narrow_from_decl (seq_decl);
-    if (!seq)
-      {
-        t.failed (
-          "Could Not Convert test_seq_t from AST_Typedef in AST_Sequence");
-      }
+    AST_Typedef *typedef_node = dynamic_cast<AST_Typedef *> (value->field_type ());
+    if (!typedef_node) t.failed ("Could not get AST_Typedef");
+    AST_Sequence *seq = dynamic_cast<AST_Sequence *> (typedef_node->base_type ());
+    if (!seq) t.failed ("Could get AST_Sequence");
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations = seq->base_type_annotations ();
@@ -444,7 +417,7 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Annotation Applications on/in Unions");
-    AST_Decl *test_union_decl = t.run (
+    AST_Union *test_union = t.run (
       /* Annotations on the union and the discriminator */
       "@test_annotation_1\n"
       "union test_union switch (@test_annotation_1 short) {\n"
@@ -455,16 +428,11 @@ annotation_tests()
       "default:\n"
       "  short union_member_2;\n"
       "};\n"
-    ).assert_node ("test_union");
-    AST_Union *test_union = AST_Union::narrow_from_decl (test_union_decl);
-    if (!test_union)
-      {
-        t.failed ("failed to get test_union!");
-      }
+    ).assert_node<AST_Union> ("test_union");
 
     // Annotation On Union
-    t.assert_annotation_appl_count (test_union_decl, 1);
-    t.assert_annotation_appl (test_union_decl, 0, test_annotation_1);
+    t.assert_annotation_appl_count (test_union, 1);
+    t.assert_annotation_appl (test_union, 0, test_annotation_1);
 
     // Annotation On Discriminator
     AST_Annotation_Appls &annotations = test_union->disc_annotations ();
@@ -602,19 +570,19 @@ annotation_tests()
     AST_Annotation_Member *member;
     AST_Annotation_Appl *annotation;
 
-    UTL_String first_string("This is some text");
+    UTL_String first_string ("This is some text");
     annotation = t.assert_annotation_appl (value, 0, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &first_string);
 
-    UTL_String second_string("Something else");
+    UTL_String second_string ("Something else");
     annotation = t.assert_annotation_appl (value, 1, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
       (member, &second_string);
 
-    UTL_String third_string("One last thing");
+    UTL_String third_string ("One last thing");
     annotation = t.assert_annotation_appl (value, 2, string_annotation);
     member = t.get_annotation_member (annotation, "value");
     t.assert_annotation_member_value <UTL_String *, UTL_String *>
@@ -650,11 +618,12 @@ annotation_tests()
 
   try {
     Annotation_Test t ("Annotate Array Base Type");
-    AST_Typedef *thetypedef = AST_Typedef::narrow_from_decl (t.run (
+    AST_Typedef *thetypedef = t.run (
       "typedef struct12 struct12Array @test_annotation_1 [12];\n"
-    ).assert_node ("::struct12Array"));
+    ).assert_node<AST_Typedef> ("::struct12Array");
     AST_Array *struct12Array =
       dynamic_cast<AST_Array *> (thetypedef->base_type ());
+    if (!struct12Array) t.failed ("Could not get AST_Array");
 
     // Verify Annotation on Base Type
     AST_Annotation_Appls &annotations =
@@ -766,7 +735,7 @@ annotation_tests()
       "};\n"
     );
 
-    AST_Interface *interface1 = dynamic_cast<AST_Interface *> (t.assert_node ("interface1"));
+    AST_Interface *interface1 = t.assert_node<AST_Interface> ("interface1");
     t.assert_annotation_appl_count (interface1, 1);
     t.assert_annotation_appl (interface1, 0, test_annotation_1);
 
@@ -850,13 +819,8 @@ annotation_tests()
    */
   try {
     Annotation_Test t ("Struct Field Visibility Must be vis_NA");
-    AST_Decl *member_decl = t.assert_node ("struct1::member");
-    AST_Field *member = AST_Field::narrow_from_decl (member_decl);
-    if (!member)
-      {
-        t.failed ("Could Not Get member");
-      }
-    if (member->visibility() != AST_Field::vis_NA)
+    AST_Field *member = t.assert_node<AST_Field> ("struct1::member");
+    if (member->visibility () != AST_Field::vis_NA)
       {
         char buffer[100];
         ACE_OS::snprintf (&buffer[0], 100,
