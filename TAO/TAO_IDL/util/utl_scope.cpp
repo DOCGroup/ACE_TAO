@@ -2247,6 +2247,7 @@ UTL_Scope::lookup_by_name (const char *name)
   AST_Decl *node = 0;
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
   node = lookup_by_name (scoped_name);
+  scoped_name->destroy();
   delete scoped_name;
   return node;
 }

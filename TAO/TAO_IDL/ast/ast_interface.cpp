@@ -350,11 +350,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 
   // Fwd redefinition should be in the same scope, so local
   // lookup is all that's needed.
-  AST_Decl *d = s->lookup_by_name_local (i->local_name (),
-                                         false);
-
-  AST_Interface *fd = 0;
-
+  AST_Decl *d = s->lookup_by_name_local (i->local_name (), false);
   if (d != 0)
     {
       scope = d->defined_in ();
@@ -375,9 +371,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           scope = parent->defined_in ();
         }
 
-      fd = AST_Interface::narrow_from_decl (d);
-
-      // Successful?
+      AST_Interface *fd = dynamic_cast<AST_Interface*> (d);
       if (fd == 0)
         {
           AST_Decl::NodeType nt = d->node_type ();
@@ -421,7 +415,6 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
               fd->redefine (i);
 
               AST_InterfaceFwd *fwd = fd->fwd_decl ();
-
               if (fwd != 0)
                 {
                   fwd->set_as_defined ();
@@ -636,7 +629,6 @@ AST_Interface::redefine (AST_Interface *from)
   this->set_file_name (idl_global->filename ()->get_string ());
   this->ifr_added_ = from->ifr_added_;
   this->ifr_fwd_added_ = from->ifr_fwd_added_;
-  this->fwd_decl_->set_as_defined ();
 }
 
 // Data accessors.
