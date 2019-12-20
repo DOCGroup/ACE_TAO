@@ -48,17 +48,12 @@ ACE_Synch_Options::set (unsigned long options,
   this->options_ = options;
   this->timeout_ = timeout;
 
-  // Whoa, possible dependence on static initialization here.  This
-  // function is called during initialization of the statics above.
-  // But, ACE_Time_Value::zero is a static object.  Very fortunately,
-  // its bits have a value of 0.
-  if (timeout_ !=
-#ifdef ACE_INITIALIZE_MEMORY_BEFORE_USE
-      ACE_Time_Value (0) // For satisfying clang's undefined behavior sanitizer
-#else
-      ACE_Time_Value::zero
-#endif
-    )
+  /*
+   * Not using ACE_Time_Value::zero because of possible static init order
+   * dependence. It would work fine because the memory would all zeros anyways,
+   * but ubsan complains about it.
+   */
+  if (timeout_ != ACE_Time_Value(0))
     ACE_SET_BITS (this->options_, ACE_Synch_Options::USE_TIMEOUT);
 
   this->arg_ = arg;
