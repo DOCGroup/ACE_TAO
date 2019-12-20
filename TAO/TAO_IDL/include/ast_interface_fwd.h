@@ -88,15 +88,15 @@ public:
   void set_full_definition (AST_Interface *nfd);
 
   virtual bool is_defined (void);
+  void set_as_defined ();
 
   /**
-   * Marks this as "defined".
+   * Do not assume memory ownership of the full definition anymore.
    *
-   * By default it assumes that ownership of the full definition remains with
-   * this object. If this is not the case, such as if the dummy definition was
-   * redefined and added to a scope, pass true to disown the definition.
+   * For example, this should be used if the dummy definition was made real and
+   * added to a scope, which always assumes ownership of nodes.
    */
-  void set_as_defined (bool disown = false);
+  void disown_full_definition ();
 
   virtual bool is_local (void);
   virtual bool is_valuetype (void);

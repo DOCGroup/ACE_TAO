@@ -371,7 +371,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
           scope = parent->defined_in ();
         }
 
-      AST_Interface *fd = dynamic_cast<AST_Interface*> (d);
+      AST_Interface *fd = dynamic_cast<AST_Interface *> (d);
       if (fd == 0)
         {
           AST_Decl::NodeType nt = d->node_type ();

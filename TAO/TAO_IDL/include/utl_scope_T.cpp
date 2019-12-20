@@ -95,7 +95,8 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
   AST_InterfaceFwd *fd = t->fwd_decl ();
   if (0 != fd)
     {
-      fd->set_as_defined (true /* transfered ownership to scope */);
+      fd->set_as_defined ();
+      fd->disown_full_definition (); // This scope assumes ownership
     }
 
   // Add it to set of locally referenced symbols

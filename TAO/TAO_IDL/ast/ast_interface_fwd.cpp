@@ -262,13 +262,15 @@ AST_InterfaceFwd::is_defined (void)
 }
 
 void
-AST_InterfaceFwd::set_as_defined (bool disown)
+AST_InterfaceFwd::set_as_defined ()
 {
   is_defined_ = true;
-  if (disown)
-    {
-      has_ownership_ = false;
-    }
+}
+
+void
+AST_InterfaceFwd::disown_full_definition ()
+{
+  has_ownership_ = false;
 }
 
 void
