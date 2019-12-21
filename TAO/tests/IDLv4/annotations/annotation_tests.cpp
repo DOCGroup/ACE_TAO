@@ -762,6 +762,48 @@ annotation_tests ()
     t.assert_annotation_appl (ro_attribute, 0, test_annotation_1);
   } catch (Failed const &) {}
 
+  /*
+   * Test for https://github.com/DOCGroup/ACE_TAO/issues/997
+   *
+   * When the original annotation work (https://github.com/DOCGroup/ACE_TAO/pull/723)
+   * was done it was assumed that when annotations didn't define the symbol
+   * being used, the lookup would go up the scope stack to the current scope.
+   * This turned out not the case, so this functionality was implemented just
+   * for annotation parameters.
+   */
+  try {
+    Annotation_Test t ("Passing Constant from Module");
+    t.run (
+      "@annotation range_test_annotation {\n"
+      "  float min;\n"
+      "  float max;\n"
+      "};\n"
+      "\n"
+      "module range_test_annoation_module {\n"
+      "  const float f1 = 1.;\n"
+      "  const float f2 = 2.;\n"
+      "\n"
+      "  @range_test_annotation(min = f1, max = f2)\n"
+      "  @range_test_annotation(\n"
+      "    min = range_test_annoation_module::f1,\n"
+      "    max = range_test_annoation_module::f2)\n"
+      "  @range_test_annotation(\n"
+      "    min = ::range_test_annoation_module::f1,\n"
+      "    max = ::range_test_annoation_module::f2)\n"
+      "  typedef float RangedFloat;\n"
+      "};\n"
+    );
+
+    AST_Annotation_Decl *range_like_test_annotation =
+      t.assert_annotation_decl ("::@range_test_annotation");
+    AST_Decl *RangedFloat = t.assert_node(
+      "::range_test_annoation_module::RangedFloat");
+    t.assert_annotation_appl_count (RangedFloat, 3);
+    t.assert_annotation_appl (RangedFloat, 0, range_like_test_annotation);
+    t.assert_annotation_appl (RangedFloat, 1, range_like_test_annotation);
+    t.assert_annotation_appl (RangedFloat, 2, range_like_test_annotation);
+  } catch (Failed const &) {}
+
   /* -------------------------------------------------------------------------
    * Annotation Names
    * -------------------------------------------------------------------------
