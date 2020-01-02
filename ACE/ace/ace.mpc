@@ -497,6 +497,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     ../bin/add_rel_link.sh
     ../bin/depgen.pl
     ../bin/ace_install_pkgconfig.pl
+    ../bin/generate_export_file.pl
   }
   InstallData_Files {
     gendir = include
