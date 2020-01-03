@@ -102,7 +102,7 @@ public:
   /**
    * A sort of copy constructor that creates a copy of the AST_Field for a new
    * scope.
-   * The new name must be calculated before hand.
+   * The new name must be calculated beforehand.
    * This was created for Annotation Instances and Extended Structs.
    */
   AST_Field (

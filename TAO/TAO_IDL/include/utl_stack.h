@@ -68,6 +68,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "TAO_IDL_FE_Export.h"
 
 class UTL_Scope;
+class UTL_IdList;
+class AST_Decl;
 
 // UTL_ScopeStack implements scope nesting.
 
@@ -79,6 +81,9 @@ class TAO_IDL_FE_Export UTL_ScopeStack
 public:
   UTL_ScopeStack (void);
   ~UTL_ScopeStack (void);
+
+  /// The initial capacity and how much to increment the capacity when needed.
+  static const size_t increments;
 
   // Return top element.
   UTL_Scope *top (void);
@@ -104,6 +109,12 @@ public:
   // return topmost non-NULL element.
   UTL_Scope *top_non_null (void);
 
+  /**
+   * Call lookup_by_name on all the scopes from the top down.
+   */
+  AST_Decl *lookup_by_name (UTL_IdList *name,
+    bool full_def_only = false, bool for_add = true);
+
 private:
   // Store scopes stack
   UTL_Scope **pd_stack_data;
@@ -128,10 +139,10 @@ public:
   void next (void);
 
   // Get current item.
-  UTL_Scope*item (void);
+  UTL_Scope* item (void);
 
   // Is the iteration finished?
-  long is_done (void);
+  bool is_done (void) const;
 
 private:
   // On what to iterate?

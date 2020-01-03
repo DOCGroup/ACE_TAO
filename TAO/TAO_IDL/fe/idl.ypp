@@ -141,11 +141,15 @@ extern  "C" int tao_yywrap();
 void tao_yyerror (const char *);
 int tao_yylex (void);
 extern "C" int tao_yywrap (void);
+
 extern char tao_yytext[];
 extern int tao_yyleng;
+
 AST_Enum *tao_enum_constant_decl = 0;
 AST_String *tao_string_decl = 0;
 AST_Expression::ExprType t_param_const_type = AST_Expression::EV_none;
+bool stack_based_lookup_for_primary_expr = false;
+
 #define TAO_YYDEBUG_LEXER_TEXT (tao_yytext[tao_yyleng] = '\0', tao_yytext)
 // Compile Optional Tracing Output for Parser, can be enabled with --bison-trace
 #define YYDEBUG 1
@@ -1316,9 +1320,8 @@ supports_spec :
         {
           $$ = $2;
         }
-        |   %empty
+        | %empty
         {
-/*      |    EMPTY */
           $$ = 0;
         }
         ;
@@ -2111,25 +2114,27 @@ unary_expr
 primary_expr
         : scoped_name
         {
+          UTL_ScopedName *name = $1;
+
           /*
            * An expression which is a scoped name is not resolved now,
            * but only when it is evaluated (such as when it is assigned
            * as a constant value).
            */
           AST_Expression *expr = 0;
-          UTL_Scope *s = idl_global->scopes ().top_non_null ();
-          AST_Decl *d =
-            s->lookup_by_name ($1);
 
-          if (d == 0)
+          AST_Decl *node = stack_based_lookup_for_primary_expr ?
+            idl_global->scopes ().lookup_by_name (name) :
+            idl_global->scopes ().top_non_null ()->lookup_by_name (name);
+          if (!node)
             {
               if (!idl_global->ignore_lookup_errors_)
                 {
-                  idl_global->err ()->lookup_error ($1);
+                  idl_global->err ()->lookup_error (name);
                   return 1;
                 }
             }
-          else if (d->node_type () == AST_Decl::NT_const)
+          else if (node->node_type () == AST_Decl::NT_const)
             {
               /*
                * If the scoped name is an IDL constant, it
@@ -2140,9 +2145,7 @@ primary_expr
                * expression created here so we can check
                * them later.
                */
-              AST_Constant *c =
-                AST_Constant::narrow_from_decl (d);
-
+              AST_Constant *c = dynamic_cast<AST_Constant *> (node);
               expr = idl_global->gen ()->create_expr (
                   c->constant_value (),
                   c->et ());
@@ -2153,19 +2156,18 @@ primary_expr
               // passed in this constructor, so we copy it
               // and destroy it below no matter which case
               // is followed.
-              expr = idl_global->gen ()->create_expr (
-                  $1->copy ());
-              if (d->node_type () == AST_Decl::NT_enum_val)
+              expr = idl_global->gen ()->create_expr (name->copy ());
+              if (node->node_type () == AST_Decl::NT_enum_val)
                 {
-                  AST_EnumVal *enumval = AST_EnumVal::narrow_from_decl (d);
-                  expr->enum_parent (enumval->enum_parent ());
+                  expr->enum_parent (
+                    dynamic_cast<AST_EnumVal *> (node)->enum_parent ());
                 }
             }
 
           $<exval>$ = expr;
-          $1->destroy ();
-          delete $1;
-          $1 = 0;
+          name->destroy ();
+          delete name;
+          $1 = name = 0;
         }
         | literal
         | '(' const_expr ')'
@@ -2495,11 +2497,14 @@ annotation_appl
               idl_global->ignore_lookup_errors_ = true;
             }
 
+          stack_based_lookup_for_primary_expr = true;
+
           $<annotation_decl_val>$ = decl;
         }
         annotation_appl_params_maybe
         {
           idl_global->ignore_lookup_errors_ = false;
+          stack_based_lookup_for_primary_expr = false;
           AST_Annotation_Appl *appl = 0;
           UTL_ScopedName *name = $2;
           AST_Annotation_Decl *decl = $<annotation_decl_val>3;
@@ -2649,6 +2654,9 @@ type_declarator :
         }
         at_least_one_declarator
         {
+          AST_Decl *type_spec = $1;
+          UTL_DeclList *decls = $3;
+
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
           FE_Declarator *d = 0;
           AST_Typedef *t = 0;
@@ -2659,21 +2667,17 @@ type_declarator :
            * Create a list of type renamings. Add them to the
            * enclosing scope
            */
-          if (s != 0 && $1 != 0 && $3 != 0)
+          if (s && type_spec && decls)
             {
-              for (UTL_DecllistActiveIterator l ($3);
-                   !l.is_done ();
-                   l.next ())
+              for (UTL_DecllistActiveIterator l (decls); !l.is_done (); l.next ())
                 {
                   d = l.item ();
-
                   if (d == 0)
                     {
                       continue;
                     }
 
-                  AST_Type * tp = d->compose ($1);
-
+                  AST_Type *tp = d->compose (type_spec);
                   if (tp == 0)
                     {
                       continue;
@@ -2705,9 +2709,9 @@ type_declarator :
                 }
 
               // This FE_Declarator class isn't destroyed with the AST.
-              $3->destroy ();
-              delete $3;
-              $3 = 0;
+              decls->destroy ();
+              delete decls;
+              $3 = decls = 0;
             }
 
           $$ = t;
