@@ -4,6 +4,7 @@
  */
 
 #include "test_config.h"
+#include "ace/CDR_Base.h"
 
 template <typename T>
 class Foo_T
@@ -11,7 +12,7 @@ class Foo_T
 public:
   Foo_T () : member() {};
   typedef T& T_elem;
-  T_elem operator[] (long) { return member; }
+  T_elem operator[] (ACE_CDR::ULong) { return member; }
   operator T *& () { return & member; };
 private:
   T member;
@@ -29,7 +30,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_38_Test"));
 
   Foo2Seq f2;
-  long const j = f2[0L].i;
+  long const j = f2[0].i;
   ACE_UNUSED_ARG(j);
 
   ACE_DEBUG ((LM_INFO,
