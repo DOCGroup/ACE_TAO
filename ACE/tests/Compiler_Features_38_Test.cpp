@@ -13,7 +13,6 @@ public:
   Foo_T () : member() {};
   typedef T& T_elem;
   T_elem operator[] (ACE_CDR::ULong) { return member; }
-  operator T *& () { return & member; };
 private:
   T member;
 };
