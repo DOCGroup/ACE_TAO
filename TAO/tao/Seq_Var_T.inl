@@ -191,14 +191,6 @@ TAO_VarSeq_Var_T<T>::operator= (T * p)
   return *this;
 }
 
-// Variable-size types only
-template<typename T>
-ACE_INLINE
-TAO_VarSeq_Var_T<T>::operator T *& ()
-{
-  return this->ptr_;
-}
-
 template<typename T>
 ACE_INLINE
 typename TAO_VarSeq_Var_T<T>::T_elem
