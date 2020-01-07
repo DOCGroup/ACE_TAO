@@ -33,7 +33,7 @@ namespace TAO
       ObjectReferenceTemplate (
         server_id_,
         orb_id_,
-        adapter_name_,
+        adapter_name_.ptr (),
         poa_.in ()
       ),
       ::CORBA::NO_MEMORY ()
@@ -59,8 +59,7 @@ namespace TAO
     PortableInterceptor::AdapterName *adapter_name = 0;
 
     ACE_NEW_THROW_EX (adapter_name,
-                      PortableInterceptor::AdapterName (
-                                                        *(this->adapter_name_)),
+                      PortableInterceptor::AdapterName (this->adapter_name_.in ()),
                       CORBA::NO_MEMORY (
                           CORBA::SystemException::_tao_minor_code (
                               TAO::VMCID,

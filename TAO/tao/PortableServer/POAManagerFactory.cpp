@@ -76,13 +76,14 @@ TAO_POAManager_Factory::create_POAManager (
 ::PortableServer::POAManagerFactory::POAManagerSeq *
 TAO_POAManager_Factory::list (void)
 {
-  ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers;
-  CORBA::ULong number_of_poamanagers = static_cast <CORBA::ULong>
+  CORBA::ULong const number_of_poamanagers = static_cast <CORBA::ULong>
                                               (this->poamanager_set_.size ());
-  ACE_NEW_THROW_EX (poamanagers,
+  ::PortableServer::POAManagerFactory::POAManagerSeq* poamanagerstmp = 0;
+  ACE_NEW_THROW_EX (poamanagerstmp,
                     PortableServer::POAManagerFactory::POAManagerSeq (
                       number_of_poamanagers),
                     CORBA::NO_MEMORY ());
+  ::PortableServer::POAManagerFactory::POAManagerSeq_var poamanagers = poamanagerstmp;
 
   poamanagers->length (number_of_poamanagers);
 

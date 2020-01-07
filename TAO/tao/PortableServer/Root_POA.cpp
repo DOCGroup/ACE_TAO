@@ -978,12 +978,13 @@ TAO_Root_POA::delete_child (const TAO_Root_POA::String &child)
 PortableServer::POAList *
 TAO_Root_POA::the_children_i (void)
 {
-  PortableServer::POAList_var children;
-  CORBA::ULong child_current = static_cast <CORBA::ULong>
+  PortableServer::POAList* childrentmp = 0;
+  CORBA::ULong const child_current = static_cast <CORBA::ULong>
                                            (this->children_.current_size ());
-  ACE_NEW_THROW_EX (children,
+  ACE_NEW_THROW_EX (childrentmp,
                     PortableServer::POAList (child_current),
                     CORBA::NO_MEMORY ());
+  PortableServer::POAList_var children = childrentmp;
 
   children->length (child_current);
 
