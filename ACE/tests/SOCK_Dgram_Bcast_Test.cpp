@@ -206,7 +206,7 @@ void print_usage (void)
                  "\ts send datagrams and exit\n"
                  "\tr receive one datagram and exit\n\n"
                  "\t  run auto-test when no r and s option is passed\n"
-                 "\t  test failures are minifested by -1 exit value, otherwise 0\n");
+                 "\t  test failures are manifested by -1 exit value, otherwise 0\n");
 }
 
 int run_main (int argc, ACE_TCHAR *argv[])
