@@ -144,7 +144,7 @@ int run_auto_test (const ACE_TCHAR *prog_name)
   ACE_Process_Options opts;
   pid_t child_pid;
   opts.command_line (ACE_TEXT ("%s -p %d -t %d -a -r"),
-                     prog_name, dgram_port, dgram_recv_timeout.msec ());
+                     prog_name, dgram_port, static_cast<int>(dgram_recv_timeout.msec ()));
   if ((child_pid = ACE_Process_Manager::instance ()->spawn (opts)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("spawn_n()")), -1);
 
