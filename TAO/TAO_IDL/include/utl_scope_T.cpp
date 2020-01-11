@@ -20,7 +20,6 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
     }
 
   AST_Decl *predef = 0;
-  DECL *fwd = 0;
 
   // Already defined?
   if ((predef = this->lookup_for_add (t)) != 0)
@@ -28,8 +27,7 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
       // Treat fwd declared interfaces specially
       if (predef->node_type () == DECL::NT)
         {
-          fwd = DECL::narrow_from_decl (predef);
-
+          DECL *fwd = dynamic_cast<DECL *> (predef);
           if (fwd == 0)
             {
               return 0;
@@ -95,10 +93,10 @@ UTL_Scope::fe_add_full_intf_decl (DECL *t)
   // since fwd declared structs and unions must be defined in
   // the same translation unit.
   AST_InterfaceFwd *fd = t->fwd_decl ();
-
   if (0 != fd)
     {
       fd->set_as_defined ();
+      fd->disown_full_definition (); // This scope assumes ownership
     }
 
   // Add it to set of locally referenced symbols
@@ -127,8 +125,7 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
       // value, but the result is what we want.
       if (nt == FULL_DECL::NT)
         {
-          FULL_DECL *itf = FULL_DECL::narrow_from_decl (d);
-
+          FULL_DECL *itf = dynamic_cast<FULL_DECL *> (d);
           if (itf == 0)
             {
               return 0;
@@ -140,23 +137,13 @@ UTL_Scope::fe_add_fwd_intf_decl (typename FULL_DECL::FWD_TYPE *t)
           // get destroyed twice.
           if (itf->is_defined ())
             {
-              if (!t->is_defined ())
-                {
-                  FULL_DECL *prev_fd =
-                    FULL_DECL::narrow_from_decl (t->full_definition ());
-
-                  prev_fd->destroy ();
-                  // No need to delete prev_fd, the call to
-                  // set_full_definition() below will do it.
-                }
-
               t->set_full_definition (itf);
               t->set_as_defined ();
             }
         }
 
-      if (!FE_Utils::can_be_redefined (d, t)) {
-
+      if (!FE_Utils::can_be_redefined (d, t))
+        {
           idl_global->err ()->error3 (UTL_Error::EIDL_REDEF,
                                       t,
                                       ScopeAsDecl (this),

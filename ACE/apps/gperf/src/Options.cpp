@@ -24,6 +24,7 @@
 #include "Options.h"
 #include "ace/Get_Opt.h"
 #include "Iterator.h"
+#include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdlib.h"
@@ -95,11 +96,11 @@ Options::print_options (void)
 {
   ACE_OS::printf ("/* Command-line: ");
 
-  for (int i = 0; i < argc_; i++)
-    ACE_OS::printf ("%s ",
-                    ACE_TEXT_ALWAYS_CHAR (argv_[i]));
+  ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (ACE::basename (argv_[0])));
+  for (int i = 1; i < argc_; i++)
+    ACE_OS::printf ("%s ", ACE_TEXT_ALWAYS_CHAR (argv_[i]));
 
-  ACE_OS::printf (" */");
+  ACE_OS::printf ("*/\n");
 }
 
 /// Sorts the key positions *IN REVERSE ORDER!!* This makes further
@@ -346,6 +347,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Displays a list of helpful Options to the user.
         case 'h':
           {
+            Options::usage ();
             ACE_OS::fprintf (stderr,
                              "-a\tGenerate ANSI standard C output code, i.e., function prototypes.\n"
                              "-b\tGenerate code for Linear Search.\n"
@@ -437,7 +439,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
                              "\tname is `Perfect_Hash.'\n",
                              DEFAULT_JUMP_VALUE,
                              MAX_KEY_POS - 1);
-            Options::usage ();
             return -1;
           }
         // Sets the name for the hash function.
@@ -679,10 +680,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             break;
           }
         default:
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             "%r",
-                             &Options::usage),
-                            -1);
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error: Invalid Option: %s\n"), get_opt.last_option ()));
+          usage ();
+          return -1;
         }
 
     }

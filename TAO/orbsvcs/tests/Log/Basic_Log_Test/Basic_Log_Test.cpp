@@ -9,7 +9,7 @@
 #include "ace/OS_NS_unistd.h"
 
 const char* BasicLog_Test::basic_log_factory_name_= "BasicLogFactory";
-const char* BasicLog_Test::naming_sevice_name_ = "NameService";
+const char* BasicLog_Test::naming_service_name_ = "NameService";
 
 BasicLog_Test::BasicLog_Test(void)
   : argc_ (0), argv_(0), logServiceIor_ (0)
@@ -513,7 +513,7 @@ void
 BasicLog_Test::resolve_naming_service (void)
 {
   CORBA::Object_var naming_obj =
-    this->orb_->resolve_initial_references (naming_sevice_name_);
+    this->orb_->resolve_initial_references (naming_service_name_);
 
   // Need to check return value for errors.
   if (CORBA::is_nil (naming_obj.in ()))

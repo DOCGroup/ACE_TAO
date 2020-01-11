@@ -27,7 +27,7 @@ Description: makefile, project, and workspace creator
   * mpc-ace: generates project files for a single target
   * mwc-ace: generates workspace files for a set of projects
 
-Package: libace-6.5.6
+Package: libace-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -45,7 +45,7 @@ Description: C++ network programming framework
 Package: libace-dev
 Architecture: any
 Section: libdevel
-Depends: libace-6.5.6 (= ${binary:Version}), ${misc:Depends}
+Depends: libace-6.5.7 (= ${binary:Version}), ${misc:Depends}
 Suggests: libace-doc, pkg-config
 Replaces: mpc-ace (<< 5.6.3-4)
 Description: C++ network programming framework - development files
@@ -62,7 +62,7 @@ Description: C++ network programming framework - documentation
  This package contains the ACE overview documentation, tutorials,
  examples, and information regarding upstream development.
 
-Package: libace-ssl-6.5.6
+Package: libace-ssl-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -73,12 +73,12 @@ Description: ACE secure socket layer library
 Package: libace-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-ssl-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev, ${misc:Depends}
+Depends: libace-ssl-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libssl-dev, ${misc:Depends}
 Description: ACE secure socket layer library - development files
  This package contains the header files and static library for the ACE
  SSL library.
 
-Package: libace-rmcast-6.5.6
+Package: libace-rmcast-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -92,12 +92,12 @@ Description: ACE reliable multicast library
 Package: libace-rmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-rmcast-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-rmcast-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE reliable multicast library - development files
  This package contains the header files and static library for the ACE
  reliable multicast library.
 
-Package: libace-tmcast-6.5.6
+Package: libace-tmcast-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -111,12 +111,12 @@ Description: ACE transactional multicast library
 Package: libace-tmcast-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tmcast-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-tmcast-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE transactional multicast library - development files
  This package contains the header files and static library for the ACE
  transactional multicast library.
 
-Package: libace-htbp-6.5.6
+Package: libace-htbp-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -130,12 +130,12 @@ Description: ACE protocol over HTTP tunneling library
 Package: libace-htbp-dev
 Architecture: any
 Section: libdevel
-Depends: libace-htbp-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-htbp-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE protocol over HTTP tunneling library - development files
  This package contains the header files and static library for the ACE
  HTBP library.
 
-Package: libace-inet-6.5.6
+Package: libace-inet-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -146,15 +146,15 @@ Description: ACE Inet protocol library
 Package: libace-inet-dev
 Architecture: any
 Section: libdevel
-Depends: libace-inet-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-inet-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE Inet protocol library - development files
  This package contains the header files and static library for the ACE
  Inet protocol library.
 
-Package: libace-inet-ssl-6.5.6
+Package: libace-inet-ssl-6.5.7
 Architecture: any
 Section: libs
-Depends: libace-inet-6.5.6, libace-ssl-6.5.6, ${shlibs:Depends}, ${misc:Depends}
+Depends: libace-inet-6.5.7, libace-ssl-6.5.7, ${shlibs:Depends}, ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library
  This package provides an ACE addon library for clients (and possibly
  servers at some point) using Inet protocols which support SSL, such as
@@ -163,7 +163,7 @@ Description: ACE SSL-enabled Inet protocol library
 Package: libace-inet-ssl-dev
 Architecture: any
 Section: libdevel
-Depends: libace-inet-ssl-6.5.6 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libace-inet-ssl-6.5.7 (= ${binary:Version}), libace-inet-dev (= ${binary:Version}), libace-ssl-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE SSL-enabled Inet protocol library - development files
  This package contains the header files and static library for the ACE
  SSL-enabled Inet protocol library.
@@ -180,7 +180,7 @@ Description: ACE perfect hash function generator
  basically the same options and functionality. ace_gperf simply takes
  advantage of some of the features provided by the ACE library.
 
-Package: libacexml-6.5.6
+Package: libacexml-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -196,12 +196,12 @@ Package: libacexml-dev
 Architecture: any
 Section: libdevel
 Replaces: libace-dev (<< 5.7.7-4)
-Depends: libacexml-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libacexml-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE SAX based XML parsing library - development files
  This package contains the header files and static library for the ACE
  XML parsing library.
 
-Package: libace-xml-utils-6.5.6
+Package: libace-xml-utils-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -215,12 +215,12 @@ Package: libace-xml-utils-dev
 Architecture: any
 Section: libdevel
 Replaces: libace-dev (<< 5.7.7-4)
-Depends: libace-xml-utils-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}, libxerces-c-dev
+Depends: libace-xml-utils-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}, libxerces-c-dev
 Description: ACE XML utility classes and methods - development files
  This package contains the header files and static library for the ACE XML
  Utils library
 
-Package: libkokyu-6.5.6
+Package: libkokyu-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -234,12 +234,12 @@ Description: ACE scheduling and dispatching library
 Package: libkokyu-dev
 Architecture: any
 Section: libdevel
-Depends: libkokyu-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libkokyu-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE scheduling and dispatching library - development files
  This package contains the header files and static library for the ACE
  scheduling and dispatching library.
 
-Package: libace-xtreactor-6.5.6
+Package: libace-xtreactor-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -257,12 +257,12 @@ Description: ACE-GUI reactor integration for Xt
 Package: libace-xtreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-xtreactor-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 4.3.0), ${misc:Depends}
+Depends: libace-xtreactor-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libxt-dev (>= 4.3.0), ${misc:Depends}
 Description: ACE-GUI reactor integration for Xt - development files
  This package contains header files and static library for the ACE-Xt
  reactor integration.
 
-Package: libace-tkreactor-6.5.6
+Package: libace-tkreactor-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -281,12 +281,12 @@ Description: ACE-GUI reactor integration for Tk
 Package: libace-tkreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-tkreactor-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
+Depends: libace-tkreactor-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), tk-dev (>= 8.5), ${misc:Depends}
 Description: ACE-GUI reactor integration for Tk - development files
  This package contains header files and static library for the ACE-Tk
  reactor integration.
 
-Package: libace-flreactor-6.5.6
+Package: libace-flreactor-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -304,12 +304,12 @@ Description: ACE-GUI reactor integration for FLTK
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 1.1.4), ${misc:Depends}
+Depends: libace-flreactor-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 1.1.4), ${misc:Depends}
 Description: ACE-GUI reactor integration for FLTK - development files
  This package contains header files and static library for the ACE-FLTK
  reactor integration.
 
-Package: libace-foxreactor-6.5.6
+Package: libace-foxreactor-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -326,7 +326,7 @@ Description: ACE-GUI reactor integration for FOX
 Package: libace-foxreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-foxreactor-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
+Depends: libace-foxreactor-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfox-1.6-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for FOX - development files
  This package contains header files and static library for the ACE-FOX
  reactor integration.
@@ -343,7 +343,7 @@ Description: ACE network service implementations
  files to link the various ACE network services together, either
  statically or dynamically, and form complete server programs.
 
-Package: libnetsvcs-6.5.6
+Package: libnetsvcs-6.5.7
 Architecture: any
 Section: libs
 Depends: ${shlibs:Depends}, ${misc:Depends}
@@ -357,7 +357,7 @@ Description: ACE network service implementations - libraries
 Package: libnetsvcs-dev
 Architecture: any
 Section: libdevel
-Depends: libnetsvcs-6.5.6 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
+Depends: libnetsvcs-6.5.7 (= ${binary:Version}), libace-dev (= ${binary:Version}), ${misc:Depends}
 Description: ACE network service implementations - development files
  ACE network services provide reusable components for common
  distributed system tasks such as logging, naming, locking, and time

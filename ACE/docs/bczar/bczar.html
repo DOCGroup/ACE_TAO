@@ -132,7 +132,7 @@
               <li>
                 <code>git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO</code></li>
               <li>
-                <code>git clone https://github.com/DOCGroup/ACE_TAO.git MPC</code></li>
+                <code>git clone https://github.com/DOCGroup/MPC.git MPC</code></li>
             </ul>
         </ul>
         <li>
@@ -278,7 +278,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_6 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-6_5_7 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
@@ -322,12 +322,12 @@
         scp bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution/ACE-html.tar.bz2 .<br>
         bunzip2 ACE-html.tar.bz2;tar -xvf ACE-html.tar<br>
         cd ..<br>
-        mkdir 6.5.5<br>
-        cd 6.5.5<br>
+        mkdir 6.5.7<br>
+        cd 6.5.7<br>
         mv ../tmp/html .<br>
         cd ..<br>
         rm Micro<br>
-        ln -s 6.5.5/html Micro<br>
+        ln -s 6.5.7/html Micro<br>
         rm -rf tmp<br>
         </code>
 
