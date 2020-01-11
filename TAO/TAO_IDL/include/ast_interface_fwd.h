@@ -80,10 +80,23 @@ public:
   virtual ~AST_InterfaceFwd (void);
 
   AST_Interface *full_definition (void);
+
+  /**
+   * Sets the full definition. If there is an existing dummy definition, it
+   * deletes that first. Ownership of the new definition is NOT assumed.
+   */
   void set_full_definition (AST_Interface *nfd);
 
   virtual bool is_defined (void);
-  void set_as_defined (void);
+  void set_as_defined ();
+
+  /**
+   * Do not assume memory ownership of the full definition anymore.
+   *
+   * For example, this should be used if the dummy definition was made real and
+   * added to a scope, which always assumes ownership of nodes.
+   */
+  void disown_full_definition ();
 
   virtual bool is_local (void);
   virtual bool is_valuetype (void);
@@ -120,6 +133,9 @@ private:
 
   bool is_defined_;
   // Checking the member above isn't good enough.
+
+  /// True if we own pd_full_definition, which would be true if it's a dummy.
+  bool has_ownership_;
 };
 
 #endif           // _AST_INTERFACE_FWD_AST_INTERFACE_FWD_HH

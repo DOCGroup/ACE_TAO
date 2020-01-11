@@ -22,7 +22,7 @@ namespace ACE
         ACE_Env_Value<int> trace_env (ACE_TEXT("INET_TRACE_ENABLE"), 0);
         trace = (trace_env != 0);
 
-        ACE_Env_Value<const ACE_TCHAR *> filename_env (ACE_TEXT("INET_LOG_FILE"), filename.c_str ());
+        ACE_Env_Value<ACE_TString> filename_env (ACE_TEXT("INET_LOG_FILE"), filename.c_str ());
         filename = filename_env;
 
         if (trace)

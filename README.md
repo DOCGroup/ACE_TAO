@@ -6,10 +6,10 @@
 
 # ACE/TAO #
 
-See [Douglas C. Schmidt website](http://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO. The quality of ACE/TAO is monitored through our distributed [scoreboard](http://www.dre.vanderbilt.edu/scoreboard/)
+See [Douglas C. Schmidt website](https://www.dre.vanderbilt.edu/~schmidt)  for more information about ACE/TAO. The quality of ACE/TAO is monitored through our distributed [scoreboard](https://www.dre.vanderbilt.edu/scoreboard/)
 
-[ACE](http://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
-networked applications, [TAO](http://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
-implementation of the OMG's [CORBA](http://www.omg.org/spec/CORBA/) standard. The main home page
-is [here](http://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are
-available [here](http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html).
+[ACE](https://www.dre.vanderbilt.edu/~schmidt/ACE.html) is a C++ framework for implementing distributed and
+networked applications, [TAO](https://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
+implementation of the OMG's [CORBA](https://www.omg.org/spec/CORBA/) standard. The main home page
+is [here](https://www.dre.vanderbilt.edu/~schmidt/). Mailing lists are
+available [here](https://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html).

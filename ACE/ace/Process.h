@@ -118,7 +118,11 @@ public:
   /// @param format must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
   int setenv (const ACE_TCHAR *format,
-              ...);
+              ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
+#endif /* !ACE_USES_WCHAR */
+    ;
 
   /**
    * Set a single environment variable, @a variable_name.  Since
@@ -130,7 +134,11 @@ public:
    */
   int setenv (const ACE_TCHAR *variable_name,
               const ACE_TCHAR *format,
-              ...);
+              ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4)
+#endif /* !ACE_USES_WCHAR */
+    ;
 #endif // ACE_LACKS_VA_FUNCTIONS
 
   /// Same as above with argv format.  @a envp must be null terminated.
@@ -155,7 +163,11 @@ public:
    * path to run a process, this method *must* be called!  Returns 0
    * on success, -1 on failure.
    */
-  int command_line (const ACE_TCHAR *format, ...);
+  int command_line (const ACE_TCHAR *format, ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
+#endif /* !ACE_USES_WCHAR */
+    ;
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
   /// Anti-TChar version of command_line ()

@@ -285,7 +285,7 @@ oneway          return IDL_ONEWAY;
                   char * const tmp = ace_yytext;
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
-                      if (isspace(tmp[i]))
+                      if (isspace (tmp[i]))
                         {
                           tmp[i] = '\0';
                         }
@@ -305,7 +305,7 @@ oneway          return IDL_ONEWAY;
                   char * const tmp = ACE_OS::strdup (ace_yytext);
                   for (size_t i = ACE_OS::strlen (tmp); i-- != 0; )
                     {
-                      if (isspace(tmp[i]))
+                      if (isspace (tmp[i]))
                         {
                           tmp[i] = '\0';
                         }
@@ -315,7 +315,8 @@ oneway          return IDL_ONEWAY;
                         }
                     }
                   tmp[ACE_OS::strlen (tmp) - 1] = '\0';
-                  tao_yylval.wsval = idl_wstring_escape_reader (tmp + 2);
+                  tao_yylval.wsval = ACE_OS::strdup (idl_wstring_escape_reader (tmp + 2));
+                  ACE_OS::free (tmp);
                   return IDL_WSTRING_LITERAL;
                 }
 "'"."'"         {

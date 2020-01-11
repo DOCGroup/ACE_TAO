@@ -107,13 +107,9 @@ public:
     implementation_type::freebuf(buffer);
   }
 
-
 #if defined TAO_HAS_SEQUENCE_ITERATORS && TAO_HAS_SEQUENCE_ITERATORS == 1
-
-  ///
   /// Additions to support iterator semantics for TAO unbounded object reference
   /// sequences.
-  ///
 
   // = Traits and factory methods that create iterators.
   typedef MM_Sequence_Iterator<unbounded_object_reference_sequence<object_t, object_t_var> > iterator;
@@ -176,7 +172,6 @@ public:
     return const_reverse_iterator (&this->impl_,
                                    -1);
   }
-
 #endif /* TAO_HAS_SEQUENCE_ITERATORS==1 */
 
 private:
