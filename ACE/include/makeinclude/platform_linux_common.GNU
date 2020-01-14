@@ -9,7 +9,7 @@ threads ?= 1
 insure ?= 0
 linux_is_cross_compiled ?= 0
 
-ifeq($(linux_is_cross_compiled),1)
+ifeq ($(linux_is_cross_compiled),1)
   LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
   LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
 endif
