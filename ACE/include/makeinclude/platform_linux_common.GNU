@@ -116,7 +116,7 @@ ifdef PLATFORM_LARGEFILE_CFLAGS
   CPPFLAGS += $(PLATFORM_LARGEFILE_CFLAGS)
 endif
 
-ifeq($(linux_is_cross_compiled),1)
+ifeq ($(linux_is_cross_compiled),1)
   SYSARCH := $(shell uname -m)
 endif
 
