@@ -1663,6 +1663,12 @@ addition to the Windows version of the Android NDK, you will also need MinGW
 for Unix utilities that ACE needs. Install <a href="http://www.mingw.org">
 MinGW</a> and install the <code>mingw-developer-toolkit-bin</code> meta package
 using the MinGW package manager.
+
+<p>You will also have to delete the <code>%ACE_ROOT%\VERSION</code> and
+<code>%TAO_ROOT%\VERSION</code> files. The <code>version</code> C++ standard
+header is used by the toolchain's standard library and on Windows filenames are
+case insensitive in many cases, so that leads to the compiler failing when it
+tries to use ACE and TAO's VERSION files when <code>version</code> is included.
 </p>
 </div>
 
