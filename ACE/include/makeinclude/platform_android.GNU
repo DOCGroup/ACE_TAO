@@ -7,6 +7,7 @@
 ACE_PLATFORM_CONFIG ?= config-android.h
 
 # Common Linux Functionality
+linux_is_cross_compiled ?= 1
 include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 
 # as of NDK r6 inlining is required

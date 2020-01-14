@@ -1,15 +1,18 @@
 # -*- Makefile -*-
 
-# We always include config-linux.h on Linux platforms.
+# Include config-linux.h by default on Linux platforms.
 ACE_PLATFORM_CONFIG ?= config-linux.h
 
 debug ?= 1
 optimize ?= 1
 threads ?= 1
 insure ?= 0
+linux_is_cross_compiled ?= 0
 
-LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
-LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
+ifeq($(linux_is_cross_compiled),1)
+  LSB_RELEASE_ID := $(shell lsb_release -i 2> /dev/null || echo Distributor ID: Unknown)
+  LSB_RELEASE_RELEASE := $(shell lsb_release -r 2> /dev/null || echo Release: Unknown)
+endif
 
 PLATFORM_XT_CPPFLAGS=
 PLATFORM_XT_LIBS=-lXt
@@ -113,7 +116,9 @@ ifdef PLATFORM_LARGEFILE_CFLAGS
   CPPFLAGS += $(PLATFORM_LARGEFILE_CFLAGS)
 endif
 
-SYSARCH := $(shell uname -m)
+ifeq($(linux_is_cross_compiled),1)
+  SYSARCH := $(shell uname -m)
+endif
 
 PIC      = -fPIC
 AR      ?= ar
