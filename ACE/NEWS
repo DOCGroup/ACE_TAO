@@ -1,6 +1,14 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================
 
+. Android:
+
+  . Added instructions to ACE-INSTALL.html for building ACE/TAO for Android on
+    Windows.
+
+  . Fixed some error messages that would come up when building ACE/TAO for
+    Android on Windows.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 ====================================================
 
