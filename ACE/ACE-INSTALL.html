@@ -1661,8 +1661,8 @@ rest of this note and all the other Windows specific notes.
 with "<b>Windows Users:</b>" in addition to the rest of the instructions. In
 addition to the Windows version of the Android NDK, you will also need MinGW
 for Unix utilities that ACE needs. Install <a href="http://www.mingw.org">
-MinGW</a> and install the <code>mingw-developer-toolkit-bin</code> meta package
-using the MinGW package manager.
+MinGW</a> and the <code>mingw-developer-toolkit-bin</code> meta package using
+the MinGW package manager.
 
 <p>You will also have to delete the <code>%ACE_ROOT%\VERSION</code> and
 <code>%TAO_ROOT%\VERSION</code> files. The <code>version</code> C++ standard
@@ -1848,12 +1848,12 @@ have caveats:
       <p><b>Windows Users:</b> If cross compiling TAO and the host tools were
       built using using Visual Studio, make sure <code>cl.exe</code> can be run
       from the environment when building for Android, as <code>tao_idl</code>
-      will need to use it as a C preprocessor. This is always the case that
-      <code>tao_idl</code> needs a preprocessor, but it's being stressing here
-      because <code>cl.exe</code> isn't automatically available in a Windows batch
-      environment. See:
+      will need to use it as a C preprocessor. It is always the case that
+      <code>tao_idl</code> needs a preprocessor, but it's being stressed here
+      because <code>cl.exe</code> isn't automatically available in a Windows
+      batch environment. See
       <a href="https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/how-to-set-environment-variables-for-the-visual-studio-command-line">
-      This Article If you are not sure how to do that</a>.</p>
+      this article</a> if you are not sure how to do that.</p>
     </div>
   </li>
   <li>Setup the Android build<ul>
@@ -1862,24 +1862,29 @@ have caveats:
       <ul>
         <li>
           Set <code>ANDROID_ABI</code> to one of the options above. This
-          must match the toolchain <code>--arch</code> argument used according to the table above.
+          must match the toolchain <code>--arch</code> argument used according
+          to the table above.
         </li>
         <li>Set options for debug and optimization options as desired.</li>
           <li>If you want to compile static, add <code>static_libs_only:=1</code></li>
           <li>Must include <code>include $(ACE_ROOT)/include/makeinclude/platform_android.GNU</code>.</li>
-          <li>If building TAO, set the tao idl options specified in the cross compiling instructions in <code>TAO-INSTALL.html</code></li>
+          <li>
+            If building TAO, set the <code>tao_idl</code> options specified in
+            the cross compiling instructions in <code>TAO-INSTALL.html</code>
+          </li>
         </ul>
       </ul>
     </li>
     </li>
     <li>Generate makefiles (if necessary).</li>
     <li>Build with GNU make. Make sure you have <code>$TOOLCHAIN/bin</code> in
-      your <code>$PATH</code>
+      your <code>$PATH</code>.
       <div class="boxed indent"><p>
-        <b>Windows Users:</b> Make sure you have <code>%TOOLCHAIN%\bin</code>.
+        <b>Windows Users:</b> Make sure you have <code>%TOOLCHAIN%\bin</code>
         and <code>C:\MinGW\msys\1.0\bin</code> in your <code>%PATH%</code> when
-        building. If you are cross compiling TAO you will also a preprocessor
-        for <code>tao_idl</code> available (See first step of this list).</p>
+        building. If you are cross compiling TAO you will also need a
+        preprocessor for <code>tao_idl</code> available (See Windows note
+        above).</p>
       </div>
     </li>
 </ul>
