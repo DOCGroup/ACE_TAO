@@ -38,7 +38,7 @@ sub run_command {
   my $print_error = shift;
 
   my $result = 0;
-  if (system ($command)) {
+  if (system($command)) {
     $result = $? >> 8;
     if ($print_error) {
       my $signal = $? & 127;
@@ -48,11 +48,11 @@ sub run_command {
         $error_message = "failed to run: $!";
       }
       elsif ($signal) {
-        $error_message = sprintf ("exited on signal %d", ($signal));
+        $error_message = sprintf("exited on signal %d", ($signal));
         $error_message .= " and created coredump" if ($coredump);
       }
       else {
-        $error_message = sprintf ("returned with status %d", $result);
+        $error_message = sprintf("returned with status %d", $result);
       }
       print "Error: $test $error_message\n";
     }
@@ -112,8 +112,8 @@ my $sandbox = '';
 my $dry_run = 0;
 my $startdir = '';
 my $show_configs = 0;
-Getopt::Long::Configure ('bundling', 'no_auto_abbrev');
-my $invalid_arguments = !GetOptions (
+Getopt::Long::Configure('bundling', 'no_auto_abbrev');
+my $invalid_arguments = !GetOptions(
   'help|h' => \$help,
   'ace|a' => \$ace_tests,
   'orb|o' => \$tao_orb_tests,
@@ -127,8 +127,8 @@ my $invalid_arguments = !GetOptions (
   'show-configs' => \$show_configs,
 );
 if ($invalid_arguments || $help) {
-  print_help ($invalid_arguments ? *STDERR : *STDOUT);
-  exit ($invalid_arguments ? 1 : 0);
+  print_help($invalid_arguments ? *STDERR : *STDOUT);
+  exit($invalid_arguments ? 1 : 0);
 }
 
 # Determine what test list files to use
@@ -149,15 +149,15 @@ foreach my $i (@main_test_lists) {
   my $name = $i->[3];
   my $list_file_path = "$root/$list_file";
   if (defined $root && $$enabled_ref) {
-    push (@file_list, $list_file_path);
+    push(@file_list, $list_file_path);
   }
   elsif ($$enabled_ref) {
     $list_error = "option for $name tests passed, but the root enviroment variable isn't set";
   }
 }
-push (@file_list, @l_options);
-push (@file_list, @ARGV);
-if (!scalar (@file_list)) {
+push(@file_list, @l_options);
+push(@file_list, @ARGV);
+if (!scalar(@file_list)) {
   foreach my $i (@main_test_lists) {
     my $root = $i->[1];
     my $list_file = $i->[2];
@@ -166,20 +166,20 @@ if (!scalar (@file_list)) {
       push (@file_list, $list_file_path);
     }
   }
-  if (!scalar (@file_list)) {
+  if (!scalar(@file_list)) {
     $list_error = "no default test lists could be found";
   }
 }
 if ($list_error) {
   print STDERR "ERROR: $list_error\n";
-  exit (1);
+  exit(1);
 }
 
 if ($show_configs) {
   foreach my $test_list (@file_list) {
     my $config_list = new PerlACE::ConfigList;
-    $config_list->load ($test_list);
-    print "$test_list: " . $config_list->list_configs () . "\n";
+    $config_list->load($test_list);
+    print "$test_list: " . $config_list->list_configs() . "\n";
   }
   exit (0);
 }
@@ -196,19 +196,19 @@ foreach my $test_lst (@file_list) {
 
     my $config_list = new PerlACE::ConfigList;
     if (-r $ACE_ROOT.$test_lst) {
-      $config_list->load ($ACE_ROOT.$test_lst);
+      $config_list->load($ACE_ROOT.$test_lst);
     }
     elsif (-r "$startdir/$test_lst") {
-      $config_list->load ("$startdir/$test_lst");
+      $config_list->load("$startdir/$test_lst");
     }
     else {
-      $config_list->load ($test_lst);
+      $config_list->load($test_lst);
     }
 
     # Insures that we search for stuff in the current directory.
     $PATH .= $Config::Config{path_sep} . '.';
 
-    foreach my $test ($config_list->valid_entries ()) {
+    foreach my $test ($config_list->valid_entries()) {
         my $directory = ".";
         my $program = ".";
 
@@ -230,7 +230,7 @@ foreach my $test_lst (@file_list) {
 
         if (! $is_ace_test) {
             print "auto_run_tests: $test\n";
-            if ($config_list->check_config ('Coverity')) {
+            if ($config_list->check_config('Coverity')) {
               $ENV{COVERITY_TEST_NAME} = $test;
               $ENV{COVERITY_SUITE_NAME} = $test_lst;
               $ENV{COVERITY_TEST_SOURCE} = "$directory/$program";
@@ -264,7 +264,7 @@ foreach my $test_lst (@file_list) {
           unshift (@dirlist, $startdir."/$orig_dir");
         }
         foreach my $path (@dirlist) {
-          if (-d $path && ($status = chdir ($path))) {
+          if (-d $path && ($status = chdir($path))) {
             last;
           }
         }
@@ -294,7 +294,7 @@ foreach my $test_lst (@file_list) {
         ### Generate the -ExeSubDir and -Config options
         my $inherited_options = " -ExeSubDir $PerlACE::Process::ExeSubDir ";
 
-        foreach my $config ($config_list->my_config_list ()) {
+        foreach my $config ($config_list->my_config_list()) {
              $inherited_options .= " -Config $config ";
         }
 
@@ -310,13 +310,13 @@ foreach my $test_lst (@file_list) {
         }
 
         if ($dry_run) {
-            my $cwd = getcwd ();
+            my $cwd = getcwd();
             print "In \"$cwd\" would run:\n    $cmd\n";
         }
         else {
-            my $start_time = time ();
-            my $result = run_command ($test, $cmd, !$is_ace_test);
-            my $time = time () - $start_time;
+            my $start_time = time();
+            my $result = run_command($test, $cmd, !$is_ace_test);
+            my $time = time() - $start_time;
 
             # see note about tests/run_test.pl printing reports for ace tests individually
             if (!$is_ace_test) {
