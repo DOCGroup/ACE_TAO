@@ -117,6 +117,19 @@ def ex (command):
         print "ERROR: Nonzero return value from " + command
         raise Exception
 
+def ex_failureok (command):
+    from os import system
+    global opts
+    vprint ("Executing " + command)
+
+    if not opts.take_action:
+        print "Executing " + command
+        return
+
+    status = system(command)
+    if status != 0:
+        print "WARNING: Nonzero return value from " + command
+
 ###
 # Checks that the users environment is sane.
 #
@@ -528,7 +541,7 @@ def update_latest_tag (product, which, branch):
 
     # Remove tag locally
     vprint ("Removing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/" + product + " && git tag -d " + tagname)
+    ex_failureok ("cd $DOC_ROOT/" + product + " && git tag -d " + tagname)
 
     vprint ("Placing tag %s" % (tagname))
     ex ("cd $DOC_ROOT/" + product + " && git tag -a " + tagname + " -m\"" + tagname + "\"")
