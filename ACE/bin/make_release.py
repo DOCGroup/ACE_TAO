@@ -564,24 +564,23 @@ def tag ():
 
             # Update latest tag
             if opts.release_type == "major":
-                update_latest_tag (ACE_TAO, "Major", tagname)
-                update_latest_tag (ACE_TAO, "Minor", tagname)
-                update_latest_tag (ACE_TAO, "Beta", tagname)
-                update_latest_tag (ACE_TAO, "Micro", tagname)
-                update_latest_tag (MPC, "ACETAO_Major", tagname)
-                update_latest_tag (MPC, "ACETAO_Minor", tagname)
-                update_latest_tag (MPC, "ACETAO_Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Major", tagname)
+                update_latest_tag ("ACE_TAO", "Minor", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Major", tagname)
+                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "minor":
-                update_latest_tag (ACE_TAO, "Minor", tagname)
-                update_latest_tag (ACE_TAO, "Beta", tagname)
-                update_latest_tag (ACE_TAO, "Micro", tagname)
-                update_latest_tag (MPC, "ACETAO_Minor", tagname)
-                update_latest_tag (MPC, "ACETAO_Beta", tagname)
-                update_latest_tag (MPC, "ACETAO_Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Minor", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "micro":
-                update_latest_tag (ACE_TAO, "Beta", tagname)
-                update_latest_tag (ACE_TAO, "Micro", tagname)
-                update_latest_tag (MPC, "ACETAO_Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
@@ -609,15 +608,23 @@ def push ():
 
             # Update latest tag
             if opts.release_type == "major":
-                push_latest_tag (ACE_TAO, "Major", tagname)
-                push_latest_tag (MPC, "ACETAO_Major", tagname)
+                push_latest_tag ("ACE_TAO", "Major", tagname)
+                push_latest_tag ("ACE_TAO", "Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Major", tagname)
+                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "minor":
-                push_latest_tag (ACE_TAO, "Minor", tagname)
-                push_latest_tag (MPC, "ACETAO_Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "micro":
-                push_latest_tag (ACE_TAO, "Beta", tagname)
-                push_latest_tag (ACE_TAO, "Micro", tagname)
-                push_latest_tag (MPC, "ACETAO_Micro", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
