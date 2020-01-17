@@ -553,8 +553,8 @@ def push_latest_tag (product, which, branch):
     tagname = "Latest_" + which
 
     if opts.push:
-        # Remove tag in the remote orgin
-        ex ("cd $DOC_ROOT/" + product + " && git push origin :refs/tags/" + tagname)
+        # Remove tag in the remote origin
+        ex_failureok ("cd $DOC_ROOT/" + product + " && git push origin :refs/tags/" + tagname)
 
         vprint ("Pushing tag %s" % (tagname))
         ex ("cd $DOC_ROOT/" + product + " && git push origin " + tagname)
