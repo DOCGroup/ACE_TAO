@@ -3145,7 +3145,7 @@ struct UniqueName {
   ACE_TCHAR buffer_[ACE_UNIQUE_NAME_LEN];
 };
 
-enum RWLockCleanup {RWLC_CondAttr, RWLC_Lock, RWLC_Cond1, RWLC_Cond2};
+enum RWLockCleanup {RWLC_CondAttr, RWLC_Lock, RWLC_CondReaders, RWLC_CondWriters};
 
 struct RWLockCleaner {
   RWLockCleaner (ACE_condattr_t &attr, ACE_rwlock_t *rw)
@@ -3159,10 +3159,10 @@ struct RWLockCleaner {
     ACE_Errno_Guard error (errno);
     switch (this->state_)
       {
-      case RWLC_Cond2:
+      case RWLC_CondWriters:
         ACE_OS::cond_destroy (&this->rw_->waiting_writers_);
         // FALLTHROUGH
-      case RWLC_Cond1:
+      case RWLC_CondReaders:
         ACE_OS::cond_destroy (&this->rw_->waiting_readers_);
         // FALLTHROUGH
       case RWLC_Lock:
@@ -3206,12 +3206,12 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                          UniqueName (&rw->waiting_readers_), arg) != 0)
     return -1;
 
-  cleanup.state_ = RWLC_Cond1;
+  cleanup.state_ = RWLC_CondReaders;
   if (ACE_OS::cond_init (&rw->waiting_writers_, attributes,
                          UniqueName (&rw->waiting_writers_), arg) != 0)
     return -1;
 
-  cleanup.state_ = RWLC_Cond2;
+  cleanup.state_ = RWLC_CondWriters;
   if (ACE_OS::cond_init (&rw->waiting_important_writer_, attributes,
                          UniqueName (&rw->waiting_important_writer_), arg) != 0)
     return -1;
