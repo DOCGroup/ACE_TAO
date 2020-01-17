@@ -521,30 +521,30 @@ def get_comp_versions (component):
     #                   str (comp_versions[component + "_minor"])
 
 
-def update_latest_tag (which, branch):
+def update_latest_tag (product, which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     tagname = "Latest_" + which
 
     # Remove tag locally
     vprint ("Removing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ACE_TAO && git tag -d " + tagname)
+    ex ("cd $DOC_ROOT/" + product + " && git tag -d " + tagname)
 
     vprint ("Placing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ACE_TAO && git tag -a " + tagname + " -m\"" + tagname + "\"")
+    ex ("cd $DOC_ROOT/" + product + " && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
 
-def push_latest_tag (which, branch):
+def push_latest_tag (product, which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     tagname = "Latest_" + which
 
     if opts.push:
         # Remove tag in the remote orgin
-        ex ("cd $DOC_ROOT/ACE_TAO && git push origin :refs/tags/" + tagname)
+        ex ("cd $DOC_ROOT/" + product + " && git push origin :refs/tags/" + tagname)
 
         vprint ("Pushing tag %s" % (tagname))
-        ex ("cd $DOC_ROOT/ACE_TAO && git push origin " + tagname)
+        ex ("cd $DOC_ROOT/" + product + " && git push origin " + tagname)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
@@ -564,17 +564,24 @@ def tag ():
 
             # Update latest tag
             if opts.release_type == "major":
-                update_latest_tag ("Major", tagname)
-                update_latest_tag ("Minor", tagname)
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag (ACE_TAO, "Major", tagname)
+                update_latest_tag (ACE_TAO, "Minor", tagname)
+                update_latest_tag (ACE_TAO, "Beta", tagname)
+                update_latest_tag (ACE_TAO, "Micro", tagname)
+                update_latest_tag (MPC, "ACETAO_Major", tagname)
+                update_latest_tag (MPC, "ACETAO_Minor", tagname)
+                update_latest_tag (MPC, "ACETAO_Micro", tagname)
             elif opts.release_type == "minor":
-                update_latest_tag ("Minor", tagname)
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag (ACE_TAO, "Minor", tagname)
+                update_latest_tag (ACE_TAO, "Beta", tagname)
+                update_latest_tag (ACE_TAO, "Micro", tagname)
+                update_latest_tag (MPC, "ACETAO_Minor", tagname)
+                update_latest_tag (MPC, "ACETAO_Beta", tagname)
+                update_latest_tag (MPC, "ACETAO_Micro", tagname)
             elif opts.release_type == "micro":
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag (ACE_TAO, "Beta", tagname)
+                update_latest_tag (ACE_TAO, "Micro", tagname)
+                update_latest_tag (MPC, "ACETAO_Micro", tagname)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
@@ -602,12 +609,15 @@ def push ():
 
             # Update latest tag
             if opts.release_type == "major":
-                push_latest_tag ("Major", tagname)
+                push_latest_tag (ACE_TAO, "Major", tagname)
+                push_latest_tag (MPC, "ACETAO_Major", tagname)
             elif opts.release_type == "minor":
-                push_latest_tag ("Minor", tagname)
+                push_latest_tag (ACE_TAO, "Minor", tagname)
+                push_latest_tag (MPC, "ACETAO_Minor", tagname)
             elif opts.release_type == "micro":
-                push_latest_tag ("Beta", tagname)
-                push_latest_tag ("Micro", tagname)
+                push_latest_tag (ACE_TAO, "Beta", tagname)
+                push_latest_tag (ACE_TAO, "Micro", tagname)
+                push_latest_tag (MPC, "ACETAO_Micro", tagname)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
