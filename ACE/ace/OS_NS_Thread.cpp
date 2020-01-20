@@ -3140,7 +3140,7 @@ struct UniqueName {
     ACE_OS::unique_name (addr, &this->buffer_[0], ACE_UNIQUE_NAME_LEN);
   }
 
-  operator const char * () const { return &this->buffer_[0]; }
+  operator const ACE_TCHAR * () const { return &this->buffer_[0]; }
 
   ACE_TCHAR buffer_[ACE_UNIQUE_NAME_LEN];
 };
