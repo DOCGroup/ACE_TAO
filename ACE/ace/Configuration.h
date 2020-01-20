@@ -447,7 +447,6 @@ protected:
 class ACE_Export ACE_Configuration_Win32Registry : public ACE_Configuration
 {
 public:
-
   /**
    * Constructor for registry configuration database.  hKey is the
    * base registry key to attach to.  This class takes ownership of
@@ -770,7 +769,6 @@ protected:
 class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
 {
 public:
-
   /// Default ctor
   ACE_Configuration_Heap (void);
 

@@ -96,7 +96,6 @@ template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
 class ACE_Array_Map
 {
 public:
-
   // STL-style typedefs/traits.
   typedef Key                                    key_type;
   typedef Value                                  mapped_type;

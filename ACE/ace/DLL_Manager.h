@@ -53,7 +53,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_DLL_Handle
 {
 public:
-
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
   typedef ACE_Fixed_Stack < ACE_TString, 10 >  ERROR_STACK;
 

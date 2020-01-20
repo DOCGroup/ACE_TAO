@@ -140,7 +140,7 @@ public:
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// @a data_block, since it did not allocated it.  It's important to be
-  /// careful with the alignment of <data_block>.
+  /// careful with the alignment of @a data_block.
   /**
    * Create an output stream from an arbitrary data block, care must be
    * exercised with alignment, because this constructor will align if

@@ -107,9 +107,7 @@ template <class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION>
 class ACE_Caching_Strategy_Adapter
   : public ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>
 {
-
 public:
-
   /// Constructor.
   ACE_Caching_Strategy_Adapter (IMPLEMENTATION *implementation = 0,
                                 bool delete_implementation = false);
@@ -200,7 +198,6 @@ template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LRU_Caching_Strategy
 {
 public:
-
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
@@ -302,9 +299,7 @@ private:
 template <class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_LFU_Caching_Strategy
 {
-
 public:
-
   // Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
@@ -398,9 +393,7 @@ private:
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_FIFO_Caching_Strategy
 {
-
 public:
-
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 
   // = Initialisation and termination.
@@ -488,9 +481,7 @@ private:
 template<class ATTRIBUTES, class CACHING_UTILITY>
 class ACE_Null_Caching_Strategy
 {
-
 public:
-
   // = Traits.
   typedef ATTRIBUTES CACHING_ATTRIBUTES;
 

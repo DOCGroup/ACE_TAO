@@ -59,7 +59,6 @@ template <class KEY, class VALUE, class CMAP_TYPE, class ITERATOR_IMPL, class RE
 class ACE_Cache_Map_Manager
 {
 public:
-
   // = Traits.
   typedef KEY key_type;
   typedef VALUE mapped_type;
@@ -245,9 +244,7 @@ private:
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES>
 class ACE_Cache_Map_Iterator
 {
-
 public:
-
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.
@@ -323,7 +320,6 @@ template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_ST
 class ACE_Cache_Map_Reverse_Iterator
 {
 public:
-
   // = Traits.
   /// The actual value mapped to the key in the cache. The <attributes>
   /// are used by the strategy and is transparent to the cache user.

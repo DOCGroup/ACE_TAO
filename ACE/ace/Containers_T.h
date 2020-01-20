@@ -1024,7 +1024,6 @@ class ACE_DLList : public ACE_DLList_Base
   friend class ACE_DLList_Reverse_Iterator<T>;
 
 public:
-
   /// Delegates to ACE_Double_Linked_List.
   void operator= (const ACE_DLList<T> &l);
 

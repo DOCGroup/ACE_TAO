@@ -37,7 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Argv_Type_Converter
 {
 public:
-
   ACE_Argv_Type_Converter (int &argc, char** argv);
 
 #if defined (ACE_USES_WCHAR)

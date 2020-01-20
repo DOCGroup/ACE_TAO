@@ -46,7 +46,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Dynamic_Message_Strategy
 {
 public:
-
   /// Message priority status
   /// Values are defined as bit flags so that status combinations may
   /// be specified easily.

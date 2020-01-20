@@ -67,7 +67,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-
   /// Constructor
   ACE_Dev_Poll_Reactor_Notify (void);
 
@@ -317,7 +316,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-
     /// Constructor.
     Handler_Repository (void);
 
@@ -406,7 +404,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   };
 
 public:
-
   /// Initialize @c ACE_Dev_Poll_Reactor with the default size.
   /**
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
@@ -1105,7 +1102,6 @@ protected:
   class ACE_Export Token_Guard
   {
   public:
-
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
@@ -1162,7 +1158,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-
   /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and

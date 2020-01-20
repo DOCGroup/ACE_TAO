@@ -37,7 +37,6 @@ template <class T>
 class ACE_Active_Map_Manager : public ACE_Map_Manager<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
 {
 public:
-
   // = Traits.
   typedef ACE_Active_Map_Manager_Key key_type;
   typedef T mapped_type;

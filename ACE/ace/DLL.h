@@ -180,7 +180,6 @@ private:
 
   //private:
 public:
-
   /// Open mode.
   int open_mode_;
 
