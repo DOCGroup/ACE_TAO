@@ -164,7 +164,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Implementation class.
   IMPLEMENTATION *implementation_;
 
@@ -261,7 +260,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// This element is the one which is the deciding factor for purging
   /// of an ITEM.
   ATTRIBUTES timer_;
@@ -361,7 +359,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The level about which the purging will happen automagically.
   double purge_percent_;
 
@@ -453,7 +450,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The order is the deciding factor for the item to be removed from
   /// the cache.
   ATTRIBUTES order_;
@@ -531,7 +527,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// This is the helper class which will decide and expunge entries
   /// from the cache.
   CACHING_UTILITY caching_utility_;

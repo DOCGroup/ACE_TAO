@@ -1740,7 +1740,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_DNode<T> *current_;
 
@@ -1878,7 +1877,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /**
    * Insert @a item, starting its search at the position given,
    * and if successful updates the passed pointer to point to

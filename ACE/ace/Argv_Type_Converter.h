@@ -55,7 +55,6 @@ public:
   int& get_argc (void);
 
 private:
-
   /// Copy Constructor should not be used.
   ACE_Argv_Type_Converter (const ACE_Argv_Type_Converter&);
 

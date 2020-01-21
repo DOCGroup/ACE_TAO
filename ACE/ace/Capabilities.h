@@ -175,7 +175,6 @@ protected:
   void resetcaps (void);
 
 private:
-
   /// This is the set of ACE_CapEntry.
   CAPABILITIES_MAP caps_;
 };

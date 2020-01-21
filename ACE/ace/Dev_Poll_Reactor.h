@@ -387,7 +387,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
-
     /// Current number of handles.
     int size_;
 
@@ -1128,7 +1127,6 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-
     Token_Guard (void);
 
   private:
@@ -1181,13 +1179,11 @@ public:
   void release (void);
 
 private:
-
   /// The event handler being managed.
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
   bool refcounted_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -140,7 +140,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Returns a string explaining why <symbol> or <open>
   /// failed in @a err.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
@@ -183,7 +182,6 @@ private:
   void operator= (const ACE_DLL_Handle &);
 
 private:
-
   /// Keep track of how many ACE_DLL objects have a reference to this
   /// dll.
   sig_atomic_t refcount_;
@@ -295,7 +293,6 @@ protected:
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
 
 private:
-
   /// Close the singleton instance.
   static void close_singleton (void);
 
@@ -304,7 +301,6 @@ private:
   void operator= (const ACE_DLL_Manager &);
 
 private:
-
   /// Vector containing all loaded handle objects.
   ACE_DLL_Handle **handle_vector_;
 
