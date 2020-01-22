@@ -67,7 +67,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-
   /// Constructor
   ACE_Dev_Poll_Reactor_Notify (void);
 
@@ -317,7 +316,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-
     /// Constructor.
     Handler_Repository (void);
 
@@ -389,7 +387,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
-
     /// Current number of handles.
     int size_;
 
@@ -406,7 +403,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   };
 
 public:
-
   /// Initialize @c ACE_Dev_Poll_Reactor with the default size.
   /**
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
@@ -1105,7 +1101,6 @@ protected:
   class ACE_Export Token_Guard
   {
   public:
-
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
@@ -1132,7 +1127,6 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-
     Token_Guard (void);
 
   private:
@@ -1162,7 +1156,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-
   /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and
@@ -1186,13 +1179,11 @@ public:
   void release (void);
 
 private:
-
   /// The event handler being managed.
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
   bool refcounted_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
