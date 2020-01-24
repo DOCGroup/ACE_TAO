@@ -35,7 +35,6 @@ public:
   virtual int visit_eventtype (be_eventtype *node);
 
 protected:
-  ACE_CString generate_flat_name (be_valuetype *node);
   ACE_CString generate_local_name (be_valuetype *node);
   ACE_CString generate_full_skel_name (be_valuetype *node);
 };
