@@ -1947,11 +1947,9 @@ namespace
         idl_global_->set_filename(0);
 
         // Name this pseudo-file "builtin-N"
-#define BUILTIN_NAME_BUFFER_SIZE 64
-        static char buffer[BUILTIN_NAME_BUFFER_SIZE];
+        static char buffer[64];
         static unsigned n = 1;
-        ACE_OS::snprintf (&buffer[0], BUILTIN_NAME_BUFFER_SIZE, "builtin-%u", n++);
-#undef BUILTIN_NAME_BUFFER_SIZE
+        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
         UTL_String utl_string (&buffer[0], true);
         idl_global_->idl_src_file (new UTL_String (&utl_string, true));
         idl_global_->set_filename (new UTL_String (&utl_string, true));
@@ -1987,7 +1985,7 @@ namespace
         tao_yylex_destroy ();
       }
 
-  private:
+    private:
       IDL_GlobalData* idl_global_;
       UTL_String *old_filename_;
       long old_lineno_;
