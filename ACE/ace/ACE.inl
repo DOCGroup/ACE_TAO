@@ -7,7 +7,6 @@
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-
 // Wrappers for methods that have been moved to ACE_OS.
 
 ACE_INLINE ssize_t

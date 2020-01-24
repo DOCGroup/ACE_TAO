@@ -56,8 +56,7 @@ public:
                      int protocol = 0,
                      int ipv6_only = 0);
 
-  /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
-  /// on success and -1 on failure.
+  /// Initialize a passive-mode QoS-enabled acceptor socket.
   ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
                      ACE_Protocol_Info *protocolinfo,
                      ACE_SOCK_GROUP g,

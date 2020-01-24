@@ -140,7 +140,7 @@ public:
 
   /// Build a CDR stream with an initial data block, it will *not* remove
   /// @a data_block, since it did not allocated it.  It's important to be
-  /// careful with the alignment of <data_block>.
+  /// careful with the alignment of @a data_block.
   /**
    * Create an output stream from an arbitrary data block, care must be
    * exercised with alignment, because this constructor will align if
@@ -524,7 +524,6 @@ public:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
-
   // Find the message block in the chain of message blocks
   // that the provide location locates.
   ACE_Message_Block* find (char* loc);
@@ -1083,7 +1082,6 @@ protected:
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 private:
-
   ACE_CDR::Boolean read_1 (ACE_CDR::Octet *x);
   ACE_CDR::Boolean read_2 (ACE_CDR::UShort *x);
   ACE_CDR::Boolean read_4 (ACE_CDR::ULong *x);

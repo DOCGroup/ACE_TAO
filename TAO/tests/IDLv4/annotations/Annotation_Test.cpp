@@ -191,8 +191,7 @@ Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 AST_Annotation_Decl *
 Annotation_Test::assert_annotation_decl (const char *name)
 {
-  AST_Annotation_Decl *node = dynamic_cast<AST_Annotation_Decl *>(
-    assert_node (name));
+  AST_Annotation_Decl *node = assert_node<AST_Annotation_Decl> (name);
 
   if (node->node_type () != AST_Decl::NT_annotation_decl)
     {
@@ -321,7 +320,7 @@ Annotation_Test::assert_annotation_member_count (
   AST_Annotation_Appl *anno_appl, size_t count)
 {
   assert_annotation_member_count (
-    dynamic_cast<AST_Annotation_Decl *>(anno_appl), count);
+    dynamic_cast<AST_Annotation_Decl *> (anno_appl), count);
 }
 
 AST_Annotation_Member *
@@ -330,7 +329,7 @@ Annotation_Test::get_annotation_member (
 {
   AST_Decl *decl = (*anno_decl)[name];
   AST_Annotation_Member *member = decl ?
-      AST_Annotation_Member::narrow_from_decl (decl) : 0;
+    dynamic_cast<AST_Annotation_Member *> (decl) : 0;
   if (!member)
     {
       ACE_ERROR ((LM_ERROR,
@@ -347,8 +346,8 @@ AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
   AST_Annotation_Appl *anno_appl, const char *name)
 {
-  return get_annotation_member(
-    dynamic_cast<AST_Annotation_Decl *>(anno_appl), name);
+  return get_annotation_member (
+    dynamic_cast<AST_Annotation_Decl *> (anno_appl), name);
 }
 
 void
@@ -404,7 +403,7 @@ Annotation_Test::assert_annotation_member_value (
       expected->ev ()->et == AST_Expression::EV_ulong)
     {
       // For Enums
-      equal = expected->ev()->u.ulval == member_value->ev()->u.ulval;
+      equal = expected->ev ()->u.ulval == member_value->ev ()->u.ulval;
     }
   else
     {
@@ -417,8 +416,7 @@ Annotation_Test::assert_annotation_member_value (
       char *member_name = member->name ()->get_string_copy ();
       ACE_ERROR ((LM_ERROR,
         ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("For Annotation Member %C, ")
-        ACE_TEXT ("expecting "),
+        ACE_TEXT ("For Annotation Member %C, expecting "),
         name_, member_name));
       delete [] member_name;
       expected->dump (*ACE_DEFAULT_LOG_STREAM);

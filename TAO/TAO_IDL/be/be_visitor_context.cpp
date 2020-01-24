@@ -11,6 +11,7 @@
 
 #include "be_visitor_context.h"
 #include "be_extern.h"
+#include "be_helper.h"
 
 be_visitor_context::be_visitor_context (void)
   : ast_visitor_context (),
@@ -101,7 +102,8 @@ be_visitor_context::stream (TAO_OutStream *os)
 TAO_OutStream *
 be_visitor_context::stream (void)
 {
-  return this->os_;
+  static TAO_OutStream null_stream;
+  return os_ ? os_ : &null_stream;
 }
 
 void

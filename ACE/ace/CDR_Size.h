@@ -116,7 +116,7 @@ public:
                                            ACE_CDR::ULong length);
 
   ///
-  /// Adjust to @a size and count <size> octets.
+  /// Adjust to @a size and count @a size octets.
   void adjust (size_t size);
 
   /// As above, but now the size and alignment requirements may be
