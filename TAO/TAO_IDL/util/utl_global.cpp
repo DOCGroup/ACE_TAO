@@ -1935,24 +1935,25 @@ namespace
   class OldState
   {
     public:
-      OldState(IDL_GlobalData* the_idl_global, bool the_disable_output = false)
-        : idl_global_(the_idl_global),
-          old_filename_(idl_global_->filename ()),
-          old_lineno_(idl_global_->lineno ()),
-          old_idl_src_file_(idl_global_->idl_src_file ()),
+      explicit OldState(bool the_disable_output = false)
+        : old_filename_(idl_global->filename ()),
+          old_lineno_(idl_global->lineno ()),
+          old_idl_src_file_(idl_global->idl_src_file ()),
           disable_output_(the_disable_output),
           flags_(ACE_LOG_MSG->flags ())
       {
-        idl_global_->set_lineno (1);
-        idl_global_->set_filename(0);
+        idl_global->in_eval_ = true;
+
+        idl_global->set_lineno (1);
+        idl_global->set_filename(0);
 
         // Name this pseudo-file "builtin-N"
         static char buffer[64];
         static unsigned n = 1;
         ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
         UTL_String utl_string (&buffer[0], true);
-        idl_global_->idl_src_file (new UTL_String (&utl_string, true));
-        idl_global_->set_filename (new UTL_String (&utl_string, true));
+        idl_global->idl_src_file (new UTL_String (&utl_string, true));
+        idl_global->set_filename (new UTL_String (&utl_string, true));
 
         // Disable Output
         if (disable_output_)
@@ -1960,19 +1961,20 @@ namespace
           default_streambuf_ = ACE_DEFAULT_LOG_STREAM->rdbuf ();
           ACE_DEFAULT_LOG_STREAM->rdbuf (0);
           ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+          ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
         }
       }
 
       ~OldState()
       {
-        idl_global_->set_lineno (old_lineno_);
+        idl_global->set_lineno (old_lineno_);
 
         // Restore IDL_Global Context
-        idl_global_->set_filename (old_filename_);
-        idl_global_->idl_src_file()->destroy ();
-        delete idl_global_->idl_src_file ();
-        idl_global_->idl_src_file (old_idl_src_file_);
-        idl_global_->reset_flag_seen ();
+        idl_global->set_filename (old_filename_);
+        idl_global->idl_src_file()->destroy ();
+        delete idl_global->idl_src_file ();
+        idl_global->idl_src_file (old_idl_src_file_);
+        idl_global->reset_flag_seen ();
 
         // Renable Output
         if (disable_output_)
@@ -1983,10 +1985,10 @@ namespace
 
         // Have Flex Cleanup
         tao_yylex_destroy ();
+        idl_global->in_eval_ = false;
       }
 
     private:
-      IDL_GlobalData* idl_global_;
       UTL_String *old_filename_;
       long old_lineno_;
       UTL_String *old_idl_src_file_;
@@ -1999,7 +2001,7 @@ namespace
 void
 IDL_GlobalData::eval (const char *string, bool disable_output)
 {
-  OldState old(this, disable_output);
+  OldState old(disable_output);
 
   // Set up Flex to read from string
   tao_yy_scan_string (string);
@@ -2008,8 +2010,6 @@ IDL_GlobalData::eval (const char *string, bool disable_output)
   FE_yyparse ();
   idl_global->check_primary_keys ();
   AST_check_fwd_decls ();
-
-  in_eval_ = false;
 }
 
 void
