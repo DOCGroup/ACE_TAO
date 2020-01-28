@@ -64,7 +64,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *

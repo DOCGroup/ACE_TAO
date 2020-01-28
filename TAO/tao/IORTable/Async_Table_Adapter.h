@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Async_IORTable_Export TAO_Async_Table_Adapter : public TAO_Table_Adapter
 {
 public:
-
   /// Constructor
   TAO_Async_Table_Adapter (TAO_ORB_Core &orb_core);
 
@@ -47,7 +46,6 @@ protected:
   /// Helper method to find an object bound in the table.
   void find_object (::IORTable::Locate_ResponseHandler rh,
                     TAO::ObjectKey &key);
-
 };
 
 // ****************************************************************

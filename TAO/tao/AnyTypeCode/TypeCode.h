@@ -424,7 +424,6 @@ namespace CORBA
     typedef CORBA::TypeCode_out _out_type;
 
   protected:
-
     /// Constructor.
     TypeCode (CORBA::TCKind kind);
 
@@ -481,7 +480,6 @@ namespace CORBA
   protected:
     /// The kind of TypeCode.
     TCKind const kind_;
-
   };
 }  // End namespace CORBA
 

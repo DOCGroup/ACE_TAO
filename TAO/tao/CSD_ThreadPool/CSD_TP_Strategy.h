@@ -102,7 +102,6 @@ namespace TAO
       void cancel_requests(PortableServer::Servant servant);
 
     protected:
-
       /// Handle the dispatching of a remote request.
       ///
       /// This will cause a new "request" object to be created and pushed

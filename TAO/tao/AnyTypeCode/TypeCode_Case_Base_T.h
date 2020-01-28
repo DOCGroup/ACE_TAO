@@ -107,7 +107,6 @@ namespace TAO
       bool equivalent (CORBA::ULong index, CORBA::TypeCode_ptr tc) const;
 
     protected:
-
       /// Marshal the IDL @c union @c case label value into the given
       /// output CDR stream.
       virtual bool marshal_label (TAO_OutputCDR & cdr) const = 0;

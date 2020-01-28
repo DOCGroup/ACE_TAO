@@ -51,9 +51,7 @@ namespace TAO
       /// Virtual Destructor.
       virtual ~TP_Corba_Request();
 
-
     protected:
-
       /// Constructor.
       TP_Corba_Request(const PortableServer::ObjectId& object_id,
                        PortableServer::POA_ptr         poa,

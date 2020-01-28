@@ -78,7 +78,6 @@ namespace TAO
 
 
     protected:
-
       /// Constructor.
       TP_Request(PortableServer::Servant servant,
                  TP_Servant_State*       servant_state);

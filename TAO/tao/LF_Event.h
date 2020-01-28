@@ -121,7 +121,6 @@ public:
   static const char *state_name (LFS_STATE st);
 
 protected:
-
   /// Validate the state change
   virtual void state_changed_i (LFS_STATE new_state) = 0;
 
