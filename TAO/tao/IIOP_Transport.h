@@ -50,13 +50,11 @@ class TAO_Adapter;
 class TAO_Export TAO_IIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
                       TAO_ORB_Core *orb_core);
 
 protected:
-
   /// Destructor
   /**
    * Protected destructor to enforce proper memory management through
@@ -85,12 +83,9 @@ protected:
                             TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
-
   virtual ssize_t recv (char *buf, size_t len, const ACE_Time_Value *s = 0);
 
-
 public:
-
   /// Bridge method to call a similar method on the connection handler
   void update_protocol_properties (int send_buffer_size,
                                    int recv_buffer_size,
@@ -114,11 +109,9 @@ public:
   virtual int tear_listen_point_list (TAO_InputCDR &cdr);
 
   virtual TAO_Connection_Handler * connection_handler_i (void);
-
   //@}
 
 private:
-
   /// Set the Bidirectional context info in the service context list
   void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
@@ -128,7 +121,6 @@ private:
   int get_listen_point (IIOP::ListenPointList &listen_point_list,
                         TAO_Acceptor *acceptor);
 private:
-
   /// The connection service handler used for accessing lower layer
   /// communication protocols.
   TAO_IIOP_Connection_Handler *connection_handler_;

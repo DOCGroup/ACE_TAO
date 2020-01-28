@@ -119,7 +119,6 @@ public:
   static TAO_AMH_Locate_ResponseHandler* _unchecked_narrow (CORBA::Object_ptr);
 
 protected:
-
   /// Return 0.  Should never be used.
   virtual const char *_interface_repository_id (void) const;
 

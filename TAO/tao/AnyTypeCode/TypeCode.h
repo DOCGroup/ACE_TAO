@@ -424,7 +424,6 @@ namespace CORBA
     typedef CORBA::TypeCode_out _out_type;
 
   protected:
-
     /// Constructor.
     TypeCode (CORBA::TCKind kind);
 
@@ -474,16 +473,13 @@ namespace CORBA
     //@}
 
   private:
-
     // Prevent copying and assignment.
     TypeCode (TypeCode const &);
     void operator= (TypeCode const &);
 
   protected:
-
     /// The kind of TypeCode.
     TCKind const kind_;
-
   };
 }  // End namespace CORBA
 

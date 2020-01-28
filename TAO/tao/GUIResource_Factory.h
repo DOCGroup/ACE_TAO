@@ -46,7 +46,6 @@ namespace TAO
   class TAO_Export GUIResource_Factory
   {
   public:
-
     GUIResource_Factory ();
 
     virtual ~GUIResource_Factory ();
@@ -65,7 +64,6 @@ namespace TAO
     virtual void reclaim_reactor (ACE_Reactor *);
 
   protected:
-
     /**
      * Create or return current reactor instance.
      * Please note that this call is NOT synchronized. Left to the
@@ -74,7 +72,6 @@ namespace TAO
     virtual ACE_Reactor_Impl *reactor_impl (void) = 0;
 
   private:
-
     /**
      * Flag that is set to true if the reactor obtained from the
      * get_reactor() method is dynamically allocated.  If this flag is

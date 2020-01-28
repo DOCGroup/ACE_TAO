@@ -136,7 +136,6 @@ public:
                                      TAO::Collocation_Strategy strategy) = 0;
 
 protected:
-
   /// Default constructor, only derived classes can be created.
   TAO_Abstract_ServantBase (void);
 

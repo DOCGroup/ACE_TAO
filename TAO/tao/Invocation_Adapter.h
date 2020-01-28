@@ -140,7 +140,6 @@ namespace TAO
     int _tao_byte_order ();
 
   protected:
-
     /**
      * The stub pointer passed to this call has all the details about
      * the object to which the invocation needs to be routed to. The

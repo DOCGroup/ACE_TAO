@@ -65,7 +65,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -82,7 +81,6 @@ namespace TAO
       virtual CORBA::TypeCode_ptr content_type_i (void) const;
 
     private:
-
       /// Element type of the sequence.
       /**
        * A pointer to the @c CORBA::TypeCode_ptr rather than the
@@ -99,9 +97,7 @@ namespace TAO
       /// Length of the @c sequence or array.  A length of zero
       /// indicates an unbounded @c sequence.
       CORBA::ULong const length_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

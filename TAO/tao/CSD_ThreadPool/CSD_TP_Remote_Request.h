@@ -59,7 +59,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Remote_Request : public TP_Corba_Request
     {
     public:
-
       /// Constructor.
       TP_Remote_Request(TAO_ServerRequest&              server_request,
                         const PortableServer::ObjectId& object_id,
@@ -73,7 +72,6 @@ namespace TAO
 
 
     protected:
-
       /// Prepare this TP_Remote_Request object to be placed into the
       /// request queue.  This will cause the underlying TAO_ServerRequest
       /// object to be cloned.
