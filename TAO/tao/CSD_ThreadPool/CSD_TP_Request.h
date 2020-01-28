@@ -100,9 +100,7 @@ namespace TAO
       /// Ask the subclass to perform its duties to carry out the cancellation.
       virtual void cancel_i() = 0;
 
-
     private:
-
       /// The TP_Queue class is our friend since it needs access to
       /// the prev_ and next_ (private) data members.
       friend class TP_Queue;

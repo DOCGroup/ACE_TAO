@@ -148,7 +148,6 @@ namespace TAO
                                      const PortableServer::ObjectId& oid);
 
     private:
-
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize

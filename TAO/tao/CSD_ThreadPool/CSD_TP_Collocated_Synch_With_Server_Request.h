@@ -88,7 +88,6 @@ namespace TAO
 
 
     private:
-
       /// Helper used to block and unblock the thread that invokes our
       /// wait() method.
       TP_Synch_Helper synch_helper_;

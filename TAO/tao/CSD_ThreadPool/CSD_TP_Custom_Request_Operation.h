@@ -70,7 +70,6 @@ namespace TAO
 
 
     protected:
-
       /// Constructor.
       TP_Custom_Request_Operation(PortableServer::Servant servant);
 
@@ -79,7 +78,6 @@ namespace TAO
 
 
     private:
-
       PortableServer::ServantBase_var servant_;
     };
 

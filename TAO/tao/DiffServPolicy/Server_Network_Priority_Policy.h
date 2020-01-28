@@ -94,7 +94,6 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
 protected:
-
   virtual ~TAO_Server_Network_Priority_Policy (void);
 
 private:

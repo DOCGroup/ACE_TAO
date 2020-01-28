@@ -130,7 +130,6 @@ namespace TAO
                                 CORBA::TypeCode_ptr tc) const = 0;
 
     private:
-
       /// The name of the case.
       StringType name_;
 
@@ -146,7 +145,6 @@ namespace TAO
        *       @c Case.
        */
       TypeCodeType type_;
-
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;

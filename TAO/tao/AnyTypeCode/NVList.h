@@ -106,7 +106,6 @@ namespace CORBA
     typedef NamedValue_out _out_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management
@@ -115,13 +114,11 @@ namespace CORBA
     ~NamedValue (void);
 
   private:
-
     /// private constructor. Cannot be directly instantiated other than
     /// by its friends.
     NamedValue (void);
 
   private:
-
     /// Reference counter.
 #if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
@@ -241,7 +238,6 @@ namespace CORBA
     typedef NVList_out _out_type;
 
   protected:
-
     /// Destructor
     /**
      * Protected destructor to enforce proper memory management

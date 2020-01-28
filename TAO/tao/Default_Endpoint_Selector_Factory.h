@@ -62,13 +62,11 @@ public:
   virtual TAO_Invocation_Endpoint_Selector *get_selector (void);
 
 private:
-
   // Prevent copying/assignment.
   TAO_Default_Endpoint_Selector_Factory (TAO_Default_Endpoint_Selector_Factory const &);
   void operator= (TAO_Default_Endpoint_Selector_Factory const &);
 
 protected:
-
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
   TAO_Default_Endpoint_Selector * const default_endpoint_selector_;

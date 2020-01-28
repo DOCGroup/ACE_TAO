@@ -108,7 +108,6 @@ namespace TAO
       //@}
 
     private:
-
       /**
        * @c Valuetype Attributes
        *

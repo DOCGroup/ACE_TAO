@@ -93,7 +93,6 @@ namespace TAO
       //@}
 
     private:
-
       /**
        * @c Enum Attributes
        *

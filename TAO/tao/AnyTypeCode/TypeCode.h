@@ -474,13 +474,11 @@ namespace CORBA
     //@}
 
   private:
-
     // Prevent copying and assignment.
     TypeCode (TypeCode const &);
     void operator= (TypeCode const &);
 
   protected:
-
     /// The kind of TypeCode.
     TCKind const kind_;
 

@@ -121,7 +121,6 @@ namespace TAO
       //@}
 
     private:
-
       //@{
 
       /// Typecode id
@@ -137,9 +136,7 @@ namespace TAO
       unsigned long refcount_;
 
       //@}
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

@@ -51,7 +51,6 @@ namespace TAO
 
 
     protected:
-
       /// Constructor.
       TP_Custom_Request(TP_Custom_Request_Operation* op,
                         TP_Servant_State*            servant_state);
@@ -61,7 +60,6 @@ namespace TAO
 
 
     private:
-
       TP_Custom_Request_Operation_Handle op_;
     };
 

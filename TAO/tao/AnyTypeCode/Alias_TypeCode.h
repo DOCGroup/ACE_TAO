@@ -89,7 +89,6 @@ namespace TAO
       virtual CORBA::TypeCode_ptr content_type_i (void) const;
 
     private:
-
       /// Base attributes for this @c TypeCode containing the
       /// repository ID and name of the @c typedef.
       Base_Attributes<StringType> attributes_;

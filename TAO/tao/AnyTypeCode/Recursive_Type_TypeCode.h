@@ -133,7 +133,6 @@ namespace TAO
                                  CORBA::ULong nfields);
 
     private:
-
       /**
        * @class Reset
        *
@@ -151,7 +150,6 @@ namespace TAO
       };
 
     private:
-
       /// Internal state thread synchronization mutex.
       mutable TAO_SYNCH_RECURSIVE_MUTEX lock_;
 
