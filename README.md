@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.com/DOCGroup/ACE_TAO.svg?branch=master)](https://travis-ci.com/DOCGroup/ACE_TAO)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
 [![Azure DevOps](https://dev.azure.com/docgroup/ACE_TAO/_apis/build/status/DOCGroup.ACE_TAO?branchName=master)](https://dev.azure.com/docgroup/ACE_TAO/_build/latest?definitionId=7&branchName=master)
+[![CodeFactor](https://www.codefactor.io/repository/github/docgroup/ace_tao/badge)](https://www.codefactor.io/repository/github/docgroup/ace_tao)
 
 # ACE/TAO #
 
