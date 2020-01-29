@@ -254,7 +254,14 @@ namespace TAO
 
     if (status == TAO_INVOKE_RESTART)
       {
+        CORBA::Boolean const is_permanent_forward =
+          (synch.reply_status () == GIOP::LOCATION_FORWARD_PERM);
+
         effective_target = synch.steal_forwarded_reference ();
+
+        this->object_forwarded (effective_target,
+                                r.stub (),
+                                is_permanent_forward);
       }
 
     return status;
