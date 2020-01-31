@@ -1936,7 +1936,7 @@ namespace
   {
     public:
       explicit OldState(bool the_disable_output = false)
-        : old_filename_(idl_global->filename ()),
+        : old_filename_ (idl_global->filename ()),
           old_lineno_(idl_global->lineno ()),
           old_idl_src_file_(idl_global->idl_src_file ()),
           disable_output_(the_disable_output),
@@ -1945,7 +1945,7 @@ namespace
         idl_global->in_eval_ = true;
 
         idl_global->set_lineno (1);
-        idl_global->set_filename(0);
+        idl_global->set_filename (0);
 
         // Name this pseudo-file "builtin-N"
         static char buffer[64];
@@ -1955,35 +1955,31 @@ namespace
         idl_global->idl_src_file (new UTL_String (&utl_string, true));
         idl_global->set_filename (new UTL_String (&utl_string, true));
 
-        // Disable Output
         if (disable_output_)
-        {
-          default_streambuf_ = ACE_DEFAULT_LOG_STREAM->rdbuf ();
-          ACE_DEFAULT_LOG_STREAM->rdbuf (0);
-          ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
-          ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
-        }
+         {
+            default_streambuf_ = ACE_DEFAULT_LOG_STREAM->rdbuf ();
+            ACE_DEFAULT_LOG_STREAM->rdbuf (0);
+            ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
+            ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
+         }
       }
 
       ~OldState()
       {
         idl_global->set_lineno (old_lineno_);
 
-        // Restore IDL_Global Context
         idl_global->set_filename (old_filename_);
         idl_global->idl_src_file()->destroy ();
         delete idl_global->idl_src_file ();
         idl_global->idl_src_file (old_idl_src_file_);
         idl_global->reset_flag_seen ();
 
-        // Renable Output
         if (disable_output_)
-        {
-          ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf_);
-          ACE_LOG_MSG->set_flags (flags_);
-        }
+          {
+            ACE_DEFAULT_LOG_STREAM->rdbuf (default_streambuf_);
+            ACE_LOG_MSG->set_flags (flags_);
+          }
 
-        // Have Flex Cleanup
         tao_yylex_destroy ();
         idl_global->in_eval_ = false;
       }
@@ -2001,7 +1997,7 @@ namespace
 void
 IDL_GlobalData::eval (const char *string, bool disable_output)
 {
-  OldState old(disable_output);
+  OldState old (disable_output);
 
   // Set up Flex to read from string
   tao_yy_scan_string (string);
