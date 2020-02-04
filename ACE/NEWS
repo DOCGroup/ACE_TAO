@@ -1,15 +1,13 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================
 
-. Android:
-
-  . Added instructions to ACE-INSTALL.html for building ACE/TAO for Android on
-    Windows.
-
-  . Fixed some error messages that would come up when building ACE/TAO for
-    Android on Windows.
+. Added instructions to ACE-INSTALL.html for building ACE/TAO for Android on
+  Windows.
 
 . Embarcadero C++ Builder Rio fixes
+
+. Renamed `VERSION` file to `VERSION.txt` to avoid conflicting with the
+  `version` standard header.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 ====================================================
