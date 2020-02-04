@@ -202,8 +202,6 @@ def update_version_files (component):
 
     vprint ("Updating version files for " + component)
 
-    import re
-
     retval = list ()
 
     ## Update component/VERSION.txt
@@ -323,7 +321,6 @@ def update_debianbuild ():
 
     global comp_versions
 
-    import re
     from os import listdir
 
     files = list ()
@@ -433,12 +430,10 @@ def create_changelog (component):
     return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
 def get_comp_versions (component):
-    """ Extracts the current version number from the VERSION
+    """ Extracts the current version number from the VERSION.txt
     file and increments it appropriately for the release type
     requested."""
     vprint ("Detecting current version for " + component)
-
-    import re
 
     global old_comp_versions, comp_versions, opts
 
@@ -446,7 +441,7 @@ def get_comp_versions (component):
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
     major = re.compile ("version (\d+)[^\.]")
 
-    with open (component + "/VERSION") as version_file:
+    with open (component + "/VERSION.txt") as version_file:
         for line in version_file:
             match = None
 
