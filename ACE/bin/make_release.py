@@ -196,7 +196,7 @@ def check_workspace ():
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
-    Version.h, the PRF, and the VERSION file."""
+    Version.h, the PRF, and the VERSION.txt file."""
 
     global comp_versions, opts, release_date
 
@@ -206,8 +206,9 @@ def update_version_files (component):
 
     retval = list ()
 
-    ## Update component/VERSION
-    with open (component + "/VERSION", "r+") as version_file:
+    ## Update component/VERSION.txt
+    filename = component + "/VERSION.txt"
+    with open (filename, "r+") as version_file:
         new_version = re.sub (component + " version .*",
                               "%s version %s, released %s" % (component,
                                                               comp_versions[component + "_version"],
@@ -223,7 +224,7 @@ def update_version_files (component):
 
         vprint ("Updating Version.h for " + component)
 
-    retval += [component + "/VERSION"]
+    retval += [filename]
 
     ## Update component/component/Version.h
     version_header = """

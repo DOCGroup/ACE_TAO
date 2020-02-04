@@ -389,10 +389,10 @@ if [ $install -ne 0 ]; then
     ##########################################
     # determine final target directories
 
-    ACE_VER=`head -n 1 $ACE_ROOT/VERSION | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
+    ACE_VER=`head -n 1 $ACE_ROOT/VERSION.txt | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
     ACE_DIR="$ACE_DEST/ACE-$ACE_VER"; export ACE_DIR
 
-    TAO_VER=`head -n 1 $ACE_ROOT/TAO/VERSION | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
+    TAO_VER=`head -n 1 $ACE_ROOT/TAO/VERSION.txt | sed -e 's/^[^0-9]*//' -e 's/[, ].*//'`
     TAO_DIR="$ACE_DEST/TAO-$TAO_VER"; export ACE_DIR
 
     ##########################################
@@ -417,7 +417,7 @@ if [ $install -ne 0 ]; then
     # copy TAO stuff
 
     cd $ACE_ROOT/TAO
-    cp VERSION $TAO_DIR/$ACE_ARCH/TAO-VERSION
+    cp VERSION.txt $TAO_DIR/$ACE_ARCH/TAO-VERSION
 
     # copy TAO includes
     echo "Copying include files..."
@@ -459,7 +459,7 @@ if [ $install -ne 0 ]; then
     # copy ACE stuff
 
     cd $ACE_ROOT
-    cp VERSION $ACE_DIR/$ACE_ARCH/ACE-VERSION
+    cp VERSION.txt $ACE_DIR/$ACE_ARCH/ACE-VERSION
 
     # copy ACE includes
     echo "Copying include files..."
