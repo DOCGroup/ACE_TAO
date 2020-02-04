@@ -4,7 +4,7 @@
 #define ACE_HAS_IPHONE
 #define ACE_SIZEOF_LONG_DOUBLE 8
 
-#include "ace/config-macosx-mavericks.h"
+#include "ace/config-macosx-mojave.h"
 
 #ifdef ACE_HAS_SYSV_IPC
 #undef ACE_HAS_SYSV_IPC

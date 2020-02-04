@@ -10,15 +10,15 @@ else
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
+  CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
-  IPHONE_HARDWARE_ARCHITECTURE=i386
+  IPHONE_HARDWARE_ARCHITECTURE=x86_64
 
-  # crt1.10.7.o is missing under MacOSX 10.7, fallback to 10.6
-  # until apple provides the missing crt1.10.7.o
-  CFLAGS  += -mmacosx-version-min=10.6
-  CCFLAGS += -mmacosx-version-min=10.6
-  LDFLAGS += -mmacosx-version-min=10.6
+# June 2017 release, iphone 6s and later
+  CFLAGS  += -miphoneos-version-min=12.0
+  CCFLAGS += -miphoneos-version-min=12.0
+  LDFLAGS += -miphoneos-version-min=12.0
 endif
 
 ifeq ($(IPHONE_TARGET), HARDWARE)
@@ -35,8 +35,8 @@ endif
 
 CC:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
-AR:=$(IPHONE_PLATFORM)/usr/bin/ar
-RANLIB:=$(IPHONE_PLATFORM)/usr/bin/ranlib
+AR:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ar
+RANLIB:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/ranlib
 DLD = $(CXX)
 LD  = $(CXX)
 CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE) -isysroot $(IPHONE_SDK)
