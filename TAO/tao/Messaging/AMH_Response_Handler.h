@@ -88,7 +88,6 @@ public:
   //@}
 
 protected:
-
   /// Sets up the various parameters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
   /// Output stream after this method has been called.

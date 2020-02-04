@@ -103,7 +103,6 @@ namespace TAO
       void cancel_servant (PortableServer::Servant servant);
 
     private:
-
       typedef TAO_SYNCH_MUTEX         LockType;
       typedef TAO_Condition<LockType> ConditionType;
 

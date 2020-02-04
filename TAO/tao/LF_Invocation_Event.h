@@ -43,7 +43,6 @@ public:
   virtual ~TAO_LF_Invocation_Event (void);
 
 protected:
-
   /// Validate and perform the state change
   /**
    * This concrete class uses the following states declared in the

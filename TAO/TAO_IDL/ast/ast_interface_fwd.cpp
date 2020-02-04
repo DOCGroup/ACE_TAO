@@ -84,7 +84,8 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
               n),
     AST_Type (AST_Decl::NT_interface_fwd,
               n),
-    is_defined_ (false)
+    is_defined_ (false),
+    has_ownership_ (true)
 {
   // Create a dummy placeholder for the forward declared interface. This
   // interface node is not yet defined (n_inherits < 0), so some operations
@@ -206,9 +207,13 @@ AST_InterfaceFwd::full_definition (void)
 void
 AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 {
-  this->pd_full_definition->destroy ();
-  delete this->pd_full_definition;
-  this->pd_full_definition = nfd;
+  if (pd_full_definition && has_ownership_)
+    {
+      pd_full_definition->destroy ();
+      delete pd_full_definition;
+    }
+  pd_full_definition = nfd;
+  has_ownership_ = false;
 }
 
 bool
@@ -230,11 +235,10 @@ AST_InterfaceFwd::is_defined (void)
             {
               // We could be looking at a superfluous forward decl
               // of an interface already defined.
-              AST_Interface *full = AST_Interface::narrow_from_decl (d);
-
+              AST_Interface *full = dynamic_cast<AST_Interface *> (d);
               if (0 != full)
                 {
-                  this->is_defined_ = true;
+                  set_as_defined ();
                 }
 
               AST_InterfaceFwd *fwd =
@@ -248,7 +252,7 @@ AST_InterfaceFwd::is_defined (void)
               // add_to_scope process.
               if (0 != fwd && fwd->is_defined ())
                 {
-                  this->is_defined_ = true;
+                  set_as_defined ();
                 }
             }
         }
@@ -258,29 +262,23 @@ AST_InterfaceFwd::is_defined (void)
 }
 
 void
-AST_InterfaceFwd::set_as_defined (void)
+AST_InterfaceFwd::set_as_defined ()
 {
-  this->is_defined_ = true;
+  is_defined_ = true;
+}
+
+void
+AST_InterfaceFwd::disown_full_definition ()
+{
+  has_ownership_ = false;
 }
 
 void
 AST_InterfaceFwd::destroy (void)
 {
-  // The implementation of is_defined() accomodates
-  // code generation issues and doesn't have the
-  // correct semantics here. The older implementation
-  // of is_defined is used in the IF block below to
-  // check if our full definition allocation must be
-  // destroyed.
-  if (!this->is_defined_)
+  if (has_ownership_)
     {
-      // If our full definition is not defined, it
-      // means that there was no full definition
-      // for us in this compilation unit, so we
-      // have to destroy this allocation.
-      this->pd_full_definition->destroy ();
-      delete this->pd_full_definition;
-      this->pd_full_definition = 0;
+      set_full_definition (0);
     }
 
   this->AST_Type::destroy ();

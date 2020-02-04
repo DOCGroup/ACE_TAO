@@ -152,7 +152,6 @@ namespace CORBA
     typedef LocalObject_out _out_type;
 
   protected:
-
     /// Default constructor.
     /**
      * Make it protected to prevent instantiation of this class.

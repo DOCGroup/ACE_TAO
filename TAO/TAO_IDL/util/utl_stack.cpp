@@ -63,18 +63,18 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 */
 
 #include "utl_stack.h"
+#include "utl_scoped_name.h"
 #include "utl_scope.h"
+#include "ast_decl.h"
 #include "global_extern.h"
 
-#undef  INCREMENT
-#define  INCREMENT  64
+const size_t UTL_ScopeStack::increments = 64;
 
 UTL_ScopeStack::UTL_ScopeStack (void)
-  : pd_stack_data_nalloced (INCREMENT),
+  : pd_stack_data_nalloced (increments),
     pd_stack_top (0)
 {
-  ACE_NEW (this->pd_stack_data,
-           UTL_Scope *[INCREMENT]);
+  ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
 }
 
 UTL_ScopeStack::~UTL_ScopeStack (void)
@@ -89,7 +89,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope  **tmp = 0;
+  UTL_Scope **tmp = 0;
   long ostack_data_nalloced;
   long i;
 
@@ -97,7 +97,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
   if (this->pd_stack_data_nalloced == this->pd_stack_top)
     {
       ostack_data_nalloced = this->pd_stack_data_nalloced;
-      this->pd_stack_data_nalloced += INCREMENT;
+      this->pd_stack_data_nalloced += increments;
 
       ACE_NEW_RETURN (tmp,
                       UTL_Scope *[this->pd_stack_data_nalloced],
@@ -212,6 +212,22 @@ UTL_ScopeStack::top_non_null (void)
   return 0;
 }
 
+AST_Decl *
+UTL_ScopeStack::lookup_by_name (
+  UTL_ScopedName *name, bool full_def_only, bool for_add)
+{
+  for (long i = pd_stack_top - 1; i >= 0; --i)
+    {
+      UTL_Scope *scope = pd_stack_data[i];
+      if (scope)
+        {
+          AST_Decl *node = scope->lookup_by_name (name, full_def_only, for_add);
+          if (node) return node;
+        }
+    }
+  return 0;
+}
+
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
   : source (s),
     il (s.pd_stack_top - 1)
@@ -238,8 +254,8 @@ UTL_ScopeStackActiveIterator::item (void)
 }
 
 // Is this iteration done?
-long
-UTL_ScopeStackActiveIterator::is_done (void)
+bool
+UTL_ScopeStackActiveIterator::is_done (void) const
 {
   if (this->il >= 0)
     {
@@ -248,4 +264,3 @@ UTL_ScopeStackActiveIterator::is_done (void)
 
   return true;
 }
-

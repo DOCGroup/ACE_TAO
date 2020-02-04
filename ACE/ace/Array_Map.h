@@ -96,7 +96,6 @@ template<typename Key, typename Value, class EqualTo = std::equal_to<Key>,
 class ACE_Array_Map
 {
 public:
-
   // STL-style typedefs/traits.
   typedef Key                                    key_type;
   typedef Value                                  mapped_type;
@@ -249,11 +248,9 @@ public:
   allocator_type get_allocator() const { return alloc_; }
 
 private:
-
   /// Increase size of underlying buffer by @a s.
   void grow (size_type s);
 
-private:
   /// The allocator.
   allocator_type alloc_;
 

@@ -86,7 +86,6 @@ namespace TAO
     void remove_ref (void);
 
   protected:
-
     /// Constructor.
     /**
      * @note This constructor is protected since it not meant to be

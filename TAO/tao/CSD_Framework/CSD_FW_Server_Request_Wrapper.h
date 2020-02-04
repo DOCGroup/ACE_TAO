@@ -77,7 +77,6 @@ namespace TAO
       void cancel();
 
     private:
-
       /// Create a deep copy of the request_ object.
       /// The other clone methods are used to support the TAO_ServerRequest clone.
       TAO_ServerRequest* clone (TAO_ServerRequest*& from);

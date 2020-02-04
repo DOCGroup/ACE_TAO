@@ -73,7 +73,6 @@ public:
   bool try_dispatch_reply (void);
 
 protected:
-
   /// Destructor.
   virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
 

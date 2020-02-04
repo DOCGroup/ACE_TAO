@@ -112,7 +112,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
 
 
  protected:
-
   /// Handle the dispatching of a remote request.
   ///
   /// This will cause a new "request" object to be created and pushed

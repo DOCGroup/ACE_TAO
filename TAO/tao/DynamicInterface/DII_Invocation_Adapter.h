@@ -116,7 +116,6 @@ namespace TAO
 
     TAO::Exception_Data *ex_data_;
   private:
-
     /// Dont allow default initializations
     DII_Invocation_Adapter (void);
 

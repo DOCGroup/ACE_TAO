@@ -72,7 +72,6 @@ namespace TAO
       void set_recursive_tc (CORBA::TypeCode_ptr);
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -121,7 +120,6 @@ namespace TAO
       //@}
 
     private:
-
       //@{
 
       /// Typecode id
@@ -137,9 +135,7 @@ namespace TAO
       unsigned long refcount_;
 
       //@}
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
