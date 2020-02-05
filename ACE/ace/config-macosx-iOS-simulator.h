@@ -7,4 +7,3 @@
 #include "ace/config-macosx-mojave.h"
 
 #endif /* ACE_CONFIG_MACOSX_IPHONE_SIMULATOR_H */
-

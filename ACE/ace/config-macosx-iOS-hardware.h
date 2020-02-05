@@ -12,4 +12,3 @@
 #endif
 
 #endif /* ACE_CONFIG_MACOSX_IPHONE_HARDWARE_H */
-
