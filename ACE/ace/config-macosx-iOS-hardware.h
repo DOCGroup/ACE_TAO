@@ -3,6 +3,7 @@
 
 #define ACE_HAS_IPHONE
 #define ACE_SIZEOF_LONG_DOUBLE 8
+#define ACE_LACKS_SYSTEM
 
 #include "ace/config-macosx-mojave.h"
 

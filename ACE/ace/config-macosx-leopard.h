@@ -211,9 +211,7 @@
 #define ACE_LACKS_CLOCK_MONOTONIC
 #define ACE_LACKS_CLOCK_REALTIME
 #endif
-#else
-#define ACE_LACKS_SYSTEM
-#endif
+#endif 
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
