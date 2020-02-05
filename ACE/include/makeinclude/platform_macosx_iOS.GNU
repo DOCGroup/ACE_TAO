@@ -9,13 +9,17 @@ else
   XCODE:=/Applications/Xcode.app
 endif
 
+ifndef IPHONE_TARGET
+  $(error Please set IPHONE_TARGET to SIMULATOR or HARDWARE) 
+endif
+
 ifeq ($(IPHONE_TARGET), SIMULATOR)
   CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=x86_64
 
-# June 2017 release, iphone 6s and later
+# June 2017 release, iPhone 6s and later
   CFLAGS  += -miphoneos-version-min=12.0
   CCFLAGS += -miphoneos-version-min=12.0
   LDFLAGS += -miphoneos-version-min=12.0
@@ -25,7 +29,9 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
   CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneOS.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneOS${IPHONE_VERSION}.sdk
-  IPHONE_HARDWARE_ARCHITECTURE=armv7
+# arm64 iPhone 6 and later
+  IPHONE_HARDWARE_ARCHITECTURE=arm64
+
 ifeq ($(iphone_codesign),1)
   CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
   POSTLINK=; codesign -f -s "iPhone Developer" $(BIN)
