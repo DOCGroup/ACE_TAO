@@ -32,6 +32,12 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
 # arm64 iPhone 6 and later
   IPHONE_HARDWARE_ARCHITECTURE=arm64
 
+ifeq ($(iphone_bitcode),1)
+# enable bitcode
+  CCFLAGS  += -fembed-bitcode
+  CXXFLAGS += -fembed-bitcode
+endif
+
 ifeq ($(iphone_codesign),1)
   CODESIGN_ALLOCATE:=$(IPHONE_PLATFORM)/usr/bin/codesign_allocate
   POSTLINK=; codesign -f -s "iPhone Developer" $(BIN)
