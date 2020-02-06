@@ -34,8 +34,8 @@ ifeq ($(IPHONE_TARGET), HARDWARE)
 
 ifeq ($(iphone_bitcode),1)
 # enable bitcode
-  CCFLAGS  += -fembed-bitcode
-  CXXFLAGS += -fembed-bitcode
+  CFLAGS  += -fembed-bitcode
+  CCFLAGS += -fembed-bitcode
 endif
 
 ifeq ($(iphone_codesign),1)
@@ -44,6 +44,10 @@ ifeq ($(iphone_codesign),1)
 endif
   rwho = 0
 endif
+
+# pass a flag to the preprocessor
+CFLAGS  += -DACE_HAS_IOS
+CCFLAGS += -DACE_HAS_IOS
 
 CC:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang
 CXX:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/clang++
