@@ -706,7 +706,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     gendir = .
     ../rules.tao.GNU
     ../README*
-    ../VERSION
+    ../VERSION.txt
     ../PROBLEM-REPORT-FORM
     ../NEWS
     ../COPYING*
