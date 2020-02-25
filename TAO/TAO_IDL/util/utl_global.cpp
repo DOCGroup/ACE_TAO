@@ -1935,7 +1935,7 @@ namespace
   class OldState
   {
   public:
-      explicit OldState(bool the_disable_output = false)
+    explicit OldState (bool the_disable_output = false)
         : old_filename_ (idl_global->filename ()),
           old_lineno_(idl_global->lineno ()),
           old_idl_src_file_(idl_global->idl_src_file ()),
