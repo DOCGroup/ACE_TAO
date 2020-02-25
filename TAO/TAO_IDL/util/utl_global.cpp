@@ -1956,7 +1956,7 @@ namespace
         idl_global->set_filename (new UTL_String (&utl_string, true));
 
         if (disable_output_)
-         {
+          {
             default_streambuf_ = ACE_DEFAULT_LOG_STREAM->rdbuf ();
             ACE_DEFAULT_LOG_STREAM->rdbuf (0);
             ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
