@@ -829,6 +829,8 @@ export TAO_ROOT=$ACE_ROOT/TAO
 g++ --version
 g++ -dumpversion
 
+%define inline %{nil}
+
 %if %skip_make
 
 cd .. && rm -rf ACE_wrappers && ln -s ACE_wrappers-BUILT ACE_wrappers
