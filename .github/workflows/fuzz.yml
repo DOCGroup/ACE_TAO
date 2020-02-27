@@ -1,0 +1,18 @@
+name: C/C++ CI
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v1
+    - name: Run fuzz
+      run: |
+        perl ${env:ACE_ROOT}/bin/fuzz.pl
+      shell: pwsh
