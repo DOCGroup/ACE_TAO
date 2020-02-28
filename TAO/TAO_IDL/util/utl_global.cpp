@@ -1939,7 +1939,7 @@ namespace
         : old_filename_ (idl_global->filename ()),
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_(idl_global->idl_src_file ()),
-          disable_output_(the_disable_output),
+          disable_output_ (the_disable_output),
           flags_(ACE_LOG_MSG->flags ())
       {
         idl_global->in_eval_ = true;
