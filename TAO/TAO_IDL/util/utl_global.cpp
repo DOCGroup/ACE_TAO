@@ -1969,7 +1969,7 @@ namespace
         idl_global->set_lineno (old_lineno_);
 
         idl_global->set_filename (old_filename_);
-        idl_global->idl_src_file()->destroy ();
+        idl_global->idl_src_file ()->destroy ();
         delete idl_global->idl_src_file ();
         idl_global->idl_src_file (old_idl_src_file_);
         idl_global->reset_flag_seen ();
