@@ -245,9 +245,9 @@ protected:
    * SIGSEGV) will be triggered.  At that point, the ACE_Sig_Handler
    * (which is part of the ACE_Reactor) will catch the signal and
    * dispatch the handle_signal() method defined here.  If the SIGSEGV
-   * signal occurred due to the fact that the mapping wasn't uptodate
+   * signal occurred due to the fact that the mapping wasn't up to date
    * with respect to the backing store, the handler method below will
-   * update the mapping accordingly.  When the signal handler returns,
+   * update the mapping accordingly. When the signal handler returns,
    * the instruction should be restarted and the operation should work.
    */
   virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
