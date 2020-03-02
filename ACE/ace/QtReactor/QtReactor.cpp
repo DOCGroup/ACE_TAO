@@ -5,7 +5,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_QtReactor)
 
 // Must be called with lock held
-
 ACE_QtReactor::ACE_QtReactor (QApplication *qapp ,
     ACE_Sig_Handler *sh,
     ACE_Timer_Queue *tq,
