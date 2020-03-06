@@ -83,6 +83,9 @@ ifndef CROSS_COMPILE
   $(error ANDROID_ABI passed (set to: $(ANDROID_ABI)) is not valid)
 endif
 
+# Export so child processes can use tools from the same toolchain.
+export CROSS_COMPILE
+
 ifeq ($(android_force_clang),0)
   # Determine if the g++ compiler is GCC or Clang.
   # There are at least 3 assumptions being made here:

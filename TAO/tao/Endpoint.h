@@ -126,7 +126,6 @@ public:
   //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
-
   /// Lock for the address lookup.
   /**
    * @todo This lock should be strategized so that we dont lock in

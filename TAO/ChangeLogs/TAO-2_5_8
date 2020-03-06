@@ -1,0 +1,341 @@
+commit 937821529f194235a709d6db7b5622368857d272
+Merge: 9b58bb58f48 e1ec7a61a1b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 7 11:05:02 2020 -0600
+
+    Merge pull request #1038 from iguessthislldo/igtd/packaging
+    
+    Fix Make Install With DESTDIR
+
+commit 7c1ba7b90306bec2a3479f81d15a51ad8834fd44
+Merge: c9ac5fecf46 37ddee2ee71
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 16:13:58 2020 -0600
+
+    Merge branch 'igtd/android-on-windows' of github.com:iguessthislldo/ACE_TAO into igtd/android-on-windows
+
+commit c9ac5fecf4621d2e186932a4003890506ce37b58
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 16:08:45 2020 -0600
+
+    Add VERSION rename to NEWS files
+
+commit 977c354addc03b848b47c392658dfc00338bf1cb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 15:23:17 2020 -0600
+
+    Change More References to VERSION.txt
+
+commit 816fca070860bbbb003aa59bc2acc69f98000cc0
+Merge: 38524dca083 cd1cef25211
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 30 12:20:16 2020 +0100
+
+    Merge pull request #1037 from jwillemsen/master
+    
+    List some important changes
+
+commit 38524dca083ae9a2687fca5f747f7a85cf0361b2
+Merge: 62b746c116f 2fd299e082a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 30 12:20:02 2020 +0100
+
+    Merge pull request #1036 from mcorino/mco-fix-deferred-segfault
+    
+    Fix transient error handling with deferred DII requests.
+
+commit cd1cef25211ce104cf784bf2cba14a5b52d93d51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 30 11:50:22 2020 +0100
+
+    List some important changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 2fd299e082affb7d8a98d10c4729b0b9215214f2
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Wed Jan 29 15:57:24 2020 +0100
+
+    Fix segmentation faults on transient (write) errors from DII deferred requests.
+    
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.cpp:
+
+commit 0f723d9f5e8a77fa0b80198cc0523295c730ca01
+Author: Martin Corino <mcorino@remedy.nl>
+Date:   Wed Jan 29 10:44:17 2020 +0100
+
+    Added regression test for transient error handling with deferred DII requests.
+    
+        * TAO/tests/DII_Deferred_Transient/DII_Deferred_Transient.mpc:
+        * TAO/tests/DII_Deferred_Transient/Hello.cpp:
+        * TAO/tests/DII_Deferred_Transient/Hello.h:
+        * TAO/tests/DII_Deferred_Transient/README:
+        * TAO/tests/DII_Deferred_Transient/Test.idl:
+        * TAO/tests/DII_Deferred_Transient/client.cpp:
+        * TAO/tests/DII_Deferred_Transient/run_test.pl:
+        * TAO/tests/DII_Deferred_Transient/server.cpp:
+          Added.
+    
+        * TAO/bin/tao_orb_tests.lst:
+
+commit ea67ac4d6fbe101532dda1f7d8247f3de5b1849a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 15:09:36 2020 +0100
+
+    Layout changes
+    
+        * TAO/tao/Abstract_Servant_Base.h:
+        * TAO/tao/AnyTypeCode/Alias_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Alias_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Empty_Param_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Fixed_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Indirected_Type_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Objref_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Objref_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/String_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/True_RefCount_Policy.h:
+        * TAO/tao/AnyTypeCode/TypeCode.h:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Base_T.h:
+        * TAO/tao/AnyTypeCode/Union_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Value_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Value_TypeCode_Static.h:
+        * TAO/tao/Asynch_Reply_Dispatcher_Base.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Corba_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Remote_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * TAO/tao/Cleanup_Func_Registry.h:
+        * TAO/tao/Connection_Handler.h:
+        * TAO/tao/DiffServPolicy/DiffServ_Protocols_Hooks.h:
+        * TAO/tao/Dynamic_TP/DTP_POA_Strategy.h:
+        * TAO/tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h:
+        * TAO/tao/Endpoint.h:
+        * TAO/tao/FlResource/FlResource_Factory.h:
+        * TAO/tao/FoxResource/FoxResource_Factory.h:
+        * TAO/tao/GUIResource_Factory.h:
+        * TAO/tao/IIOP_Profile.h:
+        * TAO/tao/IIOP_Transport.h:
+        * TAO/tao/IORManipulation/IORManip_Filter.h:
+        * TAO/tao/IORManipulation/IORManip_IIOP_Filter.h:
+        * TAO/tao/IORManipulation/IORManipulation.h:
+        * TAO/tao/IORTable/Async_Table_Adapter.h:
+        * TAO/tao/IORTable/Locate_ResponseHandler.h:
+        * TAO/tao/Invocation_Adapter.h:
+        * TAO/tao/LF_Event.h:
+        * TAO/tao/LF_Invocation_Event.h:
+        * TAO/tao/LF_Multi_Event.h:
+        * TAO/tao/LocalObject.h:
+        * TAO/tao/MProfile.h:
+        * TAO/tao/Messaging/AMH_Response_Handler.h:
+        * TAO/tao/Messaging/Asynch_Invocation_Adapter.h:
+        * TAO/tao/Transport.h:
+
+commit 1540f6900d923c6f4548c90dde09bb4d6175a45a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 28 13:48:09 2020 +0100
+
+    Layout changes
+    
+        * TAO/tao/AnyTypeCode/Alias_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Alias_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Enum_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Fixed_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Indirected_Type_TypeCode.h:
+        * TAO/tao/AnyTypeCode/NVList.h:
+        * TAO/tao/AnyTypeCode/Recursive_Type_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode.h:
+        * TAO/tao/AnyTypeCode/Sequence_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/String_TypeCode.h:
+        * TAO/tao/AnyTypeCode/String_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/Struct_TypeCode_Static.h:
+        * TAO/tao/AnyTypeCode/TypeCode.h:
+        * TAO/tao/AnyTypeCode/TypeCode_Base_Attributes.h:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_Base_T.h:
+        * TAO/tao/AnyTypeCode/TypeCode_Case_T.h:
+        * TAO/tao/AnyTypeCode/Value_TypeCode_Static.h:
+        * TAO/tao/BiDir_GIOP/BiDirGIOP.cpp:
+        * TAO/tao/CDR.h:
+        * TAO/tao/CORBALOC_Parser.h:
+        * TAO/tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h:
+        * TAO/tao/CSD_Framework/CSD_POA.h:
+        * TAO/tao/CSD_Framework/CSD_Strategy_Base.h:
+        * TAO/tao/CSD_Framework/CSD_Strategy_Proxy.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_With_Server_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Custom_Synch_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Queue.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Request.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Servant_State.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Strategy.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Synch_Helper.h:
+        * TAO/tao/CSD_ThreadPool/CSD_TP_Task.h:
+        * TAO/tao/Collocated_Invocation.h:
+        * TAO/tao/Connector_Impl.h:
+        * TAO/tao/Default_Endpoint_Selector_Factory.h:
+        * TAO/tao/Default_Thread_Lane_Resources_Manager.h:
+        * TAO/tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h:
+        * TAO/tao/DiffServPolicy/Server_Network_Priority_Policy.h:
+        * TAO/tao/DynamicAny/DynCommon.h:
+        * TAO/tao/DynamicInterface/DII_Invocation_Adapter.h:
+        * TAO/tao/DynamicInterface/DII_Reply_Dispatcher.cpp:
+        * TAO/tao/DynamicInterface/Dynamic_Implementation.h:
+        * TAO/tests/Connection_Failure/README:
+        * TAO/tests/Crashed_Callback/README:
+
+commit 96ca3b0d0c9fc273a570a51b1193a9dea90252c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 24 16:30:52 2020 +0100
+
+    Simplified scope
+    
+        * TAO/TAO_IDL/be/be_visitor_interface/interface_ss.cpp:
+
+commit 95564b4494e21770f94fff6295e2c6e361963364
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 24 16:30:33 2020 +0100
+
+    Removed not used operation
+    
+        * TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_ss.cpp:
+        * TAO/TAO_IDL/be_include/be_visitor_valuetype/valuetype_ss.h:
+
+commit 37ddee2ee7109a5093b360da104116389292acd5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 17 17:27:34 2020 -0600
+
+    Rename VERSION files to VERSION.txt
+    
+    C++20 brings a new standard header called "version". This wouldn't be an
+    issue except for on Windows where filenames can be case insensitive.
+    This issue was discovered why trying to cross-compile for Android on
+    Windows.
+
+commit e75bfac7b176650dc4a9933a080d58e9ebbd9a15
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Jan 8 15:54:41 2020 -0600
+
+    Simplify how gperf is used to generate code for TAO_IDL_FE
+
+commit e1ec7a61a1bc893f3c9d7fb6122c2068c88ebdde
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Jan 7 17:03:05 2020 -0600
+
+    Fix Make Install With DESTDIR
+    
+    When DESTDIR is specified, this ln command with a shell expansion
+    doesn't work because the libraries don't exist in the INSTALL_PREFIX
+    yet.
+
+commit eec97cc2d1d1aa09844ea0c8d5be07deaa5853e6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 7 13:38:57 2020 +0100
+
+    Doxygen changes
+    
+        * TAO/tests/Policies/Manipulation.cpp:
+
+commit 91058043be8e95f249804fd853dd626cea81b95f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 7 13:38:38 2020 +0100
+
+    Removed empty lines
+    
+        * TAO/tao/Unbounded_Object_Reference_Sequence_T.h:
+
+commit 2075eb4e4ab97dc02f705656314428fb5f20815f
+Merge: e088d1ba9fe 377169fceaa
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 3 11:53:20 2020 -0600
+
+    Merge pull request #1010 from iguessthislldo/igtd/tao_idl_leaks
+    
+    Various fixes for tao_idl built using clang with -fsanitize=undefined,address passed.
+
+commit 0012aac0cff7a8372dd81d4c232712681da4b866
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 20 21:58:38 2019 -0600
+
+    Fix for Annotation Param Scope Issue
+    
+    See: https://github.com/DOCGroup/ACE_TAO/issues/997
+    
+    When the original annotation work (https://github.com/DOCGroup/ACE_TAO/pull/723)
+    was done it was assumed that when annotations didn't define the symbol
+    being used, the lookup for the parameters would go up the scope stack to
+    the current scope. This turned out not the case, so this functionality
+    was implemented just for annotation parameters.
+
+commit 9e30891676aa30106d679b3a71cc72b5c5b76c2b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 18 01:10:00 2019 -0600
+
+    Various Small Fixes for IDLv4/annotations
+
+commit 377169fceaa4a348334b038c236be20df6fa59ed
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 20 17:09:16 2019 -0600
+
+    New Method in AST_InterfaceFwd in tao_idl
+    
+    Separate out functionality for disowning memory into it's own function.
+    
+    Respond to Review in https://github.com/DOCGroup/ACE_TAO/pull/1010
+
+commit 77a212244fc64003da9f078738b4fa0863595210
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 18 12:18:52 2019 -0600
+
+    Style Fixes
+
+commit 077f03e97ed4cf43325b32fff14eadcfd8fa6bba
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 18 01:11:27 2019 -0600
+
+    Fixes for tao_idl compiled with asan and ubsan
+    
+    Various fixes for tao_idl built using clang with
+    -fsanitize=undefined,address passed.
+    
+    - Work around static init ub in ACE_Sync_Options based on if
+      ACE_INITIALIZE_MEMORY_BEFORE_USE is defined.
+    - Fix a memory leak in UTL_Scope and a possible null dereference in
+      tao_idl be.
+    - Fixed a hard to track down memory leak involving AST_InterfaceFwd not
+      handling ownership of its placeholder AST_Interface correctly under
+      a case when a forward declaration of an interface is made after the
+      interface was already declared.
+
+commit cab5c35b998c07e98d5c5b360a774e65d973b733
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 22 10:13:31 2019 +0100
+
+    Make x.5.7 available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

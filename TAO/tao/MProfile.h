@@ -169,13 +169,11 @@ public:
   CORBA::ULong hash (CORBA::ULong max);
 
 protected:
-
   /// This method handle the dynamic allocation of the data member
   /// <policy_list_>.
  void create_policy_list (void);
 
 public:
-
   /// Sets the policies list associated with the profiles
   /// owned by the TAO_MProfile.
   void policy_list (CORBA::PolicyList *policy_list);
@@ -185,7 +183,6 @@ public:
   CORBA::PolicyList *policy_list (void);
 
 protected:
-
   /// Initialize the policy list, demarsharling the policy.
   void init_policy_list (void);
 

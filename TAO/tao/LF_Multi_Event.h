@@ -64,7 +64,6 @@ private:
   TAO_LF_Multi_Event (const TAO_LF_Multi_Event &);
 
 protected:
-
   /// Validate the state change
   virtual void state_changed_i (LFS_STATE new_state);
 

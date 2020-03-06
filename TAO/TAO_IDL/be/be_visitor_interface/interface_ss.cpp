@@ -453,11 +453,9 @@ be_visitor_interface_ss::generate_amh_classes (be_interface *node)
 int
 be_visitor_interface_ss::generate_proxy_classes (be_interface *node)
 {
-  be_visitor_context ctx = *this->ctx_;
-
   if (be_global->gen_direct_collocation ())
     {
-      ctx = *this->ctx_;
+      be_visitor_context ctx = *this->ctx_;
       ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
       be_visitor_interface_direct_proxy_impl_ss idpi_visitor (&ctx);
 

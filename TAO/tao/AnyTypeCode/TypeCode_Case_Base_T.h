@@ -107,7 +107,6 @@ namespace TAO
       bool equivalent (CORBA::ULong index, CORBA::TypeCode_ptr tc) const;
 
     protected:
-
       /// Marshal the IDL @c union @c case label value into the given
       /// output CDR stream.
       virtual bool marshal_label (TAO_OutputCDR & cdr) const = 0;
@@ -130,7 +129,6 @@ namespace TAO
                                 CORBA::TypeCode_ptr tc) const = 0;
 
     private:
-
       /// The name of the case.
       StringType name_;
 
@@ -146,7 +144,6 @@ namespace TAO
        *       @c Case.
        */
       TypeCodeType type_;
-
     };
 
     typedef Case<CORBA::String_var, CORBA::TypeCode_var> Case_Dynamic;

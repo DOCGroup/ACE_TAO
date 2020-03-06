@@ -78,7 +78,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -96,7 +95,6 @@ namespace TAO
       virtual char const * name_i (void) const;
 
     protected:
-
       /// Base attributes (@c id and @c name).
       Base_Attributes<char const *> attributes_;
 

@@ -204,11 +204,15 @@
 #endif
 
 #define ACE_LACKS_CONDATTR_SETCLOCK
+
+#ifndef ACE_HAS_IPHONE
 #if __MAC_OS_X_VERSION_MAX_ALLOWED < 101200
 #define ACE_LACKS_CLOCKID_T
 #define ACE_LACKS_CLOCK_MONOTONIC
 #define ACE_LACKS_CLOCK_REALTIME
 #endif
+#endif
+
 // dlcompat package (not part of base Darwin) is needed for dlopen().
 // You may download directly from sourceforge and install or use fink
 // Fink installer puts libraries in /sw/lib and headers in /sw/include

@@ -27,7 +27,7 @@ if (!defined $DANCE_ROOT) {
 
 $is_release = 0;
 $exclude_ace = 0;
-$exclude_tao = !-r "$TAO_ROOT/VERSION";
+$exclude_tao = !-r "$TAO_ROOT/VERSION.txt";
 $exclude_ciao = !-r "$CIAO_ROOT/VERSION";
 $exclude_dance = !-r "$DANCE_ROOT/VERSION";
 $verbose = 0;
@@ -36,7 +36,7 @@ $html_output_dir = '.';
 $footer = '';
 
 $dds = 0;
-if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
+if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION.txt") {
     $dds_path = Cwd::abs_path($DDS_ROOT);
     $cwd_path = Cwd::abs_path(getcwd());
     if ($dds_path eq $cwd_path) {
@@ -96,11 +96,11 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION.txt", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION.txt", @TAO_DOCS) if (!$exclude_tao);
 &generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
 &generate_doxy_files ('DANCE'," $DANCE_ROOT", " $DANCE_ROOT/VERSION", @DANCE_DOCS) if (!$exclude_dance);
-&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION", @DDS_DOCS) if $dds;
+&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION.txt", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 

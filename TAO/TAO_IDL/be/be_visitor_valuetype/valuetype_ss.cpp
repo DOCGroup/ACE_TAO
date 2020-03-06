@@ -53,9 +53,6 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  ACE_CString flat_name_holder =
-    this->generate_flat_name (node);
-
   *os << be_nl << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
@@ -125,12 +122,6 @@ int
 be_visitor_valuetype_ss::visit_eventtype (be_eventtype *node)
 {
   return this->visit_valuetype (node);
-}
-
-ACE_CString
-be_visitor_valuetype_ss::generate_flat_name (be_valuetype *node)
-{
-  return ACE_CString (node->flat_name ());
 }
 
 ACE_CString

@@ -65,7 +65,6 @@ namespace TAO
 
 
     private:
-
       /// Enumeration Type for all possible states of this helper object.
       enum HelperState
       {

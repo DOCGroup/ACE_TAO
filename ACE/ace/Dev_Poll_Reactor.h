@@ -51,7 +51,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
-
 // ---------------------------------------------------------------------
 
 /**
@@ -98,7 +97,7 @@ public:
   /// Unimplemented method required by pure virtual method in abstract
   /// base class.
   /**
-   * This method's interface is not very compatibile with this
+   * This method's interface is not very compatible with this
    * Reactor's design.  It's not clear why this method is pure virtual
    * either.
    */

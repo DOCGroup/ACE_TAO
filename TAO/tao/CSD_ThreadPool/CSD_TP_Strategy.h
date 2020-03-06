@@ -102,7 +102,6 @@ namespace TAO
       void cancel_requests(PortableServer::Servant servant);
 
     protected:
-
       /// Handle the dispatching of a remote request.
       ///
       /// This will cause a new "request" object to be created and pushed
@@ -148,7 +147,6 @@ namespace TAO
                                      const PortableServer::ObjectId& oid);
 
     private:
-
       /**
       * Helper method that is responsible for looking up the servant
       * state object in the servant state map *if* the "serialize

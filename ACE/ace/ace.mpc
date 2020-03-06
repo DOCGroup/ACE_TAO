@@ -506,7 +506,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
   InstallData_Files {
     gendir = .
     ../README
-    ../VERSION
+    ../VERSION.txt
     ../PROBLEM-REPORT-FORM
     ../NEWS
     ../COPYING

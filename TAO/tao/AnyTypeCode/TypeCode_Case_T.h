@@ -116,12 +116,9 @@ namespace TAO
       //@}
 
     private:
-
       /// IDL @c union case/member label value.
       DiscriminatorType const label_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 
