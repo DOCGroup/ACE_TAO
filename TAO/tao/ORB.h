@@ -134,7 +134,6 @@ namespace CORBA
 
     // Typedefs for CORBA::RequestSeq, which is an argument of
     // send_multiple_requests_*().
-
     typedef
       TAO::unbounded_object_reference_sequence<
           CORBA::Request, CORBA::Request_var
@@ -169,7 +168,6 @@ namespace CORBA
   class TAO_Export ORB
   {
   public:
-
     class TAO_Export InvalidName : public CORBA::UserException
     {
     public:
@@ -537,7 +535,6 @@ namespace CORBA
     ACE_Time_Value *get_timeout (void);
 
   protected:
-
     // We must be created via the @c CORBA::ORB_init() function.
     ORB (TAO_ORB_Core *orb_core);
 
@@ -555,7 +552,6 @@ namespace CORBA
     CORBA::Object_ptr resolve_policy_current (void);
 
   private:
-
     /// Resolve the given service based on the service ID.
     /**
      * "@c resolve_service" is a legacy name.  This method now simply
@@ -578,7 +574,6 @@ namespace CORBA
     void set_timeout (ACE_Time_Value * timeout);
 
   private:
-
     /// Maintains a reference count of number of instantiations of the
     /// ORB.
 #if defined (ACE_HAS_CPP11)
@@ -602,7 +597,6 @@ namespace CORBA
 
   };
 }  // End namespace CORBA
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
