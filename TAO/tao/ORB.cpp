@@ -1,5 +1,3 @@
-// ""
-
 #include "tao/ORB.h"
 #include "tao/ORB_Table.h"
 #include "tao/Connector_Registry.h"
@@ -1280,7 +1278,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
       return CORBA::ORB::_duplicate (oc->orb ());
     }
 
-  // Determine the service object registry this ORB will use. The choises
+  // Determine the service object registry this ORB will use. The choices
   // are: (a) the legacy (global); (b) its own, local, or (c) share somebody
   // else's configuration. By default use the process-wide (global) context
     // Use this string variable to hold the configuration identity key
@@ -1310,7 +1308,7 @@ CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
   // footprint. However, if the ORB in a DLL and the rest of that
   // application most likely neither cares, nor wishes to know about
   // them. Furthermore, if the ORB DLL gets unloaded, the static
-  // services it had registered globaly will no longer be accesible,
+  // services it had registered globally will no longer be accessible,
   // which will have disastrous consequences at the process
   // shutdown. Hence, the ACE_Service_Config_Guard ensures that for
   // the current thread, any references to the global
@@ -1448,7 +1446,6 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       // Now hexify the encapsulated CDR data into a string, and
       // return that string.
-
       size_t const total_len = cdr.total_length ();
 
       char *cp = 0;
@@ -1526,7 +1523,6 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
 // Destringify arbitrary objrefs.  This method is called from
 // <resolve_name_service> with an IOR <multicast_to_service>.
-
 CORBA::Object_ptr
 CORBA::ORB::string_to_object (const char *str)
 {
@@ -1615,7 +1611,6 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type)
 //
 // XXX there should be a simple way to reuse this code in other ORB
 // implementations ...
-
 CORBA::Object_ptr
 CORBA::ORB::ior_string_to_object (const char *str)
 {
@@ -1672,7 +1667,6 @@ CORBA::ORB::ior_string_to_object (const char *str)
 // ****************************************************************
 
 // Convert an URL style IOR in an object
-
 CORBA::Object_ptr
 CORBA::ORB::url_ior_string_to_object (const char* str)
 {
