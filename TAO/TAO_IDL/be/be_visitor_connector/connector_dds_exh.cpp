@@ -288,6 +288,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
       os_ << be_nl
           << "struct " << datatype->flat_name () << "_DDS_Traits" << be_nl
           << "{" << be_idt_nl
+          << "static const char* get_type_name () { return \"" << dt_name << "\"; };" << be_nl
           << "typedef ::" << dt_name << " value_type;" << be_nl
           << "typedef ::" << dt_name;
 
