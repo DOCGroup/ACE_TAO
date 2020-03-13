@@ -1014,7 +1014,6 @@ ACE::recvv_n_i (ACE_HANDLE handle,
               if (result != -1)
                 {
                   // Blocking subsided.  Continue data transfer.
-                  n = 0;
                   continue;
                 }
             }
@@ -1078,7 +1077,6 @@ ACE::recvv_n_i (ACE_HANDLE handle,
                 {
                   // Blocking subsided in <timeout> period.  Continue
                   // data transfer.
-                  n = 0;
                   continue;
                 }
             }
@@ -1806,7 +1804,6 @@ ACE::sendv_n_i (ACE_HANDLE handle,
               if (result != -1)
                 {
                   // Blocking subsided.  Continue data transfer.
-                  n = 0;
                   continue;
                 }
             }
@@ -1876,7 +1873,6 @@ ACE::sendv_n_i (ACE_HANDLE handle,
                 {
                   // Blocking subsided in <timeout> period.  Continue
                   // data transfer.
-                  n = 0;
                   continue;
                 }
             }
