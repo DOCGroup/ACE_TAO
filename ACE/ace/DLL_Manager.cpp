@@ -165,6 +165,13 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
 
           if (this->handle_ == ACE_SHLIB_INVALID_HANDLE)
             {
+              ACE_TString errtmp;
+              this->error (errtmp);
+              ACELIB_ERROR ((LM_ERROR,
+                             ACE_TEXT ("ACE (%P|%t) DLL_Handle::open (\"%s\"): ")
+                             ACE_TEXT ("Invalid handle error: %s\n"),
+                             this->dll_name_,
+                             errtmp.c_str ()));
               return -1;
             }
         }
