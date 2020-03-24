@@ -20,6 +20,7 @@
 #if defined (ACE_HAS_IPV6)
 
 #define LINK_LOCAL_ADDR ACE_TEXT ("fe80::")
+#define SITE_LOCAL_ADDR ACE_TEXT ("fec0::")
 #define THE_INTERFACE ("eth0")
 
 // Make sure that ACE_Addr::addr_type_ is the same
@@ -185,6 +186,13 @@ int run_main (int, ACE_TCHAR *[])
 #if defined (ACE_LINUX)
       // test a link local address to make sure the set_interface method works
       ACE_INET_Addr link_local_addr (80, LINK_LOCAL_ADDR);
+      if (!link_local_addr.is_linklocal())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IPv6 is_linklocal failed\n")));
+          status = 1;
+        }
+
       if (0 != ACE_OS::strcmp (ACE_TEXT_CHAR_TO_TCHAR(link_local_addr.get_host_addr ()),
                                LINK_LOCAL_ADDR))
         {
@@ -202,6 +210,16 @@ int run_main (int, ACE_TCHAR *[])
                       ACE_TEXT ("IPv6 set_interface failed\n")));
           status = 1;
         }
+
+      // test a site local address
+      ACE_INET_Addr site_local_addr (80, SITE_LOCAL_ADDR);
+      if (!site_local_addr.is_sitelocal())
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("IPv6 is_sitelocal failed\n")));
+          status = 1;
+        }
+
 #endif /* ACE_LINUX */
     }
 

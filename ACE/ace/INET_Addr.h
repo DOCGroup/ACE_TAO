@@ -345,6 +345,9 @@ public:
   /// Return @c true if the IP address is IPv6 linklocal address.
   bool is_linklocal (void) const;
 
+  /// Return @c true if the IP address is IPv6 sitelocal address.
+  bool is_sitelocal (void) const;
+
   /// Return @c true if the IP address is IPv4-mapped IPv6 address.
   bool is_ipv4_mapped_ipv6 (void) const;
 
