@@ -71,9 +71,9 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   do
     {
 #if defined (ACE_HAS_POLL)
-	    struct pollfd fds;
- 	    ACE_OS::memset(&fds, 0, sizeof(fds));
-	    fds.revents = 0;
+      struct pollfd fds;
+      ACE_OS::memset(&fds, 0, sizeof(fds));
+      fds.revents = 0;
 #else
       // These handle sets are used to set up for whatever SSL_accept
       // says it wants next. They're reset on each pass around the loop.
