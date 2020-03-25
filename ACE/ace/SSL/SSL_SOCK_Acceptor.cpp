@@ -138,7 +138,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                   fds.events = POLLOUT;
 #else
                   wr_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */                  
+#endif  /* ACE_HAS_POLL */
                 }
               else if (SSL_want_read (ssl))
                 {
@@ -147,9 +147,9 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                   fds.events = POLLIN;
 #else
                   rd_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */                  
+#endif  /* ACE_HAS_POLL */
                 }
-              else 
+              else
                 {
                   status = -1;            // Doesn't want anything - bail out
                 }

@@ -145,7 +145,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                   fds.events = POLLOUT;
 #else
                   wr_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */                  
+#endif  /* ACE_HAS_POLL */
                 }
               else if (SSL_want_read (ssl))
                 {
@@ -154,7 +154,7 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                   fds.events = POLLIN;
 #else
                   rd_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */                  
+#endif  /* ACE_HAS_POLL */
                 }
               else
                 {
