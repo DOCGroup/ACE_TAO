@@ -70,6 +70,12 @@
 #  include <inttypes.h>
 # endif
 
+# if defined (ACE_HAS_CPP11)
+#  include <cstdint>
+#  define ACE_HAS_INT64_T
+#  define ACE_HAS_UINT64_T
+# endif
+
 #ifdef ACE_LACKS_INTPTR_T
 # include "ace/If_Then_Else.h"
 

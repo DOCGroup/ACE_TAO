@@ -200,31 +200,27 @@ public:
   unsigned long operator () (unsigned long t) const;
 };
 
-#if (ACE_SIZEOF_LONG < 8)
 /**
- * @brief Function object for hashing a signed 64-bit number
+ * @brief Function object for hashing a signed long long number
  */
 template<>
-class ACE_Export ACE_Hash<ACE_INT64>
+class ACE_Export ACE_Hash<long long>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (ACE_INT64 t) const;
+  unsigned long operator () (long long t) const;
 };
-#endif /* ACE_SIZEOF_LONG < 8 */
 
-#if (ACE_SIZEOF_LONG < 8)
 /**
  * @brief Function object for hashing an unsigned 64-bit number
  */
 template<>
-class ACE_Export ACE_Hash<ACE_UINT64>
+class ACE_Export ACE_Hash<unsigned long long>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (const ACE_UINT64 &t) const;
+  unsigned long operator () (unsigned long long t) const;
 };
-#endif /* ACE_SIZEOF_LONG < 8 */
 
 /**
  * @brief Function object for hashing a const string
