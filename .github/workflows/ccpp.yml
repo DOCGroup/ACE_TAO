@@ -16,7 +16,7 @@ jobs:
           GCC6,
           GCC7,
           GCC8,
-          GCC97
+          GCC9
         ]
         include:
           - name: GCC48
