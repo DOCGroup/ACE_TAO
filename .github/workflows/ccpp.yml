@@ -34,9 +34,9 @@ jobs:
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'xerces3=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'ssl=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'c++11=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'c++11=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
