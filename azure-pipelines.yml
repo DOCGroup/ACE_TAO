@@ -178,31 +178,6 @@ jobs:
     vmImage: ubuntu-18.04
   strategy:
     matrix:
-      GCC48:
-        CC: gcc-4.8
-        CXX: g++-4.8
-        PackageDeps: g++-4.8
-        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-      GCC6:
-        CC: gcc-6
-        CXX: g++-6
-        PackageDeps: g++-6
-        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-      GCC7:
-        CC: gcc-7
-        CXX: g++-7
-        PackageDeps: g++-7
-        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-      GCC8:
-        CC: gcc-8
-        CXX: g++-8
-        PackageDeps: g++-8
-        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-      GCC9:
-        CC: gcc-9
-        CXX: g++-9
-        PackageDeps: g++-9
-        platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
       CLANG5:
         CC: clang-5.0
         CXX: clang++-5.0
