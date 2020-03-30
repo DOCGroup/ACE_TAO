@@ -145,6 +145,7 @@ jobs:
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "openssl11=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+      echo "ipv6=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
     displayName: Create default.features file
   - powershell: |
       echo $(OptionalFeatures) | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
@@ -256,6 +257,7 @@ jobs:
       'c++11=1' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       'xerces3=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       'ssl=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
+      'ipv6=1' >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
       "$(platform_file)" >> $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
     displayName: Create platform_macros file
   - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
