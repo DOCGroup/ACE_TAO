@@ -9,11 +9,42 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        name: [
+          GCC48,
+          GCC6,
+          GCC7,
+          GCC8,
+          GCC97
+        ]
+        include:
+          - name: GCC48
+            CC: gcc-4.8
+            CXX: g++-4.8
+            PackageDeps: g++-4.8
+          - name: GCC6
+            CC: gcc-6
+            CXX: g++-6
+            PackageDeps: g++-6
+          - name: GCC7
+            CC: gcc-7
+            CXX: g++-7
+            PackageDeps: g++-7
+          - name: GCC8
+            CC: gcc-8
+            CXX: g++-8
+            PackageDeps: g++-8
+          - name: GCC9
+            CC: gcc-9
+            CXX: g++-9
+            PackageDeps: g++-9
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
       MPC_ROOT: ${{ github.workspace }}/../MPC
-
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v1
@@ -26,7 +57,7 @@ jobs:
     - name: Add packages
       run: |
         sudo apt-get --yes update
-        sudo apt-get --yes install libxerces-c-dev libssl-dev
+        sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
