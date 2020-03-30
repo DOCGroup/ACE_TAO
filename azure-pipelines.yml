@@ -226,6 +226,7 @@ jobs:
   - powershell: |
       'xerces3=1' > $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
       'ssl=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
+      'ipv6=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
       'versioned_namespace=1' >> $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
     displayName: Create default.features file
   - powershell: |
