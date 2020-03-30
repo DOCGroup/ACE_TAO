@@ -26,7 +26,7 @@ jobs:
     - name: Add packages
       run: |
         sudo apt-get --yes update
-        sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
+        sudo apt-get --yes install libxerces-c-dev libssl-dev
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
