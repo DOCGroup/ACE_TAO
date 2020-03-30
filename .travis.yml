@@ -58,8 +58,6 @@ before_script:
   - if [ "$CORBAECOMPACT" == "1" ]; then echo -e "corba_e_compact=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$ACEFORTAO" == "1" ]; then echo -e "ace_for_tao=1" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
   - if [ "$ACEFORTAO" == "1" ]; then echo -e "ace_for_tao=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
-  - if [ "$CCMLW" == "1" ]; then echo -e "ccm_lw=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
-  - if [ "$CCMNOEVENT" == "1" ]; then echo -e "ccm_noevent=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$USES_WCHAR" == "1" ]; then echo -e "uses_wchar=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$VERSIONED" == "1" ]; then echo -e "versioned_namespace=1" >> $ACE_ROOT/bin/MakeProjectCreator/config/default.features; fi
   - if [ "$TRAVIS_OS_NAME" == "linux" ]; then echo -e "xerces3=1\nssl=1\n" >> $ACE_ROOT/include/makeinclude/platform_macros.GNU; fi
