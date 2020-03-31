@@ -298,7 +298,6 @@ private:
                const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
 
 public:
-
   enum Creation_States
   {
     ACE_READING = 1,
