@@ -29,8 +29,8 @@
  *    - ACE_UINT16
  *    - ACE_INT32
  *    - ACE_UINT32
- *    - ACE_UINT64
  *    - ACE_INT64
+ *    - ACE_UINT64
  *
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
@@ -68,6 +68,18 @@
 # endif
 # if !defined (ACE_LACKS_INTTYPES_H)
 #  include <inttypes.h>
+# endif
+
+# if defined (ACE_HAS_CPP11)
+#  include <cstdint>
+#  define ACE_HAS_INT8_T
+#  define ACE_HAS_UINT8_T
+#  define ACE_HAS_INT16_T
+#  define ACE_HAS_UINT16_T
+#  define ACE_HAS_INT32_T
+#  define ACE_HAS_UINT32_T
+#  define ACE_HAS_INT64_T
+#  define ACE_HAS_UINT64_T
 # endif
 
 #ifdef ACE_LACKS_INTPTR_T
