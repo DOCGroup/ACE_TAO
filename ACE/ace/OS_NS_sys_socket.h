@@ -65,9 +65,7 @@
 #endif
 
 #if defined (ACE_HAS_IPV6)
-#if defined (IPV6_PKTINFO)
-#define ACE_RECVPKTINFO6 IPV6_PKTINFO
-#elif defined (IPV6_RECVPKTINFO)
+#if defined (IPV6_RECVPKTINFO)
 #define ACE_RECVPKTINFO6 IPV6_RECVPKTINFO
 #endif
 #endif
@@ -276,7 +274,7 @@ namespace ACE_OS
   int shutdown (ACE_HANDLE handle,
                 int how);
 
-#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
+#if (defined (ACE_LINUX) || defined(ACE_HAS_MAC_OSX)) && defined (ACE_HAS_IPV6)
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned int if_nametoindex (const char *ifname);
 
