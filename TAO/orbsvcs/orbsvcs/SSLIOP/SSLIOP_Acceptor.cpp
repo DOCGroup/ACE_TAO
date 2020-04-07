@@ -614,6 +614,20 @@ TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
                                value.c_str ()),
                               -1);
         }
+      else if (ACE_OS::strcmp (name.c_str (), "portspan") == 0)
+        {
+          int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
+          // @@ What's the lower bound on the range?  zero, or one?
+          if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
+                  TAOLIB_ERROR_RETURN ((LM_ERROR,
+                  ACE_TEXT ("TAO (%P|%t) Invalid IIOP/SSL endpoint ")
+                  ACE_TEXT ("portspan: <%C>\n")
+                  ACE_TEXT ("Valid range 1 -- %d\n"),
+                  value.c_str (), ACE_MAX_DEFAULT_PORT),
+                 -1);
+
+          this->port_span_ = static_cast <u_short> (range);
+        }
       else
         {
           // the name is not known, skip to the next option
