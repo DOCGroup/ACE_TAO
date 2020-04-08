@@ -20,7 +20,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
 #include "orbsvcs/Time/time_serv_export.h"

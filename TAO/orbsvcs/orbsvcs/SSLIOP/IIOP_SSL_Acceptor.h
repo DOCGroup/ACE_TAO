@@ -28,7 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class IIOP_SSL_Acceptor
    *
@@ -43,7 +42,6 @@ namespace TAO
   class IIOP_SSL_Acceptor : public TAO_IIOP_Acceptor
   {
   public:
-
     typedef ACE_Strategy_Acceptor<IIOP_SSL_Connection_Handler, ACE_SOCK_ACCEPTOR> TAO_IIOP_SSL_BASE_ACCEPTOR;
     typedef TAO_Creation_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CREATION_STRATEGY;
     typedef TAO_Concurrency_Strategy<IIOP_SSL_Connection_Handler> TAO_IIOP_SSL_CONCURRENCY_STRATEGY;
@@ -58,7 +56,6 @@ namespace TAO
     virtual int close (void);
 
   private:
-
     /// The concrete acceptor, as a pointer to it's base class.
     TAO_IIOP_SSL_BASE_ACCEPTOR base_acceptor_;
 
@@ -72,9 +69,7 @@ namespace TAO
     TAO_IIOP_SSL_CONCURRENCY_STRATEGY *concurrency_strategy_;
     TAO_IIOP_SSL_ACCEPT_STRATEGY *accept_strategy_;
     //@}
-
   };
-
 } // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

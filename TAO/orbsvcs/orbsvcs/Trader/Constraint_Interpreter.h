@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
 #include /**/ "ace/pre.h"
@@ -49,7 +48,7 @@ public:
 
   /**
    * This constructor builds an expression tree representing the
-   * constraint specified in <constraints>, and throws an Illegal
+   * constraint specified in @a constraints, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
@@ -135,7 +134,6 @@ public:
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
 
 private:
-
   /// Disallow copying.
   TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
   TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
