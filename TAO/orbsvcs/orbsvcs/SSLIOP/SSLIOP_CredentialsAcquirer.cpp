@@ -20,7 +20,6 @@
 # define TAO_SSLIOP_PASSWORD_CALLBACK_NAME TAO_SSLIOP_password_callback
 #endif  /* TAO_HAS_VERSIONED_NAMESPACE == 1 */
 
-
 extern "C"
 int
 TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
@@ -31,7 +30,6 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
   // @@ I'm probably over complicating this implementation, but that's
   //    what you get when you try to be overly efficient.  :-)
   //        -Ossama
-
   const char * password = static_cast<char *> (userdata);
 
   int pwlen = -1;

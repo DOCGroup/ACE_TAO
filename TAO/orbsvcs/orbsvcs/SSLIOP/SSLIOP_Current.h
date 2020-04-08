@@ -120,7 +120,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       ~Current (void);
 
@@ -131,7 +130,6 @@ namespace TAO
       Current_Impl *implementation (void);
 
     private:
-
       /// Prevent copying through the copy constructor and the assignment
       /// operator.
       //@{
@@ -140,7 +138,6 @@ namespace TAO
       //@}
 
     private:
-
       /// TSS slot assigned to this object.
       size_t tss_slot_;
 
