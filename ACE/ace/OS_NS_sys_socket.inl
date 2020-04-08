@@ -1020,7 +1020,6 @@ ACE_OS::socketpair (int domain, int type,
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
-#if (defined (ACE_LINUX) || defined(ACE_HAS_MAC_OSX)) && defined (ACE_HAS_IPV6)
 ACE_INLINE unsigned int
 ACE_OS::if_nametoindex (const char *ifname)
 {
@@ -1068,6 +1067,5 @@ ACE_OS::if_freenameindex (struct if_nameindex *ptr)
     ::if_freenameindex (ptr);
 #endif /* ACE_LACKS_IF_NAME_INDEX */
 }
-#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

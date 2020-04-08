@@ -274,7 +274,6 @@ namespace ACE_OS
   int shutdown (ACE_HANDLE handle,
                 int how);
 
-#if (defined (ACE_LINUX) || defined(ACE_HAS_MAC_OSX)) && defined (ACE_HAS_IPV6)
   ACE_NAMESPACE_INLINE_FUNCTION
   unsigned int if_nametoindex (const char *ifname);
 
@@ -286,7 +285,6 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void if_freenameindex (struct if_nameindex *ptr);
-#endif /* ACE_LINUX && ACE_HAS_IPV6 */
 
   /// Initialize WinSock before first use (e.g., when a DLL is first
   /// loaded or the first use of a socket() call.

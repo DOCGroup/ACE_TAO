@@ -729,7 +729,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
                   0,
                   sizeof (lmreq));
 
-#if defined(ACE_LINUX) || defined(ACE_HAS_MAC_OSX)
+#if !defined(ACE_LACKS_IF_NAME_INDEX)
   if (net_if != 0)
     {
       lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR(net_if));
