@@ -280,6 +280,10 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   char *if_indextoname (unsigned int ifindex, char *ifname);
 
+#if defined(ACE_WIN32)
+  struct if_nameindex {};
+#endif
+
   ACE_NAMESPACE_INLINE_FUNCTION
   struct if_nameindex *if_nameindex (void);
 

@@ -40,6 +40,7 @@
 
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 #  include /**/ <ws2tcpip.h>
+#  include /**/ <iphlpapi.h>
 #endif /* ACE_HAS_WINSOCK2 */
 
 // Place all additions (especially function declarations) within extern "C" {}

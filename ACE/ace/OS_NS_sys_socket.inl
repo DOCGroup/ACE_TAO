@@ -1049,7 +1049,7 @@ ACE_INLINE struct if_nameindex *
 ACE_OS::if_nameindex (void)
 {
   ACE_OS_TRACE ("ACE_OS::if_nameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#if defined (ACE_LACKS_IF_NAME_INDEX) || defined(ACE_WIN32)
   ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
@@ -1060,7 +1060,7 @@ ACE_INLINE void
 ACE_OS::if_freenameindex (struct if_nameindex *ptr)
 {
   ACE_OS_TRACE ("ACE_OS::if_freenameindex");
-#if defined (ACE_LACKS_IF_NAME_INDEX)
+#if defined (ACE_LACKS_IF_NAME_INDEX) || defined(ACE_WIN32)
   ACE_UNUSED_ARG (ptr);
 #else
   if (ptr != 0)

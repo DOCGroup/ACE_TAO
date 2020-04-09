@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
 ====================================================
 
+. _WIN32_WINNT updated to 0x0600 from 0x0501.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================
 
