@@ -204,6 +204,44 @@
 
 #endif /* __UCLIBC__ */
 
+// To support musl (note: musl devs refuse to add a __MUSL__)
+#if defined (ACE_HAS_MUSL)
+
+// Enable stuff that musl definitly has
+#define ACE_HAS_UCONTEXT_T
+#define ACE_HAS_SIGTIMEDWAIT
+#define ACE_HAS_PTHREADS
+#define ACE_HAS_RECURSIVE_MUTEXES
+#define ACE_HAS_PTHREADS_UNIX98_EXT
+#define ACE_HAS_CPU_SET_T
+#define ACE_HAS_SIGINFO_T
+#define ACE_HAS_SOCKLEN_T
+
+// Mask some features musl lacks
+#define ACE_LACKS_SIGINFO_H
+#define ACE_LACKS_SYS_SYSCTL_H
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_NETDB_REENTRANT_FUNCTIONS
+
+// Following the example set by uclib undef some festures
+#  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
+#    undef ACE_SCANDIR_CMP_USES_VOIDPTR
+#  endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
+
+#  if defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
+#    undef ACE_SCANDIR_CMP_USES_CONST_VOIDPTR
+#  endif /* ACE_SCANDIR_CMP_USES_CONST_VOIDPTR */
+
+#  if defined(__GLIBC__)
+#    undef __GLIBC__
+#  endif /* __GLIBC__ */
+
+#  if defined(ACE_HAS_SEMUN)
+#    undef ACE_HAS_SEMUN
+#  endif /* ACE_HAS_SEMUN */
+
+#endif /* ACE_HAS_MUSL */
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */
