@@ -242,6 +242,10 @@
 
 #endif /* ACE_HAS_MUSL */
 
+#if !defined (__GLIBC__) && !defined (__UCLIBC__) && !defined (ACE_HAS_MUSL)
+#  error "Could not determine C Standard Library"
+#endif /* !defined (__GLIBC__) && !defined (__UCLIBC__) && !defined (ACE_HAS_MUSL) */
+
 #include /**/ "ace/post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */
