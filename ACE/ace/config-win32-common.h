@@ -55,8 +55,8 @@
 #  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
-#if !defined (_WIN32_WINNT)
-# define _WIN32_WINNT 0x0600 // pretend it's at least Windows Vista
+#if !defined (_WIN32_WINNT) || _WIN32_WINNT < 0x0600
+#  error _WIN32_WINNT must be at least 0x0600
 #endif
 
 // If the invoking procedure turned off debugging by setting NDEBUG, then
