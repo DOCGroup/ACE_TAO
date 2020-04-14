@@ -71,7 +71,7 @@
 // be defined, if your application uses MFC.
 //  Setting applies to  : building ACE
 //  Runtime restrictions: MFC DLLs must be installed
-//  Additonal notes             : If both ACE_HAS_MFC and ACE_MT_SAFE are
+//  Additional notes    : If both ACE_HAS_MFC and ACE_MT_SAFE are
 //                        defined, the MFC DLL (not the static lib)
 //                        will be used from ACE.
 #if !defined (ACE_HAS_MFC)
