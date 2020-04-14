@@ -8,7 +8,7 @@ Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 4.1.1
 Vcs-Git: git://anonscm.debian.org/pkg-ace/pkg-ace.git
 Vcs-Browser: https://anonscm.debian.org/gitweb/?p=pkg-ace/pkg-ace.git;a=summary
-Homepage: http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+Homepage: https://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
 Package: mpc-ace
 Architecture: all
