@@ -1,7 +1,11 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
 ====================================================
 
-. _WIN32_WINNT no longer defined but checked for at least 0x0600.
+. On Windows, ACE no longer defines _WIN32_WINNT.  ACE wrappers for
+  if_nametoindex and if_indextoname are available if the version of the
+  Windows SDK supports them.
+
+. IPv6 extended datagram receive info now supported on macOS.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================

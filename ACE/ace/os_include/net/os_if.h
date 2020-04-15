@@ -102,6 +102,10 @@ struct  ifconf {
 # define IFF_BROADCAST 0x2
 #endif /* IFF_BROADCAST */
 
+#ifdef ACE_LACKS_IF_NAMEINDEX
+struct if_nameindex {};
+#endif
+
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */

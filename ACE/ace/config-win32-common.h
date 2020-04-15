@@ -55,10 +55,6 @@
 #  endif  /* !_FILE_OFFSET_BITS */
 #endif /* _WIN64 || WIN64 */
 
-#if !defined (_WIN32_WINNT) || _WIN32_WINNT < 0x0600
-#  error _WIN32_WINNT must be at least 0x0600
-#endif
-
 // If the invoking procedure turned off debugging by setting NDEBUG, then
 // also set ACE_NDEBUG, unless the user has already set it.
 #if defined (NDEBUG)
@@ -565,6 +561,11 @@
 // Version 1.1 of WinSock
 # define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
+
+#if _WIN32_WINNT < 0x600
+# define ACE_LACKS_IF_NAMETOINDEX
+#endif
+#define ACE_LACKS_IF_NAMEINDEX
 
 // Platform supports IP multicast on Winsock 2
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

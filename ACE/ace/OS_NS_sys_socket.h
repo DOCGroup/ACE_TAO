@@ -75,10 +75,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Accept_QoS_Params;
 class ACE_QoS_Params;
 
-#if defined(ACE_WIN32)
-  struct if_nameindex {};
-#endif
-
 namespace ACE_OS
 {
 
