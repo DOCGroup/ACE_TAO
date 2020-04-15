@@ -90,10 +90,6 @@ override_dh_auto_clean:
 override_dh_compress:
 	dh_compress -Xexamples
 
-# Add --list-missing to make sure we don't miss new binaries
-override_dh_install:
-	dh_install --list-missing
-
 # ACE+TAO has different changelogs. Use the right one in every package.
 override_dh_installchangelogs:
 	dh_installchangelogs -pmpc-ace MPC/ChangeLog
