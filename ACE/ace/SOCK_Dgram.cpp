@@ -729,12 +729,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
                   0,
                   sizeof (lmreq));
 
-#if !defined(ACE_LACKS_IF_NAME_INDEX)
+#ifndef ACE_LACKS_IF_NAMETOINDEX
   if (net_if != 0)
     {
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR(net_if));
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
     }
-  else
 #elif defined (ACE_WIN32)
   if (net_if != 0)
     {
@@ -790,11 +789,9 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
       delete[] buf; // clean up
     }
-  else
 #else  /* ACE_WIN32 */
     ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 */
-    lmreq.ipv6mr_interface = 0;
 
   // now set the multicast address
   ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr,
@@ -807,6 +804,6 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
   return 0;
 }
-#endif /* ACE_LINUX && ACE_HAS_IPV6 */
+#endif /* ACE_HAS_IPV6 */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
