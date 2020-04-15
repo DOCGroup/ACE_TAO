@@ -12,8 +12,9 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+format,+fortify,+stackprotector,+relro,+bindnow
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
-CFLAGS+=$(CPPFLAGS)
-CXXFLAGS+=$(CPPFLAGS)
+export DEB_CFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CXXFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CPPFLAGS_MAINT_APPEND = -g
 
 MWCFLAGS := -type gnuace -noreldefs
 DSO_MAKE_FLAG := versioned_so=2
