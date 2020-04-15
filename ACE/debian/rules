@@ -49,6 +49,9 @@ ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
+	for flname in debian/*.install.in; do \
+		sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' \
+                $$flname > $${flname%.in}; done
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
 	cp debian/config*.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config

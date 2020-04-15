@@ -1,4 +1,4 @@
-usr/lib/libACE_INet.so
+usr/lib/libACE_INet.so usr/lib/@DEB_HOST_MULTIARCH@/
 usr/include/ace/INet/Sock_IOStream.cpp
 usr/include/ace/INet/FTP_IOStream.h
 usr/include/ace/INet/HTTP_Request.inl
@@ -63,4 +63,4 @@ usr/include/ace/INet/FTP_Response.inl
 usr/include/ace/INet/FTP_URL.inl
 usr/include/ace/INet/HTTP_StreamPolicy.h
 usr/include/ace/INet/Request.h
-usr/lib/pkgconfig/ACE_INet.pc
+usr/lib/pkgconfig/ACE_INet.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
