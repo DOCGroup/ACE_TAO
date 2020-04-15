@@ -1,7 +1,7 @@
 Source: ace
 Section: devel
 Priority: optional
-Maintainer: Debian ACE+TAO maintainers <pkg-ace-devel@lists.alioth.debian.org>
+Maintainer: Debian ACE maintainers <team+ace@tracker.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Johnny Willemsen <jwillemsen@remedy.nl>
 Build-Depends: debhelper-compat (=12), libssl-dev, libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), tk-dev (>= 8.5), libfox-1.6-dev, docbook-to-man, libxerces-c-dev
 Build-Depends-Indep: doxygen, graphviz
