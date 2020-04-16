@@ -1,3 +1,0 @@
-libacexml-6.5.8: no-symbols-control-file usr/lib/libACEXML_Parser-6.5.8.so
-libacexml-6.5.8: no-symbols-control-file usr/lib/libACEXML_XML_Svc_Conf_Parser-6.5.8.so
-libacexml-6.5.8: no-symbols-control-file usr/lib/libACEXML-6.5.8.so

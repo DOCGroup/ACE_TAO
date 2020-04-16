@@ -12,8 +12,9 @@
 export DEB_BUILD_MAINT_OPTIONS = hardening=+format,+fortify,+stackprotector,+relro,+bindnow
 DPKG_EXPORT_BUILDFLAGS = 1
 include /usr/share/dpkg/buildflags.mk
-CFLAGS+=$(CPPFLAGS)
-CXXFLAGS+=$(CPPFLAGS)
+export DEB_CFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CXXFLAGS_MAINT_APPEND = $(CPPFLAGS)
+export DEB_CPPFLAGS_MAINT_APPEND = -g
 
 MWCFLAGS := -type gnuace -noreldefs
 DSO_MAKE_FLAG := versioned_so=2
@@ -34,7 +35,6 @@ ALL_ACEXML   := $(filter libacexml%,$(ALL_PACKAGES))
 
 export ACE_ROOT := $(shell pwd)
 export MPC_ROOT := $(ACE_ROOT)/MPC
-export LD_LIBRARY_PATH := $(LD_LIBRARY_PATH):$(ACE_ROOT)/lib
 
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
@@ -48,6 +48,9 @@ ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
+	for flname in debian/*.install.in; do \
+		sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' \
+                $$flname > $${flname%.in}; done
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
 	cp debian/config*.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
@@ -89,10 +92,6 @@ override_dh_auto_clean:
 
 override_dh_compress:
 	dh_compress -Xexamples
-
-# Add --list-missing to make sure we don't miss new binaries
-override_dh_install:
-	dh_install --list-missing
 
 # ACE+TAO has different changelogs. Use the right one in every package.
 override_dh_installchangelogs:
