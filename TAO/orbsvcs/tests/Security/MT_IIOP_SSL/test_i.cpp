@@ -41,22 +41,26 @@ Simple_Server_i::validate_protocol (void)
            iter != end_iter;
            ++iter)
         {
-          TAO_Transport *t =
-            (*iter).int_id_.transport ();
-
-          // @@ Worst possible way to check. If SSLIOP had a tag
-          // things would have been a  lot simpler.
-          TAO::SSLIOP::Transport *ssl_t =
-            dynamic_cast<TAO::SSLIOP::Transport *> (t);
-
-          // There should be no SSL Transport
-          if (ssl_t != 0)
+          typedef TAO::Transport_Cache_Manager::Cache_IntId INT_ID;
+          ACE_Unbounded_Set<INT_ID>& int_ids = iter->item();
+          for (ACE_Unbounded_Set<INT_ID>::iterator it = int_ids.begin();
+               it != int_ids.end(); ++it)
             {
-              this->validated_ = VALIDATED_NOSUCCESS;
-              break;
+              TAO_Transport* t = (*it).transport ();
+
+              // @@ Worst possible way to check. If SSLIOP had a tag
+              // things would have been a  lot simpler.
+              TAO::SSLIOP::Transport *ssl_t =
+                dynamic_cast<TAO::SSLIOP::Transport *> (t);
+
+              // There should be no SSL Transport
+              if (ssl_t != 0)
+                {
+                  this->validated_ = VALIDATED_NOSUCCESS;
+                  break;
+                }
             }
         }
-
     }
 
   if (this->validated_ == VALIDATED_NOSUCCESS)

@@ -56,15 +56,15 @@ TAO_Transport::opened_as (TAO::Connection_Role role)
   this->opening_connection_role_ = role;
 }
 
-ACE_INLINE TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *
-TAO_Transport::cache_map_entry (void)
+ACE_INLINE const TAO::Transport_Cache_Manager::HASH_MAP_ENTRY_REF&
+TAO_Transport::cache_map_entry (void) const
 {
   return this->cache_map_entry_;
 }
 
 ACE_INLINE void
 TAO_Transport::cache_map_entry (
-    TAO::Transport_Cache_Manager::HASH_MAP_ENTRY *entry)
+    const TAO::Transport_Cache_Manager::HASH_MAP_ENTRY_REF& entry)
 {
   // Sync with TAO_Transport::purge_entry()
   ACE_GUARD (ACE_Lock, ace_mon, *this->handler_lock_);

@@ -172,16 +172,6 @@ namespace TAO
     /// Make a deep copy of the underlying pointer
     void duplicate (void);
 
-    /// Return the index value
-    CORBA::ULong index (void) const;
-
-    /// Set the index value. This calls should not be used by any users
-    /// but for the TAO_Transport_Cache_Manager class.
-    void index (CORBA::ULong index);
-
-    /// Increment the index value
-    void incr_index (void);
-
     // = Accessors
     /// Get the underlying the property pointer
     transport_descriptor_type *property (void) const;
@@ -192,14 +182,6 @@ namespace TAO
 
     /// Do we need to delete transport_property?
     bool is_delete_;
-
-    /**
-     * This is a supplementary index. Would be set to zero by
-     * default. Would be altered by the Transport_Cache of TAO. Please
-     * see the documentation of TAO_Transport_Cache_Manager for
-     * details.
-     */
-    CORBA::ULong index_;
   };
 }
 

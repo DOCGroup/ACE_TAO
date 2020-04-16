@@ -124,7 +124,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                               size_t input_cdr_size)
   : tag_ (tag)
   , orb_core_ (orb_core)
-  , cache_map_entry_ (0)
   , tms_ (0)
   , ws_ (0)
   , bidirectional_flag_ (-1)
@@ -227,7 +226,7 @@ TAO_Transport::~TAO_Transport (void)
   // The following assert is needed for the test "Bug_2494_Regression".
   // See the bugzilla bug #2494 for details.
   ACE_ASSERT (this->queue_is_empty_i ());
-  ACE_ASSERT (this->cache_map_entry_ == 0);
+  ACE_ASSERT (this->cache_map_entry_.entry_ == 0);
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   delete this->stats_;
@@ -559,8 +558,10 @@ TAO_Transport::purge_entry (void)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Transport[%d]::purge_entry, ")
-                  ACE_TEXT ("entry is %@\n"),
-                  this->id (), this->cache_map_entry_));
+                  ACE_TEXT ("entry is {%@:%@}\n"),
+                  this->id (),
+                  this->cache_map_entry_.entry_,
+                  this->cache_map_entry_.int_id_));
     }
 
   return this->transport_cache_manager ().purge_entry (this->cache_map_entry_);
@@ -2852,8 +2853,11 @@ TAO_Transport::post_open (size_t id)
 
   if (TAO_debug_level > 9)
     {
-      TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
-                            ACE_TEXT (", cache_map_entry_ is [%@]\n"), this->id_, this->cache_map_entry_));
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("TAO (%P|%t) - Transport[%d]::post_open")
+                     ACE_TEXT (", cache_map_entry_ is [%@]\n"),
+                     this->id_,
+                     this->cache_map_entry_.entry_));
     }
 
   this->transport_cache_manager ().mark_connected (this->cache_map_entry_,

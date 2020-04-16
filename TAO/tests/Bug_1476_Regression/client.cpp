@@ -132,11 +132,17 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
            iter != end_iter;
            ++iter)
         {
-          TAO_Transport* transport = (*iter).int_id_.transport ();
-          if (transport->queue_is_empty() == 0 && transport->is_connected() == false)
+          typedef TAO::Transport_Cache_Manager::Cache_IntId INT_ID;
+          ACE_Unbounded_Set<INT_ID>& int_ids = iter->item();
+          for (ACE_Unbounded_Set<INT_ID>::iterator it = int_ids.begin();
+               it != int_ids.end(); ++it)
             {
-              tranportwithqueue = true;
-              break;
+              TAO_Transport* transport = (*it).transport ();
+              if (transport->queue_is_empty() == 0 && transport->is_connected() == false)
+                {
+                  tranportwithqueue = true;
+                  break;
+                }
             }
         }
 

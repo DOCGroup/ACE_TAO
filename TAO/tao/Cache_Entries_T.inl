@@ -100,8 +100,7 @@ namespace TAO
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (void)
     : transport_property_ (0),
-      is_delete_ (false),
-      index_ (0)
+      is_delete_ (false)
   {
   }
 
@@ -109,8 +108,7 @@ namespace TAO
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (
     typename Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::transport_descriptor_type *prop)
     : transport_property_ (prop),
-      is_delete_ (false),
-      index_ (0)
+      is_delete_ (false)
   {
 
   }
@@ -128,6 +126,12 @@ namespace TAO
   {
     if (this != &rhs)
       {
+        if (this->is_delete_)
+          {
+            delete this->transport_property_;
+            this->transport_property_ = 0;
+          }
+
         // Do a deep copy
         this->transport_property_ =
           rhs.transport_property_->duplicate ();
@@ -135,12 +139,10 @@ namespace TAO
         if (this->transport_property_ == 0)
           {
             this->is_delete_ = false;
-            this->index_ = 0;
           }
         else
           {
             this->is_delete_ = true;
-            this->index_ = rhs.index_;
           }
       }
     return *this;
@@ -149,8 +151,7 @@ namespace TAO
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (const Cache_ExtId_T &rhs)
     : transport_property_ (0),
-      is_delete_ (false),
-      index_ (0)
+      is_delete_ (false)
   {
     *this = rhs;
   }
@@ -158,15 +159,13 @@ namespace TAO
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE bool
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator== (const Cache_ExtId_T &rhs) const
   {
-    return (this->transport_property_->is_equivalent (rhs.transport_property_) &&
-            this->index_ == rhs.index_);
+    return this->transport_property_->is_equivalent (rhs.transport_property_);
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE bool
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator!= (const Cache_ExtId_T &rhs) const
   {
-    if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
-        this->index_ == rhs.index_)
+    if (this->transport_property_->is_equivalent (rhs.transport_property_))
       return false;
 
     return true;
@@ -175,7 +174,7 @@ namespace TAO
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE u_long
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::hash (void) const
   {
-    return (this->transport_property_->hash () + this->index_);
+    return this->transport_property_->hash ();
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
@@ -195,26 +194,6 @@ namespace TAO
 
     this->is_delete_ = true;
     this->transport_property_ = prop;
-  }
-
-
-  template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE CORBA::ULong
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index (void) const
-  {
-    return this->index_;
-  }
-
-
-  template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::index (CORBA::ULong index)
-  {
-    this->index_ = index;
-  }
-
-  template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE void
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::incr_index (void)
-  {
-    ++this->index_;
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
