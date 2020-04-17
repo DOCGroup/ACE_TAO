@@ -562,6 +562,9 @@
 # define ACE_WSOCK_VERSION 1, 1
 #endif /* ACE_HAS_WINSOCK2 */
 
+#if _WIN32_WINNT >= 0x400
+# define ACE_HAS_WIN32_TRYLOCK
+#endif
 #if _WIN32_WINNT < 0x600
 # define ACE_LACKS_IF_NAMETOINDEX
 #endif
@@ -575,10 +578,12 @@
 #if !defined (ACE_HAS_WINCE)
 # define ACE_HAS_INTERLOCKED_EXCHANGEADD
 #endif
-#define ACE_HAS_WIN32_TRYLOCK
 
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_HAS_PHARLAP)
-# define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
+
+# if _WIN32_WINNT >= 0x400
+#  define ACE_HAS_SIGNAL_OBJECT_AND_WAIT
+# endif
 
 // If CancelIO is undefined get the updated sp2-sdk from MS
 # define ACE_HAS_CANCEL_IO
