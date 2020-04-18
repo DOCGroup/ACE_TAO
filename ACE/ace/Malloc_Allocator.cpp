@@ -69,7 +69,7 @@ ACE_Allocator::instance (ACE_Allocator *r)
   ACE_Allocator *t = ACE_Allocator::allocator_;
 
   // We can't safely delete it since we don't know who created it!
-  ACE_Allocator::delete_allocator_ = 0;
+  ACE_Allocator::delete_allocator_ = false;
 
   ACE_Allocator::allocator_ = r;
   return t;
@@ -89,7 +89,7 @@ ACE_Allocator::close_singleton (void)
       // ACE_Allocator::instance (void) method for an explanation.
       delete ACE_Allocator::allocator_;
       ACE_Allocator::allocator_ = 0;
-      ACE_Allocator::delete_allocator_ = 0;
+      ACE_Allocator::delete_allocator_ = false;
     }
 }
 

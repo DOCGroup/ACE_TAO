@@ -17,7 +17,7 @@ ACE_Allocator *ACE_Allocator::allocator_ = 0;
 // Controls whether the Allocator is deleted when we shut down (we can
 // only delete it safely if we created it!)  This is no longer used;
 // see ACE_Allocator::instance (void).
-int ACE_Allocator::delete_allocator_ = 0;
+bool ACE_Allocator::delete_allocator_ = false;
 
 void
 ACE_Control_Block::ACE_Malloc_Header::dump (void) const
