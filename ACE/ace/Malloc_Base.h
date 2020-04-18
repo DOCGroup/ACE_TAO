@@ -157,9 +157,6 @@ private:
 
   /// Pointer to a process-wide ACE_Allocator instance.
   static ACE_Allocator *allocator_;
-
-  /// Must delete the <allocator_> if true.
-  static bool delete_allocator_;
 };
 
 /**
