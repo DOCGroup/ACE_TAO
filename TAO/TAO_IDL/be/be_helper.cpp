@@ -312,15 +312,17 @@ TAO_OutStream::print (const char *format, ...)
   return result;
 }
 
+#if defined (ACE_HAS_CPP11)
 TAO_OutStream &
 TAO_OutStream::operator<< (const unsigned long num)
 {
   ACE_OS::fprintf (this->fp_,
                    "%lu",
                    (unsigned long) num);
-  
+
   return *this;
 }
+#endif /* ACE_HAS_CPP11 */
 
 TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)

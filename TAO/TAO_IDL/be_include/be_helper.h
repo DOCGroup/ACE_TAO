@@ -167,8 +167,10 @@ public:
   int gen_endif (void);
 
   // =overloaded operators
+#   if defined (ACE_HAS_CPP11)
+      TAO_OutStream &operator<< (const unsigned long num);
+#   endif /* ACE_HAS_CPP11 */
 
-  TAO_OutStream &operator<< (const unsigned long num);
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (const ACE_CString &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);

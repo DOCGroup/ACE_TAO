@@ -532,6 +532,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_INT64 &i)
   return *this;
 }
 
+#if defined (ACE_HAS_CPP11)
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (unsigned long i)
 {
@@ -551,6 +552,7 @@ TAO::Storable_FlatFileStream::operator >> (unsigned long &i)
 
   return *this;
 }
+#endif /* ACE_HAS_CPP11 */
 
 
 TAO::Storable_Base &
