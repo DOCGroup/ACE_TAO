@@ -98,7 +98,7 @@ namespace TAO
         ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
       if (n < 0)
         this->throw_on_write_error (badbit);
-      return *this; 
+      return *this;
     }
 
     template <typename Dummy = Storable_Base &>
