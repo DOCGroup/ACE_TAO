@@ -313,6 +313,16 @@ TAO_OutStream::print (const char *format, ...)
 }
 
 TAO_OutStream &
+TAO_OutStream::operator<< (const unsigned long num)
+{
+  ACE_OS::fprintf (this->fp_,
+                   "%lu",
+                   (unsigned long) num);
+  
+  return *this;
+}
+
+TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);

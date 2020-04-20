@@ -200,6 +200,10 @@ public:
   unsigned long operator () (unsigned long t) const;
 };
 
+#if (ACE_SIZEOF_LONG == 8)
+/**
+ * @brief Function object for hashing a long long number
+ */
 template<>
 class ACE_Export ACE_Hash<long long>
 {
@@ -207,15 +211,22 @@ public:
   /// Simply returns t
   unsigned long operator () (long long t) const;
 };
+#endif /* ACE_SIZEOF_LONG == 8 */
 
+#if (ACE_SIZEOF_LONG == 8)
+/**
+ * @brief Function object for hashing an unsigned long long number
+ */
 template<>
 class ACE_Export ACE_Hash<unsigned long long>
 {
 public:
+  /// Simply returns t
   unsigned long operator () (unsigned long long t) const;
 };
+#endif /* ACE_SIZEOF_LONG == 8 */
 
-#if ((ACE_SIZEOF_LONG < 8) && (ACE_SIZEOF_LONG_LONG < 8))
+#if (ACE_SIZEOF_LONG < 8)
 /**
  * @brief Function object for hashing a signed 64-bit number
  */
@@ -228,7 +239,7 @@ public:
 };
 #endif /* ACE_SIZEOF_LONG < 8 */
 
-#if ((ACE_SIZEOF_LONG < 8) && (ACE_SIZEOF_LONG_LONG < 8))
+#if (ACE_SIZEOF_LONG < 8)
 /**
  * @brief Function object for hashing an unsigned 64-bit number
  */

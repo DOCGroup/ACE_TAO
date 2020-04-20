@@ -532,6 +532,26 @@ TAO::Storable_FlatFileStream::operator >> (ACE_INT64 &i)
   return *this;
 }
 
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator << (unsigned long i)
+{
+  int const n =
+    ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
+  if (n < 0)
+    this->throw_on_write_error (badbit);
+  return *this;
+}
+
+TAO::Storable_Base &
+TAO::Storable_FlatFileStream::operator >> (unsigned long &i)
+{
+  Storable_State state = this->rdstate();
+  read_integer (ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+  this->throw_on_read_error (state);
+
+  return *this;
+}
+
 
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)

@@ -111,6 +111,8 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT32 &) = 0;
     virtual Storable_Base& operator << (ACE_INT64 ) = 0;
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
+    virtual Storable_Base& operator << (unsigned long ) = 0;
+    virtual Storable_Base& operator >> (unsigned long &) = 0;
 
     virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
 

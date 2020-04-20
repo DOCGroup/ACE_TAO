@@ -205,12 +205,7 @@ public:
   typedef ACE_UINT16 UShort;
   typedef ACE_INT32 Long;
   typedef ACE_UINT32 ULong;
-
-#   if defined (ACE_HAS_UINT64_T)
-      typedef unsigned long ULongLong;
-#   else
-      typedef ACE_UINT64 ULongLong;
-#   endif /* ACE_HAS_UINT64_T */
+  typedef ACE_UINT64 ULongLong;
 
 #   if (defined (_MSC_VER)) || (defined (__BORLANDC__))
       typedef __int64 LongLong;
