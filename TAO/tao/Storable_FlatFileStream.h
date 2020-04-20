@@ -84,10 +84,37 @@ namespace TAO
     virtual Storable_Base& operator << (ACE_INT64 );
     virtual Storable_Base& operator >> (ACE_INT64 &);
 
-#     if defined (ACE_HAS_CPP11)
-        virtual Storable_Base& operator << (unsigned long );
-        virtual Storable_Base& operator >> (unsigned long &);
-#     endif /* ACE_HAS_CPP11 */
+#if defined (ACE_HAS_CPP11)
+#include <type_traits>
+    // Avoid redefining overloaded operators for unsigned long
+    template <typename Dummy = Storable_Base &>
+    typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
+                            !std::is_same<ACE_UINT64, unsigned long>::value &&
+                            !std::is_same<ACE_UINT32, unsigned long>::value,
+                            Storable_Base &>::type
+    operator << (unsigned long )
+    {
+      int const n =
+        ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
+      if (n < 0)
+        this->throw_on_write_error (badbit);
+      return *this; 
+    }
+
+    template <typename Dummy = Storable_Base &>
+    typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
+                            !std::is_same<ACE_UINT64, unsigned long>::value &&
+                            !std::is_same<ACE_UINT32, unsigned long>::value,
+                            Storable_Base &>::type
+    operator >> (unsigned long &)
+    {
+      Storable_State state = this->rdstate();
+      read_integer (ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+      this->throw_on_read_error (state);
+
+      return *this;
+    }
+#endif /* ACE_HAS_CPP11 */
 
     virtual Storable_Base& operator << (const TAO_OutputCDR & cdr);
 

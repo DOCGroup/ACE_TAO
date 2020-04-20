@@ -167,9 +167,23 @@ public:
   int gen_endif (void);
 
   // =overloaded operators
-#   if defined (ACE_HAS_CPP11)
-      TAO_OutStream &operator<< (const unsigned long num);
-#   endif /* ACE_HAS_CPP11 */
+#if defined (ACE_HAS_CPP11)
+#include <type_traits>
+  // Avoid duplication of overloaded operator for unsigned long
+  template <typename Dummy = TAO_OutStream &>
+  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
+                          !std::is_same<ACE_CDR::ULongLong, unsigned long>::value &&
+                          !std::is_same<ACE_CDR::ULong, unsigned long>::value,
+                          TAO_OutStream &>::type
+  operator << (const unsigned long num)
+  {
+    ACE_OS::fprintf (this->fp_,
+                     "%lu",
+                     (unsigned long) num);
+
+    return *this;
+  }
+#endif /* ACE_HAS_CPP11 */
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (const ACE_CString &str);
