@@ -67,7 +67,7 @@ public:
   /// Allocate @a nbytes, giving them @a initial_value.
   virtual void *calloc (size_type nbytes, char initial_value = '\0') = 0;
 
-  /// Allocate <n_elem> each of size @a elem_size, giving them
+  /// Allocate @a n_elem each of size @a elem_size, giving them
   /// @a initial_value.
   virtual void *calloc (size_type n_elem,
                         size_type elem_size,
@@ -157,9 +157,6 @@ private:
 
   /// Pointer to a process-wide ACE_Allocator instance.
   static ACE_Allocator *allocator_;
-
-  /// Must delete the <allocator_> if non-0.
-  static int delete_allocator_;
 };
 
 /**
