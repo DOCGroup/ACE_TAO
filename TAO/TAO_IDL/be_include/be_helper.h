@@ -169,6 +169,8 @@ public:
   // =overloaded operators
 #if defined (ACE_HAS_CPP11)
 #include <type_traits>
+#include "ace/OS_NS_stdio.h"
+
   // Avoid duplication of overloaded operator for unsigned long
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&

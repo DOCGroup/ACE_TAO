@@ -112,6 +112,33 @@ namespace TAO
     virtual Storable_Base& operator << (ACE_INT64 ) = 0;
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
 
+#if defined (ACE_HAS_CPP11)
+#include <type_traits>
+
+  // Only define if these functions have not been declared above
+  template <typename Dummy = Storable_Base &>
+  typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
+                          !std::is_same<ACE_UINT64, unsigned long>::value &&
+                          !std::is_same<ACE_UINT32, unsigned long>::value,
+                          Storable_Base &>::type
+  operator << (unsigned long)
+  {
+    // Derived classes implement this
+    return *this;
+  }
+
+  template <typename Dummy = Storable_Base &>
+  typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
+                          !std::is_same<ACE_UINT64, unsigned long>::value &&
+                          !std::is_same<ACE_UINT32, unsigned long>::value,
+                          Storable_Base &>::type
+  operator >> (unsigned long &)
+  {
+    // Derived classes implement this
+    return *this;
+  }
+#endif /* ACE_HAS_CPP11 */
+
     virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
 
     virtual size_t write (size_t size, const char * bytes) = 0;

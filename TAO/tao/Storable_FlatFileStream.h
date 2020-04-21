@@ -94,6 +94,7 @@ namespace TAO
 
 #if defined (ACE_HAS_CPP11)
 #include <type_traits>
+
     // Avoid redefining overloaded operators for unsigned long
     template <typename Dummy = Storable_Base &>
     typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
