@@ -84,7 +84,7 @@ BuildRoot:    %{_tmppath}/%{name}-%{version}-%{release}-root-%(%{__id_u} -n)
 %define _extension .gz
 
 %if 0%{?fedora} || 0%{?rhel}
-BuildRequires: redhat-rpm-config elfutils sendmail
+BuildRequires: redhat-rpm-config elfutils
 %endif
 
 %if !0%{?suse_version}
