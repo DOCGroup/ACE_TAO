@@ -121,7 +121,7 @@ public:
     /// event
     bool io_entry_;
 
-    /// The assosiated Event_Handler
+    /// The associated Event_Handler
     ACE_Event_Handler *event_handler_;
 
     /// The I/O handle related to the Event_Handler.  This entry is
@@ -434,14 +434,14 @@ public:
   void dump (void) const;
 
 protected:
-  /// Reference to our <WFMO_Reactor>.
+  /// Reference to our WFMO_Reactor.
   ACE_WFMO_Reactor &wfmo_reactor_;
 
   /// Maximum number of handles.
   size_t max_size_;
 
   /**
-   * Array of <ACE_HANDLEs> passed to <WaitForMultipleObjects>.  This
+   * Array of ACE_HANDLEs passed to <WaitForMultipleObjects>.  This
    * is not part of the structure as the handle array needs to be
    * passed directly to <WaitForMultipleObjects>.
    */
@@ -497,7 +497,7 @@ public:
   /// Constructor
   ACE_WFMO_Reactor_Notify (size_t max_notifies = 1024);
 
-  /// Initialization. @a timer_queue is stored to call <gettimeofday>.
+  /// Initialization. @a timer_queue is stored to call gettimeofday().
   virtual int open (ACE_Reactor_Impl *wfmo_reactor,
                     ACE_Timer_Queue *timer_queue,
                     int disable_notify = 0);
