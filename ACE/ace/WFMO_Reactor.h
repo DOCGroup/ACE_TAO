@@ -307,10 +307,6 @@ public:
 
   // = Search structure operations.
 
-  /// Bind the ACE_Event_Handler * to the ACE_HANDLE. This is for
-  /// the simple event entry.
-  int bind (ACE_HANDLE, ACE_Event_Handler *);
-
   /// Insert I/O Event_Handler entry into the system. This method
   /// assumes that the lock are head *before* this method is invoked.
   int bind_i (bool io_entry,
