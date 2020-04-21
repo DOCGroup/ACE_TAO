@@ -23,6 +23,10 @@
 #include "tao/Storable_Factory.h"
 #include "ace/OS_NS_stdio.h"
 
+#if defined (ACE_HAS_CPP11)
+#include <type_traits>
+#endif /* ACE_HAS_CPP11 */
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_HAS_CPP11)
@@ -93,8 +97,6 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT64 &);
 
 #if defined (ACE_HAS_CPP11)
-#include <type_traits>
-
     // Avoid redefining overloaded operators for unsigned long
     template <typename Dummy = Storable_Base &>
     typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&

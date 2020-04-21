@@ -17,6 +17,11 @@
 #include "ace/CDR_Base.h"
 #include "ace/SString.h"
 
+#if defined (ACE_HAS_CPP11)
+#include "ace/OS_NS_stdio.h"
+#include <type_traits>
+#endif /* ACE_HAS_CPP11 */
+
 class Identifier;
 class UTL_IdList;
 class AST_Expression;
@@ -168,9 +173,6 @@ public:
 
   // =overloaded operators
 #if defined (ACE_HAS_CPP11)
-#include <type_traits>
-#include "ace/OS_NS_stdio.h"
-
   // Avoid duplication of overloaded operator for unsigned long
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
@@ -181,7 +183,7 @@ public:
   {
     ACE_OS::fprintf (this->fp_,
                      "%lu",
-                     (unsigned long) num);
+                     num);
 
     return *this;
   }
