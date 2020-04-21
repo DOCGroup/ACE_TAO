@@ -3,6 +3,7 @@
 // necessary to add minimum_corba to 'avoids' here.
 project(IFR_Service) : orbsvcsexe, install, ifrservice, ifr_client, imr_client, svc_utils {
   exename = tao_ifr_service
+  install = $(ACE_ROOT)/bin
 
   IDL_Files {
   }
