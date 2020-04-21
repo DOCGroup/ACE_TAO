@@ -1220,6 +1220,7 @@ install ${ACE_ROOT}/bin/ace_gperf %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_idl %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_imr %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_ifr %{buildroot}%{_bindir}
+install ${ACE_ROOT}/bin/tao_ifr_service %{buildroot}%{_bindir}
 install ${ACE_ROOT}/bin/tao_catior %{buildroot}%{_bindir}/tao_catior
 install ${ACE_ROOT}/bin/tao_nsadd %{buildroot}%{_bindir}/tao_nsadd
 install ${ACE_ROOT}/bin/tao_nsdel %{buildroot}%{_bindir}/tao_nsdel
@@ -2277,6 +2278,7 @@ fi
 
 %{_bindir}/tao_imr
 %{_bindir}/tao_ifr
+%{_bindir}/tao_ifr_service
 %{_datadir}/tao/MPC
 %{_bindir}/tao_idl
 %attr(0644,root,root) %doc %{_mandir}/man1/tao_idl.1%{_extension}
