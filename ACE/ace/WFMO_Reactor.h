@@ -771,8 +771,8 @@ public:
 
   /**
    * Control whether the Reactor will handle any more incoming events or not.
-   * If <do_stop> == 1, the Reactor will be disabled.  By default, a reactor
-   * is in active state and can be deactivated/reactived as wish.
+   * If @a do_stop == 1, the Reactor will be disabled.  By default, a reactor
+   * is in active state and can be deactivated/reactivated as wish.
    */
   virtual void deactivate (int do_stop);
 
@@ -791,13 +791,13 @@ public:
                                 ACE_HANDLE event_handle = ACE_INVALID_HANDLE);
 
   /**
-   * Register an ACE_Event_Handler <event_handle>.  @a mask specifies
-   * the network events that the <event_handler> is interested in.  If
-   * <io_handle> == <ACE_INVALID_HANDLE> the <ACE_WFMO_Reactor> will
+   * Register an ACE_Event_Handler @a event_handle.  @a mask specifies
+   * the network events that the @a event_handler is interested in.  If
+   * @a io_handle == ACE_INVALID_HANDLE the ACE_WFMO_Reactor will
    * call the <get_handle> method of <event_handler> to extract the
-   * underlying I/O handle. If the <event_handle> ==
-   * <ACE_INVALID_HANDLE>, WFMO_Reactor will create an event for
-   * associating it with the I/O handle. When the <event_handle> is
+   * underlying I/O handle. If the @a event_handle ==
+   * ACE_INVALID_HANDLE, WFMO_Reactor will create an event for
+   * associating it with the I/O handle. When the @a event_handle is
    * signalled, the appropriate <handle_*> callback will be invoked on
    * the Event_Handler
    */
@@ -848,8 +848,8 @@ public:
                                 ACE_Sig_Action *new_disp = 0);
 
   /**
-   * Removes @a event_handler from the <ACE_WFMO_Reactor>.  Note that
-   * the <ACE_WFMO_Reactor> will call the <get_handle> method of
+   * Removes @a event_handler from the ACE_WFMO_Reactor.  Note that
+   * the ACE_WFMO_Reactor will call the <get_handle> method of
    * @a event_handler to extract the underlying handle.  If @a mask ==
    * ACE_Event_Handler::DONT_CALL then the <handle_close> method of
    * the @a event_handler is not invoked. Note that the @a handle can
@@ -1018,8 +1018,8 @@ public:
                              ACE_Reactor_Mask masks_to_be_deleted);
 
   /**
-   * Remove @a masks_to_be_deleted to the <handle>'s entry in
-   * WFMO_Reactor.  The Event_Handler associated with <handle> must
+   * Remove @a masks_to_be_deleted to the @a handle's entry in
+   * WFMO_Reactor.  The Event_Handler associated with @a handle must
    * already have been registered with WFMO_Reactor.
    */
   virtual int cancel_wakeup (ACE_HANDLE handle,
@@ -1072,13 +1072,13 @@ public:
   // = Assorted helper methods.
 
   /**
-   * Return the Event_Handler associated with <handle>.  Return 0 if
-   * <handle> is not registered.
+   * Return the Event_Handler associated with @a handle.  Return 0 if
+   * @a handle is not registered.
    */
   ACE_Event_Handler *find_handler (ACE_HANDLE handle);
 
   /**
-   * Check to see if <handle> is associated with a valid Event_Handler
+   * Check to see if @a handle is associated with a valid Event_Handler
    * bound to @a mask.  Return the @a event_handler associated with this
    * @a handler if @a event_handler != 0.
    */
