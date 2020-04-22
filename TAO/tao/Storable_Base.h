@@ -117,13 +117,13 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
 
 #if defined (ACE_HAS_CPP11)
-  // Only define if these functions have not been declared above
+  // Avoid duplication for the underlying type of size_t
   template <typename Dummy = Storable_Base &>
   typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                          !std::is_same<ACE_UINT64, unsigned long>::value &&
-                          !std::is_same<ACE_UINT32, unsigned long>::value,
+                          !std::is_same<ACE_UINT64, size_t>::value &&
+                          !std::is_same<ACE_UINT32, size_t>::value,
                           Storable_Base &>::type
-  operator << (unsigned long)
+  operator << (size_t)
   {
     // Derived classes implement this
     return *this;
@@ -131,10 +131,10 @@ namespace TAO
 
   template <typename Dummy = Storable_Base &>
   typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                          !std::is_same<ACE_UINT64, unsigned long>::value &&
-                          !std::is_same<ACE_UINT32, unsigned long>::value,
+                          !std::is_same<ACE_UINT64, size_t>::value &&
+                          !std::is_same<ACE_UINT32, size_t>::value,
                           Storable_Base &>::type
-  operator >> (unsigned long &)
+  operator >> (size_t &)
   {
     // Derived classes implement this
     return *this;

@@ -97,16 +97,16 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT64 &);
 
 #if defined (ACE_HAS_CPP11)
-    // Avoid redefining overloaded operators for unsigned long
+    // Avoid duplication for the underlying type of size_t
     template <typename Dummy = Storable_Base &>
     typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                            !std::is_same<ACE_UINT64, unsigned long>::value &&
-                            !std::is_same<ACE_UINT32, unsigned long>::value,
+                            !std::is_same<ACE_UINT64, size_t>::value &&
+                            !std::is_same<ACE_UINT32, size_t>::value,
                             Storable_Base &>::type
-    operator << (unsigned long i)
+    operator << (size_t i)
     {
       int const n =
-        ACE_OS::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
+        ACE_OS::fprintf (this->fl_, ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n", i);
       if (n < 0)
         this->throw_on_write_error (badbit);
       return *this;
@@ -114,13 +114,13 @@ namespace TAO
 
     template <typename Dummy = Storable_Base &>
     typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                            !std::is_same<ACE_UINT64, unsigned long>::value &&
-                            !std::is_same<ACE_UINT32, unsigned long>::value,
+                            !std::is_same<ACE_UINT64, size_t>::value &&
+                            !std::is_same<ACE_UINT32, size_t>::value,
                             Storable_Base &>::type
-    operator >> (unsigned long &i)
+    operator >> (size_t &i)
     {
       Storable_State state = this->rdstate();
-      read_integer (ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
+      read_integer (ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n", i, state, fl_);
       this->throw_on_read_error (state);
 
       return *this;

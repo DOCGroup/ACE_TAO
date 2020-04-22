@@ -173,16 +173,16 @@ public:
 
   // =overloaded operators
 #if defined (ACE_HAS_CPP11)
-  // Avoid duplication of overloaded operator for unsigned long
+  // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, unsigned long>::value &&
-                          !std::is_same<ACE_CDR::ULong, unsigned long>::value,
+                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, size_t>::value,
                           TAO_OutStream &>::type
-  operator << (const unsigned long num)
+  operator << (const size_t num)
   {
     ACE_OS::fprintf (this->fp_,
-                     "%lu",
+                     ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER),
                      num);
 
     return *this;
