@@ -19,6 +19,10 @@
 
 #include "ace/SString.h"
 
+#if defined (ACE_HAS_CPP11)
+#include <type_traits>
+#endif /* ACE_HAS_CPP11 */
+
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -113,8 +117,6 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
 
 #if defined (ACE_HAS_CPP11)
-#include <type_traits>
-
   // Only define if these functions have not been declared above
   template <typename Dummy = Storable_Base &>
   typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&

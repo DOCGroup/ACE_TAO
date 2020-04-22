@@ -71,7 +71,12 @@
 # endif
 
 # if defined (ACE_HAS_CPP11)
-#  include <cstdint>
+#  define ACE_HAS_INT8_T
+#  define ACE_HAS_UINT8_T
+#  define ACE_HAS_INT16_T
+#  define ACE_HAS_UINT16_T
+#  define ACE_HAS_INT32_T
+#  define ACE_HAS_UINT32_T
 #  define ACE_HAS_INT64_T
 #  define ACE_HAS_UINT64_T
 # endif /* ACE_HAS_CPP11 */
