@@ -39,17 +39,25 @@ export MPC_ROOT := $(ACE_ROOT)/MPC
 ACE_MAJOR_VERSION := $(shell awk '/ACE_MAJOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
 ACE_MINOR_VERSION := $(shell awk '/ACE_MINOR_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
 ACE_MICRO_VERSION := $(shell awk '/ACE_MICRO_VERSION/ { print $$3 }' ${ACE_ROOT}/ace/Version.h)
+ACE_VERSION = ${ACE_MAJOR_VERSION}.${ACE_MINOR_VERSION}.${ACE_MICRO_VERSION}
 
 %:
 	dh $@
 
 # Implement our own configure machinery; it will copy Debian specific
 # configuration before launching MPC to generate ACE+TAO GNUmakefile
+#		fname1=echo $$fname; \
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
+	for fname in debian/*VERSION*; do \
+		cp $$fname $$(echo $$fname | \
+		sed -e 's/VERSION/${ACE_VERSION}/'); done
 	for flname in debian/*.install.in; do \
 		sed 's/@DEB_HOST_MULTIARCH@/$(DEB_HOST_MULTIARCH)/g' \
+                $$flname > $${flname%.in}; done
+	for flname in debian/*.lintian-overrides.in; do \
+		sed 's/@ACE_VERSION@/${ACE_VERSION}/g' \
                 $$flname > $${flname%.in}; done
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
 	cp debian/config*.h $(ACE_ROOT)/ace/
