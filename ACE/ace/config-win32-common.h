@@ -40,8 +40,8 @@
 #  define ACE_WIN64
 
 // MPC template adds _AMD64_ but user projects not generated using MPC
-// may want to use _AMD64_ as well. Ensure it's there in all cases.
-#  ifndef _AMD64_
+// may want to use _AMD64_ as well. Ensure it's there in all non ARM cases
+#  if !defined (_AMD64_) && !defined(_ARM_) && !defined(_ARM64_)
 #    define _AMD64_
 #  endif
 

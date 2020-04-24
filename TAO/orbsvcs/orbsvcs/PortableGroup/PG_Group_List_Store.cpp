@@ -259,7 +259,7 @@ TAO::PG_Group_List_Store::create_stream (const char * mode)
 bool
 TAO::PG_Group_List_Store::list_obsolete ()
 {
-  // TODO: Upate if obsolete flag is set based on CORBA call.
+  // TODO: Update if obsolete flag is set based on CORBA call.
   ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
   if (!stream->exists ())
     throw CORBA::INTERNAL ();

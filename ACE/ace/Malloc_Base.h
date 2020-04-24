@@ -39,7 +39,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Allocator
 {
 public:
-
   /// Unsigned integer type used for specifying memory block lengths.
   typedef size_t size_type;
 
