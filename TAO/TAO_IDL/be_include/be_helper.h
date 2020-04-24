@@ -182,7 +182,7 @@ public:
   operator << (const size_t num)
   {
     ACE_OS::fprintf (this->fp_,
-                     ACE_TEXT_ALWAYS_CHAR (ACE_SIZE_T_FORMAT_SPECIFIER),
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
                      num);
 
     return *this;
