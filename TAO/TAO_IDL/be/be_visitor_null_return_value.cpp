@@ -85,13 +85,11 @@ be_visitor_null_return_value::visit_predefined_type (be_predefined_type *node)
       case AST_PredefinedType::PT_ushort:
       case AST_PredefinedType::PT_long:
       case AST_PredefinedType::PT_ulong:
+      case AST_PredefinedType::PT_longlong:
       case AST_PredefinedType::PT_ulonglong:
       case AST_PredefinedType::PT_value:
       case AST_PredefinedType::PT_any:
         os_ << "0";
-        break;
-      case AST_PredefinedType::PT_longlong:
-        os_ << "ACE_CDR_LONGLONG_INITIALIZER";
         break;
       case AST_PredefinedType::PT_float:
         os_ << "0.0f";

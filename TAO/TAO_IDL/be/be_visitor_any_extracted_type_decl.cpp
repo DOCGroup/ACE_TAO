@@ -109,26 +109,12 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
             << " (" << tmp_name_ << ");";
         break;
       case AST_PredefinedType::PT_short:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_ushort:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_long:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_ulong:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_longlong:
-        os_ << var_name_ << " = ACE_CDR_LONGLONG_INITIALIZER;";
-        break;
       case AST_PredefinedType::PT_ulonglong:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_float:
-        os_ << var_name_ << " = 0;";
-        break;
       case AST_PredefinedType::PT_double:
         os_ << var_name_ << " = 0;";
         break;
