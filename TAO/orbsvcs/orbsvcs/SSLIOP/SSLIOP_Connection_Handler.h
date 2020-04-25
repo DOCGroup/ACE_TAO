@@ -37,7 +37,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @class Connection_Handler
      *
@@ -51,7 +50,6 @@ namespace TAO
         public TAO_Connection_Handler
     {
     public:
-
       Connection_Handler (ACE_Thread_Manager* t = 0);
 
       /// Constructor.
@@ -108,7 +106,6 @@ namespace TAO
       bool check_host (void);
 
     protected:
-
       //@{
       /**
        * @name TAO_Connection Handler overloads
@@ -119,11 +116,9 @@ namespace TAO
       //@}
 
     protected:
-
       /// Reference to the SSLIOP::Current object (downcast to gain
       /// access to the low-level management methods).
       TAO::SSLIOP::Current_var current_;
-
     };
 
     // ****************************************************************
@@ -146,7 +141,6 @@ namespace TAO
     class State_Guard
     {
     public:
-
       /// Constructor that sets up the TSS SSL state.
       State_Guard (TAO::SSLIOP::Connection_Handler *handler,
                    int &result);
@@ -155,7 +149,6 @@ namespace TAO
       ~State_Guard (void);
 
     private:
-
       /// Pointer to the connection handler currently handling the
       /// request/upcall.
       Connection_Handler *handler_;

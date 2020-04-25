@@ -28,12 +28,10 @@
 
 #include <openssl/opensslconf.h>
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
-
 
 /// Forward declarations for OpenSSL data structures.
 extern "C"
@@ -61,7 +59,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor
       CredentialsAcquirer (TAO::SL3::CredentialsCurator_ptr curator,
                            const CORBA::Any & acquisition_arguments);
@@ -91,7 +88,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -100,7 +96,6 @@ namespace TAO
       ~CredentialsAcquirer (void);
 
     private:
-
       /// Verify that this CredentialsAcquirer object is still valid,
       /// i.e. hasn't been destroyed.
       void check_validity (void);
@@ -112,7 +107,6 @@ namespace TAO
       static ::EVP_PKEY * make_EVP_PKEY (const ::SSLIOP::File &key);
 
     private:
-
       /// Lock used for synchronization.
       TAO_SYNCH_MUTEX lock_;
 
@@ -125,9 +119,7 @@ namespace TAO
       /// Has this CredentialsAcquirer object completed credentials
       /// acquisition or been explicitly destroyed?
       bool destroyed_;
-
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 

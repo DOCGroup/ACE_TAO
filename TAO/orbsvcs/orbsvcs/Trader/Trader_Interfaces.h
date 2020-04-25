@@ -57,7 +57,6 @@ class TAO_Lookup :
   public TAO_Import_Attributes<POA_CosTrading::Lookup>
 {
 public:
-
   TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Lookup (void);
@@ -153,7 +152,6 @@ public:
   // END SPEC
 
 private:
-
   /// Factory method for creating an appropriate Offer Iterator based
   /// on the presence of the Register Interface.
   TAO_Offer_Iterator* create_offer_iterator (const TAO_Property_Filter&);
@@ -268,7 +266,6 @@ class TAO_Register :
   public TAO_Support_Attributes<POA_CosTrading::Register>
 {
 public:
-
   TAO_Register (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   virtual ~TAO_Register (void);
@@ -776,17 +773,15 @@ private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
-  // *************************************************************
-  // TAO_Proxy
-  // *************************************************************
-
+// *************************************************************
+// TAO_Proxy
+// *************************************************************
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Proxy :
   public TAO_Trader_Components <POA_CosTrading::Proxy>,
   public TAO_Support_Attributes <POA_CosTrading::Proxy>
 {
 public:
-
   TAO_Proxy (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
   ~TAO_Proxy (void);
@@ -811,11 +806,9 @@ public:
                              CosTrading::OfferIdIterator_ptr &);
 
 private:
-
   // = Disallow these operations.
   ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
   ACE_UNIMPLEMENTED_FUNC (TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };

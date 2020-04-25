@@ -71,12 +71,9 @@ namespace TAO
                               ACE_Time_Value *max_wait_time = 0);
 
   protected:
-
     /// Reference to the TAO::SSLIOP::Current object.
     TAO::SSLIOP::Current_var current_;
-
   };
-
 }  // End TAO namespace.
 
 TAO_END_VERSIONED_NAMESPACE_DECL

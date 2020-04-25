@@ -43,7 +43,6 @@ namespace TAO
     class Current_Impl : public TAO::SL3::SecurityCurrent_Impl
     {
     public:
-
       /// Constructor.
       Current_Impl (void);
 
@@ -74,12 +73,10 @@ namespace TAO
       SSL *ssl (void);
 
     protected:
-
       /// Return the unique tag that identifies the concrete subclass.
       virtual CORBA::ULong tag (void) const;
 
     private:
-
       /// Prevent copying through the copy constructor and the assignment
       /// operator.
       //@{
@@ -88,10 +85,8 @@ namespace TAO
       //@}
 
     private:
-
       /// The SSL session state corresponding to the current upcall.
       SSL *ssl_;
-
     };
   }  // End SSLIOP namespace.
 }  // End TAO namespace.

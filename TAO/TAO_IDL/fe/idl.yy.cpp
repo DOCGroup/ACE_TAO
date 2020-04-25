@@ -3873,7 +3873,7 @@ idl_store_pragma (char *buf)
 static ACE_CDR::LongLong
 idl_atoi (char *s, long b)
 {
-  ACE_CDR::LongLong r = ACE_CDR_LONGLONG_INITIALIZER;
+  ACE_CDR::LongLong r = 0;
 
   // Skip over the dash and possibly spaces after the dash
   while (*s == '-' || *s == ' ' || *s == '\t')

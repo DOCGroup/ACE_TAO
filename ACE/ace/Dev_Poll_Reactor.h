@@ -376,7 +376,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Returns the current table size.
     size_t size (void) const;
 
-    /// Returns the current table size.
+    /// Returns the maximum table size.
     size_t max_size (void) const;
 
     /// Dump the state of an object.

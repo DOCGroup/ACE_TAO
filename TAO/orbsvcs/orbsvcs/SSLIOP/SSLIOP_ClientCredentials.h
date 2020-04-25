@@ -32,7 +32,6 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -41,17 +40,12 @@ namespace TAO
   {
     /**
      * @class ClientCredentials
-     *
-     * @brief
-     *
-     *
      */
     class ClientCredentials
       : public virtual SecurityLevel3::ClientCredentials,
         public virtual SSLIOP_Credentials
     {
     public:
-
       /// Constructor
       ClientCredentials (::X509 * cert, ::EVP_PKEY * evp, ::SSL * ssl);
 
@@ -98,7 +92,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -107,13 +100,10 @@ namespace TAO
       ~ClientCredentials (void);
 
     private:
-
       /// Reference to the OpenSSL @c SSL data structure associated
       /// with the current security context (e.g. SSL connection).
       TAO::SSLIOP::SSL_var ssl_;
-
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 
