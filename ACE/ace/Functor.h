@@ -135,74 +135,51 @@ public:
 };
 
 /**
- * @brief Function object for hashing a short number
+ * @brief Function object for hashing a ACE_INT16 number
  */
 template<>
-class ACE_Export ACE_Hash<short>
+class ACE_Export ACE_Hash<ACE_INT16>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (short t) const;
+  unsigned long operator () (ACE_INT16 t) const;
 };
 
 /**
- * @brief Function object for hashing an unsigned short number
+ * @brief Function object for hashing a ACE_UINT16 number
  */
 template<>
-class ACE_Export ACE_Hash<unsigned short>
+class ACE_Export ACE_Hash<ACE_UINT16>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (unsigned short t) const;
+  unsigned long operator () (ACE_UINT16 t) const;
 };
 
 /**
- * @brief Function object for hashing an int number
+ * @brief Function object for hashing a ACE_INT32 number
  */
 template<>
-class ACE_Export ACE_Hash<int>
+class ACE_Export ACE_Hash<ACE_INT32>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (int t) const;
+  unsigned long operator () (ACE_INT32 t) const;
 };
 
 /**
- * @brief Function object for hashing an unsigned int number
+ * @brief Function object for hashing a ACE_UINT32 number
  */
 template<>
-class ACE_Export ACE_Hash<unsigned int>
+class ACE_Export ACE_Hash<ACE_UINT32>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (unsigned int t) const;
+  unsigned long operator () (ACE_UINT32 t) const;
 };
 
 /**
- * @brief Function object for hashing a long number
- */
-template<>
-class ACE_Export ACE_Hash<long>
-{
-public:
-  /// Simply returns t
-  unsigned long operator () (long t) const;
-};
-
-/**
- * @brief Function object for hashing an unsigned long number
- */
-template<>
-class ACE_Export ACE_Hash<unsigned long>
-{
-public:
-  /// Simply returns t
-  unsigned long operator () (unsigned long t) const;
-};
-
-#if (ACE_SIZEOF_LONG < 8)
-/**
- * @brief Function object for hashing a signed 64-bit number
+ * @brief Function object for hashing a ACE_INT64 number
  */
 template<>
 class ACE_Export ACE_Hash<ACE_INT64>
@@ -211,20 +188,17 @@ public:
   /// Simply returns t
   unsigned long operator () (ACE_INT64 t) const;
 };
-#endif /* ACE_SIZEOF_LONG < 8 */
 
-#if (ACE_SIZEOF_LONG < 8)
 /**
- * @brief Function object for hashing an unsigned 64-bit number
+ * @brief Function object for hashing a ACE_UINT64 number
  */
 template<>
 class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (const ACE_UINT64 &t) const;
+  unsigned long operator () (ACE_UINT64 t) const;
 };
-#endif /* ACE_SIZEOF_LONG < 8 */
 
 /**
  * @brief Function object for hashing a const string

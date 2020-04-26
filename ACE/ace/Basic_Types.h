@@ -441,9 +441,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_UINT64_LITERAL(n) n ## ui64
 #  define ACE_INT64_LITERAL(n) n ## i64
 # endif /* defined (__MINGW32__) */
-#elif defined (__TANDEM)
-#   define ACE_UINT64_LITERAL(n) n ## LL
-#   define ACE_INT64_LITERAL(n) n ## LL
 #else  /* ! ACE_WIN32  */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll

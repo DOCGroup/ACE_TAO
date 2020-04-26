@@ -256,7 +256,7 @@
 #if !defined (ACE_UNUSED_ARG)
 # if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2))) || (defined (__BORLANDC__) && defined (__clang__))
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
@@ -271,7 +271,7 @@
 # endif /* ghs || __GNUC__ || ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
+#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
 #else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a
