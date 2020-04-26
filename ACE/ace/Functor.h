@@ -201,17 +201,6 @@ public:
 };
 
 /**
- * @brief Function object for hashing a signed 64-bit number
- */
-template<>
-class ACE_Export ACE_Hash<ACE_INT64>
-{
-public:
-  /// Simply returns t
-  unsigned long operator () (ACE_INT64 t) const;
-};
-
-/**
  * @brief Function object for hashing a const string
  */
 template<>
