@@ -532,6 +532,7 @@ TAO::Storable_FlatFileStream::operator >> (ACE_INT64 &i)
   return *this;
 }
 
+
 TAO::Storable_Base &
 TAO::Storable_FlatFileStream::operator << (const TAO_OutputCDR & cdr)
 {

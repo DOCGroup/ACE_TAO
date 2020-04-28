@@ -25,15 +25,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_CPP11)
-namespace
-{
-  // Forward declaration
-  template <typename T>
-  void read_integer(const char *, T &, TAO::Storable_Base::Storable_State &, FILE *);
-}
-#endif /* ACE_HAS_CPP11 */
-
 namespace TAO
 {
   /**
