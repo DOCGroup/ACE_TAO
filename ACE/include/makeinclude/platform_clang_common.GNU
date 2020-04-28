@@ -75,7 +75,7 @@ ifneq ($(DLD),)
     LD_FOR_VERSION_TEST = $(DLD)
   endif # DLD = CXX_FOR_VERSION_TEST
   # The -E option is GNU ld specific
-  GNU_LD := $(if $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v)), 1, 0)
+  GNU_LD := $(if $(findstring GNU ld,$(shell $(LD_FOR_VERSION_TEST) -v 2>&1)), 1, 0)
 endif # DLD
 
 ifeq ($(GNU_LD),1)
