@@ -157,7 +157,7 @@ private:
                                         ACE_CDR::ULong length);
 
 private:
-  /// Set to false when an error ocurrs.
+  /// Set to false when an error occurs.
   bool good_bit_;
 
   /// Current size.

@@ -208,28 +208,28 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // typedefs for whatever we can.  Some of these are needed for certain
 // cases of ACE_UINT64, so do them before the 64-bit stuff.
 
-#if defined (ACE_INT8_TYPE)
-  typedef ACE_INT8_TYPE         ACE_INT8;
-#elif defined (ACE_HAS_INT8_T)
+#if defined (ACE_HAS_INT8_T)
   typedef int8_t                ACE_INT8;
+#elif defined (ACE_INT8_TYPE)
+  typedef ACE_INT8_TYPE         ACE_INT8;
 #elif !defined (ACE_LACKS_SIGNED_CHAR)
   typedef signed char           ACE_INT8;
 #else
   typedef char                  ACE_INT8;
 #endif /* defined (ACE_INT8_TYPE) */
 
-#if defined (ACE_UINT8_TYPE)
-  typedef ACE_UINT8_TYPE        ACE_UINT8;
-#elif defined (ACE_HAS_UINT8_T)
+#if defined (ACE_HAS_UINT8_T)
   typedef uint8_t               ACE_UINT8;
+#elif defined (ACE_UINT8_TYPE)
+  typedef ACE_UINT8_TYPE        ACE_UINT8;
 #else
   typedef unsigned char         ACE_UINT8;
 #endif /* defined (ACE_UINT8_TYPE) */
 
-#if defined (ACE_INT16_TYPE)
-  typedef ACE_INT16_TYPE        ACE_INT16;
-#elif defined (ACE_HAS_INT16_T)
+#if defined (ACE_HAS_INT16_T)
   typedef int16_t               ACE_INT16;
+#elif defined (ACE_INT16_TYPE)
+  typedef ACE_INT16_TYPE        ACE_INT16;
 #elif ACE_SIZEOF_SHORT == 2
   typedef short                 ACE_INT16;
 #elif ACE_SIZEOF_INT == 2
@@ -238,10 +238,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # error Have to add to the ACE_INT16 type setting
 #endif  /* defined (ACE_INT16_TYPE) */
 
-#if defined (ACE_UINT16_TYPE)
-  typedef ACE_UINT16_TYPE       ACE_UINT16;
-#elif defined (ACE_HAS_UINT16_T)
+#if defined (ACE_HAS_UINT16_T)
   typedef uint16_t              ACE_UINT16;
+#elif defined (ACE_UINT16_TYPE)
+  typedef ACE_UINT16_TYPE       ACE_UINT16;
 #elif ACE_SIZEOF_SHORT == 2
   typedef unsigned short        ACE_UINT16;
 #elif ACE_SIZEOF_INT == 2
@@ -250,10 +250,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # error Have to add to the ACE_UINT16 type setting
 #endif /* defined (ACE_UINT16_TYPE) */
 
-#if defined (ACE_INT32_TYPE)
-  typedef ACE_INT32_TYPE        ACE_INT32;
-#elif defined (ACE_HAS_INT32_T)
+#if defined (ACE_HAS_INT32_T)
   typedef int32_t               ACE_INT32;
+#elif defined (ACE_INT32_TYPE)
+  typedef ACE_INT32_TYPE        ACE_INT32;
 #elif ACE_SIZEOF_INT == 4
   typedef int                   ACE_INT32;
 #elif ACE_SIZEOF_LONG == 4
@@ -262,10 +262,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # error Have to add to the ACE_INT32 type setting
 #endif /* defined (ACE_INT32_TYPE) */
 
-#if defined (ACE_UINT32_TYPE)
-  typedef ACE_UINT32_TYPE       ACE_UINT32;
-#elif defined (ACE_HAS_UINT32_T)
+#if defined (ACE_HAS_UINT32_T)
   typedef uint32_t              ACE_UINT32;
+#elif defined (ACE_UINT32_TYPE)
+  typedef ACE_UINT32_TYPE       ACE_UINT32;
 #elif ACE_SIZEOF_INT == 4
   typedef unsigned int          ACE_UINT32;
 #elif ACE_SIZEOF_LONG == 4
@@ -274,10 +274,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 # error Have to add to the ACE_UINT32 type setting
 #endif /* defined (ACE_UINT32_TYPE) */
 
-#if defined (ACE_INT64_TYPE)
-  typedef ACE_INT64_TYPE        ACE_INT64;
-#elif defined (ACE_HAS_INT64_T)
+#if defined (ACE_HAS_INT64_T)
   typedef int64_t               ACE_INT64;
+#elif defined (ACE_INT64_TYPE)
+  typedef ACE_INT64_TYPE        ACE_INT64;
 #elif ACE_SIZEOF_LONG == 8
   typedef long                  ACE_INT64;
 #elif ACE_SIZEOF_LONG_LONG == 8
@@ -289,10 +289,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
   typedef long long             ACE_INT64;
 #endif /* defined (ACE_INT64_TYPE) */
 
-#if defined (ACE_UINT64_TYPE)
-  typedef ACE_UINT64_TYPE       ACE_UINT64;
-#elif defined (ACE_HAS_UINT64_T)
+#if defined (ACE_HAS_UINT64_T)
   typedef uint64_t              ACE_UINT64;
+#elif defined (ACE_UINT64_TYPE)
+  typedef ACE_UINT64_TYPE       ACE_UINT64;
 #elif ACE_SIZEOF_LONG == 8
   typedef unsigned long         ACE_UINT64;
 #elif ACE_SIZEOF_LONG_LONG == 8
