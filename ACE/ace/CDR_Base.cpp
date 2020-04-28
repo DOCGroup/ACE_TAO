@@ -584,21 +584,6 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
   return 0;
 }
 
-#if defined (NONNATIVE_LONGLONG)
-bool
-ACE_CDR::LongLong::operator== (const ACE_CDR::LongLong &rhs) const
-{
-  return this->h == rhs.h && this->l == rhs.l;
-}
-
-bool
-ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
-{
-  return this->l != rhs.l || this->h != rhs.h;
-}
-
-#endif /* NONNATIVE_LONGLONG */
-
 #if defined (NONNATIVE_LONGDOUBLE)
 ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)

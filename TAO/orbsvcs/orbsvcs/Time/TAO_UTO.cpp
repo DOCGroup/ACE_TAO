@@ -8,7 +8,6 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
                   TimeBase::InaccuracyT inaccuracy,
                   TimeBase::TdfT tdf)
 {
-
   this->attr_utc_time_.time = time;
 
   // Extract the lower 32 bits in the inacclo.
@@ -17,16 +16,10 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
   // Extract the lower 16 bits of the remaining bits. 'And'ing with 0xFFFF
   // is only a sanity check.
 
-#if defined (ACE_LACKS_U_LONGLONG_T)
-  this->attr_utc_time_.inacchi = 0;
-#else
   this->attr_utc_time_.inacchi =
     static_cast<CORBA::UShort> ((inaccuracy >> 32U) & 0xFFFF);
 
-#endif /* ACE_LACKS_U_LONGLONG_T */
-
   this->attr_utc_time_.tdf = tdf;
-
 }
 
 // Destructor.

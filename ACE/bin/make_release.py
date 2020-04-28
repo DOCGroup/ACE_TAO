@@ -333,37 +333,6 @@ def update_debianbuild ():
     def update_ver (match):
         return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    # find files in debian/* matching mask
-    for fname in listdir(dname):
-        match = mask.search (fname)
-        if match is None:
-            continue
-
-        fnewname = update_ver (match)
-        prev_ace_ver = match.group (3)
-
-        # if file contains lintian overrides, update file
-        if match.group (4) == '.lintian-overrides':
-            with open (dname + fname, 'r+') as lintian_overrides_file:
-                new_lintian_overrides = ""
-                for line in lintian_overrides_file.readlines ():
-                    new_lintian_overrides += mask.sub (update_ver, line)
-
-                if opts.take_action:
-                    lintian_overrides_file.seek (0)
-                    lintian_overrides_file.truncate (0)
-                    lintian_overrides_file.writelines (new_lintian_overrides)
-                else:
-                    print "New lintian-overrides file:"
-                    print "".join (new_lintian_overrides)
-
-            files.append (dname + fnewname)
-
-        # rename file
-        print "Rename: " + dname + fname + " to " + dname + fnewname + "\n"
-        if opts.take_action:
-            ex ("git mv " + dname + fname + " " + dname + fnewname)
-
     # update debian/control
     with open (dname + "control", 'r+') as control_file:
         new_ctrl = ""
@@ -371,7 +340,7 @@ def update_debianbuild ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
             elif re.search ('^Replaces:', line) is not None:
-                line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
+                line = line.replace (old_comp_versions["ACE_version"], comp_versions["ACE_version"])
 
             new_ctrl += line
 

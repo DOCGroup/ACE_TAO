@@ -236,10 +236,8 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
               case AST_PredefinedType::PT_float:
               case AST_PredefinedType::PT_double:
               case AST_PredefinedType::PT_octet:
-                *os << " = 0";
-                break;
               case AST_PredefinedType::PT_longlong:
-                *os << " = ACE_CDR_LONGLONG_INITIALIZER";
+                *os << " = 0";
                 break;
               case AST_PredefinedType::PT_longdouble:
                 *os << " = ACE_CDR_LONG_DOUBLE_INITIALIZER";
