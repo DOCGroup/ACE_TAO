@@ -19,10 +19,6 @@
 
 #include "ace/SString.h"
 
-#if defined (ACE_HAS_CPP11)
-#include <type_traits>
-#endif /* ACE_HAS_CPP11 */
-
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
@@ -115,31 +111,6 @@ namespace TAO
     virtual Storable_Base& operator >> (ACE_INT32 &) = 0;
     virtual Storable_Base& operator << (ACE_INT64 ) = 0;
     virtual Storable_Base& operator >> (ACE_INT64 &) = 0;
-
-#if defined (ACE_HAS_CPP11)
-  // Avoid duplication for the underlying type of size_t
-  template <typename Dummy = Storable_Base &>
-  typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                          !std::is_same<ACE_UINT64, size_t>::value &&
-                          !std::is_same<ACE_UINT32, size_t>::value,
-                          Storable_Base &>::type
-  operator << (size_t)
-  {
-    // Derived classes implement this
-    return *this;
-  }
-
-  template <typename Dummy = Storable_Base &>
-  typename std::enable_if<std::is_same<Dummy, Storable_Base &>::value &&
-                          !std::is_same<ACE_UINT64, size_t>::value &&
-                          !std::is_same<ACE_UINT32, size_t>::value,
-                          Storable_Base &>::type
-  operator >> (size_t &)
-  {
-    // Derived classes implement this
-    return *this;
-  }
-#endif /* ACE_HAS_CPP11 */
 
     virtual Storable_Base& operator << (const TAO_OutputCDR & cdr) = 0;
 
