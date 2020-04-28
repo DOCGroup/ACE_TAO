@@ -361,7 +361,7 @@ public:
        /// See OMG 2012-07-02 IDL-to-C++ Mapping v1.3 section 5.13
        /// This class doesn't exactly match the IDL-to-C++ mapping because
        /// it is meant for use inside a union in the IDL compiler and therefore
-       /// has no constructors.  Standards-based middlware libraries such as
+       /// has no constructors.  Standards-based middleware libraries such as
        /// ORBs and DDSs can wrap this class in a class of their own to provide
        /// the exact interface described by the mapping specification.
        class ACE_Export Fixed
