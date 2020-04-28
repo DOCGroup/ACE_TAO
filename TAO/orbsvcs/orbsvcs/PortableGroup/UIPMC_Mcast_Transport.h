@@ -43,7 +43,7 @@ namespace TAO_PG
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
 {
-  // This is neccessary on some old compilers such as Studio 9 for SunOS
+  // This is necessary on some old compilers such as Studio 9 for SunOS
   // to let UIPMC_Recv_Packet_Cleanup_Guard access private cleanup_packets().
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
@@ -115,7 +115,7 @@ private:
                      bool &stop_packet,
                      u_long &id_hash) const;
 
-  /// Return the next complete MIOP packet, possiably dequeueing
+  /// Return the next complete MIOP packet, possibly dequeueing
   /// as many as are available first from the socket.
   TAO_PG::UIPMC_Recv_Packet *recv_all (TAO_Resume_Handle &rh);
 
