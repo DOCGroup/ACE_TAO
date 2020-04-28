@@ -20,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -54,7 +53,6 @@ namespace TAO
    * @class In_Special_Basic_Clonable_Argument_T
    *
    * @brief Template class for IN stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -77,7 +75,6 @@ namespace TAO
    * @class Inout_Special_Basic_Argument_T
    *
    * @brief Template class for INOUT stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -103,7 +100,6 @@ namespace TAO
    * @class Out_Special_Basic_Argument_T
    *
    * @brief Template class for OUT stub argument of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -128,7 +124,6 @@ namespace TAO
    * @class Ret_Basic_Argument_T
    *
    * @brief Template class for return stub value of (w)char/boolean/octet.
-   *
    */
   template<typename S,
            typename to_S,
@@ -164,7 +159,6 @@ namespace TAO
    * @struct Special_Basic_Arg_Traits_T
    *
    * @brief Template class for stub argument traits of (w)char/boolean/octet.
-   *
    */
   template<typename T,
            typename to_T,
