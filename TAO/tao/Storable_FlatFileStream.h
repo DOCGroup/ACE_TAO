@@ -29,7 +29,6 @@ namespace TAO
 {
   /**
    * @brief A Storable_Base derived class that works with a file stream.
-   *
    */
   class TAO_Export Storable_FlatFileStream : public Storable_Base
   {
@@ -92,7 +91,6 @@ namespace TAO
     virtual int restore_backup ();
 
   protected:
-
     virtual void do_remove ();
 
     virtual void remove_backup ();
@@ -100,7 +98,6 @@ namespace TAO
     virtual int create_backup ();
 
   private:
-
     /// Throw a Storable_Read_Exception if the state
     /// is not good due to a read error.
     void throw_on_read_error (Storable_State state);
@@ -120,7 +117,6 @@ namespace TAO
   class TAO_Export Storable_FlatFileFactory : public Storable_Factory
   {
   public:
-
     /// @param directory Directory to contain file passed in
     /// create_stream (). The directory is assumed to already exist.
     Storable_FlatFileFactory(const ACE_CString & directory,
@@ -135,7 +131,7 @@ namespace TAO
 
   // Factory Methods
 
-  /// Create the stream that can operate on a disk file
+    /// Create the stream that can operate on a disk file
     virtual Storable_Base *create_stream (const ACE_CString & file,
                                           const char * mode,
                                           bool = false);
