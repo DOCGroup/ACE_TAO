@@ -7,6 +7,14 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
 
 . IPv6 extended datagram receive info now supported on macOS.
 
+. ACE_(U)INT8/16/32/64 map to (u)int8/16/32/64_t when C++11 has been
+  enabled.
+
+. CDR_Base uses ACE_INT64 for LongLong, all old emulated support
+  has been removed
+
+. Updated debian and rpm packaging support
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================
 
