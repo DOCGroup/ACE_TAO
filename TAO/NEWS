@@ -1,5 +1,11 @@
+USER VISIBLE CHANGES BETWEEN TAO-2.5.9 and TAO-2.5.10
+=====================================================
+
 USER VISIBLE CHANGES BETWEEN TAO-2.5.8 and TAO-2.5.9
 ====================================================
+
+. With C++11 we are now using (u)int8/16/32/64 to map all
+  CORBA types
 
 USER VISIBLE CHANGES BETWEEN TAO-2.5.7 and TAO-2.5.8
 ====================================================
