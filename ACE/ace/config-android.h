@@ -123,7 +123,7 @@
 #  endif
 #endif
 
-#if __ANDROID_API__ < 24
+#if ACE_ANDROID_NDK_LESS_THAN(14, 0) || __ANDROID_API__ < 24
 #  define ACE_LACKS_IF_NAMEINDEX
 #endif
 
