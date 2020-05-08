@@ -4075,7 +4075,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
 #   endif /* ACE_HAS_MFC */
     {
-      int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
+      int const start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         // If we need to set the priority, then we need to start the
@@ -4105,15 +4105,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
         }
     }
-#   if 0
-  *thr_handle = ::CreateThread
-    (0,
-     stacksize,
-     LPTHREAD_START_ROUTINE (thread_args->entry_point ()),
-     thread_args,
-     flags,
-     thr_id);
-#   endif /* 0 */
 
   // Close down the handle if no one wants to use it.
   if (thr_handle == &tmp_handle && tmp_handle != 0)
