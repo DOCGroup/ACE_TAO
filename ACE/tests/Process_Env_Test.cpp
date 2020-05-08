@@ -74,7 +74,7 @@ run_main (int, ACE_TCHAR*[])
        *
        * In Windows versions > Vista it's 32,767 bytes per environment variable
        */
-#if (_WIN32_WINNT < _WIN32_WINNT_VISTA)
+#if (_WIN32_WINNT < 0x0600)
         ACE_ERROR ((LM_ERROR,
                     "ERROR: This should have failed due to the large "
                     "environment buffer\n"));
@@ -84,7 +84,7 @@ run_main (int, ACE_TCHAR*[])
         ACE_DEBUG ((LM_DEBUG,
                     "Using large environment buffer works as expected "
                     "on Windows vista or newer\n"));
-#endif /* _WIN32_WINNT < _WIN32_WINNT_VISTA */
+#endif /* _WIN32_WINNT < 0x0600 */
     }
 
   options.enable_unicode_environment ();
