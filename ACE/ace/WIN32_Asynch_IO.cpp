@@ -173,7 +173,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 
-#if (_WIN32_WINNT < _WIN32_WINNT_VISTA)
+#if (_WIN32_WINNT < 0x0600)
   int const result = (int) ::CancelIo (this->handle_);
 #else
   int const result = (int) ::CancelIoEx (this->handle_, NULL);
