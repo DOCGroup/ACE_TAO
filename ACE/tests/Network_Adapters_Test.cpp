@@ -844,7 +844,7 @@ extern "C"
 #endif /* #if defined (ACE_HAS_SIG_C_FUNC) */
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
-BOOL CtrlHandler(DWORD fdwCtrlType)
+static BOOL WINAPI CtrlHandler(DWORD fdwCtrlType)
 {
   switch (fdwCtrlType)
     {
@@ -1021,7 +1021,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_WIN32)
 #if !defined (ACE_HAS_WINCE)
-  SetConsoleCtrlHandler((PHANDLER_ROUTINE) CtrlHandler, TRUE);
+  SetConsoleCtrlHandler(&CtrlHandler, TRUE);
 #endif
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
