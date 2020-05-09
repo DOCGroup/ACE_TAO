@@ -16,7 +16,8 @@ jobs:
           GCC6,
           GCC7,
           GCC8,
-          GCC9
+          GCC9,
+          GCC10
         ]
         include:
           - name: GCC48
@@ -39,6 +40,10 @@ jobs:
             CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
+          - name: GCC10
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
