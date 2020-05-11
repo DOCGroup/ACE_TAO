@@ -323,7 +323,6 @@ ACE_Object_Manager::init (void)
 #  endif // (_MSC_VER >= 1400) // VC++ 8.0 and above.
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
 
-
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
           ACE_NEW_RETURN (preallocations_,
                           ACE_Object_Manager_Preallocations,
