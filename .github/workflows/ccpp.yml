@@ -72,7 +72,6 @@ jobs:
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'c++11=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
