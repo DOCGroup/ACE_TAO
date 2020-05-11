@@ -1,6 +1,4 @@
 /**
- * @file
- *
  * This program checks if the compiler / platform supports the
  * standard cast operators template parameters.  The motivation for
  * this test was a discussion on the development mailing list, and the
@@ -41,7 +39,6 @@ namespace
     int y;
   };
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -103,7 +100,7 @@ run_main (int, ACE_TCHAR *[])
                  ACE_TEXT("dynamic_cast should return null\n")));
     }
 
-  // Make sure dynamic cast raises an exception
+  // Make sure dynamic cast raises a bad_cast exception
   Base & b3 = a;
   try
     {
@@ -111,16 +108,16 @@ run_main (int, ACE_TCHAR *[])
 
       status = 1;
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT("dynamic_cast should have raised exception\n")));
+                 ACE_TEXT("dynamic_cast should have raised std::bad_cast\n")));
     }
-  catch(std::exception const &)
+  catch(std::bad_cast const &)
     {
     }
   catch(...)
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
-                 ACE_TEXT("dynamic_cast should have raised std::exception\n")));
+                 ACE_TEXT("dynamic_cast should have raised std::bad_cast\n")));
     }
 
   {
