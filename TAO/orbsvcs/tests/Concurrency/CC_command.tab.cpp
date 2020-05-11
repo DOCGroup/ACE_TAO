@@ -386,7 +386,7 @@ __ace_cc_yy_memcpy (to, from, count)
      char *from;
      unsigned int count;
 {
-  register char *f = from;
+  char *f = from;
   register char *t = to;
   register int i = count;
 
