@@ -174,42 +174,48 @@ jobs:
 
 - job: Linux
   timeoutInMinutes: 90
-  pool:
-    vmImage: ubuntu-18.04
   strategy:
     matrix:
       CLANG5:
+        imagename: ubuntu-16.04
         CC: clang-5.0
         CXX: clang++-5.0
         PackageDeps: clang-5.0
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG6:
+        imagename: ubuntu-18.04
         CC: clang-6.0
         CXX: clang++-6.0
         PackageDeps: clang-6.0
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG7:
+        imagename: ubuntu-18.04
         CC: clang-7
         CXX: clang++-7
         PackageDeps: clang-7
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG8:
+        imagename: ubuntu-18.04
         CC: clang-8
         CXX: clang++-8
         PackageDeps: clang-8
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG9:
+        imagename: ubuntu-18.04
         CC: clang-9
         CXX: clang++-9
         PackageDeps: clang-9
         Repo: llvm-toolchain-$(lsb_release -cs)-9
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
       CLANG10:
+        imagename: ubuntu-18.04
         CC: clang-10
         CXX: clang++-10
         PackageDeps: clang-10
         Repo: llvm-toolchain-$(lsb_release -cs)-10
         platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+  pool:
+    vmImage: $(imagename)
   steps:
   - script: |
       wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
