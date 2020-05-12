@@ -133,7 +133,7 @@ jobs:
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        ${{ matrix.platform_file }} >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
