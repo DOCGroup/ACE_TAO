@@ -29,8 +29,8 @@
  *    - ACE_UINT16
  *    - ACE_INT32
  *    - ACE_UINT32
- *    - ACE_UINT64
  *    - ACE_INT64
+ *    - ACE_UINT64
  *
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
