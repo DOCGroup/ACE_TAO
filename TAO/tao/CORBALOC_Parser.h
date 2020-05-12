@@ -59,7 +59,6 @@ public:
                                           CORBA::ORB_ptr orb);
 
 private:
-
   /**
    * Make a stub from the MProfile that is created in
    * parse_string_mprofile_helper. Using this stub, create an object

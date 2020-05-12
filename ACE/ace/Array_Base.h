@@ -41,7 +41,6 @@ template<class T>
 class ACE_Array_Base
 {
 public:
-
   // Old/ACE-style traits.
   typedef T TYPE;
   typedef ACE_Array_Iterator<T> ITERATOR;

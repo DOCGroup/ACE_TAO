@@ -256,7 +256,6 @@ template <class ACE_LOCK, typename TYPE>
 class ACE_Atomic_Op
 {
 public:
-
   typedef typename ACE_Type_Traits<TYPE>::parameter_type arg_type;
 
   /// Initialize @c value_ to 0.

@@ -430,9 +430,6 @@
 /* */
 #define ACE_LACKS_UNBUFFERED_STREAMBUF 1
 
-/* Define to 1 if the system lacks the type `u_long_long_t'. */
-#define ACE_LACKS_U_LONGLONG_T 1
-
 /* Define to 1 if platform lacks wcsnicmp(). */
 #define ACE_LACKS_WCSNICMP 1
 

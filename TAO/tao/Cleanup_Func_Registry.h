@@ -39,7 +39,6 @@ class TAO_Export TAO_Cleanup_Func_Registry
   friend class TAO_ORB_Core;
 
 public:
-
   /// Constructor.
   TAO_Cleanup_Func_Registry (void);
 
@@ -47,7 +46,6 @@ public:
   size_t size (void) const;
 
 protected:
-
   /// Register a cleanup function.  The number of slot the cleanup
   /// function is placed is in will match the one reserved for the
   /// corresponding thread specific object in the ORB Core TSS

@@ -13,7 +13,7 @@
 
 #include "ace/OS_main.h"
 
-#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
+#if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE) && _WIN32_WINNT >= 0x400
 
 #include "ace/Reactor.h"
 #include "ace/Auto_Event.h"

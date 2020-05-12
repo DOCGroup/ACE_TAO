@@ -476,6 +476,7 @@ TAO/tests/Parallel_Connect_Strategy/run_test.pl -quick : QUICK55
 TAO/tests/DII_Collocation_Tests/oneway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DII_Collocation_Tests/twoway/run_test.pl: !ST !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/DII_Discard_Deferred/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
+TAO/tests/DII_Deferred_Transient/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Compression/run_test.pl
 TAO/tests/Collocated_Forwarding/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !DISABLE_INTERCEPTORS !ACE_FOR_TAO
 TAO/tests/ZIOP/run_test.pl: ZLIB BZIP2

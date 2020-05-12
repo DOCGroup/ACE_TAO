@@ -63,7 +63,6 @@ public:
   int unbind (void *addr);
 
 private:
-
   /// Use the "Cheshire-Cat" technique to hide the implementation in
   /// order to avoid circular #include dependencies.
   ACE_Based_Pointer_Repository_Rep *rep_;

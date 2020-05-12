@@ -1,5 +1,33 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
+=====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
+====================================================
+
+. On Windows, ACE no longer defines _WIN32_WINNT.  ACE wrappers for
+  if_nametoindex and if_indextoname are available if the version of the
+  Windows SDK supports them.
+
+. IPv6 extended datagram receive info now supported on macOS.
+
+. ACE_(U)INT8/16/32/64 map to (u)int8/16/32/64_t when C++11 has been
+  enabled.
+
+. CDR_Base uses ACE_INT64 for LongLong, all old emulated support
+  has been removed
+
+. Updated debian and rpm packaging support
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.7 and ACE-6.5.8
 ====================================================
+
+. Added instructions to ACE-INSTALL.html for building ACE/TAO for Android on
+  Windows.
+
+. Embarcadero C++ Builder Rio fixes
+
+. Renamed `VERSION` file to `VERSION.txt` to avoid conflicting with the
+  `version` standard header.
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.6 and ACE-6.5.7
 ====================================================

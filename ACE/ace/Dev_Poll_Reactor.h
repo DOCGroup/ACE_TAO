@@ -51,7 +51,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
-
 // ---------------------------------------------------------------------
 
 /**
@@ -67,7 +66,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-
   /// Constructor
   ACE_Dev_Poll_Reactor_Notify (void);
 
@@ -99,7 +97,7 @@ public:
   /// Unimplemented method required by pure virtual method in abstract
   /// base class.
   /**
-   * This method's interface is not very compatibile with this
+   * This method's interface is not very compatible with this
    * Reactor's design.  It's not clear why this method is pure virtual
    * either.
    */
@@ -317,7 +315,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-
     /// Constructor.
     Handler_Repository (void);
 
@@ -379,7 +376,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     /// Returns the current table size.
     size_t size (void) const;
 
-    /// Returns the current table size.
+    /// Returns the maximum table size.
     size_t max_size (void) const;
 
     /// Dump the state of an object.
@@ -389,7 +386,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
-
     /// Current number of handles.
     int size_;
 
@@ -406,7 +402,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   };
 
 public:
-
   /// Initialize @c ACE_Dev_Poll_Reactor with the default size.
   /**
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
@@ -1105,7 +1100,6 @@ protected:
   class ACE_Export Token_Guard
   {
   public:
-
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
@@ -1132,7 +1126,6 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-
     Token_Guard (void);
 
   private:
@@ -1162,7 +1155,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-
   /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and
@@ -1186,13 +1178,11 @@ public:
   void release (void);
 
 private:
-
   /// The event handler being managed.
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
   bool refcounted_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

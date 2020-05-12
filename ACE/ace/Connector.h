@@ -38,7 +38,6 @@ template <class SVC_HANDLER>
 class ACE_Connector_Base
 {
 public:
-
   virtual ~ACE_Connector_Base (void) {}
 
   /// Initialize the Svc_Handler.
@@ -165,7 +164,6 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR>
 class ACE_Connector : public ACE_Connector_Base<SVC_HANDLER>, public ACE_Service_Object
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type addr_type;
   typedef PEER_CONNECTOR connector_type;
@@ -411,7 +409,6 @@ class ACE_Strategy_Connector
   : public ACE_Connector <SVC_HANDLER, PEER_CONNECTOR>
 {
 public:
-
   // Useful STL-style traits.
   typedef ACE_Creation_Strategy<SVC_HANDLER>
   creation_strategy_type;

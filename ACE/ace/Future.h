@@ -81,8 +81,8 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-protected:
 
+protected:
   /// Constructor
   ACE_Future_Observer (void);
 };
@@ -217,13 +217,10 @@ private:
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
 
 private:
-
   ACE_Future_Rep (void);
 
 protected:
-
   ~ACE_Future_Rep (void);
-
 };
 
 /**

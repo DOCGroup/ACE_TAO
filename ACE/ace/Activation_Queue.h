@@ -147,7 +147,6 @@ protected:
   bool delete_queue_;
 
 private:
-
   /// Allocation strategy of the queue.
   ACE_Allocator *allocator_;
 

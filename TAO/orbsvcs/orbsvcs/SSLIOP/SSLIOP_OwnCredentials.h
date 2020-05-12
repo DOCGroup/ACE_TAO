@@ -88,7 +88,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to enforce proper memory management
@@ -96,7 +95,6 @@ namespace TAO
        */
       ~OwnCredentials (void);
     };
-
   } // End SSLIOP namespace
 }  // End TAO namespace
 

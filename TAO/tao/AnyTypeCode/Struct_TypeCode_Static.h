@@ -83,7 +83,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -104,7 +103,6 @@ namespace TAO
       //@}
 
     private:
-
       /**
        * @c Struct Attributes
        *
@@ -128,9 +126,7 @@ namespace TAO
       /// OMG IDL defined @c struct.
       Struct_Field<char const *,
                    CORBA::TypeCode_ptr const *> const * const fields_;
-
       //@}
-
     };
 
   }  // End namespace TypeCode

@@ -920,7 +920,6 @@ ACE_Select_Reactor_Notify::read_notify_pipe (ACE_HANDLE handle,
             return -1;
         }
 
-
       return 1;
     }
 

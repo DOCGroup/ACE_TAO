@@ -57,7 +57,6 @@ public:
   CORBA::Long get_dscp_codepoint (TAO_Service_Context &sc);
 
 protected:
-
   TAO_ORB_Core *orb_core_;
 };
 

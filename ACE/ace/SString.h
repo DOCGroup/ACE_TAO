@@ -56,7 +56,6 @@ template class ACE_Export ACE_String_Base_Const_Iterator<ACE_WSTRING_TYPE>;
 class ACE_Export ACE_NS_WString : public ACE_WString
 {
 public:
-
   using ACE_WString::size_type;
 
   /// Default constructor.
@@ -131,7 +130,6 @@ ACE_NS_WString operator + (const ACE_NS_WString &,
 class ACE_Export ACE_SString
 {
 public:
-
   typedef ACE_Allocator::size_type size_type;
 
   /// No position constant

@@ -105,7 +105,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
       void remove_generic_endpoint (TAO_Endpoint *ep);
 
     protected:
-
       /// Destructor.
       /**
        * Protected destructor to enforce proper memory management
@@ -121,7 +120,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
         const TAO_Profile * other_profile);
 
     private:
-
       /**
        * Helper for @c decode.  Decodes TAO_TAG_SSL_ENDPOINTS from a
        * tagged component. Decode only if RTCORBA is enabled.
@@ -171,7 +169,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
        * attributes - port number, for instance.
        */
       int ssl_only_;
-
     };
 
 //   }  // End SSLIOP namespace.

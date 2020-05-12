@@ -66,16 +66,13 @@ namespace TAO
       void name (char const * the_name);
 
     private:
-
       /// The @c RepositoryId globally identifying the type.
       STRING_TYPE const id_;
 
       /// The simple name identifying the type within its enclosing
       /// scope.
       STRING_TYPE name_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

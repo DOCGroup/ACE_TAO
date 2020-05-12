@@ -94,9 +94,9 @@ TAO_BiDirGIOP_Loader::load_policy_validators (TAO_Policy_Validator &val)
   // the same ORB (different POA). In cases where huge numbers of
   // bi-directional POA instances are created, having a validator
   // instance per POA may introduce additional delays in policy
-  // validation and hence, the overal policy creation time. Since this
+  // validation and hence, the overall policy creation time. Since this
   // is out of the critical invocation processing path, I plan to keep
-  // the design simple and not try to avoid an ineficiency of such
+  // the design simple and not try to avoid an inefficiency of such
   // small proportions.
   val.add_validator (validator);
 }

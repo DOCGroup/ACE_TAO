@@ -58,7 +58,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /*!
         \brief Constructor.
         \param info reference to the ORBInitInfo object so that
@@ -100,7 +99,6 @@ namespace TAO
       //@}
 
     protected:
-
       /// Destructor
       /**
        * Protected destructor to force deallocation by the reference
@@ -109,7 +107,6 @@ namespace TAO
       ~Server_Invocation_Interceptor (void);
 
     private:
-
       /**
        * @name Copying and Assignment
        *
@@ -122,7 +119,6 @@ namespace TAO
       //@}
 
     private:
-
       /// Reference to the current SSLIOP execution context.
       ::SSLIOP::Current_var ssliop_current_;
 
@@ -139,7 +135,6 @@ namespace TAO
       SecurityLevel2::SecurityManager_var sec2manager_;
       SecurityLevel2::Current_var sec2_current_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

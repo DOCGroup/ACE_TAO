@@ -248,7 +248,6 @@ protected:
 
 private:
   // Utility functions used by insert_* and get_*.
-
   CORBA::TypeCode_ptr check_type_and_unalias (CORBA::TypeCode_ptr tc);
 };
 

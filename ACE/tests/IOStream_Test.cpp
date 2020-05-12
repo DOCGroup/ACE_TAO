@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    IOStream_Test.cpp
@@ -18,8 +17,6 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/IOStream.h"
 #include "ace/OS_NS_sys_wait.h"
-
-
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 #  include "ace/OS_NS_unistd.h"

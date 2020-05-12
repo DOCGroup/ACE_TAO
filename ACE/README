@@ -1,6 +1,6 @@
 This document is also available at the following URL:
 
-http://www.dre.vanderbilt.edu/~schmidt/ACE.html
+https://www.dre.vanderbilt.edu/~schmidt/ACE.html
 
 All software and documentation is available via both anonymous ftp and
 http.
@@ -148,7 +148,7 @@ applications provided with the ACE release include:
 OBTAINING ACE
 
 ACE may be obtained electronically from
-http://download.dre.vanderbilt.edu.  This release contains the source
+https://download.dre.vanderbilt.edu.  This release contains the source
 code, test drivers, and example applications (including JAWS) for C++
 wrapper libraries and the higher-level ACE network programming
 framework developed as part of the ADAPTIVE project at the University

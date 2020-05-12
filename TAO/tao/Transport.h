@@ -320,7 +320,6 @@ namespace TAO
 class TAO_Export TAO_Transport
 {
 public:
-
   /// Default creator, requires the tag value be supplied.
   TAO_Transport (CORBA::ULong tag,
                  TAO_ORB_Core *orb_core,
@@ -535,7 +534,6 @@ public:
                             TAO::Transport::Drain_Constraints const & dc);
 #endif  /* TAO_HAS_SENDFILE==1 */
 
-
   /// Read len bytes from into buf.
   /**
    * This method serializes on handler_lock_, guaranteeing that only
@@ -568,7 +566,6 @@ public:
 
   /// Call the implementation method after obtaining the lock.
   virtual void close_connection (void);
-
   //@}
 
   /** @name Template methods
@@ -677,11 +674,9 @@ public:
   //@@ TAO_TRANSPORT_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
-
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
 
 public:
-
   /// This is a request for the transport object to write a
   /// LocateRequest header before it is sent out.
   int generate_locate_request (TAO_Target_Specification &spec,
@@ -784,7 +779,6 @@ public:
                                    ACE_Time_Value *max_wait_time);
 
 protected:
-
   /// Process the message by sending it to the higher layers of the
   /// ORB.
   int process_parsed_messages (TAO_Queued_Data *qd,
@@ -917,7 +911,6 @@ public:
   TAO::Transport::Stats* stats (void) const;
 
 private:
-
   /// Helper method that returns the Transport Cache Manager.
   TAO::Transport_Cache_Manager &transport_cache_manager (void);
 
@@ -1087,7 +1080,6 @@ private:
   //@@ TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK
 
 protected:
-
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
@@ -1191,7 +1183,6 @@ protected:
   bool connection_closed_on_read_;
 
 private:
-
   /// Our messaging object.
   TAO_GIOP_Message_Base *messaging_object_;
 

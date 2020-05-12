@@ -72,8 +72,8 @@ namespace TAO
                  const TAO_Reply_Handler_Stub &reply_handler_stub);
 
     virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
-  protected:
 
+  protected:
     virtual Invocation_Status invoke_twoway (
         TAO_Operation_Details &op,
         CORBA::Object_var &effective_target,

@@ -263,15 +263,6 @@ namespace TAO
 
     switch (kind)
     {
-      case CORBA::tk_longlong:
-        {
-          CORBA::LongLong tmp = ACE_CDR_LONGLONG_INITIALIZER;
-          ACE_NEW_RETURN (retval,
-                          TAO::Any_Basic_Impl (tc, &tmp),
-                          0);
-        }
-
-        break;
       case CORBA::tk_longdouble:
         {
           CORBA::LongDouble tmp = ACE_CDR_LONG_DOUBLE_INITIALIZER;

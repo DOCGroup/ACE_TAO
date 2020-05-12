@@ -55,7 +55,6 @@ namespace TAO
                       : public TAO_Intrusive_Ref_Count_Base<TAO_SYNCH_MUTEX>
     {
     public:
-
       /// Handle Type (aka, Smart Pointer Type).
       typedef TAO_Intrusive_Ref_Count_Handle<TP_Servant_State> HandleType;
 
@@ -72,7 +71,6 @@ namespace TAO
       void busy_flag(bool new_value);
 
     private:
-
       /// The servant's current "busy" state (true == busy, false == not busy)
       bool busy_flag_;
     };

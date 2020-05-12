@@ -39,7 +39,6 @@ namespace TAO
 {
   namespace SSLIOP
   {
-
     /**
      * @name ORBInitializer
      *
@@ -52,7 +51,6 @@ namespace TAO
         public virtual ::CORBA::LocalObject
     {
     public:
-
       /// Constructor.
       ORBInitializer (::Security::QOP qop);
 
@@ -61,16 +59,13 @@ namespace TAO
       virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
 
     private:
-
       // Obtain the TSS slot ID assigned to the "SSLIOPCurrent" object.
       size_t get_tss_slot_id (PortableInterceptor::ORBInitInfo_ptr info);
 
     private:
-
       /// The default quality-of-protection settings in use.
       ::Security::QOP qop_;
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

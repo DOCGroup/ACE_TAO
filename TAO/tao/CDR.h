@@ -240,13 +240,11 @@ public:
   int offset (char* pos);
 
 private:
-
   // disallow copying...
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
 
 private:
-
   /**
    * @name Outgoing GIOP Fragment Related Attributes
    *

@@ -117,6 +117,19 @@ def ex (command):
         print "ERROR: Nonzero return value from " + command
         raise Exception
 
+def ex_failureok (command):
+    from os import system
+    global opts
+    vprint ("Executing " + command)
+
+    if not opts.take_action:
+        print "Executing " + command
+        return
+
+    status = system(command)
+    if status != 0:
+        print "WARNING: Nonzero return value from " + command
+
 ###
 # Checks that the users environment is sane.
 #
@@ -183,18 +196,17 @@ def check_workspace ():
 
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
-    Version.h, the PRF, and the VERSION file."""
+    Version.h, the PRF, and the VERSION.txt file."""
 
     global comp_versions, opts, release_date
 
     vprint ("Updating version files for " + component)
 
-    import re
-
     retval = list ()
 
-    ## Update component/VERSION
-    with open (component + "/VERSION", "r+") as version_file:
+    ## Update component/VERSION.txt
+    filename = component + "/VERSION.txt"
+    with open (filename, "r+") as version_file:
         new_version = re.sub (component + " version .*",
                               "%s version %s, released %s" % (component,
                                                               comp_versions[component + "_version"],
@@ -210,7 +222,7 @@ def update_version_files (component):
 
         vprint ("Updating Version.h for " + component)
 
-    retval += [component + "/VERSION"]
+    retval += [filename]
 
     ## Update component/component/Version.h
     version_header = """
@@ -309,7 +321,6 @@ def update_debianbuild ():
 
     global comp_versions
 
-    import re
     from os import listdir
 
     files = list ()
@@ -322,37 +333,6 @@ def update_debianbuild ():
     def update_ver (match):
         return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
-    # find files in debian/* matching mask
-    for fname in listdir(dname):
-        match = mask.search (fname)
-        if match is None:
-            continue
-
-        fnewname = update_ver (match)
-        prev_ace_ver = match.group (3)
-
-        # if file contains lintian overrides, update file
-        if match.group (4) == '.lintian-overrides':
-            with open (dname + fname, 'r+') as lintian_overrides_file:
-                new_lintian_overrides = ""
-                for line in lintian_overrides_file.readlines ():
-                    new_lintian_overrides += mask.sub (update_ver, line)
-
-                if opts.take_action:
-                    lintian_overrides_file.seek (0)
-                    lintian_overrides_file.truncate (0)
-                    lintian_overrides_file.writelines (new_lintian_overrides)
-                else:
-                    print "New lintian-overrides file:"
-                    print "".join (new_lintian_overrides)
-
-            files.append (dname + fnewname)
-
-        # rename file
-        print "Rename: " + dname + fname + " to " + dname + fnewname + "\n"
-        if opts.take_action:
-            ex ("git mv " + dname + fname + " " + dname + fnewname)
-
     # update debian/control
     with open (dname + "control", 'r+') as control_file:
         new_ctrl = ""
@@ -360,7 +340,7 @@ def update_debianbuild ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
                 line = mask.sub (update_ver, line)
             elif re.search ('^Replaces:', line) is not None:
-                line = line.replace (prev_ace_ver, comp_versions["ACE_version"])
+                line = line.replace (old_comp_versions["ACE_version"], comp_versions["ACE_version"])
 
             new_ctrl += line
 
@@ -419,12 +399,10 @@ def create_changelog (component):
     return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
 
 def get_comp_versions (component):
-    """ Extracts the current version number from the VERSION
+    """ Extracts the current version number from the VERSION.txt
     file and increments it appropriately for the release type
     requested."""
     vprint ("Detecting current version for " + component)
-
-    import re
 
     global old_comp_versions, comp_versions, opts
 
@@ -432,7 +410,7 @@ def get_comp_versions (component):
     minor = re.compile ("version (\d+)\.(\d+)[^\.]")
     major = re.compile ("version (\d+)[^\.]")
 
-    with open (component + "/VERSION") as version_file:
+    with open (component + "/VERSION.txt") as version_file:
         for line in version_file:
             match = None
 
@@ -521,30 +499,30 @@ def get_comp_versions (component):
     #                   str (comp_versions[component + "_minor"])
 
 
-def update_latest_tag (which, branch):
+def update_latest_tag (product, which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     tagname = "Latest_" + which
 
     # Remove tag locally
     vprint ("Removing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ACE_TAO && git tag -d " + tagname)
+    ex_failureok ("cd $DOC_ROOT/" + product + " && git tag -d " + tagname)
 
     vprint ("Placing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/ACE_TAO && git tag -a " + tagname + " -m\"" + tagname + "\"")
+    ex ("cd $DOC_ROOT/" + product + " && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
 
-def push_latest_tag (which, branch):
+def push_latest_tag (product, which, branch):
     """ Update one of the Latest_* tags externals to point the new release """
     global opts
     tagname = "Latest_" + which
 
     if opts.push:
-        # Remove tag in the remote orgin
-        ex ("cd $DOC_ROOT/ACE_TAO && git push origin :refs/tags/" + tagname)
+        # Remove tag in the remote origin
+        ex_failureok ("cd $DOC_ROOT/" + product + " && git push origin :refs/tags/" + tagname)
 
         vprint ("Pushing tag %s" % (tagname))
-        ex ("cd $DOC_ROOT/ACE_TAO && git push origin " + tagname)
+        ex ("cd $DOC_ROOT/" + product + " && git push origin " + tagname)
 
 def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
@@ -564,17 +542,23 @@ def tag ():
 
             # Update latest tag
             if opts.release_type == "major":
-                update_latest_tag ("Major", tagname)
-                update_latest_tag ("Minor", tagname)
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Major", tagname)
+                update_latest_tag ("ACE_TAO", "Minor", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Major", tagname)
+                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "minor":
-                update_latest_tag ("Minor", tagname)
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Minor", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "micro":
-                update_latest_tag ("Beta", tagname)
-                update_latest_tag ("Micro", tagname)
+                update_latest_tag ("ACE_TAO", "Beta", tagname)
+                update_latest_tag ("ACE_TAO", "Micro", tagname)
+                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
@@ -602,12 +586,23 @@ def push ():
 
             # Update latest tag
             if opts.release_type == "major":
-                push_latest_tag ("Major", tagname)
+                push_latest_tag ("ACE_TAO", "Major", tagname)
+                push_latest_tag ("ACE_TAO", "Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Major", tagname)
+                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "minor":
-                push_latest_tag ("Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Minor", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
             elif opts.release_type == "micro":
-                push_latest_tag ("Beta", tagname)
-                push_latest_tag ("Micro", tagname)
+                push_latest_tag ("ACE_TAO", "Beta", tagname)
+                push_latest_tag ("ACE_TAO", "Micro", tagname)
+                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
