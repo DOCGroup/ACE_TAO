@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
 #include /**/ "ace/pre.h"

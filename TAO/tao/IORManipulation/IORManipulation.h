@@ -77,7 +77,6 @@ public:
   virtual CORBA::ULong get_profile_count (CORBA::Object_ptr group);
 
 protected:
-
   /// Destructor
   ~TAO_IOR_Manipulation_impl (void);
 

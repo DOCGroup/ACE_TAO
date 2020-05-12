@@ -49,7 +49,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Dispatchable_Visitor : public TP_Queue_Visitor
     {
     public:
-
       /// Default Constructor.
       TP_Dispatchable_Visitor();
 
@@ -57,7 +56,7 @@ namespace TAO
       virtual ~TP_Dispatchable_Visitor();
 
       /// Reset this visitor object in order to re-use it for another
-      /// visitation of the request queue.  This sets the vistor's "result"
+      /// visitation of the request queue.  This sets the visitor's "result"
       /// (the TP_Request* data member) to its default value (a nil handle).
       void reset();
 
@@ -73,11 +72,9 @@ namespace TAO
 
 
     private:
-
       /// A handle to the located request.
       TP_Request_Handle request_;
     };
-
   }
 }
 

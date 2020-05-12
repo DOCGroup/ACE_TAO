@@ -51,7 +51,6 @@ private:
   static TAO_SYNCH_MUTEX parserMutex__;
 };
 
-
 // Functions we need for parsing.
 extern int yyparse (void);
 extern void yyrestart (FILE*);

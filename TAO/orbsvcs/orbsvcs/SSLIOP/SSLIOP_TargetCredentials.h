@@ -41,7 +41,6 @@ namespace TAO
         public virtual SSLIOP_Credentials
     {
     public:
-
       TargetCredentials (::X509 *cert, ::EVP_PKEY *evp);
 
       /**
@@ -91,7 +90,6 @@ namespace TAO
 
       virtual void release (void);
       //@}
-
     };
   }
 }

@@ -52,7 +52,6 @@ namespace CORBA
 class TAO_Trading_Serv_Export TAO_Constraint
 {
 public:
-
   /**
    * Implementing the pattern of double dispatching, each subclass of
    * TAO_Constraint will call back on an InterpreterVisitor the
@@ -74,7 +73,6 @@ public:
 class TAO_Trading_Serv_Export TAO_Noop_Constraint : public TAO_Constraint
 {
 public:
-
   TAO_Noop_Constraint (TAO_Expression_Type type)
     : type_ (type) {}
 
@@ -84,7 +82,6 @@ public:
     { return this->type_; }
 
 private:
-
   TAO_Expression_Type type_;
 };
 
@@ -97,7 +94,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Binary_Constraint : public TAO_Constraint
 {
 public:
-
   TAO_Binary_Constraint (TAO_Expression_Type op_type,
                          TAO_Constraint* left,
                          TAO_Constraint* right);
@@ -135,7 +131,6 @@ public:
   static int visit_in (TAO_Constraint_Visitor* , TAO_Binary_Constraint*);
 
 private:
-
   TAO_Binary_Constraint (const TAO_Binary_Constraint&);
   TAO_Binary_Constraint& operator= (const TAO_Binary_Constraint&);
 
@@ -156,9 +151,8 @@ private:
 class TAO_Trading_Serv_Export TAO_Unary_Constraint : public TAO_Constraint
 {
 public:
-
   TAO_Unary_Constraint (TAO_Expression_Type op_type,
-                                 TAO_Constraint* operand);
+                        TAO_Constraint* operand);
 
   virtual ~TAO_Unary_Constraint (void);
 
@@ -170,7 +164,6 @@ public:
   TAO_Constraint* operand (void);
 
 private:
-
   TAO_Unary_Constraint (const TAO_Unary_Constraint&);
   TAO_Unary_Constraint& operator= (const TAO_Unary_Constraint&);
 
@@ -190,7 +183,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Property_Constraint : public TAO_Constraint
 {
 public:
-
   TAO_Property_Constraint (const char* name);
 
   virtual ~TAO_Property_Constraint (void);
@@ -203,7 +195,6 @@ public:
   const char* name (void) const;
 
 private:
-
   TAO_Property_Constraint (const TAO_Property_Constraint&);
   TAO_Property_Constraint& operator= (const TAO_Property_Constraint&);
 
@@ -219,8 +210,7 @@ private:
  */
 class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 {
- public:
-
+public:
   TAO_Literal_Constraint (void);
 
   // = Constructors for each of the various types of literals.
@@ -339,7 +329,6 @@ class TAO_Trading_Serv_Export TAO_Literal_Constraint : public TAO_Constraint
 
   /// The actual types of the TAO_Literal_Constraint.
   TAO_Expression_Type type_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -79,7 +79,6 @@ private:
   TAO_DTP_Thread_Lane_Resources_Manager (const TAO_DTP_Thread_Lane_Resources_Manager &);
 
 protected:
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources *default_lane_resources_;
 

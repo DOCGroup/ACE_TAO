@@ -87,7 +87,6 @@ namespace TAO
       const FieldArrayType& fields() const;
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -111,7 +110,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @c Valuetype Attributes
        *

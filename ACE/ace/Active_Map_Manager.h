@@ -80,7 +80,6 @@ public:
   void increment_slot_generation_count (void);
 
 private:
-
   /**
    * @brief Data for the Active Object Map Key.
    *

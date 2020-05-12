@@ -3132,79 +3132,99 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 #endif /* ! ACE_HAS_STHREADS && ! sun */
 }
 
+#if defined ACE_HAS_THREADS && defined ACE_LACKS_RWLOCK_T
+namespace {
+struct UniqueName {
+  explicit UniqueName (const void *addr)
+  {
+    ACE_OS::unique_name (addr, &this->buffer_[0], ACE_UNIQUE_NAME_LEN);
+  }
+
+  operator const ACE_TCHAR * () const { return &this->buffer_[0]; }
+
+  ACE_TCHAR buffer_[ACE_UNIQUE_NAME_LEN];
+};
+
+enum RWLockCleanup {RWLC_CondAttr, RWLC_Lock, RWLC_CondReaders, RWLC_CondWriters};
+
+struct RWLockCleaner {
+  RWLockCleaner (ACE_condattr_t &attr, ACE_rwlock_t *rw)
+    : state_ (RWLC_CondAttr)
+    , attr_ (attr)
+    , rw_ (rw)
+  {}
+
+  ~RWLockCleaner ()
+  {
+    ACE_Errno_Guard error (errno);
+    switch (this->state_)
+      {
+      case RWLC_CondWriters:
+        ACE_OS::cond_destroy (&this->rw_->waiting_writers_);
+        // FALLTHROUGH
+      case RWLC_CondReaders:
+        ACE_OS::cond_destroy (&this->rw_->waiting_readers_);
+        // FALLTHROUGH
+      case RWLC_Lock:
+        ACE_OS::mutex_destroy (&this->rw_->lock_);
+        // FALLTHROUGH
+      case RWLC_CondAttr:
+        ACE_OS::condattr_destroy (this->attr_);
+      }
+  }
+
+  RWLockCleanup state_;
+  ACE_condattr_t &attr_;
+  ACE_rwlock_t *rw_;
+};
+}
+#endif
+
 #if !defined (ACE_HAS_THREADS) || defined (ACE_LACKS_RWLOCK_T)
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
-                     const ACE_TCHAR *name,
+                     const ACE_TCHAR *,
                      void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::rwlock_init");
 # if defined (ACE_HAS_THREADS) && defined (ACE_LACKS_RWLOCK_T)
   // NT, POSIX, and VxWorks don't support this natively.
-  ACE_UNUSED_ARG (name);
-  int result = -1;
-
-  // Since we cannot use the user specified name for all three
-  // objects, we will create three completely new names.
-  ACE_TCHAR name1[ACE_UNIQUE_NAME_LEN];
-  ACE_TCHAR name2[ACE_UNIQUE_NAME_LEN];
-  ACE_TCHAR name3[ACE_UNIQUE_NAME_LEN];
-  ACE_TCHAR name4[ACE_UNIQUE_NAME_LEN];
-
-  ACE_OS::unique_name ((const void *) &rw->lock_,
-                       name1,
-                       ACE_UNIQUE_NAME_LEN);
-  ACE_OS::unique_name ((const void *) &rw->waiting_readers_,
-                       name2,
-                       ACE_UNIQUE_NAME_LEN);
-  ACE_OS::unique_name ((const void *) &rw->waiting_writers_,
-                       name3,
-                       ACE_UNIQUE_NAME_LEN);
-  ACE_OS::unique_name ((const void *) &rw->waiting_important_writer_,
-                       name4,
-                       ACE_UNIQUE_NAME_LEN);
 
   ACE_condattr_t attributes;
-  if (ACE_OS::condattr_init (attributes, type) == 0)
-    {
-      if (ACE_OS::mutex_init (&rw->lock_, type, name1,
-                              (ACE_mutexattr_t *) arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_readers_,
-                                attributes, name2, arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_writers_,
-                                attributes, name3, arg) == 0
-          && ACE_OS::cond_init (&rw->waiting_important_writer_,
-                                attributes, name4, arg) == 0)
-        {
-          // Success!
-          rw->ref_count_ = 0;
-          rw->num_waiting_writers_ = 0;
-          rw->num_waiting_readers_ = 0;
-          rw->important_writer_ = false;
-          result = 0;
-        }
-      ACE_OS::condattr_destroy (attributes);
-    }
+  if (ACE_OS::condattr_init (attributes, type) != 0)
+    return -1;
 
-  if (result == -1)
-    {
-      // Save/restore errno.
-      ACE_Errno_Guard error (errno);
+  RWLockCleaner cleanup (attributes, rw);
 
-      /* We're about to return -1 anyway, so
-       * no need to check return values of these clean-up calls:
-       */
-      (void)ACE_OS::mutex_destroy (&rw->lock_);
-      (void)ACE_OS::cond_destroy (&rw->waiting_readers_);
-      (void)ACE_OS::cond_destroy (&rw->waiting_writers_);
-      (void)ACE_OS::cond_destroy (&rw->waiting_important_writer_);
-    }
-  return result;
+  if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (&rw->lock_),
+                          (ACE_mutexattr_t *) arg) != 0)
+    return -1;
+
+  cleanup.state_ = RWLC_Lock;
+  if (ACE_OS::cond_init (&rw->waiting_readers_, attributes,
+                         UniqueName (&rw->waiting_readers_), arg) != 0)
+    return -1;
+
+  cleanup.state_ = RWLC_CondReaders;
+  if (ACE_OS::cond_init (&rw->waiting_writers_, attributes,
+                         UniqueName (&rw->waiting_writers_), arg) != 0)
+    return -1;
+
+  cleanup.state_ = RWLC_CondWriters;
+  if (ACE_OS::cond_init (&rw->waiting_important_writer_, attributes,
+                         UniqueName (&rw->waiting_important_writer_), arg) != 0)
+    return -1;
+
+  cleanup.state_ = RWLC_CondAttr;
+  rw->ref_count_ = 0;
+  rw->num_waiting_writers_ = 0;
+  rw->num_waiting_readers_ = 0;
+  rw->important_writer_ = false;
+  return 0;
 # else
   ACE_UNUSED_ARG (rw);
   ACE_UNUSED_ARG (type);
-  ACE_UNUSED_ARG (name);
   ACE_UNUSED_ARG (arg);
   ACE_NOTSUP_RETURN (-1);
 # endif /* ACE_HAS_THREADS */
@@ -4055,7 +4075,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
 #   endif /* ACE_HAS_MFC */
     {
-      int start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
+      int const start_suspended = ACE_BIT_ENABLED (flags, THR_SUSPENDED);
 
       if (priority != ACE_DEFAULT_THREAD_PRIORITY)
         // If we need to set the priority, then we need to start the
@@ -4085,15 +4105,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
             }
         }
     }
-#   if 0
-  *thr_handle = ::CreateThread
-    (0,
-     stacksize,
-     LPTHREAD_START_ROUTINE (thread_args->entry_point ()),
-     thread_args,
-     flags,
-     thr_id);
-#   endif /* 0 */
 
   // Close down the handle if no one wants to use it.
   if (thr_handle == &tmp_handle && tmp_handle != 0)

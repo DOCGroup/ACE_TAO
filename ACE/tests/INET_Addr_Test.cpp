@@ -112,7 +112,6 @@ static bool test_port_assignment (void)
 
 static bool test_multiple (void)
 {
-
   bool success = true;
 
   // Check the behavior when there are multiple addresses assigned to a name.

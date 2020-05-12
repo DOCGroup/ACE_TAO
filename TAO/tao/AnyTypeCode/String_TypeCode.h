@@ -64,7 +64,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -80,13 +79,10 @@ namespace TAO
       virtual CORBA::ULong length_i (void) const;
 
     private:
-
       /// Length of the @c string.  A length of zero indicates an
       /// unbounded @c string.
       CORBA::ULong const length_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

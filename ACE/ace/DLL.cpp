@@ -276,7 +276,7 @@ ACE_DLL::set_handle (ACE_SHLIB_HANDLE handle,
 {
   ACE_TRACE ("ACE_DLL::set_handle");
 
-  // Create a unique name.  Note that this name is only quaranteed
+  // Create a unique name.  Note that this name is only guaranteed
   // to be unique for the life of this object.
   ACE_TCHAR temp[ACE_UNIQUE_NAME_LEN];
   ACE_OS::unique_name (this, temp, ACE_UNIQUE_NAME_LEN);

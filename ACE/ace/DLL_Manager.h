@@ -28,7 +28,6 @@
 
 #define ACE_DEFAULT_DLL_MANAGER_SIZE 1024
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -53,9 +52,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_DLL_Handle
 {
 public:
-
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
-  typedef ACE_Fixed_Stack < ACE_TString, 10 >  ERROR_STACK;
+  typedef ACE_Fixed_Stack <ACE_TString, 10> ERROR_STACK;
 
   /// Default construtor.
   ACE_DLL_Handle (void);
@@ -141,7 +139,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Returns a string explaining why <symbol> or <open>
   /// failed in @a err.  This is used internal to print out the error to the log,
   /// but since this object is shared, we can't store or return the error
@@ -166,25 +163,18 @@ private:
    *            @a dll_name is first loaded
    *        @li @c RTLD_GLOBAL: makes symbols available for relocation
    *            processing of any other DLLs.
-   * @retval false On failure
-   * @retval true On success.
-   */
-  bool open_i (const ACE_TCHAR *dll_name, int open_mode);
-
-  /**
-   * This method logs error of opening the DLL.
-   * @param dll_name  The filename or path of the DLL to load.
    * @param errors Optional address of an error stack to collect any errors
    *        encountered.
+   * @retval false On failure
+   * @retval true On success
    */
-  void log_error (const ACE_TCHAR *dll_name, ERROR_STACK *errors);
+  bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
 
   /// Disallow copying and assignment since we don't handle them.
   ACE_DLL_Handle (const ACE_DLL_Handle &);
   void operator= (const ACE_DLL_Handle &);
 
 private:
-
   /// Keep track of how many ACE_DLL objects have a reference to this
   /// dll.
   sig_atomic_t refcount_;
@@ -276,7 +266,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Default constructor.
   ACE_DLL_Manager (int size = ACE_DLL_Manager::DEFAULT_SIZE);
 
@@ -296,7 +285,6 @@ protected:
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);
 
 private:
-
   /// Close the singleton instance.
   static void close_singleton (void);
 
@@ -305,7 +293,6 @@ private:
   void operator= (const ACE_DLL_Manager &);
 
 private:
-
   /// Vector containing all loaded handle objects.
   ACE_DLL_Handle **handle_vector_;
 

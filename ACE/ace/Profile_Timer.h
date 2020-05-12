@@ -32,7 +32,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Profile_Timer
 {
 public:
-
   /**
    * @class ACE_Elapsed_Time
    *

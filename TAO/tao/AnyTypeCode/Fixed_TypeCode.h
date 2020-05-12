@@ -62,7 +62,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -79,15 +78,12 @@ namespace TAO
       virtual CORBA::UShort fixed_scale_i (void) const;
 
     private:
-
       /// The number of significant digits.
       CORBA::UShort const digits_;
 
       /// The scale factor.
       CORBA::UShort const scale_;
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

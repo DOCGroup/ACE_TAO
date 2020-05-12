@@ -53,7 +53,6 @@ namespace TAO
     class TAO_SSLIOP_Export TAO_SSLIOP_Endpoint : public TAO_Endpoint
     {
     public:
-
       friend class TAO_SSLIOP_Profile;
 
       /// Constructor
@@ -159,13 +158,11 @@ namespace TAO
       int credentials_set (void) const;
 
     protected:
-
       /// Cache the SSL tagged component in a decoded format. Notice
       /// that we do not need to marshal this object!
       ::SSLIOP::SSL ssl_component_;
 
     private:
-
       /// Cached instance of ACE_INET_Addr for use in making invocations,
       /// etc.
       mutable ACE_INET_Addr object_addr_;
@@ -222,7 +219,6 @@ namespace TAO
     class TAO_SSLIOP_Export TAO_SSLIOP_Synthetic_Endpoint : public TAO_SSLIOP_Endpoint
     {
     public:
-
       /// Constructor
       TAO_SSLIOP_Synthetic_Endpoint (TAO_IIOP_Endpoint *iiop_endp);
 
@@ -246,7 +242,6 @@ namespace TAO
       TAO_SSLIOP_Synthetic_Endpoint (const ::SSLIOP::SSL *ssl);
 
     };
-
 //   }  // End SSLIOP namespace.
 // }  // End TAO namespace.
 

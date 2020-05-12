@@ -140,7 +140,6 @@ public:
    //@@ CONNECTION_HANDLER_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
-
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
 
