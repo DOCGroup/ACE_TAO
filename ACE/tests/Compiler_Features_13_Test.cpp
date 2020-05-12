@@ -10,6 +10,7 @@
 #include "test_config.h"
 
 #include <stdexcept>
+#include <typeinfo>
 
 namespace
 {
@@ -137,4 +138,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return status;
 }
-
