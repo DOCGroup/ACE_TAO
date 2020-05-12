@@ -8,7 +8,6 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
     strategy:
       matrix:
         name: [
@@ -16,29 +15,41 @@ jobs:
           GCC6,
           GCC7,
           GCC8,
-          GCC9
+          GCC9,
+          GCC10
         ]
         include:
           - name: GCC48
             CC: gcc-4.8
             CXX: g++-4.8
             PackageDeps: g++-4.8
+            imagename: ubuntu-16.04
           - name: GCC6
             CC: gcc-6
             CXX: g++-6
             PackageDeps: g++-6
+            imagename: ubuntu-18.04
           - name: GCC7
             CC: gcc-7
             CXX: g++-7
             PackageDeps: g++-7
+            imagename: ubuntu-18.04
           - name: GCC8
             CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
+            imagename: ubuntu-18.04
           - name: GCC9
             CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
+            imagename: ubuntu-18.04
+          - name: GCC10
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            imagename: ubuntu-18.04
+    runs-on: ${{ matrix.imagename }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
@@ -67,7 +78,6 @@ jobs:
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'c++11=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features

@@ -602,7 +602,7 @@ TAO::PG_Object_Group_Storable::write (TAO::Storable_Base & stream)
 
   ///// members_ /////
   size_t const num_members = this->members_.current_size  ();
-  stream << num_members;
+  stream << static_cast<ACE_UINT64> (num_members);
   for (MemberMap_Iterator it = this->members_.begin ();
        it != this->members_.end ();
        ++it)

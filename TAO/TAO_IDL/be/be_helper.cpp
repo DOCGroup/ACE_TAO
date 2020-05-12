@@ -370,7 +370,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER),
+                   ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    num);
 
   return *this;
@@ -380,7 +380,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_TEXT_ALWAYS_CHAR (ACE_INT64_FORMAT_SPECIFIER),
+                   ACE_INT64_FORMAT_SPECIFIER_ASCII,
                    num);
 
   return *this;

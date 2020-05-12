@@ -17,6 +17,11 @@
 #include "ace/CDR_Base.h"
 #include "ace/SString.h"
 
+#if defined (ACE_HAS_CPP11)
+#include "ace/OS_NS_stdio.h"
+#include <type_traits>
+#endif /* ACE_HAS_CPP11 */
+
 class Identifier;
 class UTL_IdList;
 class AST_Expression;
@@ -167,6 +172,22 @@ public:
   int gen_endif (void);
 
   // =overloaded operators
+#if defined (ACE_HAS_CPP11)
+  // Avoid duplication for the underlying type of size_t
+  template <typename Dummy = TAO_OutStream &>
+  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
+                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
+                          !std::is_same<ACE_CDR::ULong, size_t>::value,
+                          TAO_OutStream &>::type
+  operator << (const size_t num)
+  {
+    ACE_OS::fprintf (this->fp_,
+                     ACE_SIZE_T_FORMAT_SPECIFIER_ASCII,
+                     num);
+
+    return *this;
+  }
+#endif /* ACE_HAS_CPP11 */
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (const ACE_CString &str);

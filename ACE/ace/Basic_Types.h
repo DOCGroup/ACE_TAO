@@ -80,7 +80,7 @@
 #  define ACE_HAS_UINT32_T
 #  define ACE_HAS_INT64_T
 #  define ACE_HAS_UINT64_T
-# endif
+# endif /* ACE_HAS_CPP11 */
 
 #ifdef ACE_LACKS_INTPTR_T
 # include "ace/If_Then_Else.h"
