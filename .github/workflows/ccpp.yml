@@ -29,75 +29,75 @@ jobs:
             CC: gcc-4.8
             CXX: g++-4.8
             PackageDeps: g++-4.8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-16.04
           - name: GCC6
             CC: gcc-6
             CXX: g++-6
             PackageDeps: g++-6
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-18.04
           - name: GCC7
             CC: gcc-7
             CXX: g++-7
             PackageDeps: g++-7
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-18.04
           - name: GCC8
             CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-18.04
           - name: GCC9
             CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-18.04
           - name: GCC10
             CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU'
             imagename: ubuntu-18.04
           - CLANG5:
             CC: clang-5.0
             CXX: clang++-5.0
             PackageDeps: clang-5.0
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-16.04
           - CLANG6:
             CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-18.04
           - CLANG7:
             CC: clang-7
             CXX: clang++-7
             PackageDeps: clang-7
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-18.04
           - CLANG8:
             CC: clang-8
             CXX: clang++-8
             PackageDeps: clang-8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-18.04
           - CLANG9:
             CC: clang-9
             CXX: clang++-9
             PackageDeps: clang-9
             Repo: llvm-toolchain-$(lsb_release -cs)-9
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-18.04
           - CLANG10:
             CC: clang-10
             CXX: clang++-10
             PackageDeps: clang-10
             Repo: llvm-toolchain-$(lsb_release -cs)-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            platform_file: 'include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU'
             imagename: ubuntu-18.04
     runs-on: ${{ matrix.imagename }}
     env:
