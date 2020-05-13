@@ -21,7 +21,7 @@ jobs:
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
-      MPC_ROOT: ${{ github.workspace }}/../MPC
+      MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
