@@ -114,6 +114,7 @@ jobs:
       with:
         repository: DOCGroup/MPC
         ref: master
+        path: MPC
         fetch-depth: 1
     - name: Add Repo
       run: |
