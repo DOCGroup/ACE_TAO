@@ -1,0 +1,62 @@
+name: macosx
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 7 * * SUN'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        name: [
+          macos1015
+        ]
+        include:
+          - name: macos1015
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
+            imagename: macos-10.15
+    runs-on: ${{ matrix.imagename }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/../MPC
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v1
+    - name: checkout MPC
+      uses: actions/checkout@v1
+      with:
+        repository: DOCGroup/MPC
+        ref: master
+        fetch-depth: 1
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-macosx.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh

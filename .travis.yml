@@ -23,11 +23,6 @@ env:
     - LD_LIBRARY_PATH=$ACE_ROOT/lib:$LD_LIBRARY_PATH
     - COMPILER=g++-8
 
-matrix:
-  include:
-    - os: osx
-      env: COMPILER=clang++ VERSIONED=1 TAO=1 ACETESTS=1
-
 addons:
   apt:
     packages:
