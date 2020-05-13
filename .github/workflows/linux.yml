@@ -113,9 +113,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
-        ref: master
         path: MPC
-        fetch-depth: 1
     - name: Add Repo
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
