@@ -108,9 +108,9 @@ jobs:
       CXX: ${{ matrix.CXX }}
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: checkout MPC
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
         ref: master
