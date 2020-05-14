@@ -102,8 +102,7 @@ struct  ifconf {
 # define IFF_BROADCAST 0x2
 #endif /* IFF_BROADCAST */
 
-#if (defined ACE_LACKS_IF_NAMEINDEX && defined ACE_HAS_WINSOCK2) || \
-  defined ACE_LACKS_STRUCT_IF_NAMEINDEX
+#if defined (ACE_LACKS_STRUCT_IF_NAMEINDEX)
 struct if_nameindex {};
 #endif
 
