@@ -75,7 +75,7 @@ public:
   /// Destructor
   ~ACE_SSL_SOCK_Stream (void);
 
-  /// Send an n byte buffer to the ssl socket using the semantics of
+  /// Send an @a n byte buffer to the ssl socket using the semantics of
   /// send(3n).
   /**
    * ACE_SSL supports no flags for sending at this time.
@@ -84,7 +84,7 @@ public:
                 size_t n,
                 int flags) const;
 
-  /// Recv an n byte buffer from the ssl socket using the semantics of
+  /// Recv an @a n byte buffer from the ssl socket using the semantics of
   /// recv(3n).
   /**
    * ACE_SSL supports MSG_PEEK, but no other flags at this time.
@@ -93,17 +93,17 @@ public:
                 size_t n,
                 int flags) const;
 
-  /// Send an n byte buffer to the ssl socket using the semantics of
+  /// Send an @a n byte buffer to the ssl socket using the semantics of
   /// write(2).
   ssize_t send (const void *buf,
                 size_t n) const;
 
-  /// Recv an n byte buffer from the ssl socket using the semantics of
+  /// Recv an @a n byte buffer from the ssl socket using the semantics of
   /// read(2).
   ssize_t recv (void *buf,
                 size_t n) const;
 
-  /// Send an iovec of size n to the ssl socket.
+  /// Send an iovec of size @a n to the ssl socket.
   /**
    * Note that it is not possible to perform a "scattered" write with
    * the underlying OpenSSL implementation.  As such, the expected
@@ -136,8 +136,8 @@ public:
                 const ACE_Time_Value *timeout) const;
 
   /**
-   * Wait up to timeout amount of time to receive up to n bytes into
-   * buf (uses the recv() call).  If recv() times out -1 is returned
+   * Wait up to timeout amount of time to receive up to @a n bytes into
+   * @a buf (uses the recv() call).  If recv() times out -1 is returned
    * with errno == ETIME.  If it succeeds the number of bytes received
    * is returned.  MSG_PEEK is the only supported flag.
    */
