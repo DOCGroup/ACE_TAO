@@ -177,3 +177,14 @@ endif
 
 # Link To Android Logging Library for Log_Msg_Android_Logcat
 LIBS += -llog
+
+# link step to avoid 'command line too long' error on Windows
+ifeq ($(OS), Windows_NT)
+  SHOBJS_FILE = $(VSHDIR)tmpfile
+  CLEANUP_OBJS += $(SHOBJS_FILE)
+  define SHLIBBUILD
+    echo " " > $(SHOBJS_FILE)
+    $(foreach myobj, $(VSHOBJS), echo $(myobj) >> $(SHOBJS_FILE);)
+    $(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ @$(SHOBJS_FILE) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
+  endef
+endif
