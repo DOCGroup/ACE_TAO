@@ -73,7 +73,7 @@ private:
   // Sleep_Time value.
 
   enum {QUIT_STRING_SIZE = 128};
-  char quit_string_[QUIT_STRING_SIZE];
+  char quit_string_[QUIT_STRING_SIZE + 1];
   // String that shuts down the client/server.
 
   size_t message_len_;
