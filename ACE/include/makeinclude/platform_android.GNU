@@ -180,11 +180,10 @@ LIBS += -llog
 
 # link step to avoid 'command line too long' error on Windows
 ifeq ($(OS), Windows_NT)
-  SHOBJS_FILE = $(VSHDIR)tmpfile
+  SHOBJS_FILE = $(VSHDIR)$(MAKEFILE)_object_list.tmp
   CLEANUP_OBJS += $(SHOBJS_FILE)
-  define SHLIBBUILD
-    echo " " > $(SHOBJS_FILE)
-    $(foreach myobj, $(VSHOBJS), echo $(myobj) >> $(SHOBJS_FILE);)
+  define SHLIBBUILD 
+    $(file >$(SHOBJS_FILE), $^)
     $(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ @$(SHOBJS_FILE) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
   endef
 endif
