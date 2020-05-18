@@ -339,7 +339,7 @@ ACE_SSL_Asynch_Stream::read (ACE_Message_Block & message_block,
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
 
-  ACE_SSL_Asynch_Read_Stream_Result* result = NULL;
+  ACE_SSL_Asynch_Read_Stream_Result* result = nullptr;
   // create result for future notification
   ACE_NEW_RETURN (result,
                   ACE_SSL_Asynch_Read_Stream_Result (
@@ -379,7 +379,7 @@ ACE_SSL_Asynch_Stream::write (ACE_Message_Block & message_block,
   if (this->flags_ & SF_REQ_SHUTDOWN)
     return -1;
 
-  ACE_SSL_Asynch_Write_Stream_Result* result = NULL;
+  ACE_SSL_Asynch_Write_Stream_Result* result = nullptr;
   // create result for future notification
   ACE_NEW_RETURN (result,
                   ACE_SSL_Asynch_Write_Stream_Result (
