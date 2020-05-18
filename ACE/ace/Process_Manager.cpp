@@ -152,9 +152,9 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   // delete the proactor will be called when Object_Manager is
   // being terminated.
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
-                                0,
-                                typeid (*t).name ());
+                               ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
+                               0,
+                               typeid (*t).name ());
 
   ACE_Process_Manager::instance_ = tm;
   return t;
