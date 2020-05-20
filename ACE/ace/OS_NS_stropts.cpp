@@ -59,7 +59,7 @@ ACE_OS::ioctl (ACE_HANDLE socket,
   if (io_control_code == SIO_SET_QOS)
     {
       QOS qos;
-      unsigned long const qos_len = sizeof (QOS);
+      unsigned long qos_len = sizeof (QOS);
 
       qos.SendingFlowspec = *(ace_qos.sending_flowspec ());
       qos.ReceivingFlowspec = *(ace_qos.receiving_flowspec ());
