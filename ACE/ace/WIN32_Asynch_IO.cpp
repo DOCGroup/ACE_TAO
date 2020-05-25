@@ -176,8 +176,8 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 #if (_WIN32_WINNT < 0x0600)
   int const result = (int) ::CancelIo (this->handle_);
 #else
-  int const result = (int) ::CancelIoEx (this->handle_, NULL);
-#endif
+  int const result = (int) ::CancelIoEx (this->handle_, 0);
+#endif // < _WIN32_WINNT_VISTA
   if (result == 0)
     // Couldn't cancel the operations.
     return 2;
