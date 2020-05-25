@@ -614,15 +614,6 @@ project(Compiler_Features_07_Test) : acetest {
   }
 }
 
-// This compiler feature is not supported on all compilers
-project(Compiler_Features_08_Test) : acetest {
-  requires += dummy_label
-  exename = Compiler_Features_08_Test
-  Source_Files {
-    Compiler_Features_08_Test.cpp
-  }
-}
-
 project(Compiler_Features_09_Test) : acetest {
   exename = Compiler_Features_09_Test
   Source_Files {

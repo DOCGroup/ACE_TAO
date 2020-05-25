@@ -123,6 +123,14 @@
 #  endif
 #endif
 
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0)
+#  define ACE_LACKS_STRUCT_IF_NAMEINDEX
+#endif
+
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0) || __ANDROID_API__ < 24
+#  define ACE_LACKS_IF_NAMEINDEX
+#endif
+
 // These were available before r18, but in r18 they are restricted to API >= 28 ¯\_(ツ)_/¯
 #if __ANDROID_API__ < 28
 #  define ACE_LACKS_SETHOSTENT

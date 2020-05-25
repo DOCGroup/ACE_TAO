@@ -1,0 +1,159 @@
+name: linux
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 7 * * SUN'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        name: [
+          GCC48,
+          GCC6,
+          GCC7,
+          GCC8,
+          GCC9,
+          GCC10,
+          CLANG5,
+          CLANG6,
+          CLANG7,
+          CLANG8,
+          CLANG9,
+          CLANG10
+        ]
+        include:
+          - name: GCC48
+            CC: gcc-4.8
+            CXX: g++-4.8
+            PackageDeps: g++-4.8
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-16.04
+          - name: GCC6
+            CC: gcc-6
+            CXX: g++-6
+            PackageDeps: g++-6
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-18.04
+          - name: GCC7
+            CC: gcc-7
+            CXX: g++-7
+            PackageDeps: g++-7
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-18.04
+          - name: GCC8
+            CC: gcc-8
+            CXX: g++-8
+            PackageDeps: g++-8
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-18.04
+          - name: GCC9
+            CC: gcc-9
+            CXX: g++-9
+            PackageDeps: g++-9
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-18.04
+          - name: GCC10
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            imagename: ubuntu-18.04
+          - name: CLANG5
+            CC: clang-5.0
+            CXX: clang++-5.0
+            PackageDeps: clang-5.0
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-16.04
+          - name: CLANG6
+            CC: clang-6.0
+            CXX: clang++-6.0
+            PackageDeps: clang-6.0
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-18.04
+          - name: CLANG7
+            CC: clang-7
+            CXX: clang++-7
+            PackageDeps: clang-7
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-18.04
+          - name: CLANG8
+            CC: clang-8
+            CXX: clang++-8
+            PackageDeps: clang-8
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-18.04
+          - name: CLANG9
+            CC: clang-9
+            CXX: clang++-9
+            PackageDeps: clang-9
+            Repo: llvm-toolchain-$(lsb_release -cs)-9
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-18.04
+          - name: CLANG10
+            CC: clang-10
+            CXX: clang++-10
+            PackageDeps: clang-10
+            Repo: llvm-toolchain-$(lsb_release -cs)-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            imagename: ubuntu-18.04
+    runs-on: ${{ matrix.imagename }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      CC: ${{ matrix.CC }}
+      CXX: ${{ matrix.CXX }}
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v2
+    - name: checkout MPC
+      uses: actions/checkout@v2
+      with:
+        repository: DOCGroup/MPC
+        path: MPC
+    - name: Add Repo
+      run: |
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
+      if: matrix.Repo != ''
+    - name: Add packages
+      run: |
+        sudo apt-get --yes update
+        sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'xerces3=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh
