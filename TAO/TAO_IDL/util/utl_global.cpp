@@ -1940,6 +1940,7 @@ namespace
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
           disable_output_ (disable_output),
+          default_streambuf_ (0),
           flags_ (ACE_LOG_MSG->flags ())
       {
         idl_global->in_eval_ = true;
