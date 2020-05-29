@@ -279,11 +279,13 @@ static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_error = c;
+  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  idl_global->err ()->last_error_lineno = line_number;
   ACE_ERROR ((LM_ERROR,
               "Error - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
-              lineno == -1 ? idl_global->lineno () : lineno,
+              line_number,
               error_string (c)));
   idl_global->set_err_count (idl_global->err_count () + 1);
 }
@@ -302,11 +304,13 @@ static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, ACE_CString s)
 {
   idl_global->err ()->last_warning = c;
+  const long line_number = lineno == -1 ? idl_global->lineno () : lineno;
+  idl_global->err ()->last_warning_lineno = lineno;
   ACE_ERROR ((LM_WARNING,
               "Warning - %C: \"%C\", line %d: %C",
               idl_global->prog_name (),
               s.c_str (),
-              lineno == -1 ? idl_global->lineno () : lineno,
+              line_number,
               error_string (c)));
 }
 static void
@@ -712,7 +716,9 @@ parse_state_to_error_message (IDL_GlobalData::ParseState ps)
 
 UTL_Error::UTL_Error ()
   : last_error (EIDL_OK),
-    last_warning (EIDL_OK)
+    last_error_lineno (-1),
+    last_warning (EIDL_OK),
+    last_warning_lineno (-1)
 {
 }
 
@@ -1662,4 +1668,12 @@ UTL_Error::direct_warning (
       idl_warning_header (error_code, lineno, filename);
       ACE_ERROR ((LM_WARNING, ACE_TEXT ("%C\n"), reason));
     }
+}
+
+void UTL_Error::reset_last_error_and_warning ()
+{
+  last_error = EIDL_OK;
+  last_error_lineno = -1;
+  last_warning = EIDL_OK;
+  last_warning_lineno = -1;
 }
