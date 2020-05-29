@@ -73,9 +73,8 @@ ACE_Cached_Allocator<T, ACE_LOCK>::malloc (size_t nbytes)
   if (nbytes > sizeof (T))
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  return this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<T> *allocated = this->free_list_.remove ();
+  return allocated == 0 ? 0 : allocated->addr();
 }
 
 template <class T, class ACE_LOCK> void *
@@ -86,9 +85,8 @@ ACE_Cached_Allocator<T, ACE_LOCK>::calloc (size_t nbytes,
   if (nbytes > sizeof (T))
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<T> *allocated = this->free_list_.remove ();
+  void *ptr = allocated == 0 ? 0 : allocated->addr();
   if (ptr != 0)
     ACE_OS::memset (ptr, initial_value, sizeof (T));
   return ptr;
@@ -147,9 +145,8 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::malloc (size_t nbytes)
   if (nbytes > chunk_size_)
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  return this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<char> *allocated = this->free_list_.remove ();
+  return allocated == 0 ? 0 : allocated->addr();
 }
 
 template <class ACE_LOCK> void *
@@ -160,9 +157,8 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::calloc (size_t nbytes,
   if (nbytes > chunk_size_)
     return 0;
 
-  // addr() call is really not absolutely necessary because of the way
-  // ACE_Cached_Mem_Pool_Node's internal structure arranged.
-  void *ptr = this->free_list_.remove ()->addr ();
+  ACE_Cached_Mem_Pool_Node<char> *allocated = this->free_list_.remove ();
+  void *ptr = allocated == 0 ? 0 : allocated->addr();
   if (ptr != 0)
     ACE_OS::memset (ptr, initial_value, chunk_size_);
   return ptr;
