@@ -1520,19 +1520,21 @@ visibility
 state_member
         : visibility member_i
         {
-          if ($2)
+          AST_Field::Visibility &visibility = $1;
+          AST_Decls *&decls_ptr = $2;
+          if (decls_ptr)
             {
-              AST_Decls &decls = *$2;
+              AST_Decls &decls = *decls_ptr;
               for (size_t i = 0; i < decls.size (); i++)
                 {
-                  AST_Field * field = dynamic_cast<AST_Field*> (decls[i]);
+                  AST_Field *field = dynamic_cast<AST_Field *> (decls[i]);
                   if (field)
                     {
-                      field->visibility ($1);
+                      field->visibility (visibility);
                     }
                 }
             }
-          $$ = $2;
+          $$ = decls_ptr;
         }
         ;
 
