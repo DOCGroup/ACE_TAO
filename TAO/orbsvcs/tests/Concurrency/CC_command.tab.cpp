@@ -387,8 +387,8 @@ __ace_cc_yy_memcpy (to, from, count)
      unsigned int count;
 {
   char *f = from;
-  register char *t = to;
-  register int i = count;
+  char *t = to;
+  int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -401,9 +401,9 @@ __ace_cc_yy_memcpy (to, from, count)
 static void
 __ace_cc_yy_memcpy (char *to, char *from, unsigned int count)
 {
-  register char *t = to;
-  register char *f = from;
-  register int i = count;
+  char *t = to;
+  char *f = from;
+  int i = count;
 
   while (i-- > 0)
     *t++ = *f++;
@@ -446,10 +446,10 @@ int
 ace_cc_yyparse(ACE_CC_YYPARSE_PARAM_ARG)
      ACE_CC_YYPARSE_PARAM_DECL
 {
-  register int ace_cc_yystate;
-  register int ace_cc_yyn;
-  register short *ace_cc_yyssp;
-  register ACE_CC_YYSTYPE *ace_cc_yyvsp;
+  int ace_cc_yystate;
+  int ace_cc_yyn;
+  short *ace_cc_yyssp;
+  ACE_CC_YYSTYPE *ace_cc_yyvsp;
   int ace_cc_yyerrstatus; /*  number of tokens to shift before error messages enabled */
   int ace_cc_yychar1 = 0;   /*  lookahead token as an internal (translated) token number */
 

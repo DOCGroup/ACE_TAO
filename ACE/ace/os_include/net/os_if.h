@@ -103,7 +103,7 @@ struct  ifconf {
 #endif /* IFF_BROADCAST */
 
 #if defined (ACE_LACKS_STRUCT_IF_NAMEINDEX)
-struct if_nameindex {};
+struct if_nameindex { int dummy; };
 #endif
 
 #ifdef __cplusplus
