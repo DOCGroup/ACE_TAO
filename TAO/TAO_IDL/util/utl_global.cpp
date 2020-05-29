@@ -1844,19 +1844,22 @@ IDL_GlobalData::anon_type_diagnostic (
 bool
 IDL_GlobalData::anon_error (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_ERROR);
+  return anon_type_diagnostic_ == ANON_TYPE_ERROR &&
+    !(idl_version_ >= IDL_VERSION_4);
 }
 
 bool
 IDL_GlobalData::anon_warning (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_WARNING);
+  return anon_type_diagnostic_ == ANON_TYPE_WARNING &&
+    !(idl_version_ >= IDL_VERSION_4);
 }
 
 bool
 IDL_GlobalData::anon_silent (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_SILENT);
+  return anon_type_diagnostic_ == ANON_TYPE_SILENT ||
+    idl_version_ >= IDL_VERSION_4;
 }
 
 bool
