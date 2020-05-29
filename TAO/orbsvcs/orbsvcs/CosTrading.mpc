@@ -145,7 +145,7 @@ project(CosTrading_Serv) : orbsvcslib, orbsvcs_output, install, trading_skel, dy
 
     .PHONY: Constraint_y
     Constraint_y:
-    "	byacc -l -d Trader/constraint.y"
+    "	yacc -l -d Trader/constraint.y"
     "	sed -e 's/ NULL/ 0/g' \\"
     "	    -e 's/	/        /g' \\"
     "	    -e 's/  *$$\/\/g' \\"
