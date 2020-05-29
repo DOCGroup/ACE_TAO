@@ -62,27 +62,27 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 */
 
-#include "ast_interface.h"
-#include "ast_module.h"
-#include "ast_array.h"
-#include "ast_field.h"
-#include "ast_structure.h"
-#include "ast_sequence.h"
-#include "ast_string.h"
-#include "ast_typedef.h"
-#include "ast_visitor.h"
-#include "global_extern.h"
-#include "nr_extern.h"
-#include "utl_identifier.h"
-#include "utl_string.h"
-#include "utl_scope.h"
-#include "utl_err.h"
-#include "ace/OS_NS_stdio.h"
-#include "ast_annotation_appl.h"
-#include "utl_indenter.h"
+#include <ast_interface.h>
+#include <ast_module.h>
+#include <ast_array.h>
+#include <ast_field.h>
+#include <ast_structure.h>
+#include <ast_sequence.h>
+#include <ast_string.h>
+#include <ast_typedef.h>
+#include <ast_visitor.h>
+#include <global_extern.h>
+#include <nr_extern.h>
+#include <utl_identifier.h>
+#include <utl_string.h>
+#include <utl_scope.h>
+#include <utl_err.h>
+#include <ast_annotation_appl.h>
+#include <utl_indenter.h>
 
 // FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include <ace/streams.h>
+#include <ace/OS_NS_stdio.h>
 
 COMMON_Base::COMMON_Base (bool local,
                           bool abstract)
@@ -1643,7 +1643,7 @@ operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d)
 bool
 AST_Decl::annotatable () const
 {
-  return false;
+  return true;
 }
 
 bool

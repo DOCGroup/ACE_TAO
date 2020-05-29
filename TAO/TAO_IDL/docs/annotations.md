@@ -87,7 +87,7 @@ of what can be annotated and how, annotations for specific IDL elements have to
 be added on a as-needed basis.
 
 You can put annotations before the following things in IDL and a backend using
-TAO IDL's front-end library can read them:
+TAO IDLs front-end library can read them:
 
 - modules
 - `typedef`s
@@ -95,7 +95,12 @@ TAO IDL's front-end library can read them:
 - structures and their member values
 - unions and their cases
 - enumerations and their enumerators
-- interfaces and their operations and attributes
+- interfaces, porttypes, eventtypes, components and all their contents
+- valuetypes and most of their contents with the exception of these kinds
+  valuetype statements:
+  - import: not supported by TAO
+  - typeid: not supported by TAO on valuetypes
+  - typeprefix: No corresponding AST Node to attach annotations to
 
 These are the general cases. The rest of the cases are defined in the next
 section. If an annotation application isn't listed in the general case list or
@@ -603,3 +608,10 @@ annotation member names with `_cxx_` if they are also a C++ keyword.
 
 - Expanded documentation on what can be annotated and how to extend annotation
   support.
+
+### TAO 2.5.10
+
+- Annotation support extended:
+  - All the contents of interfaces
+  - The porttypes, eventtypes, components and all their contents
+  - Valuetypes and most of their contents
