@@ -1,32 +1,33 @@
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include <ast_annotation_decl.h>
+#include <ast_annotation_member.h>
+#include <utl_identifier.h>
+#include <ast_generator.h>
+#include <utl_scope.h>
+#include <fe_declarator.h>
+#include <ast_field.h>
+#include <ast_typedef.h>
+#include <ast_sequence.h>
+#include <ast_union.h>
+#include <ast_enum_val.h>
+#include <utl_string.h>
+#include <ast_array.h>
+#include <ast_interface.h>
 
+#include <ace/OS_NS_stdlib.h>
+#include <ace/OS_NS_string.h>
+#include <ace/OS_NS_stdio.h>
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
-#  include "ace/streams.h"
+#  include <ace/streams.h>
 #endif
 
-#include "ast_annotation_decl.h"
-#include "ast_annotation_member.h"
-#include "utl_identifier.h"
-#include "ast_generator.h"
-#include "utl_scope.h"
-#include "fe_declarator.h"
-#include "ast_field.h"
-#include "ast_typedef.h"
-#include "ast_sequence.h"
-#include "ast_union.h"
-#include "ast_enum_val.h"
-#include "utl_string.h"
-#include "ast_array.h"
-#include "ast_interface.h"
+#include <string>
 
 struct Failed {};
 
 class Annotation_Test {
 public:
-  const char *name_;
-  const char *idl_;
+  std::string name_;
+  std::string idl_;
   bool failed_;
   int error_count_;
   UTL_Error::ErrorCode last_error_, last_warning_;
@@ -36,11 +37,11 @@ public:
   static unsigned failed_test_count_;
   static unsigned total_test_count_;
 
-  explicit Annotation_Test (const char *name);
+  explicit Annotation_Test (const std::string &name);
 
   ~Annotation_Test ();
 
-  void failed (const char *message = 0);
+  void failed (const std::string &message = "");
 
   Annotation_Test &error_count (int error_count);
 
@@ -48,7 +49,7 @@ public:
 
   Annotation_Test &last_warning (UTL_Error::ErrorCode last_warning);
 
-  Annotation_Test &run (const char *idl);
+  Annotation_Test &run (const std::string &idl);
 
   AST_Decl *assert_node (const char *name, UTL_Scope *from = 0);
 
@@ -104,6 +105,8 @@ public:
   void set_scope (AST_Decl *scope_node);
 
   void disable_output ();
+
+  void print_idl_with_line_numbers ();
 
   static void results ();
 };
