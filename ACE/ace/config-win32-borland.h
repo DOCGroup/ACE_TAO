@@ -193,6 +193,19 @@
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
 # define ACE_LACKS_INLINE_ASSEMBLY
+
+# if __cplusplus >= 201103L
+#  define ACE_HAS_CPP11
+# endif
+# if __cplusplus >= 201402L
+#  define ACE_HAS_CPP14
+# endif
+# if __cplusplus >= 201703L
+#  define ACE_HAS_CPP17
+# endif
+# if __cplusplus >= 202002L
+#  define ACE_HAS_CPP20
+# endif
 #endif /* __clang__ */
 
 #include /**/ "ace/post.h"
