@@ -614,6 +614,6 @@ annotation member names with `_cxx_` if they are also a C++ keyword.
 ### TAO 2.5.10
 
 - Annotation support extended:
-  - All the contents of interfaces
-  - The porttypes, eventtypes, components and all their contents
-  - Valuetypes and most of their contents
+  - All the direct contents of interfaces
+  - The porttypes, eventtypes, components and all their direct contents
+  - Valuetypes and most of their direct contents
