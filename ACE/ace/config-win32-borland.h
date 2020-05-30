@@ -145,18 +145,21 @@
 # endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x740)
+#if (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_ISCTYPE
 #endif
 
-#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x740)
+#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_STRTOK_R
 #endif
 
 #if (__BORLANDC__ <= 0x740)
 # define ACE_LACKS_LOCALTIME_R
 # define ACE_LACKS_GMTIME_R
+#endif
+
+#if (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_ASCTIME_R
 #endif
 
@@ -190,8 +193,20 @@
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
 # define ACE_LACKS_INLINE_ASSEMBLY
-#endif /* __clang__ */
 
+# if __cplusplus >= 201103L
+#  define ACE_HAS_CPP11
+# endif
+# if __cplusplus >= 201402L
+#  define ACE_HAS_CPP14
+# endif
+# if __cplusplus >= 201703L
+#  define ACE_HAS_CPP17
+# endif
+# if __cplusplus >= 202002L
+#  define ACE_HAS_CPP20
+# endif
+#endif /* __clang__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

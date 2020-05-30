@@ -1,6 +1,16 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
 =====================================================
 
+. Add support for Embarcadero C++ Builder 10.4 Sydney using the
+  classic compiler. ACE/TAO compile with the new 32/64 bit clang
+  compilers but runtime tests show several runtime problems which
+  makes them not safe to use
+
+. Make a change in the ACE Process Manager to resolve an internal
+  compiler error with Visual Studio 2019 16.5.x compilers
+
+. Android enhancements for if_nameindex
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.8 and ACE-6.5.9
 ====================================================
 
