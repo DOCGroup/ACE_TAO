@@ -962,7 +962,7 @@ interface
         {
           idl_global->set_parse_state (IDL_GlobalData::PS_InterfaceQsSeen);
 
-          $$ = dynamic_cast<AST_Decl*> (idl_global->scopes ().top_non_null ());
+          $$ = dynamic_cast<AST_Decl *> (idl_global->scopes ().top_non_null ());
           /*
            * Done with this interface - pop it off the scopes stack
            */
@@ -1116,7 +1116,7 @@ valuetype
 value_concrete_decl :
         value_header
         {
-          FE_OBVHeader *valuetype_header = $1;
+          FE_OBVHeader *&valuetype_header = $1;
           UTL_Scope *scope = idl_global->scopes ().top_non_null ();
           AST_ValueType *valuetype = 0;
 
@@ -1136,10 +1136,12 @@ value_concrete_decl :
                 valuetype_header->truncatable (),
                 false);
 
-              AST_Interface* valuetype_as_interface =
-                dynamic_cast<AST_Interface*> (valuetype);
+              AST_Interface *valuetype_as_interface =
+                dynamic_cast<AST_Interface *> (valuetype);
               AST_Interface::fwd_redefinition_helper (
                 valuetype_as_interface, scope);
+              valuetype = dynamic_cast<AST_ValueType *> (
+                valuetype_as_interface);
 
               /*
                * Add the valuetype to its definition scope
@@ -1149,7 +1151,7 @@ value_concrete_decl :
               // FE_OBVHeader is not automatically destroyed in the AST
               valuetype_header->destroy ();
               delete valuetype_header;
-              valuetype_header = ($1 = 0);
+              valuetype_header = 0;
             }
 
           /*
@@ -1850,7 +1852,7 @@ interface_forward :
           delete $2;
           $2 = 0;
 
-          $$ = dynamic_cast<AST_Decl*> (f);
+          $$ = dynamic_cast<AST_Decl *> (f);
         }
         ;
 
@@ -5301,7 +5303,7 @@ component_decl :
                 component_header->supports_flat (),
                 component_header->n_supports_flat ());
               AST_Interface *component_as_interface =
-                dynamic_cast<AST_Interface*> (component);
+                dynamic_cast<AST_Interface *> (component);
               AST_Interface::fwd_redefinition_helper (
                 component_as_interface, scope);
 

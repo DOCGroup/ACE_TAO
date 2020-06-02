@@ -1,5 +1,6 @@
 #include "Annotation_Test.h"
-#include "global_extern.h"
+
+#include <global_extern.h>
 
 unsigned Annotation_Test::failed_test_count_ = 0;
 unsigned Annotation_Test::total_test_count_ = 0;
@@ -79,7 +80,6 @@ Annotation_Test::last_warning (UTL_Error::ErrorCode last_warning)
   last_warning_ = last_warning;
   return *this;
 }
-
 
 Annotation_Test &
 Annotation_Test::run (const std::string &idl)
@@ -193,7 +193,6 @@ Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 
   return node;
 }
-
 
 AST_Annotation_Decl *
 Annotation_Test::assert_annotation_decl (const char *name)
@@ -348,7 +347,6 @@ Annotation_Test::get_annotation_member (
   return member;
 }
 
-
 AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
   AST_Annotation_Appl *anno_appl, const char *name)
@@ -416,7 +414,6 @@ Annotation_Test::assert_annotation_member_value (
     {
       equal = (*expected) == member_value;
     }
-
 
   if (!equal)
     {
@@ -492,37 +489,36 @@ Annotation_Test::results ()
 void
 Annotation_Test::print_idl_with_line_numbers ()
 {
+  static const char* start_marker =
+#ifndef ACE_WIN32
+    "\x1b[31m"
+#endif
+    ">";
+  static const char* end_marker =
+#ifndef ACE_WIN32
+    "\x1b[0m"
+#endif
+    "";
   const long last_error_line = idl_global->err ()->last_error_lineno;
-  const long last_warning_line = idl_global->err ()->last_warning_lineno;
   const long marked_line = last_error_line != -1 ?
-    last_error_line : last_warning_line;
+    last_error_line : idl_global->err ()->last_warning_lineno;
+  const size_t char_count = idl_.length ();
 
-  std::string line;
-  long line_number = 1;
-  for (long i = 0; i < static_cast<long> (idl_.length ()); ++i)
+  long line_number = 0;
+  for (size_t start = 0; start < char_count;)
     {
-      const char c = idl_[i];
-      if (c == '\n')
-        {
-          const bool mark_line = line_number == marked_line;
-          ACE_DEBUG ((LM_DEBUG,
-            ACE_TEXT ("%C%c%4u: %C%C\n"),
-#ifndef ACE_WIN32
-            mark_line ? "\x1b[31m" :
-#endif
-              "",
-            mark_line ? '>' : ' ',
-            line_number, line.c_str (),
-#ifndef ACE_WIN32
-            mark_line ? "\x1b[0m" :
-#endif
-              ""));
-          line = "";
-          line_number++;
-        }
-      else
-        {
-          line += c;
-        }
+      ++line_number;
+      const size_t end = idl_.find ('\n', start);
+      const std::string line = idl_.substr (start, end - start);
+      const bool mark_line = line_number == marked_line;
+      ACE_DEBUG ((LM_DEBUG,
+        ACE_TEXT ("%C%4u: %C%C\n"),
+        mark_line ? start_marker : " ",
+        line_number, line.c_str (),
+        mark_line ? end_marker : ""));
+      if (end == std::string::npos) {
+        break;
+      }
+      start = end + 1;
     }
 }

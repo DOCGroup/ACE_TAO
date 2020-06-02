@@ -56,14 +56,15 @@ public:
   template <typename T>
   T *assert_node (const char *name, UTL_Scope *from = 0)
   {
-    T *cast = dynamic_cast<T*> (assert_node (name, from));
-    if (!cast) {
-      ACE_ERROR ((LM_ERROR,
-        ACE_TEXT ("Annotation Test Error: %C:\n")
-        ACE_TEXT ("assert_node: Failed to cast node to requested type!\n"),
-        name_));
-      failed ();
-    }
+    T *cast = dynamic_cast<T *> (assert_node (name, from));
+    if (!cast)
+      {
+        ACE_ERROR ((LM_ERROR,
+          ACE_TEXT ("Annotation Test Error: %C:\n")
+          ACE_TEXT ("assert_node: Failed to cast node to requested type!\n"),
+          name_.c_str ()));
+        failed ();
+      }
     return cast;
   }
 
