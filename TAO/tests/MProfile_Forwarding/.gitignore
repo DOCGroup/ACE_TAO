@@ -1,4 +1,9 @@
-/Manager
 /client
+/Manager
 /manager
 /server
+/testC.cpp
+/testC.h
+/testC.inl
+/testS.cpp
+/testS.h
