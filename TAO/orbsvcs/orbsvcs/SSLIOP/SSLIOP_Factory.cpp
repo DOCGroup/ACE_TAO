@@ -336,7 +336,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       ? SSL_MAX_SSL_SESSION_ID_LENGTH
       : sizeof session_id_context_;
 
-  // Note that this function returns 1, if the operation succeded.
+  // Note that this function returns 1, if the operation succeeded.
   // See SSL_CTX_set_session_id_context(3)
   if( 1 != ::SSL_CTX_set_session_id_context (ssl_ctx->context(),
                                              session_id_context_,

@@ -15,7 +15,7 @@ jobs:
 
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: Run fuzz
       run: |
         perl ${env:ACE_ROOT}/bin/fuzz.pl
