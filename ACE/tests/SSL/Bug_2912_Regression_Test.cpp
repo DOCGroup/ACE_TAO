@@ -114,7 +114,6 @@ Client_Proactor_Task::svc (void)
   return 0;
 }
 
-
 /**
  * Server's proactor
  */

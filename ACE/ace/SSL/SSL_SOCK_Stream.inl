@@ -101,7 +101,6 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
   ACE_TRACE ("ACE_SSL_SOCK_Stream::recv_i");
 
   // NOTE: Caller must provide thread-synchronization.
-
   int bytes_read = 0;
   ACE_HANDLE const handle = this->get_handle ();
 

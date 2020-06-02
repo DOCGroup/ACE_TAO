@@ -569,6 +569,7 @@
 # define ACE_LACKS_IF_NAMETOINDEX
 #endif
 #define ACE_LACKS_IF_NAMEINDEX
+#define ACE_LACKS_STRUCT_IF_NAMEINDEX
 
 // Platform supports IP multicast on Winsock 2
 #if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)

@@ -1,4 +1,4 @@
-name: C/C++ CI
+name: linux
 
 on:
   push:
@@ -103,18 +103,17 @@ jobs:
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
-      MPC_ROOT: ${{ github.workspace }}/../MPC
+      MPC_ROOT: ${{ github.workspace }}/MPC
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
     - name: checkout MPC
-      uses: actions/checkout@v1
+      uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
-        ref: master
-        fetch-depth: 1
+        path: MPC
     - name: Add Repo
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -

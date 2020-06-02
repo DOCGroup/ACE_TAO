@@ -26,6 +26,9 @@ ACE_Process_Manager_cleanup (void *instance, void *arg)
 {
   ACE_Process_Manager::cleanup (instance, arg);
 }
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager_cleanup
+#else
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager::cleanup
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -124,19 +127,10 @@ ACE_Process_Manager::instance (void)
           // Register with the Object_Manager so that the wrapper to
           // delete the proactor will be called when Object_Manager is
           // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager_cleanup,
+                                       ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
                                        0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#else
-          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager::cleanup,
-                                       0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
-
+                                       typeid (ACE_Process_Manager).name ());
         }
     }
 
@@ -157,18 +151,10 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   // Register with the Object_Manager so that the wrapper to
   // delete the proactor will be called when Object_Manager is
   // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager_cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#else
-  ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager::cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
+                               ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
+                               0,
+                               typeid (*t).name ());
 
   ACE_Process_Manager::instance_ = tm;
   return t;

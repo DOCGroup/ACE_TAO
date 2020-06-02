@@ -30,7 +30,6 @@
 #  pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -69,15 +68,21 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
+#if defined (ACE_HAS_CPP17)
+// C++17 has removed std::auto_ptr but this is heavily used
+// in ACE and TAO tests so for the moment we are providing
+// our own auto_ptr implementation
+# define ACE_LACKS_AUTO_PTR
+# include <memory>
+#endif /* ACE_HAS_CPP17 */
+
 #if !defined (ACE_LACKS_AUTO_PTR) && \
      defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
             (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 #include <memory>
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-#if !defined (ACE_HAS_CPP17)
 using std::auto_ptr;
-#endif /* !ACE_HAS_CPP17 */
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 

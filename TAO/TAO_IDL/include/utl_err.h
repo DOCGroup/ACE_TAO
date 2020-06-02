@@ -163,7 +163,9 @@ public:
   };
 
   ErrorCode last_error;
+  long last_error_lineno;
   ErrorCode last_warning;
+  long last_warning_lineno;
 
   // Operations
 
@@ -463,6 +465,9 @@ public:
    */
   void annotation_param_missing_error (
     AST_Annotation_Appl *appl, AST_Annotation_Member *member);
+
+  /// Reset recent warning and error information
+  void reset_last_error_and_warning ();
 };
 
 #endif           // _UTL_ERR_UTL_ERR_HH

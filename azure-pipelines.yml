@@ -171,25 +171,3 @@ jobs:
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
-
-- job: MacOSX
-  timeoutInMinutes: 90
-  pool:
-    vmImage: macOS-latest
-  steps:
-  - powershell: |
-      '#include "ace/config-macosx.h"' > $(ACE_ROOT)/ace/config.h
-    displayName: Create config.h file
-  - powershell: |
-      'include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU' > $(ACE_ROOT)/include/makeinclude/platform_macros.GNU;
-    displayName: Create platform_macros file
-  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
-    displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(TAO_ROOT)/TAO_ACE.mwc -workers 4
-    displayName: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type gnuace $(ACE_ROOT)/tests/tests.mwc -workers 4
-    displayName: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
-  - bash: make -j 6 -C TAO
-    displayName: Build TAO project
-  - bash: make -j 6 -C ACE/tests
-    displayName: Build tests project
