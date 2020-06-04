@@ -5306,6 +5306,7 @@ component_decl :
                 dynamic_cast<AST_Interface *> (component);
               AST_Interface::fwd_redefinition_helper (
                 component_as_interface, scope);
+              component = dynamic_cast<AST_Component *> (component_as_interface);
 
               /*
                * Add the component to its definition scope.
@@ -6497,6 +6498,7 @@ event_decl :
                 dynamic_cast<AST_Interface *> (eventtype);
               AST_Interface::fwd_redefinition_helper (
                 eventtype_as_interface, scope);
+              eventtype = dynamic_cast<AST_EventType *> (eventtype_as_interface);
 
               /*
                * Add the eventetype to its definition scope
