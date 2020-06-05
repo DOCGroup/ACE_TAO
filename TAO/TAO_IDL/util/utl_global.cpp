@@ -1845,14 +1845,14 @@ bool
 IDL_GlobalData::anon_error (void) const
 {
   return anon_type_diagnostic_ == ANON_TYPE_ERROR &&
-    !(idl_version_ >= IDL_VERSION_4);
+    idl_version_ < IDL_VERSION_4;
 }
 
 bool
 IDL_GlobalData::anon_warning (void) const
 {
   return anon_type_diagnostic_ == ANON_TYPE_WARNING &&
-    !(idl_version_ >= IDL_VERSION_4);
+    idl_version_ < IDL_VERSION_4;
 }
 
 bool
