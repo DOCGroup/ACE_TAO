@@ -1,2 +1,7 @@
 /client
+/OBVC.cpp
+/OBVC.h
+/OBVC.inl
+/OBVS.cpp
+/OBVS.h
 /server

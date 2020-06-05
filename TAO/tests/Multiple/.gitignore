@@ -1,2 +1,7 @@
 /client
+/MultipleC.cpp
+/MultipleC.h
+/MultipleC.inl
+/MultipleS.cpp
+/MultipleS.h
 /server

@@ -1,2 +1,12 @@
 /client
+/publisherC.cpp
+/publisherC.h
+/publisherC.inl
+/publisherS.cpp
+/publisherS.h
 /server
+/subscriberC.cpp
+/subscriberC.h
+/subscriberC.inl
+/subscriberS.cpp
+/subscriberS.h
