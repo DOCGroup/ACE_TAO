@@ -80,14 +80,12 @@ namespace TAO
     void sleep () const;
 
   private:
-
     typedef ACE_Array_Map<int, int> Ex_Count_Map;
     Ex_Count_Map ex_count_map_;
     int forward_on_reply_closed_count_;
     Invocation_Retry_Params retry_params_;
     bool forward_on_exception_limit_used_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

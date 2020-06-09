@@ -73,7 +73,6 @@ namespace
                     result);
 
   }
-
 }
 
 TAO::Invocation_Retry_State::Invocation_Retry_State (TAO_Stub &stub)
