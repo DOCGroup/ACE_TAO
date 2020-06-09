@@ -60,7 +60,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            imagename: ubuntu-18.04
+            imagename: ubuntu-20.04
           - name: CLANG5
             CC: clang-5.0
             CXX: clang++-5.0
@@ -98,7 +98,7 @@ jobs:
             PackageDeps: clang-10
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            imagename: ubuntu-18.04
+            imagename: ubuntu-20.04
     runs-on: ${{ matrix.imagename }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
