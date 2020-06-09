@@ -74,7 +74,7 @@ jobs:
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ruby-${{ matrix.CXX }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
