@@ -42,8 +42,6 @@ typedef ACE_Unbounded_Queue_Const_Iterator<ACE_CString> TAO_EndpointSetIterator;
 
 // -------------------------------------------------------------------
 
-
-
 /**
  * @class TAO_ORB_Parameters
  *
