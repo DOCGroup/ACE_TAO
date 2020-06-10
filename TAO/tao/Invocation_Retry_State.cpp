@@ -51,7 +51,6 @@ namespace
       client_factory_params.forward_on_reply_closed_limit_;
 
   // Forward on exception limits
-
   retry_limit_calc (TAO::FOE_OBJECT_NOT_EXIST,
                     command_line_params,
                     client_factory_params,
@@ -173,6 +172,5 @@ TAO::Invocation_Retry_State::sleep () const
 {
   ACE_OS::sleep (this->retry_params_.init_retry_delay_);
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

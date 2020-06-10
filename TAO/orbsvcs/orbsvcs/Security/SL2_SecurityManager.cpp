@@ -105,7 +105,7 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator==
                             other.oid_->get_buffer(),olen) == 0 &&
             ACE_OS::memcmp (this->adapter_id_->get_buffer(),
                             other.adapter_id_->get_buffer(),alen) == 0 &&
-            ACE_OS_String::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
+            ACE_OS::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
   return false;
 }
 

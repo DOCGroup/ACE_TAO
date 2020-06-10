@@ -42,7 +42,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
               operation.in ()));
 
   // Ignore the shutdown operation.
-  if (ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   // retrieve the context

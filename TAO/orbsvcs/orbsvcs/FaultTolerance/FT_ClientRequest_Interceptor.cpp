@@ -194,17 +194,17 @@ namespace TAO
 
     // If it is COMPLETED_MAYBE, then we will throw a COMPLETED_NO,
     // which the ORB should understand
-    if (ACE_OS_String::strcmp (rep_id.in (),
+    if (ACE_OS::strcmp (rep_id.in (),
                                "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       throw CORBA::TRANSIENT (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                   "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       throw CORBA::COMM_FAILURE (min, CORBA::COMPLETED_NO);
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/NO_REPONSE:1.0") == 0)
       throw CORBA::NO_RESPONSE (min, CORBA::COMPLETED_NO);
 
-    else if (ACE_OS_String::strcmp (rep_id.in (),
+    else if (ACE_OS::strcmp (rep_id.in (),
                                     "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
     throw CORBA::OBJ_ADAPTER (min, CORBA::COMPLETED_NO);
     cout << "Didnt throw exception " << endl;
