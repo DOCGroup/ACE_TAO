@@ -54,7 +54,7 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
   frame->rd_ptr (frame_size);
 
   ACE_hrtime_t stamp;
-  ACE_OS_String::memcpy (&stamp, frame->rd_ptr (), sizeof (stamp));
+  ACE_OS::memcpy (&stamp, frame->rd_ptr (), sizeof (stamp));
 
   ACE_UINT64 usec = stamp;
   ACE_UINT32 val_1 = ACE_CU64_TO_CU32 (usec);

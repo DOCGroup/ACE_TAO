@@ -67,14 +67,14 @@ static int
 test_argv_type_converter (void)
 {
   char *argv[20];
-  argv[0] = ACE_OS_String::strdup ("one");
-  argv[1] = ACE_OS_String::strdup ("two");
-  argv[2] = ACE_OS_String::strdup ("three");
-  argv[3] = ACE_OS_String::strdup ("four");
+  argv[0] = ACE_OS::strdup ("one");
+  argv[1] = ACE_OS::strdup ("two");
+  argv[2] = ACE_OS::strdup ("three");
+  argv[3] = ACE_OS::strdup ("four");
   argv[4] = 0;
 
   char *save_argv[20];
-  ACE_OS_String::memcpy (save_argv, argv, sizeof (argv));
+  ACE_OS::memcpy (save_argv, argv, sizeof (argv));
 
   int argc = 4;
 
@@ -111,14 +111,14 @@ static int
 test_argv_type_converter2 (void)
 {
   ACE_TCHAR *argv[20];
-  argv[0] = ACE_OS_String::strdup (ACE_TEXT ("one"));
-  argv[1] = ACE_OS_String::strdup (ACE_TEXT ("two"));
-  argv[2] = ACE_OS_String::strdup (ACE_TEXT ("three"));
-  argv[3] = ACE_OS_String::strdup (ACE_TEXT ("four"));
+  argv[0] = ACE_OS::strdup (ACE_TEXT ("one"));
+  argv[1] = ACE_OS::strdup (ACE_TEXT ("two"));
+  argv[2] = ACE_OS::strdup (ACE_TEXT ("three"));
+  argv[3] = ACE_OS::strdup (ACE_TEXT ("four"));
   argv[4] = 0;
 
   ACE_TCHAR *save_argv[20];
-  ACE_OS_String::memcpy (save_argv, argv, sizeof (argv));
+  ACE_OS::memcpy (save_argv, argv, sizeof (argv));
 
   int argc = 4;
 
