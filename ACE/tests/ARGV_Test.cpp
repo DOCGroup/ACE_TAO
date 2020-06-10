@@ -102,7 +102,7 @@ test_argv_type_converter (void)
   }
 
   for (size_t i = 0; save_argv[i]; ++i)
-    ACE_OS_Memory::free (save_argv[i]);
+    ACE_OS::free (save_argv[i]);
 
   return 0;
 }
@@ -139,7 +139,7 @@ test_argv_type_converter2 (void)
   }
 
   for (size_t i = 0; save_argv[i]; ++i)
-    ACE_OS_Memory::free (save_argv[i]);
+    ACE_OS::free (save_argv[i]);
 
   return 0;
 }
