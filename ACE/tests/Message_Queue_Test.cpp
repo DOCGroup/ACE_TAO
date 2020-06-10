@@ -838,8 +838,8 @@ prio_test (void)
               mb1p->rd_ptr (),
               mb2p->rd_ptr ()));
 
-  if (ACE_OS_String::strcmp (mb1p->rd_ptr (), S1) == 0
-      && ACE_OS_String::strcmp (mb2p->rd_ptr (), S2) == 0)
+  if (ACE_OS::strcmp (mb1p->rd_ptr (), S1) == 0
+      && ACE_OS::strcmp (mb2p->rd_ptr (), S2) == 0)
     status = 0;
   else
     status = 1;

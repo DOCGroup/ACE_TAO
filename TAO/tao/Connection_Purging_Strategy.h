@@ -35,7 +35,6 @@ class TAO_Transport;
  * This class is used by the Transport_Cache_Manager to maintain
  * ordering information on each Transport that is created.
  */
-
 class TAO_Export TAO_Connection_Purging_Strategy
 {
 public:
@@ -52,7 +51,7 @@ public:
   virtual void update_item (TAO_Transport& transport) = 0;
 
 private:
-  /// The maximum number of cach entries
+  /// The maximum number of cache entries
   int cache_maximum_;
 };
 

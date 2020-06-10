@@ -35,32 +35,27 @@ namespace
   int
   excep_for_type (const char *tid)
   {
-    if (ACE_OS_String::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
+    if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {
         return TAO::FOE_TRANSIENT;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/COMM_FAILURE:1.0") == 0)
       {
         return TAO::FOE_COMM_FAILURE;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJECT_NOT_EXIST:1.0") == 0)
       {
         return TAO::FOE_OBJECT_NOT_EXIST;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/INV_OBJREF:1.0") == 0)
       {
         return TAO::FOE_INV_OBJREF;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/OBJ_ADAPTER:1.0") == 0)
       {
         return TAO::FOE_OBJ_ADAPTER;
       }
-    else if (ACE_OS_String::strcmp (tid,
-                                    "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
+    else if (ACE_OS::strcmp (tid, "IDL:omg.org/CORBA/NO_RESPONSE:1.0") == 0)
       {
         return TAO::FOE_NO_RESPONSE;
       }
@@ -640,8 +635,8 @@ namespace TAO
       }
     else
       {
-        int foe_kind = orb_params->forward_once_exception();
-        int ex_id = excep_for_type (type_id.in ());
+        int const foe_kind = orb_params->forward_once_exception();
+        int const ex_id = excep_for_type (type_id.in ());
 
         // this logic is a little confusing but prior to  Jul 24 2009, TRANSIENT,
         // OBJ_ADAPTER, NO_RESPONSE, and COMM_FAILURE were always retried if possible.

@@ -1411,7 +1411,6 @@ TAO_GIOP_Message_Base::get_parser (
 // errors in the case of "clean shutdown", because it relies on
 // orderly disconnect as provided by TCP.  This quality of service is
 // required to write robust distributed systems.)
-
 void
 TAO_GIOP_Message_Base::
   send_close_connection (const TAO_GIOP_Message_Version &version,
@@ -1440,7 +1439,6 @@ TAO_GIOP_Message_Base::
   //
   // @@ should recv and discard queued data for portability; note
   // that this won't block (long) since we never set SO_LINGER
-
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("send_close_connection",
@@ -1473,7 +1471,6 @@ TAO_GIOP_Message_Base::
       ACE_TEXT ("(%P|%t) shut down transport, handle %d\n"),
       transport-> id ()));
 }
-
 
 int
 TAO_GIOP_Message_Base::send_reply_exception (
@@ -1642,7 +1639,6 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
   // call, try todo the check within this class
   return generator_parser->is_ready_for_bidirectional ();
 }
-
 
 TAO_Queued_Data *
 TAO_GIOP_Message_Base::make_queued_data (size_t sz)
@@ -1946,7 +1942,6 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 
   return 0;
 }
-
 
 int
 TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel_request)

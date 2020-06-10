@@ -54,7 +54,6 @@ namespace TAO
    * map is updated only by holding the lock. The more compeling reason
    * to have the lock in this class and not in the Hash_Map is that, we
    * do quite a bit of work in this class for which we need a lock.
-   *
    */
   template <typename TT, typename TRDT, typename PSTRAT>
   class Transport_Cache_Manager_T
