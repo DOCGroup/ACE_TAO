@@ -1067,6 +1067,7 @@ private:
   AST_Module *corba_module_;
 
   ANON_TYPE_DIAGNOSTIC anon_type_diagnostic_;
+  bool explicit_anon_type_diagnostic_;
 
   /// Flag set in parser so we can decide whether to emit
   /// an anonymous type diagnostic.
