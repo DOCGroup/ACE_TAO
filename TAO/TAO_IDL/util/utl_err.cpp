@@ -1512,7 +1512,7 @@ UTL_Error::scope_masking_error (AST_Decl *masked,
 void
 UTL_Error::anonymous_type_diagnostic (void)
 {
-  if (idl_global->anon_silent ())
+  if (idl_global->anon_silent () || idl_global->in_typedef ())
     {
       return;
     }
