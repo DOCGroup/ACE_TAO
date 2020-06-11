@@ -1,5 +1,3 @@
-
-
 Description:
 
 This test is a combination of other tests and has also added some
@@ -44,4 +42,3 @@ $ ./run_test.pl cancel_servant
         OBJECT_NOT_EXIST or NO_IMPLEMENTATION exception after the servant
         is deactivated - this is what it is supposed to do - the exceptions
         are expected.
-
