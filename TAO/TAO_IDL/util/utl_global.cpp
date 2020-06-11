@@ -1844,6 +1844,12 @@ IDL_GlobalData::anon_type_diagnostic (
 }
 
 bool
+IDL_GlobalData::explicit_anon_type_diagnostic () const
+{
+  return explicit_anon_type_diagnostic_;
+}
+
+bool
 IDL_GlobalData::anon_error (void) const
 {
   if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {

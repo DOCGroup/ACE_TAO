@@ -691,6 +691,9 @@ public:
   void anon_type_diagnostic (ANON_TYPE_DIAGNOSTIC val);
   // Mutator for the member.
 
+  /// Has anon_type_diagnostic () been called?
+  bool explicit_anon_type_diagnostic () const;
+
   bool anon_error (void) const;
   bool anon_warning (void) const;
   bool anon_silent (void) const;

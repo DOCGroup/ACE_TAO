@@ -185,11 +185,12 @@ error_string (UTL_Error::ErrorCode c)
     case UTL_Error::EIDL_KEYWORD_WARNING:
       return "Warning - spelling differs from IDL keyword only in case: ";
     case UTL_Error::EIDL_ANONYMOUS_ERROR:
-      return "Error: anonymous types are deprecated by OMG spec in IDL3, "
-        "but are valid again in IDL4";
+      return "anonymous types require the IDL version to be 4 or later or must "
+        "be explictly enabled using -as";
     case UTL_Error::EIDL_ANONYMOUS_WARNING:
-      return "Warning - anonymous types are deprecated by OMG spec in IDL3, "
-        "but are valid in IDL4";
+      return "anonymous type found";
+    case UTL_Error::EIDL_ANONYMOUS_EXPLICIT_ERROR:
+      return "anonymous types have been disabled";
     case UTL_Error::EIDL_ENUM_VAL_EXPECTED:
       return "enumerator expected: ";
     case UTL_Error::EIDL_ENUM_VAL_NOT_FOUND:
@@ -1527,7 +1528,8 @@ UTL_Error::anonymous_type_diagnostic (void)
     }
   else
     {
-      idl_error_header (EIDL_ANONYMOUS_ERROR);
+      idl_error_header (idl_global->explicit_anon_type_diagnostic () ?
+        EIDL_ANONYMOUS_EXPLICIT_ERROR : EIDL_ANONYMOUS_ERROR);
       ACE_ERROR ((LM_ERROR, "\n"));
     }
 }
