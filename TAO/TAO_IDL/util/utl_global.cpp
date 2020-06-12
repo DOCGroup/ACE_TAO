@@ -169,6 +169,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     included_ami_receps_done_ (false),
     corba_module_ (0),
     anon_type_diagnostic_ (ANON_TYPE_ERROR),
+    explicit_anon_type_diagnostic_ (false),
     in_typedef_ (false),
     in_tmpl_mod_no_alias_ (false),
     in_tmpl_mod_alias_ (false)
@@ -226,11 +227,11 @@ IDL_GlobalData::IDL_GlobalData (void)
     }
 
 #if defined (IDL_ANON_ERROR)
-  this->anon_type_diagnostic_ = ANON_TYPE_ERROR;
+  anon_type_diagnostic (ANON_TYPE_ERROR);
 #elif defined (IDL_ANON_WARNING)
-  this->anon_type_diagnostic_ = ANON_TYPE_WARNING;
+  anon_type_diagnostic (ANON_TYPE_WARNING);
 #elif defined (IDL_ANON_SILENT)
-  this->anon_type_diagnostic_ = ANON_TYPE_SILENT;
+  anon_type_diagnostic (ANON_TYPE_SILENT);
 #endif
 
   // ambiguous_type_seen_ and basic_type_seen_ are not reset between
@@ -1838,25 +1839,41 @@ void
 IDL_GlobalData::anon_type_diagnostic (
   IDL_GlobalData::ANON_TYPE_DIAGNOSTIC val)
 {
-  this->anon_type_diagnostic_ = val;
+  anon_type_diagnostic_ = val;
+  explicit_anon_type_diagnostic_ = true;
+}
+
+bool
+IDL_GlobalData::explicit_anon_type_diagnostic () const
+{
+  return explicit_anon_type_diagnostic_;
 }
 
 bool
 IDL_GlobalData::anon_error (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_ERROR);
+  if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
+    return false;
+  }
+  return anon_type_diagnostic_ == ANON_TYPE_ERROR;
 }
 
 bool
 IDL_GlobalData::anon_warning (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_WARNING);
+  if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
+    return false;
+  }
+  return anon_type_diagnostic_ == ANON_TYPE_WARNING;
 }
 
 bool
 IDL_GlobalData::anon_silent (void) const
 {
-  return (this->anon_type_diagnostic_ == ANON_TYPE_SILENT);
+  if (idl_version_ >= IDL_VERSION_4 && !explicit_anon_type_diagnostic_) {
+    return true;
+  }
+  return anon_type_diagnostic_ == ANON_TYPE_SILENT;
 }
 
 bool

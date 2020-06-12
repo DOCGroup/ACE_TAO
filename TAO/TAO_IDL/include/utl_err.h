@@ -130,6 +130,7 @@ public:
     EIDL_KEYWORD_WARNING,       // Same as above, but only a warning
     EIDL_ANONYMOUS_ERROR,       // Anonymous types are deprecated by spec
     EIDL_ANONYMOUS_WARNING,     // Same as above, but only a warning
+    EIDL_ANONYMOUS_EXPLICIT_ERROR, // Anonymous types have been explicitly disabled
     EIDL_ENUM_VAL_EXPECTED,     // Expected an enumerator
     EIDL_ENUM_VAL_NOT_FOUND,    // Didnt find an enumerator with that name
     EIDL_EVAL_ERROR,            // Error in evaluating expression

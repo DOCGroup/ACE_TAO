@@ -3929,11 +3929,7 @@ sequence_type_spec
                                           );
                   seq->base_type_annotations (*type_annotations);
 
-                  if (!idl_global->in_typedef ()
-                      && !idl_global->anon_silent ())
-                    {
-                      idl_global->err ()->anonymous_type_diagnostic ();
-                    }
+                  idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
 
@@ -3998,11 +3994,7 @@ sequence_type_spec
                       );
                   seq->base_type_annotations (*type_annotations);
 
-                  if (!idl_global->in_typedef ()
-                      && !idl_global->anon_silent ())
-                    {
-                      idl_global->err ()->anonymous_type_diagnostic ();
-                    }
+                  idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
 
@@ -4084,10 +4076,7 @@ string_type_spec
                 AST_String::narrow_from_decl (
                   tao_string_decl));
 
-              if (!idl_global->in_typedef () && !idl_global->anon_silent ())
-                {
-                  idl_global->err ()->anonymous_type_diagnostic ();
-                }
+              idl_global->err ()->anonymous_type_diagnostic ();
 
               $$ = tao_string_decl;
             }
@@ -4162,10 +4151,7 @@ wstring_type_spec
                 AST_String::narrow_from_decl (
                   string));
 
-              if (!idl_global->in_typedef () && !idl_global->anon_silent ())
-                {
-                  idl_global->err ()->anonymous_type_diagnostic ();
-                }
+              idl_global->err ()->anonymous_type_diagnostic ();
 
               $$ = string;
             }
@@ -4233,11 +4219,7 @@ array_declarator :
               array->base_type_annotations (*base_type_annotations);
               sn.destroy ();
 
-              if (!idl_global->in_typedef ()
-                  && !idl_global->anon_silent ())
-                {
-                  idl_global->err ()->anonymous_type_diagnostic ();
-                }
+              idl_global->err ()->anonymous_type_diagnostic ();
             }
 
           array_dims->destroy ();
