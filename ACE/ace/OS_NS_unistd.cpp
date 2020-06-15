@@ -13,7 +13,9 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/sys/os_pstat.h"
-#include "ace/os_include/sys/os_sysctl.h"
+#if defined (ACE_HAS_SYSCTL)
+# include "ace/os_include/sys/os_sysctl.h"
+#endif /* ACE_HAS_SYSCTL */
 
 #if defined ACE_HAS_VXCPULIB
 # include "vxCpuLib.h"

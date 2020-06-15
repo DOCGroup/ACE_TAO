@@ -252,4 +252,8 @@
 #  define ACE_HAS_GETTID // See ACE_OS::thr_gettid()
 #endif
 
+#if (LINUX_VERSION_CODE >= KERNEL_VERSION (5,5,0))
+#  define ACE_LACKS_SYS_SYSCTL_H
 #endif
+
+#endif /* ACE_CONFIG_LINUX_COMMON_H */
