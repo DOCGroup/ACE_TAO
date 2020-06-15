@@ -91,7 +91,7 @@ class ACE_Member_Function_Command : public ACE_Command_Base
 public:
   typedef void (RECEIVER::*PTMF)(void);
 
-  /// Con Constructor: sets the <receiver_> of the Command to recvr, and the
+  /// Con Constructor: sets the <receiver_> of the Command to @a recvr, and the
   /// <action_> of the Command to <action>.
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 

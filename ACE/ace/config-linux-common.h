@@ -45,6 +45,10 @@
 #  define ACE_HAS_GLIBC_2_2_3
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 30)
+#  define ACE_LACKS_SYS_SYSCTL_H
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 30) */
+
 #if defined (__INTEL_COMPILER)
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
@@ -250,10 +254,6 @@
 
 #if (LINUX_VERSION_CODE >= KERNEL_VERSION (2,4,11))
 #  define ACE_HAS_GETTID // See ACE_OS::thr_gettid()
-#endif
-
-#if (LINUX_VERSION_CODE >= KERNEL_VERSION (5,5,0))
-#  define ACE_LACKS_SYS_SYSCTL_H
 #endif
 
 #endif /* ACE_CONFIG_LINUX_COMMON_H */
