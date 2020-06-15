@@ -38,7 +38,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This is a C++ wrapper for getopt(3c) and getopt_long(3c).
  */
-
 class ACE_Export ACE_Get_Opt
 {
 public:
