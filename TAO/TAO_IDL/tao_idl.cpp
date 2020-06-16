@@ -232,7 +232,8 @@ DRV_drive (const char *s)
 
   // This option creates a single IDL file that includes all
   // input files. The backend outputs their names individually.
-  if (!idl_global->multi_file_input ())
+  if (!idl_global->multi_file_input () &&
+      (idl_global->compile_flags () & IDL_CF_INFORMATIVE))
     {
       // Filename set by FE_yyparse(), so we output it immediately after.
       ACE_DEBUG ((LM_DEBUG,
