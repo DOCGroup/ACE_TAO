@@ -164,7 +164,7 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
                                        timeout,
                                        status == SSL_ERROR_WANT_READ,
                                        status == SSL_ERROR_WANT_WRITE,
-                                       0);
+                                       false);
           if (substat == 1)   // Now ready to proceed
             {
               retry = true;
