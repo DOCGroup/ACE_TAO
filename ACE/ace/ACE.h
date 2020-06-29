@@ -726,9 +726,9 @@ namespace ACE
   /// @retval 1 the handle is ready
   extern ACE_Export int handle_ready (ACE_HANDLE handle,
                                       const ACE_Time_Value *timeout,
-                                      int read_ready,
-                                      int write_ready,
-                                      int exception_ready);
+                                      bool read_ready,
+                                      bool write_ready,
+                                      bool exception_ready);
 
   /// Wait for @a timeout before proceeding to a @c recv operation.
   /// @a val keeps track of whether we're in non-blocking mode or
@@ -877,7 +877,6 @@ namespace ACE
                                        int iovcnt,
                                        const ACE_Time_Value *timeout,
                                        size_t *bytes_transferred);
-
 }
 
 // Close versioned namespace, if enabled by the user.

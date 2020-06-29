@@ -2191,9 +2191,9 @@ ACE::writev_n (ACE_HANDLE handle,
 int
 ACE::handle_ready (ACE_HANDLE handle,
                    const ACE_Time_Value *timeout,
-                   int read_ready,
-                   int write_ready,
-                   int exception_ready)
+                   bool read_ready,
+                   bool write_ready,
+                   bool exception_ready)
 {
 #if defined (ACE_HAS_POLL)
   ACE_UNUSED_ARG (exception_ready);
