@@ -10,11 +10,6 @@
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
 
-
-#if defined (ACE_HAS_POLL)
-#  include "ace/OS_NS_poll.h"
-#endif /* ACE_HAS_POLL */
-
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
@@ -69,16 +64,10 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   int status;
   do
     {
-#if defined (ACE_HAS_POLL)
-      struct pollfd fds;
-      ACE_OS::memset(&fds, 0, sizeof(fds));
-      fds.revents = 0;
-#else
       // These handle sets are used to set up for whatever SSL_accept
       // says it wants next. They're reset on each pass around the loop.
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
-#endif /* ACE_HAS_POLL */
 
       status = ::SSL_accept (ssl);
       switch (::SSL_get_error (ssl, status))
@@ -88,22 +77,12 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-#if defined (ACE_HAS_POLL)
-          fds.fd = handle;
-          fds.events = POLLOUT;
-#else
           wr_handle.set_bit (handle);
-#endif /* ACE_HAS_POLL */
           status = 1;               // Wait for more activity
           break;
 
         case SSL_ERROR_WANT_READ:
-#if defined (ACE_HAS_POLL)
-          fds.fd = handle;
-          fds.events = POLLIN;
-#else
           rd_handle.set_bit (handle);
-#endif /* ACE_HAS_POLL */
           status = 1;               // Wait for more activity
           break;
 
@@ -131,27 +110,11 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
               if (SSL_want_write (ssl))
-                {
-#if defined (ACE_HAS_POLL)
-                  fds.fd = handle;
-                  fds.events = POLLOUT;
-#else
-                  wr_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */
-                }
+                wr_handle.set_bit (handle);
               else if (SSL_want_read (ssl))
-                {
-#if defined (ACE_HAS_POLL)
-                  fds.fd = handle;
-                  fds.events = POLLIN;
-#else
-                  rd_handle.set_bit (handle);
-#endif  /* ACE_HAS_POLL */
-                }
+                rd_handle.set_bit (handle);
               else
-                {
-                  status = -1;            // Doesn't want anything - bail out
-                }
+                status = -1;            // Doesn't want anything - bail out
             }
           else
             status = -1;
@@ -165,10 +128,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
 
       if (status == 1)
         {
-#if defined (ACE_HAS_POLL)
-          ACE_ASSERT(fds.fd != 0);
-          status = ACE_OS::poll(&fds, 1, timeout);
-#else
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
           status = ACE::select (int (handle) + 1,
@@ -176,7 +135,6 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                 &wr_handle,
                                 0,
                                 timeout);
-#endif  /* ACE_HAS_POLL */
 
           (void) countdown.update ();
 
