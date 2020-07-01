@@ -1,0 +1,736 @@
+commit f082edff2b464aa48cbf7c4221e04b03a4e4e0fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 08:24:35 2020 +0200
+
+    Revert "Replacing use of ::select in favor of ::poll"
+
+commit c61e51e5d135a2950fba52e7fc55983f2b46ef28
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 29 19:35:48 2020 +0200
+
+    Changed ready flags of ACE::handle_ready from int to bool
+    
+        * ACE/ace/ACE.cpp:
+        * ACE/ace/ACE.h:
+        * ACE/ace/ACE.inl:
+        * ACE/ace/Cached_Connect_Strategy_T.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+        * ACE/tests/SOCK_Test.cpp:
+
+commit fe244776c888db6c91c7fe56e5bc25c7603ab780
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 29 17:20:02 2020 +0200
+
+    Const change
+    
+        * ACE/ace/Cached_Connect_Strategy_T.cpp:
+
+commit 885ffbb0d51c93cec57ff50433ad95e8b79e6a32
+Merge: 7cf3f1283ef 98ab6f28e52
+Author: Steve Huston <shuston@riverace.com>
+Date:   Mon Jun 29 08:12:07 2020 -0400
+
+    Merge pull request #1044 from johnjanthony/Replace-select-with-poll-in-SOCK-Connector-and-Acceptor
+    
+    Replacing use of ::select in favor of ::poll
+
+commit ef7fc87642a65e385ca9819e7550b708e0a68bb1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 15 19:47:59 2020 +0200
+
+    Layout change
+    
+        * ACE/ace/Get_Opt.h:
+
+commit f18c85a3c30f519f7f26689ac5a144ac427b5446
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 15 19:47:51 2020 +0200
+
+    Doxygen change
+    
+        * ACE/ace/Functor_T.h:
+
+commit dad285f2c4e0ed6b6f568539cd7b1a07412542bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 15 19:47:36 2020 +0200
+
+    sys/sysctl.h got deprecated in glibc 2.30, removed in kernel 5.5, so updated version check to use glibc
+    
+        * ACE/ace/config-linux-common.h:
+
+commit efac498d689122d0e6246cfe48dd85d0541f5ff4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 15 13:26:14 2020 +0200
+
+    Only include os_sysctl.h when ACE_HAS_SYSCTL has been defined and with linux kernel >= 5.5.0 sys/sysctl.h has been marked deprecated
+    
+        * ACE/ace/OS_NS_unistd.cpp:
+        * ACE/ace/config-linux-common.h:
+
+commit a1f0b95dd2a59c385e3f1a74911651fd0c92805c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 17:34:57 2020 +0200
+
+    Use ACE_OS_Dirent instead of ACE_OS
+    
+        * ACE/ace/Dirent_Selector.h:
+
+commit adb4749455ef87e39e9629d6dbe0026c074dbe08
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 17:33:22 2020 +0200
+
+    Use ACE_OS instead of ACE_OS_Memory
+    
+        * ACE/tests/ARGV_Test.cpp:
+
+commit 27e4f2f6b65a17333a930c844c80409b072b821d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 17:32:28 2020 +0200
+
+    Use ACE_OS instead of ACE_OS_String
+    
+        * ACE/ace/OS_NS_time.inl:
+        * ACE/examples/APG/Config/ARGV_Example.cpp:
+        * ACE/examples/APG/Config/Get_Opt.cpp:
+        * ACE/examples/APG/Config/Get_Opt_Long.cpp:
+        * ACE/tests/ARGV_Test.cpp:
+        * TAO/orbsvcs/DevGuideExamples/Security/ParticipatingApp/Messenger_i.cpp:
+        * TAO/orbsvcs/orbsvcs/Event/EC_Thread_Flags.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/TimeStamp.cpp:
+        * TAO/orbsvcs/tests/AVStreams/Pluggable_Flow_Protocol/receiver.cpp:
+        * TAO/orbsvcs/tests/Event/ThreadFlags/testflags.cpp:
+        * TAO/orbsvcs/tests/HTIOP/AMI/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/BiDirectional/Test_Output.cpp:
+        * TAO/orbsvcs/tests/HTIOP/Hello/Test_Output.cpp:
+        * TAO/tests/Bug_3941_Regression/test.cpp:
+
+commit 02af73cfc64c1dcf73dd907b25fcd67b80b88203
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jun 10 16:59:49 2020 +0200
+
+    Use ACE_OS::strcmp instead of ACE_OS_String::strcmp
+    
+        * ACE/tests/Message_Queue_Test.cpp:
+        * TAO/docs/ec_options.html:
+        * TAO/orbsvcs/orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.cpp:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Completion_Handler.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/HTIOP_Factory.h:
+        * TAO/orbsvcs/orbsvcs/HTIOP/README.txt:
+        * TAO/orbsvcs/orbsvcs/Security/SL2_SecurityManager.cpp:
+        * TAO/tao/Connection_Purging_Strategy.h:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/Invocation_Retry_Params.cpp:
+        * TAO/tao/Invocation_Retry_State.cpp:
+        * TAO/tao/Invocation_Retry_State.h:
+        * TAO/tao/Strategies/FIFO_Connection_Purging_Strategy.h:
+        * TAO/tao/Strategies/LFU_Connection_Purging_Strategy.h:
+        * TAO/tao/Synch_Invocation.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.cpp:
+        * TAO/tao/Transport_Cache_Manager_T.h:
+        * TAO/tests/Bug_1495_Regression/server_interceptor.cpp:
+        * TAO/tests/DII_AMI_Forward/server_interceptor.cpp:
+        * TAO/tests/ForwardOnceUponException/README:
+        * TAO/tests/Portable_Interceptors/Benchmark/Interceptor_Type.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_1559/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_2510_Regression/server_interceptor.cpp:
+        * TAO/tests/Portable_Interceptors/Bug_3079/Client_Request_Interceptor.cpp:
+
+commit 328c87c87e1e4f29561cfcd182c328377ef81a16
+Merge: 5650c5ce9e2 a4dc39467c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 9 16:03:19 2020 +0200
+
+    Merge pull request #1136 from jwillemsen/jwi-azureubuntu
+    
+    Move some jobs to ubuntu 20.04
+
+commit 3aef14966f96bddba2ef9c4e25d435a08bce3f8a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 9 13:19:03 2020 +0200
+
+    Fixed typo in comment
+    
+        * ACE/ace/OS_NS_macros.h:
+
+commit 5650c5ce9e20862e78087ca818427366669dff67
+Merge: 79af351e070 58e6d4cd1e7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Jun 6 14:59:15 2020 +0200
+
+    Merge pull request #1081 from likema/remove-unnecessary-init
+    
+    Remove unnecessary ACE_Select_Reactor_Handler_Repository ctor init parameter.
+
+commit 52d35023a4f6c76abab966de1dfa683d8d7fdb3b
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Jun 1 20:33:20 2020 -0500
+
+    Update .gitignore files
+    
+    After building TAO tests for
+    https://github.com/DOCGroup/ACE_TAO/pull/1132 I was left with a lot of
+    untracked files. I used
+    https://github.com/objectcomputing/OpenDDS/blob/e1b3c99f74e73a537083e790f3bf9fb9ee6ed8b9/tools/scripts/update_gitignore.pl
+    to create and update `.gitignore` files. I made sure I wasn't creating
+    any directories just containing a `.gitignore` file, except for
+    `ACE/apps/gperf/tests/iout2_gen`. It had a placeholder file called
+    `.empty` which I deleted because the `.gitignore` can serve the same
+    purpose.
+
+commit 3da2954d3b6d2df3ab709b980da39c70e106e17b
+Merge: 57a75e55497 ca31d936b69
+Author: Steve Huston <shuston@riverace.com>
+Date:   Sat May 30 11:56:15 2020 -0400
+
+    Merge pull request #1129 from DOCGroup/riverace-case-2186
+    
+    Do not invoke a method on pointer returned from remove() without chec…
+
+commit 66d6dee67bfba03438bcf396edaf0277d24a8964
+Merge: 386ca8fb87a 6e165d5d0fd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 30 09:02:33 2020 +0200
+
+    Merge pull request #1124 from jwillemsen/jwi-emb-hascppdefines
+    
+    Set ACE_HAS_CPP11|14|17|20 based on __cplusplus for clang embarcadero
+
+commit 386ca8fb87a1cf0093548ed4f9b12c07b2094027
+Merge: c1bce79510b b3254a06251
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 30 09:02:07 2020 +0200
+
+    Merge pull request #1123 from jwillemsen/jwi-autoptr-cpp17
+    
+    With CPP17 or newer provide our auto_ptr implementation to not break …
+
+commit ca31d936b698d3e6e318668ac55f77f70f6d81c3
+Author: Steve Huston <shuston@riverace.com>
+Date:   Fri May 29 22:05:47 2020 +0000
+
+    Do not invoke a method on pointer returned from remove() without checking it
+
+commit c1bce79510b3afaef44dfe1465fd22e77b72b45f
+Merge: 8d4781b498d 685eb73bc7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 19:43:46 2020 +0200
+
+    Merge pull request #1128 from jwillemsen/jwi-usetabs
+    
+    We need to use tabs in GNU make rules
+
+commit b3254a062511de65208e93700757b32d2ad2558e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 19:41:09 2020 +0200
+
+    Add include of memory in case we have C++17
+    
+        * ACE/ace/Auto_Ptr.h:
+
+commit 685eb73bc7e72491329cea82c4381d85735cd39b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 29 14:23:33 2020 +0200
+
+    We need to use tabs in GNU make rules
+
+commit 376cc6429f8b5e44f2f1a6d95e5f5bf9db08ffc2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 16:50:52 2020 +0200
+
+    Removed empty line
+    
+        * ACE/ace/Auto_Ptr.h:
+
+commit 90a0ee705399ddf51ddb9c68fe57b9ad78b20619
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 11:21:16 2020 +0200
+
+    With CPP17 or newer provide our auto_ptr implementation to not break all ACE/TAO tests
+
+commit 6e165d5d0fd299365cc931f9da4aee185f4a1b6e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 11:20:01 2020 +0200
+
+    Set ACE_HAS_CPP11|14|17|20 based on __cplusplus for clang
+
+commit baa8faa56bfbcc0468e3c787d0ef7daf680d0dad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 09:04:00 2020 +0200
+
+    Don't enable C++11 support for ACE, causes all kinds of compile problems :-(
+    
+        * ACE/ace/config-win32-borland.h:
+
+commit 70220ed436a20dad8d2cdcc4d39d4faa4e5819aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 27 08:21:55 2020 +0200
+
+    Add support for Embarcadero C++ Builder 10.4 Sydney
+    
+        * ACE/NEWS:
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/OS_NS_Thread.cpp:
+        * ACE/ace/config-win32-borland.h:
+        * ACE/ace/os_include/net/os_if.h:
+        * TAO/orbsvcs/orbsvcs/IFRService/IFR_Service_Utils_T.cpp:
+        * TAO/orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h:
+        * TAO/orbsvcs/orbsvcs/Notify/RT_Factory.h:
+        * TAO/orbsvcs/tests/Notify/Bug_3252_Regression/server.cpp:
+        * TAO/tests/Bug_3574_Regression/test.cpp:
+
+commit 0a50ebb1c91efb70a4d7de65eac68aca22f1485a
+Merge: 71ad93429ff 4d603bcaa03
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 20 13:47:50 2020 +0200
+
+    Merge pull request #1119 from jwillemsen/jwi-msvcwarnings
+    
+    Fix some msvc level 4 warnings
+
+commit 4d603bcaa034c0ee27c12eae4b53ac62a3e139ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 20 09:54:51 2020 +0200
+
+    Removed const again, variable is changed
+    
+        * ACE/ace/OS_NS_stropts.cpp:
+
+commit a9f9d42feadc888d2d32279283c7ef0a78f3d7a7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 20 08:56:20 2020 +0200
+
+    Removed empty lines
+    
+        * ACE/ace/QoS/README:
+
+commit 2faa23271fdb2fb44a6939dd44c69fb7a4b3adfb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 20 08:56:10 2020 +0200
+
+    Reduced scope variables
+    
+        * ACE/ace/OS_NS_stropts.cpp:
+
+commit 85aa3ddc28da8c2037ec28a3c04c300f4e3c4ddf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 20 08:55:55 2020 +0200
+
+    Removed hidden variables
+    
+        * ACE/ace/Configuration_Import_Export.cpp:
+
+commit 71ad93429ff7f99dc50419da5f0cbac9b6af752d
+Merge: b1c483ba83f a72b0d6da47
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon May 18 15:45:25 2020 -0500
+
+    Merge pull request #1116 from jonesc-oci/android-win-host-line-too-long
+    
+    Modify Android link on Windows hosts to avoid error
+
+commit a72b0d6da47b8ce94d4772601e4a83f00f0394c9
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Mon May 18 12:19:31 2020 -0500
+
+    Update Android link on Windows hosts to avoid err.
+    
+    Replace echo/$foreach logic with $file function which avoids
+    potential tmpfile truncation. Make tmpfile name unique.
+
+commit 134f0d30fdea43c4c733fd5f8102cf819313ee00
+Merge: ac954bfe407 9d89f20fc84
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 18 15:53:56 2020 +0200
+
+    Merge pull request #1114 from jwillemsen/jwi-msvc2019-2
+    
+    Code changes to workaround the Visual Studio 2019 crash, instead of d…
+
+commit 9d89f20fc8444914dc43d9963ab88199819b5872
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 18 15:41:05 2020 +0200
+
+    Fixed typo in documentation
+    
+        * ACE/ace/Object_Manager.h:
+
+commit 3eefc82b3e44164b0caf46c177c03dae1a84f122
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 18 15:40:50 2020 +0200
+
+    Layout change
+    
+        * ACE/ace/Process_Manager.cpp:
+
+commit 4ec31a69d924ed1dfa44d4536be7dfdac91de868
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 16 09:47:49 2020 +0200
+
+    Reworked msvc2019 patch
+    
+        * ACE/ace/Process_Manager.cpp:
+
+commit 54220d34e730c9f46167a4a3c5ff779c69c60385
+Merge: d9c8b8024e6 72fe6a224c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 16 09:42:39 2020 +0200
+
+    Merge branch 'master' into jwi-msvc2019-2
+
+commit ac954bfe407f5bec55302a155b9ba5c195a832a3
+Merge: 8b09cdd41d7 2ec0cf26658
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 15 17:04:30 2020 -0500
+
+    Merge pull request #1101 from jonesc-oci/android-if_nameindex
+    
+    Define ACE_LACKS_IF_NAMEINDEX for Android APIs < 24
+
+commit 8b09cdd41d73fc599e736d5d04b2e9066588b9fa
+Merge: c4d6cb02b46 8279c807d71
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 20:30:59 2020 +0200
+
+    Merge pull request #1097 from okellogg/master
+    
+    Fixes for ACE/bin/ace-install
+
+commit 72fe6a224c32f648de14795dd80a79b06771a183
+Merge: 70a709c0eee c4d6cb02b46
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 20:29:06 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit 70a709c0eee50e73e049ec8c54df2e1c0270429f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 20:28:59 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/SSL/SSL_SOCK_Stream.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Stream.inl:
+
+commit e257dff6722872b25660c8b4fe69d946c0b10626
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Fri May 15 10:32:50 2020 -0500
+
+    Modify Android link on Windows hosts to avoid err.
+    
+    Modify the Android link step on Windows hosts to avoid
+    a 'command line too long' error when linking a large
+    number of object files.
+
+commit a6374afe74fd0ceb059407571e3051125d6f14f7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 16:21:09 2020 +0200
+
+    Layout and doxygen changes
+    
+        * ACE/ace/SSL/SSL_Asynch_Stream.h:
+        * ACE/ace/SSL/SSL_SOCK.h:
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.cpp:
+        * ACE/ace/SSL/SSL_SOCK_Acceptor.h:
+        * ACE/ace/SSL/SSL_SOCK_Connector.h:
+        * ACE/ace/SSL/SSL_SOCK_Stream.h:
+
+commit d9c8b8024e6c9a6be6f5081fd4b49faff9484a6a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 15 09:00:55 2020 +0100
+
+    Code changes to workaround the Visual Studio 2019 crash, instead of deferencing the instance point just take the typeid of ACE_Process_Manager directly
+
+commit 2ec0cf266583ffeefd588fd85d93c88158cbf906
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Thu May 14 11:55:58 2020 -0500
+
+    NDK standalone toolchains < 15 lack if_nameindex.
+
+commit 6a633b1ba8c0fbe423cf1d993fbfa2d7a338acf3
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Thu May 14 11:49:35 2020 -0500
+
+    Simplify Win32/Android 'if_nameindex' conditional.
+
+commit 6302da798fda1efb043fca59ab201b31938ed298
+Merge: eeb1288ab4e 58be69d5e40
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 14 12:34:02 2020 +0200
+
+    Merge pull request #1113 from jwillemsen/jwi-sslimprov
+    
+    Minor ACE SSL related changes
+
+commit 58be69d5e403512f57fe5812b9c934af3926695e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 14 11:05:37 2020 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/SSL/SSL_SOCK_Stream.h:
+
+commit 2d366e54e7a507b6b3dfa4c3c8bc29f55e62785e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 14 10:01:29 2020 +0200
+
+    Layout, const, logging, doxygen changes
+    
+        * ACE/ace/SSL/SSL_Asynch_Stream.cpp:
+        * ACE/ace/SSL/SSL_Context.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/README:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client-simple.h:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-client.h:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server-simple.cpp:
+        * ACE/examples/IPC_SAP/SSL_SAP/SSL-server.cpp:
+        * ACE/tests/SSL/Bug_2912_Regression_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.cpp:
+        * ACE/tests/SSL/Thread_Pool_Reactor_SSL_Test.h:
+        * TAO/orbsvcs/orbsvcs/SSLIOP/SSLIOP_Factory.cpp:
+
+commit 5c8267be775feee34018e9a219d3850a783a5c18
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed May 13 15:47:33 2020 -0500
+
+    Android NDKs<14.1 lack struct if_nameindex.
+    
+    Android NDKs 12 and 13 lack a 'struct if_nameindex'
+    definition even though they support API 24.
+
+commit db73931499290bc5fb46ceff47e47e5be3601be7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 13 12:20:15 2020 +0200
+
+    Removed Compiler_Features_08_Test from this mpc file, it is not in git anymore
+    
+        * ACE/tests/tests.mpc:
+
+commit db3c5ecbc94edb3feca008433aeeb34f9c289b2d
+Merge: ea574b9e547 0eb41eafb62
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 12 12:35:28 2020 +0200
+
+    Merge pull request #1092 from jwillemsen/jwi-basictypes2
+    
+    Header change
+
+commit 0eb41eafb625f6ea1305c8a94cbd3883f7f3d51f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 12 12:34:36 2020 +0200
+
+    Removed include
+    
+        * ACE/ace/Basic_Types.h:
+
+commit 1d8f885f09f7e1dfd87385ecf9e6518feab77c69
+Merge: 9e6da1ce728 09935108c63
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 12 12:33:58 2020 +0200
+
+    Fixed merge
+
+commit 5c36116562e9254bb9a53e90a119eabeed83f97d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue May 12 09:21:15 2020 +0200
+
+    Add missing include for std::bad_cast
+    
+        * ACE/tests/Compiler_Features_13_Test.cpp:
+
+commit fe23892b353096105c98c43a68a2480d8fba9b72
+Merge: 6747a42958f e10bc3417cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 19:06:33 2020 +0200
+
+    Merge branch 'master' into jwi-badcast
+
+commit 8279c807d71456ebcfc1da64fa92a60d2bb98997
+Merge: 0be94abdd67 0a6165f4f81
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Mon May 11 17:46:08 2020 +0200
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 6747a42958f938531aa6886b381cc6c6bec1c0da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon May 11 11:44:12 2020 +0200
+
+    An incorrect dynamic_cast should throw std::bad_cast which is derived from std::exception, let us test that we get std::bad_cast
+    
+        * ACE/tests/Compiler_Features_13_Test.cpp:
+
+commit 30f134dbf5eab3550c40c9667f659dc55f97b1d4
+Merge: ea0cd275457 3a5803f18c1
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat May 9 09:38:23 2020 +0200
+
+    Merge pull request #1105 from jwillemsen/jwi-processenvtest
+    
+    On Windows vista or newer there is a limit of 32767 per environment variable
+
+commit ea0cd275457e067cae0ab833d5821fd6496855f5
+Merge: af0e3e558c3 84f362508aa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 15:58:59 2020 +0200
+
+    Merge pull request #1104 from jwillemsen/jwi-ctrlhandlersignature
+    
+    Updated CtrlHandle signature to match other use cases to resolve some warnings
+
+commit 3a5803f18c1211185d19646ab23283373d30b199
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 12:04:54 2020 +0200
+
+    Updated version check
+    
+        * ACE/tests/Process_Env_Test.cpp:
+
+commit 31fcc77d69a91783f0582baf3bd86504f2b39b12
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 12:02:26 2020 +0200
+
+    Windows Vista or newer allow 32767 per environment variable with CreateProcess
+    
+        * ACE/tests/Process_Env_Test.cpp:
+
+commit ae3cc2cd581bdeda5024822406c793b08c97af1b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 11:00:45 2020 +0200
+
+    Updated CtrlHandle signature to match other use cases to resolve some warnings with some compilers
+    
+        * ACE/tests/Network_Adapters_Test.cpp:
+
+commit effe8611c980c7065f950829fd5168404b4b15f0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 8 10:27:24 2020 +0200
+
+    Removed commented out code, small const change
+    
+        * ACE/ace/OS_NS_Thread.cpp:
+
+commit 1d14886e4d98b3e39e9a3b0500cf69bc98f995c2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 18:25:08 2020 +0200
+
+    Also list strawberry perl
+    
+        * ACE/ACE-INSTALL.html:
+
+commit 2d36a8c008d8c648421acb7eb04539a3eaa49eeb
+Author: Chip Jones <51006990+jonesc-oci@users.noreply.github.com>
+Date:   Thu May 7 09:11:34 2020 -0500
+
+    Also check NDK revision
+    
+    Co-authored-by: Fred Hornsey <hornseyf@objectcomputing.com>
+
+commit 289a4a8e0006f7a20e8de568334f74ba74f7a4bf
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 14:19:46 2020 +0200
+
+    Update various links, point to github issues
+    
+        * ACE/COPYING:
+        * ACE/PROBLEM-REPORT-FORM:
+        * ACE/README:
+        * TAO/PROBLEM-REPORT-FORM:
+
+commit 5564c9667dc17bc7826e54efe7dae79334218a03
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu May 7 14:14:22 2020 +0200
+
+    Update various hyperlinks
+    
+        * ACE/ACE-INSTALL.html:
+        * ACE/COPYING:
+        * ACE/ace/Object_Manager.cpp:
+        * TAO/TAO-INSTALL.html:
+
+commit 0be94abdd67febd5cd440a5264f6c4ac93398c48
+Merge: 393910a1ddc 7c298ab6902
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Thu May 7 00:43:36 2020 +0200
+
+    Merge remote-tracking branch 'upstream/master'
+
+commit 83371870f4743b616410a48e797756887b5a5404
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed May 6 16:07:11 2020 -0500
+
+    ACE_LACKS_IF_NAMEINDEX for Android APIs < 24
+
+commit 6dd70b41c47a097dfa2d6d3de62b3d06aa801d54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed May 6 11:19:13 2020 +0200
+
+    Upgrade to CIAO 1.3.9 and DAnCE 1.3.9
+    
+        * ACE/docs/Download.html:
+
+commit 393910a1ddcb4169d3c7326ba5c7522d72f5824c
+Author: Oliver Kellogg <okellogg@users.sourceforge.net>
+Date:   Wed May 6 07:20:04 2020 +0200
+
+    ACE/bin/ace-install
+    - On FIND runs for copying TAO libs and for copying ACE libs, replace
+      exclusions by union of patterns "lib?*.so*", "lib?*.a", "lib?*.dll",
+      "*.dylib".
+    - On copying ACE executables change ACE_PROGS to
+      apps/gperf/src/ace_gperf.
+    - Address some findings of checkstyle.
+
+commit dc92e73096bfd073dad31e2cf5d60ae3dbdf66ee
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri May 1 10:28:14 2020 +0200
+
+    Make x.5.9 public and prepare for next release
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 3d454e61d150aff4a5260791f856657e86be89f1
+Merge: fc48dfcd2c4 57e38a7b4a4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Apr 28 16:17:51 2020 +0200
+
+    Merge branch 'master' into jwi-basictypes2
+
+commit fc48dfcd2c41720eecd202f7fbaf4a73657a7819
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Apr 2 11:32:38 2020 +0200
+
+    When we have C++11 support make use of the C++ (u)intxx_t types
+    
+        * ACE/ace/Basic_Types.h:
+
+commit 58e6d4cd1e7ba55f3d7541df776a3fd94cf13bb6
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Apr 12 02:38:47 2020 +0800
+
+    Remove unnecessary ACE_Select_Reactor_Handler_Repository ctor init parameter.
+
+commit 98ab6f28e5230f5561182c9914801d6d3a83b2bd
+Author: John Anthony <john.anthony@redpointglobal.com>
+Date:   Wed Mar 25 11:06:24 2020 -0600
+
+    removing trailing spaces
+
+commit 26eb8172a683665ac3dd17d9f2eade14927dffb9
+Author: John Anthony <john.anthony@redpointglobal.com>
+Date:   Tue Mar 24 16:18:14 2020 -0600
+
+    removing tabs
+
+commit 4da3933c12416d6083309d950525b7215ad9ea64
+Author: John Anthony <john.anthony@redpointglobal.com>
+Date:   Fri Feb 21 13:39:55 2020 -0700
+
+    replacing use of select for poll
+    
+    Replacing use of ::select() with ::poll() in SSL_SOCK_Connector and SSL_SOCK_Acceptor - on systems that support ::poll()

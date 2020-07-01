@@ -4,9 +4,8 @@
 
 #define ACE_MAJOR_VERSION 6
 #define ACE_MINOR_VERSION 5
-#define ACE_MICRO_VERSION 9
-#define ACE_BETA_VERSION 9
-#define ACE_VERSION "6.5.9"
-#define ACE_VERSION_CODE 394505
+#define ACE_MICRO_VERSION 10
+#define ACE_BETA_VERSION 10
+#define ACE_VERSION "6.5.10"
+#define ACE_VERSION_CODE 394506
 #define ACE_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
-
