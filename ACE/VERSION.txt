@@ -1,4 +1,4 @@
-This is ACE version 6.5.9, released Fri May 01 09:57:51 CEST 2020
+This is ACE version 6.5.10, released Wed Jul 01 09:54:36 CEST 2020
 
 If you have any problems with or questions about ACE, please send
 e-mail to the ACE mailing list (ace-bugs@list.isis.vanderbilt.edu),
