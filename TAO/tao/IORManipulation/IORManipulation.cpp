@@ -75,12 +75,10 @@ TAO_IOR_Manipulation_impl::merge_iors (
       // append profiles
       if (Merged_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
         throw TAO_IOP::Invalid_IOR ();
-
     }
 
   // MS C++ knows nothing about reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
-
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
@@ -97,7 +95,6 @@ TAO_IOR_Manipulation_impl::merge_iors (
                     CORBA::NO_MEMORY ());
 
   CORBA::Object_var new_obj = temp_obj;
-
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
@@ -117,7 +114,6 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2)
 {
-
   // Get an estimate of the number of profiles
   CORBA::Object_ptr buffer [2];
   buffer [0] = ior1;
@@ -129,8 +125,7 @@ TAO_IOR_Manipulation_impl::add_profiles (
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr group,
-    CORBA::Object_ptr ior2
-    )
+    CORBA::Object_ptr ior2)
 {
   // First verify they are the same type!
   CORBA::String_var id =
