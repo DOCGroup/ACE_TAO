@@ -72,6 +72,10 @@
 # define ACE_HAS_CPU_SET_T
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 30)
+#  define ACE_LACKS_SYS_SYSCTL_H
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 30) */
+
 // Then the compiler specific parts
 
 #if defined (__GNUG__)
