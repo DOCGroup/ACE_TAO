@@ -236,9 +236,6 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << be_uidt_nl
       << "};" << be_uidt_nl << be_nl;
 
-  *os << "static size_t const nargs = "
-      << (node->argument_count () + 1) << ";" << be_nl_2;
-
   // Get the right object implementation.
   *os << intf->full_skel_name () << " * const impl =" << be_idt_nl
       << "dynamic_cast<"
@@ -268,16 +265,21 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   *os << ");" << be_uidt_nl << be_nl;
 
+  ACE_CDR::Long nexceptions = 0;
+  if (node->exceptions () && be_global->tc_support ())
+    {
+      nexceptions = node->exceptions ()->length ();
+    }
 
   *os << "TAO::Upcall_Wrapper upcall_wrapper;" << be_nl
       << "upcall_wrapper.upcall (server_request" << be_nl
       << "                       , args" << be_nl
-      << "                       , nargs" << be_nl
+      << "                       , " << (node->argument_count () + 1) << be_nl
       << "                       , command"
       << "\n#if TAO_HAS_INTERCEPTORS == 1" << be_nl
       << "                       , servant_upcall" << be_nl
       << "                       , exceptions" << be_nl
-      << "                       , nexceptions"
+      << "                       , " << nexceptions
       << "\n#endif  /* TAO_HAS_INTERCEPTORS == 1 */" << be_nl
       << "                       );" << be_uidt_nl
       << "}" << be_nl_2;
