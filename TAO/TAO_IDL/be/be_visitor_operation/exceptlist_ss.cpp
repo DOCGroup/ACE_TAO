@@ -59,15 +59,11 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
             }
         }
 
-      *os << be_uidt_nl << "};" << be_uidt_nl
-          << "static ::CORBA::ULong const nexceptions = "
-          << node->exceptions ()->length () << ";";
+      *os << be_uidt_nl << "};" << be_uidt_nl;
     }
   else
     {
-      *os << "static ::CORBA::TypeCode_ptr const * const exceptions = 0;"
-          << be_nl
-          << "static ::CORBA::ULong const nexceptions = 0;";
+      *os << "static ::CORBA::TypeCode_ptr const * const exceptions = 0;";
     }
 
   *os << "\n#endif /* TAO_HAS_INTERCEPTORS */" << be_nl_2;
