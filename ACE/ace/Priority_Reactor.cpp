@@ -158,11 +158,11 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                ready_mask,
                                et.event_handler_,
                                callback);
-          number_dispatched++;
+          ++number_dispatched;
 
           // clear the bit from that dispatch mask,
           // so when we need to restart the iteration (rebuilding the iterator...)
-          // we will not dispatch the already dipatched handlers
+          // we will not dispatch the already dispatched handlers
           this->clear_dispatch_mask (et.handle_,
                                      mask);
 
