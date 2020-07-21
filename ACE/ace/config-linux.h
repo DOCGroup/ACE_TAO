@@ -20,6 +20,10 @@
 
 #include "ace/config-linux-common.h"
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 32)
+#  define ACE_LACKS_SYS_SYSCTL_H
+#endif
+
 #define ACE_HAS_BYTESEX_H
 
 #if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500)
