@@ -46,7 +46,6 @@ ACE_VERSION = ${ACE_MAJOR_VERSION}.${ACE_MINOR_VERSION}.${ACE_MICRO_VERSION}
 
 # Implement our own configure machinery; it will copy Debian specific
 # configuration before launching MPC to generate ACE+TAO GNUmakefile
-#		fname1=echo $$fname; \
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
