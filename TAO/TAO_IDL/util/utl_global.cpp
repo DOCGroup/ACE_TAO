@@ -2016,6 +2016,7 @@ void
 IDL_GlobalData::eval (const char *string, bool disable_output)
 {
   OldState old (disable_output);
+  OldState old2 (disable_output);
 
   // Set up Flex to read from string
   tao_yy_scan_string (string);
