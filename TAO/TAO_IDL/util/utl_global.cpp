@@ -1953,7 +1953,7 @@ namespace
   {
   public:
     explicit OldState (bool disable_output = false)
-        : old_filename_ (idl_global->filename ()),
+        : old_filename_ (idl_global->filename () == 0 ? 0 : new UTL_String(idl_global->filename (), true)), // need a copy because set_filename() destroys previous value
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
           disable_output_ (disable_output),
