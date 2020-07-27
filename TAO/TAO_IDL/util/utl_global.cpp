@@ -1965,11 +1965,7 @@ namespace
         idl_global->set_lineno (1);
         idl_global->set_filename (0);
 
-        // Name this pseudo-file "builtin-N"
-        static char buffer[64];
-        static unsigned n = 1;
-        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
-        UTL_String utl_string (&buffer[0], true);
+        UTL_String utl_string = get_filename();
         idl_global->idl_src_file (new UTL_String (&utl_string, true));
         idl_global->set_filename (new UTL_String (&utl_string, true));
 
@@ -1980,6 +1976,17 @@ namespace
             ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
             ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
          }
+      }
+
+      UTL_String get_filename()
+      {
+        // Name this pseudo-file "builtin-N"
+        static char buffer[64];
+        static unsigned n = 1;
+        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
+        UTL_String utl_string (&buffer[0], true);
+
+        return utl_string;
       }
 
       ~OldState()
