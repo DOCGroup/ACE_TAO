@@ -1953,7 +1953,7 @@ namespace
   {
   public:
     explicit OldState (bool disable_output = false)
-        : old_filename_ (idl_global->filename () == 0 ? 0 : new UTL_String(idl_global->filename (), true)), // need a copy because set_filename() destroys previous value
+        : old_filename_ (idl_global->filename () ? new UTL_String (idl_global->filename (), true) : 0), // need a copy because IDL_GlobalData::set_filename() destroys previous value
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
           disable_output_ (disable_output),
@@ -1965,9 +1965,9 @@ namespace
         idl_global->set_lineno (1);
         idl_global->set_filename (0);
 
-        UTL_String utl_string = get_filename();
-        idl_global->idl_src_file (new UTL_String (&utl_string, true));
-        idl_global->set_filename (new UTL_String (&utl_string, true));
+        UTL_String filename = this->pseudo_filename ();
+        idl_global->idl_src_file (new UTL_String (&filename, true));
+        idl_global->set_filename (new UTL_String (&filename, true));
 
         if (disable_output_)
           {
@@ -1978,15 +1978,14 @@ namespace
          }
       }
 
-      UTL_String get_filename()
+      UTL_String pseudo_filename ()
       {
         // Name this pseudo-file "builtin-N"
         static char buffer[64];
-        static unsigned n = 1;
-        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
-        UTL_String utl_string (&buffer[0], true);
+        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", pseudo_filename_counter_);
+        UTL_String filename (&buffer[0], true);
 
-        return utl_string;
+        return filename;
       }
 
       ~OldState()
@@ -2006,6 +2005,7 @@ namespace
           }
 
         tao_yylex_destroy ();
+        pseudo_filename_counter_++;
         idl_global->in_eval_ = false;
       }
 
@@ -2016,8 +2016,11 @@ namespace
       bool disable_output_;
       std::streambuf *default_streambuf_;
       const unsigned long flags_;
+      static unsigned pseudo_filename_counter_;
   };
 }
+
+unsigned OldState::pseudo_filename_counter_ = 1;
 
 void
 IDL_GlobalData::eval (const char *string, bool disable_output)
