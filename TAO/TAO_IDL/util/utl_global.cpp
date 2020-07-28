@@ -2005,7 +2005,7 @@ namespace
           }
 
         tao_yylex_destroy ();
-        pseudo_filename_counter_++;
+        ++pseudo_filename_counter_;
         idl_global->in_eval_ = false;
       }
 
