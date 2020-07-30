@@ -59,7 +59,7 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
   TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
 #else
   TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
-#endif  
+#endif
   if (cert.ptr () == 0)
     return;
 
