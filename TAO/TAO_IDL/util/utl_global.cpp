@@ -1966,9 +1966,14 @@ namespace
         idl_global->set_lineno (1);
         idl_global->set_filename (0);
 
-        UTL_String filename = this->pseudo_filename ();
-        idl_global->idl_src_file (new UTL_String (&filename, true));
-        idl_global->set_filename (new UTL_String (&filename, true));
+        // Name this pseudo-file "builtin-N"
+        static char buffer[64];
+        static unsigned n = 1;
+        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
+        UTL_String pseudo_filename (&buffer[0], true);
+
+        idl_global->idl_src_file (new UTL_String (&pseudo_filename, true));
+        idl_global->set_filename (new UTL_String (&pseudo_filename, true));
 
         if (disable_output_)
           {
@@ -1976,16 +1981,6 @@ namespace
             ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
             ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
          }
-      }
-
-      UTL_String pseudo_filename () const
-      {
-        // Name this pseudo-file "builtin-N"
-        static char buffer[64];
-        ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", pseudo_filename_counter_);
-        const UTL_String filename (&buffer[0], true);
-
-        return filename;
       }
 
       ~OldState()
@@ -2005,7 +2000,6 @@ namespace
           }
 
         tao_yylex_destroy ();
-        ++pseudo_filename_counter_;
         idl_global->in_eval_ = false;
       }
 
@@ -2016,11 +2010,8 @@ namespace
       const bool disable_output_;
       std::streambuf *const default_streambuf_;
       const unsigned long flags_;
-      static unsigned pseudo_filename_counter_;
   };
 }
-
-unsigned OldState::pseudo_filename_counter_ = 1;
 
 void
 IDL_GlobalData::eval (const char *string, bool disable_output)
