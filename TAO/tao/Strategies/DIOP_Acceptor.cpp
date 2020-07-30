@@ -1077,7 +1077,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 TAOLIB_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("TAO (%P|%t) Invalid IIOP endpoint ")
+                                   ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint ")
                                    ACE_TEXT ("portspan: <%C>\n")
                                    ACE_TEXT ("Valid range 1 -- %d\n"),
                                    value.c_str (), ACE_MAX_DEFAULT_PORT),

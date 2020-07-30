@@ -355,6 +355,8 @@ TAO/tests/Codec/run_test.pl
 TAO/tests/Bug_1693_Test/run_test.pl
 TAO/tests/IDL_Test/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO !ANDROID
 TAO/tests/ORB_init/run_test.pl:
+TAO/tests/ORB_portspan/run_test.pl -iiop:
+TAO/tests/ORB_portspan/run_test.pl -diop: !NO_DIOP
 TAO/tests/ORB_destroy/run_test.pl:
 TAO/tests/ORB_shutdown/run_test.pl:
 TAO/tests/Server_Port_Zero/run_test.pl:
