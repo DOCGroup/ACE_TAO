@@ -20,7 +20,11 @@ TAO::SSLIOP::Current_Impl::~Current_Impl (void)
 SecurityLevel3::ClientCredentials_ptr
 TAO::SSLIOP::Current_Impl::client_credentials ()
 {
-  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
+#else
+  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
+#endif
   if (cert.ptr () == 0)
     throw CORBA::BAD_OPERATION ();
 
@@ -51,7 +55,11 @@ TAO::SSLIOP::Current_Impl::get_peer_certificate (
   if (this->ssl_ == 0)
     return;
 
-  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate (this->ssl_);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  TAO::SSLIOP::X509_var cert = ::SSL_get1_peer_certificate(this->ssl_);
+#else
+  TAO::SSLIOP::X509_var cert = ::SSL_get_peer_certificate(this->ssl_);
+#endif
   if (cert.ptr () == 0)
     return;
 

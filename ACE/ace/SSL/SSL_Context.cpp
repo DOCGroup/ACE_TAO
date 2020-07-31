@@ -366,7 +366,12 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
       return false;
     }
 
-  X509* cert = ::SSL_get_peer_certificate (peerssl);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  X509* cert = ::SSL_get1_peer_certificate(peerssl);
+#else
+  X509* cert = ::SSL_get_peer_certificate(peerssl);
+#endif
+
   if (cert == 0)
     {
       return false;
