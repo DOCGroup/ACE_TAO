@@ -845,7 +845,6 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
       if (lmreq.ipv6mr_interface == 0)
         return -1;
-
     }
 #else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
     ACE_UNUSED_ARG(net_if);
