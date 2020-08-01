@@ -834,20 +834,22 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         }
 
       delete[] buf; // clean up
+
 #endif /* ACE_WIN32 */
 #ifndef ACE_LACKS_IF_NAMETOINDEX
       if (lmreq.ipv6mr_interface == 0)
         {
           lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
         }
+
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
+      if (lmreq.ipv6mr_interface == 0)
+        return -1;
+
     }
 #else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
     ACE_UNUSED_ARG(net_if);
 #endif /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
-
-  if (lmreq.ipv6mr_interface == 0)
-    return -1;
 
   // now set the multicast address
   ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr,
