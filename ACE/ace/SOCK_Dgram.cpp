@@ -677,30 +677,23 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
           IP_ADAPTER_ADDRESSES tmp_addrs;
           // Initial call to determine actual memory size needed
           ULONG bufLen = 0;
-          if ((::GetAdaptersAddresses (AF_INET,
-                                       0,
-                                       0,
-                                       &tmp_addrs,
-                                       &bufLen)) != ERROR_BUFFER_OVERFLOW)
-            return -1; // With output bufferlength 0 this can't be right.
+          if (::GetAdaptersAddresses (AF_INET, 0, 0, &tmp_addrs, &bufLen)
+              != ERROR_BUFFER_OVERFLOW)
+            {
+              return -1; // With output bufferlength 0 this can't be right.
+            }
 
           // Get required output buffer and retrieve info for real.
           char *buf = 0;
-          ACE_NEW_RETURN (buf,
-                          char[bufLen],
-                          -1);
+          ACE_NEW_RETURN (buf, char[bufLen], -1);
           PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-          if ((::GetAdaptersAddresses (AF_INET,
-                                       0,
-                                       0,
-                                       pAddrs,
-                                       &bufLen)) != NO_ERROR)
+          if (::GetAdaptersAddresses (AF_INET, 0, 0, pAddrs, &bufLen) != NO_ERROR)
             {
               delete[] buf; // clean up
               return -1;
             }
 
-          interface_addr = ACE_INET_Addr(); // initialize
+          interface_addr = ACE_INET_Addr ();
           int set_result = -1;
           while (pAddrs && set_result == -1)
             {
@@ -711,7 +704,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                   LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
                   if (sa->sa_family = AF_INET)
                     {
-                      const void* addr = &(((struct sockaddr_in*)sa)->sin_addr);
+                      const void *addr = &(((sockaddr_in *)sa)->sin_addr);
                       set_result = interface_addr.set_address ((const char*) addr, 4, 0);
                     }
                 }
@@ -721,10 +714,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
           delete[] buf; // clean up
           if (set_result == -1)
             {
+              errno = EINVAL;
               return -1;
             }
 #else
-          return -1;
+          ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_WIN32 */
         }
       lmreq.imr_interface.s_addr =
@@ -797,24 +791,15 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       DWORD dwRetVal;
       ULONG bufLen = 0;
       char *buf = 0;
-      if ((::GetAdaptersAddresses (AF_INET6,
-                                   0,
-                                   0,
-                                   &tmp_addrs,
-                                   &bufLen)) == ERROR_BUFFER_OVERFLOW)
+      if (::GetAdaptersAddresses (AF_INET6, 0, 0, &tmp_addrs, &bufLen)
+          == ERROR_BUFFER_OVERFLOW)
         {
-          ACE_NEW_RETURN (buf,
-                          char[bufLen],
-                          -1);
+          ACE_NEW_RETURN (buf, char[bufLen], -1);
         }
 
       // Get required output buffer and retrieve info for real.
       PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
-                                              0,
-                                              0,
-                                              pAddrs,
-                                              &bufLen)) != NO_ERROR)
+      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen)) != NO_ERROR)
         {
           pAddrs = 0;
         }
@@ -843,8 +828,10 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         }
 
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
-      if (lmreq.ipv6mr_interface == 0)
+      if (lmreq.ipv6mr_interface == 0) {
+        errno = EINVAL;
         return -1;
+      }
     }
 #else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
     ACE_UNUSED_ARG(net_if);
