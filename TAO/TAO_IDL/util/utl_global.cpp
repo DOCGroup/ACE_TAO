@@ -1953,11 +1953,12 @@ namespace
   {
   public:
     explicit OldState (bool disable_output = false)
-        : old_filename_ (idl_global->filename ()),
+        : old_filename_ (idl_global->filename () ? new UTL_String (idl_global->filename (), true) : 0),
+          // need a copy because IDL_GlobalData::set_filename() destroys previous value
           old_lineno_ (idl_global->lineno ()),
           old_idl_src_file_ (idl_global->idl_src_file ()),
           disable_output_ (disable_output),
-          default_streambuf_ (0),
+          default_streambuf_ (ACE_DEFAULT_LOG_STREAM->rdbuf ()),
           flags_ (ACE_LOG_MSG->flags ())
       {
         idl_global->in_eval_ = true;
@@ -1969,13 +1970,13 @@ namespace
         static char buffer[64];
         static unsigned n = 1;
         ACE_OS::snprintf (&buffer[0], sizeof buffer, "builtin-%u", n++);
-        UTL_String utl_string (&buffer[0], true);
-        idl_global->idl_src_file (new UTL_String (&utl_string, true));
-        idl_global->set_filename (new UTL_String (&utl_string, true));
+        UTL_String pseudo_filename (&buffer[0], true);
+
+        idl_global->idl_src_file (new UTL_String (&pseudo_filename, true));
+        idl_global->set_filename (new UTL_String (&pseudo_filename, true));
 
         if (disable_output_)
           {
-            default_streambuf_ = ACE_DEFAULT_LOG_STREAM->rdbuf ();
             ACE_DEFAULT_LOG_STREAM->rdbuf (0);
             ACE_LOG_MSG->clr_flags (ACE_Log_Msg::STDERR);
             ACE_LOG_MSG->clr_flags (ACE_LOG_MSG->flags ());
@@ -2003,11 +2004,11 @@ namespace
       }
 
     private:
-      UTL_String *old_filename_;
-      long old_lineno_;
-      UTL_String *old_idl_src_file_;
-      bool disable_output_;
-      std::streambuf *default_streambuf_;
+      UTL_String *const old_filename_;
+      const long old_lineno_;
+      UTL_String *const old_idl_src_file_;
+      const bool disable_output_;
+      std::streambuf *const default_streambuf_;
       const unsigned long flags_;
   };
 }
