@@ -30,7 +30,7 @@
 
 typedef std::set<ACE_TString> nameset;
 
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
 void
 get_valid_ipv4_interface_names_win32 (nameset &names)
 {
@@ -70,7 +70,7 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
 
   delete[] buf;
 }
-#elif defined ACE_HAS_GETIFADDRS
+#elif defined (ACE_HAS_GETIFADDRS)
 void
 get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 {
@@ -96,20 +96,20 @@ get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 
   ::freeifaddrs (ifap);
 }
-#endif
+#endif /* ACE_WIN32 */
 
 void
 get_valid_ipv4_interface_names (nameset &names)
 {
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
   get_valid_ipv4_interface_names_win32 (names);
-#elif defined ACE_HAS_GETIFADDRS
+#elif defined (ACE_HAS_GETIFADDRS)
   get_valid_ipv4_interface_names_getifaddrs (names);
-#endif
+#endif /* ACE_WIN32 */
 }
 
-#ifdef ACE_HAS_IPV6
-#ifdef ACE_WIN32
+#if defined (ACE_HAS_IPV6)
+#if defined (ACE_WIN32)
 void
 get_valid_ipv6_interface_names_win32 (nameset &names)
 {
@@ -149,7 +149,7 @@ get_valid_ipv6_interface_names_win32 (nameset &names)
 
   delete[] buf;
 }
-#elif defined ACE_HAS_GETIFADDRS
+#elif defined (ACE_HAS_GETIFADDRS)
 void
 get_valid_ipv6_interface_names_getifaddrs (nameset &names)
 {
@@ -175,16 +175,16 @@ get_valid_ipv6_interface_names_getifaddrs (nameset &names)
 
   ::freeifaddrs (ifap);
 }
-#endif
+#endif /*ACE_WIN32 */
 
 void
 get_valid_ipv6_interface_names (nameset &names)
 {
-#ifdef ACE_WIN32
+#if defined (ACE_WIN32)
   get_valid_ipv6_interface_names_win32 (names);
-#elif defined ACE_HAS_GETIFADDRS
+#elif defined (ACE_HAS_GETIFADDRS)
   get_valid_ipv6_interface_names_getifaddrs (names);
-#endif
+#endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_IPV6 */
 
@@ -223,7 +223,7 @@ run_main (int, ACE_TCHAR *[])
       result |= create_socket_and_join_multicast (ipv4_mc_addr, *it);
     }
 
-#ifdef ACE_HAS_IPV6
+#if defined (ACE_HAS_IPV6)
   names.clear ();
   get_valid_ipv6_interface_names (names);
   ACE_INET_Addr ipv6_mc_addr ("ff03::7:4321", AF_INET6);
