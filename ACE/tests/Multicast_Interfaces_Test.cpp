@@ -22,8 +22,11 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/SString.h"
 
+#if defined (ACE_HAS_GETIFADDRS)
+#  include "ace/os_include/os_ifaddrs.h"
+#endif /* ACE_HAS_GETIFADDRS */
+
 #include <set>
-#include <string>
 
 typedef std::set<ACE_TString> nameset;
 
@@ -67,6 +70,28 @@ void get_valid_ipv4_interface_names_win32(nameset& names) {
 }
 #elif defined ACE_HAS_GETIFADDRS
 void get_valid_ipv4_interface_names_getifaddrs(nameset& names) {
+  struct ifaddrs *ifap = 0;
+  struct ifaddrs *p_if = 0;
+
+  if (::getifaddrs (&ifap) != 0)
+    return;
+
+  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+    {
+      if (p_if->ifa_flags & IFF_MULTICAST &&
+          p_if->ifa_addr->sa_family == AF_INET)
+        {
+          struct sockaddr_in *addr =
+            reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
+
+          if (addr->sin_addr.s_addr != INADDR_ANY)
+            {
+              names.insert(ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name));
+            }
+        }
+    }
+
+  ::freeifaddrs (ifap);
 }
 #endif
 
@@ -119,6 +144,28 @@ void get_valid_ipv6_interface_names_win32(nameset& names) {
 }
 #elif defined ACE_HAS_GETIFADDRS
 void get_valid_ipv6_interface_names_getifaddrs(nameset& names) {
+  struct ifaddrs *ifap = 0;
+  struct ifaddrs *p_if = 0;
+
+  if (::getifaddrs (&ifap) != 0)
+    return;
+
+  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+    {
+      if (p_if->ifa_flags & IFF_MULTICAST &&
+          p_if->ifa_addr->sa_family == AF_INET6)
+        {
+          struct sockaddr_in6 *addr =
+            reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
+
+          if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
+            {
+              names.insert(ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name));
+            }
+        }
+    }
+
+  ::freeifaddrs (ifap);
 }
 #endif
 
@@ -164,6 +211,7 @@ run_main (int, ACE_TCHAR *[])
   }
 
 #ifdef ACE_HAS_IPV6
+  names.clear();
   get_valid_ipv6_interface_names(names);
   ACE_INET_Addr ipv6_mc_addr("ff03::7:4321", AF_INET6);
   result |= create_socket_and_join_multicast(ipv6_mc_addr, ACE_TString());
