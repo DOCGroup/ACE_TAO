@@ -673,7 +673,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
         {
-#ifdef ACE_WIN32
+#ifdef (ACE_WIN32)
           IP_ADAPTER_ADDRESSES tmp_addrs;
           // Initial call to determine actual memory size needed
           ULONG bufLen = 0;
@@ -827,10 +827,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         }
 
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
-      if (lmreq.ipv6mr_interface == 0) {
-        errno = EINVAL;
-        return -1;
-      }
+      if (lmreq.ipv6mr_interface == 0)
+        {
+          errno = EINVAL;
+          return -1;
+        }
     }
 #else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
     ACE_UNUSED_ARG(net_if);
