@@ -31,8 +31,10 @@
 typedef std::set<ACE_TString> nameset;
 
 #ifdef ACE_WIN32
-void get_valid_ipv4_interface_names_win32(nameset& names) {
-  names.clear();
+void
+get_valid_ipv4_interface_names_win32 (nameset &names)
+{
+  names.clear ();
 
   // Initial call to determine actual memory size needed
   IP_ADAPTER_ADDRESSES tmp_addrs;
@@ -60,7 +62,7 @@ void get_valid_ipv4_interface_names_win32(nameset& names) {
           LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
           if (sa->sa_family == AF_INET)
             {
-              names.insert(ACE_TEXT_WCHAR_TO_TCHAR(pAddrs->FriendlyName));
+              names.insert (ACE_TEXT_WCHAR_TO_TCHAR (pAddrs->FriendlyName));
             }
         }
       pAddrs = pAddrs->Next;
@@ -69,9 +71,11 @@ void get_valid_ipv4_interface_names_win32(nameset& names) {
   delete[] buf;
 }
 #elif defined ACE_HAS_GETIFADDRS
-void get_valid_ipv4_interface_names_getifaddrs(nameset& names) {
-  struct ifaddrs *ifap = 0;
-  struct ifaddrs *p_if = 0;
+void
+get_valid_ipv4_interface_names_getifaddrs (nameset &names)
+{
+  ifaddrs *ifap = 0;
+  ifaddrs *p_if = 0;
 
   if (::getifaddrs (&ifap) != 0)
     return;
@@ -81,12 +85,11 @@ void get_valid_ipv4_interface_names_getifaddrs(nameset& names) {
       if (p_if->ifa_flags & IFF_MULTICAST &&
           p_if->ifa_addr->sa_family == AF_INET)
         {
-          struct sockaddr_in *addr =
-            reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
+          sockaddr_in *addr = reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
           if (addr->sin_addr.s_addr != INADDR_ANY)
             {
-              names.insert(ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name));
+              names.insert (ACE_TEXT_CHAR_TO_TCHAR (p_if->ifa_name));
             }
         }
     }
@@ -95,18 +98,22 @@ void get_valid_ipv4_interface_names_getifaddrs(nameset& names) {
 }
 #endif
 
-void get_valid_ipv4_interface_names(nameset& names) {
+void
+get_valid_ipv4_interface_names (nameset &names)
+{
 #ifdef ACE_WIN32
-get_valid_ipv4_interface_names_win32(names);
+  get_valid_ipv4_interface_names_win32 (names);
 #elif defined ACE_HAS_GETIFADDRS
-get_valid_ipv4_interface_names_getifaddrs(names);
+  get_valid_ipv4_interface_names_getifaddrs (names);
 #endif
 }
 
 #ifdef ACE_HAS_IPV6
 #ifdef ACE_WIN32
-void get_valid_ipv6_interface_names_win32(nameset& names) {
-  names.clear();
+void
+get_valid_ipv6_interface_names_win32 (nameset &names)
+{
+  names.clear ();
 
   // Initial call to determine actual memory size needed
   IP_ADAPTER_ADDRESSES tmp_addrs;
@@ -134,7 +141,7 @@ void get_valid_ipv6_interface_names_win32(nameset& names) {
           LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
           if (sa->sa_family == AF_INET6)
             {
-              names.insert(ACE_TEXT_WCHAR_TO_TCHAR(pAddrs->FriendlyName));
+              names.insert (ACE_TEXT_WCHAR_TO_TCHAR (pAddrs->FriendlyName));
             }
         }
       pAddrs = pAddrs->Next;
@@ -143,9 +150,11 @@ void get_valid_ipv6_interface_names_win32(nameset& names) {
   delete[] buf;
 }
 #elif defined ACE_HAS_GETIFADDRS
-void get_valid_ipv6_interface_names_getifaddrs(nameset& names) {
-  struct ifaddrs *ifap = 0;
-  struct ifaddrs *p_if = 0;
+void
+get_valid_ipv6_interface_names_getifaddrs (nameset &names)
+{
+  ifaddrs *ifap = 0;
+  ifaddrs *p_if = 0;
 
   if (::getifaddrs (&ifap) != 0)
     return;
@@ -155,12 +164,11 @@ void get_valid_ipv6_interface_names_getifaddrs(nameset& names) {
       if (p_if->ifa_flags & IFF_MULTICAST &&
           p_if->ifa_addr->sa_family == AF_INET6)
         {
-          struct sockaddr_in6 *addr =
-            reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
+          sockaddr_in6 *addr = reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
 
-          if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
+          if (!IN6_IS_ADDR_UNSPECIFIED (&addr->sin6_addr))
             {
-              names.insert(ACE_TEXT_CHAR_TO_TCHAR(p_if->ifa_name));
+              names.insert (ACE_TEXT_CHAR_TO_TCHAR (p_if->ifa_name));
             }
         }
     }
@@ -169,21 +177,25 @@ void get_valid_ipv6_interface_names_getifaddrs(nameset& names) {
 }
 #endif
 
-void get_valid_ipv6_interface_names(nameset& names) {
+void
+get_valid_ipv6_interface_names (nameset &names)
+{
 #ifdef ACE_WIN32
-get_valid_ipv6_interface_names_win32(names);
+  get_valid_ipv6_interface_names_win32 (names);
 #elif defined ACE_HAS_GETIFADDRS
-get_valid_ipv6_interface_names_getifaddrs(names);
+  get_valid_ipv6_interface_names_getifaddrs (names);
 #endif
 }
 #endif /* ACE_HAS_IPV6 */
 
-int create_socket_and_join_multicast(const ACE_INET_Addr& mc_addr, const ACE_TString& if_name) {
+int
+create_socket_and_join_multicast (const ACE_INET_Addr &mc_addr, const ACE_TString &if_name)
+{
   int result = 0;
   ACE_SOCK_Dgram_Mcast sock;
-  sock.opts(ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_NO | ACE_SOCK_Dgram_Mcast::DEFOPT_NULLIFACE);
-  result = sock.join(mc_addr, 1, if_name.empty() ? 0 : if_name.c_str());
-  result |= sock.close();
+  sock.opts (ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_NO | ACE_SOCK_Dgram_Mcast::DEFOPT_NULLIFACE);
+  result = sock.join (mc_addr, 1, if_name.empty () ? 0 : if_name.c_str ());
+  result |= sock.close ();
   return result;
 }
 
@@ -203,21 +215,23 @@ run_main (int, ACE_TCHAR *[])
 
   nameset names;
 
-  get_valid_ipv4_interface_names(names);
-  ACE_INET_Addr ipv4_mc_addr("239.255.0.7:1234", AF_INET);
-  result |= create_socket_and_join_multicast(ipv4_mc_addr, ACE_TString());
-  for (nameset::const_iterator it = names.begin(); result == 0 && it != names.end(); ++it) {
-    result |= create_socket_and_join_multicast(ipv4_mc_addr, *it);
-  }
+  get_valid_ipv4_interface_names (names);
+  ACE_INET_Addr ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
+  result |= create_socket_and_join_multicast (ipv4_mc_addr, ACE_TString ());
+  for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
+    {
+      result |= create_socket_and_join_multicast (ipv4_mc_addr, *it);
+    }
 
 #ifdef ACE_HAS_IPV6
-  names.clear();
-  get_valid_ipv6_interface_names(names);
-  ACE_INET_Addr ipv6_mc_addr("ff03::7:4321", AF_INET6);
-  result |= create_socket_and_join_multicast(ipv6_mc_addr, ACE_TString());
-  for (nameset::const_iterator it = names.begin(); result == 0 && it != names.end(); ++it) {
-    result |= create_socket_and_join_multicast(ipv6_mc_addr, *it);
-  }
+  names.clear ();
+  get_valid_ipv6_interface_names (names);
+  ACE_INET_Addr ipv6_mc_addr ("ff03::7:4321", AF_INET6);
+  result |= create_socket_and_join_multicast (ipv6_mc_addr, ACE_TString ());
+  for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
+    {
+      result |= create_socket_and_join_multicast (ipv6_mc_addr, *it);
+    }
 #endif /* ACE_HAS_IPV6 */
 
   ACE_END_TEST;
