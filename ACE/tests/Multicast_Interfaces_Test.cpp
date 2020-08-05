@@ -54,7 +54,7 @@ void get_valid_ipv4_interface_names_win32(nameset& names) {
 
   while (pAddrs)
     {
-      if (!pAddrs->NoMulticast)
+      if (pAddrs->OperStatus == IfOperStatusUp && !pAddrs->NoMulticast)
         {
           PIP_ADAPTER_UNICAST_ADDRESS_LH pUnicast = pAddrs->FirstUnicastAddress;
           LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
@@ -128,7 +128,7 @@ void get_valid_ipv6_interface_names_win32(nameset& names) {
 
   while (pAddrs)
     {
-      if (!pAddrs->NoMulticast)
+      if (pAddrs->OperStatus == IfOperStatusUp && !pAddrs->NoMulticast)
         {
           PIP_ADAPTER_UNICAST_ADDRESS_LH pUnicast = pAddrs->FirstUnicastAddress;
           LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
