@@ -2,21 +2,16 @@
 
 //=============================================================================
 /**
- *  @file    Enum_Interfaces_Test.cpp
+ *  @file    Multicast_Interfaces_Test.cpp
  *
- *   This is a simple test of <ACE::get_ip_interfaces>.  This call
- *   retrieves the IP addresses assigned to the host by
- *   interrogating the kernel.  Network applications typically
- *   assume gethostbyname(uname()) will work, but this is just a
- *   convention. It is also problematic if the resolver code
- *   (DNS/NIS+...) is misconfigured. This happens more than
- *   programmers realize. It is better to find out by asking the
- *   kernel for local address assignments. This API is similar to
- *   what netstat -ni or ifconfig -a produces on UNIX or ipconfig on
- *   Windows NT. In fact, it was by reverse engineering these tools
- *   that this api was created.
+ *   This is a sanity-check test of ACE_SOCK_Dgram_Mcast::join by
+ *   interface name on platforms that support it.
+ *   It retrieves the valid local interface names and attempts to
+ *   perform a multicast join on all interfaces and then on each
+ *   individual interface separately. If IPv6 is enabled, it will
+ *   attempt to join on an IPv6 multicast address as well.
  *
- *  @author Michael R. MacFaden <mrm@cisco.com>
+ *  @author Timothy Simpson <simpsont@objectcomputing.com>
  */
 //=============================================================================
 
