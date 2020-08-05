@@ -788,7 +788,6 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
       IP_ADAPTER_ADDRESSES tmp_addrs;
       // Initial call to determine actual memory size needed
-      DWORD dwRetVal;
       ULONG bufLen = 0;
       char *buf = 0;
       if (::GetAdaptersAddresses (AF_INET6, 0, 0, &tmp_addrs, &bufLen)
@@ -799,7 +798,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
       // Get required output buffer and retrieve info for real.
       PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen)) != NO_ERROR)
+      if (::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen) != NO_ERROR)
         {
           pAddrs = 0;
         }
