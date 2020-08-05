@@ -702,7 +702,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                 {
                   PIP_ADAPTER_UNICAST_ADDRESS pUnicast = pAddrs->FirstUnicastAddress;
                   LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
-                  if (sa->sa_family = AF_INET)
+                  if (sa->sa_family == AF_INET)
                     {
                       const void *addr = &(((sockaddr_in *)sa)->sin_addr);
                       set_result = interface_addr.set_address ((const char*) addr, 4, 0);
