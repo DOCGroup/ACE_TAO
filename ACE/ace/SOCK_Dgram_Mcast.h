@@ -335,12 +335,12 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  /// Override write acessor for the constructor options (@see enum options above)
+  /// Override write accessor for the constructor options (@see enum options above)
   /// This class is typically default instantiated in a connection handler templated
   /// framework so these cannot be specified on construction.
   void opts (int opts);
 
-  /// Read acessor for the constructor options (@see enum options above)
+  /// Read accessor for the constructor options (@see enum options above)
   int opts () const;
 
 private:
@@ -367,7 +367,6 @@ private:
                      const ACE_TCHAR *net_if = 0);
 
 protected:
-
   /// Contains common open functionality so that inheriting classes can
   /// reuse it.
   int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
