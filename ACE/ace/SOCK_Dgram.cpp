@@ -782,7 +782,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
     {
 #if defined (ACE_WIN32)
       int if_ix = 0;
-      bool num_if =
+      bool const num_if
         ACE_OS::ace_isdigit (net_if[0]) &&
         (if_ix = ACE_OS::atoi (net_if)) > 0;
 
