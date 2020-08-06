@@ -672,7 +672,55 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
       // This port number is not necessary, just convenient
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
-        return -1;
+        {
+#if defined (ACE_WIN32)
+          IP_ADAPTER_ADDRESSES tmp_addrs;
+          // Initial call to determine actual memory size needed
+          ULONG bufLen = 0;
+          if (::GetAdaptersAddresses (AF_INET, 0, 0, &tmp_addrs, &bufLen)
+              != ERROR_BUFFER_OVERFLOW)
+            {
+              return -1; // With output bufferlength 0 this can't be right.
+            }
+
+          // Get required output buffer and retrieve info for real.
+          char *buf = 0;
+          ACE_NEW_RETURN (buf, char[bufLen], -1);
+          PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+          if (::GetAdaptersAddresses (AF_INET, 0, 0, pAddrs, &bufLen) != NO_ERROR)
+            {
+              delete[] buf; // clean up
+              return -1;
+            }
+
+          interface_addr = ACE_INET_Addr ();
+          int set_result = -1;
+          while (pAddrs && set_result == -1)
+            {
+              if (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if), pAddrs->AdapterName) == 0 ||
+                  ACE_OS::strcmp (ACE_TEXT_ALWAYS_WCHAR (net_if), pAddrs->FriendlyName) == 0)
+                {
+                  PIP_ADAPTER_UNICAST_ADDRESS pUnicast = pAddrs->FirstUnicastAddress;
+                  LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
+                  if (sa->sa_family == AF_INET)
+                    {
+                      const void *addr = &(((sockaddr_in *)sa)->sin_addr);
+                      set_result = interface_addr.set_address ((const char*) addr, 4, 0);
+                    }
+                }
+              pAddrs = pAddrs->Next;
+            }
+
+          delete[] buf; // clean up
+          if (set_result == -1)
+            {
+              errno = EINVAL;
+              return -1;
+            }
+#else
+          ACE_NOTSUP_RETURN (-1);
+#endif /* ACE_WIN32 */
+        }
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
 #else
@@ -729,56 +777,38 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
                   0,
                   sizeof (lmreq));
 
-#ifndef ACE_LACKS_IF_NAMETOINDEX
+#if defined (ACE_WIN32) || !defined (ACE_LACKS_IF_NAMETOINDEX)
   if (net_if != 0)
     {
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
-    }
-#elif defined (ACE_WIN32)
-  if (net_if != 0)
-    {
+#if defined (ACE_WIN32)
       int if_ix = 0;
-      bool num_if =
+      bool const num_if =
         ACE_OS::ace_isdigit (net_if[0]) &&
         (if_ix = ACE_OS::atoi (net_if)) > 0;
 
       IP_ADAPTER_ADDRESSES tmp_addrs;
       // Initial call to determine actual memory size needed
-      DWORD dwRetVal;
       ULONG bufLen = 0;
-      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
-                                              0,
-                                              0,
-                                              &tmp_addrs,
-                                              &bufLen)) != ERROR_BUFFER_OVERFLOW)
-        return -1; // With output bufferlength 0 this can't be right.
-
-      // Get required output buffer and retrieve info for real.
-      PIP_ADAPTER_ADDRESSES pAddrs;
-      char *buf;
-      ACE_NEW_RETURN (buf,
-                      char[bufLen],
-                      -1);
-      pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-      if ((dwRetVal = ::GetAdaptersAddresses (AF_INET6,
-                                              0,
-                                              0,
-                                              pAddrs,
-                                              &bufLen)) != NO_ERROR)
+      char *buf = 0;
+      if (::GetAdaptersAddresses (AF_INET6, 0, 0, &tmp_addrs, &bufLen)
+          == ERROR_BUFFER_OVERFLOW)
         {
-          delete[] buf; // clean up
-          return -1;
+          ACE_NEW_RETURN (buf, char[bufLen], -1);
         }
 
-      lmreq.ipv6mr_interface = 0; // initialize
+      // Get required output buffer and retrieve info for real.
+      PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+      if (::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen) != NO_ERROR)
+        {
+          pAddrs = 0;
+        }
+
       while (pAddrs)
         {
           if ((num_if && pAddrs->Ipv6IfIndex == static_cast<unsigned int>(if_ix))
               || (!num_if &&
-                  (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
-                                   pAddrs->AdapterName) == 0
-                   || ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if),
-                                      ACE_Wide_To_Ascii (pAddrs->FriendlyName).char_rep()) == 0)))
+                  (ACE_OS::strcmp (ACE_TEXT_ALWAYS_CHAR (net_if), pAddrs->AdapterName) == 0
+                   || ACE_OS::strcmp (ACE_TEXT_ALWAYS_WCHAR (net_if), pAddrs->FriendlyName) == 0)))
             {
               lmreq.ipv6mr_interface = pAddrs->Ipv6IfIndex;
               break;
@@ -788,10 +818,24 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         }
 
       delete[] buf; // clean up
-    }
-#else  /* ACE_WIN32 */
-    ACE_UNUSED_ARG(net_if);
+
 #endif /* ACE_WIN32 */
+#ifndef ACE_LACKS_IF_NAMETOINDEX
+      if (lmreq.ipv6mr_interface == 0)
+        {
+          lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
+        }
+
+#endif /* ACE_LACKS_IF_NAMETOINDEX */
+      if (lmreq.ipv6mr_interface == 0)
+        {
+          errno = EINVAL;
+          return -1;
+        }
+    }
+#else  /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
+    ACE_UNUSED_ARG(net_if);
+#endif /* ACE_WIN32 || !ACE_LACKS_IF_NAMETOINDEX */
 
   // now set the multicast address
   ACE_OS::memcpy (&lmreq.ipv6mr_multiaddr,

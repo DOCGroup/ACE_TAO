@@ -1208,6 +1208,13 @@ project(Multicast Test) : acetest {
   }
 }
 
+project(Multicast Interfaces Test) : acetest {
+  exename = Multicast_Interfaces_Test
+  Source_Files {
+    Multicast_Interfaces_Test.cpp
+  }
+}
+
 project(Multihomed INET Addr Test) : acetest {
   avoids += ace_for_tao
   exename = Multihomed_INET_Addr_Test
