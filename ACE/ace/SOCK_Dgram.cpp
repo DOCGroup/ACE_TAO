@@ -673,7 +673,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
         {
-#ifdef (ACE_WIN32)
+#if defined (ACE_WIN32)
           IP_ADAPTER_ADDRESSES tmp_addrs;
           // Initial call to determine actual memory size needed
           ULONG bufLen = 0;
