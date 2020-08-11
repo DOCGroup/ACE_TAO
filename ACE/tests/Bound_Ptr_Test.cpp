@@ -177,7 +177,7 @@ Printer::print (void)
 class Method_Request_print : public ACE_Method_Request
 {
 public:
-  Method_Request_print (Printer_var &printer);
+  explicit Method_Request_print (Printer_var &printer);
   virtual ~Method_Request_print (void);
 
   /// This is the entry point into the Active Object method.
