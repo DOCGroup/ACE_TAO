@@ -71,7 +71,7 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (Scheduler * = 0);
+  Scheduler (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
@@ -96,7 +96,6 @@ protected:
 private:
   // = These are the <Scheduler> implementation details.
   ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
 };
 
 /**
@@ -107,22 +106,18 @@ private:
 class Method_Request_print : public ACE_Method_Request
 {
 public:
-  Method_Request_print (Scheduler *,
-                        Printer_var &printer);
+  Method_Request_print (Printer_var &printer);
   virtual ~Method_Request_print (void);
 
   /// This is the entry point into the Active Object method.
   virtual int call (void);
 
 private:
-  Scheduler *scheduler_;
   Printer_var printer_;
 };
 
-Method_Request_print::Method_Request_print (Scheduler *new_scheduler,
-                                            Printer_var &printer)
-  : scheduler_ (new_scheduler),
-    printer_ (printer)
+Method_Request_print::Method_Request_print (Printer_var &printer)
+  : printer_ (printer)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print created\n")));
@@ -191,8 +186,8 @@ Method_Request_end::call (void)
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
-Scheduler::Scheduler (Scheduler *new_scheduler)
-  : activation_queue_ (msg_queue ()), scheduler_ (new_scheduler)
+Scheduler::Scheduler (void)
+  : activation_queue_ (msg_queue ())
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler created\n")));
@@ -269,8 +264,7 @@ void
 Scheduler::print (Printer_var &printer)
 {
   this->activation_queue_.enqueue
-    (new Method_Request_print (this,
-                               printer));
+    (new Method_Request_print (printer));
 }
 
 // Total number of loops.
@@ -485,7 +479,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr;
+  Scheduler *scheduler_ptr = 0;
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,

@@ -15,17 +15,13 @@
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 
-
-
 class One {
-
   static bool released;
 
-  int m2;
   int ref;
 
 public:
-  One (int refcount) : m2(0), ref(refcount)
+  One (int refcount) : ref(refcount)
   {
     released = false;
   }

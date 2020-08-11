@@ -49,7 +49,7 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (Scheduler * = 0);
+  Scheduler (void);
 
   /// Initializer.
   virtual int open (void *args = 0);
@@ -72,7 +72,6 @@ protected:
 private:
   // = These are the <Scheduler> implementation details.
   ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
 };
 
 #endif /* ACE_HAS_THREADS */
