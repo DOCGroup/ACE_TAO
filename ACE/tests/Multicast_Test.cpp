@@ -663,7 +663,6 @@ public:
 
 private:
   const MCT_Config &config_;
-  int iterations_;
 };
 
 MCT_Task::MCT_Task (const MCT_Config &config,

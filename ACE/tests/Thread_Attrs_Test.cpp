@@ -10,19 +10,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
-
-namespace
-{
-  // Change this to 'true' if you want lots of debugging messages in the log
-  const bool PRINT_DEBUG_MSGS = true;
-}
 
 class Cancel_Check : public ACE_Task<ACE_MT_SYNCH>
 {
