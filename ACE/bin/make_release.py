@@ -5,6 +5,8 @@
 # @author William R. Otte <wotte@dre.vanderbilt.edu>
 #
 # Packaging script for ACE/TAO
+#
+# Should be compatible with Python 2.7 and 3.x
 
 from __future__ import with_statement
 from __future__ import print_function
@@ -524,33 +526,49 @@ def get_comp_versions (component):
     #                   str (comp_versions[minor])
 
 
-def update_latest_tag (product, which, branch):
-    """ Update one of the Latest_* tags externals to point the new release """
+def update_latest_branch (product, which):
+    """Update one of the Latest_* branches to point to the new release.
+    """
+
     global opts
-    tagname = "Latest_" + which
+    name = "Latest_" + which
 
-    # Remove tag locally
-    vprint ("Removing tag %s" % (tagname))
-    ex_failureok ("cd $DOC_ROOT/" + product + " && git tag -d " + tagname)
-
-    vprint ("Placing tag %s" % (tagname))
-    ex ("cd $DOC_ROOT/" + product + " && git tag -a " + tagname + " -m\"" + tagname + "\"")
+    vprint ('Fast-forwarding', name, 'to master')
+    ex ("cd $DOC_ROOT/" + product + " && git fetch . master:" + name)
 
 
-def push_latest_tag (product, which, branch):
-    """ Update one of the Latest_* tags externals to point the new release """
+def push_latest_branch (product, which):
+    """Update one of the remote Latest_* branches to point to the new release.
+    """
+
     global opts
-    tagname = "Latest_" + which
+    name = "Latest_" + which
 
     if opts.push:
-        # Remove tag in the remote origin
-        ex_failureok ("cd $DOC_ROOT/" + product + " && git push origin :refs/tags/" + tagname)
+        vprint ("Pushing branch", name)
+        ex_failureok ("cd $DOC_ROOT/" + product + " && git push origin refs/heads/" + name)
 
-        vprint ("Pushing tag %s" % (tagname))
-        ex ("cd $DOC_ROOT/" + product + " && git push origin " + tagname)
+
+def latest_branch_helper (fn, release_type):
+    release_types = ("major", "minor", "micro")
+    do = release_types[release_types.index(release_type):]
+    if "micro" in do:
+        fn ("ACE_TAO", "Beta")
+        fn ("ACE_TAO", "Micro")
+        fn ("MPC", "ACETAO_Micro")
+    if "minor" in do:
+        fn ("ACE_TAO", "Minor")
+        fn ("MPC", "ACETAO_Minor")
+    if "major" in do:
+        fn ("ACE_TAO", "Major")
+        fn ("MPC", "ACETAO_Major")
+
 
 def tag ():
-    """ Tags the DOC and MPC repositories for the version and push that remote """
+    """Add the release tag and fast-forward the release branches on DOC and MPC
+    repositories.
+    """
+
     global comp_versions, opts
 
     tagname = get_tag(comp_versions, 'ACE')
@@ -563,38 +581,23 @@ def tag ():
             vprint ("Placing tag %s on MPC" % (tagname))
             ex ("cd $DOC_ROOT/MPC && git tag -a " + tagname + " -m\"" + tagname + "\"")
 
-            # Update latest tag
-            if opts.release_type == "major":
-                update_latest_tag ("ACE_TAO", "Major", tagname)
-                update_latest_tag ("ACE_TAO", "Minor", tagname)
-                update_latest_tag ("ACE_TAO", "Beta", tagname)
-                update_latest_tag ("ACE_TAO", "Micro", tagname)
-                update_latest_tag ("MPC", "ACETAO_Major", tagname)
-                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
-                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
-            elif opts.release_type == "minor":
-                update_latest_tag ("ACE_TAO", "Minor", tagname)
-                update_latest_tag ("ACE_TAO", "Beta", tagname)
-                update_latest_tag ("ACE_TAO", "Micro", tagname)
-                update_latest_tag ("MPC", "ACETAO_Minor", tagname)
-                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
-            elif opts.release_type == "micro":
-                update_latest_tag ("ACE_TAO", "Beta", tagname)
-                update_latest_tag ("ACE_TAO", "Micro", tagname)
-                update_latest_tag ("MPC", "ACETAO_Micro", tagname)
+            # Update release branches
+            latest_branch_helper (update_latest_branch, opts.release_type)
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
             print ("Creating tags:\n")
             print ("Placing tag " + tagname + "\n")
 
+
 def push ():
-    """ Tags the DOC and MPC repositories for the version and push that remote """
+    """Push the release tag and the fast-forwarded release branches on DOC and
+    MPC repositories.
+    """
+
     global comp_versions, opts
 
-    tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                    comp_versions["ACE_minor"],
-                                    comp_versions["ACE_micro"])
+    tagname = get_tag (comp_versions, 'ACE')
 
     if opts.push:
         if opts.take_action:
@@ -607,30 +610,14 @@ def push ():
             vprint ("Pushing tag %s on MPC" % (tagname))
             ex ("cd $DOC_ROOT/MPC && git push origin tag " + tagname)
 
-            # Update latest tag
-            if opts.release_type == "major":
-                push_latest_tag ("ACE_TAO", "Major", tagname)
-                push_latest_tag ("ACE_TAO", "Minor", tagname)
-                push_latest_tag ("ACE_TAO", "Beta", tagname)
-                push_latest_tag ("ACE_TAO", "Micro", tagname)
-                push_latest_tag ("MPC", "ACETAO_Major", tagname)
-                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
-                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
-            elif opts.release_type == "minor":
-                push_latest_tag ("ACE_TAO", "Minor", tagname)
-                push_latest_tag ("ACE_TAO", "Beta", tagname)
-                push_latest_tag ("ACE_TAO", "Micro", tagname)
-                push_latest_tag ("MPC", "ACETAO_Minor", tagname)
-                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
-            elif opts.release_type == "micro":
-                push_latest_tag ("ACE_TAO", "Beta", tagname)
-                push_latest_tag ("ACE_TAO", "Micro", tagname)
-                push_latest_tag ("MPC", "ACETAO_Micro", tagname)
+            # Push release branches
+            latest_branch_helper (push_latest_branch, opts.release_type)
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
             print ("Pushing tags:\n")
             print ("Pushing tag " + tagname + "\n")
+
 
 ##################################################
 #### Packaging methods
@@ -639,9 +626,7 @@ def export_wc (stage_dir):
 
     global doc_root, comp_versions
 
-    tag = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                comp_versions["ACE_minor"],
-                                comp_versions["ACE_micro"])
+    tag = get_tag (comp_versions, 'ACE')
 
     # Clone the ACE repository with the needed tag
     print ("Retrieving ACE with tag " + tag)
