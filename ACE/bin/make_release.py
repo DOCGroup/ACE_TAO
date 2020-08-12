@@ -7,22 +7,58 @@
 # Packaging script for ACE/TAO
 
 from __future__ import with_statement
+from __future__ import print_function
 from time import strftime
 import re
-import tempfile
-import shutil
 import subprocess
 import shlex
 import multiprocessing
+import sys
+
+# Python Version Wrappers
+
+if sys.version_info < (3, 0):
+    input = raw_input
+
+def binary_str_write (stream, what):
+    if isinstance (what, str) and str is not bytes:
+        what = what.encode ('ascii')
+    stream.write (what)
+
+class ArgParser:
+    '''Wrapper for either optparse or argparse
+    '''
+
+    use_argparse = sys.version_info >= (3, 2)
+
+    def __init__ (self, optparse_usage_string):
+        if self.use_argparse:
+            from argparse import ArgumentParser
+            self.real_parser = ArgumentParser ()
+        else:
+            from optparse import OptionParser
+            self.real_parser = OptionParser (optparse_usage_string)
+
+    def add_option(self, *args, **kwargs):
+        if self.use_argparse:
+            self.real_parser.add_argument (*args, **kwargs)
+        else:
+            self.real_parser.add_option (*args, **kwargs)
+
+    def parse_args (self):
+        if self.use_argparse:
+            options = self.real_parser.parse_args ()
+        else:
+            options, arguments = self.real_parser.parse_args ()
+            if arguments:
+                self.real_parser.error ("Extranous arguments: " + ' '.join(arguments))
+        return options
 
 ##################################################
 #### Global variables
 ##################################################
 """ Options from the command line """
 opts=None
-
-""" Arguments from the command line """
-args=None
 
 """ Absolute path from the git workspace to be used for the
 release"""
@@ -35,8 +71,8 @@ COMPONENT_micro
 COMPONENT_minor
 COMPONENT_major
 COMPONENT_code """
-comp_versions = dict ()
-old_comp_versions = dict ()
+comp_versions = {}
+old_comp_versions = {}
 
 release_date = strftime (# ie: Mon Jan 23 00:35:37 CST 2006
                               "%a %b %d %H:%M:%S %Z %Y")
@@ -51,10 +87,9 @@ bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vc
 ##################################################
 #### Utility Methods
 ##################################################
-def parse_args ():
-    from optparse import OptionParser
 
-    parser = OptionParser ("usage %prog [options]")
+def parse_args ():
+    parser = ArgParser ("usage %prog [options]")
 
     parser.add_option ("--major", dest="release_type", action="store_const",
                        help="Create a major release.", default=None, const="major")
@@ -88,19 +123,20 @@ def parse_args ():
     parser.add_option ("--verbose", dest="verbose", action="store_true",
                        help="Print out actions as they are being performed",
                        default=False)
-    (options, arguments) = parser.parse_args ()
+
+    options = parser.parse_args ()
+
+    if not options.action and options.release_type is None:
+        parser.error ("A release type (--major, --minor, or --micro) must be specified")
 
     if options.tag:
-        if options.release_type is None:
-            parser.error ("When tagging, must specify a release type")
-
         if options.update is False:
-            print "Warning: You are tagging a release, but not requesting a version increment"
+            print ("Warning: You are tagging a release, but not requesting a version increment")
 
         if options.push is False:
-            print "Warning: You are tagging a release, but not requesting a push to remote"
+            print ("Warning: You are tagging a release, but not requesting a push to remote")
 
-    return (options, arguments)
+    return options
 
 
 def ex (command):
@@ -109,12 +145,12 @@ def ex (command):
     vprint ("Executing " + command)
 
     if not opts.take_action:
-        print "Executing " + command
+        print ("Executing " + command)
         return
 
     status = system(command)
     if status != 0:
-        print "ERROR: Nonzero return value from " + command
+        print ("ERROR: Nonzero return value from " + command)
         raise Exception
 
 def ex_failureok (command):
@@ -123,12 +159,12 @@ def ex_failureok (command):
     vprint ("Executing " + command)
 
     if not opts.take_action:
-        print "Executing " + command
+        print ("Executing " + command)
         return
 
     status = system(command)
     if status != 0:
-        print "WARNING: Nonzero return value from " + command
+        print ("WARNING: Nonzero return value from " + command)
 
 ###
 # Checks that the users environment is sane.
@@ -139,38 +175,48 @@ def check_environment ():
     global doc_root, opts
 
     doc_root = getenv ("DOC_ROOT")
-    if (doc_root is None):
-        print "ERROR: Environment DOC_ROOT must be defined."
+    if doc_root is None:
+        print ("ERROR: Environment DOC_ROOT must be defined.")
         return False
 
     return True
 
-def vprint (string):
+def vprint (*args, **kwargs):
     """ Prints the supplied message if verbose is enabled"""
     global opts
 
     if opts.verbose:
-        print string
+        print (*args, **kwargs)
+
+def get_tag (verdict, component):
+    return "ACE+TAO-%d_%d_%d" % (
+        verdict[component + '_major'], verdict[component + '_minor'], verdict[component + '_micro'])
+
+def get_path (component=None, subpath=''):
+  rv = doc_root + '/ACE_TAO/'
+  if component is not None:
+    rv += component + '/' + subpath
+  return rv
 
 ##################################################
 #### Tagging methods
 ##################################################
 def commit (files):
     """ Commits the supplied list of files to the repository. """
-    import shutil, os
     global comp_versions
 
-    version = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                    comp_versions["ACE_minor"],
-                                    comp_versions["ACE_micro"])
-    vprint ("Committing the following files for " + version + " ".join (files))
+    version = get_tag(comp_versions, 'ACE')
+    root_path = get_path()
+    files = [i[len(root_path):] if i.startswith(root_path) else i for i in files]
+
+    print ("Committing the following files for " + version + ':', " ".join (files))
 
     if opts.take_action:
         for file in files:
-            print "Adding file " + file + " to commit"
-            ex ("git add " + file)
+            print ("Adding file " + file + " to commit")
+            ex ("cd $DOC_ROOT/ACE_TAO && git add " + file)
 
-        ex ("git commit -m\"" + version + "\"")
+        ex ("cd $DOC_ROOT/ACE_TAO && git commit -m\"" + version + "\"")
 
 #        print "Checked in files, resuling in revision ", rev.number
 
@@ -179,16 +225,16 @@ def check_workspace ():
     global opts, doc_root
     try:
         ex ("cd $DOC_ROOT/ACE_TAO && git pull -p")
-        print "Successfully updated ACE/TAO working copy"
+        print ("Successfully updated ACE/TAO working copy")
     except:
-        print "Unable to update ACE/TAO workspace at " + doc_root
+        print ("Unable to update ACE/TAO workspace at " + doc_root)
         raise
 
     try:
         ex ("cd $DOC_ROOT/MPC && git pull -p")
-        print "Successfully updated MPC working copy to revision "
+        print ("Successfully updated MPC working copy to revision ")
     except:
-        print "Unable to update the MPC workspace at " + doc_root + "/ACE/MPC"
+        print ("Unable to update the MPC workspace at " + doc_root + "/ACE/MPC")
         raise
 
     vprint ("Repos root URL = " + opts.repo_root + "\n")
@@ -202,11 +248,11 @@ def update_version_files (component):
 
     vprint ("Updating version files for " + component)
 
-    retval = list ()
+    retval = []
 
     ## Update component/VERSION.txt
-    filename = component + "/VERSION.txt"
-    with open (filename, "r+") as version_file:
+    path = get_path(component, "VERSION.txt")
+    with open (path, "r+") as version_file:
         new_version = re.sub (component + " version .*",
                               "%s version %s, released %s" % (component,
                                                               comp_versions[component + "_version"],
@@ -217,12 +263,12 @@ def update_version_files (component):
             version_file.truncate (0)
             version_file.write (new_version)
         else:
-            print "New version file for " + component
-            print new_version
+            print ("New version file for " + component)
+            print (new_version)
 
         vprint ("Updating Version.h for " + component)
 
-    retval += [filename]
+    retval.append(path)
 
     ## Update component/component/Version.h
     version_header = """
@@ -244,21 +290,23 @@ def update_version_files (component):
        component, comp_versions[component + "_code"],
        component)
 
+    path = get_path(component, component.lower () + "/Version.h")
     if opts.take_action:
-        with open (component + '/' + component.lower () + "/Version.h", 'r+') as version_h:
+        with open (path, 'r+') as version_h:
             version_h.write (version_header)
     else:
-        print "New Version.h for " + component
-        print version_header
+        print ("New Version.h for " + component)
+        print (version_header)
 
-    retval += [component + '/' + component.lower () + "/Version.h"]
+    retval.append(path)
 
     # Update component/PROBLEM-REPORT-FORM
     vprint ("Updating PRF for " + component)
 
     version_string = re.compile ("^\s*(\w+) +VERSION ?:")
+    path = get_path(component, "PROBLEM-REPORT-FORM")
 
-    with open (component + "/PROBLEM-REPORT-FORM", 'r+') as prf:
+    with open (path, 'r+') as prf:
         new_prf = ""
         for line in prf.readlines ():
             match = None
@@ -276,18 +324,17 @@ def update_version_files (component):
             prf.truncate (0)
             prf.writelines (new_prf)
         else:
-            print "New PRF for " + component
-            print "".join (new_prf)
+            print ("New PRF for " + component)
+            print ("".join (new_prf))
 
-    retval += [component + "/PROBLEM-REPORT-FORM"]
+    retval.append(path)
+
     return retval
 
 
 def update_spec_file ():
-
-    global comp_versions, opts
-
-    with open (doc_root + "/ACE_TAO/ACE/rpmbuild/ace-tao.spec", 'r+') as spec_file:
+    path = get_path('ACE', "rpmbuild/ace-tao.spec")
+    with open (path, 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
             if line.find ("define ACEVER ") is not -1:
@@ -307,10 +354,10 @@ def update_spec_file ():
             spec_file.truncate (0)
             spec_file.writelines (new_spec)
         else:
-            print "New spec file:"
-            print "".join (new_spec)
+            print ("New spec file:")
+            print ("".join (new_spec))
 
-    return [doc_root + "/ACE_TAO/ACE/rpmbuild/ace-tao.spec"]
+    return [path]
 
 def update_debianbuild ():
     """ Updates ACE_ROOT/debian directory.
@@ -323,10 +370,9 @@ def update_debianbuild ():
 
     from os import listdir
 
-    files = list ()
     prev_ace_ver = None
 
-    dname = doc_root + '/ACE_TAO/ACE/debian/'
+    path = get_path('ACE', 'debian/control')
 
     mask = re.compile ("(libace|libACE|libkokyu|libKokyu|libnetsvcs)([^\s,:]*-)(\d+\.\d+\.\d+)([^\s,:]*)")
 
@@ -334,7 +380,7 @@ def update_debianbuild ():
         return match.group (1) + match.group (2) + comp_versions["ACE_version"] + match.group (4)
 
     # update debian/control
-    with open (dname + "control", 'r+') as control_file:
+    with open (path, 'r+') as control_file:
         new_ctrl = ""
         for line in control_file.readlines ():
             if re.search ("^(Package|Depends|Suggests):", line) is not None:
@@ -349,12 +395,10 @@ def update_debianbuild ():
             control_file.truncate (0)
             control_file.writelines (new_ctrl)
         else:
-            print "New control file:"
-            print "".join (new_ctrl)
+            print ("New control file:")
+            print ("".join (new_ctrl))
 
-    files.append (dname + "control")
-
-    return files
+    return [path]
 
 def get_and_update_versions ():
     """ Gets current version information for each component,
@@ -367,19 +411,19 @@ def get_and_update_versions ():
         get_comp_versions ("TAO")
 
         if opts.update:
-            files = list ()
+            files = []
             files += update_version_files ("ACE")
             files += update_version_files ("TAO")
-            files += create_changelog ("ACE")
-            files += create_changelog ("TAO")
+            if opts.tag:
+              files += create_changelog ("ACE")
+              files += create_changelog ("TAO")
             files += update_spec_file ()
             files += update_debianbuild ()
 
-            print "Committing " + str(files)
             commit (files)
 
     except:
-        print "Fatal error in get_and_update_versions."
+        print ("Fatal error in get_and_update_versions.")
         raise
 
 def create_changelog (component):
@@ -389,14 +433,13 @@ def create_changelog (component):
 
     global old_comp_versions, comp_versions, opts
 
-    old_tag = "ACE+TAO-%d_%d_%d" % (old_comp_versions["ACE_major"],
-                                    old_comp_versions["ACE_minor"],
-                                    old_comp_versions["ACE_micro"])
+    old_tag = get_tag (old_comp_versions, 'ACE')
 
     # Generate changelogs per component
-    ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + component + "/ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
+    path = get_path(component, "ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
+    ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + path)
 
-    return ["%s/ChangeLogs/%s-%s" % (component, component, comp_versions[component + "_version_"])]
+    return [path]
 
 def get_comp_versions (component):
     """ Extracts the current version number from the VERSION.txt
@@ -404,87 +447,69 @@ def get_comp_versions (component):
     requested."""
     vprint ("Detecting current version for " + component)
 
-    global old_comp_versions, comp_versions, opts
+    regex = re.compile ("version (\d+)(?:\.(\d+)(?:\.(\d+))?)?")
+    major = component + "_major"
+    minor = component + "_minor"
+    micro = component + "_micro"
 
-    micro = re.compile ("version (\d+)\.(\d+)\.(\d+)")
-    minor = re.compile ("version (\d+)\.(\d+)[^\.]")
-    major = re.compile ("version (\d+)[^\.]")
 
-    with open (component + "/VERSION.txt") as version_file:
+    version = (None, None, None)
+    with open (doc_root + "/ACE_TAO/" + component + "/VERSION.txt") as version_file:
         for line in version_file:
-            match = None
-
-            match = micro.search (line)
+            match = regex.search (line)
             if match is not None:
-                vprint ("Detected micro version %s.%s.%s" %
-                           (match.group (1), match.group (2), match.group (3)))
+                version = match.groups(default=0)
 
-                comp_versions[component + "_major"] = int (match.group (1))
-                comp_versions[component + "_minor"] = int (match.group (2))
-                comp_versions[component + "_micro"] = int (match.group (3))
+                vprint ("Detected version %s.%s.%s" % version)
+
+                comp_versions[major] = int (version[0])
+                comp_versions[minor] = int (version[1])
+                comp_versions[micro] = int (version[2])
+
                 break
 
-            match = minor.search (line)
-            if match is not None:
-                vprint ("Detected minor version %s.%s" %
-                            (match.group (1), match.group (2)))
-
-                comp_versions[component + "_major"] = int (match.group (1))
-                comp_versions[component + "_minor"] = int (match.group (2))
-                comp_versions[component + "_micro"] = 0
-                break
-
-            match = major.search (line)
-            if match is not None:
-                vprint ("Detected major version " + match.group (1) + ".0")
-
-                comp_versions[component + "_major"] = int (match.group (1))
-                comp_versions[component + "_minor"] = 0
-                comp_versions[component + "_micro"] = 0
-                break
-
-            print "FATAL ERROR: Unable to locate current version for " + component
+            print ("FATAL ERROR: Unable to locate current version for " + component)
             raise Exception
 
     # Also store the current release (old from now)
-    old_comp_versions[component + "_major"] = comp_versions[component + "_major"]
-    old_comp_versions[component + "_minor"] = comp_versions[component + "_minor"]
-    old_comp_versions[component + "_micro"] = comp_versions[component + "_micro"]
+    old_comp_versions[major] = comp_versions[major]
+    old_comp_versions[minor] = comp_versions[minor]
+    old_comp_versions[micro] = comp_versions[micro]
 
     if opts.update:
         if opts.release_type == "major":
-            comp_versions[component + "_major"] += 1
-            comp_versions[component + "_minor"] = 0
-            comp_versions[component + "_micro"] = 0
+            comp_versions[major] += 1
+            comp_versions[minor] = 0
+            comp_versions[micro] = 0
         elif opts.release_type == "minor":
-            comp_versions[component + "_minor"] += 1
-            comp_versions[component + "_micro"] = 0
+            comp_versions[minor] += 1
+            comp_versions[micro] = 0
         elif opts.release_type == "micro":
-            comp_versions[component + "_micro"] += 1
+            comp_versions[micro] += 1
 
     #if opts.release_type == "micro":
     comp_versions [component + "_version"] = \
-        str (comp_versions[component + "_major"])  + '.' + \
-        str (comp_versions[component + "_minor"])  + '.' + \
-        str (comp_versions[component + "_micro"])
+        str (comp_versions[major])  + '.' + \
+        str (comp_versions[minor])  + '.' + \
+        str (comp_versions[micro])
     comp_versions [component + "_version_"] = \
-        str (comp_versions[component + "_major"])  + '_' + \
-        str (comp_versions[component + "_minor"])  + '_' + \
-        str (comp_versions[component + "_micro"])
+        str (comp_versions[major])  + '_' + \
+        str (comp_versions[minor])  + '_' + \
+        str (comp_versions[micro])
 
     comp_versions [component + "_code"] = \
-        str((comp_versions[component + "_major"] << 16) + \
-            (comp_versions[component + "_minor"] << 8) + \
-            comp_versions[component + "_micro"])
+        str((comp_versions[major] << 16) + \
+            (comp_versions[minor] << 8) + \
+            comp_versions[micro])
 
-    old_comp_versions [component + "_version"] = \
-        str (old_comp_versions[component + "_major"])  + '.' + \
-        str (old_comp_versions[component + "_minor"])  + '.' + \
-        str (old_comp_versions[component + "_micro"])
-    old_comp_versions [component + "_version_"] = \
-        str (old_comp_versions[component + "_major"])  + '_' + \
-        str (old_comp_versions[component + "_minor"])  + '_' + \
-        str (old_comp_versions[component + "_micro"])
+    old_comp_versions[component + "_version"] = \
+        str (old_comp_versions[major])  + '.' + \
+        str (old_comp_versions[minor])  + '.' + \
+        str (old_comp_versions[micro])
+    old_comp_versions[component + "_version_"] = \
+        str (old_comp_versions[major])  + '_' + \
+        str (old_comp_versions[minor])  + '_' + \
+        str (old_comp_versions[micro])
 
     if opts.update:
       vprint ("Updating from version %s to version %s" %
@@ -495,8 +520,8 @@ def get_comp_versions (component):
 
     # else:
     #     comp_versions [component + "_version"] = \
-    #                   str (comp_versions[component + "_major"])  + '.' + \
-    #                   str (comp_versions[component + "_minor"])
+    #                   str (comp_versions[major])  + '.' + \
+    #                   str (comp_versions[minor])
 
 
 def update_latest_tag (product, which, branch):
@@ -528,9 +553,7 @@ def tag ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
     global comp_versions, opts
 
-    tagname = "ACE+TAO-%d_%d_%d" % (comp_versions["ACE_major"],
-                                    comp_versions["ACE_minor"],
-                                    comp_versions["ACE_micro"])
+    tagname = get_tag(comp_versions, 'ACE')
 
     if opts.tag:
         if opts.take_action:
@@ -562,8 +585,8 @@ def tag ():
         else:
             vprint ("Placing tag %s on ACE_TAO" % (tagname))
             vprint ("Placing tag %s on MPC" % (tagname))
-            print "Creating tags:\n"
-            print "Placing tag " + tagname + "\n"
+            print ("Creating tags:\n")
+            print ("Placing tag " + tagname + "\n")
 
 def push ():
     """ Tags the DOC and MPC repositories for the version and push that remote """
@@ -606,8 +629,8 @@ def push ():
         else:
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             vprint ("Pushing tag %s on MPC" % (tagname))
-            print "Pushing tags:\n"
-            print "Pushing tag " + tagname + "\n"
+            print ("Pushing tags:\n")
+            print ("Pushing tag " + tagname + "\n")
 
 ##################################################
 #### Packaging methods
@@ -639,7 +662,7 @@ def export_wc (stage_dir):
 def update_packages (text_files, bin_files, stage_dir, package_dir):
     import os
 
-    print "Updating packages...."
+    print ("Updating packages....")
     os.chdir (stage_dir)
 
     # -g appends, -q for quiet operation
@@ -653,11 +676,13 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     tar_file = stage_dir + "/tar-archive.tar"
 
     # Zip binary files
-    print "\tAdding binary files to zip...."
-    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    print ("\tAdding binary files to zip....")
+    p = subprocess.Popen (
+        shlex.split ("xargs zip " + zip_base_args + zip_file),
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
 
-    instream.write (bin_files)
+    binary_str_write (instream, bin_files)
 
     instream.close ()
     outstream.close ()
@@ -666,11 +691,13 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     # before proceeding.
     os.wait ()
 
-    print "\tAdding text files to zip....."
-    p = subprocess.Popen (shlex.split ("xargs zip " + zip_base_args + zip_text_args + zip_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    print ("\tAdding text files to zip.....")
+    p = subprocess.Popen (
+        shlex.split ("xargs zip " + zip_base_args + zip_text_args + zip_file),
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
 
-    instream.write (text_files)
+    binary_str_write (instream, text_files)
 
     instream.close ()
     outstream.close ()
@@ -680,17 +707,19 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
     os.wait ()
 
     # Tar files
-    print "\tAdding to tar file...."
-    if (not os.path.exists (tar_file)):
+    print ("\tAdding to tar file....")
+    if not os.path.exists (tar_file):
         open(tar_file, 'w').close ()
 
-    p = subprocess.Popen (shlex.split ("xargs tar " + tar_args + tar_file), stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
+    p = subprocess.Popen (
+        shlex.split ("xargs tar " + tar_args + tar_file),
+        stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
-    instream.write (' ' + bin_files + ' ' + text_files)
+    binary_str_write (instream, ' ' + bin_files + ' ' + text_files)
 
     instream.close ()
 
-    print outstream.read ()
+    print (outstream.read ())
     outstream.close ()
 
     os.wait ()
@@ -702,13 +731,12 @@ def move_packages (name, stage_dir, package_dir):
     import shutil, os
     from os.path import join
 
-    print "Storing packages for ", name
+    print ("Storing packages for ", name)
 
     # Take care of the zip file
-    print "\tZip file..."
+    print ("\tZip file...")
     target_file = join (package_dir, name + ".zip")
-    shutil.copy (join (stage_dir, "zip-archive.zip"),
-                 target_file)
+    shutil.copy (join (stage_dir, "zip-archive.zip"), target_file)
     ex ("md5sum " + target_file + " > " + target_file + ".md5")
 
 
@@ -716,15 +744,13 @@ def move_packages (name, stage_dir, package_dir):
     target_file = join (package_dir, name + ".tar")
 
     # bzip
-    print "\tBzip2 file....."
-    shutil.copy (tar_file,
-                 target_file)
+    print ("\tBzip2 file.....")
+    shutil.copy (tar_file, target_file)
     ex ("bzip2 " + target_file)
     ex ("md5sum " + target_file + ".bz2 > " + target_file + ".bz2.md5")
 
-    print "\tgzip file....."
-    shutil.copy (tar_file,
-                 target_file)
+    print ("\tgzip file.....")
+    shutil.copy (tar_file, target_file)
     ex ("gzip " + target_file)
     ex ("md5sum " + target_file + ".gz > " + target_file + ".gz.md5")
 
@@ -782,13 +808,10 @@ def create_file_lists (base_dir, prefix, exclude):
     return (text_files, bin_files)
 
 def write_file_lists (comp, text, bin):
-    outfile = open (comp + ".files", 'w')
-
-    outfile.write ("\n".join (text))
-    outfile.write (".............\nbin files\n.............\n")
-    outfile.write ("\n".join (bin))
-
-    outfile.close ()
+    with open (comp + ".files", 'w') as outfile:
+        outfile.write ("\n".join (text))
+        outfile.write (".............\nbin files\n.............\n")
+        outfile.write ("\n".join (bin))
 
 def package (stage_dir, package_dir, decorator):
     """ Packages ACE, ACE+TAO releases of current
@@ -808,7 +831,7 @@ def package (stage_dir, package_dir, decorator):
         remove (join (stage_dir, "zip-archive.zip"))
         remove (join (stage_dir, "tar-archive.tar"))
     except:
-        print "error removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
+        print ("error removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar"))
         pass # swallow any errors
 
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers"),
@@ -839,7 +862,7 @@ def package (stage_dir, package_dir, decorator):
 
 def generate_workspaces (stage_dir):
     """ Generates workspaces in the given stage_dir """
-    print "Generating workspaces..."
+    print ("Generating workspaces...")
     global opts
     import os
 
@@ -868,17 +891,29 @@ def generate_workspaces (stage_dir):
     if not opts.verbose:
         redirect_option = " >> ../mpc.log 2>&1"
 
-    print "\tGenerating GNUmakefiles...."
-    ex (mpc_command + " -type gnuace " + exclude_option + workers_option + mpc_option + redirect_option)
+    print ("\tGenerating GNUmakefiles....")
+    ex (mpc_command + " -type gnuace " + \
+        exclude_option + workers_option + mpc_option + redirect_option)
 
-    print "\tGenerating VS2017 solutions..."
-    ex (mpc_command + " -type vs2017 "  + msvc_exclude_option + mpc_option + workers_option + vs2017_option + redirect_option)
+    print ("\tGenerating VS2017 solutions...")
+    ex (mpc_command + " -type vs2017 "  + \
+        msvc_exclude_option + mpc_option + workers_option + vs2017_option + redirect_option)
 
-    print "\tGenerating VS2019 solutions..."
-    ex (mpc_command + " -type vs2019 "  + msvc_exclude_option + mpc_option + workers_option + vs2019_option + redirect_option)
+    print ("\tGenerating VS2019 solutions...")
+    ex (mpc_command + " -type vs2019 " + \
+        msvc_exclude_option + mpc_option + workers_option + vs2019_option + redirect_option)
 
-    print "\tCorrecting permissions for all generated files..."
-    ex ("find ./ -name '*.vc[p,w]' -or -name '*.bmak' -or -name '*.vcproj' -or -name '*.sln' -or -name '*.vcxproj' -or -name '*.filters' -or -name 'GNUmake*' | xargs chmod 0644")
+    print ("\tCorrecting permissions for all generated files...")
+    regex = [
+        '*.vc[p,w]',
+        '*.bmak',
+        '*.vcproj',
+        '*.sln',
+        '*.vcxproj',
+        '*.filters',
+        'GNUmake*',
+    ]
+    ex ("find ./ " + ' -or '.join(["-name '%s'" % (i,) for i in regex]) + " | xargs chmod 0644")
 
 def create_kit ():
     """ Creates kits """
@@ -886,15 +921,15 @@ def create_kit ():
     from os.path import join
     # Get version numbers for this working copy, note this will
     # not update the numbers.
-    print "Getting current version information...."
+    print ("Getting current version information....")
 
     get_comp_versions ("ACE")
     get_comp_versions ("TAO")
 
-    print "Creating working directories...."
+    print ("Creating working directories....")
     stage_dir, package_dir = make_working_directories ()
 
-    print "Exporting working copy..."
+    print ("Exporting working copy...")
     export_wc (stage_dir)
 
     ### make source only packages
@@ -924,21 +959,21 @@ def main ():
     global opts
 
     if opts.action == "kit":
-        print "Creating a kit."
-        raw_input ("Press enter to continue")
+        print ("Creating a kit.")
+        input ("Press enter to continue")
 
         create_kit ()
 
     else:
-        print "Making a " + opts.release_type + " release."
-        raw_input ("Press enter to continue")
+        print ("Making a " + opts.release_type + " release.")
+        input ("Press enter to continue")
 
         get_and_update_versions ()
         tag ()
         push ()
 
 if __name__ == "__main__":
-    (opts, args) = parse_args ()
+    opts = parse_args ()
 
     if check_environment() is not True:
         exit (1)
