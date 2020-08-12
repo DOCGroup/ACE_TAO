@@ -53,7 +53,7 @@ class ArgParser:
         else:
             options, arguments = self.real_parser.parse_args ()
             if arguments:
-                self.real_parser.error ("Extranous arguments: " + ' '.join(arguments))
+                self.real_parser.error ("Extraneous arguments: " + ' '.join(arguments))
         return options
 
 ##################################################
@@ -101,7 +101,7 @@ def parse_args ():
                        help="Create a micro release.", default=None, const="micro")
 
     parser.add_option ("--tag", dest="tag", action="store_true",
-                       help="Tag the repositorie with all needed tags", default=False)
+                       help="Update tags and branches of the repositories", default=False)
     parser.add_option ("--update", dest="update", action="store_true",
                        help="Update the version numbers", default=False)
     parser.add_option ("--push", dest="push", action="store_true",
@@ -219,8 +219,6 @@ def commit (files):
             ex ("cd $DOC_ROOT/ACE_TAO && git add " + file)
 
         ex ("cd $DOC_ROOT/ACE_TAO && git commit -m\"" + version + "\"")
-
-#        print "Checked in files, resuling in revision ", rev.number
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
@@ -742,7 +740,7 @@ def move_packages (name, stage_dir, package_dir):
 def create_file_lists (base_dir, prefix, exclude):
     """ Creates two lists of files:  files that need CR->CRLF
     conversions (useful for zip files) and those that don't,
-    excluding filies/directories found in exclude. """
+    excluding files/directories found in exclude. """
     import os
 
     text_files = list ()
