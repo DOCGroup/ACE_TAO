@@ -81,7 +81,6 @@ ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
-ACE_REDEFINES_XTI_FUNCTIONS             Platform redefines the t_... names (UnixWare)
 ACE_TEMPLATES_REQUIRE_PRAGMA            Compiler's template mechanism
                                         must use a pragma This is used
                                         for AIX's C++ compiler.
