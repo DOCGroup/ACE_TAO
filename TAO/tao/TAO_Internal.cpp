@@ -544,9 +544,18 @@ TAO::ORB::default_svc_conf_entries (char const * rf_args,
                                     char const * ssf_args,
                                     char const * csf_args)
 {
-  resource_factory_args        = rf_args;
-  server_strategy_factory_args = ssf_args;
-  client_strategy_factory_args = csf_args;
+  if (rf_args)
+    {
+      resource_factory_args        = rf_args;
+    }
+  if (ssf_args)
+    {
+      server_strategy_factory_args = ssf_args;
+    }
+  if (csf_args)
+    {
+      client_strategy_factory_args = csf_args;
+    }
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
