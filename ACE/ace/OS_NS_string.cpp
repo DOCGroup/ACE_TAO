@@ -14,23 +14,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_LACKS_MEMCHR)
-const void *
-ACE_OS::memchr_emulation (const void *s, int c, size_t len)
-{
-  const unsigned char *t = (const unsigned char *) s;
-  const unsigned char *e = (const unsigned char *) s + len;
-
-  while (t < e)
-    if (((int) *t) == c)
-      return t;
-    else
-      ++t;
-
-  return 0;
-}
-#endif /* ACE_LACKS_MEMCHR */
-
 #if (defined (ACE_LACKS_STRDUP) && !defined (ACE_STRDUP_EQUIVALENT)) \
   || defined (ACE_HAS_STRDUP_EMULATION)
 char *

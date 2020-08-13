@@ -9,11 +9,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
-#if !defined (ACE_LACKS_MEMCHR)
   return ::memchr (s, c, len);
-#else /* ACE_LACKS_MEMCHR */
-  return ACE_OS::memchr_emulation (s, c, len);
-#endif /* !ACE_LACKS_MEMCHR */
 }
 
 ACE_INLINE void *
