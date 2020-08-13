@@ -75,8 +75,11 @@ namespace TAO
     int close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg);
 
     /**
-     * Set default @c `svc.conf' content.
+     * Set default @c `svc.conf' content, only non-null values are set.
      * This function must be called before first ORB initialization.
+     * @arg rf_args Resource factory settings
+     * @arg ssf_args Server strategy factory settings
+     * @arg csf_args Client strategy factory settings
      */
     TAO_Export void default_svc_conf_entries (char const * rf_args,
                                               char const * ssf_args,
