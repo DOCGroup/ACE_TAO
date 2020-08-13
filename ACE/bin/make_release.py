@@ -15,6 +15,9 @@ import shlex
 import multiprocessing
 import sys
 import enum
+import os
+from os.path import join
+import shutil
 
 ##################################################
 #### Global variables
@@ -105,71 +108,47 @@ def parse_args ():
     return options
 
 
-def ex (command):
-    from os import system
-    global opts
-    vprint ("Executing " + command)
-
-    if not opts.take_action:
-        print ("Executing " + command)
+def ex (command, allow_fail=False):
+    if vprint ("Executing", command, take_action=True):
         return
 
-    status = system(command)
+    status = os.system(command)
     if status != 0:
-        print ("ERROR: Nonzero return value from " + command)
-        raise Exception
+        print (("ERROR" if allow_fail else "WARNING") +
+          ": Nonzero return value from " + command, file=sys.stderr)
+        if not allow_fail:
+            raise Exception
 
-def ex_failureok (command):
-    from os import system
-    global opts
-    vprint ("Executing " + command)
 
-    if not opts.take_action:
-        print ("Executing " + command)
-        return
+def vprint (*args, take_action=False, **kwargs):
+    """Prints the supplied message if verbose is enabled or this is a dry-run
+    print statenment. Return a bool of the latter case, so the caller can
+    act differently.
+    """
 
-    status = system(command)
-    if status != 0:
-        print ("WARNING: Nonzero return value from " + command)
+    take_action = take_action and not opts.take_action
 
-###
-# Checks that the users environment is sane.
-#
-def check_environment ():
-    from os import getenv
-
-    global doc_root, opts
-
-    doc_root = getenv ("DOC_ROOT")
-    if doc_root is None:
-        print ("ERROR: Environment DOC_ROOT must be defined.")
-        return False
-
-    return True
-
-def vprint (*args, **kwargs):
-    """ Prints the supplied message if verbose is enabled"""
-    global opts
-
-    if opts.verbose:
+    if opts.verbose or take_action:
         print (*args, **kwargs)
+
+    return take_action
+
 
 def get_tag (verdict, component):
     return "ACE+TAO-%d_%d_%d" % (
         verdict[component + '_major'], verdict[component + '_minor'], verdict[component + '_micro'])
 
-def get_path (component=None, subpath=''):
-    rv = doc_root + '/ACE_TAO/'
-    if component is not None:
-        rv += component + '/' + subpath
-    return rv
+
+def get_path (*args):
+    if not args:
+        args = ('',)
+    return join (doc_root, 'ACE_TAO', *args)
 
 ##################################################
 #### Tagging methods
 ##################################################
 def commit (files):
     """ Commits the supplied list of files to the repository. """
-    global comp_versions
 
     version = get_tag(comp_versions, 'ACE')
     root_path = get_path()
@@ -186,7 +165,7 @@ def commit (files):
 
 def check_workspace ():
     """ Checks that the DOC and MPC repositories are up to date.  """
-    global opts, doc_root
+
     try:
         ex ("cd $DOC_ROOT/ACE_TAO && git pull -p")
         print ("Successfully updated ACE/TAO working copy")
@@ -207,8 +186,6 @@ def check_workspace ():
 def update_version_files (component):
     """ Updates the version files for a given component.  This includes
     Version.h, the PRF, and the VERSION.txt file."""
-
-    global comp_versions, opts, release_date
 
     vprint ("Updating version files for " + component)
 
@@ -254,7 +231,7 @@ def update_version_files (component):
        component, comp_versions[component + "_code"],
        component)
 
-    path = get_path(component, component.lower () + "/Version.h")
+    path = get_path(component, component.lower (), "Version.h")
     if opts.take_action:
         with open (path, 'r+') as version_h:
             version_h.write (version_header)
@@ -297,7 +274,7 @@ def update_version_files (component):
 
 
 def update_spec_file ():
-    path = get_path('ACE', "rpmbuild/ace-tao.spec")
+    path = get_path('ACE', "rpmbuild", "ace-tao.spec")
     with open (path, 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
@@ -328,13 +305,9 @@ def update_debianbuild ():
     - updates version numbers inside file debian/control
     Currently ONLY ACE is handled here """
 
-    global comp_versions
-
-    from os import listdir
-
     prev_ace_ver = None
 
-    path = get_path('ACE', 'debian/control')
+    path = get_path('ACE', 'debian', 'control')
 
     mask = re.compile ("(libace|libACE|libkokyu|libKokyu|libnetsvcs)([^\s,:]*-)(\d+\.\d+\.\d+)([^\s,:]*)")
 
@@ -366,7 +339,6 @@ def get_and_update_versions ():
     """ Gets current version information for each component,
     updates the version files, creates changelog entries,
     and commit the changes into the repository."""
-    global comp_versions, opts
 
     try:
         get_comp_versions ("ACE")
@@ -393,12 +365,10 @@ def create_changelog (component):
     the version number being released"""
     vprint ("Creating ChangeLog entry for " + component)
 
-    global old_comp_versions, comp_versions, opts
-
     old_tag = get_tag (old_comp_versions, 'ACE')
 
     # Generate changelogs per component
-    path = get_path(component, "ChangeLogs/" + component + "-" + comp_versions[component + "_version_"])
+    path = get_path(component, "ChangeLogs", component + "-" + comp_versions[component + "_version_"])
     ex ("cd $DOC_ROOT/ACE_TAO && git log " + old_tag + "..HEAD " + component + " > " + path)
 
     return [path]
@@ -490,7 +460,6 @@ def update_latest_branch (product, which):
     """Update one of the Latest_* branches to point to the new release.
     """
 
-    global opts
     name = "Latest_" + which
 
     vprint ('Fast-forwarding', name, 'to master')
@@ -501,12 +470,12 @@ def push_latest_branch (product, which):
     """Update one of the remote Latest_* branches to point to the new release.
     """
 
-    global opts
     name = "Latest_" + which
 
     if opts.push:
         vprint ("Pushing branch", name)
-        ex_failureok ("cd $DOC_ROOT/" + product + " && git push origin refs/heads/" + name)
+        ex ("cd $DOC_ROOT/" + product + " && git push origin refs/heads/" + name,
+            allow_fail=True)
 
 
 def latest_branch_helper (fn, release_type):
@@ -528,8 +497,6 @@ def tag ():
     """Add the release tag and fast-forward the release branches on DOC and MPC
     repositories.
     """
-
-    global comp_versions, opts
 
     tagname = get_tag(comp_versions, 'ACE')
 
@@ -554,8 +521,6 @@ def push ():
     """Push the release tag and the fast-forwarded release branches on DOC and
     MPC repositories.
     """
-
-    global comp_versions, opts
 
     tagname = get_tag (comp_versions, 'ACE')
 
@@ -584,8 +549,6 @@ def push ():
 ##################################################
 def export_wc (stage_dir):
 
-    global doc_root, comp_versions
-
     tag = get_tag (comp_versions, 'ACE')
 
     # Clone the ACE repository with the needed tag
@@ -605,8 +568,6 @@ def export_wc (stage_dir):
     ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
 def update_packages (text_files_list, bin_files_list, stage_dir, package_dir):
-    import os
-
     stream_encoding = 'utf-8'
     list_to_bytes = lambda l: ('\n'.join (l)).encode (stream_encoding)
     text_files = list_to_bytes (text_files_list)
@@ -679,8 +640,6 @@ def move_packages (name, stage_dir, package_dir):
     """ Copies the temporary files from the stage_dir to the package_dir.
         Renames them to name.tar and name.zip, respectively, and compresses
         the tarfile with gzip and bzip2. """
-    import shutil, os
-    from os.path import join
 
     print ("Storing packages for ", name)
 
@@ -709,7 +668,6 @@ def create_file_lists (base_dir, prefix, exclude):
     """ Creates two lists of files:  files that need CR->CRLF
     conversions (useful for zip files) and those that don't,
     excluding files/directories found in exclude. """
-    import os
 
     text_files = list ()
     bin_files = list ()
@@ -767,17 +725,14 @@ def write_file_lists (comp, text, bin):
 def package (stage_dir, package_dir, decorator):
     """ Packages ACE, ACE+TAO releases of current
         staged tree, with decorator appended to the name of the archive. """
-    from os.path import join
-    from os import remove
-    from os import chdir
 
-    chdir (stage_dir)
+    os.chdir (stage_dir)
 
     # Erase our old temp files
     try:
 #        print "removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
-        remove (join (stage_dir, "zip-archive.zip"))
-        remove (join (stage_dir, "tar-archive.tar"))
+        os.remove (join (stage_dir, "zip-archive.zip"))
+        os.remove (join (stage_dir, "tar-archive.tar"))
     except:
         print ("error removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar"))
         pass # swallow any errors
@@ -802,8 +757,6 @@ def package (stage_dir, package_dir, decorator):
 def generate_workspaces (stage_dir):
     """ Generates workspaces in the given stage_dir """
     print ("Generating workspaces...")
-    global opts
-    import os
 
     # Make sure we are in the right directory...
     os.chdir (os.path.join (stage_dir, "ACE_wrappers"))
@@ -856,8 +809,7 @@ def generate_workspaces (stage_dir):
 
 def create_kit ():
     """ Creates kits """
-    import os
-    from os.path import join
+
     # Get version numbers for this working copy, note this will
     # not update the numbers.
     print ("Getting current version information....")
@@ -883,11 +835,9 @@ def make_working_directories ():
     """ Creates directories that we will be working in.
     In particular, we will have DOC_ROOT/stage-PID and
     DOC_ROOT/packages-PID """
-    global doc_root
-    import os.path, os
 
-    stage_dir = os.path.join (doc_root, "stage-" + str (os.getpid ()))
-    package_dir = os.path.join (doc_root, "package-" + str (os.getpid ()))
+    stage_dir = join (doc_root, "stage-" + str (os.getpid ()))
+    package_dir = join (doc_root, "package-" + str (os.getpid ()))
 
     os.mkdir (stage_dir)
     os.mkdir (package_dir)
@@ -895,7 +845,6 @@ def make_working_directories ():
     return (stage_dir, package_dir)
 
 def main ():
-    global opts
 
     if opts.action == "kit":
         print ("Creating a kit.")
@@ -914,7 +863,8 @@ def main ():
 if __name__ == "__main__":
     opts = parse_args ()
 
-    if check_environment() is not True:
-        exit (1)
+    doc_root = os.getenv ("DOC_ROOT")
+    if doc_root is None:
+        sys.exit ("ERROR: Environment DOC_ROOT must be defined.")
 
     main ()
