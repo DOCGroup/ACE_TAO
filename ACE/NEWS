@@ -1,6 +1,22 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
 ======================================================
 
+. Latest_{Major,Minor,Micro,Beta} tags have been replaced with
+  branches because tags are not intended to move where branches are
+
+. Cleanup of emulated operations in ACE_OS which are not used
+  anymore
+
+. Resolved some compile warnings when using C++11 or newer
+
+. Integrated debian packaging changes
+
+. Visual Studio 2015 solutions are not part of the release
+  packaging anymore. When you require these you need to generate
+  them locally using MPC
+
+. Improve multicast join by interface name on Windows
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
 =====================================================
 
