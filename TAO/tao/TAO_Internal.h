@@ -15,6 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
+#include /**/ "tao/TAO_Export.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -34,18 +35,21 @@ namespace TAO
   /**
    * @namespace ORB
    *
-   * @brief This @c namespace encapsulates some private behaviors and
-   *        global data structures used internal to TAO.  No
-   *        application should EVER see them which is why they are not
+   * @brief This @c namespace encapsulates some behaviors and
+   *        global data structures used by TAO.
+   *        Only default_svc_conf_entries() is exported because it is
+   *        documented as a way for applications to setup default svc.conf
+   *        settings. The other operations are internal and
+   *        application should NEVER use them which is why they are not
    *        exported.
    */
   namespace ORB
   {
-
     /**
      * If never done it before, extract ACE Service Configurator arguments from the given
-     * argument vector, and initialize the _global_ configuration gestalt. Return value 0 means OK,
-     * -1 spells major trouble ...
+     * argument vector, and initialize the _global_ configuration gestalt.
+     * @retval 0 means OK,
+     * @retval -1 spells major trouble
      */
     int open_global_services (int argc, ACE_TCHAR** argv);
 
@@ -65,8 +69,8 @@ namespace TAO
      * only actually close things down on the last call.  It is fully
      * thread-safe.
      *
-     * @return @c 0 if successful, @c -1 with @c errno set if
-     *         failure.
+     * @retval 0 if successful
+     * @retval -1 failure with @c errno set
      */
     int close_services (ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> pcfg);
 
@@ -74,12 +78,12 @@ namespace TAO
      * Set default @c `svc.conf' content.
      * This function must be called before first ORB initialization.
      */
-    void default_svc_conf_entries (char const * rf_args,
-                                   char const * ssf_args,
-                                   char const * csf_args);
-
+    TAO_Export void default_svc_conf_entries (char const * rf_args,
+                                              char const * ssf_args,
+                                              char const * csf_args);
   }
 }
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"
