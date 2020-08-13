@@ -10,12 +10,12 @@ jobs:
   build:
     strategy:
       matrix:
-        cxxstd: [3, 11]
+        cxxstd: ["03", "11"]
         include:
           - os: macos-10.15
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}
-    name: "${{ matrix.os }}-${{ matrix.cxxstd }}"
+    name: "${{ matrix.os }}-C++${{ matrix.cxxstd }}"
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
