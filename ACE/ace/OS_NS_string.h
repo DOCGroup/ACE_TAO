@@ -340,18 +340,6 @@ namespace ACE_OS {
   wchar_t *strrchr (wchar_t *s, wchar_t c);
 #endif /* ACE_HAS_WCHAR */
 
-#if defined (ACE_LACKS_STRRCHR)
-  /// Emulated strrchr (char version) - Finds the last occurrence of a
-  /// character in a string.
-  extern ACE_Export
-  char *strrchr_emulation (char *s, int c);
-
-  /// Emulated strrchr (const char version) - Finds the last occurrence of a
-  /// character in a string.
-  extern ACE_Export
-  const char *strrchr_emulation (const char *s, int c);
-#endif /* ACE_LACKS_STRRCHR */
-
   /// This is a "safe" c string copy function (char version).
   /**
    * Unlike strncpy() this function will always add a terminating '\0'
