@@ -257,9 +257,6 @@ ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
                                         t_error(const char *).
-ACE_HAS_BSTRING                         Platform has <bstring.h>
-                                        (which contains bzero()
-                                        prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32
                                         CancelIO() function (WinNT 4.0
