@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 # @file make_release.py
@@ -6,55 +6,15 @@
 #
 # Packaging script for ACE/TAO
 #
-# Should be compatible with Python 2.7 and 3.x
+# Requires Python 3.4+
 
-from __future__ import with_statement
-from __future__ import print_function
 from time import strftime
 import re
 import subprocess
 import shlex
 import multiprocessing
 import sys
-
-# Python Version Wrappers
-
-if sys.version_info < (3, 0):
-    input = raw_input
-
-def binary_str_write (stream, what):
-    if isinstance (what, str) and str is not bytes:
-        what = what.encode ('ascii')
-    stream.write (what)
-
-class ArgParser:
-    '''Wrapper for either optparse or argparse
-    '''
-
-    use_argparse = sys.version_info >= (3, 2)
-
-    def __init__ (self, optparse_usage_string):
-        if self.use_argparse:
-            from argparse import ArgumentParser
-            self.real_parser = ArgumentParser ()
-        else:
-            from optparse import OptionParser
-            self.real_parser = OptionParser (optparse_usage_string)
-
-    def add_option(self, *args, **kwargs):
-        if self.use_argparse:
-            self.real_parser.add_argument (*args, **kwargs)
-        else:
-            self.real_parser.add_option (*args, **kwargs)
-
-    def parse_args (self):
-        if self.use_argparse:
-            options = self.real_parser.parse_args ()
-        else:
-            options, arguments = self.real_parser.parse_args ()
-            if arguments:
-                self.real_parser.error ("Extraneous arguments: " + ' '.join(arguments))
-        return options
+import enum
 
 ##################################################
 #### Global variables
@@ -90,46 +50,50 @@ bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vc
 #### Utility Methods
 ##################################################
 
+class ReleaseType(enum.Enum):
+    major = enum.auto()
+    minor = enum.auto()
+    micro = enum.auto()
+
+
 def parse_args ():
-    parser = ArgParser ("usage %prog [options]")
+    from argparse import ArgumentParser
+    parser = ArgumentParser ()
 
-    parser.add_option ("--major", dest="release_type", action="store_const",
-                       help="Create a major release.", default=None, const="major")
-    parser.add_option ("--minor", dest="release_type", action="store_const",
-                       help="Create a minor release.", default=None, const="minor")
-    parser.add_option ("--micro", dest="release_type", action="store_const",
-                       help="Create a micro release.", default=None, const="micro")
+    mutex_args = parser.add_mutually_exclusive_group(required=True)
+    for rt in ReleaseType:
+        mutex_args.add_argument ('--' + rt.name,
+            dest="release_type", default=None, action="store_const", const=rt,
+            help="Create a " + rt.name + " release.")
+    mutex_args.add_argument ("--kit",
+        dest="action", default=None, action="store_const", const="kit",
+        help="Create kits.")
 
-    parser.add_option ("--tag", dest="tag", action="store_true",
-                       help="Update tags and branches of the repositories", default=False)
-    parser.add_option ("--update", dest="update", action="store_true",
-                       help="Update the version numbers", default=False)
-    parser.add_option ("--push", dest="push", action="store_true",
-                       help="Push all changes to remote", default=False)
+    parser.add_argument ("--tag", dest="tag", action="store_true",
+        help="Update tags and branches of the repositories", default=False)
+    parser.add_argument ("--update", dest="update", action="store_true",
+        help="Update the version numbers", default=False)
+    parser.add_argument ("--push", dest="push", action="store_true",
+        help="Push all changes to remote", default=False)
 
-    parser.add_option ("--kit", dest="action", action="store_const",
-                       help="Create kits. DO NOT USE WITH --tag", default=None, const="kit")
-    parser.add_option ("--dest", dest="package_dir", action="store",
-                       help="Specify destination for the created packages.", default=None)
+    parser.add_argument ("--dest", dest="package_dir", action="store",
+        help="Specify destination for the created packages.", default=None)
 
-    parser.add_option ("--root", dest="repo_root", action="store",
-                       help="Specify an alternate repository root",
-                       default="https://github.com/DOCGroup/ACE_TAO.git")
+    parser.add_argument ("--root", dest="repo_root", action="store",
+        help="Specify an alternate repository root",
+        default="https://github.com/DOCGroup/ACE_TAO.git")
 
-    parser.add_option ("--mpc_root", dest="mpc_root", action="store",
-                       help="Specify an alternate MPC repository root",
-                       default="https://github.com/DOCGroup/MPC.git")
+    parser.add_argument ("--mpc_root", dest="mpc_root", action="store",
+        help="Specify an alternate MPC repository root",
+        default="https://github.com/DOCGroup/MPC.git")
 
-    parser.add_option ("-n", dest="take_action", action="store_false",
-                       help="Take no action", default=True)
-    parser.add_option ("--verbose", dest="verbose", action="store_true",
-                       help="Print out actions as they are being performed",
-                       default=False)
+    parser.add_argument ("-n", dest="take_action", action="store_false",
+        help="Take no action", default=True)
+    parser.add_argument ("--verbose", dest="verbose", action="store_true",
+        help="Print out actions as they are being performed",
+        default=False)
 
     options = parser.parse_args ()
-
-    if not options.action and options.release_type is None:
-        parser.error ("A release type (--major, --minor, or --micro) must be specified")
 
     if options.tag:
         if options.update is False:
@@ -195,10 +159,10 @@ def get_tag (verdict, component):
         verdict[component + '_major'], verdict[component + '_minor'], verdict[component + '_micro'])
 
 def get_path (component=None, subpath=''):
-  rv = doc_root + '/ACE_TAO/'
-  if component is not None:
-    rv += component + '/' + subpath
-  return rv
+    rv = doc_root + '/ACE_TAO/'
+    if component is not None:
+        rv += component + '/' + subpath
+    return rv
 
 ##################################################
 #### Tagging methods
@@ -342,10 +306,8 @@ def update_spec_file ():
             if line.find ("define TAOVER ") is not -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
             if line.find ("define is_major_ver") is not -1:
-                if opts.release_type == "micro":
-                    line = "%define is_major_ver 0\n"
-                else:
-                    line = "%define is_major_ver 1\n"
+                line = "%define is_major_ver {}\n".format(
+                    int(opts.release_type != ReleaseType.micro))
 
             new_spec += line
 
@@ -477,14 +439,14 @@ def get_comp_versions (component):
     old_comp_versions[micro] = comp_versions[micro]
 
     if opts.update:
-        if opts.release_type == "major":
+        if opts.release_type == ReleaseType.major:
             comp_versions[major] += 1
             comp_versions[minor] = 0
             comp_versions[micro] = 0
-        elif opts.release_type == "minor":
+        elif opts.release_type == ReleaseType.minor:
             comp_versions[minor] += 1
             comp_versions[micro] = 0
-        elif opts.release_type == "micro":
+        elif opts.release_type == ReleaseType.micro:
             comp_versions[micro] += 1
 
     #if opts.release_type == "micro":
@@ -548,16 +510,16 @@ def push_latest_branch (product, which):
 
 
 def latest_branch_helper (fn, release_type):
-    release_types = ("major", "minor", "micro")
+    release_types = tuple(ReleaseType.__members__.values())
     do = release_types[release_types.index(release_type):]
-    if "micro" in do:
+    if ReleaseType.micro in do:
         fn ("ACE_TAO", "Beta")
         fn ("ACE_TAO", "Micro")
         fn ("MPC", "ACETAO_Micro")
-    if "minor" in do:
+    if ReleaseType.minor in do:
         fn ("ACE_TAO", "Minor")
         fn ("MPC", "ACETAO_Minor")
-    if "major" in do:
+    if ReleaseType.major in do:
         fn ("ACE_TAO", "Major")
         fn ("MPC", "ACETAO_Major")
 
@@ -642,8 +604,13 @@ def export_wc (stage_dir):
     print ("Moving MPC")
     ex ("mv " + stage_dir + "/MPC " + stage_dir + "/ACE_wrappers/MPC")
 
-def update_packages (text_files, bin_files, stage_dir, package_dir):
+def update_packages (text_files_list, bin_files_list, stage_dir, package_dir):
     import os
+
+    stream_encoding = 'utf-8'
+    list_to_bytes = lambda l: ('\n'.join (l)).encode (stream_encoding)
+    text_files = list_to_bytes (text_files_list)
+    bin_files = list_to_bytes (bin_files_list)
 
     print ("Updating packages....")
     os.chdir (stage_dir)
@@ -665,7 +632,7 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
         stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
 
-    binary_str_write (instream, bin_files)
+    instream.write (bin_files)
 
     instream.close ()
     outstream.close ()
@@ -680,7 +647,7 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
         stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
 
-    binary_str_write (instream, text_files)
+    instream.write (text_files)
 
     instream.close ()
     outstream.close ()
@@ -698,11 +665,12 @@ def update_packages (text_files, bin_files, stage_dir, package_dir):
         shlex.split ("xargs tar " + tar_args + tar_file),
         stdin=subprocess.PIPE, stdout=subprocess.PIPE, close_fds=True)
     instream, outstream = (p.stdin, p.stdout)
-    binary_str_write (instream, ' ' + bin_files + ' ' + text_files)
+
+    instream.write (b' ' + bin_files + b' ' + text_files)
 
     instream.close ()
 
-    print (outstream.read ())
+    print (outstream.read ().decode(stream_encoding))
     outstream.close ()
 
     os.wait ()
@@ -753,7 +721,7 @@ def create_file_lists (base_dir, prefix, exclude):
 
 #        print "relroot", relroot
 
-        if len(relroot) and relroot[0] == '/':
+        if relroot and relroot[0] == '/':
             relroot = relroot [1:]
 
         excluded = False
@@ -805,9 +773,6 @@ def package (stage_dir, package_dir, decorator):
 
     chdir (stage_dir)
 
-    text_files = list ()
-    bin_files = list ()
-
     # Erase our old temp files
     try:
 #        print "removing files", join (stage_dir, "zip-archive.zip"), join (stage_dir, "tar-archive.tar")
@@ -821,25 +786,16 @@ def package (stage_dir, package_dir, decorator):
                                                "ACE_wrappers", ["TAO", ".gitignore", ".git"])
 
 #    write_file_lists ("fACE" + decorator, text_files, bin_files)
-    update_packages ("\n".join (text_files),
-                     "\n".join (bin_files),
-                     stage_dir,
-                     package_dir)
+    update_packages (text_files, bin_files, stage_dir, package_dir)
 
     move_packages ("ACE" + decorator, stage_dir, package_dir)
-
-    text_files = list ()
-    bin_files = list ()
 
     # for TAO:
     text_files, bin_files = create_file_lists (join (stage_dir, "ACE_wrappers/TAO"),
                                                      "ACE_wrappers/TAO", [".gitignore", ".git"])
 
 #    write_file_lists ("fTAO" + decorator, text_files, bin_files)
-    update_packages ("\n".join (text_files),
-                     "\n".join (bin_files),
-                     stage_dir,
-                     package_dir)
+    update_packages (text_files, bin_files, stage_dir, package_dir)
 
     move_packages ("ACE+TAO" + decorator, stage_dir, package_dir)
 
@@ -948,7 +904,7 @@ def main ():
         create_kit ()
 
     else:
-        print ("Making a " + opts.release_type + " release.")
+        print ("Making a " + opts.release_type.name + " release.")
         input ("Press enter to continue")
 
         get_and_update_versions ()
