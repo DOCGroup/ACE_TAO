@@ -1138,14 +1138,6 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         code that uses non-lean Win32
                                         facilities such as COM.
 
-ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
-                                        the "latest and greatest"
-                                        features of ACE/TAO should be
-                                        turned on.  It has been
-                                        replaced by ACE_LEGACY_MODE,
-                                        which has the opposite meaning
-                                        but serves the same purpose.
-
 ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
                                         have a leading, single slash and not
                                         have any other slashes.
