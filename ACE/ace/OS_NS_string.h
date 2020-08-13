@@ -53,12 +53,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memchr (void *s, int c, size_t len);
 
-#if defined (ACE_LACKS_MEMCHR)
-  /// Emulated memchr - Finds a character in a buffer.
-  extern ACE_Export
-  const void *memchr_emulation (const void *s, int c, size_t len);
-#endif /* ACE_LACKS_MEMCHR */
-
   /// Compares two buffers.
   ACE_NAMESPACE_INLINE_FUNCTION
   int memcmp (const void *t, const void *s, size_t len);
@@ -66,16 +60,6 @@ namespace ACE_OS {
   /// Copies one buffer to another.
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memcpy (void *t, const void *s, size_t len);
-
-#if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
-/*
- * Version of memcpy where the copy loop is unrolled.
- * On certain platforms this results in better performance.
- * This is determined and set via autoconf.
- */
-  extern ACE_Export
-  void *fast_memcpy (void *t, const void *s, size_t len);
-#endif
 
   /// Moves one buffer to another.
   ACE_NAMESPACE_INLINE_FUNCTION

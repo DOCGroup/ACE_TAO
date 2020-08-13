@@ -167,7 +167,7 @@ Monotonic_Manual_Event_Test
 Monotonic_Message_Queue_Test: !ACE_FOR_TAO
 Monotonic_Task_Test: !ACE_FOR_TAO
 Multicast_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
-Multicast_Interfaces_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT
+Multicast_Interfaces_Test: !ST !NO_MCAST !nsk !LynxOS !LabVIEW_RT !FACE_SAFETY
 Multihomed_INET_Addr_Test: !ACE_FOR_TAO
 Naming_Test: !NO_OTHER !LynxOS !VxWorks !nsk !ACE_FOR_TAO !PHARLAP
 Network_Adapters_Test: !ACE_FOR_TAO

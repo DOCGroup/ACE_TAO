@@ -55,6 +55,12 @@ public:
    */
   ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_Entry_T<CHAR_TYPE> &entry);
 
+#if defined (ACE_HAS_CPP11)
+  ACE_ARGV_Queue_Entry_T (ACE_ARGV_Queue_Entry_T&&) = default;
+  ACE_ARGV_Queue_Entry_T &operator = (const ACE_ARGV_Queue_Entry_T &) = default;
+  ACE_ARGV_Queue_Entry_T &operator = (ACE_ARGV_Queue_Entry_T &&)  = default;
+#endif /* ACE_HAS_CPP11 */
+
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
   ~ACE_ARGV_Queue_Entry_T (void);
