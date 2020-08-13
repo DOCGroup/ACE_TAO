@@ -53,12 +53,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   void *memchr (void *s, int c, size_t len);
 
-#if defined (ACE_LACKS_MEMCHR)
-  /// Emulated memchr - Finds a character in a buffer.
-  extern ACE_Export
-  const void *memchr_emulation (const void *s, int c, size_t len);
-#endif /* ACE_LACKS_MEMCHR */
-
   /// Compares two buffers.
   ACE_NAMESPACE_INLINE_FUNCTION
   int memcmp (const void *t, const void *s, size_t len);
