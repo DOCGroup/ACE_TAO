@@ -278,11 +278,11 @@ def update_spec_file ():
     with open (path, 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
-            if line.find ("define ACEVER ") is not -1:
+            if line.find ("define ACEVER ") != -1:
                 line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
-            if line.find ("define TAOVER ") is not -1:
+            if line.find ("define TAOVER ") != -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
-            if line.find ("define is_major_ver") is not -1:
+            if line.find ("define is_major_ver") != -1:
                 line = "%define is_major_ver {}\n".format(
                     int(opts.release_type != ReleaseType.micro))
 
