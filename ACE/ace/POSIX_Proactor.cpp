@@ -691,26 +691,19 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager (void)
 
 }
 
-
 int
 ACE_AIOCB_Notify_Pipe_Manager::notify ()
 {
   // Send the result pointer through the pipe.
   char char_send = 0;
-  ssize_t ret_val = ACE::send (this->pipe_.write_handle (),
-                               &char_send,
-                               sizeof (char_send));
+  ssize_t const ret_val = ACE::send (this->pipe_.write_handle (),
+                                     &char_send,
+                                     sizeof (char_send));
 
   if (ret_val < 0)
     {
       if (errno != EWOULDBLOCK)
-#if 0
-        ACELIB_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P %t):%p\n"),
-                    ACE_TEXT ("ACE_AIOCB_Notify_Pipe_Manager::notify")
-                    ACE_TEXT ("Error:Writing on to notify pipe failed")));
-#endif /* 0 */
-      return -1;
+        return -1;
     }
 
   return 0;
