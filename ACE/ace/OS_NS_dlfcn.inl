@@ -114,13 +114,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
-#   if defined (ACE_HAS_SGIDLADD)
-  ACE_OSCALL
-    (::sgidladd (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
-#   else
-  ACE_OSCALL
-    (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
-#   endif /* ACE_HAS_SGIDLADD */
+  ACE_OSCALL (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
     {
