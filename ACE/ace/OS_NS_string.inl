@@ -346,11 +346,7 @@ ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
 ACE_INLINE const char *
 ACE_OS::strrchr (const char *s, int c)
 {
-#if defined (ACE_LACKS_STRRCHR)
-  return ACE_OS::strrchr_emulation (s, c);
-#else  /* ! ACE_LACKS_STRRCHR */
   return (const char *) ::strrchr (s, c);
-#endif /* ! ACE_LACKS_STRRCHR */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -368,11 +364,7 @@ ACE_OS::strrchr (const wchar_t *s, wchar_t c)
 ACE_INLINE char *
 ACE_OS::strrchr (char *s, int c)
 {
-#if defined (ACE_LACKS_STRRCHR)
-  return ACE_OS::strrchr_emulation (s, c);
-#else  /* ! ACE_LACKS_STRRCHR */
   return ::strrchr (s, c);
-#endif /* ! ACE_LACKS_STRRCHR */
 }
 
 #if defined (ACE_HAS_WCHAR)

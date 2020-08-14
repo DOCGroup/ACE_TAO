@@ -81,7 +81,6 @@ ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
-ACE_REDEFINES_XTI_FUNCTIONS             Platform redefines the t_... names (UnixWare)
 ACE_TEMPLATES_REQUIRE_PRAGMA            Compiler's template mechanism
                                         must use a pragma This is used
                                         for AIX's C++ compiler.
@@ -258,9 +257,6 @@ ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
                                         t_error(const char *).
-ACE_HAS_BSTRING                         Platform has <bstring.h>
-                                        (which contains bzero()
-                                        prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32
                                         CancelIO() function (WinNT 4.0
@@ -1009,7 +1005,6 @@ ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
 ACE_LACKS_WCSCHR                        Platform/compiler lacks wcschr()
 ACE_LACKS_STRDUP                        Platform/compiler lacks strdup()
 ACE_LACKS_WCSDUP                        Platform/compiler lacks wcsdup()
-ACE_LACKS_STRRCHR                       Platform/compiler lacks strrchr()
 ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr()
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
@@ -1111,11 +1106,6 @@ ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
-ACE_LEGACY_MODE                         When defined, it will enable
-                                        some code that is used to
-                                        provide some support for
-                                        backwards compatibility.
-
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
@@ -1144,14 +1134,6 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         code that uses non-lean Win32
                                         facilities such as COM.
 
-ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
-                                        the "latest and greatest"
-                                        features of ACE/TAO should be
-                                        turned on.  It has been
-                                        replaced by ACE_LEGACY_MODE,
-                                        which has the opposite meaning
-                                        but serves the same purpose.
-
 ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
                                         have a leading, single slash and not
                                         have any other slashes.
@@ -1175,14 +1157,6 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
                                         them at all.
                                         Both QNX/RTP and LynxOS suffer from
                                         this problem.
-
-ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
-                                        member template feature.
-
-ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
-                                        are deprecated are not defined. Usefull
-                                        to check whether deprecated macros are
-                                        not used anymore.
 
 ACE_DONT_INIT_WINSOCK                   This definition defines whether or not
                                         to explicitly initialize Winsock during

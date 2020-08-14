@@ -261,36 +261,6 @@ ACE_OS::strnstr (const ACE_WCHAR_T *s1, const ACE_WCHAR_T *s2, size_t len2)
   return 0;
 }
 
-#if defined (ACE_LACKS_STRRCHR)
-char *
-ACE_OS::strrchr_emulation (char *s, int c)
-{
-  char *p = s + ACE_OS::strlen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      --p;
-
-  return p;
-}
-
-const char *
-ACE_OS::strrchr_emulation (const char *s, int c)
-{
-  const char *p = s + ACE_OS::strlen (s);
-
-  while (*p != c)
-    if (p == s)
-      return 0;
-    else
-      --p;
-
-  return p;
-}
-#endif /* ACE_LACKS_STRRCHR */
-
 char *
 ACE_OS::strsncpy (char *dst, const char *src, size_t maxlen)
 {
