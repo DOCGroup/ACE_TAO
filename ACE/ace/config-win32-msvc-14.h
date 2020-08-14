@@ -52,5 +52,8 @@
 #define ACE_SWAB_EQUIVALENT ::_swab
 #define ACE_UNLINK_EQUIVALENT ::_unlink
 
+#define ACE_HAS_STRNLEN
+#define ACE_HAS_WCSNLEN
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */
