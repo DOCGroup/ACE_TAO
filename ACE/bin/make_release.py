@@ -48,6 +48,8 @@ cpu_count = multiprocessing.cpu_count()
 """ This is a regex that detects files that SHOULD NOT have line endings
 converted to CRLF when being put into a ZIP file """
 bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vcw|sln|dfm|jpg|png|vsd|bz2|pdf|ppt|graffle|pptx|odt|sh)$")
+version_restr = r'(\d+)(?:\.(\d+)(?:\.(\d+))?)?'
+version_re = re.compile(version_restr)
 
 ##################################################
 #### Utility Methods
@@ -244,19 +246,17 @@ def update_version_files (component):
     # Update component/PROBLEM-REPORT-FORM
     vprint ("Updating PRF for " + component)
 
-    version_string = re.compile ("^\s*(\w+) +VERSION ?:")
+    version_line_re = re.compile (r"^\s*(\w+) +VERSION ?:")
     path = get_path(component, "PROBLEM-REPORT-FORM")
 
     with open (path, 'r+') as prf:
         new_prf = ""
         for line in prf.readlines ():
-            match = None
-            match = version_string.search (line)
+            match = version_line_re.search (line)
             if match is not None:
                 vprint ("Found PRF Version for " + match.group (1))
-                line = re.sub ("(\d\.)+\d?",
-                               comp_versions[match.group(1) + "_version"],
-                               line)
+                new_version = comp_versions[match.group(1) + "_version"]
+                line = version_re.sub (new_version, line)
 
             new_prf += line
 
@@ -278,11 +278,11 @@ def update_spec_file ():
     with open (path, 'r+') as spec_file:
         new_spec = ""
         for line in spec_file.readlines ():
-            if line.find ("define ACEVER ") is not -1:
+            if line.find ("define ACEVER ") != -1:
                 line = "%define ACEVER  " + comp_versions["ACE_version"] + "\n"
-            if line.find ("define TAOVER ") is not -1:
+            if line.find ("define TAOVER ") != -1:
                 line = "%define TAOVER  " + comp_versions["TAO_version"] + "\n"
-            if line.find ("define is_major_ver") is not -1:
+            if line.find ("define is_major_ver") != -1:
                 line = "%define is_major_ver {}\n".format(
                     int(opts.release_type != ReleaseType.micro))
 
@@ -379,7 +379,7 @@ def get_comp_versions (component):
     requested."""
     vprint ("Detecting current version for " + component)
 
-    regex = re.compile ("version (\d+)(?:\.(\d+)(?:\.(\d+))?)?")
+    regex = re.compile (r"version " + version_restr)
     major = component + "_major"
     minor = component + "_minor"
     micro = component + "_micro"
