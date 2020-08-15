@@ -4,8 +4,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
 . Latest_{Major,Minor,Micro,Beta} tags have been replaced with
   branches because tags are not intended to move where branches are
 
-. Cleanup of emulated operations in ACE_OS which are not used
-  anymore
+. Removed emulated operations in ACE_OS which are not used anymore
 
 . Resolved some compile warnings when using C++11 or newer
 
@@ -16,6 +15,12 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
   them locally using MPC
 
 . Improve multicast join by interface name on Windows
+
+. Fixed ACE_INT64_FORMAT_SPECIFIER (and similar) preprocessor macros
+  on macOS (Apple-clang) with -std=c++11 or higher
+
+. On Windows, use unnamed kernel objects (Events and Semaphores)
+  for thread-scoped reader-write mutexes in ACE_OS::rwlock_init
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
 =====================================================
