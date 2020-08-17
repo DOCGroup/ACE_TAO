@@ -1,0 +1,743 @@
+commit 11fa72370c0df47e0d2195955585f70b7b1d8dde
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 10:04:18 2020 +0200
+
+    ACE+TAO-6_5_11
+
+commit 1ec10d1f7b5eab4e3fb47d27476cba66be0d02d1
+Merge: 1b02216aec1 3d24204ff54
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Aug 15 08:45:36 2020 +0200
+
+    Merge pull request #1197 from iguessthislldo/igtd/release-script
+    
+    make_release.py: Fix Use of "is" with Literals
+
+commit a7c0af6b5eecabd5cb9055901fcf373adc3a5d9c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 14 17:40:09 2020 -0500
+
+    Additional ACE news for 6.5.11
+
+commit 3d24204ff546ab1b3ed9c330e647594c1f2dda43
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Aug 14 12:30:02 2020 -0500
+
+    make_release.py: Fix PRF Version RegEx
+
+commit 24b0a422d6a39501fe0b56d79704dd552a314e45
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Aug 14 10:22:13 2020 -0500
+
+    make_release.py: Fix Use of "is" with Literals
+
+commit 8c61710a637d724940db4c87ba92d428f2824e0d
+Merge: 25ce7418568 b3946a3be7d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 14 08:26:38 2020 -0500
+
+    Merge pull request #1182 from iguessthislldo/igtd/release-script
+    
+    make_release.py: Use Branches for Latest
+
+commit 25ce7418568cc920cd0eb3d29f6ab739338b8bed
+Merge: 887012b20f3 3a04a6d0115
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 14 08:26:19 2020 -0500
+
+    Merge pull request #1179 from jrw972/macos-formats
+    
+    Do not redefine 64-bit formats for MacOS with C++11
+
+commit 349dfc4ece76bdfbb54e1ddcf1b7fb2cc3191057
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 14 10:56:26 2020 +0200
+
+    Visual Studio has strlen/wcsnlen
+    
+        * ACE/ace/config-win32-msvc-14.h:
+
+commit c5e840f92a7614bb6db8a8ed792572535e4cf49c
+Merge: f79c4ca6981 d3282dbf802
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 14 08:52:34 2020 +0200
+
+    Merge pull request #1191 from jwillemsen/jwi-remove-ACE_HAS_SGIDLADD
+    
+    Remove support for ACE_HAS_SGIDLADD, not set in any config file
+
+commit b3946a3be7d6566bd998b062bed44d578220e04f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 13 14:56:23 2020 -0500
+
+    make_release.py: global and import statements
+    
+    Removed unneeded global and import statements and try to simplify some
+    more functions.
+
+commit 99fd41c18381b59a1a7ab29bd973dc65699fce6b
+Merge: 5406db4418c dbc170b91a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 19:51:24 2020 +0200
+
+    Resolve merge conflicts
+
+commit dbc170b91a66b53d043e1d7e5083589318363d6f
+Merge: 96c0dfcd302 6429c617c67
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 19:49:52 2020 +0200
+
+    Merge pull request #1189 from jwillemsen/jwi-removememchremulation
+    
+    Removed memchr emulation, not used anymore by any platform config file
+
+commit 96c0dfcd30206846490324b82c98dc4dd8b4d6e9
+Merge: 7efc569616a 20d29ca18f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 18:43:56 2020 +0200
+
+    Merge pull request #1187 from jwillemsen/jwi-slowmemset
+    
+    Removed ACE_HAS_SLOW_MEMSET and related code, not set on any platform…
+
+commit 7efc569616aa24652f316d6865fd92477b100f64
+Merge: ba59fafa3df 189d83abb52
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 18:43:34 2020 +0200
+
+    Merge pull request #1192 from jwillemsen/jwi-news
+    
+    List changes for next release
+
+commit ba59fafa3df4b5b7d1e886bff741fe6b0d140030
+Merge: 63af5f505c1 8735cf6301f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 18:43:17 2020 +0200
+
+    Merge pull request #1188 from jwillemsen/jwi-remover-ACE_HAS_MEMCPY_LOOP_UNROLL
+    
+    Remove fast_memcpy, according to the related documentation it could b…
+
+commit 0e0e54bdcd95385386f81fcb677f2d6718349adf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 13 11:12:53 2020 -0500
+
+    Update Apple-clang version number
+
+commit 2062769df078eff3e793f28623fb11a21c4720ca
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 17:06:00 2020 +0200
+
+    List changes for next release
+    
+        * ACE/NEWS:
+
+commit d3282dbf8026b39a9e07b647e2baed1d050d0658
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:57:24 2020 +0200
+
+    Docu changes
+    
+        * ACE/ace/OS.h:
+        * ACE/docs/ACE-porting.html:
+
+commit c1ffa582f4a29ccac0953b99852e0ca62da85a70
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:51:49 2020 +0200
+
+    Fixed typo
+    
+        * ACE/ace/Codeset_Registry.inl:
+
+commit 25f4561b48f423f31e4075dc1f55cc29a4e643e2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:51:40 2020 +0200
+
+    Remove support for ACE_HAS_SGIDLADD, not set in any config file
+    
+        * ACE/ace/OS_NS_dlfcn.inl:
+
+commit 63af5f505c1cb2e687573a11b33292bb69ccbb0c
+Merge: 534f03f0503 3dd26d62359
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 13 09:32:41 2020 -0500
+
+    Merge pull request #1178 from simpsont-oci/remove_multicast_interfaces_test_from_face_safety_builds
+    
+    Remove Multicast_Interfaces_Test from FACE safety builds
+
+commit 534f03f0503d5e8a933bbfb59aeeba9c39af82bb
+Merge: bdd8646769b 438ad9963cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:30:42 2020 +0200
+
+    Merge pull request #1185 from jwillemsen/jwi-asnmp
+    
+    Layout, docu changes and add some missing explicits
+
+commit bdd8646769bb0d8ae0b9b4c8f3bcc9b18ea84492
+Merge: acd0ae9e29a 49cc1db8abe
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 16:29:36 2020 +0200
+
+    Merge pull request #1184 from jwillemsen/jwi-exportop-628571
+    
+    Export TAO::ORB::default_svc_conf_entries so that it can be used according to t…
+
+commit 5406db4418c095980b2fdacf81887d2955e1336c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:33:43 2020 +0200
+
+    Removed ACE_HAS_BSTRING, not used
+    
+        * ACE/ace/README:
+
+commit 656a6995dad24aa067512840bd84c4f902ffb83a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:31:45 2020 +0200
+
+    Removed ACE_REDEFINES_XTI_FUNCTIONS, not used
+    
+        * ACE/ace/README:
+
+commit f2a0d389d1a4ec55dece79230800bc0ab34e4624
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:29:43 2020 +0200
+
+    Removed ACE_LACKS_DEPRECATED_MACROS, not used anymore
+    
+        * ACE/ace/README:
+
+commit 290f9b81ed2e5c29fdb180570d1a9a64a87e84d7
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:29:12 2020 +0200
+
+    Remove ACE_LACKS_MEMBER_TEMPLATES, not used anymore
+    
+        * ACE/ace/README:
+
+commit 0e5f93a096cf2a2ed6e26d368963c0989ef96f86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:28:39 2020 +0200
+
+    Removed ACE_ONLY_LATEST_AND_GREATEST, not used anymore
+    
+        * ACE/ace/README:
+
+commit c1a34fa72eebb3ce4a735b6f405705e92019efd4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:27:57 2020 +0200
+
+    Removed reference for ACE_LEGACY_MODE, not used at all
+    
+        * ACE/ace/README:
+        * ACE/docs/wchar.txt:
+
+commit 8284ece83515e45b4d5d542d550fe88f10620d86
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:24:44 2020 +0200
+
+    Removed strrchr_emulation, not used anymore by any platform
+    
+        * ACE/ace/OS_NS_string.cpp:
+        * ACE/ace/OS_NS_string.h:
+        * ACE/ace/OS_NS_string.inl:
+        * ACE/ace/README:
+
+commit 6429c617c67bff73690581df27e9ec360e460deb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:21:54 2020 +0200
+
+    Removed memchr emulation, not used anymore by any platform config file
+    
+        * ACE/ace/OS_NS_string.cpp:
+        * ACE/ace/OS_NS_string.h:
+        * ACE/ace/OS_NS_string.inl:
+
+commit 20d29ca18f32bc92c1761dd7a47e09ad03316f85
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:17:51 2020 +0200
+
+    Removed ACE_HAS_SLOW_MEMSET and related code, not set on any platform anymore
+    
+        * ACE/ace/OS_NS_string.inl:
+
+commit 8735cf6301fb3b6bb53f15081b6062fb7a59cd47
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 15:16:43 2020 +0200
+
+    Remove fast_memcpy, according to the related documentation it could be enabled by autoconf which we don't support anymore
+    
+        * ACE/ace/OS_NS_string.cpp:
+        * ACE/ace/OS_NS_string.h:
+        * ACE/ace/OS_NS_string.inl:
+        * ACE/ace/config-kfreebsd.h:
+
+commit 49cc1db8abecc5987cd881641e341cfbf5f46d5c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 13:57:51 2020 +0200
+
+    Add default C++11 move constructor and assignment operators to ACE_ARGV_Queue_Entry_T to resolve compile warnings when compiling TAO_Internal
+    
+        * ACE/ace/ARGV.h:
+
+commit 438ad9963cd33341dd2933a836e57f6ea8d2704e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 13 11:37:26 2020 +0200
+
+    Layout, docu changes and add some missing explicits
+    
+        * ACE/ASNMP/README:
+        * ACE/ASNMP/asnmp-overview.html:
+        * ACE/ASNMP/asnmp/gauge.h:
+        * ACE/ASNMP/asnmp/integer.h:
+
+commit a18c054907bf386916fc7d83046e63d95e2d1d6e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Aug 12 21:04:39 2020 -0500
+
+    make_release.py: Remove Python2 Support
+
+commit 95b82661ac2d9438f012494472ed42d73591af1a
+Author: Xianda Wang <wxianda@gmail.com>
+Date:   Thu Aug 6 14:35:30 2020 +0800
+
+    Avoid crash when SSL not initialized correctly.
+
+commit 3fa70778c14e2f4646a341ba3967d2d522419590
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Aug 12 02:14:28 2020 -0500
+
+    make_release.py: Spelling
+
+commit caced33b4cb2cb38bbb5156fe2fd5b6abb784e00
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Aug 11 23:26:06 2020 -0500
+
+    make_release.py: Use Branches for Latest
+    
+    Part of Fix for https://github.com/DOCGroup/ACE_TAO/issues/940
+    
+    Assume Latest_Major, Latest_Minor, and Latest_Micro/Latest_Beta and the
+    MPC equivalents are branches instead of tags.
+    
+    The other part of the fix is actually changing the tags into branches.
+
+commit cad183e66896132e5e45c2f21ba705634e5c67bd
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Aug 11 19:04:15 2020 -0500
+
+    make_release.py: Update for Python 3, Cleanup
+    
+    Updated to work with Python 3, and tried to do some future proofing, mostly by
+    wrapping the argument parser, because optparse is deprecated.
+    
+    Also did some clean up. Simplfing some code, and using more normal
+    Python patterns.
+    
+    Use of non read-only global variables should be eliminated, because it's
+    unusual to use them in Python, at least nowadays. I started to do this,
+    but back tracked, because it was taking longer to do so than I would've
+    liked to spend on it.
+
+commit ed385706374786ee45bdc220c52d6e56869e2992
+Merge: f021324cbaa 1fd62332d6f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 11 16:52:50 2020 +0200
+
+    Merge pull request #1180 from jwillemsen/jwi-testwarnings
+    
+    Removed various variables/members which are not used at all
+
+commit 1fd62332d6fb341deb28dc92c9128fa3346908db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 11 13:55:11 2020 +0200
+
+    Mark single argument constructors explicit
+    
+        * ACE/tests/Bound_Ptr_Test.cpp:
+        * ACE/tests/Intrusive_Auto_Ptr_Test.cpp:
+        * ACE/tests/Refcounted_Auto_Ptr_Test.cpp:
+
+commit 6ef233f574afae7756d7e00fcfc2dc726003dd60
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 11 11:35:01 2020 +0200
+
+    Removed various variables/members which are not used at all
+    
+        * ACE/tests/Bound_Ptr_Test.cpp:
+        * ACE/tests/Bound_Ptr_Test.h:
+        * ACE/tests/Intrusive_Auto_Ptr_Test.cpp:
+        * ACE/tests/Multicast_Test.cpp:
+        * ACE/tests/Multicast_Test_IPV6.cpp:
+        * ACE/tests/Object_Manager_Flipping_Test.cpp:
+        * ACE/tests/Refcounted_Auto_Ptr_Test.cpp:
+        * ACE/tests/Sendfile_Test.cpp:
+        * ACE/tests/Thread_Attrs_Test.cpp:
+        * ACE/tests/Thread_Creation_Threshold_Test.cpp:
+
+commit 7e1c8bb7b5eb72118ddc03623da85d213328bce6
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Mon Aug 10 17:22:01 2020 -0500
+
+    Do not redefine 64-bit formats for MacOS with C++11
+
+commit 3dd26d6235913ea982c5f69f60ea7497e752b323
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Mon Aug 10 16:08:34 2020 -0500
+
+    removing multicast interfaces test from face safety builds
+
+commit f021324cbaac5073c1a43c4ec1a1e9ac84f0451a
+Merge: 2b5955c09db 363c26a1bbb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 7 18:27:08 2020 -0500
+
+    Merge pull request #1176 from simpsont-oci/fix_multicast_interfaces_test_portability_issue
+    
+    Fix Test Portability Issue For Older Windows Platforms Introduced By PR 1170
+
+commit 2b5955c09dbcab81e1c488596cd685a158e8ab5a
+Merge: ccf0cfb2bf3 a09731f6915
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 7 22:42:46 2020 +0200
+
+    Merge pull request #1175 from jwillemsen/jwi-novc14solutions
+    
+    Don't generate Visual Studio 2015 solutions as part of the release pr…
+
+commit 363c26a1bbbe1c510fba6fc4e45cd660e9b4d09c
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Fri Aug 7 14:54:15 2020 -0500
+
+    Fix Portability Issues For Older Windows In New Test From PR 1170
+
+commit a09731f691551672170d06abe21c1863d21c9ce4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 7 13:09:53 2020 +0200
+
+    Don't generate Visual Studio 2015 solutions as part of the release process, now only 2017/2019 will be shipped by default
+    
+        * ACE/bin/make_release.py:
+
+commit ccf0cfb2bf34fa11d2907b219e8ee106084e0e14
+Merge: 352f09882ab 118f672e907
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Aug 6 10:37:40 2020 -0500
+
+    Merge pull request #1170 from simpsont-oci/specify_multicast_interface_by_name_on_windows
+    
+    Improve Multicast Join by Interface Name on Windows
+
+commit 352f09882ab5213d5a44d5568a88112c827b2f05
+Merge: fa519f628c3 1adbd7999f3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 6 16:31:54 2020 +0100
+
+    Merge pull request #1174 from jwillemsen/jwi-docusock
+    
+    Documentation typo fix and layout change
+
+commit 118f672e907d332605242dba5f28bf75cfcf7065
+Author: Timothy Simpson <32278075+simpsont-oci@users.noreply.github.com>
+Date:   Thu Aug 6 08:29:31 2020 -0500
+
+    Update ACE/ace/SOCK_Dgram.cpp
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 5defdf31bfc14df418a08d93fd5bafe17e08a1d4
+Author: Timothy Simpson <32278075+simpsont-oci@users.noreply.github.com>
+Date:   Thu Aug 6 07:32:54 2020 -0500
+
+    Update ACE/ace/SOCK_Dgram.cpp
+    
+    Co-authored-by: Johnny Willemsen <jwillemsen@remedy.nl>
+
+commit 1adbd7999f36431a408485940060296e56bcbfa6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 6 13:12:28 2020 +0200
+
+    Documentation typo fix and layout change
+    
+        * ACE/ace/SOCK_Dgram_Mcast.h:
+
+commit c28689e3fb07f8df9c315e47beaf3a7ec85a2c71
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 19:46:15 2020 -0500
+
+    fixing windows define
+
+commit 90e04957137eaaf33aaa85923183c3f35755bf70
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 16:44:14 2020 -0500
+
+    fixing macro formatting per guidelines
+
+commit 40494f95ea9dae513c1df7af78377a41400e1384
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 16:33:30 2020 -0500
+
+    updating test formatting to more closely match ACE guidelines
+
+commit 2811aeb66529f61d5b46d4b93de7707f9e1faa66
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 16:32:50 2020 -0500
+
+    formatting changes per guidelines
+
+commit 432602450f8a0b164550a9341cd94bceb1484259
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 15:02:08 2020 -0500
+
+    Ignore WIN32 interfaces that aren't up & operational
+
+commit 0b7e6a840c33cbc03ff93bf171c16515d1645861
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 15:01:40 2020 -0500
+
+    Fixing another Codacy complaint
+
+commit 62ed4597ae6987d0761eba1d086d52e45d6cd0fd
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 14:23:24 2020 -0500
+
+    adding getifaddrs versions of test
+
+commit 4823171eb321c01264da2c2f2b24adb44b6626c8
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 13:56:55 2020 -0500
+
+    Fixing Test Comments
+
+commit 4ea6844994d56f78341365b3f71fba6993fecd8f
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 5 13:43:10 2020 -0500
+
+    Adding Test for Multicast Join By Interface
+
+commit b9f92010342a8015b3119c49287583029710830a
+Merge: c24760f4313 5e540e01a75
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 4 14:40:28 2020 +0200
+
+    Merge pull request #1172 from jwillemsen/jwi-autoptrcpp17
+    
+    Removed define of ACE_LACKS_AUTO_PTR for C++17 in general, gcc doesn'…
+
+commit 5e540e01a75d27e11f64c59d0bd626503b015635
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 4 12:54:24 2020 +0200
+
+    Removed define of ACE_LACKS_AUTO_PTR for C++17 in general, gcc doesn't remove auto_ptr with C++17 so we have to do this specifically for a compiler who does remove std::auto_ptr with C++17
+    
+        * ACE/ace/Auto_Ptr.h:
+
+commit 92238c4101bcf7ab4d0e335dec66684479b98960
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Mon Aug 3 09:59:28 2020 -0500
+
+    more PR comment resolution
+
+commit e51fdcb99813880c63e256844efc06043a70aa0e
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Sat Aug 1 16:06:08 2020 -0500
+
+    fixing codefactor complaint
+
+commit 3481b96f1097e2c4fde54701d4ad818c12759008
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Sat Aug 1 14:52:22 2020 -0500
+
+    fixing 'empty' result failure case to only apply when interface is specified
+
+commit 3d23f3e578a42ea72acb202dd13a1fdc2e2a2e26
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Sat Aug 1 09:35:20 2020 -0500
+
+    resolving review comments, codacy issue
+
+commit 2765e8c90801485321c773ac02867109d8e6d02d
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Fri Jul 31 22:46:38 2020 -0500
+
+    Fixing multicast join by interface name on windows for both ipv4 & ipv6
+
+commit 405c82f37cc0ed868d40c9ff01bc8178b1d9c7a5
+Author: Kamil Sokolowski <ksokolowski95@gmail.com>
+Date:   Thu Jul 30 17:59:53 2020 +0200
+
+    Added version check for deprecated function in OpenSSL 3.0
+
+commit 9097c5600873fd147884c0903fc285f1be0c2de7
+Merge: e0f2de2bc05 92a8e3486b7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 23 13:55:40 2020 -0500
+
+    Merge pull request #1161 from mitza-oci/rwlock
+    
+    ACE_OS::rwlock_init: On Win32, use unnamed kernel objects (Events and Semaphores) for USYNC_THREAD
+
+commit f69fbc87600384dfa64a82bf74ba64b96d8644ef
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 19:06:37 2020 +0100
+
+    sync changelog with debian/6.5.10+dfsg-1 release
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit a8f6540755e098674cb4992c711ca5931544107a
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 19:05:45 2020 +0100
+
+    Remove copyright of files not included in source
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 971672dca2e0a14bec8c842cfa6738a86bc9dd69
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 19:05:06 2020 +0100
+
+    exclude few files while repacking source
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit d03ce222767bea3320f2ccee81eda83375a3478b
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 19:02:26 2020 +0100
+
+    Remove unused lintian overrides
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 624d4a9e6bbe18eea1267a18100f765147b0b5c6
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 18:58:27 2020 +0100
+
+    Remove a leftover from previous cleanup
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit e6316d711c61aa55842b773fd69dd38cc58161f7
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Thu Jul 23 18:53:36 2020 +0100
+
+    Use https in watch file
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit b092fb0e9a13a345d480f8734ba1eac3b68026a6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 19 10:15:46 2020 +0200
+
+    Prefix increment, fixed typo
+    
+        * ACE/ace/Priority_Reactor.cpp:
+
+commit 92a8e3486b755a3f8eee7f6c633853e5bf19cbd5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 17 16:04:38 2020 -0500
+
+    ACE_OS::rwlock_init: On Win32, use unnamed kernel
+    
+    objects (Events and Semaphores) for USYNC_THREAD
+
+commit 8d4f0040af15b186174a50bbdfe16f0b0e2d2e0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jul 3 12:20:38 2020 +0200
+
+    Cleanup debian rules file
+
+commit d742b34733f82413952f8b2dd531c1f35f06f64d
+Merge: bad447c746f de129fd49a3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 2 12:22:45 2020 +0200
+
+    Merge branch 'master' into jwi-movehurd
+
+commit bad447c746fe6be8a900dcdc1b8a17aca043034e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 2 12:20:41 2020 +0200
+
+    https links
+    
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/etc/DOC-way.html:
+
+commit 4f8a6009d7bf746adba1f5e080dd34a165a3af7a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 2 12:20:29 2020 +0200
+
+    Move config for hurd to ace directory
+    
+        * ACE/debian/config-hurd.h -> ACE/ace/config-hurd.h:
+          Moved.
+    
+        * ACE/debian/config.h:
+
+commit f5cc54cc03779822407bd9d0c75b72c53cb23686
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jul 2 09:06:53 2020 +0200
+
+    debian hurd doesn't seem to have sys/sysctl.h
+    
+        * ACE/debian/config-hurd.h:
+
+commit 037fcd8b25dbbe9a5b57ff5a59a9d1c7ca2ee07c
+Merge: 8cc0b1f3410 bd23b03031b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 11:13:06 2020 +0200
+
+    Merge pull request #1150 from jwillemsen/jwi-doxygenup
+    
+    Upgrade all doxygen configuration files to latest version
+
+commit cd17f72a756c956b10a934fe3f1bc476d83975db
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 11:11:38 2020 +0200
+
+    Corrected release date
+    
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+
+commit 98cbd5f1304965e7b031a79531f3cd270c37e95d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 10:14:53 2020 +0200
+
+    Changes for x.5.10
+    
+        * ACE/bin/copy-local-script.sh:
+        * ACE/docs/bczar/bczar.html:
+
+commit bd23b03031b3cdda2f9d58b24ba133028b46cbb2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 10:00:11 2020 +0200
+
+    Upgrade all doxygen configuration files to latest version
+
+commit 9196f33769b5b74d6b5710c24a8013769c66dd10
+Merge: abde397eed9 d388f1d41d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 1 09:57:42 2020 +0200
+
+    Merge branch 'master' into jwi-acetaox510
+
+commit abde397eed9dd12c40bf4a06e10f18beedce3c7c
+Merge: 34ea5c270d2 b65e5d1519d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 30 10:47:03 2020 +0200
+
+    Merge branch 'master' into jwi-acetaox510
+
+commit 34ea5c270d25eaa2dc58296494074b065a7cc35e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jun 26 13:59:51 2020 +0200
+
+    Make x.5.10 public available
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
