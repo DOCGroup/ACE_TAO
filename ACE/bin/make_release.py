@@ -348,9 +348,8 @@ def get_and_update_versions ():
             files = []
             files += update_version_files ("ACE")
             files += update_version_files ("TAO")
-            if opts.tag:
-              files += create_changelog ("ACE")
-              files += create_changelog ("TAO")
+            files += create_changelog ("ACE")
+            files += create_changelog ("TAO")
             files += update_spec_file ()
             files += update_debianbuild ()
 
