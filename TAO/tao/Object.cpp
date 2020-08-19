@@ -345,7 +345,8 @@ CORBA::Object::is_nil_i (CORBA::Object_ptr obj)
 
   // If the profile length is zero for a non-evaluted IOR it is a
   // null-object.
-  if ((!obj->is_evaluated ()) && obj->ior ().profiles.length () == 0)
+  if ((!obj->is_evaluated ()) &&
+      obj->ior_ && obj->ior ().profiles.length () == 0)
     return true;
 
   // To accomodate new definitions.

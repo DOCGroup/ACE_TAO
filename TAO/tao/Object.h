@@ -85,9 +85,7 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
 
-  template<>
-  TAO_Export Boolean
-  is_nil<> (Object_ptr);
+  TAO_INLINE Boolean is_nil (Object_ptr);
 
   /**
    * @class Object
