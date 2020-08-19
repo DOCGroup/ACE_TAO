@@ -1,0 +1,34 @@
+// -*- MPC -*-
+project(*idl): taoidldefaults {
+  IDL_Files {
+    Echo.idl
+  }
+  custom_only = 1
+}
+
+project(*Server): taoserver, namingexe, iortable, utils, avoids_corba_e_micro {
+  exename = server
+  after += *idl
+  Source_Files {
+    Echo_i.cpp
+    ../../../examples/Simple/Simple_util.cpp
+    server.cpp
+    EchoS.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}
+
+project(*Client): taoclient, namingexe, iortable, utils {
+  exename = client
+  after += *IDL
+  Source_Files {
+    Echo_Client_i.cpp
+    ../../../examples/Simple/Simple_util.cpp
+    client.cpp
+    EchoC.cpp
+  }
+  IDL_Files {
+  }
+}

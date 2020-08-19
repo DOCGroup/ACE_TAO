@@ -1,0 +1,18 @@
+/* -*- C++ -*- */
+#if !defined (_ECHO_IDL)
+#define _ECHO_IDL
+
+interface Echo
+{
+  // = TITLE
+  // Defines an interface that encapsulates an operation that returns
+  // a string sequence.
+
+  typedef sequence<string> List;
+
+  List return_list ();
+
+  oneway void shutdown ();
+};
+
+#endif /* _ECHO_IDL */
