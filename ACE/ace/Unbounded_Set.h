@@ -60,7 +60,6 @@ class ACE_Unbounded_Set_Const_Iterator : public
   ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-
   typedef ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> > base_type;
 
   ACE_Unbounded_Set_Const_Iterator (const ACE_Unbounded_Set<T> &s,
