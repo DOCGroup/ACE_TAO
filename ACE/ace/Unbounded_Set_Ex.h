@@ -93,7 +93,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_Node<T, C> *current_;
 
@@ -161,7 +160,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_Node<T, C> *current_;
 
