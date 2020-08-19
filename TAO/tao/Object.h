@@ -85,7 +85,15 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
 
-  inline Boolean is_nil (Object_ptr);
+  inline Boolean is_nil (Object_ptr obj)
+  {
+     if (obj == 0)
+     {
+        return true;
+     }
+
+     return Object::is_nil_i (obj);
+  }
 
   /**
    * @class Object

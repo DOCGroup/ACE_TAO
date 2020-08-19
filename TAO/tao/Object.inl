@@ -4,20 +4,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ****************************************************************
 
 ACE_INLINE
-CORBA::Boolean
-CORBA::is_nil (CORBA::Object_ptr obj)
-{
-  if (obj == 0)
-    {
-      return true;
-    }
-
-  return CORBA::Object::is_nil_i (obj);
-}
-
-// ****************************************************************
-
-ACE_INLINE
 CORBA::Object::Object (int)
   : refcount_ (1),
     is_local_ (true),
