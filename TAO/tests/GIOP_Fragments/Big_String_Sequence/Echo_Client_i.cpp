@@ -31,24 +31,24 @@ Echo_Client_i::run (const char *name,
   try
   {
      Echo::List_var list = client_->return_list();
-     std::cout << "Received list of length " 
+     std::cout << "Received list of length "
                << list->length() << std::endl;
      if (list->length() != 2)
      {
         std::cout << "ERROR: Expected length 2, exiting..." << std::endl;
-        client_->shutdown (); 
+        client_->shutdown ();
         return -1;
      }
      const char* value = (*list)[0].in();
      size_t length = std::strlen(value);
-     std::cout << "First element has length " 
+     std::cout << "First element has length "
                << length << std::endl;
      for (size_t n = 0; n < length; ++n)
      {
         if (value[n] != 'A')
         {
            std::cout << "ERROR: Character at position " << n
-                       << " should be 'A', but is '" 
+                       << " should be 'A', but is '"
                      << value[n] << "'" << std::endl;
            client_->shutdown ();
            return -1;
@@ -56,13 +56,13 @@ Echo_Client_i::run (const char *name,
      }
      value = (*list)[1].in();
      length = std::strlen(value);
-     std::cout << "Second element has length " 
+     std::cout << "Second element has length "
                << length << std::endl;
      std::cout << "Value: " << value << std::endl;
      if (std::strcmp(value, "Hello World") != 0)
      {
-        std::cout << "ERROR: Expected \"Hello World\", exiting..." 
-                  << std::endl; 
+        std::cout << "ERROR: Expected \"Hello World\", exiting..."
+                  << std::endl;
         client_->shutdown ();
         return -1;
      }
