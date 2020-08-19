@@ -100,10 +100,10 @@ namespace ACE_OS {
    */
   //@{
   ACE_NAMESPACE_INLINE_FUNCTION
-  void _exit (int status = 0);
+  void _exit (int status = 0) ACE_GCC_NO_RETURN;
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void abort (void);
+  void abort (void) ACE_GCC_NO_RETURN;
 
   /**
    * Register an at exit hook. The @a name can be used to analyze shutdown

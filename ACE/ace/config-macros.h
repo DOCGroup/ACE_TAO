@@ -718,4 +718,8 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #  endif
 #endif
 
+#ifndef ACE_GCC_NO_RETURN
+#  define ACE_GCC_NO_RETURN
+#endif
+
 #endif /* ACE_CONFIG_MACROS_H */
