@@ -85,16 +85,6 @@ namespace CORBA
   typedef TAO_Pseudo_Var_T<Object> Object_var;
   typedef TAO_Pseudo_Out_T<Object> Object_out;
 
-  inline Boolean is_nil (Object_ptr obj)
-  {
-     if (obj == 0)
-     {
-        return true;
-     }
-
-     return Object::is_nil_i (obj);
-  }
-
   /**
    * @class Object
    *
@@ -406,6 +396,16 @@ namespace CORBA
      */
     TAO_SYNCH_MUTEX object_init_lock_;
   };
+
+  inline Boolean is_nil (Object_ptr obj)
+  {
+     if (obj == 0)
+     {
+        return true;
+     }
+
+     return Object::is_nil_i (obj);
+  }
 }   // End CORBA namespace.
 
 namespace TAO
