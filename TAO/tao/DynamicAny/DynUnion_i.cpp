@@ -108,8 +108,7 @@ TAO_DynUnion_i::init (CORBA::TypeCode_ptr tc)
     }
 
   CORBA::TypeCode_var first_type =
-    unaliased_tc->member_type (this->current_position_
-                              );
+    unaliased_tc->member_type (this->current_position_);
 
   // Recursively initialize the member to its default value.
   this->member_ =
@@ -261,8 +260,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
           CORBA::ULong index = static_cast<CORBA::ULong> (default_index);
 
           CORBA::TypeCode_var default_tc =
-            tc->member_type (index
-                            );
+            tc->member_type (index);
 
           CORBA::Any default_any;
           TAO::Unknown_IDL_Type *unk = 0;
@@ -562,9 +560,7 @@ TAO_DynUnion_i::member (void)
 
   // A deep copy is made only by copy() (CORBA 2.4.2 section 9.2.3.6).
   // Set the flag so the caller can't destroy.
-  this->set_flag (this->member_.in (),
-                  0
-                 );
+  this->set_flag (this->member_.in (), 0);
 
   return DynamicAny::DynAny::_duplicate (this->member_.in ());
 }
@@ -635,8 +631,7 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
 
       // Set the from_factory arg to FALSE, so any problems will throw
       // TypeMismatch.
-      this->set_from_any (any
-                         );
+      this->set_from_any (any);
     }
   else
     {

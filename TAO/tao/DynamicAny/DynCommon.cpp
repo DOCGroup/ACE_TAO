@@ -733,8 +733,7 @@ TAO_DynCommon::get_val (void)
 // ****************************************************************
 
 CORBA::Boolean
-TAO_DynCommon::seek (CORBA::Long slot
-                     )
+TAO_DynCommon::seek (CORBA::Long slot)
 {
   if (this->destroyed_)
     {

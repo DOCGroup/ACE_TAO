@@ -154,8 +154,7 @@ TAO::TypeCode::Enum<char const *,
     adapter->create_enum_tc (this->base_attributes_.id (),
                              ""  /* empty name */,
                              tc_enumerators,
-                             this->nenumerators_
-                            );
+                             this->nenumerators_);
 }
 
 char const *

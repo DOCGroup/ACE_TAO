@@ -305,8 +305,7 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values)
 
   // member_type() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -397,8 +396,7 @@ TAO_DynStruct_i::set_members_as_dyn_any (
 
   // member_type() does not work with aliased type codes.
   CORBA::TypeCode_var unaliased_tc =
-    TAO_DynAnyFactory::strip_alias (this->type_.in ()
-                                   );
+    TAO_DynAnyFactory::strip_alias (this->type_.in ());
 
   for (CORBA::ULong i = 0; i < length; ++i)
     {
@@ -435,8 +433,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
 
   CORBA::TypeCode_var tc = any.type ();
   CORBA::Boolean equivalent =
-    this->type_->equivalent (tc.in ()
-                            );
+    this->type_->equivalent (tc.in ());
 
   if (equivalent)
     {
@@ -474,8 +471,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
 
       CORBA::TypeCode_var field_tc;
       CORBA::TypeCode_var unaliased =
-        TAO::unaliased_typecode (this->type_.in ()
-                                );
+        TAO::unaliased_typecode (this->type_.in ());
 
       for (CORBA::ULong i = 0; i < this->component_count_; ++i)
         {

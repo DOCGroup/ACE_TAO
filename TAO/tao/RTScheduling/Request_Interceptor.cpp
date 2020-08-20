@@ -253,8 +253,7 @@ Server_Interceptor::receive_request_service_contexts (
 }
 
 void
-Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                     )
+Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,

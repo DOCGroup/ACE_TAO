@@ -238,8 +238,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
           // Initialize a Profile using the individual endpoint
           // string.
           // @@ Not exception safe!  We need a TAO_Profile_var!
-          profile->parse_string (endpoint.c_str ()
-                                );
+          profile->parse_string (endpoint.c_str ());
 
           // Give up ownership of the profile.
           if (mprofile.give_profile (profile) == -1)

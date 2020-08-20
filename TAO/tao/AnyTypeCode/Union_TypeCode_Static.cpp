@@ -218,8 +218,7 @@ TAO::TypeCode::Union<char const *,
 //           // the compact TypeCode.
 //           tc_cases[i].name = empty_name;
 //           tc_cases[i].type =
-//             this->cases_[i]->type ()->get_compact_typecode (
-//              );
+//             this->cases_[i]->type ()->get_compact_typecode ();
 //         }
 //     }
 

@@ -217,8 +217,7 @@ TAO_RTScheduler_Manager::rtscheduler (void)
 }
 
 ACE_INLINE void
-TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler
-                                      )
+TAO_RTScheduler_Manager::rtscheduler (RTScheduling::Scheduler_ptr rtscheduler)
 {
   this->rtscheduler_ = RTScheduling::Scheduler::_duplicate (rtscheduler);
   this->orb_->orb ()->register_initial_reference (

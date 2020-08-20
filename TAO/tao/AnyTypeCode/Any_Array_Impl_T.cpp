@@ -161,8 +161,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
 
 template<typename T_slice, typename T_forany>
 void
-TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr
-                                                       )
+TAO::Any_Array_Impl_T<T_slice, T_forany>::_tao_decode (TAO_InputCDR &cdr)
 {
   if (! this->demarshal_value (cdr))
     {

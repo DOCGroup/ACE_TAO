@@ -244,8 +244,7 @@ TAO::TypeCode::Value<char const *,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             Traits<char const *>::get_typecode (
-              this->fields_[i].type)->get_compact_typecode (
-                );
+              this->fields_[i].type)->get_compact_typecode ();
           tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }
