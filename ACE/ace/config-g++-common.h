@@ -182,5 +182,9 @@
 #endif
 #endif /* ACE_HAS_THREADS */
 
+#if (__GNUC__ > 2) || ((__GNUC__ == 2) && (__GNUC_MINOR__ >= 5))
+#  define ACE_GCC_NO_RETURN __attribute__ ((__noreturn__))
+#endif
+
 #include /**/ "ace/post.h"
 #endif /* ACE_GNUG_COMMON_H */
