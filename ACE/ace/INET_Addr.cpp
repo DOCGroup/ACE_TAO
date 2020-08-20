@@ -327,7 +327,6 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
 
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and a 32 bit Internet
 // address.
-
 int
 ACE_INET_Addr::set (u_short port_number,
                     ACE_UINT32 inet_address,
@@ -344,10 +343,8 @@ ACE_INET_Addr::set (u_short port_number,
   return 0;
 }
 
-
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
-
 int
 ACE_INET_Addr::set (u_short port_number,
                     const char host_name[],
@@ -502,9 +499,8 @@ static int get_port_number_from_name (const char port_name[],
   return port_number;
 }
 
-// Initializes a ACE_INET_Addr from a <port_name> and the remote
-// <host_name>.
-
+/// Initializes a ACE_INET_Addr from a @a port_name and the remote
+/// @a host_name.
 int
 ACE_INET_Addr::set (const char port_name[],
                     const char host_name[],
@@ -532,9 +528,8 @@ ACE_INET_Addr::set (const char port_name[],
                     host_name, 0, address_family);
 }
 
-// Initializes a ACE_INET_Addr from a <port_name> and a 32 bit
-// Internet address.
-
+/// Initializes a ACE_INET_Addr from a @a port_name and a 32 bit
+/// Internet address.
 int
 ACE_INET_Addr::set (const char port_name[],
                     ACE_UINT32 inet_address,
@@ -555,7 +550,6 @@ ACE_INET_Addr::set (const char port_name[],
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and the remote
 // HOST_NAME.
-
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               const char host_name[],
                               int address_family)
@@ -594,7 +588,6 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 #endif /* ACE_HAS_WCHAR */
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
-
 int
 ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 {
@@ -603,7 +596,7 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
   this->reset_i ();
   if (addr->sin_family == AF_INET)
     {
-      int maxlen = static_cast<int> (sizeof (this->inet_addr_.in4_));
+      int const maxlen = static_cast<int> (sizeof (this->inet_addr_.in4_));
       if (len > maxlen)
         len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in4_, addr, len);
@@ -613,7 +606,7 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 #if defined (ACE_HAS_IPV6)
   else if (addr->sin_family == AF_INET6)
     {
-      int maxlen = static_cast<int> (sizeof (this->inet_addr_.in6_));
+      int const maxlen = static_cast<int> (sizeof (this->inet_addr_.in6_));
       if (len > maxlen)
         len = maxlen;
       ACE_OS::memcpy (&this->inet_addr_.in6_, addr, len);
@@ -627,7 +620,6 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 }
 
 // Return the address.
-
 void *
 ACE_INET_Addr::get_addr (void) const
 {
@@ -677,7 +669,6 @@ ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
 }
 
 // Creates a ACE_INET_Addr from a sockaddr_in structure.
-
 ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
@@ -686,7 +677,6 @@ ACE_INET_Addr::ACE_INET_Addr (const sockaddr_in *addr, int len)
 }
 
 // Creates a ACE_INET_Addr from a PORT_NUMBER and an Internet address.
-
 ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
                               ACE_UINT32 inet_address)
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
@@ -700,7 +690,6 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
 
 // Creates a ACE_INET_Addr from a PORT_NAME and the remote
 // HOST_NAME.
-
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               const char host_name[],
                               const char protocol[])
@@ -730,7 +719,6 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 #endif /* ACE_HAS_WCHAR */
 
 // Creates a ACE_INET_Addr from a PORT_NAME and an Internet address.
-
 ACE_INET_Addr::ACE_INET_Addr (const char port_name[],
                               ACE_UINT32 inet_address,
                               const char protocol[])
@@ -810,7 +798,7 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
     len = MAXHOSTNAMELEN + 1;
 
   // Call the char version
-  int result = this->get_host_name (char_hostname, len);
+  int const result = this->get_host_name (char_hostname, len);
 
   // And copy it over, if successful
   if (result == 0)

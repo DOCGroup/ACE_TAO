@@ -338,8 +338,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::open (ACE_Reactor *r, int flags)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector (ACE_Reactor *r,
-                                                                 int flags)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector");
   (void) this->open (r, flags);

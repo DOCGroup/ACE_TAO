@@ -30,7 +30,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_IPC_SAP
 {
 public:
-
   /// Interface for <ioctl>.
   int control (int cmd, void *) const;
 
@@ -63,7 +62,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // = Ensure that ACE_IPC_SAP is an abstract base class.
   /// Default constructor.
   ACE_IPC_SAP (void);

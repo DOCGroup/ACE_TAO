@@ -29,7 +29,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Hashable
 {
 public:
-
   /// Destructor.
   virtual ~ACE_Hashable (void);
 
@@ -46,10 +45,8 @@ protected:
   virtual unsigned long hash_i (void) const = 0;
 
 protected:
-
   /// Pre-computed hash-value.
   mutable unsigned long hash_value_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

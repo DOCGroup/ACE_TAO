@@ -98,7 +98,7 @@ public:
   ssize_t recv (iovec iov[], int n) const;
 
   /**
-   * Send N char *ptrs and int lengths.  Note that the char *'s
+   * Send @a n char *ptrs and int lengths.  Note that the char *'s
    * precede the ints (basically, an varargs version of writev).  The
    * count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!

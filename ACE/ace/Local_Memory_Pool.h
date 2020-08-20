@@ -122,7 +122,6 @@ protected:
   /// Implement the algorithm for rounding up the request to an
   /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
