@@ -95,8 +95,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 
       // Obtain a reference to the naming context
       CORBA::Object_var name_context =
-        orb->string_to_object (corbaloc_addr.c_str ()
-                               );
+        orb->string_to_object (corbaloc_addr.c_str ());
 
       // Check if the Object reference is nil.
       if (CORBA::is_nil (name_context.in ()))

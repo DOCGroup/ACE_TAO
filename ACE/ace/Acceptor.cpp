@@ -1101,7 +1101,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::accept
   // 0) in this case...
 
   ACE_Time_Value *timeout;
-  int use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
+  int const use_reactor = synch_options[ACE_Synch_Options::USE_REACTOR];
 
   if (use_reactor)
     timeout = (ACE_Time_Value *) &ACE_Time_Value::zero;

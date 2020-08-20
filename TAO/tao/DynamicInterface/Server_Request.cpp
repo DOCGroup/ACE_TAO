@@ -37,7 +37,7 @@ CORBA::ServerRequest::_decr_refcount (void)
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
-  : lazy_evaluation_ (0),
+  : lazy_evaluation_ (false),
     ctx_ (CORBA::Context::_nil ()),
     params_ (CORBA::NVList::_nil ()),
     retval_ (0),

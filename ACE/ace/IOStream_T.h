@@ -224,8 +224,6 @@ protected:
   ACE_Streambuf_T<STREAM> *streambuf_;
 
 private:
-  // = Private methods.
-
   // We move these into the private section so that they cannot be
   // used by the application programmer.  This is necessary because
   // streambuf_ will be buffering IO on the STREAM object.  If these

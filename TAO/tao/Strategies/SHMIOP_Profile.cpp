@@ -123,8 +123,7 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SHMIOP_Profile::parse_string_i (const char *string
-                                    )
+TAO_SHMIOP_Profile::parse_string_i (const char *string)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -284,8 +283,7 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_SHMIOP_Profile::hash (CORBA::ULong max
-                          )
+TAO_SHMIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hashvalue for all endpoints.
   CORBA::ULong hashval = 0;

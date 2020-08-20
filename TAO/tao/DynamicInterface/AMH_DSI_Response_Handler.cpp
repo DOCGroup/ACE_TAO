@@ -411,7 +411,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
       this->_tao_out.write_char_array (encap.buffer (),
                                        ACE_Utils::truncate_cast<ACE_CDR::ULong> (encap.length ()));
       // This will prevent the marshaling of any parameters into this reply.
-      //  this->sent_gateway_exception_ = 1;
+      //  this->sent_gateway_exception_ = true;
       this->_tao_rh_send_reply ();
     }
   catch (const CORBA::Exception &)
@@ -456,7 +456,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
   // to the original source of the reply.
     this->_tao_out.write_octet_array_mb (encap.start());
   // This will prevent the marshaling of any parameters into this reply.
-  //  this->sent_gateway_exception_ = 1;
+  //  this->sent_gateway_exception_ = true;
     this->_tao_rh_send_reply ();
   }
   catch (const CORBA::Exception &)
@@ -484,7 +484,7 @@ TAO_AMH_DSI_Response_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
   if (CORBA::is_nil (obj))
     return TAO_AMH_DSI_Response_Handler::_nil ();
 
-  return dynamic_cast < TAO_AMH_DSI_Response_Handler_ptr > (obj);
+  return dynamic_cast <TAO_AMH_DSI_Response_Handler_ptr> (obj);
 }
 
 const char*

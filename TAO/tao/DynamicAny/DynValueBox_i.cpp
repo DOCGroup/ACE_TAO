@@ -336,7 +336,7 @@ TAO_DynValueBox_i::to_any (void)
   // Is this an NULL Valuetype?
   if (!CORBA::ValueBase::_tao_write_special_value (
        out_cdr, reinterpret_cast <CORBA::ValueBase *> (
-         this->is_null_ ? 0 : this                 )   ))
+         this->is_null_ ? 0 : this)))
     {
       // Build <value-tag>, which states if chunking is used
       // and if type information ((list of) repository id(s))
