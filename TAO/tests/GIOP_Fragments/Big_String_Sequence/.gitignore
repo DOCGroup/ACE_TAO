@@ -1,5 +1,6 @@
 .obj
 .depend.Echo_Client
+.depend.Echo_Server
 .depend.echo_idl
 .depend.echo_idl_Idl1
 server_log.txt
