@@ -103,8 +103,9 @@ jobs:
         path: vcpkg
     - name: Install vcpkg
       run: |
-        ${env:VCPKG_ROOT}/bootstrap-vcpkg.bat
-        ${env:VCPKG_ROOT}/vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
+        cd ${env:VCPKG_ROOT}
+        .\bootstrap-vcpkg.bat
+        .\vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
       shell: pwsh
     - name: create $ACE_ROOT/ace/config.h
       run: |
