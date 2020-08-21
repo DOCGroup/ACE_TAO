@@ -131,13 +131,11 @@ jobs:
     - name: Add msbuild to PATH
       uses: microsoft/setup-msbuild@v1.0.1
     - name: Build solution TAO/TAO_ACE.sln
-    inputs:
       solution: TAO/TAO_ACE.sln
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
     - name: Build solution ACE/tests/tests.sln
-    inputs:
       solution: ACE/tests/tests.sln
       platform: $(BuildPlatform)
       configuration: $(BuildConfiguration)
