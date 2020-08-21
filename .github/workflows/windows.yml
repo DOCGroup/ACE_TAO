@@ -96,17 +96,11 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: MPC
-    - name: checkout vcpkg
-      uses: actions/checkout@v2
-      with:
-        repository: Microsoft/vcpkg
-        path: vcpkg
     - name: Install vcpkg
-      run: |
-        cd ${env:VCPKG_ROOT}
-        .\bootstrap-vcpkg.bat
-        .\vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
-      shell: pwsh
+      uses: lukka/run-vcpkg@v3
+      with:
+        vcpkgGitCommitId: 6185aa76504a5025f36754324abf307cc776f3da
+        vcpkgArguments: --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
