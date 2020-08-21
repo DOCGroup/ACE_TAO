@@ -129,6 +129,6 @@ jobs:
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1.0.1
     - name: Build solution TAO/TAO_ACE.sln
-      run: msbuild -maxcpucount -p:PlatformTarget=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
-      run: msbuild -maxcpucount -p:PlatformTarget=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
