@@ -105,6 +105,7 @@ jobs:
       '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
     displayName: Create config.h file
   - powershell: |
+      echo "ipv6=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
       echo "openssl11=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
