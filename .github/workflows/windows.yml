@@ -1,0 +1,142 @@
+name: windows
+
+on:
+  push:
+  pull_request:
+  schedule:
+    - cron: '0 7 * * SUN'
+
+jobs:
+  build:
+    strategy:
+      matrix:
+        include:
+          - name: VS2017WChar
+            vmimage: windows-2016
+            mpctype: vs2017
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug\lib
+            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+            OptionalFeatures: uses_wchar=1
+          - name: VS2017Debug64
+            vmimage: windows-2016
+            mpctype: vs2017
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug\lib
+            vcpkgpackages: openssl xerces-c
+          - name: VS2017Release64
+            vmimage: windows-2016
+            mpctype: vs2017
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: openssl xerces-c
+          - name: VS2019WChar
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug\lib
+            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+            OptionalFeatures: uses_wchar=1
+          - name: VS2019Debug64
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug\lib
+            vcpkgpackages: openssl xerces-c
+          - name: VS2019Release64
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: openssl xerces-c
+          - name: VS2019Debug32
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: Win32
+            BuildConfiguration: Debug
+            vcpkgarch: x86-windows
+            vcpkglibdir: debug\lib
+            vcpkgpackages: openssl xerces-c
+          - name: VS2019Release32
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: Win32
+            BuildConfiguration: Release
+            vcpkgarch: x86-windows
+            vcpkglibdir: lib
+            vcpkgpackages: openssl xerces-c
+    runs-on: ${{ matrix.vmimage }}
+    name: ${{ matrix.name }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+      VCPKG_ROOT: ${{ github.workspace }}/vcpkg
+      XERCESC_INCDIR: ${{ github.workspace }}/installed/${{ matrix.vcpkgarch }}/include
+      XERCESC_LIBDIR: ${{ github.workspace }}/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      SSL_INCDIR: ${{ github.workspace }}/installed/${{ matrix.vcpkgarch }}/include
+      SSL_LIBDIR: ${{ github.workspace }}/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v2
+    - name: checkout MPC
+      uses: actions/checkout@v2
+      with:
+        repository: DOCGroup/MPC
+        path: MPC
+    - name: checkout vcpkg
+      uses: actions/checkout@v2
+      with:
+        repository: Microsoft/vcpkg
+        path: vcpkg
+    - name: Install additional packages using vcpkg
+      run: |
+        ${env:VCPKG_ROOT}\bootstrap-vcpkg.bat
+        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${env:vcpkgarch} ${env:vcpkgpackages}
+      shell: pwsh
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        echo "ipv6=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "xerces3=1" | out-file -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh
