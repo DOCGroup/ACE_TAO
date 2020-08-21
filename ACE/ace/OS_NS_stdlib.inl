@@ -33,7 +33,6 @@ ACE_OS::_exit (int status)
   ::_exit (status);
 #else
   ACE_UNUSED_ARG (status);
-
 #endif /* ACE_VXWORKS */
 }
 
