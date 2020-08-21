@@ -117,7 +117,7 @@ jobs:
       run: |
         echo "${{ matrix.OptionalFeatures }}" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
-      if: ${{ matrix.OptionalFeatures }} != ''
+      if: matrix.OptionalFeatures != ''
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
