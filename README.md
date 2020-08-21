@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.com/DOCGroup/ACE_TAO.svg?branch=master)](https://travis-ci.com/DOCGroup/ACE_TAO)
 [![Linux CI](https://github.com/DOCGroup/ACE_TAO/workflows/linux/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Alinux)
 [![Windows CI](https://github.com/DOCGroup/ACE_TAO/workflows/windows/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Awindows)
-[![Fuzz CI](https://github.com/DOCGroup/ACE_TAO/workflows/fuzzr/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Afuzzr)
+[![Fuzz CI](https://github.com/DOCGroup/ACE_TAO/workflows/fuzz/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Afuzz)
 [![MacOSX CI](https://github.com/DOCGroup/ACE_TAO/workflows/macosx/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Amacosx)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
 [![CodeFactor](https://www.codefactor.io/repository/github/docgroup/ace_tao/badge)](https://www.codefactor.io/repository/github/docgroup/ace_tao)
