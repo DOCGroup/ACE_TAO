@@ -17,43 +17,78 @@ resources:
   fetchDepth: 1
 
 jobs:
-- job: VisualStudio2019
+- job: Windows
   timeoutInMinutes: 120
-  pool:
-    vmImage: windows-2019
   strategy:
     matrix:
-      WChar:
+      VS2019WChar:
+        vmimage: windows-2019
+        mpctype: vs2019
         BuildPlatform: x64
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
         vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
         OptionalFeatures: uses_wchar=1
-      Debug64:
+      VS2019Debug64:
+        vmimage: windows-2019
+        mpctype: vs2019
         BuildPlatform: x64
         BuildConfiguration: Debug
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
         vcpkgpackages: openssl xerces-c
-      Release64:
+      VS2019Release64:
+        vmimage: windows-2019
+        mpctype: vs2019
         BuildPlatform: x64
         BuildConfiguration: Release
         vcpkgarch: x64-windows
         vcpkglibdir: lib
         vcpkgpackages: openssl xerces-c
-      Debug32:
+      VS2019Debug32:
+        vmimage: windows-2019
+        mpctype: vs2019
         BuildPlatform: Win32
         BuildConfiguration: Debug
         vcpkgarch: x86-windows
         vcpkglibdir: debug\lib
         vcpkgpackages: openssl xerces-c
-      Release32:
+      VS2019Release32:
+        vmimage: windows-2019
+        mpctype: vs2019
         BuildPlatform: Win32
         BuildConfiguration: Release
         vcpkgarch: x86-windows
         vcpkglibdir: lib
         vcpkgpackages: openssl xerces-c
+      VS2017WChar:
+        vmimage: vs2017-win2016
+        mpctype: vs2017
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+        vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+        OptionalFeatures: uses_wchar=1
+      VS2017WChar:
+        vmimage: vs2017-win2016
+        mpctype: vs2017
+        BuildPlatform: x64
+        BuildConfiguration: Debug
+        vcpkgarch: x64-windows
+        vcpkglibdir: debug\lib
+        vcpkgpackages: openssl xerces-c
+      VS2017WChar:
+        vmimage: vs2017-win2016
+        mpctype: vs2017
+        BuildPlatform: x64
+        BuildConfiguration: Release
+        vcpkgarch: x64-windows
+        vcpkglibdir: lib
+        vcpkgpackages: openssl xerces-c
+  pool:
+    vmImage: $(vmimage)
   variables:
     VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
     XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
@@ -81,81 +116,9 @@ jobs:
     condition: and(succeeded(), ne(variables['OptionalFeatures'], ''))
   - powershell: git clone -q --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
     displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2019 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type $(mpctype) $(TAO_ROOT)/TAO_ACE.mwc -workers 4
     displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2019 $(ACE_ROOT)/tests/tests.mwc -workers 4
-    displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
-  - task: VSBuild@1
-    displayName: Build solution TAO/TAO_ACE.sln
-    inputs:
-      solution: TAO/TAO_ACE.sln
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
-      maximumCpuCount: true
-  - task: VSBuild@1
-    displayName: Build solution ACE/tests/tests.sln
-    inputs:
-      solution: ACE/tests/tests.sln
-      platform: $(BuildPlatform)
-      configuration: $(BuildConfiguration)
-      maximumCpuCount: true
-
-- job: VisualStudio2017
-  timeoutInMinutes: 120
-  pool:
-    vmImage: vs2017-win2016
-  strategy:
-    matrix:
-      WChar:
-        BuildPlatform: x64
-        BuildConfiguration: Debug
-        vcpkgarch: x64-windows
-        vcpkglibdir: debug\lib
-        vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
-        OptionalFeatures: uses_wchar=1
-      Debug64:
-        BuildPlatform: x64
-        BuildConfiguration: Debug
-        vcpkgarch: x64-windows
-        vcpkglibdir: debug\lib
-        vcpkgpackages: openssl xerces-c
-      Release64:
-        BuildPlatform: x64
-        BuildConfiguration: Release
-        vcpkgarch: x64-windows
-        vcpkglibdir: lib
-        vcpkgpackages: openssl xerces-c
-  variables:
-    VCPKG_ROOT: $(Build.SourcesDirectory)\vcpkg
-    XERCESC_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
-    XERCESC_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
-    SSL_INCDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\include
-    SSL_LIBDIR: $(VCPKG_ROOT)\installed\$(vcpkgarch)\$(vcpkglibdir)
-  steps:
-  - powershell: |
-      git clone --depth 1 git://github.com/Microsoft/vcpkg.git $(VCPKG_ROOT)
-      $(VCPKG_ROOT)\bootstrap-vcpkg.bat
-      $(VCPKG_ROOT)\vcpkg install --recurse --triplet $(vcpkgarch) $(vcpkgpackages)
-    displayName: Install additional packages using vcpkg
-  - powershell: |
-      '#include "ace/config-win32.h"' > $(ACE_ROOT)/ace/config.h
-    displayName: Create config.h file
-  - powershell: |
-      echo "xerces3=1" | out-file -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-      echo "ssl=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-      echo "openssl11=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-      echo "versioned_namespace=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-      echo "ipv6=1" | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-    displayName: Create default.features file
-  - powershell: |
-      echo $(OptionalFeatures) | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
-    displayName: Add optional features ($(OptionalFeatures))
-    condition: and(succeeded(), ne(variables['OptionalFeatures'], ''))
-  - powershell: git clone --depth 1 git://github.com/DOCGroup/MPC.git $(MPC_ROOT)
-    displayName: git clone MPC
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(TAO_ROOT)/TAO_ACE.mwc -workers 4
-    displayName: Run script mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
-  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type vs2017 $(ACE_ROOT)/tests/tests.mwc -workers 4
+  - powershell: perl $(ACE_ROOT)/bin/mwc.pl -type $(mpctype) $(ACE_ROOT)/tests/tests.mwc -workers 4
     displayName: Run script mwc.pl on $(ACE_ROOT)/tests/tests.mwc
   - task: VSBuild@1
     displayName: Build solution TAO/TAO_ACE.sln
