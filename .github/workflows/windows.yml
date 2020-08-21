@@ -96,26 +96,17 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: MPC
-    - name: checkout vcpkg
-      uses: actions/checkout@v2
+    - name: Install vcpkg
+      uses: lukka/run-vcpkg@v3
       with:
-        repository: Microsoft/vcpkg
-        path: vcpkg
-    - name: Install additional packages using vcpkg
+        setupOnly: true
+    - name: Install vcpkg packages
       run: |
-        ${env:VCPKG_ROOT}\bootstrap-vcpkg.bat
-        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${env:vcpkgarch} ${env:vcpkgpackages}
+        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${matrix.vcpkgarch} ${matrix.vcpkgpackages}
       shell: pwsh
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
-      shell: pwsh
-    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
-      run: |
-        'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
