@@ -100,7 +100,8 @@ jobs:
       uses: lukka/run-vcpkg@v3
       with:
         vcpkgGitCommitId: 6185aa76504a5025f36754324abf307cc776f3da
-        vcpkgArguments: --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
+        vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
+        vcpkgTriplet: ${{ matrix.vcpkgarch }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
