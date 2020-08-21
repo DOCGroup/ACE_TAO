@@ -124,6 +124,12 @@ jobs:
         echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
+
+  - powershell: |
+      echo $(OptionalFeatures) | out-file -append -encoding ASCII $(ACE_ROOT)\bin\MakeProjectCreator\config\default.features
+    displayName: Add optional features ($(OptionalFeatures))
+    condition: and(succeeded(), ne(variables['OptionalFeatures'], ''))
+
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
@@ -132,11 +138,17 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
-    - name: Build TAO_ACE project
-      run: |
-        make -j 6 -C ${env:TAO_ROOT}
-      shell: pwsh
-    - name: Build ACE/tests project
-      run: |
-        make -j 6 -C ${env:ACE_ROOT}/tests
-      shell: pwsh
+    - name: Add msbuild to PATH
+      uses: microsoft/setup-msbuild@v1.0.1
+    - name: Build solution TAO/TAO_ACE.sln
+    inputs:
+      solution: TAO/TAO_ACE.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
+    - name: Build solution ACE/tests/tests.sln
+    inputs:
+      solution: ACE/tests/tests.sln
+      platform: $(BuildPlatform)
+      configuration: $(BuildConfiguration)
+      maximumCpuCount: true
