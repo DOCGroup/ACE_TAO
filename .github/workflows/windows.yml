@@ -96,12 +96,14 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: MPC
-    - name: Install vcpkg
-      uses: lukka/run-vcpkg@v3
+    - name: checkout vcpkg
+      uses: actions/checkout@v2
       with:
-        setupOnly: true
-    - name: Install vcpkg packages
+        repository: Microsoft/vcpkg
+        path: vcpkg
+    - name: Install vcpkg
       run: |
+        ${env:VCPKG_ROOT}\bootstrap-vcpkg.bat
         ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
       shell: pwsh
     - name: create $ACE_ROOT/ace/config.h
