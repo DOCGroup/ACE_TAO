@@ -71,7 +71,7 @@ jobs:
         vcpkglibdir: debug\lib
         vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
         OptionalFeatures: uses_wchar=1
-      VS2017WChar:
+      VS2017Debug64:
         vmimage: vs2017-win2016
         mpctype: vs2017
         BuildPlatform: x64
@@ -79,7 +79,7 @@ jobs:
         vcpkgarch: x64-windows
         vcpkglibdir: debug\lib
         vcpkgpackages: openssl xerces-c
-      VS2017WChar:
+      VS2017Release64:
         vmimage: vs2017-win2016
         mpctype: vs2017
         BuildPlatform: x64
