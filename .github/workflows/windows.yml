@@ -102,7 +102,7 @@ jobs:
         setupOnly: true
     - name: Install vcpkg packages
       run: |
-        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${matrix.vcpkgarch} ${matrix.vcpkgpackages}
+        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
       shell: pwsh
     - name: create $ACE_ROOT/ace/config.h
       run: |
