@@ -132,8 +132,5 @@ jobs:
       shell: pwsh
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount TAO/TAO_ACE.sln
-      configuration: $(BuildConfiguration)
-      maximumCpuCount: true
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount ACE/tests/tests.sln
-      configuration: $(BuildConfiguration)
