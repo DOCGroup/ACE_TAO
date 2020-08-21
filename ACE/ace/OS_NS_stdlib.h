@@ -180,7 +180,7 @@ namespace ACE_OS {
   void *calloc (size_t elements, size_t sizeof_elements);
 
   extern ACE_Export
-  void exit (int status = 0);
+  void exit (int status = 0) ACE_GCC_NO_RETURN;
 
   extern ACE_Export
   void free (void *);
