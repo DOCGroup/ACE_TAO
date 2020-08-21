@@ -17,7 +17,7 @@ jobs:
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
-            vcpkglibdir: debug\lib
+            vcpkglibdir: debug/lib
             vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
             OptionalFeatures: uses_wchar=1
           - name: VS2017Debug64
@@ -26,7 +26,7 @@ jobs:
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
-            vcpkglibdir: debug\lib
+            vcpkglibdir: debug/lib
             vcpkgpackages: openssl xerces-c
           - name: VS2017Release64
             vmimage: windows-2016
@@ -42,7 +42,7 @@ jobs:
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
-            vcpkglibdir: debug\lib
+            vcpkglibdir: debug/lib
             vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
@@ -51,7 +51,7 @@ jobs:
             BuildPlatform: x64
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
-            vcpkglibdir: debug\lib
+            vcpkglibdir: debug/lib
             vcpkgpackages: openssl xerces-c
           - name: VS2019Release64
             vmimage: windows-2019
@@ -67,7 +67,7 @@ jobs:
             BuildPlatform: Win32
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
-            vcpkglibdir: debug\lib
+            vcpkglibdir: debug/lib
             vcpkgpackages: openssl xerces-c
           - name: VS2019Release32
             vmimage: windows-2019
@@ -103,8 +103,8 @@ jobs:
         path: vcpkg
     - name: Install vcpkg
       run: |
-        ${env:VCPKG_ROOT}\bootstrap-vcpkg.bat
-        ${env:VCPKG_ROOT}\vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
+        ${env:VCPKG_ROOT}/bootstrap-vcpkg.bat
+        ${env:VCPKG_ROOT}/vcpkg install --recurse --triplet ${{ matrix.vcpkgarch }} ${{ matrix.vcpkgpackages }}
       shell: pwsh
     - name: create $ACE_ROOT/ace/config.h
       run: |
