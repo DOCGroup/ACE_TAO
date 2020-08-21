@@ -43,13 +43,12 @@ run_main (int, ACE_TCHAR *[])
 
   int result = 0;
 
-  auto_ptr<ACE_Reactor> reactor(
-      new ACE_Reactor(new ACE_Select_Reactor, 1));
-
 #if defined ACE_HAS_CPP11
+  std::unique_ptr<ACE_Reactor> reactor(new ACE_Reactor(new ACE_Select_Reactor, 1));
   ACE_Event_Handler_var v =
     ACE::make_event_handler<Simple_Handler> (reactor.get());
 #else
+  auto_ptr<ACE_Reactor> reactor(new ACE_Reactor(new ACE_Select_Reactor, 1));
   ACE_Event_Handler_var v(
       new Simple_Handler(reactor.get()));
 #endif

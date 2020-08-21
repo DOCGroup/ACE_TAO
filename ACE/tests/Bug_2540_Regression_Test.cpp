@@ -105,7 +105,11 @@ run_main (int, ACE_TCHAR *[])
   // happen with ACE_WFMO_Reactor.
   ACE_Select_Reactor *impl_ptr = 0;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
+#if defined (ACE_HAS_CPP11)
+  std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+#else
   auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+#endif
 
   ACE_Reactor reactor (impl_ptr);
 
