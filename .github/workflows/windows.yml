@@ -128,15 +128,12 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
-    - name: Add msbuild to PATH
-      uses: microsoft/setup-msbuild@v1.0.1
+    - uses :microsoft/setup-msbuild@v1.0.1
+      arch: ${{ matrix.BuildPlatform }}
     - name: Build solution TAO/TAO_ACE.sln
-      solution: TAO/TAO_ACE.sln
-      platform: $(BuildPlatform)
+      run: msbuild -maxcpucount TAO/TAO_ACE.sln
       configuration: $(BuildConfiguration)
       maximumCpuCount: true
     - name: Build solution ACE/tests/tests.sln
-      solution: ACE/tests/tests.sln
-      platform: $(BuildPlatform)
+      run: msbuild -maxcpucount ACE/tests/tests.sln
       configuration: $(BuildConfiguration)
-      maximumCpuCount: true
