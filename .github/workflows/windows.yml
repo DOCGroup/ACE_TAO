@@ -96,8 +96,6 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: MPC
-    - name: Setup Visual Studio
-      uses: microsoft/setup-msbuild@v1.0.1
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v3
       with:
@@ -124,13 +122,15 @@ jobs:
       if: ${{ matrix.OptionalFeatures }} != ''
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
       shell: pwsh
     - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
+    - name: Setup msbuild
+      uses: microsoft/setup-msbuild@v1.0.1
     - name: Build solution TAO/TAO_ACE.sln
-      run: msbuild -maxcpucount TAO/TAO_ACE.sln
+      run: msbuild -maxcpucount -p:PlatformTarget=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
-      run: msbuild -maxcpucount ACE/tests/tests.sln
+      run: msbuild -maxcpucount -p:PlatformTarget=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
