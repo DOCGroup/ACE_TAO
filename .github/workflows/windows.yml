@@ -96,6 +96,8 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: MPC
+    - name: Setup Visual Studio
+      uses: microsoft/setup-msbuild@v1.0.1
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v3
       with:
@@ -128,8 +130,6 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type {{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
-    - uses :microsoft/setup-msbuild@v1.0.1
-      arch: ${{ matrix.BuildPlatform }}
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount TAO/TAO_ACE.sln
       configuration: $(BuildConfiguration)
