@@ -73,7 +73,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          if (CORBA::is_nil(obj))
          {
             std::cout << "CORBA::is_nil(Hello_ptr) returned false!\n"
-                      << "CORBA::is_nil(Object_ptr) returned true!" 
+                      << "CORBA::is_nil(Object_ptr) returned true!"
                       << std::endl;
          }
          CORBA::String_var aString = helloRef->get_string();
