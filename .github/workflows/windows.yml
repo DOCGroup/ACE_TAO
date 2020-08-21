@@ -120,7 +120,7 @@ jobs:
       shell: pwsh
     - name: Add optional features ${{ matrix.OptionalFeatures }}
       run: |
-        echo ${{ matrix.OptionalFeatures }} | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "${{ matrix.OptionalFeatures }}" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
       if: ${{ matrix.OptionalFeatures }} != ''
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
