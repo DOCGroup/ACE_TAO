@@ -102,6 +102,7 @@ jobs:
         vcpkgGitCommitId: f6948aeb686c015d7b582aa4d76702a2f92602b1
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
+        appendedCacheKey: ${{ matrix.name }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
