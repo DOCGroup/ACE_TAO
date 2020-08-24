@@ -73,8 +73,39 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
+          - FEATURE: CORBA/e micro
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: corba_e_micro=1
+            optional_macros: corba_e_micro=1
+          - FEATURE: CORBA/e compact
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: corba_e_compact=1
+            optional_macros: corba_e_compact=1
+          - FEATURE: ACE for TAO
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: ace_for_tao=1
+            optional_macros: ace_for_tao=1
+          - FEATURE: wchar
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: uses_wchar=1
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.FEATURE }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
@@ -102,16 +133,24 @@ jobs:
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
+    - name: create optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      if: matrix.optional_macros != ''
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
-        'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'ipv6=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
+    - name: create optional optional feature
+      run: |
+        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      if: matrix.optional_feature != ''
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
-        'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'ipv6=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'xerces3=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
