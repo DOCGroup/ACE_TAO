@@ -40,7 +40,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
           - CC: clang-5.0
             CXX: clang++-5.0
             PackageDeps: clang-5.0
@@ -72,7 +72,7 @@ jobs:
             PackageDeps: clang-10
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
           - feature: CORBAe micro
             CC: gcc-10
             CXX: g++-10
@@ -102,7 +102,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
             optional_feature: uses_wchar=1
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
