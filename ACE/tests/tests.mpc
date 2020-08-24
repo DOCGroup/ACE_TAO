@@ -2285,6 +2285,7 @@ project(Missing_Svc_Conf_Test) : acetest {
 }
 
 project(UNIX Addr Test) : acetest {
+  avoids += ace_for_tao
   exename = UNIX_Addr_Test
   Source_Files {
     UNIX_Addr_Test.cpp
