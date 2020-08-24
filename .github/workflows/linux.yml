@@ -133,26 +133,31 @@ jobs:
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
-    - name: create optional optional macros
-      run: |
-        '${{ matrix.optional_macros }}' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         'ipv6=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
-    - name: create optional optional feature
+    - name: add optional optional macros
       run: |
-        '${{ matrix.optional_feature }}' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      if: matrix.optional_macros != ''
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
-        'ipv6=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'xerces3=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
+    - name: add optional optional feature
+      run: |
+        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      if: matrix.optional_feature != ''
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
