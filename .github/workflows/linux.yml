@@ -146,6 +146,7 @@ jobs:
     - name: add optional optional macros
       run: |
         '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
       if: matrix.optional_macros != ''
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
