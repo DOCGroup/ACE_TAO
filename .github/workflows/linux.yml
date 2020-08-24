@@ -73,39 +73,8 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
-          - FEATURE: CORBA/e micro
-            CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-            optional_feature: corba_e_micro=1
-            optional_macros: corba_e_micro=1
-          - FEATURE: CORBA/e compact
-            CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-            optional_feature: corba_e_compact=1
-            optional_macros: corba_e_compact=1
-          - FEATURE: ACE for TAO
-            CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-            optional_feature: ace_for_tao=1
-            optional_macros: ace_for_tao=1
-          - FEATURE: wchar
-            CC: gcc-10
-            CXX: g++-10
-            PackageDeps: g++-10
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
-            optional_feature: uses_wchar=1
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.FEATURE }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
