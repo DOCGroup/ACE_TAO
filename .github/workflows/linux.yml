@@ -78,7 +78,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
             optional_feature: corba_e_micro=1
             optional_macros: corba_e_micro=1
           - feature: CORBAe compact
@@ -86,7 +86,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
             optional_feature: corba_e_compact=1
             optional_macros: corba_e_compact=1
           - feature: ACE for TAO
@@ -94,7 +94,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
             optional_feature: ace_for_tao=1
             optional_macros: ace_for_tao=1
           - feature: wchar
