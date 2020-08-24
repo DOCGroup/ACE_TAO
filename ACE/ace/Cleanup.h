@@ -146,7 +146,6 @@ private:
   ACE_Cleanup_Info_Node_List registered_objects_;
 };
 
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_HAS_INLINED_OSCALLS)
