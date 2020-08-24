@@ -32,10 +32,9 @@ jobs:
       run: |
         '#include "ace/config-macosx.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
-    - name: Add c++11 to platform_macros.GNU
-      if: matrix.cxxstd == 11
+    - name: Add c++${{ matrix.cxxstd }} platform_macros.GNU
       run: |
-        'c++11=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'c++${{ matrix.cxxstd }}=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
