@@ -98,12 +98,13 @@ jobs:
             optional_feature: ace_for_tao=1
             optional_macros: ace_for_tao=1
           - feature: wchar
-            CC: gcc-9
-            CXX: g++-9
-            PackageDeps: g++-9
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-20.04
             optional_feature: uses_wchar=1
+            optional_macros: inline=0
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
