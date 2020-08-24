@@ -135,8 +135,7 @@ jobs:
       shell: pwsh
     - name: create optional optional macros
       run: |
-        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-      if: matrix.optional_macros != ''
+        '${{ matrix.optional_macros }}' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         'ipv6=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
@@ -146,8 +145,7 @@ jobs:
       shell: pwsh
     - name: create optional optional feature
       run: |
-        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
-      if: matrix.optional_feature != ''
+        '${{ matrix.optional_feature }}' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         'ipv6=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
