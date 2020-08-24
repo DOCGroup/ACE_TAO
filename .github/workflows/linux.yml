@@ -134,13 +134,9 @@ jobs:
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
-    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
-      run: |
-        '${{ matrix.platform_file }}' >  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-      shell: pwsh
     - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
-        'ipv6=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
@@ -149,6 +145,10 @@ jobs:
         '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
       if: matrix.optional_macros != ''
+    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
