@@ -429,7 +429,7 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
         ++curarg;
         if (curarg < argc)
           {
-            int tmp = ACE_OS::atoi (argv[curarg]);
+            int const tmp = ACE_OS::atoi (argv[curarg]);
 
             if (tmp == 0)
               this->drop_replies_ = false;

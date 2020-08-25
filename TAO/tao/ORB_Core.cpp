@@ -698,7 +698,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBPreferIPV6Interfaces"))))
         {
-          int prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
+          int const prefer_ipv6_interfaces = ACE_OS::atoi (current_arg);
           if (prefer_ipv6_interfaces)
             this->orb_params ()->prefer_ipv6_interfaces (true);
           else
@@ -709,7 +709,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBConnectIPV6Only"))))
         {
-          int connect_ipv6_only = ACE_OS::atoi (current_arg);
+          int const connect_ipv6_only = ACE_OS::atoi (current_arg);
           if (connect_ipv6_only)
             this->orb_params ()->connect_ipv6_only (true);
           else
@@ -720,7 +720,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if ((current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBUseIPV6LinkLocal"))))
         {
-          int use_ipv6_link_local = ACE_OS::atoi (current_arg);
+          int const use_ipv6_link_local = ACE_OS::atoi (current_arg);
           if (use_ipv6_link_local)
             this->orb_params ()->use_ipv6_link_local (true);
           else
@@ -1105,7 +1105,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardInvocationOnObjectNotExist"))))
         {
-          int forward = ACE_OS::atoi (current_arg);
+          int const forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_invocation_on_object_not_exist (true);
           else
@@ -1116,14 +1116,14 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnTransientLimit"))))
         {
-          int limit = ACE_OS::atoi (current_arg);
+          int const limit = ACE_OS::atoi (current_arg);
           this->orb_params_.forward_on_exception_limit (TAO::FOE_TRANSIENT, limit);
           arg_shifter.consume_arg ();
         }
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT("-ORBForwardOnCommFailureLimit"))))
         {
-          int limit = ACE_OS::atoi (current_arg);
+          int const limit = ACE_OS::atoi (current_arg);
           this->orb_params_.forward_on_exception_limit (
                               TAO::FOE_COMM_FAILURE, limit);
           arg_shifter.consume_arg ();
@@ -1131,7 +1131,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT("-ORBForwardOnObjectNotExistLimit"))))
         {
-          int limit = ACE_OS::atoi (current_arg);
+          int const limit = ACE_OS::atoi (current_arg);
           this->orb_params_.forward_on_exception_limit (
                               TAO::FOE_OBJECT_NOT_EXIST, limit);
           arg_shifter.consume_arg ();
@@ -1139,7 +1139,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnInvObjrefLimit"))))
         {
-          int limit = ACE_OS::atoi (current_arg);
+          int const limit = ACE_OS::atoi (current_arg);
           this->orb_params_.forward_on_exception_limit (
                               TAO::FOE_INV_OBJREF, limit);
           arg_shifter.consume_arg ();
@@ -1147,7 +1147,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT("-ORBForwardOnReplyClosedLimit"))))
         {
-          int limit = ACE_OS::atoi (current_arg);
+          int const limit = ACE_OS::atoi (current_arg);
           this->orb_params_.invocation_retry_params ()
             .forward_on_reply_closed_limit_ = limit;
           arg_shifter.consume_arg ();
@@ -1155,7 +1155,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardDelay"))))
         {
-          int msecs = ACE_OS::atoi (current_arg);
+          int const msecs = ACE_OS::atoi (current_arg);
           ACE_Time_Value delay(0, 1000*msecs);
           this->orb_params_.forward_on_exception_delay (delay);
           arg_shifter.consume_arg ();
@@ -1163,7 +1163,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                      (ACE_TEXT("-ORBForwardOnceOnObjectNotExist"))))
         {
-          int forward = ACE_OS::atoi (current_arg);
+          int const forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
 
@@ -1172,7 +1172,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnCommFailure"))))
         {
-          int forward = ACE_OS::atoi (current_arg);
+          int const forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
 
@@ -1181,7 +1181,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (0 != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBForwardOnceOnTransient"))))
         {
-          int forward = ACE_OS::atoi (current_arg);
+          int const forward = ACE_OS::atoi (current_arg);
           if (forward)
             this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
 
