@@ -157,7 +157,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                     }
                   open_mode |= RTLD_MEMBER;
 
-                  if (this->open_i (aix_pathname, open_mode))
+                  if (this->open_i (aix_pathname, open_mode, errors))
                     break;
                 }
 #endif /* AIX */
