@@ -1230,7 +1230,7 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                           -1);
       if (name == "portspan")
         {
-          int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
+          int const range = ACE_OS::atoi (value.c_str ());
           // @@ What's the lower bound on the range?  zero, or one?
           if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
             TAOLIB_ERROR_RETURN ((LM_ERROR,

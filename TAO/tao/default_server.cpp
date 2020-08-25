@@ -129,7 +129,7 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
             else
               {
                 this->thread_per_connection_use_timeout_ = 1;
-                int milliseconds = ACE_OS::atoi (name);
+                int const milliseconds = ACE_OS::atoi (name);
                 this->thread_per_connection_timeout_.set (0,
                                                           1000 * milliseconds);
               }
