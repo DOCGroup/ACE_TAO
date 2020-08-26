@@ -47,19 +47,16 @@ template <class X>
 class ACE_Intrusive_Auto_Ptr
 {
 protected:
-
-    /// Used to define a proper boolean conversion for "if (sp) ..."
+  /// Used to define a proper boolean conversion for "if (sp) ..."
   static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){};
   typedef void (*unspecified_bool_type)(ACE_Intrusive_Auto_Ptr<X>***);
 
 public:
-
   /// Enables "if (sp) ..."
   operator unspecified_bool_type() const
     {
         return rep_ == 0 ? 0: unspecified_bool;
     }
-
 
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
@@ -103,14 +100,10 @@ public:
    /// Get the reference count value.
   long count (void) const;
 
-  /// Returns @c true if this object does not contain a valid pointer.
-  //  bool null (void) const;
-
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Protect operations on the ACE_Intrusive_Auto_Ptr.
   X *rep_;
 };
