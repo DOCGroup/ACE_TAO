@@ -27,7 +27,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
-        path: MPC
+        path: ${{ env.MPC_ROOT }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-macosx.h"' > ${env:ACE_ROOT}/ace/config.h
