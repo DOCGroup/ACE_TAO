@@ -1,9 +1,5 @@
 #include "TestC.h"
 #include "ace/Get_Opt.h"
-#include "tao/ORB_Core.h"
-#include "ace/Reactor.h"
-#include "ace/Event_Handler.h"
-#include <iostream>
 
 const ACE_TCHAR *ior = ACE_TEXT ("file://test.ior");
 
