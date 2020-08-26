@@ -1496,14 +1496,18 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       {
         if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
           {
-            ACE_Thread_Descriptor_Base *tdbl = biter.advance_and_remove (false);
+#if defined (ACE_HAS_CPP11)
+            std::unique_ptr<ACE_Thread_Descriptor_Base> tdbl (biter.advance_and_remove (false));
+#else
+            auto_ptr<ACE_Thread_Descriptor_Base> tdbl (biter.advance_and_remove (false));
+#endif /* ACE_HAS_CPP11 */
+            ace_mon.release();
 #ifndef ACE_LACKS_PTHREAD_JOIN
             if (ACE_Thread::join (tdbl->thr_handle_, status) == -1)
               {
                 return -1;
               }
 #endif
-            delete tdbl;
 
             // return immediately if we've found the thread we want to join.
             return 0;
