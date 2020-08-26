@@ -31,7 +31,7 @@ int parse_args (int argc, ACE_TCHAR *argv[])
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
-{  
+{
   try
   {
     CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
@@ -50,9 +50,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          ior),
                         -1);
     }
-    
+
     Echo::List_var list = echo->return_list();
-     
+
     ACE_DEBUG ((LM_DEBUG,
                 "Received list of length %u\n",
                 list->length()));
@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
        ACE_ERROR_RETURN ((LM_ERROR, "Expected \"Hello World\""), -1);
     }
-    
+
     echo->shutdown ();
     orb->destroy ();
   }
