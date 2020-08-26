@@ -40,7 +40,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
           - CC: clang-5.0
             CXX: clang++-5.0
             PackageDeps: clang-5.0
@@ -73,8 +73,40 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
+          - feature: CORBA/e micro
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-18.04
+            optional_feature: corba_e_micro=1
+            optional_macros: corba_e_micro=1
+          - feature: CORBA/e compact
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-18.04
+            optional_feature: corba_e_compact=1
+            optional_macros: corba_e_compact=1
+          - feature: ACE for TAO
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: ace_for_tao=1
+            optional_macros: ace_for_tao=1
+          - feature: wchar
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: uses_wchar=1
+            optional_macros: inline=0
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
@@ -107,6 +139,14 @@ jobs:
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: add optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.optional_macros != ''
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
         '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
@@ -115,6 +155,11 @@ jobs:
         'xerces3=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: add optional optional feature
+      run: |
+        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      if: matrix.optional_feature != ''
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
