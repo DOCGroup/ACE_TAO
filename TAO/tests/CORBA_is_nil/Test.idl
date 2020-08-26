@@ -16,6 +16,5 @@ module Test
      * This method is used to simplify the test shutdown process
      */
     oneway void shutdown ();
-//    void shutdown ();
   };
 };

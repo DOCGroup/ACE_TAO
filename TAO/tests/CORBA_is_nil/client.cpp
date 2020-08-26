@@ -58,13 +58,16 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var the_string = hello->get_string ();
 
-      std::cout << "Hello from file IOR: " << the_string.in() << std::endl;
+      ACE_DEBUG ((LM_DEBUG,
+                  "Hello from file IOR: %s\n",
+                  the_string.in()));
 
       Test::Hello_var helloRef = hello->get_Hello();
 
       if (CORBA::is_nil(helloRef.in()))
       {
-         std::cout << "Correctly detected nil Object reference." << std::endl;
+         ACE_DEBUG ((LM_DEBUG,
+                     ACE_TEXT("Correctly detected nil Object reference.\n")));
          process_result = 0;
       }
       else
@@ -72,12 +75,15 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          CORBA::Object_ptr obj = helloRef.in();
          if (CORBA::is_nil(obj))
          {
-            std::cout << "CORBA::is_nil(Hello_ptr) returned false!\n"
-                      << "CORBA::is_nil(Object_ptr) returned true!"
-                      << std::endl;
+            ACE_DEBUG ((LM_DEBUG,
+                        "ERROR (causes exception further down):\n%s\n$s\n",
+                        "CORBA::is_nil(Hello_ptr) returned false!"
+                        "CORBA::is_nil(Object_ptr) returned true!"));
          }
          CORBA::String_var aString = helloRef->get_string();
-         std::cout << "Received Hello: " << aString.in() << std::endl;
+         ACE_DEBUG ((LM_DEBUG,
+                     "Received Hello: %s\n",
+                     aString.in()));
       }
 
       hello->shutdown ();
@@ -92,4 +98,3 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
   return process_result;
 }
-

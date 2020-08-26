@@ -15,7 +15,9 @@ produces the corrcet result.
 
 This test has the server return a nil object reference and the client
 uses lazy resource usage, to comfirm that CORBA::is_nil corrcetly
-identifies the nil object reference.
+identifies the nil object reference. See issue #1203, which pointed
+out that only CORBA::Object_ptr has a template specialization for
+CORBA::is_nil, but not derived interfaces.
 
 
 

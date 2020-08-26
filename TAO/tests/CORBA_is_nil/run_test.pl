@@ -25,8 +25,20 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
+$conf_file = "svc$PerlACE::svcconf_ext";
+$client_conf = $client->LocalFile ($conf_file);
+
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-ORBSvcConf svc.conf -ORBdebuglevel $debug_level -f file://$client_iorfile");
+
+# copy the configruation file.
+if ($client->PutFile ($conf_file) == -1) {
+    print STDERR "ERROR: cannot set file <$client_conf>\n";
+    $SV->Kill (); $SV->TimedWait (1);
+    exit 1;
+}
+
+$CL = $client->CreateProcess ("client", "-ORBSvcConf $client_conf -ORBdebuglevel $debug_level -f file://$client_iorfile");
+
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
