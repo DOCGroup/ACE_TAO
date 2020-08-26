@@ -6,12 +6,11 @@ project(*idl): taoidldefaults {
   custom_only = 1
 }
 
-project(*Server): taoserver, namingexe, iortable, utils {
+project(*Server): taoserver {
   exename = server
   after += *idl
   Source_Files {
     Echo_i.cpp
-    ../../../examples/Simple/Simple_util.cpp
     server.cpp
     EchoS.cpp
     EchoC.cpp
@@ -20,12 +19,10 @@ project(*Server): taoserver, namingexe, iortable, utils {
   }
 }
 
-project(*Client): taoclient, namingexe, iortable, utils {
+project(*Client): taoclient {
   exename = client
   after += *IDL
   Source_Files {
-    Echo_Client_i.cpp
-    ../../../examples/Simple/Simple_util.cpp
     client.cpp
     EchoC.cpp
   }

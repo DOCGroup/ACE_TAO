@@ -3,22 +3,15 @@
 
 // Constructor.
 
-Echo_i::Echo_i (void)
+Echo_i::Echo_i (CORBA::ORB_ptr o)
+   : orb_(o)
 {
 }
 
 // Destructor.
 
-Echo_i::~Echo_i (void)
+Echo_i::~Echo_i ()
 {
-}
-
-// Set the ORB pointer.
-
-void
-Echo_i::orb (CORBA::ORB_ptr o)
-{
-  this->orb_ = CORBA::ORB::_duplicate (o);
 }
 
 // Return a list of strings.
@@ -33,18 +26,40 @@ Echo_i::return_list ()
     ACE_NEW_RETURN (tmp,
                     Echo::List (2),
                     0);
-    // Pass ownership to the _var, pitty that ACE_NEW_RETURN cannot
-    // assign to T_vars directly.
     list = tmp;
   }
 
   list->length (2);
 
   // Just do something to get a 'big' list of strings.
-  std::string big(4 * 1024 * 1024, 'A');
+  std::string big(4 * 1024, 'A');
   std::string small("Hello World");
   list[CORBA::ULong(0)] = CORBA::string_dup(big.c_str());
   list[CORBA::ULong(1)] = CORBA::string_dup(small.c_str());
+
+  return list._retn ();
+}
+
+Echo::WList *
+Echo_i::return_wlist ()
+{
+  Echo::WList_var list;
+
+  {
+    Echo::WList *tmp = 0;
+    ACE_NEW_RETURN (tmp,
+                    Echo::WList (2),
+                    0);
+    list = tmp;
+  }
+
+  list->length (2);
+
+  // Just do something to get a 'big' list of wide strings.
+  std::wstring big(4 * 1024, 'A');
+  std::wstring small(17, 'B');
+  list[CORBA::ULong(0)] = CORBA::wstring_dup(big.c_str());
+  list[CORBA::ULong(1)] = CORBA::wstring_dup(small.c_str());
 
   return list._retn ();
 }

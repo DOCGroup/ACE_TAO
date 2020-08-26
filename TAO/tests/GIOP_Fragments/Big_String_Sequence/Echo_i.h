@@ -6,7 +6,6 @@
  *
  *  This class implements the Echo IDL interface.
  *
- *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
 
@@ -21,28 +20,22 @@
  *
  * @brief Echo Object Implementation
  *
- * The object implementation  performs the following functions:
- * -- To return the string which needs to be displayed
- * from the server.
- * -- shuts down the server
  */
 class Echo_i : public POA_Echo
 {
 public:
   /// Constructor.
-  Echo_i (void);
+  Echo_i (CORBA::ORB_ptr o);
 
   /// Destructor.
   virtual ~Echo_i (void);
 
-  /// Return the mesg string back from the server.
+  /// Return the result sequences to the cllient.
   virtual Echo::List *return_list ();
+  virtual Echo::WList *return_wlist ();
 
   /// Shutdown the server.
   virtual void shutdown ();
-
-  /// Set the ORB pointer.
-  void orb (CORBA::ORB_ptr o);
 
 private:
   /// ORB pointer.

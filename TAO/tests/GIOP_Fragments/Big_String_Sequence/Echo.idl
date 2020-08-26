@@ -6,11 +6,13 @@ interface Echo
 {
   // = TITLE
   // Defines an interface that encapsulates an operation that returns
-  // a string sequence.
+  // a string sequence, or a wstring sequence, respectively.
 
   typedef sequence<string> List;
+  typedef sequence<wstring> WList;
 
   List return_list ();
+  WList return_wlist ();
 
   oneway void shutdown ();
 };

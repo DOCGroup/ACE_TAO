@@ -22,11 +22,12 @@ my $client = PerlACE::TestTarget::create_target (2) || die "Create target 2 fail
 my $iorbase = "server.ior";
 my $server_iorfile = $server->LocalFile ($iorbase);
 my $client_iorfile = $client->LocalFile ($iorbase);
+
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-$SV = $server->CreateProcess ("server", "-ORBMaxMessageSize 1048576 -ORBdebuglevel $debug_level -ORBLogFile server_log.txt -o $server_iorfile");
-$CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level -ORBLogFile client_log.txt -f $client_iorfile -x");
+$SV = $server->CreateProcess ("server", "-ORBMaxMessageSize 1024 -ORBdebuglevel $debug_level -o $server_iorfile");
+$CL = $client->CreateProcess ("client", "-ORBdebuglevel $debug_level -f file://$client_iorfile");
 $server_status = $SV->Spawn ();
 
 if ($server_status != 0) {
