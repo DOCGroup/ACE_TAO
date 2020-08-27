@@ -208,12 +208,12 @@
 
 #define ACE_HAS_DIRENT
 
-#define ACE_HAS_STRBUF_T
-
 #define ACE_SIZEOF_WCHAR 4
 
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_STRRECVFD
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS
