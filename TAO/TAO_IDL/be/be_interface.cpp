@@ -734,7 +734,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_interface:: gen_var_out_seq_decls (void)
+be_interface::gen_var_out_seq_decls (void)
 {
   if (this->var_out_seq_decls_gen_)
     {
