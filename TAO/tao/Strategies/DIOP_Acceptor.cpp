@@ -395,11 +395,8 @@ TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
   unsigned short const requested_port = addr.get_port_number ();
-  ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-  if (last_port > ACE_MAX_DEFAULT_PORT)
-    {
-      last_port = ACE_MAX_DEFAULT_PORT;
-    }
+  ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                        ACE_MAX_DEFAULT_PORT);
 
   ACE_INET_Addr a(addr);
   bool found_a_port = false;
@@ -1073,7 +1070,7 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int range = static_cast <int> (ACE_OS::atoi (value.c_str ()));
+              int const range = ACE_OS::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 TAOLIB_ERROR_RETURN ((LM_ERROR,
