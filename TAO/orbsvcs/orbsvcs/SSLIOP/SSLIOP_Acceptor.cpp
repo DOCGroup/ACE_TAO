@@ -577,7 +577,7 @@ int
 TAO::SSLIOP::Acceptor::parse_options_i (int &argc, ACE_CString ** argv)
 {
   //first, do the base class parser, then parse the leftovers.
-  int result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
+  int const result = this->IIOP_SSL_Acceptor::parse_options_i(argc,argv);
   if (result == -1)
     return result;
 
