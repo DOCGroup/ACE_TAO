@@ -509,7 +509,7 @@ private:
   static ACE_Service_Gestalt* static_svcs (void);
 
   /// Insert a static service descriptor for processing on open_i(). The
-  /// corresponding ACE_STATIC_SVC_* macros were chaged to use this method
+  /// corresponding ACE_STATIC_SVC_* macros were changed to use this method
   /// instead of obtaining a ptr to a container. See the note on static_svcs().
   /// Added to prevent exposing the internal storage representation of the
   /// services repository and provide a better way of debugging service
@@ -557,7 +557,7 @@ private:
   /// Dump the state of an object.
   void dump (void) const;
 
-  /// Set the signal_handler;for internal use by ACE_Object_Manager only.
+  /// Set the signal_handler for internal use by ACE_Object_Manager only.
   static ACE_INLINE void signal_handler (ACE_Sig_Adapter *);
 
   /// Declare the dynamic allocation hooks.
@@ -643,7 +643,6 @@ private:
   static int load_static_svcs (void);
 
 protected:
-
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   /// @deprecated
   /// This is the implementation function that process_directives()
@@ -652,11 +651,7 @@ protected:
   static int process_directives_i (ACE_Svc_Conf_Param *param);
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
-
-  // = Process-wide state.
-
 private:
-
   /// Have we called ACE_Service_Config::open() yet?
   bool is_opened_;
 
@@ -732,7 +727,6 @@ private:
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;
 };
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
