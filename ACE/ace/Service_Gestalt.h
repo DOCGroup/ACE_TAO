@@ -328,7 +328,6 @@ public:
   ACE_Service_Repository* current_service_repository (void);
 
 protected:
-
   int parse_args_i (int, ACE_TCHAR *argv[],
                     bool& ignore_default_svc_conf_file);
 
@@ -389,7 +388,6 @@ protected:
   int init_i (void);
 
 protected:
-
   /// Maintain a queue of services to be configured from the
   /// command-line.
   typedef ACE_Unbounded_Queue<ACE_TString> ACE_SVC_QUEUE;
@@ -414,7 +412,6 @@ protected:
   friend class ACE_Service_Config_Guard;
 
 protected:
-
   /// Do we own the service repository instance, or have only been
   /// given a ptr to the singleton?
   bool svc_repo_is_owned_;
@@ -508,7 +505,6 @@ private:
 // FUZZ: enable check_for_ACE_Guard
 #endif
 };
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
