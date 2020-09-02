@@ -276,7 +276,6 @@ public:
  */
 class ACE_Export ACE_Service_Config
 {
-
   /// The Instance, or the global (default) configuration context.
   /// The monostate would forward the calls to that instance. The TSS
   /// will point here
@@ -312,7 +311,6 @@ public:
   virtual ~ACE_Service_Config (void);
 
 private:
-
   /**
    * Performs an open without parsing command-line arguments.
    * Implements whats different in the opening sequence
