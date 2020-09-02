@@ -949,7 +949,6 @@ EOF
 
 cat > $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 ssl=1
-cidl=0
 EOF
 
 %if %{?_with_bzip2:1}%{!?_with_bzip2:0}
