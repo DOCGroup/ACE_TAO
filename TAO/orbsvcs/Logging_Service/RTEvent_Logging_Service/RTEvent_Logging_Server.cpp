@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "RTEvent_Logging_Service.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
 #include "ace/OS_main.h"

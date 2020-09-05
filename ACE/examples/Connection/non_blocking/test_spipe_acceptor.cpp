@@ -1,7 +1,7 @@
+#include "ace/Synch.h"
 #include "ace/SPIPE_Acceptor.h"
 #include "ace/SPIPE_Addr.h"
 #include "ace/Service_Config.h"
-
 #include "CPP-acceptor.h"
 
 #if !defined (ACE_WIN32)

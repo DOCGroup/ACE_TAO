@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "JAWS_Concurrency.h"
 
 JAWS_Concurrency_Base::JAWS_Concurrency_Base (void)

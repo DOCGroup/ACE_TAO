@@ -1,6 +1,7 @@
 #if !defined (CPP_CONNECTOR_C)
 #define CPP_CONNECTOR_C
 
+#include "ace/Synch.h"
 #include "CPP-connector.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"

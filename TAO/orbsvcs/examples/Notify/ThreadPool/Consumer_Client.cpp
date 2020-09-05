@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Consumer_Client.h"
 #include "Consumer.h"
 #include "ORB_Run_Task.h"

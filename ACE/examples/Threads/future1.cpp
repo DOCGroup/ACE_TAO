@@ -14,6 +14,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_main.h"
 #include "ace/ACE.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Message_Queue.h"

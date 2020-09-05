@@ -7,8 +7,6 @@
 #define __CLIENTSERVICE_H_
 
 #include "ace/Synch_Traits.h"
-#include "ace/Null_Condition.h"
-#include "ace/Null_Mutex.h"
 
 // Listing 3 code/ch07
 #include "ace/Message_Block.h"

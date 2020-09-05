@@ -1,7 +1,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_unistd.h"
-
+#include "ace/Synch.h"
 #include "UDP_PerformanceClient.h"
 
 // This is the interface program that accesses the remote object

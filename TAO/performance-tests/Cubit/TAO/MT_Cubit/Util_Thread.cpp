@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Util_Thread.h"
 #include "ace/ACE.h"
 #include "ace/Barrier.h"

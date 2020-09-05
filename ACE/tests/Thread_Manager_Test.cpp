@@ -13,6 +13,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Signal.h"
 #include "ace/Task.h"

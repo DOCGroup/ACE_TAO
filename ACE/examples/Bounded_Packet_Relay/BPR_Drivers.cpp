@@ -12,6 +12,7 @@
 
 
 #include "ace/OS_NS_sys_time.h"
+#include "ace/Synch.h"
 #include "BPR_Drivers.h"
 
 

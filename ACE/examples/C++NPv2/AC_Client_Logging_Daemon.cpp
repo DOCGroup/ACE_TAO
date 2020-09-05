@@ -10,6 +10,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"

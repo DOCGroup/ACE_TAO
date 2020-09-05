@@ -14,6 +14,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Thread_Hook.h"
 

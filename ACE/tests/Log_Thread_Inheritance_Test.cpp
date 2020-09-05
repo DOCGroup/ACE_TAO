@@ -1,5 +1,6 @@
 #include "test_config.h"
 #include "ace/Log_Msg.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include <fstream>
 

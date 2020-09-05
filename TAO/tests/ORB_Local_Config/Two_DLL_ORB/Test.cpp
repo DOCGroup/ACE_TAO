@@ -1,4 +1,5 @@
 #include "ace/ARGV.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "Service_Configuration_Per_ORB.h"

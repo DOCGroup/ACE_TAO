@@ -2,6 +2,7 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/SOCK_Acceptor.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "Message_Receiver.h"
 

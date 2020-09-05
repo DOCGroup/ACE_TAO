@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "ace/Synch.h"
 #include "Service_Config_DLL.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"

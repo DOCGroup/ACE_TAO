@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Dispatcher_Task.h"
 
 #include "ace/Malloc_T.h"

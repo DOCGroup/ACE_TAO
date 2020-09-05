@@ -6,6 +6,8 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_time.h"
+
+#include "ace/Synch.h"
 #include "Client.h"
 
 // Listing 2 code/ch07

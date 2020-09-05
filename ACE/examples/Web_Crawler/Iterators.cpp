@@ -1,5 +1,6 @@
 #include "ace/Truncate.h"
 #include "Options.h"
+#include "ace/Synch.h"
 #include "Iterators.h"
 
 URL_Iterator::~URL_Iterator (void)

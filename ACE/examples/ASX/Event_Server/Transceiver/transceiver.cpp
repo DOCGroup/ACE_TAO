@@ -6,6 +6,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Service_Config.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Synch.h"
 #include "ace/Connector.h"
 #include "ace/Get_Opt.h"
 #include "ace/Signal.h"

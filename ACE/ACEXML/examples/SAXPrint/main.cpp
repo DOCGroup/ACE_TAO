@@ -1,4 +1,5 @@
 #include "ACEXML/common/FileCharStream.h"
+#include "ace/Synch.h"
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/ZipCharStream.h"

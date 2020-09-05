@@ -266,6 +266,7 @@ project(ACE) : ace_output, acedefaults, install, other, codecs, token, svcconf, 
     Time_Policy.cpp
     Time_Value.cpp
     Timeprobe.cpp
+    Timer_Queue_Adapters.cpp
     TLI.cpp
     TLI_Acceptor.cpp
     TLI_Connector.cpp

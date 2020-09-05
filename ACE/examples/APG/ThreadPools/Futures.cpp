@@ -3,6 +3,7 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_time.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Synch.h"

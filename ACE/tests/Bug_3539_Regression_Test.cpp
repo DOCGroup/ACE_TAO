@@ -15,6 +15,7 @@
 #include "TSS_Test_Errno.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/TSS_T.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Atomic_Op_T.h"
 

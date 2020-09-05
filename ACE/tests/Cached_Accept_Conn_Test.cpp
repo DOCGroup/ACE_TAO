@@ -21,6 +21,7 @@
 
 #include "test_config.h"
 
+#include "ace/Synch.h"
 #include "Cached_Accept_Conn_Test.h"
 
 #include "ace/OS_NS_string.h"

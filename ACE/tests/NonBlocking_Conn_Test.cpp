@@ -16,6 +16,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "NonBlocking_Conn_Test.h"
 #include "ace/Connector.h"
 #include "ace/SOCK_Connector.h"

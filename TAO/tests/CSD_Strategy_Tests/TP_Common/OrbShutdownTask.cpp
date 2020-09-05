@@ -7,7 +7,7 @@
  *  @author  Tim Bradley <bradley_t@ociweb.com>
  */
 //=============================================================================
-
+#include "ace/Synch.h"
 #include "OrbShutdownTask.h"
 #include "ace/CORBA_macros.h"
 #include "ace/OS_NS_unistd.h"

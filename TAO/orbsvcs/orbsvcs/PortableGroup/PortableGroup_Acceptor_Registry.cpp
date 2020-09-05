@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"

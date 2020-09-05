@@ -33,7 +33,7 @@
 
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
-
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_Connector.h"
 #include "ace/Time_Value.h"

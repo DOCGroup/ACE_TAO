@@ -7,6 +7,7 @@
 #include "ace/Signal.h"
 #include "ace/Truncate.h"
 #include "Config_Files.h"
+#include "ace/Synch.h"
 #include "Event_Channel.h"
 #include "Gateway.h"
 

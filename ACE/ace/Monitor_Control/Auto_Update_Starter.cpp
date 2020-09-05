@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ace/Monitor_Control/Auto_Update_Starter.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)

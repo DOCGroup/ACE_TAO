@@ -2,8 +2,8 @@
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_string.h"
-#include "ace/Task.h"
 #include "ace/Synch.h"
+#include "ace/Task.h"
 
 // Listing 2 code/ch14
 class Consumer : public ACE_Task<ACE_MT_SYNCH>

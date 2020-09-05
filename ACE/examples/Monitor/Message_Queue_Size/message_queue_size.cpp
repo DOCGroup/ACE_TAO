@@ -1,5 +1,6 @@
 #include "ace/OS_NS_unistd.h"
 
+#include "ace/Synch.h"
 #include "ace/Monitor_Control/Monitor_Control.h"
 
 #include "examples/Monitor/MC_Test_Utilities.h"

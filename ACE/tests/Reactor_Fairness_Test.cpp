@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "Reactor_Fairness_Test.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Connector.h"

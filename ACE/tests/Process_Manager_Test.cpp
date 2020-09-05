@@ -20,6 +20,7 @@
 #include "test_config.h"
 #include "ace/SString.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_string.h"

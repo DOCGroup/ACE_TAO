@@ -13,6 +13,7 @@
 
 #include "test_config.h"
 #include "ace/Intrusive_Auto_Ptr.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 class One {

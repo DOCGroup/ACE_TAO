@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Service_Config_Stream_DLL.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"

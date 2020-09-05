@@ -1,5 +1,6 @@
 #include "ace/ACE.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/Atomic_Op.h"

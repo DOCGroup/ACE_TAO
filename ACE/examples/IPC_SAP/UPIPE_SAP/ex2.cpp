@@ -12,6 +12,7 @@
 
 
 #include "ace/OS_main.h"
+#include "ace/Synch.h"
 #include "ace/UPIPE_Connector.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/Auto_Ptr.h"

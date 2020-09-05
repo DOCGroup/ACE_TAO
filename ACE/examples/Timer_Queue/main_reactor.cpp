@@ -14,8 +14,9 @@
 
 #include "ace/OS_main.h"
 #include "ace/Auto_Ptr.h"
-#include "Reactor_Timer_Queue_Test.h"
+#include "ace/Synch.h"
 #include "Driver.h"
+#include "Reactor_Timer_Queue_Test.h"
 
 typedef Timer_Queue_Test_Driver <ACE_Timer_Heap,
                                  Input_Handler,

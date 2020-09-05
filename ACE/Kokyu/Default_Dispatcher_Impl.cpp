@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Default_Dispatcher_Impl.h"
 #include "ace/Sched_Params.h"
 

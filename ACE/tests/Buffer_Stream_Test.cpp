@@ -16,6 +16,7 @@
 
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Module.h"
 #include "ace/Task.h"

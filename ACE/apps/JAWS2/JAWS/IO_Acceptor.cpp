@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/IO_Acceptor.h"
 

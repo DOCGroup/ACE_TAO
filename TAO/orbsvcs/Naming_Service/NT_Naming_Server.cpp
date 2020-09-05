@@ -30,6 +30,7 @@ ACE_TMAIN(int, ACE_TCHAR *[])
 #include "ace/Init_ACE.h"
 
 #include "winreg.h"
+#include "ace/Synch.h"
 #include "NT_Naming_Service.h"
 
 // Default for the -i (install) option

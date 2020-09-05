@@ -19,7 +19,7 @@
 
 #include "ace/NT_Service.h"
 #include "ace/Singleton.h"
-#include "ace/Synch.h"
+#include "ace/Synch_Traits.h"
 #include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -54,7 +54,7 @@ private:
   friend class ACE_Singleton<Activator_NT_Service, MUTEX>;
 };
 
-typedef ACE_Singleton<Activator_NT_Service, ACE_Mutex> SERVICE;
+typedef ACE_Singleton<Activator_NT_Service, Activator_NT_Service::MUTEX> SERVICE;
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 

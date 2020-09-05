@@ -2,6 +2,7 @@
 
 #include "ace/SPIPE_Connector.h"
 #include "ace/SPIPE_Addr.h"
+#include "ace/Synch.h"
 #include "CPP-connector.h"
 
 

@@ -3,6 +3,7 @@
 #endif
 
 #include "jaws3/Protocol_Handler.h"
+#include "ace/Synch.h"
 #include "jaws3/Concurrency.h"
 
 JAWS_Protocol_State::~JAWS_Protocol_State (void)

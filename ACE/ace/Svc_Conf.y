@@ -3,6 +3,7 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
+#include "ace/Synch.h"
 #include "ace/Module.h"
 #include "ace/Stream.h"
 #include "ace/Service_Types.h"

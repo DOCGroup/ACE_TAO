@@ -7,6 +7,7 @@
 #include "ace/SOCK_Dgram_Mcast.h"
 #include "ace/Reactor.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Service_Config.h"
 

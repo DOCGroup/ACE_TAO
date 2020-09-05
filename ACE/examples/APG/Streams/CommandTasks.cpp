@@ -3,6 +3,7 @@
 #include "ace/FILE_IO.h"
 
 #include "Command.h"
+#include "ace/Synch.h"
 #include "CommandTasks.h"
 #include "RecordingDevice_Text.h"
 

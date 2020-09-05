@@ -2,6 +2,7 @@
 #define JAWS_BUILD_DLL
 #endif
 
+#include "ace/Synch.h"
 #include "jaws3/Timer.h"
 #include "jaws3/Task_Timer.h"
 

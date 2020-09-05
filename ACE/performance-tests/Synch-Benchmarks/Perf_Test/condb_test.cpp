@@ -2,6 +2,8 @@
 #include "Performance_Test_Options.h"
 #include "Benchmark_Performance.h"
 
+#include "ace/Synch.h"
+
 #if defined (ACE_HAS_THREADS)
 
 class ACE_Svc_Export Cond_Brdcast_Test : public Benchmark_Performance

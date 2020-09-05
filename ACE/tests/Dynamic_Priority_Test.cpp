@@ -43,6 +43,7 @@
 
 #include "test_config.h" /* Include first to enable ACE_TEST_ASSERT. */
 #include "ace/Message_Queue.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/Sched_Params.h"

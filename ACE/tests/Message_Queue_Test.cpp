@@ -23,6 +23,7 @@
 
 #include "test_config.h"
 #include "ace/Atomic_Op.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Message_Queue.h"
 #include "ace/Message_Queue_NT.h"

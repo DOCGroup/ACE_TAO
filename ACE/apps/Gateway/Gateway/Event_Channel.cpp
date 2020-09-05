@@ -1,5 +1,6 @@
 #define ACE_BUILD_SVC_DLL
 
+#include "ace/Synch.h"
 #include "Connection_Handler_Connector.h"
 #include "Event_Channel.h"
 #include "ace/OS_NS_sys_select.h"

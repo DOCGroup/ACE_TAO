@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "ECM_Consumer.h"
 #include "ECM_Data.h"
 

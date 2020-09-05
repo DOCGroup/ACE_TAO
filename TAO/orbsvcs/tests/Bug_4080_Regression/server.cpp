@@ -1,6 +1,7 @@
-
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 #include "test_impl.h"
 

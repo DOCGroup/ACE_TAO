@@ -9,6 +9,8 @@
 
 #include "ace/Service_Repository.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
+#include "ace/Thread_Manager.h"
 
 Performance_Test::Performance_Test (void)
   : n_lwps_ (0),

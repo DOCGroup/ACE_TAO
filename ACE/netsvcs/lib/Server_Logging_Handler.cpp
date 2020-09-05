@@ -1,6 +1,7 @@
 #if !defined (ACE_SERVER_LOGGING_HANDLER_C)
 #define ACE_SERVER_LOGGING_HANDLER_C
 
+#include "ace/Synch.h"
 #include "Server_Logging_Handler.h"
 
 // The following are "Factories" used by the ACE_Service_Config and

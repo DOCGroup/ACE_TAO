@@ -26,7 +26,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Object_Manager.h"
 #include "ace/Get_Opt.h"
-
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Asynch_Acceptor.h"
 #include "ace/Asynch_Connector.h"

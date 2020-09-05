@@ -1,5 +1,6 @@
 #include "ace/Get_Opt.h"
 #include "ace/ARGV.h"
+#include "ace/Synch.h"
 #include "Blob.h"
 #include "Blob_Handler.h"
 #include "Options.h"

@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-
+#include "ace/Synch.h"
 #include "client.h"
 #include "local_server.h"
 #include "tao/debug.h"

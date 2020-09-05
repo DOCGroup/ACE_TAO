@@ -8,6 +8,7 @@
  */
 //=============================================================================
 
+#include "ace/Synch.h"
 #include "timeout_client.h"
 #include "tao/Messaging/Messaging.h"
 #include "tao/PolicyC.h"

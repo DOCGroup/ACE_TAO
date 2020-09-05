@@ -1,4 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "RTEvent_Logging_Service.h"
 #include "tao/IORTable/IORTable.h"
 #include "ace/Get_Opt.h"

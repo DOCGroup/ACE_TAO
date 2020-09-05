@@ -1,4 +1,5 @@
 #include "ace/Functor.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "fooS.h"
 

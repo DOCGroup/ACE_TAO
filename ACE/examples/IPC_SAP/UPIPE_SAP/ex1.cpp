@@ -13,6 +13,7 @@
 
 #include "ace/OS_main.h"
 #include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/UPIPE_Acceptor.h"
 #include "ace/UPIPE_Connector.h"

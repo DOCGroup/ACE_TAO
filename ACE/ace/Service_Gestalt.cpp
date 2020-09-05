@@ -7,6 +7,7 @@
 #include "ace/Containers.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"
 #include "ace/XML_Svc_Conf.h"

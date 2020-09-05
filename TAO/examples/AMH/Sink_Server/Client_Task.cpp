@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Client_Task.h"
 #include "tao/Strategies/advanced_resource.h"
 

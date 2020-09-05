@@ -5,6 +5,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Service_Repository.h"
 #include "ace/Service_Types.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/DLL.h"
 #include "ace/ACE.h"

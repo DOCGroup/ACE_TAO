@@ -2,6 +2,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/Singleton.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Synch.h"
 #include "Name_Handler.h"
 #include "ace/Signal.h"
 #include "ace/OS_NS_string.h"

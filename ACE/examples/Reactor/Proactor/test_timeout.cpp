@@ -13,6 +13,7 @@
  */
 //=============================================================================
 
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Task.h"
 #include "ace/Atomic_Op.h"

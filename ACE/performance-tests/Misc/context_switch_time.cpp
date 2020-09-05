@@ -45,6 +45,7 @@ static const char usage [] = "[-? |\n"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Sched_Params.h"
 #include "ace/Stats.h"

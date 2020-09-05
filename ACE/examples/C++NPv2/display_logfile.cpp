@@ -8,6 +8,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/FILE_IO.h"
 #include "ace/Message_Block.h"
+#include "ace/Synch.h"
 #include "ace/Module.h"
 #include "ace/SString.h"
 #include "ace/Stream.h"

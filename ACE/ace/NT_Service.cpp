@@ -1,6 +1,7 @@
 #include "ace/config-all.h"
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
+#include "ace/Synch.h"
 #include "ace/NT_Service.h"
 
 #if !defined (__ACE_INLINE__)

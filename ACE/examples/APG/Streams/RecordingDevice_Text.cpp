@@ -3,6 +3,7 @@
  */
 
 #include "MessageInfo.h"
+#include "ace/Synch.h"
 #include "RecordingDevice.h"
 #include "RecordingDevice_Text.h"
 #include "Util.h"

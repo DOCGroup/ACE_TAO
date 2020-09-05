@@ -20,6 +20,7 @@
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
 #include "ace/SOCK_Stream.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "Logging_Acceptor.h"
 #include "CLD_export.h"

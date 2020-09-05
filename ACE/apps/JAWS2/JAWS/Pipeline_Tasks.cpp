@@ -1,4 +1,5 @@
 #include "JAWS/Jaws_IO.h"
+#include "ace/Synch.h"
 #include "JAWS/Pipeline_Tasks.h"
 #include "JAWS/Pipeline_Handler_T.h"
 #include "JAWS/Data_Block.h"

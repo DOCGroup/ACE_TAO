@@ -12,6 +12,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/Connector.h"

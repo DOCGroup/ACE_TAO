@@ -9,6 +9,7 @@
 #include "ace/FILE_Connector.h"
 #include "ace/os_include/os_netdb.h"
 #include "Reactor_Logging_Server_Adapter.h"
+#include "ace/Synch.h"
 #include "TPC_Logging_Server.h"
 #include "TPCLS_export.h"
 

@@ -11,6 +11,7 @@
 
 
 #include "ace/Auto_Ptr.h"
+#include "ace/Synch.h"
 #include "Thread_Bounded_Packet_Relay.h"
 
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>

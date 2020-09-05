@@ -1,4 +1,5 @@
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "TS_Clerk_Handler.h"
 #include "ace/Lib_Find.h"
 #include "ace/Signal.h"

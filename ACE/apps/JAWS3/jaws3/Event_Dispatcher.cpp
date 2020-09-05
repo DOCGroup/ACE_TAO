@@ -1,6 +1,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Thread.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/POSIX_Proactor.h"
 

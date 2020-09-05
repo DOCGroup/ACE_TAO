@@ -22,6 +22,7 @@
 #include "test_config.h"
 #include "ace/Reactor.h"
 #include "ace/SOCK_Connector.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"

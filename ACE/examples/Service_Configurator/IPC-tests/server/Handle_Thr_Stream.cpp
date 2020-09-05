@@ -7,6 +7,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
 #include "ace/TLI_Acceptor.h"
+#include "ace/Synch.h"
 #include "Handle_Thr_Stream.h"
 
 #if defined (ACE_HAS_THREADS)

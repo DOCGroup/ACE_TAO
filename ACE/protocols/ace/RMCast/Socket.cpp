@@ -12,6 +12,7 @@
 
 #include "Stack.h"
 #include "Protocol.h"
+#include "ace/Synch.h"
 #include "Bits.h"
 
 #include "Fragment.h"

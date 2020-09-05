@@ -17,6 +17,7 @@
 #include "ace/Shared_Memory_MM.h"
 #include "ace/SV_Semaphore_Simple.h"
 #include "ace/Process_Semaphore.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Lib_Find.h"
 #include "ace/OS_NS_string.h"

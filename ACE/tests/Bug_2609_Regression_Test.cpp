@@ -8,6 +8,7 @@
  */
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Stream.h"

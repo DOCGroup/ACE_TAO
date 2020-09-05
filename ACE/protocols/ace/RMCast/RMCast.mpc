@@ -1,11 +1,21 @@
 //  -*- MPC -*-
 project(RMCast) : acelib, ace_output, install, threads {
   avoids = ace_for_tao
-  sharedname   = ACE_RMCast
+  sharedname = ACE_RMCast
   dynamicflags += ACE_RMCAST_BUILD_DLL
 
   specific {
     install_dir = ace/RMCast
+  }
+
+  // *TODO*: essentially, this is a workaround to be removed ASAP. On current
+  //         systems, the correct solution is to use (C++11) 'extern templates'
+  //         in all ACE headers and instantiate any templates in the application
+  //         translation units only, where these linkage issues occur).
+  // *TODO*: note how MPC probably needs to stop adopting each new MSVC release
+  //         separately; this patch doesn't scale at all
+  specific(nmake,vc6,vc7,vc71,vc8,vc9,vc10,vc11,vc12,vc14) {
+    linkflags += /force:multiple
   }
 
   Pkgconfig_Files {

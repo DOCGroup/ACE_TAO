@@ -5,6 +5,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Service_Object.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/OS_NS_string.h"
 

@@ -12,6 +12,7 @@
 //=============================================================================
 
 #include "test_config.h"
+#include "ace/Synch.h"
 #include "Reactor_Performance_Test.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"

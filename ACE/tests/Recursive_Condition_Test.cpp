@@ -16,6 +16,7 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Event_Handler.h"
 #include "ace/Log_Msg.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Queue_Adapters.h"

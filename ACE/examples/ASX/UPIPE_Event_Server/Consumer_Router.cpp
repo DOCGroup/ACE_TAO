@@ -1,6 +1,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
+#include "ace/Synch.h"
 #include "Consumer_Router.h"
 #include "Options.h"
 

@@ -7,6 +7,7 @@
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Min_Max.h"
 
+#include "ace/Synch.h"
 #include "JAWS/Data_Block.h"
 #include "JAWS/Policy.h"
 #include "JAWS/Jaws_IO.h"

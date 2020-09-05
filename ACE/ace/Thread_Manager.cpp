@@ -1,4 +1,5 @@
 #include "ace/TSS_T.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Dynamic.h"
 #include "ace/Object_Manager.h"
@@ -1901,9 +1902,17 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
 # endif
             ACE_SET_BITS (iter.next ()->thr_state_,
                           ACE_THR_JOINING);
+            this->thr_to_be_removed_.enqueue_tail (iter.next ());
             copy_table[copy_count++] = *iter.next ();
           }
       }
+
+    if (!this->thr_to_be_removed_.is_empty ())
+    {
+      ACE_Thread_Descriptor *td = 0;
+      while (this->thr_to_be_removed_.dequeue_head (td) != -1)
+        this->remove_thr (td, 0); // *NOTE*: on Win32, ACE_Thread::join() calls ::CloseHandle() --> don't do it here
+    }
 
 #if !defined (ACE_HAS_VXTHREADS)
     for (ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor_Base> titer (this->terminated_thr_list_);

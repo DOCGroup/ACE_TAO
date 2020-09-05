@@ -5,6 +5,7 @@
  */
 
 #include "ace/OS_NS_string.h"
+#include "ace/Synch.h"
 #include "ace/Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/FILE_IO.h"

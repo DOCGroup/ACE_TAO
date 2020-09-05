@@ -12,6 +12,7 @@
  */
 //=============================================================================
 
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Service_Config.h"

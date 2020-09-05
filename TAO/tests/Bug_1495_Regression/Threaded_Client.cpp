@@ -13,6 +13,7 @@
  * request is the same as the thread that makes the request.
  */
 
+#include "ace/Synch.h"
 #include "Server_Task.h"
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"

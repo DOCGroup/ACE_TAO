@@ -19,6 +19,7 @@
 #include "ace/ARGV.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Vector_T.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 
 /// We want to give shutdown a little more time to work, so that we

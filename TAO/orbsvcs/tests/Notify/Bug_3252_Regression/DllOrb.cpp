@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "DllOrb.h"
 #include "ace/Arg_Shifter.h"
 #include "ace/Argv_Type_Converter.h"

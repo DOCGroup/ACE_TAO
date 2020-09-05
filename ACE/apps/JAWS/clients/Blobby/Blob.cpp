@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "Blob.h"
 #include "Blob_Handler.h"
 #include "ace/OS_NS_string.h"

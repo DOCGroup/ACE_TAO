@@ -23,6 +23,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Get_Opt.h"
 #include "ace/SOCK_Dgram_Bcast.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process.h"
 #include "ace/Process_Manager.h"

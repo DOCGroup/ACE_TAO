@@ -2,6 +2,7 @@
 #if !defined (ACE_LACKS_ACE_TOKEN)
 # include "ace/Token_Manager.h"
 #endif /* ! ACE_LACKS_ACE_TOKEN */
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #if !defined (ACE_LACKS_ACE_SVCCONF)
 # include "ace/Service_Manager.h"
@@ -25,9 +26,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Mutex.h"
-#include "ace/RW_Thread_Mutex.h"
 #if defined (ACE_DISABLE_WIN32_ERROR_WINDOWS) && !defined (ACE_HAS_WINCE)
 # include "ace/OS_NS_stdlib.h"
 # include /**/ <crtdbg.h>

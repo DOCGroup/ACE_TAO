@@ -13,6 +13,7 @@
 #include "ace/Reactor.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Select_Reactor.h"
 

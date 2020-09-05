@@ -12,6 +12,7 @@
 //=============================================================================
 
 
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Proactor.h"
 #include "ace/WIN32_Proactor.h"

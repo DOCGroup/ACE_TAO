@@ -8,6 +8,7 @@
 #include "ace/Configuration.h"
 #include "ace/Configuration_Import_Export.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "HA_Status_Static.h"
 
 // Listing 1 code/ch19

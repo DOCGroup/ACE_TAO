@@ -1,3 +1,4 @@
+#include "ace/Synch.h"
 #include "AppShutdown.h"
 #include "TestAppExceptionC.h"
 #include "ace/Log_Msg.h"

@@ -6,6 +6,7 @@
 #include "ace/FILE_IO.h"
 #include "ace/Log_Msg.h"
 #include "ace/Signal.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "Thread_Per_Connection_Logging_Server.h"

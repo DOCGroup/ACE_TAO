@@ -11,6 +11,7 @@
 
 
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 
 #include "UDP_i.h"

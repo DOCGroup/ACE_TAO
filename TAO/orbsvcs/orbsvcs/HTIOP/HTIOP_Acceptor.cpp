@@ -1,6 +1,7 @@
 // This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
+#include "ace/Synch.h"
 #include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"

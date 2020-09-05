@@ -4,6 +4,7 @@
 // test_barrier.cpp test to see how they differ.
 
 #include "ace/OS_main.h"
+#include "ace/Synch.h"
 #include "ace/Task.h"
 #include "ace/Service_Config.h"
 

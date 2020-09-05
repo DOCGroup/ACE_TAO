@@ -15,6 +15,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/MEM_Connector.h"
 #include "ace/MEM_Acceptor.h"

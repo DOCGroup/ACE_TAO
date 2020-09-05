@@ -8,6 +8,7 @@
 
 #include "ace/OS_NS_string.h"
 #include "ace/Get_Opt.h"
+#include "ace/Synch.h"
 #include "ace/Acceptor.h"
 #include "ace/Null_Mutex.h"
 #include "ace/SOCK_Acceptor.h"

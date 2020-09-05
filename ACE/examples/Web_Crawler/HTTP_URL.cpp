@@ -1,6 +1,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Synch.h"
 #include "URL_Visitor.h"
 #include "Options.h"
 #include "HTTP_URL.h"

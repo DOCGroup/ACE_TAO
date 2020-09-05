@@ -3,6 +3,7 @@
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms with Asynchronous IO
 
+#include "ace/Synch.h"
 #include "ace/Proactor.h"
 #include "ace/Message_Block.h"
 #include "ace/INET_Addr.h"

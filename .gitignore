@@ -1,13 +1,15 @@
 *.vcxproj*
 *.tlog
 *.log
+*.[i]obj
 *.obj*
 *.ilk
 *.exe
 *.dll
 *.lib
 *.exp
-*.[ip]db
+*.pdb
+*.ipdb
 *.opensdf
 *.sdf
 *.sln
@@ -15,6 +17,9 @@
 *S_T.cpp
 *S_T.h
 *S_T.inl
+ipch/
+Debug/
+Release/
 *.bmak
 
 .depend.*
@@ -26,7 +31,7 @@ lib*.a
 lib*.so*
 lib*.dylib
 *~
-ipch/
+build/
 
 /ACE/ace/config.h
 /ACE/bin/MakeProjectCreator/config/default.features

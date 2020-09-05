@@ -1,6 +1,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
+#include "ace/Synch.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Thread.h"
 #include "ace/Signal.h"

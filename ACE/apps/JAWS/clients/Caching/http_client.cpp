@@ -14,6 +14,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include "ace/Synch.h"
 #include "http_handler.h"
 
 int

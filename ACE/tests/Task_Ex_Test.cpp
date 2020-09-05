@@ -13,6 +13,7 @@
 
 #include "test_config.h"
 #include "Task_Ex_Test.h"
+#include "ace/Synch.h"
 #include "ace/Task_Ex_T.h"
 #include "ace/Log_Msg.h"
 #include "ace/Auto_Ptr.h"
