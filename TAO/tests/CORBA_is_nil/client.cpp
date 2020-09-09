@@ -47,7 +47,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (hello.in ()))
       {
          ACE_ERROR_RETURN ((LM_DEBUG,
-                            "Nil Test::Hello reference <%s>\n",
+                            "Nil Test::Hello reference <%C>\n",
                             ior),
                            1);
       }
@@ -55,7 +55,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var the_string = hello->get_string ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Hello from file IOR: %s\n",
+                  "Hello from file IOR: %C\n",
                   the_string.in()));
 
       Test::Hello_var helloRef = hello->get_Hello();
@@ -64,7 +64,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       {
          ACE_DEBUG ((LM_DEBUG,
                      ACE_TEXT("Correctly detected nil Object reference.\n")));
-         process_result = 0;
+         CORBA::Object_var var = CORBA::Object::_duplicate(helloRef.in());
+         if (CORBA::is_nil(var))
+         {
+            ACE_DEBUG ((LM_DEBUG,
+                        ACE_TEXT("Duplicated Object reference works too.\n")));
+            process_result = 0;
+         }
+         else
+         {
+            ACE_ERROR_RETURN ((LM_DEBUG,
+                               "ERROR:\n%C\n$%C\n",
+                               "CORBA::is_nil(Hello_ptr) returned false!"
+                               "CORBA::is_nil(Object_var) returned true!"),
+                              1);
+         }
       }
       else
       {
@@ -72,13 +86,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          if (CORBA::is_nil(obj))
          {
             ACE_DEBUG ((LM_DEBUG,
-                        "ERROR (causes exception further down):\n%s\n$s\n",
+                        "ERROR (causes exception further down):\n%C\n%C\n",
                         "CORBA::is_nil(Hello_ptr) returned false!"
                         "CORBA::is_nil(Object_ptr) returned true!"));
          }
          CORBA::String_var aString = helloRef->get_string();
          ACE_DEBUG ((LM_DEBUG,
-                     "Received Hello: %s\n",
+                     "Received Hello: %C\n",
                      aString.in()));
       }
 
