@@ -352,7 +352,7 @@ private:
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
-  /// (Layered method for <subscribe> processing).
+  /// (Layered method for subscribe() processing).
   int subscribe_i (const ACE_INET_Addr &mcast_addr,
                    int reuse_addr = 1,
                    const ACE_TCHAR *net_if = 0);
