@@ -105,6 +105,12 @@ jobs:
             os: ubuntu-20.04
             optional_feature: uses_wchar=1
             optional_macros: inline=0
+          - feature: CodeQL
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
     runs-on: ${{ matrix.os }}
     name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
@@ -161,6 +167,11 @@ jobs:
         '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       if: matrix.optional_feature != ''
       shell: pwsh
+    - name: initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: cpp
+      if: matrix.feature == 'CodeQL'
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
@@ -177,3 +188,6 @@ jobs:
       run: |
         make -j 6 -C ${env:ACE_ROOT}/tests
       shell: pwsh
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+      if: matrix.feature == 'CodeQL'
