@@ -543,7 +543,7 @@ protected:
    * but for several elements @c memcpy should be more efficient, it
    * could be interesting to find the break even point and optimize
    * for that case, but that would be too platform dependent.
-   * 
+   *
    * This is virtual to support GIOP fragmentation at the TAO layer.
    */
   virtual ACE_CDR::Boolean write_array (const void *x,

@@ -332,12 +332,12 @@ TAO_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
 
   if (avail < sizeof (CORBA::LongDouble))
   {
-    const CORBA::ULongLong* ptr_8 
+    const CORBA::ULongLong* ptr_8
        = reinterpret_cast<const CORBA::ULongLong*> (x);
 
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
 
-    return 
+    return
       ACE_OutputCDR::write_8 (ptr_8)
       && fragment_stream (ACE_CDR::LONGLONG_ALIGN, sizeof (CORBA::ULongLong))
       && ACE_OutputCDR::write_8 (ptr_8 + 1);
@@ -346,14 +346,14 @@ TAO_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
 
     if (!this->do_byte_swap_)
     {
-      return 
+      return
         ACE_OutputCDR::write_8 (ptr_8)
         && fragment_stream (ACE_CDR::LONGLONG_ALIGN, sizeof (CORBA::ULongLong))
         && ACE_OutputCDR::write_8 (ptr_8 + 1);
     }
     else
     {
-      return 
+      return
         ACE_OutputCDR::write_8 (ptr_8 + 1)
         && fragment_stream (ACE_CDR::LONGLONG_ALIGN, sizeof (CORBA::ULongLong))
         && ACE_OutputCDR::write_8 (ptr_8);
@@ -365,7 +365,7 @@ TAO_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
   else
   {
      return ACE_OutputCDR::write_16 (x);
-  } 
+  }
 }
 
 ACE_CDR::Boolean
@@ -409,7 +409,7 @@ TAO_OutputCDR::write_array (const void *x,
       }
       else
       {
-        // We can write a batch of whole elements into the current fragment. 
+        // We can write a batch of whole elements into the current fragment.
         lastBatch = (availableLength >= length);
         batchLength = (lastBatch ? length : availableLength);
 

@@ -22,7 +22,7 @@ TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
   //  + 8 for payload (including padding)
   // since fragments must be aligned on an 8 byte boundary.
   // Make it a multiple of 8 to avoid checking for this repeatedly
-  // at runtime. 
+  // at runtime.
 }
 
 TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (

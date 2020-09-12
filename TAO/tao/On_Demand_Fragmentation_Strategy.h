@@ -51,7 +51,7 @@ public:
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);
 
-  virtual ACE_CDR::ULong available (TAO_OutputCDR & cdr, 
+  virtual ACE_CDR::ULong available (TAO_OutputCDR & cdr,
                                     ACE_CDR::ULong pending_alignment);
 
 private:
