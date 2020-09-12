@@ -451,8 +451,8 @@ ACE_CDR::Boolean TAO_OutputCDR::write_array_16 (const void *x,
       lastBatch = (availableLength >= length);
       batchLength = (lastBatch ? length : availableLength);
 
-      if (!ACE_OutputCDR::write_array (xPtr, 16, 
-                                       ACE_CDR::MAX_ALIGNMENT, 
+      if (!ACE_OutputCDR::write_array (xPtr, 16,
+                                       ACE_CDR::MAX_ALIGNMENT,
                                        batchLength))
         return 0;
     }
