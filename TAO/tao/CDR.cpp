@@ -377,58 +377,10 @@ TAO_OutputCDR::write_array (const void *x,
   if (length == 0)
     return 1;
 
-  const char* xPtr = static_cast<const char*> (x);
-
-  if (size > ACE_CDR::MAX_ALIGNMENT)
+  if (size <= ACE_CDR::MAX_ALIGNMENT)
   {
-    if (size != 16)
-    {
-      good_bit(false);
-      return 0;
-    }
+    const char* xPtr = static_cast<const char*> (x);
 
-    // may need to fragment in the middle of an element
-
-    if (!fragment_stream (align, ACE_CDR::MAX_ALIGNMENT))
-      return 0;
-
-    while (true)
-    {
-      ACE_CDR::ULong availableBytes = fragment_bytes_available(align);
-      ACE_CDR::ULong availableLength = availableBytes / size;
-      ACE_CDR::ULong batchLength;
-      bool lastBatch;
-
-      if (availableLength == 0)
-      {
-        // This will fragment in the middle of the 16-byte element.
-        if (!write_16 (reinterpret_cast<const ACE_CDR::LongDouble*> (xPtr)))
-          return 0;
-        batchLength = 1;
-        lastBatch = (length == 1);
-      }
-      else
-      {
-        // We can write a batch of whole elements into the current fragment.
-        lastBatch = (availableLength >= length);
-        batchLength = (lastBatch ? length : availableLength);
-
-        if (!ACE_OutputCDR::write_array (xPtr, size, align, batchLength))
-          return 0;
-      }
-
-      if (lastBatch)
-        return 1;
-
-      if (!fragment_stream (align, ACE_CDR::MAX_ALIGNMENT))
-        return 0;
-
-      xPtr += batchLength * size;
-      length -= batchLength;
-    }
-  }
-  else
-  {
     if (!fragment_stream (align, size))
       return 0;
 
@@ -451,6 +403,68 @@ TAO_OutputCDR::write_array (const void *x,
       xPtr += batchLength * size;
       length -= batchLength;
     }
+  }
+  else
+  {
+    if (size == 16 && align == ACE_CDR::MAX_ALIGNMENT)
+    {
+       return write_array_16 (x, length);
+    }
+    else
+    {
+      good_bit(false);
+      return 0;
+    }
+  }
+}
+
+ACE_CDR::Boolean TAO_OutputCDR::write_array_16 (const void *x,
+                                                ACE_CDR::ULong length)
+{
+  // may need to fragment in the middle of an element
+
+  const ACE_CDR::LongDouble* xPtr
+    = static_cast<const ACE_CDR::LongDouble*> (x);
+
+  if (!fragment_stream (ACE_CDR::MAX_ALIGNMENT, ACE_CDR::MAX_ALIGNMENT))
+    return 0;
+
+  while (true)
+  {
+    ACE_CDR::ULong availableBytes
+      = fragment_bytes_available(ACE_CDR::MAX_ALIGNMENT);
+    ACE_CDR::ULong availableLength = availableBytes / 16;
+    ACE_CDR::ULong batchLength;
+    bool lastBatch;
+
+    if (availableLength == 0)
+    {
+      // This will fragment in the middle of the 16-byte element.
+      if (!write_16 (reinterpret_cast<const ACE_CDR::LongDouble*> (xPtr)))
+        return 0;
+      batchLength = 1;
+      lastBatch = (length == 1);
+    }
+    else
+    {
+      // We can write a batch of whole elements into the current fragment.
+      lastBatch = (availableLength >= length);
+      batchLength = (lastBatch ? length : availableLength);
+
+      if (!ACE_OutputCDR::write_array (xPtr, 16, 
+                                       ACE_CDR::MAX_ALIGNMENT, 
+                                       batchLength))
+        return 0;
+    }
+
+    if (lastBatch)
+      return 1;
+
+    if (!fragment_stream (ACE_CDR::MAX_ALIGNMENT, ACE_CDR::MAX_ALIGNMENT))
+      return 0;
+
+    xPtr += batchLength;
+    length -= batchLength;
   }
 }
 
@@ -519,7 +533,6 @@ TAO_InputCDR::throw_skel_exception (int error_num )
 
     default :
       throw ::CORBA::MARSHAL();
-
     }
 }
 

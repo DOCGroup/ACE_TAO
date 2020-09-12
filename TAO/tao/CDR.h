@@ -257,7 +257,9 @@ private:
   TAO_OutputCDR (const TAO_OutputCDR& rhs);
   TAO_OutputCDR& operator= (const TAO_OutputCDR& rhs);
 
-private:
+private:  
+  ACE_CDR::Boolean write_array_16 (const void *x,
+                                   ACE_CDR::ULong length);
   /**
    * @name Outgoing GIOP Fragment Related Attributes
    *
