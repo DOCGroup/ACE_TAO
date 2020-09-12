@@ -165,7 +165,7 @@ public:
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// destructor
-  ~ACE_OutputCDR (void);
+  virtual ~ACE_OutputCDR (void);
 
   /**
    * Disambiguate overload when inserting booleans, octets, chars, and
@@ -523,20 +523,14 @@ public:
   void unregister_monitor (void);
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
-private:
-  // Find the message block in the chain of message blocks
-  // that the provide location locates.
-  ACE_Message_Block* find (char* loc);
+protected:
 
-  /// disallow copying...
-  ACE_OutputCDR (const ACE_OutputCDR& rhs);
-  ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
-
-  ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
-  ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
-  ACE_CDR::Boolean write_4 (const ACE_CDR::ULong *x);
-  ACE_CDR::Boolean write_8 (const ACE_CDR::ULongLong *x);
-  ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
+  // These are virtual to support GIOP fragmentation at the TAO layer.
+  virtual ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
+  virtual ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
+  virtual ACE_CDR::Boolean write_4 (const ACE_CDR::ULong *x);
+  virtual ACE_CDR::Boolean write_8 (const ACE_CDR::ULongLong *x);
+  virtual ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
 
   /**
    * write an array of @a length elements, each of @a size bytes and the
@@ -549,12 +543,26 @@ private:
    * but for several elements @c memcpy should be more efficient, it
    * could be interesting to find the break even point and optimize
    * for that case, but that would be too platform dependent.
+   * 
+   * This is virtual to support GIOP fragmentation at the TAO layer.
    */
-  ACE_CDR::Boolean write_array (const void *x,
-                                size_t size,
-                                size_t align,
-                                ACE_CDR::ULong length);
+  virtual ACE_CDR::Boolean write_array (const void *x,
+                                        size_t size,
+                                        size_t align,
+                                        ACE_CDR::ULong length);
 
+  // Overrides of the above functions may need to set this bit.
+  void good_bit (bool bit) { good_bit_ = bit; }
+
+private:
+
+  // Find the message block in the chain of message blocks
+  // that the provide location locates.
+  ACE_Message_Block* find (char* loc);
+
+  /// disallow copying...
+  ACE_OutputCDR (const ACE_OutputCDR& rhs);
+  ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
 
   ACE_CDR::Boolean write_wchar_array_i (const ACE_CDR::WChar* x,
                                         ACE_CDR::ULong length);

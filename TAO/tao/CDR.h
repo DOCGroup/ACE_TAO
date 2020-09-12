@@ -188,6 +188,7 @@ public:
    */
   bool fragment_stream (ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length);
+  ACE_CDR::ULong fragment_bytes_available(ACE_CDR::ULong pending_alignment);
 
   /// Are there more data fragments to come?
   bool more_fragments (void) const;
@@ -239,6 +240,18 @@ public:
   /// Calculate the offset between pos and current wr_ptr.
   int offset (char* pos);
 
+protected:
+  // These are overridden to support GIOP fragmentation.
+  virtual ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
+  virtual ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
+  virtual ACE_CDR::Boolean write_4 (const ACE_CDR::ULong *x);
+  virtual ACE_CDR::Boolean write_8 (const ACE_CDR::ULongLong *x);
+  virtual ACE_CDR::Boolean write_16 (const ACE_CDR::LongDouble *x);
+
+  virtual ACE_CDR::Boolean write_array (const void *x,
+                                        size_t size,
+                                        size_t align,
+                                        ACE_CDR::ULong length);
 private:
   // disallow copying...
   TAO_OutputCDR (const TAO_OutputCDR& rhs);

@@ -331,28 +331,19 @@ TAO_InputCDR::reset_vt_indirect_maps ()
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Short x)
 {
-  return
-    os.fragment_stream (ACE_CDR::SHORT_ALIGN,
-                        sizeof (CORBA::Short))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::UShort x)
 {
-  return
-    os.fragment_stream (ACE_CDR::SHORT_ALIGN,
-                        sizeof (CORBA::UShort))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Long x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONG_ALIGN,
-                        sizeof (CORBA::Long))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -367,66 +358,43 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::LongLong x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONGLONG_ALIGN,
-                        sizeof (CORBA::LongLong))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::ULongLong x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONGLONG_ALIGN,
-                        sizeof (CORBA::ULongLong))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR& os,
                                       CORBA::LongDouble x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONGDOUBLE_ALIGN,
-                        sizeof (CORBA::LongDouble))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Float x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONG_ALIGN,
-                        sizeof (CORBA::Float))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Double x)
 {
-  return
-    os.fragment_stream (ACE_CDR::LONGLONG_ALIGN,
-                        sizeof (CORBA::Double))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const char * x)
 {
-  return
-    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
-                        sizeof (char))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const CORBA::WChar * x)
 {
-  return
-    os.fragment_stream ((sizeof (CORBA::WChar) == 2
-                         ? ACE_CDR::SHORT_ALIGN
-                         : ACE_CDR::LONG_ALIGN),
-                        sizeof (CORBA::WChar))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -455,10 +423,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x)
 {
 #if defined (ACE_HAS_CPP11)
-  return
-    os.fragment_stream (ACE_CDR::OCTET_ALIGN,
-                        sizeof (char))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 #else
   return os << x.c_str ();
 #endif
@@ -480,12 +445,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::wstring &x)
 {
 #if defined (ACE_HAS_CPP11)
-  return
-    os.fragment_stream ((sizeof (CORBA::WChar) == 2
-                         ? ACE_CDR::SHORT_ALIGN
-                         : ACE_CDR::LONG_ALIGN),
-                        sizeof (CORBA::WChar))
-    && static_cast<ACE_OutputCDR &> (os) << x;
+  return static_cast<ACE_OutputCDR &> (os) << x;
 #else
   return os << x.c_str ();
 #endif

@@ -67,6 +67,9 @@ public:
                         ACE_CDR::ULong pending_alignment,
                         ACE_CDR::ULong pending_length) = 0;
 
+  virtual ACE_CDR::ULong available (TAO_OutputCDR & cdr,
+                                    ACE_CDR::ULong pending_alignment) = 0;
+
 private:
   // Disallow copying and assignment.
   TAO_GIOP_Fragmentation_Strategy (TAO_GIOP_Fragmentation_Strategy const &);
