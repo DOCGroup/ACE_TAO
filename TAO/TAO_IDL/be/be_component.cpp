@@ -80,9 +80,7 @@ be_component::~be_component (void)
 be_component *
 be_component::base_component (void) const
 {
-  return
-    dynamic_cast<be_component*> (
-      this->AST_Component::base_component ());
+  return dynamic_cast<be_component*> (this->AST_Component::base_component ());
 }
 
 void

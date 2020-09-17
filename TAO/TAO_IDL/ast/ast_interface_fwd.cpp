@@ -223,8 +223,7 @@ AST_InterfaceFwd::is_defined (void)
   // that may have a full definition.
   if (!this->is_defined_)
     {
-      AST_Module *m =
-        dynamic_cast<AST_Module*> (this->defined_in ());
+      AST_Module *m = dynamic_cast<AST_Module*> (this->defined_in ());
 
       if (0 != m)
         {
@@ -241,8 +240,7 @@ AST_InterfaceFwd::is_defined (void)
                   set_as_defined ();
                 }
 
-              AST_InterfaceFwd *fwd =
-                dynamic_cast<AST_InterfaceFwd*> (d);
+              AST_InterfaceFwd *fwd = dynamic_cast<AST_InterfaceFwd*> (d);
 
               // Since fwd_redefinition_helper() is called
               // before fe_add_interface(), we can't check

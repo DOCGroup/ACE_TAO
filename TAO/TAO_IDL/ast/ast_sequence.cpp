@@ -113,8 +113,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
 
   if (bnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        dynamic_cast<AST_Param_Holder*> (bt);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {

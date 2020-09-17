@@ -51,9 +51,7 @@ be_attribute::be_attribute (bool ro,
 be_type *
 be_attribute::field_type (void) const
 {
-  return
-    dynamic_cast<be_type*>  (
-      this->AST_Attribute::field_type ());
+  return dynamic_cast<be_type*>  (this->AST_Attribute::field_type ());
 }
 
 int

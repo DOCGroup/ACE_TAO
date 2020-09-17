@@ -242,26 +242,20 @@ AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
 AST_EnumVal *
 AST_Interface::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    dynamic_cast<AST_EnumVal*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Add an AST_Typedef (a typedef) to the current scope.
 AST_Typedef *
 AST_Interface::fe_add_typedef (AST_Typedef *t)
 {
-  return
-    dynamic_cast<AST_Typedef*> (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Typedef*> (this->fe_add_ref_decl (t));
 }
 
 AST_Native *
 AST_Interface::fe_add_native (AST_Native *t)
 {
-  return
-    dynamic_cast<AST_Native*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Native*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Interface node to the ostream o.
@@ -428,8 +422,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 
   if (nt != AST_Decl::NT_param_holder)
     {
-      AST_Interface *i =
-        dynamic_cast<AST_Interface*> (t);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (t);
 
       AST_Type **parents = i->inherits ();
       long n_parents = i->n_inherits ();
@@ -492,8 +485,7 @@ int
 AST_Interface::insert_non_dup (AST_Type *t,
                                bool abstract_paths_only)
 {
-  AST_Interface *f =
-    dynamic_cast<AST_Interface*> (t);
+  AST_Interface *f = dynamic_cast<AST_Interface*> (t);
 
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
@@ -814,8 +806,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i =
-        dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       if (i == 0)
         {
@@ -882,8 +873,7 @@ AST_Interface::look_in_inherited_local (Identifier *e,
        nis > 0;
        nis--, is++)
     {
-      AST_Interface *i =
-        dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       if (i == 0)
         {
@@ -995,8 +985,7 @@ AST_Interface::analyze_parentage (void)
 
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
-      AST_Interface *parent =
-         dynamic_cast<AST_Interface*> (this->pd_inherits[i]);
+      AST_Interface *parent = dynamic_cast<AST_Interface*> (this->pd_inherits[i]);
 
       if (parent == 0)
         {
@@ -1020,8 +1009,7 @@ AST_Interface::analyze_parentage (void)
 
   while (s != 0)
     {
-      AST_Template_Module *m =
-        dynamic_cast<AST_Template_Module*> (s);
+      AST_Template_Module *m = dynamic_cast<AST_Template_Module*> (s);
 
       if (m != 0)
         {

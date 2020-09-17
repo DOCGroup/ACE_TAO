@@ -208,9 +208,7 @@ AST_Factory::compute_argument_attr (void)
 AST_Argument *
 AST_Factory::fe_add_argument (AST_Argument *t)
 {
-  return
-    dynamic_cast<AST_Argument*> (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Argument*> (this->fe_add_ref_decl (t));
 }
 
 UTL_NameList *

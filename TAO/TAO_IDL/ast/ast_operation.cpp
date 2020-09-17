@@ -176,8 +176,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
        !si.is_done ();
        si.next ())
     {
-      AST_Argument *arg =
-        dynamic_cast<AST_Argument*> (si.item ());
+      AST_Argument *arg = dynamic_cast<AST_Argument*> (si.item ());
 
       if ((arg->direction () & direction_mask) != 0)
         {
@@ -342,8 +341,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             break;
           case AST_Decl::NT_param_holder:
             {
-              AST_Param_Holder *ph =
-                dynamic_cast<AST_Param_Holder*> (d);
+              AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (d);
 
               nt = ph->info ()->type_;
 
@@ -358,8 +356,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             }
           case AST_Decl::NT_typedef:
             {
-              AST_Typedef *td =
-                dynamic_cast<AST_Typedef*> (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
 
               nt = td->primitive_base_type ()->node_type ();
 
@@ -445,9 +442,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 AST_Argument *
 AST_Operation::fe_add_argument (AST_Argument *t)
 {
-  return
-    dynamic_cast<AST_Argument*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Argument*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Operation node (an operation) to the ostream o.

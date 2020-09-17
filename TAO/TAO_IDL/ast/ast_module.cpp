@@ -342,8 +342,7 @@ AST_Module::special_lookup (UTL_ScopedName *e,
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)
 {
-  return dynamic_cast<AST_PredefinedType*> (
-    this->fe_add_decl (t));
+  return dynamic_cast<AST_PredefinedType*> (this->fe_add_decl (t));
 }
 
 AST_Module *
@@ -460,121 +459,97 @@ AST_Module::fe_add_module (AST_Module *t)
 AST_Template_Module_Inst *
 AST_Module::fe_add_template_module_inst (AST_Template_Module_Inst *t)
 {
-  return
-    dynamic_cast<AST_Template_Module_Inst*> (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Template_Module_Inst*> (this->fe_add_ref_decl (t));
 }
 
 AST_Interface *
 AST_Module::fe_add_interface (AST_Interface *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_Interface> (t);
+  return this->fe_add_full_intf_decl<AST_Interface> (t);
 }
 
 AST_ValueBox *
 AST_Module::fe_add_valuebox (AST_ValueBox *t)
 {
-  return
-    dynamic_cast<AST_ValueBox*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_ValueBox*> (this->fe_add_decl (t));
 }
 
 AST_ValueType *
 AST_Module::fe_add_valuetype (AST_ValueType *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_ValueType> (t);
+  return this->fe_add_full_intf_decl<AST_ValueType> (t);
 }
 
 AST_EventType *
 AST_Module::fe_add_eventtype (AST_EventType *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_EventType> (t);
+  return this->fe_add_full_intf_decl<AST_EventType> (t);
 }
 
 AST_Component *
 AST_Module::fe_add_component (AST_Component *t)
 {
-  return
-    this->fe_add_full_intf_decl<AST_Component> (t);
+  return this->fe_add_full_intf_decl<AST_Component> (t);
 }
 
 AST_Connector *
 AST_Module::fe_add_connector (AST_Connector *t)
 {
-  return
-    dynamic_cast<AST_Connector*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Connector*> (this->fe_add_decl (t));
 }
 
 AST_Home *
 AST_Module::fe_add_home (AST_Home *t)
 {
-  return
-    dynamic_cast<AST_Home*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Home*> (this->fe_add_decl (t));
 }
 
 AST_InterfaceFwd *
 AST_Module::fe_add_interface_fwd (AST_InterfaceFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_Interface> (t);
+  return this->fe_add_fwd_intf_decl<AST_Interface> (t);
 }
 
 AST_ValueTypeFwd *
 AST_Module::fe_add_valuetype_fwd (AST_ValueTypeFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_ValueType> (t);
+  return this->fe_add_fwd_intf_decl<AST_ValueType> (t);
 }
 
 AST_EventTypeFwd *
 AST_Module::fe_add_eventtype_fwd (AST_EventTypeFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_EventType> (t);
+  return this->fe_add_fwd_intf_decl<AST_EventType> (t);
 }
 
 AST_ComponentFwd *
 AST_Module::fe_add_component_fwd (AST_ComponentFwd *t)
 {
-  return
-    this->fe_add_fwd_intf_decl<AST_Component> (t);
+  return this->fe_add_fwd_intf_decl<AST_Component> (t);
 }
 
 AST_Constant *
 AST_Module::fe_add_constant (AST_Constant *t)
 {
-  return
-    dynamic_cast<AST_Constant*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Constant*> (this->fe_add_decl (t));
 }
 
 AST_Exception *
 AST_Module::fe_add_exception (AST_Exception *t)
 {
-  return
-    dynamic_cast<AST_Exception*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Exception*> (this->fe_add_decl (t));
 }
 
 AST_Union *
 AST_Module::fe_add_union (AST_Union *t)
 {
-  return
-    dynamic_cast<AST_Union*> (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_UnionFwd *
 AST_Module::fe_add_union_fwd (AST_UnionFwd *t)
 {
-  return
-    dynamic_cast<AST_UnionFwd*> (
-      this->fe_add_fwd_struct_type (t));
+  return dynamic_cast<AST_UnionFwd*> (this->fe_add_fwd_struct_type (t));
 }
 
 AST_Structure *
@@ -592,9 +567,7 @@ AST_Module::fe_add_structure_fwd (AST_StructureFwd *t)
 AST_Enum *
 AST_Module::fe_add_enum (AST_Enum *t)
 {
-  return
-    dynamic_cast<AST_Enum*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add an AST_EnumVal node (an enumerator) to this scope.
@@ -604,33 +577,25 @@ AST_Module::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Module::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    dynamic_cast<AST_EnumVal*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 AST_Typedef *
 AST_Module::fe_add_typedef (AST_Typedef *t)
 {
-  return
-    dynamic_cast<AST_Typedef*> (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_Typedef*> (this->fe_add_ref_decl (t));
 }
 
 AST_Native *
 AST_Module::fe_add_native (AST_Native *t)
 {
-  return
-    dynamic_cast<AST_Native*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Native*> (this->fe_add_decl (t));
 }
 
 AST_PortType *
 AST_Module::fe_add_porttype (AST_PortType *t)
 {
-  return
-    dynamic_cast<AST_PortType*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_PortType*> (this->fe_add_decl (t));
 }
 
 void
@@ -643,6 +608,5 @@ AST_Annotation_Decl *
 AST_Module::fe_add_annotation_decl (
   AST_Annotation_Decl *annotation_decl)
 {
-  return dynamic_cast<AST_Annotation_Decl*> (
-    fe_add_decl (annotation_decl));
+  return dynamic_cast<AST_Annotation_Decl*> (fe_add_decl (annotation_decl));
 }

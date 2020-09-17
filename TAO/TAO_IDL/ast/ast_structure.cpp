@@ -350,17 +350,13 @@ AST_Structure::fe_add_structure (AST_Structure *t)
 AST_Union *
 AST_Structure::fe_add_union (AST_Union *t)
 {
-  return
-    dynamic_cast<AST_Union*> (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_Enum *
 AST_Structure::fe_add_enum (AST_Enum *t)
 {
-  return
-    dynamic_cast<AST_Enum*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (an enumerator declaration) to this scope.
@@ -370,9 +366,7 @@ AST_Structure::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    dynamic_cast<AST_EnumVal*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Compute total number of members.

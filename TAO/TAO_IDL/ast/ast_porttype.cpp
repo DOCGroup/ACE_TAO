@@ -47,23 +47,17 @@ AST_PortType::ast_accept (ast_visitor *visitor)
 AST_Provides *
 AST_PortType::fe_add_provides (AST_Provides *p)
 {
-  return
-    dynamic_cast<AST_Provides*> (
-      this->fe_add_ref_decl (p));
+  return dynamic_cast<AST_Provides*> (this->fe_add_ref_decl (p));
 }
 
 AST_Uses *
 AST_PortType::fe_add_uses (AST_Uses *u)
 {
-  return
-    dynamic_cast<AST_Uses*> (
-      this->fe_add_ref_decl (u));
+  return dynamic_cast<AST_Uses*> (this->fe_add_ref_decl (u));
 }
 
 AST_Attribute *
 AST_PortType::fe_add_attribute (AST_Attribute *t)
 {
-  return
-    dynamic_cast<AST_Attribute*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Attribute*> (this->fe_add_decl (t));
 }

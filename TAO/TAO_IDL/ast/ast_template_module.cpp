@@ -61,8 +61,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
       if (d->node_type () == AST_Decl::NT_typedef)
         {
-          AST_Typedef *td =
-            dynamic_cast<AST_Typedef*> (d);
+          AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
 
           d = td->primitive_base_type ();
         }
@@ -77,8 +76,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
 
           if (n == 0)
             {
-              AST_Constant *c =
-                dynamic_cast<AST_Constant*> (d);
+              AST_Constant *c = dynamic_cast<AST_Constant*> (d);
 
               s = c->exprtype_to_string ();
             }
@@ -161,9 +159,7 @@ AST_Template_Module_Ref *
 AST_Template_Module::fe_add_template_module_ref (
   AST_Template_Module_Ref *m)
 {
-  return
-    dynamic_cast<AST_Template_Module_Ref*> (
-      this->fe_add_ref_decl (m));
+  return dynamic_cast<AST_Template_Module_Ref*> (this->fe_add_ref_decl (m));
 }
 
 void
@@ -190,8 +186,7 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
 
   if (other_type == AST_Decl::NT_const)
     {
-      AST_Constant *c =
-        dynamic_cast<AST_Constant*> (d);
+      AST_Constant *c = dynamic_cast<AST_Constant*> (d);
 
       AST_Expression *ex = c->constant_value ();
 

@@ -263,9 +263,7 @@ ast_visitor_tmpl_module_inst::visit_provides (AST_Provides *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
 
-  AST_Type *p_type =
-    dynamic_cast<AST_Type*> (
-      this->reify_type (node->provides_type ()));
+  AST_Type *p_type = dynamic_cast<AST_Type*> (this->reify_type (node->provides_type ()));
 
   AST_Provides *added_provides =
     idl_global->gen ()->create_provides (&sn,
@@ -281,9 +279,7 @@ ast_visitor_tmpl_module_inst::visit_uses (AST_Uses *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
 
-  AST_Type *u_type =
-    dynamic_cast<AST_Type*> (
-      this->reify_type (node->uses_type ()));
+  AST_Type *u_type = dynamic_cast<AST_Type*> (this->reify_type (node->uses_type ()));
 
   AST_Uses *added_uses =
     idl_global->gen ()->create_uses (&sn,
@@ -335,9 +331,7 @@ ast_visitor_tmpl_module_inst::visit_consumes (AST_Consumes *node)
 {
   UTL_ScopedName sn (node->local_name (), 0);
 
-  AST_Type *c_type =
-    dynamic_cast<AST_Type*> (
-      this->reify_type (node->consumes_type ()));
+  AST_Type *c_type = dynamic_cast<AST_Type*> (this->reify_type (node->consumes_type ()));
 
   AST_Consumes *added_consumes =
     idl_global->gen ()->create_consumes (&sn, c_type);
@@ -351,9 +345,7 @@ int
 ast_visitor_tmpl_module_inst::visit_extended_port (
   AST_Extended_Port *node)
 {
-  AST_PortType *pt =
-    dynamic_cast<AST_PortType*> (
-      this->reify_type (node->port_type ()));
+  AST_PortType *pt = dynamic_cast<AST_PortType*> (this->reify_type (node->port_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -369,9 +361,7 @@ int
 ast_visitor_tmpl_module_inst::visit_mirror_port (
   AST_Mirror_Port *node)
 {
-  AST_PortType *pt =
-    dynamic_cast<AST_PortType*> (
-      this->reify_type (node->port_type ()));
+  AST_PortType *pt = dynamic_cast<AST_PortType*> (this->reify_type (node->port_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -386,9 +376,7 @@ ast_visitor_tmpl_module_inst::visit_mirror_port (
 int
 ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 {
-  AST_Connector *parent =
-    dynamic_cast<AST_Connector*> (
-      this->reify_type (node->base_connector ()));
+  AST_Connector *parent = dynamic_cast<AST_Connector*> (this->reify_type (node->base_connector ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -431,9 +419,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 
   UTL_ScopedName *managed_comp_name = 0;
 
-  AST_Component *managed_comp =
-    dynamic_cast<AST_Component*> (
-      this->reify_type (node->managed_component ()));
+  AST_Component *managed_comp = dynamic_cast<AST_Component*> (this->reify_type (node->managed_component ()));
 
   if (managed_comp != 0)
     {
@@ -442,9 +428,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
 
   UTL_ScopedName *p_key_name = 0;
 
-  AST_ValueType *p_key =
-    dynamic_cast<AST_ValueType*> (
-      this->reify_type (node->primary_key ()));
+  AST_ValueType *p_key = dynamic_cast<AST_ValueType*> (this->reify_type (node->primary_key ()));
 
   if (p_key != 0)
     {

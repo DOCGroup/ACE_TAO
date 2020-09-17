@@ -275,8 +275,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
           continue;
         }
 
-      AST_Interface *i =
-        dynamic_cast<AST_Interface*> (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -477,9 +476,7 @@ AST_ValueType::fe_add_field (AST_Field *t)
 AST_Factory *
 AST_ValueType::fe_add_factory (AST_Factory *f)
 {
-  return
-    dynamic_cast<AST_Factory*> (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Factory*> (this->fe_add_decl (f));
 }
 
 bool
@@ -496,8 +493,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_ValueType *concrete_parent =
-    dynamic_cast<AST_ValueType*> (node->inherits_concrete ());
+  AST_ValueType *concrete_parent = dynamic_cast<AST_ValueType*> (node->inherits_concrete ());
 
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {

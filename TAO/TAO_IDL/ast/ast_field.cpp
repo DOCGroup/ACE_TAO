@@ -107,8 +107,7 @@ AST_Field::AST_Field (AST_Type *ft,
 
   if (fnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        dynamic_cast<AST_Param_Holder*> (ft);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -140,8 +139,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
 
   if (fnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        dynamic_cast<AST_Param_Holder*> (ft);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {

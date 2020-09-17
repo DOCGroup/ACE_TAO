@@ -265,8 +265,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
            !si.is_done ();
            si.next ())
         {
-          AST_UnionBranch *field =
-            dynamic_cast<AST_UnionBranch*> (si.item ());
+          AST_UnionBranch *field = dynamic_cast<AST_UnionBranch*> (si.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
@@ -548,8 +547,7 @@ AST_Union::compute_default_value (void)
        si.next ())
     {
       // Get the next AST decl node.
-      AST_UnionBranch *ub =
-        dynamic_cast<AST_UnionBranch*> (si.item ());
+      AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
       if (ub != 0)
         {
@@ -715,8 +713,7 @@ AST_Union::compute_default_value (void)
            si.next ())
         {
           // Get the next AST decl node
-          AST_UnionBranch *ub =
-            dynamic_cast<AST_UnionBranch*> (si.item ());
+          AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (si.item ());
 
           if (ub != 0)
             {
@@ -924,17 +921,13 @@ AST_Union::compute_default_index (void)
 AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
-  return
-    dynamic_cast<AST_UnionBranch*> (
-      this->fe_add_ref_decl (t));
+  return dynamic_cast<AST_UnionBranch*> (this->fe_add_ref_decl (t));
 }
 
 AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
-  return
-    dynamic_cast<AST_Union*> (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_Structure *
@@ -946,9 +939,7 @@ AST_Union::fe_add_structure (AST_Structure *t)
 AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
-  return
-    dynamic_cast<AST_Enum*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (enumerator declaration) to this scope.
@@ -958,9 +949,7 @@ AST_Union::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    dynamic_cast<AST_EnumVal*> (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Union node to the ostream o.
