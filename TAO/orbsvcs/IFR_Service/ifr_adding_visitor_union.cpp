@@ -35,7 +35,7 @@ ifr_adding_visitor_union::visit_scope (UTL_Scope *node)
 
   AST_Union *u = dynamic_cast<AST_Union*> (node);
 
-  CORBA::ULong nfields = static_cast<CORBA::ULong> (u->nfields ());
+  CORBA::ULong const nfields = static_cast<CORBA::ULong> (u->nfields ());
 
   this->members_.length (nfields);
 

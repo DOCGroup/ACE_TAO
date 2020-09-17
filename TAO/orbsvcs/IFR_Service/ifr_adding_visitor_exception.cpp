@@ -37,7 +37,7 @@ ifr_adding_visitor_exception::visit_scope (UTL_Scope *node)
 
   AST_Exception *e = dynamic_cast<AST_Exception*> (node);
 
-  CORBA::ULong nfields = static_cast<CORBA::ULong> (e->nfields ());
+  CORBA::ULong const nfields = static_cast<CORBA::ULong> (e->nfields ());
 
   this->members_.length (nfields);
 
