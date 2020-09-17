@@ -1276,7 +1276,6 @@ private:
   bool gen_unique_guards_;
 
   /// False by default, these flags trigger code generation
-  /// formerly done by the CIAO CIDL compiler.
   bool gen_ciao_svnt_;
   bool gen_ciao_exec_idl_;
   bool gen_ciao_exec_impl_;
