@@ -67,7 +67,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #define _AST_DECL_AST_DECL_HH
 
 #include "utl_scoped_name.h"
-#include "idl_narrow.h"
 #include "ast_annotation_appls.h"
 
 #include "ace/os_include/sys/os_types.h"
