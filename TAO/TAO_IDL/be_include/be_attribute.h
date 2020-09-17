@@ -46,10 +46,6 @@ public:
   /// Returns the original attribute from which this one was created,
   /// applies only to implied IDL
   be_attribute *original_attribute ();
-
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL (be_attribute);
 };
 
 #endif

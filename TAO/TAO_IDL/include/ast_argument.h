@@ -92,10 +92,6 @@ public:
   // Data Accessors.
   Direction direction (void);
 
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Argument);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

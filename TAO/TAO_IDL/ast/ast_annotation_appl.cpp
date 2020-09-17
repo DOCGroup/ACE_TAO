@@ -103,9 +103,6 @@ const char *AST_Annotation_Appl::original_name () const
   return original_name_;
 }
 
-IMPL_NARROW_FROM_DECL (AST_Annotation_Appl)
-IMPL_NARROW_FROM_SCOPE (AST_Annotation_Appl)
-
 bool
 AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
 {
@@ -117,7 +114,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
     si.next ())
     {
       AST_Annotation_Member *member =
-        AST_Annotation_Member::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Annotation_Member*> (si.item ());
       if (member)
         {
           AST_Annotation_Member *new_member = fe_add_annotation_member (

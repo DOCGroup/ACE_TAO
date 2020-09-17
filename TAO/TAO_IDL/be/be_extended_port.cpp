@@ -30,7 +30,7 @@ be_porttype *
 be_extended_port::port_type (void) const
 {
   return
-    be_porttype::narrow_from_decl (
+    dynamic_cast<be_porttype*> (
       this->AST_Extended_Port::port_type ());
 }
 
@@ -46,6 +46,3 @@ be_extended_port::accept (be_visitor *visitor)
 {
   return visitor->visit_extended_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_extended_port)
-

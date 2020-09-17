@@ -167,10 +167,6 @@ public:
     return pd_scope_node_type;
   }
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_SCOPE(UTL_Scope);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

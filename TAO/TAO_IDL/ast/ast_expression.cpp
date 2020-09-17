@@ -116,7 +116,7 @@ AST_Expression::AST_Expression (UTL_ScopedName *nm)
   if (d->node_type () == AST_Decl::NT_param_holder)
     {
       this->param_holder_ =
-        AST_Param_Holder::narrow_from_decl (d);
+        dynamic_cast<AST_Param_Holder*> (d);
     }
 }
 
@@ -2517,12 +2517,12 @@ AST_Expression::eval_symbol (AST_Expression::EvalKind ek)
 
   if (d->node_type () == AST_Decl::NT_enum_val)
     {
-      AST_EnumVal *enumval = AST_EnumVal::narrow_from_decl (d);
+      AST_EnumVal *enumval = dynamic_cast<AST_EnumVal*> (d);
       enum_parent (enumval->enum_parent ());
     }
 
   // OK, now evaluate the constant we just got, to produce its value.
-  c = AST_Constant::narrow_from_decl (d);
+  c = dynamic_cast<AST_Constant*> (d);
 
   if (c == 0)
     {
@@ -2575,7 +2575,7 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
 
           if (d->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
               d = td->primitive_base_type ();
             }
 

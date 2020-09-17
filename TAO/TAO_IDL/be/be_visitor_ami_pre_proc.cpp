@@ -144,7 +144,7 @@ be_visitor_ami_pre_proc::visit_interface (be_interface *node)
     }
 
   AST_Module *module =
-    AST_Module::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Module*> (node->defined_in ());
 
   if (!module)
     {
@@ -203,7 +203,7 @@ be_visitor_ami_pre_proc::visit_operation (be_operation *node)
     }
 
   be_interface *parent =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
   // If we're here, we're sure that the arg traits specialization
   // for this will be needed.
@@ -340,7 +340,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
 
           if (d->node_type () == AST_Decl::NT_attr)
             {
-              be_attribute *attribute = be_attribute::narrow_from_decl (d);
+              be_attribute *attribute = dynamic_cast<be_attribute*> (d);
 
               if (attribute)
                 {
@@ -376,7 +376,7 @@ be_visitor_ami_pre_proc::create_reply_handler (be_interface *node)
             }
           else
             {
-              be_operation* operation = be_operation::narrow_from_decl (d);
+              be_operation* operation = dynamic_cast<be_operation*> (d);
 
               if (operation)
                 {
@@ -439,7 +439,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
   // Look up the field type.
   UTL_Scope *s = node->defined_in ();
-  be_interface *parent = be_interface::narrow_from_scope (s);
+  be_interface *parent = dynamic_cast<be_interface*> (s);
 
   // Add the pre- and suffix
   ACE_CString handler_local_name;
@@ -467,7 +467,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
     }
 
   be_interface *field_type =
-    be_interface::narrow_from_decl (handler);
+    dynamic_cast<be_interface*> (handler);
 
   ACE_NEW_RETURN (id,
                   Identifier ("ami_handler"),
@@ -522,7 +522,7 @@ be_visitor_ami_pre_proc::create_sendc_operation (be_operation *node)
 
             }
 
-          AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
+          AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
 
           if (original_arg->direction () == AST_Argument::dir_IN ||
               original_arg->direction () == AST_Argument::dir_INOUT)
@@ -656,7 +656,7 @@ be_visitor_ami_pre_proc::create_reply_handler_operation (
 
             }
 
-          AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
+          AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
 
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_OUT)
@@ -855,7 +855,7 @@ be_visitor_ami_pre_proc::visit_scope (be_scope *node)
               continue;
             }
 
-          be_decl *bd = be_decl::narrow_from_decl (d);
+          be_decl *bd = dynamic_cast<be_decl*> (d);
 
           // Set the scope node as "node" in which the code is being
           // generated so that elements in the node's scope can use it
@@ -1053,7 +1053,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 
           if (d != 0)
             {
-              retval[index] = AST_Interface::narrow_from_decl (d);
+              retval[index] = dynamic_cast<AST_Interface*> (d);
               retval[index++]->set_prefix_with_typeprefix (parent->prefix () ?
                                                            const_cast<char*> (parent->prefix()) :
                                                            const_cast<char*> (""));
@@ -1142,7 +1142,7 @@ be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
       sn = 0;
 
       be_interface *iface =
-        be_interface::narrow_from_decl (d);
+        dynamic_cast<be_interface*> (d);
 
       if (iface == 0)
         {

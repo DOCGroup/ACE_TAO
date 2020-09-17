@@ -37,7 +37,7 @@ int
 be_visitor_decl::gen_anonymous_base_type (be_type *bt,
                                           TAO_CodeGen::CG_STATE cg_state)
 {
-  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
 
   if (!tdef)
     {

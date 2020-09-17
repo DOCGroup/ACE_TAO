@@ -74,11 +74,6 @@ public:
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_component);
-  DEF_NARROW_FROM_SCOPE (be_component);
-
 private:
   /// Specialized version for mirror ports.
   void mirror_scan (AST_PortType *p);

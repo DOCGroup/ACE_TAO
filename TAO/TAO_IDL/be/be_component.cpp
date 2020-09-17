@@ -81,14 +81,14 @@ be_component *
 be_component::base_component (void) const
 {
   return
-    be_component::narrow_from_decl (
+    dynamic_cast<be_component*> (
       this->AST_Component::base_component ());
 }
 
 void
 be_component::redefine (AST_Interface *from)
 {
-  be_component *bc = be_component::narrow_from_decl (from);
+  be_component *bc = dynamic_cast<be_component*> (from);
   this->var_out_seq_decls_gen_ = bc->var_out_seq_decls_gen_;
   AST_Component::redefine (from);
 }
@@ -168,9 +168,6 @@ be_component::n_emits (void) const
   return this->n_emits_;
 }
 
-IMPL_NARROW_FROM_DECL (be_component)
-IMPL_NARROW_FROM_SCOPE (be_component)
-
 void
 be_component::scan (UTL_Scope *s)
 {
@@ -197,7 +194,7 @@ be_component::scan (UTL_Scope *s)
         {
           case AST_Decl::NT_provides:
             ++this->n_provides_;
-            p = AST_Provides::narrow_from_decl (d);
+            p = dynamic_cast<AST_Provides*> (d);
 
             if (!p->provides_type ()->is_local ())
               {
@@ -207,7 +204,7 @@ be_component::scan (UTL_Scope *s)
             continue;
           case AST_Decl::NT_uses:
             ++this->n_uses_;
-            u = AST_Uses::narrow_from_decl (d);
+            u = dynamic_cast<AST_Uses*> (d);
 
             if (u->is_multiple ())
               {
@@ -230,15 +227,15 @@ be_component::scan (UTL_Scope *s)
             ++this->n_emits_;
             continue;
           case AST_Decl::NT_ext_port:
-            ep = AST_Extended_Port::narrow_from_decl (d);
+            ep = dynamic_cast<AST_Extended_Port*> (d);
             this->scan (ep->port_type ());
             continue;
           case AST_Decl::NT_mirror_port:
-            mp = AST_Mirror_Port::narrow_from_decl (d);
+            mp = dynamic_cast<AST_Mirror_Port*> (d);
             this->mirror_scan (mp->port_type ());
             continue;
           case AST_Decl::NT_attr:
-            a = AST_Attribute::narrow_from_decl (d);;
+            a = dynamic_cast<AST_Attribute*> (d);;
 
             if (!a->readonly ())
               {
@@ -263,7 +260,7 @@ be_component::scan (UTL_Scope *s)
         }
     }
 
-  AST_Component *c = AST_Component::narrow_from_scope (s);
+  AST_Component *c = dynamic_cast<AST_Component*> (s);
   AST_Interface *iface = 0;
 
   if (c != 0)
@@ -280,7 +277,7 @@ be_component::scan (UTL_Scope *s)
       // will be 0 and the call will return immediately.
       this->scan (c->base_component ());
     }
-  else if ((iface = AST_Interface::narrow_from_scope (s)) != 0)
+  else if ((iface = dynamic_cast<AST_Interface*> (s)) != 0)
     {
       for (long i = 0; i < iface->n_inherits (); ++i)
         {
@@ -402,7 +399,7 @@ be_component::mirror_scan (AST_PortType *pt)
         {
           case AST_Decl::NT_provides:
             ++this->n_uses_;
-            p = AST_Provides::narrow_from_decl (d);
+            p = dynamic_cast<AST_Provides*> (d);
 
             if (!p->provides_type ()->is_local ())
               {
@@ -412,7 +409,7 @@ be_component::mirror_scan (AST_PortType *pt)
             continue;
           case AST_Decl::NT_uses:
             ++this->n_provides_;
-            u = AST_Uses::narrow_from_decl (d);
+            u = dynamic_cast<AST_Uses*> (d);
 
             if (!u->uses_type ()->is_local ())
               {
@@ -421,7 +418,7 @@ be_component::mirror_scan (AST_PortType *pt)
 
             continue;
           case AST_Decl::NT_attr:
-            a = AST_Attribute::narrow_from_decl (d);;
+            a = dynamic_cast<AST_Attribute*> (d);;
 
             if (!a->readonly ())
               {

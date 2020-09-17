@@ -57,9 +57,6 @@ AST_Annotation_Member::destroy ()
   AST_Field::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL (AST_Annotation_Member);
-IMPL_NARROW_FROM_SCOPE (AST_Annotation_Member);
-
 void
 AST_Annotation_Member::dump (ACE_OSTREAM_TYPE &o)
 {

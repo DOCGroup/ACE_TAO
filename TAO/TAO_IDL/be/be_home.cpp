@@ -73,7 +73,7 @@ be_home::be_home (UTL_ScopedName *n,
     }
 
   be_component *bt =
-     be_component::narrow_from_decl (managed_component);
+     dynamic_cast<be_component*> (managed_component);
 
   bt->seen_in_operation (true);
 
@@ -98,7 +98,7 @@ be_home::scan (UTL_Scope *s)
     {
       AST_Decl *d = i.item ();
       AST_Attribute *attr =
-        AST_Attribute::narrow_from_decl (d);
+        dynamic_cast<AST_Attribute*> (d);
 
       if (attr != 0 && ! attr->readonly ())
         {
@@ -107,7 +107,7 @@ be_home::scan (UTL_Scope *s)
         }
     }
 
-  AST_Home *h = AST_Home::narrow_from_scope (s);
+  AST_Home *h = dynamic_cast<AST_Home*> (s);
 
   if (h != 0)
     {
@@ -162,6 +162,3 @@ be_home::accept (be_visitor *visitor)
             ? 0
             : visitor->visit_home (this));
 }
-
-IMPL_NARROW_FROM_DECL (be_home)
-IMPL_NARROW_FROM_SCOPE (be_home)

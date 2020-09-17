@@ -102,7 +102,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
     }
   else
     {
-      be_interface *bd = be_interface::narrow_from_decl (concrete);
+      be_interface *bd = dynamic_cast<be_interface*> (concrete);
       *os << bd->full_skel_name () << " (rhs)," << be_nl;
     }
 

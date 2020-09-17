@@ -572,7 +572,7 @@ be_interface::has_rw_attributes (void) const
 void
 be_interface::redefine (AST_Interface *from)
 {
-  be_interface *bi = be_interface::narrow_from_decl (from);
+  be_interface *bi = dynamic_cast<be_interface*> (from);
   this->var_out_seq_decls_gen_ = bi->var_out_seq_decls_gen_;
   this->has_mixed_parentage_ = bi->has_mixed_parentage_;
 
@@ -841,7 +841,7 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
 {
   // Generate entries for the derived class using the properties of its
   // ancestors.
-  be_interface *bi = be_interface::narrow_from_decl (base_interface);
+  be_interface *bi = dynamic_cast<be_interface*> (base_interface);
   return bi->gen_optable_entries (derived_interface,
                                   this->skeleton_name_,
                                   os);
@@ -896,7 +896,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
        !si.is_done ();
        si.next ())
     {
-      d = be_decl::narrow_from_decl (si.item ());
+      d = dynamic_cast<be_decl*> (si.item ());
 
       if (d->node_type () == AST_Decl::NT_op)
         {
@@ -1387,7 +1387,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
           if (d->node_type () == AST_Decl::NT_op)
             {
               be_operation *op =
-                be_operation::narrow_from_decl (d);
+                dynamic_cast<be_operation*> (d);
 
               if (op->is_sendc_ami ())
                 {
@@ -1417,7 +1417,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
           else if (d->node_type () == AST_Decl::NT_attr)
             {
               AST_Attribute *attr =
-                AST_Attribute::narrow_from_decl (d);
+                dynamic_cast<AST_Attribute*> (d);
 
               if (attr == 0)
                 return -1;
@@ -1488,7 +1488,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
           if (d->node_type () == AST_Decl::NT_op)
             {
               be_operation *op =
-                be_operation::narrow_from_decl (d);
+                dynamic_cast<be_operation*> (d);
 
               if (op->is_sendc_ami ())
                 {
@@ -1570,7 +1570,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
           else if (d->node_type () == AST_Decl::NT_attr)
             {
               AST_Attribute *attr =
-                AST_Attribute::narrow_from_decl (d);
+                dynamic_cast<AST_Attribute*> (d);
 
               if (attr == 0)
                 {
@@ -1786,7 +1786,7 @@ be_interface::traverse_inheritance_graph (
       if (nt == AST_Decl::NT_home)
         {
           this->enqueue_base_home_r (
-            AST_Home::narrow_from_decl (intf));
+            dynamic_cast<AST_Home*> (intf));
         }
 
       // If we are doing a component, we check for a parent.
@@ -1798,7 +1798,7 @@ be_interface::traverse_inheritance_graph (
             }
 
           this->enqueue_base_component_r (
-            AST_Component::narrow_from_decl (intf));
+            dynamic_cast<AST_Component*> (intf));
         }
 
       (void) this->insert_non_dup (intf, abstract_paths_only);
@@ -1831,7 +1831,7 @@ be_interface::traverse_inheritance_graph (
                             -1);
         }
 
-      be_interface *bi = be_interface::narrow_from_decl (intf);
+      be_interface *bi = dynamic_cast<be_interface*> (intf);
 
       // Use the helper method to generate code for ourself using the
       // properties of the element dequeued. For the first iteration, the
@@ -2341,7 +2341,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
   else if (base->is_nested ())
     {
       be_decl *scope = 0;
-      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::"
           << base->local_name () << " (rhs)";
@@ -2428,7 +2428,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
                                    be_interface *ancestor,
                                    TAO_OutStream *os)
 {
-  if (be_component::narrow_from_decl (ancestor) != 0)
+  if (dynamic_cast<be_component*> (ancestor) != 0)
     {
       return 0;
     }
@@ -2447,7 +2447,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
 
       if (nt == AST_Decl::NT_op)
         {
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
 
           /// No sendc_* operations in facet servants. If the
           /// original interface had these generated as AMI
@@ -2471,7 +2471,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
         }
       else if (nt == AST_Decl::NT_attr)
         {
-          be_attribute *attr = be_attribute::narrow_from_decl (d);
+          be_attribute *attr = dynamic_cast<be_attribute*> (d);
           be_visitor_attribute v (&ctx);
 
           if (v.visit_attribute (attr) == -1)
@@ -3038,6 +3038,3 @@ be_interface::create_with_prefix_suffix (const char *prefix,
 
   return cat_string;
 }
-
-IMPL_NARROW_FROM_DECL (be_interface)
-IMPL_NARROW_FROM_SCOPE (be_interface)

@@ -111,10 +111,6 @@ public:
   UTL_ScopedName *enum_full_name (void);
   // If our type is enum, we have to generate the scoped name.
 
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Constant);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

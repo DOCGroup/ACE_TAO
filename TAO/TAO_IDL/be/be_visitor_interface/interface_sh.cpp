@@ -219,13 +219,13 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           be_visitor_operation_sh op_visitor (&ctx);
           op_visitor.visit_operation (op);
         }
       else if (d->node_type () == AST_Decl::NT_attr)
         {
-          AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+          AST_Attribute *attr = dynamic_cast<AST_Attribute*> (d);
           be_attribute new_attr (attr->readonly (),
                                  attr->field_type (),
                                  &item_new_name,

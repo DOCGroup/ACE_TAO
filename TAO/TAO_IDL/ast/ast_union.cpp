@@ -123,7 +123,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
   // the pd_udisc_type field.
   if (dt->node_type () == AST_Decl::NT_pre_defined)
     {
-      pdt = AST_PredefinedType::narrow_from_decl (dt);
+      pdt = dynamic_cast<AST_PredefinedType*> (dt);
 
       if (pdt == 0)
         {
@@ -200,7 +200,7 @@ AST_Union::~AST_Union (void)
 void
 AST_Union::redefine (AST_Structure *from)
 {
-  AST_Union *u = AST_Union::narrow_from_decl (from);
+  AST_Union *u = dynamic_cast<AST_Union*> (from);
 
   if (u == 0)
     {
@@ -266,7 +266,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
            si.next ())
         {
           AST_UnionBranch *field =
-            AST_UnionBranch::narrow_from_decl (si.item ());
+            dynamic_cast<AST_UnionBranch*> (si.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
@@ -279,7 +279,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
@@ -323,7 +323,7 @@ AST_Union::lookup_default (void)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          b = AST_UnionBranch::narrow_from_decl (d);
+          b = dynamic_cast<AST_UnionBranch*> (d);
 
           if (b == 0)
             {
@@ -375,7 +375,7 @@ AST_Union::lookup_label (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
           if (fb == 0)
             {
@@ -405,7 +405,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 {
   AST_UnionLabel *label = b->label();
   AST_Expression *lv = label->label_val ();
-  AST_Enum *e = AST_Enum::narrow_from_decl (this->pd_disc_type);
+  AST_Enum *e = dynamic_cast<AST_Enum*> (this->pd_disc_type);
   AST_Decl *d = 0;
   AST_UnionBranch       *fb = 0;
 
@@ -450,7 +450,7 @@ AST_Union::lookup_enum (AST_UnionBranch *b)
 
       if (d->node_type () == AST_Decl::NT_union_branch)
         {
-          fb = AST_UnionBranch::narrow_from_decl (d);
+          fb = dynamic_cast<AST_UnionBranch*> (d);
 
           if (fb == 0)
             {
@@ -549,7 +549,7 @@ AST_Union::compute_default_value (void)
     {
       // Get the next AST decl node.
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (si.item ());
+        dynamic_cast<AST_UnionBranch*> (si.item ());
 
       if (ub != 0)
         {
@@ -716,7 +716,7 @@ AST_Union::compute_default_value (void)
         {
           // Get the next AST decl node
           AST_UnionBranch *ub =
-            AST_UnionBranch::narrow_from_decl (si.item ());
+            dynamic_cast<AST_UnionBranch*> (si.item ());
 
           if (ub != 0)
             {
@@ -895,7 +895,7 @@ AST_Union::compute_default_index (void)
 
           if (!d->imported ())
             {
-              ub = AST_UnionBranch::narrow_from_decl (d);
+              ub = dynamic_cast<AST_UnionBranch*> (d);
 
               for (unsigned long j = 0; j < ub->label_list_length (); ++j)
                 {
@@ -925,7 +925,7 @@ AST_UnionBranch *
 AST_Union::fe_add_union_branch (AST_UnionBranch *t)
 {
   return
-    AST_UnionBranch::narrow_from_decl (
+    dynamic_cast<AST_UnionBranch*> (
       this->fe_add_ref_decl (t));
 }
 
@@ -933,7 +933,7 @@ AST_Union *
 AST_Union::fe_add_union (AST_Union *t)
 {
   return
-    AST_Union::narrow_from_decl (
+    dynamic_cast<AST_Union*> (
       this->fe_add_full_struct_type (t));
 }
 
@@ -947,7 +947,7 @@ AST_Enum *
 AST_Union::fe_add_enum (AST_Enum *t)
 {
   return
-    AST_Enum::narrow_from_decl (
+    dynamic_cast<AST_Enum*> (
       this->fe_add_decl (t));
 }
 
@@ -959,7 +959,7 @@ AST_EnumVal *
 AST_Union::fe_add_enum_val (AST_EnumVal *t)
 {
   return
-    AST_EnumVal::narrow_from_decl (
+    dynamic_cast<AST_EnumVal*> (
       this->fe_add_decl (t));
 }
 
@@ -1001,7 +1001,7 @@ AST_Union::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
 
       if (f != 0)
         {
@@ -1016,7 +1016,7 @@ AST_Union::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_union::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 
@@ -1042,9 +1042,6 @@ AST_Union::udisc_type (void)
 {
   return this->pd_udisc_type;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Union)
-IMPL_NARROW_FROM_SCOPE(AST_Union)
 
 AST_Annotation_Appls &
 AST_Union::disc_annotations ()

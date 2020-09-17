@@ -102,7 +102,7 @@ be_visitor_home_svs::visit_factory (be_factory *node)
   // An inherited factory/finder needs to return the managed
   // component of the home where it is defined.
   be_home *h =
-    be_home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_home*> (node->defined_in ());
 
   AST_Component *c = h->managed_component ();
 
@@ -346,7 +346,7 @@ be_visitor_home_svs::gen_servant_class (void)
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           bi->get_insert_queue ().reset ();
           bi->get_del_queue ().reset ();
@@ -373,7 +373,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   return 0;
@@ -459,7 +459,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
        !i.is_done ();
        i.next ())
     {
-      be_decl *d = be_decl::narrow_from_decl (i.item ());
+      be_decl *d = dynamic_cast<be_decl*> (i.item ());
 
       if (d->accept (this) == -1)
         {
@@ -471,7 +471,7 @@ be_visitor_home_attr_set::visit_home (be_home *node)
         }
     }
 
-  be_home *h = be_home::narrow_from_decl (node->base_home ());
+  be_home *h = dynamic_cast<be_home*> (node->base_home ());
 
   return this->visit_home (h);
 }

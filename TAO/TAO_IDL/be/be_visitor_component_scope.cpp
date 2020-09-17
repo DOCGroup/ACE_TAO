@@ -154,14 +154,14 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
        !si.is_done ();
        si.next ())
     {
-      be_decl *d = be_decl::narrow_from_decl (si.item ());
+      be_decl *d = dynamic_cast<be_decl*> (si.item ());
 
       switch (d->node_type ())
         {
           case AST_Decl::NT_provides:
             {
               be_provides *p =
-                be_provides::narrow_from_decl (d);
+                dynamic_cast<be_provides*> (d);
 
               be_uses mirror_node (p->name (),
                                    p->provides_type (),
@@ -182,7 +182,7 @@ be_visitor_component_scope::visit_porttype_scope_mirror (
           case AST_Decl::NT_uses:
             {
               be_uses *u =
-                be_uses::narrow_from_decl (d);
+                dynamic_cast<be_uses*> (d);
 
               be_provides mirror_node (u->name (),
                                        u->uses_type ());

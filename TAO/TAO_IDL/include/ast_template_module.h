@@ -26,10 +26,6 @@ public:
   // Checks for errors in the template param refs of an alias.
   bool match_param_refs (UTL_StrList *refs, UTL_Scope *decl_scope);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Template_Module);
-  DEF_NARROW_FROM_SCOPE (AST_Template_Module);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

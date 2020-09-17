@@ -133,5 +133,3 @@ AST_Argument::direction (void)
 {
   return this->pd_direction;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Argument)

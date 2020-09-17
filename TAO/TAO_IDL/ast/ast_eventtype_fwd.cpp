@@ -51,7 +51,3 @@ void
 AST_EventTypeFwd::destroy (void)
 {
 }
-
-
-
-IMPL_NARROW_FROM_DECL (AST_EventTypeFwd)

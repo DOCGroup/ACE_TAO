@@ -42,7 +42,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
     {
       AST_Decl *d = si.item ();
 
-      be_enum *e = be_enum::narrow_from_decl (d);
+      be_enum *e = dynamic_cast<be_enum*> (d);
       if (e != 0)
         {
           be_visitor_enum_cdr_op_cs visitor (&ctx);
@@ -159,7 +159,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       << "{" << be_idt_nl;
 
   be_type* disc_type =
-    be_type::narrow_from_decl (node->disc_type ());
+    dynamic_cast<be_type*> (node->disc_type ());
 
   // Generate a temporary to store the discriminant
   *os << disc_type->full_name ()

@@ -272,7 +272,3 @@ AST_PredefinedType::pt (void)
 {
   return this->pd_pt;
 }
-
-
-
-IMPL_NARROW_FROM_DECL(AST_PredefinedType)

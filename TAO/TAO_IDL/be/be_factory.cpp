@@ -64,6 +64,3 @@ be_factory::be_add_argument (AST_Argument *arg)
                            0);
   return arg;
 }
-
-IMPL_NARROW_FROM_DECL (be_factory)
-IMPL_NARROW_FROM_SCOPE (be_factory)

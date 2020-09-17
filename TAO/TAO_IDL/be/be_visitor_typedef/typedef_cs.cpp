@@ -90,7 +90,7 @@ be_visitor_typedef_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node);
 
       // Grab the immediate base type node.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {

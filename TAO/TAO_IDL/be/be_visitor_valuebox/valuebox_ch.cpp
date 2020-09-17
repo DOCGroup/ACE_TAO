@@ -96,7 +96,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
           << be_nl_2;
     }
 
-  be_type *bt = be_type::narrow_from_decl (node->boxed_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->boxed_type ());
 
   // Emit the type specific elements.  The visit_* methods in this
   // module do that work.
@@ -268,7 +268,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
 
   // Retrieve the base type since we will need to do some code
   // generation for it.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (bt == 0)
     {
@@ -518,7 +518,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = AST_Field::narrow_from_decl (d)) == 0)
+      if (d == 0 || (field = dynamic_cast<AST_Field*> (d)) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ch::visit_structure -"
@@ -526,10 +526,10 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
           break;
         }
 
-      bt = be_type::narrow_from_decl (field->field_type ());
+      bt = dynamic_cast<be_type*> (field->field_type ());
 
       // Set the node to be visited
-      ctx.node (be_decl::narrow_from_decl (d));
+      ctx.node (dynamic_cast<be_decl*> (d));
 
       // Create a visitor and use that to process the type.
       be_visitor_valuebox_field_ch visitor (&ctx);
@@ -619,7 +619,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = AST_Field::narrow_from_decl (d)) == 0)
+      if (d == 0 || (field = dynamic_cast<AST_Field*> (d)) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ch::visit_union -"
@@ -627,10 +627,10 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
           break;
         }
 
-      bt = be_type::narrow_from_decl (field->field_type ());
+      bt = dynamic_cast<be_type*> (field->field_type ());
 
       // Set the node to be visited
-      ctx.node (be_decl::narrow_from_decl (d));
+      ctx.node (dynamic_cast<be_decl*> (d));
 
       // Create a visitor and use that to process the type.
       be_visitor_valuebox_field_ch visitor (&ctx);
@@ -644,7 +644,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
     }
 
   // Retrieve the disriminant type.
-  bt = be_type::narrow_from_decl (node->disc_type ());
+  bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {

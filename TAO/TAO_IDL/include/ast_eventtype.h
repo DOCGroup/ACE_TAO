@@ -25,11 +25,6 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_EventType);
-  DEF_NARROW_FROM_SCOPE(AST_EventType);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

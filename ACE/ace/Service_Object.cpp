@@ -110,7 +110,7 @@ ACE_Service_Type::fini (void)
       return 1; // No implementation was found.
     }
 
-  int ret = this->type_->fini ();
+  int const ret = this->type_->fini ();
 
   // Ensure type is 0 to prevent invalid access after call to fini.
   this->type_ = 0;

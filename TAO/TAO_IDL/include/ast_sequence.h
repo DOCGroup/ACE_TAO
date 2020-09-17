@@ -106,10 +106,6 @@ public:
   // Cleanup method.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Sequence);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

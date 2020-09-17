@@ -44,7 +44,7 @@ be_interface_fwd::seen_in_sequence (bool val)
 {
   this->be_type::seen_in_sequence (val);
   be_interface *fd =
-    be_interface::narrow_from_decl (this->full_definition ());
+    dynamic_cast<be_interface*> (this->full_definition ());
   fd->seen_in_sequence (val);
 }
 
@@ -53,7 +53,7 @@ be_interface_fwd::seen_in_operation (bool val)
 {
   this->be_type::seen_in_operation (val);
   be_interface *fd =
-    be_interface::narrow_from_decl (this->full_definition ());
+    dynamic_cast<be_interface*> (this->full_definition ());
   fd->seen_in_operation (val);
 }
 
@@ -69,7 +69,3 @@ be_interface_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_interface_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_interface_fwd)

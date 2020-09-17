@@ -264,7 +264,7 @@ ast_visitor_tmpl_module_inst::visit_provides (AST_Provides *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Type *p_type =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->provides_type ()));
 
   AST_Provides *added_provides =
@@ -282,7 +282,7 @@ ast_visitor_tmpl_module_inst::visit_uses (AST_Uses *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Type *u_type =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->uses_type ()));
 
   AST_Uses *added_uses =
@@ -301,7 +301,7 @@ ast_visitor_tmpl_module_inst::visit_publishes (AST_Publishes *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Type *p_type =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->publishes_type ()));
 
   AST_Publishes *added_publishes =
@@ -319,7 +319,7 @@ ast_visitor_tmpl_module_inst::visit_emits (AST_Emits *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Type *e_type =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->emits_type ()));
 
   AST_Emits *added_emits =
@@ -336,7 +336,7 @@ ast_visitor_tmpl_module_inst::visit_consumes (AST_Consumes *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Type *c_type =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->consumes_type ()));
 
   AST_Consumes *added_consumes =
@@ -352,7 +352,7 @@ ast_visitor_tmpl_module_inst::visit_extended_port (
   AST_Extended_Port *node)
 {
   AST_PortType *pt =
-    AST_PortType::narrow_from_decl (
+    dynamic_cast<AST_PortType*> (
       this->reify_type (node->port_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
@@ -370,7 +370,7 @@ ast_visitor_tmpl_module_inst::visit_mirror_port (
   AST_Mirror_Port *node)
 {
   AST_PortType *pt =
-    AST_PortType::narrow_from_decl (
+    dynamic_cast<AST_PortType*> (
       this->reify_type (node->port_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
@@ -387,7 +387,7 @@ int
 ast_visitor_tmpl_module_inst::visit_connector (AST_Connector *node)
 {
   AST_Connector *parent =
-    AST_Connector::narrow_from_decl (
+    dynamic_cast<AST_Connector*> (
       this->reify_type (node->base_connector ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
@@ -432,7 +432,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
   UTL_ScopedName *managed_comp_name = 0;
 
   AST_Component *managed_comp =
-    AST_Component::narrow_from_decl (
+    dynamic_cast<AST_Component*> (
       this->reify_type (node->managed_component ()));
 
   if (managed_comp != 0)
@@ -443,7 +443,7 @@ ast_visitor_tmpl_module_inst::visit_home (AST_Home *node)
   UTL_ScopedName *p_key_name = 0;
 
   AST_ValueType *p_key =
-    AST_ValueType::narrow_from_decl (
+    dynamic_cast<AST_ValueType*> (
       this->reify_type (node->primary_key ()));
 
   if (p_key != 0)
@@ -593,7 +593,7 @@ int
 ast_visitor_tmpl_module_inst::visit_union_branch (AST_UnionBranch *node)
 {
   AST_Type *ft =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->field_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
@@ -608,7 +608,7 @@ ast_visitor_tmpl_module_inst::visit_union_branch (AST_UnionBranch *node)
   // add_to_scope() so we need to reuse it.
 
   AST_Union *u =
-    AST_Union::narrow_from_scope (idl_global->scopes ().top ());
+    dynamic_cast<AST_Union*> (idl_global->scopes ().top ());
 
   u->fe_add_union_branch (added_branch);
 
@@ -684,7 +684,7 @@ ast_visitor_tmpl_module_inst::visit_module (AST_Module *node)
   added_module->from_inst (this->tmi_);
 
   AST_Module *m =
-    AST_Module::narrow_from_scope (idl_global->scopes ().top ());
+    dynamic_cast<AST_Module*> (idl_global->scopes ().top ());
 
   m->fe_add_module (added_module);
 
@@ -752,7 +752,7 @@ ast_visitor_tmpl_module_inst::visit_template_module_inst (
   // Add the new module to the scope containing the template
   // module instantiation.
   AST_Module *m =
-    AST_Module::narrow_from_scope (idl_global->scopes ().top ());
+    dynamic_cast<AST_Module*> (idl_global->scopes ().top ());
 
   m->fe_add_module (instance);
 
@@ -959,7 +959,7 @@ int
 ast_visitor_tmpl_module_inst::visit_attribute (AST_Attribute *node)
 {
   AST_Type *ft =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->field_type ()));
 
   AST_Attribute *added_attr =
@@ -988,7 +988,7 @@ int
 ast_visitor_tmpl_module_inst::visit_operation (AST_Operation *node)
 {
   AST_Type *rt =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->return_type ()));
 
   Identifier id (node->local_name ()->get_string ());
@@ -1030,7 +1030,7 @@ int
 ast_visitor_tmpl_module_inst::visit_argument (AST_Argument *node)
 {
   AST_Type *t =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->field_type ()));
 
   if (t == 0)
@@ -1056,7 +1056,7 @@ int
 ast_visitor_tmpl_module_inst::visit_typedef (AST_Typedef *node)
 {
   AST_Type *bt =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->base_type ()));
 
   UTL_ScopedName sn (node->local_name (), 0);
@@ -1096,7 +1096,7 @@ ast_visitor_tmpl_module_inst::visit_constant (AST_Constant *node)
         }
 
       AST_Constant *c =
-        AST_Constant::narrow_from_decl (rv.reified_node ());
+        dynamic_cast<AST_Constant*> (rv.reified_node ());
 
       /// We don't use the reified node's ExprType here, since
       /// it was created from a template arg that (for const
@@ -1162,7 +1162,7 @@ int
 ast_visitor_tmpl_module_inst::visit_field (AST_Field *node)
 {
   AST_Type *t =
-    AST_Type::narrow_from_decl (
+    dynamic_cast<AST_Type*> (
       this->reify_type (node->field_type ()));
 
   AST_Field *added_field =
@@ -1287,7 +1287,7 @@ ast_visitor_tmpl_module_inst::reify_exception_list (
        i.next ())
     {
       AST_Type *ex =
-        AST_Type::narrow_from_decl (this->reify_type (i.item ()));
+        dynamic_cast<AST_Type*> (this->reify_type (i.item ()));
 
       UTL_ExceptList *ex_list = 0;
       ACE_NEW_RETURN (ex_list,
@@ -1316,7 +1316,7 @@ ast_visitor_tmpl_module_inst::create_name_list (AST_Type **list,
   for (long i = 0; i < length; ++i)
     {
       AST_Type *item =
-        AST_Type::narrow_from_decl (this->reify_type (list[i]));
+        dynamic_cast<AST_Type*> (this->reify_type (list[i]));
 
       // We copy each name added so we can call destroy() on the
       // list, which disposes of the contents as well as the

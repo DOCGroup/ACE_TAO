@@ -385,7 +385,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
   // This will recursively catch all previous openings of a module.
   if (this->node_type () == AST_Decl::NT_module)
     {
-      AST_Module *m = AST_Module::narrow_from_decl (this);
+      AST_Module *m = dynamic_cast<AST_Module*> (this);
       while (!!(m = m->previous_opening ()))
         {
           for (UTL_ScopeActiveIterator si (m, UTL_Scope::IK_decls);
@@ -867,7 +867,7 @@ AST_Decl::has_ancestor (AST_Decl *s)
           return true;
         }
 
-      AST_Module *m = AST_Module::narrow_from_decl (s);
+      AST_Module *m = dynamic_cast<AST_Module*> (s);
       if (m)
         {
           while (!!(m = m->previous_opening ()))
@@ -1470,7 +1470,7 @@ AST_Decl::contains_wstring (void)
         {
         case AST_Decl::NT_array:
           {
-            AST_Array *a = AST_Array::narrow_from_decl (this);
+            AST_Array *a = dynamic_cast<AST_Array*> (this);
             this->contains_wstring_ = a->base_type ()->contains_wstring ();
             break;
           }
@@ -1479,14 +1479,14 @@ AST_Decl::contains_wstring (void)
         case AST_Decl::NT_struct:
         case AST_Decl::NT_union:
           {
-            AST_Structure *s = AST_Structure::narrow_from_decl (this);
+            AST_Structure *s = dynamic_cast<AST_Structure*> (this);
             this->contains_wstring_ = s->contains_wstring ();
             break;
           }
 
         case AST_Decl::NT_sequence:
           {
-            AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+            AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
             this->contains_wstring_ = s->base_type ()->contains_wstring ();
             break;
           }
@@ -1495,14 +1495,14 @@ AST_Decl::contains_wstring (void)
         case AST_Decl::NT_field:
         case AST_Decl::NT_union_branch:
           {
-            AST_Field *f = AST_Field::narrow_from_decl (this);
+            AST_Field *f = dynamic_cast<AST_Field*> (this);
             this->contains_wstring_ = f->field_type ()->contains_wstring ();
             break;
           }
 
         case AST_Decl::NT_typedef:
           {
-            AST_Typedef *td = AST_Typedef::narrow_from_decl (this);
+            AST_Typedef *td = dynamic_cast<AST_Typedef*> (this);
             this->contains_wstring_ =
               td->primitive_base_type ()->contains_wstring ();
             break;
@@ -1536,11 +1536,11 @@ AST_Decl::masking_checks (AST_Decl *mod)
       return true;
     }
 
-  AST_Module *me_mod = AST_Module::narrow_from_decl (this);
+  AST_Module *me_mod = dynamic_cast<AST_Module*> (this);
 
   if (me_mod != 0)
     {
-      AST_Module *po_mod = AST_Module::narrow_from_decl (mod);
+      AST_Module *po_mod = dynamic_cast<AST_Module*> (mod);
       if (po_mod)
         {
           while (!!(po_mod = po_mod->previous_opening ()))
@@ -1567,11 +1567,6 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
 {
   this->in_tmpl_mod_not_aliased_ = val;
 }
-
-//Narrowing methods for AST_Decl.
-
-IMPL_NARROW_FROM_DECL(AST_Decl)
-
 
 void
 AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)

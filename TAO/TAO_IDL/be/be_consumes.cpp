@@ -28,7 +28,7 @@ be_eventtype *
 be_consumes::consumes_type (void) const
 {
   return
-    be_eventtype::narrow_from_decl (
+    dynamic_cast<be_eventtype*> (
       this->AST_Consumes::consumes_type ());
 }
 
@@ -44,5 +44,3 @@ be_consumes::destroy (void)
   this->AST_Consumes::destroy ();
   this->be_field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_consumes)

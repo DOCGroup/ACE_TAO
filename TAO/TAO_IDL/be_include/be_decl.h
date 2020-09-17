@@ -157,10 +157,6 @@ public:
   void exec_src_facet_gen (bool);
   void ami4ccm_ex_idl_gen (bool);
 
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL (be_decl);
-
 private:
   // Variables that indicate if the code generation for that node is already
   // been done. This way we avoid regenerating same code.

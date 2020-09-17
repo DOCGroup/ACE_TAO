@@ -52,10 +52,6 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_array);
-
 protected:
   /// Create a name for us.
   virtual int create_name (void);

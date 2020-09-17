@@ -61,7 +61,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << node->local_name () << " &);";
 
   // Retrieve the disriminant type.
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {

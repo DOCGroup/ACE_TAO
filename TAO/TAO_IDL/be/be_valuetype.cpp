@@ -85,7 +85,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   // Always the case.
   this->size_type (AST_Type::VARIABLE);
 
-  AST_Module *m = AST_Module::narrow_from_scope (this->defined_in ());
+  AST_Module *m = dynamic_cast<AST_Module*> (this->defined_in ());
 
   if (m != 0)
     {
@@ -98,7 +98,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
   for (long i = 0; i < this->pd_n_supports; ++i)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (this->pd_supports[i]);
+        dynamic_cast<be_interface*> (this->pd_supports[i]);
 
       if (intf == 0)
         {
@@ -138,7 +138,7 @@ be_valuetype::~be_valuetype (void)
 void
 be_valuetype::redefine (AST_Interface *from)
 {
-  be_valuetype *bv = be_valuetype::narrow_from_decl (from);
+  be_valuetype *bv = dynamic_cast<be_valuetype*> (from);
 
   // This should always be TRUE, but our signature is inherited, so
   // the narrow is necessary and should always be checked.
@@ -301,7 +301,7 @@ be_valuetype::have_operation (void)
 
       for (i = 0; i < n_inherits; ++i)
         {
-          be_valuetype *vt = be_valuetype::narrow_from_decl (inherits[i]);
+          be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
           if (vt != 0 && vt->have_operation ())
             {
@@ -319,7 +319,7 @@ be_valuetype::have_operation (void)
       if (supported != 0)
         {
           be_interface *intf =
-            be_interface::narrow_from_decl (supported);
+            dynamic_cast<be_interface*> (supported);
 
           if (intf != 0)
             {
@@ -378,7 +378,7 @@ be_valuetype::have_supported_op (be_interface * node)
       for (i = 0; i < n_inherits; ++i)
         {
           be_interface * intf =
-            be_interface::narrow_from_decl (inherits[i]);
+            dynamic_cast<be_interface*> (inherits[i]);
 
           if (intf != 0)
             {
@@ -413,7 +413,7 @@ be_valuetype::has_member (void)
   if (parent != 0)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
 
       if (be_parent->has_member ())
         {
@@ -606,7 +606,7 @@ be_valuetype::statefull_inherit (void)
   if (this->pd_inherits_concrete != 0)
     {
       return
-        be_valuetype::narrow_from_decl (
+        dynamic_cast<be_valuetype*> (
           this->pd_inherits_concrete);
     }
   else
@@ -651,8 +651,8 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
                             0);
         }
 
-      AST_Field *field = AST_Field::narrow_from_decl (d);
-      AST_Attribute *attr = AST_Attribute::narrow_from_decl (d);
+      AST_Field *field = dynamic_cast<AST_Field*> (d);
+      AST_Attribute *attr = dynamic_cast<AST_Attribute*> (d);
 
       if (field == 0 || attr != 0)
         {
@@ -718,7 +718,7 @@ be_valuetype::traverse_supports_list_graphs (
         }
 
       supported_interface =
-        be_interface::narrow_from_decl (this->pd_supports[i]);
+        dynamic_cast<be_interface*> (this->pd_supports[i]);
 
       // Insert a supported interface in the queue.
       if (this->insert_queue.enqueue_tail (supported_interface) == -1)
@@ -750,7 +750,7 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
     }
 
   be_interface *concrete =
-    be_interface::narrow_from_decl (supported);
+    dynamic_cast<be_interface*> (supported);
 
   // Make sure the queues are empty.
   this->insert_queue.reset ();
@@ -783,6 +783,3 @@ be_valuetype::abstract_supports_helper (be_interface *,
 
   return 0;
 }
-
-IMPL_NARROW_FROM_DECL (be_valuetype)
-IMPL_NARROW_FROM_SCOPE (be_valuetype)

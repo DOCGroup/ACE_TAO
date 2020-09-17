@@ -57,11 +57,6 @@ public:
   /// Returns total number of labels, useful when the union has
   /// multiple case labels.
   ACE_UINT64 nlabels (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(be_union);
-  DEF_NARROW_FROM_SCOPE(be_union);
 };
 
 #endif

@@ -108,7 +108,7 @@ AST_Field::AST_Field (AST_Type *ft,
   if (fnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
+        dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -141,7 +141,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
   if (fnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
+        dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -233,8 +233,6 @@ AST_Field::contains_wstring (void)
 {
   return this->ref_type_->contains_wstring ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Field)
 
 bool AST_Field::annotatable () const
 {

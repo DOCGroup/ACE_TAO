@@ -43,8 +43,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 {
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
-  AST_ValueType *pk =
-    AST_ValueType::narrow_from_decl (primary_key);
+  AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
 
   if (pk != 0)
     {
@@ -107,8 +106,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
           continue;
         }
 
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -266,21 +264,11 @@ AST_Home::ast_accept (ast_visitor *visitor)
 AST_Factory *
 AST_Home::fe_add_factory (AST_Factory *f)
 {
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Factory*> (this->fe_add_decl (f));
 }
 
 AST_Finder *
 AST_Home::fe_add_finder (AST_Finder *f)
 {
-  return
-    AST_Finder::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Finder*> (this->fe_add_decl (f));
 }
-
-  // Narrowing.
-
-IMPL_NARROW_FROM_DECL(AST_Home)
-IMPL_NARROW_FROM_SCOPE(AST_Home)
-

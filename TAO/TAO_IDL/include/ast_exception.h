@@ -88,11 +88,6 @@ public:
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we or the parameter node is in recursion.
 
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Exception);
-  DEF_NARROW_FROM_SCOPE(AST_Exception);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

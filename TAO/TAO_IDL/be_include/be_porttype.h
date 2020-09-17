@@ -36,9 +36,6 @@ public:
   virtual void destroy (void);
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_porttype);
-  DEF_NARROW_FROM_SCOPE (be_porttype);
 };
 
 #endif // BE_PORTTYPE_H

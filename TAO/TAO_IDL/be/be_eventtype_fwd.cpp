@@ -59,8 +59,3 @@ be_eventtype_fwd::destroy (void)
 {
   this->be_valuetype_fwd::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_eventtype_fwd)
-

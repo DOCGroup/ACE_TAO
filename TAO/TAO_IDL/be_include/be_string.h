@@ -41,10 +41,6 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_string);
-
 protected:
   /// Overridden method to compute typecode name.
   virtual void compute_tc_name (void);

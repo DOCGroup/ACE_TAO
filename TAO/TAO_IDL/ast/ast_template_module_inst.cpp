@@ -28,7 +28,7 @@ AST_Template_Module *
 AST_Template_Module_Inst::ref (void) const
 {
   return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+    dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 FE_Utils::T_ARGLIST const *
@@ -58,6 +58,3 @@ AST_Template_Module_Inst::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_template_module_inst (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst)
-

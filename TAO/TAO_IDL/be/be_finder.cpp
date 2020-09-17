@@ -46,6 +46,3 @@ be_finder::accept (be_visitor *visitor)
 {
   return visitor->visit_finder (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_finder)
-IMPL_NARROW_FROM_SCOPE (be_finder)

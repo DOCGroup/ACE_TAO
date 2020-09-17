@@ -103,11 +103,6 @@ public:
   // Overridden for unions.
   virtual void redefine (AST_Structure *from);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Structure);
-  DEF_NARROW_FROM_SCOPE(AST_Structure);
-
   virtual int member_count (void);
   // Return the count of members.
 

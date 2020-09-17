@@ -136,14 +136,14 @@ AST_InterfaceFwd::full_def_seen (void)
 
   if (AST_Decl::NT_module == s->scope_node_type ())
     {
-      AST_Module *m = AST_Module::narrow_from_scope (s);
+      AST_Module *m = dynamic_cast<AST_Module*> (s);
       AST_Decl *d =
         m->look_in_prev_mods_local (this->local_name (),
                                     false);
 
       if (0 != d)
         {
-          i = AST_Interface::narrow_from_decl (d);
+          i = dynamic_cast<AST_Interface*> (d);
 
           if (0 != i && i->is_defined ())
             {
@@ -156,7 +156,7 @@ AST_InterfaceFwd::full_def_seen (void)
         !iter.is_done ();
         iter.next ())
     {
-      i = AST_Interface::narrow_from_decl (iter.item ());
+      i = dynamic_cast<AST_Interface*> (iter.item ());
 
       if (0 != i && this->local_name ()->compare (i->local_name ()))
         {
@@ -224,7 +224,7 @@ AST_InterfaceFwd::is_defined (void)
   if (!this->is_defined_)
     {
       AST_Module *m =
-        AST_Module::narrow_from_scope (this->defined_in ());
+        dynamic_cast<AST_Module*> (this->defined_in ());
 
       if (0 != m)
         {
@@ -242,7 +242,7 @@ AST_InterfaceFwd::is_defined (void)
                 }
 
               AST_InterfaceFwd *fwd =
-                AST_InterfaceFwd::narrow_from_decl (d);
+                dynamic_cast<AST_InterfaceFwd*> (d);
 
               // Since fwd_redefinition_helper() is called
               // before fe_add_interface(), we can't check
@@ -306,5 +306,3 @@ AST_InterfaceFwd::adjust_found (
 
   return this;
 }
-
-IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

@@ -33,7 +33,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   // If the node is an array of anonymous sequence, we need to
@@ -100,7 +100,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   *os << be_global->core_versioning_begin () << be_nl;
 
-  be_scope* scope = be_scope::narrow_from_scope (node->defined_in ());
+  be_scope* scope = dynamic_cast<be_scope*> (node->defined_in ());
   be_decl* parent = scope->decl ();
   be_typedef *td = this->ctx_->tdef ();
   ACE_CString arg_name (ACE_CString (parent->full_name ())

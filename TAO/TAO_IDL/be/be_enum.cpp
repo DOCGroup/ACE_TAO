@@ -92,8 +92,3 @@ be_enum::accept (be_visitor *visitor)
 {
   return visitor->visit_enum (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_enum)
-IMPL_NARROW_FROM_SCOPE (be_enum)

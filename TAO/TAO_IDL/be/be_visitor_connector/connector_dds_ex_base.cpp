@@ -88,15 +88,15 @@ be_visitor_connector_dds_ex_base::is_dds_type (
 
       if (ACE_OS::strcmp (lname, "DDS_Base") == 0)
         {
-          AST_Structure *s = AST_Structure::narrow_from_decl (d);
+          AST_Structure *s = dynamic_cast<AST_Structure*> (d);
 
           if (s == 0)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
 
               if (td != 0)
                 {
-                  s = AST_Structure::narrow_from_decl (td->primitive_base_type ());
+                  s = dynamic_cast<AST_Structure*> (td->primitive_base_type ());
                 }
             }
 
@@ -115,7 +115,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
   AST_Connector *node)
 {
   AST_Module *m =
-    AST_Module::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Module*> (node->defined_in ());
 
   /// If this is non-zero, we use this to limit our template
   /// args list to those used in the alias. If it is zero, we
@@ -130,7 +130,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
   while (this->t_inst_ == 0 && m != 0)
     {
       this->t_inst_ = m->from_inst ();
-      m = AST_Module::narrow_from_scope (m->defined_in ());
+      m = dynamic_cast<AST_Module*> (m->defined_in ());
     }
 
   if (this->t_inst_ == 0)

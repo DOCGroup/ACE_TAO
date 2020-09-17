@@ -47,10 +47,6 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_field);
-
 private:
   // If the name of a provides or uses node has already been
   // prefixed with the (mirror)port name(s), we don't want

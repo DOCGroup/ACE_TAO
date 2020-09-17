@@ -15,9 +15,6 @@ public:
   // Data Accessor.
   AST_Type *provides_type (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_Provides);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

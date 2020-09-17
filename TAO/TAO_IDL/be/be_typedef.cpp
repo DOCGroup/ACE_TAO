@@ -77,8 +77,8 @@ be_typedef::primitive_base_type (void)
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = be_typedef::narrow_from_decl (d);
-      d = be_type::narrow_from_decl (temp->base_type ());
+      temp = dynamic_cast<be_typedef*> (d);
+      d = dynamic_cast<be_type*> (temp->base_type ());
     }
 
   return d;
@@ -89,7 +89,7 @@ be_typedef::base_node_type (void) const
 {
   be_typedef *td = const_cast<be_typedef *> (this);
 
-  be_type *base = be_type::narrow_from_decl (td->base_type ());
+  be_type *base = dynamic_cast<be_type*> (td->base_type ());
 
   return base->base_node_type ();
 }
@@ -118,5 +118,3 @@ be_typedef::accept (be_visitor *visitor)
 {
   return visitor->visit_typedef (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_typedef)

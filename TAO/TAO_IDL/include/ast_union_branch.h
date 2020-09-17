@@ -103,10 +103,6 @@ public:
   // we call this at the end of fe_add_union_branch.
   void coerce_labels (AST_Union *u);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_UnionBranch);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

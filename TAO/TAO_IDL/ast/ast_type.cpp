@@ -217,7 +217,7 @@ AST_Type::unaliased_type (void)
 
   while (nt == AST_Decl::NT_typedef)
     {
-      td = AST_Typedef::narrow_from_decl (t);
+      td = dynamic_cast<AST_Typedef*> (t);
       t = td->base_type ();
       nt = t->node_type ();
     }
@@ -542,5 +542,3 @@ AST_Type::destroy (void)
 
   this->AST_Decl::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Type)

@@ -39,9 +39,6 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_predefined_type);
-
 protected:
   /// Overridden method.
   virtual void compute_tc_name (void);

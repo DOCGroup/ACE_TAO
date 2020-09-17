@@ -36,8 +36,6 @@ public:
   virtual void destroy (void);
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_mirror_port);
 };
 
 #endif // BE_MIRROR_PORT_H

@@ -49,7 +49,3 @@ AST_ValueBox::destroy (void)
 {
   this->AST_ConcreteType::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_ValueBox)
-
-

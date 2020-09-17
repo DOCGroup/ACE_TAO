@@ -184,33 +184,25 @@ AST_Interface::is_defined (void)
 AST_Constant *
 AST_Interface::fe_add_constant (AST_Constant *t)
 {
-  return
-    AST_Constant::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Constant*> (this->fe_add_decl (t));
 }
 
 AST_Exception *
 AST_Interface::fe_add_exception (AST_Exception *t)
 {
-  return
-    AST_Exception::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Exception*> (this->fe_add_decl (t));
 }
 
 AST_Attribute *
 AST_Interface::fe_add_attribute (AST_Attribute *t)
 {
-  return
-    AST_Attribute::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Attribute*> (this->fe_add_decl (t));
 }
 
 AST_Operation *
 AST_Interface::fe_add_operation (AST_Operation *t)
 {
-  return
-    AST_Operation::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Operation*> (this->fe_add_decl (t));
 }
 
 AST_Structure *
@@ -228,25 +220,19 @@ AST_Interface::fe_add_structure_fwd (AST_StructureFwd *t)
 AST_Enum *
 AST_Interface::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 AST_Union *
 AST_Interface::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_UnionFwd *
 AST_Interface::fe_add_union_fwd (AST_UnionFwd *t)
 {
-  return
-    AST_UnionFwd::narrow_from_decl (
-      this->fe_add_fwd_struct_type (t));
+  return dynamic_cast<AST_UnionFwd*> (this->fe_add_fwd_struct_type (t));
 }
 
 // Add an AST_EnumVal node (an enumerator) to this scope.
@@ -257,7 +243,7 @@ AST_EnumVal *
 AST_Interface::fe_add_enum_val (AST_EnumVal *t)
 {
   return
-    AST_EnumVal::narrow_from_decl (
+    dynamic_cast<AST_EnumVal*> (
       this->fe_add_decl (t));
 }
 
@@ -266,7 +252,7 @@ AST_Typedef *
 AST_Interface::fe_add_typedef (AST_Typedef *t)
 {
   return
-    AST_Typedef::narrow_from_decl (
+    dynamic_cast<AST_Typedef*> (
       this->fe_add_ref_decl (t));
 }
 
@@ -274,7 +260,7 @@ AST_Native *
 AST_Interface::fe_add_native (AST_Native *t)
 {
   return
-    AST_Native::narrow_from_decl (
+    dynamic_cast<AST_Native*> (
       this->fe_add_decl (t));
 }
 
@@ -443,7 +429,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
   if (nt != AST_Decl::NT_param_holder)
     {
       AST_Interface *i =
-        AST_Interface::narrow_from_decl (t);
+        dynamic_cast<AST_Interface*> (t);
 
       AST_Type **parents = i->inherits ();
       long n_parents = i->n_inherits ();
@@ -456,7 +442,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 
   if (nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype)
     {
-      AST_ValueType *v = AST_ValueType::narrow_from_decl (t);
+      AST_ValueType *v = dynamic_cast<AST_ValueType*> (t);
       AST_Type **supports = v->supports ();
       long n_supports = v->n_supports ();
 
@@ -467,7 +453,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
     }
   else if (nt == AST_Decl::NT_component)
     {
-      AST_Component *c = AST_Component::narrow_from_decl (t);
+      AST_Component *c = dynamic_cast<AST_Component*> (t);
       AST_Type **supports = c->supports ();
       long n_supports = c->n_supports ();
 
@@ -507,7 +493,7 @@ AST_Interface::insert_non_dup (AST_Type *t,
                                bool abstract_paths_only)
 {
   AST_Interface *f =
-    AST_Interface::narrow_from_decl (t);
+    dynamic_cast<AST_Interface*> (t);
 
   // Now check if the dequeued element has any ancestors. If yes, insert
   // them inside the queue making sure that there are no duplicates.
@@ -829,7 +815,7 @@ AST_Interface::look_in_inherited (UTL_ScopedName *e,
        nis--, is++)
     {
       AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+        dynamic_cast<AST_Interface*> (*is);
 
       if (i == 0)
         {
@@ -897,7 +883,7 @@ AST_Interface::look_in_inherited_local (Identifier *e,
        nis--, is++)
     {
       AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+        dynamic_cast<AST_Interface*> (*is);
 
       if (i == 0)
         {
@@ -1010,7 +996,7 @@ AST_Interface::analyze_parentage (void)
   for (long i = 0; i < this->pd_n_inherits; ++i)
     {
       AST_Interface *parent =
-         AST_Interface::narrow_from_decl (this->pd_inherits[i]);
+         dynamic_cast<AST_Interface*> (this->pd_inherits[i]);
 
       if (parent == 0)
         {
@@ -1035,7 +1021,7 @@ AST_Interface::analyze_parentage (void)
   while (s != 0)
     {
       AST_Template_Module *m =
-        AST_Template_Module::narrow_from_scope (s);
+        dynamic_cast<AST_Template_Module*> (s);
 
       if (m != 0)
         {
@@ -1151,6 +1137,3 @@ AST_Interface::annotatable () const
 {
   return true;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Interface)
-IMPL_NARROW_FROM_SCOPE(AST_Interface)

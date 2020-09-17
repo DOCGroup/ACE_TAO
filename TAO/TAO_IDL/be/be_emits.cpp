@@ -28,7 +28,7 @@ be_eventtype *
 be_emits::emits_type (void) const
 {
   return
-    be_eventtype::narrow_from_decl (
+    dynamic_cast<be_eventtype*> (
       this->AST_Emits::emits_type ());
 }
 
@@ -44,5 +44,3 @@ be_emits::destroy (void)
   this->AST_Emits::destroy ();
   this->be_field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_emits)

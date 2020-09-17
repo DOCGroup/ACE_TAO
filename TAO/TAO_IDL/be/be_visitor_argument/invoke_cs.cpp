@@ -30,7 +30,7 @@ int be_visitor_args_invoke_cs::visit_argument (be_argument *node)
 {
   this->ctx_->node (node);
   be_type *bt =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -128,7 +128,7 @@ int be_visitor_args_invoke_cs::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -175,7 +175,7 @@ int be_visitor_args_invoke_cs::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -254,7 +254,7 @@ int be_visitor_args_invoke_cs::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -298,7 +298,7 @@ int be_visitor_args_invoke_cs::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -451,7 +451,7 @@ int be_visitor_args_invoke_cs::emit_common (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {
@@ -495,7 +495,7 @@ int be_visitor_args_invoke_cs::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_OUTPUT)
     {

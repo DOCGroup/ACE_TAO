@@ -69,7 +69,7 @@ be_array::create_name (void)
                   NAMEBUFSIZE);
   // Retrieve the base type.
   // The name always starts this way.
-  be_type *bt = be_type::narrow_from_decl (this->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (this->base_type ());
 
   if (!bt)
     {
@@ -116,7 +116,7 @@ be_array::create_name (void)
     }
 
   // Now see if we have a fully scoped name and if so, generate one.
-  scope = be_scope::narrow_from_scope (this->defined_in ())->decl ();
+  scope = dynamic_cast<be_scope*> (this->defined_in ())->decl ();
 
   if (scope)
     {
@@ -239,7 +239,7 @@ void
 be_array::gen_ostream_operator (TAO_OutStream *os,
                                 bool use_underscore)
 {
-  be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
+  be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
   ACE_CString arg_name (ACE_CString (parent->full_name ())
                         + "::"
@@ -288,7 +288,7 @@ be_array::gen_ostream_operator (TAO_OutStream *os,
       instance_name += "]";
     }
 
-  be_type *bt = be_type::narrow_from_decl (this->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (this->base_type ());
   bt->gen_member_ostream_operator (os,
                                    instance_name.c_str (),
                                    use_underscore,
@@ -314,7 +314,7 @@ be_array::gen_member_ostream_operator (TAO_OutStream *os,
                                        bool use_underscore,
                                        bool accessor)
 {
-  be_scope* scope = be_scope::narrow_from_scope (this->defined_in ());
+  be_scope* scope = dynamic_cast<be_scope*> (this->defined_in ());
   be_decl* parent = scope->decl ();
   ACE_CString decl_name (ACE_CString (parent->full_name ())
                          + "::"
@@ -346,7 +346,3 @@ be_array::destroy (void)
   this->be_type::destroy ();
   this->AST_Array::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_array)

@@ -32,11 +32,11 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
   if (intf == 0)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
       if (pt == 0)
         {
@@ -158,7 +158,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
 
   for (; !si.is_done (); si.next (), ++index)
     {
-      arg = AST_Argument::narrow_from_decl (si.item ());
+      arg = dynamic_cast<AST_Argument*> (si.item ());
 
       *os << (index == 1 ? "" : ",") << be_nl
           << "((TAO::Arg_Traits< ";

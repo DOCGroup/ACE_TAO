@@ -109,5 +109,3 @@ AST_StructureFwd::adjust_found (
 
   return this;
 }
-
-IMPL_NARROW_FROM_DECL (AST_StructureFwd)

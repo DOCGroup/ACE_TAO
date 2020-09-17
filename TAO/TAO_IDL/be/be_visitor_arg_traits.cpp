@@ -209,7 +209,7 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
     }
 
   be_interface *fd =
-    be_interface::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_interface*> (node->full_definition ());
 
   // The logic in visit_interface() should handle what gets generated
   // and what doesn't.
@@ -368,7 +368,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
 
   be_valuetype *fd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
@@ -418,7 +418,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
   // Arg_Traits<> template parameter.
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *str = AST_String::narrow_from_decl (rt);
+      AST_String *str = dynamic_cast<AST_String*> (rt);
       ACE_CDR::ULong bound = str->max_size ()->ev ()->u.ulval;
 
       if (bound > 0)
@@ -489,7 +489,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
       return 0;
     }
 
-  AST_String *st = AST_String::narrow_from_decl (node->field_type ());
+  AST_String *st = dynamic_cast<AST_String*> (node->field_type ());
 
   if (st == 0)
     {
@@ -575,7 +575,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       return 0;
     }
 
-  be_string *st = be_string::narrow_from_decl (bt);
+  be_string *st = dynamic_cast<be_string*> (bt);
   ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
@@ -992,7 +992,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 int
 be_visitor_arg_traits::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -1106,7 +1106,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 int
 be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -31,10 +31,6 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_finder);
-  DEF_NARROW_FROM_SCOPE (be_finder);
 };
 
 #endif // BE_FINDER_H

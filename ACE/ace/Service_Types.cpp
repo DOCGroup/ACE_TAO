@@ -121,7 +121,7 @@ ACE_Service_Object_Type::fini (void) const
   ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
-  // Call fini() if an only if, the object was successfuly
+  // Call fini() if an only if, the object was successfully
   // initialized, i.e. init() returned 0. This is necessary to
   // maintain the ctor/dtor-like semantics for init/fini.
   if (so != 0 && this->initialized_ == 0)

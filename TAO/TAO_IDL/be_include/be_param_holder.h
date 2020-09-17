@@ -28,9 +28,6 @@ public:
 
   virtual ~be_param_holder (void);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_param_holder);
-
   // Cleanup function.
   virtual void destroy (void);
 

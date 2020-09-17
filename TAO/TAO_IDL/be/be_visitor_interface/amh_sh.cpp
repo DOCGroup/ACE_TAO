@@ -80,7 +80,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
           // @@ The following code is *NOT* exception-safe.
           char *buf = 0;
           be_interface *base =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+            dynamic_cast<be_interface*> (node->inherits ()[i]);
           base->compute_full_name ("AMH_", "", buf);
           amh_name += buf;
           // buf was allocated by ACE_OS::strdup, so we need to use free
@@ -189,7 +189,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_attr)
         {
-          be_attribute *attribute = be_attribute::narrow_from_decl (d);
+          be_attribute *attribute = dynamic_cast<be_attribute*> (d);
 
           if (!attribute)
             {
@@ -198,7 +198,7 @@ be_visitor_amh_interface_sh::add_original_members (be_interface *node,
         }
       else
         {
-          be_operation* operation = be_operation::narrow_from_decl (d);
+          be_operation* operation = dynamic_cast<be_operation*> (d);
 
           if (operation)
             {
@@ -301,7 +301,7 @@ be_visitor_amh_interface_sh::add_amh_operation (be_operation *node,
             }
 
           AST_Argument *original_arg =
-            AST_Argument::narrow_from_decl (d);
+            dynamic_cast<AST_Argument*> (d);
 
           if (original_arg->direction () == AST_Argument::dir_INOUT ||
               original_arg->direction () == AST_Argument::dir_IN)

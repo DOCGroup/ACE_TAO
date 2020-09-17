@@ -65,7 +65,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   be_type * const discriminant_type =
-    be_type::narrow_from_decl (node->disc_type ());
+    dynamic_cast<be_type*> (node->disc_type ());
 
   ACE_ASSERT (discriminant_type != 0);
 
@@ -121,7 +121,7 @@ TAO::be_visitor_union_typecode::visit_union (be_union * node)
      << node->default_index () << ");" << be_uidt_nl
      << be_uidt_nl;
 
-  if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
+  if (this->gen_typecode_ptr (dynamic_cast<be_type*> (node)) != 0)
     {
       return -1;
     }
@@ -141,7 +141,7 @@ TAO::be_visitor_union_typecode::gen_case_typecodes (be_union * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -175,7 +175,7 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
   // Generate array containing union case/branch characterstics.
 
   be_type * const discriminant_type =
-    be_type::narrow_from_decl (node->disc_type ());
+    dynamic_cast<be_type*> (node->disc_type ());
 
   ACE_CString tao_cases ("_tao_cases_");
   ACE_CString const fields_name (tao_cases
@@ -193,10 +193,10 @@ TAO::be_visitor_union_typecode::visit_cases (be_union * node)
       node->field (member_ptr, fieldNumber);
 
       be_type * const type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
 
       be_union_branch * const branch =
-        be_union_branch::narrow_from_decl (*member_ptr);
+        dynamic_cast<be_union_branch*> (*member_ptr);
 
       ACE_ASSERT (branch != 0);
       ACE_CDR::ULong numberOfLabels = branch->label_list_length ();

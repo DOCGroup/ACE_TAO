@@ -114,7 +114,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   if (bnt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (bt);
+        dynamic_cast<AST_Param_Holder*> (bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -159,7 +159,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   list.enqueue_tail(this);
 
-  AST_Type *type = AST_Type::narrow_from_decl (this->base_type ());
+  AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
 
   if (type == 0)
     {
@@ -173,7 +173,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
       type = td->primitive_base_type ();
       nt = type->node_type ();
     }
@@ -280,8 +280,6 @@ AST_Sequence::destroy (void)
 
   this->AST_ConcreteType::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Sequence)
 
 AST_Annotation_Appls &
 AST_Sequence::base_type_annotations ()

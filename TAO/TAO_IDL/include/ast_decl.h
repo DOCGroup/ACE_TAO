@@ -288,10 +288,6 @@ public:
   // the corresponding forward declaration classes.
   virtual bool is_defined (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Decl);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

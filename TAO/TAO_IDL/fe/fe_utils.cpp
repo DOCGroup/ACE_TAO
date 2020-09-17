@@ -277,7 +277,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   UTL_ScopedName *fn = u->uses_type ()->name ();
   AST_Decl *d =
     idl_global->root ()->lookup_by_name (fn, true, false);
-  AST_Type *ft = AST_Type::narrow_from_decl (d);
+  AST_Type *ft = dynamic_cast<AST_Type*> (d);
 
   Identifier object_id ("objref");
   UTL_ScopedName object_name (&object_id,
@@ -307,7 +307,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
       return;
     }
 
-  AST_ValueType *cookie = AST_ValueType::narrow_from_decl (d);
+  AST_ValueType *cookie = dynamic_cast<AST_ValueType*> (d);
 
   Identifier cookie_id ("ck");
   UTL_ScopedName cookie_name (&cookie_id,
@@ -387,7 +387,7 @@ FE_Utils::create_implied_ami_uses_stuff (void)
       delete sn;
       sn = 0;
 
-      AST_Uses *u = AST_Uses::narrow_from_decl (d);
+      AST_Uses *u = dynamic_cast<AST_Uses*> (d);
 
       if (u == 0)
         {
@@ -406,7 +406,7 @@ FE_Utils::create_implied_ami_uses_stuff (void)
         }
 
       AST_Component *c =
-        AST_Component::narrow_from_scope (u->defined_in ());
+        dynamic_cast<AST_Component*> (u->defined_in ());
 
       if (c == 0)
         {
@@ -852,8 +852,8 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
         }
 
       /// Neither can be a template module.
-      ptm = AST_Template_Module::narrow_from_decl (prev_decl);
-      ctm = AST_Template_Module::narrow_from_decl (curr_decl);
+      ptm = dynamic_cast<AST_Template_Module*> (prev_decl);
+      ctm = dynamic_cast<AST_Template_Module*> (curr_decl);
       return (ptm == 0 && ctm == 0);
     /// For the *_fwd types, if scopes aren't related, it's ok.
     /// If they are related, then we need another fwd or a full decl.
@@ -874,7 +874,7 @@ FE_Utils::can_be_redefined (AST_Decl *prev_decl,
     /// in a derived interface type is ok.
     case AST_Decl::NT_struct:
     case AST_Decl::NT_union:
-      s = AST_Structure::narrow_from_decl (prev_decl);
+      s = dynamic_cast<AST_Structure*> (prev_decl);
       s_fwd = (s == 0 ? 0 : s->fwd_decl ());
       return (!s_eq || s_fwd != 0);
     /// Only 2 or more full definitions in the same scope are illegal,
@@ -982,7 +982,7 @@ FE_Utils::get_tm_container (AST_Decl *contained)
   while (d != 0)
     {
       AST_Template_Module *tm =
-        AST_Template_Module::narrow_from_decl (d);
+        dynamic_cast<AST_Template_Module*> (d);
 
       if (tm != 0)
         {

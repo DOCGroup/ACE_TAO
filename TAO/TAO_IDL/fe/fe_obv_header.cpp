@@ -131,7 +131,7 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
   if (this->n_inherits_ > 0)
     {
       AST_Type *t = this->inherits_[0];
-      AST_ValueType *vt = AST_ValueType::narrow_from_decl (t);
+      AST_ValueType *vt = dynamic_cast<AST_ValueType*> (t);
 
       if (vt != 0
           && vt->is_abstract () == false)
@@ -210,7 +210,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
           if (sad->node_type () == AST_Decl::NT_module)
             {
-              AST_Module *m = AST_Module::narrow_from_decl (sad);
+              AST_Module *m = dynamic_cast<AST_Module*> (sad);
 
               d = m->look_in_prev_mods_local (item->last_component ());
             }
@@ -229,20 +229,20 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       // Remove typedefs, if any.
       if (d->node_type () == AST_Decl::NT_typedef)
         {
-          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+          d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
         }
 
       AST_Decl::NodeType nt = d->node_type ();
-      t = AST_Type::narrow_from_decl (d);
+      t = dynamic_cast<AST_Type*> (d);
 
       if (nt == AST_Decl::NT_interface)
         {
-          iface = AST_Interface::narrow_from_decl (d);
+          iface = dynamic_cast<AST_Interface*> (d);
         }
       else if (nt == AST_Decl::NT_param_holder)
         {
           AST_Param_Holder *ph =
-            AST_Param_Holder::narrow_from_decl (d);
+            dynamic_cast<AST_Param_Holder*> (d);
 
           nt = ph->info ()->type_;
 
@@ -309,7 +309,7 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
 
   for (long i = 0; i < this->n_inherits_; ++i)
     {
-      vt = AST_ValueType::narrow_from_decl (this->inherits_[i]);
+      vt = dynamic_cast<AST_ValueType*> (this->inherits_[i]);
       concrete = vt->supports_concrete ();
 
       if (0 == concrete)

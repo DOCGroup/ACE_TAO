@@ -105,9 +105,6 @@ public:
   // Data Accessors.
   PredefinedType pt (void);
 
-  // Narrowing
-  DEF_NARROW_FROM_DECL(AST_PredefinedType);
-
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

@@ -192,7 +192,3 @@ AST_String::width (void)
 {
   return this->pd_width;
 }
-
-
-
-IMPL_NARROW_FROM_DECL(AST_String)

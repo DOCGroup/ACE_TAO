@@ -131,10 +131,6 @@ public:
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Type);
-
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 

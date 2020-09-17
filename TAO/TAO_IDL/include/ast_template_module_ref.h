@@ -21,9 +21,6 @@ public:
 
   UTL_StrList *param_refs (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Template_Module_Ref);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

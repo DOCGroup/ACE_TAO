@@ -35,7 +35,7 @@ be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs (void)
 int
 be_visitor_union_branch_cdr_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -85,7 +85,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -116,7 +116,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -185,7 +185,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
 
   // Retrieve the union_branch node
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -260,7 +260,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -340,7 +340,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -425,7 +425,7 @@ be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -483,7 +483,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -671,7 +671,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -741,7 +741,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -864,7 +864,7 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -961,7 +961,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
 
   // Retrieve the union_branch node.
   be_union_branch *f =
-    be_union_branch::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -1013,13 +1013,13 @@ int
 be_visitor_union_branch_cdr_op_cs::explicit_default (void)
 {
   be_union *bu =
-    be_union::narrow_from_decl (this->ctx_->scope ()->decl ());
+    dynamic_cast<be_union*> (this->ctx_->scope ()->decl ());
   int def_index = bu->default_index ();
 
   if (def_index != -1)
     {
       be_union_branch *ub =
-        be_union_branch::narrow_from_decl (this->ctx_->node ());
+        dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
       int i = 0;
 
@@ -1034,7 +1034,7 @@ be_visitor_union_branch_cdr_op_cs::explicit_default (void)
 
           if (!d->imported ())
             {
-              bub = be_union_branch::narrow_from_decl (d);
+              bub = dynamic_cast<be_union_branch*> (d);
             }
 
           if (bub == ub)

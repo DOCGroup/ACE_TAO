@@ -90,7 +90,7 @@ be_visitor_typedef_ch::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node);
 
       // Grab the immediate base type node.
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {
@@ -203,7 +203,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       // output statement.
 
       const char *static_decl = "";
-      AST_Module *scope = AST_Module::narrow_from_scope (tdef->defined_in ());
+      AST_Module *scope = dynamic_cast<AST_Module*> (tdef->defined_in ());
 
       // If the typedef is not declared globally or in a module, the
       // associated array memory management function must be static.
@@ -343,7 +343,7 @@ int
 be_visitor_typedef_ch::visit_interface_fwd (be_interface_fwd *)
 {
 //  be_interface *fd =
-//    be_interface::narrow_from_decl (node->full_definition ());
+//    dynamic_cast<be_interface*> (node->full_definition ());
 //  return this->visit_interface (fd);
   return 0;
 }

@@ -40,10 +40,6 @@ public:
 
   // Add an argument to the scope.
   virtual AST_Argument *be_add_argument (AST_Argument *arg);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_factory);
-  DEF_NARROW_FROM_SCOPE (be_factory);
 };
 
 #endif // BE_FACTORY_H

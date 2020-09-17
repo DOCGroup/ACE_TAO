@@ -17,9 +17,6 @@ public:
   AST_Type *uses_type (void) const;
   bool is_multiple (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_Uses);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

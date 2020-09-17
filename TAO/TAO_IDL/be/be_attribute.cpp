@@ -44,7 +44,7 @@ be_attribute::be_attribute (bool ro,
     {
       // For the return types of the two operations
       // generated from this attribute.
-      be_util::set_arg_seen_bit (be_type::narrow_from_decl (ft));
+      be_util::set_arg_seen_bit (dynamic_cast<be_type*> (ft));
     }
 }
 
@@ -52,7 +52,7 @@ be_type *
 be_attribute::field_type (void) const
 {
   return
-    be_type::narrow_from_decl  (
+    dynamic_cast<be_type*>  (
       this->AST_Attribute::field_type ());
 }
 
@@ -68,5 +68,3 @@ be_attribute::destroy (void)
   this->be_decl::destroy ();
   this->AST_Attribute::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_attribute)

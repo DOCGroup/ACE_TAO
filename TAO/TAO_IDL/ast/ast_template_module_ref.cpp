@@ -31,7 +31,7 @@ AST_Template_Module *
 AST_Template_Module_Ref::ref (void) const
 {
   return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+    dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 UTL_StrList *
@@ -87,6 +87,3 @@ AST_Template_Module_Ref::processed (bool val)
 {
   this->processed_ = val;
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Ref)
-

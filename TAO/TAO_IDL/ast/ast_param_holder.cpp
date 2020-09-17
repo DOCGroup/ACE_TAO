@@ -44,6 +44,3 @@ void
 AST_Param_Holder::dump (ACE_OSTREAM_TYPE & /* o */)
 {
 }
-
-IMPL_NARROW_FROM_DECL (AST_Param_Holder)
-

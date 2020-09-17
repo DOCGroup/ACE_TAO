@@ -159,7 +159,7 @@ be_type::nested_sp_type_name (be_decl *use_scope,
                   NAMEBUFSIZE);
 
   fu_scope = this->defined_in ()
-               ? be_scope::narrow_from_scope (this->defined_in ())->decl ()
+               ? dynamic_cast<be_scope*> (this->defined_in ())->decl ()
                : 0;
 
   ACE_OS::strcat (fu_name,
@@ -303,8 +303,8 @@ be_type::gen_stub_decls (TAO_OutStream *os)
       << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  AST_Interface *i = AST_Interface::narrow_from_decl (this);
-  AST_ValueType *v = AST_ValueType::narrow_from_decl (this);
+  AST_Interface *i = dynamic_cast<AST_Interface*> (this);
+  AST_ValueType *v = dynamic_cast<AST_ValueType*> (this);
 
   if (i != 0)
     {
@@ -313,7 +313,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
     }
 
   bool skip_varout = false;
-  AST_Sequence *s = AST_Sequence::narrow_from_decl (this);
+  AST_Sequence *s = dynamic_cast<AST_Sequence*> (this);
 
   if (s != 0)
     {
@@ -394,7 +394,3 @@ be_type::accept (be_visitor *visitor)
 {
   return visitor->visit_type (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_type)

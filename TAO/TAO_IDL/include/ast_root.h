@@ -79,11 +79,6 @@ public:
 
   virtual unsigned long nmembers (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Root);
-  DEF_NARROW_FROM_SCOPE(AST_Root);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

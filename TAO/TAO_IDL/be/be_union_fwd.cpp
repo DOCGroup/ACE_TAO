@@ -49,7 +49,3 @@ be_union_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_union_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union_fwd)

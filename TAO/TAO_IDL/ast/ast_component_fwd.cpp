@@ -50,5 +50,3 @@ AST_ComponentFwd::is_fwd (void)
 {
   return true; // This is a fwd declared type
 }
-
-IMPL_NARROW_FROM_DECL (AST_ComponentFwd)

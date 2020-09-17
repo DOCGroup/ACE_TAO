@@ -87,7 +87,7 @@ be_visitor_home_svh::visit_factory (be_factory *node)
   // An inherited factory/finder needs to return the managed
   // component of the home where it is defined.
   be_home *h =
-    be_home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_home*> (node->defined_in ());
 
   AST_Component *c = h->managed_component ();
 
@@ -216,7 +216,7 @@ AST_Type *pk = node_->primary_key ();
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           int status =
             bi->traverse_inheritance_graph (
@@ -235,7 +235,7 @@ AST_Type *pk = node_->primary_key ();
             }
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   os_ << be_uidt_nl

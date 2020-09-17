@@ -114,5 +114,5 @@ AST_Annotation_Appls::find (const char *annotation)
       return 0;
     }
 
-  return find (AST_Annotation_Decl::narrow_from_decl (decl));
+  return find (dynamic_cast<AST_Annotation_Decl*> (decl));
 }

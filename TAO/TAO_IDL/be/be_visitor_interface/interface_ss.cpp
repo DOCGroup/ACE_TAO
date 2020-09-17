@@ -307,7 +307,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       // abstract interface in a concrete interface or component.
       if (AST_Decl::NT_op == nt)
         {
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_name =
             (UTL_ScopedName *) op->name ()->copy ();
           op->set_name (new_name);
@@ -324,7 +324,7 @@ be_visitor_interface_ss::gen_abstract_ops_helper (
       else if (AST_Decl::NT_attr == nt)
         {
           AST_Attribute *attr =
-            AST_Attribute::narrow_from_decl (d);
+            dynamic_cast<AST_Attribute*> (d);
           be_attribute new_attr (attr->readonly (),
                                  attr->field_type (),
                                  0,

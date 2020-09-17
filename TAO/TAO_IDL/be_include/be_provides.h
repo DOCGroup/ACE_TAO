@@ -22,9 +22,6 @@ public:
   // Non-virtual override of frontend method.
   be_type *provides_type (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(be_provides);
-
   // Visiting.
   virtual int accept (be_visitor *visitor);
 

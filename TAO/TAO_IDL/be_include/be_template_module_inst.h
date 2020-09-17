@@ -16,9 +16,6 @@ public:
 
   virtual ~be_template_module_inst (void);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_template_module_inst);
-
   // Cleanup function.
   virtual void destroy (void);
 

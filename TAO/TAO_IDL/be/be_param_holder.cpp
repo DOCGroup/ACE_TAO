@@ -47,6 +47,3 @@ be_param_holder::destroy (void)
   this->AST_Param_Holder::destroy ();
   this->be_type::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_param_holder)
-

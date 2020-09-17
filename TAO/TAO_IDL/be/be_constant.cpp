@@ -38,7 +38,3 @@ be_constant::destroy (void)
   this->be_decl::destroy ();
   this->AST_Constant::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_constant)

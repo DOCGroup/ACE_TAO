@@ -59,11 +59,6 @@ public:
   int be_add_uses (AST_Uses *i,
                    AST_Uses *ix = 0);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_Component);
-  DEF_NARROW_FROM_SCOPE (AST_Component);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 

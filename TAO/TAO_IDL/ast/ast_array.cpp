@@ -270,8 +270,6 @@ AST_Array::set_dims (AST_Expression **ds,
   this->pd_n_dims = nds;
 }
 
-IMPL_NARROW_FROM_DECL(AST_Array)
-
 AST_Annotation_Appls &
 AST_Array::base_type_annotations ()
 {

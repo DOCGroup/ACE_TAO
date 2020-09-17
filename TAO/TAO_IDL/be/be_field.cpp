@@ -45,7 +45,7 @@ be_type *
 be_field::field_type (void) const
 {
   return
-    be_type::narrow_from_decl  (
+    dynamic_cast<be_type*>  (
       this->AST_Field::field_type ());
 }
 
@@ -55,7 +55,7 @@ be_field::gen_member_ostream_operator (TAO_OutStream *os,
                                        bool use_underscore,
                                        bool accessor)
 {
-  be_type *ft = be_type::narrow_from_decl (this->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (this->field_type ());
   ft->gen_member_ostream_operator (os,
                                    instance_name,
                                    use_underscore,
@@ -86,5 +86,3 @@ be_field::destroy (void)
   this->be_decl::destroy ();
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_field)

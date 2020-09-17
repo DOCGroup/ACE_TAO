@@ -130,11 +130,6 @@ public:
   // This is important because in that case no code should be
   // generated for the stubs.
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Operation);
-  DEF_NARROW_FROM_SCOPE(AST_Operation);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

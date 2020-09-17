@@ -69,7 +69,7 @@ be_visitor_xplicit_pre_proc::visit_home (be_home *node)
   // for a minute so the correct repo id can be calculated at
   // interface construction time.
   AST_Module *m =
-    AST_Module::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Module*> (node->defined_in ());
 
   idl_global->scopes ().push (m);
 
@@ -176,7 +176,7 @@ be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
   this->ref_type_ = true;
 
   be_type *ft =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   if (ft->accept (this) != 0)
     {
@@ -190,7 +190,7 @@ be_visitor_xplicit_pre_proc::visit_argument (be_argument *node)
   this->ref_type_ = false;
 
   AST_Type *arg_type =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   be_argument *added_arg = 0;
   ACE_NEW_RETURN (added_arg,
@@ -210,7 +210,7 @@ be_visitor_xplicit_pre_proc::visit_factory (be_factory *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Home *f_home =
-    AST_Home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Home*> (node->defined_in ());
 
   be_operation *added_factory = 0;
   ACE_NEW_RETURN (added_factory,
@@ -244,7 +244,7 @@ be_visitor_xplicit_pre_proc::visit_finder (be_finder *node)
   UTL_ScopedName sn (node->local_name (), 0);
 
   AST_Home *f_home =
-    AST_Home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Home*> (node->defined_in ());
 
   be_operation *added_finder = 0;
   ACE_NEW_RETURN (added_finder,
@@ -439,7 +439,7 @@ be_visitor_xplicit_pre_proc::visit_field (be_field *node)
   this->ref_type_ = true;
 
   be_type *ft =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   if (ft->accept (this) != 0)
     {
@@ -454,7 +454,7 @@ be_visitor_xplicit_pre_proc::visit_field (be_field *node)
 
   UTL_ScopedName sn (node->local_name (), 0);
   AST_Type *field_type =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   be_field *added_field = 0;
   ACE_NEW_RETURN (added_field,
@@ -472,7 +472,7 @@ int
 be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
 {
   be_type *ft =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   this->ref_type_ = true;
 
@@ -488,7 +488,7 @@ be_visitor_xplicit_pre_proc::visit_attribute (be_attribute *node)
   this->ref_type_ = false;
 
   AST_Type *attr_type =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -516,7 +516,7 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
     }
 
   be_type *ud =
-    be_type::narrow_from_decl (node->disc_type ());
+    dynamic_cast<be_type*> (node->disc_type ());
 
   this->ref_type_ = true;
 
@@ -532,7 +532,7 @@ be_visitor_xplicit_pre_proc::visit_union (be_union *node)
   this->ref_type_ = false;
 
   AST_ConcreteType *disc =
-    AST_ConcreteType::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_ConcreteType*> (this->type_holder_);
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -590,7 +590,7 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   be_union_branch *node)
 {
   be_type *ft =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   this->ref_type_ = true;
 
@@ -606,7 +606,7 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   this->ref_type_ = false;
 
   AST_Type *bt =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   UTL_ScopedName sn (node->local_name (), 0);
 
@@ -622,7 +622,7 @@ be_visitor_xplicit_pre_proc::visit_union_branch (
   // add_to_scope() so we need to reuse it.
 
   be_union *u =
-    be_union::narrow_from_scope (idl_global->scopes ().top ());
+    dynamic_cast<be_union*> (idl_global->scopes ().top ());
 
   u->be_add_union_branch (added_branch);
 
@@ -690,7 +690,7 @@ int
 be_visitor_xplicit_pre_proc::visit_array (be_array *node)
 {
   be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
+    dynamic_cast<be_type*> (node->base_type ());
 
   bool tmp = this->ref_type_;
   this->ref_type_ = true;
@@ -753,7 +753,7 @@ be_visitor_xplicit_pre_proc::visit_array (be_array *node)
     }
 
   AST_Type *base_type =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   added_array->set_base_type (base_type);
 
@@ -766,7 +766,7 @@ int
 be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
 {
   be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
+    dynamic_cast<be_type*> (node->base_type ());
 
   bool tmp = this->ref_type_;
   this->ref_type_ = true;
@@ -794,7 +794,7 @@ be_visitor_xplicit_pre_proc::visit_sequence (be_sequence *node)
   UTL_ScopedName sn (&id, 0);
 
   AST_Type *ft =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   ACE_NEW_RETURN (this->type_holder_,
                   be_sequence (bound,
@@ -856,7 +856,7 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
     }
 
   be_type *t =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   this->ref_type_ = true;
 
@@ -873,7 +873,7 @@ be_visitor_xplicit_pre_proc::visit_typedef (be_typedef *node)
 
   UTL_ScopedName sn (node->local_name (), 0);
   AST_Type *bt =
-    AST_Type::narrow_from_decl (this->type_holder_);
+    dynamic_cast<AST_Type*> (this->type_holder_);
 
   be_typedef *added_typedef = 0;
   ACE_NEW_RETURN (added_typedef,
@@ -957,7 +957,7 @@ be_visitor_xplicit_pre_proc::xplicit_iface_rel_name (AST_Decl *d)
 
   while (tmp != 0)
     {
-      if (be_home::narrow_from_decl (tmp) != 0)
+      if (dynamic_cast<be_home*> (tmp) != 0)
         {
           ACE_CString head (tmp->local_name ()->get_string ());
 

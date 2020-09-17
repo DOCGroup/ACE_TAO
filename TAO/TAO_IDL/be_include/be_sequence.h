@@ -79,10 +79,6 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_sequence);
-
   /// Report the instance name for instantiation.
   const char *instance_name (void);
 

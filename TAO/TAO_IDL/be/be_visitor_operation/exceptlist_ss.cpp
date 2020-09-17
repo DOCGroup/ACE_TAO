@@ -47,7 +47,7 @@ be_visitor_operation_exceptlist_ss::visit_operation (be_operation * node)
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          be_exception * ex = be_exception::narrow_from_decl (ei.item ());
+          be_exception * ex = dynamic_cast<be_exception*> (ei.item ());
 
           *os << ex->tc_name ();
 

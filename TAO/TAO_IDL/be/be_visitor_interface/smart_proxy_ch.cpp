@@ -114,14 +114,14 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       for (i = 0; i < node->n_inherits (); i++)
         {
           be_interface *inherited =
-            be_interface::narrow_from_decl (node->inherits ()[i]);
+            dynamic_cast<be_interface*> (node->inherits ()[i]);
           be_decl *scope = 0;
 
           if (inherited->is_nested ())
             {
               // Inherited node is used in the scope of "node" node.
               scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                dynamic_cast<be_scope*> (node->defined_in ())->decl ();
             }
 
           *os << "," << be_nl << "  public virtual ";

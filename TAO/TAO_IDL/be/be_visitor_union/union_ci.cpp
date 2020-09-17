@@ -43,7 +43,7 @@ int be_visitor_union_ci::visit_union (be_union *node)
   // the discriminant type may have to be defined here if it was an enum
   // declaration inside of the union statement.
 
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {

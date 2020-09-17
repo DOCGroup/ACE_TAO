@@ -190,9 +190,9 @@ AST_Factory::compute_argument_attr (void)
             {
               this->argument_count_++;
 
-              arg = AST_Argument::narrow_from_decl (d);
+              arg = dynamic_cast<AST_Argument*> (d);
 
-              type = AST_Type::narrow_from_decl (arg->field_type ());
+              type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -209,7 +209,7 @@ AST_Argument *
 AST_Factory::fe_add_argument (AST_Argument *t)
 {
   return
-    AST_Argument::narrow_from_decl (
+    dynamic_cast<AST_Argument*> (
       this->fe_add_ref_decl (t));
 }
 
@@ -246,7 +246,7 @@ AST_Factory::fe_add_exceptions (UTL_NameList *t)
           return 0;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
       UTL_ExceptList *el = 0;
       ACE_NEW_RETURN (el,
@@ -307,7 +307,3 @@ AST_Factory::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_factory (this);
 }
-
-IMPL_NARROW_FROM_DECL(AST_Factory)
-IMPL_NARROW_FROM_SCOPE(AST_Factory)
-

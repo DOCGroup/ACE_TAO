@@ -111,8 +111,3 @@ be_eventtype::destroy (void)
 {
   this->be_valuetype::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_eventtype)
-IMPL_NARROW_FROM_SCOPE (be_eventtype)

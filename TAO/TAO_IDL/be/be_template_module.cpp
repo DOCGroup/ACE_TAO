@@ -42,6 +42,3 @@ be_template_module::accept (be_visitor *)
   // to generate implied IDL.
   return 0;
 }
-
-IMPL_NARROW_FROM_DECL (be_template_module)
-IMPL_NARROW_FROM_SCOPE (be_template_module)
