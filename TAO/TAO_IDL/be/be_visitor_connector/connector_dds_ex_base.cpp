@@ -58,8 +58,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
       return false;
     }
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << node->flat_name ()
       << "_Impl" << be_nl

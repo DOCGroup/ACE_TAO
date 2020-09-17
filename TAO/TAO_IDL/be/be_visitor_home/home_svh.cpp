@@ -44,8 +44,7 @@ be_visitor_home_svh::visit_home (be_home *node)
   node_ = node;
   comp_ = node_->managed_component ();
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
