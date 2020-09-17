@@ -29,7 +29,7 @@ ifr_adding_visitor_structure::visit_scope (UTL_Scope *node)
       return ifr_adding_visitor::visit_scope (node);
     }
 
-  AST_Structure *s = AST_Structure::narrow_from_scope (node);
+  AST_Structure *s = dynamic_cast<AST_Structure*> (node);
   CORBA::ULong nfields = static_cast<CORBA::ULong> (s->nfields ());
   this->members_.length (nfields);
   AST_Field **f = 0;
