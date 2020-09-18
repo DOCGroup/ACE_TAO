@@ -51,7 +51,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
   this->ctx_->node (node);
 
   // Initialize the return type variable.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -74,7 +74,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
 
   // Get the scope name.
   be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
   if (!parent)
     {
@@ -163,7 +163,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_operation (
       for (UTL_ExceptlistActiveIterator ei (node->exceptions ());
            !ei.is_done ();)
         {
-          ex = be_exception::narrow_from_decl (ei.item ());
+          ex = dynamic_cast<be_exception*> (ei.item ());
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl;
@@ -249,7 +249,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs::visit_argument (
   be_type *bt = 0;
 
   // Retrieve the type for this argument.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

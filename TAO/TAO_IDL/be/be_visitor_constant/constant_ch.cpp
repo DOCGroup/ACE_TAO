@@ -46,7 +46,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   if (tdef != 0)
     {
       nt = tdef->node_type ();
-      be_typedef *td = be_typedef:: narrow_from_decl (tdef);
+      be_typedef *td = dynamic_cast<be_typedef*> (tdef);
       bnt = td->base_node_type ();
     }
 

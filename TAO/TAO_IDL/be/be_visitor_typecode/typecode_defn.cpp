@@ -98,7 +98,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
+        dynamic_cast<be_module*> (node->defined_in ());
 
       if (module == 0)
         {
@@ -188,7 +188,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       be_module * const module =
-        be_module::narrow_from_scope (node->defined_in ());
+        dynamic_cast<be_module*> (node->defined_in ());
 
       if (module == 0)
         {
@@ -238,7 +238,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
                                                          true);
 
       be_interface * const intf =
-        d != 0 ? be_interface::narrow_from_decl (d) : 0;
+        d != 0 ? dynamic_cast<be_interface*> (d) : 0;
 
       if (intf && intf->is_defined ())
         {
@@ -251,7 +251,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
       // structures and unions
 
       AST_Structure * const st =
-        AST_Structure::narrow_from_decl (node);
+        dynamic_cast<AST_Structure*> (node);
 
       if (st && st->is_defined ())
         {
@@ -289,7 +289,7 @@ be_visitor_typecode_defn::gen_end_NS_for_anon (void)
 int
 be_visitor_typecode_defn::visit_array (be_array *node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -452,7 +452,7 @@ be_visitor_typecode_defn::visit_interface_fwd (be_interface_fwd * node)
 int
 be_visitor_typecode_defn::visit_sequence (be_sequence * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -615,7 +615,7 @@ be_visitor_typecode_defn::visit_typedef (be_typedef * node)
   // visited are strings and sequences.  All others have their own
   // full-fledged visitors (e.g. objref_typecode, etc.)
 
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
   this->recursion_detect_ = true;
 

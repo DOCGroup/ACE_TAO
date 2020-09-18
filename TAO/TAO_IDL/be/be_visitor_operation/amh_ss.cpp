@@ -62,7 +62,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
            si.next ())
         {
           be_argument *argument =
-            be_argument::narrow_from_decl (si.item ());
+            dynamic_cast<be_argument*> (si.item ());
 
           if (argument == 0
               || argument->direction () == AST_Argument::dir_OUT)
@@ -99,7 +99,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
            sj.next ())
         {
           be_argument *argument =
-            be_argument::narrow_from_decl (sj.item ());
+            dynamic_cast<be_argument*> (sj.item ());
 
           if (argument == 0
               || argument->direction () == AST_Argument::dir_OUT)
@@ -151,7 +151,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
          !i.is_done ();)
       {
         be_argument *argument =
-          be_argument::narrow_from_decl (i.item ());
+          dynamic_cast<be_argument*> (i.item ());
 
         i.next ();
 
@@ -308,7 +308,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
   if (intf == 0)
     {
@@ -359,7 +359,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
                                                       TAO_OutStream *os)
 {
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
   if (!intf)
     {

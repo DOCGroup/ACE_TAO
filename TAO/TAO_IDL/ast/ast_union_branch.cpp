@@ -211,7 +211,7 @@ AST_UnionBranch::add_labels (AST_Union *u)
       if (enum_labels)
         {
           ex->ev ()->et = AST_Expression::EV_enum;
-          AST_Enum *disc = AST_Enum::narrow_from_decl (u->disc_type ());
+          AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
           AST_EnumVal *dval = disc->lookup_by_value (ex);
 
           if (dval == 0)

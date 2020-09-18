@@ -147,7 +147,7 @@ be_visitor_array::visit_typedef (be_typedef *node)
 
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (pbt);
+      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (pbt);
       pt = pdt->pt ();
     }
 

@@ -161,7 +161,7 @@ be_visitor_traits::visit_interface_fwd (be_interface_fwd *node)
     }
 
   be_interface *fd =
-    be_interface::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_interface*> (node->full_definition ());
 
   // We want to generate just the declaration of the Arg_Traits<>
   // specialization if the interface is forward declared but not defined.
@@ -234,7 +234,7 @@ be_visitor_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
 
   be_valuetype *fd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
@@ -320,7 +320,7 @@ be_visitor_traits::visit_eventtype_fwd (be_eventtype_fwd *node)
 int
 be_visitor_traits::visit_field (be_field *node)
 {
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
   if (ft->accept (this) == -1)
     {
@@ -336,7 +336,7 @@ be_visitor_traits::visit_field (be_field *node)
 int
 be_visitor_traits::visit_union_branch (be_union_branch *node)
 {
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
   AST_Decl::NodeType nt = ft->node_type ();
 
   // All we are trying to catch in here are anonymous array members.
@@ -411,7 +411,7 @@ be_visitor_traits::visit_array (be_array *node)
   if (node->is_nested ())
     {
       be_decl *parent =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
       name_holder = parent->full_name ();
 
       name_holder += "::";

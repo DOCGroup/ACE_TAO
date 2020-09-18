@@ -38,7 +38,7 @@ be_visitor_operation_exs::visit_operation (be_operation *node)
   os_ << be_nl_2;
 
   // Retrieve the operation return type.
-  be_type *rt = be_type::narrow_from_decl (node->return_type ());
+  be_type *rt = dynamic_cast<be_type*> (node->return_type ());
 
   if (rt == 0)
     {
@@ -111,7 +111,7 @@ be_visitor_operation_exs::gen_op_body (be_type *return_type)
       << your_code_here_;
 
   be_operation *op =
-    be_operation::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_operation*> (this->ctx_->node ());
 
   if (! op->void_return_type ())
     {

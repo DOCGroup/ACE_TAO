@@ -97,7 +97,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (node); // save the typedef node
 
       // grab the immediate base type node
-      bt = be_type::narrow_from_decl (node->base_type ());
+      bt = dynamic_cast<be_type*> (node->base_type ());
 
       if (!bt)
         {

@@ -74,7 +74,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
   if (impl->node_type () == AST_Decl::NT_interface)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (impl);
+        dynamic_cast<be_interface*> (impl);
 
       os_ << be_nl_2
           << "/** @name Operations and attributes from "

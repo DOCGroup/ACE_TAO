@@ -112,12 +112,12 @@ be_connector::check_ancestors (void)
           // If we have a templated module, enable it as dds_connector_
           // for the moment
           AST_Module *m =
-            AST_Module::narrow_from_scope (this->defined_in ());
+            dynamic_cast<AST_Module*> (this->defined_in ());
           AST_Template_Module_Inst *t_inst = 0;
           while (t_inst == 0 && m != 0)
             {
               t_inst = m->from_inst ();
-              m = AST_Module::narrow_from_scope (m->defined_in ());
+              m = dynamic_cast<AST_Module*> (m->defined_in ());
             }
           if (t_inst != 0 && t_inst->template_args () != 0)
             {

@@ -53,7 +53,7 @@ be_visitor_amh_operation_sh::visit_operation (be_operation *node)
        i.next ())
     {
       be_argument *argument =
-        be_argument::narrow_from_decl (i.item ());
+        dynamic_cast<be_argument*> (i.item ());
 
       if (argument == 0
           || argument->direction () == AST_Argument::dir_OUT)
@@ -139,11 +139,11 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
   be_interface *intf =
-    be_interface::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_interface*> (node->defined_in ());
 
   if (this->ctx_->attribute () != 0)
     {
-      intf = be_interface::narrow_from_scope (
+      intf = dynamic_cast<be_interface*> (
                  this->ctx_->attribute()->defined_in ()
                );
     }

@@ -349,7 +349,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                         -1);
     }
 
-  bt = AST_Type::narrow_from_decl (this->reified_node_);
+  bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
   AST_Expression **dims = node->dims ();
   AST_Expression *v = 0;
@@ -378,8 +378,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                                 -1);
             }
 
-          AST_Constant *c =
-            AST_Constant::narrow_from_decl (this->reified_node_);
+          AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
 
           ACE_NEW_RETURN (v,
                           AST_Expression (c->constant_value (),
@@ -448,7 +447,7 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
                         -1);
     }
 
-  bt = AST_Type::narrow_from_decl (this->reified_node_);
+  bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
   AST_Expression *v = node->max_size ();
   AST_Param_Holder *ph = v->param_holder ();
@@ -465,8 +464,7 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
                             -1);
         }
 
-      AST_Constant *c =
-        AST_Constant::narrow_from_decl (this->reified_node_);
+      AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
 
       v = c->constant_value ();
     }
@@ -515,8 +513,7 @@ ast_visitor_reifying::visit_string (AST_String *node)
                             -1);
         }
 
-      AST_Constant *c =
-        AST_Constant::narrow_from_decl (this->reified_node_);
+      AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
 
       b = c->constant_value ();
     }
@@ -645,7 +642,7 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
 
   while (tmp != 0)
     {
-      if (AST_Template_Module::narrow_from_decl (tmp) != 0)
+      if (dynamic_cast<AST_Template_Module*> (tmp) != 0)
         {
           ACE_CString head (tmp->local_name ()->get_string ());
 

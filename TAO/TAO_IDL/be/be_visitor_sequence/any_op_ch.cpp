@@ -55,7 +55,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   if (alt)
     {
       be_type *bt =
-        be_type::narrow_from_decl (node->base_type ());
+        dynamic_cast<be_type*> (node->base_type ());
 
       name = "std::vector<";
       name += bt->full_name ();
@@ -76,7 +76,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
         {
           if (nt == AST_Decl::NT_module)
             {
-              module = be_module::narrow_from_decl (d);
+              module = dynamic_cast<be_module*> (d);
               break;
             }
           else

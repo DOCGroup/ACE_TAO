@@ -100,7 +100,7 @@ be_visitor_component_exs::visit_component (be_component *node)
       delete sn;
       sn = 0;
 
-      be_uses *u = be_uses::narrow_from_decl (d);
+      be_uses *u = dynamic_cast<be_uses*> (d);
 
       if (u == 0)
         {
@@ -113,7 +113,7 @@ be_visitor_component_exs::visit_component (be_component *node)
         }
 
       be_component *c =
-        be_component::narrow_from_decl (
+        dynamic_cast<be_component*> (
           ScopeAsDecl (u->defined_in ()));
 
       if (c == node)

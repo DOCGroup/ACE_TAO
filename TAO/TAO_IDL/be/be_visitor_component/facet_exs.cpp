@@ -55,7 +55,7 @@ be_visitor_facet_exs::visit_attribute (be_attribute *node)
     }
 
   be_decl *attr_scope =
-    be_decl::narrow_from_decl (ScopeAsDecl (node->defined_in ()));
+    dynamic_cast<be_decl*> (ScopeAsDecl (node->defined_in ()));
 
   nt = attr_scope->node_type ();
 
@@ -115,7 +115,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
   if (impl->node_type () == AST_Decl::NT_interface)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (impl);
+        dynamic_cast<be_interface*> (impl);
 
       os_ << be_nl_2
           << "// Operations from ::" << intf->full_name ();

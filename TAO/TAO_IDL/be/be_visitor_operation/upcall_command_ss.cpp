@@ -35,8 +35,8 @@ be_visitor_operation_upcall_command_ss::visit (
     }
 
   be_interface * const intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (node->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (node->defined_in ());
 
   if (!intf)
     {
@@ -57,7 +57,7 @@ be_visitor_operation_upcall_command_ss::visit (
   if (intf->is_nested () &&
       intf->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      module = be_module::narrow_from_scope (intf->defined_in ());
+      module = dynamic_cast<be_module*> (intf->defined_in ());
 
       if (module == 0)
         {
@@ -228,16 +228,16 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
   for (; !si.is_done (); si.next (), ++index)
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Argument*> (si.item ());
 
       // Finish the check for the _excep method
       if (excep_method)
         {
           excep_method = false;
           be_argument *argument =
-            be_argument::narrow_from_decl (si.item ());
+            dynamic_cast<be_argument*> (si.item ());
           be_valuetype *value_type =
-            be_valuetype::narrow_from_decl (argument->field_type ());
+            dynamic_cast<be_valuetype*> (argument->field_type ());
 
           if (value_type != 0)
             {

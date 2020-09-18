@@ -40,7 +40,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
   /// The port is the only item in the connector's scope.
   UTL_ScopeActiveIterator j (node, UTL_Scope::IK_decls);
   AST_Extended_Port *p =
-    AST_Extended_Port::narrow_from_decl (j.item ());
+    dynamic_cast<AST_Extended_Port*> (j.item ());
 
   bool first = true;
   int port_nr = 0;
@@ -49,7 +49,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
        i.next ())
     {
       AST_Decl *d = i.item ();
-      AST_Provides *p = AST_Provides::narrow_from_decl (d);
+      AST_Provides *p = dynamic_cast<AST_Provides*> (d);
 
       if (p != 0)
         {

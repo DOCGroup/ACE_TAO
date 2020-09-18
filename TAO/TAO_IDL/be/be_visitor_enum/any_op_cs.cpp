@@ -78,7 +78,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
         {
           if (nt == AST_Decl::NT_module)
             {
-              module = be_module::narrow_from_decl (d);
+              module = dynamic_cast<be_module*> (d);
               break;
             }
           else

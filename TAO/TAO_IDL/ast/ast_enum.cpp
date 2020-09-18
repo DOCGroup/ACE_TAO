@@ -117,7 +117,7 @@ AST_Enum::value_to_name (const unsigned long v)
   for (UTL_ScopeActiveIterator i (this, IK_decls); !i.is_done (); i.next ())
     {
       d = i.item  ();
-      item = AST_EnumVal::narrow_from_decl (d);
+      item = dynamic_cast<AST_EnumVal*> (d);
 
       if (item->constant_value ()->ev ()->u.ulval == v)
         {
@@ -140,7 +140,7 @@ AST_Enum::lookup_by_value (const AST_Expression *v)
        i.next ())
     {
       d = i.item ();
-      item = AST_EnumVal::narrow_from_decl (d);
+      item = dynamic_cast<AST_EnumVal*> (d);
       AST_Expression *cv = item->constant_value ();
 
       if (cv == v)

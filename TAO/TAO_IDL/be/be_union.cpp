@@ -66,7 +66,7 @@ be_union::be_union (AST_ConcreteType *dt,
 void
 be_union::redefine (AST_Structure *from)
 {
-  be_union *bu = be_union::narrow_from_decl (from);
+  be_union *bu = dynamic_cast<be_union*> (from);
   this->common_varout_gen_ = bu->common_varout_gen_;
   AST_Union::redefine (from);
 }
@@ -80,7 +80,7 @@ be_union::has_duplicate_case_labels (void)
     {
       AST_Decl *d = si.item ();
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (d);
+        dynamic_cast<AST_UnionBranch*> (d);
 
       if (ub->label_list_length () > 1)
         {
@@ -108,7 +108,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
   for (long i = 0; i < this->pd_decls_used; ++i)
     {
       be_union_branch *ub =
-        be_union_branch::narrow_from_decl (this->pd_decls[i]);
+        dynamic_cast<be_union_branch*> (this->pd_decls[i]);
 
       // We don't want any decls, just members.
       if (ub == 0)
@@ -151,7 +151,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 
       *os << "strm << ";
 
-      be_type *ub_ft = be_type::narrow_from_decl (ub->field_type ());
+      be_type *ub_ft = dynamic_cast<be_type*> (ub->field_type ());
       AST_Decl::NodeType ub_nt = ub_ft->node_type ();
       // catch anonymous Array member types
       bool ub_use_underscore = ub_nt == AST_Decl::NT_array;
@@ -223,7 +223,7 @@ be_union::gen_empty_default_label (void)
       return (n_labels <= ACE_UINT32_MAX);
     }
 
-  AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (disc);
+  AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (disc);
   if (pdt == 0)
     {
       return true; // In reality this is an error.
@@ -276,7 +276,7 @@ be_union::nlabels (void)
     {
       AST_Decl *d = si.item ();
       AST_UnionBranch *ub =
-        AST_UnionBranch::narrow_from_decl (d);
+        dynamic_cast<AST_UnionBranch*> (d);
 
       if (ub != 0)
         {

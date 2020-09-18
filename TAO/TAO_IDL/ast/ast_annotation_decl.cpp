@@ -86,19 +86,19 @@ AST_Annotation_Decl::fe_add_annotation_member (
         }
     }
 
-  AST_Annotation_Decl *s = AST_Annotation_Decl::narrow_from_scope (this);
+  AST_Annotation_Decl *s = dynamic_cast<AST_Annotation_Decl*> (this);
   if (s)
     {
       s->fields ().enqueue_tail (annotation_member);
     }
 
-  return AST_Annotation_Member::narrow_from_decl (d);
+  return dynamic_cast<AST_Annotation_Member*> (d);
 }
 
 AST_Constant *
 AST_Annotation_Decl::fe_add_constant (AST_Constant *t)
 {
-  return AST_Constant::narrow_from_decl (fe_add_decl (t));
+  return dynamic_cast<AST_Constant*> (fe_add_decl (t));
 }
 
 int

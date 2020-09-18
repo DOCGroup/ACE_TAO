@@ -43,8 +43,7 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 {
   FE_Utils::tmpl_mod_ref_check (this, base_home);
 
-  AST_ValueType *pk =
-    AST_ValueType::narrow_from_decl (primary_key);
+  AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
 
   if (pk != 0)
     {
@@ -107,8 +106,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
           continue;
         }
 
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 

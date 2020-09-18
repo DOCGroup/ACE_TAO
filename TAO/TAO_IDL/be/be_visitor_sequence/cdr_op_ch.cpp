@@ -42,7 +42,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  be_type *base_type = be_type::narrow_from_decl (node->base_type ());
+  be_type *base_type = dynamic_cast<be_type*> (node->base_type ());
 
   // If our base type is an anonymous sequence, generate code for it here.
   if (base_type->node_type () == AST_Decl::NT_sequence)
@@ -58,8 +58,8 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node);
-  be_typedef *tdef = be_typedef::narrow_from_decl (bt);
+  be_type *bt = dynamic_cast<be_type*> (node);
+  be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
 
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;

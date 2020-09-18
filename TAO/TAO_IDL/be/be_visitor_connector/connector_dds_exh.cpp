@@ -117,13 +117,13 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           if (d->node_type () == AST_Decl::NT_typedef)
             {
               /// Strip away all layers of typedef before narrowing.
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
               d = td->primitive_base_type ();
             }
 
           /// No need to check if this is 0, but must narrow
           /// to call virtual function size_type() below.
-          AST_Type *t = AST_Type::narrow_from_decl (d);
+          AST_Type *t = dynamic_cast<AST_Type*> (d);
 
           switch (param->type_)
             {
@@ -231,7 +231,7 @@ int
 be_visitor_connector_dds_exh::visit_provides (be_provides *node)
 {
   be_interface *iface =
-    be_interface::narrow_from_decl (node->provides_type ());
+    dynamic_cast<be_interface*> (node->provides_type ());
 
   this->gen_interface_connector_trait (iface, node, true);
 
@@ -242,7 +242,7 @@ int
 be_visitor_connector_dds_exh::visit_uses (be_uses *node)
 {
   be_interface *iface =
-    be_interface::narrow_from_decl (node->uses_type ());
+    dynamic_cast<be_interface*> (node->uses_type ());
 
   this->gen_interface_connector_trait (iface, node, false);
 

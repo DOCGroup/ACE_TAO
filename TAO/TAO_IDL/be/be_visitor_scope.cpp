@@ -67,7 +67,7 @@ be_visitor_scope::visit_scope (be_scope *node)
           continue;
         }
 
-      be_decl *bd = be_decl::narrow_from_decl (d);
+      be_decl *bd = dynamic_cast<be_decl*> (d);
 
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
@@ -156,7 +156,7 @@ be_visitor_scope::next_elem (be_decl *elem,
        !si.is_done ();
        si.next ())
     {
-      be_decl *bd = be_decl::narrow_from_decl (si.item ());
+      be_decl *bd = dynamic_cast<be_decl*> (si.item ());
 
       if (bd == 0)
         {
@@ -180,7 +180,7 @@ be_visitor_scope::next_elem (be_decl *elem,
           return 0;
         }
 
-      successor = be_decl::narrow_from_decl (si.item ());
+      successor = dynamic_cast<be_decl*> (si.item ());
 
       if (successor == 0)
         {
@@ -217,7 +217,7 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
 
   while (next != 0)
     {
-      be_argument *arg = be_argument::narrow_from_decl (next);
+      be_argument *arg = dynamic_cast<be_argument*> (next);
 
       if (arg->direction () == AST_Argument::dir_INOUT
           || arg->direction () == AST_Argument::dir_OUT)

@@ -28,7 +28,7 @@ AST_Extended_Port::~AST_Extended_Port (void)
 AST_PortType *
 AST_Extended_Port::port_type (void) const
 {
-  return AST_PortType::narrow_from_decl (this->field_type ());
+  return dynamic_cast<AST_PortType*> (this->field_type ());
 }
 
 void

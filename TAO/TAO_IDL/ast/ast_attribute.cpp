@@ -232,7 +232,7 @@ AST_Attribute::fe_add_get_exceptions (UTL_NameList *t)
           return 0;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
       UTL_ExceptList *el = 0;
       ACE_NEW_RETURN (el,
@@ -285,7 +285,7 @@ AST_Attribute::fe_add_set_exceptions (UTL_NameList *t)
           return 0;
         }
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
       UTL_ExceptList *el = 0;
       ACE_NEW_RETURN (el,

@@ -220,7 +220,7 @@ TAO_IDL_Copy_Ctor_Worker::emit (be_interface *derived,
   if (base->is_nested ())
     {
       be_decl *scope = 0;
-      scope = be_scope::narrow_from_scope (base->defined_in ())->decl ();
+      scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::AMH_"
           << base->local_name () << " (rhs)";

@@ -155,7 +155,7 @@ be_generator::create_module (UTL_Scope *s,
     {
       // Can't just check node type here, since it could be a
       // template module or template module instantiation.
-      AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
+      AST_Module *m = dynamic_cast<AST_Module*> (iter.item ());
 
       if (m && m->local_name ()->compare (n->last_component ()))
         {
@@ -172,7 +172,7 @@ be_generator::create_module (UTL_Scope *s,
   // is itself a module, and has been previously opened, any
   // of the previous openings may contain a previous opening
   // of the module we're creating.
-  AST_Module *prev_module = AST_Module::narrow_from_scope (s);
+  AST_Module *prev_module = dynamic_cast<AST_Module*> (s);
   if (prev_module)
     {
       while (!!(prev_module = prev_module->previous_opening ()))
@@ -181,7 +181,7 @@ be_generator::create_module (UTL_Scope *s,
                !iter.is_done ();
                iter.next ())
             {
-              AST_Module *m = AST_Module::narrow_from_decl (iter.item ());
+              AST_Module *m = dynamic_cast<AST_Module*> (iter.item ());
               if (m && m->local_name ()->compare (n->last_component ()))
                 {
                   // Create this new module with referance to the

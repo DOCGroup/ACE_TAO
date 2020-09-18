@@ -87,7 +87,7 @@ FE_Declarator::FE_Declarator (UTL_ScopedName *n,
 AST_Type *
 FE_Declarator::compose (AST_Decl *d)
 {
-  AST_Type *ct = AST_Type::narrow_from_decl (d);
+  AST_Type *ct = dynamic_cast<AST_Type*> (d);
 
   if (ct == 0)
     {
@@ -97,7 +97,7 @@ FE_Declarator::compose (AST_Decl *d)
   else if (ct->node_type () == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ct);
+        dynamic_cast<AST_Param_Holder*> (ct);
 
       // Every other template parameter kind is legal.
       if (ph->info ()->type_ == AST_Decl::NT_const)
@@ -178,7 +178,7 @@ FE_Declarator::compose (AST_Decl *d)
 
   if (this->pd_complex_part->node_type () == AST_Decl::NT_array)
     {
-      arr = AST_Array::narrow_from_decl (this->pd_complex_part);
+      arr = dynamic_cast<AST_Array*> (this->pd_complex_part);
 
       // The base type of an array isn't set until after the array
       // has been created, so the check below gets done at this point.

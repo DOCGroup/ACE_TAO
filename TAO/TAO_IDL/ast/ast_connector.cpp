@@ -45,7 +45,7 @@ AST_Connector::~AST_Connector (void)
 AST_Connector *
 AST_Connector::base_connector (void) const
 {
-  return AST_Connector::narrow_from_decl (this->pd_base_component);
+  return dynamic_cast<AST_Connector*> (this->pd_base_component);
 }
 
 void

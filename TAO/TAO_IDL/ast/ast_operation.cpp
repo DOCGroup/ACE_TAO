@@ -122,7 +122,7 @@ AST_Operation::AST_Operation (AST_Type *rt,
         }
       else
         {
-          pdt = AST_PredefinedType::narrow_from_decl (rt);
+          pdt = dynamic_cast<AST_PredefinedType*> (rt);
 
           if (pdt == 0 || pdt->pt () != AST_PredefinedType::PT_void)
             {
@@ -145,7 +145,7 @@ AST_Operation::void_return_type (void)
   AST_Type* type = this->return_type ();
 
   return (type->node_type () == AST_Decl::NT_pre_defined
-          && (AST_PredefinedType::narrow_from_decl (type)->pt ()
+          && (dynamic_cast<AST_PredefinedType*> (type)->pt ()
                 == AST_PredefinedType::PT_void));
 }
 
@@ -176,8 +176,7 @@ AST_Operation::count_arguments_with_direction (int direction_mask)
        !si.is_done ();
        si.next ())
     {
-      AST_Argument *arg =
-        AST_Argument::narrow_from_decl (si.item ());
+      AST_Argument *arg = dynamic_cast<AST_Argument*> (si.item ());
 
       if ((arg->direction () & direction_mask) != 0)
         {
@@ -264,7 +263,7 @@ AST_Operation::compute_argument_attr (void)
             {
               this->argument_count_++;
 
-              arg = AST_Argument::narrow_from_decl (d);
+              arg = dynamic_cast<AST_Argument*> (d);
 
               if (arg->direction() == AST_Argument::dir_IN ||
                   arg->direction() == AST_Argument::dir_INOUT)
@@ -273,7 +272,7 @@ AST_Operation::compute_argument_attr (void)
                 }
 
 
-              type = AST_Type::narrow_from_decl (arg->field_type ());
+              type = dynamic_cast<AST_Type*> (arg->field_type ());
 
               if (type->node_type () == AST_Decl::NT_native)
                 {
@@ -283,7 +282,7 @@ AST_Operation::compute_argument_attr (void)
         }
     }
 
-  type = AST_Type::narrow_from_decl (this->return_type ());
+  type = dynamic_cast<AST_Type*> (this->return_type ());
 
   if (type->node_type () == AST_Decl::NT_native)
     {
@@ -342,8 +341,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             break;
           case AST_Decl::NT_param_holder:
             {
-              AST_Param_Holder *ph =
-                AST_Param_Holder::narrow_from_decl (d);
+              AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (d);
 
               nt = ph->info ()->type_;
 
@@ -358,8 +356,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
             }
           case AST_Decl::NT_typedef:
             {
-              AST_Typedef *td =
-                AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
 
               nt = td->primitive_base_type ()->node_type ();
 
@@ -399,7 +396,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
       bool oneway_op =
         (this->flags () == AST_Operation::OP_oneway);
 
-      fe = AST_Type::narrow_from_decl (d);
+      fe = dynamic_cast<AST_Type*> (d);
 
       if (oneway_op && fe != 0)
         {
@@ -445,9 +442,7 @@ AST_Operation::fe_add_exceptions (UTL_NameList *t)
 AST_Argument *
 AST_Operation::fe_add_argument (AST_Argument *t)
 {
-  return
-    AST_Argument::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Argument*> (this->fe_add_decl (t));
 }
 
 // Dump this AST_Operation node (an operation) to the ostream o.

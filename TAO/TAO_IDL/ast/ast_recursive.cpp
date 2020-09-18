@@ -120,7 +120,7 @@ AST_illegal_recursive_type (AST_Decl *t)
     }
 
   AST_Decl::NodeType nt;
-  AST_Type *ut = AST_Type::narrow_from_decl (t);
+  AST_Type *ut = dynamic_cast<AST_Type*> (t);
 
   if (ut != 0)
     {
@@ -152,7 +152,7 @@ AST_illegal_recursive_type (AST_Decl *t)
   if (t->node_type () == AST_Decl::NT_struct)
     {
       check_for_struct = true;
-      st1 = AST_Structure::narrow_from_decl (t);
+      st1 = dynamic_cast<AST_Structure*> (t);
 
       if (st1 == 0)
         {
@@ -162,7 +162,7 @@ AST_illegal_recursive_type (AST_Decl *t)
   else if (t->node_type () == AST_Decl::NT_union)
     {
       check_for_union = true;
-      un1 = AST_Union::narrow_from_decl (t);
+      un1 = dynamic_cast<AST_Union*> (t);
 
       if (un1 == 0)
         {
@@ -192,7 +192,7 @@ AST_illegal_recursive_type (AST_Decl *t)
       if (s->scope_node_type () == AST_Decl::NT_struct
           && check_for_struct == true)
         {
-          st2 = AST_Structure::narrow_from_scope (s);
+          st2 = dynamic_cast<AST_Structure*> (s);
 
           if (st2 != 0 && st2 == st1)
             {
@@ -202,7 +202,7 @@ AST_illegal_recursive_type (AST_Decl *t)
       else if (s->scope_node_type () == AST_Decl::NT_union
                && check_for_union == true)
         {
-          un2 = AST_Union::narrow_from_scope (s);
+          un2 = dynamic_cast<AST_Union*> (s);
 
           if (un2 != 0 && un2 == un1)
             {

@@ -217,7 +217,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
   if (parent != 0)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_base_constructor_args (be_parent, index);
     }
 
@@ -227,9 +227,9 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
+      be_field *f = dynamic_cast<be_field*> (si.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
+        dynamic_cast<be_attribute*> (si.item ());
 
       if (f == 0 || attr != 0)
         {
@@ -252,7 +252,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
   // Generate for inherited members first.
   if (parent != 0)
     {
-      be_valuetype *be_parent = be_valuetype::narrow_from_decl (parent);
+      be_valuetype *be_parent = dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_constructor_inits (be_parent);
     }
 
@@ -262,9 +262,9 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
+      be_field *f = dynamic_cast<be_field*> (si.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
+        dynamic_cast<be_attribute*> (si.item ());
 
       if (f == 0 || attr != 0)
         {
@@ -290,7 +290,7 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
   if (parent != 0)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_call_base_constructor_args (be_parent, index);
     }
 
@@ -301,8 +301,8 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
-      if (f && !be_attribute::narrow_from_decl (si.item ()))
+      be_field *f = dynamic_cast<be_field*> (si.item ());
+      if (f && !dynamic_cast<be_attribute*> (si.item ()))
         {
           if (index++) // comma before 2nd onwards
             *os << ",";
@@ -311,10 +311,10 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
           *os << be_nl;
 
           // Check the member type for nested valuetypes
-          be_type *t = be_type::narrow_from_decl (f->field_type ());
-          if (be_valuetype_fwd::narrow_from_decl (t) ||
-              be_valuetype::narrow_from_decl (t) ||
-              be_valuebox::narrow_from_decl (t) )
+          be_type *t = dynamic_cast<be_type*> (f->field_type ());
+          if (dynamic_cast<be_valuetype_fwd*> (t) ||
+              dynamic_cast<be_valuetype*> (t) ||
+              dynamic_cast<be_valuebox*> (t) )
             {
               // Nested valuetypes/boxes need to be deep copied also
               *os << "(" << f->local_name () << " () ?" << be_idt_nl

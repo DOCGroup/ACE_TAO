@@ -142,7 +142,7 @@ be_visitor_valuetype_init_ch::visit_factory (be_factory *node)
   TAO_OutStream& os = *(this->ctx_->stream ());
 
   be_valuetype *vt =
-    be_valuetype::narrow_from_decl (this->ctx_->scope ()->decl ());
+    dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
 
 
   // STEP I: Generate preambule.

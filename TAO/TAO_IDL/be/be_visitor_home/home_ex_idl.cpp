@@ -62,7 +62,7 @@ be_visitor_home_ex_idl::visit_attribute (be_attribute *node)
    os_ << be_nl
        << (rd_only ? "readonly " : "") << "attribute ";
 
-   be_type *ft = be_type::narrow_from_decl (node->field_type ());
+   be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
    os_ << IdentifierHelper::type_name (ft, this);
    os_ << " "
@@ -89,7 +89,7 @@ be_visitor_home_ex_idl::visit_operation (be_operation *node)
       os_ << "oneway ";
     }
 
-  be_type *rt = be_type::narrow_from_decl (node->return_type ());
+  be_type *rt = dynamic_cast<be_type*> (node->return_type ());
 
   os_ << IdentifierHelper::type_name (rt, this);
 
@@ -136,7 +136,7 @@ be_visitor_home_ex_idl::visit_argument (be_argument *node)
         return -1;
     }
 
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
 
   os_ << IdentifierHelper::type_name (ft, this)
       << " "
@@ -178,7 +178,7 @@ be_visitor_home_ex_idl::visit_sequence (be_sequence *node)
   // Keep output statements separate because of side effects.
   os_ << "sequence<";
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   os_ << IdentifierHelper::type_name (bt, this);
 

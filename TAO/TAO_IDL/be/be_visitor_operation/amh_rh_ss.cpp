@@ -43,11 +43,11 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
       ? this->ctx_->attribute ()->defined_in ()
       : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
   if (intf == 0)
     {
-      be_porttype *pt = be_porttype::narrow_from_scope (s);
+      be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
       if (pt == 0)
         {
@@ -136,9 +136,9 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           if (!i.is_done ())
             {
               be_argument *argument =
-                be_argument::narrow_from_decl (i.item ());
+                dynamic_cast<be_argument*> (i.item ());
               be_valuetype *vt =
-                be_valuetype::narrow_from_decl (argument->field_type ());
+                dynamic_cast<be_valuetype*> (argument->field_type ());
 
               if (vt != 0
                   && vt->original_interface () == intf->original_interface ())

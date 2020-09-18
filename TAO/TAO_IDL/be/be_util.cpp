@@ -1017,9 +1017,9 @@ be_util::set_arg_seen_bit (be_type *bt)
     {
       case AST_Decl::NT_typedef:
         {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (bt);
+          AST_Typedef *td = dynamic_cast<AST_Typedef*> (bt);
           be_util::set_arg_seen_bit (
-                    be_type::narrow_from_decl (td->primitive_base_type ())
+                    dynamic_cast<be_type*> (td->primitive_base_type ())
                   );
           break;
         }
@@ -1049,8 +1049,8 @@ be_util::set_arg_seen_bit (be_type *bt)
       case AST_Decl::NT_struct_fwd:
       case AST_Decl::NT_union_fwd:
         {
-          AST_StructureFwd *fwd = AST_StructureFwd::narrow_from_decl (bt);
-          be_type *fd = be_type::narrow_from_decl (fwd->full_definition ());
+          AST_StructureFwd *fwd = dynamic_cast<AST_StructureFwd*> (bt);
+          be_type *fd = dynamic_cast<be_type*> (fwd->full_definition ());
           be_util::set_arg_seen_bit (fd);
           break;
         }
@@ -1061,7 +1061,7 @@ be_util::set_arg_seen_bit (be_type *bt)
       case AST_Decl::NT_string:
       case AST_Decl::NT_wstring:
         {
-          AST_String *str = AST_String::narrow_from_decl (bt);
+          AST_String *str = dynamic_cast<AST_String*> (bt);
 
           if (str->max_size ()->ev ()->u.ulval == 0)
             {
@@ -1090,7 +1090,7 @@ be_util::set_arg_seen_bit (be_type *bt)
         break;
       case AST_Decl::NT_pre_defined:
         {
-          AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+          AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
 
           switch (pdt->pt ())
             {

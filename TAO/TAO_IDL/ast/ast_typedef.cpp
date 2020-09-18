@@ -111,8 +111,8 @@ AST_Typedef::primitive_base_type (void) const
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      temp = AST_Typedef::narrow_from_decl (d);
-      d = AST_Type::narrow_from_decl (temp->base_type ());
+      temp = dynamic_cast<AST_Typedef*> (d);
+      d = dynamic_cast<AST_Type*> (temp->base_type ());
     }
 
   return d;

@@ -28,7 +28,7 @@ be_visitor_args_upcall_ss::~be_visitor_args_upcall_ss (void)
 int be_visitor_args_upcall_ss::visit_argument (be_argument *node)
 {
   this->ctx_->node (node);
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -61,7 +61,7 @@ int be_visitor_args_upcall_ss::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -108,7 +108,7 @@ int be_visitor_args_upcall_ss::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -158,7 +158,7 @@ int be_visitor_args_upcall_ss::visit_predefined_type (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   AST_PredefinedType::PredefinedType pt = node->pt ();
 
   if (pt == AST_PredefinedType::PT_any)
@@ -248,7 +248,7 @@ int be_visitor_args_upcall_ss::visit_sequence (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -347,7 +347,7 @@ int be_visitor_args_upcall_ss::emit_common (void)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {
@@ -397,7 +397,7 @@ int be_visitor_args_upcall_ss::emit_common2 (
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
 
   switch (this->direction ())
     {

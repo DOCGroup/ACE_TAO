@@ -97,7 +97,7 @@ BE_visit_root (be_visitor_decl &root_visitor,
                const char *which_pass)
 {
   static be_root *root =
-    be_root::narrow_from_decl (idl_global->root ());
+    dynamic_cast<be_root*> (idl_global->root ());
 
   if (-1 == root->accept (&root_visitor))
     {

@@ -29,7 +29,7 @@ be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch (void)
 int
 be_visitor_valuetype_field_ch::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -538,7 +538,7 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       && this->ctx_->state () != TAO_CodeGen::TAO_VALUETYPE_OBV_CH)
     {
       be_field *member_node =
-        be_field::narrow_from_decl (this->ctx_->node ());
+        dynamic_cast<be_field*> (this->ctx_->node ());
       node->field_node (member_node);
 
       be_visitor_context ctx (*this->ctx_);

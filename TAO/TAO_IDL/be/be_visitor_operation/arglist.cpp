@@ -148,7 +148,7 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
+    dynamic_cast<be_operation*> (this->ctx_->scope ());
   be_interface *intf = 0;
 
   // We need the interface node in which this operation was defined. However,
@@ -157,15 +157,15 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   if (op == 0)
     {
       be_factory *f =
-        be_factory::narrow_from_scope (this->ctx_->scope ());
+        dynamic_cast<be_factory*> (this->ctx_->scope ());
 
-      intf = be_interface::narrow_from_scope (f->defined_in ());
+      intf = dynamic_cast<be_interface*> (f->defined_in ());
     }
   else
     {
       intf = this->ctx_->attribute ()
-        ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-        : be_interface::narrow_from_scope (op->defined_in ());
+        ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+        : dynamic_cast<be_interface*> (op->defined_in ());
     }
 
   // Set new scope.

@@ -22,7 +22,7 @@ IdentifierHelper::type_name (be_type *t, be_visitor *visitor)
         (void) t->accept (visitor);
         return "";
       case AST_Decl::NT_pre_defined:
-        pdt = AST_PredefinedType::narrow_from_decl (t);
+        pdt = dynamic_cast<AST_PredefinedType*> (t);
 
         switch (pdt->pt ())
           {

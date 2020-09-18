@@ -164,7 +164,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
      << node->nfields () << ");"
      << be_uidt_nl << be_nl;
 
-  if (this->gen_typecode_ptr (be_type::narrow_from_decl (node)) != 0)
+  if (this->gen_typecode_ptr (dynamic_cast<be_type*> (node)) != 0)
     {
       return -1;
     }
@@ -183,7 +183,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_type * const member_type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
 
       if (this->is_typecode_generation_required (member_type)
           && member_type->accept (this) != 0)
@@ -194,7 +194,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 /*  MCO@20101020 - this is unnecessary since the check for recursiveness
  *  of *this* typecode has already been done before calling this method
 
-      be_structure *bs = be_structure::narrow_from_decl (node);
+      be_structure *bs = dynamic_cast<be_structure*> (node);
       if (bs)
         {
           be_visitor_typecode_defn::QNode const * const qnode =
@@ -226,10 +226,10 @@ TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
       node->field (member_ptr, i);
 
       be_decl * const member_decl =
-        be_decl::narrow_from_decl (*member_ptr);
+        dynamic_cast<be_decl*> (*member_ptr);
 
       be_type * const member_type =
-        be_type::narrow_from_decl ((*member_ptr)->field_type ());
+        dynamic_cast<be_type*> ((*member_ptr)->field_type ());
 
       os << "{ "
          << "\"" << member_decl->original_local_name () << "\", "

@@ -117,7 +117,7 @@ AST_Annotation_Appl::apply_from (AST_Annotation_Decl *decl)
     si.next ())
     {
       AST_Annotation_Member *member =
-        AST_Annotation_Member::narrow_from_decl (si.item ());
+        dynamic_cast<AST_Annotation_Member*> (si.item ());
       if (member)
         {
           AST_Annotation_Member *new_member = fe_add_annotation_member (

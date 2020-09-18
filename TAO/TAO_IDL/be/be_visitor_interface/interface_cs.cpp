@@ -39,7 +39,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       bt = node;
     }
 
-  AST_Component *c = AST_Component::narrow_from_decl (node);
+  AST_Component *c = dynamic_cast<AST_Component*> (node);
   TAO_OutStream *os = this->ctx_->stream ();
 
   if (node->is_defined () && be_global->gen_arg_traits ())
@@ -524,7 +524,7 @@ be_visitor_interface_cs::visit_extended_port (be_extended_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -553,7 +553,7 @@ be_visitor_interface_cs::visit_mirror_port (be_mirror_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -615,7 +615,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
             (UTL_ScopedName *)node->name ()->copy ();
           new_op_name->nconc (item_new_name);
 
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           UTL_ScopedName *old_op_name =
             (UTL_ScopedName *) op->name ()->copy ();
           op->set_name (new_op_name);

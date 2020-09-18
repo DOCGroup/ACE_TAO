@@ -31,7 +31,7 @@ be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs (void)
 int
 be_visitor_valuetype_field_cdr_cs::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -63,7 +63,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -92,7 +92,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -168,7 +168,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -230,7 +230,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -280,7 +280,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -336,7 +336,7 @@ be_visitor_valuetype_field_cdr_cs::valuetype_common (be_type *)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -388,7 +388,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -458,7 +458,7 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -563,7 +563,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -628,7 +628,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -710,7 +710,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -793,7 +793,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -869,7 +869,7 @@ be_visitor_valuetype_field_cdr_decl::be_visitor_valuetype_field_cdr_decl (
 int
 be_visitor_valuetype_field_cdr_decl::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -902,7 +902,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
 
   // Retrieve the field node.
   be_field *f =
-    be_field::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_field*> (this->ctx_->node ());
 
   if (f == 0)
     {
@@ -915,7 +915,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
 
   // Retrieve the valuetype scope in which the code is generated.
   be_decl *sc = this->ctx_->scope ()->decl ();
-  be_valuetype *vt = be_valuetype::narrow_from_decl (sc);
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (sc);
 
   if (!vt)
     {
@@ -944,7 +944,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),

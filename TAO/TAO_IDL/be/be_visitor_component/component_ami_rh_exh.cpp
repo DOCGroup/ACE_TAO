@@ -28,7 +28,7 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
   this->port_ = node;
 
   this->iface_ =
-    be_interface::narrow_from_decl (node->uses_type ());
+    dynamic_cast<be_interface*> (node->uses_type ());
 
   this->init ();
 

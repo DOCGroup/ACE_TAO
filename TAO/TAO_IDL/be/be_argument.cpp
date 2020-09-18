@@ -46,7 +46,7 @@ be_argument::be_argument (AST_Argument::Direction d,
       && !dcl->is_local ()
       && (idl_global->in_main_file () || dcl->is_abstract ()))
     {
-      be_type *bt = be_type::narrow_from_decl (ft);
+      be_type *bt = dynamic_cast<be_type*> (ft);
       bt->seen_in_operation (true);
       be_util::set_arg_seen_bit (bt);
       idl_global->need_skeleton_includes_ = true;

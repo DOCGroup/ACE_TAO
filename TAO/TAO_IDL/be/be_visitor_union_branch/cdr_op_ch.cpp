@@ -23,7 +23,7 @@ be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch (void)
 int
 be_visitor_union_branch_cdr_op_ch::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
