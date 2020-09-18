@@ -36,8 +36,7 @@ be_visitor_component_exh::visit_component (be_component *node)
 
   this->node_ = node;
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "/// Namespace for implementation of " << node->full_name () << " component" << be_nl
       << "namespace CIAO_" << node->flat_name ()
