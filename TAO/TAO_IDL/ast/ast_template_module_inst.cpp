@@ -27,8 +27,7 @@ AST_Template_Module_Inst::~AST_Template_Module_Inst (void)
 AST_Template_Module *
 AST_Template_Module_Inst::ref (void) const
 {
-  return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+  return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 FE_Utils::T_ARGLIST const *

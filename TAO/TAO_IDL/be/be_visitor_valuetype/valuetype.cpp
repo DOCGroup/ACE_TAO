@@ -39,7 +39,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
                             -1);
         }
 
-      be_decl *bd = be_decl::narrow_from_decl (d);
+      be_decl *bd = dynamic_cast<be_decl*> (d);
       // Set the scope node as "node" in which the code is being
       // generated so that elements in the node's scope can use it
       // for code generation.
@@ -48,7 +48,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
       this->ctx_->node (bd);
       this->elem_number_++;
 
-      AST_Field *field = AST_Field::narrow_from_decl (d);
+      AST_Field *field = dynamic_cast<AST_Field*> (d);
 
       if (field != 0 && field->visibility () == AST_Field::vis_PRIVATE)
         {
@@ -681,8 +681,8 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
                             -1);
         }
 
-      be_field *field = be_field::narrow_from_decl (d);
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
+      be_field *field = dynamic_cast<be_field*> (d);
+      be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
       if (field == 0 || attr != 0)
         {
@@ -719,8 +719,8 @@ be_visitor_valuetype::gen_field_pd (be_field *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // First generate the type information.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
-  be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (node->defined_in ());
 
   if (!bt || !vt)
     {
@@ -767,7 +767,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
   if (parent != 0)
     {
       be_valuetype *be_parent =
-        be_valuetype::narrow_from_decl (parent);
+        dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_constructor_args (be_parent, index);
     }
 
@@ -780,9 +780,9 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
     {
       // be_attribute inherits from be_field
       // so we have to also screen out attributes
-      be_field *f = be_field::narrow_from_decl (si.item ());
+      be_field *f = dynamic_cast<be_field*> (si.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (si.item ());
+        dynamic_cast<be_attribute*> (si.item ());
 
       if (f == 0 || attr != 0)
         {
@@ -795,7 +795,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       arg_name += f->local_name ()->get_string ();
       Identifier id (arg_name.c_str ());
       UTL_ScopedName sn (&id, 0);
-      be_type *ft = be_type::narrow_from_decl (f->field_type ());
+      be_type *ft = dynamic_cast<be_type*> (f->field_type ());
       bool seen = ft->seen_in_operation ();
 
       // This sets ft->seen_in_operation (true), so we have to
@@ -900,7 +900,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
   for (int i = 0; i < node->n_inherits (); ++i)
     {
       be_valuetype *vt =
-        be_valuetype::narrow_from_decl (node->inherits ()[i]);
+        dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
       if (vt != 0)
         {
@@ -947,7 +947,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
   // Now go thru our base VTs.
   for (int i = 0; i < node->n_inherits (); ++i)
     {
-      be_valuetype *vt = be_valuetype::narrow_from_decl (node->inherits ()[i]);
+      be_valuetype *vt = dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
       if (vt != 0)
         {

@@ -55,7 +55,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_type *bt =
-    be_type::narrow_from_decl (node->base_type ());
+    dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {

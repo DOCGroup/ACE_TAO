@@ -86,7 +86,7 @@ fe_populate_global_scope (void)
 
   AST_PredefinedType *pdt = 0;
   AST_Root *root =
-    AST_Root::narrow_from_scope (idl_global->root ());
+    dynamic_cast<AST_Root*> (idl_global->root ());
 
   Identifier void_id ("void");
   UTL_ScopedName void_name (&void_id, 0);

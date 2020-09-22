@@ -37,7 +37,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
   const char *lname = node->local_name ();
 
   be_decl *scope =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
   ACE_CString suffix (scope->flat_name ());
 
   if (suffix != "")
@@ -69,7 +69,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
   if (is_intf)
     {
       be_interface *intf =
-        be_interface::narrow_from_decl (node);
+        dynamic_cast<be_interface*> (node);
 
       be_global->in_facet_servant (true);
 

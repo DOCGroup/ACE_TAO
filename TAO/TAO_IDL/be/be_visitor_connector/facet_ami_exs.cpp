@@ -43,7 +43,7 @@ be_visitor_facet_ami_exs::visit_provides (be_provides *node)
 {
 
   this->iface_ =
-    be_interface::narrow_from_decl (node->provides_type ());
+    dynamic_cast<be_interface*> (node->provides_type ());
 
     if (this->gen_reply_handler_class () == -1)
     {
@@ -223,7 +223,7 @@ be_visitor_facet_ami_exs::init (void)
 
 
   be_interface *callback_iface =
-    be_interface::narrow_from_decl (d);
+    dynamic_cast<be_interface*> (d);
 
   if (callback_iface == 0)
    this->sync_ = true;
@@ -295,7 +295,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 
 
   be_interface *callback_iface =
-    be_interface::narrow_from_decl (d);
+    dynamic_cast<be_interface*> (d);
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
@@ -363,7 +363,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
     sn = 0;
 
     be_interface *sync_iface =
-       be_interface::narrow_from_decl (d);
+       dynamic_cast<be_interface*> (d);
 
     /// The overload of traverse_inheritance_graph() used here
     /// doesn't automatically prime the queues.
@@ -477,7 +477,7 @@ be_visitor_facet_ami_exs::gen_reply_hander_op (be_operation *node)
       UTL_ScopeActiveIterator i (node, UTL_Scope::IK_decls);
       AST_Decl *d = i.item ();
       AST_Argument *arg =
-        AST_Argument::narrow_from_decl (d);
+        dynamic_cast<AST_Argument*> (d);
       AST_Type *t = arg->field_type ();
       ACE_CString type_name = t->full_name ();
 
@@ -653,7 +653,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
 
    os_ << be_nl_2;
   // generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -702,7 +702,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
       << "{" << be_idt_nl;
 
   AST_PredefinedType *pdt = 0;
-  pdt = AST_PredefinedType::narrow_from_decl (bt);
+  pdt = dynamic_cast<AST_PredefinedType*> (bt);
   bool ret = true;
   if ((pdt != 0) && (pdt->pt () == AST_PredefinedType::PT_void))
     ret =false;

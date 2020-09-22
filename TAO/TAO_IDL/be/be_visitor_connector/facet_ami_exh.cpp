@@ -51,7 +51,7 @@ int
 be_visitor_facet_ami_exh::visit_provides (be_provides *node)
 {
   this->iface_ =
-    be_interface::narrow_from_decl (node->provides_type ());
+    dynamic_cast<be_interface*> (node->provides_type ());
 
   if (this->gen_reply_handler_class () == -1)
     {
@@ -206,7 +206,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   UTL_ScopedName *sn =
     FE_Utils::string_to_scoped_name (this->handler_str_.c_str ());
   AST_Decl *d = s->lookup_by_name (sn, true, false);
-  this->callback_iface_ = be_interface::narrow_from_decl (d);
+  this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
   if (this->callback_iface_ == 0)
     this->sync_  = true;
@@ -315,7 +315,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
      sn = 0;
 
      be_interface *sync_iface =
-     be_interface::narrow_from_decl (d);
+     dynamic_cast<be_interface*> (d);
 
      /// The overload of traverse_inheritance_graph() used here
      /// doesn't automatically prime the queues.

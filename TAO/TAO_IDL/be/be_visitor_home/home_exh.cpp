@@ -143,7 +143,7 @@ be_visitor_home_exh::gen_exec_class (void)
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           int status =
             bi->traverse_inheritance_graph (
@@ -162,7 +162,7 @@ be_visitor_home_exh::gen_exec_class (void)
             }
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   os_ << be_nl_2

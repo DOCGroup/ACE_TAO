@@ -28,7 +28,7 @@ be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci (void)
 int
 be_visitor_valuebox_field_ci::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -42,7 +42,7 @@ be_visitor_valuebox_field_ci::visit_field (be_field *node)
   // Store the valuebox in the visitor member, then replace the
   // context value with the field node.
   this->vb_node_ =
-    be_valuebox::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_valuebox*> (this->ctx_->node ());
   this->ctx_->node (node);
 
   if (bt->accept (this) == -1)
@@ -99,7 +99,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
       if (bt->is_nested ())
         {
           be_decl *parent =
-                 be_scope::narrow_from_scope (bt->defined_in ())->decl ();
+                 dynamic_cast<be_scope*> (bt->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),

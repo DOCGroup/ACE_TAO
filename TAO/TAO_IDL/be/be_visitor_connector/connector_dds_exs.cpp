@@ -91,13 +91,13 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           if (d->node_type () == AST_Decl::NT_typedef)
             {
               /// Strip away all layers of typedef before narrowing.
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
               d = td->primitive_base_type ();
             }
 
           /// No need to check if this is 0, but must narrow
           /// to call virtual function size_type() below.
-          AST_Type *t = AST_Type::narrow_from_decl (d);
+          AST_Type *t = dynamic_cast<AST_Type*> (d);
 
           switch (param->type_)
             {

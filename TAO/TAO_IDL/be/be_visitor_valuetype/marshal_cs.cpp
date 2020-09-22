@@ -240,7 +240,7 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
   if (node->opt_accessor ())
     {
       be_decl *scope =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
       *os << scope->name () << "::"
           << node->local_name ();
@@ -277,9 +277,9 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
 
       // (JP) 2010-10-21
       // be_attribute now inherits from be_field, so we need this check.
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
+      be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
-      be_field *field = be_field::narrow_from_decl (d);
+      be_field *field = dynamic_cast<be_field*> (d);
 
       if (field != 0 && attr == 0)
         {

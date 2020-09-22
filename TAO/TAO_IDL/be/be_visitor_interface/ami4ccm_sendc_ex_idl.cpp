@@ -51,7 +51,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_interface (be_interface *node)
   for (long i = 0; i < node->n_inherits_flat (); ++i)
     {
       be_interface *ancestor =
-        be_interface::narrow_from_decl (inh_flat[i]);
+        dynamic_cast<be_interface*> (inh_flat[i]);
 
       if (this->visit_scope (ancestor) == -1)
         {
@@ -121,7 +121,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_argument (be_argument *node)
   else
     {
       be_type *t =
-        be_type::narrow_from_decl (node->field_type ());
+        dynamic_cast<be_type*> (node->field_type ());
 
       os_ << be_nl
           << "in ";
@@ -169,7 +169,7 @@ be_visitor_ami4ccm_sendc_ex_idl::visit_sequence (be_sequence *node)
 int
 be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
 {
-  be_argument *arg = be_argument::narrow_from_decl (node);
+  be_argument *arg = dynamic_cast<be_argument*> (node);
 
   if (arg == 0)
     {

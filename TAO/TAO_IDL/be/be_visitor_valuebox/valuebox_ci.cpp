@@ -33,7 +33,7 @@ be_visitor_valuebox_ci::visit_valuebox (be_valuebox *node)
 
   this->ctx_->node (node); // save the node
 
-  be_type *bt = be_type::narrow_from_decl (node->boxed_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->boxed_type ());
 
   // Emit the type specific elements.  The visit_* methods in this
   // module do that work.
@@ -426,7 +426,7 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = be_field::narrow_from_decl (d)) == 0)
+      if (d == 0 || (field = dynamic_cast<be_field*> (d)) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_cs::visit_structure -"
@@ -485,7 +485,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
   this->emit_accessor_modifier (node);
 
   be_valuebox *vb_node =
-    be_valuebox::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_valuebox*> (this->ctx_->node ());
 
   if (node->size_type() == AST_Type::FIXED)
     {
@@ -508,7 +508,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
     {
       d = si.item ();
 
-      if (d == 0 || (member = be_union_branch::narrow_from_decl (d)) == 0)
+      if (d == 0 || (member = dynamic_cast<be_union_branch*> (d)) == 0)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ci::visit_union -"
@@ -535,7 +535,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
   // Retrieve the disriminant type.
   be_type *bt = 0;
-  bt = be_type::narrow_from_decl (node->disc_type ());
+  bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -657,7 +657,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
   // Retrieve the node being visited by this be_visitor_valuebox_ci
   be_decl * vb_node = this->ctx_->node ();
   bool node_not_pod =
-    be_type::narrow_from_decl (node)->size_type () == AST_Type::VARIABLE;
+    dynamic_cast<be_type*> (node)->size_type () == AST_Type::VARIABLE;
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl

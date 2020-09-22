@@ -39,7 +39,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   *os << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
 
-  AST_Component *c = AST_Component::narrow_from_decl (node);
+  AST_Component *c = dynamic_cast<AST_Component*> (node);
 
   // Now generate the class definition.
   *os << be_nl_2
@@ -335,7 +335,7 @@ be_visitor_interface_ch::visit_extended_port (be_extended_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -364,7 +364,7 @@ be_visitor_interface_ch::visit_mirror_port (be_mirror_port *node)
   /// original porttype, this is a way for visitors down the
   /// line to tell what scope we are actually in.
   this->ctx_->interface (
-    be_interface::narrow_from_scope (node->defined_in ()));
+    dynamic_cast<be_interface*> (node->defined_in ()));
 
   /// Will ignore everything but porttype attributes.
   int status = this->visit_scope (node->port_type ());
@@ -415,7 +415,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
       if (d->node_type () == AST_Decl::NT_op)
         {
 
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
           op->set_local (node->is_local ());
           ctx.state (TAO_CodeGen::TAO_OPERATION_CH);
           be_visitor_operation_ch op_visitor (&ctx);

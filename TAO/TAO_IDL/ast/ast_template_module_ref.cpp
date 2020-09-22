@@ -30,8 +30,7 @@ AST_Template_Module_Ref::~AST_Template_Module_Ref (void)
 AST_Template_Module *
 AST_Template_Module_Ref::ref (void) const
 {
-  return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+  return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 UTL_StrList *

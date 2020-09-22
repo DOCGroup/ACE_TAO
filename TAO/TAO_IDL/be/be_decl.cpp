@@ -130,7 +130,7 @@ be_decl::compute_full_name  (const char *prefix,
     {
       // Get scope name.
       be_decl * const parent =
-        be_scope::narrow_from_scope (this->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (this->defined_in ())->decl ();
 
       if (parent == 0)
         {
@@ -199,7 +199,7 @@ be_decl::compute_flat_name  (const char *prefix,
     {
       // Get scope name.
       be_decl * const parent =
-        be_scope::narrow_from_scope (this->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (this->defined_in ())->decl ();
       if (parent == 0)
         {
           ACE_ERROR ((LM_ERROR,
@@ -255,42 +255,42 @@ be_decl::scope (void)
       // Resolve forward declared interface by looking at full_definition()
       // field and iterating.
       d =
-        be_interface::narrow_from_decl (
-            (be_interface_fwd::narrow_from_decl (this))->full_definition ()
+        dynamic_cast<be_interface*> (
+            (dynamic_cast<be_interface_fwd*> (this))->full_definition ()
           );
     // Fall through
     case AST_Decl::NT_interface:
-      return be_interface::narrow_from_decl (d);
+      return dynamic_cast<be_interface*> (d);
     case AST_Decl::NT_module:
-      return be_module::narrow_from_decl (d);
+      return dynamic_cast<be_module*> (d);
     case AST_Decl::NT_root:
-      return be_root::narrow_from_decl (d);
+      return dynamic_cast<be_root*> (d);
     case AST_Decl::NT_except:
-      return be_exception::narrow_from_decl (d);
+      return dynamic_cast<be_exception*> (d);
     case AST_Decl::NT_union:
-      return be_union::narrow_from_decl (d);
+      return dynamic_cast<be_union*> (d);
     case AST_Decl::NT_struct:
-      return be_structure::narrow_from_decl (d);
+      return dynamic_cast<be_structure*> (d);
     case AST_Decl::NT_enum:
-      return be_enum::narrow_from_decl (d);
+      return dynamic_cast<be_enum*> (d);
     case AST_Decl::NT_op:
-      return be_operation::narrow_from_decl (d);
+      return dynamic_cast<be_operation*> (d);
     case AST_Decl::NT_factory:
-      return be_factory::narrow_from_decl (d);
+      return dynamic_cast<be_factory*> (d);
     case AST_Decl::NT_finder:
-      return be_finder::narrow_from_decl (d);
+      return dynamic_cast<be_finder*> (d);
     case AST_Decl::NT_sequence:
-      return be_sequence::narrow_from_decl (d);
+      return dynamic_cast<be_sequence*> (d);
     case AST_Decl::NT_valuetype:
-      return be_valuetype::narrow_from_decl (d);
+      return dynamic_cast<be_valuetype*> (d);
     case AST_Decl::NT_component:
-      return be_component::narrow_from_decl (d);
+      return dynamic_cast<be_component*> (d);
     case AST_Decl::NT_eventtype:
-      return be_eventtype::narrow_from_decl (d);
+      return dynamic_cast<be_eventtype*> (d);
     case AST_Decl::NT_home:
-      return be_home::narrow_from_decl (d);
+      return dynamic_cast<be_home*> (d);
     default:
-      return (be_scope *)0;
+      return 0;
   }
 }
 

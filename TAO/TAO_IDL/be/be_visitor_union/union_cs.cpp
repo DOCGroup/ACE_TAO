@@ -35,7 +35,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // declaration inside of the union statement. We need to generate its
   // typecode.
 
-  be_type *bt = be_type::narrow_from_decl (node->disc_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
     {
@@ -98,7 +98,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
       // Just get the union's first member.
       AST_Decl *d = si.item ();
 
-      ub = be_union_branch::narrow_from_decl (d);
+      ub = dynamic_cast<be_union_branch*> (d);
       si.next ();
     }
 

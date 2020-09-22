@@ -93,7 +93,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
           if (node->is_nested ())
             {
               be_decl *scope = 0;
-              scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+              scope = dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
               *os << "  POA_" << scope->name () << "::"
                   << node->local_name () << " (rhs)";

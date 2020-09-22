@@ -85,10 +85,10 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
 
   if (d->node_type () == AST_Decl::NT_typedef)
     {
-      d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+      d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
     }
 
-  this->base_component_ = AST_Component::narrow_from_decl (d);
+  this->base_component_ = dynamic_cast<AST_Component*> (d);
 
   if (this->base_component_ == 0)
     {
@@ -148,7 +148,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
           if (sad->node_type () == AST_Decl::NT_module)
             {
-              AST_Module *m = AST_Module::narrow_from_decl (sad);
+              AST_Module *m = dynamic_cast<AST_Module*> (sad);
 
               d = m->look_in_prev_mods_local (item->last_component ());
             }
@@ -167,15 +167,15 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       // Remove typedefs, if any.
       if (d->node_type () == AST_Decl::NT_typedef)
         {
-          d = AST_Typedef::narrow_from_decl (d)->primitive_base_type ();
+          d = dynamic_cast<AST_Typedef*> (d)->primitive_base_type ();
         }
 
       AST_Decl::NodeType nt = d->node_type ();
-      t = AST_Type::narrow_from_decl (d);
+      t = dynamic_cast<AST_Type*> (d);
 
       if (nt == AST_Decl::NT_interface)
         {
-          iface = AST_Interface::narrow_from_decl (d);
+          iface = dynamic_cast<AST_Interface*> (d);
 
           // Undefined interface?
           if (!iface->is_defined ())
@@ -200,7 +200,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       else if (nt == AST_Decl::NT_param_holder)
         {
           AST_Param_Holder *ph =
-            AST_Param_Holder::narrow_from_decl (d);
+            dynamic_cast<AST_Param_Holder*> (d);
 
           nt = ph->info ()->type_;
 

@@ -35,7 +35,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
   this->ctx_->node (node);
 
   // Retrieve the type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {

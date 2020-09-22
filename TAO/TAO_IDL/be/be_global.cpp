@@ -2192,7 +2192,7 @@ BE_GlobalData:: void_type (void)
         idl_global->root ()->lookup_primitive_type (
           AST_Expression::EV_void);
 
-      this->void_type_ = AST_PredefinedType::narrow_from_decl (d);
+      this->void_type_ = dynamic_cast<AST_PredefinedType*> (d);
     }
 
   return this->void_type_;
@@ -2233,7 +2233,7 @@ BE_GlobalData::ccmobject (void)
                             0);
         }
 
-      this->ccmobject_ = be_interface::narrow_from_decl (d);
+      this->ccmobject_ = dynamic_cast<be_interface*> (d);
     }
 
   return this->ccmobject_;

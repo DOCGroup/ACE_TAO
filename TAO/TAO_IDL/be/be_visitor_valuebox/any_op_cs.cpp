@@ -72,7 +72,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      module = be_module::narrow_from_scope (node->defined_in ());
+      module = dynamic_cast<be_module*> (node->defined_in ());
 
       if (!module)
         {

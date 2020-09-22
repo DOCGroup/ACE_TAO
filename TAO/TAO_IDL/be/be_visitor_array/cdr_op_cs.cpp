@@ -41,7 +41,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
     }
 
   // Retrieve the base type.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -140,7 +140,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -286,7 +286,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
 
   // Grab the array node.
   be_array *array =
-    be_array::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_array*> (this->ctx_->node ());
 
   if (array == 0)
     {
@@ -553,7 +553,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CDR::ULong i;
   be_array *node =
-    be_array::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_array*> (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
 
   if (node == 0)
@@ -637,7 +637,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
-              str = be_string::narrow_from_decl (bt);
+              str = dynamic_cast<be_string*> (bt);
               if (!str)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -698,7 +698,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {
@@ -764,7 +764,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
-              str = be_string::narrow_from_decl (bt);
+              str = dynamic_cast<be_string*> (bt);
               if (!str)
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
@@ -825,7 +825,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
                   // We need to separately handle this case of pseudo
                   // objects because they have a _var type.
                   be_predefined_type *pt =
-                    be_predefined_type::narrow_from_decl (bt);
+                    dynamic_cast<be_predefined_type*> (bt);
 
                   if (!pt)
                     {

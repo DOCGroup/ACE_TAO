@@ -62,7 +62,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
   // Grab the scope name.
   be_decl *parent =
-    be_scope::narrow_from_scope (node->defined_in ())->decl ();
+    dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
   if (parent == 0)
     {
@@ -165,7 +165,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
 
       for (; ! arg_list_iter.is_done (); arg_list_iter.next ())
         {
-          arg = AST_Argument::narrow_from_decl (arg_list_iter.item ());
+          arg = dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
           *os << "," << be_nl
               << "&_tao_" << arg->local_name ();
@@ -225,7 +225,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   if (parent->is_nested ())
     {
       be_decl *gparent =
-        be_scope::narrow_from_scope (parent->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (parent->defined_in ())->decl ();
 
       *os << gparent->name () << "::";
     }
@@ -248,7 +248,7 @@ be_visitor_operation_ami_cs::visit_argument (be_argument *node)
   be_type *bt = 0; // argument type
 
   // Retrieve the type for this argument.
-  bt = be_type::narrow_from_decl (node->field_type ());
+  bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

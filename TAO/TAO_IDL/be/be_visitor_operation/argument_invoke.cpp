@@ -37,7 +37,7 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {
@@ -97,7 +97,7 @@ be_visitor_operation_argument_invoke::pre_process (be_decl *bd)
 int
 be_visitor_operation_argument_invoke::post_process (be_decl *bd)
 {
-  be_argument *arg = be_argument::narrow_from_decl (bd);
+  be_argument *arg = dynamic_cast<be_argument*> (bd);
 
   if (!arg)
     {

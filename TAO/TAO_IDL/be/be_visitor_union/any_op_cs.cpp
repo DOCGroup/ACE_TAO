@@ -78,13 +78,13 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
         {
           be_interface *intf = 0;
-          intf = be_interface::narrow_from_scope (node->defined_in ());
+          intf = dynamic_cast<be_interface*> (node->defined_in ());
           decl = intf;
         }
 
       if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
-          module = be_module::narrow_from_scope (decl->defined_in ());
+          module = dynamic_cast<be_module*> (decl->defined_in ());
 
           if (!module)
             {
@@ -221,7 +221,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
     {
       AST_Decl *d = si.item ();
 
-      be_enum *e = be_enum::narrow_from_decl (d);
+      be_enum *e = dynamic_cast<be_enum*> (d);
       if (e != 0)
         {
           be_visitor_enum_any_op_cs visitor (&ctx);
@@ -254,7 +254,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

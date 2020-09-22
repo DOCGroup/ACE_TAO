@@ -71,7 +71,7 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   // TAO provides extensions for octet sequences, first find out if
   // the base type is an octet (or an alias for octet).
@@ -80,16 +80,16 @@ be_visitor_template_export::visit_sequence (be_sequence *node)
   if (bt->base_node_type () == AST_Type::NT_pre_defined)
     {
       be_typedef* alias =
-            be_typedef::narrow_from_decl (bt);
+            dynamic_cast<be_typedef*> (bt);
 
       if (alias == 0)
         {
-          predef = be_predefined_type::narrow_from_decl (bt);
+          predef = dynamic_cast<be_predefined_type*> (bt);
         }
       else
         {
           predef =
-            be_predefined_type::narrow_from_decl (
+            dynamic_cast<be_predefined_type*> (
                 alias->primitive_base_type ()
               );
         }

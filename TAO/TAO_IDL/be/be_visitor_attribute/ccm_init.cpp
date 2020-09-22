@@ -49,7 +49,7 @@ be_visitor_attribute_ccm_init::visit_attribute (
     }
 
   attr_ = node;
-  be_type *ft = be_type::narrow_from_decl (node->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (node->field_type ());
   return ft->accept (this);
 }
 
@@ -170,7 +170,7 @@ be_visitor_attribute_ccm_init::emit_init_block (void)
   this->open_if_block ();
 
   be_visitor_any_extracted_type_decl decl_emitter (this->ctx_);
-  be_type *ft = be_type::narrow_from_decl (attr_->field_type ());
+  be_type *ft = dynamic_cast<be_type*> (attr_->field_type ());
 
   if (ft->accept (&decl_emitter) == -1)
     {

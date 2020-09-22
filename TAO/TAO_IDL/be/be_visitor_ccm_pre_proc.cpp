@@ -460,7 +460,7 @@ int
 be_visitor_ccm_pre_proc::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   be_eventtype *fd =
-    be_eventtype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_eventtype*> (node->full_definition ());
 
   return this->visit_eventtype (fd);
 }
@@ -783,7 +783,7 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
                                    0);
   AST_Decl *d = comp_->lookup_by_name (&connections_name,
                                        true);
-  be_typedef *td = be_typedef::narrow_from_decl (d);
+  be_typedef *td = dynamic_cast<be_typedef*> (d);
   connections_id.destroy ();
 
   be_operation *op = 0;
@@ -1397,7 +1397,7 @@ be_visitor_ccm_pre_proc::lookup_cookie (void)
           return -1;
         }
 
-      this->cookie_ = be_valuetype::narrow_from_decl (d);
+      this->cookie_ = dynamic_cast<be_valuetype*> (d);
 
       if (this->cookie_ == 0)
         {
@@ -1474,7 +1474,7 @@ be_visitor_ccm_pre_proc::lookup_one_exception (const char *name,
       return -1;
     }
 
-  result = be_exception::narrow_from_decl (d);
+  result = dynamic_cast<be_exception*> (d);
 
   if (result == 0)
     {
@@ -1506,7 +1506,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
     }
 
   AST_Interface *event_consumer = 0;
-  AST_Module *m = AST_Module::narrow_from_scope (s);
+  AST_Module *m = dynamic_cast<AST_Module*> (s);
 
   // We're at global scope here so we need to fool the scope stack
   // for a minute so the correct repo id can be calculated at
@@ -1543,7 +1543,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->set_imported (node->imported ());
   event_consumer->set_name (consumer_name);
   be_interface *bec =
-    be_interface::narrow_from_decl (event_consumer);
+    dynamic_cast<be_interface*> (event_consumer);
   bec->original_interface (node);
 
   // Set repo id to 0, so it will be recomputed on the next access,
@@ -1554,7 +1554,7 @@ be_visitor_ccm_pre_proc::create_event_consumer (be_eventtype *node)
   event_consumer->repoID (0);
   event_consumer->prefix (const_cast<char*> (node->prefix ()));
 
-  be_type::narrow_from_decl (event_consumer)->gen_fwd_helper_name ();
+  dynamic_cast<be_type*> (event_consumer)->gen_fwd_helper_name ();
   m->be_add_interface (event_consumer);
   return this->gen_push_op (node,
                             event_consumer);
@@ -1576,7 +1576,7 @@ be_visitor_ccm_pre_proc::lookup_consumer (be_field *node)
       return 0;
     }
 
-  AST_Interface *i = AST_Interface::narrow_from_decl (d);
+  AST_Interface *i = dynamic_cast<AST_Interface*> (d);
 
   if (i == 0)
     {
@@ -1675,7 +1675,7 @@ be_visitor_ccm_pre_proc::create_implicit (be_home *node)
 
   i->gen_fwd_helper_name ();
   i->original_interface (node);
-  AST_Module *m = AST_Module::narrow_from_scope (node->defined_in ());
+  AST_Module *m = dynamic_cast<AST_Module*> (node->defined_in ());
   m->be_add_interface (i);
 
   return i;
@@ -1738,7 +1738,7 @@ be_visitor_ccm_pre_proc::create_equivalent (be_home *node,
                               "_tao_home_name_extension",
                               ScopeAsDecl (s));
   node->set_name (mangled_name);
-  AST_Module *m = AST_Module::narrow_from_scope (s);
+  AST_Module *m = dynamic_cast<AST_Module*> (s);
 
   /// Calling be_add_interface() here calls add_to_referenced(),
   /// which will give a redef error.
@@ -1883,7 +1883,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       delete sn;
       sn = 0;
 
-      be_uses *u = be_uses::narrow_from_decl (d);
+      be_uses *u = dynamic_cast<be_uses*> (d);
 
       if (u == 0)
         {
@@ -1896,7 +1896,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
         }
 
       be_interface *iface =
-        be_interface::narrow_from_decl (u->uses_type ());
+        dynamic_cast<be_interface*> (u->uses_type ());
 
       /// The real AMI_xxx exists only in the *A.idl file, so
       /// we create a dummy as the uses type for the implied
@@ -1904,7 +1904,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
       /// already been created for this uses type.
 
       be_interface *ami_iface =
-        be_interface::narrow_from_decl (iface->ami4ccm_uses ());
+        dynamic_cast<be_interface*> (iface->ami4ccm_uses ());
 
       if (ami_iface == 0)
         {
@@ -1970,7 +1970,7 @@ be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
         */
           // Grammar ensures this narrowing will never be 0.
           AST_Component *c =
-            AST_Component::narrow_from_scope (s);
+            dynamic_cast<AST_Component*> (s);
           FE_Utils::create_uses_multiple_stuff (c, ami_uses);
         }
     }

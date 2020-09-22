@@ -76,7 +76,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       for (i = 0; i < n_inherits; ++i)
         {
           inherited =
-            be_valuetype::narrow_from_decl (node->inherits ()[i]);
+            dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
           if (inherited->node_type () == AST_Decl::NT_eventtype)
             {
@@ -94,7 +94,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
             {
               // Inherited node is used in the scope of "node" node.
               scope =
-                be_scope::narrow_from_scope (node->defined_in ())->decl ();
+                dynamic_cast<be_scope*> (node->defined_in ())->decl ();
             }
 
           // Dump the scoped name.
@@ -398,7 +398,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   // Every operation is declared public and virtual in the client code.
   *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";
 
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -443,7 +443,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
 int
 be_visitor_valuetype_ch::visit_field (be_field *node)
 {
-  be_valuetype *vt = be_valuetype::narrow_from_scope (node->defined_in ());
+  be_valuetype *vt = dynamic_cast<be_valuetype*> (node->defined_in ());
 
   if (!vt)
     {
@@ -522,7 +522,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
 
       if (nt == AST_Decl::NT_op)
         {
-          be_operation *op = be_operation::narrow_from_decl (d);
+          be_operation *op = dynamic_cast<be_operation*> (d);
 
           if (visitor.visit_operation (op) == -1)
             {

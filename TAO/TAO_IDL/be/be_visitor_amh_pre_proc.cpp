@@ -106,7 +106,7 @@ be_visitor_amh_pre_proc::visit_interface (be_interface *node)
   excep_holder->is_amh_excep_holder (true);
 
   AST_Module *module =
-    AST_Module::narrow_from_scope (node->defined_in ());
+    dynamic_cast<AST_Module*> (node->defined_in ());
   module->set_has_nested_valuetype ();
 
   // Create the ResponseHandler class
@@ -229,7 +229,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
 
       if (nt == AST_Decl::NT_attr)
         {
-          be_attribute *attr = be_attribute::narrow_from_decl (d);
+          be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
           if (attr != 0)
             {
@@ -250,7 +250,7 @@ be_visitor_amh_pre_proc::add_rh_node_members ( be_interface *node,
         }
       else if (nt == AST_Decl::NT_op)
         {
-          be_operation* operation = be_operation::narrow_from_decl (d);
+          be_operation* operation = dynamic_cast<be_operation*> (d);
 
           if (operation != 0)
             {
@@ -491,8 +491,8 @@ be_visitor_amh_pre_proc::add_normal_reply (be_operation *node,
 
         }
 
-      //be_decl *arg = be_decl::narrow_from_decl (d);
-      AST_Argument *original_arg = AST_Argument::narrow_from_decl (d);
+      //be_decl *arg = dynamic_cast<be_decl*> (d);
+      AST_Argument *original_arg = dynamic_cast<AST_Argument*> (d);
 
       if (original_arg->direction () == AST_Argument::dir_INOUT ||
           original_arg->direction () == AST_Argument::dir_OUT)
@@ -606,12 +606,12 @@ be_visitor_amh_pre_proc::create_exception_holder (be_interface *node)
                             0);
         }
 
-      be_decl *op = be_decl::narrow_from_decl (d);
+      be_decl *op = dynamic_cast<be_decl*> (d);
       AST_Decl::NodeType nt = d->node_type ();
 
       if (nt == AST_Decl::NT_attr)
         {
-          AST_Attribute *attribute = AST_Attribute::narrow_from_decl (d);
+          AST_Attribute *attribute = dynamic_cast<AST_Attribute*> (d);
 
           if (attribute == 0)
             {
@@ -657,7 +657,7 @@ be_visitor_amh_pre_proc::create_raise_operation (
 
   if (operation_kind == NORMAL)
     {
-      orig_op = be_operation::narrow_from_decl (node);
+      orig_op = dynamic_cast<be_operation*> (node);
     }
 
   // Name the operation properly

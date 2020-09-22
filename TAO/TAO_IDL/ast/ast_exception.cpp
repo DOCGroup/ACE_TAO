@@ -137,7 +137,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
       // Continue until each element is visited.
       for (UTL_ScopeActiveIterator i (this, IK_decls);!i.is_done ();i.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (i.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (i.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
@@ -150,7 +150,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 

@@ -31,7 +31,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   this->ctx_->node (node); // save the array node
 
   // If we contain an anonymous sequence, generate code for it here.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -121,7 +121,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -153,7 +153,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      be_typedef *td = dynamic_cast<be_typedef*> (bt);
       unique = td->primitive_base_type ()->flat_name ();
     }
   else
@@ -234,11 +234,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
       while (tmp->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *tdef = be_typedef::narrow_from_decl (tmp);
-          tmp = be_type::narrow_from_decl (tdef->base_type ());
+          be_typedef *tdef = dynamic_cast<be_typedef*> (tmp);
+          tmp = dynamic_cast<be_type*> (tdef->base_type ());
         }
 
-      primitive_type = be_array::narrow_from_decl (tmp);
+      primitive_type = dynamic_cast<be_array*> (tmp);
     }
 
   *os << "// Zero each individual element." << be_nl;

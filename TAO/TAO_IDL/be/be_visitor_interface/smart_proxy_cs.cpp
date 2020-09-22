@@ -36,7 +36,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       // Its necessary to take care of the nested case. The smart proxy classes
       // are in the same scope as the proxy.
-      be_decl* scope = be_scope::narrow_from_scope (node->defined_in ())->decl ();
+      be_decl* scope = dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
       *os << be_nl_2
           << scope->full_name ();

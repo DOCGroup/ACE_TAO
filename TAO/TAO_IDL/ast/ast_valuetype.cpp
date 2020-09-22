@@ -143,7 +143,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                             0);
         }
 
-      AST_Field *field = AST_Field::narrow_from_decl (d);
+      AST_Field *field = dynamic_cast<AST_Field*> (d);
 
       if (field == 0)
         {
@@ -162,7 +162,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
       if (type->node_type () == AST_Decl::NT_typedef)
         {
-          AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+          AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
           type = td->primitive_base_type ();
         }
 
@@ -186,7 +186,7 @@ AST_ValueType::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 void
 AST_ValueType::redefine (AST_Interface *from)
 {
-  AST_ValueType *vt = AST_ValueType::narrow_from_decl (from);
+  AST_ValueType *vt = dynamic_cast<AST_ValueType*> (from);
 
   if (vt == 0)
     {
@@ -275,8 +275,7 @@ AST_ValueType::look_in_supported (UTL_ScopedName *e,
           continue;
         }
 
-      AST_Interface *i =
-        AST_Interface::narrow_from_decl (*is);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (*is);
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
@@ -357,7 +356,7 @@ AST_ValueType::legal_for_primary_key (void) const
           !i.is_done ();
           i.next ())
         {
-          AST_Field *f = AST_Field::narrow_from_decl (i.item ());
+          AST_Field *f = dynamic_cast<AST_Field*> (i.item ());
 
           // We're not interested in any valuetype decls that aren't fields.
           if (f == 0)
@@ -477,9 +476,7 @@ AST_ValueType::fe_add_field (AST_Field *t)
 AST_Factory *
 AST_ValueType::fe_add_factory (AST_Factory *f)
 {
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Factory*> (this->fe_add_decl (f));
 }
 
 bool
@@ -496,8 +493,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
       return true;
     }
 
-  AST_ValueType *concrete_parent =
-    AST_ValueType::narrow_from_decl (node->inherits_concrete ());
+  AST_ValueType *concrete_parent = dynamic_cast<AST_ValueType*> (node->inherits_concrete ());
 
   if (this->derived_from_primary_key_base (concrete_parent, pk_base))
     {
@@ -508,7 +504,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
 
   for (long i = 0; i < node->pd_n_inherits; ++i)
     {
-      AST_ValueType *tmp = AST_ValueType::narrow_from_decl (v[i]);
+      AST_ValueType *tmp = dynamic_cast<AST_ValueType*> (v[i]);
 
       if (this->derived_from_primary_key_base (tmp, pk_base))
         {
@@ -543,7 +539,7 @@ AST_ValueType::lookup_primary_key_base (void) const
           return 0;
         }
 
-      retval = AST_ValueType::narrow_from_decl (d);
+      retval = dynamic_cast<AST_ValueType*> (d);
 
       if (retval == 0)
         {

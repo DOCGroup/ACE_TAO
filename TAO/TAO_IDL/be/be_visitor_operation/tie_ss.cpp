@@ -44,7 +44,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
     }
 
   // Retrieve the operation return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -71,7 +71,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
           // Check for conflicts between the arg name and the proposed template
           // class identifier
           AST_Argument *arg =
-            AST_Argument::narrow_from_decl (si.item ());
+            dynamic_cast<AST_Argument*> (si.item ());
 
           if (! ACE_OS::strcmp (arg->local_name ()->get_string (),
                                 template_name.c_str ()))
@@ -127,7 +127,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 
   *os << be_nl << "{" << be_idt_nl;
 
-  be_predefined_type *pdt = be_predefined_type::narrow_from_decl (bt);
+  be_predefined_type *pdt = dynamic_cast<be_predefined_type*> (bt);
 
   if (pdt == 0 || pdt->pt () != AST_PredefinedType::PT_void)
     {

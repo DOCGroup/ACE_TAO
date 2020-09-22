@@ -35,7 +35,7 @@ be_visitor_interface::visit_scope (be_scope *node)
       return -1;
     }
 
-  be_interface *intf = be_interface::narrow_from_scope (node);
+  be_interface *intf = dynamic_cast<be_interface*> (node);
 
   if (intf == 0)
     {

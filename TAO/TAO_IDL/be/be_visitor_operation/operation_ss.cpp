@@ -43,7 +43,7 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
     }
 
   // Retrieve the operation return type.
-  bt = be_type::narrow_from_decl (node->return_type ());
+  bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -65,7 +65,7 @@ be_visitor_operation_ss::visit_argument (be_argument *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the type for this argument.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -127,7 +127,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
                  ? this->ctx_->attribute ()->defined_in ()
                  : node->defined_in ();
 
-  be_interface *intf = be_interface::narrow_from_scope (s);
+  be_interface *intf = dynamic_cast<be_interface*> (s);
 
   if (intf == 0)
     {
@@ -227,7 +227,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
        arg_list_iter.next ())
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (arg_list_iter.item ());
+        dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
           << "&_tao_" << arg->local_name ();
@@ -300,7 +300,7 @@ be_visitor_operation_ss::gen_skel_body_arglist (be_operation * node,
        arg_decl_iter.next ())
     {
       AST_Argument * const arg =
-        AST_Argument::narrow_from_decl (arg_decl_iter.item ());
+        dynamic_cast<AST_Argument*> (arg_decl_iter.item ());
 
       *os << be_nl
           << "TAO::SArg_Traits< ";

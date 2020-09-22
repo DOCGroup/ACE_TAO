@@ -28,7 +28,7 @@ be_eventtype *
 be_consumes::consumes_type (void) const
 {
   return
-    be_eventtype::narrow_from_decl (
+    dynamic_cast<be_eventtype*> (
       this->AST_Consumes::consumes_type ());
 }
 

@@ -165,7 +165,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   os = tao_cg->client_stubs ();
 
   AST_Type * at = node->boxed_type()->unaliased_type();
-  be_type *bt = be_type::narrow_from_decl (at);
+  be_type *bt = dynamic_cast<be_type*> (at);
 
   if (!bt)
     {
@@ -178,7 +178,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   bool is_array = false;
   const char * unmarshal_arg;
-  be_predefined_type *bpt = be_predefined_type::narrow_from_decl (bt);
+  be_predefined_type *bpt = dynamic_cast<be_predefined_type*> (bt);
 
   if (bpt != 0)
     {
@@ -214,7 +214,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
           unmarshal_arg = "vb_object->_pd_value";
         }
     }
-  else if (be_array::narrow_from_decl (bt) != 0)
+  else if (dynamic_cast<be_array*> (bt) != 0)
     {
       is_array = true;
       unmarshal_arg = "temp";
@@ -270,7 +270,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   *os << "return (strm >> ";
 
-  be_string *str = be_string::narrow_from_decl (bt);
+  be_string *str = dynamic_cast<be_string*> (bt);
   if (str != 0 &&
       str->max_size ()->ev ()->u.ulval != 0)
     {
@@ -448,7 +448,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
 
   // Retrieve the base type since we will need to do some code
   // generation for it.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (bt == 0)
     {

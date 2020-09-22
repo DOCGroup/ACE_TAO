@@ -47,7 +47,7 @@ be_visitor_valuetype_marshal_ch::visit_valuetype (be_valuetype *node)
 
         }
 
-      be_field *field = be_field::narrow_from_decl (d);
+      be_field *field = dynamic_cast<be_field*> (d);
 
       if (field)
         {

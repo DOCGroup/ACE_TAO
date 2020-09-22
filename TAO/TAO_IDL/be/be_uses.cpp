@@ -31,7 +31,7 @@ be_type *
 be_uses::uses_type (void) const
 {
   return
-    be_type::narrow_from_decl (
+    dynamic_cast<be_type*> (
       this->AST_Uses::uses_type ());
 }
 

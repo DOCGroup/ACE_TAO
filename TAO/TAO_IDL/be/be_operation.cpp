@@ -55,7 +55,7 @@ be_operation::be_operation (AST_Type *rt,
 
   if (!this->is_local ())
     {
-      be_type *bt = be_type::narrow_from_decl (rt);
+      be_type *bt = dynamic_cast<be_type*> (rt);
       bt->seen_in_operation (true);
       be_util::set_arg_seen_bit (bt);
       idl_global->non_local_op_seen_ = true;

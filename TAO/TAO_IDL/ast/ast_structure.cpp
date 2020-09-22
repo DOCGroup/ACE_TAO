@@ -159,7 +159,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
            !si.is_done ();
            si.next ())
         {
-          AST_Field *field = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *field = dynamic_cast<AST_Field*> (si.item ());
 
           if (field == 0)
             // This will be an enum value or other legitimate non-field
@@ -172,7 +172,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
           if (type->node_type () == AST_Decl::NT_typedef)
             {
-              AST_Typedef *td = AST_Typedef::narrow_from_decl (type);
+              AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
               type = td->primitive_base_type ();
             }
 
@@ -300,7 +300,7 @@ AST_Structure::legal_for_primary_key (void) const
           !si.is_done ();
           si.next ())
         {
-          AST_Field *f = AST_Field::narrow_from_decl (si.item ());
+          AST_Field *f = dynamic_cast<AST_Field*> (si.item ());
 
           if (f != 0 && !f->field_type ()->legal_for_primary_key ())
             {
@@ -350,17 +350,13 @@ AST_Structure::fe_add_structure (AST_Structure *t)
 AST_Union *
 AST_Structure::fe_add_union (AST_Union *t)
 {
-  return
-    AST_Union::narrow_from_decl (
-      this->fe_add_full_struct_type (t));
+  return dynamic_cast<AST_Union*> (this->fe_add_full_struct_type (t));
 }
 
 AST_Enum *
 AST_Structure::fe_add_enum (AST_Enum *t)
 {
-  return
-    AST_Enum::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_Enum*> (this->fe_add_decl (t));
 }
 
 // Add this AST_EnumVal node (an enumerator declaration) to this scope.
@@ -370,9 +366,7 @@ AST_Structure::fe_add_enum (AST_Enum *t)
 AST_EnumVal *
 AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 {
-  return
-    AST_EnumVal::narrow_from_decl (
-      this->fe_add_decl (t));
+  return dynamic_cast<AST_EnumVal*> (this->fe_add_decl (t));
 }
 
 // Compute total number of members.
@@ -450,7 +444,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
           || nt == AST_Decl::NT_union_fwd)
         {
           AST_StructureFwd *fwd_def =
-            AST_StructureFwd::narrow_from_decl (d);
+            dynamic_cast<AST_StructureFwd*> (d);
 
           fd = fwd_def->full_definition ();
         }
@@ -458,7 +452,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
       else if (nt == AST_Decl::NT_struct
                || nt == AST_Decl::NT_union)
         {
-          fd = AST_Structure::narrow_from_decl (d);
+          fd = dynamic_cast<AST_Structure*> (d);
         }
 
       // Successful?
@@ -552,7 +546,7 @@ AST_Structure::compute_size_type (void)
           continue;
         }
 
-      AST_Field *f = AST_Field::narrow_from_decl (d);
+      AST_Field *f = dynamic_cast<AST_Field*> (d);
       AST_Type *t = f->field_type ();
 
       if (t != 0)
@@ -566,7 +560,7 @@ AST_Structure::compute_size_type (void)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "WARNING (%N:%l) be_structure::compute_size_type - "
-                      "narrow_from_decl returned 0\n"));
+                      "dynamic_cast returned 0\n"));
         }
     }
 

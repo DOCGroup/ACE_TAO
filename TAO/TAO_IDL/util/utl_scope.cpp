@@ -347,11 +347,11 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
     case AST_Decl::NT_union_branch:
     case AST_Decl::NT_attr:
     case AST_Decl::NT_argument:
-      bt = AST_Field::narrow_from_decl (d)->field_type ();
+      bt = dynamic_cast<AST_Field*> (d)->field_type ();
       break;
 
     case AST_Decl::NT_typedef:
-      bt = AST_Typedef::narrow_from_decl (d)->base_type ();
+      bt = dynamic_cast<AST_Typedef*> (d)->base_type ();
       break;
 
     default:
@@ -364,7 +364,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
       return;
     }
 
-  bt = AST_Typedef::narrow_from_decl (bt)->base_type ();
+  bt = dynamic_cast<AST_Typedef*> (bt)->base_type ();
   nt = bt->node_type ();
 
   // Must be a sequence with only one level of typedef.
@@ -381,7 +381,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
     }
 
   // We know this narrowing will be successful.
-  bt = AST_Sequence::narrow_from_decl (bt)->base_type ();
+  bt = dynamic_cast<AST_Sequence*> (bt)->base_type ();
   nt = bt->node_type ();
 
   // First check for string or wstring base type.
@@ -398,7 +398,7 @@ UTL_Scope::check_for_predef_seq (AST_Decl *d)
     }
 
   // Now check for predefined base type.
-  AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (bt);
+  AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (bt);
   if (!pdt)
     {
       return;
@@ -562,13 +562,13 @@ UTL_Scope::fe_add_ref_decl (AST_Field *t)
 
   // Catches struct/union/exception which all maintain a queue
   // for fields as distinct from decls and enum values.
-  AST_Structure *s = AST_Structure::narrow_from_scope (this);
+  AST_Structure *s = dynamic_cast<AST_Structure*> (this);
   if (s)
     {
       s->fields ().enqueue_tail (t);
     }
 
-  return AST_Field::narrow_from_decl (d);
+  return dynamic_cast<AST_Field*> (d);
 }
 
 AST_Structure *
@@ -634,7 +634,7 @@ UTL_Scope::fe_add_fwd_struct_type (AST_StructureFwd *t)
       // value, but the result is what we want.
       if (d->node_type () == AST_Decl::NT_struct)
         {
-          t->set_full_definition (AST_Structure::narrow_from_decl (d));
+          t->set_full_definition (dynamic_cast<AST_Structure*> (d));
         }
       else if (!FE_Utils::can_be_redefined (d, t))
         {
@@ -1061,7 +1061,7 @@ UTL_Scope::lookup_primitive_type (AST_Expression::ExprType et)
       if (as_decl->node_type () == AST_Decl::NT_pre_defined)
         {
           AST_PredefinedType *t =
-            AST_PredefinedType::narrow_from_decl (as_decl);
+            dynamic_cast<AST_PredefinedType*> (as_decl);
 
           if (t->pt () == pdt)
             {
@@ -1153,7 +1153,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
 
   // Ok the name wasn't found in the current scope, if this
   // scope is a module, we can check it's previous openings!
-  AST_Module *m = AST_Module::narrow_from_scope (this);
+  AST_Module *m = dynamic_cast<AST_Module*> (this);
   if (m)
     {
       d = m->look_in_prev_mods_local (e);
@@ -1166,7 +1166,7 @@ UTL_Scope::lookup_by_name_local (Identifier *e,
     {
       // Or if this scope is an interface, we can check if
       // it was inherited!
-      AST_Interface *i = AST_Interface::narrow_from_scope (this);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (this);
       if (i)
         {
           d = i->look_in_inherited_local (e);
@@ -1413,7 +1413,7 @@ UTL_Scope::add_to_referenced (AST_Decl *e,
   if (   nt == AST_Decl::NT_interface
       || nt == AST_Decl::NT_component)
     {
-      AST_Interface *itf = AST_Interface::narrow_from_decl (e);
+      AST_Interface *itf = dynamic_cast<AST_Interface*> (e);
       if (itf
           && itf->defined_in () == this
           && !itf->is_defined ())
@@ -1960,7 +1960,7 @@ UTL_Scope::match_param (UTL_ScopedName *e)
 bool
 UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
 {
-  AST_Interface *i = AST_Interface::narrow_from_scope (this);
+  AST_Interface *i = dynamic_cast<AST_Interface*> (this);
   if (!i)
     {
       return false;
@@ -1987,13 +1987,13 @@ UTL_Scope::inherited_op_attr_clash (AST_Decl *t)
 bool
 UTL_Scope::arg_specific_error (AST_Decl *t)
 {
-  AST_Operation *op = AST_Operation::narrow_from_scope (this);
+  AST_Operation *op = dynamic_cast<AST_Operation*> (this);
   if (!op)
     {
       return false;
     }
 
-  AST_Argument *arg = AST_Argument::narrow_from_decl (t);
+  AST_Argument *arg = dynamic_cast<AST_Argument*> (t);
   AST_Argument::Direction d = arg->direction ();
 
   // Cannot add OUT or INOUT argument to oneway operation.
@@ -2023,10 +2023,10 @@ void
 UTL_Scope::smart_local_add (AST_Decl *t)
 {
   // Catches struct, union * exception
-  AST_Structure *s = AST_Structure::narrow_from_scope (this);
+  AST_Structure *s = dynamic_cast<AST_Structure*> (this);
 
   // Catches AST_Field and AST_UnionBranch.
-  AST_Field *f = AST_Field::narrow_from_decl (t);
+  AST_Field *f = dynamic_cast<AST_Field*> (t);
 
   // Decls inside a struct/union/exception are also referenced by
   // fields, and so must be handled differently.
@@ -2042,8 +2042,8 @@ UTL_Scope::smart_local_add (AST_Decl *t)
   // If we have an enum discriminator, add the label names to
   // the name_referenced list before we add the union branch,
   // so a branch name clash with a label name will be caught.
-  AST_Union *u = AST_Union::narrow_from_scope (this);
-  AST_UnionBranch *ub = AST_UnionBranch::narrow_from_decl (t);
+  AST_Union *u = dynamic_cast<AST_Union*> (this);
+  AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch*> (t);
   if (u && ub)
     {
       if (u->udisc_type () == AST_Expression::EV_enum)
@@ -2078,7 +2078,7 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
   // Remove all the layers of typedefs.
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
-      AST_Typedef *td = AST_Typedef::narrow_from_decl (d);
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
       if (!td)
         {
           return 0;
@@ -2108,7 +2108,7 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
     }
   else
     {
-      AST_Interface *i = AST_Interface::narrow_from_decl (d);
+      AST_Interface *i = dynamic_cast<AST_Interface*> (d);
       result = i ? i->look_in_inherited_local (e->head ())
                  : sc->look_in_prev_mods_local (e->head (), true);
     }

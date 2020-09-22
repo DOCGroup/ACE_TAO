@@ -50,11 +50,11 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   if (be_global->alt_mapping () && node->max_size ()->ev ()->u.ulval == 0)
     {
       be_type *bt =
-        be_type::narrow_from_decl (node->base_type ());
+        dynamic_cast<be_type*> (node->base_type ());
 
       if (bt->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *td = be_typedef::narrow_from_decl (bt);
+          be_typedef *td = dynamic_cast<be_typedef*> (bt);
           bt = td->primitive_base_type ();
         }
 
@@ -71,8 +71,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         {
           tc = ANY_ARRAY;
         }
-      else if (be_interface::narrow_from_decl (bt) != 0
-               && be_valuetype::narrow_from_decl (bt) == 0)
+      else if (dynamic_cast<be_interface*> (bt) != 0
+               && dynamic_cast<be_valuetype*> (bt) == 0)
         {
           tc = ANY_OBJREF;
         }
@@ -194,7 +194,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         {
           if (nt == AST_Decl::NT_module)
             {
-              module = be_module::narrow_from_decl (d);
+              module = dynamic_cast<be_module*> (d);
               break;
             }
           else

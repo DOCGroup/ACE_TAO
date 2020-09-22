@@ -33,7 +33,7 @@ be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
   if (bd->node_type () == AST_Decl::NT_argument)
     {
       AST_Argument *arg =
-        AST_Argument::narrow_from_decl (bd);
+        dynamic_cast<AST_Argument*> (bd);
 
       if (arg->direction () != AST_Argument::dir_IN
           && ! this->last_inout_or_out_node (bd))

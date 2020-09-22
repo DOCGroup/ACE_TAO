@@ -87,7 +87,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
         {
           if (nt == AST_Decl::NT_module)
             {
-              module = be_module::narrow_from_decl (d);
+              module = dynamic_cast<be_module*> (d);
               break;
             }
           else
@@ -235,7 +235,7 @@ int
 be_visitor_structure_any_op_cs::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

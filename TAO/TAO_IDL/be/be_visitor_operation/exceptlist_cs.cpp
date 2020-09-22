@@ -50,7 +50,7 @@ be_visitor_operation_exceptlist_cs::visit_operation (be_operation *node)
            !ei.is_done ();)
         {
           AST_Decl *d = ei.item ();
-          ex = be_exception::narrow_from_decl (d);
+          ex = dynamic_cast<be_exception*> (d);
 
           *os << "{" << be_idt_nl
               << "\"" << ex->repoID () << "\"," << be_nl

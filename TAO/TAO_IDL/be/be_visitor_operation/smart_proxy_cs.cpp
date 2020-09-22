@@ -37,11 +37,11 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
           ? this->ctx_->attribute ()->defined_in ()
           : node->defined_in ();
 
-      be_interface *intf = be_interface::narrow_from_scope (s);
+      be_interface *intf = dynamic_cast<be_interface*> (s);
 
       if (intf == 0)
         {
-          be_porttype *pt = be_porttype::narrow_from_scope (s);
+          be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
           if (pt == 0)
             {
@@ -58,7 +58,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
             }
         }
 
-      be_type *bt = be_type::narrow_from_decl (node->return_type ());
+      be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
       if (!bt)
         {
@@ -87,7 +87,7 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
       // node (i.e the operation) is already in a scope lower than intf
       // (i.e. be_interface), so for deciding the exact scope use intf.
 
-      be_decl* scope = be_scope::narrow_from_scope (intf->defined_in ())->decl ();
+      be_decl* scope = dynamic_cast<be_scope*> (intf->defined_in ())->decl ();
 
       *os << " ";
       *os << scope->full_name ();

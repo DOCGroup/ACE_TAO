@@ -183,7 +183,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       if (node->opt_accessor ())
         {
           be_decl *scope =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
           *os << scope->name () << "::"
               << node->local_name ()
@@ -210,7 +210,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       if (node->opt_accessor ())
         {
           be_decl *scope =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
           *os << scope->name () << "::"
               << node->local_name ()
@@ -407,7 +407,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
     }
 
   be_valuetype *parent =
-    be_valuetype::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_valuetype*> (node->defined_in ());
 
   if (parent == 0 || ! this->is_amh_exception_holder (parent))
     {
@@ -421,7 +421,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // STEP I: Generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -495,7 +495,7 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
   // Recurse up the parent chain.
   if (parent != 0)
     {
-      this->gen_ostream_operator_r (be_valuetype::narrow_from_decl (parent),
+      this->gen_ostream_operator_r (dynamic_cast<be_valuetype*> (parent),
                                     index);
     }
 
@@ -504,9 +504,9 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
        !i.is_done ();
        i.next ())
     {
-      be_field *f = be_field::narrow_from_decl (i.item ());
+      be_field *f = dynamic_cast<be_field*> (i.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (i.item ());
+        dynamic_cast<be_attribute*> (i.item ());
 
       // No way to access the private members from generated code.
       if (f == 0
