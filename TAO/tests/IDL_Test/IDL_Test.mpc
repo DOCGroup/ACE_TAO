@@ -30,7 +30,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     gperf.idl
     interface.idl
     nested_scope.idl
-
+    keywords.idl
     old_constants.idl
     simple.idl
     simple2.idl
@@ -39,7 +39,6 @@ project(*IDL): taoserver, messaging, gen_ostream {
     old_struct.idl
     old_union.idl
     old_union2.idl
-
     params.idl
     reopened_modules.idl
     struct.idl
@@ -73,7 +72,6 @@ project(*IDL): taoserver, messaging, gen_ostream {
     array_only.idl
     constants.idl
     generic_object.idl
-    keywords.idl
 
     inherit.idl
     module.idl
@@ -162,7 +160,6 @@ project(*DLL): taoidldefaults, taolib, messaging {
     inheritS.cpp
     interfaceC.cpp
     interfaceS.cpp
-    keywordsA.cpp
     keywordsC.cpp
     keywordsS.cpp
     loader_constC.cpp

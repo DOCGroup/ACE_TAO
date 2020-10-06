@@ -37,5 +37,6 @@ struct Objects {
 interface Testing
 {
   void foo (in string namespace);
+  void bar (in Objects foo);
 };
 
