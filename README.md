@@ -5,6 +5,7 @@
 [![Windows CI](https://github.com/DOCGroup/ACE_TAO/workflows/windows/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Awindows)
 [![Fuzz CI](https://github.com/DOCGroup/ACE_TAO/workflows/fuzz/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Afuzz)
 [![MacOSX CI](https://github.com/DOCGroup/ACE_TAO/workflows/macosx/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Amacosx)
+[![face](https://github.com/DOCGroup/ACE_TAO/workflows/face/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Aface)
 [![Coverity Scan Build Status](https://scan.coverity.com/projects/1/badge.svg)](https://scan.coverity.com/projects/1)
 [![CodeFactor](https://www.codefactor.io/repository/github/docgroup/ace_tao/badge)](https://www.codefactor.io/repository/github/docgroup/ace_tao)
 
