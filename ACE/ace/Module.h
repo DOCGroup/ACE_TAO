@@ -59,8 +59,6 @@ public:
     /// Indicates that close() should not delete any Tasks.
     M_DELETE_NONE = 4
   };
-
-  inline virtual ~ACE_Module_Base (void) {}
 };
 
 /**
