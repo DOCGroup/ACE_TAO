@@ -563,7 +563,6 @@ ACE_SSL_SOCK_Stream::get_remote_addr (ACE_Addr &addr) const
   // complete.  Despite that fact, the SSL connection may not have
   // been completed.  In such a case, a successful return from
   // get_remote_addr() would be misleading.
-
   if (SSL_is_init_finished (this->ssl_))
     {
       return this->ACE_SSL_SOCK::get_remote_addr (addr);
