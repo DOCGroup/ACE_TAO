@@ -121,7 +121,7 @@ public:
 
   /// If @a symbol_name is in the symbol table of the DLL a pointer to
   /// the @a symbol_name is returned.  Otherwise, returns 0.  Set the
-  /// ignore_errors flag to supress logging errors if symbol_name isn't
+  /// @a ignore_errors flag to suppress logging errors if @a symbol_name isn't
   /// found.  This is nice if you just want to probe a dll to see what's
   /// available, since missing functions in that case aren't really errors.
   void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors = false);
@@ -147,7 +147,7 @@ private:
 
   /// Builds array of DLL names to try to dlopen, based on platform
   /// and configured DLL prefixes/suffixes.
-  /// Returns the array of names to try in try_names.
+  /// Returns the array of names to try in @a try_names.
   void get_dll_names (const ACE_TCHAR *dll_name,
                       ACE_Array<ACE_TString> &try_names);
 

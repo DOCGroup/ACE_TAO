@@ -32,7 +32,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * This is often done by making the copy constructor and assignment
  * operators private, effectively disallowing copying by clients of
  * the class (including derived classes).  If the copy constructor and
- * assingment operators are left unimplemented then the class itself
+ * assignment operators are left unimplemented then the class itself
  * cannot make any copies of its instances, because it would result in
  * link errors.
  *
