@@ -34,9 +34,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief This information is stored in memory allocated by the Memory_Pool.
  *
  * This class implements the control block structure that can be
- * used in a "position indepent" fashion, i.e., you don't need to
+ * used in a "position independent" fashion, i.e., you don't need to
  * "map" the underlying memory pool to the same address in
- * processes sharing the memory.  The tradoff of this flexibility
+ * processes sharing the memory.  The trade off of this flexibility
  * is more expensive malloc/free operations.
  */
 class ACE_Export ACE_PI_Control_Block
@@ -81,11 +81,9 @@ public:
     void dump (void) const;
 
   private:
-
     // Disallow copy construction and assignment.
     ACE_Malloc_Header (ACE_Malloc_Header const &);
     void operator= (ACE_Malloc_Header const &);
-
   };
 
   /**
@@ -143,7 +141,6 @@ public:
     void dump (void) const;
 
   private:
-
     // Disallow assignment.
     void operator= (const ACE_Name_Node &);
   };
@@ -192,7 +189,6 @@ public:
   void dump (void) const;
 
 private:
-
   // Disallow assignment.
   void operator= (const ACE_Control_Block &);
 };
