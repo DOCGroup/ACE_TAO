@@ -2358,7 +2358,7 @@ if (!getopts ('cdx:hl:t:s:mv') || $opt_h) {
           "                       this will disable the run level setting\n";
     print "    -s test_names  specify comma-separated list of tests to suppress\n".
           "                       this will supplement the run level setting\n";
-    print "    -m             only check locally modified files (uses svn)\n";
+    print "    -m             only check locally modified files (uses git)\n";
     print "======================================================\n";
     print "list of the tests that could be run or suppressed:\n";
     print <<EOT;
