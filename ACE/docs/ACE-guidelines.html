@@ -181,21 +181,6 @@ rather than
         should consist of complete sentences, <em>i.e.</em>, start
         with a capital letter and end with a period.<p>
 
-    <li>Insert a svn keyword string at the top of every source file,
-        Makefile, config file, <em>etc</em>.  For C++ files, it is:
-        <pre>
-        // $<!-- -->Id$
-        </pre>
-        It is not necessary to fill in the fields of the keyword string,
-        or modify them when you edit a file that already has one. SVN
-        does that automatically when you checkout or update the file.<p>
-
-        To insert that string at the top of a file:
-        <pre>
-        perl -pi -e \
-          'if (! $o) {printf "// \$<!-- -->Id\$\n\n";}; $o = 1;' <em>file</em>
-        </pre><p>
-
     <li>Be sure to follow the guidelines and restrictions for use of the
         documentation tools for ACE
         header files, which must follow the
