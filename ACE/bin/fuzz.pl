@@ -68,25 +68,6 @@ $warnings = 0;
 
 ##############################################################################
 
-# Use 'svn -q st' to get a list of locally modified
-# files to look through
-sub find_mod_svn_files ()
-{
-    unless (open (SVN, "svn -q st |")) {
-        print STDERR "Error: Could not run svn\n";
-        return 0;
-    }
-
-    while (<SVN>) {
-        #        1234567   (see "svn help st" for column definitions)
-        if (/^[MA].....\s+(.*)$/) {
-            store_file ($1);
-        }
-    }
-    close (SVN);
-    return 1;
-}
-
 # Use 'git status -s' to get a list of locally modified
 # files to look through
 sub find_mod_git_files ()
@@ -107,8 +88,8 @@ sub find_mod_git_files ()
 
 sub find_mod_files ()
 {
-  if (!(find_mod_svn_files() && find_mod_git_files())) {
-    print "Could use neither svn nor git to find modified files\n";
+  if (!find_mod_git_files()) {
+    print "Could use git to find modified files\n";
     exit (1);
   }
 }
@@ -415,14 +396,14 @@ sub check_for_newline ()
 }
 
 
-# This test checks for files that are not allowed to be in svn
+# This test checks for files that are not allowed to be in version control
 sub check_for_noncvs_files ()
 {
     return if is_suppressed ();
 
     print "Running non svn files check\n";
     foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor) {
-        print_error ("File $file should not be in svn!");
+        print_error ("File $file should not be in version control!");
     }
 }
 
@@ -1357,7 +1338,7 @@ sub check_for_dependency_file ()
                     $depend = $path . $depend;
                     unless (open (DFILE, $depend)) {
                         print_error ("DEPENDENCY_FILE \"$depend\" not found");
-                        print " Either add \"$depend\" to svn ";
+                        print " Either add \"$depend\" to git ";
                         print "or remove DEPENDENCY_FILE variable\n";
                         print " from $file\n\n";
                     }
