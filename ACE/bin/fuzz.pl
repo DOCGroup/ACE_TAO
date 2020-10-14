@@ -401,7 +401,7 @@ sub check_for_noncvs_files ()
 {
     return if is_suppressed ();
 
-    print "Running non svn files check\n";
+    print "Running non versioned controlled files check\n";
     foreach $file (@files_noncvs, @files_dsp, @files_dsw, @files_makefile, @files_bor) {
         print_error ("File $file should not be in version control!");
     }
