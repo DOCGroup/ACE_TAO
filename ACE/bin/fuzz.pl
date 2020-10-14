@@ -1891,42 +1891,6 @@ sub check_for_bad_ace_trace()
     }
 }
 
-
-# This test checks for broken ChangeLog entries.
-sub check_for_changelog_errors ()
-{
-    return if is_suppressed ();
-
-    print "Running ChangeLog check\n";
-    foreach $file (@files_changelog) {
-        if (open (FILE, $file)) {
-            my $found_backslash = 0;
-            my $found_cvs_conflict = 0;
-
-            print "Looking at file $file\n" if $opt_d;
-            while (<FILE>) {
-
-                next if m/^\s*\/\//;
-                next if m/^\s*$/;
-
-                # Check for backslashes in paths.
-                if (m/\*.*\\[^ ]*:/) {
-                    print_error ("$file:$.: Backslashes in file path");
-                }
-
-                # Check for svn conflict tags
-                if (m/^<<<<</ || m/^=====/ || m/^>>>>>/) {
-                    print_error ("$file:$.: svn conflict markers");
-                }
-            }
-            close (FILE);
-        }
-        else {
-            print STDERR "Error: Could not open $file\n";
-        }
-    }
-}
-
 sub check_for_deprecated_macros ()
 {
     return if is_suppressed ();
@@ -2445,7 +2409,6 @@ if (!getopts ('cdx:hl:t:s:mv') || $opt_h) {
            check_for_bad_run_test
            check_for_absolute_ace_wrappers
            check_for_bad_ace_trace
-           check_for_changelog_errors
            check_for_ptr_arith_t
            check_for_include (disabled by default)
            check_for_non_bool_operators
@@ -2540,7 +2503,6 @@ check_for_versioned_namespace_begin_end () if ($opt_l >= 4);
 check_for_mismatched_filename () if ($opt_l >= 2);
 check_for_absolute_ace_wrappers () if ($opt_l >= 3);
 check_for_bad_ace_trace () if ($opt_l >= 4);
-check_for_changelog_errors () if ($opt_l >= 4);
 check_for_ptr_arith_t () if ($opt_l >= 4);
 check_for_non_bool_operators () if ($opt_l > 2);
 check_for_long_file_names () if ($opt_l >= 1);
