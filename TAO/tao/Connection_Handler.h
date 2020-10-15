@@ -33,12 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_ORB_Core;
 class TAO_Transport;
 
-/*
- * Hook to specialize the connection handler with the
- * concrete connection handler implementation.
- */
-//@@ CONNECTION_HANDLER_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Connection_Handler
  *
@@ -132,13 +126,6 @@ public:
 
   virtual int handle_write_ready (const ACE_Time_Value *timeout);
 
-  /*
-   * Hook to add public methods from concrete connection handler
-   * implementation onto the base connection handler.
-   */
-
-   //@@ CONNECTION_HANDLER_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
   /// Return our TAO_ORB_Core pointer
   TAO_ORB_Core *orb_core (void);
@@ -208,18 +195,7 @@ private:
   /// Once closed make sure the transport is not added back to the cache.
   /// This is distinct from the leader-follower state so it cannot be reset.
   bool is_closed_;
-
-  /*
-   * Hook to add instance members from derived class
-   * onto base Connection_Handler class. Any further
-   * additions to this class should go before this
-   * hook.
-   */
-  //@@ CONNECTION_HANDLER_SPL_PRIVATE_DATA_ADD_HOOK
 };
-
-//@@ CONNECTION_HANDLER_SPL_EXTERN_ADD_HOOK
-
 
 /**
  * @class TAO_Auto_Reference

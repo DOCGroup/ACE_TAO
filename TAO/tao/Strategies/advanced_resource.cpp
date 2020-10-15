@@ -424,7 +424,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
   // get a timer queue (or not) from a possibly configured
   // time policy
   TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
-//@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_START
   switch (this->reactor_type_)
     {
     case TAO_REACTOR_SELECT_MT:
@@ -495,8 +494,6 @@ TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
           0);
       break;
     }
-
-//@@ TAO_ADVANCED_RESOURCE_REACTOR_SPL_COMMENT_HOOK_END
 
   // safe to release timer queue
   tmq.release ();

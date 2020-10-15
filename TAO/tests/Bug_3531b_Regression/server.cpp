@@ -203,10 +203,6 @@ public:
   virtual ACE_Reactor_Impl* allocate_reactor_impl (void) const
   {
     ACE_Reactor_Impl *impl = 0;
-    /*
-     * Hook to specialize TAO's reactor implementation.
-     */
-  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
     ACE_NEW_RETURN (impl,
                     Test_Reactor (ACE::max_handles (),
                                     1,
@@ -215,14 +211,13 @@ public:
                                     this->reactor_mask_signals_,
                                     ACE_Select_Reactor_Token::LIFO),
                     0);
-  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
     return impl;
   }
 
 private:
 };
 
-// force export flag otherwise Windoze will complain
+// force export flag otherwise Windows will complain
 #define TAO_Test_Export ACE_Proper_Export_Flag
 
 ACE_FACTORY_DEFINE (TAO_Test, Test_Resource_Factory)

@@ -69,6 +69,4 @@ TAO_Connection_Handler::handle_write_ready (const ACE_Time_Value *)
   return 0;
 }
 
-//@@ CONNECTION_HANDLER_SPL_METHODS_ADD_HOOK
-
 TAO_END_VERSIONED_NAMESPACE_DECL

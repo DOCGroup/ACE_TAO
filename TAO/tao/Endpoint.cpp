@@ -20,5 +20,3 @@ TAO_Endpoint::next_filtered (TAO_ORB_Core *, TAO_Endpoint *root)
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-//@@ TAO_ENDPOINT_SPL_METHODS_ADD_HOOK

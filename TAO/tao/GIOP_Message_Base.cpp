@@ -14,11 +14,6 @@
 #include "tao/ZIOP_Adapter.h"
 #include "ace/Min_Max.h"
 
-/*
- * Hook to add additional include files during specializations.
- */
-//@@ GIOP_MESSAGE_BASE_INCLUDE_ADD_HOOK
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_GIOP_Message_Base::TAO_GIOP_Message_Base (TAO_ORB_Core *orb_core,
@@ -980,20 +975,11 @@ TAO_GIOP_Message_Base::process_request (
 
       CORBA::Object_var forward_to;
 
-      /*
-       * Hook to specialize request processing within TAO
-       * This hook will be replaced by specialized request
-       * processing implementation.
-       */
-//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_START
-
       // Do this before the reply is sent.
       this->orb_core_->request_dispatcher ()->dispatch (
           this->orb_core_,
           request,
           forward_to);
-
-//@@ TAO_DISPATCH_RESOLUTION_OPT_COMMENT_HOOK_END
 
       if (request.is_forwarded ())
         {
