@@ -142,7 +142,7 @@ sub GetConfigSettings ($)
             $self->{tao_root} = $ENV{'TAO_ROOT'};
         }
     } else {
-        # fall back to assuming classic hierarchical struture
+        # fall back to assuming classic hierarchical structure
         $self->{tao_root} = "$self->{ace_root}/TAO";
     }
     $env_name = $env_prefix.'CIAO_ROOT';
@@ -162,7 +162,7 @@ sub GetConfigSettings ($)
             $self->{ciao_root} = $ENV{'CIAO_ROOT'};
         }
     } else {
-        # fall back to assuming classic hierarchical struture
+        # fall back to assuming classic hierarchical structure
         $self->{ciao_root} = "$self->{tao_root}/CIAO";
     }
 
@@ -183,7 +183,7 @@ sub GetConfigSettings ($)
             $self->{dance_root} = $ENV{'DANCE_ROOT'};
         }
     } else {
-        # fall back to assuming classic hierarchical struture
+        # fall back to assuming classic hierarchical structure
         $self->{dance_root} = "$self->{tao_root}/DAnCE";
     }
 
