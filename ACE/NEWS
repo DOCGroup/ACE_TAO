@@ -1,3 +1,14 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
+======================================================
+
+. Fixed some C++11 warnings
+
+. Fixed compile problem on AIX
+
+. Removed c++0x and c++1y as GNU make variables
+
+. Moved all CI builds to github actions
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
 ======================================================
 
