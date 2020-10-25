@@ -5,9 +5,14 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 
 . Fixed compile problem on AIX
 
-. Removed c++0x and c++1y as GNU make variables
+. Removed c++0x and c++1y as GNU make variables, use c++11 and c++14 as
+  alternatives
 
 . Moved all CI builds to github actions
+
+. Added ACE_GCC_NO_RETURN to fix fall through warnings
+
+. Fix ACE_Thread_Manager::join memory leak and potential deadlock
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
 ======================================================
