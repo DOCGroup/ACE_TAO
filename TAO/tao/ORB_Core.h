@@ -602,7 +602,7 @@ public:
                                 CORBA::PolicyList *policy_list);
 
   /// Factory method that create the "right" Stub depending on
-  /// wheather RTCORBA is loaded or not. The factory used to create
+  /// whether RTCORBA is loaded or not. The factory used to create
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
   TAO_Stub *create_stub (const char *repository_id,
