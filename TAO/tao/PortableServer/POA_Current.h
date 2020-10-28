@@ -40,7 +40,6 @@ namespace TAO
       , public ::CORBA::LocalObject
     {
     public:
-
       /**
        * Returns the POA on which the current request is being invoked.
        * Can raise the @c NoContext exception if this function is

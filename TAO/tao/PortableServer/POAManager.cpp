@@ -182,7 +182,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
   // requests.  Any requests that have been queued but have not
   // started executing will continue to be queued while in the holding
   // state.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
       throw PortableServer::POAManager::AdapterInactive ();
@@ -204,7 +203,6 @@ TAO_POA_Manager::hold_requests_i (CORBA::Boolean wait_for_completion)
   // and the current thread is in an invocation context dispatched by
   // some POA belonging to the same ORB as this POA the BAD_INV_ORDER
   // exception is raised and the state is not changed.
-
   if (wait_for_completion)
     {
       for (POA_COLLECTION::iterator iterator = this->poa_collection_.begin ();
@@ -234,7 +232,6 @@ TAO_POA_Manager::discard_requests_i (CORBA::Boolean wait_for_completion)
   // have not started executing are discarded. When a request is
   // discarded, a TRANSIENT system exception is returned to the
   // client.
-
   if (this->state_ == PortableServer::POAManager::INACTIVE)
     {
       throw PortableServer::POAManager::AdapterInactive ();

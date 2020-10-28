@@ -138,7 +138,6 @@ namespace TAO
       void setup (::TAO_Root_POA *impl, const TAO::ObjectKey &key);
 
     private:
-
       // = Hidden because we don't allow these
       POA_Current_Impl (const POA_Current_Impl &);
       void operator= (const POA_Current_Impl &);
@@ -175,7 +174,6 @@ namespace TAO
 
       /// Pointer to tss resources.
       TAO_TSS_Resources *tss_resources_;
-
     };
   }
 }

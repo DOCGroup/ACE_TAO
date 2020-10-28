@@ -59,7 +59,6 @@ class TAO_PortableServer_Export TAO_POA_Manager :
   friend class TAO_Object_Adapter;
 
 public:
-
   void activate (void);
 
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -100,7 +99,6 @@ public:
 #endif
 
 protected:
-
   void activate_i (void);
 
   void deactivate_i (CORBA::Boolean etherealize_objects,
@@ -125,7 +123,6 @@ protected:
   int register_poa (TAO_Root_POA *poa);
 
 protected:
-
   PortableServer::POAManager::State state_;
 
   ACE_Lock &lock_;
@@ -139,15 +136,11 @@ protected:
   CORBA::String_var id_;
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-
   TAO_POAManager_Factory& poa_manager_factory_;
   CORBA::PolicyList policies_;
-
 #endif
 
-
 private :
-
   /**
    * Generate an id for this POAManager.
    * @return A value that uniquely identifies the POAManager within a

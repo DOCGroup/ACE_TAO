@@ -66,8 +66,7 @@ public:
 
   /// Activate in the POA
   virtual void activate (
-          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
-    = 0;
+          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) = 0;
 
   /// Deactivate from the POA
   virtual void deactivate (void);
