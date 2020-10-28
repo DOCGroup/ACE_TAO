@@ -65,8 +65,6 @@ TAO_Profile::~TAO_Profile (void)
     }
 
   this->orb_core_->object_key_table ().unbind (this->ref_object_key_);
-
-  //@@ TAO_PROFILE_SPL_DESTRUCTOR_ADD_HOOK
 }
 
 void
@@ -728,13 +726,6 @@ TAO_Profile::hash_service_i (CORBA::ULong m)
   return this->orb_core_->hash_service (this, m);
 }
 
-/*
- * Hook to comment out no op method
- * in the base class that is specialized in the
- * derived class.
- */
-//@@ TAO_PROFILE_SPL_COMMENT_HOOK_START
-
 int
 TAO_Profile::encode_alternate_endpoints(void)
 {
@@ -752,10 +743,6 @@ TAO_Profile::remove_generic_endpoint (TAO_Endpoint *)
 {
   // default for virtual methods, thus a no-op
 }
-
-//@@ TAO_PROFILE_SPL_COMMENT_HOOK_END
-
-//@@ TAO_PROFILE_SPL_METHODS_ADD_HOOK
 
 // ****************************************************************
 

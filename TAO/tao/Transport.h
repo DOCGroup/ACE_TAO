@@ -147,11 +147,6 @@ namespace TAO
   }
 }
 
-/*
- * Specialization hook for the TAO's transport implementation.
- */
-//@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Transport
  *
@@ -666,13 +661,6 @@ public:
 
   virtual void set_bidir_context_info (TAO_Operation_Details &opdetails);
 
-  /*
-   * Specialization hook to add public methods from
-   * concrete transport implementations to TAO's transport
-   * class
-   */
-  //@@ TAO_TRANSPORT_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
   virtual TAO_Connection_Handler * connection_handler_i (void) = 0;
 
@@ -1077,8 +1065,6 @@ private:
    * TAO's protocol implementation onto the base Transport class
    */
 
-  //@@ TAO_TRANSPORT_SPL_PRIVATE_METHODS_ADD_HOOK
-
 protected:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
@@ -1235,21 +1221,7 @@ private:
 
   /// lock for synchronizing Transport OutputCDR access
   mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
-
-  /*
-   * specialization hook to add class members from concrete
-   * transport class onto the base transport class. Please
-   * add any private members to this class *before* this hook.
-   */
-  //@@ TAO_TRANSPORT_SPL_DATA_MEMBERS_ADD_HOOK
 };
-
-/*
- * Hook to add external typedefs and specializations to
- * TAO's transport implementation.
- */
-
-//@@ TAO_TRANSPORT_SPL_EXTERN_ADD_HOOK
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 namespace TAO

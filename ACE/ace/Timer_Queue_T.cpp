@@ -7,11 +7,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-/*
- * Hook to specialize to add includes
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #include "ace/Timer_Queue_T.h"
 #include "ace/Guard_T.h"
 #include "ace/Reverse_Lock_T.h"

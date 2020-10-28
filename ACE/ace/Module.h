@@ -161,7 +161,7 @@ public:
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next (void);
 
   /// Set the next pointer to the module above in the stream.
-  void next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
+  virtual void next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
 
   /// Dump the state of an object.
   void dump (void) const;
