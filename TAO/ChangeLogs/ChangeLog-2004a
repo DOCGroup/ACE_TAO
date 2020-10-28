@@ -3619,7 +3619,7 @@ Tue Apr 27 06:55:46 2004  Chad Elliott  <elliott_c@ociweb.com>
 Mon Apr 26 13:52:49 2004  Carlos O'Ryan  <coryan@atdesk.com>
 
         * Fixes for:
-            http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1779
+            http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1779
 
         * tao/params.i:
           The sock_{snd,rcv}buf_size were silently truncated to
@@ -7985,7 +7985,7 @@ Fri Feb 13 17:47:10 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
           Added a mutex around refcounting to address problems as outlined
           in
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1728
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1728
 
           Thanks to Torsten Kuepper for reporting the problem.
 
@@ -8479,7 +8479,7 @@ Sat Feb  7 20:32:06 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for BUGID 1734. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1734
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1734
 
           for details.
 
