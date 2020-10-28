@@ -28,12 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
-/*
- * Includes and forward decls for specializing TAO's
- * endpoint implementation.
- */
-//@@ TAO_ENDPOINT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Endpoint
  *
@@ -119,12 +113,6 @@ public:
   /// Return a hash value for this object.
   virtual CORBA::ULong hash (void)  = 0;
 
-  /*
-   * Hook to add public methods from derived class onto base
-   * Endpoint class.
-   */
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
   /// Lock for the address lookup.
   /**
@@ -150,19 +138,10 @@ protected:
   CORBA::Short priority_;
 
 private:
-
   /// Endpoints should not be copied.
   TAO_Endpoint (const TAO_Endpoint&);
   void operator= (const TAO_Endpoint&);
-
-  /*
-   * Addition of private members from derived class.
-   */
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_ADD_HOOK
-
 };
-
-//@@ TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

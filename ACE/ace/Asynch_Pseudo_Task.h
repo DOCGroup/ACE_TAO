@@ -25,13 +25,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*
- * Specialization hook to replace the Reactor with the
- * concrete Reactor implementation, e.g., select_st,
- * select_mt etc.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class ACE_Asynch_Pseudo_Task
  */

@@ -1,7 +1,3 @@
-/*
- * Hook to copy all include and forward declarations.
- */
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 #include "tao/IIOP_Acceptor.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -53,8 +49,6 @@ TAO_IIOP_Acceptor::TAO_IIOP_Acceptor (void)
 #endif /* ACE_HAS_IPV6 && ACE_USES_IPV4_IPV6_MIGRATION */
 }
 
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END
-
 TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 {
   // Make sure we are closed before we start destroying the
@@ -74,8 +68,6 @@ TAO_IIOP_Acceptor::~TAO_IIOP_Acceptor (void)
 
   delete [] this->hostname_in_ior_;
 }
-
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_START
 
 // TODO =
 //    2) For V1.[1,2] there are tagged components
@@ -1272,5 +1264,3 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */
-
-//@@ TAO_ACCEPTOR_SPL_COPY_HOOK_END

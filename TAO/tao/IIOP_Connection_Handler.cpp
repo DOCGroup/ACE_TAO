@@ -120,13 +120,6 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
     }
 }
 
-/* Copy hook that copies over the concrete methods from this class
- * to the base Connection_Handler class as a part of the specialization
- * process. Add all concrete and virtual
- * methods implemented in this class within this hook.
- */
-//@@ CONNECTION_HANDLER_SPL_COPY_HOOK_START
-
 int
 TAO_IIOP_Connection_Handler::open_handler (void *v)
 {
@@ -689,12 +682,6 @@ TAO_IIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *timeout)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), timeout);
 }
-
-
-//@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
-/*
- * End copy hook
- */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

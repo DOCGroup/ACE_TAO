@@ -18,8 +18,6 @@
 
 #include "ace/OS_NS_string.h"
 
-//@@ TAO_CONNECTOR_SPL_INCLUDE_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
@@ -1089,7 +1087,5 @@ TAO_Connector::check_connection_closure (
 
   return result;
 }
-
-//@@ TAO_CONNECTOR_SPL_METHODS_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
