@@ -786,8 +786,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
                                        0,  // nargs
                                        0,  // servant_upcall
                                        0,  // exceptions
-                                       0   // nexceptions
-                                      );
+                                       0); // nexceptions
             }
         }
     }

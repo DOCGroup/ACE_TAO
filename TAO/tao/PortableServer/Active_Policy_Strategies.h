@@ -53,8 +53,7 @@ namespace TAO
       Active_Policy_Strategies (void);
 
       void update (Cached_Policies &policies,
-                   TAO_Root_POA* poa
-                  );
+                   TAO_Root_POA* poa);
 
       void cleanup (void);
 

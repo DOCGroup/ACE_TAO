@@ -171,8 +171,7 @@ namespace CORBA
      *     ACE_NEW_RETURN (
      *         result,
      *         SomeException (*this),
-     *         0
-     *       );
+     *         0);
      *     return result;
      *   }
      * };

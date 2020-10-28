@@ -125,7 +125,6 @@ TAO_LB_ServerRequestInterceptor::send_exception (
     {
       // A CORBA::TRANSIENT is thrown when the LoadManager informs the
       // LoadAlert object that its member is overloaded, for example.
-
       ORBSVCS_DEBUG ((LM_INFO,
                   ACE_TEXT ("TAO_LB_ServerRequestInterceptor -- ")
                   ACE_TEXT ("Exception thrown.\n")));
