@@ -45,7 +45,7 @@ A::u_type_::~u_type_ ()
 void A::clear ()
 {
 #if defined __clang__ && \
-    (defined __apple_build_version__ && __apple_build_version__ <= 11030032 \
+    (defined __apple_build_version__ && __apple_build_version__ <= 12000322 \
      || __clang_major__ <= 10)
 #define CLANG_WORKAROUND
 #endif
