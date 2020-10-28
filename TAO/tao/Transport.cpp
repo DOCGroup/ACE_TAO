@@ -33,12 +33,6 @@
 #include "ace/CORBA_macros.h"
 #include "ace/Truncate.h"
 
-/*
- * Specialization hook to add include files from
- * concrete transport implementation.
- */
-//@@ TAO_TRANSPORT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport.inl"
 #endif /* __ACE_INLINE__ */
@@ -183,14 +177,6 @@ TAO_Transport::TAO_Transport (CORBA::ULong tag,
                     TAO::Transport::Stats,
                     CORBA::NO_MEMORY ());
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-
-  /*
-   * Hook to add code that initializes components that
-   * belong to the concrete protocol implementation.
-   * Further additions to this Transport class will
-   * need to add code *before* this hook.
-   */
-  //@@ TAO_TRANSPORT_SPL_CONSTRUCTOR_ADD_HOOK
 }
 
 TAO_Transport::~TAO_Transport (void)
@@ -232,14 +218,6 @@ TAO_Transport::~TAO_Transport (void)
 #if TAO_HAS_TRANSPORT_CURRENT == 1
   delete this->stats_;
 #endif /* TAO_HAS_TRANSPORT_CURRENT == 1 */
-
-  /*
-   * Hook to add code that cleans up components
-   * belong to the concrete protocol implementation.
-   * Further additions to this Transport class will
-   * need to add code *before* this hook.
-   */
-  //@@ TAO_TRANSPORT_SPL_DESTRUCTOR_ADD_HOOK
 }
 
 void
@@ -276,16 +254,6 @@ TAO_Transport::idle_after_reply (void)
   return this->tms ()->idle_after_reply ();
 }
 
-/*
- * A concrete transport class specializes this
- * method. This hook allows commenting this function
- * when TAO's transport is specialized. Note: All
- * functions that have an implementation that does
- * nothing should be added within this hook to
- * enable specialization.
- */
-//@@ TAO_TRANSPORT_SPL_COMMENT_HOOK_START
-
 int
 TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 {
@@ -319,8 +287,6 @@ TAO_Transport::send_message_shared (TAO_Stub *stub,
 
   return result;
 }
-
-//@@ TAO_TRANSPORT_SPL_COMMENT_HOOK_END
 
 bool
 TAO_Transport::post_connect_hook (void)
@@ -2925,12 +2891,5 @@ TAO_Transport::connection_closed_on_read (void) const
 {
   return connection_closed_on_read_;
 }
-
-/*
- * Hook to add concrete implementations from the derived class onto
- * TAO's transport.
- */
-
-//@@ TAO_TRANSPORT_SPL_METHODS_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL

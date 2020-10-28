@@ -36,7 +36,6 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Base class constructor.
   TAO_Transport_Mux_Strategy (TAO_Transport *transport);

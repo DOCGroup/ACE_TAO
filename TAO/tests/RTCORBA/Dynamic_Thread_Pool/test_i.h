@@ -8,8 +8,7 @@
 
 #include "testS.h"
 
-class test_i :
-  public POA_test
+class test_i : public POA_test
 {
 public:
   /// Constructor.

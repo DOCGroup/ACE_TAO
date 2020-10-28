@@ -57,13 +57,6 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 class ACE_Select_Reactor_Impl;
 class ACE_Sig_Handler;
 
-/*
- * Hook to specialize the Select_Reactor_Base implementation
- * with the concrete reactor, e.g., select or tp reactor
- * specified at build/compilation time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class ACE_Select_Reactor_Handle_Set
  *
@@ -487,13 +480,6 @@ public:
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
   virtual int resumable_handler (void);
-
-  /*
-   * Hook to add concrete methods required to specialize the
-   * implementation with concrete methods required for the concrete
-   * reactor implementation, for example, select, tp reactors.
-   */
-  //@@ REACTOR_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

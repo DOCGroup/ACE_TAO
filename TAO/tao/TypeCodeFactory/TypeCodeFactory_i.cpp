@@ -1209,8 +1209,7 @@ TAO_TypeCodeFactory_i::struct_except_tc_common (
       CORBA::TypeCode_ptr const member_tc = members[index].type.in ();
 
       CORBA::Boolean const valid_member =
-        this->valid_content_type (member_tc
-                                 );
+        this->valid_content_type (member_tc);
 
       if (!valid_member)
         {

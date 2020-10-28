@@ -20,7 +20,6 @@ class TAO_RTScheduler_Export Client_Interceptor:
   public ::CORBA::LocalObject
 {
 public:
-
   //  Client_Interceptor (RTScheduling::Current_ptr current);
   virtual void send_request (PortableInterceptor::ClientRequestInfo_ptr ri);
 
@@ -37,14 +36,12 @@ public:
   virtual void destroy (void);
 
   static const IOP::ServiceId SchedulingInfo;
-
 };
 
 class TAO_RTScheduler_Export Server_Interceptor :
   public PortableInterceptor::ServerRequestInterceptor,
   public ::CORBA::LocalObject
 {
-
 public:
   Server_Interceptor (TAO_RTScheduler_Current_ptr current);
 
@@ -66,7 +63,6 @@ public:
 
  private:
   TAO_RTScheduler_Current_var current_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

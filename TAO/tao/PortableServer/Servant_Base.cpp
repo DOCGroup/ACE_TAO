@@ -29,8 +29,6 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"
 
-//@@ TAO_SERVANT_BASE_INCLUDE_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 # include "tao/PortableServer/Servant_Base.inl"
 #endif /* ! __ACE_INLINE__ */
@@ -568,12 +566,6 @@ TAO_ServantBase::synchronous_upcall_dispatch (
       // results.  De/marshaling will only occur in the not collocated
       // case.
       skel (req, servant_upcall, derived_this);
-
-      /*
-       * Dispatch resolution specialization add hook.
-       * Over-ridden with code to handle optimized dispatch.
-       */
-      //@@ TAO_DISPATCH_RESOLUTION_OPT_ADD_HOOK
 
       // It is our job to send the already marshaled reply, but only
       // send if it is expected and it has not already been sent

@@ -62,8 +62,7 @@ public:
   virtual void add_offer (CosTrading::OfferId offer_id,
                           const CosTrading::Offer* offer) = 0;
 
-  virtual CORBA::ULong max_left (void)
-    = 0;
+  virtual CORBA::ULong max_left (void) = 0;
 
   // BEGIN SPEC
   // The max_left operation returns the number of service offers
@@ -88,10 +87,8 @@ public:
    * END SPEC
    */
   virtual CORBA::Boolean next_n (CORBA::ULong n,
-                                 CosTrading::OfferSeq_out offers)
-    = 0;
+                                 CosTrading::OfferSeq_out offers) = 0;
  protected:
-
   TAO_Offer_Iterator& operator=(const TAO_Offer_Iterator&);
 
   /// The filter through which each returned offer must pass. Used to

@@ -294,7 +294,7 @@ protected:
   int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                    const ACE_Time_Value *timeout);
 
-private:
+protected:
   /// The class that does all of the non-secure socket connection.
   /// It is default constructed, and subsequently used by connect().
   ACE_SOCK_Connector connector_;

@@ -17,8 +17,6 @@ TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
 
 TAO_Acceptor::~TAO_Acceptor (void)
 {
-
-  //@@ TAO_ACCEPTOR_DESTRUCTOR_ADD_HOOK
 }
 
 int
@@ -88,7 +86,5 @@ TAO_Acceptor::handle_expiration (ACE_Event_Handler* base_acceptor)
                                           ACE_Event_Handler::DONT_CALL);
   return 0;
 }
-
-//@@ TAO_ACCEPTOR_SPL_METHODS_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL

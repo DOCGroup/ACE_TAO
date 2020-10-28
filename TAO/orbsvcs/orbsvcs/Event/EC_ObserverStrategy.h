@@ -62,11 +62,9 @@ public:
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
-      append_observer (RtecEventChannelAdmin::Observer_ptr)
-    = 0;
+      append_observer (RtecEventChannelAdmin::Observer_ptr) = 0;
   virtual void remove_observer (
-                        RtecEventChannelAdmin::Observer_Handle)
-     = 0;
+                        RtecEventChannelAdmin::Observer_Handle) = 0;
 
   /// Used by the EC to inform the ObserverStrategy that a Consumer has
   /// connected or disconnected from it.

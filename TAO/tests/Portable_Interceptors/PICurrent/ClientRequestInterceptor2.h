@@ -40,7 +40,6 @@ class ClientRequestInterceptor2
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   ClientRequestInterceptor2 (PortableInterceptor::SlotId slot_id);
 
@@ -75,11 +74,9 @@ public:
   //@}
 
 private:
-
   /// The PICurrent slot ID allocated to this application during ORB
   /// initialization.
   PortableInterceptor::SlotId slot_id_;
-
 };
 
 #if defined(_MSC_VER)

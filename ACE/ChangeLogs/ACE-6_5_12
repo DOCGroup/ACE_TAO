@@ -1,0 +1,701 @@
+commit 7449152aa7f626f93fc495b68b747d94b7331731
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Oct 25 09:48:17 2020 +0100
+
+    Extend news file with changes as part of issue #1271
+    
+        * ACE/NEWS:
+
+commit 83dc09aacce718c0844ba721053298f21bc8e160
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 24 10:39:48 2020 +0200
+
+    Updated news file for x.5.12
+    
+        * ACE/NEWS:
+
+commit 350d4011d2eddbe4429d0048b8dfda4e293be23c
+Merge: 46f29e2e07d 22532739d89
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Oct 22 08:40:45 2020 -0500
+
+    Merge pull request #1268 from mitza-oci/android
+    
+    Updates for Windows-hosted Android NDK cross-compile
+
+commit 46f29e2e07d210e6804786b1863b087aee05a540
+Merge: 886935f09b8 935fcd2d827
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 22 11:02:54 2020 +0200
+
+    Merge pull request #1261 from jwillemsen/jwi-cle
+    
+    Removed changelog editor, we don't maintain manual changelogs anymore…
+
+commit 886935f09b885b90391c29d1be85d286af15222c
+Merge: c4559d9048a 17c1db72fef
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Oct 22 10:42:19 2020 +0200
+
+    Merge pull request #1262 from jwillemsen/jwi-guidelines
+    
+    Fixed some typos and removed some references/support for subversion as version control
+
+commit 22532739d89cd5ad3883c6b04ad289db54cf5e41
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Oct 21 12:52:41 2020 -0500
+
+    Updates for Windows-hosted Android NDK cross-compile
+
+commit 935fcd2d82761dd605211a1ac0556a17f0188b17
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:43:45 2020 +0200
+
+    Removed changelog editor, we don't maintain manual changelogs anymore and the tool hasn't bee updated for git at all
+
+commit 17c1db72fef43b50d4454ed4bb6df1a85781501f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:35:02 2020 +0200
+
+    Updated comment
+
+commit a428372d1b0a1516853947c554e33f6223cba7e8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:34:46 2020 +0200
+
+    Updated comment
+
+commit afd4cc54d7c5bab54cf4ac76e3cf0feb9f704108
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:34:23 2020 +0200
+
+    Removed check for non svn files
+
+commit d09cdd5a2c7a5c0c83f58c7954dcab4036c33ebd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:31:50 2020 +0200
+
+    Removed special handling for subversion files
+
+commit 3ab2a7fc9753f0686bf4f0c887f1eb3d22b1e7f6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:30:52 2020 +0200
+
+    Removed check_for_changelog_errors, we don't maintain changelogs anymore
+
+commit 50f221e13831d2fd0a3a09b671d649cac28f980a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:30:19 2020 +0200
+
+    Fixed typos in comments
+
+commit a32f0645e56f07afdbd86c6230537edc9ef8858a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 14 14:29:57 2020 +0200
+
+    Removed reference to svn
+
+commit 4b16e80fdac9e3c74774b03f405b4d2383d0aa90
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 12 17:08:01 2020 +0200
+
+    Fixed typos
+    
+        * ACE/ace/Copy_Disabled.h:
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/Date_Time.h:
+
+commit 42c12b3727d091e29bcf74886343a75023c43a2e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 12 17:02:27 2020 +0200
+
+    Layout and typo changes
+    
+        * ACE/ace/PI_Malloc.h:
+
+commit c942cf5318f7599584cccedaf2f6c3ababd49708
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 12 16:48:29 2020 +0200
+
+    Removed c++0x and c++1y, added c++20
+
+commit 30dc9807c9d6c752e0bc0d528ae2e7c57c53f716
+Merge: d25bf627beb a5bb8cb886e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 13:05:15 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit d25bf627bebf25507b2f4c7e3023ec2c1bd0ed7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Oct 6 13:05:07 2020 +0200
+
+    Use https
+    
+        * ACE/docs/ACE-bug-process.html:
+        * ACE/docs/usage-bugzilla.html:
+        * ACE/html/Stats/img.html:
+        * TAO/docs/TAO-metrics.html:
+        * TAO/docs/releasenotes/index.html:
+
+commit 80472e4cf63bea10b0b3a1dd45f1b8d6a05cc57f
+Merge: 01c51074185 ae13700f764
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 5 13:54:24 2020 +0200
+
+    Merge pull request #1248 from jwillemsen/jwi-doxygenup2
+    
+    Upgrade to latest doxygen
+
+commit ae13700f76493361f0c82ac49d87567f9ac18cf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Oct 5 12:10:20 2020 +0200
+
+    Upgrade to latest doxygen
+    
+        * ACE/etc/ace.doxygen:
+        * ACE/etc/ace_inet.doxygen:
+        * ACE/etc/ace_qos.doxygen:
+        * ACE/etc/ace_rmcast.doxygen:
+        * ACE/etc/ace_ssl.doxygen:
+        * ACE/etc/acexml.doxygen:
+        * TAO/etc/tao.doxygen:
+        * TAO/etc/tao_anytypecode.doxygen:
+        * TAO/etc/tao_av.doxygen:
+        * TAO/etc/tao_compression.doxygen:
+        * TAO/etc/tao_cosevent.doxygen:
+        * TAO/etc/tao_cosnaming.doxygen:
+        * TAO/etc/tao_cosnotification.doxygen:
+        * TAO/etc/tao_costime.doxygen:
+        * TAO/etc/tao_costrader.doxygen:
+        * TAO/etc/tao_dynamicany.doxygen:
+        * TAO/etc/tao_dynamicinterface.doxygen:
+        * TAO/etc/tao_esf.doxygen:
+        * TAO/etc/tao_ifr.doxygen:
+        * TAO/etc/tao_implrepo.doxygen:
+        * TAO/etc/tao_iormanip.doxygen:
+        * TAO/etc/tao_iortable.doxygen:
+        * TAO/etc/tao_pi.doxygen:
+        * TAO/etc/tao_pi_server.doxygen:
+        * TAO/etc/tao_portablegroup.doxygen:
+        * TAO/etc/tao_portableserver.doxygen:
+        * TAO/etc/tao_rtcorba.doxygen:
+        * TAO/etc/tao_rtevent.doxygen:
+        * TAO/etc/tao_rtportableserver.doxygen:
+        * TAO/etc/tao_security.doxygen:
+        * TAO/etc/tao_smartproxies.doxygen:
+        * TAO/etc/tao_ssliop.doxygen:
+        * TAO/etc/tao_strategies.doxygen:
+        * TAO/etc/tao_transportcurrent.doxygen:
+        * TAO/etc/tao_ziop.doxygen:
+
+commit d80f32e641d3431e39268d66f7718042611754c6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Oct 4 10:24:41 2020 +0200
+
+    Add link for conda-forge update
+    
+        * ACE/docs/bczar/bczar.html:
+
+commit f458a1ace77661e39f55575a153d0c34160e218e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sat Oct 3 10:24:37 2020 +0200
+
+    Give an eror when we can't detect the MacOSX version instead of silently including no real config file
+    
+        * ACE/ace/config-macosx.h:
+
+commit 7d1e5116b673b3655837e0ce549e7781702d309c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 2 16:45:22 2020 +0200
+
+    Perl shebang portability changes
+    
+        * ACE/bin/PerlACE/ConfigList.pm:
+        * ACE/bin/PerlACE/MSProject.pm:
+        * ACE/bin/PerlACE/Process.pm:
+        * ACE/bin/PerlACE/ProcessAndroid.pm:
+        * ACE/bin/PerlACE/ProcessLVRT.pm:
+        * ACE/bin/PerlACE/ProcessVX.pm:
+        * ACE/bin/PerlACE/ProcessVX_Unix.pm:
+        * ACE/bin/PerlACE/ProcessVX_Win32.pm:
+        * ACE/bin/PerlACE/ProcessWinCE.pm:
+        * ACE/bin/PerlACE/ProcessWinCE_Unix.pm:
+        * ACE/bin/PerlACE/Process_Unix.pm:
+        * ACE/bin/PerlACE/Process_VMS.pm:
+        * ACE/bin/PerlACE/Process_Win32.pm:
+        * ACE/bin/PerlACE/Run_Test.pm:
+        * ACE/bin/PerlACE/TestTarget.pm:
+        * ACE/bin/PerlACE/TestTarget_Android.pm:
+        * ACE/bin/PerlACE/TestTarget_LVRT.pm:
+        * ACE/bin/PerlACE/TestTarget_VxWorks.pm:
+        * ACE/bin/PerlACE/TestTarget_WinCE.pm:
+        * ACE/bin/Uniqueid.pm:
+
+commit 39b6bf47cedf362390469a2cd7aadf123adc8033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Oct 2 16:25:40 2020 +0200
+
+    Use #!/usr/bin/env perl as perl shebang for portability, see https://stackoverflow.com/questions/10376206/what-is-the-preferred-bash-shebang and https://github.com/conda-forge/staged-recipes/pull/12698
+    
+        * ACE/bin/depgen.pl:
+        * ACE/bin/generate_export_file.pl:
+        * ACE/bin/mpc.pl:
+        * ACE/bin/mwc.pl:
+        * ACE/bin/split-cpp.pl:
+        * ACE/examples/IPC_SAP/SOCK_SAP/summarize.pl:
+        * ACE/examples/IPC_SAP/SSL_SAP/summarize.pl:
+
+commit 44a6cb570564dd58e71eedb1fc1975df048fcbf9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 22 08:33:59 2020 +0200
+
+    Zap empty lines
+    
+        * ACE/ace/SPIPE_Addr.cpp:
+
+commit 6f78b0285ec9a20ccc8c626ff99e5df711a25e18
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 18 08:46:41 2020 +0200
+
+    Remove usage of narrow_from_decl/narrow_from_scope and replace them with dynamic_cast
+
+commit 0ca9c019335cde957877214b6ffb4328de4ca198
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 13:49:45 2020 +0200
+
+    Doxygen change
+    
+        * ACE/ace/SOCK_Dgram_Mcast.h:
+
+commit ab728e5de3864251bc10d399aa3dab686706e75c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 11:13:20 2020 +0200
+
+    Removed empty lines
+    
+        * ACE/examples/Reactor/Ntalker/README:
+
+commit 1359caf0cc52564e3480de85d1b87811425f02c9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 9 11:13:06 2020 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/Log_Category.h:
+
+commit 14d3e012d5632d4932f1a5045241b934a0956e33
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 2 15:47:24 2020 +0200
+
+    Removed setting of cidl, not used anymore for ACE/TAO
+    
+        * ACE/rpmbuild/ace-tao.spec:
+
+commit aabdac304b8b9c20617e95b1b3bf890f34c3c011
+Merge: 2667ee25fd5 29f2ebd6e7b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 2 12:14:10 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 2667ee25fd5de951201fe27171f1168cdaa5224b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 2 12:14:05 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/Init_ACE.cpp:
+        * ACE/ace/Service_Config.h:
+
+commit 29f2ebd6e7ba98e76722cedc4ff1ae95fcdce16d
+Merge: 38f7c05997f 46923db6e60
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 1 15:48:51 2020 +0200
+
+    Merge pull request #1230 from jwillemsen/jwi-noxscdynamictypes
+    
+    No need for adding XSC_ROOT/MPC to dynamic_types
+
+commit 35d57553c13c79ff64d9eebad1d5486e293861fc
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Sep 1 14:24:27 2020 +0200
+
+    Layout and docu changes
+    
+        * ACE/ace/Service_Config.h:
+        * ACE/ace/Service_Gestalt.h:
+
+commit 46923db6e60d8970b4b502ee903f2bb48b3f59eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 31 12:17:16 2020 +0200
+
+    No need for adding XSC_ROOT/MPC to dynamic_types
+    
+        * ACE/bin/MakeProjectCreator/config/MPC.cfg:
+
+commit a886e56c56209c11b35ebf7c89834ecb9e837882
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 27 08:25:31 2020 +0200
+
+    Revert "Use unspecified_bool_type instead of bool."
+
+commit e816643abb2682e5a53a33e61e276183289dba8d
+Merge: 80a604ead86 38143a3c197
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 27 08:14:17 2020 +0200
+
+    Merge pull request #1226 from sudipm-mukherjee/sudip/hurd
+    
+    Fix build for Debian hurd
+
+commit 38143a3c1975fbc8a35db00a5b15d12f8bfbe5a1
+Author: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+Date:   Wed Aug 26 20:28:21 2020 +0100
+
+    Fix build for Debian hurd
+    
+    Signed-off-by: Sudip Mukherjee <sudipm.mukherjee@gmail.com>
+
+commit 0c2d1a119120df3e6f615c82cbb23d39e9763dfa
+Merge: ffdd6735537 e4e843a66e9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 20:29:11 2020 +0200
+
+    Merge branch 'thr-mgr-join-leak-deadlock' of git://github.com/likema/ACE_TAO into likema-thr-mgr-join-leak-deadlock
+
+commit ffdd6735537f4c5a69fdf75a658d12d55108d7cd
+Merge: dac841ab982 75f62ae3902
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 20:28:49 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit dac841ab98249ba3984f7cae975115d0f3ad236e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 16:15:22 2020 +0200
+
+    Indent change in class docu
+    
+        * ACE/ace/Log_Msg_Callback.h:
+
+commit 6fdc79c928bc388be70ccf9f1e371648cdf70ef3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 15:54:32 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/Intrusive_Auto_Ptr.inl:
+
+commit 3f027144ea3b868d7dbf75231b993c410a2156fb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 15:53:29 2020 +0200
+
+    Layout changes and removed commented out operation
+    
+        * ACE/ace/Intrusive_Auto_Ptr.h:
+
+commit 182f6c2a6453a8e4c84bd64a234194d7b42ea07f
+Merge: 8b02c0495ec 7e7902f9ffa
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 15:53:08 2020 +0200
+
+    Merge branch 'unspecified-bool-type' of git://github.com/likema/ACE_TAO into likema-unspecified-bool-type
+
+commit b4840dd0504121a633774fae167c59c85103a5f9
+Merge: 2f35a199f9d 37280f99664
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 26 08:22:47 2020 +0200
+
+    Merge pull request #1216 from jwillemsen/jwi-linuxfeaturestravis
+    
+    Migrate several custom travis configurations to github actions
+
+commit e39f3d46ca6b992428cae3f9629de1d77225d452
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Aug 26 02:02:33 2020 +0800
+
+    Fix building DLL_Manager.cpp on AIX
+
+commit 5be4b01d123bebfc355cef1ec83e2b5d041b6ac8
+Merge: 9b8aa251557 939549d98ba
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Aug 25 13:26:57 2020 +0200
+
+    Merge pull request #1219 from likema/fix-select-reactor-hash-map
+    
+    Fix redefined ACE_SELECT_REACTOR_BASE_USES_HASH_MAP warning.
+
+commit 9277daf0bc51db1eda1fd6b347ddf11bc2e20a7f
+Merge: 8d1155019cf dfbada54e38
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 20:06:46 2020 +0200
+
+    Merge pull request #1218 from jwillemsen/master
+    
+    Fixed documentation typos
+
+commit 939549d98ba657b60b122875918e66fc9fd907d6
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Aug 25 01:17:38 2020 +0800
+
+    Fix redefined ACE_SELECT_REACTOR_BASE_USES_HASH_MAP warning.
+    
+    If ACE_SELECT_REACTOR_BASE_USES_HASH_MAP is defined by ace/config.h, GCC
+    would warn redefinition.
+
+commit dfbada54e389168c27e9c5748ba16787225c4727
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 17:31:10 2020 +0200
+
+    Doxygen changes
+    
+        * ACE/ace/NT_Service.h:
+
+commit c3c16c78dfec71183de20d1ec95e3cda0aeee557
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 17:29:22 2020 +0200
+
+    Fixed typo
+    
+        * ACE/ace/Obstack_T.h:
+        * TAO/docs/releasenotes/trader.html:
+        * TAO/orbsvcs/tests/Property/client.cpp:
+        * TAO/orbsvcs/tests/Simple_Naming/README:
+
+commit c1d01ce02ae81bc47e88fdaa46c8aa0b67bed81e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 17:02:00 2020 +0200
+
+    UNIX_Addr_Test should also be excluded for ACE_FOR_TAO
+    
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit e6d828ed165644465a6499a17105f01586f7f3d4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 16:31:18 2020 +0200
+
+    Bug_4189_Regression_Test needs to be excluded for ace_for_tao
+    
+        * ACE/tests/Bug_4189_Regression_Test.cpp:
+        * ACE/tests/run_test.lst:
+        * ACE/tests/tests.mpc:
+
+commit a293b62dab742818572a514251dad14abafcd502
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 24 15:54:59 2020 +0200
+
+    Layout changes
+    
+        * ACE/ace/Cleanup.h:
+        * ACE/ace/Object_Manager_Base.h:
+
+commit 8d1155019cf86f95cc49c77c7329dace810142a3
+Merge: 026e77fdfb4 fd49219a28f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 19:41:20 2020 +0200
+
+    Merge pull request #1210 from jwillemsen/jwi-noreturn
+    
+    Mark also ACE_OS::exit with ACE_GCC_NO_RETURN
+
+commit 7bc0aecc3d80e8d105be68f329ede4a8c3a3fc6e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 11:16:06 2020 +0200
+
+    With C++11 make use of std::unique_ptr
+    
+        * ACE/examples/APG/Naming/Name_Binding.h:
+        * ACE/examples/APG/Reactor/HAStatus.cpp:
+
+commit d5f4d848c1318e544f2f1f82f6d82e4a1361ec64
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 11:02:14 2020 +0200
+
+    Make use of C++11 std::unique_ptr
+    
+        * ACE/ACEXML/examples/SAXPrint/main.cpp:
+        * ACE/tests/Bug_2540_Regression_Test.cpp:
+        * ACE/tests/Bug_2820_Regression_Test.cpp:
+        * ACE/tests/DLL_Test.cpp:
+
+commit fd49219a28f14136731f809f8fb959bc2022f912
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 10:32:13 2020 +0200
+
+    Const change
+    
+        * ACE/tests/NonBlocking_Conn_Test.h:
+
+commit 888e4cf4a074e7dd0ef7f0f6e0adb5fa9675a817
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 10:32:05 2020 +0200
+
+    Layout change
+    
+        * ACE/ace/OS_NS_stdlib.inl:
+
+commit b272800c49f5b929962e38c0a8628e6fec167412
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 21 10:31:51 2020 +0200
+
+    Mark also exit with ACE_GCC_NO_RETURN
+    
+        * ACE/ace/OS_NS_stdlib.h:
+
+commit 53ac0545ce37c867745c618a29eb6f82b538fc8a
+Merge: 57ecd9fd721 c61b0db31cd
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 18:29:29 2020 +0200
+
+    Merge pull request #1209 from jwillemsen/jwi-doxygen2
+    
+    Upgrade doxygen files to latest doxygen version
+
+commit 57ecd9fd7216a7fbdd09c54b5ff32a2b03dc0fa6
+Merge: c199c1aa62b 3932af0ee97
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Aug 20 10:27:26 2020 -0500
+
+    Merge pull request #1206 from iguessthislldo/igtd/no-return
+    
+    Create ACE_GCC_NO_RETURN, Add to ACE_OS::_exit
+
+commit c199c1aa62b82c917fde05ee91589a6ff9222c91
+Merge: ab97ecf8087 bbe905207b9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 17:12:04 2020 +0200
+
+    Merge pull request #1208 from jwillemsen/master
+    
+    Various layout/const/doxygen/bool minor changes
+
+commit c61b0db31cda9725e27e512b8a847651fb7708d0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 16:06:33 2020 +0200
+
+    Upgrade doxygen files to latest doxygen version
+
+commit fefa0d5f1850d0f1e633c4182702698ce64f6eb8
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 14:41:22 2020 +0200
+
+    Layout and true/false changes
+    
+        * ACE/ace/INET_Addr.cpp:
+        * TAO/tao/DynamicInterface/AMH_DSI_Response_Handler.cpp:
+        * TAO/tao/DynamicInterface/DII_Arguments.cpp:
+        * TAO/tao/DynamicInterface/Server_Request.cpp:
+
+commit 78bb4ae0df5461dcfd5303a02c63fc2fb8fd82d2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Aug 20 14:13:07 2020 +0200
+
+    Const and layout changes
+    
+        * ACE/ace/Acceptor.cpp:
+        * ACE/ace/Connector.cpp:
+        * ACE/ace/FILE_IO.h:
+        * ACE/ace/Hashable.h:
+        * ACE/ace/INET_Addr.cpp:
+        * ACE/ace/IOStream_T.h:
+        * ACE/ace/IO_SAP.h:
+        * ACE/ace/IPC_SAP.h:
+        * ACE/ace/If_Then_Else.h:
+        * ACE/ace/Local_Memory_Pool.h:
+
+commit 3932af0ee97a2c713fb6e0bbea6c3c317fe7e19f
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Aug 19 17:00:34 2020 -0500
+
+    Create ACE_GCC_NO_RETURN, Add to ACE_OS::_exit
+    
+    To fix fallthrough warning in ACE.cpp. Also added to ACE_OS::abort.
+
+commit e0d4c3e0147452a79a786088be1fec7365435b82
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 13:43:00 2020 +0200
+
+    Const changes
+    
+        * ACE/ace/Connector.cpp:
+
+commit ece08cd0ab22e71841e70cf8aeea5f52eeccefad
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 19 12:09:43 2020 +0200
+
+    Removed empty lines
+    
+        * ACE/ace/Unbounded_Set.h:
+        * ACE/ace/Unbounded_Set_Ex.h:
+
+commit 00fa9dccdc506736f651c4076d74d6f821f54762
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 11:21:49 2020 +0200
+
+    Remove Visual Studio 2015 as IDE for which we ship generated solutions as part of the release
+    
+        * ACE/docs/Download.html:
+
+commit fcdeaf9ba2ff504e3d3f4ac2f9c06657d498b39f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 11:05:51 2020 +0200
+
+    Add missing changelogs
+
+commit 8f8ccba316c69953e1f1263f734e707a98c72581
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 11:04:51 2020 +0200
+
+    Prepare for next release and always create a changelog
+    
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/make_release.py:
+
+commit dbbd86832258985b5cf9533d85738e38df37ee66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 10:14:35 2020 +0200
+
+    Make ACE 6.5.11 and TAO 2.5.11 public available and prepare for next release
+    
+        * ACE/bin/copy-local-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
+
+commit 7ed14884f80170cd5d19c586a5be53b6c89b36ce
+Merge: 951879f18dc 11fa72370c0
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 10:10:23 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 951879f18dc071dda270bd3177e289ef1cd97436
+Merge: 35b185f0431 1ec10d1f7b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 17 09:59:52 2020 +0200
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO into master
+
+commit 35b185f043170e07dc9ec1c06f818dfb385b1082
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Aug 14 15:27:47 2020 +0200
+
+    Add ace directory as we do with all ace includes
+    
+        * ACE/ace/config-windows.h:
+
+commit e4e843a66e9388138dfcb64328637221d264b6a0
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sat Mar 9 02:09:32 2019 +0800
+
+    Fix ACE_Thread_Manager::join memory leak and deadlock.
+
+commit 7e7902f9ffa652f78540870170c492a67816b731
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Wed Nov 13 20:20:47 2019 +0800
+
+    Use unspecified_bool_type instead of bool.

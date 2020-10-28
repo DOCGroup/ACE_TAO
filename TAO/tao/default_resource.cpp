@@ -390,10 +390,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                                  ACE_TEXT("-ORBFlushingStrategy")) == 0)
       {
         ++curarg;
-        /*
-         * Hook to specialize TAO's Flushing strategy implementations
-         */
-//@@ FLUSHING_STRATEGY_SPL_COMMENT_HOOK_START
         if (curarg < argc)
           {
             ACE_TCHAR* name = argv[curarg];
@@ -410,7 +406,6 @@ TAO_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
             else
               this->report_option_value_error (ACE_TEXT("-ORBFlushingStrategy"), name);
           }
-//@@ FLUSHING_STRATEGY_SPL_COMMENT_HOOK_END
       }
     else if (ACE_OS::strcasecmp (argv[curarg],
                                  ACE_TEXT ("-ORBMuxedConnectionMax")) == 0)
@@ -757,13 +752,9 @@ ACE_Reactor_Impl*
 TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
 {
   ACE_Reactor_Impl *impl = 0;
-  /*
-   * Hook to specialize TAO's reactor implementation.
-   */
   // get a timer queue (or not) from a possibly configured
   // time policy
   TAO_RSF_Timer_Queue_Ptr tmq (*this, this->create_timer_queue ());
-//@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
   ACE_NEW_RETURN (impl,
                   ACE_TP_Reactor (ACE::max_handles (),
                                   1,
@@ -772,7 +763,6 @@ TAO_Default_Resource_Factory::allocate_reactor_impl (void) const
                                   this->reactor_mask_signals_,
                                   ACE_Select_Reactor_Token::LIFO),
                   0);
-//@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
   // safe to release timer queue
   tmq.release ();
   return impl;

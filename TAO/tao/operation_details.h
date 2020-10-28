@@ -63,7 +63,6 @@ class TAO_Reply_Dispatcher;
 class TAO_Export TAO_Operation_Details
 {
 public:
-
   /// Declare FW_Server_Request_Wrapper a friend
   /// This friendship makes the FW_Server_Request_Wrapper be able to
   /// clone the TAO_Operation_Details data member in TAO_ServerRequest.
@@ -176,7 +175,6 @@ public:
   void reply_dispatcher (TAO_Reply_Dispatcher *rd);
 
 private:
-
   /// Name of the operation being invoked.
   const char *opname_;
 
@@ -235,7 +233,6 @@ private:
 
   /// The optional reply dispatcher
   TAO_Reply_Dispatcher *reply_dispatcher_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

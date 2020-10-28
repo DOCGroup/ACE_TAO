@@ -76,7 +76,6 @@ class TAO_LB_LoadMinimum
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadMinimum (PortableServer::POA_ptr poa);
 
@@ -108,14 +107,12 @@ public:
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Initialize the LoadMinimum instance with the given properties.
   void init (const PortableGroup::Properties & props);
 
 protected:
-
   /// Destructor.
   ~TAO_LB_LoadMinimum (void);
 
@@ -142,7 +139,6 @@ protected:
                                CORBA::Float & value);
 
 private:
-
   /// This servant's default POA.
   PortableServer::POA_var poa_;
 
@@ -173,7 +169,6 @@ private:
   CORBA::Float per_balance_load_;
 
   //@}
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

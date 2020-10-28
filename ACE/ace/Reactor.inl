@@ -1,12 +1,6 @@
 // -*- C++ -*-
 #include "ace/Reactor_Impl.h"
 
-/*
- * Hook to specialize the Reactor with the concrete implementation
- * known at compile time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Run the event loop until the <ACE_Reactor::handle_events> method

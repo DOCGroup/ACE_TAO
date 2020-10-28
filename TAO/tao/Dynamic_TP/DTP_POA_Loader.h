@@ -31,7 +31,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Dynamic_TP_Export TAO_DTP_POA_Loader : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
   TAO_DTP_POA_Loader (void);
 

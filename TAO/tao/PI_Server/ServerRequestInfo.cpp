@@ -461,7 +461,6 @@ CORBA::Boolean
 TAO::ServerRequestInfo::target_is_a (const char * id)
 {
   // Implemented in the generated skeleton.
-
   PortableServer::Servant const servant =
     (this->servant_upcall_ == 0
      ? 0

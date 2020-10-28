@@ -38,7 +38,6 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_Auto_Ptr
 {
 public:
-
   /**
    * @name Initialization and termination methods
    */

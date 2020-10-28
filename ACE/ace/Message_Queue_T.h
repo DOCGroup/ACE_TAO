@@ -673,6 +673,7 @@ private:
   /// Message_Queue we are iterating over.
   ACE_Message_Queue <ACE_SYNCH_USE, TIME_POLICY> &queue_;
 
+protected:
   /// Keeps track of how far we've advanced...
   ACE_Message_Block *curr_;
 };
@@ -710,6 +711,7 @@ private:
   /// Message_Queue we are iterating over.
   ACE_Message_Queue <ACE_SYNCH_USE, TIME_POLICY> &queue_;
 
+protected:
   /// Keeps track of how far we've advanced...
   ACE_Message_Block *curr_;
 };

@@ -39,13 +39,6 @@ class ACE_Sig_Action;
 class ACE_Sig_Handler;
 class ACE_Sig_Set;
 
-/*
- * Hook to specialize the Reactor implementation with the concrete
- * Reactor type, for example, select, thread pool reactor known
- * at compile time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class ACE_Reactor
  *

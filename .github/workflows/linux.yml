@@ -73,6 +73,12 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
+          - CC: clang-11
+            CXX: clang++-11
+            PackageDeps: clang-11
+            Repo: llvm-toolchain-$(lsb_release -cs)-11
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-20.04
           - feature: CORBA/e micro
             CC: gcc-10
             CXX: g++-10

@@ -315,7 +315,7 @@ endif # ! COMPSPEC
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
-  ACE_NUL = nul
+  ACE_NUL = $(if $(findstring /bin/sh,$(SHELL)),/dev/null,nul)
 else  # ! WIN32
   ACE_NUL = /dev/null
 endif # ! WIN32

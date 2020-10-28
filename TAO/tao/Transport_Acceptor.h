@@ -48,8 +48,6 @@ namespace TAO
   class ObjectKey;
 }
 
-//@@ TAO_ACCEPTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 // ****************************************************************
 
 /// The TAO-specific OMG assigned value for the TAG_ORB_TYPE tagged
@@ -148,23 +146,11 @@ public:
   /// into the reactor to try accepting again.
   int handle_expiration (ACE_Event_Handler* base_acceptor);
 
-  /*
-   * Hook to add public methods from derived acceptor classes onto
-   * this class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_PUBLIC_METHODS_ADD_HOOK
-
 private:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
   time_t error_retry_delay_;
-
-  /*
-   * Hook to add data members from concrete acceptor implementations onto
-   * the base class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
 };
 
 /// This is a drop-in replacement class for the ACE_Strategy_Acceptor.
@@ -200,8 +186,6 @@ public:
 private:
   TAO_Acceptor* acceptor_;
 };
-
-//@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
