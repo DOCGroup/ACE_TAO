@@ -176,7 +176,7 @@ protected:
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_Root_POA *&poa                  );
+                   TAO_Root_POA *&poa);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,

@@ -33,7 +33,6 @@ class TAO_ORB_Core;
 class TAO_Dynamic_TP_Export TAO_DTP_ORB_Loader : public ACE_Service_Object
 {
 public:
-
   /// Constructor.
   TAO_DTP_ORB_Loader (void);
 
