@@ -131,8 +131,7 @@ protected:
   /// Template methods. Please see Profile.h for the documentation.
   virtual int decode_profile (TAO_InputCDR &cdr);
   virtual int decode_endpoints (void);
-  virtual void parse_string_i (const char *string
-                              );
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);
 

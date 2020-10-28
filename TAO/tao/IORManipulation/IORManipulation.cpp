@@ -165,8 +165,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Diff_Profiles
-                                         );
+                                          Diff_Profiles);
 
   // Make the stub memory allocation exception safe for the duration
   // of this method.

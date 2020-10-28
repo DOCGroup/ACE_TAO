@@ -29,7 +29,6 @@ class TAO_Policy_Validator;
 class TAO_PortableServer_Export TAO_POA_Policy_Set
 {
 public:
-
   TAO_POA_Policy_Set (void);
 
   TAO_POA_Policy_Set (const TAO_POA_Policy_Set &rhs);

@@ -20,8 +20,7 @@ Zlib_CompressorFactory::get_compressor (
     // Ensure Compression range 0-9 and will also convert -1(default) to 9(max).
     compression_level = ace_range(  ::Compression::CompressionLevel(Z_NO_COMPRESSION),   // Min value
                                     ::Compression::CompressionLevel(Z_BEST_COMPRESSION), // Max value
-                                    compression_level   // Argument value
-                                  );
+                                    compression_level); // Argument value
 
     ::Compression::Compressor_ptr compressor = 0;
 

@@ -66,8 +66,7 @@ namespace TAO
           // The user specified that the ImR should be used.
           ImR_Client_Adapter *adapter =
             ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-              TAO_Root_POA::imr_client_adapter_name ()
-            );
+              TAO_Root_POA::imr_client_adapter_name ());
 
 #if !defined (TAO_AS_STATIC_LIBS)
           // In case we build shared, try to load the ImR Client library, in a
@@ -109,8 +108,7 @@ namespace TAO
     {
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-          TAO_Root_POA::imr_client_adapter_name ()
-        );
+          TAO_Root_POA::imr_client_adapter_name ());
 
       if (adapter != 0)
         {
@@ -154,8 +152,7 @@ namespace TAO
       // The user specified that the ImR should be used.
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
-          TAO_Root_POA::imr_client_adapter_name ()
-        );
+          TAO_Root_POA::imr_client_adapter_name ());
       if (adapter == 0)
         {
           // couldn't load adapter, already reported error

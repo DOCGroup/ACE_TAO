@@ -30,8 +30,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
   // Check case TypeCodes.
   CORBA::TypeCode_ptr const lhs_tc = this->type ();
   CORBA::TypeCode_var const rhs_tc =
-    tc->member_type (index
-                    );
+    tc->member_type (index);
 
   CORBA::Boolean const equal_members =
     lhs_tc->equal (rhs_tc.in ());
@@ -54,8 +53,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equivalent (
   // Check case TypeCodes.
   CORBA::TypeCode_ptr const lhs_tc = this->type ();
   CORBA::TypeCode_var const rhs_tc =
-    tc->member_type (index
-                    );
+    tc->member_type (index);
 
   CORBA::Boolean const equivalent_members =
     lhs_tc->equivalent (rhs_tc.in ());

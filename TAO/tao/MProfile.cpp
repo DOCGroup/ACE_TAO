@@ -305,8 +305,7 @@ TAO_MProfile::create_policy_list (void)
   ACE_NEW_THROW_EX (this->policy_list_,
                     CORBA::PolicyList,
                     CORBA::NO_MEMORY (0,
-                                      CORBA::COMPLETED_NO)
-                    );
+                                      CORBA::COMPLETED_NO));
 }
 
 void

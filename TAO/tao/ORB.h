@@ -594,7 +594,6 @@ namespace CORBA
 
     /// Timeout value
     ACE_Time_Value * timeout_;
-
   };
 }  // End namespace CORBA
 

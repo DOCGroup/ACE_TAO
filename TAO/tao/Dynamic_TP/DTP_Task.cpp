@@ -153,8 +153,7 @@ TAO_DTP_Task::open (void* /* args */)
                     this->max_pool_threads_,
                     this->max_request_queue_depth_,
                     this->thread_stack_size_,
-                    this->thread_idle_time_.sec ())
-                   );
+                    this->thread_idle_time_.sec ()));
     }
 
   // We can't activate 0 threads.  Make sure this isn't the case.

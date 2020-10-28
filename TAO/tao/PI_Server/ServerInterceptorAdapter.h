@@ -93,7 +93,7 @@ namespace TAO
 
     /// This method implements the "intermediate" server side
     /// interception point if the above #ifdef is set to 1 and a
-    /// starting intercetion point if it is not set to 1.
+    /// starting interception point if it is not set to 1.
     ///
     /// @note This method should have been the "starting" interception
     ///       point according to the interceptor spec. This will be
