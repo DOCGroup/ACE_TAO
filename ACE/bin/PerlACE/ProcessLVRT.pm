@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 #
 # ProcessLVRT - how to run ACE+TAO tests on a LabVIEW RT target.
 # Tests on LabVIEW RT are not executables - LabVIEW RT can't start plain

@@ -1,10 +1,4 @@
 // -*- C++ -*-
-/*
- * Add all include files within the following
- * two markers.
- */
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
-
 #include "tao/IIOP_Endpoint.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
@@ -31,11 +25,8 @@
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const ACE_INET_Addr &addr,
                                       int use_dotted_decimal_addresses)
   : TAO_Endpoint (IOP::TAG_INTERNET_IOP)
@@ -104,8 +95,6 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const char *host,
 {
   this->host(host); // With IPv6 performs check for decimal address
 }
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
-
 
 TAO_IIOP_Endpoint &
 TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
@@ -129,8 +118,6 @@ TAO_IIOP_Endpoint::operator= (const TAO_IIOP_Endpoint &other)
 TAO_IIOP_Endpoint::~TAO_IIOP_Endpoint (void)
 {
 }
-
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_START
 
 TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (const TAO_IIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_, rhs.priority_)
@@ -633,8 +620,6 @@ TAO_IIOP_Endpoint::preferred_network (void) const
 {
   return this->preferred_path_.host.in ();
 }
-
-//@@ TAO_ENDPOINT_SPL_COPY_HOOK_END
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

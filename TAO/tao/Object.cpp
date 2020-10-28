@@ -396,8 +396,7 @@ CORBA::Object::_create_request (CORBA::Context_ptr ctx,
                        result,
                        0,
                        request,
-                       req_flags
-                     );
+                       req_flags);
 }
 #endif
 

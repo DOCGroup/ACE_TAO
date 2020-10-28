@@ -1,4 +1,3 @@
-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
@@ -112,8 +111,6 @@ private:
   /// Write servant IOR to file specified with the '-o' option
   int write_ior_to_file (CORBA::String_var ior);
 };
-
-
 
 /*** Server Declaration ***/
 

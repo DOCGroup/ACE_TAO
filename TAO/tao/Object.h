@@ -101,7 +101,6 @@ namespace CORBA
   class TAO_Export Object
   {
   public:
-
     /// Destructor.
     virtual ~Object (void);
 
@@ -291,7 +290,6 @@ namespace CORBA
     virtual void _proxy_broker (TAO::Object_Proxy_Broker *proxy_broker);
 
   public:
-
     /// Allows us to forbid marshaling of local interfaces.
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
@@ -352,7 +350,6 @@ namespace CORBA
 #endif /* ACE_HAS_CPP11 */
 
   private:
-
     // = Unimplemented methods
     ACE_UNIMPLEMENTED_FUNC (Object (const Object &))
     ACE_UNIMPLEMENTED_FUNC (Object &operator = (const Object &))

@@ -49,7 +49,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Object_Ref_Table
 {
 public:
-
   typedef ACE_Array_Map<CORBA::String_var,
                         CORBA::Object_var,
                         TAO::String_Var_Equal_To> Table;
@@ -93,7 +92,6 @@ public:
   size_t current_size (void) const;
 
 private:
-
   /**
    * @name The canonical ACE_Map methods
    */
@@ -104,19 +102,16 @@ private:
   //@}
 
 private:
-
   // Disallow copying and assignment.
   TAO_Object_Ref_Table (const TAO_Object_Ref_Table &);
   void operator= (const TAO_Object_Ref_Table &);
 
 private:
-
   /// The implementation.
   Table table_;
 
   /// Table synchronization lock.
   TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

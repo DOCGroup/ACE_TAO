@@ -47,8 +47,7 @@ namespace TAO
         {
           CORBA::Policy_var policy = policy_set.get_policy_by_index (i);
 
-          this->update_policy (policy.in ()
-                              );
+          this->update_policy (policy.in ());
         }
     }
 
@@ -59,8 +58,7 @@ namespace TAO
 
     #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
       ::PortableServer::ThreadPolicy_var thread
-        = ::PortableServer::ThreadPolicy::_narrow (policy
-                                                  );
+        = ::PortableServer::ThreadPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (thread.in ()))
         {
@@ -72,8 +70,7 @@ namespace TAO
 
     #if !defined (CORBA_E_MICRO)
       ::PortableServer::LifespanPolicy_var lifespan
-        = ::PortableServer::LifespanPolicy::_narrow (policy
-                                                    );
+        = ::PortableServer::LifespanPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (lifespan.in ()))
         {
@@ -85,8 +82,7 @@ namespace TAO
 
     #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdUniquenessPolicy_var id_uniqueness
-        = ::PortableServer::IdUniquenessPolicy::_narrow (policy
-                                                        );
+        = ::PortableServer::IdUniquenessPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (id_uniqueness.in ()))
         {
@@ -98,8 +94,7 @@ namespace TAO
 
     #if !defined (CORBA_E_MICRO)
       ::PortableServer::IdAssignmentPolicy_var id_assignment
-        = ::PortableServer::IdAssignmentPolicy::_narrow (policy
-                                                        );
+        = ::PortableServer::IdAssignmentPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (id_assignment.in ()))
         {
@@ -112,8 +107,7 @@ namespace TAO
     #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
       ::PortableServer::ImplicitActivationPolicy_var implicit_activation
-        = ::PortableServer::ImplicitActivationPolicy::_narrow (policy
-                                                              );
+        = ::PortableServer::ImplicitActivationPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (implicit_activation.in ()))
         {
@@ -123,8 +117,7 @@ namespace TAO
         }
 
       ::PortableServer::ServantRetentionPolicy_var servant_retention
-        = ::PortableServer::ServantRetentionPolicy::_narrow (policy
-                                                            );
+        = ::PortableServer::ServantRetentionPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (servant_retention.in ()))
         {
@@ -134,8 +127,7 @@ namespace TAO
         }
 
       ::PortableServer::RequestProcessingPolicy_var request_processing
-        = ::PortableServer::RequestProcessingPolicy::_narrow (policy
-                                                             );
+        = ::PortableServer::RequestProcessingPolicy::_narrow (policy);
 
       if (!CORBA::is_nil (request_processing.in ()))
         {

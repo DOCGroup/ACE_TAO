@@ -40,8 +40,8 @@
 To: tao-bugs@list.isis.vanderbilt.edu
 Subject: [area]: [synopsis]
 
-    TAO VERSION: 2.5.11
-    ACE VERSION: 6.5.11
+    TAO VERSION: 2.5.12
+    ACE VERSION: 6.5.12
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you

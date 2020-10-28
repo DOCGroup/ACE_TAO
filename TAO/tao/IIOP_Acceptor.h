@@ -45,13 +45,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_IIOP_Acceptor : public TAO_Acceptor
 {
 public:
-
-  /*
-   * Hook that marks beginning of all concrete i.e. non virtual
-   * methods implemented in IIOP_Acceptor class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
-
   /// Constructor.
   TAO_IIOP_Acceptor (void);
 
@@ -75,8 +68,6 @@ public:
   typedef TAO_Creation_Strategy<TAO_IIOP_Connection_Handler> CREATION_STRATEGY;
   typedef TAO_Concurrency_Strategy<TAO_IIOP_Connection_Handler> CONCURRENCY_STRATEGY;
   typedef TAO_Accept_Strategy<TAO_IIOP_Connection_Handler, ACE_SOCK_ACCEPTOR> ACCEPT_STRATEGY;
-
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
   /**
    * The TAO_Acceptor methods, check the documentation in
@@ -103,7 +94,6 @@ public:
   virtual int object_key (IOP::TaggedProfile &profile,
                           TAO::ObjectKey &key);
 
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_START
   /**
    * Set the host name for the given @a addr.
    * A hostname may be forced by using @a specified_hostname.  This
@@ -127,7 +117,6 @@ public:
                         const char *specified_hostname = 0);
 
 protected:
-
   /**
    * Helper method
    * Clear out 'addr' & 'specified_hostname' and initialize them based
@@ -208,15 +197,12 @@ protected:
   int create_shared_profile (const TAO::ObjectKey &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
-  //@@ TAO_ACCEPTOR_SPL_CONCRETE_METHODS_COPY_HOOK_END
 
 private:
   void operator= (const TAO_IIOP_Acceptor &);
   TAO_IIOP_Acceptor (const TAO_IIOP_Acceptor &);
 
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_START
 protected:
-
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
@@ -263,7 +249,6 @@ protected:
   ACE_INET_Addr default_address_;
 
 private:
-
   /// The concrete acceptor, as a pointer to it's base class.
   BASE_ACCEPTOR base_acceptor_;
 
@@ -271,8 +256,6 @@ private:
   CREATION_STRATEGY *creation_strategy_;
   CONCURRENCY_STRATEGY *concurrency_strategy_;
   ACCEPT_STRATEGY *accept_strategy_;
-
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_COPY_HOOK_END
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -49,7 +49,6 @@ namespace TAO
   class TAO_Export Object_Proxy_Broker
   {
   public:
-
     /// Destructor
     virtual ~Object_Proxy_Broker (void);
 

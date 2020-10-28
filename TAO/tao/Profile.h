@@ -273,8 +273,6 @@ public:
   virtual CORBA::ULong hash (CORBA::ULong max) = 0;
   //@}
 
-  //@@ TAO_PROFILE_SPL_PUBLIC_METHODS_ADD_HOOK
-
 protected:
   /// If you have a virtual method you need a virtual dtor.
   virtual ~TAO_Profile (void);
@@ -347,10 +345,7 @@ private:
   TAO_Profile (const TAO_Profile&);
   void operator= (const TAO_Profile&);
 
-  //@@ TAO_PROFILE_SPL_PROTECTED_METHODS_ADD_HOOK
-
 protected:
-
   /// IIOP version number.
   TAO_GIOP_Message_Version version_;
 
@@ -396,15 +391,10 @@ private:
   /// Having (tagged_profile_ != 0) doesn't mean yet that
   /// tagged_profile_ building is finished.
   bool tagged_profile_created_;
-
-  //@@ TAO_PROFILE_SPL_PRIVATE_DATA_ADD_HOOK
 };
-
-//@@ TAO_PROFILE_SPL_EXTERN_ADD_HOOK
 
 // A helper class to handle the various kinds of octet sequences used
 // inside the ORB.
-
 typedef TAO::unbounded_value_sequence<CORBA::Octet> TAO_opaque;
 
 TAO_Export CORBA::Boolean
@@ -461,8 +451,6 @@ private:
 private:
   TAO_opaque body_;
 };
-
-//@@ TAO_PROFILE_SPL_EXTERN_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

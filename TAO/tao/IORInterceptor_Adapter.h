@@ -82,8 +82,7 @@ public:
 
   /// Call the IORInterceptor::components_established() method on all
   /// registered IORInterceptors.
-  virtual void components_established (PortableInterceptor::IORInfo_ptr info)
-    = 0;
+  virtual void components_established (PortableInterceptor::IORInfo_ptr info) = 0;
 
   virtual void adapter_state_changed (
       const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,

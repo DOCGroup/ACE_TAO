@@ -70,7 +70,6 @@ namespace TAO
     , public virtual ::CORBA::LocalObject
   {
   public:
-
     /// Constructor.
     ServerRequestInfo (TAO_ServerRequest & server_request,
                        TAO::Argument * const * args,
@@ -185,7 +184,6 @@ namespace TAO
         CORBA::Boolean replace);
 
   public:
-
     /**
      * @name Helper methods specific to TAO.
      */
@@ -212,7 +210,6 @@ namespace TAO
     TAO_ServerRequest &server_request (void);
 
   protected:
-
     /// Helper method to get the request and response service
     /// contexts.
     IOP::ServiceContext * get_service_context_i (
@@ -220,7 +217,6 @@ namespace TAO
         IOP::ServiceId id);
 
   protected:
-
     /// Underlying request object that contains much of the
     /// information encapsulated by this @c ServerRequestInfo
     /// implementation.

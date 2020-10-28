@@ -187,7 +187,6 @@ public:
                                      TAO::Collocation_Strategy strategy);
 
 protected:
-
   /// Default constructor, only derived classes can be created.
   explicit TAO_ServantBase (TAO_Operation_Table* optable = 0);
 

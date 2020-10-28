@@ -1185,8 +1185,7 @@ TAO_Marshal_Value::append (CORBA::TypeCode_ptr  tc,
         {
           retval = this->append (param.in (),
                                  src,
-                                 dest
-                                );
+                                 dest);
         }
 
       if (retval == TAO::TRAVERSE_CONTINUE)
