@@ -19,9 +19,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_signal.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Synch_Traits.h"
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -286,7 +286,7 @@ protected:
                      int priority = ACE_Event_Handler::LO_PRIORITY);
 
   /// Typedef for implementation of reference counting.
-  typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, Reference_Count> Atomic_Reference_Count;
+  typedef std::atomic<Reference_Count> Atomic_Reference_Count;
 
   /// Reference count.
   Atomic_Reference_Count reference_count_;
