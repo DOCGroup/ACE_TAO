@@ -20,7 +20,6 @@
 
 #include "ace/os_include/os_signal.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Synch_Traits.h"
 #include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
