@@ -86,13 +86,9 @@ ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
 endif
 
-ifeq ($(c++0x),1)
-  CCFLAGS += -std=c++0x
-else
-  ifeq ($(c++11),1)
-    CCFLAGS += -std=c++11
-  endif # c++11
-endif # c++0x
+ifeq ($(c++11),1)
+  CCFLAGS += -std=c++11
+endif # c++11
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
