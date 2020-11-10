@@ -15,7 +15,7 @@ endif
 ifeq (cmd,$(findstring cmd,$(SHELL)))
 CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
 else
-CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
 endif
 
 # clang5 has C++03 as default C++ version, enable this to be C++11
