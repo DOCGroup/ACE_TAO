@@ -11,7 +11,6 @@ class FooServantList;
 class Foo_i : public virtual POA_Foo
 {
   public:
-
     Foo_i(const char* servant_name, FooServantList* mgr);
     virtual ~Foo_i();
 
@@ -27,55 +26,42 @@ class Foo_i : public virtual POA_Foo
 
     virtual CORBA::Boolean op6 (
         const char * user_name,
-        char *& message
-      );
+        char *& message);
 
     virtual void test_unbounded_string_arg (
-        const char * message
-      );
+        const char * message);
 
     virtual void test_bounded_string_arg (
-        const char * message
-      );
+        const char * message);
 
     virtual void test_fixed_array_arg (
-        const ::Fixed_Array message
-      );
+        const ::Fixed_Array message);
 
     virtual void test_var_array_arg (
-        const ::Var_Array messages
-      );
+        const ::Var_Array messages);
 
     virtual void test_bounded_var_size_arg (
-        const ::Bounded_Var_Size & message
-      );
+        const ::Bounded_Var_Size & message);
 
     virtual void test_unbounded_var_size_arg (
-        const ::Unbounded_Var_Size & message
-      );
+        const ::Unbounded_Var_Size & message);
 
     virtual void test_fixed_size_arg (
-        const ::TimeOfDay & t
-      );
+        const ::TimeOfDay & t);
 
     virtual void test_fixed_size_arg_two_way (
-        const ::TimeOfDay & t
-      );
+        const ::TimeOfDay & t);
 
     virtual void test_special_basic_arg (
-        ::CORBA::Boolean value
-      );
+        ::CORBA::Boolean value);
 
     virtual void test_objref_arg (
-        ::Callback_ptr cb
-      );
+        ::Callback_ptr cb);
 
     virtual void callback_object (
-        ::Callback_ptr cb
-      );
+        ::Callback_ptr cb);
 
-    virtual void test_callback (
-      );
+    virtual void test_callback ();
 
     virtual void done(void);
 
@@ -84,7 +70,6 @@ class Foo_i : public virtual POA_Foo
     bool active ();
 
   private:
-
     typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, CORBA::Long> AtomicLong;
     typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned> AtomicUnsigned;
     typedef ACE_Atomic_Op <TAO_SYNCH_MUTEX, bool> AtomicBool;
