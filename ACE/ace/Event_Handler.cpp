@@ -186,8 +186,7 @@ ACE_Event_Handler::remove_reference (void)
 
   if (reference_counting_required)
     {
-      Reference_Count result =
-        --this->reference_count_;
+      Reference_Count const result = --this->reference_count_;
 
       if (result == 0)
         delete this;
