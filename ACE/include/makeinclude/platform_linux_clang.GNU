@@ -10,7 +10,17 @@ ifeq ($(insure),0)
 endif
 
 ifndef CXX_VERSION
-  CXX_VERSION := $(shell $(CXX) --version)
+  CXX_VERSION := $(shell $(CXX) -dumpversion)
+endif
+ifeq (cmd,$(findstring cmd,$(SHELL)))
+CXX_MAJOR_VERSION := $(firstword $(subst ., ,$(CXX_VERSION)))
+else
+CXX_MAJOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+endif
+
+# clang5 has C++03 as default C++ version, enable this to be C++11
+ifeq ($(findstring $(CXX_MAJOR_VERSION),5),$(CXX_MAJOR_VERSION))
+  c++11 ?= 1
 endif
 
 CCFLAGS += $(CFLAGS)
@@ -30,14 +40,9 @@ ifeq ($(optimize),0)
   CPPFLAGS += -O0
 endif
 
-ifeq ($(c++0x),1)
-  CCFLAGS += -std=c++0x
+ifeq ($(c++11),1)
+  CCFLAGS += -std=c++11
   no_deprecated ?= 1
-else
-  ifeq ($(c++11),1)
-    CCFLAGS += -std=c++11
-    no_deprecated ?= 1
-  endif
 endif
 
 ifeq ($(no_deprecated),1)
