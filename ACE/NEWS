@@ -1,5 +1,8 @@
-USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-6.5.13
-======================================================
+USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
+=====================================================
+
+. C++11 is now a mandatory compiler feature which is
+  required for ACE
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
