@@ -52,30 +52,6 @@ ifeq ($(gprof),1)
   LDFLAGS += -pg
 endif
 
-ifeq ($(c++20),1)
-  CCFLAGS += -std=c++20
-  # This is needed due to the use of the deprecated auto_ptr class
-  no_deprecated ?= 1
-else
-  ifeq ($(c++17),1)
-    CCFLAGS += -std=c++17
-    # This is needed due to the use of the deprecated auto_ptr class
-    no_deprecated ?= 1
-  else
-    ifeq ($(c++14),1)
-      CCFLAGS += -std=c++14
-      # This is needed due to the use of the deprecated auto_ptr class
-      no_deprecated ?= 1
-    else
-      ifeq ($(c++11),1)
-        CCFLAGS += -std=c++11
-        # This is needed due to the use of the deprecated auto_ptr class
-        no_deprecated ?= 1
-      endif # c++11
-    endif # c++14
-  endif #c++17
-endif #c++20
-
 ifeq ($(no_deprecated),1)
   CCFLAGS += -Wno-deprecated
 endif
@@ -109,6 +85,35 @@ GXX_4_OR_BETTER := 0
 else
 GXX_4_OR_BETTER := 1
 endif
+
+# gcc 4 has C++03 as default C++ version, enable this to be C++11
+ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
+  c++11 ?= 1
+endif
+
+ifeq ($(c++20),1)
+  CCFLAGS += -std=c++20
+  # This is needed due to the use of the deprecated auto_ptr class
+  no_deprecated ?= 1
+else
+  ifeq ($(c++17),1)
+    CCFLAGS += -std=c++17
+    # This is needed due to the use of the deprecated auto_ptr class
+    no_deprecated ?= 1
+  else
+    ifeq ($(c++14),1)
+      CCFLAGS += -std=c++14
+      # This is needed due to the use of the deprecated auto_ptr class
+      no_deprecated ?= 1
+    else
+      ifeq ($(c++11),1)
+        CCFLAGS += -std=c++11
+        # This is needed due to the use of the deprecated auto_ptr class
+        no_deprecated ?= 1
+      endif # c++11
+    endif # c++14
+  endif #c++17
+endif #c++20
 
 # If no option has been specified, set templates to automatic
 # version of the compiler.
