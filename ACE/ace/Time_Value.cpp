@@ -19,10 +19,7 @@
 #endif /* ACE_HAS_CPP98_IOSTREAMS */
 
 #include <cstdlib>
-
-#ifdef ACE_HAS_CPP11
-# include <cmath>
-#endif /* ACE_HAS_CPP11 */
+#include <cmath>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -324,11 +321,7 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
     {
       o << tv->tv_sec;
       if (tv->tv_usec)
-#ifdef ACE_HAS_CPP11
         o << '.' << std::setw (6) << std::labs (tv->tv_usec);
-#else
-        o << '.' << std::setw (6) << ACE_STD_NAMESPACE::labs (tv->tv_usec);
-#endif
     }
   else if (tv->tv_usec < 0)
     o << "-0." << std::setw (6) << - tv->tv_usec;

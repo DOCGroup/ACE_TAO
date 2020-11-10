@@ -61,24 +61,11 @@
 #  define ACE_ENDLESS_LOOP
 # endif /* ! ACE_ENDLESS_LOOP */
 
-# if defined (ACE_NEEDS_FUNC_DEFINITIONS) && !defined (ACE_HAS_CPP11)
-    // It just evaporated ;-)  Not pleasant.
-#   define ACE_UNIMPLEMENTED_FUNC(f)
-# else
-#   if defined (ACE_HAS_CPP11)
-#     define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
-#   else
-#     define ACE_UNIMPLEMENTED_FUNC(f) f;
-#   endif
-# endif /* ACE_NEEDS_FUNC_DEFINITIONS */
+# define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
 
 // noexcept(false) specification to specify that the operation can
 // throw an exception
-#if defined (ACE_HAS_CPP11)
 #define ACE_NOEXCEPT_FALSE noexcept(false)
-#else
-#define ACE_NOEXCEPT_FALSE
-#endif
 
 // ----------------------------------------------------------------
 
