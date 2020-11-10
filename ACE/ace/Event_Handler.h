@@ -255,7 +255,6 @@ public:
     friend class ACE_Event_Handler;
 
   public:
-
     enum Value
       {
         /// Perform reference counting.
@@ -271,7 +270,6 @@ public:
     void value (Value value);
 
   private:
-
     /// Private constructor.
     Reference_Counting_Policy (Value value);
 
@@ -294,7 +292,6 @@ protected:
   Atomic_Reference_Count reference_count_;
 
 private:
-
   /// Priority of this Event_Handler.
   int priority_;
 
@@ -356,7 +353,6 @@ public:
 #endif
 
 private:
-
   /// Handler.
   ACE_Event_Handler *ptr_;
 };

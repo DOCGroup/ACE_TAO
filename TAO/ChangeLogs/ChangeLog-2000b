@@ -5757,7 +5757,7 @@ Tue Aug 29 20:28:30 2000  Pradeep Gore  <pradeep@cs.wustl.edu>
 
         * orbsvcs/examples/Notify/Filter/Filter.cpp:
         * orbsvcs/examples/Notify/Subscribe/Subscribe.cpp:
-          Fix for http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=626
+          Fix for http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=626
 
 Tue Aug 29 20:09:44 2000  Angelo Corsaro  <corsaro@cs.wustl.edu>
 

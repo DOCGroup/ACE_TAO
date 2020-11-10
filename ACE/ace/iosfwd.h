@@ -31,12 +31,6 @@
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
-#if defined (__APPLE_CC__)
-// Should this really be here?  dhinton
-// FUZZ: disable check_for_streams_include
-# include "ace/streams.h"
-#endif
-
 #if defined (ACE_HAS_STANDARD_CPP_LIBRARY)  && \
     (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
 
