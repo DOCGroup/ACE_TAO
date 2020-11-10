@@ -70,7 +70,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "Reference count in Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
@@ -78,7 +78,7 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   if (this->expected_number_of_handle_close_calls_ != -1)
     ACE_TEST_ASSERT (this->number_of_handle_close_calls_ ==
@@ -93,7 +93,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
     ACE_DEBUG ((LM_DEBUG,
                 "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
                 (const char *) arg,
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   return 0;
 }
@@ -108,7 +108,7 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
                 "Reference count is %d\n",
                 handle,
                 masks,
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   ++this->number_of_handle_close_calls_;
 
