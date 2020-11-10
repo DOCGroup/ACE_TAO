@@ -19,7 +19,8 @@ CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed 
 endif
 
 # clang5 has C++03 as default C++ version, enable this to be C++11
-ifeq ($(findstring $(CXX_MAJOR_VERSION),5),$(CXX_MAJOR_VERSION))
+# the older clang versions all return 4.2.1 as part of dumpversion
+ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
   c++11 ?= 1
 endif
 
