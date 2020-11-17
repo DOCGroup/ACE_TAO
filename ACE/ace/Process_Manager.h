@@ -243,7 +243,7 @@ public:
    * @retval 0 on success; -1 on failure.
    */
   int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
-#if defined (ACE_HAS_CPP11)
+
   /// @sa wait
   template< class Rep, class Period >
   int wait (const std::chrono::duration<Rep, Period>& timeout)
@@ -251,7 +251,6 @@ public:
     ACE_Time_Value const tv (timeout);
     return this->wait (tv);
   }
-#endif
 
   /**
    * Wait up to @a timeout for a single specified process to terminate.
@@ -269,7 +268,7 @@ public:
   pid_t wait (pid_t pid,
               const ACE_Time_Value &timeout,
               ACE_exitcode *status = 0);
-#if defined (ACE_HAS_CPP11)
+
   /// @sa wait
   template< class Rep, class Period >
   pid_t wait (pid_t pid,
@@ -279,7 +278,6 @@ public:
     ACE_Time_Value const tv (timeout);
     return this->wait (pid, tv, status);
   }
-#endif
 
   /**
    * Wait indefinitely for a single, specified process to terminate.

@@ -20,10 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_HAS_CPP11)
-# include "ace/Auto_Ptr.h"
-#endif /* !ACE_HAS_CPP11 */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -113,12 +109,6 @@ public:
   /// Constructor that initializes an ACE_Strong_Bound_Ptr to point to the
   /// object \<p\> immediately.
   explicit ACE_Strong_Bound_Ptr (X *p = 0);
-
-#if !defined (ACE_HAS_CPP11)
-  /// Constructor that initializes an ACE_Strong_Bound_Ptr by stealing
-  /// ownership of an object from an auto_ptr.
-  explicit ACE_Strong_Bound_Ptr (auto_ptr<X> p);
-#endif /* !ACE_HAS_CPP11 */
 
   /// Copy constructor binds @c this and @a r to the same object.
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
@@ -215,13 +205,6 @@ public:
   /// Resets the ACE_Strong_Bound_Ptr to refer to a different
   /// underlying object.
   void reset (X *p = 0);
-
-#if !defined (ACE_HAS_CPP11)
-  /// Resets the ACE_Strong_Bound_Ptr to refer to a different
-  /// underlying object, ownership of which is stolen from the
-  /// auto_ptr.
-  void reset (auto_ptr<X> p);
-#endif /* !ACE_HAS_CPP11 */
 
   /// Allows us to check for NULL on all ACE_Strong_Bound_Ptr
   /// objects.

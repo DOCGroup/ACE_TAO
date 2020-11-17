@@ -95,11 +95,7 @@ ClientAcceptor::handle_input (ACE_HANDLE)
 {
   ClientService *client = 0;
   ACE_NEW_RETURN (client, ClientService, -1);
-#if defined ACE_HAS_CPP11
   std::unique_ptr<ClientService> p (client);
-#else
-  auto_ptr<ClientService> p (client);
-#endif
 
   if (this->acceptor_.accept (client->peer ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
