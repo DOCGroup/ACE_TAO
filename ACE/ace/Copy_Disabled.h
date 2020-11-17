@@ -50,8 +50,10 @@ public:
   ACE_Copy_Disabled (void);
 
 private:
-  ACE_Copy_Disabled (const ACE_Copy_Disabled &);
-  ACE_Copy_Disabled &operator= (const ACE_Copy_Disabled &);
+  ACE_Copy_Disabled (const ACE_Copy_Disabled &) = delete;
+  ACE_Copy_Disabled (ACE_Copy_Disabled &&) = delete;
+  ACE_Copy_Disabled &operator= (const ACE_Copy_Disabled &) = delete;
+  ACE_Copy_Disabled &operator= (ACE_Copy_Disabled &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
