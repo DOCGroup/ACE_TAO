@@ -221,7 +221,6 @@ def update_version_files (component):
 #define %s_MAJOR_VERSION %s
 #define %s_MINOR_VERSION %s
 #define %s_MICRO_VERSION %s
-#define %s_BETA_VERSION %s
 #define %s_VERSION \"%s\"
 #define %s_VERSION_CODE %s
 #define %s_MAKE_VERSION_CODE(a,b,c) (((a) << 16) + ((b) << 8) + (c))
@@ -469,7 +468,7 @@ def push_latest_branch (product, which):
     """Update one of the remote Latest_* branches to point to the new release.
     """
 
-    name = "Latest_" + which
+    name = "Latest_ACE7TAO3_" + which
 
     if opts.push:
         vprint ("Pushing branch", name)
@@ -481,15 +480,14 @@ def latest_branch_helper (fn, release_type):
     release_types = tuple(ReleaseType.__members__.values())
     do = release_types[release_types.index(release_type):]
     if ReleaseType.micro in do:
-        fn ("ACE_TAO", "Beta")
         fn ("ACE_TAO", "Micro")
-        fn ("MPC", "ACETAO_Micro")
+        fn ("MPC", "Micro")
     if ReleaseType.minor in do:
         fn ("ACE_TAO", "Minor")
-        fn ("MPC", "ACETAO_Minor")
+        fn ("MPC", "Minor")
     if ReleaseType.major in do:
         fn ("ACE_TAO", "Major")
-        fn ("MPC", "ACETAO_Major")
+        fn ("MPC", "Major")
 
 
 def tag ():
