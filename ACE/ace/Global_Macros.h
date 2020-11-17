@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/ACE_export.h"
 
@@ -61,7 +61,11 @@
 #  define ACE_ENDLESS_LOOP
 # endif /* ! ACE_ENDLESS_LOOP */
 
-# define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
+#if !defined (ACE_HAS_CPP11)
+# error ACE/TAO require C++11 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
+#endif /* !ACE_HAS_CPP11 */
+
+#define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
 
 // noexcept(false) specification to specify that the operation can
 // throw an exception
