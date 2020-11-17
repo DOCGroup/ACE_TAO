@@ -93,11 +93,7 @@ int basic_test (ACE_DLL &dll)
                        dll.error ()),
                       -1);
 
-#if defined ACE_HAS_CPP11
   std::unique_ptr<Hello> my_hello (factory ());
-#else
-  auto_ptr<Hello> my_hello (factory ());
-#endif
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();

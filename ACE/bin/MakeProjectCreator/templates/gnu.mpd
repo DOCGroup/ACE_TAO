@@ -200,15 +200,6 @@ VSHDIR = <%targetoutdir%>.shobj/
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 <%marker(extension)%>
-<%if(ciao)%>
-include $(CIAO_ROOT)/rules.ciao.GNU
-<%endif%>
-<%if(dance)%>
-include $(DANCE_ROOT)/rules.dance.GNU
-<%endif%>
-<%if(tao)%>
-include $(TAO_ROOT)/rules.tao.GNU
-<%endif%>
 
 <%if(version)%>
 GNUACE_PROJECT_VERSION = <%version%>
@@ -570,6 +561,9 @@ export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%cust
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+<%if(precious_files)%>
+PRECIOUS_FILES +=<%foreach(precious_files)%><%foreach(custom_type->input_file->output_files)%><%if(contains(custom_type->input_file->output_file, precious_file))%> <%custom_type->input_file->output_file%><%endif%><%endfor%><%endfor%>
+<%endif%>
 <%if(custom_type->input_file->non_source_output_files)%>
 OBJS_DEPEND_ON_GENERATED = 1
 <%endif%>
@@ -735,7 +729,7 @@ incremental_depend_idl::
 
 realclean: clean
 ifneq ($(GENERATED_DIRTY),)
-	-$(RM) -r $(GENERATED_DIRTY)
+	-$(RM) -r $(filter-out $(PRECIOUS_FILES),$(GENERATED_DIRTY))
 endif
 <%if(postclean)%>
 	-<%eval(postclean)%>
