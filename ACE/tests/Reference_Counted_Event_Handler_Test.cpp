@@ -78,14 +78,14 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int &events)
 
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   this->pipe_.close ();
 }
@@ -95,7 +95,7 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler::handle_input() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -126,7 +126,7 @@ Reference_Counted_Event_Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler::handle_output() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -152,7 +152,7 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %d\n",
               (const char *) arg,
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -176,7 +176,7 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
               "Reference count is %d\n",
               handle,
               masks,
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   return 0;
 }
@@ -189,7 +189,7 @@ Reference_Counted_Event_Handler::add_reference (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "Reference count after add_reference() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   return reference_count;
 }
@@ -854,7 +854,7 @@ Closed_In_Upcall_Event_Handler::handle_close (ACE_HANDLE handle,
               ACE_TEXT ("Reference count is %d\n"),
               handle,
               masks,
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   return 0;
 }
@@ -867,7 +867,7 @@ Closed_In_Upcall_Event_Handler::add_reference (void)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Reference count after add_reference() is %d\n"),
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   return reference_count;
 }

@@ -296,7 +296,7 @@ Sender::Sender (ACE_HANDLE handle,
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Sender::Sender() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 }
 
 Sender::~Sender (void)
@@ -304,7 +304,7 @@ Sender::~Sender (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in ~Sender::Sender() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
@@ -316,7 +316,7 @@ Sender::handle_input (ACE_HANDLE)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Sender::handle_input() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   //
   // In this test, this method is only called when the connection has
@@ -417,7 +417,7 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in Receiver::Receiver() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 }
 
 Receiver::~Receiver (void)
@@ -425,7 +425,7 @@ Receiver::~Receiver (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Reference count in ~Receiver::Receiver() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   // Close the socket that we are responsible for.
   ACE_OS::closesocket (this->handle_);
