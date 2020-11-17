@@ -6,10 +6,6 @@
 /* Need to see if ACE_HAS_BUILTIN_ATOMIC_OP defined */
 #include "ace/Atomic_Op.h"
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Event_Handler.inl"
-#endif /* __ACE_INLINE__ */
-
 #include <algorithm>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

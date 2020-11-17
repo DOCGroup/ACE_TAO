@@ -396,7 +396,7 @@ public:
                            ACE_Reactor_Mask mask);
 
   /// Default destructor.
-  ~ACE_Notification_Buffer (void);
+  ~ACE_Notification_Buffer (void) = default;
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.
@@ -407,10 +407,6 @@ public:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Event_Handler.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */
