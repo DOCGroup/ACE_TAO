@@ -552,7 +552,3 @@ AST_ValueType::lookup_primary_key_base (void) const
 
   return retval;
 }
-
-IMPL_NARROW_FROM_DECL(AST_ValueType)
-IMPL_NARROW_FROM_SCOPE(AST_ValueType)
-

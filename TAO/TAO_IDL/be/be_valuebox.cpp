@@ -63,7 +63,3 @@ be_valuebox::destroy (void)
   this->AST_ValueBox::destroy ();
   this->be_type::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_valuebox)

@@ -88,10 +88,6 @@ public:
   // Visiting.
   virtual int accept (be_visitor* visitor);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_type);
-
 protected:
   /// Computes the fully scoped typecode name.
   virtual void compute_tc_name (void);

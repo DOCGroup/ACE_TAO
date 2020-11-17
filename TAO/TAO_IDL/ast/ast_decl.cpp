@@ -1568,11 +1568,6 @@ AST_Decl::in_tmpl_mod_not_aliased (bool val)
   this->in_tmpl_mod_not_aliased_ = val;
 }
 
-//Narrowing methods for AST_Decl.
-
-IMPL_NARROW_FROM_DECL(AST_Decl)
-
-
 void
 AST_Decl::annotation_appls (const AST_Annotation_Appls &annotations)
 {

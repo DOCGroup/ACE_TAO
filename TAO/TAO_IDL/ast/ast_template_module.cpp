@@ -273,7 +273,3 @@ AST_Template_Module::match_param_by_type (
 
   return false;
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module)
-IMPL_NARROW_FROM_SCOPE (AST_Template_Module)
-

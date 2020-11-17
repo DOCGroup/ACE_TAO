@@ -310,5 +310,3 @@ AST_Attribute::annotatable () const
 {
   return true;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Attribute)

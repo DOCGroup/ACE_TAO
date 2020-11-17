@@ -58,7 +58,3 @@ AST_Finder::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_finder (this);
 }
-
-IMPL_NARROW_FROM_DECL(AST_Finder)
-IMPL_NARROW_FROM_SCOPE(AST_Finder)
-

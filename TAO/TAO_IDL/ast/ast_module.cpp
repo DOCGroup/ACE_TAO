@@ -131,9 +131,6 @@ AST_Module::destroy (void)
   this->AST_Decl::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(AST_Module)
-IMPL_NARROW_FROM_SCOPE(AST_Module)
-
 // Dump this AST_Module node to the ostream o.
 void
 AST_Module::dump (ACE_OSTREAM_TYPE &o)

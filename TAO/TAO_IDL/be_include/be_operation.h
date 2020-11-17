@@ -58,10 +58,6 @@ public:
   bool is_attr_op (void) const;
   void is_attr_op (bool val);
 
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_operation);
-  DEF_NARROW_FROM_SCOPE (be_operation);
-
 protected:
   bool is_sendc_ami_;
   bool is_excep_ami_;

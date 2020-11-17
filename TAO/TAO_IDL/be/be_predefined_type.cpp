@@ -261,7 +261,3 @@ be_predefined_type::destroy (void)
   this->AST_PredefinedType::destroy ();
   this->be_type::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_predefined_type)

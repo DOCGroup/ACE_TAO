@@ -102,9 +102,6 @@ public:
   void owns_base_type (bool val);
   // Sometimes this has to be accessed or managed from outside.
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Typedef);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

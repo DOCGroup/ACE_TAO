@@ -54,8 +54,3 @@ be_root::accept (be_visitor *visitor)
 {
   return visitor->visit_root (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_root)
-IMPL_NARROW_FROM_SCOPE (be_root)

@@ -39,8 +39,6 @@ public:
   virtual void destroy (void);
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_extended_port);
 };
 
 #endif // BE_EXTENDED_PORT_H

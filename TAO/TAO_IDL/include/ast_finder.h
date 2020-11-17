@@ -13,10 +13,6 @@ public:
   AST_Finder (UTL_ScopedName *n);
 
   virtual ~AST_Finder (void);
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Finder);
-  DEF_NARROW_FROM_SCOPE(AST_Finder);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

@@ -877,7 +877,3 @@ be_sequence::destroy (void)
   this->be_type::destroy ();
   this->AST_Sequence::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_sequence)

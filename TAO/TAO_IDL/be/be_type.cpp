@@ -394,7 +394,3 @@ be_type::accept (be_visitor *visitor)
 {
   return visitor->visit_type (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_type)

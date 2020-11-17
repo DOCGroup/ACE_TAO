@@ -371,9 +371,3 @@ AST_Enum::destroy (void)
   this->UTL_Scope::destroy ();
   this->AST_ConcreteType::destroy ();
 }
-
-
-
-
-IMPL_NARROW_FROM_DECL(AST_Enum)
-IMPL_NARROW_FROM_SCOPE(AST_Enum)

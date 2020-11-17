@@ -268,5 +268,3 @@ AST_Component::be_add_uses (AST_Uses *i,
   return 0;
 }
 
-IMPL_NARROW_FROM_DECL (AST_Component)
-IMPL_NARROW_FROM_SCOPE (AST_Component)

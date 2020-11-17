@@ -89,10 +89,6 @@ public:
   UTL_ExceptList *get_get_exceptions (void) const;
   UTL_ExceptList *get_set_exceptions (void) const;
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Attribute);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

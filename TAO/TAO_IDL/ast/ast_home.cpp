@@ -264,21 +264,11 @@ AST_Home::ast_accept (ast_visitor *visitor)
 AST_Factory *
 AST_Home::fe_add_factory (AST_Factory *f)
 {
-  return
-    AST_Factory::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Factory*> (this->fe_add_decl (f));
 }
 
 AST_Finder *
 AST_Home::fe_add_finder (AST_Finder *f)
 {
-  return
-    AST_Finder::narrow_from_decl (
-      this->fe_add_decl (f));
+  return dynamic_cast<AST_Finder*> (this->fe_add_decl (f));
 }
-
-  // Narrowing.
-
-IMPL_NARROW_FROM_DECL(AST_Home)
-IMPL_NARROW_FROM_SCOPE(AST_Home)
-

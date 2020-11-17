@@ -66,7 +66,3 @@ be_native::accept (be_visitor *visitor)
 {
   return visitor->visit_native (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL(be_native)

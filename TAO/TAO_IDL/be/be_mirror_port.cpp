@@ -43,6 +43,3 @@ be_mirror_port::accept (be_visitor *visitor)
 {
   return visitor->visit_mirror_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_mirror_port)
-

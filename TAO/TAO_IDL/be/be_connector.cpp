@@ -132,7 +132,3 @@ be_connector::check_ancestors (void)
       base = base->base_connector ();
     }
 }
-
-IMPL_NARROW_FROM_DECL (be_connector)
-IMPL_NARROW_FROM_SCOPE (be_connector)
-

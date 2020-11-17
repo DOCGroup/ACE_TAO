@@ -286,8 +286,3 @@ be_union::nlabels (void)
 
   return retval;
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union)
-IMPL_NARROW_FROM_SCOPE (be_union)

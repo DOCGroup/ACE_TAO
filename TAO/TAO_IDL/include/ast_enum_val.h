@@ -80,9 +80,6 @@ public:
 
   virtual ~AST_EnumVal (void);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_EnumVal);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 

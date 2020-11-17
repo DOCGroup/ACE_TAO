@@ -17,9 +17,6 @@ public:
 
   FE_Utils::T_Param_Info const *info (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Param_Holder);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

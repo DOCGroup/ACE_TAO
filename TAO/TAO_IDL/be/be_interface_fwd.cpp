@@ -69,7 +69,3 @@ be_interface_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_interface_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_interface_fwd)

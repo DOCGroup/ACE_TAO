@@ -304,5 +304,3 @@ AST_InterfaceFwd::adjust_found (
 
   return this;
 }
-
-IMPL_NARROW_FROM_DECL (AST_InterfaceFwd)

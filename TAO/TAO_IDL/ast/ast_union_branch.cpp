@@ -241,5 +241,3 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }
 }
-
-IMPL_NARROW_FROM_DECL(AST_UnionBranch)

@@ -46,6 +46,3 @@ be_extended_port::accept (be_visitor *visitor)
 {
   return visitor->visit_extended_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_extended_port)
-

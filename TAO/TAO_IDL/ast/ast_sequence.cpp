@@ -280,8 +280,6 @@ AST_Sequence::destroy (void)
   this->AST_ConcreteType::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(AST_Sequence)
-
 AST_Annotation_Appls &
 AST_Sequence::base_type_annotations ()
 {

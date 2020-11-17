@@ -40,9 +40,6 @@ void AST_Annotation_Decl::destroy ()
   AST_Decl::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL (AST_Annotation_Decl)
-IMPL_NARROW_FROM_SCOPE (AST_Annotation_Decl)
-
 void
 AST_Annotation_Decl::escape_name (Identifier *name)
 {

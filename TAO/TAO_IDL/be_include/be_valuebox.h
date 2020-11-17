@@ -31,9 +31,6 @@ public:
 
   // Cleanup.
   virtual void destroy (void);
-
-  // Narrowing
-  DEF_NARROW_FROM_DECL (be_valuebox);
 };
 
 #endif /* TAO_BE_VALUEBOX_H */

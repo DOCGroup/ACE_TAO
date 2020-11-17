@@ -44,11 +44,6 @@ public:
 
   // Visiting.
   virtual int accept (be_visitor* visitor);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_home);
-  DEF_NARROW_FROM_SCOPE (be_home);
 };
 
 #endif // if !defined

@@ -2132,8 +2132,6 @@ UTL_Scope::iter_lookup_by_name_local (AST_Decl *d,
   return result;
 }
 
-IMPL_NARROW_FROM_SCOPE(UTL_Scope)
-
 // UTL_SCOPE_ACTIVE_ITERATOR
 
 // Constructor.

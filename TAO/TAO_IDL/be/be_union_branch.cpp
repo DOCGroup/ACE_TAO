@@ -188,7 +188,3 @@ be_union_branch::destroy (void)
   this->be_decl::destroy ();
   this->AST_UnionBranch::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union_branch)

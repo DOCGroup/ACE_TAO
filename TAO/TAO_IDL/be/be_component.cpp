@@ -166,9 +166,6 @@ be_component::n_emits (void) const
   return this->n_emits_;
 }
 
-IMPL_NARROW_FROM_DECL (be_component)
-IMPL_NARROW_FROM_SCOPE (be_component)
-
 void
 be_component::scan (UTL_Scope *s)
 {

@@ -17,8 +17,6 @@ public:
 
   virtual ~AST_Fixed ();
 
-  DEF_NARROW_FROM_DECL (AST_Fixed);
-
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   virtual void destroy ();

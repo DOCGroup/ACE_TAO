@@ -22,9 +22,6 @@ public:
   FE_Utils::T_ARGLIST const *
   template_args (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (AST_Template_Module_Inst);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

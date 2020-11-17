@@ -82,11 +82,6 @@ public:
 
   virtual ~AST_Enum (void);
 
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL(AST_Enum);
-  DEF_NARROW_FROM_SCOPE(AST_Enum);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 

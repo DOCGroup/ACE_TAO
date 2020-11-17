@@ -107,10 +107,6 @@ public:
   // Cleanup function.
   virtual void destroy (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_InterfaceFwd);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
 

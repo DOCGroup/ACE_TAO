@@ -305,7 +305,3 @@ AST_Factory::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_factory (this);
 }
-
-IMPL_NARROW_FROM_DECL(AST_Factory)
-IMPL_NARROW_FROM_SCOPE(AST_Factory)
-

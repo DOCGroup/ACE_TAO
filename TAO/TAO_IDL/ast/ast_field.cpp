@@ -232,8 +232,6 @@ AST_Field::contains_wstring (void)
   return this->ref_type_->contains_wstring ();
 }
 
-IMPL_NARROW_FROM_DECL(AST_Field)
-
 bool AST_Field::annotatable () const
 {
   return true;

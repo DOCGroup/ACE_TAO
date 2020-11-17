@@ -47,6 +47,3 @@ AST_Mirror_Port::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_mirror_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Mirror_Port)
-

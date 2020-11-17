@@ -38,9 +38,6 @@ public:
 
   // Cleanup
   virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_valuetype_fwd);
 };
 
 #endif // if !defined

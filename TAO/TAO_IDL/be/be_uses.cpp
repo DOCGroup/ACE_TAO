@@ -59,5 +59,3 @@ be_uses::original_uses (void)
 {
   return this->original_uses_;
 }
-
-IMPL_NARROW_FROM_DECL (be_uses)

@@ -88,9 +88,6 @@ public:
   AST_Expression *max_size (void);
   long width (void);
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_String);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

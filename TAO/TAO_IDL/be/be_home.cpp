@@ -162,6 +162,3 @@ be_home::accept (be_visitor *visitor)
             ? 0
             : visitor->visit_home (this));
 }
-
-IMPL_NARROW_FROM_DECL (be_home)
-IMPL_NARROW_FROM_SCOPE (be_home)

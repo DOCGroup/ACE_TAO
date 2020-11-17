@@ -121,9 +121,3 @@ AST_EventType::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_eventtype (this);
 }
-
-  // Narrowing.
-
-IMPL_NARROW_FROM_DECL(AST_EventType)
-IMPL_NARROW_FROM_SCOPE(AST_EventType)
-

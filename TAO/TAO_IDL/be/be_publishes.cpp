@@ -44,5 +44,3 @@ be_publishes::destroy (void)
   this->AST_Publishes::destroy ();
   this->be_field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_publishes)

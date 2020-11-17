@@ -57,6 +57,3 @@ AST_Template_Module_Inst::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_template_module_inst (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst)
-

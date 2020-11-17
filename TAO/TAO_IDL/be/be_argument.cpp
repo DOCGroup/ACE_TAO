@@ -66,5 +66,3 @@ be_argument::destroy (void)
   this->be_decl::destroy ();
   this->AST_Argument::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_argument)

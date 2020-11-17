@@ -42,6 +42,3 @@ be_enum_val::destroy (void)
   this->AST_EnumVal::destroy ();
   this->be_decl::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_enum_val)
-

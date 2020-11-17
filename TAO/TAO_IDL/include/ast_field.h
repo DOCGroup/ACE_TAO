@@ -128,10 +128,6 @@ public:
   // we are destroyed.
   void set_recursive_flag (void);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_Field);
-
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

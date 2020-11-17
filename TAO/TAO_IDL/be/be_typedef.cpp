@@ -118,5 +118,3 @@ be_typedef::accept (be_visitor *visitor)
 {
   return visitor->visit_typedef (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_typedef)

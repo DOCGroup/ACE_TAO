@@ -561,6 +561,3 @@ AST_Operation::annotatable () const
 {
   return true;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Operation)
-IMPL_NARROW_FROM_SCOPE(AST_Operation)

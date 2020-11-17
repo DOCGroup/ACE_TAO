@@ -37,9 +37,6 @@ public:
   virtual void destroy (void);
 
   virtual int accept (be_visitor *visitor);
-
-  DEF_NARROW_FROM_DECL (be_template_module);
-  DEF_NARROW_FROM_SCOPE (be_template_module);
 };
 
 #endif /* TAO_BE_TEMPLATE_MODULE_H */

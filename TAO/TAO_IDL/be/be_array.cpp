@@ -346,7 +346,3 @@ be_array::destroy (void)
   this->be_type::destroy ();
   this->AST_Array::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_array)

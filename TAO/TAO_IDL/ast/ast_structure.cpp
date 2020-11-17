@@ -580,9 +580,6 @@ AST_Structure::destroy (void)
   this->UTL_Scope::destroy ();
 }
 
-IMPL_NARROW_FROM_DECL(AST_Structure)
-IMPL_NARROW_FROM_SCOPE(AST_Structure)
-
 bool AST_Structure::annotatable () const
 {
   return true;

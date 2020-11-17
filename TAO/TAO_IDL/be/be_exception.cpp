@@ -68,8 +68,3 @@ be_exception::accept (be_visitor *visitor)
 {
   return visitor->visit_exception (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_exception)
-IMPL_NARROW_FROM_SCOPE (be_exception)

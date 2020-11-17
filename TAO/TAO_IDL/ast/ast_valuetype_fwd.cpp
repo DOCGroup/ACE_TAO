@@ -50,7 +50,3 @@ AST_ValueTypeFwd::destroy (void)
 {
   this->AST_InterfaceFwd::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (AST_ValueTypeFwd)

@@ -1032,9 +1032,6 @@ AST_Union::udisc_type (void)
   return this->pd_udisc_type;
 }
 
-IMPL_NARROW_FROM_DECL(AST_Union)
-IMPL_NARROW_FROM_SCOPE(AST_Union)
-
 AST_Annotation_Appls &
 AST_Union::disc_annotations ()
 {

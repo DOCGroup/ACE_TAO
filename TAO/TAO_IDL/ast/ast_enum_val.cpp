@@ -103,8 +103,6 @@ AST_EnumVal::ast_accept (ast_visitor *visitor)
   return visitor->visit_enum_val (this);
 }
 
-IMPL_NARROW_FROM_DECL(AST_EnumVal)
-
 AST_Enum *
 AST_EnumVal::enum_parent ()
 {

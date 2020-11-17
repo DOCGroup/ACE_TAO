@@ -174,5 +174,3 @@ be_string::destroy (void)
   this->be_type::destroy ();
   this->AST_String::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL (be_string)

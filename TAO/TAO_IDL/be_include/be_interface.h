@@ -165,11 +165,6 @@ public:
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_interface);
-  DEF_NARROW_FROM_SCOPE (be_interface);
-
   /// Helper method passed to the template method that generates code for the
   /// is_a method.
   static int is_a_helper (be_interface *,

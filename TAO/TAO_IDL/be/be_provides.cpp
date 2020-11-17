@@ -40,11 +40,9 @@ be_type *
 be_provides::provides_type (void) const
 {
   return
-    be_type::narrow_from_decl (
+    dynamic_cast<be_type*> (
       this->AST_Provides::provides_type ());
 }
-
-IMPL_NARROW_FROM_DECL (be_provides)
 
 int
 be_provides::accept (be_visitor *visitor)

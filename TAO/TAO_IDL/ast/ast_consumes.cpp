@@ -44,5 +44,3 @@ AST_Consumes::destroy (void)
 {
   this->AST_Field::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Consumes)

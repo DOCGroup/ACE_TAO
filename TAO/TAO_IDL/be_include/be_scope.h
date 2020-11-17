@@ -62,9 +62,6 @@ public:
   /// Visiting.
   virtual int accept (be_visitor *visitor);
 
-  // Narrowing.
-  DEF_NARROW_FROM_SCOPE (be_scope);
-
 private:
   /// If set, generate a comma after every element is handled.
   unsigned short comma_;

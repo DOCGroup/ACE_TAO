@@ -50,6 +50,3 @@ AST_Extended_Port::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_extended_port (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Extended_Port)
-

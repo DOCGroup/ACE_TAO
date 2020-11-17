@@ -103,11 +103,6 @@ public:
   // Cleanup.
   virtual void destroy (void);
 
- // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_valuetype);
-  DEF_NARROW_FROM_SCOPE (be_valuetype);
-
   /// Compute the fully scoped skel class name.
   void compute_fullobvskelname (void);
 

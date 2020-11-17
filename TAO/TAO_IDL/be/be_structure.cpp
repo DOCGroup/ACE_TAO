@@ -158,6 +158,3 @@ be_structure::accept (be_visitor *visitor)
 {
   return visitor->visit_structure (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_structure)
-IMPL_NARROW_FROM_SCOPE (be_structure)

@@ -51,8 +51,3 @@ be_valuetype_fwd::destroy (void)
 {
   this->be_interface_fwd::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_valuetype_fwd)
-

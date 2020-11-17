@@ -54,5 +54,3 @@ AST_Expression *AST_Fixed::scale ()
 {
   return pd_scale;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Fixed)

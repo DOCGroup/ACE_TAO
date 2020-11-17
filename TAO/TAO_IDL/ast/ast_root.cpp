@@ -220,6 +220,3 @@ AST_Root::fini (void)
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Root)
-IMPL_NARROW_FROM_SCOPE(AST_Root)

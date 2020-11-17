@@ -45,7 +45,3 @@ be_structure_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_structure_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_structure_fwd)

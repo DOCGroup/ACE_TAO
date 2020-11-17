@@ -21,9 +21,6 @@ public:
   // Non-virtual override of frontend method.
   be_eventtype *publishes_type (void) const;
 
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(be_publishes);
-
   // Visiting.
   virtual int accept (be_visitor *visitor);
 

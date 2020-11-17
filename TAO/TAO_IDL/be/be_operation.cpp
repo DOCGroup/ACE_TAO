@@ -138,6 +138,3 @@ be_operation::is_attr_op (bool val)
 {
   this->is_attr_op_ = val;
 }
-
-IMPL_NARROW_FROM_DECL (be_operation)
-IMPL_NARROW_FROM_SCOPE (be_operation)

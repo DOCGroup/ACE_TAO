@@ -783,6 +783,3 @@ be_valuetype::abstract_supports_helper (be_interface *,
 
   return 0;
 }
-
-IMPL_NARROW_FROM_DECL (be_valuetype)
-IMPL_NARROW_FROM_SCOPE (be_valuetype)

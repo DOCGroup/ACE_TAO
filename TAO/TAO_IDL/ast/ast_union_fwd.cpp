@@ -48,7 +48,3 @@ AST_UnionFwd::destroy (void)
 {
   this->AST_StructureFwd::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (AST_UnionFwd)

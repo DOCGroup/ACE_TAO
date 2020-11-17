@@ -3038,6 +3038,3 @@ be_interface::create_with_prefix_suffix (const char *prefix,
 
   return cat_string;
 }
-
-IMPL_NARROW_FROM_DECL (be_interface)
-IMPL_NARROW_FROM_SCOPE (be_interface)
