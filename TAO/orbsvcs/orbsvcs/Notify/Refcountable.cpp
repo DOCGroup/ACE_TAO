@@ -3,7 +3,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Guard_T.h"
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
 #include <map>
 #include <string>
@@ -68,7 +68,7 @@ TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)
 
 TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 {
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   TAO_Notify_Tracker::Entry e = TAO_Notify_Tracker::get_instance().find( this );
   if ( e.obj != 0 )
   {
@@ -97,7 +97,7 @@ TAO_Notify_Refcountable::_incr_refcnt (void)
   {
     ORBSVCS_DEBUG ((LM_DEBUG,"object:%x incr refcount = %d\n", this, refcount ));
   }
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
   // Stack-instantiated-non-servants should never have _incr_refcnt called.
   // We do not care about stack-instances. Stack-instantiated servants break
   // the tracker.
@@ -131,7 +131,7 @@ TAO_Notify_Refcountable::_decr_refcnt (void)
   return refcount;
 }
 
-#if ( TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0 )
+#if (TAO_NOTIFY_REFCOUNT_DIAGNOSTICS != 0)
 
 std::auto_ptr< TAO_Notify_Tracker > TAO_Notify_Tracker::s_instance;
 
