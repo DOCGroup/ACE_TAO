@@ -254,20 +254,16 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
   if (! node->is_abstract ())
     {
       *os << "// Private and unimplemented for concrete interfaces." << be_nl
-          << "ACE_UNIMPLEMENTED_FUNC (" << node->local_name () << " (const "
-          << node->local_name () << " &))"
-          << "\n#if defined (ACE_HAS_CPP11)" << be_nl
-          << "ACE_UNIMPLEMENTED_FUNC (" << node->local_name () << " ("
-          << node->local_name () << " &&))"
-          << "\n#endif /* ACE_HAS_CPP11 */" << be_nl;
+          << node->local_name () << " (const "
+          << node->local_name () << " &) = delete;" << be_nl
+          << node->local_name () << " ("
+          << node->local_name () << " &&) = delete;" << be_nl;
     }
 
-  *os << "ACE_UNIMPLEMENTED_FUNC (" << node->local_name ()
-      << " &operator= (const " << node->local_name () << " &))"
-      << "\n#if defined (ACE_HAS_CPP11)" << be_nl
-      << "ACE_UNIMPLEMENTED_FUNC (" << node->local_name ()
-      << " &operator= (" << node->local_name () << " &&))"
-      << "\n#endif /* ACE_HAS_CPP11 */" << be_uidt_nl
+  *os << node->local_name ()
+      << " &operator= (const " << node->local_name () << " &) = delete;" << be_nl
+      <<  node->local_name ()
+      << " &operator= (" << node->local_name () << " &&) = delete;" << be_uidt_nl
       << "};";
 
   be_visitor_context ctx (*this->ctx_);

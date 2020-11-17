@@ -238,12 +238,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       }
 
       // Default copy/move constructor and assignment operators
-      *os << "\n#if defined (ACE_HAS_CPP11)" << be_nl
+      *os << be_nl
           << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
           << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
           << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
-          << "\n#endif /* ACE_HAS_CPP11 */" << be_nl;
+          << be_nl;
 
       *os << "virtual ~" << node->local_name () << " (void);";
 

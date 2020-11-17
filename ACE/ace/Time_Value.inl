@@ -397,10 +397,7 @@ operator - (const ACE_Time_Value &tv1,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_CPP11)
-
 // Additional chrono streaming operators.
-
 namespace std
 {
   namespace chrono
@@ -552,5 +549,3 @@ namespace std
     }
   }
 }
-
-#endif /* ACE_HAS_CPP11 */

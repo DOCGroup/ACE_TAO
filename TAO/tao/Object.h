@@ -342,12 +342,8 @@ namespace CORBA
     TAO::Object_Proxy_Broker *proxy_broker () const;
 
     /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
 # define TAO_OBJECT_USES_STD_ATOMIC_REFCOUNT
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
   private:
     // = Unimplemented methods

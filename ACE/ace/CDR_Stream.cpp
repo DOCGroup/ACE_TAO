@@ -1689,7 +1689,6 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
 ACE_CDR::Boolean
 ACE_InputCDR::read_string (std::string& x)
 {
-#if defined (ACE_HAS_CPP11)
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
@@ -1727,20 +1726,12 @@ ACE_InputCDR::read_string (std::string& x)
   this->good_bit_ = false;
   x.clear ();
   return false;
-#else
-  ACE_CDR::Char *buf = 0;
-  ACE_CDR::Boolean const marshal_flag = this->read_string (buf);
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
-#endif
 }
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_CDR::Boolean
 ACE_InputCDR::read_wstring (std::wstring& x)
 {
-#if defined (ACE_HAS_CPP11)
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
   // smaller and should be better for the cache ;-) ;-)
@@ -1814,13 +1805,6 @@ ACE_InputCDR::read_wstring (std::wstring& x)
   this->good_bit_ = false;
   x.clear ();
   return false;
-#else
-  ACE_CDR::WChar *buf = 0;
-  ACE_CDR::Boolean const marshal_flag = this->read_wstring (buf);
-  x.assign (buf);
-  ACE::strdelete (buf);
-  return marshal_flag;
-#endif
 }
 #endif
 
