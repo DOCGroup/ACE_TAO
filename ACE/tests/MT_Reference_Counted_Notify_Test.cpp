@@ -60,7 +60,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (void)
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler() ")
         ACE_TEXT ("is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
@@ -70,14 +70,14 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
         ACE_TEXT ("is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
-  if (0 != this->reference_count_.value ())
+  if (0 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in ~Reference_Counted_Event_Handler() ")
         ACE_TEXT ("should be 0 but is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 }
 
 int
@@ -88,14 +88,14 @@ Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
       ((LM_DEBUG,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
         ACE_TEXT ("handle_input() is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
-  if (2 != this->reference_count_.value ())
+  if (2 != this->reference_count_.load ())
     ACE_ERROR
       ((LM_ERROR,
         ACE_TEXT ("Reference count in Reference_Counted_Event_Handler::")
         ACE_TEXT ("handle_input() should be 2 but is %d\n"),
-        this->reference_count_.value ()));
+        this->reference_count_.load ()));
 
   return 0;
 }
@@ -109,7 +109,7 @@ Reference_Counted_Event_Handler::add_reference (void)
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Reference count after add_reference() is %d\n"),
-                this->reference_count_.value ()));
+                this->reference_count_.load ()));
 
   return reference_count;
 }

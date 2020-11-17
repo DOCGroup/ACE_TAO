@@ -30,6 +30,7 @@
 
 // Get ACE_Time_Value in
 #include "ace/Time_Value.h"
+#include "ace/Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
