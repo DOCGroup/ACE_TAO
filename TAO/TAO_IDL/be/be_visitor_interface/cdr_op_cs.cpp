@@ -106,25 +106,24 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
       << "if (!(strm >> obj.inout ()))" << be_idt_nl
       << "{" << be_idt_nl
       << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "typedef ::" << node->name () << " RHS_SCOPED_NAME;"
-      << be_nl_2
+      << "}" << be_uidt_nl
+      << be_nl
       << "// Narrow to the right type." << be_nl;
 
-  *os << "_tao_objref =" << be_idt_nl;
+  *os << "_tao_objref = ";
 
   if (!node->is_abstract ())
     {
-      *os << "TAO::Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
+      *os << "TAO::Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
   else
     {
-      *os << "TAO::AbstractBase_Narrow_Utils<RHS_SCOPED_NAME>::unchecked_narrow ("
+      *os << "TAO::AbstractBase_Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
           << "obj.in ());";
     }
 
-  *os << be_nl << be_uidt_nl;
+  *os << be_nl_2;
 
   *os << "return true;" << be_uidt_nl
       << "}" << be_nl;
