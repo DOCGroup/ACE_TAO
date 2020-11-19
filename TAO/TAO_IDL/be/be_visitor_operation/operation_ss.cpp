@@ -220,7 +220,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
   *os << be_nl_2
       << "TAO::Argument * const args[] =" << be_idt_nl
       << "{" << be_idt_nl
-      << "&retval";
+      << "std::addressof(retval)";
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -230,7 +230,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
         dynamic_cast<AST_Argument*> (arg_list_iter.item ());
 
       *os << "," << be_nl
-          << "&_tao_" << arg->local_name ();
+          << "std::addressof(_tao_" << arg->local_name () << ")";
     }
 
   *os << be_uidt_nl
@@ -280,7 +280,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
     }
   else
     {
-      *os << "                       , 0" << be_nl
+      *os << "                       , nullptr" << be_nl
           << "                       , 0";
     }
 

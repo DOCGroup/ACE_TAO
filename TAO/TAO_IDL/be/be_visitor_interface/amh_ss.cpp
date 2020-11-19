@@ -79,7 +79,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
       << "ACE_NEW_RETURN (" << be_idt << be_idt_nl
       << "tmp," << be_nl
       << "::CORBA::Object (stub, _tao_opt_colloc, this)," << be_nl
-      << "0" << be_uidt_nl
+      << "nullptr" << be_uidt_nl
       << ");" << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl

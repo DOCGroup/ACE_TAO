@@ -981,15 +981,15 @@ be_interface::gen_operation_table (const char *flat_name,
         // Generate the skeleton for the is_a method.
         if (amh)
           {
-            *os << "{\"_is_a\", &TAO_AMH_Skeletons::_is_a_amh_skel, 0}," << be_nl;
+            *os << "{\"_is_a\", std::addressof(TAO_AMH_Skeletons::_is_a_amh_skel), nullptr}," << be_nl;
           }
         else if (be_global->gen_thru_poa_collocation ())
           {
-            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_thru_poa_skel, 0}," << be_nl;
+            *os << "{\"_is_a\", std::addressof(TAO_ServantBase::_is_a_thru_poa_skel), nullptr}," << be_nl;
           }
         else
           {
-            *os << "{\"_is_a\", &TAO_ServantBase::_is_a_skel, 0}," << be_nl;
+            *os << "{\"_is_a\", std::addressof(TAO_ServantBase::_is_a_skel), nullptr}," << be_nl;
           }
 
         ++this->skel_count_;
@@ -998,18 +998,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "{\"_non_existent\", &TAO_AMH_Skeletons"
-                    << "::_non_existent_amh_skel, 0}," << be_nl;
+                *os << "{\"_non_existent\", std::addressof(TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel), nullptr}," << be_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "{\"_non_existent\", &TAO_ServantBase"
-                    << "::_non_existent_thru_poa_skel, 0}," << be_nl;
+                *os << "{\"_non_existent\", std::addressof(TAO_ServantBase"
+                    << "::_non_existent_thru_poa_skel), nullptr}," << be_nl;
               }
             else
               {
-                *os << "{\"_non_existent\", &TAO_ServantBase"
-                    << "::_non_existent_skel, 0}," << be_nl;
+                *os << "{\"_non_existent\", std::addressof(TAO_ServantBase"
+                    << "::_non_existent_skel), nullptr}," << be_nl;
               }
 
             ++this->skel_count_;
@@ -1019,18 +1019,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "{\"_component\", &TAO_AMH_Skeletons"
-                    << "::_component_amh_skel, 0}," << be_nl;
+                *os << "{\"_component\", std::addressof(TAO_AMH_Skeletons"
+                    << "::_component_amh_skel), nullptr}," << be_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "{\"_component\", &TAO_ServantBase"
-                    << "::_component_thru_poa_skel, 0}," << be_nl;
+                *os << "{\"_component\", std::addressof(TAO_ServantBase"
+                    << "::_component_thru_poa_skel), nullptr}," << be_nl;
               }
             else
               {
-                *os << "{\"_component\", &TAO_ServantBase"
-                    << "::_component_skel, 0}," << be_nl;
+                *os << "{\"_component\", std::addressof(TAO_ServantBase"
+                    << "::_component_skel), nullptr}," << be_nl;
               }
 
             ++this->skel_count_;
@@ -1040,13 +1040,13 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "{\"_interface\", &TAO_AMH_Skeletons"
-                    << "::_interface_amh_skel, 0}," << be_nl;
+                *os << "{\"_interface\", std::addressof(TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel), nullptr}," << be_nl;
               }
             else
               {
-                *os << "{\"_interface\", &TAO_ServantBase"
-                    << "::_interface_skel, 0}," << be_nl;
+                *os << "{\"_interface\", std::addressof(TAO_ServantBase"
+                    << "::_interface_skel), nullptr}," << be_nl;
               }
 
             ++this->skel_count_;
@@ -1056,18 +1056,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "{\"_repository_id\", &TAO_AMH_Skeletons"
-                    << "::_repository_id_amh_skel, 0}" << be_uidt_nl;
+                *os << "{\"_repository_id\", std::addressof(TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel), nullptr}" << be_uidt_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "{\"_repository_id\", &TAO_ServantBase"
-                    << "::_repository_id_thru_poa_skel, 0}" << be_uidt_nl;
+                *os << "{\"_repository_id\", std::addressof(TAO_ServantBase"
+                    << "::_repository_id_thru_poa_skel), nullptr}" << be_uidt_nl;
               }
             else
               {
-                *os << "{\"_repository_id\", &TAO_ServantBase"
-                    << "::_repository_id_skel, 0}" << be_uidt_nl;
+                *os << "{\"_repository_id\", std::addressof(TAO_ServantBase"
+                    << "::_repository_id_skel), nullptr}" << be_uidt_nl;
               }
 
             ++this->skel_count_;
@@ -1205,18 +1205,18 @@ be_interface::gen_operation_table (const char *flat_name,
 
         if (amh)
           {
-            *os << "_is_a,&TAO_AMH_Skeletons"
-                << "::_is_a_amh_skel, 0" << be_nl;
+            *os << "_is_a,std::addressof(TAO_AMH_Skeletons"
+                << "::_is_a_amh_skel), nullptr" << be_nl;
           }
         else if (be_global->gen_thru_poa_collocation ())
           {
-            *os << "_is_a,&TAO_ServantBase"
-                << "::_is_a_thru_poa_skel, 0" << be_nl;
+            *os << "_is_a,std::addressof(TAO_ServantBase"
+                << "::_is_a_thru_poa_skel), nullptr" << be_nl;
           }
         else
           {
-            *os << "_is_a,&TAO_ServantBase"
-                << "::_is_a_skel, 0" << be_nl;
+            *os << "_is_a,std::addressof(TAO_ServantBase"
+                << "::_is_a_skel), nullptr" << be_nl;
           }
 
         ++this->skel_count_;
@@ -1225,18 +1225,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "_non_existent,&TAO_AMH_Skeletons"
-                    << "::_non_existent_amh_skel, 0" << be_nl;
+                *os << "_non_existent,std::addressof(TAO_AMH_Skeletons"
+                    << "::_non_existent_amh_skel), nullptr" << be_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "_non_existent,&TAO_ServantBase"
-                    << "::_non_existent_thru_poa_skel, 0" << be_nl;
+                *os << "_non_existent,std::addressof(TAO_ServantBase"
+                    << "::_non_existent_thru_poa_skel), nullptr" << be_nl;
               }
             else
               {
-                *os << "_non_existent,&TAO_ServantBase"
-                    << "::_non_existent_skel, 0" << be_nl;
+                *os << "_non_existent,std::addressof(TAO_ServantBase"
+                    << "::_non_existent_skel), nullptr" << be_nl;
               }
 
             ++this->skel_count_;
@@ -1246,18 +1246,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "_component,&TAO_AMH_Skeletons"
-                    << "::_component_amh_skel, 0" << be_nl;
+                *os << "_component,std::addressof(TAO_AMH_Skeletons"
+                    << "::_component_amh_skel), nullptr" << be_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "_component,&TAO_ServantBase"
-                    << "::_component_thru_poa_skel, 0" << be_nl;
+                *os << "_component,std::addressof(TAO_ServantBase"
+                    << "::_component_thru_poa_skel), nullptr" << be_nl;
               }
             else
               {
-                *os << "_component,&TAO_ServantBase"
-                    << "::_component_skel, 0" << be_nl;
+                *os << "_component,std::addressof(TAO_ServantBase"
+                    << "::_component_skel), nullptr" << be_nl;
               }
             ++this->skel_count_;
           }
@@ -1266,13 +1266,13 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "_interface,&TAO_AMH_Skeletons"
-                    << "::_interface_amh_skel, 0" << be_nl;
+                *os << "_interface,std::addressof(TAO_AMH_Skeletons"
+                    << "::_interface_amh_skel), nullptr" << be_nl;
               }
             else
               {
-                *os << "_interface,&TAO_ServantBase"
-                    << "::_interface_skel, 0" << be_nl;
+                *os << "_interface,std::addressof(TAO_ServantBase"
+                    << "::_interface_skel), nullptr" << be_nl;
               }
 
             ++this->skel_count_;
@@ -1282,18 +1282,18 @@ be_interface::gen_operation_table (const char *flat_name,
           {
             if (amh)
               {
-                *os << "_repository_id,&TAO_AMH_Skeletons"
-                    << "::_repository_id_amh_skel, 0" << be_nl;
+                *os << "_repository_id,std::addressof(TAO_AMH_Skeletons"
+                    << "::_repository_id_amh_skel), nullptr" << be_nl;
               }
             else if (be_global->gen_thru_poa_collocation ())
               {
-                *os << "_repository_id,&TAO_ServantBase"
-                    << "::_repository_id_thru_poa_skel, 0" << be_nl;
+                *os << "_repository_id,std::addressof(TAO_ServantBase"
+                    << "::_repository_id_thru_poa_skel), nullptr" << be_nl;
               }
             else
               {
-                *os << "_repository_id,&TAO_ServantBase"
-                    << "::_repository_id_skel, 0" << be_nl;
+                *os << "_repository_id,std::addressof(TAO_ServantBase"
+                    << "::_repository_id_skel), nullptr" << be_nl;
               }
 
             ++this->skel_count_;
@@ -1395,19 +1395,19 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 }
 
               // We are an operation node.
-              *os << "{\"" << d->original_local_name () << "\", &"
+              *os << "{\"" << d->original_local_name () << "\", std::addressof("
                   << full_skeleton_name << "::"
-                  << d->local_name () << "_skel,";
+                  << d->local_name () << "_skel),";
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &"
+                  *os << " std::addressof("
                       << this->full_direct_proxy_impl_name ()
-                      << "::" << d->local_name ();
+                      << "::" << d->local_name () << ")";
                 }
               else
                 {
-                  *os << " 0";
+                  *os << " nullptr";
                 }
 
               *os << "}," << be_nl;
@@ -1425,18 +1425,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               // Generate only the "get" entry if we are
               // readonly.
               *os << "{\"_get_" << d->original_local_name ()
-                  << "\", &" << full_skeleton_name
-                  << "::_get_" << d->local_name () << "_skel,";
+                  << "\", std::addressof(" << full_skeleton_name
+                  << "::_get_" << d->local_name () << "_skel),";
 
               if (be_global->gen_direct_collocation ())
                 {
-                  *os << " &"
+                  *os << " std::addressof("
                       << this->full_direct_proxy_impl_name ()
-                      << "::_get_" << d->local_name ();
+                      << "::_get_" << d->local_name () << ")";
                 }
               else
                 {
-                  *os << " 0";
+                  *os << " nullptr";
                 }
 
               *os << "}," << be_nl;
@@ -1447,18 +1447,18 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 {
                   // The set method
                   *os << "{\"_set_" << d->original_local_name ()
-                      << "\", &" << full_skeleton_name
-                      << "::_set_" << d->local_name () << "_skel,";
+                      << "\", std::addressof(" << full_skeleton_name
+                      << "::_set_" << d->local_name () << "_skel),";
 
                   if (be_global->gen_direct_collocation ())
                     {
-                      *os << " &"
+                      *os << " std::addressof("
                           << this->full_direct_proxy_impl_name ()
-                          << "::_set_" << d->local_name ();
+                          << "::_set_" << d->local_name () << ")";
                     }
                   else
                     {
-                      *os << " 0";
+                      *os << " nullptr";
                     }
 
                   *os << "}," << be_nl;
@@ -1513,54 +1513,54 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                     {
                       ACE_CString nspace = name.substring (0, name.rfind (':') - 1);
                       name = name.substring (name.rfind (':') + 1);
-                      *os << d->original_local_name () << ",&POA_"
+                      *os << d->original_local_name () << ",std::addressof(POA_"
                           << nspace.c_str () << "::AMH_"
                           << name.c_str () << "::"
                           << d->original_local_name ()
-                          << "_skel,";
+                          << "_skel),";
                     }
                   else
                     {
-                      *os << d->original_local_name () << ",&POA_AMH_"
+                      *os << d->original_local_name () << ",std::addressof(POA_AMH_"
                           << name.c_str () << "::"
                           << d->original_local_name ()
-                          << "_skel,";
+                          << "_skel),";
                     }
                 }
               else
                 {
                   if (!d->is_abstract ())
                     {
-                      *os << d->original_local_name () << ",&POA_"
-                          << d->full_name () << "_skel,";
+                      *os << d->original_local_name () << ",std::addressof(POA_"
+                          << d->full_name () << "_skel),";
                     }
                   else
                     {
-                      *os << d->original_local_name () << ",&"
+                      *os << d->original_local_name () << ",std::addressof("
                           << full_skeleton_name << "::"
                           << d->original_local_name ()
-                          << "_skel,";
+                          << "_skel),";
                     }
                 }
               if (be_global->gen_direct_collocation ())
                 {
                   if (!d->is_abstract ())
                     {
-                      *os << " &"
+                      *os << " std::addressof("
                           << this->full_direct_proxy_impl_name ()
-                          << "::" << d->local_name ();
+                          << "::" << d->local_name () << ")";
                     }
                   else
                     {
-                      *os << " &"
+                      *os << " std::addressof("
                           << derived_interface->full_direct_proxy_impl_name ()
-                          << "::" << d->local_name ();
+                          << "::" << d->local_name () << ")";
                     }
 
                 }
               else
                 {
-                  *os << " 0";
+                  *os << " nullptr";
                 }
 
               *os << "\n";
@@ -1588,15 +1588,15 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
 
               if (!d->is_abstract ())
                 {
-                  *os << "_get_" << d->original_local_name () << ",&POA_"
+                  *os << "_get_" << d->original_local_name () << ",std::addressof(POA_"
                       << nspace.c_str () << "_get_"
-                      << d->original_local_name () << "_skel,";
+                      << d->original_local_name () << "_skel),";
 
                   if (be_global->gen_direct_collocation ())
                     {
-                      *os << " &"
+                      *os << " std::addressof("
                           << this->full_direct_proxy_impl_name ()
-                          << "::_get_" << d->local_name ();
+                          << "::_get_" << d->local_name () << ")";
                     }
                   else
                     {
@@ -1605,19 +1605,19 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                 }
               else
                 {
-                  *os << "_get_" << d->original_local_name () << ",&"
+                  *os << "_get_" << d->original_local_name () << ",std::addressof("
                       << full_skeleton_name << "::_get_"
-                      << d->original_local_name () << "_skel,";
+                      << d->original_local_name () << "_skel),";
 
                   if (be_global->gen_direct_collocation ())
                     {
-                      *os << " &"
+                      *os << " std::addressof("
                           << derived_interface->full_direct_proxy_impl_name ()
-                          << "::_get_" << d->local_name ();
+                          << "::_get_" << d->local_name () << ")";
                     }
                   else
                     {
-                      *os << " 0";
+                      *os << " nullptr";
                     }
                 }
 
@@ -1630,37 +1630,37 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
                   if (!d->is_abstract ())
                     {
                       // The set method
-                      *os << "_set_" << d->original_local_name () << ",&POA_"
+                      *os << "_set_" << d->original_local_name () << ",std::addressof(POA_"
                           << nspace.c_str () << "_set_"
-                          << d->original_local_name () << "_skel,";
+                          << d->original_local_name () << "_skel),";
 
                       if (be_global->gen_direct_collocation ())
                         {
-                          *os << " &"
+                          *os << " std::addressof("
                               << this->full_direct_proxy_impl_name ()
-                              << "::_set_" << d->local_name ();
+                              << "::_set_" << d->local_name () << ")";
                         }
                       else
                         {
-                          *os << " 0";
+                          *os << " nullptr";
                         }
                     }
                   else
                     {
                       // The set method in case abstract
-                      *os << "_set_" << d->original_local_name () << ",&"
+                      *os << "_set_" << d->original_local_name () << ",std::addressof("
                           << full_skeleton_name << "::_set_"
-                          << d->original_local_name () << "_skel,";
+                          << d->original_local_name () << "_skel),";
 
                       if (be_global->gen_direct_collocation ())
                         {
-                          *os << " &"
+                          *os << " std::addressof("
                               << derived_interface->full_direct_proxy_impl_name ()
-                              << "::_set_" << d->local_name ();
+                              << "::_set_" << d->local_name () << ")";
                         }
                       else
                         {
-                          *os << " 0";
+                          *os << " nullptr";
                         }
                     }
 
@@ -2309,7 +2309,7 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+  *os << "std::strcmp (" << be_idt << be_idt_nl
       << "value," << be_nl
       << "\"" << bi->repoID () << "\"" << be_uidt_nl
       << ") == 0 ||" << be_uidt_nl;
@@ -2756,14 +2756,14 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (this->is_abstract () || this->has_mixed_parentage ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+      *os << "std::strcmp (" << be_idt << be_idt_nl
           << "value," << be_nl
           << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
           << ") == 0";
     }
   else if (this->is_local ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+      *os << "std::strcmp (" << be_idt << be_idt_nl
           << "value," << be_nl
           << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
           << ") == 0";
@@ -2780,7 +2780,7 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (! this->is_abstract ())
     {
-      *os << "ACE_OS::strcmp (" << be_idt << be_idt_nl
+      *os << "std::strcmp (" << be_idt << be_idt_nl
           << "value," << be_nl
           << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
           << ") == 0" << be_uidt << be_uidt_nl;

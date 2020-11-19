@@ -182,7 +182,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+  *os << "!std::strcmp (" << be_idt << be_idt_nl
       << "value," << be_nl
       << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
       << ")";
@@ -190,7 +190,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
   if (node->has_mixed_parentage ())
     {
       *os << " ||" << be_uidt_nl
-          << "!ACE_OS::strcmp (" << be_idt << be_idt_nl
+          << "!std::strcmp (" << be_idt << be_idt_nl
           << "value," << be_nl
           << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
           << be_uidt_nl
@@ -397,18 +397,15 @@ be_visitor_interface_ss::this_method (be_interface *node)
   *os << "_tao_opt_colloc";
 
   *os << ", this)," << be_nl
-      << "0);" << be_uidt << be_uidt_nl << be_nl;
+      << "nullptr);" << be_uidt << be_uidt_nl << be_nl;
 
   *os << "::CORBA::Object_var obj = tmp;" << be_nl
       << "(void) safe_stub.release ();" << be_nl_2
-      << "typedef ::" << node->name () << " STUB_SCOPED_NAME;"
-      << be_nl
-      << "return" << be_idt_nl
-      << "TAO::Narrow_Utils<STUB_SCOPED_NAME>::unchecked_narrow ("
-      << be_idt << be_idt_nl
+      << "return "
+      << "TAO::Narrow_Utils< ::" << node->name () << ">::unchecked_narrow ("
       << "obj.in ());";
 
-  *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << "}";
 }
 

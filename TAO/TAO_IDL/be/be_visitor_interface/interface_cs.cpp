@@ -263,7 +263,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << node->full_name () << "::_nil (void)"
       << be_nl
       << "{" << be_idt_nl
-      << "return 0;" << be_uidt_nl
+      << "return nullptr;" << be_uidt_nl
       << "}" << be_nl_2;
 
   // The _duplicate method
