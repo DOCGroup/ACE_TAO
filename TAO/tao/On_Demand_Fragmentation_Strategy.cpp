@@ -12,8 +12,17 @@ TAO_On_Demand_Fragmentation_Strategy::TAO_On_Demand_Fragmentation_Strategy (
   TAO_Transport * transport,
   CORBA::ULong max_message_size)
   : transport_ (transport)
-  , max_message_size_ (max_message_size)
+  , max_message_size_ ((max_message_size < 24
+                        ? 24 : max_message_size)
+                       & ~(ACE_CDR::MAX_ALIGNMENT - 1))
 {
+  // this->max_message_size_ must be >= 24 bytes, i.e.:
+  //   12 for GIOP protocol header
+  //  + 4 for GIOP fragment header
+  //  + 8 for payload (including padding)
+  // since fragments must be aligned on an 8 byte boundary.
+  // Make it a multiple of 8 to avoid checking for this repeatedly
+  // at runtime.
 }
 
 TAO_On_Demand_Fragmentation_Strategy::~TAO_On_Demand_Fragmentation_Strategy (
@@ -48,19 +57,7 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
         ACE_align_binary (cdr.total_length (), pending_alignment)
         + pending_length);
 
-  // Except for the last fragment, fragmented GIOP messages must
-  // always be aligned on an 8-byte boundary.  Padding will be added
-  // if necessary.
-  ACE_CDR::ULong const aligned_length =
-      ACE_Utils::truncate_cast<ACE_CDR::ULong> (
-          ACE_align_binary (total_pending_length, ACE_CDR::MAX_ALIGNMENT));
-
-  // this->max_message_size_ must be >= 24 bytes, i.e.:
-  //   12 for GIOP protocol header
-  //  + 4 for GIOP fragment header
-  //  + 8 for payload (including padding)
-  // since fragments must be aligned on an 8 byte boundary.
-  if (aligned_length > this->max_message_size_)
+  if (total_pending_length > this->max_message_size_)
     {
       // Pad the outgoing fragment if necessary.
       if (cdr.align_write_ptr (ACE_CDR::MAX_ALIGNMENT) != 0)
@@ -92,4 +89,20 @@ TAO_On_Demand_Fragmentation_Strategy::fragment (
     }
 
   return 0;
+}
+
+ACE_CDR::ULong
+TAO_On_Demand_Fragmentation_Strategy::available (
+  TAO_OutputCDR & cdr,
+  ACE_CDR::ULong pending_alignment)
+{
+  // Determine increase in CDR stream length if pending data is
+  // marshaled, taking into account the alignment for the given data
+  // type.
+  ACE_CDR::ULong const total_starting_length =
+    ACE_Utils::truncate_cast<ACE_CDR::ULong> (
+        ACE_align_binary (cdr.total_length (), pending_alignment));
+
+  return (total_starting_length > this->max_message_size_
+          ? 0 : this->max_message_size_ - total_starting_length);
 }

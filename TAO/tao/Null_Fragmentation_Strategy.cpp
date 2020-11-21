@@ -11,3 +11,9 @@ TAO_Null_Fragmentation_Strategy::fragment (TAO_OutputCDR &,
 {
   return 0;
 }
+
+ACE_CDR::ULong
+TAO_Null_Fragmentation_Strategy::available (TAO_OutputCDR &, ACE_CDR::ULong)
+{
+  return 0xFFFFFFFF;
+}
