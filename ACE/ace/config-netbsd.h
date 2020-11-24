@@ -127,9 +127,6 @@
 #define ACE_SIZEOF_VOID_P 8
 #define ACE_SIZEOF_WCHAR 4
 
-typedef unsigned long ACE_UINT64;
-typedef   signed long ACE_INT64;
-
 #define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII  "%ld"
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
@@ -144,9 +141,6 @@ typedef   signed long ACE_INT64;
 #define ACE_SIZEOF_SHORT 2
 #define ACE_SIZEOF_VOID_P 4
 #define ACE_SIZEOF_WCHAR 4
-
-typedef unsigned long long ACE_UINT64;
-typedef   signed long long ACE_INT64;
 
 #else
 # error unknown CPU architecture
