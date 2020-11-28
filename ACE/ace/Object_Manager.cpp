@@ -271,10 +271,9 @@ ACE_Object_Manager::init (void)
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
 
-#  if (_MSC_VER >= 1400) // VC++ 8.0 and above
           // And this will stop the abort system call from being treated as a crash
           _set_abort_behavior( 0,  _CALL_REPORTFAULT);
-#  endif
+
   // Note the following fix was derived from that proposed by Jochen Kalmbach
   // http://blog.kalmbachnet.de/?postid=75
   // See also:
@@ -289,10 +288,10 @@ ACE_Object_Manager::init (void)
   // from calling SetUnhandledExceptionFilter() after we have done so above.
   // NOTE this only works for intel based windows builds.
 
-#  if (_MSC_VER >= 1400) \
+#  if (_MSC_VER) \
       || (__MINGW32_MAJOR_VERSION > 3)  || \
           ((__MINGW32_MAJOR_VERSION == 3) && \
-           (__MINGW32_MINOR_VERSION >= 15)) // VC++ 8.0 and above || MingW32 >= 3.15
+           (__MINGW32_MINOR_VERSION >= 15)) // VC++ || MingW32 >= 3.15
 #    ifdef _M_IX86
           HMODULE hKernel32 = ACE_TEXT_LoadLibrary (ACE_TEXT ("kernel32.dll"));
           if (hKernel32)
@@ -320,7 +319,7 @@ ACE_Object_Manager::init (void)
                 }
             }
 #    endif // _M_IX86
-#  endif // (_MSC_VER >= 1400) // VC++ 8.0 and above.
+#  endif // (_MSC_VER) // VC++ 8.0
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
