@@ -87,11 +87,8 @@
    __attribute__ ((format (TYPE, STR_INDEX, FIRST_INDEX)))
 #endif
 
-// GNU g++ >= 4.x implements "#pragma once".
-#if (__GNUC__ < 4) && !defined (ACE_LACKS_PRAGMA_ONCE)
 // We define it with a -D with make depend.
 # define ACE_LACKS_PRAGMA_ONCE
-#endif /* ! ACE_LACKS_PRAGMA_ONCE */
 
 // Take advantage of g++ visibility attributes to generate
 // improved shared library binaries.
@@ -139,7 +136,7 @@
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* __GNU__ >= 4 */
+#endif  /* !__MINGW32__ && !ACE_HAS_CEGCC */
 
 #if defined (ACE_HAS_THREADS)
 # if defined (__powerpc__)
