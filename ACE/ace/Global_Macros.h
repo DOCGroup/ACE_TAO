@@ -153,7 +153,7 @@
 
 /* Using ACE_UNEXPECTED_RETURNS is ill-advised because, in many cases,
  *   it fails to inform callers of the error condition.
- * It exists mainly to provide back-compatibility with old, dangegrous,
+ * It exists mainly to provide back-compatibility with old, dangerous,
  *   incorrect behavior.
  * Code that previously used ACE_GUARD() or ACE_GUARD_RETURN() to return
  *   upon failure to acquire a lock can now use:
