@@ -87,9 +87,6 @@
    __attribute__ ((format (TYPE, STR_INDEX, FIRST_INDEX)))
 #endif
 
-// We define it with a -D with make depend.
-# define ACE_LACKS_PRAGMA_ONCE
-
 // Take advantage of g++ visibility attributes to generate
 // improved shared library binaries.
 #if !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
