@@ -1277,7 +1277,7 @@ operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_string x)
 {
-  ACE_CDR::ULong len =
+  ACE_CDR::ULong const len =
       static_cast<ACE_CDR::ULong> (x.val_.size ());
 
   os.write_string (len, x.val_.c_str ());
@@ -1289,7 +1289,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_string x)
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_wstring x)
 {
-  ACE_CDR::ULong len =
+  ACE_CDR::ULong const len =
       static_cast<ACE_CDR::ULong> (x.val_.size ());
 
   os.write_wstring (len, x.val_.c_str ());
