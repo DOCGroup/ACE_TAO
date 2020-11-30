@@ -141,8 +141,8 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         geteuid() system call exists.
 ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
 ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-                                        Non-C++ Complient compilers that automatically
-                                        provide storeage for class static const int
+                                        Non-C++ Compliant compilers that automatically
+                                        provide storage for class static const int
                                         when their declaration is seen. I.e. they object
                                         to explicit definitions being seen in the .cpp
                                         file.
