@@ -78,7 +78,6 @@
 
 # if defined (ACE_HAS_VALGRIND)
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
-#   define ACE_LACKS_DLCLOSE
 # endif /* ACE_HAS_VALGRIND */
 
 // =========================================================================
