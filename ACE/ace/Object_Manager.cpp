@@ -319,7 +319,7 @@ ACE_Object_Manager::init (void)
                 }
             }
 #    endif // _M_IX86
-#  endif // (_MSC_VER) // VC++ 8.0
+#  endif // (_MSC_VER)
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
