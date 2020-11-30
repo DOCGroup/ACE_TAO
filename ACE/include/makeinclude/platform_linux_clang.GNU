@@ -43,7 +43,6 @@ endif
 
 ifeq ($(c++11),1)
   CCFLAGS += -std=c++11
-  no_deprecated ?= 1
 endif
 
 ifeq ($(no_deprecated),1)
