@@ -4,6 +4,13 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
 . C++11 is now a mandatory compiler feature which is
   required for ACE
 
+. When valgrind is enabled we don't disable dlclose anymore,
+  this reduces the amount of leaks reported related to dlclose.
+  When you unload your shared libraries before the end of your program
+  you can use `--keep-debuginfo=yes` as valgrind options as alternative
+  or you can disable dlclose yourself by adding
+  `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
 
