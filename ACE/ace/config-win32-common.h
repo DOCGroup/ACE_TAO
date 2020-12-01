@@ -335,16 +335,6 @@
 
 #define ACE_SIZEOF_LONG_LONG 8
 
-#if !defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed __int64
-#define ACE_UINT64_TYPE unsigned __int64
-#endif
-
-#if defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed long long
-#define ACE_UINT64_TYPE unsigned long long
-#endif
-
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 

@@ -1132,13 +1132,12 @@ DRV_pre_proc (const char *myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-
   FILE * const file = ACE_OS::fopen (myfile, "r");
 
   if (file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: Unable to open file : %p\n",
+                  "%C: ERROR: Unable to open file : %p\n",
                   idl_global->prog_name (),
                   myfile));
 

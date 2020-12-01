@@ -466,7 +466,7 @@ State Perl</a> or <a href="http://strawberryperl.com">Strawberry Perl</a></p>
 Microsoft Visual Studio</a></h3>
 
 <p>ACE contains project files for
-Visual Studio 2015 (vc14), Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
+Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
 Visual Studio 2015/2017/2019 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
@@ -482,11 +482,6 @@ a <code>.vcproj</code> suffix.</p>
     <th>File Name</th>
   </tr>
 </thead><tbody>
-  <tr>
-    <th>Visual Studio 2015</th>
-    <td><i>name</i><code>_vc14</code>
-    </td>
-  </tr>
   <tr>
     <th>Visual Studio 2017</th>
     <td><i>name</i><code>_vs2017</code>
@@ -2697,7 +2692,7 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
 If you use the GNU GCC g++ compiler please note the following:
 
 <ul>
-  </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
+  </p></li><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies
@@ -2830,11 +2825,11 @@ core ACE and TAO libraries and executables is the following:
 
 <pre><code>
 C:> cd %TAO_ROOT%
-C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
+C:> %ACE_ROOT%\bin\mwc.pl -type vs2019 TAO_ACE.mwc
 </pre></code>
 
 <p>
-Replace vc71 with whatever project type you want to use.  On Linux and
+Replace vs2019 with whatever project type you want to use.  On Linux and
 other UNIX platform use the gnuace type:
 </p>
 
