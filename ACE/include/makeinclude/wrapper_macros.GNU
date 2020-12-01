@@ -704,6 +704,12 @@ valgrind ?=
 ifeq ($(valgrind),1)
   CPPFLAGS += -DACE_HAS_VALGRIND
 endif
+# Does the valgrind version support --keep-debug-info, if not
+# we disable dlclose in ACE to get complete callstacks
+valgrind_keep_debuginfo ?=
+ifeq ($(valgrind_keep_debuginfo),0)
+  CPPFLAGS += -DACE_LACKS_DLCLOSE
+endif
 
 profile ?=
 ifeq ($(profile),0)
