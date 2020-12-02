@@ -148,18 +148,6 @@ jobs:
       TAO_ROOT: ${{ github.workspace }}/TAO
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
-    - uses: actions/checkout@v2
-    - uses: msys2/setup-msys2@v2
-      with:
-        msystem: ${{ matrix.msystem }}
-        install: make
-    - run: pacman --noconfirm -S gcc
-      if: ${{ matrix.compiler == 'gcc' }}
-    - run: pacman --noconfirm -S mingw-w64-x86_64-clang
-      if: ${{ (matrix.msystem == 'MINGW64') && (matrix.compiler == 'clang') }}
-    - run: pacman --noconfirm -S mingw-w64-i686-clang
-      if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
-    - run: ${{ matrix.compiler }} --version
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
     - name: checkout MPC
@@ -167,6 +155,21 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S gcc
+      shell: msys2 {0}
+      if: ${{ matrix.compiler == 'gcc' }}
+    - run: pacman --noconfirm -S mingw-w64-x86_64-clang
+      shell: msys2 {0}
+      if: ${{ (matrix.msystem == 'MINGW64') && (matrix.compiler == 'clang') }}
+    - run: pacman --noconfirm -S mingw-w64-i686-clang
+      shell: msys2 {0}
+      if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
+    - run: ${{ matrix.compiler }} --version
+      shell: msys2 {0}
     - name: create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
