@@ -134,3 +134,44 @@ jobs:
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
+
+jobs:
+  windows:
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        compiler: [gcc, clang]
+        msystem: [MINGW32, MINGW64]
+    defaults:
+      run:
+        shell: msys2 {0}
+    name: mingw-${{ matrix.msystem }}
+    steps:
+    - uses: actions/checkout@v2
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S gcc
+      if: ${{ matrix.compiler == 'gcc' }}
+    - run: pacman --noconfirm -S mingw-w64-x86_64-clang
+      if: ${{ (matrix.msystem == 'MINGW64') && (matrix.compiler == 'clang') }}
+    - run: pacman --noconfirm -S mingw-w64-i686-clang
+      if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
+    - run: ${{ matrix.compiler }} --version
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl $ACE_ROOT/bin/mwc.pl -type gnuace $TAO_ROOT/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl $ACE_ROOT/bin/mwc.pl -type gnuace $ACE_ROOT/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        make -j 6 -C $TAO_ROOT
+      shell: pwsh
+    - name: Build ACE/tests project
+      run: |
+        make -j 6 -C $ACE_ROOT/tests
+      shell: pwsh
