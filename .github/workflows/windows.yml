@@ -195,17 +195,13 @@ jobs:
       shell: pwsh
     - name: Build TAO_ACE project
       run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
         make -j 6 -C $TAO_ROOT
-      env:
-        ACE_ROOT: /d/a/ACE_TAO/ACE_TAO/ACE
-        TAO_ROOT: /d/a/ACE_TAO/ACE_TAO/TAO
-        MPC_ROOT: /d/a/ACE_TAO/ACE_TAO/MPC
       shell: msys2 {0}
     - name: Build ACE/tests project
       run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
         make -j 6 -C $ACE_ROOT/tests
-      env:
-        ACE_ROOT: /d/a/ACE_TAO/ACE_TAO/ACE
-        TAO_ROOT: /d/a/ACE_TAO/ACE_TAO/TAO
-        MPC_ROOT: /d/a/ACE_TAO/ACE_TAO/MPC
       shell: msys2 {0}
