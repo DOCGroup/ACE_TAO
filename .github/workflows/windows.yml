@@ -159,15 +159,8 @@ jobs:
       with:
         msystem: ${{ matrix.msystem }}
         install: make
-    - run: pacman --noconfirm -S gcc
+    - run: pacman --noconfirm -S mingw-w64-x86_64-${{ matrix.compiler }}
       shell: msys2 {0}
-      if: ${{ matrix.compiler == 'gcc' }}
-    - run: pacman --noconfirm -S mingw-w64-x86_64-clang
-      shell: msys2 {0}
-      if: ${{ (matrix.msystem == 'MINGW64') && (matrix.compiler == 'clang') }}
-    - run: pacman --noconfirm -S mingw-w64-i686-clang
-      shell: msys2 {0}
-      if: ${{ (matrix.msystem == 'MINGW32') && (matrix.compiler == 'clang') }}
     - run: ${{ matrix.compiler }} --version
       shell: msys2 {0}
     - name: create $ACE_ROOT/ace/config.h
