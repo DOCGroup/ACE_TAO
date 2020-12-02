@@ -159,13 +159,17 @@ jobs:
     - run: ${{ matrix.compiler }} --version
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
-        perl $ACE_ROOT/bin/mwc.pl -type gnuace $TAO_ROOT/TAO_ACE.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
     - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
       run: |
-        perl $ACE_ROOT/bin/mwc.pl -type gnuace $ACE_ROOT/tests/tests.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
     - name: Build TAO_ACE project
       run: |
-        make -j 6 -C $TAO_ROOT
+        make -j 6 -C ${env:TAO_ROOT}
+      shell: pwsh
     - name: Build ACE/tests project
       run: |
-        make -j 6 -C $ACE_ROOT/tests
+        make -j 6 -C ${env:ACE_ROOT}/tests
+      shell: pwsh
