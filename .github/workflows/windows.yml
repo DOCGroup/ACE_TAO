@@ -7,7 +7,7 @@ on:
     - cron: '0 1 * * SUN'
 
 jobs:
-  build:
+  msvc:
     strategy:
       matrix:
         include:
@@ -134,9 +134,7 @@ jobs:
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
-
-jobs:
-  windows:
+  mingw:
     runs-on: windows-2019
     strategy:
       matrix:
