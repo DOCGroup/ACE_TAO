@@ -138,8 +138,8 @@ jobs:
     runs-on: windows-2019
     strategy:
       matrix:
-        compiler: [gcc, clang]
-        msystem: [MINGW32, MINGW64]
+        compiler: [gcc]
+        msystem: [MINGW64]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
     name: ${{ matrix.msystem }}-${{ matrix.compiler }}
