@@ -271,8 +271,10 @@ ACE_Object_Manager::init (void)
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
 
+#if !defined (__MINGW32__)
           // And this will stop the abort system call from being treated as a crash
           _set_abort_behavior( 0,  _CALL_REPORTFAULT);
+#endif /* !__MINGW32__ */
 
   // Note the following fix was derived from that proposed by Jochen Kalmbach
   // http://blog.kalmbachnet.de/?postid=75
