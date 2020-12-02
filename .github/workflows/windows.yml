@@ -143,7 +143,7 @@ jobs:
     defaults:
       run:
         shell: msys2 {0}
-    name: mingw-${{ matrix.msystem }}
+    name: ${{ matrix.msystem }}-${{ matrix.compiler }}
     steps:
     - uses: actions/checkout@v2
     - uses: msys2/setup-msys2@v2
@@ -160,16 +160,12 @@ jobs:
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl $ACE_ROOT/bin/mwc.pl -type gnuace $TAO_ROOT/TAO_ACE.mwc -workers 4
-      shell: pwsh
     - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
       run: |
         perl $ACE_ROOT/bin/mwc.pl -type gnuace $ACE_ROOT/tests/tests.mwc -workers 4
-      shell: pwsh
     - name: Build TAO_ACE project
       run: |
         make -j 6 -C $TAO_ROOT
-      shell: pwsh
     - name: Build ACE/tests project
       run: |
         make -j 6 -C $ACE_ROOT/tests
-      shell: pwsh
