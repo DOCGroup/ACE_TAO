@@ -11,6 +11,17 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
   or you can disable dlclose yourself by adding
   `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
 
+. Android Support:
+
+  . Support for building with the Android NDK directly instead of having to use
+    the generated standalone toolchain. See ACE-INSTALL.html for how to.
+
+  . Made it eaiser to use gnuace built libraries in Android Studio native
+    projects.
+
+  . Building with neon support is now the default when ANDROID_ABI is
+    armeabi-v7a.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
 
