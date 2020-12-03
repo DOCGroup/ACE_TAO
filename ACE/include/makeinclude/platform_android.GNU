@@ -19,8 +19,12 @@ PIE	?= -pie
 #No rwho on Android
 rwho = 0
 
-# Android Studio does not seem to recognize so files with versions
-versioned_so ?= 0
+# Android Studio does not seem to recognize so files with versions, but if
+# trying to add gnuace-built libraries as imported libraries in CMake in a
+# Android Studio project, at runtime apparently the Android loader needs the
+# SONAME be set to the filename or else it was fail trying to load the so file
+# path from the host computer.
+versioned_so = 3
 
 # Only try to use clang, unless this is set to 0, then try to use g++
 android_force_clang ?= 1
@@ -29,7 +33,7 @@ android_force_clang ?= 1
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
 ifndef ANDROID_ABI
-  ifdef ANDROID_ARCH # Handle Possiblity of ANDROID_ARCH being passed
+  ifdef ANDROID_ARCH # Handle possibility of ANDROID_ARCH being passed
     ifeq ($(ANDROID_ARCH),arm)
       ANDROID_ABI := armeabi-v7a
     else
@@ -182,7 +186,7 @@ LIBS += -llog
 ifeq ($(OS), Windows_NT)
   SHOBJS_FILE = $(VSHDIR)$(MAKEFILE)_object_list.tmp
   CLEANUP_OBJS += $(SHOBJS_FILE)
-  define SHLIBBUILD 
+  define SHLIBBUILD
     $(file >$(SHOBJS_FILE), $^)
     $(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ @$(SHOBJS_FILE) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
   endef
