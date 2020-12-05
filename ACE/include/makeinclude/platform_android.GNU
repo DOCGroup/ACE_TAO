@@ -2,6 +2,9 @@
 
 # This file allows ACE and applications using ACE GNU Makefiles to be built for
 # Android by cross compiling on Linux.
+#
+# See here for latest documentation on how to invoke the NDK:
+# https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md
 
 # We always include config-android.h on Android platforms.
 ACE_PLATFORM_CONFIG ?= config-android.h
@@ -19,8 +22,12 @@ PIE	?= -pie
 #No rwho on Android
 rwho = 0
 
-# Android Studio does not seem to recognize so files with versions
-versioned_so ?= 0
+# Android Studio does not seem to recognize so files with versions, but if
+# trying to add gnuace-built libraries as imported libraries in CMake in a
+# Android Studio project, at runtime apparently the Android loader needs the
+# SONAME be set to the filename or else it was fail trying to load the so file
+# path from the host computer.
+versioned_so = 3
 
 # Only try to use clang, unless this is set to 0, then try to use g++
 android_force_clang ?= 1
@@ -29,7 +36,7 @@ android_force_clang ?= 1
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
 ifndef ANDROID_ABI
-  ifdef ANDROID_ARCH # Handle Possiblity of ANDROID_ARCH being passed
+  ifdef ANDROID_ARCH # Handle possibility of ANDROID_ARCH being passed
     ifeq ($(ANDROID_ARCH),arm)
       ANDROID_ABI := armeabi-v7a
     else
@@ -40,53 +47,84 @@ ifndef ANDROID_ABI
   endif
 endif
 
-# Alias neon
-ifeq ($(ANDROID_ABI), neon)
-  ANDROID_ABI := armeabi-v7a-with-neon
+ifndef android_abi
+  ifdef ANDROID_ABI
+    android_abi := $(ANDROID_ABI)
+  else
+    $(error android_abi or ANDROID_ABI must be defined)
+  endif
 endif
 
-android_neon ?= 0
-ifeq ($(ANDROID_ABI),armeabi-v7a-with-neon)
-  ANDROID_ABI := armeabi-v7a
+# Alias neon
+ifeq ($(android_abi), neon)
+  android_abi := armeabi-v7a-with-neon
+endif
+
+android_neon ?= 1
+ifeq ($(android_abi),armeabi-v7a-with-neon)
+  android_abi := armeabi-v7a
   android_neon := 1
 endif
 
-# NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug
-# in some Cortex-A8 implementations
-
-ifeq ($(ANDROID_ABI),armeabi-v7a)
-  CROSS_COMPILE := arm-linux-androideabi-
+ifeq ($(android_abi),armeabi-v7a)
+  CROSS_COMPILE := armv7a-linux-androideabi
   FLAGS_C_CC += -march=armv7-a -mfloat-abi=softfp
   ifeq ($(android_neon),1)
     FLAGS_C_CC += -mfpu=neon
   else
     FLAGS_C_CC += -mfpu=vfpv3-d16
   endif
-  LDFLAGS    += -march=armv7-a -Wl,--fix-cortex-a8
-endif
+  # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug
+  # in some Cortex-A8 implementations
+  LDFLAGS += -march=armv7-a -Wl,--fix-cortex-a8
 
-ifeq ($(ANDROID_ABI),arm64-v8a)
-  CROSS_COMPILE := aarch64-linux-android-
+else ifeq ($(android_abi),arm64-v8a)
+  CROSS_COMPILE := aarch64-linux-android
   FLAGS_C_CC += -march=armv8-a
-  LDFLAGS    += -march=armv8-a
-endif
+  LDFLAGS += -march=armv8-a
 
-ifeq ($(ANDROID_ABI),x86)
-  CROSS_COMPILE := i686-linux-android-
-endif
+else ifeq ($(android_abi),x86)
+  CROSS_COMPILE := i686-linux-android
 
-ifeq ($(ANDROID_ABI),x86_64)
-  CROSS_COMPILE := x86_64-linux-android-
+else ifeq ($(android_abi),x86_64)
+  CROSS_COMPILE := x86_64-linux-android
 endif
 
 ifndef CROSS_COMPILE
-  $(error ANDROID_ABI passed (set to: $(ANDROID_ABI)) is not valid)
+  $(error android_abi $(android_abi) is not valid)
 endif
 
-# Export so child processes can use tools from the same toolchain.
-export CROSS_COMPILE
+ifdef android_ndk
+  ifndef android_api
+    $(error android_ndk also requires defining android_api)
+  endif
+
+  android_ndk_tools ?= $(wildcard $(android_ndk)/toolchains/llvm/prebuilt/*/bin)
+  ifndef android_ndk_tool_prefix
+    android_ndk_tool_prefix := $(CROSS_COMPILE)$(android_api)-
+  endif
+
+  # We dont want this being used again except to signal that this is a
+  # cross-compile build. If it is this command (probably) wont exist.
+  CROSS_COMPILE := THIS_VALUE_SHOULD_NOT_BE_USED
+
+  override_cross_compile = 1
+  CC = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang
+  CXX = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang++
+  AR = $(android_ndk_tools)/llvm-ar
+
+else
+  CROSS_COMPILE := $(CROSS_COMPILE)-
+
+  # Export so child processes can use tools from the same toolchain.
+  export CROSS_COMPILE
+endif
 
 ifeq ($(android_force_clang),0)
+  ifdef android_ndk
+    $(error Must use a standalone toolchain to use GCC)
+  endif
+
   # Determine if the g++ compiler is GCC or Clang.
   # There are at least 3 assumptions being made here:
   #  - There is a g++ command to get the version from
@@ -94,17 +132,18 @@ ifeq ($(android_force_clang),0)
   #  - If g++ is actually clang, then we can replace that with clang++
   gplusplus_version = $(shell $(CROSS_COMPILE)g++$(CROSS_COMPILE_SUFFIX) --version)
   actually_is_clang := $(strip $(findstring clang,$(gplusplus_version)))
+else ifeq ($(android_force_clang),1)
+  actually_is_clang := 1
 else
-  ifeq ($(android_force_clang),1)
-    actually_is_clang := 1
-  else
-    $(error Invalid value for android_force_clang: $(android_force_clang))
-  endif
+  $(error Invalid value for android_force_clang: $(android_force_clang))
 endif
 
-FLAGS_C_CC += -W -Wall -Wpointer-arith
+FLAGS_C_CC += -Wpointer-arith
 ifeq ($(threads),1)
-    CPPFLAGS  += -D_REENTRANT $(PLATFORM_AIO_SUPPORT)
+  CPPFLAGS += -D_REENTRANT
+  ifdef PLATFORM_AIO_SUPPORT
+    CPPFLAGS += $(PLATFORM_AIO_SUPPORT)
+  endif
 endif # threads
 
 # Use -pipes by default
@@ -150,8 +189,8 @@ else
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 endif
 
-ifeq ($(shell echo '\#include "android/ndk-version.h"' | $(CXX) -E - > /dev/null 2>&1; echo $$?), 0)
-  CPPFLAGS += -DACE_ANDROID_NDK_HAS_NDK_VERSION_H
+ifneq ($(shell echo '\#include <android/ndk-version.h>' | $(CXX) -E - > /dev/null 2>&1; echo $$?), 0)
+  CPPFLAGS += -DACE_ANDROID_NDK_MISSING_NDK_VERSION_H
 endif
 
 ifdef __NDK_MAJOR__
@@ -160,6 +199,10 @@ endif
 
 ifdef __NDK_MINOR__
   CPPFLAGS += -D__NDK_MINOR__=$(__NDK_MINOR__)
+endif
+
+ifdef __NDK_BETA__
+  CPPFLAGS += -D__NDK_BETA__=$(__NDK_BETA__)
 endif
 
 OCFLAGS ?= -O3
@@ -182,7 +225,7 @@ LIBS += -llog
 ifeq ($(OS), Windows_NT)
   SHOBJS_FILE = $(VSHDIR)$(MAKEFILE)_object_list.tmp
   CLEANUP_OBJS += $(SHOBJS_FILE)
-  define SHLIBBUILD 
+  define SHLIBBUILD
     $(file >$(SHOBJS_FILE), $^)
     $(SHR_FILTER) $(SOLINK.cc) $(SO_OUTPUT_FLAG) $@ @$(SHOBJS_FILE) $(LDFLAGS) $(ACE_SHLIBS) $(LIBS)
   endef

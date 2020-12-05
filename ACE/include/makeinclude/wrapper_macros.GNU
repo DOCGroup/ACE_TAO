@@ -82,6 +82,8 @@
 #                   the version will be appended to the name but *before* the
 #                   $(SOEXT) - it should have a lead '-' - else it defaults to
 #                   -ACE_MAJOR.ACE_MINOR.ACE_MICRO.
+#                   If versioned_so is 3, then set the SONAME, but without a
+#                   version.
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)

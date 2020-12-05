@@ -10,43 +10,47 @@
 // There is a large number of combinations of these two that can lead to
 // problems.
 
-// Location of the __ANDROID_API__ define
-// #include $NDK_ROOT/sysroot/usr/include/android/api-level.h
-#include "android/api-level.h"
-
 #if !defined (__ANDROID_API__)
-# error __ANDROID_API__ must be defined
+#  include <android/api-level.h>
 #endif
 
 #define ACE_ANDROID
 #define ACE_PLATFORM_CONFIG config-android.h
 
-#include "ace/config-linux-common.h"
+#include "config-linux-common.h"
 
 /*
  * Android NDK Revision Macros
  *
- * Revsions Scheme Work Like This:
- * Revision | __NDK_MAJOR__ | __NDK_MINOR__
- * r16      | 16            | 0
- * r16b     | 16            | 1
- * r16c     | 16            | 2
+ * Revisions Scheme Work Like This:
+ * Revision | __NDK_MAJOR__ | __NDK_MINOR__ | __NDK__BETA__
+ * r16      | 16            | 0             | 0
+ * r16b     | 16            | 1             | 0
+ * r16c     | 16            | 2             | 0
+ * r22-beta1| 22            | 0             | 1
+ *
+ * __NDK_BETA__ is starts at 1 and increments until release when it is 0.
  *
  * After r16, NDK version macros are defined in android/ndk-version.h Before
  * that they must be defined in platform_macros.GNU before the include of
  * platform_android.GNU.
  */
-#define ACE_ANDROID_NDK_AT_LEAST(MAJ, MIN) \
-  (__NDK_MAJOR__ > (MAJ) || (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ >= (MIN)))
+#define ACE_ANDROID_NDK_AT_LEAST(MAJ, MIN, BET) (\
+  (__NDK_MAJOR__ > (MAJ)) || \
+  (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ >= (MIN)) || \
+  (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ == (MIN) && \
+    (__NDK_BETA__ == 0 || __NDK_BETA__ >= (BET)) \
+  ) \
+)
 
-#define ACE_ANDROID_NDK_EXACTLY(MAJ, MIN) \
-  (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ == (MIN))
+#define ACE_ANDROID_NDK_EXACTLY(MAJ, MIN, BET) \
+  (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ == (MIN) && __NDK_BETA__ == (BETA))
 
-#define ACE_ANDROID_NDK_LESS_THAN(MAJ, MIN) \
-  (__NDK_MAJOR__ < (MAJ) || (__NDK_MAJOR__ == (MAJ) && __NDK_MINOR__ < (MIN)))
+#define ACE_ANDROID_NDK_LESS_THAN(MAJ, MIN, BET) \
+  !ACE_ANDROID_NDK_AT_LEAST((MAJ), (MIN), (BET))
 
-#ifdef ACE_ANDROID_NDK_HAS_NDK_VERSION_H
-#  include "android/ndk-version.h"
+#ifndef ACE_ANDROID_NDK_MISSING_NDK_VERSION_H
+#  include <android/ndk-version.h>
 #else
 #  ifndef __NDK_MAJOR__
 #    error ndk-version.h is missing, __NDK_MAJOR__ for Android NDK must be defined!
@@ -54,10 +58,13 @@
 #  ifndef __NDK_MINOR__
 #    error ndk-version.h is missing, __NDK_MINOR__ for Android NDK must be defined!
 #  endif
+#  ifndef __NDK_BETA__
+#    define __NDK_BETA__ 0
+#  endif
 #endif
 
 // ucontext.h and clock_settime() were added in r10c
-#if ACE_ANDROID_NDK_AT_LEAST(10, 2)
+#if ACE_ANDROID_NDK_AT_LEAST(10, 2, 0)
 #  define ACE_HAS_UCONTEXT_T
 #  define ACE_HAS_CLOCK_SETTIME
 #else
@@ -65,7 +72,7 @@
 #endif
 
 // NDK has these by r12b
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1)
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0)
 #  define ACE_LACKS_GETHOSTENT
 #  define ACE_LACKS_LOCALECONV
 #  define ACE_LACKS_WCHAR_STD_NAMESPACE
@@ -73,11 +80,11 @@
 #  define TAO_LACKS_WCHAR_CXX_STDLIB
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 18
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0) || __ANDROID_API__ < 18
 #  define ACE_LACKS_LOG2
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1) || __ANDROID_API__ < 21
+#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0) || __ANDROID_API__ < 21
 #  define ACE_LACKS_SEARCH_H
 #  define ACE_LACKS_SYS_SEM_H
 #  define ACE_LACKS_SEMBUF_T
@@ -88,7 +95,7 @@
 #  define ACE_HAS_SEMUN
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0) && __ANDROID_API__ < 21
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0) && __ANDROID_API__ < 21
 // NOTE: The && is correct, SYS_GETTID is present in API 16 in r15 onwards
 #  ifdef ACE_HAS_GETTID
 #    undef ACE_HAS_GETTID
@@ -96,20 +103,20 @@
 #endif
 
 // NDK has telldir() and seekdir() by 15c
-#if ACE_ANDROID_NDK_LESS_THAN(15, 2) || __ANDROID_API__ < 23
+#if ACE_ANDROID_NDK_LESS_THAN(15, 2, 0) || __ANDROID_API__ < 23
 #  define ACE_LACKS_TELLDIR
 #  define ACE_LACKS_SEEKDIR
 #endif
 
 // strbuf was added by r16
-#if ACE_ANDROID_NDK_LESS_THAN(16, 0)
+#if ACE_ANDROID_NDK_LESS_THAN(16, 0, 0)
 #  ifdef ACE_HAS_STRBUF_T
 #    undef ACE_HAS_STRBUF_T
 #  endif
 #endif
 
 // fd_mask was added in r17c
-#if ACE_ANDROID_NDK_LESS_THAN(17, 2)
+#if ACE_ANDROID_NDK_LESS_THAN(17, 2, 0)
 #  define ACE_LACKS_FD_MASK
 #endif
 
@@ -123,11 +130,11 @@
 #  endif
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0)
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0)
 #  define ACE_LACKS_STRUCT_IF_NAMEINDEX
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0) || __ANDROID_API__ < 24
+#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0) || __ANDROID_API__ < 24
 #  define ACE_LACKS_IF_NAMEINDEX
 #endif
 
@@ -137,7 +144,7 @@
 #  define ACE_LACKS_ENDHOSTENT
 #endif
 
-#if !defined(ACE_HAS_GLIBC_2_2_3) && (ACE_ANDROID_NDK_AT_LEAST(15, 0) || __ANDROID_API__ >= 21)
+#if !defined(ACE_HAS_GLIBC_2_2_3) && (ACE_ANDROID_NDK_AT_LEAST(15, 0, 0) || __ANDROID_API__ >= 21)
 #  define ACE_HAS_CPU_SET_T
 #endif
 
