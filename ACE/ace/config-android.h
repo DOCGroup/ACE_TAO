@@ -10,14 +10,13 @@
 // There is a large number of combinations of these two that can lead to
 // problems.
 
-#if !defined (__ANDROID_API__)
-#  include <android/api-level.h>
-#endif
+#include <android/ndk-version.h>
+#include <android/api-level.h>
 
 #define ACE_ANDROID
 #define ACE_PLATFORM_CONFIG config-android.h
 
-#include "ace/config-linux-common.h"
+#include "config-linux-common.h"
 
 /*
  * Android NDK Revision Macros
@@ -48,20 +47,6 @@
 
 #define ACE_ANDROID_NDK_LESS_THAN(MAJ, MIN, BET) \
   !ACE_ANDROID_NDK_AT_LEAST((MAJ), (MIN), (BET))
-
-#ifndef ACE_ANDROID_NDK_MISSING_NDK_VERSION_H
-#  include <android/ndk-version.h>
-#else
-#  ifndef __NDK_MAJOR__
-#    error ndk-version.h is missing, __NDK_MAJOR__ for Android NDK must be defined!
-#  endif
-#  ifndef __NDK_MINOR__
-#    error ndk-version.h is missing, __NDK_MINOR__ for Android NDK must be defined!
-#  endif
-#  ifndef __NDK_BETA__
-#    define __NDK_BETA__ 0
-#  endif
-#endif
 
 // ucontext.h and clock_settime() were added in r10c
 #if ACE_ANDROID_NDK_AT_LEAST(10, 2, 0)

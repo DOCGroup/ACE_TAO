@@ -2,7 +2,7 @@
 
 # This file allows ACE and applications using ACE GNU Makefiles to be built for
 # Android by cross compiling on Linux.
-
+#
 # See here for latest documentation on how to invoke the NDK:
 # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md
 
@@ -29,36 +29,29 @@ rwho = 0
 # path from the host computer.
 versioned_so = 3
 
-# Only try to use clang, unless this is set to 0, then try to use g++
-android_force_clang ?= 1
-
 # This section deals with selecting the architecture/compiler
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
-ifndef ANDROID_ABI
-  ifdef ANDROID_ARCH # Handle possibility of ANDROID_ARCH being passed
-    ifeq ($(ANDROID_ARCH),arm)
-      ANDROID_ABI := armeabi-v7a
-    else
-      ANDROID_ABI := $(ANDROID_ARCH)
-    endif
-  else # Else default to ARMv7
-    ANDROID_ABI := armeabi-v7a
+ifndef android_abi
+  ifdef ANDROID_ABI
+    android_abi := $(ANDROID_ABI)
+  else
+    $(error android_abi or ANDROID_ABI must be defined)
   endif
 endif
 
 # Alias neon
-ifeq ($(ANDROID_ABI), neon)
-  ANDROID_ABI := armeabi-v7a-with-neon
+ifeq ($(android_abi), neon)
+  android_abi := armeabi-v7a-with-neon
 endif
 
 android_neon ?= 1
-ifeq ($(ANDROID_ABI),armeabi-v7a-with-neon)
-  ANDROID_ABI := armeabi-v7a
+ifeq ($(android_abi),armeabi-v7a-with-neon)
+  android_abi := armeabi-v7a
   android_neon := 1
 endif
 
-ifeq ($(ANDROID_ABI),armeabi-v7a)
+ifeq ($(android_abi),armeabi-v7a)
   CROSS_COMPILE := armv7a-linux-androideabi
   ifeq ($(android_neon),1)
     FLAGS_C_CC += -mfpu=neon
@@ -68,26 +61,22 @@ ifeq ($(ANDROID_ABI),armeabi-v7a)
   # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug
   # in some Cortex-A8 implementations
   LDFLAGS += -Wl,--fix-cortex-a8
-endif
 
-ifeq ($(ANDROID_ABI),arm64-v8a)
+else ifeq ($(android_abi),arm64-v8a)
   CROSS_COMPILE := aarch64-linux-android
-endif
 
-ifeq ($(ANDROID_ABI),x86)
+else ifeq ($(android_abi),x86)
   CROSS_COMPILE := i686-linux-android
-endif
 
-ifeq ($(ANDROID_ABI),x86_64)
+else ifeq ($(android_abi),x86_64)
   CROSS_COMPILE := x86_64-linux-android
 endif
 
 ifndef CROSS_COMPILE
-  $(error ANDROID_ABI $(ANDROID_ABI) is not valid)
+  $(error android_abi $(android_abi) is not valid)
 endif
 
 ifdef android_ndk
-  # If we are given the Android NDK path, use that instead of PATH.
   ifndef android_api
     $(error android_ndk also requires defining android_api)
   endif
@@ -99,7 +88,7 @@ ifdef android_ndk
 
   # We dont want this being used again except to signal that this is a
   # cross-compile build. If it is this command (probably) wont exist.
-  CROSS_COMPILE := fake
+  CROSS_COMPILE := THIS_VALUE_SHOULD_NOT_BE_USED
 
   override_cross_compile = 1
   CC = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang
@@ -113,29 +102,11 @@ else
   export CROSS_COMPILE
 endif
 
-ifeq ($(android_force_clang),0)
-  ifdef android_api
-    $(error Must use a standalone toolchain to use GCC)
-  endif
-
-  # Determine if the g++ compiler is GCC or Clang.
-  # There are at least 3 assumptions being made here:
-  #  - There is a g++ command to get the version from
-  #  - Clang will have "clang" in the version string
-  #  - If g++ is actually clang, then we can replace that with clang++
-  gplusplus_version = $(shell $(CROSS_COMPILE)g++$(CROSS_COMPILE_SUFFIX) --version)
-  actually_is_clang := $(strip $(findstring clang,$(gplusplus_version)))
-else ifeq ($(android_force_clang),1)
-  actually_is_clang := 1
-else
-  $(error Invalid value for android_force_clang: $(android_force_clang))
-endif
-
 FLAGS_C_CC += -W -Wall -Wpointer-arith
 ifeq ($(threads),1)
-  CPPFLAGS  += -D_REENTRANT
+  CPPFLAGS += -D_REENTRANT
   ifdef PLATFORM_AIO_SUPPORT
-    CPPFLAGS  += $(PLATFORM_AIO_SUPPORT)
+    CPPFLAGS += $(PLATFORM_AIO_SUPPORT)
   endif
 endif # threads
 
@@ -151,21 +122,18 @@ LD_RPATH_FLAGS += -Wl,--enable-new-dtags
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
 CPPFLAGS += -D_GNU_SOURCE
 
+android_set_lld ?= 1
+ifeq ($(android_set_lld),1)
+  # Use the LLVM linker as recommended by Google
+  # The other two arguments are explained by
+  # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md#additional-required-arguments
+  LDFLAGS += -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--no-rosegment
+endif
+
 DCFLAGS  += -ggdb
 DCCFLAGS += -ggdb
 DLD      = $(CXX)
 LD       = $(CXX) $(PIE)
-
-ifndef actually_is_clang
-  # make sure to add the required libs for RTTI and exceptions (libsupc++)
-  # and a shared STL lib (libgnustl_shared by default)
-  static_libs_only ?=
-  ANDROID_STL_DLL ?= gnustl_shared
-  LIBS     += -ldl -lsupc++
-  ifneq ($(static_libs_only),1)
-    LIBS   += -l$(ANDROID_STL_DLL)
-  endif
-endif
 
 ifeq ($(optimize),1)
   SOFLAGS += -Wl,-O3
@@ -176,27 +144,7 @@ SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
           $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
 PRELIB  = @true
 
-ifdef actually_is_clang
-  include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
-else
-  include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
-endif
-
-ifneq ($(shell echo '\#include <android/ndk-version.h>' | $(CXX) -E - > /dev/null 2>&1; echo $$?), 0)
-  CPPFLAGS += -DACE_ANDROID_NDK_MISSING_NDK_VERSION_H
-endif
-
-ifdef __NDK_MAJOR__
-  CPPFLAGS += -D__NDK_MAJOR__=$(__NDK_MAJOR__)
-endif
-
-ifdef __NDK_MINOR__
-  CPPFLAGS += -D__NDK_MINOR__=$(__NDK_MINOR__)
-endif
-
-ifdef __NDK_BETA__
-  CPPFLAGS += -D__NDK_BETA__=$(__NDK_BETA__)
-endif
+include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
 
 OCFLAGS ?= -O3
 OCCFLAGS ?= -O3
