@@ -101,8 +101,6 @@
 
 #define ACE_HAS_3_PARAM_WCSTOK
 
-#define ACE_HAS_3_PARAM_READDIR_R
-
 #define ACE_HAS_ALLOCA
 
 // Compiler/platform has <alloca.h>

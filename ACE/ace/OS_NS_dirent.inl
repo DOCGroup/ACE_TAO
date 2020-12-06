@@ -65,36 +65,6 @@ readdir (ACE_DIR *d)
 #endif /* ACE_HAS_DIRENT */
 }
 
-ACE_INLINE int
-readdir_r (ACE_DIR *dirp,
-           struct ACE_DIRENT *entry,
-           struct ACE_DIRENT **result)
-{
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
-  ACE_UNUSED_ARG (entry);
-  // <result> has better not be 0!
-  *result = ACE_OS::readdir (dirp);
-  if (*result)
-    return 0; // Keep iterating
-  else
-    return 1; // Oops, some type of error!
-#elif defined (ACE_HAS_DIRENT) && !defined (ACE_LACKS_READDIR_R)
-#  if defined (ACE_HAS_3_PARAM_READDIR_R)
-       return ::readdir_r (dirp, entry, result);
-#  else
-       // <result> had better not be 0!
-       *result = ::readdir_r (dirp, entry);
-       return 0;
-#  endif /* sun */
-#else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
-  ACE_UNUSED_ARG (dirp);
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (result);
-  ACE_NOTSUP_RETURN (0);
-
-#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
-}
-
 ACE_INLINE void
 rewinddir (ACE_DIR *d)
 {
