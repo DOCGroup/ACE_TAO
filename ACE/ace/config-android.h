@@ -29,10 +29,6 @@
  * r22-beta1| 22            | 0             | 1
  *
  * __NDK_BETA__ is starts at 1 and increments until release when it is 0.
- *
- * After r16, NDK version macros are defined in android/ndk-version.h Before
- * that they must be defined in platform_macros.GNU before the include of
- * platform_android.GNU.
  */
 #define ACE_ANDROID_NDK_AT_LEAST(MAJ, MIN, BET) (\
   (__NDK_MAJOR__ > (MAJ)) || \
@@ -48,64 +44,17 @@
 #define ACE_ANDROID_NDK_LESS_THAN(MAJ, MIN, BET) \
   !ACE_ANDROID_NDK_AT_LEAST((MAJ), (MIN), (BET))
 
-// ucontext.h and clock_settime() were added in r10c
-#if ACE_ANDROID_NDK_AT_LEAST(10, 2, 0)
-#  define ACE_HAS_UCONTEXT_T
-#  define ACE_HAS_CLOCK_SETTIME
-#else
-#  define ACE_LACKS_UCONTEXT_H
-#endif
-
-// NDK has these by r12b
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0)
-#  define ACE_LACKS_GETHOSTENT
-#  define ACE_LACKS_LOCALECONV
-#  define ACE_LACKS_WCHAR_STD_NAMESPACE
-// Used in tests/Sequence_Unit_Tests/string_sequence_tester.hpp
-#  define TAO_LACKS_WCHAR_CXX_STDLIB
-#endif
-
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0) || __ANDROID_API__ < 18
+#if __ANDROID_API__ < 18
 #  define ACE_LACKS_LOG2
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(12, 1, 0) || __ANDROID_API__ < 21
+#if __ANDROID_API__ < 21
 #  define ACE_LACKS_SEARCH_H
 #  define ACE_LACKS_SYS_SEM_H
 #  define ACE_LACKS_SEMBUF_T
 #  define ACE_LACKS_SYS_MSG_H
 #  define ACE_LACKS_SYS_SHM_H
 #  define ACE_LACKS_SYSV_SHMEM
-#else
-#  define ACE_HAS_SEMUN
-#endif
-
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0) && __ANDROID_API__ < 21
-// NOTE: The && is correct, SYS_GETTID is present in API 16 in r15 onwards
-#  ifdef ACE_HAS_GETTID
-#    undef ACE_HAS_GETTID
-#  endif
-#endif
-
-// NDK has telldir() and seekdir() by 15c
-#if ACE_ANDROID_NDK_LESS_THAN(15, 2, 0) || __ANDROID_API__ < 23
-#  define ACE_LACKS_TELLDIR
-#  define ACE_LACKS_SEEKDIR
-#endif
-
-// strbuf was added by r16
-#if ACE_ANDROID_NDK_LESS_THAN(16, 0, 0)
-#  ifdef ACE_HAS_STRBUF_T
-#    undef ACE_HAS_STRBUF_T
-#  endif
-#endif
-
-// fd_mask was added in r17c
-#if ACE_ANDROID_NDK_LESS_THAN(17, 2, 0)
-#  define ACE_LACKS_FD_MASK
-#endif
-
-#if __ANDROID_API__ < 21
 #  define ACE_LACKS_RAND_R
 #  define ACE_LACKS_WCSTOLL
 #  define ACE_LACKS_WCSTOULL
@@ -113,13 +62,19 @@
 #  ifdef ACE_HAS_EVENT_POLL
 #    undef ACE_HAS_EVENT_POLL
 #  endif
+#  if !defined(ACE_HAS_GLIBC_2_2_3)
+#    define ACE_HAS_CPU_SET_T
+#  endif
+#else
+#  define ACE_HAS_SEMUN
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0)
-#  define ACE_LACKS_STRUCT_IF_NAMEINDEX
+#if __ANDROID_API__ < 23
+#  define ACE_LACKS_TELLDIR
+#  define ACE_LACKS_SEEKDIR
 #endif
 
-#if ACE_ANDROID_NDK_LESS_THAN(15, 0, 0) || __ANDROID_API__ < 24
+#if __ANDROID_API__ < 24
 #  define ACE_LACKS_IF_NAMEINDEX
 #endif
 
@@ -129,9 +84,8 @@
 #  define ACE_LACKS_ENDHOSTENT
 #endif
 
-#if !defined(ACE_HAS_GLIBC_2_2_3) && (ACE_ANDROID_NDK_AT_LEAST(15, 0, 0) || __ANDROID_API__ >= 21)
-#  define ACE_HAS_CPU_SET_T
-#endif
+#define ACE_HAS_UCONTEXT_T
+#define ACE_HAS_CLOCK_SETTIME
 
 // system errorno is a volatile int
 #define ACE_HAS_VOLATILE_ERRNO
