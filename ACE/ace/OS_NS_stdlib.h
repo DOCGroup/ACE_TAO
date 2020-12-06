@@ -100,10 +100,10 @@ namespace ACE_OS {
    */
   //@{
   ACE_NAMESPACE_INLINE_FUNCTION
-  void _exit (int status = 0) ACE_GCC_NO_RETURN;
+  [[noreturn]] void _exit (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void abort (void) ACE_GCC_NO_RETURN;
+  [[noreturn]] void abort (void);
 
   /**
    * Register an at exit hook. The @a name can be used to analyze shutdown
@@ -180,7 +180,7 @@ namespace ACE_OS {
   void *calloc (size_t elements, size_t sizeof_elements);
 
   extern ACE_Export
-  void exit (int status = 0) ACE_GCC_NO_RETURN;
+  [[noreturn]] void exit (int status = 0);
 
   extern ACE_Export
   void free (void *);
