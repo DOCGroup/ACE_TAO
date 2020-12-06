@@ -16,9 +16,9 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
   . `gnuace` no longer supports Android NDKs before r18. This means only clang
     is now supported when building for Android.
 
-  . Support for building with the Android NDK directly instead of having to use
-    a generated standalone toolchain. See `ACE-INSTALL.html` for details. Using
-    a standalone toolchain is still supported.
+  . Support for building with the Android NDK r19 or later directly instead of
+    having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
+    details. Using a standalone toolchain is still supported.
 
   . Made it easier to use `gnuace`-built libraries in as imported libraries in
     CMake-based Android Studio native projects.
