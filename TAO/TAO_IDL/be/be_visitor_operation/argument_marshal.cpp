@@ -19,16 +19,13 @@
 
 be_visitor_operation_argument_marshal::be_visitor_operation_argument_marshal (
     be_visitor_context
-    *ctx
-  )
+    *ctx)
   : be_visitor_operation_argument (ctx),
     last_arg_printed_ (be_visitor_operation_argument_marshal::TAO_ARG_NONE)
 {
 }
 
-be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal (
-    
-  )
+be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal ()
 {
 }
 
