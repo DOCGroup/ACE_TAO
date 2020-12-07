@@ -18,7 +18,7 @@ be_visitor_union_discriminant_cs::be_visitor_union_discriminant_cs (
 {
 }
 
-be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs (void)
+be_visitor_union_discriminant_cs::~be_visitor_union_discriminant_cs ()
 {
 }
 

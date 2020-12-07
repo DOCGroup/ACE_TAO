@@ -98,34 +98,34 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     }
 }
 
-AST_InterfaceFwd::~AST_InterfaceFwd (void)
+AST_InterfaceFwd::~AST_InterfaceFwd ()
 {
 }
 
 // Private operations.
 
 bool
-AST_InterfaceFwd::is_local (void)
+AST_InterfaceFwd::is_local ()
 {
   return this->full_definition ()->is_local ();
 }
 
 bool
-AST_InterfaceFwd::is_valuetype (void)
+AST_InterfaceFwd::is_valuetype ()
 {
   AST_Decl::NodeType nt = this->full_definition ()->node_type ();
   return nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype;
 }
 
 bool
-AST_InterfaceFwd::is_abstract_valuetype (void)
+AST_InterfaceFwd::is_abstract_valuetype ()
 {
   return (this->full_definition ()->is_abstract ()
           && this->is_valuetype ());
 }
 
 bool
-AST_InterfaceFwd::full_def_seen (void)
+AST_InterfaceFwd::full_def_seen ()
 {
   UTL_Scope *s = this->defined_in ();
   AST_Interface *i = nullptr;
@@ -199,7 +199,7 @@ AST_InterfaceFwd::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Interface *
-AST_InterfaceFwd::full_definition (void)
+AST_InterfaceFwd::full_definition ()
 {
   return this->pd_full_definition;
 }
@@ -217,7 +217,7 @@ AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 }
 
 bool
-AST_InterfaceFwd::is_defined (void)
+AST_InterfaceFwd::is_defined ()
 {
   // Look for the one instance of the fwd decl
   // that may have a full definition.
@@ -272,7 +272,7 @@ AST_InterfaceFwd::disown_full_definition ()
 }
 
 void
-AST_InterfaceFwd::destroy (void)
+AST_InterfaceFwd::destroy ()
 {
   if (has_ownership_)
     {
@@ -283,7 +283,7 @@ AST_InterfaceFwd::destroy (void)
 }
 
 bool
-AST_InterfaceFwd::is_fwd (void)
+AST_InterfaceFwd::is_fwd ()
 {
   return true; // This is a fwd declared type
 }

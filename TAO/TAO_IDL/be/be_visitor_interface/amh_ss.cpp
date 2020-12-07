@@ -16,7 +16,7 @@ be_visitor_amh_interface_ss::be_visitor_amh_interface_ss (
 {
 }
 
-be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss (void)
+be_visitor_amh_interface_ss::~be_visitor_amh_interface_ss ()
 {
 }
 
@@ -157,7 +157,7 @@ public:
 };
 
 TAO_IDL_Downcast_Implementation_Worker::
-TAO_IDL_Downcast_Implementation_Worker (void)
+TAO_IDL_Downcast_Implementation_Worker ()
 {
 }
 
@@ -194,14 +194,14 @@ class TAO_IDL_Copy_Ctor_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
 public:
-  TAO_IDL_Copy_Ctor_Worker (void);
+  TAO_IDL_Copy_Ctor_Worker ();
 
   virtual int emit (be_interface *base,
                     TAO_OutStream *os,
                     be_interface *derived);
 };
 
-TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker (void)
+TAO_IDL_Copy_Ctor_Worker::TAO_IDL_Copy_Ctor_Worker ()
 {
 }
 

@@ -18,7 +18,7 @@ be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
 {
 }
 
-be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs (void)
+be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs ()
 {
 }
 
@@ -69,7 +69,7 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
 }
 
 void
-be_visitor_connector_ami_exs::gen_entrypoint (void)
+be_visitor_connector_ami_exs::gen_entrypoint ()
 {
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
 

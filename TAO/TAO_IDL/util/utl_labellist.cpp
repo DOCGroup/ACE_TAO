@@ -88,14 +88,14 @@ UTL_LabelList::UTL_LabelList (AST_UnionLabel *s,
 
 // Get list item.
 AST_UnionLabel *
-UTL_LabelList::head (void)
+UTL_LabelList::head ()
 {
   return this->pd_car_data;
 }
 
 // Copy a label list.
 UTL_LabelList *
-UTL_LabelList::copy (void)
+UTL_LabelList::copy ()
 {
   AST_Expression *val = this->pd_car_data->label_val ();
 
@@ -123,7 +123,7 @@ UTL_LabelList::copy (void)
 }
 
 void
-UTL_LabelList::destroy (void)
+UTL_LabelList::destroy ()
 {
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
@@ -139,7 +139,7 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 
 // Get current item.
 AST_UnionLabel *
-UTL_LabellistActiveIterator::item (void)
+UTL_LabellistActiveIterator::item ()
 {
   if (this->source == nullptr)
     {

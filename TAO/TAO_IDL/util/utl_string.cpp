@@ -184,7 +184,7 @@ UTL_String::get_canonical_rep (ACE_CString &cstr)
 
 //////////////////////////////////////////////////////////////////////
 
-UTL_String::UTL_String (void)
+UTL_String::UTL_String ()
   : copy_taken (false),
     p_str      (nullptr),
     c_str      (nullptr)
@@ -207,7 +207,7 @@ UTL_String::UTL_String (UTL_String *s, bool force_copy)
 {
 }
 
-UTL_String::~UTL_String (void)
+UTL_String::~UTL_String ()
 {
   delete [] this->c_str;
   if (copy_taken)
@@ -217,7 +217,7 @@ UTL_String::~UTL_String (void)
 }
 
 void
-UTL_String::destroy (void)
+UTL_String::destroy ()
 {
   delete [] this->c_str;
   this->c_str = nullptr;
@@ -246,7 +246,7 @@ UTL_String::compare_quiet (UTL_String *s)
 
 // Get the canonical representation from a String.
 char *
-UTL_String::get_canonical_rep (void)
+UTL_String::get_canonical_rep ()
 {
   if (!this->c_str && this->p_str)
     {

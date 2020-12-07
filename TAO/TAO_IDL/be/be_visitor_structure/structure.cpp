@@ -16,7 +16,7 @@ be_visitor_structure::be_visitor_structure (be_visitor_context *ctx)
 {
 }
 
-be_visitor_structure::~be_visitor_structure (void)
+be_visitor_structure::~be_visitor_structure ()
 {
 }
 

@@ -24,7 +24,7 @@ be_visitor_args_marshal_ss (be_visitor_context *ctx)
 }
 
 be_visitor_args_marshal_ss::
-~be_visitor_args_marshal_ss (void)
+~be_visitor_args_marshal_ss ()
 {
 }
 
@@ -439,7 +439,7 @@ be_visitor_args_marshal_ss::visit_home (
 }
 
 int
-be_visitor_args_marshal_ss::emit_common (void)
+be_visitor_args_marshal_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =

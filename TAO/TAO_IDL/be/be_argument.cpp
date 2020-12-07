@@ -61,7 +61,7 @@ be_argument::accept (be_visitor *visitor)
 }
 
 void
-be_argument::destroy (void)
+be_argument::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_Argument::destroy ();

@@ -25,7 +25,7 @@ be_visitor_template_export::be_visitor_template_export (
 {
 }
 
-be_visitor_template_export::~be_visitor_template_export (void)
+be_visitor_template_export::~be_visitor_template_export ()
 {
 }
 

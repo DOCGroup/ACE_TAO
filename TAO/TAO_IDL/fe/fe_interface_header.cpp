@@ -159,24 +159,24 @@ FE_InterfaceHeader::FE_InterfaceHeader (UTL_ScopedName *n,
     }
 }
 
-FE_InterfaceHeader::~FE_InterfaceHeader (void)
+FE_InterfaceHeader::~FE_InterfaceHeader ()
 {
 }
 
 bool
-FE_InterfaceHeader::is_local (void) const
+FE_InterfaceHeader::is_local () const
 {
   return this->is_local_;
 }
 
 bool
-FE_InterfaceHeader::is_abstract (void) const
+FE_InterfaceHeader::is_abstract () const
 {
   return this->is_abstract_;
 }
 
 void
-FE_InterfaceHeader::destroy (void)
+FE_InterfaceHeader::destroy ()
 {
   if (nullptr != this->interface_name_)
     {
@@ -542,7 +542,7 @@ FE_InterfaceHeader::already_seen_flat (AST_Interface *ip)
 }
 
 void
-FE_InterfaceHeader::install_in_header (void)
+FE_InterfaceHeader::install_in_header ()
 {
   long j = 0;
   long k = 0;
@@ -579,37 +579,37 @@ FE_InterfaceHeader::install_in_header (void)
 // Data accessors.
 
 UTL_ScopedName *
-FE_InterfaceHeader::name (void) const
+FE_InterfaceHeader::name () const
 {
   return this->interface_name_;
 }
 
 AST_Type **
-FE_InterfaceHeader::inherits (void) const
+FE_InterfaceHeader::inherits () const
 {
   return this->inherits_;
 }
 
 long
-FE_InterfaceHeader::n_inherits (void) const
+FE_InterfaceHeader::n_inherits () const
 {
   return this->n_inherits_;
 }
 
 AST_Interface **
-FE_InterfaceHeader::inherits_flat (void) const
+FE_InterfaceHeader::inherits_flat () const
 {
   return this->inherits_flat_;
 }
 
 long
-FE_InterfaceHeader::n_inherits_flat (void) const
+FE_InterfaceHeader::n_inherits_flat () const
 {
   return this->n_inherits_flat_;
 }
 
 void
-FE_InterfaceHeader::destroy_flat_arrays (void)
+FE_InterfaceHeader::destroy_flat_arrays ()
 {
   delete [] this->inherits_flat_;
   this->inherits_flat_ = nullptr;

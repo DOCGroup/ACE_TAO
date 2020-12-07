@@ -50,7 +50,7 @@ be_visitor_xplicit_pre_proc::be_visitor_xplicit_pre_proc (
 {
 }
 
-be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc (void)
+be_visitor_xplicit_pre_proc::~be_visitor_xplicit_pre_proc ()
 {
 }
 
@@ -919,7 +919,7 @@ be_visitor_xplicit_pre_proc::visit_predefined_type (
 }
 
 be_interface *
-be_visitor_xplicit_pre_proc::xplicit (void) const
+be_visitor_xplicit_pre_proc::xplicit () const
 {
   return this->xplicit_;
 }

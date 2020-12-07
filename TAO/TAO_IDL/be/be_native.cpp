@@ -43,19 +43,19 @@ be_native::be_native (UTL_ScopedName *n)
 }
 
 int
-be_native::gen_typecode (void)
+be_native::gen_typecode ()
 {
   return 0;
 }
 
 long
-be_native::tc_size (void)
+be_native::tc_size ()
 {
   return 0;
 }
 
 void
-be_native::destroy (void)
+be_native::destroy ()
 {
   this->be_exception::destroy ();
   this->AST_Native::destroy ();

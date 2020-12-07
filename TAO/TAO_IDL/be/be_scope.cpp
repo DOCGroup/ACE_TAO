@@ -15,7 +15,7 @@
 #include "be_visitor.h"
 
 // Default Constructor.
-be_scope::be_scope (void)
+be_scope::be_scope ()
   : UTL_Scope (),
     comma_ (0)
 {
@@ -28,7 +28,7 @@ be_scope::be_scope (AST_Decl::NodeType type)
 {
 }
 
-be_scope::~be_scope (void)
+be_scope::~be_scope ()
 {
 }
 
@@ -53,14 +53,14 @@ be_scope::comma (unsigned short comma)
 }
 
 int
-be_scope::comma (void) const
+be_scope::comma () const
 {
   return this->comma_;
 }
 
 // Return the scope created by this node (if one exists, else NULL).
 be_decl *
-be_scope::decl (void)
+be_scope::decl ()
 {
   switch (this->scope_node_type ())
     {
@@ -100,7 +100,7 @@ be_scope::decl (void)
 }
 
 void
-be_scope::destroy (void)
+be_scope::destroy ()
 {
 }
 

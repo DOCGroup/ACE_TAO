@@ -52,12 +52,12 @@ be_array::be_array (UTL_ScopedName *n,
     }
 }
 
-be_array::~be_array (void)
+be_array::~be_array ()
 {
 }
 
 int
-be_array::create_name (void)
+be_array::create_name ()
 {
   char namebuf [NAMEBUFSIZE];
   unsigned long i;
@@ -151,7 +151,7 @@ be_array::create_name (void)
 
 // Overriden method.
 void
-be_array::compute_tc_name (void)
+be_array::compute_tc_name ()
 {
   // Array TypeCodes can only be accessed through an alias
   // TypeCode.  Generate a TypeCode name that is meant for internal
@@ -341,7 +341,7 @@ be_array::accept (be_visitor *visitor)
 }
 
 void
-be_array::destroy (void)
+be_array::destroy ()
 {
   this->be_type::destroy ();
   this->AST_Array::destroy ();

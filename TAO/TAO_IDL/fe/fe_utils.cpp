@@ -24,7 +24,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-FE_Utils::T_Param_Info::T_Param_Info (void)
+FE_Utils::T_Param_Info::T_Param_Info ()
   : type_ (AST_Decl::NT_fixed),
     const_type_ (AST_Expression::EV_none),
     enum_const_type_decl_ (nullptr)
@@ -61,7 +61,7 @@ FE_Utils::duplicate_param_id (T_PARAMLIST_INFO *params)
 }
 
 void
-FE_Utils::T_ARGLIST::destroy (void)
+FE_Utils::T_ARGLIST::destroy ()
 {
   AST_Decl **d = nullptr;
 
@@ -351,7 +351,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
 }
 
 void
-FE_Utils::create_implied_ami_uses_stuff (void)
+FE_Utils::create_implied_ami_uses_stuff ()
 {
   if (idl_global->included_ami_receps_done ())
     {
@@ -576,7 +576,7 @@ FE_Utils::is_include_file_found (ACE_CString & inc_file,
 /// Validate the included idl files, some files might have been
 /// ignored by the preprocessor.
 void
-FE_Utils::validate_included_idl_files (void)
+FE_Utils::validate_included_idl_files ()
 {
   // Flag to make sure we don't repeat things.
   static bool already_done = false;

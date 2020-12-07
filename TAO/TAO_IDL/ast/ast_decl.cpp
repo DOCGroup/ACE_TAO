@@ -91,17 +91,17 @@ COMMON_Base::COMMON_Base (bool local,
 {
 }
 
-COMMON_Base::~COMMON_Base (void)
+COMMON_Base::~COMMON_Base ()
 {
 }
 
 void
-COMMON_Base::destroy (void)
+COMMON_Base::destroy ()
 {
 }
 
 bool
-COMMON_Base::is_local (void)
+COMMON_Base::is_local ()
 {
   return this->is_local_;
 }
@@ -113,7 +113,7 @@ COMMON_Base::is_local (bool val)
 }
 
 bool
-COMMON_Base::is_abstract (void) const
+COMMON_Base::is_abstract () const
 {
   return this->is_abstract_;
 }
@@ -218,12 +218,12 @@ AST_Decl::AST_Decl (
   this->compute_repoID ();
 }
 
-AST_Decl::~AST_Decl (void)
+AST_Decl::~AST_Decl ()
 {
 }
 
 void
-AST_Decl::destroy (void)
+AST_Decl::destroy ()
 {
   // These are not set for the root node.
   if (this->pd_name)
@@ -282,7 +282,7 @@ AST_Decl::adjust_found (
 }
 
 bool
-AST_Decl::is_fwd (void)
+AST_Decl::is_fwd ()
 {
   return false; // Not a fwd declared type (by default)
 }
@@ -408,7 +408,7 @@ AST_Decl::set_prefix_with_typeprefix_r (const char *value,
 
 // Compute stringified fully scoped name.
 void
-AST_Decl::compute_full_name (void)
+AST_Decl::compute_full_name ()
 {
   if (!this->full_name_)
     {
@@ -486,7 +486,7 @@ AST_Decl::compute_full_name (void)
 
 // Compute stringified repository ID.
 void
-AST_Decl::compute_repoID (void)
+AST_Decl::compute_repoID ()
 {
   if (this->repoID_)
     {
@@ -647,7 +647,7 @@ AST_Decl::compute_repoID (void)
 // Public operations.
 
 const char *
-AST_Decl::flat_name (void)
+AST_Decl::flat_name ()
 {
   if (!this->flat_name_)
     {
@@ -659,7 +659,7 @@ AST_Decl::flat_name (void)
 
 // Compute stringified flattened fully scoped name.
 void
-AST_Decl::compute_flat_name (void)
+AST_Decl::compute_flat_name ()
 {
   if (this->flat_name_ == nullptr)
     {
@@ -908,7 +908,7 @@ AST_Decl::is_child (AST_Decl *s)
 }
 
 bool
-AST_Decl::is_nested (void)
+AST_Decl::is_nested ()
 {
   AST_Decl *d = ScopeAsDecl (this->defined_in ());
 
@@ -941,7 +941,7 @@ AST_Decl::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 const char *
-AST_Decl::full_name (void)
+AST_Decl::full_name ()
 {
   if (!this->full_name_)
     {
@@ -952,7 +952,7 @@ AST_Decl::full_name (void)
 }
 
 const char *
-AST_Decl::repoID (void)
+AST_Decl::repoID ()
 {
   if (this->pd_node_type == NT_root)
     {
@@ -976,7 +976,7 @@ AST_Decl::repoID (char *value)
 }
 
 const char *
-AST_Decl::prefix (void)
+AST_Decl::prefix ()
 {
   return this->prefix_;
 }
@@ -989,7 +989,7 @@ AST_Decl::prefix (const char *value)
 }
 
 const char *
-AST_Decl::version (void)
+AST_Decl::version ()
 {
   if (!this->version_)
     {
@@ -1055,7 +1055,7 @@ AST_Decl::version (char *value)
 }
 
 bool
-AST_Decl::anonymous (void) const
+AST_Decl::anonymous () const
 {
   return this->anonymous_;
 }
@@ -1067,7 +1067,7 @@ AST_Decl::anonymous (bool val)
 }
 
 bool
-AST_Decl::typeid_set (void) const
+AST_Decl::typeid_set () const
 {
   return this->typeid_set_;
 }
@@ -1157,7 +1157,7 @@ AST_Decl::set_prefix_with_typeprefix (const char *value)
 }
 
 bool
-AST_Decl::imported (void)
+AST_Decl::imported ()
 {
   return this->pd_imported;
 }
@@ -1169,7 +1169,7 @@ AST_Decl::set_imported (bool is_it)
 }
 
 bool
-AST_Decl::in_main_file (void)
+AST_Decl::in_main_file ()
 {
   return this->pd_in_main_file;
 }
@@ -1181,7 +1181,7 @@ AST_Decl::set_in_main_file (bool is_it)
 }
 
 UTL_Scope *
-AST_Decl::defined_in (void)
+AST_Decl::defined_in ()
 {
   return this->pd_defined_in;
 }
@@ -1193,13 +1193,13 @@ AST_Decl::set_defined_in (UTL_Scope *s)
 }
 
 AST_Decl::NodeType
-AST_Decl::node_type (void)
+AST_Decl::node_type ()
 {
   return this->pd_node_type;
 }
 
 long
-AST_Decl::line (void)
+AST_Decl::line ()
 {
   return this->pd_line;
 }
@@ -1211,7 +1211,7 @@ AST_Decl::set_line (long l)
 }
 
 ACE_CString &
-AST_Decl::file_name (void)
+AST_Decl::file_name ()
 {
   return this->pd_file_name;
 }
@@ -1223,7 +1223,7 @@ AST_Decl::set_file_name (ACE_CString s)
 }
 
 UTL_ScopedName *
-AST_Decl::name (void)
+AST_Decl::name ()
 {
   return this->pd_name;
 }
@@ -1344,7 +1344,7 @@ AST_Decl::set_name (UTL_ScopedName *n)
 }
 
 Identifier *
-AST_Decl::local_name (void)
+AST_Decl::local_name ()
 {
   return this->pd_local_name;
 }
@@ -1417,13 +1417,13 @@ AST_Decl::original_local_name (Identifier *local_name)
 }
 
 Identifier *
-AST_Decl::original_local_name (void)
+AST_Decl::original_local_name ()
 {
   return this->pd_original_local_name;
 }
 
 bool
-AST_Decl::is_defined (void)
+AST_Decl::is_defined ()
 {
   // AST_Interface, AST_Structure, and AST_Union will
   // override this, as will AST_InterfaceFwd, etc.
@@ -1431,7 +1431,7 @@ AST_Decl::is_defined (void)
 }
 
 UTL_ScopedName *
-AST_Decl::last_referenced_as (void) const
+AST_Decl::last_referenced_as () const
 {
   return this->last_referenced_as_;
 }
@@ -1449,7 +1449,7 @@ AST_Decl::last_referenced_as (UTL_ScopedName *n)
 }
 
 UTL_Scope *
-AST_Decl::prefix_scope (void)
+AST_Decl::prefix_scope ()
 {
   return this->prefix_scope_;
 }
@@ -1462,7 +1462,7 @@ AST_Decl::prefix_scope (UTL_Scope *s)
 
 // Container types will override this.
 int
-AST_Decl::contains_wstring (void)
+AST_Decl::contains_wstring ()
 {
   if (this->contains_wstring_ == -1)
     {
@@ -1557,7 +1557,7 @@ AST_Decl::masking_checks (AST_Decl *mod)
 }
 
 bool
-AST_Decl::in_tmpl_mod_not_aliased (void) const
+AST_Decl::in_tmpl_mod_not_aliased () const
 {
   return this->in_tmpl_mod_not_aliased_;
 }

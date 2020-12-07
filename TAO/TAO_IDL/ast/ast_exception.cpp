@@ -100,7 +100,7 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception (void)
+AST_Exception::~AST_Exception ()
 {
 }
 
@@ -198,7 +198,7 @@ AST_Exception::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Exception::destroy (void)
+AST_Exception::destroy ()
 {
   this->AST_Structure::destroy ();
 }

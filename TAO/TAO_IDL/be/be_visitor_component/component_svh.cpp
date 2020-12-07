@@ -26,7 +26,7 @@ be_visitor_component_svh::be_visitor_component_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_component_svh::~be_visitor_component_svh (void)
+be_visitor_component_svh::~be_visitor_component_svh ()
 {
 }
 

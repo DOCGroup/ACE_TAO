@@ -123,7 +123,7 @@ be_sequence::be_sequence (AST_Expression *v,
 }
 
 be_type *
-be_sequence::base_type (void) const
+be_sequence::base_type () const
 {
   return
     dynamic_cast<be_type*> (
@@ -132,7 +132,7 @@ be_sequence::base_type (void) const
 
 // Helper to create_name.
 char *
-be_sequence::gen_name (void)
+be_sequence::gen_name ()
 {
   char namebuf [NAMEBUFSIZE];
   be_type *bt = nullptr;
@@ -275,7 +275,7 @@ be_sequence::create_name (be_typedef *node)
 
 // Does this sequence have a managed type sequence element?
 be_sequence::MANAGED_TYPE
-be_sequence::managed_type (void)
+be_sequence::managed_type ()
 {
   if (this->mt_ == be_sequence::MNG_UNKNOWN) // Not calculated yet.
     {
@@ -372,7 +372,7 @@ be_sequence::fe_add_sequence (AST_Sequence *t)
 
 // Overridden method
 be_decl *
-be_sequence::decl (void)
+be_sequence::decl ()
 {
   return this;
 }
@@ -794,7 +794,7 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
 }
 
 be_field *
-be_sequence::field_node (void) const
+be_sequence::field_node () const
 {
   return this->field_node_;
 }
@@ -807,7 +807,7 @@ be_sequence::field_node (be_field *node)
 
 // Overriden method.
 void
-be_sequence::compute_tc_name (void)
+be_sequence::compute_tc_name ()
 {
   // Sequence TypeCodes can only be accessed through an alias
   // TypeCode.  Generate a TypeCode name that is meant for internal
@@ -870,7 +870,7 @@ be_sequence::smart_fwd_helper_name (AST_Decl *ctx_scope,
 }
 
 void
-be_sequence::destroy (void)
+be_sequence::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();

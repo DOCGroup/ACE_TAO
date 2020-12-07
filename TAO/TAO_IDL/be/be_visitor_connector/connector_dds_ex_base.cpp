@@ -34,7 +34,7 @@ be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
 }
 
 be_visitor_connector_dds_ex_base::~be_visitor_connector_dds_ex_base (
-  void)
+  )
 {
 }
 
@@ -172,7 +172,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
 }
 
 void
-be_visitor_connector_dds_ex_base::match_template_args (void)
+be_visitor_connector_dds_ex_base::match_template_args ()
 {
   /// If the connector was declared in an aliased templated
   /// module, we want to populate our template args list with

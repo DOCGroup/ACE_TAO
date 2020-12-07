@@ -72,7 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/streams.h"
 #include "ace/OS_NS_string.h"
 
-Identifier::Identifier (void)
+Identifier::Identifier ()
   : pv_string (nullptr),
     escaped_ (false)
 {
@@ -92,7 +92,7 @@ Identifier::Identifier (const Identifier &other)
   *this = other;
 }
 
-Identifier::~Identifier (void)
+Identifier::~Identifier ()
 {
   if (this->pv_string != nullptr)
     {
@@ -103,13 +103,13 @@ Identifier::~Identifier (void)
 // Operations.
 
 char *
-Identifier::get_string (void)
+Identifier::get_string ()
 {
   return this->pv_string;
 }
 
 const char *
-Identifier::get_string (void) const
+Identifier::get_string () const
 {
   return this->pv_string;
 }
@@ -206,7 +206,7 @@ Identifier::case_compare_quiet (Identifier *o)
 }
 
 Identifier *
-Identifier::copy (void)
+Identifier::copy ()
 {
   Identifier *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -219,7 +219,7 @@ Identifier::copy (void)
 }
 
 bool
-Identifier::escaped (void) const
+Identifier::escaped () const
 {
   return this->escaped_;
 }
@@ -241,7 +241,7 @@ Identifier::dump (ACE_OSTREAM_TYPE &o)
 }
 
 void
-Identifier::destroy (void)
+Identifier::destroy ()
 {
 }
 

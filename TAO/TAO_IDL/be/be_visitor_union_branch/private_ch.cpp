@@ -25,7 +25,7 @@ be_visitor_union_branch_private_ch::be_visitor_union_branch_private_ch (
 }
 
 // Destructor.
-be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch (void)
+be_visitor_union_branch_private_ch::~be_visitor_union_branch_private_ch ()
 {
 }
 

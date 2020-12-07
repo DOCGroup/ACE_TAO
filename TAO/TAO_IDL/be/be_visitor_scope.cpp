@@ -29,7 +29,7 @@ be_visitor_scope::be_visitor_scope (be_visitor_context *ctx)
 {
 }
 
-be_visitor_scope::~be_visitor_scope (void)
+be_visitor_scope::~be_visitor_scope ()
 {
 }
 
@@ -122,7 +122,7 @@ be_visitor_scope::pre_process (be_decl *)
 }
 
 int
-be_visitor_scope::elem_number (void)
+be_visitor_scope::elem_number ()
 {
   // Return the current element that we are working on.
   return this->elem_number_;

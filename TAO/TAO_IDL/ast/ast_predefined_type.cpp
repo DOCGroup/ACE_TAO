@@ -221,7 +221,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   this->set_name (new_name);
 }
 
-AST_PredefinedType::~AST_PredefinedType (void)
+AST_PredefinedType::~AST_PredefinedType ()
 {
 }
 
@@ -236,7 +236,7 @@ AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_PredefinedType::compute_size_type (void)
+AST_PredefinedType::compute_size_type ()
 {
   switch (this->pd_pt)
   {
@@ -260,7 +260,7 @@ AST_PredefinedType::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_PredefinedType::destroy (void)
+AST_PredefinedType::destroy ()
 {
   this->AST_ConcreteType::destroy ();
 }
@@ -268,7 +268,7 @@ AST_PredefinedType::destroy (void)
 // Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt (void)
+AST_PredefinedType::pt ()
 {
   return this->pd_pt;
 }

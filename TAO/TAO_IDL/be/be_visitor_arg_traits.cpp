@@ -51,7 +51,7 @@ be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
 {
 }
 
-be_visitor_arg_traits::~be_visitor_arg_traits (void)
+be_visitor_arg_traits::~be_visitor_arg_traits ()
 {
   delete [] this->S_;
 }
@@ -1242,7 +1242,7 @@ be_visitor_arg_traits::generated (be_decl *node,
 }
 
 const char *
-be_visitor_arg_traits::insert_policy (void)
+be_visitor_arg_traits::insert_policy ()
 {
   if (be_global->any_support ())
     {

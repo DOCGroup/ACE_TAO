@@ -21,7 +21,7 @@ be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
 {
 }
 
-be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs (void)
+be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs ()
 {
 }
 
@@ -203,7 +203,7 @@ be_visitor_facet_ami_exs::post_process (be_decl *node)
   return 0;
 }
 void
-be_visitor_facet_ami_exs::init (void)
+be_visitor_facet_ami_exs::init ()
 {
   UTL_Scope *s = this->iface_->defined_in ();
   ACE_CString handler_str (
@@ -233,7 +233,7 @@ be_visitor_facet_ami_exs::init (void)
 
 }
 int
-be_visitor_facet_ami_exs::gen_reply_handler_class (void)
+be_visitor_facet_ami_exs::gen_reply_handler_class ()
 {
   this->for_reply_handler_ = true;
 
@@ -325,7 +325,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 }
 
 int
-be_visitor_facet_ami_exs::gen_facet_executor_class (void)
+be_visitor_facet_ami_exs::gen_facet_executor_class ()
 {
 
   this->for_reply_handler_ = false;

@@ -21,7 +21,7 @@ be_visitor_field_cdr_op_cs::be_visitor_field_cdr_op_cs (
 {
 }
 
-be_visitor_field_cdr_op_cs::~be_visitor_field_cdr_op_cs (void)
+be_visitor_field_cdr_op_cs::~be_visitor_field_cdr_op_cs ()
 {
 }
 
@@ -404,7 +404,7 @@ be_visitor_field_cdr_op_cs::visit_eventtype_fwd (be_eventtype_fwd *node)
 
 
 int
-be_visitor_field_cdr_op_cs::emit_valuetype_common (void)
+be_visitor_field_cdr_op_cs::emit_valuetype_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_field *f =

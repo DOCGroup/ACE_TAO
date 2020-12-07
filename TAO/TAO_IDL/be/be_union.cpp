@@ -72,7 +72,7 @@ be_union::redefine (AST_Structure *from)
 }
 
 bool
-be_union::has_duplicate_case_labels (void)
+be_union::has_duplicate_case_labels ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -181,7 +181,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_union::destroy (void)
+be_union::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -198,7 +198,7 @@ be_union::accept (be_visitor *visitor)
 }
 
 bool
-be_union::gen_empty_default_label (void)
+be_union::gen_empty_default_label ()
 {
   // A non-empty explicit default label will be generated.
   if (this->default_index () != -1)
@@ -266,7 +266,7 @@ be_union::be_add_union_branch (AST_UnionBranch *b)
 }
 
 ACE_UINT64
-be_union::nlabels (void)
+be_union::nlabels ()
 {
   ACE_UINT64 retval = 0;
 

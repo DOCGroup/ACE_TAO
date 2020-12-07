@@ -22,7 +22,7 @@ ast_visitor_tmpl_module_ref::ast_visitor_tmpl_module_ref (
 {
 }
 
-ast_visitor_tmpl_module_ref::~ast_visitor_tmpl_module_ref (void)
+ast_visitor_tmpl_module_ref::~ast_visitor_tmpl_module_ref ()
 {
 }
 

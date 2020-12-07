@@ -32,7 +32,7 @@ be_visitor_amh_pre_proc::be_visitor_amh_pre_proc (be_visitor_context *ctx)
 {
 }
 
-be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc (void)
+be_visitor_amh_pre_proc::~be_visitor_amh_pre_proc ()
 {
 }
 

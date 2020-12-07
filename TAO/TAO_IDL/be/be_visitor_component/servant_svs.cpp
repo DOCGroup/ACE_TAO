@@ -17,7 +17,7 @@ be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svs::~be_visitor_servant_svs (void)
+be_visitor_servant_svs::~be_visitor_servant_svs ()
 {
 }
 
@@ -648,7 +648,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
 }
 
 void
-be_visitor_servant_svs::gen_provides_top (void)
+be_visitor_servant_svs::gen_provides_top ()
 {
   if (this->node_->n_provides () == 0UL)
     {
@@ -702,7 +702,7 @@ be_visitor_servant_svs::gen_provides_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_publishes_top (void)
+be_visitor_servant_svs::gen_publishes_top ()
 {
   ACE_CDR::ULong npubs = this->node_->n_publishes ();
 
@@ -809,7 +809,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_uses_top (void)
+be_visitor_servant_svs::gen_uses_top ()
 {
   ACE_CDR::ULong nuses = this->node_->n_uses ();
 
@@ -916,7 +916,7 @@ be_visitor_servant_svs::gen_uses_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_emits_top (void)
+be_visitor_servant_svs::gen_emits_top ()
 {
   /// Generated whether the component has emits ports
   /// or not, except if we are generating a LwCCM
@@ -991,7 +991,7 @@ be_visitor_servant_svs::gen_emits_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_get_all_emitters (void)
+be_visitor_servant_svs::gen_get_all_emitters ()
 {
   if (be_global->gen_lwccm () || be_global->gen_noeventccm () || this->node_->n_emits () == 0UL)
     {
@@ -1039,7 +1039,7 @@ be_visitor_obv_factory_reg::be_visitor_obv_factory_reg (
 {
 }
 
-be_visitor_obv_factory_reg::~be_visitor_obv_factory_reg (void)
+be_visitor_obv_factory_reg::~be_visitor_obv_factory_reg ()
 {
 }
 
@@ -1087,7 +1087,7 @@ be_visitor_attr_set::be_visitor_attr_set (be_visitor_context *ctx)
 {
 }
 
-be_visitor_attr_set::~be_visitor_attr_set (void)
+be_visitor_attr_set::~be_visitor_attr_set ()
 {
 }
 
@@ -1168,7 +1168,7 @@ be_visitor_facet_executor_block::be_visitor_facet_executor_block (
 }
 
 be_visitor_facet_executor_block::~be_visitor_facet_executor_block (
-  void)
+  )
 {
 }
 
@@ -1199,7 +1199,7 @@ be_visitor_connect_block::be_visitor_connect_block (
 {
 }
 
-be_visitor_connect_block::~be_visitor_connect_block (void)
+be_visitor_connect_block::~be_visitor_connect_block ()
 {
 }
 
@@ -1247,7 +1247,7 @@ be_visitor_disconnect_block::be_visitor_disconnect_block (
 }
 
 be_visitor_disconnect_block::~be_visitor_disconnect_block (
-  void)
+  )
 {
 }
 
@@ -1295,7 +1295,7 @@ be_visitor_receptacle_desc::be_visitor_receptacle_desc (
 }
 
 be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
-  void)
+  )
 {
 }
 
@@ -1364,7 +1364,7 @@ be_visitor_subscribe_block::be_visitor_subscribe_block (
 }
 
 be_visitor_subscribe_block::~be_visitor_subscribe_block (
-  void)
+  )
 {
 }
 
@@ -1400,7 +1400,7 @@ be_visitor_unsubscribe_block::be_visitor_unsubscribe_block (
 }
 
 be_visitor_unsubscribe_block::~be_visitor_unsubscribe_block (
-  void)
+  )
 {
 }
 
@@ -1432,7 +1432,7 @@ be_visitor_event_source_desc::be_visitor_event_source_desc (
 }
 
 be_visitor_event_source_desc::~be_visitor_event_source_desc (
-  void)
+  )
 {
 }
 
@@ -1478,7 +1478,7 @@ be_visitor_connect_consumer_block::be_visitor_connect_consumer_block (
 {
 }
 
-be_visitor_connect_consumer_block::~be_visitor_connect_consumer_block (void)
+be_visitor_connect_consumer_block::~be_visitor_connect_consumer_block ()
 {
 }
 
@@ -1516,7 +1516,7 @@ be_visitor_disconnect_consumer_block::be_visitor_disconnect_consumer_block (
 }
 
 be_visitor_disconnect_consumer_block::~be_visitor_disconnect_consumer_block (
-  void)
+  )
 {
 }
 
@@ -1548,7 +1548,7 @@ be_visitor_emitter_desc::be_visitor_emitter_desc (
 }
 
 be_visitor_emitter_desc::~be_visitor_emitter_desc (
-  void)
+  )
 {
 }
 
@@ -1583,7 +1583,7 @@ be_visitor_populate_port_tables::be_visitor_populate_port_tables (
 }
 
 be_visitor_populate_port_tables::~be_visitor_populate_port_tables (
-  void)
+  )
 {
 }
 

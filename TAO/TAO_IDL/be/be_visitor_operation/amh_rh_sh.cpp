@@ -17,7 +17,7 @@ be_visitor_amh_rh_operation_sh::be_visitor_amh_rh_operation_sh (
 {
 }
 
-be_visitor_amh_rh_operation_sh::~be_visitor_amh_rh_operation_sh (void)
+be_visitor_amh_rh_operation_sh::~be_visitor_amh_rh_operation_sh ()
 {
 }
 

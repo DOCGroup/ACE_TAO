@@ -45,7 +45,7 @@ be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
 {
 }
 
-be_visitor_attribute::~be_visitor_attribute (void)
+be_visitor_attribute::~be_visitor_attribute ()
 {
 }
 

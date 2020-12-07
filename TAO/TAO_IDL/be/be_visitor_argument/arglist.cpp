@@ -22,7 +22,7 @@ be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist (void)
+be_visitor_args_arglist::~be_visitor_args_arglist ()
 {
 }
 

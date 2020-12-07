@@ -23,7 +23,7 @@ be_visitor_operation_argument::be_visitor_operation_argument (
 {
 }
 
-be_visitor_operation_argument::~be_visitor_operation_argument (void)
+be_visitor_operation_argument::~be_visitor_operation_argument ()
 {
 }
 

@@ -90,7 +90,7 @@ UTL_IdList::UTL_IdList (Identifier *s,
 
 // Copy an IdList.
 UTL_IdList *
-UTL_IdList::copy (void)
+UTL_IdList::copy ()
 {
   UTL_IdList *retval = nullptr;
   ACE_NEW_RETURN (retval,
@@ -108,14 +108,14 @@ UTL_IdList::copy (void)
 
 // Get list item.
 Identifier *
-UTL_IdList::head (void)
+UTL_IdList::head ()
 {
   return this->pd_car_data;
 }
 
 // Get last item of this list.
 Identifier *
-UTL_IdList::last_component (void)
+UTL_IdList::last_component ()
 {
   if (this->tail () == nullptr)
     {
@@ -127,7 +127,7 @@ UTL_IdList::last_component (void)
 
 // Get first item of this list holding a non-empty string.
 Identifier *
-UTL_IdList::first_component (void)
+UTL_IdList::first_component ()
 {
   if (ACE_OS::strlen (this->pd_car_data->get_string ()) > 0)
     {
@@ -238,7 +238,7 @@ UTL_IdList::dump (ACE_OSTREAM_TYPE &o)
 }
 
 void
-UTL_IdList::destroy (void)
+UTL_IdList::destroy ()
 {
   if (this->pd_car_data != nullptr)
     {
@@ -262,7 +262,7 @@ UTL_IdListActiveIterator::UTL_IdListActiveIterator (UTL_IdList *s)
 
 // Get current item.
 Identifier *
-UTL_IdListActiveIterator::item (void)
+UTL_IdListActiveIterator::item ()
 {
     if (this->source == nullptr)
       {

@@ -326,7 +326,7 @@ be_util::prep_be_arg (char *s)
 }
 
 void
-be_util::arg_post_proc (void)
+be_util::arg_post_proc ()
 {
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.
@@ -384,7 +384,7 @@ be_util::arg_post_proc (void)
 }
 
 void
-be_util::usage (void)
+be_util::usage ()
 {
   ACE_DEBUG ((
       LM_DEBUG,
@@ -940,7 +940,7 @@ be_util::usage (void)
 }
 
 AST_Generator *
-be_util::generator_init (void)
+be_util::generator_init ()
 {
   tao_cg = TAO_CODEGEN::instance ();
 

@@ -145,7 +145,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_structure::destroy (void)
+be_structure::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();

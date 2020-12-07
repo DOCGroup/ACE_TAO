@@ -18,7 +18,7 @@ be_visitor_args::be_visitor_args (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args::~be_visitor_args (void)
+be_visitor_args::~be_visitor_args ()
 {
 }
 
@@ -67,7 +67,7 @@ be_visitor_args::type_name (be_type *node,
 
 // Helper that returns the direction type of the argument
 AST_Argument::Direction
-be_visitor_args::direction (void)
+be_visitor_args::direction ()
 {
   if (this->fixed_direction_ != -1)
     {

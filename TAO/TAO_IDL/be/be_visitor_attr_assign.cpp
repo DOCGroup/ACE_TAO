@@ -23,7 +23,7 @@ be_visitor_attr_assign::be_visitor_attr_assign  (
 {
 }
 
-be_visitor_attr_assign::~be_visitor_attr_assign (void)
+be_visitor_attr_assign::~be_visitor_attr_assign ()
 {
 }
 

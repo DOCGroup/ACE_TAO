@@ -22,7 +22,7 @@ be_visitor_valuetype_field_ch::be_visitor_valuetype_field_ch (
   setenclosings ("", ";");
 }
 
-be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch (void)
+be_visitor_valuetype_field_ch::~be_visitor_valuetype_field_ch ()
 {
 }
 
@@ -800,13 +800,13 @@ be_visitor_valuetype_field_ch::setenclosings (const char *pre,
 }
 
 const char*
-be_visitor_valuetype_field_ch::pre_op (void)
+be_visitor_valuetype_field_ch::pre_op ()
 {
   return pre_op_;
 }
 
 const char*
-be_visitor_valuetype_field_ch::post_op (void)
+be_visitor_valuetype_field_ch::post_op ()
 {
   return post_op_;
 }

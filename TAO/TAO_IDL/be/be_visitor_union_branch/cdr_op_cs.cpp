@@ -28,7 +28,7 @@ be_visitor_union_branch_cdr_op_cs::be_visitor_union_branch_cdr_op_cs (
 {
 }
 
-be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs (void)
+be_visitor_union_branch_cdr_op_cs::~be_visitor_union_branch_cdr_op_cs ()
 {
 }
 
@@ -1010,7 +1010,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
 }
 
 int
-be_visitor_union_branch_cdr_op_cs::explicit_default (void)
+be_visitor_union_branch_cdr_op_cs::explicit_default ()
 {
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ()->decl ());

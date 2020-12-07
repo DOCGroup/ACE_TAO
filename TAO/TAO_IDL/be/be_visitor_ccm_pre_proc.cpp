@@ -91,7 +91,7 @@ be_visitor_ccm_pre_proc::be_visitor_ccm_pre_proc (
 {
 }
 
-be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc (void)
+be_visitor_ccm_pre_proc::~be_visitor_ccm_pre_proc ()
 {
   this->module_id_.destroy ();
 }
@@ -1377,7 +1377,7 @@ be_visitor_ccm_pre_proc::gen_extended_port (be_porttype *pt)
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_cookie (void)
+be_visitor_ccm_pre_proc::lookup_cookie ()
 {
   if (this->cookie_ == nullptr)
     {
@@ -1410,7 +1410,7 @@ be_visitor_ccm_pre_proc::lookup_cookie (void)
 }
 
 int
-be_visitor_ccm_pre_proc::lookup_exceptions (void)
+be_visitor_ccm_pre_proc::lookup_exceptions ()
 {
   int status = 0;
 
@@ -1835,7 +1835,7 @@ be_visitor_ccm_pre_proc::compute_inheritance (be_home *node)
 }
 
 int
-be_visitor_ccm_pre_proc::generate_ami4ccm_uses (void)
+be_visitor_ccm_pre_proc::generate_ami4ccm_uses ()
 {
   /// The interfaces in the list below are from this IDL file,
   /// which then must be processed with the -GC option, so we

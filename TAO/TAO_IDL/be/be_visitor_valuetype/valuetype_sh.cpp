@@ -20,7 +20,7 @@ be_visitor_valuetype_sh::be_visitor_valuetype_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_sh::~be_visitor_valuetype_sh (void)
+be_visitor_valuetype_sh::~be_visitor_valuetype_sh ()
 {
 }
 

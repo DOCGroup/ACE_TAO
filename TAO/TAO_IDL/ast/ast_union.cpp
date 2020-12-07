@@ -191,7 +191,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
     }
 }
 
-AST_Union::~AST_Union (void)
+AST_Union::~AST_Union ()
 {
 }
 
@@ -220,7 +220,7 @@ AST_Union::redefine (AST_Structure *from)
 
 // Return the default_index.
 int
-AST_Union::default_index (void)
+AST_Union::default_index ()
 {
   if (this->default_index_ == -2)
     {
@@ -309,7 +309,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
 // Look up the default branch in union.
 AST_UnionBranch *
-AST_Union::lookup_default (void)
+AST_Union::lookup_default ()
 {
   AST_UnionBranch *b = nullptr;
   AST_Decl *d = nullptr;
@@ -527,7 +527,7 @@ AST_Union::default_value (AST_Union::DefaultValue &dv)
 
 // Determine the default value (if any).
 int
-AST_Union::compute_default_value (void)
+AST_Union::compute_default_value ()
 {
   // Check if we really need a default value. This will be true if there is an
   // explicit default case OR if an implicit default exists because not all
@@ -862,7 +862,7 @@ AST_Union::compute_default_value (void)
 
 // Compute the default index.
 int
-AST_Union::compute_default_index (void)
+AST_Union::compute_default_index ()
 {
   AST_Decl *d = nullptr;
   AST_UnionBranch *ub = nullptr;
@@ -976,7 +976,7 @@ AST_Union::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_Union::compute_size_type (void)
+AST_Union::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -1021,13 +1021,13 @@ AST_Union::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_ConcreteType *
-AST_Union::disc_type (void)
+AST_Union::disc_type ()
 {
   return this->pd_disc_type;
 }
 
 AST_Expression::ExprType
-AST_Union::udisc_type (void)
+AST_Union::udisc_type ()
 {
   return this->pd_udisc_type;
 }

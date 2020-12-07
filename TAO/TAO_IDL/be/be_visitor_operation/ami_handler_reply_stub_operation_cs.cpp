@@ -19,7 +19,7 @@ be_visitor_operation_ami_handler_reply_stub_operation_cs (
 }
 
 be_visitor_operation_ami_handler_reply_stub_operation_cs::
-~be_visitor_operation_ami_handler_reply_stub_operation_cs (void)
+~be_visitor_operation_ami_handler_reply_stub_operation_cs ()
 {
 }
 

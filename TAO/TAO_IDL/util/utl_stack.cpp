@@ -70,14 +70,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 const size_t UTL_ScopeStack::increments = 64;
 
-UTL_ScopeStack::UTL_ScopeStack (void)
+UTL_ScopeStack::UTL_ScopeStack ()
   : pd_stack_data_nalloced (increments),
     pd_stack_top (0)
 {
   ACE_NEW (this->pd_stack_data, UTL_Scope *[increments]);
 }
 
-UTL_ScopeStack::~UTL_ScopeStack (void)
+UTL_ScopeStack::~UTL_ScopeStack ()
 {
   if (this->pd_stack_data != nullptr)
     {
@@ -120,7 +120,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
 
 // Pop an element from the stack.
 void
-UTL_ScopeStack::pop (void)
+UTL_ScopeStack::pop ()
 {
   if (this->pd_stack_top <= 0)
     {
@@ -143,7 +143,7 @@ UTL_ScopeStack::pop (void)
 
 // Return top element on stack.
 UTL_Scope *
-UTL_ScopeStack::top (void)
+UTL_ScopeStack::top ()
 {
   if (this->pd_stack_top <= 0)
     {
@@ -155,7 +155,7 @@ UTL_ScopeStack::top (void)
 
 // Return bottom element on stack.
 UTL_Scope *
-UTL_ScopeStack::bottom (void)
+UTL_ScopeStack::bottom ()
 {
   if (this->pd_stack_top == 0)
     {
@@ -167,21 +167,21 @@ UTL_ScopeStack::bottom (void)
 
 // Clear entire stack.
 void
-UTL_ScopeStack::clear (void)
+UTL_ScopeStack::clear ()
 {
   this->pd_stack_top = 0;
 }
 
 // How deep is the stack?
 unsigned long
-UTL_ScopeStack::depth (void)
+UTL_ScopeStack::depth ()
 {
   return this->pd_stack_top;
 }
 
 // Return (top - 1) element on stack.
 UTL_Scope *
-UTL_ScopeStack::next_to_top (void)
+UTL_ScopeStack::next_to_top ()
 {
   UTL_Scope  *tmp, *retval;
 
@@ -199,7 +199,7 @@ UTL_ScopeStack::next_to_top (void)
 
 // Return topmost non-NULL element.
 UTL_Scope *
-UTL_ScopeStack::top_non_null (void)
+UTL_ScopeStack::top_non_null ()
 {
   for (long i = this->pd_stack_top - 1; i >= 0; --i)
     {
@@ -236,14 +236,14 @@ UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
 
 // Advance to next item
 void
-UTL_ScopeStackActiveIterator::next (void)
+UTL_ScopeStackActiveIterator::next ()
 {
   il--;
 }
 
 // Get current item.
 UTL_Scope *
-UTL_ScopeStackActiveIterator::item (void)
+UTL_ScopeStackActiveIterator::item ()
 {
   if (this->il >= 0)
     {
@@ -255,7 +255,7 @@ UTL_ScopeStackActiveIterator::item (void)
 
 // Is this iteration done?
 bool
-UTL_ScopeStackActiveIterator::is_done (void) const
+UTL_ScopeStackActiveIterator::is_done () const
 {
   if (this->il >= 0)
     {

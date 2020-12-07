@@ -57,12 +57,12 @@ be_connector::be_connector (
     }
 }
 
-be_connector::~be_connector (void)
+be_connector::~be_connector ()
 {
 }
 
 void
-be_connector::destroy (void)
+be_connector::destroy ()
 {
   this->AST_Connector::destroy ();
   this->be_component::destroy ();
@@ -75,19 +75,19 @@ be_connector::accept (be_visitor *visitor)
 }
 
 bool
-be_connector::dds_connector (void)
+be_connector::dds_connector ()
 {
   return this->dds_connector_;
 }
 
 bool
-be_connector::ami_connector (void)
+be_connector::ami_connector ()
 {
   return this->ami_connector_;
 }
 
 void
-be_connector::check_ancestors (void)
+be_connector::check_ancestors ()
 {
   AST_Connector *base = this;
 

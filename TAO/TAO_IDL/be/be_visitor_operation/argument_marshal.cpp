@@ -27,7 +27,7 @@ be_visitor_operation_argument_marshal::be_visitor_operation_argument_marshal (
 }
 
 be_visitor_operation_argument_marshal::~be_visitor_operation_argument_marshal (
-    void
+    
   )
 {
 }

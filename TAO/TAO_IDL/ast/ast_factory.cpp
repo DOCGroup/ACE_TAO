@@ -93,27 +93,27 @@ AST_Factory::AST_Factory (UTL_ScopedName *n)
 {
 }
 
-AST_Factory::~AST_Factory (void)
+AST_Factory::~AST_Factory ()
 {
 }
 
 // Public operations.
 
 UTL_ExceptList *
-AST_Factory::exceptions (void)
+AST_Factory::exceptions ()
 {
   return this->pd_exceptions;
 }
 
 int
-AST_Factory::n_exceptions (void)
+AST_Factory::n_exceptions ()
 {
   return this->pd_n_exceptions;
 }
 
 // Return the member count.
 int
-AST_Factory::argument_count (void)
+AST_Factory::argument_count ()
 {
   this->compute_argument_attr ();
 
@@ -122,7 +122,7 @@ AST_Factory::argument_count (void)
 
 // Return if any argument or the return type is a <native> type.
 int
-AST_Factory::has_native (void)
+AST_Factory::has_native ()
 {
   this->compute_argument_attr ();
 
@@ -130,7 +130,7 @@ AST_Factory::has_native (void)
 }
 
 void
-AST_Factory::destroy (void)
+AST_Factory::destroy ()
 {
   if (nullptr != this->pd_exceptions)
     {
@@ -163,7 +163,7 @@ AST_Factory::be_add_exceptions (UTL_ExceptList *t)
 
 // Compute total number of members.
 int
-AST_Factory::compute_argument_attr (void)
+AST_Factory::compute_argument_attr ()
 {
   if (this->argument_count_ != -1)
     {

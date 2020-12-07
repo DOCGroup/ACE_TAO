@@ -94,7 +94,7 @@ be_decl::be_decl (AST_Decl::NodeType type,
 {
 }
 
-be_decl::~be_decl (void)
+be_decl::~be_decl ()
 {
 }
 
@@ -233,7 +233,7 @@ be_decl::compute_flat_name  (const char *prefix,
 }
 
 void
-be_decl::destroy (void)
+be_decl::destroy ()
 {
 }
 
@@ -245,7 +245,7 @@ be_decl::set_local (bool val)
 
 // Return the scope created by this node (if one exists, else NULL).
 be_scope *
-be_decl::scope (void)
+be_decl::scope ()
 {
   be_decl *d = this;
 
@@ -296,271 +296,271 @@ be_decl::scope (void)
 
 // Boolean methods to test if code was already generated.
 bool
-be_decl::cli_hdr_gen (void)
+be_decl::cli_hdr_gen ()
 {
   return this->cli_hdr_gen_;
 }
 
 bool
-be_decl::cli_stub_gen (void)
+be_decl::cli_stub_gen ()
 {
   return this->cli_stub_gen_;
 }
 
 bool
-be_decl::cli_hdr_any_op_gen (void)
+be_decl::cli_hdr_any_op_gen ()
 {
   return this->cli_hdr_any_op_gen_;
 }
 
 bool
-be_decl::cli_stub_any_op_gen (void)
+be_decl::cli_stub_any_op_gen ()
 {
   return this->cli_stub_any_op_gen_;
 }
 
 bool
-be_decl::cli_hdr_cdr_op_gen (void)
+be_decl::cli_hdr_cdr_op_gen ()
 {
   return this->cli_hdr_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_stub_cdr_op_gen (void)
+be_decl::cli_stub_cdr_op_gen ()
 {
   return this->cli_stub_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_inline_cdr_op_gen (void)
+be_decl::cli_inline_cdr_op_gen ()
 {
   return this->cli_inline_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_inline_cdr_decl_gen (void)
+be_decl::cli_inline_cdr_decl_gen ()
 {
   return this->cli_inline_cdr_decl_gen_;
 }
 
 bool
-be_decl::cli_traits_gen (void)
+be_decl::cli_traits_gen ()
 {
   return this->cli_traits_gen_;
 }
 
 bool
-be_decl::cli_arg_traits_gen (void)
+be_decl::cli_arg_traits_gen ()
 {
   return this->cli_arg_traits_gen_;
 }
 
 bool
-be_decl::srv_arg_traits_gen (void)
+be_decl::srv_arg_traits_gen ()
 {
   return this->srv_arg_traits_gen_;
 }
 
 bool
-be_decl::srv_sarg_traits_gen (void)
+be_decl::srv_sarg_traits_gen ()
 {
   return this->srv_sarg_traits_gen_;
 }
 
 bool
-be_decl::cli_pragma_inst_gen (void)
+be_decl::cli_pragma_inst_gen ()
 {
   return this->cli_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inarg_tmpl_class_gen (void)
+be_decl::cli_inarg_tmpl_class_gen ()
 {
   return this->cli_inarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_inarg_pragma_inst_gen (void)
+be_decl::cli_inarg_pragma_inst_gen ()
 {
   return this->cli_inarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inoutarg_tmpl_class_gen (void)
+be_decl::cli_inoutarg_tmpl_class_gen ()
 {
   return this->cli_inoutarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_inoutarg_pragma_inst_gen (void)
+be_decl::cli_inoutarg_pragma_inst_gen ()
 {
   return this->cli_inoutarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_outarg_tmpl_class_gen (void)
+be_decl::cli_outarg_tmpl_class_gen ()
 {
   return this->cli_outarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_outarg_pragma_inst_gen (void)
+be_decl::cli_outarg_pragma_inst_gen ()
 {
   return this->cli_outarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_retarg_tmpl_class_gen (void)
+be_decl::cli_retarg_tmpl_class_gen ()
 {
   return this->cli_retarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_retarg_pragma_inst_gen (void)
+be_decl::cli_retarg_pragma_inst_gen ()
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_tmpl_class_gen (void)
+be_decl::srv_tmpl_class_gen ()
 {
   return this->srv_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_pragma_inst_gen (void)
+be_decl::srv_pragma_inst_gen ()
 {
   return this->srv_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_inarg_tmpl_class_gen (void)
+be_decl::srv_inarg_tmpl_class_gen ()
 {
   return this->srv_inarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_inarg_pragma_inst_gen (void)
+be_decl::srv_inarg_pragma_inst_gen ()
 {
   return this->srv_inarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_inoutarg_tmpl_class_gen (void)
+be_decl::srv_inoutarg_tmpl_class_gen ()
 {
   return this->srv_inoutarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_inoutarg_pragma_inst_gen (void)
+be_decl::srv_inoutarg_pragma_inst_gen ()
 {
   return this->srv_inoutarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_outarg_tmpl_class_gen (void)
+be_decl::srv_outarg_tmpl_class_gen ()
 {
   return this->srv_outarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_outarg_pragma_inst_gen (void)
+be_decl::srv_outarg_pragma_inst_gen ()
 {
   return this->srv_outarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_retarg_tmpl_class_gen (void)
+be_decl::srv_retarg_tmpl_class_gen ()
 {
   return this->srv_retarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_retarg_pragma_inst_gen (void)
+be_decl::srv_retarg_pragma_inst_gen ()
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inline_gen (void)
+be_decl::cli_inline_gen ()
 {
   return this->cli_inline_gen_;
 }
 
 bool
-be_decl::srv_hdr_gen (void)
+be_decl::srv_hdr_gen ()
 {
   return this->srv_hdr_gen_;
 }
 
 bool
-be_decl::impl_hdr_gen (void)
+be_decl::impl_hdr_gen ()
 {
   return this->impl_hdr_gen_;
 }
 
 bool
-be_decl::srv_skel_gen (void)
+be_decl::srv_skel_gen ()
 {
   return this->srv_skel_gen_;
 }
 
 bool
-be_decl::impl_skel_gen (void)
+be_decl::impl_skel_gen ()
 {
   return this->impl_skel_gen_;
 }
 
 bool
-be_decl::srv_inline_gen (void)
+be_decl::srv_inline_gen ()
 {
   return this->srv_inline_gen_;
 }
 
 bool
-be_decl::tie_skel_gen (void)
+be_decl::tie_skel_gen ()
 {
   return this->tie_skel_gen_;
 }
 
 bool
-be_decl::ccm_pre_proc_gen (void)
+be_decl::ccm_pre_proc_gen ()
 {
   return this->ccm_pre_proc_gen_;
 }
 
 bool
-be_decl::ex_idl_facet_gen (void)
+be_decl::ex_idl_facet_gen ()
 {
   return this->ex_idl_facet_gen_;
 }
 
 bool
-be_decl::svnt_hdr_facet_gen (void)
+be_decl::svnt_hdr_facet_gen ()
 {
   return this->svnt_hdr_facet_gen_;
 }
 
 bool
-be_decl::svnt_src_facet_gen (void)
+be_decl::svnt_src_facet_gen ()
 {
   return this->svnt_src_facet_gen_;
 }
 
 bool
-be_decl::exec_hdr_facet_gen (void)
+be_decl::exec_hdr_facet_gen ()
 {
   return this->exec_hdr_facet_gen_;
 }
 
 bool
-be_decl::exec_src_facet_gen (void)
+be_decl::exec_src_facet_gen ()
 {
   return this->exec_src_facet_gen_;
 }
 
 bool
-be_decl::ami4ccm_ex_idl_gen (void)
+be_decl::ami4ccm_ex_idl_gen ()
 {
   return this->ami4ccm_ex_idl_gen_;
 }

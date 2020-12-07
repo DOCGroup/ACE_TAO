@@ -120,7 +120,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 //  Constructors.
 
-UTL_Scope::UTL_Scope (void)
+UTL_Scope::UTL_Scope ()
   : pd_scope_node_type (AST_Decl::NT_module),
     pd_decls (nullptr),
     pd_decls_allocated (0),
@@ -159,7 +159,7 @@ UTL_Scope::UTL_Scope (AST_Decl::NodeType nt)
 }
 
 // Destructor.
-UTL_Scope::~UTL_Scope (void)
+UTL_Scope::~UTL_Scope ()
 {
   for (UTL_ScopeActiveIterator iter (this, IK_both);
        !iter.is_done ();
@@ -185,7 +185,7 @@ UTL_Scope::~UTL_Scope (void)
 }
 
 void
-UTL_Scope::destroy (void)
+UTL_Scope::destroy ()
 {
   for (UTL_ScopeActiveIterator iter (this, IK_both);
        !iter.is_done ();
@@ -1795,7 +1795,7 @@ UTL_Scope::referenced (AST_Decl *e,
 }
 
 bool
-UTL_Scope::has_prefix (void)
+UTL_Scope::has_prefix ()
 {
   return this->has_prefix_;
 }
@@ -1871,7 +1871,7 @@ UTL_Scope::ast_accept (ast_visitor *visitor)
 
 // How many entries are defined?
 unsigned long
-UTL_Scope::nmembers (void)
+UTL_Scope::nmembers ()
 {
   return this->pd_decls_used;
 }
@@ -2150,14 +2150,14 @@ UTL_ScopeActiveIterator::UTL_ScopeActiveIterator (
 
 // Advance to next item.
 void
-UTL_ScopeActiveIterator::next (void)
+UTL_ScopeActiveIterator::next ()
 {
   this->il++;
 }
 
 // Get current item.
 AST_Decl *
-UTL_ScopeActiveIterator::item (void)
+UTL_ScopeActiveIterator::item ()
 {
   if (this->is_done ())
     {
@@ -2179,7 +2179,7 @@ UTL_ScopeActiveIterator::item (void)
 
 // Is this iteration done?
 bool
-UTL_ScopeActiveIterator::is_done (void)
+UTL_ScopeActiveIterator::is_done ()
 {
   long limit =
     (stage == UTL_Scope::IK_decls)
@@ -2215,14 +2215,14 @@ UTL_ScopeActiveIterator::is_done (void)
 
 // What kind of iterator is this?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_kind (void)
+UTL_ScopeActiveIterator::iteration_kind ()
 {
   return this->ik;
 }
 
 // And where are we in the iteration?
 UTL_Scope::ScopeIterationKind
-UTL_ScopeActiveIterator::iteration_stage (void)
+UTL_ScopeActiveIterator::iteration_stage ()
 {
   return this->stage;
 }

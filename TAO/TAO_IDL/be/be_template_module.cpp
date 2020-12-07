@@ -20,12 +20,12 @@ be_template_module::be_template_module (
 {
 }
 
-be_template_module::~be_template_module (void)
+be_template_module::~be_template_module ()
 {
 }
 
 void
-be_template_module::destroy (void)
+be_template_module::destroy ()
 {
   this->AST_Template_Module::destroy ();
   this->be_scope::destroy ();

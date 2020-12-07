@@ -42,7 +42,7 @@ be_visitor_component_scope::be_visitor_component_scope (
 }
 
 be_visitor_component_scope::~be_visitor_component_scope (
-  void)
+  )
 {
 }
 
@@ -224,7 +224,7 @@ be_visitor_component_scope::node (be_component *c)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
+be_visitor_component_scope::gen_svnt_entrypoint_decl ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()
@@ -239,7 +239,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_decl (void)
 }
 
 void
-be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
+be_visitor_component_scope::gen_svnt_entrypoint_defn ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
@@ -279,7 +279,7 @@ be_visitor_component_scope::gen_svnt_entrypoint_defn (void)
 }
 
 void
-be_visitor_component_scope::gen_exec_entrypoint_decl (void)
+be_visitor_component_scope::gen_exec_entrypoint_decl ()
 {
   os_ << be_nl_2
       << "/// Factory method and library entry point used by the middleware" << be_nl
@@ -291,7 +291,7 @@ be_visitor_component_scope::gen_exec_entrypoint_decl (void)
 }
 
 void
-be_visitor_component_scope::gen_exec_entrypoint_defn (void)
+be_visitor_component_scope::gen_exec_entrypoint_defn ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()

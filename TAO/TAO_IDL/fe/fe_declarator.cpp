@@ -198,7 +198,7 @@ FE_Declarator::compose (AST_Decl *d)
 }
 
 void
-FE_Declarator::destroy (void)
+FE_Declarator::destroy ()
 {
   if (pd_name)
     {
@@ -211,19 +211,19 @@ FE_Declarator::destroy (void)
 // Data accessors.
 
 AST_Decl *
-FE_Declarator::complex_part (void)
+FE_Declarator::complex_part ()
 {
   return this->pd_complex_part;
 }
 
 UTL_ScopedName *
-FE_Declarator::name (void)
+FE_Declarator::name ()
 {
   return this->pd_name;
 }
 
 FE_Declarator::DeclaratorType
-FE_Declarator::decl_type (void)
+FE_Declarator::decl_type ()
 {
   return this->pd_decl_type;
 }

@@ -103,7 +103,7 @@ AST_Array::AST_Array (UTL_ScopedName *n,
                                       nd);
 }
 
-AST_Array::~AST_Array (void)
+AST_Array::~AST_Array ()
 {
 }
 
@@ -179,7 +179,7 @@ AST_Array::ast_accept (ast_visitor *visitor)
 
 // Compute the size type of the node in question.
 int
-AST_Array::compute_size_type (void)
+AST_Array::compute_size_type ()
 {
   AST_Type *type = this->base_type ();
 
@@ -201,19 +201,19 @@ AST_Array::compute_size_type (void)
 
 // Data accessors.
 ACE_CDR::ULong
-AST_Array::n_dims (void)
+AST_Array::n_dims ()
 {
   return this->pd_n_dims;
 }
 
 AST_Expression **
-AST_Array::dims (void)
+AST_Array::dims ()
 {
   return this->pd_dims;
 }
 
 AST_Type *
-AST_Array::base_type (void) const
+AST_Array::base_type () const
 {
   return this->pd_base_type;
 }
@@ -233,13 +233,13 @@ AST_Array::set_base_type (AST_Type *nbt)
 }
 
 bool
-AST_Array::legal_for_primary_key (void) const
+AST_Array::legal_for_primary_key () const
 {
   return this->base_type ()->legal_for_primary_key ();
 }
 
 void
-AST_Array::destroy (void)
+AST_Array::destroy ()
 {
   if (this->owns_base_type_)
     {

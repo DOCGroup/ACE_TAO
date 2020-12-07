@@ -23,7 +23,7 @@ be_visitor_executor_ami_exh::be_visitor_executor_ami_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_executor_ami_exh::~be_visitor_executor_ami_exh (void)
+be_visitor_executor_ami_exh::~be_visitor_executor_ami_exh ()
 {
 }
 

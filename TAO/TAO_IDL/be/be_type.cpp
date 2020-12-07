@@ -46,7 +46,7 @@ be_type::be_type (AST_Decl::NodeType nt,
     }
 }
 
-be_type::~be_type (void)
+be_type::~be_type ()
 {
 }
 
@@ -56,7 +56,7 @@ be_type::~be_type (void)
 // predefined types.
 
 void
-be_type::compute_tc_name (void)
+be_type::compute_tc_name ()
 {
   static char namebuf [NAMEBUFSIZE];
   UTL_ScopedName *n = this->name ();
@@ -122,7 +122,7 @@ be_type::compute_tc_name (void)
 
 // Retrieve typecode name.
 UTL_ScopedName *
-be_type::tc_name (void)
+be_type::tc_name ()
 {
   // Compute and init the member.
   if (this->tc_name_ == nullptr)
@@ -185,7 +185,7 @@ be_type::nested_sp_type_name (be_decl *use_scope,
 }
 
 void
-be_type::gen_fwd_helper_name (void)
+be_type::gen_fwd_helper_name ()
 {
   AST_Decl *parent = ScopeAsDecl (this->defined_in ());
   Identifier *segment = nullptr;
@@ -235,7 +235,7 @@ be_type::gen_member_ostream_operator (TAO_OutStream *os,
 }
 
 const char *
-be_type::fwd_helper_name (void) const
+be_type::fwd_helper_name () const
 {
   return this->fwd_helper_name_.fast_rep ();
 }
@@ -346,7 +346,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 }
 
 bool
-be_type::seen_in_sequence (void) const
+be_type::seen_in_sequence () const
 {
   return this->seen_in_sequence_;
 }
@@ -358,7 +358,7 @@ be_type::seen_in_sequence (bool val)
 }
 
 bool
-be_type::seen_in_operation (void) const
+be_type::seen_in_operation () const
 {
   return this->seen_in_operation_;
 }
@@ -370,14 +370,14 @@ be_type::seen_in_operation (bool val)
 }
 
 AST_Decl::NodeType
-be_type::base_node_type (void) const
+be_type::base_node_type () const
 {
   return const_cast<be_type*> (this)->node_type ();
 }
 
 // Cleanup method
 void
-be_type::destroy (void)
+be_type::destroy ()
 {
   if (this->tc_name_ != nullptr)
     {

@@ -18,7 +18,7 @@ be_visitor_component_ami_rh_exh::be_visitor_component_ami_rh_exh (
 {
 }
 
-be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh (void)
+be_visitor_component_ami_rh_exh::~be_visitor_component_ami_rh_exh ()
 {
 }
 

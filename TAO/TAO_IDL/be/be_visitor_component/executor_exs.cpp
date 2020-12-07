@@ -21,7 +21,7 @@ be_visitor_executor_exs::be_visitor_executor_exs (
 {
 }
 
-be_visitor_executor_exs::~be_visitor_executor_exs (void)
+be_visitor_executor_exs::~be_visitor_executor_exs ()
 {
 }
 

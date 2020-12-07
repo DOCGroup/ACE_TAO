@@ -23,7 +23,7 @@ be_visitor_operation_exceptlist_cs::be_visitor_operation_exceptlist_cs (
 {
 }
 
-be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs (void)
+be_visitor_operation_exceptlist_cs::~be_visitor_operation_exceptlist_cs ()
 {
 }
 
