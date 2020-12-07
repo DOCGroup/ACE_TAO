@@ -27,18 +27,18 @@ TAO_IIOP_Transport::TAO_IIOP_Transport (TAO_IIOP_Connection_Handler *handler,
 {
 }
 
-TAO_IIOP_Transport::~TAO_IIOP_Transport (void)
+TAO_IIOP_Transport::~TAO_IIOP_Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO_IIOP_Transport::event_handler_i (void)
+TAO_IIOP_Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO_IIOP_Transport::connection_handler_i (void)
+TAO_IIOP_Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -82,7 +82,7 @@ TAO_IIOP_Transport::sendfile (TAO_MMAP_Allocator * allocator,
 
   // If we don't have an allocator, fallback to the regular way of sending
   // data
-  if (allocator == 0)
+  if (allocator == nullptr)
     return this->send (iov, iovcnt, bytes_transferred, this->io_timeout(dc));
 
   // We can only use sendfile when all data is coming from the mmap allocator,
@@ -207,7 +207,7 @@ TAO_IIOP_Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
     {
@@ -341,7 +341,7 @@ TAO_IIOP_Transport::get_listen_point (
   TAO_IIOP_Acceptor *iiop_acceptor =
     dynamic_cast<TAO_IIOP_Acceptor *> (acceptor);
 
-  if (iiop_acceptor == 0)
+  if (iiop_acceptor == nullptr)
     return -1;
 
   // Get the array of endpoints serviced by TAO_IIOP_Acceptor

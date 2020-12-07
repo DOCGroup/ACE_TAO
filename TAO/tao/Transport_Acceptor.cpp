@@ -15,7 +15,7 @@ TAO_Acceptor::TAO_Acceptor (CORBA::ULong tag)
 {
 }
 
-TAO_Acceptor::~TAO_Acceptor (void)
+TAO_Acceptor::~TAO_Acceptor ()
 {
 }
 
@@ -37,7 +37,7 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
       // Get the reactor.  If there isn't one, which isn't very likely,
       // then just return -1.
       ACE_Reactor* reactor = base_acceptor->reactor ();
-      if (reactor == 0)
+      if (reactor == nullptr)
         return -1;
 
       // So that the reactor doesn't completely remove this handler from
@@ -55,7 +55,7 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
       // Schedule a timer so that we can resume the handler in hopes
       // that some file handles have freed up.
       ACE_Time_Value timeout (this->error_retry_delay_);
-      reactor->schedule_timer (base_acceptor, 0, timeout);
+      reactor->schedule_timer (base_acceptor, nullptr, timeout);
     }
 
   // We want to keep accepting in all other situations.
@@ -68,7 +68,7 @@ TAO_Acceptor::handle_expiration (ACE_Event_Handler* base_acceptor)
   // Get the reactor.  If there isn't one, which isn't very likely, then
   // just return -1;
   ACE_Reactor* reactor = base_acceptor->reactor ();
-  if (reactor == 0)
+  if (reactor == nullptr)
     return -1;
 
   if (TAO_debug_level > 0)

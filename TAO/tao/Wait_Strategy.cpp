@@ -14,7 +14,7 @@ TAO_Wait_Strategy::TAO_Wait_Strategy (TAO_Transport *transport)
 }
 
 // Destructor.
-TAO_Wait_Strategy::~TAO_Wait_Strategy (void)
+TAO_Wait_Strategy::~TAO_Wait_Strategy ()
 {
 }
 
