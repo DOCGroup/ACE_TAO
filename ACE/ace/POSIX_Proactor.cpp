@@ -45,14 +45,14 @@ public:
                                int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Wakeup_Completion (void);
+  ~ACE_POSIX_Wakeup_Completion (void) override;
 
 
   /// This method calls the <handler>'s <handle_wakeup> method.
-  virtual void complete (size_t bytes_transferred = 0,
+  void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
-                         u_long error = 0);
+                         u_long error = 0) override;
 };
 
 // *********************************************************************
@@ -595,14 +595,14 @@ public:
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// Destructor.
-  virtual ~ACE_AIOCB_Notify_Pipe_Manager (void);
+  ~ACE_AIOCB_Notify_Pipe_Manager (void) override;
 
   /// Send the result pointer through the notification pipe.
   int notify ();
 
   /// This is the call back method when <Asynch_Read> from the pipe is
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
 private:
   /// The implementation proactor class.
