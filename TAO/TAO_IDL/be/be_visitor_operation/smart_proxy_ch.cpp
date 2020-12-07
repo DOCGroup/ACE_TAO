@@ -16,15 +16,12 @@
 // ******************************************************
 
 be_visitor_operation_smart_proxy_ch::be_visitor_operation_smart_proxy_ch (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_scope (ctx)
 {
 }
 
-be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch (
-    
-  )
+be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch ()
 {
 }
 

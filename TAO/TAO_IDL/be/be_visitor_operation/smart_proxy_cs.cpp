@@ -17,9 +17,7 @@ be_visitor_operation_smart_proxy_cs::be_visitor_operation_smart_proxy_cs (
 {
 }
 
-be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs (
-    
-  )
+be_visitor_operation_smart_proxy_cs::~be_visitor_operation_smart_proxy_cs ()
 {
 }
 
