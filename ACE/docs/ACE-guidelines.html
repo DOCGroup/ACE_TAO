@@ -157,7 +157,7 @@ bgcolor="#ffffff">
         class ACE_Monitor_Control
         {
         public:
-          int read_monitor (void);
+          int read_monitor ();
           // ...
         };
         </PRE>
@@ -168,7 +168,7 @@ rather than
         class ACEMonitorControl
         {
         public:
-          int readMonitor (void);
+          int readMonitor ();
           // ...
         };
         </PRE>
@@ -610,7 +610,7 @@ Foo::bar ()
         void object_addr (const ACE_INET_Addr &);
 
         /// Returns the ACE_INET_Addr for this profile.
-        const ACE_INET_Addr &object_addr const (void);
+        const ACE_INET_Addr &object_addr const ();
         </pre><p>
 
         instead of the "set_" and "get_" form.<p>
@@ -627,9 +627,9 @@ Foo::bar ()
         <strong><code>delete []</code></strong> to correspond to the
         allocation.<p>
 
-    <li>Don't check for a pointer being 0 before deleting it.  It's
-        always safe to delete a 0 pointer.  If the pointer is visible
-        outside the local scope, it's often a good idea to 0 it
+    <li>Don't check for a pointer being nullptr before deleting it.  It's
+        always safe to delete a nullptr.  If the pointer is visible
+        outside the local scope, it's often a good idea to nullptr it
         _after_ deleting it.  Note, the same argument applies to
         free().<p>
 
@@ -638,11 +638,8 @@ Foo::bar ()
         because they check for successful allocation and set errno
         appropriately if it fails.<p>
 
-    <li>Never compare or assign a pointer value with <strong>NULL</strong>;
-        use <strong>0</strong> instead.  The language allows any pointer to
-        be compared or assigned with <strong>0</strong>.  The definition
-        of <strong>NULL</strong> is implementation dependent, so it is
-        difficult to use portably without casting.<p>
+    <li>Never compare or assign a pointer value with <strong>NULL</strong> or <strong>0</strong>
+        use <strong>nullptr</strong> instead.<p>
 
     <li>Never cast a pointer to or from an <strong><code>int</code></strong>
         or a <strong><code>long</code></strong>.  On all currently supported
@@ -750,26 +747,15 @@ Foo::bar ()
 
     <li>In general, if instances of a class should not be copied,
         then a private copy constructor and assignment operator should
-        be declared for the class, but not implemented.  For example:
+        be deleted for the class
 
         <pre>
         // Disallow copying by not implementing the following . . .
-        ACE_Object_Manager (const ACE_Object_Manager &);
-        ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+        ACE_Object_Manager (const ACE_Object_Manager &) = delete;
+        ACE_Object_Manager (ACE_Object_Manager &&) = delete;
+        ACE_Object_Manager &operator= (const ACE_Object_Manager &) = delete;
+        ACE_Object_Manager &operator= (ACE_Object_Manager &&) = delete;
         </pre><p>
-
-        If the class is a template class, then the
-        <code>ACE_UNIMPLEMENTED_FUNC</code> macro should be used:
-
-        <pre>
-        // = Disallow copying...
-        ACE_UNIMPLEMENTED_FUNC (ACE_TSS (const ACE_TSS&lt;TYPE&gt; &))
-        ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS&lt;TYPE&gt; &))
-        </pre><p>
-
-        <code>ACE_UNIMPLEMENTED_FUNC</code> can be used with non-template
-        classes as well.  Though for consistency and maximum safety, it
-        should be avoided for non-template classes.<p>
 
     <li>Never use <code>BOOL</code>, or similar types.
             (<code>ACE_CDR::Boolean</code> and
