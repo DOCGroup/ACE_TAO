@@ -23,7 +23,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Connector)
 
 void
-ACE_SOCK_SEQPACK_Connector::dump (void) const
+ACE_SOCK_SEQPACK_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::dump");

@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Connector)
 
 void
-ACE_FILE_Connector::dump (void) const
+ACE_FILE_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE_Connector::dump");
@@ -27,7 +27,7 @@ ACE_FILE_Connector::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_FILE_Connector::ACE_FILE_Connector (void)
+ACE_FILE_Connector::ACE_FILE_Connector ()
 {
   ACE_TRACE ("ACE_FILE_Connector::ACE_FILE_Connector");
 }

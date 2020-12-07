@@ -21,7 +21,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Stream_Node)
 // Nodes.
 
 void
-ACE_Stream_Node::dump (void) const
+ACE_Stream_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream_Node::dump");
@@ -112,7 +112,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 ACE_ALLOC_HOOK_DEFINE (ACE_Parse_Node)
 
   void
-ACE_Parse_Node::dump (void) const
+ACE_Parse_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Parse_Node::dump");
@@ -120,14 +120,14 @@ ACE_Parse_Node::dump (void) const
 }
 
 const ACE_TCHAR *
-ACE_Parse_Node::name (void) const
+ACE_Parse_Node::name () const
 {
   ACE_TRACE ("ACE_Parse_Node::name");
   return this->name_;
 }
 
 ACE_Parse_Node *
-ACE_Parse_Node::link (void) const
+ACE_Parse_Node::link () const
 {
   ACE_TRACE ("ACE_Parse_Node::link");
   return this->next_;
@@ -157,7 +157,7 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
 }
 
 
-ACE_Stream_Node::~ACE_Stream_Node (void)
+ACE_Stream_Node::~ACE_Stream_Node ()
 {
   ACE_TRACE ("ACE_Stream_Node::~ACE_Stream_Node");
   ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
@@ -166,7 +166,7 @@ ACE_Stream_Node::~ACE_Stream_Node (void)
   delete m;
 }
 
-ACE_Parse_Node::ACE_Parse_Node (void)
+ACE_Parse_Node::ACE_Parse_Node ()
   : name_ (0),
     next_ (0)
 {
@@ -182,7 +182,7 @@ ACE_Parse_Node::ACE_Parse_Node (const ACE_TCHAR *nm)
 }
 
 void
-ACE_Parse_Node::print (void) const
+ACE_Parse_Node::print () const
 {
   ACE_TRACE ("ACE_Parse_Node::print");
 
@@ -195,7 +195,7 @@ ACE_Parse_Node::print (void) const
 }
 
 
-ACE_Parse_Node::~ACE_Parse_Node (void)
+ACE_Parse_Node::~ACE_Parse_Node ()
 {
   ACE_TRACE ("ACE_Parse_Node::~ACE_Parse_Node");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -209,7 +209,7 @@ ACE_Parse_Node::~ACE_Parse_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Suspend_Node)
 
   void
-ACE_Suspend_Node::dump (void) const
+ACE_Suspend_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Suspend_Node::dump");
@@ -222,14 +222,14 @@ ACE_Suspend_Node::ACE_Suspend_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Suspend_Node::ACE_Suspend_Node");
 }
 
-ACE_Suspend_Node::~ACE_Suspend_Node (void)
+ACE_Suspend_Node::~ACE_Suspend_Node ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Resume_Node)
 
   void
-ACE_Resume_Node::dump (void) const
+ACE_Resume_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Resume_Node::dump");
@@ -242,7 +242,7 @@ ACE_Resume_Node::ACE_Resume_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Resume_Node::ACE_Resume_Node");
 }
 
-ACE_Resume_Node::~ACE_Resume_Node (void)
+ACE_Resume_Node::~ACE_Resume_Node ()
 {
 }
 
@@ -283,7 +283,7 @@ ACE_Resume_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 ACE_ALLOC_HOOK_DEFINE (ACE_Remove_Node)
 
   void
-ACE_Remove_Node::dump (void) const
+ACE_Remove_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remove_Node::dump");
@@ -296,7 +296,7 @@ ACE_Remove_Node::ACE_Remove_Node (const ACE_TCHAR *name)
   ACE_TRACE ("ACE_Remove_Node::ACE_Remove_Node");
 }
 
-ACE_Remove_Node::~ACE_Remove_Node (void)
+ACE_Remove_Node::~ACE_Remove_Node ()
 {
 }
 
@@ -349,14 +349,14 @@ ACE_Dynamic_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 ACE_ALLOC_HOOK_DEFINE (ACE_Dynamic_Node)
 
   void
-ACE_Dynamic_Node::dump (void) const
+ACE_Dynamic_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dynamic_Node::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Dynamic_Node::~ACE_Dynamic_Node (void)
+ACE_Dynamic_Node::~ACE_Dynamic_Node ()
 {
   ACE_TRACE ("ACE_Dynamic_Node::~ACE_Dynamic_Node");
 }
@@ -364,7 +364,7 @@ ACE_Dynamic_Node::~ACE_Dynamic_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Static_Node)
 
   void
-ACE_Static_Node::dump (void) const
+ACE_Static_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Node::dump");
@@ -392,7 +392,7 @@ ACE_Static_Node::record (const ACE_Service_Gestalt *config) const
 }
 
 ACE_TCHAR *
-ACE_Static_Node::parameters (void) const
+ACE_Static_Node::parameters () const
 {
   ACE_TRACE ("ACE_Static_Node::parameters");
   return this->parameters_;
@@ -416,7 +416,7 @@ ACE_Static_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
 #endif /* ACE_NLOGGING */
 }
 
-ACE_Static_Node::~ACE_Static_Node (void)
+ACE_Static_Node::~ACE_Static_Node ()
 {
   ACE_TRACE ("ACE_Static_Node::~ACE_Static_Node");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -430,14 +430,14 @@ ACE_Static_Node::~ACE_Static_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Location_Node)
 
   void
-ACE_Location_Node::dump (void) const
+ACE_Location_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Location_Node::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Location_Node::ACE_Location_Node (void)
+ACE_Location_Node::ACE_Location_Node ()
   : pathname_ (0),
     must_delete_ (0),
     dll_ (),
@@ -446,19 +446,19 @@ ACE_Location_Node::ACE_Location_Node (void)
   ACE_TRACE ("ACE_Location_Node::ACE_Location_Node");
 }
 
-ACE_Location_Node::~ACE_Location_Node (void)
+ACE_Location_Node::~ACE_Location_Node ()
 {
   ACE_TRACE ("ACE_Location_Node::~ACE_Location_Node");
 }
 
 const ACE_DLL &
-ACE_Location_Node::dll (void)
+ACE_Location_Node::dll ()
 {
   return this->dll_;
 }
 
 const ACE_TCHAR *
-ACE_Location_Node::pathname (void) const
+ACE_Location_Node::pathname () const
 {
   ACE_TRACE ("ACE_Location_Node::pathname");
   return this->pathname_;
@@ -472,7 +472,7 @@ ACE_Location_Node::pathname (const ACE_TCHAR *p)
 }
 
 int
-ACE_Location_Node::dispose (void) const
+ACE_Location_Node::dispose () const
 {
   ACE_TRACE ("ACE_Location_Node::dispose");
   return this->must_delete_;
@@ -522,7 +522,7 @@ ACE_Location_Node::set_symbol (void *s)
 ACE_ALLOC_HOOK_DEFINE (ACE_Object_Node)
 
   void
-ACE_Object_Node::dump (void) const
+ACE_Object_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Object_Node::dump");
@@ -574,7 +574,7 @@ ACE_Object_Node::symbol (ACE_Service_Gestalt *,
   return 0;
 }
 
-ACE_Object_Node::~ACE_Object_Node (void)
+ACE_Object_Node::~ACE_Object_Node ()
 {
   ACE_TRACE ("ACE_Object_Node::~ACE_Object_Node");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -587,7 +587,7 @@ ACE_Object_Node::~ACE_Object_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Function_Node)
 
   void
-ACE_Function_Node::dump (void) const
+ACE_Function_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Function_Node::dump");
@@ -727,7 +727,7 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
   return this->symbol_;
 }
 
-ACE_Function_Node::~ACE_Function_Node (void)
+ACE_Function_Node::~ACE_Function_Node ()
 {
   ACE_TRACE ("ACE_Function_Node::~ACE_Function_Node");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -742,7 +742,7 @@ ACE_Function_Node::~ACE_Function_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Dummy_Node)
 
   void
-ACE_Dummy_Node::dump (void) const
+ACE_Dummy_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dummy_Node::dump");
@@ -774,7 +774,7 @@ ACE_Dummy_Node::apply (ACE_Service_Gestalt *, int &yyerrno)
 #endif /* ACE_NLOGGING */
 }
 
-ACE_Dummy_Node::~ACE_Dummy_Node (void)
+ACE_Dummy_Node::~ACE_Dummy_Node ()
 {
   ACE_TRACE ("ACE_Dummy_Node::~ACE_Dummy_Node");
   ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
@@ -786,7 +786,7 @@ ACE_Dummy_Node::~ACE_Dummy_Node (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_Static_Function_Node)
 
   void
-ACE_Static_Function_Node::dump (void) const
+ACE_Static_Function_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Static_Function_Node::dump");
@@ -863,7 +863,7 @@ ACE_Static_Function_Node::symbol (ACE_Service_Gestalt *config,
   return this->symbol_;
 }
 
-ACE_Static_Function_Node::~ACE_Static_Function_Node (void)
+ACE_Static_Function_Node::~ACE_Static_Function_Node ()
 {
   ACE_TRACE ("ACE_Static_Function_Node::~ACE_Static_Function_Node");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -887,7 +887,7 @@ ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
 }
 
 
-ACE_Service_Type_Factory::~ACE_Service_Type_Factory (void)
+ACE_Service_Type_Factory::~ACE_Service_Type_Factory ()
 {
 }
 
@@ -940,7 +940,7 @@ ACE_Service_Type_Factory::make_service_type (ACE_Service_Gestalt *cfg) const
 }
 
 ACE_TCHAR const*
-ACE_Service_Type_Factory::name (void) const
+ACE_Service_Type_Factory::name () const
 {
   return name_.c_str ();
 }

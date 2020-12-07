@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_SV_Semaphore_Simple)
 
 void
-ACE_SV_Semaphore_Simple::dump (void) const
+ACE_SV_Semaphore_Simple::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SV_Semaphore_Simple::dump");
@@ -224,13 +224,13 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple (void)
+ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::~ACE_SV_Semaphore_Simple");
   this->close ();
 }
 
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void) :
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple () :
   sem_number_ (0)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple");
@@ -246,7 +246,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (void) :
 // other processes should use close() below.
 
 int
-ACE_SV_Semaphore_Simple::remove (void) const
+ACE_SV_Semaphore_Simple::remove () const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::remove");
   int const result = this->control (IPC_RMID);

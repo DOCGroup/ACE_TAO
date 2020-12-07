@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Dgram)
 
 void
-ACE_LSOCK_Dgram::dump (void) const
+ACE_LSOCK_Dgram::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Dgram::dump");
@@ -31,7 +31,7 @@ ACE_LSOCK_Dgram::dump (void) const
 
 // The "do nothing" constructor.
 
-ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (void)
+ACE_LSOCK_Dgram::ACE_LSOCK_Dgram ()
 {
   ACE_TRACE ("ACE_LSOCK_Dgram::ACE_LSOCK_Dgram");
 }

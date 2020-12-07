@@ -54,7 +54,7 @@ ACE_Time_Value::operator ++ (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator ++ (void)
+ACE_Time_Value::operator ++ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
   this->usec (this->usec () + 1);
@@ -74,7 +74,7 @@ ACE_Time_Value::operator -- (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator -- (void)
+ACE_Time_Value::operator -- ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
   this->usec (this->usec () - 1);
@@ -166,7 +166,7 @@ ACE_Time_Value::duplicate () const
 }
 
 void
-ACE_Time_Value::dump (void) const
+ACE_Time_Value::dump () const
 {
 }
 

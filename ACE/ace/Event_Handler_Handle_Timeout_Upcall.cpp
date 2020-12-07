@@ -11,13 +11,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_Handle_Timeout_Upcall)
 
 ACE_Event_Handler_Handle_Timeout_Upcall::
-ACE_Event_Handler_Handle_Timeout_Upcall (void) :
+ACE_Event_Handler_Handle_Timeout_Upcall () :
   requires_reference_counting_ (0)
 {
 }
 
 ACE_Event_Handler_Handle_Timeout_Upcall::
-~ACE_Event_Handler_Handle_Timeout_Upcall (void)
+~ACE_Event_Handler_Handle_Timeout_Upcall ()
 {
 }
 

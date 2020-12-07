@@ -12,13 +12,13 @@ namespace ACE
   namespace Monitor_Control
   {
     Monitor_Point_Registry*
-    Monitor_Point_Registry::instance (void)
+    Monitor_Point_Registry::instance ()
     {
       return
         ACE_Singleton<Monitor_Point_Registry, ACE_SYNCH_MUTEX>::instance ();
     }
 
-    Monitor_Point_Registry::Monitor_Point_Registry (void)
+    Monitor_Point_Registry::Monitor_Point_Registry ()
       : constraint_id_ (0)
     {
     }
@@ -101,7 +101,7 @@ namespace ACE
     }
 
     Monitor_Control_Types::NameList
-    Monitor_Point_Registry::names (void)
+    Monitor_Point_Registry::names ()
     {
       Monitor_Control_Types::NameList name_holder_;
 
@@ -137,7 +137,7 @@ namespace ACE
     }
 
     long
-    Monitor_Point_Registry::constraint_id (void)
+    Monitor_Point_Registry::constraint_id ()
     {
       long retval = 0;
 
@@ -151,7 +151,7 @@ namespace ACE
     }
 
     void
-    Monitor_Point_Registry::cleanup (void)
+    Monitor_Point_Registry::cleanup ()
     {
       for (Map::ITERATOR i = this->map_.begin ();
            i != this->map_.end ();

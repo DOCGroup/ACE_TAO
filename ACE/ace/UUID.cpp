@@ -55,7 +55,7 @@ namespace ACE_Utils
     return *this;
   }
 
-  const ACE_CString * UUID::to_string (void) const
+  const ACE_CString * UUID::to_string () const
   {
     // Compute the string representation only once.
     if (0 != this->as_string_.get ())
@@ -319,7 +319,7 @@ namespace ACE_Utils
   }
 #endif // ACE_LACKS_SSCANF
 
-  UUID_Generator::UUID_Generator (void)
+  UUID_Generator::UUID_Generator ()
     : time_last_ (0),
       destroy_lock_ (true),
       is_init_ (false)
@@ -328,14 +328,14 @@ namespace ACE_Utils
     this->init ();
   }
 
-  UUID_Generator::~UUID_Generator (void)
+  UUID_Generator::~UUID_Generator ()
   {
     if (destroy_lock_)
       delete lock_;
   }
 
   void
-  UUID_Generator::init (void)
+  UUID_Generator::init ()
   {
     if (this->is_init_)
       return;
@@ -501,7 +501,7 @@ namespace ACE_Utils
   }
 
   ACE_SYNCH_MUTEX*
-  UUID_Generator::lock (void)
+  UUID_Generator::lock ()
   {
     return this->lock_;
   }

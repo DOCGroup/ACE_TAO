@@ -40,14 +40,14 @@ public:
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Based_Pointer_Repository_Rep);
 
-ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository (void)
+ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository");
   ACE_NEW (this->rep_,
            ACE_Based_Pointer_Repository_Rep);
 }
 
-ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository (void)
+ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository");
   delete this->rep_;

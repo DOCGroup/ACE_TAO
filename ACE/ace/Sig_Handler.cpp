@@ -46,7 +46,7 @@ sig_atomic_t ACE_Sig_Handler::sig_pending_ = 0;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 
-ACE_Sig_Handler::~ACE_Sig_Handler (void)
+ACE_Sig_Handler::~ACE_Sig_Handler ()
 {
   for (int s = 1; s < ACE_NSIG; ++s)
     if (ACE_Sig_Handler::signal_handlers_[s])
@@ -54,7 +54,7 @@ ACE_Sig_Handler::~ACE_Sig_Handler (void)
 }
 
 void
-ACE_Sig_Handler::dump (void) const
+ACE_Sig_Handler::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handler::dump");
@@ -62,7 +62,7 @@ ACE_Sig_Handler::dump (void) const
 }
 
 int
-ACE_Sig_Handler::sig_pending (void)
+ACE_Sig_Handler::sig_pending ()
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
@@ -319,12 +319,12 @@ ACE_Sig_Handlers_Set::instance (int signum)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handlers)
 
-ACE_Sig_Handlers::ACE_Sig_Handlers (void)
+ACE_Sig_Handlers::ACE_Sig_Handlers ()
 {
 }
 
 void
-ACE_Sig_Handlers::dump (void) const
+ACE_Sig_Handlers::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handlers::dump");

@@ -605,7 +605,7 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
 }
 
 int
-ACE_TP_Reactor::resumable_handler (void)
+ACE_TP_Reactor::resumable_handler ()
 {
   return 1;
 }
@@ -632,7 +632,7 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
 }
 
 ACE_HANDLE
-ACE_TP_Reactor::get_notify_handle (void)
+ACE_TP_Reactor::get_notify_handle ()
 {
   // Call the notify handler to get a handle on which we would have a
   // notify waiting
