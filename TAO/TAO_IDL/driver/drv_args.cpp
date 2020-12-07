@@ -118,7 +118,7 @@ DRV_prep_cpp_arg (char *s)
 
 // Print a usage message and exit.
 void
-DRV_usage (void)
+DRV_usage ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%C: usage: %C [[flag|file] ...] [-- file ...]\n"),

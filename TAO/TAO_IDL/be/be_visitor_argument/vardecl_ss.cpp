@@ -23,7 +23,7 @@ be_visitor_args_vardecl_ss::be_visitor_args_vardecl_ss (
 {
 }
 
-be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss (void)
+be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss ()
 {
 }
 

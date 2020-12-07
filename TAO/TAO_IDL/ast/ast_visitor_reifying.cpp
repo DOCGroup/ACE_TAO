@@ -42,12 +42,12 @@ ast_visitor_reifying::ast_visitor_reifying (
 {
 }
 
-ast_visitor_reifying::~ast_visitor_reifying (void)
+ast_visitor_reifying::~ast_visitor_reifying ()
 {
 }
 
 AST_Decl *
-ast_visitor_reifying::reified_node (void) const
+ast_visitor_reifying::reified_node () const
 {
   return this->reified_node_;
 }

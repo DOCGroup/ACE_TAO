@@ -24,7 +24,7 @@ be_visitor_union_branch_public_ci::be_visitor_union_branch_public_ci (
 }
 
 // destructor
-be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci (void)
+be_visitor_union_branch_public_ci::~be_visitor_union_branch_public_ci ()
 {
 }
 

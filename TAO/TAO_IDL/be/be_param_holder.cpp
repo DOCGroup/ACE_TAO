@@ -31,7 +31,7 @@ be_param_holder::be_param_holder (UTL_ScopedName *parameter_name,
 {
 }
 
-be_param_holder::~be_param_holder (void)
+be_param_holder::~be_param_holder ()
 {
 }
 
@@ -42,7 +42,7 @@ be_param_holder::accept (be_visitor *visitor)
 }
 
 void
-be_param_holder::destroy (void)
+be_param_holder::destroy ()
 {
   this->AST_Param_Holder::destroy ();
   this->be_type::destroy ();

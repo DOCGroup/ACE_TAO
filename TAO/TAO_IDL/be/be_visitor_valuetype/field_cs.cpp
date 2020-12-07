@@ -21,7 +21,7 @@ be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs (void)
+be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs ()
 {
 }
 

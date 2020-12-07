@@ -29,7 +29,7 @@ be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
 }
 
 be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl (
-  void)
+  )
 {
 }
 

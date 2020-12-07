@@ -27,7 +27,7 @@ be_visitor_operation_argument_invoke::be_visitor_operation_argument_invoke (
 }
 
 be_visitor_operation_argument_invoke::~be_visitor_operation_argument_invoke (
-    void
+    
   )
 {
 }

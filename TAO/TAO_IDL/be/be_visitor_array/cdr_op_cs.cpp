@@ -18,7 +18,7 @@ be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs (void)
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
 {
 }
 

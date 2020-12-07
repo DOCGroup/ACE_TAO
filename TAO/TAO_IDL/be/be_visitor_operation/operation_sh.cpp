@@ -16,7 +16,7 @@ be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_sh::~be_visitor_operation_sh (void)
+be_visitor_operation_sh::~be_visitor_operation_sh ()
 {
 }
 

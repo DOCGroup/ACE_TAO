@@ -16,7 +16,7 @@ be_visitor_union_branch_cdr_op_ch::be_visitor_union_branch_cdr_op_ch (
 {
 }
 
-be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch (void)
+be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch ()
 {
 }
 

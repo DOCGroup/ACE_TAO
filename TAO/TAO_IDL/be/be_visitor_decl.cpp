@@ -23,12 +23,12 @@ be_visitor_decl::be_visitor_decl (be_visitor_context *ctx)
 {
 }
 
-be_visitor_decl::~be_visitor_decl (void)
+be_visitor_decl::~be_visitor_decl ()
 {
 }
 
 be_visitor_context *
-be_visitor_decl::ctx (void)
+be_visitor_decl::ctx ()
 {
   return this->ctx_;
 }

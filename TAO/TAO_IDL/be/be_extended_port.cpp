@@ -22,12 +22,12 @@ be_extended_port::be_extended_port (
 {
 }
 
-be_extended_port::~be_extended_port (void)
+be_extended_port::~be_extended_port ()
 {
 }
 
 be_porttype *
-be_extended_port::port_type (void) const
+be_extended_port::port_type () const
 {
   return
     dynamic_cast<be_porttype*> (
@@ -35,7 +35,7 @@ be_extended_port::port_type (void) const
 }
 
 void
-be_extended_port::destroy (void)
+be_extended_port::destroy ()
 {
   this->AST_Extended_Port::destroy ();
   this->be_field::destroy ();

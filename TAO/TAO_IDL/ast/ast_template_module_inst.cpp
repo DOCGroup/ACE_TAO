@@ -20,18 +20,18 @@ AST_Template_Module_Inst::AST_Template_Module_Inst (
 {
 }
 
-AST_Template_Module_Inst::~AST_Template_Module_Inst (void)
+AST_Template_Module_Inst::~AST_Template_Module_Inst ()
 {
 }
 
 AST_Template_Module *
-AST_Template_Module_Inst::ref (void) const
+AST_Template_Module_Inst::ref () const
 {
   return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 FE_Utils::T_ARGLIST const *
-AST_Template_Module_Inst::template_args (void) const
+AST_Template_Module_Inst::template_args () const
 {
   return this->template_args_;
 }
@@ -43,7 +43,7 @@ AST_Template_Module_Inst::dump (ACE_OSTREAM_TYPE &)
 }
 
 void
-AST_Template_Module_Inst::destroy (void)
+AST_Template_Module_Inst::destroy ()
 {
   this->template_args_->destroy ();
   delete this->template_args_;

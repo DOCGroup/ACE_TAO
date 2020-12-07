@@ -126,7 +126,7 @@ AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
 // Helper function to fill out the details of where this expression
 // is defined.
 void
-AST_Expression::fill_definition_details (void)
+AST_Expression::fill_definition_details ()
 {
   this->pd_defined_in = idl_global->scopes ().depth () > 0
                           ? idl_global->scopes ().top ()
@@ -548,12 +548,12 @@ AST_Expression::AST_Expression (const ACE_CDR::Fixed &f)
   this->pd_ev->u.fixedval = f;
 }
 
-AST_Expression::~AST_Expression (void)
+AST_Expression::~AST_Expression ()
 {
   destroy ();
 }
 
-AST_Expression::AST_ExprValue::AST_ExprValue (void)
+AST_Expression::AST_ExprValue::AST_ExprValue ()
 {
   this->u.ulval = 0UL;
   this->et = AST_Expression::EV_none;
@@ -2653,13 +2653,13 @@ AST_Expression::compare (AST_Expression *vc)
 }
 
 AST_Decl *
-AST_Expression::get_tdef (void) const
+AST_Expression::get_tdef () const
 {
   return this->tdef;
 }
 
 AST_Param_Holder *
-AST_Expression::param_holder (void) const
+AST_Expression::param_holder () const
 {
   return this->param_holder_;
 }
@@ -2894,7 +2894,7 @@ AST_Expression::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Expression::destroy (void)
+AST_Expression::destroy ()
 {
   if (0 != this->pd_ev)
     {
@@ -2945,7 +2945,7 @@ AST_Expression::destroy (void)
 // Data accessors.
 
 UTL_Scope *
-AST_Expression::defined_in (void)
+AST_Expression::defined_in ()
 {
   return this->pd_defined_in;
 }
@@ -2957,7 +2957,7 @@ AST_Expression::set_defined_in (UTL_Scope *d)
 }
 
 long
-AST_Expression::line (void)
+AST_Expression::line ()
 {
   return this->pd_line;
 }
@@ -2969,7 +2969,7 @@ AST_Expression::set_line (long l)
 }
 
 UTL_String *
-AST_Expression::file_name (void)
+AST_Expression::file_name ()
 {
   return this->pd_file_name;
 }
@@ -2981,13 +2981,13 @@ AST_Expression::set_file_name (UTL_String *f)
 }
 
 AST_Expression::ExprComb
-AST_Expression::ec (void)
+AST_Expression::ec ()
 {
   return this->pd_ec;
 }
 
 AST_Expression::AST_ExprValue   *
-AST_Expression::ev (void)
+AST_Expression::ev ()
 {
   return this->pd_ev;
 }
@@ -3000,7 +3000,7 @@ AST_Expression::set_ev (AST_Expression::AST_ExprValue *new_ev)
 }
 
 AST_Expression *
-AST_Expression::v1 (void)
+AST_Expression::v1 ()
 {
   return this->pd_v1;
 }
@@ -3012,7 +3012,7 @@ AST_Expression::set_v1 (AST_Expression *e)
 }
 
 AST_Expression *
-AST_Expression::v2 (void)
+AST_Expression::v2 ()
 {
   return this->pd_v2;
 }
@@ -3024,7 +3024,7 @@ AST_Expression::set_v2 (AST_Expression *e)
 }
 
 UTL_ScopedName *
-AST_Expression::n (void)
+AST_Expression::n ()
 {
   return this->pd_n;
 }

@@ -19,7 +19,7 @@ AST_ValueTypeFwd::AST_ValueTypeFwd (AST_Interface *dummy,
 {
 }
 
-AST_ValueTypeFwd::~AST_ValueTypeFwd (void)
+AST_ValueTypeFwd::~AST_ValueTypeFwd ()
 {
 }
 
@@ -46,7 +46,7 @@ AST_ValueTypeFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_ValueTypeFwd::destroy (void)
+AST_ValueTypeFwd::destroy ()
 {
   this->AST_InterfaceFwd::destroy ();
 }

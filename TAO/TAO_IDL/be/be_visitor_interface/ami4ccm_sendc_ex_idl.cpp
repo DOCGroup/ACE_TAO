@@ -19,7 +19,7 @@ be_visitor_ami4ccm_sendc_ex_idl::be_visitor_ami4ccm_sendc_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl (void)
+be_visitor_ami4ccm_sendc_ex_idl::~be_visitor_ami4ccm_sendc_ex_idl ()
 {
 }
 

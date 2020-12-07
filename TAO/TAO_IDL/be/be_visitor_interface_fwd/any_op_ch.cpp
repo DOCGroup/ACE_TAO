@@ -18,7 +18,7 @@ be_visitor_interface_fwd_any_op_ch::be_visitor_interface_fwd_any_op_ch (
 {
 }
 
-be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch (void)
+be_visitor_interface_fwd_any_op_ch::~be_visitor_interface_fwd_any_op_ch ()
 {
 }
 

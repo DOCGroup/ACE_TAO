@@ -92,7 +92,7 @@ be_eventtype::be_eventtype (UTL_ScopedName *n,
 {
 }
 
-be_eventtype::~be_eventtype (void)
+be_eventtype::~be_eventtype ()
 {
 }
 
@@ -107,7 +107,7 @@ be_eventtype::accept (be_visitor *visitor)
 }
 
 void
-be_eventtype::destroy (void)
+be_eventtype::destroy ()
 {
   this->be_valuetype::destroy ();
 }

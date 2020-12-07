@@ -18,7 +18,7 @@ be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
 {
 }
 
-be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs (void)
+be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs ()
 {
 }
 

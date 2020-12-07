@@ -37,7 +37,7 @@ be_enum_val::accept (be_visitor *visitor)
 }
 
 void
-be_enum_val::destroy (void)
+be_enum_val::destroy ()
 {
   this->AST_EnumVal::destroy ();
   this->be_decl::destroy ();

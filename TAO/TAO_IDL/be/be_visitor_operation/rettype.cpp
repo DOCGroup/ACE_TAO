@@ -23,7 +23,7 @@ be_visitor_operation_rettype::be_visitor_operation_rettype (be_visitor_context
 {
 }
 
-be_visitor_operation_rettype::~be_visitor_operation_rettype (void)
+be_visitor_operation_rettype::~be_visitor_operation_rettype ()
 {
 }
 

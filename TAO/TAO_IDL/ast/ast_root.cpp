@@ -88,14 +88,14 @@ AST_Root::AST_Root (UTL_ScopedName *n)
 {
 }
 
-AST_Root::~AST_Root (void)
+AST_Root::~AST_Root ()
 {
 }
 
 // Overrides the one in UTL_Scope - this one doesn't
 // count the predefined types.
 unsigned long
-AST_Root::nmembers (void)
+AST_Root::nmembers ()
 {
   unsigned long retval = 0;
 
@@ -169,7 +169,7 @@ AST_Root::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Root::destroy (void)
+AST_Root::destroy ()
 {
   long i = 0;
   AST_Decl *d = 0;
@@ -215,7 +215,7 @@ AST_Root::destroy (void)
 }
 
 void
-AST_Root::fini (void)
+AST_Root::fini ()
 {
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();

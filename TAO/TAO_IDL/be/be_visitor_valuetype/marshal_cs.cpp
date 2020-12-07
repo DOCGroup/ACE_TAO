@@ -19,7 +19,7 @@ be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
 {
 }
 
-be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs (void)
+be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs ()
 {
 }
 

@@ -25,7 +25,7 @@ be_visitor_operation_arglist::be_visitor_operation_arglist (
 {
 }
 
-be_visitor_operation_arglist::~be_visitor_operation_arglist (void)
+be_visitor_operation_arglist::~be_visitor_operation_arglist ()
 {
 }
 

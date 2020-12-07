@@ -23,7 +23,7 @@ be_visitor_native_ch::be_visitor_native_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_native_ch::~be_visitor_native_ch (void)
+be_visitor_native_ch::~be_visitor_native_ch ()
 {
 }
 

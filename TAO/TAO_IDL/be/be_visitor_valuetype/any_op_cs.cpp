@@ -23,7 +23,7 @@ be_visitor_valuetype_any_op_cs::be_visitor_valuetype_any_op_cs (
 {
 }
 
-be_visitor_valuetype_any_op_cs::~be_visitor_valuetype_any_op_cs (void)
+be_visitor_valuetype_any_op_cs::~be_visitor_valuetype_any_op_cs ()
 {
 }
 

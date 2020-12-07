@@ -62,7 +62,7 @@ ast_visitor_tmpl_module_inst::ast_visitor_tmpl_module_inst (
 {
 }
 
-ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst (void)
+ast_visitor_tmpl_module_inst::~ast_visitor_tmpl_module_inst ()
 {
 }
 

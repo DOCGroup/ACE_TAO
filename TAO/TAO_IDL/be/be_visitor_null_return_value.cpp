@@ -23,7 +23,7 @@ be_visitor_null_return_value::be_visitor_null_return_value (
 {
 }
 
-be_visitor_null_return_value::~be_visitor_null_return_value (void)
+be_visitor_null_return_value::~be_visitor_null_return_value ()
 {
 }
 

@@ -17,7 +17,7 @@ be_visitor_enum_any_op_cs::be_visitor_enum_any_op_cs (
 {
 }
 
-be_visitor_enum_any_op_cs::~be_visitor_enum_any_op_cs (void)
+be_visitor_enum_any_op_cs::~be_visitor_enum_any_op_cs ()
 {
 }
 

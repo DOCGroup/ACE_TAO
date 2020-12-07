@@ -21,7 +21,7 @@ be_visitor_attr_setarg_type::be_visitor_attr_setarg_type  (
 {
 }
 
-be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type (void)
+be_visitor_attr_setarg_type::~be_visitor_attr_setarg_type ()
 {
 }
 

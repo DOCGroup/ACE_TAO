@@ -78,7 +78,7 @@ const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 
 // Populate the global scope with all predefined entities.
 void
-fe_populate_global_scope (void)
+fe_populate_global_scope ()
 {
   // No need to create a scoped name for the basic types, the
   // AST_PredefinedType constructor will do that.
@@ -265,7 +265,7 @@ fe_populate_global_scope (void)
 // Populate idl_global's hash map with upper case versions of
 // all the IDL keywords
 void
-fe_populate_idl_keywords (void)
+fe_populate_idl_keywords ()
 {
   static const char *keywords[] =
     {
@@ -358,7 +358,7 @@ fe_populate_idl_keywords (void)
 
 // FE initialization
 void
-FE_init (void)
+FE_init ()
 {
   // Initialize FE global data object.
   ACE_NEW (idl_global,
@@ -396,7 +396,7 @@ FE_init (void)
 }
 
 void
-FE_populate (void)
+FE_populate ()
 {
   AST_Root *r = 0;
 
@@ -469,7 +469,7 @@ FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list)
 
 // Store include paths from the environment variable, if any.
 void
-FE_store_env_include_paths (void)
+FE_store_env_include_paths ()
 {
   ACE_Unbounded_Queue<ACE_CString> list;
   FE_extract_env_include_paths (list);
@@ -486,7 +486,7 @@ FE_store_env_include_paths (void)
 }
 
 const char *
-FE_get_cpp_loc_from_env (void)
+FE_get_cpp_loc_from_env ()
 {
   const char *cpp_loc = 0;
 
@@ -526,7 +526,7 @@ FE_get_cpp_loc_from_env (void)
 }
 
 const char *
-FE_get_cpp_args_from_env (void)
+FE_get_cpp_args_from_env ()
 {
   const char *cpp_args = 0;
 

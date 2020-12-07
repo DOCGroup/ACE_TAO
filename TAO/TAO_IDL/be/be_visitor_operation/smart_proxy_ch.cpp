@@ -23,7 +23,7 @@ be_visitor_operation_smart_proxy_ch::be_visitor_operation_smart_proxy_ch (
 }
 
 be_visitor_operation_smart_proxy_ch::~be_visitor_operation_smart_proxy_ch (
-    void
+    
   )
 {
 }

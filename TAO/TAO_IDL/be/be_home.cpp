@@ -80,7 +80,7 @@ be_home::be_home (UTL_ScopedName *n,
   idl_global->object_arg_seen_ = true;
 }
 
-be_home::~be_home (void)
+be_home::~be_home ()
 {
 }
 
@@ -116,7 +116,7 @@ be_home::scan (UTL_Scope *s)
 }
 
 void
-be_home::destroy (void)
+be_home::destroy ()
 {
   delete [] this->full_skel_name_;
   this->full_skel_name_ = 0;

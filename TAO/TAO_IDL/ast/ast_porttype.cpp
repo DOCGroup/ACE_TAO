@@ -22,12 +22,12 @@ AST_PortType::AST_PortType (UTL_ScopedName *n)
 {
 }
 
-AST_PortType::~AST_PortType (void)
+AST_PortType::~AST_PortType ()
 {
 }
 
 void
-AST_PortType::destroy (void)
+AST_PortType::destroy ()
 {
   this->UTL_Scope::destroy ();
   this->AST_Type::destroy ();

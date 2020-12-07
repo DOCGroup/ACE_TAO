@@ -24,12 +24,12 @@ be_template_module_ref::be_template_module_ref (
 {
 }
 
-be_template_module_ref::~be_template_module_ref (void)
+be_template_module_ref::~be_template_module_ref ()
 {
 }
 
 void
-be_template_module_ref::destroy (void)
+be_template_module_ref::destroy ()
 {
   this->AST_Template_Module_Ref::destroy ();
   this->be_field::destroy ();

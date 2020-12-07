@@ -22,7 +22,7 @@ be_visitor_valuetype_ch::be_visitor_valuetype_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ch::~be_visitor_valuetype_ch (void)
+be_visitor_valuetype_ch::~be_visitor_valuetype_ch ()
 {
 }
 
@@ -476,7 +476,7 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
 
 
 void
-be_visitor_valuetype_ch::begin_public (void)
+be_visitor_valuetype_ch::begin_public ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -485,7 +485,7 @@ be_visitor_valuetype_ch::begin_public (void)
 }
 
 void
-be_visitor_valuetype_ch::begin_private (void)
+be_visitor_valuetype_ch::begin_private ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

@@ -19,7 +19,7 @@ be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
 {
 }
 
-be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch (void)
+be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch ()
 {
 }
 

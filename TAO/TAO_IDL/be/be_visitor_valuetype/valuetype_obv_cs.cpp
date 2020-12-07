@@ -24,7 +24,7 @@ be_visitor_valuetype_obv_cs::be_visitor_valuetype_obv_cs (
 {
 }
 
-be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs (void)
+be_visitor_valuetype_obv_cs::~be_visitor_valuetype_obv_cs ()
 {
 }
 

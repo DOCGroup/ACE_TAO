@@ -141,12 +141,12 @@ be_interface::be_interface (UTL_ScopedName *n,
     }
 }
 
-be_interface::~be_interface (void)
+be_interface::~be_interface ()
 {
 }
 
 const char *
-be_interface::local_name (void)
+be_interface::local_name ()
 {
   // Return the local name.
 //  return this->strategy_->local_name ();
@@ -154,7 +154,7 @@ be_interface::local_name (void)
 }
 
 const char *
-be_interface::full_skel_name (void)
+be_interface::full_skel_name ()
 {
   if (this->full_skel_name_ == 0)
     {
@@ -533,7 +533,7 @@ be_interface::relative_name (const char *localname,
 
 // Am I in some kind of a multiple inheritance?
 int
-be_interface::in_mult_inheritance (void)
+be_interface::in_mult_inheritance ()
 {
   if (this->in_mult_inheritance_ == -1)
     {
@@ -564,7 +564,7 @@ be_interface::in_mult_inheritance (int mi)
 }
 
 bool
-be_interface::has_rw_attributes (void) const
+be_interface::has_rw_attributes () const
 {
   return this->has_rw_attributes_;
 }
@@ -734,7 +734,7 @@ be_interface::gen_stub_ctor (TAO_OutStream *os)
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_interface::gen_var_out_seq_decls (void)
+be_interface::gen_var_out_seq_decls ()
 {
   if (this->var_out_seq_decls_gen_)
     {
@@ -807,7 +807,7 @@ be_interface::gen_var_out_seq_decls (void)
 // ****************************************************************
 
 TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
-    void)
+    )
 {
 }
 
@@ -2488,7 +2488,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
 }
 
 void
-be_interface::destroy (void)
+be_interface::destroy ()
 {
   delete [] this->full_skel_name_;
   this->full_skel_name_ = 0;
@@ -2539,13 +2539,13 @@ be_interface::original_interface (be_interface *original_interface)
 }
 
 be_interface *
-be_interface::original_interface (void)
+be_interface::original_interface ()
 {
   return this->original_interface_;
 }
 
 bool
-be_interface::is_event_consumer (void)
+be_interface::is_event_consumer ()
 {
   return
     this->pd_n_inherits == 1
@@ -2626,7 +2626,7 @@ be_interface::enqueue_base_home_r (AST_Home *node)
 }
 
 bool
-be_interface::dds_connector_traits_done (void) const
+be_interface::dds_connector_traits_done () const
 {
   return this->dds_connector_traits_done_;
 }
@@ -2877,7 +2877,7 @@ be_interface::gen_ami4ccm_idl (TAO_OutStream *os)
 }
 
 bool
-be_interface::is_ami_rh (void) const
+be_interface::is_ami_rh () const
 {
   return this->is_ami_rh_;
 }
@@ -2889,7 +2889,7 @@ be_interface::is_ami_rh (bool val)
 }
 
 bool
-be_interface::is_ami4ccm_rh (void) const
+be_interface::is_ami4ccm_rh () const
 {
   return this->is_ami4ccm_rh_;
 }
@@ -2901,7 +2901,7 @@ be_interface::is_ami4ccm_rh (bool val)
 }
 
 const char *
-be_interface::direct_proxy_impl_name (void)
+be_interface::direct_proxy_impl_name ()
 {
   if (this->direct_proxy_impl_name_ == 0)
     {
@@ -2917,7 +2917,7 @@ be_interface::direct_proxy_impl_name (void)
 }
 
 const char *
-be_interface::full_direct_proxy_impl_name (void)
+be_interface::full_direct_proxy_impl_name ()
 {
   if (this->full_direct_proxy_impl_name_ == 0)
     {
@@ -2942,7 +2942,7 @@ be_interface::full_direct_proxy_impl_name (void)
 
 
 const char *
-be_interface::client_enclosing_scope (void)
+be_interface::client_enclosing_scope ()
 {
   if (this->client_scope_ == 0)
     {
@@ -2963,7 +2963,7 @@ be_interface::client_enclosing_scope (void)
 }
 
 const char *
-be_interface::flat_client_enclosing_scope (void)
+be_interface::flat_client_enclosing_scope ()
 {
   if (this->flat_client_scope_ == 0)
     {
@@ -2988,7 +2988,7 @@ be_interface::flat_client_enclosing_scope (void)
 }
 
 const char *
-be_interface::server_enclosing_scope (void)
+be_interface::server_enclosing_scope ()
 {
   if (this->server_scope_ == 0)
     {

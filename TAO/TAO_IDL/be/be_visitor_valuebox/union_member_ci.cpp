@@ -21,7 +21,7 @@ be_visitor_valuebox_union_member_ci::be_visitor_valuebox_union_member_ci (
 {
 }
 
-be_visitor_valuebox_union_member_ci::~be_visitor_valuebox_union_member_ci (void)
+be_visitor_valuebox_union_member_ci::~be_visitor_valuebox_union_member_ci ()
 {
 }
 

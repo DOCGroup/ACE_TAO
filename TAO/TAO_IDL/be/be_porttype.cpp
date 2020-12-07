@@ -18,12 +18,12 @@ be_porttype::be_porttype (UTL_ScopedName *n)
 {
 }
 
-be_porttype::~be_porttype (void)
+be_porttype::~be_porttype ()
 {
 }
 
 void
-be_porttype::destroy (void)
+be_porttype::destroy ()
 {
   this->AST_PortType::destroy ();
 }

@@ -118,7 +118,7 @@ AST_record_fwd_decl (AST_Type *n)
 
 // Check that all forward declared structs and unions were also defined.
 TAO_IDL_FE_Export void
-AST_check_fwd_decls (void)
+AST_check_fwd_decls ()
 {
   AST_Type *d = 0;
 

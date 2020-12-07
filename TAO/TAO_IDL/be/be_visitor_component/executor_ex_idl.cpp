@@ -19,7 +19,7 @@ be_visitor_executor_ex_idl::be_visitor_executor_ex_idl (
 }
 
 be_visitor_executor_ex_idl::~be_visitor_executor_ex_idl (
-  void)
+  )
 {
 }
 
@@ -204,7 +204,7 @@ be_visitor_executor_ex_idl::visit_consumes (
 }
 
 void
-be_visitor_executor_ex_idl::gen_supported (void)
+be_visitor_executor_ex_idl::gen_supported ()
 {
   os_ << be_idt;
 

@@ -29,12 +29,12 @@ AST_Template_Module::AST_Template_Module (
 {
 }
 
-AST_Template_Module::~AST_Template_Module (void)
+AST_Template_Module::~AST_Template_Module ()
 {
 }
 
 FE_Utils::T_PARAMLIST_INFO *
-AST_Template_Module::template_params (void) const
+AST_Template_Module::template_params () const
 {
   return this->template_params_;
 }
@@ -140,7 +140,7 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
 }
 
 void
-AST_Template_Module::destroy (void)
+AST_Template_Module::destroy ()
 {
   delete this->template_params_;
   this->template_params_ = 0;

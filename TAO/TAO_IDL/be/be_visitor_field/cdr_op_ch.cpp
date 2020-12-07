@@ -25,7 +25,7 @@ be_visitor_field_cdr_op_ch::be_visitor_field_cdr_op_ch (be_visitor_context *ctx)
 }
 
 // Destructor.
-be_visitor_field_cdr_op_ch::~be_visitor_field_cdr_op_ch (void)
+be_visitor_field_cdr_op_ch::~be_visitor_field_cdr_op_ch ()
 {
 }
 
