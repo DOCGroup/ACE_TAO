@@ -721,4 +721,9 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 #  define ACE_GCC_NO_RETURN
 #endif
 
+// ACE_OS::readdir_r was removed in ACE7
+#ifndef ACE_LACKS_READDIR_R
+#  define ACE_LACKS_READDIR_R
+#endif
+
 #endif /* ACE_CONFIG_MACROS_H */
