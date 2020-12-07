@@ -305,7 +305,7 @@ int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
-  typedef ACE_Member_Function_Command<ACE_TP_Token_Guard> Guard_Release;
+  using Guard_Release = ACE_Member_Function_Command<ACE_TP_Token_Guard>;
 
   Guard_Release release(guard, &ACE_TP_Token_Guard::release_token);
   return this->timer_queue_->expire_single(release);

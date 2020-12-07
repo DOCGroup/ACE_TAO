@@ -1081,7 +1081,7 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
 int
 ACE_Dev_Poll_Reactor::dispatch_timer_handler (Token_Guard &guard)
 {
-  typedef ACE_Member_Function_Command<Token_Guard> Guard_Release;
+  using Guard_Release = ACE_Member_Function_Command<Token_Guard>;
 
   Guard_Release release(guard, &Token_Guard::release_token);
   return this->timer_queue_->expire_single(release);

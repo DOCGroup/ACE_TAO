@@ -754,7 +754,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
           else
             {
               // Declare the type of the symbol:
-              typedef int (*dll_unload_policy)(void);
+              using dll_unload_policy = int (*)();
 
               void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);

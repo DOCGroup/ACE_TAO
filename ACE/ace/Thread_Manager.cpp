@@ -1503,7 +1503,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       }
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we
@@ -1578,7 +1578,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we
@@ -1868,7 +1868,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we
