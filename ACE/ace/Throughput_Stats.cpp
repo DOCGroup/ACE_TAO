@@ -9,7 +9,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Throughput_Stats::ACE_Throughput_Stats (void)
+ACE_Throughput_Stats::ACE_Throughput_Stats ()
   : ACE_Basic_Stats ()
   , throughput_last_ (0)
 {

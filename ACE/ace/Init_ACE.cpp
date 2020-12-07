@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 unsigned int ACE::init_fini_count_ = 0;
 
 int
-ACE::init (void)
+ACE::init ()
 {
   // Don't use ACE_TRACE, because Object_Manager might not have been
   // instantiated yet.
@@ -18,7 +18,7 @@ ACE::init (void)
 }
 
 int
-ACE::fini (void)
+ACE::fini ()
 {
   ACE_TRACE ("ACE::fini");
 

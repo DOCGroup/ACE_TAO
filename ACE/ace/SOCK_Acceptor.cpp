@@ -25,7 +25,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Acceptor)
 
 // Do nothing routine for constructor.
 
-ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (void)
+ACE_SOCK_Acceptor::ACE_SOCK_Acceptor ()
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::ACE_SOCK_Acceptor");
 }
@@ -211,7 +211,7 @@ ACE_SOCK_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 #endif  // ACE_HAS_WINCE
 
 void
-ACE_SOCK_Acceptor::dump (void) const
+ACE_SOCK_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Acceptor::dump");
@@ -425,7 +425,7 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 }
 
 int
-ACE_SOCK_Acceptor::close (void)
+ACE_SOCK_Acceptor::close ()
 {
   return ACE_SOCK::close ();
 }

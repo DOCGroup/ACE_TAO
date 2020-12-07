@@ -15,13 +15,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Construction/Destruction
 
-ACE_Dirent_Selector::ACE_Dirent_Selector (void)
+ACE_Dirent_Selector::ACE_Dirent_Selector ()
   : namelist_ (0),
     n_ (0)
 {
 }
 
-ACE_Dirent_Selector::~ACE_Dirent_Selector (void)
+ACE_Dirent_Selector::~ACE_Dirent_Selector ()
 {
   // Free up any allocated resources.
   this->close();
@@ -37,7 +37,7 @@ ACE_Dirent_Selector::open (const ACE_TCHAR *dir,
 }
 
 int
-ACE_Dirent_Selector::close (void)
+ACE_Dirent_Selector::close ()
 {
   for (--n_; n_ >= 0; --n_)
     {

@@ -399,7 +399,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 }
 
 long
-ACE_OS::num_processors (void)
+ACE_OS::num_processors ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors");
 
@@ -433,7 +433,7 @@ ACE_OS::num_processors (void)
 }
 
 long
-ACE_OS::num_processors_online (void)
+ACE_OS::num_processors_online ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors_online");
 

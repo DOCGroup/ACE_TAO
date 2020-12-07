@@ -62,7 +62,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg)
 
 static ACE_thread_key_t the_log_msg_tss_key;
 
-ACE_thread_key_t *log_msg_tss_key (void)
+ACE_thread_key_t *log_msg_tss_key ()
 {
   return &the_log_msg_tss_key;
 }
@@ -125,10 +125,10 @@ public:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   //FUZZ: disable check_for_lack_ACE_OS
-  static void close (void) ACE_GCC_DESTRUCTOR_ATTRIBUTE;
+  static void close () ACE_GCC_DESTRUCTOR_ATTRIBUTE;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  static ACE_Recursive_Thread_Mutex *get_lock (void);
+  static ACE_Recursive_Thread_Mutex *get_lock ();
 
 private:
   static ACE_Recursive_Thread_Mutex *lock_;
@@ -196,7 +196,7 @@ int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
 ACE_Recursive_Thread_Mutex *ACE_Log_Msg_Manager::lock_ = 0;
 
 ACE_Recursive_Thread_Mutex *
-ACE_Log_Msg_Manager::get_lock (void)
+ACE_Log_Msg_Manager::get_lock ()
 {
   // This function is called by the first thread to create an ACE_Log_Msg
   // instance.  It makes the call while holding a mutex, so we don't have
@@ -215,7 +215,7 @@ ACE_Log_Msg_Manager::get_lock (void)
 }
 
 void
-ACE_Log_Msg_Manager::close (void)
+ACE_Log_Msg_Manager::close ()
 {
 #if defined (ACE_HAS_STHREADS) && ! defined (ACE_HAS_TSS_EMULATION) && ! defined (ACE_HAS_EXCEPTIONS)
   // Delete the (main thread's) Log_Msg instance.  I think that this
@@ -264,7 +264,7 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
 
 /* static */
 int
-ACE_Log_Msg::exists (void)
+ACE_Log_Msg::exists ()
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
@@ -285,7 +285,7 @@ ACE_Log_Msg::exists (void)
 }
 
 ACE_Log_Msg *
-ACE_Log_Msg::instance (void)
+ACE_Log_Msg::instance ()
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || \
@@ -395,7 +395,7 @@ ACE_Log_Msg::instance (void)
 // Not inlined to help prevent having to include OS.h just to
 // get ACELIB_DEBUG, et al, macros.
 int
-ACE_Log_Msg::last_error_adapter (void)
+ACE_Log_Msg::last_error_adapter ()
 {
   return ACE_OS::last_error ();
 }
@@ -423,7 +423,7 @@ ACE_Log_Msg::disable_debug_messages (ACE_Log_Priority priority)
 }
 
 const ACE_TCHAR *
-ACE_Log_Msg::program_name (void)
+ACE_Log_Msg::program_name ()
 {
   return ACE_Log_Msg::program_name_;
 }
@@ -459,7 +459,7 @@ u_long ACE_Log_Msg::process_priority_mask_ = LM_SHUTDOWN
                                              | LM_EMERGENCY;
 
 void
-ACE_Log_Msg::close (void)
+ACE_Log_Msg::close ()
 {
   // This call needs to go here to avoid memory leaks.
   ACE_MT (ACE_Log_Msg_Manager::close ());
@@ -523,7 +523,7 @@ ACE_Log_Msg::sync_hook (const ACE_TCHAR *prg_name)
 }
 
 ACE_OS_Thread_Descriptor *
-ACE_Log_Msg::thr_desc_hook (void)
+ACE_Log_Msg::thr_desc_hook ()
 {
   return ACE_LOG_MSG->thr_desc ();
 }
@@ -551,7 +551,7 @@ ACE_Log_Msg::sync (const ACE_TCHAR *prog_name)
 }
 
 u_long
-ACE_Log_Msg::flags (void)
+ACE_Log_Msg::flags ()
 {
   ACE_TRACE ("ACE_Log_Msg::flags");
   u_long result;
@@ -583,7 +583,7 @@ ACE_Log_Msg::clr_flags (u_long flgs)
 }
 
 int
-ACE_Log_Msg::acquire (void)
+ACE_Log_Msg::acquire ()
 {
   ACE_TRACE ("ACE_Log_Msg::acquire");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
@@ -613,7 +613,7 @@ ACE_Log_Msg::priority_mask (u_long n_mask, MASK_TYPE mask_type)
 }
 
 int
-ACE_Log_Msg::release (void)
+ACE_Log_Msg::release ()
 {
   ACE_TRACE ("ACE_Log_Msg::release");
 
@@ -624,7 +624,7 @@ ACE_Log_Msg::release (void)
 #endif /* ! ACE_MT_SAFE */
 }
 
-ACE_Log_Msg::ACE_Log_Msg (void)
+ACE_Log_Msg::ACE_Log_Msg ()
   : status_ (0),
     errnum_ (0),
     linenum_ (0),
@@ -676,7 +676,7 @@ ACE_Log_Msg::ACE_Log_Msg (void)
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-ACE_Log_Msg::~ACE_Log_Msg (void)
+ACE_Log_Msg::~ACE_Log_Msg ()
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 
@@ -2810,8 +2810,8 @@ ssize_t ACE_Log_Msg::log (const ACE_Log_Formatter &formatter)
 class ACE_Log_Msg_Sig_Guard
 {
 private:
-  ACE_Log_Msg_Sig_Guard (void);
-  ~ACE_Log_Msg_Sig_Guard (void);
+  ACE_Log_Msg_Sig_Guard ();
+  ~ACE_Log_Msg_Sig_Guard ();
 
   /// Original signal mask.
   sigset_t omask_;
@@ -2820,7 +2820,7 @@ private:
                                    int suppress_stderr);
 };
 
-ACE_Log_Msg_Sig_Guard::ACE_Log_Msg_Sig_Guard (void)
+ACE_Log_Msg_Sig_Guard::ACE_Log_Msg_Sig_Guard ()
 {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
   ACE_OS::sigemptyset (&this->omask_);
@@ -2837,7 +2837,7 @@ ACE_Log_Msg_Sig_Guard::ACE_Log_Msg_Sig_Guard (void)
 #endif /* ACE_LACKS_UNIX_SIGNALS */
 }
 
-ACE_Log_Msg_Sig_Guard::~ACE_Log_Msg_Sig_Guard (void)
+ACE_Log_Msg_Sig_Guard::~ACE_Log_Msg_Sig_Guard ()
 {
 #if !defined (ACE_LACKS_UNIX_SIGNALS)
 # if defined (ACE_LACKS_PTHREAD_THR_SIGSETMASK)
@@ -3055,7 +3055,7 @@ ACE_Log_Msg::conditional_set (const char *filename,
 }
 
 void
-ACE_Log_Msg::dump (void) const
+ACE_Log_Msg::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Log_Msg::dump");
@@ -3122,7 +3122,7 @@ ACE_Log_Msg::msg_backend (ACE_Log_Msg_Backend *b)
 }
 
 ACE_Log_Msg_Backend *
-ACE_Log_Msg::msg_backend (void)
+ACE_Log_Msg::msg_backend ()
 {
   ACE_TRACE ("ACE_Log_Msg::msg_backend");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,

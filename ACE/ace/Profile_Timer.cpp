@@ -27,7 +27,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Profile_Timer)
 
 
 void
-ACE_Profile_Timer::dump (void) const
+ACE_Profile_Timer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");
@@ -36,7 +36,7 @@ ACE_Profile_Timer::dump (void) const
 
 // Initialize interval timer.
 
-ACE_Profile_Timer::ACE_Profile_Timer (void)
+ACE_Profile_Timer::ACE_Profile_Timer ()
 {
   ACE_TRACE ("ACE_Profile_Timer::ACE_Profile_Timer");
   ACE_OS::memset (&this->end_usage_, 0, sizeof this->end_usage_);
@@ -61,7 +61,7 @@ ACE_Profile_Timer::ACE_Profile_Timer (void)
 }
 
 // Terminate the interval timer.
-ACE_Profile_Timer::~ACE_Profile_Timer (void)
+ACE_Profile_Timer::~ACE_Profile_Timer ()
 {
   ACE_TRACE ("ACE_Profile_Timer::~ACE_Profile_Timer");
 #  if defined (ACE_HAS_PRUSAGE_T)

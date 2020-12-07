@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
         ACE_Event_Handler::HI_PRIORITY-ACE_Event_Handler::LO_PRIORITY+1
 
 void
-ACE_Priority_Reactor::init_bucket (void)
+ACE_Priority_Reactor::init_bucket ()
 {
   // Allocate enough space for all the handles.
   // TODO: This can be wrong, maybe we should use other kind of
@@ -65,7 +65,7 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
   this->init_bucket ();
 }
 
-ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
+ACE_Priority_Reactor::~ACE_Priority_Reactor ()
 {
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
 
@@ -179,7 +179,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
 }
 
 void
-ACE_Priority_Reactor::dump (void) const
+ACE_Priority_Reactor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Priority_Reactor::dump");

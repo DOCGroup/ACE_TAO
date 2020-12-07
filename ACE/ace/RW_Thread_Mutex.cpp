@@ -34,7 +34,7 @@ ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (const ACE_TCHAR *name,
 }
 
 void
-ACE_RW_Thread_Mutex::dump (void) const
+ACE_RW_Thread_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Thread_Mutex::dump");

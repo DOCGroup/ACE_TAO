@@ -28,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Semaphore)
 
 void
-ACE_Thread_Semaphore::dump (void) const
+ACE_Thread_Semaphore::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Semaphore::dump");

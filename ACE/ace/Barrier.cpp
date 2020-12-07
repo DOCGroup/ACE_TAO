@@ -22,7 +22,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Sub_Barrier)
 
 void
-ACE_Sub_Barrier::dump (void) const
+ACE_Sub_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Sub_Barrier::dump");
@@ -47,7 +47,7 @@ ACE_Sub_Barrier::ACE_Sub_Barrier (unsigned int count,
 ACE_ALLOC_HOOK_DEFINE(ACE_Barrier)
 
 void
-ACE_Barrier::dump (void) const
+ACE_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Barrier::dump");
@@ -77,7 +77,7 @@ ACE_Barrier::ACE_Barrier (unsigned int count,
 }
 
 int
-ACE_Barrier::wait (void)
+ACE_Barrier::wait ()
 {
   ACE_TRACE ("ACE_Barrier::wait");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -126,7 +126,7 @@ ACE_Barrier::wait (void)
 }
 
 int
-ACE_Barrier::shutdown (void)
+ACE_Barrier::shutdown ()
 {
   ACE_TRACE ("ACE_Barrier::shutdown");
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, -1);
@@ -161,7 +161,7 @@ ACE_Thread_Barrier::ACE_Thread_Barrier (unsigned int count,
 }
 
 void
-ACE_Thread_Barrier::dump (void) const
+ACE_Thread_Barrier::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Thread_Barrier::dump");

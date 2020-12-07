@@ -41,7 +41,7 @@ sigchld_nop (int, siginfo_t *, ucontext_t *)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Process::ACE_Process (void)
+ACE_Process::ACE_Process ()
   :
 #if !defined (ACE_WIN32)
   child_id_ (ACE_INVALID_PID),
@@ -55,7 +55,7 @@ ACE_Process::ACE_Process (void)
 #endif /* ACE_WIN32 */
 }
 
-ACE_Process::~ACE_Process (void)
+ACE_Process::~ACE_Process ()
 {
 #if defined (ACE_WIN32)
   // Free resources allocated in kernel.
@@ -577,13 +577,13 @@ ACE_Process::child (pid_t)
 }
 
 void
-ACE_Process::unmanage (void)
+ACE_Process::unmanage ()
 {
   // nothing to do
 }
 
 int
-ACE_Process::running (void) const
+ACE_Process::running () const
 {
 #if defined (ACE_WIN32)
     DWORD code;
@@ -731,7 +731,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
 }
 
 void
-ACE_Process::close_dup_handles (void)
+ACE_Process::close_dup_handles ()
 {
   if (this->dup_handles_.num_set () > 0)
     {
@@ -746,7 +746,7 @@ ACE_Process::close_dup_handles (void)
 }
 
 void
-ACE_Process::close_passed_handles (void)
+ACE_Process::close_passed_handles ()
 {
   if (this->handles_passed_.num_set () > 0)
     {
@@ -971,7 +971,7 @@ ACE_Process_Options::inherit_environment (void)
 #else /* defined ACE_WIN32 */
 
 ACE_TCHAR * const *
-ACE_Process_Options::env_argv (void)
+ACE_Process_Options::env_argv ()
 {
   return environment_argv_;
 }
@@ -1242,7 +1242,7 @@ ACE_Process_Options::release_handles ()
 #endif /* !ACE_HAS_WINCE */
 
 
-ACE_Process_Options::~ACE_Process_Options (void)
+ACE_Process_Options::~ACE_Process_Options ()
 {
 #if !defined (ACE_HAS_WINCE)
   release_handles();
@@ -1371,7 +1371,7 @@ ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
 #endif // ACE_LACKS_VA_FUNCTIONS
 
 ACE_TCHAR *
-ACE_Process_Options::env_buf (void)
+ACE_Process_Options::env_buf ()
 {
 #if !defined (ACE_HAS_WINCE)
   if (environment_buf_[0] == '\0')
@@ -1384,7 +1384,7 @@ ACE_Process_Options::env_buf (void)
 }
 
 ACE_TCHAR * const *
-ACE_Process_Options::command_line_argv (void)
+ACE_Process_Options::command_line_argv ()
 {
   if (!command_line_argv_calculated_)
     {
@@ -1453,14 +1453,14 @@ ACE_Process_Options::passed_handles (ACE_Handle_Set &set) const
   return 1;
 }
 
-ACE_Managed_Process::~ACE_Managed_Process (void)
+ACE_Managed_Process::~ACE_Managed_Process ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Managed_Process)
 
 void
-ACE_Managed_Process::unmanage (void)
+ACE_Managed_Process::unmanage ()
 {
   delete this;
 }

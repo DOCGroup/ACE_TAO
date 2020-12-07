@@ -14,7 +14,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
+ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor ()
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
   : sa_ (0), pipe_handle_ (ACE_INVALID_HANDLE)
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
@@ -23,7 +23,7 @@ ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (void)
 }
 
 int
-ACE_SPIPE_Acceptor::remove (void)
+ACE_SPIPE_Acceptor::remove ()
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::remove");
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -41,7 +41,7 @@ ACE_SPIPE_Acceptor::remove (void)
 ACE_ALLOC_HOOK_DEFINE (ACE_SPIPE_Acceptor)
 
 void
-ACE_SPIPE_Acceptor::dump (void) const
+ACE_SPIPE_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Acceptor::dump");
@@ -180,7 +180,7 @@ ACE_SPIPE_Acceptor::create_new_instance (int perms)
 }
 
 int
-ACE_SPIPE_Acceptor::close (void)
+ACE_SPIPE_Acceptor::close ()
 {
   ACE_TRACE ("ACE_SPIPE_Acceptor::close");
 

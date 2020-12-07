@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Semaphore)
 
 void
-ACE_Process_Semaphore::dump (void) const
+ACE_Process_Semaphore::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Process_Semaphore::dump");
@@ -48,7 +48,7 @@ ACE_Process_Semaphore::ACE_Process_Semaphore (u_int count,
 // Explicitly destroy the semaphore.
 
 int
-ACE_Process_Semaphore::remove (void)
+ACE_Process_Semaphore::remove ()
 {
 // ACE_TRACE ("ACE_Process_Semaphore::remove");
   return this->lock_.remove ();
@@ -58,7 +58,7 @@ ACE_Process_Semaphore::remove (void)
 // greater than 0, then decrement it.
 
 int
-ACE_Process_Semaphore::acquire (void)
+ACE_Process_Semaphore::acquire ()
 {
 // ACE_TRACE ("ACE_Process_Semaphore::acquire");
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
@@ -72,7 +72,7 @@ ACE_Process_Semaphore::acquire (void)
 // than 0 (i.e., won't block).
 
 int
-ACE_Process_Semaphore::tryacquire (void)
+ACE_Process_Semaphore::tryacquire ()
 {
 // ACE_TRACE ("ACE_Process_Semaphore::tryacquire");
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
@@ -86,7 +86,7 @@ ACE_Process_Semaphore::tryacquire (void)
 // a waiting thread.
 
 int
-ACE_Process_Semaphore::release (void)
+ACE_Process_Semaphore::release ()
 {
 // ACE_TRACE ("ACE_Process_Semaphore::release");
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)

@@ -47,7 +47,7 @@ ACE_LSOCK_Stream::get_remote_addr (ACE_Addr &addr) const
 }
 
 void
-ACE_LSOCK_Stream::dump (void) const
+ACE_LSOCK_Stream::dump () const
 {
   ACE_TRACE ("ACE_LSOCK_Stream::dump");
 

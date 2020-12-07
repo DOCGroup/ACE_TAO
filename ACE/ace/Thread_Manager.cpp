@@ -15,12 +15,12 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
+ACE_At_Thread_Exit::~ACE_At_Thread_Exit ()
 {
   this->do_apply ();
 }
 
-ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
+ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func ()
 {
   this->do_apply ();
 }
@@ -28,7 +28,7 @@ ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_At_Thread_Exit_Func)
 
 void
-ACE_At_Thread_Exit_Func::apply (void)
+ACE_At_Thread_Exit_Func::apply ()
 {
   this->func_ (this->object_, this->param_);
 }
@@ -58,7 +58,7 @@ ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
 }
 
 void
-ACE_Thread_Manager::dump (void)
+ACE_Thread_Manager::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Manager::dump");
@@ -82,7 +82,7 @@ ACE_Thread_Manager::dump (void)
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
+ACE_Thread_Descriptor::~ACE_Thread_Descriptor ()
 {
   delete this->sync_;
 }
@@ -242,7 +242,7 @@ ACE_Thread_Descriptor::at_exit (void *object,
 }
 
 void
-ACE_Thread_Descriptor::dump (void) const
+ACE_Thread_Descriptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
@@ -258,7 +258,7 @@ ACE_Thread_Descriptor::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
+ACE_Thread_Descriptor::ACE_Thread_Descriptor ()
   : log_msg_ (0),
     at_exit_list_ (0),
     tm_ (0),
@@ -270,7 +270,7 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
 }
 
 void
-ACE_Thread_Descriptor::acquire_release (void)
+ACE_Thread_Descriptor::acquire_release ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -291,7 +291,7 @@ ACE_Thread_Descriptor::acquire_release (void)
 }
 
 void
-ACE_Thread_Descriptor::acquire (void)
+ACE_Thread_Descriptor::acquire ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -303,7 +303,7 @@ ACE_Thread_Descriptor::acquire (void)
 }
 
 void
-ACE_Thread_Descriptor::release (void)
+ACE_Thread_Descriptor::release ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -401,7 +401,7 @@ ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attribut
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 ACE_Thread_Manager *
-ACE_Thread_Manager::instance (void)
+ACE_Thread_Manager::instance ()
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
@@ -439,7 +439,7 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 }
 
 void
-ACE_Thread_Manager::close_singleton (void)
+ACE_Thread_Manager::close_singleton ()
 {
   ACE_TRACE ("ACE_Thread_Manager::close_singleton");
 
@@ -479,7 +479,7 @@ ACE_Thread_Manager::close ()
   return 0;
 }
 
-ACE_Thread_Manager::~ACE_Thread_Manager (void)
+ACE_Thread_Manager::~ACE_Thread_Manager ()
 {
   ACE_TRACE ("ACE_Thread_Manager::~ACE_Thread_Manager");
   this->close ();
@@ -973,7 +973,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 // Repeatedly call remove_thr on all table entries until there
 // is no thread left.   Must be called with lock held.
 void
-ACE_Thread_Manager::remove_thr_all (void)
+ACE_Thread_Manager::remove_thr_all ()
 {
   ACE_Thread_Descriptor *td = 0;
 
@@ -1442,14 +1442,14 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 // Resume all threads that are suspended.
 
 int
-ACE_Thread_Manager::resume_all (void)
+ACE_Thread_Manager::resume_all ()
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_all");
   return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 int
-ACE_Thread_Manager::suspend_all (void)
+ACE_Thread_Manager::suspend_all ()
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_all");
   return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::suspend_thr));

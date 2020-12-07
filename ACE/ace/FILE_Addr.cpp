@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_Addr)
 
-ACE_FILE_Addr::ACE_FILE_Addr (void)
+ACE_FILE_Addr::ACE_FILE_Addr ()
   : ACE_Addr (AF_FILE, sizeof this->filename_ / sizeof (ACE_TCHAR))
 {
   this->filename_[0] = '\0';
@@ -110,13 +110,13 @@ ACE_FILE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 // Return the address.
 
 void *
-ACE_FILE_Addr::get_addr (void) const
+ACE_FILE_Addr::get_addr () const
 {
   return (void *)&this->filename_;
 }
 
 void
-ACE_FILE_Addr::dump (void) const
+ACE_FILE_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE_Addr::dump");
