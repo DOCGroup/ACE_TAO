@@ -75,7 +75,7 @@ namespace TAO
                          resolver,
                          detail,
                          response_expected)
-    , retry_state_ (0)
+    , retry_state_ (nullptr)
   {
   }
 
@@ -90,7 +90,7 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = 0;
+    TAO_Synch_Reply_Dispatcher *rd_p = nullptr;
     ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
                                           this->details_.reply_service_info ()));
     if (!rd_p)
@@ -398,7 +398,7 @@ namespace TAO
               }
             catch (const ::CORBA::Exception&)
               {
-                if (this->retry_state_ == 0 ||
+                if (this->retry_state_ == nullptr ||
                     !this->retry_state_->forward_on_exception_limit_used ())
                   {
                     this->resolver_.stub ()->reset_profiles ();
@@ -426,7 +426,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, 0);
+    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
 
     // At this point it can be assumed that the GIOP/whatever protocol
     // header and the reply header are already handled.  Further it
@@ -718,7 +718,7 @@ namespace TAO
 
     CORBA::SystemException *ex = TAO::create_system_exception (type_id.in ());
 
-    if (ex == 0)
+    if (ex == nullptr)
       {
         // @@ We should raise a CORBA::NO_MEMORY, but we ran out
         //    of memory already. We need a pre-allocated, TSS,

@@ -16,7 +16,7 @@ TAO_Wait_On_Read::TAO_Wait_On_Read (TAO_Transport *transport)
 }
 
 // Destructor.
-TAO_Wait_On_Read::~TAO_Wait_On_Read (void)
+TAO_Wait_On_Read::~TAO_Wait_On_Read ()
 {
 }
 
@@ -147,19 +147,19 @@ TAO_Wait_On_Read::wait (ACE_Time_Value * max_wait_time,
 
 // No-op.
 int
-TAO_Wait_On_Read::register_handler (void)
+TAO_Wait_On_Read::register_handler ()
 {
   return 0;
 }
 
 bool
-TAO_Wait_On_Read::non_blocking (void) const
+TAO_Wait_On_Read::non_blocking () const
 {
   return false;
 }
 
 bool
-TAO_Wait_On_Read::can_process_upcalls (void) const
+TAO_Wait_On_Read::can_process_upcalls () const
 {
   return true;
 }

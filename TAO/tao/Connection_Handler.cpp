@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
   : orb_core_ (orb_core),
-    transport_ (0),
+    transport_ (nullptr),
     connection_pending_ (false),
     is_closed_ (false)
 {
@@ -29,12 +29,12 @@ TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
                        this->orb_core_->leader_follower ());
 }
 
-TAO_Connection_Handler::~TAO_Connection_Handler (void)
+TAO_Connection_Handler::~TAO_Connection_Handler ()
 {
 }
 
 int
-TAO_Connection_Handler::shared_open (void)
+TAO_Connection_Handler::shared_open ()
 {
   // This reference counting is related to asynch connections.  It
   // should probably be managed by the ACE_Strategy_Connector, since
@@ -101,7 +101,7 @@ TAO_Connection_Handler::set_socket_option (ACE_SOCK &sock,
 }
 
 int
-TAO_Connection_Handler::svc_i (void)
+TAO_Connection_Handler::svc_i ()
 {
   int result = 0;
 
@@ -113,7 +113,7 @@ TAO_Connection_Handler::svc_i (void)
   // in a reactive handler, except that this can simply block waiting
   // for input.
 
-  ACE_Time_Value *max_wait_time = 0;
+  ACE_Time_Value *max_wait_time = nullptr;
   ACE_Time_Value timeout;
   ACE_Time_Value current_timeout;
 
@@ -347,13 +347,13 @@ TAO_Connection_Handler::close_connection_eh (ACE_Event_Handler *eh)
         {
           // If the ORB is nil, get the reactor from orb_core which gets it
           // from LF.
-          if (eh_reactor == 0)
+          if (eh_reactor == nullptr)
             eh_reactor = this->transport()->orb_core()->reactor ();
         }
 
       // The Reactor must not be null, otherwise something else is
       // horribly broken.
-      ACE_ASSERT (eh_reactor != 0);
+      ACE_ASSERT (eh_reactor != nullptr);
 
       if (TAO_debug_level)
         {
@@ -428,7 +428,7 @@ TAO_Connection_Handler::set_dscp_codepoint (CORBA::Long)
 }
 
 int
-TAO_Connection_Handler::release_os_resources (void)
+TAO_Connection_Handler::release_os_resources ()
 {
   return 0;
 }

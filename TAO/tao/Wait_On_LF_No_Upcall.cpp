@@ -11,7 +11,7 @@ namespace TAO
   {
   }
 
-  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall (void)
+  Wait_On_LF_No_Upcall::~Wait_On_LF_No_Upcall ()
   {
   }
 
@@ -25,7 +25,7 @@ namespace TAO
   }
 
   bool
-  Wait_On_LF_No_Upcall::can_process_upcalls (void) const
+  Wait_On_LF_No_Upcall::can_process_upcalls () const
   {
     if ((this->transport_->opened_as () == TAO::TAO_SERVER_ROLE) &&
         (this->transport_->bidirectional_flag () == -1))
