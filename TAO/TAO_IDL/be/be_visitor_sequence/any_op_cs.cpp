@@ -18,7 +18,7 @@ be_visitor_sequence_any_op_cs::be_visitor_sequence_any_op_cs (
 {
 }
 
-be_visitor_sequence_any_op_cs::~be_visitor_sequence_any_op_cs (void)
+be_visitor_sequence_any_op_cs::~be_visitor_sequence_any_op_cs ()
 {
 }
 
@@ -71,8 +71,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         {
           tc = ANY_ARRAY;
         }
-      else if (dynamic_cast<be_interface*> (bt) != 0
-               && dynamic_cast<be_valuetype*> (bt) == 0)
+      else if (dynamic_cast<be_interface*> (bt) != nullptr
+               && dynamic_cast<be_valuetype*> (bt) == nullptr)
         {
           tc = ANY_OBJREF;
         }
@@ -184,7 +184,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   // for the TypeCode to pass to the Any operator impls.
   be_typedef *td = this->ctx_->tdef ();
 
-  be_module *module = 0;
+  be_module *module = nullptr;
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -204,7 +204,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
             }
         }
 
-      if (module != 0)
+      if (module != nullptr)
         {
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
@@ -224,7 +224,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << be_idt_nl
               << "_tao_any," << be_nl
               << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+              << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem);" << be_uidt
               << be_uidt_nl
               << "}" << be_nl_2;
@@ -240,7 +240,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << be_idt_nl
               << "_tao_any," << be_nl
               << "::" << node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+              << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem);" << be_uidt
               << be_uidt_nl
               << "}" << be_nl_2;
@@ -256,7 +256,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
               << be_idt_nl
               << "_tao_any," << be_nl
               << "::"  <<  node->name () << "::_tao_any_destructor," << be_nl
-              << "::" << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+              << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
               << "_tao_elem);" << be_uidt
               << be_uidt_nl
               << "}";
@@ -283,7 +283,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}" << be_nl_2;
@@ -299,7 +299,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}" << be_nl_2;
@@ -315,14 +315,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}";
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }

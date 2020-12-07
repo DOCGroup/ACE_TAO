@@ -17,13 +17,13 @@ be_visitor_sequence_ch::be_visitor_sequence_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_ch::~be_visitor_sequence_ch (void)
+be_visitor_sequence_ch::~be_visitor_sequence_ch ()
 {
 }
 
 int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 {
-  if (node->defined_in () == 0)
+  if (node->defined_in () == nullptr)
     {
       // The node is a nested sequence, and has had no scope defined.
       node->set_defined_in (DeclAsScope (this->ctx_->scope ()->decl ()));
@@ -57,7 +57,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
   // generation for the base type.
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_sequence_ch::")
@@ -77,7 +77,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
       be_typedef *tmp = this->ctx_->tdef ();
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
         {
@@ -133,12 +133,12 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
       /// and _outs. They may get redefined and reinstated later.
       if (!be_global->alt_mapping () || !node->unbounded ())
         {
-          if (this->ctx_->tdef () != 0)
+          if (this->ctx_->tdef () != nullptr)
             {
               *os << "class " << node->local_name () << ";";
             }
 
-          if (this->ctx_->tdef () != 0)
+          if (this->ctx_->tdef () != nullptr)
             {
               this->gen_varout_typedefs (node, bt);
             }
@@ -263,14 +263,14 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
 
       // TAO provides extensions for octet sequences, first find out if
       // the base type is an octet (or an alias for octet).
-      be_predefined_type *predef = 0;
+      be_predefined_type *predef = nullptr;
 
       if (bt->base_node_type () == AST_Type::NT_pre_defined)
         {
           be_typedef* alias =
                 dynamic_cast<be_typedef*> (bt);
 
-          if (alias == 0)
+          if (alias == nullptr)
             {
               predef = dynamic_cast<be_predefined_type*> (bt);
             }
@@ -284,7 +284,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
         }
 
       // Now generate the extension...
-      if (predef != 0
+      if (predef != nullptr
           && predef->pt () == AST_PredefinedType::PT_octet
           && node->unbounded ()
           && !be_global->alt_mapping ())

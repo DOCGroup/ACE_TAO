@@ -20,7 +20,7 @@ be_visitor_valuebox_ch::be_visitor_valuebox_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ch::~be_visitor_valuebox_ch (void)
+be_visitor_valuebox_ch::~be_visitor_valuebox_ch ()
 {
 }
 
@@ -270,7 +270,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   // generation for it.
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_ch::"
@@ -507,9 +507,9 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
   // member.  These functions have the same signatures as
   // acessor and modifier functions for union members.
 
-  AST_Decl *d = 0;
-  AST_Field *field = 0;
-  be_type *bt = 0;
+  AST_Decl *d = nullptr;
+  AST_Field *field = nullptr;
+  be_type *bt = nullptr;
   be_visitor_context ctx (*this->ctx_);
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -518,7 +518,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = dynamic_cast<AST_Field*> (d)) == 0)
+      if (d == nullptr || (field = dynamic_cast<AST_Field*> (d)) == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ch::visit_structure -"
@@ -608,9 +608,9 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
   // Now generate the accessor and modifier functions for each union
   // member.
 
-  AST_Decl *d = 0;
-  AST_Field *field = 0;
-  be_type *bt = 0;
+  AST_Decl *d = nullptr;
+  AST_Field *field = nullptr;
+  be_type *bt = nullptr;
   be_visitor_context ctx (*this->ctx_);
 
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -619,7 +619,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = dynamic_cast<AST_Field*> (d)) == 0)
+      if (d == nullptr || (field = dynamic_cast<AST_Field*> (d)) == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ch::visit_union -"
@@ -741,7 +741,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
 }
 
 void
-be_visitor_valuebox_ch::emit_default_constructor (void)
+be_visitor_valuebox_ch::emit_default_constructor ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -771,7 +771,7 @@ be_visitor_valuebox_ch::emit_constructor_one_arg (be_decl *node,
 }
 
 void
-be_visitor_valuebox_ch::emit_copy_constructor (void)
+be_visitor_valuebox_ch::emit_copy_constructor ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

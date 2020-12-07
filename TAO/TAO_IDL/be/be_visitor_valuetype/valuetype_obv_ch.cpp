@@ -24,7 +24,7 @@ be_visitor_valuetype_obv_ch::be_visitor_valuetype_obv_ch (
 {
 }
 
-be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch (void)
+be_visitor_valuetype_obv_ch::~be_visitor_valuetype_obv_ch ()
 {
 }
 
@@ -92,7 +92,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       //
 
       int i = 0;
-      AST_Type *inherited = 0;
+      AST_Type *inherited = nullptr;
 
       for (; i < node->n_inherits (); ++i)
         {
@@ -281,7 +281,7 @@ be_visitor_valuetype_obv_ch::visit_field (be_field *node)
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_public (void)
+be_visitor_valuetype_obv_ch::begin_public ()
 {
   AST_Decl::NodeType nt = this->ctx_->node ()->node_type ();
 
@@ -297,7 +297,7 @@ be_visitor_valuetype_obv_ch::begin_public (void)
 }
 
 void
-be_visitor_valuetype_obv_ch::begin_private (void)
+be_visitor_valuetype_obv_ch::begin_private ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   *os << be_uidt_nl << be_nl

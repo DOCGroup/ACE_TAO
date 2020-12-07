@@ -69,14 +69,6 @@ public:
    */
   ACE_DIRENT *read (void);
 
-  /**
-   * Has the equivalent functionality as @c read() except that an
-   * @a entry and @a result buffer must be supplied by the caller to
-   * store the result.
-   */
-  int read (struct ACE_DIRENT *entry,
-            struct ACE_DIRENT **result);
-
   // = Manipulators.
   /// Returns the current location associated with the directory
   /// stream.

@@ -108,8 +108,8 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
     pd_has_nested_valuetype_ (0),
     previous_opening_ (previous),
     last_in_same_parent_scope_ (this),
-    from_inst_ (0),
-    from_ref_ (0)
+    from_inst_ (nullptr),
+    from_ref_ (nullptr)
 {
   // NOTE previous passed into this constructor should be
   // the FIRST module that is a previous opening of this same
@@ -120,12 +120,12 @@ AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   // below.
 }
 
-AST_Module::~AST_Module (void)
+AST_Module::~AST_Module ()
 {
 }
 
 void
-AST_Module::destroy (void)
+AST_Module::destroy ()
 {
   this->UTL_Scope::destroy ();
   this->AST_Decl::destroy ();
@@ -156,7 +156,7 @@ AST_Module::adjust_found (
 
 // Involved in OBV_ namespace generation.
 void
-AST_Module::set_has_nested_valuetype (void)
+AST_Module::set_has_nested_valuetype ()
 {
   UTL_Scope *parent = this->defined_in ();
   if (parent && !this->pd_has_nested_valuetype_)
@@ -172,7 +172,7 @@ AST_Module::set_has_nested_valuetype (void)
 }
 
 bool
-AST_Module::has_nested_valuetype (void)
+AST_Module::has_nested_valuetype ()
 {
   return this->pd_has_nested_valuetype_;
 }
@@ -255,7 +255,7 @@ AST_Module::look_in_prev_mods_local (Identifier *e,
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl *
@@ -296,7 +296,7 @@ AST_Module::look_in_prev_mods (UTL_ScopedName *e,
         }
     }
 
-  return 0; // Not found.
+  return nullptr; // Not found.
 }
 
 int
@@ -306,7 +306,7 @@ AST_Module::ast_accept (ast_visitor *visitor)
 }
 
 AST_Template_Module_Inst *
-AST_Module::from_inst (void) const
+AST_Module::from_inst () const
 {
   return this->from_inst_;
 }
@@ -318,7 +318,7 @@ AST_Module::from_inst (AST_Template_Module_Inst *node)
 }
 
 AST_Template_Module_Ref *
-AST_Module::from_ref (void) const
+AST_Module::from_ref () const
 {
   return this->from_ref_;
 }
@@ -374,7 +374,7 @@ AST_Module::fe_add_module (AST_Module *t)
     }
 
   // Already defined and cannot be redefined? Or already used?
-  AST_Module *m = 0;
+  AST_Module *m = nullptr;
   AST_Decl *d = this->lookup_for_add (t);
 
   if (d)
@@ -385,7 +385,7 @@ AST_Module::fe_add_module (AST_Module *t)
                                       t,
                                       this,
                                       d);
-          return 0;
+          return nullptr;
         }
 
       // has_ancestor() returns TRUE if both nodes are the same.
@@ -393,7 +393,7 @@ AST_Module::fe_add_module (AST_Module *t)
       if (t != m && t->has_ancestor (d))
         {
           idl_global->err ()->redefinition_in_scope (t, d);
-          return 0;
+          return nullptr;
         }
 
       const char *prev_prefix = d->prefix ();
@@ -599,7 +599,7 @@ AST_Module::fe_add_porttype (AST_PortType *t)
 }
 
 void
-AST_Module::reset_last_in_same_parent_scope (void)
+AST_Module::reset_last_in_same_parent_scope ()
 {
   this->last_in_same_parent_scope_ = this;
 }

@@ -18,7 +18,7 @@ be_visitor_array_any_op_cs::be_visitor_array_any_op_cs (
 {
 }
 
-be_visitor_array_any_op_cs::~be_visitor_array_any_op_cs (void)
+be_visitor_array_any_op_cs::~be_visitor_array_any_op_cs ()
 {
 }
 
@@ -88,7 +88,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem.nocopy ()" << be_idt_nl
       << "? _tao_elem.ptr ()" << be_nl
       << ": "
@@ -108,7 +108,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ">::extract (" << be_idt << be_idt_nl
       << "_tao_any," << be_nl
       << node->name () << "_forany::_tao_any_destructor," << be_nl
-      << (td != 0 ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem.out ()" << be_uidt_nl
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";

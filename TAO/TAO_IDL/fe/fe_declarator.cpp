@@ -89,10 +89,10 @@ FE_Declarator::compose (AST_Decl *d)
 {
   AST_Type *ct = dynamic_cast<AST_Type*> (d);
 
-  if (ct == 0)
+  if (ct == nullptr)
     {
       idl_global->err ()->not_a_type (d);
-      return 0;
+      return nullptr;
     }
   else if (ct->node_type () == AST_Decl::NT_param_holder)
     {
@@ -103,7 +103,7 @@ FE_Declarator::compose (AST_Decl *d)
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
           idl_global->err ()->not_a_type (d);
-          return 0;
+          return nullptr;
         }
     }
 
@@ -119,11 +119,11 @@ FE_Declarator::compose (AST_Decl *d)
           idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_ADD,
                                       d);
 
-          return 0;
+          return nullptr;
         }
     }
 
-  AST_Array *arr = 0;
+  AST_Array *arr = nullptr;
 
   // All uses of forward declared types must
   // not have a different prefix from the place of declaration.
@@ -138,7 +138,7 @@ FE_Declarator::compose (AST_Decl *d)
           scope = ScopeAsDecl (scope->defined_in ());
 
           // Are we at global scope?
-          if (scope == 0)
+          if (scope == nullptr)
             {
               break;
             }
@@ -171,7 +171,7 @@ FE_Declarator::compose (AST_Decl *d)
       */
     }
 
-  if (this->pd_decl_type == FD_simple || this->pd_complex_part == 0)
+  if (this->pd_decl_type == FD_simple || this->pd_complex_part == nullptr)
     {
       return ct;
     }
@@ -194,36 +194,36 @@ FE_Declarator::compose (AST_Decl *d)
     }
 
   // We shouldn't get here.
-  return 0;
+  return nullptr;
 }
 
 void
-FE_Declarator::destroy (void)
+FE_Declarator::destroy ()
 {
   if (pd_name)
     {
       this->pd_name->destroy ();
       delete this->pd_name;
-      this->pd_name = 0;
+      this->pd_name = nullptr;
     }
 }
 
 // Data accessors.
 
 AST_Decl *
-FE_Declarator::complex_part (void)
+FE_Declarator::complex_part ()
 {
   return this->pd_complex_part;
 }
 
 UTL_ScopedName *
-FE_Declarator::name (void)
+FE_Declarator::name ()
 {
   return this->pd_name;
 }
 
 FE_Declarator::DeclaratorType
-FE_Declarator::decl_type (void)
+FE_Declarator::decl_type ()
 {
   return this->pd_decl_type;
 }

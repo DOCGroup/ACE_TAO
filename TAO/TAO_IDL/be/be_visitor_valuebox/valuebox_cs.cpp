@@ -16,7 +16,7 @@ be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_cs::~be_visitor_valuebox_cs (void)
+be_visitor_valuebox_cs::~be_visitor_valuebox_cs ()
 {
 }
 
@@ -180,7 +180,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   const char * unmarshal_arg;
   be_predefined_type *bpt = dynamic_cast<be_predefined_type*> (bt);
 
-  if (bpt != 0)
+  if (bpt != nullptr)
     {
       switch (bpt->pt())
         {
@@ -214,7 +214,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
           unmarshal_arg = "vb_object->_pd_value";
         }
     }
-  else if (dynamic_cast<be_array*> (bt) != 0)
+  else if (dynamic_cast<be_array*> (bt) != nullptr)
     {
       is_array = true;
       unmarshal_arg = "temp";
@@ -271,7 +271,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << "return (strm >> ";
 
   be_string *str = dynamic_cast<be_string*> (bt);
-  if (str != 0 &&
+  if (str != nullptr &&
       str->max_size ()->ev ()->u.ulval != 0)
     {
       if (str->width () == (long) sizeof (char))
@@ -450,7 +450,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   // generation for it.
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_cs::"
@@ -721,7 +721,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
 }
 
 void
-be_visitor_valuebox_cs::emit_destructor (void)
+be_visitor_valuebox_cs::emit_destructor ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 

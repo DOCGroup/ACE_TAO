@@ -85,7 +85,7 @@ UTL_ExceptList::UTL_ExceptList (AST_Type *s,
 
 // Get list item.
 AST_Type *
-UTL_ExceptList::head (void)
+UTL_ExceptList::head ()
 {
   return this->pd_car_data;
 }
@@ -97,9 +97,9 @@ UTL_ExceptList::head (void)
 // AST_Exception.
 
 void
-UTL_ExceptList::destroy (void)
+UTL_ExceptList::destroy ()
 {
-  if (this->tail () != 0)
+  if (this->tail () != nullptr)
     {
       this->tail ()->destroy ();
     }
@@ -108,15 +108,15 @@ UTL_ExceptList::destroy (void)
 }
 
 UTL_ExceptList *
-UTL_ExceptList::copy (void)
+UTL_ExceptList::copy ()
 {
-  UTL_ExceptList *retval = 0;
+  UTL_ExceptList *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_ExceptList (this->pd_car_data,
-                                  0),
-                  0);
+                                  nullptr),
+                  nullptr);
 
-  if (this->tail () != 0)
+  if (this->tail () != nullptr)
     {
       retval->nconc ((UTL_ExceptList *) this->tail ()->copy ());
     }
@@ -131,11 +131,11 @@ UTL_ExceptlistActiveIterator::UTL_ExceptlistActiveIterator (UTL_ExceptList *s)
 
 // Get current item.
 AST_Type *
-UTL_ExceptlistActiveIterator::item (void)
+UTL_ExceptlistActiveIterator::item ()
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_ExceptList *) source)->head ();

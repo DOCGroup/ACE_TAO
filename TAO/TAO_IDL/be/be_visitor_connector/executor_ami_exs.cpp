@@ -18,7 +18,7 @@ be_visitor_executor_ami_exs::be_visitor_executor_ami_exs (
 {
 }
 
-be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs (void)
+be_visitor_executor_ami_exs::~be_visitor_executor_ami_exs ()
 {
 }
 
@@ -51,7 +51,7 @@ be_visitor_executor_ami_exs::visit_connector (be_connector *node)
       AST_Decl *d = i.item ();
       AST_Provides *p = dynamic_cast<AST_Provides*> (d);
 
-      if (p != 0)
+      if (p != nullptr)
         {
           if (first)
             {

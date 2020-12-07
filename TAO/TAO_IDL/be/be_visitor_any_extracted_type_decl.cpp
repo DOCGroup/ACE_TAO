@@ -29,7 +29,7 @@ be_visitor_any_extracted_type_decl::be_visitor_any_extracted_type_decl (
 }
 
 be_visitor_any_extracted_type_decl::~be_visitor_any_extracted_type_decl (
-  void)
+  )
 {
 }
 
@@ -157,7 +157,7 @@ be_visitor_any_extracted_type_decl::visit_sequence (be_sequence *node)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       bt = node;
     }
@@ -203,7 +203,7 @@ be_visitor_any_extracted_type_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

@@ -24,7 +24,7 @@ be_visitor_valuetype_field_cdr_cs::be_visitor_valuetype_field_cdr_cs (
 {
 }
 
-be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs (void)
+be_visitor_valuetype_field_cdr_cs::~be_visitor_valuetype_field_cdr_cs ()
 {
 }
 
@@ -65,7 +65,7 @@ be_visitor_valuetype_field_cdr_cs::visit_array (be_array *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -170,7 +170,7 @@ be_visitor_valuetype_field_cdr_cs::visit_enum (be_enum *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -232,7 +232,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface (be_interface *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -282,7 +282,7 @@ be_visitor_valuetype_field_cdr_cs::visit_interface_fwd (be_interface_fwd *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -338,7 +338,7 @@ be_visitor_valuetype_field_cdr_cs::valuetype_common (be_type *)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -390,7 +390,7 @@ be_visitor_valuetype_field_cdr_cs::visit_valuetype_fwd (be_valuetype_fwd *)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -460,7 +460,7 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -565,7 +565,7 @@ be_visitor_valuetype_field_cdr_cs::visit_sequence (be_sequence *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -630,7 +630,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -644,7 +644,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
           if (str->width () == (long) sizeof (char))
             {
@@ -666,7 +666,7 @@ be_visitor_valuetype_field_cdr_cs::visit_string (be_string *str)
         }
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
           if (str->width () == (long) sizeof (char))
             {
@@ -712,7 +712,7 @@ be_visitor_valuetype_field_cdr_cs::visit_structure (
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -782,7 +782,7 @@ be_visitor_valuetype_field_cdr_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -795,7 +795,7 @@ be_visitor_valuetype_field_cdr_cs::visit_union (be_union *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_cs::"
@@ -904,7 +904,7 @@ be_visitor_valuetype_field_cdr_decl::visit_array (be_array *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuetype_field_cdr_decl::"
@@ -1006,6 +1006,6 @@ be_visitor_valuetype_field_cdr_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

@@ -77,7 +77,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    custom),
     supports_abstract_ (false),
     var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (0),
+    full_obv_skel_name_ (nullptr),
     is_amh_excep_holder_ (false)
 {
   // Check that redefine() copies all members.
@@ -87,7 +87,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
 
   AST_Module *m = dynamic_cast<AST_Module*> (this->defined_in ());
 
-  if (m != 0)
+  if (m != nullptr)
     {
       m->set_has_nested_valuetype ();
     }
@@ -100,7 +100,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
       be_interface *intf =
         dynamic_cast<be_interface*> (this->pd_supports[i]);
 
-      if (intf == 0)
+      if (intf == nullptr)
         {
           // The item is a template param holder.
           continue;
@@ -131,7 +131,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
     }
 }
 
-be_valuetype::~be_valuetype (void)
+be_valuetype::~be_valuetype ()
 {
 }
 
@@ -142,7 +142,7 @@ be_valuetype::redefine (AST_Interface *from)
 
   // This should always be TRUE, but our signature is inherited, so
   // the narrow is necessary and should always be checked.
-  if (bv != 0)
+  if (bv != nullptr)
     {
       this->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
     }
@@ -153,14 +153,14 @@ be_valuetype::redefine (AST_Interface *from)
 // Is true if non-virtual accessor and modifier should be generated
 // If #pragma TAO OBV opt_accessor (todo) is used or -Wb,obv_opt_accessor.
 bool
-be_valuetype::opt_accessor (void)
+be_valuetype::opt_accessor ()
 {
   return be_global->obv_opt_accessor ();
 }
 
 // Compute stringified fully scoped skeleton name (OBV_name).
 void
-be_valuetype::compute_fullobvskelname (void)
+be_valuetype::compute_fullobvskelname ()
 {
   this->compute_full_skel_name ("OBV_",
                                 this->full_obv_skel_name_);
@@ -168,9 +168,9 @@ be_valuetype::compute_fullobvskelname (void)
 
 // Retrieve the fully scoped skeleton name.
 const char*
-be_valuetype::full_obv_skel_name (void)
+be_valuetype::full_obv_skel_name ()
 {
-  if (0 == this->full_obv_skel_name_)
+  if (nullptr == this->full_obv_skel_name_)
     {
       this->compute_fullobvskelname ();
     }
@@ -179,13 +179,13 @@ be_valuetype::full_obv_skel_name (void)
 }
 
 const char *
-be_valuetype::fwd_helper_name (void) const
+be_valuetype::fwd_helper_name () const
 {
   return this->fwd_helper_name_.fast_rep ();
 }
 
 be_valuetype::FactoryStyle
-be_valuetype::determine_factory_style (void)
+be_valuetype::determine_factory_style ()
 {
   FactoryStyle factory_style = FS_UNKNOWN;
 
@@ -249,7 +249,7 @@ be_valuetype::determine_factory_style (void)
 }
 
 bool
-be_valuetype::have_operation (void)
+be_valuetype::have_operation ()
 {
   // Check whatever scope we get for operations/attributes.
 
@@ -303,7 +303,7 @@ be_valuetype::have_operation (void)
         {
           be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
-          if (vt != 0 && vt->have_operation ())
+          if (vt != nullptr && vt->have_operation ())
             {
               have_operation = true;
               break;
@@ -316,12 +316,12 @@ be_valuetype::have_operation (void)
       // Check for operations on supported interfaces
       AST_Type * supported = this->supports_concrete ();
 
-      if (supported != 0)
+      if (supported != nullptr)
         {
           be_interface *intf =
             dynamic_cast<be_interface*> (supported);
 
-          if (intf != 0)
+          if (intf != nullptr)
             {
               have_operation =
                 be_valuetype::have_supported_op (intf);
@@ -349,7 +349,7 @@ be_valuetype::have_supported_op (be_interface * node)
     {
       AST_Decl *d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_valuetype::")
@@ -380,7 +380,7 @@ be_valuetype::have_supported_op (be_interface * node)
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
 
-          if (intf != 0)
+          if (intf != nullptr)
             {
               have_supported_op =
                 be_valuetype::have_supported_op (intf);
@@ -397,7 +397,7 @@ be_valuetype::have_supported_op (be_interface * node)
 }
 
 bool
-be_valuetype::will_have_factory (void)
+be_valuetype::will_have_factory ()
 {
   FactoryStyle fs = this->determine_factory_style ();
 
@@ -405,12 +405,12 @@ be_valuetype::will_have_factory (void)
 }
 
 bool
-be_valuetype::has_member (void)
+be_valuetype::has_member ()
 {
   AST_Type *parent = this->pd_inherits_concrete;
 
   // We're looking for inherited members too.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
         dynamic_cast<be_valuetype*> (parent);
@@ -435,7 +435,7 @@ be_valuetype::has_member (void)
 }
 
 bool
-be_valuetype::is_amh_excep_holder (void) const
+be_valuetype::is_amh_excep_holder () const
 {
   return this->is_amh_excep_holder_;
 }
@@ -551,7 +551,7 @@ be_valuetype::gen_ostream_operator (TAO_OutStream *os,
 // interface _var and _out template classes, as well as by the
 // template sequence classes for object references.
 void
-be_valuetype::gen_var_out_seq_decls (void)
+be_valuetype::gen_var_out_seq_decls ()
 {
   if (this->var_out_seq_decls_gen_)
     {
@@ -589,21 +589,21 @@ be_valuetype::gen_var_out_seq_decls (void)
 
 // For building the pre and postfix of private data fields.
 const char *
-be_valuetype::field_pd_prefix (void)
+be_valuetype::field_pd_prefix ()
 {
   return "_pd_";
 }
 
 const char *
-be_valuetype::field_pd_postfix (void)
+be_valuetype::field_pd_postfix ()
 {
   return "";
 }
 
 be_valuetype *
-be_valuetype::statefull_inherit (void)
+be_valuetype::statefull_inherit ()
 {
-  if (this->pd_inherits_concrete != 0)
+  if (this->pd_inherits_concrete != nullptr)
     {
       return
         dynamic_cast<be_valuetype*> (
@@ -611,7 +611,7 @@ be_valuetype::statefull_inherit (void)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -623,10 +623,10 @@ be_valuetype::accept (be_visitor *visitor)
 }
 
 void
-be_valuetype::destroy (void)
+be_valuetype::destroy ()
 {
   delete [] this->full_obv_skel_name_;
-  this->full_obv_skel_name_ = 0;
+  this->full_obv_skel_name_ = nullptr;
 
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
@@ -654,7 +654,7 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
       AST_Field *field = dynamic_cast<AST_Field*> (d);
       AST_Attribute *attr = dynamic_cast<AST_Attribute*> (d);
 
-      if (field == 0 || attr != 0)
+      if (field == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -672,7 +672,7 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
 }
 
 bool
-be_valuetype::supports_abstract (void) const
+be_valuetype::supports_abstract () const
 {
   return this->supports_abstract_;
 }
@@ -701,7 +701,7 @@ be_valuetype::traverse_supports_list_graphs (
   this->insert_queue.reset ();
   this->del_queue.reset ();
 
-  be_interface *supported_interface = 0;
+  be_interface *supported_interface = nullptr;
 
   for (long i = 0; i < n_supports; ++i)
     {
@@ -744,7 +744,7 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
 {
   AST_Type *supported = this->supports_concrete ();
 
-  if (supported == 0)
+  if (supported == nullptr)
     {
       return 0;
     }

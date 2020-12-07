@@ -15,12 +15,12 @@ AST_Publishes::AST_Publishes (UTL_ScopedName *n,
 {
 }
 
-AST_Publishes::~AST_Publishes (void)
+AST_Publishes::~AST_Publishes ()
 {
 }
 
 AST_Type *
-AST_Publishes::publishes_type (void) const
+AST_Publishes::publishes_type () const
 {
   return this->field_type ();
 }
@@ -39,7 +39,7 @@ AST_Publishes::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Publishes::destroy (void)
+AST_Publishes::destroy ()
 {
   this->AST_Field::destroy ();
 }

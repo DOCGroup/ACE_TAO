@@ -20,12 +20,12 @@ be_publishes::be_publishes (UTL_ScopedName *n,
 {
 }
 
-be_publishes::~be_publishes (void)
+be_publishes::~be_publishes ()
 {
 }
 
 be_eventtype *
-be_publishes::publishes_type (void) const
+be_publishes::publishes_type () const
 {
   return
     dynamic_cast<be_eventtype*> (
@@ -39,7 +39,7 @@ be_publishes::accept (be_visitor *visitor)
 }
 
 void
-be_publishes::destroy (void)
+be_publishes::destroy ()
 {
   this->AST_Publishes::destroy ();
   this->be_field::destroy ();

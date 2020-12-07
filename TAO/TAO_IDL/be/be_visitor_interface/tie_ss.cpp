@@ -18,7 +18,7 @@ be_visitor_interface_tie_ss::be_visitor_interface_tie_ss (
 {
 }
 
-be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss (void)
+be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss ()
 {
 }
 

@@ -23,7 +23,7 @@ be_visitor_args_vardecl_ss::be_visitor_args_vardecl_ss (
 {
 }
 
-be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss (void)
+be_visitor_args_vardecl_ss::~be_visitor_args_vardecl_ss ()
 {
 }
 
@@ -66,7 +66,7 @@ int be_visitor_args_vardecl_ss::visit_array (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -114,7 +114,7 @@ int be_visitor_args_vardecl_ss::visit_enum (be_enum *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -176,7 +176,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -261,7 +261,7 @@ int be_visitor_args_vardecl_ss::visit_sequence (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -358,7 +358,7 @@ int be_visitor_args_vardecl_ss::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -402,7 +402,7 @@ be_visitor_args_vardecl_ss::emit_common (
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -439,7 +439,7 @@ be_visitor_args_vardecl_ss::emit_common2 (be_type *node)
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
     dynamic_cast<be_argument*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {

@@ -17,10 +17,10 @@
 be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    iface_ (0),
-    callback_iface_ (0),
-    scope_name_ (0),
-    iface_name_ (0),
+    iface_ (nullptr),
+    callback_iface_ (nullptr),
+    scope_name_ (nullptr),
+    iface_name_ (nullptr),
     sync_ (false)
 {
   // This is initialized in the base class to svnt_export_macro()
@@ -30,7 +30,7 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh (void)
+be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh ()
 {
 }
 
@@ -103,7 +103,7 @@ be_visitor_facet_ami_exh::visit_attribute (be_attribute *node)
       return 0;
     }
   Identifier id ("void");
-  UTL_ScopedName sn (&id, 0);
+  UTL_ScopedName sn (&id, nullptr);
 
   // Create the return type, which is "void"
   be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
@@ -208,16 +208,16 @@ be_visitor_facet_ami_exh::init (bool for_impl)
   AST_Decl *d = s->lookup_by_name (sn, true, false);
   this->callback_iface_ = dynamic_cast<be_interface*> (d);
 
-  if (this->callback_iface_ == 0)
+  if (this->callback_iface_ == nullptr)
     this->sync_  = true;
 
   sn->destroy ();
   delete sn;
-  sn = 0;
+  sn = nullptr;
 }
 
 int
-be_visitor_facet_ami_exh::gen_reply_handler_class (void)
+be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
   os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -269,7 +269,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 }
 
 int
-be_visitor_facet_ami_exh::gen_facet_executor_class (void)
+be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
     os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -299,7 +299,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
   handler_str += "::";
   handler_str += tmp;
 
-  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != 0)
+  if (ACE_OS::strstr (tmp.c_str(), "AMI4CCM") != nullptr)
     this->sync_ = false;
   else
     this->sync_ = true;
@@ -312,7 +312,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class (void)
 
      sn->destroy ();
      delete sn;
-     sn = 0;
+     sn = nullptr;
 
      be_interface *sync_iface =
      dynamic_cast<be_interface*> (d);

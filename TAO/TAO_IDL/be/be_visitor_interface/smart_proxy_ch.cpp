@@ -17,14 +17,14 @@ be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
 {
 }
 
-be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
+be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch ()
 {
 }
 
 int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -115,7 +115,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
         {
           be_interface *inherited =
             dynamic_cast<be_interface*> (node->inherits ()[i]);
-          be_decl *scope = 0;
+          be_decl *scope = nullptr;
 
           if (inherited->is_nested ())
             {

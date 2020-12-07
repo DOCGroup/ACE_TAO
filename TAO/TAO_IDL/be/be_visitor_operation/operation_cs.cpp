@@ -20,7 +20,7 @@ be_visitor_operation_cs::be_visitor_operation_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_cs::~be_visitor_operation_cs (void)
+be_visitor_operation_cs::~be_visitor_operation_cs ()
 {
 }
 
@@ -49,11 +49,11 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
 
   be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_cs::")
@@ -65,7 +65,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
         {
           intf = this->ctx_->interface ();
 
-          if (intf == 0)
+          if (intf == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_operation_cs::")
@@ -142,7 +142,7 @@ be_visitor_operation_cs::visit_operation (be_operation *node)
   /// If we are in a reply handler, are not an execp_* operation,
   /// and have no native args, then generate the AMI static
   /// reply stub declaration.
-  if (intf != 0
+  if (intf != nullptr
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
       && !node->has_native ())

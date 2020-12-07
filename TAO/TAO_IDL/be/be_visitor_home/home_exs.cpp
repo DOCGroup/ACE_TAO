@@ -13,8 +13,8 @@
 
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     comment_start_border_ ("/**"),
     comment_end_border_ (" */"),
@@ -23,7 +23,7 @@ be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_home_exs::~be_visitor_home_exs (void)
+be_visitor_home_exs::~be_visitor_home_exs ()
 {
 }
 
@@ -113,7 +113,7 @@ be_visitor_home_exs::visit_factory (be_factory *node)
 }
 
 int
-be_visitor_home_exs::gen_exec_class (void)
+be_visitor_home_exs::gen_exec_class ()
 {
   // No '_cxx_' prefix.
   const char *lname =
@@ -137,7 +137,7 @@ be_visitor_home_exs::gen_exec_class (void)
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -207,7 +207,7 @@ be_visitor_home_exs::gen_exec_class (void)
 }
 
 void
-be_visitor_home_exs::gen_entrypoint (void)
+be_visitor_home_exs::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()

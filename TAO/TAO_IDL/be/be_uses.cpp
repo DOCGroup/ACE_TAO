@@ -19,16 +19,16 @@ be_uses::be_uses (UTL_ScopedName *n,
              n),
     be_field (uses_type,
               n),
-    original_uses_ (0)
+    original_uses_ (nullptr)
 {
 }
 
-be_uses::~be_uses (void)
+be_uses::~be_uses ()
 {
 }
 
 be_type *
-be_uses::uses_type (void) const
+be_uses::uses_type () const
 {
   return
     dynamic_cast<be_type*> (
@@ -42,7 +42,7 @@ be_uses::accept (be_visitor *visitor)
 }
 
 void
-be_uses::destroy (void)
+be_uses::destroy ()
 {
   this->AST_Uses::destroy ();
   this->be_field::destroy ();
@@ -55,7 +55,7 @@ be_uses::original_uses (be_uses *original_uses)
 }
 
 be_uses *
-be_uses::original_uses (void)
+be_uses::original_uses ()
 {
   return this->original_uses_;
 }

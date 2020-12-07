@@ -21,7 +21,7 @@ be_visitor_facet_ami_exs::be_visitor_facet_ami_exs (
 {
 }
 
-be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs (void)
+be_visitor_facet_ami_exs::~be_visitor_facet_ami_exs ()
 {
 }
 
@@ -94,7 +94,7 @@ be_visitor_facet_ami_exs::visit_attribute (be_attribute *node)
       return 0;
     }
   Identifier id ("void");
-  UTL_ScopedName sn (&id, 0);
+  UTL_ScopedName sn (&id, nullptr);
 
   // Create the return type, which is "void"
   be_predefined_type rt (AST_PredefinedType::PT_void, &sn);
@@ -203,7 +203,7 @@ be_visitor_facet_ami_exs::post_process (be_decl *node)
   return 0;
 }
 void
-be_visitor_facet_ami_exs::init (void)
+be_visitor_facet_ami_exs::init ()
 {
   UTL_Scope *s = this->iface_->defined_in ();
   ACE_CString handler_str (
@@ -219,13 +219,13 @@ be_visitor_facet_ami_exs::init (void)
 
   sn->destroy ();
   delete sn;
-  sn = 0;
+  sn = nullptr;
 
 
   be_interface *callback_iface =
     dynamic_cast<be_interface*> (d);
 
-  if (callback_iface == 0)
+  if (callback_iface == nullptr)
    this->sync_ = true;
   else
     this->sync_ = false;
@@ -233,7 +233,7 @@ be_visitor_facet_ami_exs::init (void)
 
 }
 int
-be_visitor_facet_ami_exs::gen_reply_handler_class (void)
+be_visitor_facet_ami_exs::gen_reply_handler_class ()
 {
   this->for_reply_handler_ = true;
 
@@ -291,7 +291,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 
   sn->destroy ();
   delete sn;
-  sn = 0;
+  sn = nullptr;
 
 
   be_interface *callback_iface =
@@ -325,7 +325,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class (void)
 }
 
 int
-be_visitor_facet_ami_exs::gen_facet_executor_class (void)
+be_visitor_facet_ami_exs::gen_facet_executor_class ()
 {
 
   this->for_reply_handler_ = false;
@@ -360,7 +360,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
     sn->destroy ();
     delete sn;
-    sn = 0;
+    sn = nullptr;
 
     be_interface *sync_iface =
        dynamic_cast<be_interface*> (d);
@@ -389,7 +389,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class (void)
 
       }
 
-  ACE_CString scope_str (scope_name, 0, false);
+  ACE_CString scope_str (scope_name, nullptr, false);
 
   const char *container_type = be_global->ciao_container_type ();
 
@@ -539,7 +539,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_op (be_operation *node)
 {
 
   // do not handle not sendc operations.
-  if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== 0)
+  if (ACE_OS::strstr (node->local_name()->get_string (), "sendc_")== nullptr)
      return 0;
 
     os_ << be_nl_2
@@ -701,10 +701,10 @@ be_visitor_facet_ami_exs::gen_facet_executor_sync_op (be_operation *node)
   os_ << be_nl
       << "{" << be_idt_nl;
 
-  AST_PredefinedType *pdt = 0;
+  AST_PredefinedType *pdt = nullptr;
   pdt = dynamic_cast<AST_PredefinedType*> (bt);
   bool ret = true;
-  if ((pdt != 0) && (pdt->pt () == AST_PredefinedType::PT_void))
+  if ((pdt != nullptr) && (pdt->pt () == AST_PredefinedType::PT_void))
     ret =false;
 
   os_  << "::" << scope->full_name () << smart_scope

@@ -21,7 +21,7 @@ be_visitor_typecode_decl::be_visitor_typecode_decl (be_visitor_context *ctx)
     }
 }
 
-be_visitor_typecode_decl::~be_visitor_typecode_decl (void)
+be_visitor_typecode_decl::~be_visitor_typecode_decl ()
 {
 }
 

@@ -20,7 +20,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs (void)
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
 {
 }
 
@@ -409,7 +409,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   be_valuetype *parent =
     dynamic_cast<be_valuetype*> (node->defined_in ());
 
-  if (parent == 0 || ! this->is_amh_exception_holder (parent))
+  if (parent == nullptr || ! this->is_amh_exception_holder (parent))
     {
       return 0;
     }
@@ -489,7 +489,7 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
   AST_Type *parent = node->inherits_concrete ();
 
   // Recurse up the parent chain.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       this->gen_ostream_operator_r (dynamic_cast<be_valuetype*> (parent),
                                     index);
@@ -505,9 +505,9 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
         dynamic_cast<be_attribute*> (i.item ());
 
       // No way to access the private members from generated code.
-      if (f == 0
+      if (f == nullptr
           || f->visibility () != AST_Field::vis_PUBLIC
-          || attr != 0)
+          || attr != nullptr)
         {
           continue;
         }

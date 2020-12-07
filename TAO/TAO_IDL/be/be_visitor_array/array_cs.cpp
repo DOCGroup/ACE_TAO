@@ -16,7 +16,7 @@ be_visitor_array_cs::be_visitor_array_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_cs::~be_visitor_array_cs (void)
+be_visitor_array_cs::~be_visitor_array_cs ()
 {
 }
 
@@ -164,7 +164,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cs::"
@@ -192,7 +192,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   // Now generate code such that every element of the array gets assigned
   // inside the innermost level of the  nested loops generated above.
-  be_array *primitive_type = 0;
+  be_array *primitive_type = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -213,7 +213,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
       primitive_type = dynamic_cast<be_array*> (tmp);
     }
 
-  if (primitive_type != 0)
+  if (primitive_type != nullptr)
     {
       // The base type is a typedef to another array type, so
       // we use the base type's copy method.
@@ -297,7 +297,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   // If the member's element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;

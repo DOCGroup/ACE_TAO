@@ -98,37 +98,37 @@ AST_InterfaceFwd::AST_InterfaceFwd (AST_Interface *dummy,
     }
 }
 
-AST_InterfaceFwd::~AST_InterfaceFwd (void)
+AST_InterfaceFwd::~AST_InterfaceFwd ()
 {
 }
 
 // Private operations.
 
 bool
-AST_InterfaceFwd::is_local (void)
+AST_InterfaceFwd::is_local ()
 {
   return this->full_definition ()->is_local ();
 }
 
 bool
-AST_InterfaceFwd::is_valuetype (void)
+AST_InterfaceFwd::is_valuetype ()
 {
   AST_Decl::NodeType nt = this->full_definition ()->node_type ();
   return nt == AST_Decl::NT_valuetype || nt == AST_Decl::NT_eventtype;
 }
 
 bool
-AST_InterfaceFwd::is_abstract_valuetype (void)
+AST_InterfaceFwd::is_abstract_valuetype ()
 {
   return (this->full_definition ()->is_abstract ()
           && this->is_valuetype ());
 }
 
 bool
-AST_InterfaceFwd::full_def_seen (void)
+AST_InterfaceFwd::full_def_seen ()
 {
   UTL_Scope *s = this->defined_in ();
-  AST_Interface *i = 0;
+  AST_Interface *i = nullptr;
 
   // If a full definition is seen in a previous module opening
   // or anywhere in the current scope (before or after our
@@ -141,11 +141,11 @@ AST_InterfaceFwd::full_def_seen (void)
         m->look_in_prev_mods_local (this->local_name (),
                                     false);
 
-      if (0 != d)
+      if (nullptr != d)
         {
           i = dynamic_cast<AST_Interface*> (d);
 
-          if (0 != i && i->is_defined ())
+          if (nullptr != i && i->is_defined ())
             {
               return true;
             }
@@ -158,7 +158,7 @@ AST_InterfaceFwd::full_def_seen (void)
     {
       i = dynamic_cast<AST_Interface*> (iter.item ());
 
-      if (0 != i && this->local_name ()->compare (i->local_name ()))
+      if (nullptr != i && this->local_name ()->compare (i->local_name ()))
         {
           if (i->is_defined ())
             {
@@ -199,7 +199,7 @@ AST_InterfaceFwd::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Interface *
-AST_InterfaceFwd::full_definition (void)
+AST_InterfaceFwd::full_definition ()
 {
   return this->pd_full_definition;
 }
@@ -217,7 +217,7 @@ AST_InterfaceFwd::set_full_definition (AST_Interface *nfd)
 }
 
 bool
-AST_InterfaceFwd::is_defined (void)
+AST_InterfaceFwd::is_defined ()
 {
   // Look for the one instance of the fwd decl
   // that may have a full definition.
@@ -225,17 +225,17 @@ AST_InterfaceFwd::is_defined (void)
     {
       AST_Module *m = dynamic_cast<AST_Module*> (this->defined_in ());
 
-      if (0 != m)
+      if (nullptr != m)
         {
           AST_Decl *d =
             m->look_in_prev_mods_local (this->local_name ());
 
-          if (0 != d)
+          if (nullptr != d)
             {
               // We could be looking at a superfluous forward decl
               // of an interface already defined.
               AST_Interface *full = dynamic_cast<AST_Interface *> (d);
-              if (0 != full)
+              if (nullptr != full)
                 {
                   set_as_defined ();
                 }
@@ -248,7 +248,7 @@ AST_InterfaceFwd::is_defined (void)
               // is a sufficient way to tell if our full
               // definition has already gone through the
               // add_to_scope process.
-              if (0 != fwd && fwd->is_defined ())
+              if (nullptr != fwd && fwd->is_defined ())
                 {
                   set_as_defined ();
                 }
@@ -272,18 +272,18 @@ AST_InterfaceFwd::disown_full_definition ()
 }
 
 void
-AST_InterfaceFwd::destroy (void)
+AST_InterfaceFwd::destroy ()
 {
   if (has_ownership_)
     {
-      set_full_definition (0);
+      set_full_definition (nullptr);
     }
 
   this->AST_Type::destroy ();
 }
 
 bool
-AST_InterfaceFwd::is_fwd (void)
+AST_InterfaceFwd::is_fwd ()
 {
   return true; // This is a fwd declared type
 }
@@ -299,7 +299,7 @@ AST_InterfaceFwd::adjust_found (
   if (ignore_fwd)
     {
       AST_Interface *i = this->full_definition ();
-      return (full_def_only && !i->is_defined () ? 0 : i);
+      return (full_def_only && !i->is_defined () ? nullptr : i);
     }
 
   return this;

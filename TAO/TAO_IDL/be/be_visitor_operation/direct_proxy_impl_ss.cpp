@@ -7,7 +7,7 @@ be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_operation_direct_proxy_impl_ss::
-~be_visitor_operation_direct_proxy_impl_ss (void)
+~be_visitor_operation_direct_proxy_impl_ss ()
 {
 }
 
@@ -34,11 +34,11 @@ be_visitor_operation_direct_proxy_impl_ss::visit_operation (
 
   be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_")
@@ -153,7 +153,7 @@ be_visitor_operation_direct_proxy_impl_ss::gen_invoke (
       return 0;
     }
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   int index = 1;
 
   for (; !si.is_done (); si.next (), ++index)

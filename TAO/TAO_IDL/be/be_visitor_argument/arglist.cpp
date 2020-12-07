@@ -22,7 +22,7 @@ be_visitor_args_arglist::be_visitor_args_arglist (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_arglist::~be_visitor_args_arglist (void)
+be_visitor_args_arglist::~be_visitor_args_arglist ()
 {
 }
 
@@ -280,7 +280,7 @@ int be_visitor_args_arglist::visit_sequence (be_sequence *node)
   // then 'type_name' below will output 'sequence'.
   if (node->imported () && node->anonymous ())
     {
-      (void) node->create_name (0);
+      (void) node->create_name (nullptr);
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -417,7 +417,7 @@ int be_visitor_args_arglist::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

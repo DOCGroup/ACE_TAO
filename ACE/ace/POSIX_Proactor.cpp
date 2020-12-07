@@ -45,18 +45,18 @@ public:
                                int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Wakeup_Completion (void);
+  ~ACE_POSIX_Wakeup_Completion () override;
 
 
   /// This method calls the <handler>'s <handle_wakeup> method.
-  virtual void complete (size_t bytes_transferred = 0,
+  void complete (size_t bytes_transferred = 0,
                          int success = 1,
                          const void *completion_key = 0,
-                         u_long error = 0);
+                         u_long error = 0) override;
 };
 
 // *********************************************************************
-ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
+ACE_POSIX_Proactor::ACE_POSIX_Proactor ()
   :  os_id_ (ACE_OS_UNDEFINED)
 {
 #if defined(sun)
@@ -91,13 +91,13 @@ ACE_POSIX_Proactor::ACE_POSIX_Proactor (void)
 #endif
 }
 
-ACE_POSIX_Proactor::~ACE_POSIX_Proactor (void)
+ACE_POSIX_Proactor::~ACE_POSIX_Proactor ()
 {
   this->close ();
 }
 
 int
-ACE_POSIX_Proactor::close (void)
+ACE_POSIX_Proactor::close ()
 {
   return 0;
 }
@@ -112,7 +112,7 @@ ACE_POSIX_Proactor::register_handle (ACE_HANDLE handle,
 }
 
 int
-ACE_POSIX_Proactor::wake_up_dispatch_threads (void)
+ACE_POSIX_Proactor::wake_up_dispatch_threads ()
 {
   return 0;
 }
@@ -124,7 +124,7 @@ ACE_POSIX_Proactor::close_dispatch_threads (int)
 }
 
 size_t
-ACE_POSIX_Proactor::number_of_threads (void) const
+ACE_POSIX_Proactor::number_of_threads () const
 {
   // @@ Implement it.
   ACE_NOTSUP_RETURN (0);
@@ -138,13 +138,13 @@ ACE_POSIX_Proactor::number_of_threads (size_t threads)
 }
 
 ACE_HANDLE
-ACE_POSIX_Proactor::get_handle (void) const
+ACE_POSIX_Proactor::get_handle () const
 {
   return ACE_INVALID_HANDLE;
 }
 
 ACE_Asynch_Read_Stream_Impl *
-ACE_POSIX_Proactor::create_asynch_read_stream (void)
+ACE_POSIX_Proactor::create_asynch_read_stream ()
 {
   ACE_Asynch_Read_Stream_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -180,7 +180,7 @@ ACE_POSIX_Proactor::create_asynch_read_stream_result
 
 
 ACE_Asynch_Write_Stream_Impl *
-ACE_POSIX_Proactor::create_asynch_write_stream (void)
+ACE_POSIX_Proactor::create_asynch_write_stream ()
 {
   ACE_Asynch_Write_Stream_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -216,7 +216,7 @@ ACE_POSIX_Proactor::create_asynch_write_stream_result
 
 
 ACE_Asynch_Read_File_Impl *
-ACE_POSIX_Proactor::create_asynch_read_file (void)
+ACE_POSIX_Proactor::create_asynch_read_file ()
 {
   ACE_Asynch_Read_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -256,7 +256,7 @@ ACE_POSIX_Proactor::create_asynch_read_file_result
 
 
 ACE_Asynch_Write_File_Impl *
-ACE_POSIX_Proactor::create_asynch_write_file (void)
+ACE_POSIX_Proactor::create_asynch_write_file ()
 {
   ACE_Asynch_Write_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -296,7 +296,7 @@ ACE_POSIX_Proactor::create_asynch_write_file_result
 
 
 ACE_Asynch_Read_Dgram_Impl *
-ACE_POSIX_Proactor::create_asynch_read_dgram (void)
+ACE_POSIX_Proactor::create_asynch_read_dgram ()
 {
     ACE_Asynch_Read_Dgram_Impl *implementation = 0;
     ACE_NEW_RETURN (implementation,
@@ -337,7 +337,7 @@ ACE_POSIX_Proactor::create_asynch_read_dgram_result
 
 
 ACE_Asynch_Write_Dgram_Impl *
-ACE_POSIX_Proactor::create_asynch_write_dgram (void)
+ACE_POSIX_Proactor::create_asynch_write_dgram ()
 {
         ACE_Asynch_Write_Dgram_Impl *implementation = 0;
         ACE_NEW_RETURN (implementation,
@@ -377,7 +377,7 @@ ACE_POSIX_Proactor::create_asynch_write_dgram_result
 
 
 ACE_Asynch_Accept_Impl *
-ACE_POSIX_Proactor::create_asynch_accept (void)
+ACE_POSIX_Proactor::create_asynch_accept ()
 {
   ACE_Asynch_Accept_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -416,7 +416,7 @@ ACE_POSIX_Proactor::create_asynch_accept_result
 
 
 ACE_Asynch_Connect_Impl *
-ACE_POSIX_Proactor::create_asynch_connect (void)
+ACE_POSIX_Proactor::create_asynch_connect ()
 {
   ACE_Asynch_Connect_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -449,7 +449,7 @@ ACE_POSIX_Proactor::create_asynch_connect_result
 
 
 ACE_Asynch_Transmit_File_Impl *
-ACE_POSIX_Proactor::create_asynch_transmit_file (void)
+ACE_POSIX_Proactor::create_asynch_transmit_file ()
 {
   ACE_Asynch_Transmit_File_Impl *implementation = 0;
   ACE_NEW_RETURN (implementation,
@@ -554,7 +554,7 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
 }
 
 ACE_POSIX_Proactor::Proactor_Type
-ACE_POSIX_Proactor::get_impl_type (void)
+ACE_POSIX_Proactor::get_impl_type ()
 {
   return PROACTOR_POSIX;
 }
@@ -595,14 +595,14 @@ public:
   ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor);
 
   /// Destructor.
-  virtual ~ACE_AIOCB_Notify_Pipe_Manager (void);
+  ~ACE_AIOCB_Notify_Pipe_Manager () override;
 
   /// Send the result pointer through the notification pipe.
   int notify ();
 
   /// This is the call back method when <Asynch_Read> from the pipe is
   /// complete.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
 private:
   /// The implementation proactor class.
@@ -619,7 +619,7 @@ private:
   ACE_POSIX_Asynch_Read_Stream read_stream_;
 
   /// Default constructor. Shouldnt be called.
-  ACE_AIOCB_Notify_Pipe_Manager (void);
+  ACE_AIOCB_Notify_Pipe_Manager ();
 };
 
 ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Proactor *posix_aiocb_proactor)
@@ -666,7 +666,7 @@ ACE_AIOCB_Notify_Pipe_Manager::ACE_AIOCB_Notify_Pipe_Manager (ACE_POSIX_AIOCB_Pr
                 ACE_TEXT("Read from pipe failed")));
 }
 
-ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager (void)
+ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
 {
   // 1. try to cancel pending aio
   this->read_stream_.cancel ();
@@ -789,20 +789,20 @@ ACE_POSIX_AIOCB_Proactor::ACE_POSIX_AIOCB_Proactor (size_t max_aio_operations,
 }
 
 // Destructor.
-ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor (void)
+ACE_POSIX_AIOCB_Proactor::~ACE_POSIX_AIOCB_Proactor ()
 {
   this->close();
 }
 
 ACE_POSIX_Proactor::Proactor_Type
-ACE_POSIX_AIOCB_Proactor::get_impl_type (void)
+ACE_POSIX_AIOCB_Proactor::get_impl_type ()
 {
   return PROACTOR_AIOCB;
 }
 
 
 int
-ACE_POSIX_AIOCB_Proactor::close (void)
+ACE_POSIX_AIOCB_Proactor::close ()
 {
   // stop asynch accept task
   this->get_asynch_pseudo_task().stop ();
@@ -819,7 +819,7 @@ void ACE_POSIX_AIOCB_Proactor::set_notify_handle (ACE_HANDLE h)
   notify_pipe_read_handle_ = h;
 }
 
-int ACE_POSIX_AIOCB_Proactor::create_result_aiocb_list (void)
+int ACE_POSIX_AIOCB_Proactor::create_result_aiocb_list ()
 {
   if (aiocb_list_ != 0)
     return 0;
@@ -840,7 +840,7 @@ int ACE_POSIX_AIOCB_Proactor::create_result_aiocb_list (void)
   return 0;
 }
 
-int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list (void)
+int ACE_POSIX_AIOCB_Proactor::delete_result_aiocb_list ()
 {
   if (aiocb_list_ == 0)  // already deleted
     return 0;
@@ -977,7 +977,7 @@ void ACE_POSIX_AIOCB_Proactor::check_max_aio_num ()
 }
 
 void
-ACE_POSIX_AIOCB_Proactor::create_notify_manager (void)
+ACE_POSIX_AIOCB_Proactor::create_notify_manager ()
 {
   // Remember! this issues a Asynch_Read
   // on the notify pipe for doing the Asynch_Accept/Connect.
@@ -988,7 +988,7 @@ ACE_POSIX_AIOCB_Proactor::create_notify_manager (void)
 }
 
 void
-ACE_POSIX_AIOCB_Proactor::delete_notify_manager (void)
+ACE_POSIX_AIOCB_Proactor::delete_notify_manager ()
 {
   // We are responsible for delete as all pointers set to 0 after
   // delete, it is save to delete twice
@@ -1005,7 +1005,7 @@ ACE_POSIX_AIOCB_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_POSIX_AIOCB_Proactor::handle_events (void)
+ACE_POSIX_AIOCB_Proactor::handle_events ()
 {
   return this->handle_events_i (ACE_INFINITE);
 }
@@ -1050,7 +1050,7 @@ ACE_POSIX_AIOCB_Proactor::putq_result (ACE_POSIX_Asynch_Result *result)
   return 0;
 }
 
-ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result (void)
+ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0));
 
@@ -1070,7 +1070,7 @@ ACE_POSIX_Asynch_Result * ACE_POSIX_AIOCB_Proactor::getq_result (void)
   return result;
 }
 
-int ACE_POSIX_AIOCB_Proactor::clear_result_queue (void)
+int ACE_POSIX_AIOCB_Proactor::clear_result_queue ()
 {
   int ret_val = 0;
   ACE_POSIX_Asynch_Result* result = 0;
@@ -1084,7 +1084,7 @@ int ACE_POSIX_AIOCB_Proactor::clear_result_queue (void)
   return ret_val;
 }
 
-int ACE_POSIX_AIOCB_Proactor::process_result_queue (void)
+int ACE_POSIX_AIOCB_Proactor::process_result_queue ()
 {
   int ret_val = 0;
   ACE_POSIX_Asynch_Result* result = 0;
@@ -1632,7 +1632,7 @@ ACE_POSIX_SIG_Proactor::ACE_POSIX_SIG_Proactor (const sigset_t signal_set,
   return;
 }
 
-ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
+ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor ()
 {
   this->close ();
 
@@ -1640,7 +1640,7 @@ ACE_POSIX_SIG_Proactor::~ACE_POSIX_SIG_Proactor (void)
 }
 
 ACE_POSIX_Proactor::Proactor_Type
-ACE_POSIX_SIG_Proactor::get_impl_type (void)
+ACE_POSIX_SIG_Proactor::get_impl_type ()
 {
   return PROACTOR_SIG;
 }
@@ -1654,7 +1654,7 @@ ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_POSIX_SIG_Proactor::handle_events (void)
+ACE_POSIX_SIG_Proactor::handle_events ()
 {
   return this->handle_events_i (0);
 }
@@ -1787,7 +1787,7 @@ ACE_POSIX_SIG_Proactor::setup_signal_handler (int signal_number) const
 
 
 int
-ACE_POSIX_SIG_Proactor::block_signals (void) const
+ACE_POSIX_SIG_Proactor::block_signals () const
 {
   return ACE_OS::pthread_sigmask (SIG_BLOCK, &this->RT_completion_signals_, 0);
 }
@@ -1985,7 +1985,7 @@ ACE_POSIX_Wakeup_Completion::ACE_POSIX_Wakeup_Completion
 {
 }
 
-ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion (void)
+ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion ()
 {
 }
 

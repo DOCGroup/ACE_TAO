@@ -20,7 +20,7 @@ be_visitor_executor_private_exh::be_visitor_executor_private_exh (
 {
 }
 
-be_visitor_executor_private_exh::~be_visitor_executor_private_exh (void)
+be_visitor_executor_private_exh::~be_visitor_executor_private_exh ()
 {
 }
 

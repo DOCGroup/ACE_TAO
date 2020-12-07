@@ -11,6 +11,10 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
   or you can disable dlclose yourself by adding
   `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
 
+. Removed `ACE_OS::readdir_r`. `readdir_r` was marked as depracated in glibc
+  and FreeBSD libc. Also removed `ACE_Dirent::read (ACE_DIRENT *, ACE_DIRENT **)`
+  which used it. `ACE_LACKS_READDIR_R` will now always be defined.
+
 . Android Support:
 
   . `gnuace` no longer supports Android NDKs before r18. This means only clang

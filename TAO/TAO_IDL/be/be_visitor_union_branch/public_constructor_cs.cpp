@@ -25,7 +25,7 @@ be_visitor_union_branch_public_constructor_cs (be_visitor_context *ctx)
 
 // destructor
 be_visitor_union_branch_public_constructor_cs::
-~be_visitor_union_branch_public_constructor_cs (void)
+~be_visitor_union_branch_public_constructor_cs ()
 {
 }
 
@@ -69,7 +69,7 @@ be_visitor_union_branch_public_constructor_cs::visit_array (be_array *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -141,7 +141,7 @@ be_visitor_union_branch_public_constructor_cs::visit_predefined_type (
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -187,7 +187,7 @@ be_visitor_union_branch_public_constructor_cs::visit_sequence (be_sequence *node
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -224,7 +224,7 @@ be_visitor_union_branch_public_constructor_cs::visit_structure (be_structure *no
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -285,7 +285,7 @@ be_visitor_union_branch_public_constructor_cs::visit_typedef (be_typedef *node)
                          ), -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -296,7 +296,7 @@ be_visitor_union_branch_public_constructor_cs::visit_union (be_union *node)
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->scope ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())

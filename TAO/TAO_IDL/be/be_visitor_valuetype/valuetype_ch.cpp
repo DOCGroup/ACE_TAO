@@ -22,7 +22,7 @@ be_visitor_valuetype_ch::be_visitor_valuetype_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_ch::~be_visitor_valuetype_ch (void)
+be_visitor_valuetype_ch::~be_visitor_valuetype_ch ()
 {
 }
 
@@ -67,7 +67,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   *os << be_idt_nl << ": " << be_idt;
 
   long i;  // loop index
-  be_valuetype *inherited = 0;
+  be_valuetype *inherited = nullptr;
   long n_inherits = node->n_inherits ();
   int inherits_eventtype = 0;
 
@@ -88,7 +88,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
               *os << "," << be_nl;
             }
 
-          be_decl *scope = 0;
+          be_decl *scope = nullptr;
 
           if (inherited->is_nested ())
             {
@@ -475,7 +475,7 @@ be_visitor_valuetype_ch::visit_field (be_field *node)
 
 
 void
-be_visitor_valuetype_ch::begin_public (void)
+be_visitor_valuetype_ch::begin_public ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -484,7 +484,7 @@ be_visitor_valuetype_ch::begin_public (void)
 }
 
 void
-be_visitor_valuetype_ch::begin_private (void)
+be_visitor_valuetype_ch::begin_private ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -498,7 +498,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
                                             TAO_OutStream *os)
 {
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -508,7 +508,7 @@ be_visitor_valuetype_ch::gen_supported_ops (be_interface *,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_valuetype_ch::")

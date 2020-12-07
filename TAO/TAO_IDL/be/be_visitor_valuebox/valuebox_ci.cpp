@@ -16,7 +16,7 @@ be_visitor_valuebox_ci::be_visitor_valuebox_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_ci::~be_visitor_valuebox_ci (void)
+be_visitor_valuebox_ci::~be_visitor_valuebox_ci ()
 {
 }
 
@@ -426,7 +426,7 @@ be_visitor_valuebox_ci::visit_structure (be_structure *node)
     {
       d = si.item ();
 
-      if (d == 0 || (field = dynamic_cast<be_field*> (d)) == 0)
+      if (d == nullptr || (field = dynamic_cast<be_field*> (d)) == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_cs::visit_structure -"
@@ -508,7 +508,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
     {
       d = si.item ();
 
-      if (d == 0 || (member = dynamic_cast<be_union_branch*> (d)) == 0)
+      if (d == nullptr || (member = dynamic_cast<be_union_branch*> (d)) == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_visitor_valuebox_ci::visit_union -"
@@ -534,7 +534,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
 
 
   // Retrieve the disriminant type.
-  be_type *bt = 0;
+  be_type *bt = nullptr;
   bt = dynamic_cast<be_type*> (node->disc_type ());
 
   if (!bt)
@@ -635,7 +635,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 }
 
 void
-be_visitor_valuebox_ci::emit_default_constructor (void)
+be_visitor_valuebox_ci::emit_default_constructor ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -712,7 +712,7 @@ be_visitor_valuebox_ci::emit_constructor_one_arg_alloc (be_decl *node)
 }
 
 void
-be_visitor_valuebox_ci::emit_copy_constructor (void)
+be_visitor_valuebox_ci::emit_copy_constructor ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
 

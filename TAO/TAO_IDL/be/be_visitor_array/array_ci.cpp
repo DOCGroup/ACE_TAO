@@ -16,7 +16,7 @@ be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ci::~be_visitor_array_ci (void)
+be_visitor_array_ci::~be_visitor_array_ci ()
 {
 }
 
@@ -61,7 +61,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -220,7 +220,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "{" << be_idt_nl;
 
   ACE_CDR::ULong ndims = node->n_dims ();
-  be_array *primitive_type = 0;
+  be_array *primitive_type = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -249,7 +249,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                               "(%N:%l) be_visitor_array_cs::"

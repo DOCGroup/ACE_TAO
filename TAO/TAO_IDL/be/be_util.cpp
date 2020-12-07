@@ -34,7 +34,7 @@ be_util::gen_nested_namespace_begin (TAO_OutStream *os,
                                      be_module *node,
                                      bool skel)
 {
-  char *item_name = 0;
+  char *item_name = nullptr;
   bool first_level = true;
 
   for (UTL_IdListActiveIterator i (node->name ());
@@ -154,11 +154,11 @@ be_util::prep_be_arg (char *s)
   static const char stripped_filename[]    = "stripped_filename=";
   static const char no_fixed_err[]         = "no_fixed_err";
 
-  char* last = 0;
+  char* last = nullptr;
 
   for (char* arg = ACE_OS::strtok_r (s, ",", &last);
-       arg != 0;
-       arg = ACE_OS::strtok_r (0, ",", &last))
+       arg != nullptr;
+       arg = ACE_OS::strtok_r (nullptr, ",", &last))
     {
       if (ACE_OS::strstr (arg, arg_macro) == arg)
         {
@@ -326,7 +326,7 @@ be_util::prep_be_arg (char *s)
 }
 
 void
-be_util::arg_post_proc (void)
+be_util::arg_post_proc ()
 {
   // Let us try to use Perfect Hashing Operation Lookup Strategy. Let
   // us check whether things are fine with GPERF.
@@ -384,7 +384,7 @@ be_util::arg_post_proc (void)
 }
 
 void
-be_util::usage (void)
+be_util::usage ()
 {
   ACE_DEBUG ((
       LM_DEBUG,
@@ -940,14 +940,14 @@ be_util::usage (void)
 }
 
 AST_Generator *
-be_util::generator_init (void)
+be_util::generator_init ()
 {
   tao_cg = TAO_CODEGEN::instance ();
 
-  AST_Generator *gen = 0;
+  AST_Generator *gen = nullptr;
   ACE_NEW_RETURN (gen,
                   be_generator,
-                  0);
+                  nullptr);
 
   return gen;
 }
@@ -957,15 +957,15 @@ be_util::get_output_path (bool for_anyop,
                           bool for_skel,
                           bool for_exec)
 {
-  if (for_anyop && 0 != be_global->anyop_output_dir ())
+  if (for_anyop && nullptr != be_global->anyop_output_dir ())
     {
       return be_global->anyop_output_dir ();
     }
-  else if (for_skel && 0 != be_global->skel_output_dir ())
+  else if (for_skel && nullptr != be_global->skel_output_dir ())
     {
       return be_global->skel_output_dir ();
     }
-  else if (for_exec && 0 != be_global->exec_output_dir ())
+  else if (for_exec && nullptr != be_global->exec_output_dir ())
     {
       return be_global->exec_output_dir ();
     }
@@ -1008,7 +1008,7 @@ be_util::overwrite_ciao_exec_files ()
 void
 be_util::set_arg_seen_bit (be_type *bt)
 {
-  if (bt == 0)
+  if (bt == nullptr)
     {
       return;
     }

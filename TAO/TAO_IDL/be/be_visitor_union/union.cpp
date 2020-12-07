@@ -16,7 +16,7 @@ be_visitor_union::be_visitor_union (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union::~be_visitor_union (void)
+be_visitor_union::~be_visitor_union ()
 {
 }
 
@@ -165,7 +165,7 @@ be_visitor_union_cdr_op_cs::pre_process (be_decl *bd)
     dynamic_cast<be_union_branch*> (bd);
 
   // Could be a type decl.
-  if (b == 0)
+  if (b == nullptr)
     {
       return 0;
     }

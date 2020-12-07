@@ -15,12 +15,12 @@
 be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx),
-    attr_ (0)
+    attr_ (nullptr)
 {
 }
 
 be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init (
-  void)
+  )
 {
 }
 
@@ -35,7 +35,7 @@ be_visitor_attribute_ccm_init::visit_attribute (
 
   be_interface *intf = this->ctx_->interface ();
 
-  if (intf != 0)
+  if (intf != nullptr)
     {
       AST_Decl::NodeType snt = intf->node_type ();
       AST_Decl::NodeType ant =
@@ -165,7 +165,7 @@ be_visitor_attribute_ccm_init::visit_valuetype (
 }
 
 void
-be_visitor_attribute_ccm_init::emit_init_block (void)
+be_visitor_attribute_ccm_init::emit_init_block ()
 {
   this->open_if_block ();
 
@@ -228,7 +228,7 @@ be_visitor_attribute_ccm_init::emit_error (
 }
 
 void
-be_visitor_attribute_ccm_init::open_if_block (void)
+be_visitor_attribute_ccm_init::open_if_block ()
 {
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (descr_name, \""
@@ -239,7 +239,7 @@ be_visitor_attribute_ccm_init::open_if_block (void)
 }
 
 void
-be_visitor_attribute_ccm_init::close_if_block (void)
+be_visitor_attribute_ccm_init::close_if_block ()
 {
   os_ << be_nl
       << "continue;" << be_uidt_nl

@@ -80,7 +80,7 @@ ACE_Reactor::ACE_Reactor (ACE_Reactor_Impl *impl,
     }
 }
 
-ACE_Reactor::~ACE_Reactor (void)
+ACE_Reactor::~ACE_Reactor ()
 {
   this->implementation ()->close ();
   if (this->delete_implementation_)
@@ -95,7 +95,7 @@ ACE_Reactor *ACE_Reactor::reactor_ = 0;
 bool ACE_Reactor::delete_reactor_ = false;
 
 ACE_Reactor *
-ACE_Reactor::instance (void)
+ACE_Reactor::instance ()
 {
   ACE_TRACE ("ACE_Reactor::instance");
 
@@ -139,7 +139,7 @@ ACE_Reactor::instance (ACE_Reactor *r, bool delete_reactor)
 }
 
 void
-ACE_Reactor::close_singleton (void)
+ACE_Reactor::close_singleton ()
 {
   ACE_TRACE ("ACE_Reactor::close_singleton");
 
@@ -155,13 +155,13 @@ ACE_Reactor::close_singleton (void)
 }
 
 const ACE_TCHAR *
-ACE_Reactor::dll_name (void)
+ACE_Reactor::dll_name ()
 {
   return ACE_TEXT ("ACE");
 }
 
 const ACE_TCHAR *
-ACE_Reactor::name (void)
+ACE_Reactor::name ()
 {
   return ACE_TEXT ("ACE_Reactor");
 }

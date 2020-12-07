@@ -17,7 +17,7 @@ be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svh::~be_visitor_servant_svh (void)
+be_visitor_servant_svh::~be_visitor_servant_svh ()
 {
 }
 
@@ -291,7 +291,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 
       ACE_CString holder (obj_name);
       ACE_CString::size_type pos = holder.rfind (':');
-      const char *ev_lname = 0;
+      const char *ev_lname = nullptr;
 
       if (pos == ACE_CString::npos)
         {
@@ -383,7 +383,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 }
 
 void
-be_visitor_servant_svh::gen_non_type_specific (void)
+be_visitor_servant_svh::gen_non_type_specific ()
 {
   os_ << be_nl_2
       << "// Base class overrides."

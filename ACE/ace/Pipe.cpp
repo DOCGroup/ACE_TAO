@@ -29,7 +29,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Pipe::dump (void) const
+ACE_Pipe::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Pipe::dump");
@@ -264,7 +264,7 @@ ACE_Pipe::open (ACE_HANDLE handles[2])
 
 // Do nothing...
 
-ACE_Pipe::ACE_Pipe (void)
+ACE_Pipe::ACE_Pipe ()
 {
   ACE_TRACE ("ACE_Pipe::ACE_Pipe");
 
@@ -290,7 +290,7 @@ ACE_Pipe::ACE_Pipe (ACE_HANDLE read,
 }
 
 int
-ACE_Pipe::close (void)
+ACE_Pipe::close ()
 {
   ACE_TRACE ("ACE_Pipe::close");
 
@@ -300,12 +300,12 @@ ACE_Pipe::close (void)
 }
 
 int
-ACE_Pipe::close_read (void)
+ACE_Pipe::close_read ()
 {
   return this->close_handle (0);
 }
 
-int ACE_Pipe::close_write (void)
+int ACE_Pipe::close_write ()
 {
   return this->close_handle (1);
 }

@@ -15,7 +15,7 @@ be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs (void)
+be_visitor_interface_cs::~be_visitor_interface_cs ()
 {
 }
 
@@ -27,7 +27,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       return 0;
     }
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Set the right type.
   if (this->ctx_->alias ())
@@ -99,7 +99,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return ";
 
 
-      if (node->is_abstract () || c != 0)
+      if (node->is_abstract () || c != nullptr)
         {
           *os << "cdr << p;";
         }
@@ -248,7 +248,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // The _unchecked_narrow method, not for components.
-  if (c == 0 && ! this->gen_xxx_narrow ("unchecked_narrow", node))
+  if (c == nullptr && ! this->gen_xxx_narrow ("unchecked_narrow", node))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_interface_cs::")
@@ -280,7 +280,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   // The _tao_release method
-  if (c == 0)
+  if (c == nullptr)
     {
       *os << "void" << be_nl
           << node->full_name () << "::_tao_release ("
@@ -584,7 +584,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -594,7 +594,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
@@ -605,10 +605,10 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName *item_new_name  = 0;
+          UTL_ScopedName *item_new_name  = nullptr;
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
+                                          nullptr),
                           -1);
 
           UTL_ScopedName *new_op_name =

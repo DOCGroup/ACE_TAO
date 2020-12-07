@@ -18,7 +18,7 @@ be_visitor_array_cdr_op_cs::be_visitor_array_cdr_op_cs (
 {
 }
 
-be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs (void)
+be_visitor_array_cdr_op_cs::~be_visitor_array_cdr_op_cs ()
 {
 }
 
@@ -74,7 +74,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -124,7 +124,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
                   '\0',
                   NAMEBUFSIZE);
 
-  bool use_underscore = (this->ctx_->tdef () == 0);
+  bool use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (!use_underscore)
     {
@@ -288,7 +288,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   be_array *array =
     dynamic_cast<be_array*> (this->ctx_->node ());
 
-  if (array == 0)
+  if (array == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -465,7 +465,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
       // Retrieve the ith dimension value.
       AST_Expression *expr = array->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -542,7 +542,7 @@ be_visitor_array_cdr_op_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -556,7 +556,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
     dynamic_cast<be_array*> (this->ctx_->node ());
   AST_Decl::NodeType nt = bt->node_type ();
 
-  if (node == 0)
+  if (node == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -580,7 +580,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -633,7 +633,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = 0;
+          be_string *str = nullptr;
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
@@ -649,7 +649,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_tao_marshal_flag = (strm >> ";
-          if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
               if (str->width () == (long) sizeof (char))
                 {
@@ -760,7 +760,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
         }
       else
         {
-          be_string *str = 0;
+          be_string *str = nullptr;
           if (bt->node_type () == AST_Decl::NT_string ||
               bt->node_type () == AST_Decl::NT_wstring)
             {
@@ -776,7 +776,7 @@ be_visitor_array_cdr_op_cs::visit_node (be_type *bt)
             }
 
           *os << "_tao_marshal_flag = (strm << ";
-          if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+          if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
             {
               if (str->width () == (long) sizeof (char))
                 {

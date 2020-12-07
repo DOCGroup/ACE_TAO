@@ -56,7 +56,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   be_union *u =
     dynamic_cast<be_union*> (this->defined_in ());
 
-  if (u == 0)
+  if (u == nullptr)
     {
       return -1;
     }
@@ -64,7 +64,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   be_type* dt =
     dynamic_cast<be_type*> (u->disc_type ());
 
-  if (dt == 0)
+  if (dt == nullptr)
     {
       return -1;
     }
@@ -85,7 +85,7 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   be_scope* scope =
     dynamic_cast<be_scope*> (dt->defined_in ());
 
-  if (scope == 0)
+  if (scope == nullptr)
     {
       *os << e->n ();
       return 0;
@@ -183,7 +183,7 @@ be_union_branch::accept (be_visitor *visitor)
 }
 
 void
-be_union_branch::destroy (void)
+be_union_branch::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_UnionBranch::destroy ();

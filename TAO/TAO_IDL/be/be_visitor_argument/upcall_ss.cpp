@@ -21,7 +21,7 @@ be_visitor_args_upcall_ss::be_visitor_args_upcall_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_args_upcall_ss::~be_visitor_args_upcall_ss (void)
+be_visitor_args_upcall_ss::~be_visitor_args_upcall_ss ()
 {
 }
 
@@ -307,7 +307,7 @@ int be_visitor_args_upcall_ss::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -343,7 +343,7 @@ be_visitor_args_upcall_ss::visit_eventtype_fwd (
   return this->visit_valuetype_fwd (node);
 }
 
-int be_visitor_args_upcall_ss::emit_common (void)
+int be_visitor_args_upcall_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =

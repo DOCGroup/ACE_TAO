@@ -16,7 +16,7 @@ be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_sh::~be_visitor_interface_sh (void)
+be_visitor_interface_sh::~be_visitor_interface_sh ()
 {
 }
 
@@ -194,7 +194,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
@@ -205,7 +205,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_interface_sh::")
@@ -215,7 +215,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
         }
 
       UTL_ScopedName item_new_name (d->local_name (),
-                                    0);
+                                    nullptr);
 
       if (d->node_type () == AST_Decl::NT_op)
         {
@@ -235,21 +235,21 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
 
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
 
-          if (0 != get_exceptions)
+          if (nullptr != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
 
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
 
-          if (0 != set_exceptions)
+          if (nullptr != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
 
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
-          ctx.attribute (0);
+          ctx.attribute (nullptr);
           new_attr.destroy ();
         }
     }

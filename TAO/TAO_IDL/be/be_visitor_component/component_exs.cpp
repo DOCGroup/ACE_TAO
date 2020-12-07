@@ -22,7 +22,7 @@ be_visitor_component_exs::be_visitor_component_exs (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_component_exs::~be_visitor_component_exs (void)
+be_visitor_component_exs::~be_visitor_component_exs ()
 {
 }
 
@@ -74,7 +74,7 @@ be_visitor_component_exs::visit_component (be_component *node)
        ! i.done ();
        i.advance ())
     {
-      char **item = 0;
+      char **item = nullptr;
       i.next (item);
 
       UTL_ScopedName *sn =
@@ -85,24 +85,24 @@ be_visitor_component_exs::visit_component (be_component *node)
 
       AST_Decl *d = s->lookup_by_name (sn, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (sn);
 
           sn->destroy ();
           delete sn;
-          sn = 0;
+          sn = nullptr;
 
           continue;
         }
 
       sn->destroy ();
       delete sn;
-      sn = 0;
+      sn = nullptr;
 
       be_uses *u = dynamic_cast<be_uses*> (d);
 
-      if (u == 0)
+      if (u == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_component_exs")

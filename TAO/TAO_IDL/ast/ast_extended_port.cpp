@@ -21,18 +21,18 @@ AST_Extended_Port::AST_Extended_Port (
 {
 }
 
-AST_Extended_Port::~AST_Extended_Port (void)
+AST_Extended_Port::~AST_Extended_Port ()
 {
 }
 
 AST_PortType *
-AST_Extended_Port::port_type (void) const
+AST_Extended_Port::port_type () const
 {
   return dynamic_cast<AST_PortType*> (this->field_type ());
 }
 
 void
-AST_Extended_Port::destroy (void)
+AST_Extended_Port::destroy ()
 {
   this->AST_Field::destroy ();
 }

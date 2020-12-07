@@ -20,7 +20,7 @@ be_visitor_operation::be_visitor_operation (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation::~be_visitor_operation (void)
+be_visitor_operation::~be_visitor_operation ()
 {
 }
 
@@ -82,7 +82,7 @@ be_visitor_operation::count_non_out_parameters (be_operation *node)
       be_valuetype *vt =
         dynamic_cast<be_valuetype*> (bd->field_type ());
 
-      if ((bd->direction () != AST_Argument::dir_OUT) && vt == 0)
+      if ((bd->direction () != AST_Argument::dir_OUT) && vt == nullptr)
         {
           ++count;
         }
@@ -106,7 +106,7 @@ be_visitor_operation::is_amh_exception_holder (be_interface *node)
     {
       //ACE_DEBUG ((LM_DEBUG, "Passed first test of amh_excepholder\n"));
       const char *last_E = ACE_OS::strrchr (node->full_name (), 'E');
-      if (last_E != 0
+      if (last_E != nullptr
           && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
         {
           //ACE_DEBUG ((LM_DEBUG, "be_visitor_operation: Passed second test of amh_excepholder\n"));
@@ -142,11 +142,11 @@ be_visitor_operation::gen_stub_operation_body (
 
   be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-      if (pt == 0)
+      if (pt == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation::")
@@ -215,7 +215,7 @@ be_visitor_operation::gen_stub_operation_body (
       << "{" << be_idt_nl
       << "std::addressof(_tao_retval)";
 
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
 
   for (UTL_ScopeActiveIterator arg_list_iter (node, UTL_Scope::IK_decls);
        ! arg_list_iter.is_done ();
@@ -408,7 +408,7 @@ be_visitor_operation::gen_stub_body_arglist (be_operation *node,
                                              TAO_OutStream *os,
                                              bool ami)
 {
-  AST_Argument *arg = 0;
+  AST_Argument *arg = nullptr;
   UTL_ScopeActiveIterator arg_decl_iter (node, UTL_Scope::IK_decls);
 
   if (ami)
@@ -459,7 +459,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
                                                    AST_Type *bt,
                                                    TAO_OutStream *os)
 {
-  AST_Typedef *alias = 0;
+  AST_Typedef *alias = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -481,7 +481,7 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
         {
           *os << "::TAO::";
 
-          if (alias != 0)
+          if (alias != nullptr)
             {
               *os << alias->local_name () << "_" << bound;
             }

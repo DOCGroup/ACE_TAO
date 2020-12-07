@@ -28,13 +28,13 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper (void)
+ACE_Threading_Helper<ACE_Thread_Mutex>::~ACE_Threading_Helper ()
 {
   ACE_OS::thr_key_detach (this->key_);
   ACE_OS::thr_keyfree (this->key_);
 }
 
-ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper (void)
+ACE_Threading_Helper<ACE_Thread_Mutex>::ACE_Threading_Helper ()
   :  key_ (ACE_OS::NULL_key)
 {
 # if defined (ACE_HAS_TSS_EMULATION)
@@ -59,7 +59,7 @@ ACE_Threading_Helper<ACE_Thread_Mutex>::set (void* p)
 }
 
 void*
-ACE_Threading_Helper<ACE_Thread_Mutex>::get (void)
+ACE_Threading_Helper<ACE_Thread_Mutex>::get ()
 {
   void* temp = 0;
   if (ACE_Thread::getspecific (key_, &temp) == -1)
@@ -84,7 +84,7 @@ ACE_Threading_Helper<ACE_Null_Mutex>::set (void*)
 }
 
 void*
-ACE_Threading_Helper<ACE_Null_Mutex>::get (void)
+ACE_Threading_Helper<ACE_Null_Mutex>::get ()
 {
   return ACE_Service_Config::singleton()->instance_.get ();
 }
@@ -98,8 +98,7 @@ ACE_Threading_Helper<ACE_Null_Mutex>::get (void)
   * know that upon process exit the SC will still be automaticaly and explicitly
   * closed by @c ACE_Object_Manager::fini().
   */
-typedef ACE_Unmanaged_Singleton<ACE_Service_Config,
-                                ACE_SYNCH_RECURSIVE_MUTEX> ACE_SERVICE_CONFIG_SINGLETON;
+using ACE_SERVICE_CONFIG_SINGLETON = ACE_Unmanaged_Singleton<ACE_Service_Config, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
 
 /// ctor
@@ -119,7 +118,7 @@ ACE_Service_Config_Guard::ACE_Service_Config_Guard (ACE_Service_Gestalt * psg)
   ACE_Service_Config::current (psg);
 }
 
-ACE_Service_Config_Guard::~ACE_Service_Config_Guard (void)
+ACE_Service_Config_Guard::~ACE_Service_Config_Guard ()
 {
   ACE_Service_Gestalt* s = this->saved_.get ();
   ACE_ASSERT (s != 0);
@@ -155,7 +154,7 @@ bool ACE_Service_Config::be_a_daemon_ = false;
 int ACE_Service_Config::signum_ = SIGHUP;
 
 void
-ACE_Service_Config::dump (void) const
+ACE_Service_Config::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Config::dump");
@@ -327,7 +326,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
 /// Return the global configuration instance. Always returns the same
 /// instance
 ACE_Service_Config *
-ACE_Service_Config::singleton (void)
+ACE_Service_Config::singleton ()
 {
   return ACE_SERVICE_CONFIG_SINGLETON::instance ();
 }
@@ -425,7 +424,7 @@ ACE_Service_Config::ACE_Service_Config (const ACE_TCHAR program_name[],
 /// provides a way of temporarily replacing the "current"
 /// configuration instance in the context of a thread.
 ACE_Service_Gestalt*
-ACE_Service_Config::current (void)
+ACE_Service_Config::current ()
 {
   void* temp = ACE_Service_Config::singleton()->threadkey_.get ();
   if (temp == 0) {
@@ -529,7 +528,7 @@ ACE_Service_Config::handle_signal (int sig,
 
 // Trigger reconfiguration to re-read configuration files.
 void
-ACE_Service_Config::reconfigure (void)
+ACE_Service_Config::reconfigure ()
 {
   ACE_TRACE ("ACE_Service_Config::reconfigure");
 
@@ -554,7 +553,7 @@ ACE_Service_Config::reconfigure (void)
 
 // Tidy up and perform last rites on a terminating ACE_Service_Config.
 int
-ACE_Service_Config::close (void)
+ACE_Service_Config::close ()
 {
   ACE_Service_Config::singleton ()->instance_->close ();
 
@@ -570,7 +569,7 @@ ACE_Service_Config::close (void)
 
 
 int
-ACE_Service_Config::fini_svcs (void)
+ACE_Service_Config::fini_svcs ()
 {
   ACE_TRACE ("ACE_Service_Config::fini_svcs");
 
@@ -589,7 +588,7 @@ ACE_Service_Config::fini_svcs (void)
 }
 
 /// Perform user-specified close activities and remove dynamic memory.
-ACE_Service_Config::~ACE_Service_Config (void)
+ACE_Service_Config::~ACE_Service_Config ()
 {
   ACE_TRACE ("ACE_Service_Config::~ACE_Service_Config");
 }
@@ -598,7 +597,7 @@ ACE_Service_Config::~ACE_Service_Config (void)
 
 /* static */
 int
-ACE_Service_Config::reconfig_occurred (void)
+ACE_Service_Config::reconfig_occurred ()
 {
   ACE_TRACE ("ACE_Service_Config::reconfig_occurred");
   return ACE_Service_Config::reconfig_occurred_ != 0;

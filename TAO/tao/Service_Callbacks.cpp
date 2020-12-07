@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
+TAO_Service_Callbacks::~TAO_Service_Callbacks ()
 {
 }
 

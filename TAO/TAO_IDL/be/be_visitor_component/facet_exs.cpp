@@ -14,13 +14,13 @@
 be_visitor_facet_exs::be_visitor_facet_exs (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    op_scope_ (0),
+    op_scope_ (nullptr),
     comment_start_border_ ("/**"),
     comment_end_border_ (" */")
 {
 }
 
-be_visitor_facet_exs::~be_visitor_facet_exs (void)
+be_visitor_facet_exs::~be_visitor_facet_exs ()
 {
 }
 

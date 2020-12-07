@@ -17,7 +17,7 @@ be_visitor_amh_operation_ss::be_visitor_amh_operation_ss (
 {
 }
 
-be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss (void)
+be_visitor_amh_operation_ss::~be_visitor_amh_operation_ss ()
 {
 }
 
@@ -64,7 +64,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
           be_argument *argument =
             dynamic_cast<be_argument*> (si.item ());
 
-          if (argument == 0
+          if (argument == nullptr
               || argument->direction () == AST_Argument::dir_OUT)
             {
               continue;
@@ -101,7 +101,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
           be_argument *argument =
             dynamic_cast<be_argument*> (sj.item ());
 
-          if (argument == 0
+          if (argument == nullptr
               || argument->direction () == AST_Argument::dir_OUT)
             {
               continue;
@@ -155,7 +155,7 @@ be_visitor_amh_operation_ss::visit_operation (be_operation *node)
 
         i.next ();
 
-        if (argument == 0
+        if (argument == nullptr
             || argument->direction () == AST_Argument::dir_OUT)
           {
             continue;
@@ -310,7 +310,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   be_interface *intf =
     dynamic_cast<be_interface*> (node->defined_in ());
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ss::"
@@ -327,7 +327,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   *os << "void" << be_nl
       << amh_skel_name.c_str () << "::"
@@ -377,7 +377,7 @@ be_visitor_amh_operation_ss::generate_shared_section (be_decl *node,
   // buf was allocated by ACE_OS::strdup, so we need to use free instead
   // of delete.
   ACE_OS::free (buf);
-  buf = 0;
+  buf = nullptr;
 
   *os << be_nl
       << "TAO_ORB_Core *orb_core =" << be_idt_nl
