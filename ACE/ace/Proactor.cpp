@@ -61,7 +61,7 @@ public:
   explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
   /// Destructor.
-  virtual ~ACE_Proactor_Timer_Handler (void);
+  ~ACE_Proactor_Timer_Handler (void) override;
 
   /// Proactor calls this to shut down the timer handler
   /// gracefully. Just calling the destructor alone doesnt do what
@@ -77,7 +77,7 @@ protected:
   /// Run by a daemon thread to handle deferred processing. In other
   /// words, this method will do the waiting on the earliest timer and
   /// event.
-  virtual int svc (void);
+  int svc (void) override;
 
   /// Event to wait on.
   ACE_Auto_Event timer_event_;

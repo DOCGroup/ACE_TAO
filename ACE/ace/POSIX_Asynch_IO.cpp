@@ -1734,7 +1734,7 @@ public:
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_Handler (void);
+  ~ACE_POSIX_Asynch_Transmit_Handler (void) override;
 
   /// Do the transmission. All the info to do the transmission is in
   /// the <result> member.
@@ -1775,10 +1775,10 @@ protected:
   size_t bytes_transferred_;
 
   /// This is called when asynchronous writes from the socket complete.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   /// This is called when asynchronous reads from the file complete.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
   /// Issue asynch read from  the file.
   int initiate_read_file (void);
