@@ -77,7 +77,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    custom),
     supports_abstract_ (false),
     var_out_seq_decls_gen_ (false),
-    full_obv_skel_name_ (0),
+    full_obv_skel_name_ (nullptr),
     is_amh_excep_holder_ (false)
 {
   // Check that redefine() copies all members.
@@ -87,7 +87,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
 
   AST_Module *m = dynamic_cast<AST_Module*> (this->defined_in ());
 
-  if (m != 0)
+  if (m != nullptr)
     {
       m->set_has_nested_valuetype ();
     }
@@ -100,7 +100,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
       be_interface *intf =
         dynamic_cast<be_interface*> (this->pd_supports[i]);
 
-      if (intf == 0)
+      if (intf == nullptr)
         {
           // The item is a template param holder.
           continue;
@@ -142,7 +142,7 @@ be_valuetype::redefine (AST_Interface *from)
 
   // This should always be TRUE, but our signature is inherited, so
   // the narrow is necessary and should always be checked.
-  if (bv != 0)
+  if (bv != nullptr)
     {
       this->var_out_seq_decls_gen_ = bv->var_out_seq_decls_gen_;
     }
@@ -170,7 +170,7 @@ be_valuetype::compute_fullobvskelname (void)
 const char*
 be_valuetype::full_obv_skel_name (void)
 {
-  if (0 == this->full_obv_skel_name_)
+  if (nullptr == this->full_obv_skel_name_)
     {
       this->compute_fullobvskelname ();
     }
@@ -303,7 +303,7 @@ be_valuetype::have_operation (void)
         {
           be_valuetype *vt = dynamic_cast<be_valuetype*> (inherits[i]);
 
-          if (vt != 0 && vt->have_operation ())
+          if (vt != nullptr && vt->have_operation ())
             {
               have_operation = true;
               break;
@@ -316,12 +316,12 @@ be_valuetype::have_operation (void)
       // Check for operations on supported interfaces
       AST_Type * supported = this->supports_concrete ();
 
-      if (supported != 0)
+      if (supported != nullptr)
         {
           be_interface *intf =
             dynamic_cast<be_interface*> (supported);
 
-          if (intf != 0)
+          if (intf != nullptr)
             {
               have_operation =
                 be_valuetype::have_supported_op (intf);
@@ -349,7 +349,7 @@ be_valuetype::have_supported_op (be_interface * node)
     {
       AST_Decl *d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_valuetype::")
@@ -380,7 +380,7 @@ be_valuetype::have_supported_op (be_interface * node)
           be_interface * intf =
             dynamic_cast<be_interface*> (inherits[i]);
 
-          if (intf != 0)
+          if (intf != nullptr)
             {
               have_supported_op =
                 be_valuetype::have_supported_op (intf);
@@ -410,7 +410,7 @@ be_valuetype::has_member (void)
   AST_Type *parent = this->pd_inherits_concrete;
 
   // We're looking for inherited members too.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
         dynamic_cast<be_valuetype*> (parent);
@@ -603,7 +603,7 @@ be_valuetype::field_pd_postfix (void)
 be_valuetype *
 be_valuetype::statefull_inherit (void)
 {
-  if (this->pd_inherits_concrete != 0)
+  if (this->pd_inherits_concrete != nullptr)
     {
       return
         dynamic_cast<be_valuetype*> (
@@ -611,7 +611,7 @@ be_valuetype::statefull_inherit (void)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -626,7 +626,7 @@ void
 be_valuetype::destroy (void)
 {
   delete [] this->full_obv_skel_name_;
-  this->full_obv_skel_name_ = 0;
+  this->full_obv_skel_name_ = nullptr;
 
   this->be_interface::destroy ();
   this->AST_ValueType::destroy ();
@@ -654,7 +654,7 @@ be_valuetype::data_members_count (AST_Field::Visibility vis)
       AST_Field *field = dynamic_cast<AST_Field*> (d);
       AST_Attribute *attr = dynamic_cast<AST_Attribute*> (d);
 
-      if (field == 0 || attr != 0)
+      if (field == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -701,7 +701,7 @@ be_valuetype::traverse_supports_list_graphs (
   this->insert_queue.reset ();
   this->del_queue.reset ();
 
-  be_interface *supported_interface = 0;
+  be_interface *supported_interface = nullptr;
 
   for (long i = 0; i < n_supports; ++i)
     {
@@ -744,7 +744,7 @@ be_valuetype::traverse_concrete_inheritance_graph (tao_code_emitter gen,
 {
   AST_Type *supported = this->supports_concrete ();
 
-  if (supported == 0)
+  if (supported == nullptr)
     {
       return 0;
     }

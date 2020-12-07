@@ -30,31 +30,31 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_ctype.h"
 
-TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
+TAO_IDL_BE_Export BE_GlobalData *be_global = nullptr;
 
 BE_GlobalData::BE_GlobalData (void)
   : changing_standard_include_files_ (1),
-    skel_export_macro_ (0),
-    skel_export_include_ (0),
-    skel_export_file_ (0),
-    stub_export_macro_ (0),
-    stub_export_include_ (0),
-    stub_export_file_ (0),
-    anyop_export_macro_ (0),
-    anyop_export_include_ (0),
-    exec_export_macro_ (0),
-    exec_export_include_ (0),
-    svnt_export_macro_ (0),
-    svnt_export_include_ (0),
-    conn_export_macro_ (0),
-    conn_export_include_ (0),
-    pch_include_ (0),
-    pre_include_ (0),
-    post_include_ (0),
-    include_guard_ (0),
-    safe_include_ (0),
-    unique_include_ (0),
-    stripped_filename_ (0),
+    skel_export_macro_ (nullptr),
+    skel_export_include_ (nullptr),
+    skel_export_file_ (nullptr),
+    stub_export_macro_ (nullptr),
+    stub_export_include_ (nullptr),
+    stub_export_file_ (nullptr),
+    anyop_export_macro_ (nullptr),
+    anyop_export_include_ (nullptr),
+    exec_export_macro_ (nullptr),
+    exec_export_include_ (nullptr),
+    svnt_export_macro_ (nullptr),
+    svnt_export_include_ (nullptr),
+    conn_export_macro_ (nullptr),
+    conn_export_include_ (nullptr),
+    pch_include_ (nullptr),
+    pre_include_ (nullptr),
+    post_include_ (nullptr),
+    include_guard_ (nullptr),
+    safe_include_ (nullptr),
+    unique_include_ (nullptr),
+    stripped_filename_ (nullptr),
     core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
     core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
     versioning_begin_ (),
@@ -88,11 +88,11 @@ BE_GlobalData::BE_GlobalData (void)
     ciao_ami_conn_impl_hdr_ending_ (ACE::strnew ("_conn_i.h")),
     ciao_ami_conn_impl_src_ending_ (ACE::strnew ("_conn_i.cpp")),
     ciao_container_type_ (ACE::strnew ("Session")),
-    output_dir_ (0),
-    stub_include_dir_ (0),
-    skel_output_dir_ (0),
-    anyop_output_dir_ (0),
-    exec_output_dir_ (0),
+    output_dir_ (nullptr),
+    stub_include_dir_ (nullptr),
+    skel_output_dir_ (nullptr),
+    anyop_output_dir_ (nullptr),
+    exec_output_dir_ (nullptr),
     any_support_ (true),
     cdr_support_ (true),
     tc_support_ (true),
@@ -118,11 +118,11 @@ BE_GlobalData::BE_GlobalData (void)
     gen_empty_anyop_header_ (false),
     lookup_strategy_ (TAO_PERFECT_HASH),
     dds_impl_ (DDS_NONE),
-    void_type_ (0),
-    ccmobject_ (0),
-    messaging_ (0),
-    messaging_exceptionholder_ (0),
-    messaging_replyhandler_ (0),
+    void_type_ (nullptr),
+    ccmobject_ (nullptr),
+    messaging_ (nullptr),
+    messaging_exceptionholder_ (nullptr),
+    messaging_replyhandler_ (nullptr),
     gen_anyop_files_ (false),
     gen_skel_files_ (true),
     gen_svnt_cpp_files_ (true),
@@ -192,9 +192,9 @@ be_change_idl_file_extension (UTL_String* idl_file,
 {
   // @@ This shouldn't happen anyway; but a better error handling
   // mechanism is needed.
-  if (idl_file == 0 || new_extension == 0)
+  if (idl_file == nullptr || new_extension == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   static char fname[MAXPATHLEN];
@@ -205,7 +205,7 @@ be_change_idl_file_extension (UTL_String* idl_file,
 
   // Get the base part of the filename, we try several extensions
   // before giving up.
-  const char *base = 0;
+  const char *base = nullptr;
 
   static const char* extensions[] = {
     ".idl",
@@ -220,22 +220,22 @@ be_change_idl_file_extension (UTL_String* idl_file,
     {
       base = ACE_OS::strstr (string, extensions[k]);
 
-      if (base != 0)
+      if (base != nullptr)
         {
           break;
         }
     }
 
-  if (base == 0)
+  if (base == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   // Anyop * skel file output defaults to general output dir if not set.
   const char *output_path =
     be_util::get_output_path (for_anyop, for_skel, for_exec);
 
-  if (!base_name_only && output_path != 0)
+  if (!base_name_only && output_path != nullptr)
     {
       // Path info should also be added to fname.
 
@@ -810,7 +810,7 @@ BE_GlobalData::be_get_ciao_ami_conn_impl_src_fname (
 const char*
 BE_GlobalData::skel_export_macro (void) const
 {
-  if (this->skel_export_macro_ == 0)
+  if (this->skel_export_macro_ == nullptr)
     {
       return "";
     }
@@ -854,7 +854,7 @@ BE_GlobalData::skel_export_file (const char *s)
 const char*
 BE_GlobalData::stub_export_macro (void) const
 {
-  if (this->stub_export_macro_ == 0)
+  if (this->stub_export_macro_ == nullptr)
     {
       return "";
     }
@@ -898,7 +898,7 @@ BE_GlobalData::stub_export_file (const char *s)
 const char*
 BE_GlobalData::anyop_export_macro (void) const
 {
-  if (this->anyop_export_macro_ == 0)
+  if (this->anyop_export_macro_ == nullptr)
     {
       return "";
     }
@@ -929,7 +929,7 @@ BE_GlobalData::anyop_export_include (const char *s)
 const char*
 BE_GlobalData::exec_export_macro (void) const
 {
-  if (this->exec_export_macro_ == 0)
+  if (this->exec_export_macro_ == nullptr)
     {
       return "";
     }
@@ -960,7 +960,7 @@ BE_GlobalData::exec_export_include (const char *s)
 const char*
 BE_GlobalData::svnt_export_macro (void) const
 {
-  if (this->svnt_export_macro_ == 0)
+  if (this->svnt_export_macro_ == nullptr)
     {
       return "";
     }
@@ -991,7 +991,7 @@ BE_GlobalData::svnt_export_include (const char *s)
 const char*
 BE_GlobalData::conn_export_macro (void) const
 {
-  if (this->conn_export_macro_ == 0)
+  if (this->conn_export_macro_ == nullptr)
     {
       return "";
     }
@@ -1957,7 +1957,7 @@ BE_GlobalData::lookup_strategy (void) const
 void
 BE_GlobalData::dds_impl (char const * const val)
 {
-  ACE_CString tmp (val, 0, false);
+  ACE_CString tmp (val, nullptr, false);
 
   if (tmp == "ndds")
     {
@@ -1995,189 +1995,189 @@ void
 BE_GlobalData::destroy (void)
 {
   ACE::strdelete (this->skel_export_macro_);
-  this->skel_export_macro_ = 0;
+  this->skel_export_macro_ = nullptr;
 
   ACE::strdelete (this->skel_export_include_);
-  this->skel_export_include_ = 0;
+  this->skel_export_include_ = nullptr;
 
   ACE::strdelete (this->skel_export_file_);
-  this->skel_export_file_ = 0;
+  this->skel_export_file_ = nullptr;
 
   ACE::strdelete (this->stub_export_macro_);
-  this->stub_export_macro_ = 0;
+  this->stub_export_macro_ = nullptr;
 
   ACE::strdelete (this->stub_export_include_);
-  this->stub_export_include_ = 0;
+  this->stub_export_include_ = nullptr;
 
   ACE::strdelete (this->stub_export_file_);
-  this->stub_export_file_ = 0;
+  this->stub_export_file_ = nullptr;
 
   ACE::strdelete (this->anyop_export_macro_);
-  this->anyop_export_macro_ = 0;
+  this->anyop_export_macro_ = nullptr;
 
   ACE::strdelete (this->anyop_export_include_);
-  this->anyop_export_include_ = 0;
+  this->anyop_export_include_ = nullptr;
 
   ACE::strdelete (this->exec_export_macro_);
-  this->exec_export_macro_ = 0;
+  this->exec_export_macro_ = nullptr;
 
   ACE::strdelete (this->exec_export_include_);
-  this->exec_export_include_ = 0;
+  this->exec_export_include_ = nullptr;
 
   ACE::strdelete (this->svnt_export_macro_);
-  this->svnt_export_macro_ = 0;
+  this->svnt_export_macro_ = nullptr;
 
   ACE::strdelete (this->svnt_export_include_);
-  this->svnt_export_include_ = 0;
+  this->svnt_export_include_ = nullptr;
 
   ACE::strdelete (this->conn_export_macro_);
-  this->conn_export_macro_ = 0;
+  this->conn_export_macro_ = nullptr;
 
   ACE::strdelete (this->conn_export_include_);
-  this->conn_export_include_ = 0;
+  this->conn_export_include_ = nullptr;
 
   ACE::strdelete (this->pch_include_);
-  this->pch_include_ = 0;
+  this->pch_include_ = nullptr;
 
   ACE::strdelete (this->pre_include_);
-  this->pre_include_ = 0;
+  this->pre_include_ = nullptr;
 
   ACE::strdelete (this->post_include_);
-  this->post_include_ = 0;
+  this->post_include_ = nullptr;
 
   ACE::strdelete (this->include_guard_);
-  this->include_guard_ = 0;
+  this->include_guard_ = nullptr;
 
   ACE::strdelete (this->safe_include_);
-  this->safe_include_ = 0;
+  this->safe_include_ = nullptr;
 
   ACE::strdelete (this->unique_include_);
-  this->unique_include_ = 0;
+  this->unique_include_ = nullptr;
 
   ACE::strdelete (this->stripped_filename_);
-  this->stripped_filename_ = 0;
+  this->stripped_filename_ = nullptr;
 
   ACE::strdelete (this->client_hdr_ending_);
-  this->client_hdr_ending_ = 0;
+  this->client_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->client_stub_ending_);
-  this->client_stub_ending_ = 0;
+  this->client_stub_ending_ = nullptr;
 
   ACE::strdelete (this->client_inline_ending_);
-  this->client_inline_ending_ = 0;
+  this->client_inline_ending_ = nullptr;
 
   ACE::strdelete (this->server_hdr_ending_);
-  this->server_hdr_ending_ = 0;
+  this->server_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->implementation_hdr_ending_);
-  this->implementation_hdr_ending_ = 0;
+  this->implementation_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->implementation_skel_ending_);
-  this->implementation_skel_ending_ = 0;
+  this->implementation_skel_ending_ = nullptr;
 
   ACE::strdelete (this->impl_class_prefix_);
-  this->impl_class_prefix_ = 0;
+  this->impl_class_prefix_ = nullptr;
 
   ACE::strdelete (this->impl_class_suffix_);
-  this->impl_class_suffix_ = 0;
+  this->impl_class_suffix_ = nullptr;
 
   ACE::strdelete (this->server_template_hdr_ending_);
-  this->server_template_hdr_ending_ = 0;
+  this->server_template_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->server_skeleton_ending_);
-  this->server_skeleton_ending_ = 0;
+  this->server_skeleton_ending_ = nullptr;
 
   ACE::strdelete (this->server_template_skeleton_ending_);
-  this->server_template_skeleton_ending_ = 0;
+  this->server_template_skeleton_ending_ = nullptr;
 
   ACE::strdelete (this->anyop_hdr_ending_);
-  this->anyop_hdr_ending_ = 0;
+  this->anyop_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->anyop_src_ending_);
-  this->anyop_src_ending_ = 0;
+  this->anyop_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_hdr_ending_);
-  this->ciao_svnt_hdr_ending_ = 0;
+  this->ciao_svnt_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_src_ending_);
-  this->ciao_svnt_src_ending_ = 0;
+  this->ciao_svnt_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_hdr_template_ending_);
-  this->ciao_svnt_hdr_template_ending_ = 0;
+  this->ciao_svnt_hdr_template_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_svnt_src_template_ending_);
-  this->ciao_svnt_src_template_ending_ = 0;
+  this->ciao_svnt_src_template_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_hdr_ending_);
-  this->ciao_exec_hdr_ending_ = 0;
+  this->ciao_exec_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_src_ending_);
-  this->ciao_exec_src_ending_ = 0;
+  this->ciao_exec_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_stub_hdr_ending_);
-  this->ciao_exec_stub_hdr_ending_ = 0;
+  this->ciao_exec_stub_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_exec_idl_ending_);
-  this->ciao_exec_idl_ending_ = 0;
+  this->ciao_exec_idl_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_conn_hdr_ending_);
-  this->ciao_conn_hdr_ending_ = 0;
+  this->ciao_conn_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_conn_src_ending_);
-  this->ciao_conn_src_ending_ = 0;
+  this->ciao_conn_src_ending_ = nullptr;
 
   ACE::strdelete (this->dds_typesupport_hdr_ending_);
-  this->dds_typesupport_hdr_ending_ = 0;
+  this->dds_typesupport_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_idl_ending_);
-  this->ciao_ami_conn_idl_ending_ = 0;
+  this->ciao_ami_conn_idl_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_impl_hdr_ending_);
-  this->ciao_ami_conn_impl_hdr_ending_ = 0;
+  this->ciao_ami_conn_impl_hdr_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_ami_conn_impl_src_ending_);
-  this->ciao_ami_conn_impl_src_ending_ = 0;
+  this->ciao_ami_conn_impl_src_ending_ = nullptr;
 
   ACE::strdelete (this->ciao_container_type_);
-  this->ciao_container_type_ = 0;
+  this->ciao_container_type_ = nullptr;
 
   ACE::strdelete (this->output_dir_);
-  this->output_dir_ = 0;
+  this->output_dir_ = nullptr;
 
   ACE::strdelete (this->stub_include_dir_);
-  this->stub_include_dir_ = 0;
+  this->stub_include_dir_ = nullptr;
 
   ACE::strdelete (this->skel_output_dir_);
-  this->skel_output_dir_ = 0;
+  this->skel_output_dir_ = nullptr;
 
   ACE::strdelete (this->anyop_output_dir_);
-  this->anyop_output_dir_ = 0;
+  this->anyop_output_dir_ = nullptr;
 
   ACE::strdelete (this->exec_output_dir_);
-  this->exec_output_dir_ = 0;
+  this->exec_output_dir_ = nullptr;
 
-  if (0 != this->messaging_)
+  if (nullptr != this->messaging_)
     {
       this->messaging_->destroy ();
       delete this->messaging_;
-      this->messaging_ = 0;
+      this->messaging_ = nullptr;
     }
 
-  if (0 != this->messaging_exceptionholder_)
+  if (nullptr != this->messaging_exceptionholder_)
     {
       this->messaging_exceptionholder_->destroy ();
       delete this->messaging_exceptionholder_;
-      this->messaging_exceptionholder_ = 0;
+      this->messaging_exceptionholder_ = nullptr;
     }
 
-  if (0 != this->messaging_replyhandler_)
+  if (nullptr != this->messaging_replyhandler_)
     {
       this->messaging_replyhandler_->destroy ();
       delete this->messaging_replyhandler_;
-      this->messaging_replyhandler_ = 0;
+      this->messaging_replyhandler_ = nullptr;
     }
 
-  if (0 != tao_cg)
+  if (nullptr != tao_cg)
     {
       tao_cg->destroy ();
     }
@@ -2186,7 +2186,7 @@ BE_GlobalData::destroy (void)
 AST_PredefinedType *
 BE_GlobalData:: void_type (void)
 {
-  if (0 == this->void_type_)
+  if (nullptr == this->void_type_)
     {
       AST_Decl *d =
         idl_global->root ()->lookup_primitive_type (
@@ -2201,21 +2201,21 @@ BE_GlobalData:: void_type (void)
 be_interface *
 BE_GlobalData::ccmobject (void)
 {
-  if (0 == this->ccmobject_)
+  if (nullptr == this->ccmobject_)
     {
-      Identifier *local_id = 0;
+      Identifier *local_id = nullptr;
       ACE_NEW_RETURN (local_id,
                       Identifier ("CCMObject"),
-                      0);
-      UTL_ScopedName *local_name = 0;
+                      nullptr);
+      UTL_ScopedName *local_name = nullptr;
       ACE_NEW_RETURN (local_name,
-                      UTL_ScopedName (local_id, 0),
-                      0);
+                      UTL_ScopedName (local_id, nullptr),
+                      nullptr);
 
-      Identifier *module_id = 0;
+      Identifier *module_id = nullptr;
       ACE_NEW_RETURN (module_id,
                       Identifier ("Components"),
-                      0);
+                      nullptr);
       UTL_ScopedName sn (module_id,
                          local_name);
 
@@ -2225,7 +2225,7 @@ BE_GlobalData::ccmobject (void)
 
       sn.destroy ();
 
-      if (0 == d)
+      if (nullptr == d)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_global::ccmobject - "
@@ -2242,23 +2242,23 @@ BE_GlobalData::ccmobject (void)
 be_module *
 BE_GlobalData::messaging (void)
 {
-  if (0 == this->messaging_)
+  if (nullptr == this->messaging_)
     {
-      Identifier *id = 0;
-      UTL_ScopedName *sn = 0;
+      Identifier *id = nullptr;
+      UTL_ScopedName *sn = nullptr;
 
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
       ACE_NEW_RETURN (sn,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (this->messaging_,
                       be_module (sn),
-                      0);
+                      nullptr);
 
       this->messaging_->set_name (sn);
     }
@@ -2269,50 +2269,50 @@ BE_GlobalData::messaging (void)
 be_valuetype *
 BE_GlobalData::messaging_exceptionholder (void)
 {
-  if (0 == this->messaging_exceptionholder_)
+  if (nullptr == this->messaging_exceptionholder_)
     {
-      Identifier *id = 0;
+      Identifier *id = nullptr;
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
       // Create a valuetype "ExceptionHolder"
       // from which we inherit.
-      UTL_ScopedName *full_name = 0;
+      UTL_ScopedName *full_name = nullptr;
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (id,
                       Identifier ("ExceptionHolder"),
-                      0);
+                      nullptr);
 
-      UTL_ScopedName *local_name = 0;
+      UTL_ScopedName *local_name = nullptr;
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       full_name->nconc (local_name);
 
       ACE_NEW_RETURN (this->messaging_exceptionholder_,
                       be_valuetype (full_name,
+                                    nullptr,
                                     0,
+                                    nullptr,
+                                    nullptr,
                                     0,
+                                    nullptr,
                                     0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
-                                    0,
+                                    nullptr,
                                     0,
                                     0,
                                     0),
-                      0);
+                      nullptr);
 
       this->messaging_exceptionholder_->set_name (full_name);
 
@@ -2334,47 +2334,47 @@ BE_GlobalData::messaging_exceptionholder (void)
 be_interface *
 BE_GlobalData::messaging_replyhandler (void)
 {
-  if (0 == this->messaging_replyhandler_)
+  if (nullptr == this->messaging_replyhandler_)
     {
       be_module *msg = this->messaging ();
       idl_global->scopes ().push (msg);
 
-      Identifier *id = 0;
-      UTL_ScopedName *local_name = 0;
+      Identifier *id = nullptr;
+      UTL_ScopedName *local_name = nullptr;
 
       // Create a virtual module named "Messaging"
       // "and an interface "ReplyHandler"
       // from which we inherit.
       ACE_NEW_RETURN (id,
                       Identifier ("Messaging"),
-                      0);
+                      nullptr);
 
-      UTL_ScopedName *full_name = 0;
+      UTL_ScopedName *full_name = nullptr;
       ACE_NEW_RETURN (full_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       ACE_NEW_RETURN (id,
                       Identifier ("ReplyHandler"),
-                      0);
+                      nullptr);
 
       ACE_NEW_RETURN (local_name,
                       UTL_ScopedName (id,
-                                      0),
-                      0);
+                                      nullptr),
+                      nullptr);
 
       full_name->nconc (local_name);
 
       ACE_NEW_RETURN (this->messaging_replyhandler_,
                       be_interface (full_name,
-                                    0,  // inherited interfaces
+                                    nullptr,  // inherited interfaces
                                     0,  // number of inherited interfaces
-                                    0,  // ancestors
+                                    nullptr,  // ancestors
                                     0,  // number of ancestors
                                     0,  // not local
                                     0), // not abstract
-                      0);
+                      nullptr);
 
       this->messaging_replyhandler_->set_name (full_name);
       this->messaging_replyhandler_->set_prefix_with_typeprefix ("omg.org");
@@ -2902,7 +2902,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'H':
         idl_global->append_idl_flag (av[i + 1]);
 
-        if (av[i + 1] == 0 || av[i + 1][0] == '-')
+        if (av[i + 1] == nullptr || av[i + 1][0] == '-')
           {
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("no selection for -H option\n")));
@@ -2981,7 +2981,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == '\0')
           {
             idl_global->append_idl_flag (av[i + 1]);
-            ACE_CString tmp (av[i + 1], 0, false);
+            ACE_CString tmp (av[i + 1], nullptr, false);
 #if defined (ACE_WIN32)
             // WIN32's CreateProcess needs the full executable name
             // when the gperf path is modified, but not for the default
@@ -3713,7 +3713,7 @@ BE_GlobalData::parse_args (long &i, char **av)
       case 'T':
         if (av[i][2] == 'S')
           {
-            unsigned long ul = ACE_OS::strtoul (av[i + 1], 0, 10);
+            unsigned long ul = ACE_OS::strtoul (av[i + 1], nullptr, 10);
             be_global->tab_size (ul);
             ++i;
           }

@@ -39,7 +39,7 @@ TAO::be_visitor_value_typecode::visit_valuetype (be_valuetype * node)
       // we're repeated and we're recursive so just leave
       return 0;
     }
-  else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
+  else if (this->queue_insert (this->tc_queue_, node, 0) == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_value_typecode::"

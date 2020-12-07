@@ -99,22 +99,22 @@ UTL_LabelList::copy (void)
 {
   AST_Expression *val = this->pd_car_data->label_val ();
 
-  AST_Expression *val_copy = 0;
+  AST_Expression *val_copy = nullptr;
   ACE_NEW_RETURN (val_copy,
                   AST_Expression (val, val->ev ()->et),
-                  0);
+                  nullptr);
 
   AST_UnionLabel *label_copy =
     idl_global->gen ()->create_union_label (this->pd_car_data->label_kind (),
                                             val_copy);
 
-  UTL_LabelList *retval = 0;
+  UTL_LabelList *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_LabelList (label_copy,
-                                 0),
-                  0);
+                                 nullptr),
+                  nullptr);
 
-  if (this->tail () != 0)
+  if (this->tail () != nullptr)
     {
       retval->nconc ((UTL_LabelList *) this->tail ()->copy ());
     }
@@ -127,7 +127,7 @@ UTL_LabelList::destroy (void)
 {
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
-  this->pd_car_data = 0;
+  this->pd_car_data = nullptr;
 
   this->UTL_List::destroy ();
 }
@@ -141,13 +141,13 @@ UTL_LabellistActiveIterator::UTL_LabellistActiveIterator (UTL_LabelList *s)
 AST_UnionLabel *
 UTL_LabellistActiveIterator::item (void)
 {
-  if (this->source == 0)
+  if (this->source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   UTL_LabelList *llist = dynamic_cast<UTL_LabelList *> (this->source);
 
-  return (llist != 0 ? llist->head () : 0);
+  return (llist != nullptr ? llist->head () : nullptr);
 }
 

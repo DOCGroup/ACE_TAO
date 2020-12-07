@@ -193,7 +193,7 @@ be_visitor_args_decl::visit_array (be_array *node)
   be_argument *f =
     dynamic_cast<be_argument*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_args_decl::"
@@ -275,6 +275,6 @@ be_visitor_args_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

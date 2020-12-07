@@ -506,7 +506,7 @@ struct yy_buffer_state
 /* Stack of input buffers. */
 static size_t yy_buffer_stack_top = 0; /**< index of top of stack. */
 static size_t yy_buffer_stack_max = 0; /**< capacity of stack. */
-static YY_BUFFER_STATE * yy_buffer_stack = 0; /**< Stack as an array. */
+static YY_BUFFER_STATE * yy_buffer_stack = nullptr; /**< Stack as an array. */
 
 /* We provide macros for accessing buffer states in case in the
  * future we want to put the buffer states in a more general
@@ -528,7 +528,7 @@ static int yy_n_chars;        /* number of characters read into yy_ch_buf */
 int yyleng;
 
 /* Points to current character in buffer. */
-static char *yy_c_buf_p = 0;
+static char *yy_c_buf_p = nullptr;
 static int yy_init = 0;        /* whether we need to initialize */
 static int yy_start = 0;    /* start state number */
 
@@ -582,7 +582,7 @@ void yyfree ( void *  );
 /* Begin user sect3 */
 typedef flex_uint8_t YY_CHAR;
 
-FILE *yyin = 0, *yyout = 0;
+FILE *yyin = nullptr, *yyout = nullptr;
 
 typedef int yy_state_type;
 
@@ -1965,7 +1965,7 @@ YY_RULE_SETUP
   // regular expression is to handle EBCDIC, as well as ASCII.
 
   TAO_IDL_CPP_Keyword_Table cpp_key_tbl;
-  const TAO_IDL_CPP_Keyword_Entry *entry = 0;
+  const TAO_IDL_CPP_Keyword_Entry *entry = nullptr;
   if (!idl_global->preserve_cpp_keywords())
     {
       // This check will ensure that escaped C++ keywords will be
@@ -2273,7 +2273,7 @@ YY_RULE_SETUP
                           if (next == '/')
                             break;
                           else
-                            yyunput (c, 0);
+                            yyunput (c, nullptr);
                         }
                       else if (c == '\n')
                         {
@@ -2523,7 +2523,7 @@ static int yy_get_next_buffer (void)
                 }
             else
                 /* Can't grow it, we don't own it. */
-                b->yy_ch_buf = 0;
+                b->yy_ch_buf = nullptr;
 
             if ( ! b->yy_ch_buf )
                 YY_FATAL_ERROR(
@@ -2862,7 +2862,7 @@ static void yy_load_buffer_state  (void)
         return;
 
     if ( b == YY_CURRENT_BUFFER ) /* Not sure if we should pop here. */
-        YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) 0;
+        YY_CURRENT_BUFFER_LVALUE = (YY_BUFFER_STATE) nullptr;
 
     if ( b->yy_is_our_buffer )
         yyfree( (void *) b->yy_ch_buf  );
@@ -2933,7 +2933,7 @@ static void yy_load_buffer_state  (void)
  */
 void yypush_buffer_state (YY_BUFFER_STATE new_buffer )
 {
-        if (new_buffer == 0)
+        if (new_buffer == nullptr)
         return;
 
     yyensure_buffer_stack();
@@ -2967,7 +2967,7 @@ void yypop_buffer_state (void)
         return;
 
     yy_delete_buffer(YY_CURRENT_BUFFER );
-    YY_CURRENT_BUFFER_LVALUE = 0;
+    YY_CURRENT_BUFFER_LVALUE = nullptr;
     if ((yy_buffer_stack_top) > 0)
         --(yy_buffer_stack_top);
 
@@ -3037,7 +3037,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
          base[size-2] != YY_END_OF_BUFFER_CHAR ||
          base[size-1] != YY_END_OF_BUFFER_CHAR )
         /* They forgot to leave room for the EOB's. */
-        return 0;
+        return nullptr;
 
     b = (YY_BUFFER_STATE) yyalloc( sizeof( struct yy_buffer_state )  );
     if ( ! b )
@@ -3046,7 +3046,7 @@ YY_BUFFER_STATE yy_scan_buffer  (char * base, yy_size_t  size )
     b->yy_buf_size = (int) (size - 2);    /* "- 2" to take care of EOB's */
     b->yy_buf_pos = b->yy_ch_buf = base;
     b->yy_is_our_buffer = 0;
-    b->yy_input_file = 0;
+    b->yy_input_file = nullptr;
     b->yy_n_chars = b->yy_buf_size;
     b->yy_is_interactive = 0;
     b->yy_at_bol = 1;
@@ -3222,10 +3222,10 @@ static int yy_init_globals (void)
      * This function is called from yylex_destroy(), so don't allocate here.
      */
 
-    (yy_buffer_stack) = 0;
+    (yy_buffer_stack) = nullptr;
     (yy_buffer_stack_top) = 0;
     (yy_buffer_stack_max) = 0;
-    (yy_c_buf_p) = 0;
+    (yy_c_buf_p) = nullptr;
     (yy_init) = 0;
     (yy_start) = 0;
 
@@ -3234,8 +3234,8 @@ static int yy_init_globals (void)
     yyin = stdin;
     yyout = stdout;
 #else
-    yyin = 0;
-    yyout = 0;
+    yyin = nullptr;
+    yyout = nullptr;
 #endif
 
     /* For future reference: Set errno on error, since we are called by
@@ -3251,13 +3251,13 @@ int yylex_destroy  (void)
     /* Pop the buffer stack, destroying each element. */
     while(YY_CURRENT_BUFFER){
         yy_delete_buffer( YY_CURRENT_BUFFER  );
-        YY_CURRENT_BUFFER_LVALUE = 0;
+        YY_CURRENT_BUFFER_LVALUE = nullptr;
         yypop_buffer_state();
     }
 
     /* Destroy the stack itself. */
     yyfree((yy_buffer_stack) );
-    (yy_buffer_stack) = 0;
+    (yy_buffer_stack) = nullptr;
 
     /* Reset the globals. This is important in a non-reentrant scanner so the next time
      * yylex() is called, initialization will occur. */
@@ -3330,7 +3330,7 @@ same_file (char *path1, char *path2)
   char *fp2 = ACE_OS::realpath (path2, fullpath2);
 
   return
-    (fp1 == 0 || fp2 == 0)
+    (fp1 == nullptr || fp2 == nullptr)
       ? false
       : FE_Utils::path_cmp (fullpath1,fullpath2) == 0;
 }
@@ -3340,8 +3340,8 @@ static void
 idl_parse_line_and_file (char *buf)
 {
   char *r = buf;
-  char *h = 0;
-  UTL_String *nm = 0;
+  char *h = nullptr;
+  UTL_String *nm = nullptr;
 
   // Skip initial '#'.
   if (*r != '#')
@@ -3394,7 +3394,7 @@ idl_parse_line_and_file (char *buf)
     }
 
   *r = 0;
-  UTL_String *tmp = 0;
+  UTL_String *tmp = nullptr;
 
   if (*h == '\0')
     {
@@ -3539,13 +3539,13 @@ idl_store_pragma (char *buf)
   sp -= crunched;
   *sp = '\0';
 
-  if (ACE_OS::strstr (buf + 8, "import") != 0)
+  if (ACE_OS::strstr (buf + 8, "import") != nullptr)
     {
       idl_global->set_import (true);
       return;
     }
 
-  if (ACE_OS::strstr (buf + 8, "include") != 0)
+  if (ACE_OS::strstr (buf + 8, "include") != nullptr)
     {
       idl_global->set_import (false);
       return;
@@ -3555,14 +3555,14 @@ idl_store_pragma (char *buf)
     {
       char *new_prefix = idl_get_pragma_string (buf);
 
-      if (new_prefix != 0)
+      if (new_prefix != nullptr)
         {
           unsigned long depth = idl_global->scopes ().depth ();
 
           // We replace the prefix only if there is a prefix already
           // associated with this file, otherwise we add the prefix.
           char *ext_id = idl_global->filename ()->get_string ();
-          ACE_Hash_Map_Entry<char *, char *> *entry = 0;
+          ACE_Hash_Map_Entry<char *, char *> *entry = nullptr;
           int const status =
             idl_global->file_prefixes ().find (ext_id, entry);
 
@@ -3570,7 +3570,7 @@ idl_store_pragma (char *buf)
             {
               if (ACE_OS::strcmp (entry->int_id_, "") != 0)
                 {
-                  char *trash = 0;
+                  char *trash = nullptr;
                   idl_global->pragma_prefixes ().pop (trash);
                   delete [] trash;
                 }
@@ -3624,7 +3624,7 @@ idl_store_pragma (char *buf)
 
       char *number = ACE_OS::strchr (tmp, ' ');
 
-      if (number == 0)
+      if (number == nullptr)
         {
           number = ACE_OS::strchr (tmp, '\t');
         }
@@ -3634,7 +3634,7 @@ idl_store_pragma (char *buf)
 
       // Most likely this means there is only a version number
       // without an identifier to apply it to.
-      if (number == 0)
+      if (number == nullptr)
         {
           const char *msg = "no identifier or scoped name";
           idl_global->err ()->version_syntax_error (msg);
@@ -3663,7 +3663,7 @@ idl_store_pragma (char *buf)
       // do it here.
       AST_Decl *d = idl_find_node (tmp);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
@@ -3694,14 +3694,14 @@ idl_store_pragma (char *buf)
 
       AST_Decl *d = idl_find_node (work.c_str ());
 
-      if (d == 0)
+      if (d == nullptr)
         {
           return;
         }
 
       char *new_id = idl_get_pragma_string (buf);
 
-      if (new_id != 0)
+      if (new_id != nullptr)
         {
           if (d->typeid_set ())
             {
@@ -4153,33 +4153,33 @@ idl_get_pragma_string (char *pragma)
   // Get pointers to each end of the substring between the quotes.
   const char *firstquote = ACE_OS::strchr (pragma, '"');
 
-  if (firstquote == 0)
+  if (firstquote == nullptr)
     {
       idl_global->err ()->syntax_error (
           IDL_GlobalData::PS_PragmaPrefixSyntax
         );
 
-      return 0;
+      return nullptr;
     }
 
   const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
-  if (end == 0)
+  if (end == nullptr)
     {
       idl_global->err ()->syntax_error (
           IDL_GlobalData::PS_PragmaPrefixSyntax
         );
 
-      return 0;
+      return nullptr;
     }
 
   int len = static_cast<int> (end - start);
-  char *retval = 0;
+  char *retval = nullptr;
 
   ACE_NEW_RETURN (retval,
                   char[len + 1],
-                  0);
+                  nullptr);
 
   ACE_OS::strncpy (retval,
                    start,
@@ -4201,7 +4201,7 @@ idl_valid_version (char *s)
   char *minor = ACE_OS::strchr (s, '.');
   int i;
 
-  if (minor == 0)
+  if (minor == nullptr)
     {
       // No decimal point.
       return 0;
@@ -4247,13 +4247,13 @@ static AST_Decl *
 idl_find_node (const char *s)
 {
   UTL_ScopedName * node = FE_Utils::string_to_scoped_name (s);
-  AST_Decl * d = 0;
+  AST_Decl * d = nullptr;
 
-  if (node != 0)
+  if (node != nullptr)
     {
       d = idl_global->scopes ().top_non_null ()->lookup_by_name (node);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (node);
         }

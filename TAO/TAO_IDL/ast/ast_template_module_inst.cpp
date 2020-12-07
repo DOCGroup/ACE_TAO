@@ -47,7 +47,7 @@ AST_Template_Module_Inst::destroy (void)
 {
   this->template_args_->destroy ();
   delete this->template_args_;
-  this->template_args_ = 0;
+  this->template_args_ = nullptr;
 
   this->AST_Field::destroy ();
 }

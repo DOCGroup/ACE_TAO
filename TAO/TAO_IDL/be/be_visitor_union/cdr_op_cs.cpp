@@ -43,7 +43,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
       AST_Decl *d = si.item ();
 
       be_enum *e = dynamic_cast<be_enum*> (d);
-      if (e != 0)
+      if (e != nullptr)
         {
           be_visitor_enum_cdr_op_cs visitor (&ctx);
 
@@ -240,7 +240,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << "return result;" << be_uidt_nl
       << "}" << be_nl;
 
-  bool use_underscore = (this->ctx_->tdef () == 0);
+  bool use_underscore = (this->ctx_->tdef () == nullptr);
 
   if (be_global->gen_ostream_operators ())
     {

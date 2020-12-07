@@ -66,7 +66,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       name = node->full_name ();
     }
 
-  be_module *module = 0;
+  be_module *module = nullptr;
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -86,7 +86,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
             }
         }
 
-      if (module != 0)
+      if (module != nullptr)
         {
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
@@ -150,7 +150,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }

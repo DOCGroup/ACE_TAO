@@ -149,12 +149,12 @@ be_visitor_operation_arglist::visit_argument (be_argument *node)
   // generate the appropriate relative scoped names.
   be_operation *op =
     dynamic_cast<be_operation*> (this->ctx_->scope ());
-  be_interface *intf = 0;
+  be_interface *intf = nullptr;
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
   // information from the context
-  if (op == 0)
+  if (op == nullptr)
     {
       be_factory *f =
         dynamic_cast<be_factory*> (this->ctx_->scope ());

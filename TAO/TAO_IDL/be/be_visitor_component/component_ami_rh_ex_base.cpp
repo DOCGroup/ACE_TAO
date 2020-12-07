@@ -15,8 +15,8 @@
 be_visitor_component_ami_rh_ex_base::be_visitor_component_ami_rh_ex_base (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    iface_ (0),
-    port_ (0)
+    iface_ (nullptr),
+    port_ (nullptr)
 {
 }
 

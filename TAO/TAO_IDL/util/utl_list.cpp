@@ -86,7 +86,7 @@ UTL_List::~UTL_List (void)
 ACE_CDR::Long
 UTL_List::list_length (ACE_CDR::Long n)
 {
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       return n;
     }
@@ -100,7 +100,7 @@ UTL_List::list_length (ACE_CDR::Long n)
 void
 UTL_List::nconc (UTL_List *l)
 {
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       this->pd_cdr_data = l;
     }
@@ -114,19 +114,19 @@ UTL_List::nconc (UTL_List *l)
 UTL_List *
 UTL_List::copy (void)
 {
-  UTL_List *retval = 0;
+  UTL_List *retval = nullptr;
 
-  if (this->pd_cdr_data == 0)
+  if (this->pd_cdr_data == nullptr)
     {
       ACE_NEW_RETURN (retval,
-                      UTL_List (0),
-                      0);
+                      UTL_List (nullptr),
+                      nullptr);
     }
   else
     {
       ACE_NEW_RETURN (retval,
                       UTL_List (this->pd_cdr_data->copy ()),
-                      0);
+                      nullptr);
     }
 
   return retval;
@@ -158,11 +158,11 @@ UTL_List::length (void)
 void
 UTL_List::destroy (void)
 {
-  if (this->pd_cdr_data != 0)
+  if (this->pd_cdr_data != nullptr)
     {
       this->pd_cdr_data->destroy ();
       delete this->pd_cdr_data;
-      this->pd_cdr_data = 0;
+      this->pd_cdr_data = nullptr;
     }
 }
 
@@ -177,14 +177,14 @@ UTL_ListActiveIterator::UTL_ListActiveIterator (UTL_List *s)
 bool
 UTL_ListActiveIterator::is_done (void)
 {
-  return (this->source == 0) ? true : false;
+  return (this->source == nullptr) ? true : false;
 }
 
 // Advance to next item.
 void
 UTL_ListActiveIterator::next (void)
 {
-  if (this->source != 0)
+  if (this->source != nullptr)
     {
       this->source = this->source->tail ();
     }

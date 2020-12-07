@@ -26,7 +26,7 @@
 be_visitor_component_scope::be_visitor_component_scope (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
+    node_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
     in_ext_port_ (false)
@@ -119,7 +119,7 @@ int
 be_visitor_component_scope::visit_component_scope (
   be_component *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }

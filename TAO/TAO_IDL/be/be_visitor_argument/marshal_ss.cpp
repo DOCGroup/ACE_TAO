@@ -394,7 +394,7 @@ int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

@@ -291,7 +291,7 @@ be_visitor_servant_svh::visit_consumes (be_consumes *node)
 
       ACE_CString holder (obj_name);
       ACE_CString::size_type pos = holder.rfind (':');
-      const char *ev_lname = 0;
+      const char *ev_lname = nullptr;
 
       if (pos == ACE_CString::npos)
         {

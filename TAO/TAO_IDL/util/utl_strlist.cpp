@@ -108,7 +108,7 @@ UTL_StrList::set_head (UTL_String *s)
 UTL_String *
 UTL_StrList::last_component (void)
 {
-  if (this->tail () == 0)
+  if (this->tail () == nullptr)
     {
       return pd_car_data;
     }
@@ -120,21 +120,21 @@ UTL_StrList::last_component (void)
 UTL_List *
 UTL_StrList::copy (void)
 {
-  UTL_List *retval = 0;
+  UTL_List *retval = nullptr;
 
-  if (this->tail () == 0)
+  if (this->tail () == nullptr)
     {
       ACE_NEW_RETURN (retval,
                       UTL_StrList (head (),
-                                   0),
-                      0);
+                                   nullptr),
+                      nullptr);
     }
   else
     {
       ACE_NEW_RETURN (retval,
                       UTL_StrList (head (),
                                    (UTL_StrList *) this->tail ()->copy ()),
-                      0);
+                      nullptr);
     }
 
   return retval;
@@ -143,14 +143,14 @@ UTL_StrList::copy (void)
 void
 UTL_StrList::destroy (void)
 {
-  UTL_String *str = 0;
+  UTL_String *str = nullptr;
 
   for (UTL_StrlistActiveIterator i (this); !i.is_done (); i.next ())
     {
       str = i.item ();
       str->destroy ();
       delete str;
-      str = 0;
+      str = nullptr;
     }
 }
 
@@ -158,7 +158,7 @@ UTL_StrList::destroy (void)
 void
 UTL_StrList::dump (ACE_OSTREAM_TYPE &o)
 {
-  char *s = 0;
+  char *s = nullptr;
   bool first = true;
   bool second = false;
 
@@ -217,9 +217,9 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator (UTL_StrList *s)
 UTL_String *
 UTL_StrlistActiveIterator::item (void)
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_StrList *) source)->head ();

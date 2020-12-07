@@ -38,7 +38,7 @@ ast_visitor_reifying::ast_visitor_reifying (
       ast_visitor_context *ctx)
   : ast_visitor (),
     ctx_ (ctx),
-    reified_node_ (0)
+    reified_node_ (nullptr)
 {
 }
 
@@ -352,22 +352,22 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   bt = dynamic_cast<AST_Type*> (this->reified_node_);
 
   AST_Expression **dims = node->dims ();
-  AST_Expression *v = 0;
-  UTL_ExprList *v_list = 0;
+  AST_Expression *v = nullptr;
+  UTL_ExprList *v_list = nullptr;
 
   for (ACE_CDR::ULong i = 0; i < node->n_dims (); ++i)
     {
       AST_Param_Holder *ph = dims[i]->param_holder ();
 
-      if (ph != 0)
+      if (ph != nullptr)
         {
           if (this->visit_param_holder (ph) != 0)
             {
-              if (v_list != 0)
+              if (v_list != nullptr)
                 {
                   v_list->destroy ();
                   delete v_list;
-                  v_list = 0;
+                  v_list = nullptr;
                 }
 
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -393,12 +393,12 @@ ast_visitor_reifying::visit_array (AST_Array *node)
                           -1);
         }
 
-      UTL_ExprList *el = 0;
+      UTL_ExprList *el = nullptr;
       ACE_NEW_RETURN (el,
-                      UTL_ExprList (v, 0),
+                      UTL_ExprList (v, nullptr),
                       -1);
 
-      if (v_list == 0)
+      if (v_list == nullptr)
         {
           v_list = el;
         }
@@ -408,7 +408,7 @@ ast_visitor_reifying::visit_array (AST_Array *node)
         }
     }
 
-  UTL_ScopedName sn (node->local_name (), 0);
+  UTL_ScopedName sn (node->local_name (), nullptr);
 
   AST_Array *arr =
     idl_global->gen ()->create_array (&sn,
@@ -420,11 +420,11 @@ ast_visitor_reifying::visit_array (AST_Array *node)
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.
 
-  if (v_list != 0)
+  if (v_list != nullptr)
     {
       v_list->destroy ();
       delete v_list;
-      v_list = 0;
+      v_list = nullptr;
     }
 
   arr->set_base_type (bt);
@@ -452,7 +452,7 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
   AST_Expression *v = node->max_size ();
   AST_Param_Holder *ph = v->param_holder ();
 
-  if (ph != 0)
+  if (ph != nullptr)
     {
       if (this->visit_param_holder (ph) != 0)
         {
@@ -473,7 +473,7 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
     idl_global->gen ()->create_expr (v,
                                      AST_Expression::EV_ulong);
   Identifier id ("sequence");
-  UTL_ScopedName sn (&id, 0);
+  UTL_ScopedName sn (&id, nullptr);
 
   this->reified_node_ =
     idl_global->gen ()->create_sequence (bound,
@@ -501,7 +501,7 @@ ast_visitor_reifying::visit_string (AST_String *node)
   AST_Expression *b = node->max_size ();
   AST_Param_Holder *ph = b->param_holder ();
 
-  if (ph != 0)
+  if (ph != nullptr)
     {
       if (this->visit_param_holder (ph) != 0)
         {
@@ -523,14 +523,14 @@ ast_visitor_reifying::visit_string (AST_String *node)
       return 0;
     }
 
-  AST_Expression *bound = 0;
+  AST_Expression *bound = nullptr;
   ACE_NEW_RETURN (bound,
                   AST_Expression (b,
                                   AST_Expression::EV_ulong),
                   -1);
 
   Identifier id ("string");
-  UTL_ScopedName sn (&id, 0);
+  UTL_ScopedName sn (&id, nullptr);
 
   ACE_NEW_RETURN (this->reified_node_,
                   AST_String (AST_Decl::NT_string,
@@ -563,7 +563,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
        !iter.done ();
        iter.advance (), ++i)
     {
-      FE_Utils::T_Param_Info *item = 0;
+      FE_Utils::T_Param_Info *item = nullptr;
       iter.next (item);
 
       ACE_CString name (item->name_);
@@ -576,7 +576,7 @@ ast_visitor_reifying::visit_param_holder (AST_Param_Holder *node)
       /// name, which is what we want.
       if (name == node->local_name ()->get_string ())
         {
-          AST_Decl **ret_ptr = 0;
+          AST_Decl **ret_ptr = nullptr;
 
           if (t_args->get (ret_ptr, i) == 0)
             {
@@ -614,7 +614,7 @@ ast_visitor_reifying::check_and_store (AST_Decl *node)
   UTL_ScopedName *tmpl_tail =
     this->template_module_rel_name (node);
 
-  if (tmpl_tail != 0)
+  if (tmpl_tail != nullptr)
     {
       AST_Decl *d =
         idl_global->scopes ().top ()->lookup_by_name (
@@ -626,7 +626,7 @@ ast_visitor_reifying::check_and_store (AST_Decl *node)
 
       tmpl_tail->destroy ();
       delete tmpl_tail;
-      tmpl_tail = 0;
+      tmpl_tail = nullptr;
     }
   else
     {
@@ -640,9 +640,9 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
   AST_Decl *tmp = d;
   ACE_CString name (d->full_name ());
 
-  while (tmp != 0)
+  while (tmp != nullptr)
     {
-      if (dynamic_cast<AST_Template_Module*> (tmp) != 0)
+      if (dynamic_cast<AST_Template_Module*> (tmp) != nullptr)
         {
           ACE_CString head (tmp->local_name ()->get_string ());
 
@@ -656,6 +656,6 @@ ast_visitor_reifying::template_module_rel_name (AST_Decl *d)
       tmp = ScopeAsDecl (tmp->defined_in ());
     }
 
-  return 0;
+  return nullptr;
 }
 

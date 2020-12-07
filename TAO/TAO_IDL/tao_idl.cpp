@@ -137,10 +137,10 @@ void
 DRV_refresh (void)
 {
   idl_global->set_err_count (0);
-  idl_global->set_filename (0);
-  idl_global->set_main_filename (0);
-  idl_global->set_real_filename (0);
-  idl_global->set_stripped_filename (0);
+  idl_global->set_filename (nullptr);
+  idl_global->set_main_filename (nullptr);
+  idl_global->set_real_filename (nullptr);
+  idl_global->set_stripped_filename (nullptr);
   idl_global->set_lineno (-1);
   idl_global->reset_flag_seen ();
 }
@@ -154,11 +154,11 @@ DRV_cleanup (void)
 
   be_global->destroy ();
   delete be_global;
-  be_global = 0;
+  be_global = nullptr;
 
   idl_global->fini ();
   delete idl_global;
-  idl_global = 0;
+  idl_global = nullptr;
 
   for (DRV_file_index = 0;
        DRV_file_index < DRV_nfiles;
@@ -193,7 +193,7 @@ DRV_drive (const char *s)
 {
   // Set the name of the IDL file we are parsing. This is useful to
   // the backend when it generates C++ headers and files.
-  UTL_String *utl_string = 0;
+  UTL_String *utl_string = nullptr;
   ACE_NEW (utl_string,
            UTL_String (s, true));
 
@@ -362,7 +362,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       AST_Generator *gen = be_util::generator_init ();
 
-      if (0 == gen)
+      if (nullptr == gen)
         {
           ACE_ERROR ((
               LM_ERROR,
@@ -399,7 +399,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // If there are no input files, and we are not using the
       // directory recursion option, there's no sense going any further.
-      if (0 == DRV_nfiles && 0 == idl_global->recursion_start ())
+      if (0 == DRV_nfiles && nullptr == idl_global->recursion_start ())
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("IDL: No input files\n")));
@@ -407,7 +407,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw Bailout ();
         }
 
-      FILE *output_file = 0;
+      FILE *output_file = nullptr;
 
       if (idl_global->multi_file_input ())
         {

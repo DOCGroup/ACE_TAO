@@ -66,7 +66,7 @@ be_home::be_home (UTL_ScopedName *n,
 
   // Some previous error may have caused a lookup failure, in which
   // case we'll crash if we do the narrow below.
-  if (managed_component == 0)
+  if (managed_component == nullptr)
     {
       idl_global->set_err_count (idl_global->err_count () + 1);
       return;
@@ -87,7 +87,7 @@ be_home::~be_home (void)
 void
 be_home::scan (UTL_Scope *s)
 {
-  if (s == 0)
+  if (s == nullptr)
     {
       return;
     }
@@ -100,7 +100,7 @@ be_home::scan (UTL_Scope *s)
       AST_Attribute *attr =
         dynamic_cast<AST_Attribute*> (d);
 
-      if (attr != 0 && ! attr->readonly ())
+      if (attr != nullptr && ! attr->readonly ())
         {
           this->has_rw_attributes_ = true;
           return;
@@ -109,7 +109,7 @@ be_home::scan (UTL_Scope *s)
 
   AST_Home *h = dynamic_cast<AST_Home*> (s);
 
-  if (h != 0)
+  if (h != nullptr)
     {
       this->scan (h->base_home ());
     }
@@ -119,34 +119,34 @@ void
 be_home::destroy (void)
 {
   delete [] this->full_skel_name_;
-  this->full_skel_name_ = 0;
+  this->full_skel_name_ = nullptr;
 
   delete [] this->full_coll_name_;
-  this->full_coll_name_ = 0;
+  this->full_coll_name_ = nullptr;
 
   delete [] this->local_coll_name_;
-  this->local_coll_name_ = 0;
+  this->local_coll_name_ = nullptr;
 
   delete [] this->relative_skel_name_;
-  this->relative_skel_name_ = 0;
+  this->relative_skel_name_ = nullptr;
 
   delete [] this->direct_proxy_impl_name_;
-  this->direct_proxy_impl_name_ = 0;
+  this->direct_proxy_impl_name_ = nullptr;
 
   delete [] this->full_direct_proxy_impl_name_;
-  this->full_direct_proxy_impl_name_ = 0;
+  this->full_direct_proxy_impl_name_ = nullptr;
 
   delete [] this->client_scope_;
-  this->client_scope_ = 0;
+  this->client_scope_ = nullptr;
 
   delete [] this->flat_client_scope_;
-  this->flat_client_scope_ = 0;
+  this->flat_client_scope_ = nullptr;
 
   delete [] this->server_scope_;
-  this->server_scope_ = 0;
+  this->server_scope_ = nullptr;
 
   delete [] this->flat_server_scope_;
-  this->flat_server_scope_ = 0;
+  this->flat_server_scope_ = nullptr;
 
   this->be_scope::destroy ();
   this->be_type::destroy ();

@@ -76,7 +76,7 @@ const TAO_UNINDENT be_uidt_nl (1);
 // Methods of the TAO_OutStream class.
 
 TAO_OutStream::TAO_OutStream (void)
-  : fp_ (0),
+  : fp_ (nullptr),
     st_ (TAO_CLI_HDR),
     indent_level_ (0)
 {
@@ -89,10 +89,10 @@ TAO_OutStream::TAO_OutStream (void)
 TAO_OutStream::~TAO_OutStream (void)
 {
   // Close the underlying I/O handle only if it exists.
-  if (this->fp_ != 0)
+  if (this->fp_ != nullptr)
     {
       ACE_OS::fclose (this->fp_);
-      this->fp_ = 0;
+      this->fp_ = nullptr;
     }
 
   indent_level_ = 0;
@@ -102,12 +102,12 @@ int
 TAO_OutStream::open (const char *fname,
                      TAO_OutStream::STREAM_TYPE st)
 {
-  if (fname != 0)
+  if (fname != nullptr)
     {
       // File name exists, open an I/O file handle.
       this->fp_ = ACE_OS::fopen (fname, "w");
 
-      if (this->fp_ != 0)
+      if (this->fp_ != nullptr)
         {
           this->st_ = st;
           // Put the copyright notice.  Not for the gperf's temp input
@@ -239,7 +239,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
                    "_%s_",
                    tao_cg->upcase (flat_name));
 
-  if (suffix != 0)
+  if (suffix != nullptr)
     {
       ACE_OS::strcat (macro, "_");
       ACE_OS::strcat (macro, tao_cg->upcase (suffix));
@@ -464,7 +464,7 @@ TAO_OutStream::print (UTL_IdList *idl)
 {
   bool first = true;
   bool second = false;
-  Identifier *id = 0;
+  Identifier *id = nullptr;
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
     {
@@ -505,7 +505,7 @@ TAO_OutStream::print (AST_Expression *expr)
   AST_Expression::AST_ExprValue *ev = expr->ev ();
 
   /// Never happens as far as I know, but just in case...
-  if (ev == 0)
+  if (ev == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_OutStream::print() - ")

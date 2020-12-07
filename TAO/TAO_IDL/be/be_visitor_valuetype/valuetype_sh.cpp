@@ -36,7 +36,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
-  if (concrete == 0)
+  if (concrete == nullptr)
     {
       return 0;
     }

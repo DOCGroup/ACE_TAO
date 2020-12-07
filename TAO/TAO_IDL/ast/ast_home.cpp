@@ -45,11 +45,11 @@ AST_Home::AST_Home (UTL_ScopedName *n,
 
   AST_ValueType *pk = dynamic_cast<AST_ValueType*> (primary_key);
 
-  if (pk != 0)
+  if (pk != nullptr)
     {
       idl_global->primary_keys ().enqueue_tail (pk);
     }
-  else if (primary_key != 0)
+  else if (primary_key != nullptr)
     {
       // If we are here, it's a param holder and we must destroy it.
       this->owns_primary_key_ = true;
@@ -64,9 +64,9 @@ AST_Decl *
 AST_Home::look_in_inherited (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
-  if (this->pd_base_home != 0)
+  if (this->pd_base_home != nullptr)
     {
       d =
         this->pd_base_home->lookup_by_name (e, full_def_only);
@@ -80,8 +80,8 @@ AST_Decl *
 AST_Home::look_in_supported (UTL_ScopedName *e,
                              bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
@@ -89,7 +89,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
     {
       idl_global->err ()->fwd_decl_lookup (this,
                                            e);
-      return 0;
+      return nullptr;
     }
 
   // OK, loop through supported interfaces.
@@ -110,7 +110,7 @@ AST_Home::look_in_supported (UTL_ScopedName *e,
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
-      if (d != 0)
+      if (d != nullptr)
         {
           break;
         }
@@ -126,7 +126,7 @@ AST_Home::special_lookup (UTL_ScopedName *e,
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       d = this->look_in_supported (e, full_def_only);
     }
@@ -147,7 +147,7 @@ AST_Type **
 AST_Home::supports (void) const
 {
   return
-    this->pd_base_home == 0
+    this->pd_base_home == nullptr
       ? this->inherits ()
       : this->inherits () + 1;
 }
@@ -179,13 +179,13 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
     {
       AST_Decl *d = src_iter.item ();
 
-      Identifier *local_id = 0;
+      Identifier *local_id = nullptr;
       ACE_NEW (local_id,
                Identifier (d->local_name ()->get_string ()));
-      UTL_ScopedName *last_segment = 0;
+      UTL_ScopedName *last_segment = nullptr;
       ACE_NEW (last_segment,
                UTL_ScopedName (local_id,
-                               0));
+                               nullptr));
       UTL_ScopedName *full_name =
         static_cast<UTL_ScopedName *> (dst->name ()->copy ());
       full_name->nconc (last_segment);
@@ -199,7 +199,7 @@ AST_Home::transfer_scope_elements (AST_Interface *dst)
   long const end = this->pd_decls_used;
   for (long i = 0; i < end; ++i)
     {
-      this->pd_decls[i] = 0;
+      this->pd_decls[i] = nullptr;
       --this->pd_decls_used;
     }
 }
@@ -212,7 +212,7 @@ AST_Home::destroy (void)
     {
       this->pd_primary_key->destroy ();
       delete this->pd_primary_key;
-      this->pd_primary_key = 0;
+      this->pd_primary_key = nullptr;
     }
 
   this->AST_Interface::destroy ();
@@ -227,20 +227,20 @@ AST_Home::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_home != 0)
+  if (this->pd_base_home != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_home->local_name ()->dump (o);
     }
 
-  if (this->pd_managed_component != 0)
+  if (this->pd_managed_component != nullptr)
     {
       this->dump_i (o, "\n");
       this->dump_i (o, "manages ");
       this->pd_managed_component->local_name ()->dump (o);
     }
 
-  if (this->pd_primary_key != 0)
+  if (this->pd_primary_key != nullptr)
     {
       this->dump_i (o, "\n");
       this->dump_i (o, "primary key ");

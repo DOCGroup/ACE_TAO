@@ -87,14 +87,14 @@ be_operation::be_add_argument (AST_Argument *arg)
   this->add_to_scope (arg);
   this->add_to_referenced (arg,
                            0,
-                           0);
+                           nullptr);
   return arg;
 }
 
 int
 be_operation::be_insert_exception (AST_Exception *ex)
 {
-  UTL_ExceptList *new_list = 0;
+  UTL_ExceptList *new_list = nullptr;
   ACE_NEW_RETURN (new_list,
                   UTL_ExceptList (ex,
                                   this->pd_exceptions),

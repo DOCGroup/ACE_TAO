@@ -485,7 +485,7 @@ be_visitor_traits::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   node->cli_traits_gen (true);
   return 0;
 }

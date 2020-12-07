@@ -184,7 +184,7 @@ void
 DRV_parse_args (long ac, char **av)
 {
   ACE_CString buffer;
-  char *s = 0;
+  char *s = nullptr;
   long i;
   bool has_space = false;
 
@@ -512,7 +512,7 @@ DRV_parse_args (long ac, char **av)
   be_util::arg_post_proc ();
 
   // Make sure the output directory is valid.
-  if (idl_global->temp_dir () == 0)
+  if (idl_global->temp_dir () == nullptr)
     {
       ACE_TCHAR tmpdir[MAXPATHLEN + 1];
 

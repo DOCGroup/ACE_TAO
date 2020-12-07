@@ -13,8 +13,8 @@
 
 be_visitor_home_exs::be_visitor_home_exs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     comment_start_border_ ("/**"),
     comment_end_border_ (" */"),
@@ -137,7 +137,7 @@ be_visitor_home_exs::gen_exec_class (void)
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {

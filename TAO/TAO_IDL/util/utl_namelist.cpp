@@ -104,7 +104,7 @@ UTL_NameList::destroy (void)
 {
   this->pd_car_data->destroy ();
   delete this->pd_car_data;
-  this->pd_car_data = 0;
+  this->pd_car_data = nullptr;
 
   this->UTL_List::destroy ();
 }
@@ -118,9 +118,9 @@ UTL_NamelistActiveIterator::UTL_NamelistActiveIterator (UTL_NameList *s)
 UTL_ScopedName *
 UTL_NamelistActiveIterator::item (void)
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_NameList *) source)->head ();

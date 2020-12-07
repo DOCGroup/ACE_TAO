@@ -126,16 +126,16 @@ void
 be_predefined_type::compute_tc_name (void)
 {
   // Start with the head as the CORBA namespace.
-  Identifier *corba_id = 0;
+  Identifier *corba_id = nullptr;
   ACE_NEW (corba_id,
            Identifier ("CORBA"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (corba_id,
-                           0));
+                           nullptr));
 
-  Identifier *id = 0;
-  UTL_ScopedName *conc_name = 0;
+  Identifier *id = nullptr;
+  UTL_ScopedName *conc_name = nullptr;
 
   switch (this->pt ())
     {
@@ -229,7 +229,7 @@ be_predefined_type::compute_tc_name (void)
 
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }

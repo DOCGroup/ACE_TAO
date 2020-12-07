@@ -13,7 +13,7 @@
 
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    op_scope_ (0)
+    op_scope_ (nullptr)
 {
 }
 
@@ -1112,7 +1112,7 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
 int
 be_visitor_attr_set::visit_component_scope (be_component *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }

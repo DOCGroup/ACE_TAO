@@ -79,7 +79,7 @@ UTL_ScopeStack::UTL_ScopeStack (void)
 
 UTL_ScopeStack::~UTL_ScopeStack (void)
 {
-  if (this->pd_stack_data != 0)
+  if (this->pd_stack_data != nullptr)
     {
       delete [] this->pd_stack_data;
     }
@@ -89,7 +89,7 @@ UTL_ScopeStack::~UTL_ScopeStack (void)
 UTL_ScopeStack *
 UTL_ScopeStack::push (UTL_Scope *el)
 {
-  UTL_Scope **tmp = 0;
+  UTL_Scope **tmp = nullptr;
   long ostack_data_nalloced;
   long i;
 
@@ -101,7 +101,7 @@ UTL_ScopeStack::push (UTL_Scope *el)
 
       ACE_NEW_RETURN (tmp,
                       UTL_Scope *[this->pd_stack_data_nalloced],
-                      0);
+                      nullptr);
 
       for (i = 0; i < ostack_data_nalloced; ++i)
         {
@@ -131,9 +131,9 @@ UTL_ScopeStack::pop (void)
 
   // If our top scope has a #pragma prefix associated with it,
   // it goes away with the scope.
-  if (current != 0 && current->has_prefix ())
+  if (current != nullptr && current->has_prefix ())
     {
-      char *trash = 0;
+      char *trash = nullptr;
       idl_global->pragma_prefixes ().pop (trash);
       delete [] trash;
     }
@@ -147,7 +147,7 @@ UTL_ScopeStack::top (void)
 {
   if (this->pd_stack_top <= 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return this->pd_stack_data[pd_stack_top - 1];
@@ -159,7 +159,7 @@ UTL_ScopeStack::bottom (void)
 {
   if (this->pd_stack_top == 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return this->pd_stack_data[0];
@@ -187,7 +187,7 @@ UTL_ScopeStack::next_to_top (void)
 
   if (this->depth () < 2)
     {
-      return 0;
+      return nullptr;
     }
 
   tmp = top ();    // Save top
@@ -203,13 +203,13 @@ UTL_ScopeStack::top_non_null (void)
 {
   for (long i = this->pd_stack_top - 1; i >= 0; --i)
     {
-      if (this->pd_stack_data[i] != 0)
+      if (this->pd_stack_data[i] != nullptr)
         {
           return this->pd_stack_data[i];
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl *
@@ -225,7 +225,7 @@ UTL_ScopeStack::lookup_by_name (
           if (node) return node;
         }
     }
-  return 0;
+  return nullptr;
 }
 
 UTL_ScopeStackActiveIterator::UTL_ScopeStackActiveIterator (UTL_ScopeStack &s)
@@ -250,7 +250,7 @@ UTL_ScopeStackActiveIterator::item (void)
       return this->source.pd_stack_data[il];
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Is this iteration done?

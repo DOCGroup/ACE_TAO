@@ -66,10 +66,10 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
                         false,
                         false,
                         false),
-    supports_ (0),
+    supports_ (nullptr),
     n_supports_ (0),
-    inherits_concrete_ (0),
-    supports_concrete_ (0),
+    inherits_concrete_ (nullptr),
+    supports_concrete_ (nullptr),
     truncatable_ (truncatable)
 {
   this->compile_inheritance (inherits,
@@ -133,7 +133,7 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
       AST_Type *t = this->inherits_[0];
       AST_ValueType *vt = dynamic_cast<AST_ValueType*> (t);
 
-      if (vt != 0
+      if (vt != nullptr
           && vt->is_abstract () == false)
         {
           this->inherits_concrete_ = vt;
@@ -166,9 +166,9 @@ FE_OBVHeader::compile_inheritance (UTL_NameList *vtypes,
 void
 FE_OBVHeader::compile_supports (UTL_NameList *supports)
 {
-  if (supports == 0)
+  if (supports == nullptr)
     {
-      this->supports_ = 0;
+      this->supports_ = nullptr;
       this->n_supports_ = 0;
       return;
     }
@@ -179,10 +179,10 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
   ACE_NEW (this->supports_,
            AST_Type *[length]);
 
-  AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;
-  AST_Interface *iface = 0;
-  AST_Type *t = 0;
+  AST_Decl *d = nullptr;
+  UTL_ScopedName *item = nullptr;
+  AST_Interface *iface = nullptr;
+  AST_Type *t = nullptr;
   int i = 0;
 
   for (UTL_NamelistActiveIterator l (supports); !l.is_done (); l.next ())
@@ -190,7 +190,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
       item = l.item ();
 
       // Check that scope stack is valid.
-      if (idl_global->scopes ().top () == 0)
+      if (idl_global->scopes ().top () == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -204,7 +204,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
 
       d = s->lookup_by_name  (item, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           AST_Decl *sad = ScopeAsDecl (s);
 
@@ -217,7 +217,7 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Not found?
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -263,14 +263,14 @@ FE_OBVHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Forward declared interface?
-      if (iface != 0 && !iface->is_defined ())
+      if (iface != nullptr && !iface->is_defined ())
         {
           idl_global->err ()->supports_fwd_error (this->interface_name_,
                                                   iface);
           continue;
         }
 
-      if (iface != 0 && !iface->is_abstract ())
+      if (iface != nullptr && !iface->is_abstract ())
         {
           if (i == 0)
             {
@@ -303,16 +303,16 @@ FE_OBVHeader::check_concrete_supported_inheritance (AST_Interface *d)
       return true;
     }
 
-  AST_ValueType *vt = 0;
-  AST_Type *concrete = 0;
-  AST_Interface *ancestor = 0;
+  AST_ValueType *vt = nullptr;
+  AST_Type *concrete = nullptr;
+  AST_Interface *ancestor = nullptr;
 
   for (long i = 0; i < this->n_inherits_; ++i)
     {
       vt = dynamic_cast<AST_ValueType*> (this->inherits_[i]);
       concrete = vt->supports_concrete ();
 
-      if (0 == concrete)
+      if (nullptr == concrete)
         {
           return true;
         }

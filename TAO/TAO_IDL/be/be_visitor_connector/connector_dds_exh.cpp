@@ -58,7 +58,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           !i.done ();
           i.advance ())
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -87,7 +87,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
           !i.done ();
           i.advance (), ++slot)
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -103,7 +103,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
 
           bool needs_bool = false;
           bool is_fixed = false;
-          FE_Utils::T_Param_Info *param = 0;
+          FE_Utils::T_Param_Info *param = nullptr;
 
           if (this->t_params_->get (param, slot - 1) != 0)
             {
@@ -175,7 +175,7 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       !iter.done ();
       iter.advance ())
     {
-      be_interface **item = 0;
+      be_interface **item = nullptr;
       iter.next (item);
 
       (*item)->dds_connector_traits_done (false);
@@ -218,7 +218,7 @@ be_visitor_connector_dds_exh::visit_mirror_port (
        !iter.done ();
        iter.advance ())
     {
-      be_interface **item = 0;
+      be_interface **item = nullptr;
       iter.next (item);
 
       (*item)->dds_connector_traits_done (false);

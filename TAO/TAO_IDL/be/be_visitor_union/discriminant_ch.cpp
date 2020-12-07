@@ -27,7 +27,7 @@ be_visitor_union_discriminant_ch::visit_enum (be_enum *node)
   // Get the enclosing union backend.
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -82,7 +82,7 @@ be_visitor_union_discriminant_ch::visit_predefined_type (be_predefined_type
   // get the enclosing union backend.
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -125,6 +125,6 @@ be_visitor_union_discriminant_ch::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

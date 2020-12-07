@@ -19,17 +19,17 @@ AST_Connector::AST_Connector (
               n),
     UTL_Scope (AST_Decl::NT_connector),
     AST_Interface (n,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0,
                    false,
                    false),
     AST_Component (n,
                    base_connector,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0)
 {
   if (!this->imported ())
@@ -63,7 +63,7 @@ AST_Connector::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);

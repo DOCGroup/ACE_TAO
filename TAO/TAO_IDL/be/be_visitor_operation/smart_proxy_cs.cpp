@@ -39,11 +39,11 @@ int be_visitor_operation_smart_proxy_cs::visit_operation (be_operation *node)
 
       be_interface *intf = dynamic_cast<be_interface*> (s);
 
-      if (intf == 0)
+      if (intf == nullptr)
         {
           be_porttype *pt = dynamic_cast<be_porttype*> (s);
 
-          if (pt == 0)
+          if (pt == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("be_visitor_operation_")

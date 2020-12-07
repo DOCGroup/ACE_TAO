@@ -307,7 +307,7 @@ int be_visitor_args_upcall_ss::visit_typedef (
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

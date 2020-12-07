@@ -50,7 +50,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
 
       AST_Field *field = dynamic_cast<AST_Field*> (d);
 
-      if (field != 0 && field->visibility () == AST_Field::vis_PRIVATE)
+      if (field != nullptr && field->visibility () == AST_Field::vis_PRIVATE)
         {
           this->begin_private ();
         }
@@ -59,7 +59,7 @@ be_visitor_valuetype::visit_valuetype_scope (be_valuetype *node)
           this->begin_public ();
         }
 
-      if (bd == 0 || bd->accept (this) == -1)
+      if (bd == nullptr || bd->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
@@ -121,7 +121,7 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   Identifier id ("void");
 
   UTL_ScopedName sn (&id,
-                     0);
+                     nullptr);
 
   be_predefined_type rt (AST_PredefinedType::PT_void,
                          &sn);
@@ -684,7 +684,7 @@ be_visitor_valuetype::gen_pd (be_valuetype *node)
       be_field *field = dynamic_cast<be_field*> (d);
       be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
-      if (field == 0 || attr != 0)
+      if (field == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -764,7 +764,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
   AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
         dynamic_cast<be_valuetype*> (parent);
@@ -784,7 +784,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       be_attribute *attr =
         dynamic_cast<be_attribute*> (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -794,7 +794,7 @@ be_visitor_valuetype::gen_obv_init_constructor_args (be_valuetype *node,
       ACE_CString arg_name ("_tao_init_");
       arg_name += f->local_name ()->get_string ();
       Identifier id (arg_name.c_str ());
-      UTL_ScopedName sn (&id, 0);
+      UTL_ScopedName sn (&id, nullptr);
       be_type *ft = dynamic_cast<be_type*> (f->field_type ());
       bool seen = ft->seen_in_operation ();
 
@@ -902,7 +902,7 @@ be_visitor_valuetype::obv_need_ref_counter (be_valuetype* node)
       be_valuetype *vt =
         dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
-      if (vt != 0)
+      if (vt != nullptr)
         {
           if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
@@ -934,7 +934,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
 {
 
   // Just try to find a VT with concrete factory in inheritance tree.
-  if (node == 0)
+  if (node == nullptr)
     {
       return false;
     }
@@ -949,7 +949,7 @@ be_visitor_valuetype::obv_have_ref_counter (be_valuetype* node)
     {
       be_valuetype *vt = dynamic_cast<be_valuetype*> (node->inherits ()[i]);
 
-      if (vt != 0)
+      if (vt != nullptr)
         {
           if (be_visitor_valuetype::obv_have_ref_counter (vt))
             {
@@ -969,7 +969,7 @@ be_visitor_valuetype::is_amh_exception_holder (be_valuetype *node)
      const char *last_E =
       ACE_OS::strrchr (node->full_name (), 'E');
 
-     if (last_E != 0
+     if (last_E != nullptr
          && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
        {
          return true;

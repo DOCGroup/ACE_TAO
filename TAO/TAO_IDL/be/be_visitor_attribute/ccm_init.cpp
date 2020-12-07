@@ -15,7 +15,7 @@
 be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
     be_visitor_context *ctx)
   : be_visitor_any_extracted_type_decl (ctx),
-    attr_ (0)
+    attr_ (nullptr)
 {
 }
 
@@ -35,7 +35,7 @@ be_visitor_attribute_ccm_init::visit_attribute (
 
   be_interface *intf = this->ctx_->interface ();
 
-  if (intf != 0)
+  if (intf != nullptr)
     {
       AST_Decl::NodeType snt = intf->node_type ();
       AST_Decl::NodeType ant =

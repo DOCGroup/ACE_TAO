@@ -114,7 +114,7 @@ be_structure::gen_ostream_operator (TAO_OutStream *os,
       be_field *f = dynamic_cast<be_field*> (this->pd_decls[i]);
 
       // We don't want any decls, just members.
-      if (f == 0)
+      if (f == nullptr)
         {
           continue;
         }

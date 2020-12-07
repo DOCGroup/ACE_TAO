@@ -79,7 +79,7 @@ AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
   : pd_label_kind (lk),
     pd_label_val (lv)
 {
-    if (lv != 0)
+    if (lv != nullptr)
       {
         lv->evaluate (AST_Expression::EK_const);
       }
@@ -119,7 +119,7 @@ AST_UnionLabel::destroy (void)
     {
       this->pd_label_val->destroy ();
       delete this->pd_label_val;
-      this->pd_label_val = 0;
+      this->pd_label_val = nullptr;
     }
 }
 

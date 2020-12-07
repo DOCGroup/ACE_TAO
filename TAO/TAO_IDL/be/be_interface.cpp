@@ -82,23 +82,23 @@ be_interface::be_interface (UTL_ScopedName *n,
              n),
     be_type (AST_Decl::NT_interface,
              n),
-    direct_proxy_impl_name_ (0),
-    full_direct_proxy_impl_name_ (0),
-    client_scope_ (0),
-    flat_client_scope_ (0),
-    server_scope_ (0),
-    flat_server_scope_ (0),
+    direct_proxy_impl_name_ (nullptr),
+    full_direct_proxy_impl_name_ (nullptr),
+    client_scope_ (nullptr),
+    flat_client_scope_ (nullptr),
+    server_scope_ (nullptr),
+    flat_server_scope_ (nullptr),
     var_out_seq_decls_gen_ (false),
     skel_count_ (0),
     in_mult_inheritance_ (-1),
-    original_interface_ (0),
+    original_interface_ (nullptr),
     is_amh_rh_ (false),
     is_ami_rh_ (false),
     is_ami4ccm_rh_ (false),
-    full_skel_name_ (0),
-    full_coll_name_ (0),
-    local_coll_name_ (0),
-    relative_skel_name_ (0),
+    full_skel_name_ (nullptr),
+    full_coll_name_ (nullptr),
+    local_coll_name_ (nullptr),
+    relative_skel_name_ (nullptr),
     cached_type_ (-1),
     has_rw_attributes_ (false),
     dds_connector_traits_done_ (false)
@@ -156,7 +156,7 @@ be_interface::local_name (void)
 const char *
 be_interface::full_skel_name (void)
 {
-  if (this->full_skel_name_ == 0)
+  if (this->full_skel_name_ == nullptr)
     {
       this->compute_full_skel_name ("POA_",
                                     this->full_skel_name_);
@@ -169,8 +169,8 @@ const char *
 be_interface::full_coll_name (int type)
 {
   this->compute_coll_names (type,
-                            0,  // prefix
-                            0); // suffix
+                            nullptr,  // prefix
+                            nullptr); // suffix
 
   return this->full_coll_name_;
 }
@@ -179,8 +179,8 @@ const char *
 be_interface::local_coll_name (int type)
 {
   this->compute_coll_names (type,
-                            0,  // prefix
-                            0); // suffix
+                            nullptr,  // prefix
+                            nullptr); // suffix
 
   return this->local_coll_name_;
 }
@@ -196,7 +196,7 @@ void
 be_interface::compute_full_skel_name (const char *prefix,
                                       char *&skel_name)
 {
-  if (skel_name != 0)
+  if (skel_name != nullptr)
     {
       return;
     }
@@ -204,7 +204,7 @@ be_interface::compute_full_skel_name (const char *prefix,
   size_t namelen = ACE_OS::strlen (prefix);
   long first = true;
   long second = false;
-  char *item_name = 0;
+  char *item_name = nullptr;
 
   // In the first loop compute the total length.
   for (UTL_IdListActiveIterator i (this->name ());
@@ -284,7 +284,7 @@ be_interface::compute_coll_names (int type,
                                   const char *prefix,
                                   const char *suffix)
 {
-  if (type == this->cached_type_ && this->full_coll_name_ != 0)
+  if (type == this->cached_type_ && this->full_coll_name_ != nullptr)
     {
       return;
     }
@@ -296,8 +296,8 @@ be_interface::compute_coll_names (int type,
 
       // Reset to zero in case allocations below fail, and cause
       // premature return to caller.
-      this->full_coll_name_ = 0;
-      this->local_coll_name_ = 0;
+      this->full_coll_name_ = nullptr;
+      this->local_coll_name_ = nullptr;
     }
 
   static const char *collocated_names[] = {"_tao_thru_poa_collocated_",
@@ -494,8 +494,8 @@ be_interface::relative_name (const char *localname,
       if (!ACE_OS::strcmp (def_curr, use_curr))
         {
           // They have same prefix, append to arg1.
-          def_curr = (def_next ? (def_next+2) : 0); // Skip the ::
-          use_curr = (use_next ? (use_next+2) : 0); // Skip the ::
+          def_curr = (def_next ? (def_next+2) : nullptr); // Skip the ::
+          use_curr = (use_next ? (use_next+2) : nullptr); // Skip the ::
         }
       else
         {
@@ -541,7 +541,7 @@ be_interface::in_mult_inheritance (void)
       // Determine if we are in some form of a multiple inheritance.
       if (this->traverse_inheritance_graph (
               be_interface::in_mult_inheritance_helper,
-              0
+              nullptr
             ) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -581,7 +581,7 @@ be_interface::redefine (AST_Interface *from)
       ACE_Unbounded_Queue<AST_Interface *> &q =
         idl_global->mixed_parentage_interfaces ();
       size_t slot = 0;
-      AST_Interface **t = 0;
+      AST_Interface **t = nullptr;
 
       // The queue of interfaces with mixed parentage must
       // replace each interface that has been forward
@@ -758,7 +758,7 @@ be_interface::gen_var_out_seq_decls (void)
   // execution of the IDL compiler) there is nothing
   // to tell the IDL compiler that this interface is in any
   // way special. All we can do is search for the prefix.
-  ACE_CString test (lname, 0, false);
+  ACE_CString test (lname, nullptr, false);
   bool has_ami4ccm_prefix = (test.find ("AMI4CCM_") == 0);
 
   bool already_ami =
@@ -890,7 +890,7 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
       return 0;
     }
 
-  be_decl *d = 0;
+  be_decl *d = nullptr;
 
   for (UTL_ScopeActiveIterator si (base_interface, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -1107,7 +1107,7 @@ be_interface::gen_operation_table (const char *flat_name,
         // We must randomize this a bit in order to avoid problems with
         // processing more than one idl file (in separate processes) with
         // the same name (in different directories).
-        char *temp_file = 0;
+        char *temp_file = nullptr;
         ACE_NEW_RETURN (temp_file,
                         char [ACE_OS::strlen (idl_global->temp_dir ())
                               + 11 // The number of possible digits in
@@ -1148,10 +1148,10 @@ be_interface::gen_operation_table (const char *flat_name,
 
         // Make a new outstream to hold the gperf_temp_file for this
         // interface.
-        TAO_OutStream *os = 0;
+        TAO_OutStream *os = nullptr;
         ACE_NEW_NORETURN (os, TAO_OutStream);
 
-        if (os == 0)
+        if (os == nullptr)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                "be_visitor_interface_ss"
@@ -1337,7 +1337,7 @@ be_interface::convert_parent_ops (be_visitor *visitor)
   // Traverse the graph.
   Pure_Virtual_Regenerator worker (visitor);
 
-  if (this->traverse_inheritance_graph (worker, 0) == -1)
+  if (this->traverse_inheritance_graph (worker, nullptr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                           "(%N:%l) be_interface::"
@@ -1419,7 +1419,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               AST_Attribute *attr =
                 dynamic_cast<AST_Attribute*> (d);
 
-              if (attr == 0)
+              if (attr == nullptr)
                 return -1;
 
               // Generate only the "get" entry if we are
@@ -1572,7 +1572,7 @@ be_interface::gen_optable_entries (be_interface *derived_interface,
               AST_Attribute *attr =
                 dynamic_cast<AST_Attribute*> (d);
 
-              if (attr == 0)
+              if (attr == nullptr)
                 {
                   return -1;
                 }
@@ -1767,7 +1767,7 @@ be_interface::traverse_inheritance_graph (
   bool abstract_paths_only,
   bool add_ccm_object)
 {
-  AST_Type *intf = 0;  // element inside the queue
+  AST_Type *intf = nullptr;  // element inside the queue
 
   if (!this->insert_queue.is_empty ())
     {
@@ -2019,7 +2019,7 @@ be_interface::gen_gperf_lookup_methods (const char *flat_name)
     }
 
   // And reset file to 0 because otherwise there is a problem during destruction of stream.
-  tao_cg->gperf_input_stream ()->file () = 0;
+  tao_cg->gperf_input_stream ()->file () = nullptr;
 
   // Open the temp file.
 #if defined (ACE_OPENVMS)
@@ -2340,7 +2340,7 @@ be_interface::copy_ctor_helper (be_interface *derived,
     }
   else if (base->is_nested ())
     {
-      be_decl *scope = 0;
+      be_decl *scope = nullptr;
       scope = dynamic_cast<be_scope*> (base->defined_in ())->decl ();
 
       *os << "POA_" << scope->name () << "::"
@@ -2428,7 +2428,7 @@ be_interface::op_attr_decl_helper (be_interface * /*derived */,
                                    be_interface *ancestor,
                                    TAO_OutStream *os)
 {
-  if (dynamic_cast<be_component*> (ancestor) != 0)
+  if (dynamic_cast<be_component*> (ancestor) != nullptr)
     {
       return 0;
     }
@@ -2493,34 +2493,34 @@ void
 be_interface::destroy (void)
 {
   delete [] this->full_skel_name_;
-  this->full_skel_name_ = 0;
+  this->full_skel_name_ = nullptr;
 
   delete [] this->full_coll_name_;
-  this->full_coll_name_ = 0;
+  this->full_coll_name_ = nullptr;
 
   delete [] this->local_coll_name_;
-  this->local_coll_name_ = 0;
+  this->local_coll_name_ = nullptr;
 
   delete [] this->relative_skel_name_;
-  this->relative_skel_name_ = 0;
+  this->relative_skel_name_ = nullptr;
 
   delete [] this->direct_proxy_impl_name_;
-  this->direct_proxy_impl_name_ = 0;
+  this->direct_proxy_impl_name_ = nullptr;
 
   delete [] this->full_direct_proxy_impl_name_;
-  this->full_direct_proxy_impl_name_ = 0;
+  this->full_direct_proxy_impl_name_ = nullptr;
 
   delete [] this->client_scope_;
-  this->client_scope_ = 0;
+  this->client_scope_ = nullptr;
 
   delete [] this->flat_client_scope_;
-  this->flat_client_scope_ = 0;
+  this->flat_client_scope_ = nullptr;
 
   delete [] this->server_scope_;
-  this->server_scope_ = 0;
+  this->server_scope_ = nullptr;
 
   delete [] this->flat_server_scope_;
-  this->flat_server_scope_ = 0;
+  this->flat_server_scope_ = nullptr;
 
   // Call the destroy methods of our base classes.
   this->AST_Interface::destroy ();
@@ -2586,7 +2586,7 @@ be_interface::enqueue_base_component_r (AST_Component *node)
 {
   AST_Component *base = node->base_component ();
 
-  if (base == 0)
+  if (base == nullptr)
     {
       return;
     }
@@ -2609,7 +2609,7 @@ be_interface::enqueue_base_home_r (AST_Home *node)
 {
   AST_Home *base = node->base_home ();
 
-  if (base == 0)
+  if (base == nullptr)
     {
       return;
     }
@@ -2706,7 +2706,7 @@ void
 be_interface::gen_skel_inheritance (TAO_OutStream *os)
 {
   long n_parents = this->n_inherits ();
-  AST_Type *parent = 0;
+  AST_Type *parent = nullptr;
   AST_Type **parents = this->inherits ();
   bool has_concrete_parent = false;
 
@@ -2905,7 +2905,7 @@ be_interface::is_ami4ccm_rh (bool val)
 const char *
 be_interface::direct_proxy_impl_name (void)
 {
-  if (this->direct_proxy_impl_name_ == 0)
+  if (this->direct_proxy_impl_name_ == nullptr)
     {
       this->direct_proxy_impl_name_ =
         this->create_with_prefix_suffix (
@@ -2921,7 +2921,7 @@ be_interface::direct_proxy_impl_name (void)
 const char *
 be_interface::full_direct_proxy_impl_name (void)
 {
-  if (this->full_direct_proxy_impl_name_ == 0)
+  if (this->full_direct_proxy_impl_name_ == nullptr)
     {
       const char *scope = this->server_enclosing_scope ();
       const char *base_name = this->direct_proxy_impl_name ();
@@ -2931,7 +2931,7 @@ be_interface::full_direct_proxy_impl_name (void)
 
       ACE_NEW_RETURN (this->full_direct_proxy_impl_name_,
                       char[length + 1],
-                      0);
+                      nullptr);
 
       ACE_OS::strcpy (this->full_direct_proxy_impl_name_,
                       scope);
@@ -2946,7 +2946,7 @@ be_interface::full_direct_proxy_impl_name (void)
 const char *
 be_interface::client_enclosing_scope (void)
 {
-  if (this->client_scope_ == 0)
+  if (this->client_scope_ == nullptr)
     {
       const char *full_name = this->full_name ();
       const char *name = this->local_name ();
@@ -2955,7 +2955,7 @@ be_interface::client_enclosing_scope (void)
       size_t length = ACE_OS::strlen (full_name) - offset;
       ACE_NEW_RETURN (this->client_scope_,
                       char[length + 1],
-                      0);
+                      nullptr);
 
       ACE_OS::strncpy (this->client_scope_, full_name, length);
       this->client_scope_[length] = '\0';
@@ -2967,7 +2967,7 @@ be_interface::client_enclosing_scope (void)
 const char *
 be_interface::flat_client_enclosing_scope (void)
 {
-  if (this->flat_client_scope_ == 0)
+  if (this->flat_client_scope_ == nullptr)
     {
       const char *full_name = this->flat_name ();
       const char *name =
@@ -2978,7 +2978,7 @@ be_interface::flat_client_enclosing_scope (void)
 
       ACE_NEW_RETURN (this->flat_client_scope_,
                       char[length + 1],
-                      0);
+                      nullptr);
 
       ACE_OS::strncpy (this->flat_client_scope_,
                        full_name,
@@ -2992,7 +2992,7 @@ be_interface::flat_client_enclosing_scope (void)
 const char *
 be_interface::server_enclosing_scope (void)
 {
-  if (this->server_scope_ == 0)
+  if (this->server_scope_ == nullptr)
     {
       const char *full_name =
         this->full_coll_name (be_interface::DIRECT);
@@ -3004,7 +3004,7 @@ be_interface::server_enclosing_scope (void)
       size_t length = ACE_OS::strlen (full_name) - offset;
       ACE_NEW_RETURN (this->server_scope_,
                       char[length + 1],
-                      0);
+                      nullptr);
 
       ACE_OS::strncpy (this->server_scope_, full_name, length);
       this->server_scope_[length] = '\0';
@@ -3019,7 +3019,7 @@ be_interface::create_with_prefix_suffix (const char *prefix,
                                          const char *suffix,
                                          const char *separator)
 {
-  char *cat_string = 0;
+  char *cat_string = nullptr;
   size_t length =
     ACE_OS::strlen (str) +
     ACE_OS::strlen (prefix) +
@@ -3029,7 +3029,7 @@ be_interface::create_with_prefix_suffix (const char *prefix,
 
   ACE_NEW_RETURN (cat_string,
                   char[length],
-                  0);
+                  nullptr);
 
   ACE_OS::strcpy (cat_string, prefix);
   ACE_OS::strcat (cat_string, str);

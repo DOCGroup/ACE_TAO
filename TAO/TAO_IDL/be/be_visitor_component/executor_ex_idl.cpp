@@ -37,7 +37,7 @@ be_visitor_executor_ex_idl::visit_component (
       << be_idt_nl
       << ": ";
 
-  if (base == 0)
+  if (base == nullptr)
     {
       os_ << "::Components::EnterpriseComponent";
     }
@@ -226,7 +226,7 @@ be_visitor_executor_ex_idl::gen_exception_list (
   const char *prefix,
   bool closed)
 {
-  if (exceptions != 0 && exceptions->length () > 0)
+  if (exceptions != nullptr && exceptions->length () > 0)
     {
       os_ << be_idt_nl
           << prefix << "raises ( ";

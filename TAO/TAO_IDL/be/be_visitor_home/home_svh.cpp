@@ -13,8 +13,8 @@
 
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ())
 {
@@ -165,7 +165,7 @@ be_visitor_home_svh::gen_servant_class (void)
 
 AST_Type *pk = node_->primary_key ();
 
-  if (pk != 0)
+  if (pk != nullptr)
     {
       os_ << be_nl_2
           << "// Implicit home primary key operations - not supported.";
@@ -199,7 +199,7 @@ AST_Type *pk = node_->primary_key ();
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {

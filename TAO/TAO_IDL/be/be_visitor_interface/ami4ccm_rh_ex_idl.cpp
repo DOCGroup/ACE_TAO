@@ -208,7 +208,7 @@ be_visitor_ami4ccm_rh_ex_idl::pre_process (be_decl *node)
   be_operation *op =
     dynamic_cast<be_operation*> (this->ctx_->scope ());
 
-  if (op == 0)
+  if (op == nullptr)
     {
       return 0;
     }
@@ -217,7 +217,7 @@ be_visitor_ami4ccm_rh_ex_idl::pre_process (be_decl *node)
 
   be_argument *arg = dynamic_cast<be_argument*> (node);
 
-  if (arg == 0)
+  if (arg == nullptr)
     {
       return 0;
     }

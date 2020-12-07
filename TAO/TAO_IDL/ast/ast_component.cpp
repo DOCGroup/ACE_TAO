@@ -55,7 +55,7 @@ AST_Component::redefine (AST_Interface *from)
 {
   AST_Component *c = dynamic_cast<AST_Component*> (from);
 
-  if (c == 0)
+  if (c == nullptr)
     {
       idl_global->err ()->redef_error (from->local_name ()->get_string (),
                                        this->local_name ()->get_string ());
@@ -72,9 +72,9 @@ AST_Decl *
 AST_Component::look_in_inherited (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       d =
         this->pd_base_component->lookup_by_name_r (
@@ -90,15 +90,15 @@ AST_Decl *
 AST_Component::look_in_supported (UTL_ScopedName *e,
                                   bool full_def_only)
 {
-  AST_Decl *d = 0;
-  AST_Type **is = 0;
+  AST_Decl *d = nullptr;
+  AST_Type **is = nullptr;
   long nis = -1;
 
   // Can't look in an interface which was not yet defined.
   if (!this->is_defined ())
     {
       idl_global->err ()->fwd_decl_lookup (this, e);
-      return 0;
+      return nullptr;
     }
 
   // OK, loop through supported interfaces.
@@ -117,7 +117,7 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 
       d = (i)->lookup_by_name_r (e, full_def_only);
 
-      if (d != 0)
+      if (d != nullptr)
         {
           break;
         }
@@ -151,7 +151,7 @@ AST_Component::special_lookup (UTL_ScopedName *e,
 {
   AST_Decl *d = this->look_in_inherited (e, full_def_only);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       d = this->look_in_supported (e, full_def_only);
     }
@@ -174,7 +174,7 @@ AST_Component::dump (ACE_OSTREAM_TYPE &o)
 
   this->dump_i (o, " ");
 
-  if (this->pd_base_component != 0)
+  if (this->pd_base_component != nullptr)
     {
       this->dump_i (o, ": ");
       this->pd_base_component->local_name ()->dump (o);
