@@ -18,7 +18,7 @@ be_visitor_operation_tie_sh::be_visitor_operation_tie_sh (
 {
 }
 
-be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh (void)
+be_visitor_operation_tie_sh::~be_visitor_operation_tie_sh ()
 {
 }
 

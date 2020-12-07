@@ -20,7 +20,7 @@ be_visitor_facet_exs::be_visitor_facet_exs (
 {
 }
 
-be_visitor_facet_exs::~be_visitor_facet_exs (void)
+be_visitor_facet_exs::~be_visitor_facet_exs ()
 {
 }
 

@@ -34,12 +34,12 @@ be_union_fwd::be_union_fwd (AST_Union *dummy,
 {
 }
 
-be_union_fwd::~be_union_fwd (void)
+be_union_fwd::~be_union_fwd ()
 {
 }
 
 void
-be_union_fwd::destroy (void)
+be_union_fwd::destroy ()
 {
   this->be_structure_fwd::destroy ();
 }

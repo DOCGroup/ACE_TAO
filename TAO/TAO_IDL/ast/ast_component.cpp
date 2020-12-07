@@ -46,7 +46,7 @@ AST_Component::AST_Component (UTL_ScopedName *n,
     }
 }
 
-AST_Component::~AST_Component (void)
+AST_Component::~AST_Component ()
 {
 }
 
@@ -127,19 +127,19 @@ AST_Component::look_in_supported (UTL_ScopedName *e,
 }
 
 AST_Component *
-AST_Component::base_component (void) const
+AST_Component::base_component () const
 {
   return this->pd_base_component;
 }
 
 AST_Type **
-AST_Component::supports (void) const
+AST_Component::supports () const
 {
   return this->inherits ();
 }
 
 long
-AST_Component::n_supports (void) const
+AST_Component::n_supports () const
 {
   return this->n_inherits ();
 }
@@ -160,7 +160,7 @@ AST_Component::special_lookup (UTL_ScopedName *e,
 }
 
 void
-AST_Component::destroy (void)
+AST_Component::destroy ()
 {
   this->AST_Interface::destroy ();
 }

@@ -20,7 +20,7 @@ be_visitor_attribute_ccm_init::be_visitor_attribute_ccm_init (
 }
 
 be_visitor_attribute_ccm_init::~be_visitor_attribute_ccm_init (
-  void)
+  )
 {
 }
 
@@ -165,7 +165,7 @@ be_visitor_attribute_ccm_init::visit_valuetype (
 }
 
 void
-be_visitor_attribute_ccm_init::emit_init_block (void)
+be_visitor_attribute_ccm_init::emit_init_block ()
 {
   this->open_if_block ();
 
@@ -228,7 +228,7 @@ be_visitor_attribute_ccm_init::emit_error (
 }
 
 void
-be_visitor_attribute_ccm_init::open_if_block (void)
+be_visitor_attribute_ccm_init::open_if_block ()
 {
   os_ << be_nl_2
       << "if (ACE_OS::strcmp (descr_name, \""
@@ -239,7 +239,7 @@ be_visitor_attribute_ccm_init::open_if_block (void)
 }
 
 void
-be_visitor_attribute_ccm_init::close_if_block (void)
+be_visitor_attribute_ccm_init::close_if_block ()
 {
   os_ << be_nl
       << "continue;" << be_uidt_nl

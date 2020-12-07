@@ -96,7 +96,7 @@ long DRV_nfiles = 0;
 long DRV_file_index = -1;
 
 void
-DRV_version (void)
+DRV_version ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "%C\n"
@@ -134,7 +134,7 @@ DRV_init (int &argc, ACE_TCHAR *argv[])
 }
 
 void
-DRV_refresh (void)
+DRV_refresh ()
 {
   idl_global->set_err_count (0);
   idl_global->set_filename (nullptr);
@@ -146,7 +146,7 @@ DRV_refresh (void)
 }
 
 void
-DRV_cleanup (void)
+DRV_cleanup ()
 {
   // In case we got here via an init error or
   // usage/version option - otherwise it's idempotent.

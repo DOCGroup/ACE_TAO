@@ -25,7 +25,7 @@ be_visitor_valuebox_field_ch::be_visitor_valuebox_field_ch (
 {
 }
 
-be_visitor_valuebox_field_ch::~be_visitor_valuebox_field_ch (void)
+be_visitor_valuebox_field_ch::~be_visitor_valuebox_field_ch ()
 {
 }
 

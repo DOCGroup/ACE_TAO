@@ -99,7 +99,7 @@ AST_Attribute::AST_Attribute (bool ro,
 {
 }
 
-AST_Attribute::~AST_Attribute (void)
+AST_Attribute::~AST_Attribute ()
 {
 }
 
@@ -123,7 +123,7 @@ AST_Attribute::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Attribute::destroy (void)
+AST_Attribute::destroy ()
 {
   // No need to delete our exception lists, the
   // destroy() method does it. The UTL_ExceptList
@@ -180,19 +180,19 @@ AST_Attribute::be_add_set_exceptions (UTL_ExceptList *t)
 // Data accessors.
 
 bool
-AST_Attribute::readonly (void) const
+AST_Attribute::readonly () const
 {
   return this->pd_readonly;
 }
 
 UTL_ExceptList *
-AST_Attribute::get_get_exceptions (void) const
+AST_Attribute::get_get_exceptions () const
 {
   return this->pd_get_exceptions;
 }
 
 UTL_ExceptList *
-AST_Attribute::get_set_exceptions (void) const
+AST_Attribute::get_set_exceptions () const
 {
   return this->pd_set_exceptions;
 }

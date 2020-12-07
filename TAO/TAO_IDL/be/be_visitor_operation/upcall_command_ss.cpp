@@ -19,7 +19,7 @@ be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
 }
 
 be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
-  void)
+  )
 {
 }
 

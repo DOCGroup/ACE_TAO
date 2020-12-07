@@ -19,7 +19,7 @@ be_visitor_operation_svs::be_visitor_operation_svs (
 {
 }
 
-be_visitor_operation_svs::~be_visitor_operation_svs (void)
+be_visitor_operation_svs::~be_visitor_operation_svs ()
 {
 }
 

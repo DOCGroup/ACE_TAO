@@ -9,7 +9,7 @@ be_visitor_interface_direct_proxy_impl_ss (be_visitor_context *ctx)
 }
 
 be_visitor_interface_direct_proxy_impl_ss::
-~be_visitor_interface_direct_proxy_impl_ss (void)
+~be_visitor_interface_direct_proxy_impl_ss ()
 {
 }
 

@@ -33,7 +33,7 @@ be_visitor_connector_dds_exh::be_visitor_connector_dds_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh (void)
+be_visitor_connector_dds_exh::~be_visitor_connector_dds_exh ()
 {
 }
 
@@ -356,7 +356,7 @@ be_visitor_connector_dds_exh::gen_dds_traits (AST_Decl *datatype)
 }
 
 void
-be_visitor_connector_dds_exh::gen_connector_traits (void)
+be_visitor_connector_dds_exh::gen_connector_traits ()
 {
   AST_Decl *comp_scope =
     ScopeAsDecl (this->node_->defined_in ());

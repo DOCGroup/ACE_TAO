@@ -16,7 +16,7 @@ be_visitor_interface_ci::be_visitor_interface_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ci::~be_visitor_interface_ci (void)
+be_visitor_interface_ci::~be_visitor_interface_ci ()
 {
 }
 

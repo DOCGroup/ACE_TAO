@@ -18,7 +18,7 @@ class Scoped_Compute_Queue_Guard
 {
 public:
   Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
-  ~Scoped_Compute_Queue_Guard (void);
+  ~Scoped_Compute_Queue_Guard ();
 
 private:
   be_visitor_typecode_defn* customer_;
@@ -37,7 +37,7 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
     }
 }
 
-Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
+Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard ()
 {
   if (customer_ != nullptr)
     {
@@ -70,7 +70,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
     }
 }
 
-be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
+be_visitor_typecode_defn::~be_visitor_typecode_defn ()
 {
   this->queue_reset (this->tc_queue_);
   this->queue_reset (this->compute_queue_);
@@ -263,7 +263,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
 }
 
 void
-be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
+be_visitor_typecode_defn::gen_begin_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -276,7 +276,7 @@ be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
 }
 
 void
-be_visitor_typecode_defn::gen_end_NS_for_anon (void)
+be_visitor_typecode_defn::gen_end_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 

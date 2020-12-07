@@ -146,7 +146,7 @@
 #include <fe_utils.h>
 
 void tao_yyerror (const char *);
-int tao_yylex (void);
+int tao_yylex ();
 extern "C" int tao_yywrap (void);
 
 extern char tao_yytext[];
@@ -354,7 +354,7 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE tao_yylval;
 
-int tao_yyparse (void);
+int tao_yyparse ();
 
 #endif /* !YY_TAO_YY_FE_IDL_TAB_HPP_INCLUDED  */
 /* Symbol kind.  */
@@ -2530,7 +2530,7 @@ int yynerrs;
 `----------*/
 
 int
-yyparse (void)
+yyparse ()
 {
     yy_state_fast_t yystate;
     /* Number of tokens to shift before error messages enabled.  */

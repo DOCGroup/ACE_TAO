@@ -30,7 +30,7 @@ be_visitor_facet_ami_exh::be_visitor_facet_ami_exh (
   export_macro_ = be_global->conn_export_macro ();
 }
 
-be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh (void)
+be_visitor_facet_ami_exh::~be_visitor_facet_ami_exh ()
 {
 }
 
@@ -217,7 +217,7 @@ be_visitor_facet_ami_exh::init (bool for_impl)
 }
 
 int
-be_visitor_facet_ami_exh::gen_reply_handler_class (void)
+be_visitor_facet_ami_exh::gen_reply_handler_class ()
 {
   os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;
@@ -269,7 +269,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class (void)
 }
 
 int
-be_visitor_facet_ami_exh::gen_facet_executor_class (void)
+be_visitor_facet_ami_exh::gen_facet_executor_class ()
 {
     os_ << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__;

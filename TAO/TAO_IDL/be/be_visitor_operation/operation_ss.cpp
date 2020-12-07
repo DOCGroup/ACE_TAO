@@ -16,7 +16,7 @@ be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ss::~be_visitor_operation_ss (void)
+be_visitor_operation_ss::~be_visitor_operation_ss ()
 {
 }
 

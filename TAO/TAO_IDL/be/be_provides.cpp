@@ -32,12 +32,12 @@ be_provides::be_provides (UTL_ScopedName *n,
 {
 }
 
-be_provides::~be_provides (void)
+be_provides::~be_provides ()
 {
 }
 
 be_type *
-be_provides::provides_type (void) const
+be_provides::provides_type () const
 {
   return
     dynamic_cast<be_type*> (
@@ -51,7 +51,7 @@ be_provides::accept (be_visitor *visitor)
 }
 
 void
-be_provides::destroy (void)
+be_provides::destroy ()
 {
   this->AST_Provides::destroy ();
   this->be_field::destroy ();

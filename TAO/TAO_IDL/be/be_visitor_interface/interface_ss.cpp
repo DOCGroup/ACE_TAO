@@ -19,7 +19,7 @@ be_visitor_interface_ss::be_visitor_interface_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_ss::~be_visitor_interface_ss (void)
+be_visitor_interface_ss::~be_visitor_interface_ss ()
 {
 }
 

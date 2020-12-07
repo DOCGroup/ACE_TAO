@@ -16,12 +16,12 @@ AST_Finder::AST_Finder (UTL_ScopedName *n)
 {
 }
 
-AST_Finder::~AST_Finder (void)
+AST_Finder::~AST_Finder ()
 {
 }
 
 void
-AST_Finder::destroy (void)
+AST_Finder::destroy ()
 {
   this->AST_Factory::destroy ();
 }

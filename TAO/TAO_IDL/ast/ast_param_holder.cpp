@@ -18,18 +18,18 @@ AST_Param_Holder::AST_Param_Holder (UTL_ScopedName *parameter_name,
 {
 }
 
-AST_Param_Holder::~AST_Param_Holder (void)
+AST_Param_Holder::~AST_Param_Holder ()
 {
 }
 
 FE_Utils::T_Param_Info const *
-AST_Param_Holder::info (void) const
+AST_Param_Holder::info () const
 {
   return this->info_;
 }
 
 void
-AST_Param_Holder::destroy (void)
+AST_Param_Holder::destroy ()
 {
   this->AST_Type::destroy ();
 }

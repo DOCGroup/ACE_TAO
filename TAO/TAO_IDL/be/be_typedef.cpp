@@ -56,7 +56,7 @@ be_typedef::seen_in_sequence (bool val)
 // Some compilers seems to have a problem with a function
 // that's both virtual and overloaded.
 bool
-be_typedef::seen_in_operation (void) const
+be_typedef::seen_in_operation () const
 {
   return this->be_type::seen_in_operation ();
 }
@@ -70,7 +70,7 @@ be_typedef::seen_in_operation (bool val)
 // Given a typedef node, traverse the chain of base types until they are no
 // more typedefs, and return that most primitive base type.
 be_type *
-be_typedef::primitive_base_type (void)
+be_typedef::primitive_base_type ()
 {
   be_type *d = this;
   be_typedef *temp = nullptr;
@@ -85,7 +85,7 @@ be_typedef::primitive_base_type (void)
 }
 
 AST_Decl::NodeType
-be_typedef::base_node_type (void) const
+be_typedef::base_node_type () const
 {
   be_typedef *td = const_cast<be_typedef *> (this);
 
@@ -107,7 +107,7 @@ be_typedef::gen_member_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_typedef::destroy (void)
+be_typedef::destroy ()
 {
   this->AST_Typedef::destroy ();
   this->be_type::destroy ();

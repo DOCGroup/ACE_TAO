@@ -26,36 +26,36 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
   this->compile_supports (supports);
 }
 
-FE_ComponentHeader::~FE_ComponentHeader (void)
+FE_ComponentHeader::~FE_ComponentHeader ()
 {
 }
 
 AST_Component *
-FE_ComponentHeader::base_component (void) const
+FE_ComponentHeader::base_component () const
 {
   return this->base_component_;
 }
 
 AST_Type **
-FE_ComponentHeader::supports (void) const
+FE_ComponentHeader::supports () const
 {
   return this->inherits_;
 }
 
 long
-FE_ComponentHeader::n_supports (void) const
+FE_ComponentHeader::n_supports () const
 {
   return this->n_inherits_;
 }
 
 AST_Interface **
-FE_ComponentHeader::supports_flat (void) const
+FE_ComponentHeader::supports_flat () const
 {
   return this->inherits_flat_;
 }
 
 long
-FE_ComponentHeader::n_supports_flat (void) const
+FE_ComponentHeader::n_supports_flat () const
 {
   return this->n_inherits_flat_;
 }

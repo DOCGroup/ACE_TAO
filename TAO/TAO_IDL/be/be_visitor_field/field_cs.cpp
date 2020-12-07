@@ -25,7 +25,7 @@ be_visitor_field_cs::be_visitor_field_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_cs::~be_visitor_field_cs (void)
+be_visitor_field_cs::~be_visitor_field_cs ()
 {
 }
 

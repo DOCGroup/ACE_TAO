@@ -19,7 +19,7 @@ be_visitor_context_ex_idl::be_visitor_context_ex_idl (
 }
 
 be_visitor_context_ex_idl::~be_visitor_context_ex_idl (
-  void)
+  )
 {
 }
 

@@ -20,12 +20,12 @@ be_consumes::be_consumes (UTL_ScopedName *n,
 {
 }
 
-be_consumes::~be_consumes (void)
+be_consumes::~be_consumes ()
 {
 }
 
 be_eventtype *
-be_consumes::consumes_type (void) const
+be_consumes::consumes_type () const
 {
   return
     dynamic_cast<be_eventtype*> (
@@ -39,7 +39,7 @@ be_consumes::accept (be_visitor *visitor)
 }
 
 void
-be_consumes::destroy (void)
+be_consumes::destroy ()
 {
   this->AST_Consumes::destroy ();
   this->be_field::destroy ();

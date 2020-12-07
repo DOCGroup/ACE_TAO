@@ -28,7 +28,7 @@ be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svh::~be_visitor_home_svh (void)
+be_visitor_home_svh::~be_visitor_home_svh ()
 {
 }
 
@@ -119,7 +119,7 @@ be_visitor_home_svh::visit_finder (be_finder *node)
 }
 
 int
-be_visitor_home_svh::gen_servant_class (void)
+be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -244,7 +244,7 @@ AST_Type *pk = node_->primary_key ();
 }
 
 void
-be_visitor_home_svh::gen_entrypoint (void)
+be_visitor_home_svh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()

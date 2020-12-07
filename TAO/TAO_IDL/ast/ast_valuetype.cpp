@@ -77,7 +77,7 @@ AST_ValueType::AST_ValueType (UTL_ScopedName *n,
     }
 }
 
-AST_ValueType::~AST_ValueType (void)
+AST_ValueType::~AST_ValueType ()
 {
 }
 
@@ -204,43 +204,43 @@ AST_ValueType::redefine (AST_Interface *from)
 }
 
 AST_Type **
-AST_ValueType::supports (void) const
+AST_ValueType::supports () const
 {
   return this->pd_supports;
 }
 
 long
-AST_ValueType::n_supports (void) const
+AST_ValueType::n_supports () const
 {
   return this->pd_n_supports;
 }
 
 AST_Type *
-AST_ValueType::inherits_concrete (void) const
+AST_ValueType::inherits_concrete () const
 {
   return this->pd_inherits_concrete;
 }
 
 AST_Type *
-AST_ValueType::supports_concrete (void) const
+AST_ValueType::supports_concrete () const
 {
   return this->pd_supports_concrete;
 }
 
 bool
-AST_ValueType::truncatable (void) const
+AST_ValueType::truncatable () const
 {
   return this->pd_truncatable;
 }
 
 bool
-AST_ValueType::custom (void) const
+AST_ValueType::custom () const
 {
   return this->pd_custom;
 }
 
 bool
-AST_ValueType::will_have_factory (void)
+AST_ValueType::will_have_factory ()
 {
   return false;
 }
@@ -335,7 +335,7 @@ AST_ValueType::special_lookup (UTL_ScopedName *e,
 }
 
 bool
-AST_ValueType::legal_for_primary_key (void) const
+AST_ValueType::legal_for_primary_key () const
 {
   AST_ValueType *pk_base = this->lookup_primary_key_base ();
 
@@ -395,7 +395,7 @@ AST_ValueType::legal_for_primary_key (void) const
 }
 
 void
-AST_ValueType::destroy (void)
+AST_ValueType::destroy ()
 {
   this->AST_Interface::destroy ();
 
@@ -516,7 +516,7 @@ AST_ValueType::derived_from_primary_key_base (const AST_ValueType *node,
 }
 
 AST_ValueType *
-AST_ValueType::lookup_primary_key_base (void) const
+AST_ValueType::lookup_primary_key_base () const
 {
   AST_ValueType *retval = idl_global->primary_key_base ();
 

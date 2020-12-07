@@ -118,7 +118,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
 {
 }
 
-AST_Structure::~AST_Structure (void)
+AST_Structure::~AST_Structure ()
 {
   destroy ();
 }
@@ -202,7 +202,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 }
 
 int
-AST_Structure::member_count (void)
+AST_Structure::member_count ()
 {
   if (this->member_count_ == -1)
     {
@@ -213,7 +213,7 @@ AST_Structure::member_count (void)
 }
 
 ACE_CDR::ULong
-AST_Structure::nfields (void) const
+AST_Structure::nfields () const
 {
   return ACE_Utils::truncate_cast<ACE_CDR::ULong> (this->fields_.size ());
 }
@@ -226,7 +226,7 @@ AST_Structure::field (AST_Field **&result,
 }
 
 bool
-AST_Structure::is_local (void)
+AST_Structure::is_local ()
 {
   if (this->local_struct_ == -1)
     {
@@ -259,7 +259,7 @@ AST_Structure::is_local (void)
 }
 
 int
-AST_Structure::contains_wstring (void)
+AST_Structure::contains_wstring ()
 {
   if (this->contains_wstring_ == -1)
     {
@@ -281,13 +281,13 @@ AST_Structure::contains_wstring (void)
 }
 
 bool
-AST_Structure::is_defined (void)
+AST_Structure::is_defined ()
 {
   return nullptr == this->fwd_decl_ || this->fwd_decl_->is_defined ();
 }
 
 bool
-AST_Structure::legal_for_primary_key (void) const
+AST_Structure::legal_for_primary_key () const
 {
   bool retval = true;
 
@@ -316,7 +316,7 @@ AST_Structure::legal_for_primary_key (void) const
 }
 
 AST_StructureFwd *
-AST_Structure::fwd_decl (void) const
+AST_Structure::fwd_decl () const
 {
   return this->fwd_decl_;
 }
@@ -328,7 +328,7 @@ AST_Structure::fwd_decl (AST_StructureFwd *node)
 }
 
 ACE_Unbounded_Queue<AST_Field *> &
-AST_Structure::fields (void)
+AST_Structure::fields ()
 {
   return this->fields_;
 }
@@ -371,7 +371,7 @@ AST_Structure::fe_add_enum_val (AST_EnumVal *t)
 
 // Compute total number of members.
 int
-AST_Structure::compute_member_count (void)
+AST_Structure::compute_member_count ()
 {
   this->member_count_ = 0;
 
@@ -532,7 +532,7 @@ AST_Structure::redefine (AST_Structure *from)
 
 // Compute the size type of the node in question.
 int
-AST_Structure::compute_size_type (void)
+AST_Structure::compute_size_type ()
 {
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
        !si.is_done ();
@@ -574,7 +574,7 @@ AST_Structure::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Structure::destroy (void)
+AST_Structure::destroy ()
 {
   this->AST_ConcreteType::destroy ();
   this->UTL_Scope::destroy ();

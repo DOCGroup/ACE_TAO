@@ -86,13 +86,13 @@ UTL_StrList::UTL_StrList (UTL_String *s,
 {
 }
 
-UTL_StrList::~UTL_StrList (void)
+UTL_StrList::~UTL_StrList ()
 {
 }
 
 // Get list item.
 UTL_String *
-UTL_StrList::head (void)
+UTL_StrList::head ()
 {
   return this->pd_car_data;
 }
@@ -106,7 +106,7 @@ UTL_StrList::set_head (UTL_String *s)
 
 // Get last item of this list
 UTL_String *
-UTL_StrList::last_component (void)
+UTL_StrList::last_component ()
 {
   if (this->tail () == nullptr)
     {
@@ -118,7 +118,7 @@ UTL_StrList::last_component (void)
 
 // Copy a list.
 UTL_List *
-UTL_StrList::copy (void)
+UTL_StrList::copy ()
 {
   UTL_List *retval = nullptr;
 
@@ -141,7 +141,7 @@ UTL_StrList::copy (void)
 }
 
 void
-UTL_StrList::destroy (void)
+UTL_StrList::destroy ()
 {
   UTL_String *str = nullptr;
 
@@ -215,7 +215,7 @@ UTL_StrlistActiveIterator::UTL_StrlistActiveIterator (UTL_StrList *s)
 
 // Get current item
 UTL_String *
-UTL_StrlistActiveIterator::item (void)
+UTL_StrlistActiveIterator::item ()
 {
   if (source == nullptr)
     {

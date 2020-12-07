@@ -40,7 +40,7 @@ be_visitor_ami_pre_proc::be_visitor_ami_pre_proc (be_visitor_context *ctx)
 {
 }
 
-be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc (void)
+be_visitor_ami_pre_proc::~be_visitor_ami_pre_proc ()
 {
 }
 
@@ -1078,7 +1078,7 @@ be_visitor_ami_pre_proc::create_inheritance_list (be_interface *node,
 }
 
 int
-be_visitor_ami_pre_proc::generate_ami4ccm_idl (void)
+be_visitor_ami_pre_proc::generate_ami4ccm_idl ()
 {
   /// The interfaces in the list below are from this IDL file,
   /// which then must be processed with the -GC option, so we

@@ -145,7 +145,7 @@ AST_Interface::AST_Interface (UTL_ScopedName *n,
     }
 }
 
-AST_Interface::~AST_Interface (void)
+AST_Interface::~AST_Interface ()
 {
 }
 
@@ -167,7 +167,7 @@ AST_Interface::be_add_operation (AST_Operation *op)
 }
 
 bool
-AST_Interface::is_defined (void)
+AST_Interface::is_defined ()
 {
   // Each instance of a forward declared interface no
   // longer has a redefined full definition, so we
@@ -458,7 +458,7 @@ AST_Interface::redef_clash_populate_r (AST_Type *t)
 }
 
 bool
-AST_Interface::home_equiv (void) const
+AST_Interface::home_equiv () const
 {
   return this->home_equiv_;
 }
@@ -470,7 +470,7 @@ AST_Interface::home_equiv (bool val)
 }
 
 AST_InterfaceFwd *
-AST_Interface::fwd_decl (void) const
+AST_Interface::fwd_decl () const
 {
   return this->fwd_decl_;
 }
@@ -612,43 +612,43 @@ AST_Interface::redefine (AST_Interface *from)
 // Data accessors.
 
 AST_Type **
-AST_Interface::inherits (void) const
+AST_Interface::inherits () const
 {
   return this->pd_inherits;
 }
 
 long
-AST_Interface::n_inherits (void) const
+AST_Interface::n_inherits () const
 {
   return this->pd_n_inherits;
 }
 
 AST_Interface **
-AST_Interface::inherits_flat (void) const
+AST_Interface::inherits_flat () const
 {
   return this->pd_inherits_flat;
 }
 
 long
-AST_Interface::n_inherits_flat (void) const
+AST_Interface::n_inherits_flat () const
 {
   return pd_n_inherits_flat;
 }
 
 ACE_Unbounded_Queue<AST_Type *> &
-AST_Interface::get_insert_queue (void)
+AST_Interface::get_insert_queue ()
 {
   return this->insert_queue;
 }
 
 ACE_Unbounded_Queue<AST_Type *> &
-AST_Interface::get_del_queue (void)
+AST_Interface::get_del_queue ()
 {
   return this->del_queue;
 }
 
 bool
-AST_Interface::redef_clash (void)
+AST_Interface::redef_clash ()
 {
   this->insert_queue.reset ();
   this->redef_clash_populate_r (this);
@@ -943,7 +943,7 @@ AST_Interface::lookup_for_add (AST_Decl *d)
 }
 
 int
-AST_Interface::has_mixed_parentage (void)
+AST_Interface::has_mixed_parentage ()
 {
   if (this->is_abstract_)
     {
@@ -968,7 +968,7 @@ AST_Interface::has_mixed_parentage (void)
 }
 
 void
-AST_Interface::analyze_parentage (void)
+AST_Interface::analyze_parentage ()
 {
   if (this->has_mixed_parentage_ != -1)
     {
@@ -1030,7 +1030,7 @@ AST_Interface::analyze_parentage (void)
 }
 
 bool
-AST_Interface::legal_for_primary_key (void) const
+AST_Interface::legal_for_primary_key () const
 {
   return false;
 }
@@ -1058,7 +1058,7 @@ AST_Interface::special_lookup (UTL_ScopedName *e,
 }
 
 AST_Interface *
-AST_Interface::ami_handler (void) const
+AST_Interface::ami_handler () const
 {
   return this->ami_handler_;
 }
@@ -1070,7 +1070,7 @@ AST_Interface::ami_handler (AST_Interface *handler)
 }
 
 AST_Interface *
-AST_Interface::ami4ccm_uses (void) const
+AST_Interface::ami4ccm_uses () const
 {
   return this->ami4ccm_uses_;
 }
@@ -1082,7 +1082,7 @@ AST_Interface::ami4ccm_uses (AST_Interface *implied)
 }
 
 void
-AST_Interface::destroy (void)
+AST_Interface::destroy ()
 {
   for (ACE_Unbounded_Queue_Iterator<AST_Type *> i (
          this->param_holders_);

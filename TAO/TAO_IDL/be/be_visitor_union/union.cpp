@@ -16,7 +16,7 @@ be_visitor_union::be_visitor_union (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union::~be_visitor_union (void)
+be_visitor_union::~be_visitor_union ()
 {
 }
 

@@ -21,7 +21,7 @@ be_visitor_component_ami_rh_ex_base::be_visitor_component_ami_rh_ex_base (
 }
 
 be_visitor_component_ami_rh_ex_base::~be_visitor_component_ami_rh_ex_base (
-  void)
+  )
 {
 }
 
@@ -46,7 +46,7 @@ be_visitor_component_ami_rh_ex_base::post_process (be_decl *bd)
 }
 
 void
-be_visitor_component_ami_rh_ex_base::init (void)
+be_visitor_component_ami_rh_ex_base::init ()
 {
   UTL_Scope *s = this->iface_->defined_in ();
   AST_Decl *scope = ScopeAsDecl (s);
@@ -94,7 +94,7 @@ be_visitor_component_ami_rh_ex_base::gen_excep_op (
 }
 
 void
-be_visitor_component_ami_rh_ex_base::gen_op_body (void)
+be_visitor_component_ami_rh_ex_base::gen_op_body ()
 {
 }
 

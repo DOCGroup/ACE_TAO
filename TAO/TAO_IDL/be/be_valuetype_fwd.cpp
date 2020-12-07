@@ -36,7 +36,7 @@ be_valuetype_fwd::be_valuetype_fwd (AST_Interface *dummy,
 {
 }
 
-be_valuetype_fwd::~be_valuetype_fwd (void)
+be_valuetype_fwd::~be_valuetype_fwd ()
 {
 }
 
@@ -47,7 +47,7 @@ be_valuetype_fwd::accept (be_visitor *visitor)
 }
 
 void
-be_valuetype_fwd::destroy (void)
+be_valuetype_fwd::destroy ()
 {
   this->be_interface_fwd::destroy ();
 }

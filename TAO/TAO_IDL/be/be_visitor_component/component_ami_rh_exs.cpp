@@ -19,7 +19,7 @@ be_visitor_component_ami_rh_exs::be_visitor_component_ami_rh_exs (
 {
 }
 
-be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs (void)
+be_visitor_component_ami_rh_exs::~be_visitor_component_ami_rh_exs ()
 {
 }
 
@@ -225,7 +225,7 @@ be_visitor_component_ami_rh_exs::visit_argument (
 }
 
 void
-be_visitor_component_ami_rh_exs::gen_op_body (void)
+be_visitor_component_ami_rh_exs::gen_op_body ()
 {
   os_ << be_nl
       << "{" << be_idt_nl

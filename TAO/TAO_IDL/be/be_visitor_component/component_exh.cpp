@@ -22,7 +22,7 @@ be_visitor_component_exh::be_visitor_component_exh (
   export_macro_ = be_global->exec_export_macro ();
 }
 
-be_visitor_component_exh::~be_visitor_component_exh (void)
+be_visitor_component_exh::~be_visitor_component_exh ()
 {
 }
 

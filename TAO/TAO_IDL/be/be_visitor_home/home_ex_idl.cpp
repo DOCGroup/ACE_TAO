@@ -19,7 +19,7 @@ be_visitor_home_ex_idl::be_visitor_home_ex_idl (
 {
 }
 
-be_visitor_home_ex_idl::~be_visitor_home_ex_idl (void)
+be_visitor_home_ex_idl::~be_visitor_home_ex_idl ()
 {
 }
 
@@ -210,7 +210,7 @@ be_visitor_home_ex_idl::visit_string (be_string *node)
 }
 
 void
-be_visitor_home_ex_idl::gen_implicit (void)
+be_visitor_home_ex_idl::gen_implicit ()
 {
   os_ << be_nl
       << "local interface CCM_"
@@ -224,7 +224,7 @@ be_visitor_home_ex_idl::gen_implicit (void)
 }
 
 void
-be_visitor_home_ex_idl::gen_explicit (void)
+be_visitor_home_ex_idl::gen_explicit ()
 {
   os_ << be_nl_2
       << "local interface CCM_"
@@ -270,7 +270,7 @@ be_visitor_home_ex_idl::gen_explicit (void)
 }
 
 void
-be_visitor_home_ex_idl::gen_derived (void)
+be_visitor_home_ex_idl::gen_derived ()
 {
   ACE_CString lname_str =
     IdentifierHelper::try_escape (node_->original_local_name ());
@@ -285,7 +285,7 @@ be_visitor_home_ex_idl::gen_derived (void)
 }
 
 void
-be_visitor_home_ex_idl::gen_supported (void)
+be_visitor_home_ex_idl::gen_supported ()
 {
   os_ << be_idt;
 
@@ -351,7 +351,7 @@ be_visitor_home_ex_idl::gen_exception_list (
 }
 
 void
-be_visitor_home_ex_idl::gen_home_executor (void)
+be_visitor_home_ex_idl::gen_home_executor ()
 {
   AST_Component *comp = node_->managed_component ();
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
@@ -377,7 +377,7 @@ be_visitor_home_ex_idl::gen_home_executor (void)
 }
 
 void
-be_visitor_home_ex_idl::restore_scope (void)
+be_visitor_home_ex_idl::restore_scope ()
 {
   for (UTL_ScopeActiveIterator iter (node_, UTL_Scope::IK_decls);
        ! iter.is_done ();

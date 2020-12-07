@@ -21,7 +21,7 @@ be_visitor_exception_cs::be_visitor_exception_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_cs::~be_visitor_exception_cs (void)
+be_visitor_exception_cs::~be_visitor_exception_cs ()
 {
 }
 

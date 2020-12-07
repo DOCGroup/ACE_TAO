@@ -24,7 +24,7 @@ be_visitor_operation_rettype_return_cs (be_visitor_context *ctx)
 }
 
 be_visitor_operation_rettype_return_cs::
-~be_visitor_operation_rettype_return_cs (void)
+~be_visitor_operation_rettype_return_cs ()
 {
 }
 

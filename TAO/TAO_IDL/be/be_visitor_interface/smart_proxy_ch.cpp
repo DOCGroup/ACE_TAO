@@ -17,7 +17,7 @@ be_visitor_interface_smart_proxy_ch::be_visitor_interface_smart_proxy_ch (
 {
 }
 
-be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch (void)
+be_visitor_interface_smart_proxy_ch::~be_visitor_interface_smart_proxy_ch ()
 {
 }
 

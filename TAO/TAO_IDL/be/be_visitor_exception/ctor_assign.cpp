@@ -19,7 +19,7 @@ be_visitor_exception_ctor_assign::be_visitor_exception_ctor_assign (
 {
 }
 
-be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign (void)
+be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign ()
 {
 }
 

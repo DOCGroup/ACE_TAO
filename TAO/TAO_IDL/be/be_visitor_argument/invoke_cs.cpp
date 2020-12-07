@@ -22,7 +22,7 @@ be_visitor_args_invoke_cs (be_visitor_context *ctx)
 }
 
 be_visitor_args_invoke_cs::
-~be_visitor_args_invoke_cs (void)
+~be_visitor_args_invoke_cs ()
 {
 }
 
@@ -447,7 +447,7 @@ be_visitor_args_invoke_cs::visit_home (
 }
 
 
-int be_visitor_args_invoke_cs::emit_common (void)
+int be_visitor_args_invoke_cs::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =

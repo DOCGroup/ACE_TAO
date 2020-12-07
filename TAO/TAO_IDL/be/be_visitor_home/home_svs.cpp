@@ -29,7 +29,7 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svs::~be_visitor_home_svs (void)
+be_visitor_home_svs::~be_visitor_home_svs ()
 {
 }
 
@@ -203,7 +203,7 @@ be_visitor_home_svs::visit_finder (be_finder *node)
 }
 
 int
-be_visitor_home_svs::gen_servant_class (void)
+be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -379,7 +379,7 @@ be_visitor_home_svs::gen_servant_class (void)
 }
 
 void
-be_visitor_home_svs::gen_entrypoint (void)
+be_visitor_home_svs::gen_entrypoint ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
@@ -442,7 +442,7 @@ be_visitor_home_attr_set::be_visitor_home_attr_set (
 {
 }
 
-be_visitor_home_attr_set::~be_visitor_home_attr_set (void)
+be_visitor_home_attr_set::~be_visitor_home_attr_set ()
 {
 }
 

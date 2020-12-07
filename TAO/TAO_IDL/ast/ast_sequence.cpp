@@ -144,7 +144,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
     || nt == AST_Decl::NT_param_holder;
 }
 
-AST_Sequence::~AST_Sequence (void)
+AST_Sequence::~AST_Sequence ()
 {
 }
 
@@ -234,37 +234,37 @@ AST_Sequence::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Sequence::max_size (void)
+AST_Sequence::max_size ()
 {
   return this->pd_max_size;
 }
 
 AST_Type *
-AST_Sequence::base_type (void) const
+AST_Sequence::base_type () const
 {
   return this->pd_base_type;
 }
 
 bool
-AST_Sequence::unbounded (void) const
+AST_Sequence::unbounded () const
 {
   return this->unbounded_;
 }
 
 bool
-AST_Sequence::legal_for_primary_key (void) const
+AST_Sequence::legal_for_primary_key () const
 {
   return this->base_type ()->legal_for_primary_key ();
 }
 
 bool
-AST_Sequence::is_defined (void)
+AST_Sequence::is_defined ()
 {
   return this->pd_base_type->is_defined ();
 }
 
 void
-AST_Sequence::destroy (void)
+AST_Sequence::destroy ()
 {
   if (this->owns_base_type_)
     {

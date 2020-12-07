@@ -20,7 +20,7 @@ be_visitor_valuetype_init_arglist_ch::be_visitor_valuetype_init_arglist_ch (
 }
 
 be_visitor_valuetype_init_arglist_ch::~be_visitor_valuetype_init_arglist_ch (
-  void)
+  )
 {
 }
 

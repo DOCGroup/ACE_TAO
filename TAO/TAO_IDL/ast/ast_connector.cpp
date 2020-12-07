@@ -38,18 +38,18 @@ AST_Connector::AST_Connector (
     }
 }
 
-AST_Connector::~AST_Connector (void)
+AST_Connector::~AST_Connector ()
 {
 }
 
 AST_Connector *
-AST_Connector::base_connector (void) const
+AST_Connector::base_connector () const
 {
   return dynamic_cast<AST_Connector*> (this->pd_base_component);
 }
 
 void
-AST_Connector::destroy (void)
+AST_Connector::destroy ()
 {
   this->AST_Component::destroy ();
 }

@@ -62,12 +62,12 @@ be_operation::be_operation (AST_Type *rt,
     }
 }
 
-be_operation::~be_operation (void)
+be_operation::~be_operation ()
 {
 }
 
 void
-be_operation::destroy (void)
+be_operation::destroy ()
 {
   // Call the destroy methods of our base classes.
   this->be_scope::destroy ();
@@ -104,7 +104,7 @@ be_operation::be_insert_exception (AST_Exception *ex)
 }
 
 bool
-be_operation::is_sendc_ami (void) const
+be_operation::is_sendc_ami () const
 {
   return this->is_sendc_ami_;
 }
@@ -116,7 +116,7 @@ be_operation::is_sendc_ami (bool val)
 }
 
 bool
-be_operation::is_excep_ami (void) const
+be_operation::is_excep_ami () const
 {
   return this->is_excep_ami_;
 }
@@ -128,7 +128,7 @@ be_operation::is_excep_ami (bool val)
 }
 
 bool
-be_operation::is_attr_op (void) const
+be_operation::is_attr_op () const
 {
   return this->is_attr_op_;
 }

@@ -85,7 +85,7 @@ AST_UnionLabel::AST_UnionLabel (UnionLabel lk,
       }
 }
 
-AST_UnionLabel::~AST_UnionLabel (void)
+AST_UnionLabel::~AST_UnionLabel ()
 {
 }
 
@@ -112,7 +112,7 @@ AST_UnionLabel::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_UnionLabel::destroy (void)
+AST_UnionLabel::destroy ()
 {
   // Otherwise (default label) our label value is 0.
   if (UL_label == this->pd_label_kind)
@@ -126,13 +126,13 @@ AST_UnionLabel::destroy (void)
 // Data accessors.
 
 AST_UnionLabel::UnionLabel
-AST_UnionLabel::label_kind (void)
+AST_UnionLabel::label_kind ()
 {
   return this->pd_label_kind;
 }
 
 AST_Expression *
-AST_UnionLabel::label_val (void)
+AST_UnionLabel::label_val ()
 {
   return this->pd_label_val;
 }

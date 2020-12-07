@@ -16,7 +16,7 @@ be_visitor_valuetype::be_visitor_valuetype (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype::~be_visitor_valuetype (void)
+be_visitor_valuetype::~be_visitor_valuetype ()
 {
 }
 

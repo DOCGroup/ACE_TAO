@@ -81,42 +81,42 @@ FE_OBVHeader::FE_OBVHeader (UTL_ScopedName *n,
     }
 }
 
-FE_OBVHeader::~FE_OBVHeader (void)
+FE_OBVHeader::~FE_OBVHeader ()
 {
 }
 
 AST_Type **
-FE_OBVHeader::supports (void) const
+FE_OBVHeader::supports () const
 {
   return this->supports_;
 }
 
 long
-FE_OBVHeader::n_supports (void) const
+FE_OBVHeader::n_supports () const
 {
   return this->n_supports_;
 }
 
 AST_Type *
-FE_OBVHeader::inherits_concrete (void) const
+FE_OBVHeader::inherits_concrete () const
 {
   return this->inherits_concrete_;
 }
 
 AST_Type *
-FE_OBVHeader::supports_concrete (void) const
+FE_OBVHeader::supports_concrete () const
 {
   return this->supports_concrete_;
 }
 
 bool
-FE_OBVHeader::truncatable (void) const
+FE_OBVHeader::truncatable () const
 {
   return this->truncatable_;
 }
 
 void
-FE_OBVHeader::destroy (void)
+FE_OBVHeader::destroy ()
 {
   this->FE_InterfaceHeader::destroy ();
 }

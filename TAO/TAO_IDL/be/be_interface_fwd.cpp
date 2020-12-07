@@ -35,7 +35,7 @@ be_interface_fwd::be_interface_fwd (AST_Interface *dummy,
   this->size_type (AST_Type::VARIABLE);
 }
 
-be_interface_fwd::~be_interface_fwd (void)
+be_interface_fwd::~be_interface_fwd ()
 {
 }
 
@@ -58,7 +58,7 @@ be_interface_fwd::seen_in_operation (bool val)
 }
 
 void
-be_interface_fwd::destroy (void)
+be_interface_fwd::destroy ()
 {
   this->be_type::destroy ();
   this->AST_InterfaceFwd::destroy ();

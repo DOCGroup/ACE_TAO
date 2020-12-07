@@ -76,7 +76,7 @@ be_enum::gen_ostream_operator (TAO_OutStream *os,
 }
 
 void
-be_enum::destroy (void)
+be_enum::destroy ()
 {
   // Call the destroy methods of our base classes.
   // No need to call be_scope::destroy(). It has no
