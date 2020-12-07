@@ -999,7 +999,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 #else
   // External decls.
 
-  typedef void (*PointerToFunction)(...);
+  using PointerToFunction = void (*)(...);
 
   // Check if there were any conditional values set.
   bool const conditional_values = this->conditional_values_.is_set_;

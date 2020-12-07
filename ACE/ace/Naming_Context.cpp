@@ -23,8 +23,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Make life easier later on...
 
-typedef ACE_Local_Name_Space <ACE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LOCAL_NAME_SPACE;
-typedef ACE_Local_Name_Space <ACE_LITE_MMAP_MEMORY_POOL, ACE_RW_Process_Mutex> LITE_LOCAL_NAME_SPACE;
+using LOCAL_NAME_SPACE = ACE_Local_Name_Space<ACE_MMAP_Memory_Pool, ACE_RW_Process_Mutex>;
+using LITE_LOCAL_NAME_SPACE = ACE_Local_Name_Space<ACE_Lite_MMAP_Memory_Pool, ACE_RW_Process_Mutex>;
 
 // The ACE_Naming_Context static service object is now defined
 // by the ACE_Object_Manager, in Object_Manager.cpp.

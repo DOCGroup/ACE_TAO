@@ -5,10 +5,10 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple> QUEUE_ITERATOR;
+using QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;
 // Its iterator.
 
-typedef ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_SYNCH_NULL_MUTEX> TUPLE_ALLOCATOR;
+using TUPLE_ALLOCATOR = ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_MT_SYNCH::NULL_MUTEX>;
 // Defines the memory allocator used, no need for locking because it
 // is only used in one thread of control.
 

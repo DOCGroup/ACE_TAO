@@ -51,7 +51,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   typedef std::list<const ACE_Static_Node *,
                     ACE_Allocator_Std_Adapter<const ACE_Static_Node *> > list_t;
 #else
-  typedef std::list<const ACE_Static_Node *> list_t;
+  using list_t = std::list<const ACE_Static_Node *>;
 #endif /* ACE_HAS_ALLOC_HOOKS */
   list_t mod_list;
   const ACE_Static_Node *module;
@@ -668,8 +668,7 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
                            int &yyerrno,
                            ACE_Service_Object_Exterminator *gobbler)
 {
-  typedef ACE_Service_Object *(*ACE_Service_Factory_Ptr)
-    (ACE_Service_Object_Exterminator *);
+  using ACE_Service_Factory_Ptr = ACE_Service_Object *(*)(ACE_Service_Object_Exterminator *);
 
   ACE_TRACE ("ACE_Function_Node::symbol");
   if (this->open_dll (yyerrno) == 0)

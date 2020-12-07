@@ -289,8 +289,8 @@ int ACE_Sig_Handlers::sigkey_ = 0;
 bool ACE_Sig_Handlers::third_party_sig_handler_ = false;
 
 // Make life easier by defining typedefs...
-typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
-typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_ITERATOR;
+using ACE_SIG_HANDLERS_SET = ACE_Fixed_Set<ACE_Event_Handler *, ((size_t)20)>;
+using ACE_SIG_HANDLERS_ITERATOR = ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ((size_t)20)>;
 
 class ACE_Sig_Handlers_Set
 {

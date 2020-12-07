@@ -896,7 +896,7 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
-typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
+using ACE_Static_Object_Lock_Type = ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
 static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
