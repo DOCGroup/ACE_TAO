@@ -41,7 +41,7 @@ run_main (int, ACE_TCHAR *[])
   // just getting an error ...
   void * symbol = dll.symbol (ACE_TEXT ("SHOULD_CRASH"));
 
-  if(symbol == 0)
+  if(symbol == nullptr)
   {
     // Use dll.error() is you want to get the error text, but we don't this in
     // this test because else the error is shown on the scoreboard

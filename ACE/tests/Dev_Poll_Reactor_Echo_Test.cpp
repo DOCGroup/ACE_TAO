@@ -41,18 +41,18 @@ public:
   Client (void);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask) override;
 
   std::string sent;
   std::string received;
@@ -68,12 +68,12 @@ public:
 
   Server (void);
 
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
-  virtual int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask) override;
 
 private:
   int send_i (const char* buffer,
@@ -97,7 +97,7 @@ Client::open (void *)
   ACE_Time_Value delay (1, 0);
   ACE_Time_Value restart (1, 0);
   if (this->reactor ()->schedule_timer (this,
-                                        0,
+                                        nullptr,
                                         delay,
                                         restart) == -1)
     {
@@ -370,7 +370,7 @@ class TestAcceptor : public ACCEPTOR
 {
 public:
 
-  virtual int accept_svc_handler (Server * handler)
+  int accept_svc_handler (Server * handler) override
   {
     int result = this->ACCEPTOR::accept_svc_handler (handler);
 
@@ -400,14 +400,14 @@ class TestConnector : public CONNECTOR
 {
 public:
 
-  virtual int connect_svc_handler (
+  int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     const CONNECTOR::addr_type &remote_addr,
     ACE_Time_Value *timeout,
     const CONNECTOR::addr_type &local_addr,
     int reuse_addr,
     int flags,
-    int perms)
+    int perms) override
   {
     const int result = this->CONNECTOR::connect_svc_handler (handler,
                                                              remote_addr,
@@ -438,7 +438,7 @@ public:
     return result;
   }
 
-  virtual int connect_svc_handler (
+  int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     CONNECTOR::handler_type *& sh_copy,
     const CONNECTOR::addr_type &remote_addr,
@@ -446,7 +446,7 @@ public:
     const CONNECTOR::addr_type &local_addr,
     int reuse_addr,
     int flags,
-    int perms) {
+    int perms) override {
     sh_copy = handler;
     return this->connect_svc_handler (handler, remote_addr, timeout,
                                       local_addr, reuse_addr, flags,
@@ -475,7 +475,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -533,7 +533,7 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("Unable to open server service handler")),
                       -1);
 
-  Client *client_handler = 0;
+  Client *client_handler = nullptr;
 
   if (client.connect (client_handler, addr) != 0)
     ACE_ERROR_RETURN ((LM_ERROR,

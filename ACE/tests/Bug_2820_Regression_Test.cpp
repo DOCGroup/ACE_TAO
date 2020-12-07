@@ -30,10 +30,10 @@ public:
   Simple_Handler(ACE_Reactor * reactor);
 
   /// Destructor
-  ~Simple_Handler();
+  ~Simple_Handler() override;
 
   /// Receive (and ignore) the notifications
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 };
 
 int
@@ -68,10 +68,10 @@ run_main (int, ACE_TCHAR *[])
                  notify_count, pre_notify_count, pos_notify_count));
     }
 
-  ACE_auto_ptr_reset(reactor, (ACE_Reactor*)0);
+  ACE_auto_ptr_reset(reactor, (ACE_Reactor*)nullptr);
 
   // Reset the reactor in the event handler, since it is gone.p
-  v->reactor(0);
+  v->reactor(nullptr);
 
   ACE_Event_Handler::Reference_Count pos_release_count =
     v->add_reference();

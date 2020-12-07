@@ -36,7 +36,7 @@ strptime_test (void)
   char lBuffer[128];
   time_t time = lValue.sec();
   struct tm tm_time;
-  if (ACE_OS::gmtime_r (&time, &tm_time) == 0 && errno == ENOTSUP)
+  if (ACE_OS::gmtime_r (&time, &tm_time) == nullptr && errno == ENOTSUP)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("gmtime_r is not supported on this platform\n")));
     }

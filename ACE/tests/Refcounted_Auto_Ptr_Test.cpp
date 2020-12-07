@@ -75,14 +75,14 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
 
   /// Terminator.
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
-  virtual ~Scheduler (void);
+  ~Scheduler (void) override;
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
@@ -91,7 +91,7 @@ public:
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  int svc (void) override;
 
 private:
   // = These are the <Scheduler> implementation details.
@@ -107,10 +107,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print (void);
+  ~Method_Request_print (void) override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call (void) override;
 
 private:
   Printer_var printer_;
@@ -156,8 +156,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  ~Method_Request_end (void) override;
+  int call (void) override;
 
 private:
   Scheduler *scheduler_;
@@ -232,7 +232,7 @@ Scheduler::svc (void)
       // Dequeue the next method request (we use an auto pointer in
       // case an exception is thrown in the <call>).
       ACE_Method_Request *mo_p = this->activation_queue_.dequeue ();
-      if (0 == mo_p)
+      if (nullptr == mo_p)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) activation queue shut down\n")));
@@ -479,7 +479,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = 0;
+  Scheduler *scheduler_ptr = nullptr;
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,

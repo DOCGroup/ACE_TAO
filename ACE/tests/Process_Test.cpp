@@ -64,7 +64,7 @@ test_setenv (void)
 int
 check_temp_file (const ACE_TString &tmpfilename)
 {
-  ACE_DIRENT *dir = 0;
+  ACE_DIRENT *dir = nullptr;
   ACE_Dirent entr;
   ACE_stat stat;
   char filename[MAXPATHLEN + 1];

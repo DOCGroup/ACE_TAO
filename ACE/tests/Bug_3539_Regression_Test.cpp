@@ -32,20 +32,20 @@ public:
 int Errno::flags_;
 int Errno::created_;
 int Errno::deleted_;
-ACE_Thread_Mutex *Errno::lock_ = 0;
+ACE_Thread_Mutex *Errno::lock_ = nullptr;
 
 ACE_THR_FUNC_RETURN
 check_tss (ObjectWithTSS *o)
 {
-  if (0 == o)
+  if (nullptr == o)
     {
       ACE_ERROR ((LM_ERROR,
                   "Nil object."));
       status = 1;
     }
 
-  Errno *e = o->tss_.ts_object (0);
-  if (0 != e)
+  Errno *e = o->tss_.ts_object (nullptr);
+  if (nullptr != e)
     {
       ACE_ERROR ((LM_ERROR,
                   "TSS should not have any value yet."));
@@ -53,14 +53,14 @@ check_tss (ObjectWithTSS *o)
     }
 
   e = ACE_TSS_GET (&o->tss_, Errno);
-  if (0 == e)
+  if (nullptr == e)
     {
       ACE_ERROR ((LM_ERROR,
                   "TSS should now have a value."));
       status = 3;
     }
 
-  return 0;
+  return nullptr;
 }
 
 // This worker function is the entry point for each thread.
@@ -83,7 +83,7 @@ run_main (int, ACE_TCHAR *[])
   const u_int threads = ACE_MAX_THREADS;
 
   {
-    ObjectWithTSS *o = 0;
+    ObjectWithTSS *o = nullptr;
     ACE_NEW_RETURN (o, ObjectWithTSS, 1);
     ACE_Auto_Ptr<ObjectWithTSS> owner (o);
 

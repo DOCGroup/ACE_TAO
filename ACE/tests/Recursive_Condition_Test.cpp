@@ -30,8 +30,8 @@ public:
   Test_Handler (void) : nr_expirations_ (0) {}
   int nr_expirations (void) { return this->nr_expirations_; }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
     ++this->nr_expirations_;
@@ -83,7 +83,7 @@ waiter (void *)
   if (mutex_.release () != 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%t) %p\n"), ACE_TEXT ("release")));
 
-  return 0;
+  return nullptr;
 }
 
 static int

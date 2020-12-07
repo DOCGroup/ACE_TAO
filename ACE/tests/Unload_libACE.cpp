@@ -75,7 +75,7 @@ time_stamp (char date_and_time[], int date_and_timelen, int format)
       "Sat"
     };
 
-  char *ts = 0;
+  char *ts = nullptr;
 
   if (date_and_timelen >= TIME_STAMP_FIELD_WIDTH)
     {
@@ -119,22 +119,22 @@ main (int, char **)
   char const *const program = "UnloadLibACE";
 
   int status = 0;
-  void *handle = 0;
-  char *ace_root = 0;
+  void *handle = nullptr;
+  char *ace_root = nullptr;
   char tbuf[BUFSIZ];
   char ybuf[BUFSIZ];
-  FILE *logfp = 0;
+  FILE *logfp = nullptr;
 
-  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != 0)
+  if ((logfp = fopen ("log/UnloadLibACE.log", "w")) != nullptr)
     {
-      setvbuf (logfp, 0, _IONBF, 0);
+      setvbuf (logfp, nullptr, _IONBF, 0);
       // reassign stdout/stderr to log file
       int fdno = fileno (logfp);
 
       dup2 (fdno, fileno (stdout));
       dup2 (fdno, fileno (stderr));
-      setvbuf (stdout, 0, _IONBF, 0);
-      setvbuf (stderr, 0, _IONBF, 0);
+      setvbuf (stdout, nullptr, _IONBF, 0);
+      setvbuf (stderr, nullptr, _IONBF, 0);
       fflush (stdout);
       fflush (stderr);
 
@@ -142,7 +142,7 @@ main (int, char **)
               time_stamp (tbuf, BUFSIZ, 'T'),
               program, time_stamp (ybuf, BUFSIZ, 'Y'));
 
-      if ((ace_root = getenv ("ACE_ROOT")) != 0)
+      if ((ace_root = getenv ("ACE_ROOT")) != nullptr)
         {
           char buf[BUFSIZ];
 
@@ -169,7 +169,7 @@ main (int, char **)
 #endif /* (__hpux) */
 
           handle = dlopen (buf, RTLD_LAZY);
-          if (handle == 0)
+          if (handle == nullptr)
             {
               // is it because of "No such file or directory" ?
               if (errno != ENOENT)

@@ -72,7 +72,7 @@ cdecl_decoration (ACE_TCHAR const *func_name)
 }
 
 // Global variables.
-static ACE_TCHAR *file_name = 0;
+static ACE_TCHAR *file_name = nullptr;
 static int max_size_files = 0;
 static int max_num_files = 0;
 static int interval_time = 0;
@@ -89,7 +89,7 @@ run_reactor (void *)
   ACE_Reactor::instance ()->owner
     (ACE_Thread_Manager::instance ()->thr_self ());
   ACE_Reactor::instance ()->run_reactor_event_loop ();
-  return 0;
+  return nullptr;
 }
 
 // Initiate the cycle of messages.
@@ -147,7 +147,7 @@ count_files (void)
                          i);
 
       stream = ACE_OS::fopen (backup_ct, ACE_TEXT ("r"));
-      if (stream == 0)
+      if (stream == nullptr)
         error = 1;
       else
         {
@@ -408,7 +408,7 @@ int run_main (int argc, ACE_TCHAR *argv [])
                       ACE_TEXT ("log/Logging_Strategy_Test")
                       ACE_LOG_FILE_EXT_NAME;
       l_argv[2] = (ACE_TCHAR *) ACE_TEXT ("-o");
-      l_argv[3] = 0;
+      l_argv[3] = nullptr;
 
       if (parse_args (3, l_argv) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,

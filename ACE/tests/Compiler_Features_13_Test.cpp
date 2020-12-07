@@ -73,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
   d.value = 24;
   Base * b1 = &d;
   Derived * d1 = dynamic_cast<Derived*>(b1);
-  if (d1 == 0)
+  if (d1 == nullptr)
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
@@ -94,7 +94,7 @@ run_main (int, ACE_TCHAR *[])
   Another a;
   Base * b2 = &a;
   Derived * d2 = dynamic_cast<Derived*>(b2);
-  if (d2 != 0)
+  if (d2 != nullptr)
     {
       status = 1;
       ACE_ERROR((LM_ERROR,
@@ -127,7 +127,7 @@ run_main (int, ACE_TCHAR *[])
     int y = static_cast<int>(x);
     void * z = reinterpret_cast<void*>(y);
 
-    if (z == 0)
+    if (z == nullptr)
       {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("My hack to make sure the code is not ")

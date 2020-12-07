@@ -118,7 +118,7 @@ static int randomize_lookups = 1;
 static int purge_percent = 10;
 static int debug = 0;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static KEY *lookup_array = 0;
+static KEY *lookup_array = nullptr;
 
 static void
 run_iterator_cache (MAP_CACHE &cache)
@@ -418,8 +418,8 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 void
 test_caching_strategy_type (void)
 {
-  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
-  MAP_CACHING_STRATEGY *map_caching_strategy = 0;
+  HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = nullptr;
+  MAP_CACHING_STRATEGY *map_caching_strategy = nullptr;
 
   switch (caching_strategy_type)
     {
@@ -537,7 +537,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
   // Providing random a unique seed.
-  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (0)));
+  ACE_OS::srand (static_cast<u_int> (ACE_OS::time (nullptr)));
 
   // Create the lookup array.
   ACE_NEW_RETURN (lookup_array,

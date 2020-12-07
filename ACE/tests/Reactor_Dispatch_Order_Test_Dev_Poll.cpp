@@ -28,16 +28,16 @@ class Handler : public ACE_Event_Handler
 public:
   Handler (ACE_Reactor &reactor);
 
-  ~Handler();
+  ~Handler() override;
 
   int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg);
+                      const void *arg) override;
 
-  int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  int handle_output (ACE_HANDLE fd);
+  int handle_output (ACE_HANDLE fd) override;
 
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle (void) const override;
 
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with
@@ -179,7 +179,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
 
   // This should trigger a call to <handle_timeout>.
   if (-1 == reactor.schedule_timer (&handler,
-                                    0,
+                                    nullptr,
                                     ACE_Time_Value (0)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));
@@ -202,7 +202,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   // Reset the dispatch_order_ count and schedule another timer
   handler.dispatch_order_ = 1;
   if (-1 == reactor.schedule_timer (&handler,
-                                    0,
+                                    nullptr,
                                     ACE_Time_Value (0)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("schedule_timer")));

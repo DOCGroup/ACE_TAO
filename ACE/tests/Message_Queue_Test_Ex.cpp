@@ -44,7 +44,7 @@ static int chain_limit = 4;
 static ACE_Barrier tester_barrier (2);
 
 // Dynamically allocate to avoid a static.
-static ACE_High_Res_Timer *timer = 0;
+static ACE_High_Res_Timer *timer = nullptr;
 
 // Helper printing function
 static void
@@ -79,7 +79,7 @@ struct Queue_Wrapper
 
   /// Default constructor.
   Queue_Wrapper (void)
-    : q_ (0), send_block_ (0)
+    : q_ (nullptr), send_block_ (nullptr)
   {
   }
 };
@@ -102,7 +102,7 @@ struct MQ_Ex_N_Tester_Wrapper
 struct Send_Messages
 {
   Send_Messages (int number_of_messages, int chain_limit):
-    send_block_ (0),
+    send_block_ (nullptr),
     number_of_messages_ (number_of_messages),
     chain_limit_ (chain_limit)
   {
@@ -125,7 +125,7 @@ struct Send_Messages
         User_Class *tail = temp1;
         for (j = 1; j < this->chain_limit_; ++j)
           {
-            User_Class *temp2 = 0;
+            User_Class *temp2 = nullptr;
             ACE_NEW_RETURN (temp2,
                             User_Class (test_message),
                             -1);
@@ -164,7 +164,7 @@ struct Send_Messages
 struct Receive_Messages
 {
   Receive_Messages (int number_of_messages) :
-    receive_block_ (0),
+    receive_block_ (nullptr),
     number_of_messages_ (number_of_messages)
   {
   }
@@ -195,7 +195,7 @@ single_thread_performance_test (void)
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_NULL_SYNCH>, single thread");
 
   // Create a message queue.
-  QUEUE *msgq = 0;
+  QUEUE *msgq = nullptr;
 
   ACE_NEW_RETURN (msgq,
                   QUEUE,
@@ -203,7 +203,7 @@ single_thread_performance_test (void)
 
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
-  User_Class **send_block = 0;
+  User_Class **send_block = nullptr;
   ACE_NEW_RETURN (send_block,
                   User_Class *[max_messages],
                   -1);
@@ -215,7 +215,7 @@ single_thread_performance_test (void)
                     User_Class (test_message),
                     -1);
 
-  User_Class **receive_block_p = 0;
+  User_Class **receive_block_p = nullptr;
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   -1);
@@ -384,7 +384,7 @@ receiver (void *arg)
   Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
-  User_Class **receive_block_p = 0;
+  User_Class **receive_block_p = nullptr;
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   (void *) -1);
@@ -399,7 +399,7 @@ receiver (void *arg)
 
   delete [] receive_block_p;
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -418,7 +418,7 @@ sender (void *arg)
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("enqueue")),
                         0);
-  return 0;
+  return nullptr;
 }
 
 static int
@@ -433,7 +433,7 @@ performance_test (void)
   // large relative to the amount of stack space available.  Allocate
   // it here instead of in the sender, so that we can delete it after
   // the _receiver_ is done.
-  User_Class **send_block = 0;
+  User_Class **send_block = nullptr;
   ACE_NEW_RETURN (send_block,
                   User_Class *[max_messages],
                   -1);
@@ -470,7 +470,7 @@ performance_test (void)
   timer->reset ();
 
   delete queue_wrapper.q_;
-  queue_wrapper.q_ = 0;
+  queue_wrapper.q_ = nullptr;
 
   for (i = 0; i < max_messages; ++i)
     delete send_block[i];
@@ -525,7 +525,7 @@ MQ_Ex_N_Tester::receiver (void *args)
 {
   MQ_Ex_N_Tester *tester = reinterpret_cast<MQ_Ex_N_Tester *> (args);
 
-  User_Class **receive_block_p = 0;
+  User_Class **receive_block_p = nullptr;
   ACE_NEW_RETURN (receive_block_p,
                   User_Class *[max_messages],
                   (ACE_THR_FUNC_RETURN) -1);
@@ -546,7 +546,7 @@ MQ_Ex_N_Tester::receiver (void *args)
 
   delete [] receive_block_p;
 
-  return 0;
+  return nullptr;
 }
 
 ACE_THR_FUNC_RETURN
@@ -577,7 +577,7 @@ MQ_Ex_N_Tester::sender (void *args)
           return (ACE_THR_FUNC_RETURN) -1;
         }
     }
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -632,18 +632,18 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
     ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>::DEFAULT_PRIORITY;
 
   prio += 1;
-  if (-1 == q.enqueue_prio (b2.get (), 0, prio))
+  if (-1 == q.enqueue_prio (b2.get (), nullptr, prio))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b2")), 1);
-  if (-1 == q.enqueue_prio (b3.get (), 0, prio))
+  if (-1 == q.enqueue_prio (b3.get (), nullptr, prio))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b3")), 1);
   prio -= 1;
-  if (-1 == q.enqueue_prio (b4.get (), 0, prio))
+  if (-1 == q.enqueue_prio (b4.get (), nullptr, prio))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b4")), 1);
   prio += 5;
-  if (-1 == q.enqueue_prio (b1.get (), 0, prio))
+  if (-1 == q.enqueue_prio (b1.get (), nullptr, prio))
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
 
-  User_Class *b = 0;
+  User_Class *b = nullptr;
   if (q.dequeue_head (b) == -1)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("dequeue 1")));
@@ -769,7 +769,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("%p\n"),
                 ACE_TEXT ("test failed")));
   delete timer;
-  timer = 0;
+  timer = nullptr;
 
   ACE_END_TEST;
   return status;

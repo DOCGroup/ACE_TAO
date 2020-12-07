@@ -29,12 +29,12 @@ public:
                  ACE_HANDLE read,
                  ACE_HANDLE write);
 
-  ~Event_Handler (void);
+  ~Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 
   ACE_Pipe pipe_;
   bool ok_;

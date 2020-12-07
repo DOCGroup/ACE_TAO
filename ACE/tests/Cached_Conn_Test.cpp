@@ -141,7 +141,7 @@ static int user_has_specified_iterations = 0;
 static size_t keep_handles_available = 100;
 static double purge_percentage = 20;
 static Caching_Strategy_Type caching_strategy_type = ACE_ALL;
-static CACHED_CONNECT_STRATEGY *connect_strategy = 0;
+static CACHED_CONNECT_STRATEGY *connect_strategy = nullptr;
 
 // On Win32, the handle gobbling doesn't work.  Therefore, we need
 // more iterations to get to the handle limit.
@@ -188,7 +188,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
-  Svc_Handler *svc_handler = 0;
+  Svc_Handler *svc_handler = nullptr;
   int result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
@@ -241,7 +241,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   NULL_CREATION_STRATEGY creation_strategy;
   NULL_ACTIVATION_STRATEGY activation_strategy;
 
-  STRATEGY_CONNECTOR strategy_connector (0,
+  STRATEGY_CONNECTOR strategy_connector (nullptr,
                                          &creation_strategy,
                                          &caching_connect_strategy,
                                          &activation_strategy);
@@ -313,7 +313,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 void
 test_caching_strategy_type (void)
 {
-  CACHING_STRATEGY *caching_strategy = 0;
+  CACHING_STRATEGY *caching_strategy = nullptr;
 
   switch (caching_strategy_type)
     {

@@ -43,23 +43,23 @@ public:
 
   Reference_Counted_Event_Handler (int &events);
 
-  ~Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference (void) override;
 
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference (void) override;
 
   ACE_Pipe pipe_;
 
@@ -252,7 +252,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -313,7 +313,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("register pipe handler read")));
       else
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler->pipe_.read_handle (),
@@ -333,7 +333,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler->pipe_.read_handle (),
@@ -400,7 +400,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -474,19 +474,19 @@ public:
   Simple_Event_Handler (int &events,
                         int close_count);
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
   ACE_Pipe pipe_;
 
@@ -621,7 +621,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("register pipe handler read")));
       else
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler.pipe_.read_handle (),
@@ -640,7 +640,7 @@ simple_event_handler (ACE_Reactor *reactor)
       }
 
       {
-        ACE_Event_Handler *result_handler = 0;
+        ACE_Event_Handler *result_handler = nullptr;
 
         result =
           reactor->handler (handler.pipe_.read_handle (),
@@ -712,7 +712,7 @@ simple_event_handler (ACE_Reactor *reactor)
                     ACE_TEXT ("line %l %p\n"),
                     ACE_TEXT ("schedule_timer")));
       else
-        if ((result = reactor->cancel_timer (timer_id, 0, 0)) != 1)
+        if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
                       result));
@@ -772,16 +772,16 @@ public:
 
   Closed_In_Upcall_Event_Handler (int &events);
 
-  ~Closed_In_Upcall_Event_Handler (void);
+  ~Closed_In_Upcall_Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference (void) override;
 
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference (void) override;
 
   ACE_Pipe pipe_;
 
@@ -892,7 +892,7 @@ closed_in_upcall_event_handler (ACE_Reactor *reactor)
 
   if (test_io)
     {
-      Closed_In_Upcall_Event_Handler *handler = 0;
+      Closed_In_Upcall_Event_Handler *handler = nullptr;
       ACE_NEW (handler, Closed_In_Upcall_Event_Handler (events));
 
       ACE_Event_Handler_var safe_handler (handler);

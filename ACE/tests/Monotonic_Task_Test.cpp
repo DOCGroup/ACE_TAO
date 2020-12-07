@@ -80,9 +80,9 @@ public:
     this->thr_mgr (&this->tm_);
   }
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc (void);
+  int svc (void) override;
 
   int start ();
 

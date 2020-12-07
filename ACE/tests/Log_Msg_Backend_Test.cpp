@@ -25,15 +25,15 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (const ACE_TCHAR *logger_key);
+  int open (const ACE_TCHAR *logger_key) override;
 
-  virtual int reset (void);
+  int reset (void) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (void);
+  int close (void) override;
 
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  ssize_t log (ACE_Log_Record &log_record) override;
 
   // Test probes to see if things worked as specified.
   bool hooks_ok (void) const;
@@ -102,7 +102,7 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
 
-  if (old_b != 0)
+  if (old_b != nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Old backend (%@) not 0 at start\n"),

@@ -47,8 +47,8 @@ public:
     void simulate_socket_closure();
 
     /// Reactor callback
-    virtual ACE_HANDLE get_handle() const;
-    virtual int handle_input(ACE_HANDLE);
+    ACE_HANDLE get_handle() const override;
+    int handle_input(ACE_HANDLE) override;
 
 private:
     bool auto_remove_flag_;
@@ -78,7 +78,7 @@ public:
 
     bool check_expected_results() const;
 
-    virtual int handle_timeout(ACE_Time_Value const &, void const*);
+    int handle_timeout(ACE_Time_Value const &, void const*) override;
 
 private:
     void send_data_through_handlers();
@@ -103,7 +103,7 @@ run_main (int, ACE_TCHAR *[])
   // regardless of platform. In particular, this test relies on a handler
   // that doesn't consume ready-to-read data being called back - this won't
   // happen with ACE_WFMO_Reactor.
-  ACE_Select_Reactor *impl_ptr = 0;
+  ACE_Select_Reactor *impl_ptr = nullptr;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -218,7 +218,7 @@ int Timer::open(ACE_Reactor * r)
   ACE_Time_Value const interval(0, ACE_ONE_SECOND_IN_USECS / 10);
   ACE_Time_Value const startup (0, ACE_ONE_SECOND_IN_USECS / 20);
 
-  if ( -1 == r->schedule_timer(this, 0, startup, interval))
+  if ( -1 == r->schedule_timer(this, nullptr, startup, interval))
   {
       ACE_ERROR_RETURN((LM_ERROR, "Could not schedule timer\n"), -1);
   }

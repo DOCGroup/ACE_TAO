@@ -57,11 +57,11 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool (void) override;
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc (void) override;
 
   /// Start the threads in the pool.
   void start();
@@ -80,11 +80,11 @@ public:
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Total number of threads activated through this thread pool ever.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> total_activated_threads_;

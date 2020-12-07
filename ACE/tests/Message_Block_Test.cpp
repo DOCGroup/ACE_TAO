@@ -35,7 +35,7 @@ class User_Data : public ACE_Data_Block
 public:
   User_Data() {}
 
-  ~User_Data()
+  ~User_Data() override
   {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT ("User_Data dtor\n")));
     user_data_dtor_called = true;
@@ -62,16 +62,16 @@ public:
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc (void) override;
 
   /// Allows the producer to pass messages to the <Message_Block>.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 };
 
 int
@@ -106,7 +106,7 @@ Worker_Task::svc (void)
 
   for (int count = 0; ; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       if (-1 == this->msg_queue ()->dequeue_head (mb))
         ACE_ERROR_BREAK ((LM_ERROR,
@@ -120,7 +120,7 @@ Worker_Task::svc (void)
       // that this doesn't actually make a copy of the message
       // contents (i.e., the Data_Block portion), it just makes a copy
       // of the header and reference counts the data.
-      if (this->next () != 0)
+      if (this->next () != nullptr)
         {
           if (-1 == this->put_next (mb->duplicate ()))
             ACE_ERROR_BREAK ((LM_ERROR,
@@ -251,7 +251,7 @@ static int
 produce (Worker_Task &worker_task,
          ACE_Allocator *alloc_strategy)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   int status;
 
   // Send <n_iteration> messages through the pipeline.
@@ -266,8 +266,8 @@ produce (Worker_Task &worker_task,
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (n, // size
                                          ACE_Message_Block::MB_DATA, // type
-                                         0, // cont
-                                         0, // data
+                                         nullptr, // cont
+                                         nullptr, // data
                                          alloc_strategy, // allocator
                                          &lock_adapter_, // locking strategy
                                          ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY), // priority
@@ -319,8 +319,8 @@ produce (Worker_Task &worker_task,
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (0,
                                      ACE_Message_Block::MB_DATA,
-                                     0,
-                                     0,
+                                     nullptr,
+                                     nullptr,
                                      alloc_strategy,
                                      &lock_adapter_),
                   -1);
@@ -349,7 +349,7 @@ struct alloc_struct_type
 
 alloc_struct_type alloc_struct[ACE_ALLOC_STRATEGY_NO] =
 {
-  { 0, ACE_TEXT ("Default"), {0,0,0} },
+  { nullptr, ACE_TEXT ("Default"), {0,0,0} },
   { &mem_allocator, ACE_TEXT ("Cached Memory"), {0,0,0} }
 };
 
@@ -361,7 +361,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Message_Block_Test"));
 
   // A quick user-defined data block test, then the main event
-  User_Data *user_data_block = 0;
+  User_Data *user_data_block = nullptr;
   ACE_NEW_MALLOC_RETURN (user_data_block,
                          static_cast<User_Data *>(
                            ACE_Allocator::instance()->malloc(sizeof (User_Data))),
@@ -370,13 +370,13 @@ run_main (int, ACE_TCHAR *[])
 
   // Create a new message block referring to the User_Data block and
   // ensure it is released and freed correctly.
-  ACE_Message_Block *wrapper_mb = 0;
+  ACE_Message_Block *wrapper_mb = nullptr;
   ACE_NEW_RETURN (wrapper_mb,
                   ACE_Message_Block (user_data_block),
                   -1);
 
   wrapper_mb->release ();
-  wrapper_mb = 0;
+  wrapper_mb = nullptr;
   if (!user_data_dtor_called)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("User-defined data block not freed correctly.\n")));
 

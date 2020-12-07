@@ -59,14 +59,14 @@ struct Parent
 struct Child : public Child_Base
 {
   Child (ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent);
-  virtual ~Child (void);
+  ~Child (void) override;
 
   // Back pointer to the parent. The child does not own the parent so has no
   // effect on its lifetime.
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent_;
 
   // Perform some operation. Delegates the work to the parent.
-  virtual void do_something (void);
+  void do_something (void) override;
 
   static size_t instance_count_;
 };
@@ -135,7 +135,7 @@ void Child::do_something (void)
   // You can check for null to see if the parent object still exists (in this
   // case it is not strictly necessary since the child will only exist if the
   // parent still exists).
-  if (strong_parent == 0)
+  if (strong_parent == nullptr)
     return;
 
   for (int i = 0; i < 5; ++i)
@@ -178,10 +178,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print (void);
+  ~Method_Request_print (void) override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call (void) override;
 
 private:
   Printer_var printer_;
@@ -221,8 +221,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  ~Method_Request_end (void) override;
+  int call (void) override;
 
 private:
   Scheduler *scheduler_;
@@ -297,7 +297,7 @@ Scheduler::svc (void)
       // Dequeue the next method request (we use an strong pointer in
       // case an exception is thrown in the <call>).
       ACE_Strong_Bound_Ptr<ACE_Method_Request, ACE_Null_Mutex> mo (this->activation_queue_.dequeue ());
-      if (mo == 0)
+      if (mo == nullptr)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) activation queue shut down\n")));
@@ -349,7 +349,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing synchronous test...\n")));
 
-  Parent *parent1 = 0;
+  Parent *parent1 = nullptr;
   ACE_NEW_RETURN (parent1,
                   Parent,
                   -1);
@@ -393,7 +393,7 @@ run_main (int, ACE_TCHAR *[])
                          -1);
     }
 
-  Printer *printer1 = 0;
+  Printer *printer1 = nullptr;
   ACE_NEW_RETURN (printer1,
                   Printer ("I am printer 1"),
                   -1);
@@ -437,7 +437,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) performing asynchronous test...\n")));
 
-  Scheduler *scheduler_ptr = 0;
+  Scheduler *scheduler_ptr = nullptr;
 
   // Create active objects..
   ACE_NEW_RETURN (scheduler_ptr,
@@ -454,7 +454,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   {
-    Printer *printer2 = 0;
+    Printer *printer2 = nullptr;
     ACE_NEW_RETURN (printer2,
                     Printer ("I am printer 2"),
                     -1);

@@ -34,12 +34,12 @@ class Test_Handler;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc (void)
+  int svc (void) override
   {
     while (--max_iterations > 0)
       {
         // dequeue the next object
-        ACE_Message_Block * mb = 0;
+        ACE_Message_Block * mb = nullptr;
 
         if (this->getq (mb) == -1)
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -72,7 +72,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0)
+  int open (void * = nullptr) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP, 1) != 0)
@@ -95,8 +95,8 @@ private:
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
@@ -104,19 +104,19 @@ public:
     void *nc_arg = const_cast<void *> (arg);
     Test_Task *test_task =
       reinterpret_cast<Test_Task *> (nc_arg);
-    ACE_Message_Block *mb = 0;
+    ACE_Message_Block *mb = nullptr;
     ACE_NEW_MALLOC_RETURN (mb,
                            static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                            ACE_Message_Block (sizeof (*this),    // size
                                               ACE_Message_Block::MB_DATA, // type
-                                              0,       // cont
+                                              nullptr,       // cont
                                               (char *) this,     // data
-                                              0,
-                                              0,
+                                              nullptr,
+                                              nullptr,
                                               ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
                                               ACE_Time_Value::zero,
                                               ACE_Time_Value::max_time,
-                                              0,
+                                              nullptr,
                                               ACE_Allocator::instance()),     // data
                            -1);
 
@@ -145,19 +145,19 @@ run_main (int, ACE_TCHAR *[])
                        ACE_TEXT ("open")),
                       -1);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_MALLOC_RETURN (mb,
                          static_cast<ACE_Message_Block *> (ACE_Allocator::instance()->malloc (sizeof (ACE_Message_Block))),
                          ACE_Message_Block (sizeof (handler),    // size
                                             ACE_Message_Block::MB_DATA, // type
-                                            0,       // cont
+                                            nullptr,       // cont
                                             (char *) &handler,
-                                            0,
-                                            0,
+                                            nullptr,
+                                            nullptr,
                                             ACE_DEFAULT_MESSAGE_BLOCK_PRIORITY,
                                             ACE_Time_Value::zero,
                                             ACE_Time_Value::max_time,
-                                            0,
+                                            nullptr,
                                             ACE_Allocator::instance()),     // data
                           -1);
 

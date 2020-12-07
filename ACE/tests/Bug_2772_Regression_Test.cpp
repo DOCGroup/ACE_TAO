@@ -98,7 +98,7 @@ void* ThreadTest::workerThreadWrapper(void *data)
 {
    ThreadTest *thisPtr = reinterpret_cast<ThreadTest *>(data);
    thisPtr->workerThread();
-   return 0;
+   return nullptr;
 }
 
 void ThreadTest::workerThread()

@@ -36,14 +36,14 @@ class Quiet_Notify_Tester : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
   Quiet_Notify_Tester (void) : result_ (0) {}
-  ~Quiet_Notify_Tester (void) { this->wait (); }
+  ~Quiet_Notify_Tester (void) override { this->wait (); }
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Start the reactor event thread.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   // Run the reactor event loop.
-  virtual int svc (void);
+  int svc (void) override;
 
   // Return the test result, 0 ok, -1 fail
   int result (void) const { return this->result_; }
@@ -113,30 +113,30 @@ public:
                  const ACE_Time_Value &tv);
 
   /// Destructor.
-  ~Supplier_Task (void);
+  ~Supplier_Task (void) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Make this an Active Object.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
 
   /// Close down the supplier.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Generates events and sends them to the <Reactor>'s <notify>
   /// method.
-  virtual int svc (void);
+  int svc (void) override;
 
   /// Releases the <waiter_> semaphore when called by the <Reactor>'s
   /// notify handler.
-  virtual int handle_exception (ACE_HANDLE);
+  int handle_exception (ACE_HANDLE) override;
 
   /**
    * Called every time through the main <ACE_Reactor> event loop to
    * illustrate the difference between "limited" and "unlimited"
    * notification.
    */
-  virtual int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   /// Release the <waiter_>.
   void release (void);
@@ -348,10 +348,10 @@ run_test (int disable_notify_pipe,
 {
   // Create special reactors with the appropriate flags enabled.
 
-  ACE_Select_Reactor *reactor_impl = 0;
+  ACE_Select_Reactor *reactor_impl = nullptr;
   if (disable_notify_pipe)
     ACE_NEW_RETURN (reactor_impl,
-                    ACE_Select_Reactor (0, 0, 1),
+                    ACE_Select_Reactor (nullptr, nullptr, 1),
                     -1);
   else
     ACE_NEW_RETURN (reactor_impl,
@@ -447,7 +447,7 @@ run_test (int disable_notify_pipe,
 class Purged_Notify : public ACE_Event_Handler
 {
 
-  virtual int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE)
+  int handle_exception (ACE_HANDLE = ACE_INVALID_HANDLE) override
   {
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Got a notify that should have been purged!\n")),
@@ -494,7 +494,7 @@ run_notify_purge_test (void)
     r->notify (&n1, ACE_Event_Handler::READ_MASK);
     r->notify (n2, ACE_Event_Handler::READ_MASK);
     status = r->purge_pending_notifications
-      (0, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
+      (nullptr, ACE_Event_Handler::READ_MASK | ACE_Event_Handler::WRITE_MASK);
     if (status != 2)
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Purged %d notifies; expected 2\n"),

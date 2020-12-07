@@ -45,7 +45,7 @@ class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 {
 public:
   SYNCHRONIZER (int initial_value)
-    : ACE_SV_Semaphore_Simple ((const char *) 0,
+    : ACE_SV_Semaphore_Simple ((const char *) nullptr,
                                ACE_SV_Semaphore_Simple::ACE_CREATE,
                                initial_value)
   {}
@@ -66,10 +66,10 @@ const ACE_TCHAR *sem_name ()
 #endif /* !defined (ACE_LACKS_FORK) */
 
 // Synchronize the start of the parent and the child.
-static SYNCHRONIZER *synchronizer = 0;
+static SYNCHRONIZER *synchronizer = nullptr;
 
 static void *
-child (void * = 0)
+child (void * = nullptr)
 {
   int result;
 
@@ -85,7 +85,7 @@ child (void * = 0)
 
   char *shm = (char *) shm_child.malloc ();
 
-  ACE_TEST_ASSERT (shm != 0);
+  ACE_TEST_ASSERT (shm != nullptr);
 
   for (char *s = shm; *s != '\0'; s++)
     {
@@ -96,11 +96,11 @@ child (void * = 0)
   // Indicate to the parent that we're done.
   *shm = '*';
 
-  return 0;
+  return nullptr;
 }
 
 static void *
-parent (void * = 0)
+parent (void * = nullptr)
 {
   int result;
   ACE_Shared_Memory_MM shm_parent;
@@ -110,7 +110,7 @@ parent (void * = 0)
 
   char *shm = (char *) shm_parent.malloc ();
 
-  ACE_TEST_ASSERT (shm != 0);
+  ACE_TEST_ASSERT (shm != nullptr);
 
   char *s = shm;
 
@@ -132,7 +132,7 @@ parent (void * = 0)
   ACE_TEST_ASSERT (result != -1);
 
   ACE_OS::unlink (shm_key);
-  return 0;
+  return nullptr;
 }
 
 static int
@@ -215,7 +215,7 @@ run_main (int, ACE_TCHAR *[])
   // Store in the global variable.
   shm_key = temp_file;
 
-  if (ACE_OS::mktemp (shm_key) == 0
+  if (ACE_OS::mktemp (shm_key) == nullptr
       || (ACE_OS::unlink (shm_key) == -1
           && errno == EPERM))
     ACE_ERROR_RETURN ((LM_ERROR,

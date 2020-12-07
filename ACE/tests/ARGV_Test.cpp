@@ -71,7 +71,7 @@ test_argv_type_converter (void)
   argv[1] = ACE_OS::strdup ("two");
   argv[2] = ACE_OS::strdup ("three");
   argv[3] = ACE_OS::strdup ("four");
-  argv[4] = 0;
+  argv[4] = nullptr;
 
   char *save_argv[20];
   ACE_OS::memcpy (save_argv, argv, sizeof (argv));
@@ -115,7 +115,7 @@ test_argv_type_converter2 (void)
   argv[1] = ACE_OS::strdup (ACE_TEXT ("two"));
   argv[2] = ACE_OS::strdup (ACE_TEXT ("three"));
   argv[3] = ACE_OS::strdup (ACE_TEXT ("four"));
-  argv[4] = 0;
+  argv[4] = nullptr;
 
   ACE_TCHAR *save_argv[20];
   ACE_OS::memcpy (save_argv, argv, sizeof (argv));
@@ -167,7 +167,7 @@ test_argv_buf (void)
                        ACE_TEXT (" -c");
   l_argv[0] = const_cast <ACE_TCHAR *> (t);
   l_argv[1] = pid_str;
-  l_argv[2] = 0;
+  l_argv[2] = nullptr;
 
   ACE_ARGV my_argv (l_argv);
 
@@ -183,7 +183,7 @@ test_argv_quotes (void)
   const ACE_TCHAR *argv_const[] = { ACE_TEXT ("first without quotes"),
                                     ACE_TEXT ("'second in single quotes'"),
                                     ACE_TEXT ("\"third in double quotes\""),
-                                    0
+                                    nullptr
                                   };
   ACE_TCHAR **argv = const_cast<ACE_TCHAR **> (argv_const);
   // The convoluted argv definition is to silence warnings from gcc 4.3, which

@@ -87,7 +87,7 @@ rename_test (void)
   // something written in it so it's non-zero length - this is how the rename
   // is verified.
   FILE *f = ACE_OS::fopen (old_file, ACE_TEXT ("w+"));
-  if (f == 0)
+  if (f == nullptr)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%s: %p\n"),
                        old_file,
@@ -97,7 +97,7 @@ rename_test (void)
   ACE_OS::fwrite (ACE_TEXT ("this is a test\n"), sizeof (ACE_TCHAR), 15, f);
   ACE_OS::fclose (f);
   f = ACE_OS::fopen (new_file, ACE_TEXT ("w+"));
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_OS::unlink (old_file);
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -190,11 +190,11 @@ string_emulation_test (void)
 
     const char *memchr1 = "abcdefghijklmnopqrstuvwxyz";
 
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (static_cast<const void *> (0),
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (static_cast<const void *> (nullptr),
                                 'a',
-                                0) == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == 0);
+                                0) == nullptr);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, 'a', sizeof (memchr1)) != nullptr);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::memchr (memchr1, '1', sizeof (memchr1)) == nullptr);
 
     // ========================================================================
     // Test strchr
@@ -204,7 +204,7 @@ string_emulation_test (void)
 
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (*ACE_OS::strchr (strchr1, 'h') == 'h');
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, 'h') == strchr1 + 7);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, '1') == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, '1') == nullptr);
 
     // ========================================================================
     // Test strrchr
@@ -214,7 +214,7 @@ string_emulation_test (void)
 
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (*ACE_OS::strrchr (strrchr1, 'h') == 'h');
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, 'h') == strrchr1 + 18);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, '1') == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, '1') == nullptr);
 
     // ========================================================================
     // Test strcspn
@@ -252,19 +252,19 @@ string_emulation_test (void)
                                                   " ",
                                                   &strtok_r2),
                                 "A") == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (nullptr,
                                                   " ",
                                                   &strtok_r2),
                                 "string") == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (nullptr,
                                                   " ",
                                                   &strtok_r2),
                                 "of") == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok_r (nullptr,
                                                   " ",
                                                   &strtok_r2),
                                 "tokens") == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok_r (0, " ", &strtok_r2) == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok_r (nullptr, " ", &strtok_r2) == nullptr);
 
     // ========================================================================
     // Test itoa
@@ -407,7 +407,7 @@ string_emulation_test (void)
                 == ACE_TEXT_WIDE ('h'));
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('h'))
                 == strchr1 + 7);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strchr (strchr1, ACE_TEXT_WIDE ('1')) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
@@ -423,7 +423,7 @@ string_emulation_test (void)
                   3)
                   == 0);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strstr (strstr1,
-                                ACE_TEXT_WIDE ("mno")) == 0);
+                                ACE_TEXT_WIDE ("mno")) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
@@ -448,7 +448,7 @@ string_emulation_test (void)
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strpbrk (strpbrk1,  ACE_TEXT_WIDE ("ijkb"))
                   == strpbrk1 + 1);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strpbrk (strpbrk1,
-                                        ACE_TEXT_WIDE ("mno")) == 0);
+                                        ACE_TEXT_WIDE ("mno")) == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
@@ -463,7 +463,7 @@ string_emulation_test (void)
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('h'))
                   == strrchr1 + 18);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strrchr (strrchr1, ACE_TEXT_WIDE ('1'))
-                  == 0);
+                  == nullptr);
 
     //FUZZ: disable check_for_lack_ACE_OS
     // ========================================================================
@@ -558,16 +558,16 @@ string_emulation_test (void)
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (strtok_r1,
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("A")) == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (nullptr,
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("string") ) == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (nullptr,
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("of") ) == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (0,
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strcmp (ACE_OS::strtok (nullptr,
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("tokens") ) == 0);
-    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
+    THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (nullptr, ACE_TEXT_WIDE (" ")) == nullptr);
 #  endif /* ACE_LACKS_WCSTOK */
 
 
@@ -665,7 +665,7 @@ getpwnam_r_test (void)
   char buf[1024];
 
   const char* login = getlogin ();
-  if (login == 0)
+  if (login == nullptr)
     login = "root";
 
   if (ACE_OS::getpwnam_r (login,
@@ -741,7 +741,7 @@ ctime_r_test (void)
     ACE_OS::gettimeofday ();
 
   time_t const secs = cur_time.sec ();
-  if (ACE_OS::ctime_r (&secs, buf, 26) == 0)
+  if (ACE_OS::ctime_r (&secs, buf, 26) == nullptr)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                   ACE_TEXT ("ctime_r with 26 bytes")));
@@ -764,7 +764,7 @@ ctime_r_test (void)
     {
       ACE_TCHAR bufcheck[27];
       ACE_OS::strcpy (bufcheck, buf);
-      if (ACE_OS::ctime_r (&secs, buf, 10) != 0)
+      if (ACE_OS::ctime_r (&secs, buf, 10) != nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("ctime_r with short len returned %s\n"),
@@ -997,12 +997,12 @@ strsignal_test (void)
 
   int test_status = 0;
 
-  const char* result = 0;
+  const char* result = nullptr;
 
   for (int i=-1; i < (ACE_NSIG + 1); ++i)
     {
       result = ACE_OS::strsignal (i);
-      if (result == 0)
+      if (result == nullptr)
         {
           ACE_ERROR ((LM_ERROR, ACE_TEXT ("strsignal returned null\n")));
           test_status = 1;

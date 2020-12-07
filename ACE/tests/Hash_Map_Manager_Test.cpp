@@ -80,8 +80,8 @@ static String_Table string_table[] =
     ACE_TEXT ("lustig")
   },
   {
-    0,
-    0
+    nullptr,
+    nullptr
   }
 };
 
@@ -187,7 +187,7 @@ run_test (void)
   size_t i;
 
   // Check the <bind> operation.
-  for (i = 0; string_table[i].key_ != 0; i++)
+  for (i = 0; string_table[i].key_ != nullptr; i++)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) == -1)
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -195,10 +195,10 @@ run_test (void)
                          ACE_TEXT ("bind"),
                          string_table[i].key_), -1);
 
-  const ACE_TCHAR *entry = 0;
+  const ACE_TCHAR *entry = nullptr;
 
   // Check the <find> operation.
-  for (i = 0; string_table[i].key_ != 0; i++)
+  for (i = 0; string_table[i].key_ != nullptr; i++)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -227,7 +227,7 @@ run_test (void)
 
   // Let's test the iterator while we are at it.
   {
-    HASH_STRING_ENTRY *entry = 0;
+    HASH_STRING_ENTRY *entry = nullptr;
     size_t i = 0;
 
     for (HASH_STRING_ITER hash_iter (hash);
@@ -245,7 +245,7 @@ run_test (void)
 
   // And now test the const iterator
   {
-    HASH_STRING_ENTRY *entry = 0;
+    HASH_STRING_ENTRY *entry = nullptr;
     size_t i = 0;
 
     for (HASH_STRING_CONST_ITER hash_iter (hash);
@@ -264,7 +264,7 @@ run_test (void)
   hash.unbind (string_table[2].key_, entry);
 
   // Check the <find> operation again.
-  for (i = 0; string_table[i].key_ != 0; i++)
+  for (i = 0; string_table[i].key_ != nullptr; i++)
     if (hash.find (string_table[i].key_,
                    entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -279,7 +279,7 @@ run_test (void)
 
   // Let's test the iterator backwards.
   {
-    HASH_STRING_ENTRY *entry = 0;
+    HASH_STRING_ENTRY *entry = nullptr;
     size_t i = 0;
 
     for (HASH_STRING_REVERSE_ITER hash_iter (hash);
@@ -302,7 +302,7 @@ run_test (void)
                        -1);
 
   // Redo the <bind> operations.
-  for (i = 0; string_table[i].key_ != 0; i++)
+  for (i = 0; string_table[i].key_ != nullptr; i++)
     if (hash.bind (string_table[i].key_,
                    string_table[i].value_) != 0)
       ACE_ERROR_RETURN ((LM_ERROR,

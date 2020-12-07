@@ -26,9 +26,9 @@ static ACE_Atomic_Op<ACE_Thread_Mutex, int> run_count (0);
 class Waiter_Task : public ACE_Task_Base
 {
 public:
-  Waiter_Task (ACE_Thread_Manager* tm = 0)
+  Waiter_Task (ACE_Thread_Manager* tm = nullptr)
     : ACE_Task_Base (tm) {}
-  virtual int svc(void);
+  int svc(void) override;
 };
 
 int

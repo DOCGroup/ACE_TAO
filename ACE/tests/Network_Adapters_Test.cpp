@@ -89,9 +89,9 @@
 Echo_Handler::Echo_Handler (void)
   : ping_socket_ (),
     reply_wait_ (),
-    remote_addrs_ (0),
+    remote_addrs_ (nullptr),
     number_remotes_ (0),
-    success_status_ (0),
+    success_status_ (nullptr),
     delete_success_status_ (0),
     max_attempts_num_ (0),
     current_attempt_ (0),
@@ -108,13 +108,13 @@ Echo_Handler::~Echo_Handler (void)
   if (this->remote_addrs_)
     {
       delete [] this->remote_addrs_;
-      this->remote_addrs_ = 0;
+      this->remote_addrs_ = nullptr;
     }
   if (this->success_status_ && this->delete_success_status_)
     {
       delete this->success_status_;
     }
-  this->success_status_ = 0;
+  this->success_status_ = nullptr;
 
   ACE_DEBUG
     ((LM_DEBUG,
@@ -343,7 +343,7 @@ Echo_Handler::dispatch_echo_checks (int first_call)
   int rval_sched = -1;
   if ((rval_sched =
          this->reactor ()->schedule_timer (this,
-                                           0,
+                                           nullptr,
                                            ACE_Time_Value (1),
                                            this->reply_wait_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -636,7 +636,7 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
                           ACE_TEXT ("handler's pointer has been deleted.\n")));
             }
 #endif // ACE_HAS_EXCEPTIONS
-          this->handlers_to_stop_[i] = 0;
+          this->handlers_to_stop_[i] = nullptr;
         }
     }
 
@@ -741,14 +741,14 @@ Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
 
   entrance = index;
   // null the entrance. Nulled entrances cannot be destroyed
-  this->handlers_to_stop_[entrance] = 0;
+  this->handlers_to_stop_[entrance] = nullptr;
 
   return 0;
 }
 
 
 Repeats_Handler::Repeats_Handler (void)
-  : check_handler_ (0),
+  : check_handler_ (nullptr),
     seconds_timer_ (60),
     counter_ (0)
 {
@@ -784,7 +784,7 @@ Repeats_Handler::open (Echo_Handler * check_handler,
 
   if (this->reactor ()->schedule_timer (
         this,
-        0,
+        nullptr,
         ACE_Time_Value (1),
         ACE_Time_Value (this->seconds_timer_)) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -876,7 +876,7 @@ static int repeats_seconds_timer = 60; // 60 seconds between repeats
 static int
 is_ip_address_local (char const * const ip_to_bind)
 {
-  ACE_INET_Addr *the_addr_array = 0;
+  ACE_INET_Addr *the_addr_array = nullptr;
   size_t how_many = 0;
   int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
@@ -938,7 +938,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("b:p:t:w:"));
   int c, counter = 0;
   ACE_INET_Addr b_temp_addr;
-  ACE_TCHAR *token = 0;
+  ACE_TCHAR *token = nullptr;
   while ((c = get_opt ()) != EOF)
     {
       switch (c)
@@ -973,8 +973,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
           // tokenizing the string
           for (token = ACE_OS::strtok (get_opt.optarg, ACE_TEXT (":"));
-               token != 0 && counter < MAX_NUMBER_OF_PING_POINTS;
-               token = ACE_OS::strtok (0, ACE_TEXT (":")))
+               token != nullptr && counter < MAX_NUMBER_OF_PING_POINTS;
+               token = ACE_OS::strtok (nullptr, ACE_TEXT (":")))
             {
               if (ping_points_addrs[counter].set ((u_short)0, token) != 0)
                 ACE_ERROR_RETURN
@@ -1032,7 +1032,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       return -1;
     }
 
-  ACE_Reactor * main_reactor = 0;
+  ACE_Reactor * main_reactor = nullptr;
   ACE_NEW_RETURN (main_reactor, ACE_Reactor, -1);
 
   (void) ACE_High_Res_Timer::global_scale_factor ();
@@ -1063,7 +1063,7 @@ run_main (int argc, ACE_TCHAR *argv[])
    * Stop_Handler and pass an instance of reactor (main_reactor),
    * running demultiplexing event loop in the "main thread".
    */
-  Stop_Handler* stop_handler = 0;
+  Stop_Handler* stop_handler = nullptr;
   ACE_NEW_RETURN (stop_handler, Stop_Handler (main_reactor), -1);
   if (stop_handler->open () == -1)
     {
@@ -1073,7 +1073,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit(-2);
     }
 
-  ACE_TCHAR *ping_status = 0;
+  ACE_TCHAR *ping_status = nullptr;
   ACE_NEW_RETURN (ping_status, ACE_TCHAR[number_of_ping_points], -1);
 
   // wait_echo_reply_timer is in msec
@@ -1083,7 +1083,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   milliseconds =  wait_echo_reply_timer % 1000;
   ACE_Time_Value const wait_timer (seconds, milliseconds);
 
-  Echo_Handler *ping_handler = 0;
+  Echo_Handler *ping_handler = nullptr;
   ACE_NEW_RETURN (ping_handler, Echo_Handler, -1);
 
   if (ACE_OS::strlen (local_ip_to_bind))
@@ -1162,7 +1162,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  Repeats_Handler *repeats_handler = 0;
+  Repeats_Handler *repeats_handler = nullptr;
   ACE_NEW_RETURN (repeats_handler, Repeats_Handler, -1);
   if (repeats_handler->open (ping_handler,
                              main_reactor,

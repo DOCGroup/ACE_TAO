@@ -82,11 +82,11 @@ Hello_Impl::operator delete (void *ptr)
 extern "C" ACE_Svc_Export Hello *
 get_hello (void)
 {
-  Hello *hello = 0;
+  Hello *hello = nullptr;
 
   ACE_NEW_RETURN (hello,
                   Hello_Impl,
-                  0);
+                  nullptr);
 
   return hello;
 }
@@ -131,7 +131,7 @@ Child::test (void)
 extern "C" ACE_Svc_Export int
 dynamic_cast_test (Parent *target)
 {
-  Child *c = 0;
+  Child *c = nullptr;
   c = dynamic_cast<Child*> (target);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
               target, c));

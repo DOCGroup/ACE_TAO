@@ -74,13 +74,13 @@ get_valid_ipv4_interface_names_win32 (nameset &names)
 void
 get_valid_ipv4_interface_names_getifaddrs (nameset &names)
 {
-  ifaddrs *ifap = 0;
-  ifaddrs *p_if = 0;
+  ifaddrs *ifap = nullptr;
+  ifaddrs *p_if = nullptr;
 
   if (::getifaddrs (&ifap) != 0)
     return;
 
-  for (p_if = ifap; p_if != 0; p_if = p_if->ifa_next)
+  for (p_if = ifap; p_if != nullptr; p_if = p_if->ifa_next)
     {
       if (p_if->ifa_flags & IFF_MULTICAST &&
           p_if->ifa_addr->sa_family == AF_INET)
@@ -194,7 +194,7 @@ create_socket_and_join_multicast (const ACE_INET_Addr &mc_addr, const ACE_TStrin
   int result = 0;
   ACE_SOCK_Dgram_Mcast sock;
   sock.opts (ACE_SOCK_Dgram_Mcast::OPT_BINDADDR_NO | ACE_SOCK_Dgram_Mcast::DEFOPT_NULLIFACE);
-  result = sock.join (mc_addr, 1, if_name.empty () ? 0 : if_name.c_str ());
+  result = sock.join (mc_addr, 1, if_name.empty () ? nullptr : if_name.c_str ());
   result |= sock.close ();
   return result;
 }

@@ -63,7 +63,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = 0;
+static const ACE_TCHAR *host = nullptr;
 
 // number of Client instances
 static int clients = 1;
@@ -125,7 +125,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -161,15 +161,15 @@ public:
   MyTask (void):
     lock_ (),
     sem_ ((unsigned int) 0),
-    proactor_(0) {}
+    proactor_(nullptr) {}
 
-  virtual ~MyTask()
+  ~MyTask() override
     {
       (void) this->stop ();
       (void) this->delete_proactor();
     }
 
-  virtual int svc (void);
+  int svc (void) override;
 
   int start (int num_threads,
              ProactorType type_proactor,
@@ -195,7 +195,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->proactor_ == 0);
+  ACE_TEST_ASSERT (this->proactor_ == nullptr);
 
 #if defined (ACE_WIN32)
 
@@ -213,7 +213,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-  ACE_POSIX_Proactor * proactor_impl = 0;
+  ACE_POSIX_Proactor * proactor_impl = nullptr;
 
   switch (type_proactor)
     {
@@ -284,7 +284,7 @@ MyTask::delete_proactor (void)
               ACE_TEXT ("(%t) Delete Proactor\n")));
 
   ACE_Proactor::close_singleton ();
-  this->proactor_ = 0;
+  this->proactor_ = nullptr;
 
   return 0;
 }
@@ -318,7 +318,7 @@ MyTask::start (int num_threads,
 int
 MyTask::stop ()
 {
-  if (this->proactor_ != 0)
+  if (this->proactor_ != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Calling End Proactor event loop\n")));
@@ -377,7 +377,7 @@ class Server : public ACE_Handler
 public:
   Server ();
   Server (TestData *tester, int id);
-  ~Server (void);
+  ~Server (void) override;
 
   int id (void) { return this->id_; }
   size_t get_total_snd (void) { return this->total_snd_; }
@@ -398,11 +398,11 @@ protected:
    */
   /// This is called when asynchronous <read> operation from the
   /// socket completes.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
   /// This is called when an asynchronous <write> to the socket
   /// completes.
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 
 private:
   int initiate_read (void);
@@ -434,7 +434,7 @@ class Client : public ACE_Handler
 public:
   Client ();
   Client (TestData *tester, int id);
-  ~Client (void);
+  ~Client (void) override;
 
   void go (ACE_HANDLE h, const ACE_INET_Addr &server);
   int id (void) { return this->id_; }
@@ -444,10 +444,10 @@ public:
   int    get_total_r   (void) { return this->total_r_; }
 
   // This is called when asynchronous reads from the socket complete
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
   // This is called when asynchronous writes from the socket complete
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 
   void cancel (void);
 
@@ -515,9 +515,9 @@ TestData::TestData ()
 {
   int i;
   for (i = 0; i < MAX_SERVERS; ++i)
-    this->server_list_[i] = 0;
+    this->server_list_[i] = nullptr;
   for (i = 0; i < MAX_CLIENTS; ++i)
-    this->client_list_[i] = 0;
+    this->client_list_[i] = nullptr;
 }
 
 bool
@@ -538,13 +538,13 @@ Server *
 TestData::server_up (void)
 {
   ++this->servers_.sessions_up_;
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, nullptr);
 
   for (int i = 0; i < MAX_SERVERS; ++i)
     {
-      if (this->server_list_[i] == 0)
+      if (this->server_list_[i] == nullptr)
         {
-          ACE_NEW_RETURN (this->server_list_[i], Server (this, i), 0);
+          ACE_NEW_RETURN (this->server_list_[i], Server (this, i), nullptr);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Server %d up; now %d up, %d down.\n"),
                       i,
@@ -553,20 +553,20 @@ TestData::server_up (void)
           return this->server_list_[i];
         }
     }
-  return 0;
+  return nullptr;
 }
 
 Client *
 TestData::client_up (void)
 {
   ++this->clients_.sessions_up_;
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, nullptr);
 
   for (int i = 0; i < MAX_CLIENTS; ++i)
     {
-      if (this->client_list_[i] == 0)
+      if (this->client_list_[i] == nullptr)
         {
-          ACE_NEW_RETURN (this->client_list_[i], Client (this, i), 0);
+          ACE_NEW_RETURN (this->client_list_[i], Client (this, i), nullptr);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Client %d up; now %d up, %d down.\n"),
                       i,
@@ -575,7 +575,7 @@ TestData::client_up (void)
           return this->client_list_[i];
         }
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -603,7 +603,7 @@ TestData::server_done (Server *s)
                         ACE_TEXT ("Server %d is pos %d in list\n"),
                         s->id (),
                         i));
-          this->server_list_[i] = 0;
+          this->server_list_[i] = nullptr;
           break;
         }
     }
@@ -638,7 +638,7 @@ TestData::client_done (Client *c)
                         ACE_TEXT ("Client %d is pos %d in list\n"),
                         c->id (),
                         i));
-          this->client_list_[i] = 0;
+          this->client_list_[i] = nullptr;
           break;
         }
     }
@@ -659,13 +659,13 @@ TestData::stop_all (void)
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->list_lock_);
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
-        if (this->client_list_[i] != 0)
+        if (this->client_list_[i] != nullptr)
           this->client_list_[i]->cancel ();
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
-        if (this->server_list_[i] != 0)
+        if (this->server_list_[i] != nullptr)
           this->server_list_[i]->cancel ();
       }
   }
@@ -673,13 +673,13 @@ TestData::stop_all (void)
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->list_lock_);
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
-        if (this->client_list_[i] != 0)
+        if (this->client_list_[i] != nullptr)
           delete this->client_list_[i];
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
-        if (this->server_list_[i] != 0)
+        if (this->server_list_[i] != nullptr)
           delete this->server_list_[i];
       }
   }
@@ -758,10 +758,10 @@ class Master : public ACE_Handler
 {
 public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
-  ~Master (void);
+  ~Master (void) override;
 
   // Called when dgram receive operation completes.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
 private:
   void start_recv (void);
@@ -779,7 +779,7 @@ private:
 Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
   : tester_ (tester),
     recv_addr_ (recv_addr),
-    mb_ (0),
+    mb_ (nullptr),
     sessions_expected_ (expected),
     recv_in_progress_ (false)
 {
@@ -802,10 +802,10 @@ Master::~Master (void)
     this->rd_.cancel ();
   this->sock_.close ();
 
-  if (this->mb_ != 0)
+  if (this->mb_ != nullptr)
     {
       this->mb_->release ();
-      this->mb_ = 0;
+      this->mb_ = nullptr;
     }
 }
 
@@ -917,7 +917,7 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 void
 Master::start_recv (void)
 {
-  if (this->mb_ == 0)
+  if (this->mb_ == nullptr)
     return;
 
   size_t unused = 0;
@@ -984,7 +984,7 @@ Server::~Server (void)
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
-  if (this->tester_ != 0)
+  if (this->tester_ != nullptr)
     this->tester_->server_done (this);
 
   if (this->handle () != ACE_INVALID_HANDLE)
@@ -1040,7 +1040,7 @@ Server::initiate_read (void)
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (1024), //BUFSIZ + 1),
                   -1);
@@ -1442,7 +1442,7 @@ Client::~Client (void)
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
-  if (this->tester_ != 0)
+  if (this->tester_ != nullptr)
     this->tester_->client_done (this);
 
   this->id_ = -1;
@@ -1589,7 +1589,7 @@ Client::initiate_write (void)
     }
 #else /* ACE_WIN32 */
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // No need to allocate +1 for proper printing - the memory includes
   // it already
@@ -1680,7 +1680,7 @@ Client::initiate_read (void)
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
                      complete_message_length : BUFSIZ;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out
@@ -2153,15 +2153,15 @@ run_main (int argc, ACE_TCHAR *argv[])
       Connector connector (&test);
       int rc = 0;
 
-      if (both != 0 || host == 0) // Acceptor
+      if (both != 0 || host == nullptr) // Acceptor
         {
           // Already running; if not needed will be deleted soon.
           rc = 1;
         }
 
-      if (both != 0 || host != 0)
+      if (both != 0 || host != nullptr)
         {
-          if (host == 0)
+          if (host == nullptr)
             host = ACE_LOCALHOST;
 
           if (addr.set (port, host, 1, addr.get_type ()) == -1)

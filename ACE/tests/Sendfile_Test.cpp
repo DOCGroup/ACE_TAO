@@ -62,7 +62,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -91,7 +91,7 @@ client (void *arg)
   ACE_TCHAR test_file[MAXPATHLEN + 1];
   ACE_HANDLE in_fd = ACE_INVALID_HANDLE;
   if (ACE::get_temp_dir (test_file, MAXPATHLEN - file_sz) == -1
-      || ACE_OS::strcat (test_file, file) == 0
+      || ACE_OS::strcat (test_file, file) == nullptr
       || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS)) == ACE_INVALID_HANDLE)
     {
@@ -165,7 +165,7 @@ cleanup:
   if (in_fd != ACE_INVALID_HANDLE)
     (void) ACE_OS::close (in_fd);
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -186,7 +186,7 @@ server (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -256,7 +256,7 @@ server (void *arg)
 
   sock_str.close();
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */

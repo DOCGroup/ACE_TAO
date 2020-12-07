@@ -36,7 +36,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
 
   ACE_Byte* encodeBuf = ACE_Base64::encode (stream, length,
                                             &encode_len);
-  if (encodeBuf == 0)
+  if (encodeBuf == nullptr)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Error in encoding stream\n")));
       return -1;
@@ -52,7 +52,7 @@ encode_decode_stream (const ACE_Byte* stream, size_t length)
   size_t decode_len = 0;
   ACE_Byte* decodeBuf = ACE_Base64::decode (encodeBuf, &decode_len);
 
-  if (decodeBuf == 0)
+  if (decodeBuf == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Error in decoding encoded stream\n")));

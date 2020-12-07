@@ -47,22 +47,22 @@ static int max_iterations = ACE_DEFAULT_TIMERS * 100;
 static int TIMER_DISTANCE = 50;
 
 // Array of timer ids assigned to us that we need to keep track of.
-static long *timer_ids = 0;
+static long *timer_ids = nullptr;
 
 class Example_Handler : public ACE_Event_Handler
 {
 public:
   Example_Handler (void): close_count_ (0) {}
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
     this->close_count_++;
     return 0;
   }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     int *act = (int *) arg;
     ACE_TEST_ASSERT (*act == 42 || *act == 007);
@@ -84,7 +84,7 @@ struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler (void) : trip_count_ (0) { }
 
-  virtual int handle_timeout (const ACE_Time_Value & , const void *)
+  int handle_timeout (const ACE_Time_Value & , const void *) override
   {
     ++trip_count_;
     return 0;
@@ -109,7 +109,7 @@ test_interval_timer (ACE_Timer_Queue *tq)
   const unsigned EXPECTED_TRIP_COUNT =
     NUM_INTERVAL_FIRINGS + 1 /* for the first immediate firing */;
 
-  long id = tq->schedule (&ih, 0 /* no act */, ACE_Time_Value::zero, interval);
+  long id = tq->schedule (&ih, nullptr /* no act */, ACE_Time_Value::zero, interval);
   ACE_TEST_ASSERT (id != -1);
 
   do
@@ -142,7 +142,7 @@ test_functionality (ACE_Timer_Queue *tq)
   // Do a test on earliest_time.
   ACE_Time_Value earliest_time = tq->gettimeofday ();
 
-  const void *timer_act = 0;
+  const void *timer_act = nullptr;
   ACE_NEW (timer_act, int (1));
   timer_id = tq->schedule (&eh, timer_act, earliest_time);
 
@@ -201,14 +201,14 @@ test_functionality (ACE_Timer_Queue *tq)
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act1 = 0;
+  const void *timer_act1 = nullptr;
   ACE_NEW (timer_act1, int (42));
   result = tq->schedule (&eh,
                          timer_act1,
                          tq->gettimeofday () + ACE_Time_Value (100));
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act2 = 0;
+  const void *timer_act2 = nullptr;
   ACE_NEW (timer_act2, int (42));
   result = tq->schedule (&eh,
                          timer_act2,
@@ -309,14 +309,14 @@ test_performance (ACE_Timer_Queue *tq,
   Example_Handler eh;
   ACE_Profile_Timer timer;
   int i;
-  const void *timer_act = 0;
+  const void *timer_act = nullptr;
 
   ACE_TEST_ASSERT (tq->is_empty () != 0);
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
 
   // Test the amount of time required to schedule all the timers.
 
-  ACE_Time_Value *times = 0;
+  ACE_Time_Value *times = nullptr;
   ACE_NEW (times, ACE_Time_Value[max_iterations]);
 
   // Set up a bunch of times TIMER_DISTANCE ms apart.
@@ -418,7 +418,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   randomize (times,
              max_iterations,
-             static_cast<unsigned int> (ACE_OS::time (0L)));
+             static_cast<unsigned int> (ACE_OS::time (nullptr)));
 
   // Test the amount of time required to randomly cancel all the
   // timers.
@@ -532,7 +532,7 @@ test_unique_timer_heap_ids (void)
 
   for (int i = 0; i < 100; ++i)
     {
-      timer_id = timer_heap.schedule (&eh, 0, anytime);
+      timer_id = timer_heap.schedule (&eh, nullptr, anytime);
       if (timer_id == -1)
         {
           ACE_ERROR ((LM_ERROR,
@@ -588,7 +588,7 @@ class Timer_Queue_Stack
 public:
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
     const ACE_TCHAR *name,
-    Timer_Queue_Stack *next = 0)
+    Timer_Queue_Stack *next = nullptr)
     : queue_ (queue),
     name_ (name),
     next_ (next)
@@ -615,7 +615,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // = Perform initializations.
 
-  Timer_Queue_Stack *tq_stack = 0;
+  Timer_Queue_Stack *tq_stack = nullptr;
 
   // Add new Timer_Queue implementations here.  Note that these will
   // be executed in "reverse order".
@@ -703,7 +703,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   Timer_Queue_Stack *tq_ptr = tq_stack;
 
-  while (tq_ptr != 0)
+  while (tq_ptr != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("**** starting test of %s\n"),

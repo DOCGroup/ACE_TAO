@@ -531,7 +531,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
           for (i = 0; i < Nr_Processes; i++)
             {
-              if (children[i] == 0)
+              if (children[i] == nullptr)
                 continue;
               ACE_exitcode child_status;
               // See if the child has exited.
@@ -549,7 +549,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                     ACE_ERROR ((LM_ERROR,
                                 ACE_TEXT ("Child %d finished with status %d\n"),
                                 (int)(children[i]->getpid ()), child_status));
-                  children[i] = 0;
+                  children[i] = nullptr;
                   --processes;
                 }
             }

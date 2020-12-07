@@ -35,7 +35,7 @@ static int test_result = 0;
 
 // Event used in the tests.  Start it "unsignalled" (i.e., its initial
 // state is 0).
-static ACE_Event_Base *evt = 0;
+static ACE_Event_Base *evt = nullptr;
 
 // use monotonic or system time policy
 static bool use_monotonic = true;
@@ -178,7 +178,7 @@ worker (void *)
         }
 
       // Check to ensure that an "infinite timeout" will work.
-      if (evt->wait (0) == -1)
+      if (evt->wait (nullptr) == -1)
         {
           //FUZZ: disable check_for_lack_ACE_OS
           ACE_ERROR ((LM_ERROR,
@@ -209,7 +209,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) worker finished\n")));
 
-  return 0;
+  return nullptr;
 }
 
 #  endif /* ACE_HAS_THREADS */
@@ -256,7 +256,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
        ACE_THR_FUNC (worker),
-       0,
+       nullptr,
        THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

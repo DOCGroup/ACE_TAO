@@ -61,7 +61,7 @@ client (void *arg)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("client: Connection timed out.")));
-      return 0;
+      return nullptr;
     }
 
   if (cli_stream.get_local_addr (client_addr) == -1)
@@ -102,7 +102,7 @@ client (void *arg)
               ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) client: Connection refused (delayed)\n")));
             cli_stream.close ();
-            return 0;
+            return nullptr;
           }
 
         ACE_ERROR ((LM_ERROR,
@@ -110,7 +110,7 @@ client (void *arg)
                     ACE_TEXT ("client: send_n")));
         ACE_ERROR ((LM_ERROR, "client: Closing stream.\n"));
         cli_stream.close();
-        return 0;
+        return nullptr;
       }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -141,7 +141,7 @@ client (void *arg)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("client: close")));
-  return 0;
+  return nullptr;
 }
 
 void *
@@ -196,7 +196,7 @@ server (void *arg)
                             ACE_TEXT ("(%P|%t) server: Incorrect # client ")
                             ACE_TEXT ("connections. Expected:%d-%d Actual:%d\n"),
                             BACKLOG, BACKLOG * 2, num_clients_connected));
-              return 0;
+              return nullptr;
             }
 
           ACE_ERROR_RETURN ((LM_ERROR,
@@ -232,7 +232,7 @@ server (void *arg)
 
           for (ssize_t r_bytes; ;)
             {
-              if (ACE::handle_read_ready (new_stream.get_handle (), 0) == -1)
+              if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
                 ACE_ERROR_RETURN ((LM_ERROR,
                                    ACE_TEXT ("(%P|%t) %p\n"),
                                    ACE_TEXT ("stream handle_read_ready")),
@@ -297,7 +297,7 @@ server (void *arg)
                         ACE_TEXT ("server: accept")));
         }
     }
-  ACE_NOTREACHED (return 0);
+  ACE_NOTREACHED (return nullptr);
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -349,7 +349,7 @@ spawn (int num_clients)
       peer_acceptor.close();
 
       // Reap the child pids.
-      for (pid_t pid; (pid = ACE_OS::waitpid (0, 0, 0)) != -1; )
+      for (pid_t pid; (pid = ACE_OS::waitpid (0, nullptr, 0)) != -1; )
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%P|%t) spawn: reaping pid %d\n"), pid));
 

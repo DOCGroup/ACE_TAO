@@ -48,12 +48,12 @@ A::operator new (size_t n)
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
-  if (dynamic_instance == 0)
+  if (dynamic_instance == nullptr)
     {
       // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_TEST_ASSERT (dynamic_instance != 0);
+      ACE_TEST_ASSERT (dynamic_instance != nullptr);
 
       ACE_throw_bad_alloc;
     }
@@ -73,14 +73,14 @@ A::operator new (size_t n, const ACE_nothrow_t&) throw()
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
-  if (dynamic_instance == 0)
+  if (dynamic_instance == nullptr)
     {
       // If this ACE_TEST_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
-      ACE_TEST_ASSERT (dynamic_instance != 0);
+      ACE_TEST_ASSERT (dynamic_instance != nullptr);
 
-      return 0;
+      return nullptr;
     }
   else
     {
@@ -122,7 +122,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Dynamic_Test"));
   A from_stack;
-  A* heap = 0;
+  A* heap = nullptr;
   ACE_NEW_RETURN (heap, A, 1);
   if (from_stack.dynamic_)
     {

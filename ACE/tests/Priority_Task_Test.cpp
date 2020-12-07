@@ -43,10 +43,10 @@ public:
    * priority.
    *FUZZ: enable check_for_lack_ACE_OS
    */
-  int open (void *);
+  int open (void *) override;
 
   /// Runs on a separate thread an checks the priority.
-  int svc (void);
+  int svc (void) override;
 
   /// Returns 1 if priority was set properly, 0 otherwise.
   int succeeded (void) { return error_ == 0; }

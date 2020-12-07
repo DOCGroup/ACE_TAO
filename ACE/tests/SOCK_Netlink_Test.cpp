@@ -203,7 +203,7 @@ public:
   Secondary_Ipaddr_Handler (void);
 
   // Destructor
-  virtual ~Secondary_Ipaddr_Handler (void);
+  ~Secondary_Ipaddr_Handler (void) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialization. Schedules a timer to run start the business.
@@ -214,21 +214,21 @@ public:
             const char *const if_name);
 
   // Returns reference to netlink socket. Necessary for reactor.
-  virtual ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle (void) const override;
 
   /**
    * Takes care of the input. Reads the incoming messages,
    * makes their processing.
    */
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
   // Makes clean-up
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
   // Runs a state machine. Controls adding/deleting of ip-address.
   int handle_timeout (ACE_Time_Value const & tv,
-                      void const * arg = 0);
+                      void const * arg = nullptr) override;
 
   // Sends to kernel a request to add secondary ip/mask to an
   // interface.
@@ -397,14 +397,14 @@ Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
                       -1);
 
   if (this->reactor ()->schedule_timer (this,
-                                        0,
+                                        nullptr,
                                         ACE_Time_Value::zero) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P) Secondary_Ipaddr_Handler::open - ")
                        ACE_TEXT("can't schedule timer with reactor.\n")),
                       -1);
 
-  this->seq_ = ACE_OS::time (0);
+  this->seq_ = ACE_OS::time (nullptr);
 
   ACE_OS::strncpy (this->ip_buff_,
                    ip_slash_mask,
@@ -429,7 +429,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT("(%P) Secondary_Ipaddr_Handler::handle_input -  entered\n")));
 
-  nlmsghdr *hdr = 0;
+  nlmsghdr *hdr = nullptr;
   iovec iov;
 
   iov.iov_base = this->recv_buff_;
@@ -607,7 +607,7 @@ Secondary_Ipaddr_Handler::close ()
 
       this->reactor ()->cancel_timer (this);
 
-      this->reactor (0);
+      this->reactor (nullptr);
     }
   return 0;
 }
@@ -618,7 +618,7 @@ Secondary_Ipaddr_Handler::schedule_one_sec_timer ()
   const ACE_Time_Value one_sec (1, 0);
 
   if (this->reactor ()->schedule_timer (this,
-                                        0,
+                                        nullptr,
                                         one_sec) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("(%P) Secondary_Ipaddr_Handler::schedule_one_sec_timer - ")
@@ -650,7 +650,7 @@ Secondary_Ipaddr_Handler::fill_inet_prefix (
   char ip_buff[32];
   ACE_OS::strncpy (ip_buff, ip_slash_netmask, sizeof (ip_buff));
 
-  char* to_search = ip_buff, *dot = 0;
+  char* to_search = ip_buff, *dot = nullptr;
 
   for (int i = 0; i < 4; i++)
     {

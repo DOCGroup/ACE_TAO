@@ -25,7 +25,7 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   int ret = 0;
-  int *ptr = 0;
+  int *ptr = nullptr;
 
   ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));
 
@@ -68,7 +68,7 @@ run_main (int, ACE_TCHAR *[])
 
       // make sure the current element is what we expect
       iter.next (ptr);
-      ACE_TEST_ASSERT (ptr != 0);
+      ACE_TEST_ASSERT (ptr != nullptr);
       ACE_TEST_ASSERT (*ptr == i);
 
       // move to the next element in the set
@@ -88,9 +88,9 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (iter.done () == 0);
 
       // Make sure the current element is what we expect.
-      int *ptr = 0;
+      int *ptr = nullptr;
       iter.next (ptr);
-      ACE_TEST_ASSERT (ptr != 0);
+      ACE_TEST_ASSERT (ptr != nullptr);
       ACE_TEST_ASSERT (*ptr == i);
 
       // Move to the previous element in the set.
@@ -183,12 +183,12 @@ run_main (int, ACE_TCHAR *[])
   set.find (205, iter);
   ACE_TEST_ASSERT (iter.done () == 0);
   iter.next (ptr);
-  ACE_TEST_ASSERT (ptr != 0);
+  ACE_TEST_ASSERT (ptr != nullptr);
   ACE_TEST_ASSERT (*ptr == 205);
   set.find (201, iter);
   ACE_TEST_ASSERT (iter.done () == 0);
   iter.next (ptr);
-  ACE_TEST_ASSERT (ptr != 0);
+  ACE_TEST_ASSERT (ptr != nullptr);
   ACE_TEST_ASSERT (*ptr == 201);
 
   // Finally, iterate through the set and make sure its contents are
@@ -196,7 +196,7 @@ run_main (int, ACE_TCHAR *[])
   iter.first ();
   ACE_TEST_ASSERT (iter.done () == 0);
   iter.next (ptr);
-  ACE_TEST_ASSERT (ptr != 0);
+  ACE_TEST_ASSERT (ptr != nullptr);
   ACE_TEST_ASSERT (*ptr == 201);
   iter.advance ();
 
@@ -206,7 +206,7 @@ run_main (int, ACE_TCHAR *[])
       // should be 205
       ACE_TEST_ASSERT (iter.done () == 0);
       iter.next (ptr);
-      ACE_TEST_ASSERT (ptr != 0);
+      ACE_TEST_ASSERT (ptr != nullptr);
       ACE_TEST_ASSERT (*ptr == 205);
 
       // Move to the next element in the set.

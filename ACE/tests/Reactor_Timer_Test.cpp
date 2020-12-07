@@ -33,12 +33,12 @@ public:
   Time_Handler ();
 
   /// Handle the timeout.
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   /// Called when <Time_Handler> is removed.
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
   /// Return our timer id.
   long timer_id (void) const;

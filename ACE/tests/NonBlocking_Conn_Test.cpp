@@ -30,8 +30,8 @@ static bool test_wfmo_reactor = true;
 static int result = 0;
 
 Svc_Handler::Svc_Handler (bool is_ref_counted)
-  : status_ (0),
-    completion_counter_ (0),
+  : status_ (nullptr),
+    completion_counter_ (nullptr),
     is_ref_counted_ (is_ref_counted)
 {
   if (this->is_ref_counted_)
@@ -132,7 +132,7 @@ test_connect (ACE_Reactor &reactor,
   connector.connect_n (number_of_connections,
                        svc_handlers,
                        addresses,
-                       0,
+                       nullptr,
                        synch_options);
 
   if (!synch_options[ACE_Synch_Options::USE_REACTOR])

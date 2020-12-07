@@ -54,7 +54,7 @@ wait_tester (Tester_Args *args)
                     ACE_TEXT ("wait failed")));
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Wait on the barrier, expecting it to be shut down before completing
@@ -70,7 +70,7 @@ shut_tester (Tester_Args *args)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%t) wait failed, expecting ESHUTDOWN, %p\n"),
                 ACE_TEXT ("got")));
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */

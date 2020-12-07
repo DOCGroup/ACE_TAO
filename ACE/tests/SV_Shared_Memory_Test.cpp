@@ -49,8 +49,8 @@ static const int SEM_KEY_2 = ACE_DEFAULT_SEM_KEY + 2;
 static const int SHMSZ = 27;
 static const char SHMDATA[SHMSZ] = "abcdefghijklmnopqrstuvwxyz";
 
-static ACE_SV_Semaphore_Complex *parent_mutex = 0;
-static ACE_SV_Semaphore_Complex *parent_synch = 0;
+static ACE_SV_Semaphore_Complex *parent_mutex = nullptr;
+static ACE_SV_Semaphore_Complex *parent_synch = nullptr;
 
 static int
 parent (char *shm)

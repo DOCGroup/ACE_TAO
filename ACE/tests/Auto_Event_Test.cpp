@@ -185,7 +185,7 @@ worker (void *)
       ACE_Thread::yield ();
     }
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -198,7 +198,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
 #if defined (ACE_HAS_THREADS)
   parse_args (argc, argv);
-  ACE_OS::srand ((u_int) ACE_OS::time (0L));
+  ACE_OS::srand ((u_int) ACE_OS::time (nullptr));
 
   //Test timed waits.
   for (size_t i = 0; i < test_timeout_count; i++)
@@ -208,7 +208,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (static_cast<size_t> (n_workers),
        ACE_THR_FUNC (worker),
-       0,
+       nullptr,
        THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

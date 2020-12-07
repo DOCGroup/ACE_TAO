@@ -260,7 +260,7 @@ void reset_non_empty_queue(char const * /* test_name */)
   Event_Handler eh2(2);
 
   queue.push_new_notification(
-      ACE_Notification_Buffer(0,
+      ACE_Notification_Buffer(nullptr,
                               ACE_Event_Handler::READ_MASK));
   queue.push_new_notification(
       ACE_Notification_Buffer(&eh1,
@@ -269,7 +269,7 @@ void reset_non_empty_queue(char const * /* test_name */)
       ACE_Notification_Buffer(&eh2,
                               ACE_Event_Handler::WRITE_MASK));
   queue.push_new_notification(
-      ACE_Notification_Buffer(0,
+      ACE_Notification_Buffer(nullptr,
                               ACE_Event_Handler::WRITE_MASK));
 
   queue.reset();

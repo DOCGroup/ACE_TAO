@@ -55,9 +55,9 @@ typedef int (* voidfunction)(void);
 
 #if defined (CAN_RUN_TEST)
 static void * dllHandle;
-static voidfunction   capi_init = 0;
-static voidfunction   capi_fini = 0;
-static voidfunction   capi_dosomething = 0;
+static voidfunction   capi_init = nullptr;
+static voidfunction   capi_fini = nullptr;
+static voidfunction   capi_dosomething = nullptr;
 #endif /* defined (CAN_RUN_TEST) */
 
 
@@ -83,39 +83,39 @@ void* loadDll(void*)
       dllHandle = dlopen (DllTestName, RTLD_NOW);
     }
 
-  if (dllHandle == 0)
+  if (dllHandle == nullptr)
   {
     PRINTF ("unable to load library: %s\n", dlerror());
-    assert(dllHandle != 0);
+    assert(dllHandle != nullptr);
   }
 
   void* temp = dlsym (dllHandle, "capi_init");
   memcpy (&capi_init, &temp, sizeof (temp));
-  if (capi_init == 0)
+  if (capi_init == nullptr)
   {
     PRINTF ("unable to resolve symbol capi_init: %s\n", dlerror());
-    assert(capi_init != 0);
+    assert(capi_init != nullptr);
   }
 
   temp = dlsym (dllHandle, "capi_fini");
   memcpy (&capi_fini, &temp, sizeof (temp));
-  if (capi_fini == 0)
+  if (capi_fini == nullptr)
   {
     PRINTF ("unable to resolve symbol capi_fini: %s\n", dlerror());
-    assert(capi_fini != 0);
+    assert(capi_fini != nullptr);
   }
 
   temp = dlsym (dllHandle, "capi_dosomething");
   memcpy (&capi_dosomething, &temp, sizeof (temp));
-  if (capi_dosomething == 0)
+  if (capi_dosomething == nullptr)
   {
     PRINTF ("unable to resolve symbol capi_dosomething: %s\n", dlerror());
-    assert(capi_dosomething != 0);
+    assert(capi_dosomething != nullptr);
   }
   capi_init();
   PRINTF ("loadDll - leaving\n");
 #endif /* defined (CAN_RUN_TEST) */
-  return 0;
+  return nullptr;
 }
 
 extern "C"
@@ -127,7 +127,7 @@ void* unloadDll(void*)
   dlclose(dllHandle);
   PRINTF ("unloadDll - leaving\n");
 #endif /* defined (CAN_RUN_TEST) */
-  return 0;
+  return nullptr;
 }
 
 void * loadunloadDll(void *pp)
@@ -135,13 +135,13 @@ void * loadunloadDll(void *pp)
   loadDll(pp);
 
 #if defined (CAN_RUN_TEST)
-  assert(capi_dosomething != 0);
+  assert(capi_dosomething != nullptr);
   capi_dosomething();
 #endif /* defined (CAN_RUN_TEST) */
 
   unloadDll(pp);
 
-  return 0;
+  return nullptr;
 }
 // FUZZ: disable check_for_improper_main_declaration
 int main (int, char *[])
@@ -158,14 +158,14 @@ int main (int, char *[])
 #  if defined (CAN_USE_THREADS)
   int result = 0;
   pthread_t tid1;
-  result = pthread_create(&tid1, 0, &loadDll, 0);
+  result = pthread_create(&tid1, nullptr, &loadDll, nullptr);
   if (result != 0)
   {
     PRINTF ("pthread_create() failed: %d\n", result);
     return result;
   }
 
-  pthread_join(tid1, 0);
+  pthread_join(tid1, nullptr);
   PRINTF ("loadDll thread finished and re-joined\n");
 
 #  else
@@ -179,13 +179,13 @@ int main (int, char *[])
 
 #  if defined (CAN_USE_THREADS)
   pthread_t tid2;
-  result = pthread_create(&tid2, 0, &unloadDll, 0);
+  result = pthread_create(&tid2, nullptr, &unloadDll, nullptr);
   if (result != 0)
   {
     PRINTF ("pthread_create() failed: %d\n", result);
     return 1;
   }
-  pthread_join(tid2, 0);
+  pthread_join(tid2, nullptr);
   PRINTF ("unloadDll thread finished and re-joined\n");
 
 #  else

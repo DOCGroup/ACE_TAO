@@ -89,7 +89,7 @@ client (void *arg)
   if (fifo.close () != 0)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("fifo close")));
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -178,7 +178,7 @@ server (void *arg)
                 buf));
   else
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) All receives ok\n")));
-  return 0;
+  return nullptr;
 }
 
 static int

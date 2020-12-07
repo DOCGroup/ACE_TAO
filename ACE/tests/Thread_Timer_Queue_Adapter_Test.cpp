@@ -130,7 +130,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// Default destructor.
         ///
         /// @return
-        virtual ~CTestEventHandler()
+        ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));
         }
@@ -139,7 +139,7 @@ class CTestEventHandler : public ICustomEventHandler
         ///
         /// @return int
         /// @param p_vParameter
-        virtual int operator() (void* p_vParameter)
+        int operator() (void* p_vParameter) override
         {
             long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
@@ -188,7 +188,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -210,7 +210,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -237,7 +237,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,
@@ -266,7 +266,7 @@ run_main (int, ACE_TCHAR *[])
     {
         // Create a test event handler
         long iCallCount = 0;
-        CTestEventHandler* p_TestEventHandler = 0;
+        CTestEventHandler* p_TestEventHandler = nullptr;
         ACE_NEW_RETURN(p_TestEventHandler, CTestEventHandler(&iCallCount), -1);
 
         ACE_DEBUG((LM_DEBUG,

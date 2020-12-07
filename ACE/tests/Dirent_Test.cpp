@@ -164,8 +164,8 @@ dirent_test (void)
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
 
-  for (ACE_DIRENT *directory = 0;
-       (directory = dir.read ()) != 0;
+  for (ACE_DIRENT *directory = nullptr;
+       (directory = dir.read ()) != nullptr;
        entrycount++)
     {
 #if defined (ACE_HAS_TCHAR_DIRENT)
@@ -230,7 +230,7 @@ dirent_count (const ACE_TCHAR *dir_path,
 
   int entry_count = 0;
 
-  for (ACE_DIRENT *directory; (directory = dir.read ()) != 0;)
+  for (ACE_DIRENT *directory; (directory = dir.read ()) != nullptr;)
     {
       // Skip the ".." and "." files.
       if (ACE::isdotdir(directory->d_name) == true)
@@ -355,9 +355,9 @@ run_main (int, ACE_TCHAR *[])
   TestDir = TEST_DIR;
 #else
   const char *root = ACE_OS::getenv ("top_srcdir");
-  if (root == 0)
+  if (root == nullptr)
     root = ACE_OS::getenv ("ACE_ROOT");
-  if (root != 0)
+  if (root != nullptr)
     {
       TestDir = ACE_TEXT_CHAR_TO_TCHAR (root);
       TestDir += ACE_DIRECTORY_SEPARATOR_STR;

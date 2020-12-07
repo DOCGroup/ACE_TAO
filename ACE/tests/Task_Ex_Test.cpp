@@ -40,10 +40,10 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// activate/spawn the threads.
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void*);
+  int open (void*) override;
 
   /// svc thread entry point
-  virtual int svc (void);
+  int svc (void) override;
 private:
 
 };
@@ -63,10 +63,10 @@ int Consumer::open (void*)
 
 int Consumer::svc ()
 {
-  User_Defined_Msg* pMsg=0;
+  User_Defined_Msg* pMsg=nullptr;
   while(this->getq (pMsg)!=-1)
   {
-    ACE_TEST_ASSERT (pMsg!=0);
+    ACE_TEST_ASSERT (pMsg!=nullptr);
     std::unique_ptr<User_Defined_Msg> pAuto(pMsg);
     ACE_DEBUG((LM_DEBUG,
                ACE_TEXT("Consumer::svc got msg id=%d\n"),
@@ -86,8 +86,8 @@ int Consumer::svc ()
 ACE_THR_FUNC_RETURN producer (void *arg)
 {
   Consumer* c = static_cast<Consumer*> (arg);
-  ACE_TEST_ASSERT(c!=0);
-  if (c==0)
+  ACE_TEST_ASSERT(c!=nullptr);
+  if (c==nullptr)
   {
     ACE_ERROR((LM_ERROR,
                ACE_TEXT("producer Error casting to consumer\n")));
@@ -95,9 +95,9 @@ ACE_THR_FUNC_RETURN producer (void *arg)
   }
   for (int i=0;i!=NUMBER_OF_MSGS;++i)
   {
-    User_Defined_Msg* pMsg=0;
+    User_Defined_Msg* pMsg=nullptr;
     ACE_NEW_NORETURN(pMsg, User_Defined_Msg(i));
-    if (pMsg==0)
+    if (pMsg==nullptr)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("producer Error allocating data %p\n"),
@@ -112,7 +112,7 @@ ACE_THR_FUNC_RETURN producer (void *arg)
       return (ACE_THR_FUNC_RETURN)-1;
     }
   }
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -125,7 +125,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
 
   Consumer c;
-  if(c.open (0)==-1)
+  if(c.open (nullptr)==-1)
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("main Error opening consumer\n")),-1);
 

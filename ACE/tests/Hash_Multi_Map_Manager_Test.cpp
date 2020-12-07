@@ -30,10 +30,10 @@ typedef HASH_STRING_MAP::ITERATOR HASH_STRING_ITERATOR;
 typedef HASH_STRING_MAP::CONST_ITERATOR HASH_STRING_CONST_ITERATOR;
 typedef HASH_STRING_MAP::REVERSE_ITERATOR HASH_STRING_REVERSE_ITERATOR;
 
-static const ACE_TCHAR *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), 0};
-static const ACE_TCHAR *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), 0};
-static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), 0};
-static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), 0};
+static const ACE_TCHAR *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), nullptr};
+static const ACE_TCHAR *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), nullptr};
+static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), nullptr};
+static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), nullptr};
 
 static int
 run_test (void)
@@ -43,7 +43,7 @@ run_test (void)
   size_t i;
 
   // Check the <bind> operation.
-  for (i = 0; warm_colors[i] != 0; i++)
+  for (i = 0; warm_colors[i] != nullptr; i++)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -54,8 +54,8 @@ run_test (void)
                           -1);
     }
 
-  HASH_STRING_ENTRY *entry = 0;
-  for (i = 0; cold_colors[i] != 0; i++)
+  HASH_STRING_ENTRY *entry = nullptr;
+  for (i = 0; cold_colors[i] != nullptr; i++)
     {
       if (colors.bind (color_sorts[1],
                        cold_colors[i],
@@ -68,8 +68,8 @@ run_test (void)
     }
 
   HASH_STRING_VALUE_SET value_set;
-  entry = 0;
-  for (i = 0; neutral_colors[i] != 0; i++)
+  entry = nullptr;
+  for (i = 0; neutral_colors[i] != nullptr; i++)
     value_set.insert (neutral_colors[i]);
   if (colors.bind (color_sorts[2],
                    value_set,
@@ -89,7 +89,7 @@ run_test (void)
                        -1);
 
   value_set.reset ();
-  entry = 0;
+  entry = nullptr;
   if (colors.trybind (color_sorts[2],
                       value_set,
                       entry) == -1)
@@ -99,7 +99,7 @@ run_test (void)
                        -1);
 
   value_set.reset ();
-  entry = 0;
+  entry = nullptr;
   if (colors.trybind (color_sorts[2],
                       value_set,
                       entry) == -1)
@@ -120,7 +120,7 @@ run_test (void)
 
   value_set.reset ();
   value_set.insert (neutral_colors[1]);
-  entry = 0;
+  entry = nullptr;
   if (colors.rebind (color_sorts[2],
                      value_set,
                      entry) == -1)
@@ -143,7 +143,7 @@ run_test (void)
   value_set.reset ();
   value_set.insert (neutral_colors[1]);
   old_value_set.reset ();
-  entry = 0;
+  entry = nullptr;
   if (colors.rebind (color_sorts[2],
                      value_set,
                      old_value_set,
@@ -167,11 +167,11 @@ run_test (void)
                        -1);
 
   value_set.reset ();
-  for (i = 0; neutral_colors[i] != 0; i++)
+  for (i = 0; neutral_colors[i] != nullptr; i++)
     value_set.insert (neutral_colors[i]);
-  old_key = 0;
+  old_key = nullptr;
   old_value_set.reset ();
-  entry = 0;
+  entry = nullptr;
   if (colors.rebind (color_sorts[2],
                      value_set,
                      old_key,
@@ -183,7 +183,7 @@ run_test (void)
                        -1);
 
   // Check the <find> operation.
-  for (i = 0; color_sorts[i] != 0; i++)
+  for (i = 0; color_sorts[i] != nullptr; i++)
     if (colors.find (color_sorts[i]) == 0)
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%s found\n"),
@@ -194,8 +194,8 @@ run_test (void)
                          color_sorts[i]),
                         -1);
 
-  entry = 0;
-  for (i = 0; color_sorts[i] != 0; i++)
+  entry = nullptr;
+  for (i = 0; color_sorts[i] != nullptr; i++)
     if (colors.find (color_sorts[i],
                      entry) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -208,7 +208,7 @@ run_test (void)
                         -1);
 
   value_set.reset ();
-  for (i = 0; color_sorts[i] != 0; i++)
+  for (i = 0; color_sorts[i] != nullptr; i++)
     if (colors.find (color_sorts[i],
                      value_set) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -220,7 +220,7 @@ run_test (void)
                          color_sorts[i]),
                         -1);
 
-  for (i = 0; warm_colors[i] != 0; i++)
+  for (i = 0; warm_colors[i] != nullptr; i++)
     if (colors.find (color_sorts[0],
                      warm_colors[i]) == 0)
       ACE_DEBUG ((LM_DEBUG,
@@ -236,7 +236,7 @@ run_test (void)
 
   // Check the iterator.
   i = 0;
-  entry = 0;
+  entry = nullptr;
   for (HASH_STRING_ITERATOR hash_iter (colors);
        hash_iter.next (entry) != 0;
        hash_iter.advance ())
@@ -263,7 +263,7 @@ run_test (void)
                        ACE_TEXT ("unbind failed for %s\n"),
                        color_sorts[1]),
                       -1);
-  for (i = 0; warm_colors[i] != 0; i++)
+  for (i = 0; warm_colors[i] != nullptr; i++)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -280,7 +280,7 @@ run_test (void)
                        ACE_TEXT ("unbind failed for %s\n"),
                        color_sorts[1]),
                       -1);
-  for (i = 0; warm_colors[i] != 0; i++)
+  for (i = 0; warm_colors[i] != nullptr; i++)
     {
       if (colors.bind (color_sorts[0],
                        warm_colors[i]) == -1)
@@ -291,7 +291,7 @@ run_test (void)
                           -1);
     }
 
-  for (i = 0; warm_colors[i] != 0; i++)
+  for (i = 0; warm_colors[i] != nullptr; i++)
     {
       if (colors.unbind (color_sorts[0],
                          warm_colors[i]) == -1)
@@ -304,7 +304,7 @@ run_test (void)
 
   // Check the reverse iterator.
   i = 0;
-  entry = 0;
+  entry = nullptr;
   for (HASH_STRING_REVERSE_ITERATOR hash_iter (colors);
        hash_iter.next (entry) != 0;
        hash_iter.advance ())
@@ -325,7 +325,7 @@ run_test (void)
         }
     }
 
-  entry = 0;
+  entry = nullptr;
   colors.find (color_sorts[1], entry);
   if (colors.unbind (entry) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
@@ -335,7 +335,7 @@ run_test (void)
 
   // Check the const iterator.
   i = 0;
-  entry = 0;
+  entry = nullptr;
   for (HASH_STRING_CONST_ITERATOR hash_iter (colors);
        hash_iter.next (entry) != 0;
        hash_iter.advance ())

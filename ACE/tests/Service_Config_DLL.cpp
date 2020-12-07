@@ -32,7 +32,7 @@ invoke_service_config (void *arg)
                 ACE_TEXT ("\"%s\"\n"),
                 directive));
 
-  return 0;
+  return nullptr;
 }
 
 Service_Config_DLL::Service_Config_DLL (void)
@@ -256,7 +256,7 @@ Refuses_Init::info (ACE_TCHAR **info_string, size_t length) const
 {
   ACE_TCHAR const *msg =
     ACE_TEXT ("Refuses_Init service, shouldn't be here!\n");
-  if (*info_string == 0)
+  if (*info_string == nullptr)
     *info_string = ACE_OS::strdup (msg);
   else
     ACE_OS::strncpy (*info_string, msg, length);

@@ -51,7 +51,7 @@ class Handler : public ACE_Event_Handler
 {
 public:
   /// The Handler callbacks.
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 };
 
 int
@@ -72,9 +72,9 @@ client (void *arg)
   thread_counter = opt_nthreads;
 
   // To pass or not to pass is the question
-  Handler *handler = 0;
+  Handler *handler = nullptr;
   if (!opt_pass_notify_data)
-    handler = 0;
+    handler = nullptr;
   else
     handler = (Handler *) arg;
 
@@ -84,7 +84,7 @@ client (void *arg)
   if (--thread_counter == 0)
     ACE_Reactor::instance()->end_reactor_event_loop ();
 
-  return 0;
+  return nullptr;
 }
 
 // Sets up the correct reactor (based on platform and options)
@@ -92,7 +92,7 @@ client (void *arg)
 static void
 create_reactor (void)
 {
-  ACE_Reactor_Impl *impl = 0;
+  ACE_Reactor_Impl *impl = nullptr;
 
   if (opt_wfmo_reactor)
     {
@@ -110,7 +110,7 @@ create_reactor (void)
       ACE_NEW (impl, ACE_Dev_Poll_Reactor);
 #endif /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
     }
-  ACE_Reactor *reactor = 0;
+  ACE_Reactor *reactor = nullptr;
   ACE_NEW (reactor, ACE_Reactor (impl));
   ACE_Reactor::instance (reactor);
 }
@@ -118,7 +118,7 @@ create_reactor (void)
 static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  const ACE_TCHAR *reactor_type = 0;
+  const ACE_TCHAR *reactor_type = nullptr;
   if (opt_wfmo_reactor)
     reactor_type = ACE_TEXT ("WFMO_Reactor");
   else if (opt_select_reactor)

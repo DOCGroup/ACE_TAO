@@ -181,7 +181,7 @@ client (void *arg)
               ACE_TEXT ("(%P|%t) running client\n")));
   CONNECTOR connector;
 
-  Write_Handler *writer = 0;
+  Write_Handler *writer = nullptr;
 
   // Do exponential backoff connections
   ACE_Synch_Options options = ACE_Synch_Options::synch;
@@ -201,7 +201,7 @@ client (void *arg)
           ACE_Time_Value tmp = options.timeout ();
           tmp += options.timeout ();
           options.timeout (tmp);
-          writer = 0;
+          writer = nullptr;
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) still trying to connect\n")));
         }
@@ -215,14 +215,14 @@ client (void *arg)
 
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) finishing client\n")));
-          return 0;
+          return nullptr;
         }
     }
 
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("(%P|%t) failed to connect after %d retries\n"),
               max_retries));
-  return 0;
+  return nullptr;
 }
 
 #endif
@@ -270,7 +270,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Manage Reactor memory automagically.
   // Note:  If opt_priority_reactor is false, the default ACE_Reactor is used
   // and we don't need to set one up.
-  ACE_Reactor *orig_reactor = 0;
+  ACE_Reactor *orig_reactor = nullptr;
   auto_ptr<ACE_Reactor> reactor;
 
   if (opt_priority_reactor)
@@ -384,7 +384,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
 #endif // ACE_LACKS_ACCEPT
 
-  if (orig_reactor != 0)
+  if (orig_reactor != nullptr)
     ACE_Reactor::instance (orig_reactor);
 
   ACE_END_TEST;

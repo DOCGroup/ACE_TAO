@@ -55,18 +55,18 @@ class Prime_Scheduler : public ACE_Task_Base
 public:
   /// Constructor.
   Prime_Scheduler (const ACE_TCHAR *,
-                   Prime_Scheduler * = 0);
+                   Prime_Scheduler * = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
 
   /// Terminator.
   //FUZZ: enable check_for_lack_ACE_OS
   virtual int shutdown (void);
 
   /// Destructor.
-  virtual ~Prime_Scheduler (void);
+  ~Prime_Scheduler (void) override;
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
@@ -76,7 +76,7 @@ public:
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
-  virtual int svc (void);
+  int svc (void) override;
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
@@ -101,10 +101,10 @@ public:
                        u_long,
                        int,
                        ACE_Future<u_long> &);
-  virtual ~Method_Request_work (void);
+  ~Method_Request_work (void) override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call (void) override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -159,10 +159,10 @@ class Method_Request_name : public ACE_Method_Request
 public:
   Method_Request_name (Prime_Scheduler *,
                        ACE_Future<const ACE_TCHAR*> &);
-  virtual ~Method_Request_name (void);
+  ~Method_Request_name (void) override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  int call (void) override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -201,8 +201,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  ~Method_Request_end (void) override;
+  int call (void) override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -519,7 +519,7 @@ run_main (int, ACE_TCHAR *[])
                   (u_int) resultd));
     }
 
-  const ACE_TCHAR *name = 0;
+  const ACE_TCHAR *name = nullptr;
   count = 0;
   while (fsetname.next_readable (fname))
     {

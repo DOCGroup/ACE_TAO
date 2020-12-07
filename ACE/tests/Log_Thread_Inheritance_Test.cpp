@@ -19,7 +19,7 @@ int run_main (int, ACE_TCHAR *[])
 #ifdef ACE_HAS_PTHREADS
 struct Inheritor : ACE_Task_Base
 {
-  int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) - this test might crash ACE if it does not "
                           "have the fix for the second bug in #3480.\n"));
@@ -35,7 +35,7 @@ void* spawn_ace_task (void*)
   inheritor.activate ();
   inheritor.wait ();
 
-  return 0;
+  return nullptr;
 }
 
 bool test_inherited_attributes ()
@@ -48,11 +48,11 @@ bool test_inherited_attributes ()
   // stallions 2009/02/05
   pthread_t parent;
 
-  if (pthread_create (&parent, 0, spawn_ace_task, 0) != 0)
+  if (pthread_create (&parent, nullptr, spawn_ace_task, nullptr) != 0)
     {
       return false;
     }
-  pthread_join (parent, 0);
+  pthread_join (parent, nullptr);
 
   return true;
 }
@@ -69,7 +69,7 @@ struct MyThread : ACE_Task_Base
   bool openfile_;
   static MyThread childthread_;
 
-  int svc ()
+  int svc () override
   {
     if (openfile_)
       {

@@ -41,13 +41,13 @@ public:
   // Each client will send/recv 'echo_cnt' times, close/reopen the socket,
   // then echo, etc. for ACE_MAX_ITERATIONS times.
   ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt);
-  ~ClientSvcHandler ();
+  ~ClientSvcHandler () override;
 
-  int open (void* factory);
-  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE);
-  int handle_timeout (const ACE_Time_Value &now, const void *act = 0);
+  int open (void* factory) override;
+  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
+  int handle_timeout (const ACE_Time_Value &now, const void *act = nullptr) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                    ACE_Reactor_Mask mask = 0);
+                    ACE_Reactor_Mask mask = 0) override;
 
 protected:
   static const char *send_str;
@@ -68,10 +68,10 @@ const char *ClientSvcHandler::send_str =
 class ServerSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  int open (void* factory);
-  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE);
+  int open (void* factory) override;
+  int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
-                    ACE_Reactor_Mask mask = 0);
+                    ACE_Reactor_Mask mask = 0) override;
 };
 
 
@@ -103,7 +103,7 @@ ClientSvcHandler::open (void* factory)
   if (ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>::open (factory) == 0)
     {
       this->timer_ = this->reactor ()->schedule_timer (this,
-                                                       0,
+                                                       nullptr,
                                                        MAX_CLIENT_TIMEOUT);
 
       size_t send_len = ACE_OS::strlen (ClientSvcHandler::send_str);
@@ -157,7 +157,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%t: client h %d: %p\n"),
                              ACE_TEXT ("resending")),
                             -1);
-        this->timer_ = reactor ()->schedule_timer (this, 0, MAX_CLIENT_TIMEOUT);
+        this->timer_ = reactor ()->schedule_timer (this, nullptr, MAX_CLIENT_TIMEOUT);
       }
     else if (bc == 0) // Socket was closed by server
       {
@@ -295,7 +295,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -320,7 +320,7 @@ event_loop(void *arg)
   int s = reactor->run_reactor_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
-  return 0;
+  return nullptr;
 }
 
 

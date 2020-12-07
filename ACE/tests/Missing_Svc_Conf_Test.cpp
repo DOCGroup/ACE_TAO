@@ -40,7 +40,7 @@ run_main (int, ACE_TCHAR *[] )
     }
 
   int argc = 1;
-  ACE_TCHAR *argv[] = {const_cast<ACE_TCHAR *>(ACE_TEXT("nosvc")),0,0,0 };
+  ACE_TCHAR *argv[] = {const_cast<ACE_TCHAR *>(ACE_TEXT("nosvc")),nullptr,nullptr,nullptr };
   int failcount = 0;
   int result = ACE_Service_Config::open(argc, argv);
   if (result != -1 || errno != ENOENT)

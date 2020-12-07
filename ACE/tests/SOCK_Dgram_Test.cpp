@@ -64,7 +64,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) protocol %d, %p\n"),
                  server_addr.get_type (),
                  ACE_TEXT ("SOCK_Dgram open")));
-      return 0;
+      return nullptr;
     }
 
   {
@@ -74,7 +74,7 @@ client (void *arg)
       if (cli_dgram.set_option(IPPROTO_IP, ACE_RECVPKTINFO, &sockopt, sizeof sockopt) == -1) {
         ACE_ERROR((LM_ERROR,
                    ACE_TEXT("(%P|%t) setsockopt failed\n")));
-        return 0;
+        return nullptr;
       } else {
         ACE_DEBUG((LM_DEBUG,
                    ACE_TEXT("(%P|%t) setsockopt succeeded\n")));
@@ -104,7 +104,7 @@ client (void *arg)
                  ACE_TEXT("(%P|%t) UDP send to %s %p\n"),
                  hostname_string,
                  ACE_TEXT ("failed")));
-      return 0;
+      return nullptr;
     }
 
     {
@@ -205,7 +205,7 @@ client (void *arg)
 
   cli_dgram.close();
 
-  return 0;
+  return nullptr;
 }
 
 static void *
@@ -262,7 +262,7 @@ server (void *arg)
     }
   server_dgram->close ();
 
-  return 0;
+  return nullptr;
 }
 
 static int

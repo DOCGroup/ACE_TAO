@@ -31,7 +31,7 @@ public:
   void run(void);
 
   /// Receive the notifications.
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 
 private:
   /**

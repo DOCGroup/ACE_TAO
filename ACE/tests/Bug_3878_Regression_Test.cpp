@@ -30,13 +30,13 @@ class Worker : public ACE_Task<ACE_MT_SYNCH>
 public:
   Worker (IManager *manager) : manager_(manager) { }
 
-  virtual int svc (void)
+  int svc (void) override
   {
     ACE_Thread_ID id;
     thread_id_ = id;
     while (1)
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         if (this->getq (mb) == -1)
           ACE_ERROR_BREAK
             ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("getq")));
@@ -94,7 +94,7 @@ public:
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc (void)
+  int svc (void) override
   {
     ACE_TRACE ("Manager::svc");
 
@@ -105,9 +105,9 @@ public:
 
     while (!done ())
       {
-        ACE_Message_Block *mb = 0;
+        ACE_Message_Block *mb = nullptr;
         ACE_Time_Value tv ((long)MAX_TIMEOUT);
-        tv += ACE_OS::time (0);
+        tv += ACE_OS::time (nullptr);
 
         // Get a message request.
         if (this->getq (mb, &tv) < 0)
@@ -117,7 +117,7 @@ public:
           }
 
         // Choose a worker.
-        Worker *worker = 0;
+        Worker *worker = nullptr;
         {
           ACE_GUARD_RETURN (ACE_Mutex,
                             worker_mon, this->workers_lock_, -1);
@@ -139,7 +139,7 @@ public:
 
   const ACE_Thread_ID& thread_id (Worker *worker);
 
-  virtual int return_to_work (Worker *worker)
+  int return_to_work (Worker *worker) override
   {
     ACE_GUARD_RETURN (ACE_Mutex,
                       worker_mon, this->workers_lock_, -1);
@@ -190,7 +190,7 @@ Manager::shut_down (void)
   ACE_TRACE ("Manager::shut_down");
   ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
     this->workers_.begin ();
-  Worker **worker_ptr = 0;
+  Worker **worker_ptr = nullptr;
   do
     {
       iter.next (worker_ptr);
@@ -203,7 +203,7 @@ Manager::shut_down (void)
                  buf));
 
       // Send the hangup message.
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW_RETURN
         (mb,
          ACE_Message_Block(0,
@@ -247,7 +247,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Time_Value tv;
   tv.msec (100);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   for (int i = 0; i < 3; i++)
     {
       ACE_NEW_RETURN

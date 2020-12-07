@@ -104,7 +104,7 @@ reader (void *)
   for (size_t iterations = 1; iterations <= n_iterations; iterations++)
     {
       ACE_OS::sleep (pause);
-      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
+      ACE_READ_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, nullptr);
       // int n = ++current_readers;
       // ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) I'm reader number %d\n"), n));
 
@@ -185,7 +185,7 @@ reader (void *)
                   ACE_TEXT ("(%t) reader finished %d iterations at %T\n"),
                   iterations));
     }
-  return 0;
+  return nullptr;
 }
 
 // Iterate <n_iterations> each time modifying the global data
@@ -204,7 +204,7 @@ writer (void *)
     {
       ACE_OS::sleep (pause);
 
-      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, 0);
+      ACE_WRITE_GUARD_RETURN (ACE_RW_Thread_Mutex, g, rw_mutex, nullptr);
 
       ++current_writers;
 
@@ -234,7 +234,7 @@ writer (void *)
 
       ACE_DEBUG((LM_DEBUG, ACE_TEXT (" (%t) write %d done at %T\n"), iterations));
     }
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -256,14 +256,14 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   if (ACE_Thread_Manager::instance ()->spawn_n (n_readers,
                                                ACE_THR_FUNC (reader),
-                                               0,
+                                               nullptr,
                                                THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),
                        ACE_TEXT ("spawn_n")), 1);
   else if (ACE_Thread_Manager::instance ()->spawn_n (n_writers,
                                                     ACE_THR_FUNC (writer),
-                                                    0,
+                                                    nullptr,
                                                     THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

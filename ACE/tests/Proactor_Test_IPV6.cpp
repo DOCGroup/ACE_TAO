@@ -70,7 +70,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host = 0;
+static const ACE_TCHAR *host = nullptr;
 
 // number of Client instances
 static int clients = 1;
@@ -131,7 +131,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -168,15 +168,15 @@ public:
   MyTask (void):
     lock_ (),
     sem_ ((unsigned int) 0),
-    proactor_(0) {}
+    proactor_(nullptr) {}
 
-  virtual ~MyTask()
+  ~MyTask() override
     {
       (void) this->stop ();
       (void) this->delete_proactor();
     }
 
-  virtual int svc (void);
+  int svc (void) override;
 
   int start (int num_threads,
              ProactorType type_proactor,
@@ -202,7 +202,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
                     this->lock_,
                     -1);
 
-  ACE_TEST_ASSERT (this->proactor_ == 0);
+  ACE_TEST_ASSERT (this->proactor_ == nullptr);
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)
 
@@ -220,7 +220,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 
 #elif defined (ACE_HAS_AIO_CALLS)
 
-  ACE_POSIX_Proactor * proactor_impl = 0;
+  ACE_POSIX_Proactor * proactor_impl = nullptr;
 
   switch (type_proactor)
     {
@@ -291,7 +291,7 @@ MyTask::delete_proactor (void)
               ACE_TEXT ("(%t) Delete Proactor\n")));
 
   ACE_Proactor::close_singleton ();
-  this->proactor_ = 0;
+  this->proactor_ = nullptr;
 
   return 0;
 }
@@ -325,7 +325,7 @@ MyTask::start (int num_threads,
 int
 MyTask::stop ()
 {
-  if (this->proactor_ != 0)
+  if (this->proactor_ != nullptr)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Calling End Proactor event loop\n")));
@@ -398,9 +398,9 @@ TestData::TestData ()
 {
   int i;
   for (i = 0; i < MAX_SERVERS; ++i)
-    this->server_list_[i] = 0;
+    this->server_list_[i] = nullptr;
   for (i = 0; i < MAX_CLIENTS; ++i)
-    this->client_list_[i] = 0;
+    this->client_list_[i] = nullptr;
 }
 
 bool
@@ -421,13 +421,13 @@ Server *
 TestData::server_up (void)
 {
   ++this->servers_.sessions_up_;
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, nullptr);
 
   for (int i = 0; i < MAX_SERVERS; ++i)
     {
-      if (this->server_list_[i] == 0)
+      if (this->server_list_[i] == nullptr)
         {
-          ACE_NEW_RETURN (this->server_list_[i], Server (this, i), 0);
+          ACE_NEW_RETURN (this->server_list_[i], Server (this, i), nullptr);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Server %d up; now %d up, %d down.\n"),
                       i,
@@ -436,20 +436,20 @@ TestData::server_up (void)
           return this->server_list_[i];
         }
     }
-  return 0;
+  return nullptr;
 }
 
 Client *
 TestData::client_up (void)
 {
   ++this->clients_.sessions_up_;
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, nullptr);
 
   for (int i = 0; i < MAX_CLIENTS; ++i)
     {
-      if (this->client_list_[i] == 0)
+      if (this->client_list_[i] == nullptr)
         {
-          ACE_NEW_RETURN (this->client_list_[i], Client (this, i), 0);
+          ACE_NEW_RETURN (this->client_list_[i], Client (this, i), nullptr);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Client %d up; now %d up, %d down.\n"),
                       i,
@@ -458,7 +458,7 @@ TestData::client_up (void)
           return this->client_list_[i];
         }
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -486,7 +486,7 @@ TestData::server_done (Server *s)
                         ACE_TEXT ("Server %d is pos %d in list\n"),
                         s->id (),
                         i));
-          this->server_list_[i] = 0;
+          this->server_list_[i] = nullptr;
           break;
         }
     }
@@ -521,7 +521,7 @@ TestData::client_done (Client *c)
                         ACE_TEXT ("Client %d is pos %d in list\n"),
                         c->id (),
                         i));
-          this->client_list_[i] = 0;
+          this->client_list_[i] = nullptr;
           break;
         }
     }
@@ -542,13 +542,13 @@ TestData::stop_all (void)
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->list_lock_);
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
-        if (this->client_list_[i] != 0)
+        if (this->client_list_[i] != nullptr)
           this->client_list_[i]->cancel ();
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
-        if (this->server_list_[i] != 0)
+        if (this->server_list_[i] != nullptr)
           this->server_list_[i]->cancel ();
       }
   }
@@ -556,13 +556,13 @@ TestData::stop_all (void)
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->list_lock_);
     for (i = 0; i < MAX_CLIENTS; ++i)
       {
-        if (this->client_list_[i] != 0)
+        if (this->client_list_[i] != nullptr)
           delete this->client_list_[i];
       }
 
     for (i = 0; i < MAX_SERVERS; ++i)
       {
-        if (this->server_list_[i] != 0)
+        if (this->server_list_[i] != nullptr)
           delete this->server_list_[i];
       }
   }
@@ -622,10 +622,10 @@ class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
 public:
   Acceptor (TestData *tester);
-  virtual ~Acceptor (void);
+  ~Acceptor (void) override;
 
   // Virtual from ACE_Asynch_Acceptor
-  Server *make_handler (void);
+  Server *make_handler (void) override;
 
 private:
   TestData *tester_;
@@ -704,7 +704,7 @@ Server::~Server (void)
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
-  if (this->tester_ != 0)
+  if (this->tester_ != nullptr)
     this->tester_->server_done (this);
 
   if (this->handle_ != ACE_INVALID_HANDLE)
@@ -782,7 +782,7 @@ Server::initiate_read_stream (void)
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block (1024), //BUFSIZ + 1),
                   -1);
@@ -1056,12 +1056,12 @@ class Connector : public ACE_Asynch_Connector<Client>
 {
 public:
   Connector (TestData *tester);
-  virtual ~Connector (void);
+  ~Connector (void) override;
 
   int  start (const ACE_INET_Addr &addr, int num);
 
   // Virtual from ACE_Asynch_Connector
-  Client *make_handler (void);
+  Client *make_handler (void) override;
 
 private:
   TestData *tester_;
@@ -1101,7 +1101,7 @@ Connector::start (const ACE_INET_Addr& addr, int num)
   //             ACE_Proactor *proactor = 0,
   //             int validate_new_connection = 0 );
 
-  if (this->open (1, 0, 1) != 0)
+  if (this->open (1, nullptr, 1) != 0)
   {
      ACE_ERROR ((LM_ERROR,
                  ACE_TEXT ("(%t) %p\n"),
@@ -1179,7 +1179,7 @@ Client::~Client (void)
     ACE_DEBUG ((LM_WARNING,
                 ACE_TEXT ("(%t) Above byte counts look odd; need review\n")));
 
-  if (this->tester_ != 0)
+  if (this->tester_ != nullptr)
     this->tester_->client_done (this);
 
   this->id_ = -1;
@@ -1225,9 +1225,9 @@ Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
 
   // This checks to make sure the peer address given to us matches what
   // we expect it to be.
-  if (0 != peer.get_host_addr (peer_name, sizeof (peer_name)))
+  if (nullptr != peer.get_host_addr (peer_name, sizeof (peer_name)))
     {
-      if (0 != addr.get_host_addr (my_name, sizeof (my_name)))
+      if (nullptr != addr.get_host_addr (my_name, sizeof (my_name)))
         {
           if (0 != ACE_OS::strncmp (peer_name, my_name, sizeof (my_name)))
             {
@@ -1361,7 +1361,7 @@ Client::initiate_write_stream (void)
     }
 #else /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // No need to allocate +1 for proper printing - the memory includes it already
   ACE_NEW_RETURN (mb,
@@ -1457,7 +1457,7 @@ Client::initiate_read_stream (void)
   size_t blksize = ( complete_message_length > BUFSIZ ) ?
                      complete_message_length : BUFSIZ;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // We allocate +1 only for proper printing - we can just set the last byte
   // to '\0' before printing out

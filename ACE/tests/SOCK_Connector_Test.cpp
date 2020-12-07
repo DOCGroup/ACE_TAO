@@ -78,14 +78,14 @@ find_another_host (ACE_TCHAR other_host[])
 
 #ifndef MISSING_HOSTENT_FUNCTIONS
       // These gethost-type things don't work everywhere.
-      struct hostent *h = 0;
+      struct hostent *h = nullptr;
       ACE_utsname un;
 
       ACE_OS::uname (&un);
 
       h = ACE_OS::gethostbyname (un.nodename);
 
-      if (h == 0)
+      if (h == nullptr)
         ACE_OS::strcpy (other_host, ACE_LOCALHOST);
       else
         // Use me if can't find another
@@ -102,7 +102,7 @@ find_another_host (ACE_TCHAR other_host[])
       // Linux systems between <gethostent> and <gethostbyname_r>
       // (called by ACE_INET_Addr in host_is_up) This otherwise causes
       // an infinite loop on Linux --mas 03-08-2001
-      while ((h = gethostent ()) != 0)
+      while ((h = gethostent ()) != nullptr)
         {
           if (ACE_OS::strcmp (h->h_name,
                               ACE_TEXT_ALWAYS_CHAR (ACE_DEFAULT_SERVER_HOST)) == 0)

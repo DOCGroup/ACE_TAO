@@ -92,7 +92,7 @@ client (void *arg)
   if (cli_stream.close () == -1)
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
 
-  return 0;
+  return nullptr;
 }
 
 void *
@@ -135,7 +135,7 @@ server (void *arg)
       // Read data from client (terminate on error).
       for (ssize_t r_bytes; ;)
         {
-          if (ACE::handle_read_ready (new_stream.get_handle (), 0) == -1)
+          if (ACE::handle_read_ready (new_stream.get_handle (), nullptr) == -1)
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("handle_read_ready")), 0);
 
           while ((r_bytes = new_stream.recv (buf, 1)) > 0)
@@ -156,7 +156,7 @@ server (void *arg)
               // Close endpoint.
               if (new_stream.close () == -1)
                 ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("close")));
-              return 0;
+              return nullptr;
             }
           else if (r_bytes == -1)
             {
@@ -176,7 +176,7 @@ server (void *arg)
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) %p\n"), ACE_TEXT ("accept")));
     }
 
-  return 0;
+  return nullptr;
 }
 
 void

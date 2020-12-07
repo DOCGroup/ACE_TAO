@@ -29,7 +29,7 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_TCHAR *str = stack.freeze ();
 
-  if (str == 0)
+  if (str == nullptr)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
       ++errors;
@@ -47,7 +47,7 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_TCHAR* temp = stack.freeze();
 
-  if (temp == 0)
+  if (temp == nullptr)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
       ++errors;
@@ -64,7 +64,7 @@ int run_main (int, ACE_TCHAR *[])
     stack.grow (str1[k]);
 
   ACE_TCHAR* tmp = stack.freeze ();
-  if (tmp == 0)
+  if (tmp == nullptr)
     {
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
     ++errors;
@@ -84,7 +84,7 @@ int run_main (int, ACE_TCHAR *[])
 
   temp = stack.freeze();
 
-  if (temp == 0)
+  if (temp == nullptr)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("freeze failed!\n")));
       ++errors;

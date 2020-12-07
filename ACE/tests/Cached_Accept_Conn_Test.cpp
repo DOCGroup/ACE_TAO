@@ -84,8 +84,8 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   int reset_new_handle = this->reactor_->uses_event_associations ();
 
   int result = this->acceptor ().accept (svc_handler->peer (), // stream
-                                         0, // remote address
-                                         0, // timeout
+                                         nullptr, // remote address
+                                         nullptr, // timeout
                                          1, // restart
                                          reset_new_handle  // reset new handler
                                          );
@@ -209,7 +209,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
 
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
-  Client_Svc_Handler *svc_handler = 0;
+  Client_Svc_Handler *svc_handler = nullptr;
   int result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
@@ -252,7 +252,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   NULL_CREATION_STRATEGY creation_strategy;
   NULL_ACTIVATION_STRATEGY activation_strategy;
 
-  STRATEGY_CONNECTOR strategy_connector (0,
+  STRATEGY_CONNECTOR strategy_connector (nullptr,
                                          &creation_strategy,
                                          &caching_connect_strategy,
                                          &activation_strategy);
@@ -267,7 +267,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   int result =
     listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                                    ACE_Reactor::instance (),
-                                   0,
+                                   nullptr,
                                    &listen_one_time_accept_strategy);
   if (result != 0)
     {
@@ -302,7 +302,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
           // was.
           if (listen_multiple_times_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
                                                    ACE_Reactor::instance (),
-                                                   0,
+                                                   nullptr,
                                                    &listen_multiple_times_accept_strategy) == -1)
             {
               ACE_ERROR ((LM_ERROR,
@@ -337,7 +337,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 void
 test_caching_strategy_type (void)
 {
-  CACHING_STRATEGY *caching_strategy = 0;
+  CACHING_STRATEGY *caching_strategy = nullptr;
 
   switch (caching_strategy_type)
     {

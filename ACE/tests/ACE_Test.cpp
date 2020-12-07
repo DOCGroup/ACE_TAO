@@ -46,7 +46,7 @@ ace_debug_test (void)
   // Check if ACE::debug() is by default false when no ACE_DEBUG environment variable
   // is there
   const char* debug = ACE_OS::getenv ("ACE_DEBUG");
-  if (debug == 0)
+  if (debug == nullptr)
     {
       if (ACE::debug())
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE::debug() returns true.\n")));

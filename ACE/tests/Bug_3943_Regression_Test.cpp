@@ -217,10 +217,10 @@ namespace {
     //    compiler "features" related to template instantiation...  It is
     //    only used by Conn_Test.cpp.
   public:
-    Svc_Handler (ACE_Thread_Manager * = 0);
+    Svc_Handler (ACE_Thread_Manager * = nullptr);
     // Do-nothing constructor.
 
-    virtual int open (void *);
+    int open (void *) override;
     // Initialization hook.
 
     void send_data (void);
@@ -229,7 +229,7 @@ namespace {
     void recv_data (void);
     // Recv data from client.
 
-    int close (u_long = 0);
+    int close (u_long = 0) override;
     // Shutdown the <Svc_Handler>.
 
   private:
@@ -933,8 +933,8 @@ Svc_Handler::wait_for_completion(Direction direction)
 
   int result =
    (direction == READX) ?
-    ACE_OS::select (select_width, handle_set, 0, 0, &DEFAULT_TIME_VALUE) :
-    ACE_OS::select (select_width, 0, handle_set, 0, &DEFAULT_TIME_VALUE);
+    ACE_OS::select (select_width, handle_set, nullptr, nullptr, &DEFAULT_TIME_VALUE) :
+    ACE_OS::select (select_width, nullptr, handle_set, nullptr, &DEFAULT_TIME_VALUE);
   return result != -1;
 }
 
@@ -960,11 +960,11 @@ client (void *arg)
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
 
-  Svc_Handler *svc_handler = 0;
+  Svc_Handler *svc_handler = nullptr;
   // Run the blocking test.
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  0);
+                  nullptr);
 
   // Perform a blocking connect to the server.
   if (connector.connect (svc_handler,
@@ -978,7 +978,7 @@ client (void *arg)
       svc_handler->send_data ();
 
     }
-  return 0;
+  return nullptr;
 }
 
 // Performs the iterative server activities.
@@ -992,10 +992,10 @@ server (void *arg)
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
-  Svc_Handler *svc_handler = 0;
+  Svc_Handler *svc_handler = nullptr;
   ACE_NEW_RETURN (svc_handler,
                   Svc_Handler,
-                  0);
+                  nullptr);
 
   // Keep looping until we timeout on <accept> or fail.
 
@@ -1018,7 +1018,7 @@ server (void *arg)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("accept timed out\n")));
-              return 0;
+              return nullptr;
             }
           else
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1038,7 +1038,7 @@ server (void *arg)
       break;
     }
 
-  return 0;
+  return nullptr;
 }
 
 // Spawn threads and run the client and server.
@@ -1057,7 +1057,7 @@ spawn_threads (ACCEPTOR *acceptor,
        THR_NEW_LWP
        , ACE_DEFAULT_THREAD_PRIORITY
        , -1
-       , 0
+       , nullptr
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),
@@ -1068,7 +1068,7 @@ spawn_threads (ACCEPTOR *acceptor,
       ((ACE_THR_FUNC) client,
        (void *) server_addr,
        THR_NEW_LWP,
-       0
+       nullptr
        ) == -1)
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) %p\n%a"),

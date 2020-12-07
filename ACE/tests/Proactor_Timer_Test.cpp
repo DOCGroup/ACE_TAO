@@ -39,7 +39,7 @@ public:
   Time_Handler ();
 
   /// Handle the timeout.
-  virtual void handle_time_out (const ACE_Time_Value &tv, const void *arg);
+  void handle_time_out (const ACE_Time_Value &tv, const void *arg) override;
 
   /// Return our timer id.
   long timer_id (void) const;
@@ -71,10 +71,10 @@ public:
   Repeat_Timer_Handler (const int repeat_time = REPEAT_INTERVAL)
     : repeat_secs_ (repeat_time), expirations_ (0) {};
 
-  ~Repeat_Timer_Handler ();
+  ~Repeat_Timer_Handler () override;
 
   // Handle the timeout.
-  virtual void handle_time_out (const ACE_Time_Value &tv, const void *arg);
+  void handle_time_out (const ACE_Time_Value &tv, const void *arg) override;
 
 private:
   int repeat_secs_;
@@ -264,7 +264,7 @@ test_cancel_repeat_timer (void)
   Repeat_Timer_Handler *handler = new Repeat_Timer_Handler;
   ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);
   long t_id = ACE_Proactor::instance ()->schedule_repeating_timer
-    (*handler, 0, timeout);
+    (*handler, nullptr, timeout);
   if (t_id == -1)
     {
       ACE_ERROR ((LM_ERROR,

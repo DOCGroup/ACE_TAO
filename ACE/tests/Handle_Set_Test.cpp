@@ -29,7 +29,7 @@ test_duplicates (size_t count)
 
   ACE_Handle_Set handle_set;
 
-  u_int seed = (u_int) ACE_OS::time (0);
+  u_int seed = (u_int) ACE_OS::time (nullptr);
 
   for (size_t i = 0; i < count; i++)
     {
@@ -103,7 +103,7 @@ test_boundaries (void)
        (handle = i1 ()) != ACE_INVALID_HANDLE;
        )
     {
-      ACE_TEST_ASSERT (0 ==
+      ACE_TEST_ASSERT (nullptr ==
                   ACE_TEXT ("this shouldn't get called since ")
                   ACE_TEXT ("the set is empty!\n"));
     }

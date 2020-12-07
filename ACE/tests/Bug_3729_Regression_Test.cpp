@@ -32,7 +32,7 @@ int run_main (int, ACE_TCHAR *[])
       { "239.255.255.255:23006", true },
       { "240.0.0.0:23006", false },
       { "2.0.0.224", false },
-      { 0, false }
+      { nullptr, false }
     };
 
   for (int i = 0; mcast_addresses[i].addr_; ++i)

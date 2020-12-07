@@ -45,8 +45,8 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = nullptr) override;
+  int close (u_long = 0) override;
 };
 
 /**
@@ -60,7 +60,7 @@ public:
   Supplier (void) {}
 
   /// Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  int svc (void) override;
 };
 
 /**
@@ -75,10 +75,10 @@ public:
 
   /// Enqueue the message on the ACE_Message_Queue for subsequent
   /// handling in the svc() method.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
   /// Receive message from Supplier and print to stdout.
-  virtual int svc (void);
+  int svc (void) override;
 private:
 
   /// Amount of time to wait for a timeout.
@@ -118,7 +118,7 @@ Common_Task::close (u_long exit_status)
 int
 Supplier::svc (void)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
@@ -163,10 +163,10 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 int
 Consumer::svc (void)
 {
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
   int result;
   const char *c = ACE_ALPHABET;
-  char *output = 0;
+  char *output = nullptr;
 
   // Keep looping, reading a message out of the queue, until we
   // timeout or get a message with a length == 0, which signals us to
@@ -174,7 +174,7 @@ Consumer::svc (void)
 
   for (;;)
     {
-      this->timeout_.set (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
+      this->timeout_.set (ACE_OS::time (nullptr) + 4, 0); // Wait for upto 4 seconds
 
       result = this->getq (mb, &this->timeout_);
 
@@ -211,8 +211,8 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   // Control hierachically-related active objects.
   MT_Stream stream;
-  MT_Module *cm = 0;
-  MT_Module *sm = 0;
+  MT_Module *cm = nullptr;
+  MT_Module *sm = nullptr;
 
   // Allocate the Consumer and Supplier modules.
   ACE_NEW_RETURN (cm, MT_Module (ACE_TEXT ("Consumer"), new Consumer), -1);

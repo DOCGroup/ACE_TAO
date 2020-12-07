@@ -206,9 +206,9 @@ run_test (int write_file,
 
       ACE_OutputCDR output_cdr (0,
                                 ACE_CDR_BYTE_ORDER,
-                                0,
-                                0,
-                                0,
+                                nullptr,
+                                nullptr,
+                                nullptr,
                                 ACE_DEFAULT_CDR_MEMCPY_TRADEOFF,
                                 ACE_CDR_GIOP_MAJOR_VERSION,
                                 ACE_CDR_GIOP_MINOR_VERSION);
@@ -247,7 +247,7 @@ run_test (int write_file,
       ACE_OFF_T msgsize = info.size_ - 1;
 
       // Allocate the input buffer
-      char *buffer = 0;
+      char *buffer = nullptr;
       ACE_NEW_RETURN (buffer,
                       char[msgsize],
                       -1);
@@ -344,7 +344,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   int opt;
   int reading = 1;
   int writing = 1;
-  ACE_TCHAR* fn = 0;
+  ACE_TCHAR* fn = nullptr;
   while ((opt = get_opt ()) != EOF)
     {
       switch (opt)
@@ -364,7 +364,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         }
     }
 
-  if ((!reading || !writing) && fn == 0)
+  if ((!reading || !writing) && fn == nullptr)
     usage (ACE_TEXT("CDR_File_Test"));
 
   if (!reading && !writing)
@@ -372,7 +372,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Create a temporary filename.
   ACE_FILE_Addr filename (ACE_sap_any_cast (ACE_FILE_Addr &));
-  if (fn != 0)
+  if (fn != nullptr)
     filename.set (fn);
 
 
@@ -382,7 +382,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Open up the file.
   if (connector.connect (file,
                          filename,
-                         0,
+                         nullptr,
                          ACE_Addr::sap_any,
                          0,
                          ((writing) ? (O_RDWR | O_CREAT) : O_RDONLY),
@@ -417,7 +417,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                 cdr_test);
     }
 
-  if (fn == 0)
+  if (fn == nullptr)
     {
       file.close ();
       if (file.unlink () == -1)

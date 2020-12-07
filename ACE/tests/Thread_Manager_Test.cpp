@@ -25,7 +25,7 @@
 // Each thread keeps track of whether it has been signalled by using a
 // global array.  It must be dynamically allocated to allow sizing at
 // runtime, based on the number of threads.
-static ACE_thread_t *signalled = 0;
+static ACE_thread_t *signalled = nullptr;
 static size_t n_threads = ACE_MAX_THREADS;
 
 // Helper function that looks for an existing entry in the signalled
@@ -60,7 +60,7 @@ been_signalled (const ACE_thread_t t_id,
 // Synchronize starts of threads, so that they all start before the
 // main thread cancels them.  To avoid creating a static object, it is
 // dynamically allocated, before spawning any threads.
-static ACE_Barrier *thread_start = 0;
+static ACE_Barrier *thread_start = nullptr;
 
 extern "C" void
 handler (int /* signum */)
@@ -136,7 +136,7 @@ worker (int iterations)
     }
 
   // Destructor removes thread from Thread_Manager.
-  return 0;
+  return nullptr;
 }
 
 static const int DEFAULT_ITERATIONS = 10000;
@@ -147,7 +147,7 @@ class ThrMgr_Task : public ACE_Task_Base {
 public:
   ThrMgr_Task (ACE_Thread_Manager *);
 
-  virtual int svc (void);
+  int svc (void) override;
 
   static int errors;
 };
@@ -437,9 +437,9 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_HAS_VXTHREADS */
 
   delete thread_start;
-  thread_start = 0;
+  thread_start = nullptr;
   delete [] signalled;
-  signalled = 0;
+  signalled = nullptr;
 
   // Now test task record keeping
   if (test_task_record_keeping (thr_mgr) != 0)

@@ -442,19 +442,19 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  virtual ~MCT_Event_Handler (void);
+  ~MCT_Event_Handler (void) override;
 
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
-            const ACE_TCHAR *net_if = 0);
+            const ACE_TCHAR *net_if = nullptr);
   int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = 0);
+             const ACE_TCHAR *net_if = nullptr);
 
   // = Event Handler hooks.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
 
-  virtual ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle (void) const override;
 
   // Turn loopback on/off. Must be called after at least 1 join() is performed.
   int loopback (bool on_off);
@@ -547,7 +547,7 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
                       -1);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Joined %C\n"), buf));
 
-  ACE_CString *str = 0;
+  ACE_CString *str = nullptr;
   ACE_NEW_RETURN (str, ACE_CString (buf), -1);
   this->address_vec_.push_back (str);
   return 0;
@@ -621,7 +621,7 @@ MCT_Event_Handler::handle_close (ACE_HANDLE /*fd*/,
   this->reactor ()->remove_handler (this,
                                     ACE_Event_Handler::ALL_EVENTS_MASK |
                                     ACE_Event_Handler::DONT_CALL);
-  this->reactor (0);
+  this->reactor (nullptr);
   delete this;
   return 0;
 }
@@ -652,14 +652,14 @@ class MCT_Task : public ACE_Task<ACE_NULL_SYNCH>
 public:
   MCT_Task (const MCT_Config &config,
             ACE_Reactor *reactor = ACE_Reactor::instance ());
-  ~MCT_Task (void);
+  ~MCT_Task (void) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
-  virtual int open (void *args = 0);
+  int open (void *args = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  int svc (void) override;
 
 private:
   const MCT_Config &config_;
@@ -678,7 +678,7 @@ MCT_Task::~MCT_Task (void)
 int
 MCT_Task::open (void *)
 {
-  MCT_Event_Handler *handler = 0;
+  MCT_Event_Handler *handler = nullptr;
 
   ACE_INET_Addr addr = this->config_.group_start ();
   int groups = this->config_.groups ();
@@ -933,7 +933,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_Time_Value max_wait ( config.wait ()/* seconds */);
       ACE_Time_Value wait_time (ACE_OS::gettimeofday () + max_wait);
       ACE_Time_Value *ptime = ACE_BIT_ENABLED (role, MCT_Config::PRODUCER)
-                                ? &wait_time : 0;
+                                ? &wait_time : nullptr;
       if (ACE_Thread_Manager::instance ()->wait (ptime) == -1)
         {
           // We will no longer wait for this thread, so we must

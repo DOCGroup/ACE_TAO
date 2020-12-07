@@ -572,12 +572,12 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion (v
                     ACE_TEXT ("failure")));
 
       // Test the deprecated interface.
-      if (0 == deprecated_tree_.insert (key_array_ [k], item_array_ [k]))
+      if (nullptr == deprecated_tree_.insert (key_array_ [k], item_array_ [k]))
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Deprecated insert %p\n"),
                     ACE_TEXT ("failure")));
 
-      if (0 == deprecated_tree_.find (key_array_ [k]) ||
+      if (nullptr == deprecated_tree_.find (key_array_ [k]) ||
           *deprecated_tree_.find (key_array_ [k]) != item_array_ [k])
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Deprecated find %p\n"),
@@ -664,7 +664,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
 ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration(void)
 {
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node = 0;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node = nullptr;
 
   stable_tree_.find(key_array_ [2], tree_node);
   part_rev_iter_ = ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> (stable_tree_, tree_node);

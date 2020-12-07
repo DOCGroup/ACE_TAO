@@ -45,7 +45,7 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool (void) override;
 
   /**
    * Activate the task's thread pool, produce the messages that are
@@ -64,20 +64,20 @@ public:
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc (void) override;
 
   /// Allows the producer to pass messages to the <Thread_Pool>.
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb,
+                   ACE_Time_Value *tv = nullptr) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  virtual int open (void * = 0);
+  int open (void * = nullptr) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Close hook.
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Serialize access to <ACE_Message_Block> reference count, which
   /// will be decremented by multiple threads.
@@ -124,7 +124,7 @@ Thread_Pool::svc (void)
 
   for (int count = 1; ; count++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       int result = this->getq (mb);
 
@@ -200,7 +200,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -215,9 +215,9 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ,
                                          ACE_Message_Block::MB_DATA,
-                                         0,
-                                         0,
-                                         0,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          &this->lock_adapter_),
                       -1);
 
@@ -292,7 +292,7 @@ Thread_Pool::test_empty_message_shutdown (void)
   if (this->open () == -1)
     return -1;
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   // Run the main loop that generates messages and enqueues them into
   // the pool of threads managed by <ACE_Task>.
@@ -307,9 +307,9 @@ Thread_Pool::test_empty_message_shutdown (void)
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (BUFSIZ,
                                          ACE_Message_Block::MB_DATA,
-                                         0,
-                                         0,
-                                         0,
+                                         nullptr,
+                                         nullptr,
+                                         nullptr,
                                          &this->lock_adapter_),
                       -1);
 

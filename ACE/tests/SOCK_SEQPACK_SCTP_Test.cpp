@@ -94,8 +94,8 @@ Server (void *arg)
 
   result = ACE_OS::select(select_width,
                           handle_set,
-                          0,
-                          0,
+                          nullptr,
+                          nullptr,
                           &tv);
 
   if (-1 == result)
@@ -162,7 +162,7 @@ Server (void *arg)
                 ACE_TEXT ("(%P|%t) %p\n"),
                 ACE_TEXT ("AcceptorSocket.close")));
 
-  return 0;
+  return nullptr;
 }
 
 ACE_THR_FUNC_RETURN
@@ -232,7 +232,7 @@ Client(void *arg)
                 ACE_TEXT (".recv_n returned %b (w/ %m) after abort\n"),
                 cnt));
 
-  return 0;
+  return nullptr;
 }
 
 //

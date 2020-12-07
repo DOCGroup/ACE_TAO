@@ -40,13 +40,13 @@ public:
 
   Reference_Counted_Event_Handler (void);
 
-  ~Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference (void) override;
 
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference (void) override;
 
 };
 
@@ -134,9 +134,9 @@ public:
 
   Simple_Event_Handler (int notifies);
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int notifies_;
 };
@@ -177,7 +177,7 @@ public:
                      ACE_Reactor &reactor,
                      int extra_iterations_needed);
 
-  int svc (void);
+  int svc (void) override;
 
   ACE_Reactor &reactor_;
 
@@ -269,7 +269,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       ACE_Reactor reactor (&impl, 0);
 
       notify (reactor,
-              0,
+              nullptr,
               extra_iterations_needed);
     }
 

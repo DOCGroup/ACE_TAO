@@ -80,13 +80,13 @@ test_singleton_cleanup (void *object, void *)
 Test_Singleton *
 Test_Singleton::instance (u_short variety)
 {
-  static Test_Singleton *instances[VARIETIES] = { 0 };
+  static Test_Singleton *instances[VARIETIES] = { nullptr };
 
-  if (instances[variety] == 0)
+  if (instances[variety] == nullptr)
     {
       ACE_NEW_RETURN (instances[variety],
                       Test_Singleton (variety),
-                      0);
+                      nullptr);
     }
 
   ACE_Object_Manager::at_exit (instances[variety],
@@ -151,7 +151,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
     }
 
   // Try to find the service; it should not be there.
-  ACE_Service_Type const *svcp = 0;
+  ACE_Service_Type const *svcp = nullptr;
   if (-1 != ACE_Service_Repository::instance ()->find (ACE_TEXT ("Refuses_Svc"),
                                                        &svcp))
     {
@@ -436,13 +436,13 @@ testLimits (int , ACE_TCHAR *[])
   one.process_directive (svc_desc1);
   one.process_directive (svc_desc2);
 
-  if (-1 == one.find (ACE_TEXT ("Test_Object_1_More"), 0, 0))
+  if (-1 == one.find (ACE_TEXT ("Test_Object_1_More"), nullptr, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the first service\n")));
     }
 
-  if (-1 == one.find (ACE_TEXT ("Test_Object_2_More"), 0, 0))
+  if (-1 == one.find (ACE_TEXT ("Test_Object_2_More"), nullptr, 0))
     {
       ++error;
       ACE_ERROR ((LM_ERROR, ACE_TEXT("Expected to have registered the second service\n")));
@@ -492,11 +492,11 @@ testrepository (int, ACE_TCHAR *[])
 {
   MyRepository repository;
   ACE_DLL handle;
-  ACE_Service_Type s0 (ACE_TEXT ("0"), 0, handle, false);
-  ACE_Service_Type s1 (ACE_TEXT ("1"), 0, handle, false);
-  ACE_Service_Type s2 (ACE_TEXT ("2"), 0, handle, false);
-  ACE_Service_Type s3 (ACE_TEXT ("3"), 0, handle, false);
-  ACE_Service_Type* result = 0;
+  ACE_Service_Type s0 (ACE_TEXT ("0"), nullptr, handle, false);
+  ACE_Service_Type s1 (ACE_TEXT ("1"), nullptr, handle, false);
+  ACE_Service_Type s2 (ACE_TEXT ("2"), nullptr, handle, false);
+  ACE_Service_Type s3 (ACE_TEXT ("3"), nullptr, handle, false);
+  ACE_Service_Type* result = nullptr;
   repository.insert (&s0);
   if (repository.current_size () != 1)
     {
@@ -534,7 +534,7 @@ testrepository (int, ACE_TCHAR *[])
                   ACE_TEXT ("Repository was wrong size %d\n"),
                   repository.current_size ()));
     }
-  if (repository.array ()[1] != 0)
+  if (repository.array ()[1] != nullptr)
     {
       ++error;
       ACE_ERROR ((LM_ERROR,
@@ -583,7 +583,7 @@ testOrderlyInstantiation (int , ACE_TCHAR *[])
     {
       Test_Singleton *s = Test_Singleton::instance (i);
 
-      if (s == 0)
+      if (s == nullptr)
         {
           ++error;
           ACE_ERROR ((LM_ERROR,
@@ -606,7 +606,7 @@ extern "C" ACE_THR_FUNC_RETURN
 #  endif
 nonacethreadentry (void *args)
 {
-  ACE_Log_Msg::inherit_hook (0, *(ACE_OS_Log_Msg_Attributes *)args);
+  ACE_Log_Msg::inherit_hook (nullptr, *(ACE_OS_Log_Msg_Attributes *)args);
 
   if (ACE_Service_Config::instance()->find(ACE_TEXT("Test_Object_1_Thr")) != 0)
     {
@@ -633,7 +633,7 @@ nonacethreadentry (void *args)
                 ACE_TEXT ("In thr %t, located Test_Object_1_Thr ")
                 ACE_TEXT ("via ACE_Service_Repository\n")));
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -695,7 +695,7 @@ testNonACEThread ()
     }
 #elif defined (ACE_HAS_PTHREADS)
   pthread_t thr_id;
-  int status = pthread_create (&thr_id, 0, nonacethreadentry, &log_msg_attrs);
+  int status = pthread_create (&thr_id, nullptr, nonacethreadentry, &log_msg_attrs);
   if (status != 0)
     {
       errno = status;
@@ -704,7 +704,7 @@ testNonACEThread ()
     }
   else
     {
-      pthread_join (thr_id, 0);
+      pthread_join (thr_id, nullptr);
     }
 #endif
 

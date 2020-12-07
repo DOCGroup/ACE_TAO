@@ -338,7 +338,7 @@ class RefCounted
 public:
 
   RefCounted (void)
-    : refcount_ (0)
+    : refcount_ (nullptr)
   {
   }
 

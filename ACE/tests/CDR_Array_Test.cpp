@@ -190,14 +190,14 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
 
     ACE_NEW(srcbuf, char[stotal]);
-    if (srcbuf == 0)
+    if (srcbuf == nullptr)
       {
         memabort ();
       }
     zero(srcbuf, stotal);
 
     ACE_NEW(dstbuf, char[stotal]);
-    if (dstbuf == 0)
+    if (dstbuf == nullptr)
       {
         memabort ();
       }
@@ -383,7 +383,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
   ACE_DEBUG((LM_DEBUG,
              ACE_TEXT( "Writing data...\n" )));
 
-  char* toread = 0;
+  char* toread = nullptr;
   {
     ACE_TEST_ASSERT(use_array || total % 4 == 0);
 

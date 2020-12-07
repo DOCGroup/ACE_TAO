@@ -38,14 +38,14 @@ public:
       Reference_Counting_Policy::ENABLED);
   }
 
-  ~My_Svc_Handler()
+  ~My_Svc_Handler() override
   {
     TEST_TRACE ("My_Svc_Handler::~My_Svc_Handler");
     g_handler_deleted = true;
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void* pv)
+  int open (void* pv) override
   {
     TEST_TRACE ("open");
     g_semaphore.release (); // signal open completed
@@ -56,7 +56,7 @@ public:
   }
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   {
     TEST_TRACE ("handle_close");
     if (g_handler_deleted)
@@ -72,7 +72,7 @@ public:
 
 struct My_Task : public ACE_Task_Base
 {
-   int svc()
+   int svc() override
    {
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor *r = ACE_Reactor::instance ();
@@ -91,7 +91,7 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*)
+   int handle_timeout (const ACE_Time_Value&, const void*) override
    {
      g_semaphore.release (); // signal reactor started
      return 0;
@@ -131,7 +131,7 @@ run_main (int, ACE_TCHAR *[])
 
   Timer_Handler timer_handler;
   ACE_Reactor::instance()->schedule_timer (&timer_handler,
-                                           0,
+                                           nullptr,
                                            ACE_Time_Value(0));
 
   My_Task task;

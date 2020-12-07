@@ -51,7 +51,7 @@ consumer (void *args)
   // message with a length == 0, which signals us to quit.
   for (char c = 'z'; ; c--)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
 
       int result = msg_queue->dequeue_head (mb);
 
@@ -82,7 +82,7 @@ consumer (void *args)
     }
 
   ACE_TEST_ASSERT (local_count == message_count);
-  return 0;
+  return nullptr;
 }
 
 // The producer reads data from the stdin stream, creates a message,
@@ -97,7 +97,7 @@ producer (void *args)
   ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     reinterpret_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
-  ACE_Message_Block *mb = 0;
+  ACE_Message_Block *mb = nullptr;
 
   for (const char *c = ACE_ALPHABET; *c != '\0'; c++)
     {
@@ -107,7 +107,7 @@ producer (void *args)
 
       ACE_NEW_RETURN (mb,
                       ACE_Message_Block (1),
-                      0);
+                      nullptr);
       *mb->wr_ptr () = *c;
 
       // Set the priority.
@@ -125,7 +125,7 @@ producer (void *args)
   // Now send a 0-sized shutdown message to the other thread
   ACE_NEW_RETURN (mb,
                   ACE_Message_Block ((size_t) 0),
-                  0);
+                  nullptr);
 
   if (msg_queue->enqueue_tail (mb) == -1)
     ACE_ERROR ((LM_ERROR,
@@ -138,7 +138,7 @@ producer (void *args)
   // the size of the lines!).
   consumer (msg_queue);
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */

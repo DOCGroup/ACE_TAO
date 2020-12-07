@@ -30,15 +30,15 @@ run_test (SVC_HANDLER &svc_handler,
   // <svc_handler>.
   for (size_t i = 0; i < iterations; i++)
     {
-      ACE_Message_Block *mb = 0;
+      ACE_Message_Block *mb = nullptr;
       ACE_NEW (mb,
                ACE_Message_Block (sizeof (ACE_TEXT("hello "))));
 
-      ACE_Message_Block *cb1 = 0;
+      ACE_Message_Block *cb1 = nullptr;
       ACE_NEW (cb1,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
-      ACE_Message_Block *cb2 = 0;
+      ACE_Message_Block *cb2 = nullptr;
       ACE_NEW (cb2,
                ACE_Message_Block (sizeof (ACE_TEXT("there\n"))));
 
@@ -101,11 +101,11 @@ run_main (int argc, ACE_TCHAR *argv[])
 
     // Create the service handler and assign it <file_io> as its data
     // sink.
-    SVC_HANDLER svc_handler (0,
-                             0,
-                             0,
+    SVC_HANDLER svc_handler (nullptr,
+                             nullptr,
+                             nullptr,
                              max_buffer_size,
-                             0);
+                             nullptr);
     svc_handler.peer () = file_io;
 
     // Run the test.

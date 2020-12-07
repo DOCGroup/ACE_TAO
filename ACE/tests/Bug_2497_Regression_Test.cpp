@@ -20,7 +20,7 @@ public:
   {
   }
 
-  virtual ~Test_Task( void )
+  ~Test_Task( void ) override
   {
     ++_destructorCalled;
     if (_destructorCalled > 1)
@@ -41,7 +41,7 @@ public:
       this->open( ACE_TEXT("Test module"),
                   &_writerTask,
                   &_readerTask,
-                  0,
+                  nullptr,
                   M_DELETE_NONE );
     }
 

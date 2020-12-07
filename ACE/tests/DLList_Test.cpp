@@ -31,7 +31,7 @@ static ACE_STRING string_table[] =
   const_cast<ACE_TCHAR *> (ACE_TEXT ("auf wiedersehen")),
   const_cast<ACE_TCHAR *> (ACE_TEXT ("funny")),
   const_cast<ACE_TCHAR *> (ACE_TEXT ("lustig")),
-  0
+  nullptr
 };
 
 static void
@@ -41,7 +41,7 @@ run_iterate (STRLIST &list)
   size_t i = 0;
 
   for (STRLIST_ITERATOR iter (list);
-       (entry = iter.next ()) != 0;
+       (entry = iter.next ()) != nullptr;
        iter.advance (), i++)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("iterating (%d): [%s]\n"),
@@ -73,16 +73,16 @@ run_test (void)
 
   size_t i;
 
-  for (i = 0; string_table[i] != 0; i++)
+  for (i = 0; string_table[i] != nullptr; i++)
     {
       if (ACE_EVEN (i)
-          && list.insert_tail ((ACE_STRING *) &string_table[i]) == 0)
+          && list.insert_tail ((ACE_STRING *) &string_table[i]) == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p failed for %s\n"),
                            ACE_TEXT ("insert"),
                            string_table[i]),
                           -1);
-      else if (list.insert_head ((ACE_STRING *) &string_table[i]) == 0)
+      else if (list.insert_head ((ACE_STRING *) &string_table[i]) == nullptr)
         ACE_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT ("%p failed for %s\n"),
                            ACE_TEXT ("insert"),

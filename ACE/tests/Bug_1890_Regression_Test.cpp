@@ -44,8 +44,8 @@ public:
     void send_dummy_data();
 
     /// Reactor callback
-    virtual ACE_HANDLE get_handle() const;
-    virtual int handle_input(ACE_HANDLE);
+    ACE_HANDLE get_handle() const override;
+    int handle_input(ACE_HANDLE) override;
 
 private:
     size_t handle_input_count_;
@@ -74,7 +74,7 @@ public:
 
     bool check_expected_results() const;
 
-    virtual int handle_timeout(ACE_Time_Value const &, void const*);
+    int handle_timeout(ACE_Time_Value const &, void const*) override;
 
 private:
     void send_data_through_handlers();
@@ -99,7 +99,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Bug 1890 is all about ACE_Select_Reactor, so run it on that reactor
   // regardless of platform.
-  ACE_Select_Reactor *impl_ptr = 0;
+  ACE_Select_Reactor *impl_ptr = nullptr;
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
   auto_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
@@ -211,7 +211,7 @@ Timer::open (ACE_Reactor * r)
   ACE_Time_Value const interval(0, ACE_ONE_SECOND_IN_USECS / 10);
   ACE_Time_Value const startup (0, ACE_ONE_SECOND_IN_USECS / 20);
 
-  if (-1 == r->schedule_timer (this, 0, startup, interval))
+  if (-1 == r->schedule_timer (this, nullptr, startup, interval))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

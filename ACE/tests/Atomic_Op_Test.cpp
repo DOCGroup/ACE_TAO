@@ -38,7 +38,7 @@ public:
 
 private:
   Exchange_Tester () {}
-  int svc (void);
+  int svc (void) override;
 
   ACE_Barrier barrier_;
   ACE_Atomic_Op<ACE_SYNCH_MUTEX, T> op_;

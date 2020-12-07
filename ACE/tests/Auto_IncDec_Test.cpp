@@ -57,7 +57,7 @@ worker (void *)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT (" (%t) worker exiting\n")));
-  return 0;
+  return nullptr;
 }
 
 #endif /* ACE_HAS_THREADS */
@@ -79,7 +79,7 @@ run_main (int, ACE_TCHAR *[])
   if (ACE_Thread_Manager::instance ()->spawn_n
       (n_threads,
        ACE_THR_FUNC (worker),
-       0,
+       nullptr,
        THR_NEW_LWP) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("%p\n"),

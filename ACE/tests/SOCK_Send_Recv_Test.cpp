@@ -70,7 +70,7 @@ client (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("connection failed")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -215,7 +215,7 @@ client (void *arg)
 
   cli_stream.close ();
 
-  return 0;
+  return nullptr;
 }
 
 void *
@@ -236,7 +236,7 @@ server (void *arg)
                   ACE_TEXT ("(%P|%t) %p\n"),
                   ACE_TEXT ("accept")));
       Test_Result = 1;
-      return 0;
+      return nullptr;
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -366,7 +366,7 @@ server (void *arg)
 
   sock_str.close();
 
-  return 0;
+  return nullptr;
 }
 
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
@@ -408,7 +408,7 @@ spawn (void)
           /* NOTREACHED */
         default:
           server (reinterpret_cast<void *> (&peer_acceptor));
-          ACE_OS::waitpid (0, 0, 0);
+          ACE_OS::waitpid (0, nullptr, 0);
         }
 #elif defined (ACE_HAS_THREADS)
       if (ACE_Thread_Manager::instance ()->spawn

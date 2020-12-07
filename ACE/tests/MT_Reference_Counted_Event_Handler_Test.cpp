@@ -117,7 +117,7 @@ disable_signal (int sigmin, int sigmax)
   // but let's leave it just in case.
   if (ACE_OS::sigprocmask (SIG_BLOCK, &signal_set, 0) != 0)
 # else
-  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, 0) != 0)
+  if (ACE_OS::thr_sigsetmask (SIG_BLOCK, &signal_set, nullptr) != 0)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     ACE_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT ("Error: (%P|%t): %p\n"),
@@ -221,7 +221,7 @@ Pipe::write_handle (void) const
 class Connection_Cache;
 class Event_Loop_Thread;
 
-static Event_Loop_Thread *global_event_loop_thread_variable = 0;
+static Event_Loop_Thread *global_event_loop_thread_variable = nullptr;
 
 class Sender : public ACE_Event_Handler
 {
@@ -230,9 +230,9 @@ public:
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
-  ~Sender (void);
+  ~Sender (void) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   ssize_t send_message (void);
 
@@ -338,7 +338,7 @@ Sender::close (void)
 {
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
-  if (this->reactor() != 0)
+  if (this->reactor() != nullptr)
     this->reactor ()->remove_handler (this->handle_,
                                       ACE_Event_Handler::ALL_EVENTS_MASK);
 
@@ -365,7 +365,7 @@ public:
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
-  int svc (void);
+  int svc (void) override;
 
   ACE_Reactor &reactor_;
 
@@ -379,17 +379,17 @@ public:
             ACE_HANDLE handle,
             int nested_upcalls);
 
-  ~Receiver (void);
+  ~Receiver (void) override;
 
-  int svc (void);
+  int svc (void) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int close (u_long flags);
+  int close (u_long flags) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int resume_handler (void);
+  int resume_handler (void) override;
 
   ACE_HANDLE handle_;
 
@@ -499,7 +499,7 @@ Receiver::handle_input (ACE_HANDLE handle)
                         this->nested_upcalls_level_));
 
           if ((this->nested_upcalls_level_ != max_nested_upcall_level) &&
-            (global_event_loop_thread_variable != 0))
+            (global_event_loop_thread_variable != nullptr))
             global_event_loop_thread_variable->svc ();
 
           this->nested_upcalls_level_--;
@@ -644,7 +644,7 @@ Connection_Cache::Connection_Cache (void)
 
   for (int i = 0; i < number_of_connections; ++i)
     {
-      this->entries_[i].sender_ = 0;
+      this->entries_[i].sender_ = nullptr;
       this->entries_[i].state_ = NOT_IN_CACHE;
     }
 }
@@ -671,7 +671,7 @@ Connection_Cache::add_connection (Sender *sender)
   ACE_TEST_ASSERT (this->find (sender) == -1);
 
   int empty_index =
-    this->find (0);
+    this->find (nullptr);
 
   sender->add_reference ();
   this->entries_[empty_index].sender_ = sender;
@@ -693,14 +693,14 @@ Connection_Cache::remove_connection (Sender *sender)
 
   // If we still have the sender, remove it.
   sender->remove_reference ();
-  this->entries_[index].sender_ = 0;
+  this->entries_[index].sender_ = nullptr;
   this->entries_[index].state_ = NOT_IN_CACHE;
 }
 
 Sender *
 Connection_Cache::acquire_connection (void)
 {
-  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+  ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
 
   // Find a valid and IDLE sender.
 
@@ -714,7 +714,7 @@ Connection_Cache::acquire_connection (void)
     }
 
   if (index == -1)
-    return 0;
+    return nullptr;
 
   this->entries_[index].sender_->add_reference ();
   this->entries_[index].state_ = BUSY;
@@ -769,7 +769,7 @@ public:
                      int run_receiver_thread,
                      int nested_upcalls);
 
-  int svc (void);
+  int svc (void) override;
 
   Sender *create_connection (void);
 
@@ -882,7 +882,7 @@ Invocation_Thread::svc (void)
         this->connection_cache_.acquire_connection ();
 
       // If no connection is available in the cache, create a new one.
-      if (sender == 0)
+      if (sender == nullptr)
         {
           if (connection_counter < number_of_connections)
             {
@@ -977,7 +977,7 @@ public:
                        int make_invocations,
                        int run_receiver_thread);
 
-  int svc (void);
+  int svc (void) override;
 
   ACE_Auto_Event &new_connection_event_;
 
@@ -1110,7 +1110,7 @@ public:
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);
 
-  int svc (void);
+  int svc (void) override;
 
   ACE_Reactor &reactor_;
 
@@ -1142,7 +1142,7 @@ Purger_Thread::svc (void)
         this->connection_cache_.acquire_connection ();
 
       // If no connection is available in the cache, sleep for a while.
-      if (sender == 0)
+      if (sender == nullptr)
         ACE_OS::sleep (ACE_Time_Value (0, 10 * 1000));
       else
         {
@@ -1217,7 +1217,7 @@ testing (ACE_Reactor *reactor,
     close_socket_thread.activate ();
   ACE_TEST_ASSERT (result == 0);
 
-  global_event_loop_thread_variable = 0;
+  global_event_loop_thread_variable = nullptr;
 
   // Create a thread to run the event loop.
   Event_Loop_Thread event_loop_thread (thread_manager,
@@ -1250,7 +1250,7 @@ testing (ACE_Reactor *reactor,
   // Set the global variable to zero again because the
   // event_loop_thread exists on the stack and now
   // gets destructed.
-  global_event_loop_thread_variable = 0;
+  global_event_loop_thread_variable = nullptr;
 }
 
 template <class REACTOR_IMPL>

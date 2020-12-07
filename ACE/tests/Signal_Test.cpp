@@ -160,7 +160,7 @@ synchronous_signal_handler (void *)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) synchronous signal handler done\n")));
 
-  return 0;
+  return nullptr;
 }
 
 // This function arranges to handle signals asynchronously, which is
@@ -189,7 +189,7 @@ asynchronous_signal_handler (void *)
                      (ACE_SignalHandler) handle_signal);
   ACE_UNUSED_ARG (sa);
 
-  return 0;
+  return nullptr;
 }
 
 // Function that runs in the child process in its own worker thread.
@@ -249,7 +249,7 @@ worker_child (void *arg)
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) finished running child\n")));
-  return 0;
+  return nullptr;
 }
 
 // This function runs the parent process in a separate worker thread.
@@ -276,7 +276,7 @@ worker_parent (void *arg)
                        ACE_TEXT (" -c");
   l_argv[0] = const_cast <ACE_TCHAR *> (t);
   l_argv[1] = pid_str;
-  l_argv[2] = 0;
+  l_argv[2] = nullptr;
 
   ACE_ARGV argv (l_argv);
 
@@ -316,7 +316,7 @@ worker_parent (void *arg)
     while (shut_down == 0)
       {
         // Wait for a signal to arrive.
-        if (ACE_OS::sigsuspend (0) == -1 && errno != EINTR)
+        if (ACE_OS::sigsuspend (nullptr) == -1 && errno != EINTR)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("sigsuspend")));
@@ -326,7 +326,7 @@ worker_parent (void *arg)
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) parent worker done\n")));
-  return 0;
+  return nullptr;
 }
 
 // This is the driver function that spawns threads to run the test for
@@ -363,13 +363,13 @@ run_test (ACE_THR_FUNC worker,
 
           result = ACE_Thread_Manager::instance ()->spawn
             (synchronous_signal_handler,
-             0,
+             nullptr,
              THR_DETACHED);
           ACE_TEST_ASSERT (result != -1);
         }
       else
         {
-          synchronous_signal_handler (0);
+          synchronous_signal_handler (nullptr);
         }
 
       // Wait for the thread(s) to finish.
@@ -385,7 +385,7 @@ run_test (ACE_THR_FUNC worker,
     {
       ACE_UNUSED_ARG (handle_signals_in_separate_thread);
       // Arrange to handle signals asynchronously.
-      asynchronous_signal_handler (0);
+      asynchronous_signal_handler (nullptr);
       (*worker) (reinterpret_cast <void *> (handle_signals_synchronously));
     }
 }

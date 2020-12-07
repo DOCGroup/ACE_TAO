@@ -31,7 +31,7 @@ speed_test (ACE_UINT32 loops)
     speed = 0.0;
 
   ACE_Time_Value tc;
-  void *ptr = 0;
+  void *ptr = nullptr;
   ACE_UINT32 i = loops;
   size_t n_chunks = 10;
   size_t chunk_size = 8;
@@ -83,7 +83,7 @@ stdspeed_test (ACE_UINT32 loops)
     speed = 0.0;
 
   ACE_Time_Value tc;
-  void *ptr = 0;
+  void *ptr = nullptr;
   ACE_UINT32 i = loops;
   size_t n_chunks   = 10,
     chunk_size = 8;
@@ -128,10 +128,10 @@ run_main (int argc, ACE_TCHAR *argv[])
   size_t n_chunks   = 0;
   size_t requested_size = 0;
   size_t depth = 0;
-  char *ptr1 = 0;
-  char *ptr2 = 0;
-  char *ptr3 = 0;
-  char *ptr4 = 0;
+  char *ptr1 = nullptr;
+  char *ptr2 = nullptr;
+  char *ptr3 = nullptr;
+  char *ptr4 = nullptr;
   ACE_UINT32 loops = 0;
 
   const char *str1 = "12345678";
