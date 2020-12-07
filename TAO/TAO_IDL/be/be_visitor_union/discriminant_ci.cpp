@@ -26,7 +26,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -116,7 +116,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -235,6 +235,6 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

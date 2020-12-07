@@ -102,7 +102,7 @@ be_visitor_operation_ch::visit_operation (be_operation *node)
   /// If we are in a reply handler, are not an excep_* operation,
   /// and have no native args, then generate the AMI static
   /// reply stub declaration.
-  if (intf != 0
+  if (intf != nullptr
       && intf->is_ami_rh ()
       && !node->is_excep_ami ()
       && !node->has_native ())

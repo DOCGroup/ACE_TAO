@@ -15,7 +15,7 @@ be_visitor_ami4ccm_sendc_ex_idl::be_visitor_ami4ccm_sendc_ex_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
     os_ (*ctx->stream ()),
-    iface_ (0)
+    iface_ (nullptr)
 {
 }
 
@@ -171,7 +171,7 @@ be_visitor_ami4ccm_sendc_ex_idl::pre_process (be_decl *node)
 {
   be_argument *arg = dynamic_cast<be_argument*> (node);
 
-  if (arg == 0)
+  if (arg == nullptr)
     {
       return 0;
     }

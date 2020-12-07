@@ -132,10 +132,10 @@ FE_set_yyin (FILE * f)
 UTL_Error *
 FE_new_UTL_Error (void)
 {
-  UTL_Error *retval = 0;
+  UTL_Error *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Error,
-                  0);
+                  nullptr);
 
   return retval;
 }
@@ -143,10 +143,10 @@ FE_new_UTL_Error (void)
 UTL_Indenter *
 FE_new_UTL_Indenter (void)
 {
-  UTL_Indenter *retval = 0;
+  UTL_Indenter *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   UTL_Indenter,
-                  0);
+                  nullptr);
 
   return retval;
 }

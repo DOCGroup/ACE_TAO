@@ -202,7 +202,7 @@ AST_Field::destroy (void)
     {
       this->ref_type_->destroy ();
       delete this->ref_type_;
-      this->ref_type_ = 0;
+      this->ref_type_ = nullptr;
     }
 
   this->AST_Decl::destroy ();

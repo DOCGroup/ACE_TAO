@@ -28,7 +28,7 @@
 be_visitor_dds_ts_idl::be_visitor_dds_ts_idl (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    os_ptr_ (0)
+    os_ptr_ (nullptr)
 {
 }
 
@@ -365,5 +365,5 @@ be_visitor_dds_ts_idl::fini_file (void)
                  << "\n";
 
   delete this->os_ptr_;
-  this->os_ptr_ = 0;
+  this->os_ptr_ = nullptr;
 }

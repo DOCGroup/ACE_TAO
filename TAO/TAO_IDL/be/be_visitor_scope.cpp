@@ -37,7 +37,7 @@ be_visitor_scope::~be_visitor_scope (void)
 int
 be_visitor_scope::visit_scope (be_scope *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                         "(%N:%l) be_visitor_scope::visit_scope - "
@@ -54,7 +54,7 @@ be_visitor_scope::visit_scope (be_scope *node)
     {
       AST_Decl *d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
@@ -88,7 +88,7 @@ be_visitor_scope::visit_scope (be_scope *node)
         }
 
       // Send the visitor.
-      if (bd == 0 || bd->accept (this) == -1)
+      if (bd == nullptr || bd->accept (this) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::visit_scope - "
@@ -134,14 +134,14 @@ be_visitor_scope::next_elem (be_decl *elem,
                              be_decl *&successor)
 {
   be_decl *ctx_scope = this->ctx_->scope ()->decl ();
-  be_scope *node = 0;
+  be_scope *node = nullptr;
 
-  if (ctx_scope != 0)
+  if (ctx_scope != nullptr)
     {
       node = ctx_scope->scope ();
     }
 
-  if (ctx_scope == 0 || node == 0)
+  if (ctx_scope == nullptr || node == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_scope::next_elem - "
@@ -149,7 +149,7 @@ be_visitor_scope::next_elem (be_decl *elem,
                         -1);
     }
 
-  successor = 0;
+  successor = nullptr;
 
   // Initialize an iterator to iterate thru our scope.
   for (UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
@@ -158,7 +158,7 @@ be_visitor_scope::next_elem (be_decl *elem,
     {
       be_decl *bd = dynamic_cast<be_decl*> (si.item ());
 
-      if (bd == 0)
+      if (bd == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::next_elem - "
@@ -182,7 +182,7 @@ be_visitor_scope::next_elem (be_decl *elem,
 
       successor = dynamic_cast<be_decl*> (si.item ());
 
-      if (successor == 0)
+      if (successor == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_scope::next_elem - "
@@ -200,22 +200,22 @@ be_visitor_scope::next_elem (be_decl *elem,
 bool
 be_visitor_scope::last_node (be_decl *bd)
 {
-  be_decl *next = 0;
+  be_decl *next = nullptr;
   (void) this->next_elem (bd,
                           next);
 
-  return (next == 0);
+  return (next == nullptr);
 }
 
 bool
 be_visitor_scope::last_inout_or_out_node (be_decl *)
 {
   // Return true if we are the last inout or out argument.
-  be_decl *next = 0;
+  be_decl *next = nullptr;
   (void) this->next_elem (this->ctx_->node (),
                           next);
 
-  while (next != 0)
+  while (next != nullptr)
     {
       be_argument *arg = dynamic_cast<be_argument*> (next);
 
@@ -226,7 +226,7 @@ be_visitor_scope::last_inout_or_out_node (be_decl *)
           return false;
         }
 
-      be_decl *next_next = 0;
+      be_decl *next_next = nullptr;
       this->next_elem (next,
                        next_next);
 

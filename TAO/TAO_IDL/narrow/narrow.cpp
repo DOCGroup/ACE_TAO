@@ -86,9 +86,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 TAO_IDL_FE_Export AST_Decl *
 ScopeAsDecl (UTL_Scope *s)
 {
-  if (s == 0)
+  if (s == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   switch (s->scope_node_type ())
@@ -130,7 +130,7 @@ ScopeAsDecl (UTL_Scope *s)
     case AST_Decl::NT_annotation_appl:
       return dynamic_cast<AST_Annotation_Appl*> (s);
     default:
-      return 0;
+      return nullptr;
   }
 }
 
@@ -140,9 +140,9 @@ ScopeAsDecl (UTL_Scope *s)
 TAO_IDL_FE_Export UTL_Scope *
 DeclAsScope (AST_Decl *d)
 {
-  if (d == 0)
+  if (d == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   switch (d->node_type ())
@@ -187,6 +187,6 @@ DeclAsScope (AST_Decl *d)
     case AST_Decl::NT_finder:
       return dynamic_cast<AST_Finder*> (d);
     default:
-      return 0;
+      return nullptr;
   }
 }

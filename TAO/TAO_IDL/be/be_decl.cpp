@@ -103,7 +103,7 @@ be_decl::compute_full_name  (const char *prefix,
                              const char *suffix,
                              char *&name)
 {
-  if (prefix == 0 || suffix == 0)
+  if (prefix == nullptr || suffix == nullptr)
     {
       return;
     }
@@ -113,7 +113,7 @@ be_decl::compute_full_name  (const char *prefix,
   ACE_CString result_str;
 
   // Get parent.
-  if (this->defined_in () == 0)
+  if (this->defined_in () == nullptr)
     {
       // Global scope.
 
@@ -132,7 +132,7 @@ be_decl::compute_full_name  (const char *prefix,
       be_decl * const parent =
         dynamic_cast<be_scope*> (this->defined_in ())->decl ();
 
-      if (parent == 0)
+      if (parent == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
@@ -169,7 +169,7 @@ be_decl::compute_flat_name  (const char *prefix,
                              const char *suffix,
                              char *&name)
 {
-  if (prefix == 0 || suffix == 0)
+  if (prefix == nullptr || suffix == nullptr)
     {
       return;
     }
@@ -180,7 +180,7 @@ be_decl::compute_flat_name  (const char *prefix,
   ACE_CString result_str;
 
   // Get parent.
-  if (this->defined_in () == 0)
+  if (this->defined_in () == nullptr)
     {
       // Global scope.
 
@@ -200,7 +200,7 @@ be_decl::compute_flat_name  (const char *prefix,
       // Get scope name.
       be_decl * const parent =
         dynamic_cast<be_scope*> (this->defined_in ())->decl ();
-      if (parent == 0)
+      if (parent == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
@@ -290,7 +290,7 @@ be_decl::scope (void)
     case AST_Decl::NT_home:
       return dynamic_cast<be_home*> (d);
     default:
-      return 0;
+      return nullptr;
   }
 }
 

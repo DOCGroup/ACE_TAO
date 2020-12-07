@@ -74,7 +74,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       << "static " << node->local_name () << "_ptr " << "_duplicate ("
       << node->local_name () << "_ptr obj);" << be_nl_2;
 
-  if (c == 0)
+  if (c == nullptr)
     {
       *os << "static void _tao_release ("
           << node->local_name () << "_ptr obj);"
@@ -91,7 +91,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
                         -1);
     }
 
-  if (c == 0)
+  if (c == nullptr)
     {
       if (! this->gen_xxx_narrow ("_unchecked_narrow", node, os))
         {
@@ -233,7 +233,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
           << be_uidt << be_uidt;
     }
 
-  if (c != 0)
+  if (c != nullptr)
     {
       // Friends declarations, component only.
       *os << be_nl_2
@@ -389,7 +389,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -399,7 +399,7 @@ be_visitor_interface_ch::gen_abstract_ops_helper (be_interface *node,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_interface::")

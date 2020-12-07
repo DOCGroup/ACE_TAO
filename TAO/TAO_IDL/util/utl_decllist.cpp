@@ -96,11 +96,11 @@ UTL_DeclList::head (void)
 void
 UTL_DeclList::destroy (void)
 {
-  if (this->pd_car_data != 0)
+  if (this->pd_car_data != nullptr)
     {
       this->pd_car_data->destroy ();
       delete this->pd_car_data;
-      this->pd_car_data = 0;
+      this->pd_car_data = nullptr;
     }
 
   this->UTL_List::destroy ();
@@ -133,9 +133,9 @@ UTL_DecllistActiveIterator::UTL_DecllistActiveIterator (UTL_DeclList *s)
 FE_Declarator *
 UTL_DecllistActiveIterator::item (void)
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_DeclList *) source)->head ();

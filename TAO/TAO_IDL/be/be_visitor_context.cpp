@@ -17,15 +17,15 @@ be_visitor_context::be_visitor_context (void)
   : ast_visitor_context (),
     state_ (TAO_CodeGen::TAO_INITIAL),
     sub_state_ (TAO_CodeGen::TAO_SUB_STATE_UNKNOWN),
-    os_ (0),
-    scope_ (0),
-    node_ (0),
-    alias_ (0),
-    tdef_ (0),
-    attr_ (0),
+    os_ (nullptr),
+    scope_ (nullptr),
+    node_ (nullptr),
+    alias_ (nullptr),
+    tdef_ (nullptr),
+    attr_ (nullptr),
     exception_ (0),
     comma_ (0),
-    interface_ (0)
+    interface_ (nullptr)
 {
 }
 
@@ -79,17 +79,17 @@ be_visitor_context::reset (void)
 {
   this->state_ = TAO_CodeGen::TAO_INITIAL;
   this->sub_state_ = TAO_CodeGen::TAO_SUB_STATE_UNKNOWN;
-  this->os_ = 0;
-  this->scope_ = 0;
-  this->node_ = 0;
-  this->alias_ = 0;
-  this->tdef_ = 0;
-  this->attr_ = 0;
+  this->os_ = nullptr;
+  this->scope_ = nullptr;
+  this->node_ = nullptr;
+  this->alias_ = nullptr;
+  this->tdef_ = nullptr;
+  this->attr_ = nullptr;
   this->exception_ = 0;
   this->comma_ = 0;
-  this->interface_ = 0;
-  this->template_args_ = 0;
-  this->template_params_ = 0;
+  this->interface_ = nullptr;
+  this->template_args_ = nullptr;
+  this->template_params_ = nullptr;
   this->port_prefix_ = "";
 }
 

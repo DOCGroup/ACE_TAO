@@ -111,7 +111,7 @@ be_union::gen_ostream_operator (TAO_OutStream *os,
         dynamic_cast<be_union_branch*> (this->pd_decls[i]);
 
       // We don't want any decls, just members.
-      if (ub == 0)
+      if (ub == nullptr)
         {
           continue;
         }
@@ -207,7 +207,7 @@ be_union::gen_empty_default_label (void)
     }
 
   AST_ConcreteType *disc = this->disc_type ();
-  if (disc == 0)
+  if (disc == nullptr)
     {
       return true; // In reality this is an error.
     }
@@ -224,7 +224,7 @@ be_union::gen_empty_default_label (void)
     }
 
   AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (disc);
-  if (pdt == 0)
+  if (pdt == nullptr)
     {
       return true; // In reality this is an error.
     }
@@ -278,7 +278,7 @@ be_union::nlabels (void)
       AST_UnionBranch *ub =
         dynamic_cast<AST_UnionBranch*> (d);
 
-      if (ub != 0)
+      if (ub != nullptr)
         {
           retval += ub->label_list_length ();
         }

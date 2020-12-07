@@ -95,7 +95,7 @@ AST_Structure::AST_Structure (UTL_ScopedName *n,
     UTL_Scope (AST_Decl::NT_struct),
     member_count_ (-1),
     local_struct_ (-1),
-    fwd_decl_ (0)
+    fwd_decl_ (nullptr)
 {
 }
 
@@ -114,7 +114,7 @@ AST_Structure::AST_Structure (AST_Decl::NodeType nt,
     UTL_Scope (nt),
     member_count_ (-1),
     local_struct_ (-1),
-    fwd_decl_ (0)
+    fwd_decl_ (nullptr)
 {
 }
 
@@ -161,7 +161,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
         {
           AST_Field *field = dynamic_cast<AST_Field*> (si.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -176,7 +176,7 @@ AST_Structure::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Structure::")
@@ -283,7 +283,7 @@ AST_Structure::contains_wstring (void)
 bool
 AST_Structure::is_defined (void)
 {
-  return 0 == this->fwd_decl_ || this->fwd_decl_->is_defined ();
+  return nullptr == this->fwd_decl_ || this->fwd_decl_->is_defined ();
 }
 
 bool
@@ -302,7 +302,7 @@ AST_Structure::legal_for_primary_key (void) const
         {
           AST_Field *f = dynamic_cast<AST_Field*> (si.item ());
 
-          if (f != 0 && !f->field_type ()->legal_for_primary_key ())
+          if (f != nullptr && !f->field_type ()->legal_for_primary_key ())
             {
               retval = false;
               break;
@@ -412,7 +412,7 @@ void
 AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
                                         UTL_Scope *s)
 {
-  if (i == 0)
+  if (i == nullptr)
     {
       return;
     }
@@ -422,9 +422,9 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
   AST_Decl *d =
     s->lookup_by_name_local (i->local_name (), false);
 
-  AST_Structure *fd = 0;
+  AST_Structure *fd = nullptr;
 
-  if (d != 0)
+  if (d != nullptr)
     {
       // Full definition must have the same prefix as the forward declaration.
       if (ACE_OS::strcmp (i->prefix (), d->prefix ()) != 0)
@@ -456,7 +456,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
         }
 
       // Successful?
-      if (fd == 0)
+      if (fd == nullptr)
         {
           // Should we give an error here?
           // No, look in fe_add_interface.
@@ -492,7 +492,7 @@ AST_Structure::fwd_redefinition_helper (AST_Structure *&i,
               fd->redefine (i);
               AST_StructureFwd *fwd = fd->fwd_decl ();
 
-              if (0 != fwd)
+              if (nullptr != fwd)
                 {
                   // So the fwd decl won't destroy us at cleanup time.
                   // Unlike interfaces, valuetypes and components, it's
@@ -549,7 +549,7 @@ AST_Structure::compute_size_type (void)
       AST_Field *f = dynamic_cast<AST_Field*> (d);
       AST_Type *t = f->field_type ();
 
-      if (t != 0)
+      if (t != nullptr)
         {
           this->size_type (t->size_type ());
 
@@ -591,7 +591,7 @@ AST_Structure::operator[] (const size_t index)
   size_t count = member_count_ <= 0 ? 0 : member_count_;
   if (index >= count)
     {
-      return 0;
+      return nullptr;
     }
   size_t i = 0;
   for (UTL_ScopeActiveIterator si (this, UTL_Scope::IK_decls);
@@ -604,7 +604,7 @@ AST_Structure::operator[] (const size_t index)
         }
       i++;
     }
-  return 0;
+  return nullptr;
 }
 
 AST_Decl *
@@ -620,5 +620,5 @@ AST_Structure::operator[] (const char* name)
         return field;
       }
     }
-  return 0;
+  return nullptr;
 }

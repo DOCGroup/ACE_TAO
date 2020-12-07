@@ -20,7 +20,7 @@ FE_ComponentHeader::FE_ComponentHeader (UTL_ScopedName *n,
                         false,
                         false,
                         false),
-    base_component_ (0)
+    base_component_ (nullptr)
 {
   this->compile_inheritance (base_component);
   this->compile_supports (supports);
@@ -65,7 +65,7 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
 {
   // If there is a base component, look up the decl and assign our member.
   // We also inherit its supported interfaces.
-  if (base_component == 0)
+  if (base_component == nullptr)
     {
       return;
     }
@@ -74,7 +74,7 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
   AST_Decl *d = s->lookup_by_name (base_component,
                                    true);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       idl_global->err ()->lookup_error (base_component);
 
@@ -90,7 +90,7 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
 
   this->base_component_ = dynamic_cast<AST_Component*> (d);
 
-  if (this->base_component_ == 0)
+  if (this->base_component_ == nullptr)
     {
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
                                   d);
@@ -101,22 +101,22 @@ FE_ComponentHeader::compile_inheritance (UTL_ScopedName *base_component)
                               this->name (),
                               this->base_component_
                             );
-      this->base_component_ = 0;
+      this->base_component_ = nullptr;
     }
 }
 
 void
 FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 {
-  if (supports == 0)
+  if (supports == nullptr)
     {
       return;
     }
 
-  AST_Decl *d = 0;
-  UTL_ScopedName *item = 0;
-  AST_Interface *iface = 0;
-  AST_Type *t = 0;
+  AST_Decl *d = nullptr;
+  UTL_ScopedName *item = nullptr;
+  AST_Interface *iface = nullptr;
+  AST_Type *t = nullptr;
   long j = 0;
   long k = 0;
 
@@ -128,7 +128,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
       item = l.item ();
 
       // Check that scope stack is valid.
-      if (idl_global->scopes ().top () == 0)
+      if (idl_global->scopes ().top () == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 
@@ -142,7 +142,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
 
       d = s->lookup_by_name  (item, true);
 
-      if (d == 0)
+      if (d == nullptr)
         {
           AST_Decl *sad = ScopeAsDecl (s);
 
@@ -155,7 +155,7 @@ FE_ComponentHeader::compile_supports (UTL_NameList *supports)
         }
 
       // Not found?
-      if (d == 0)
+      if (d == nullptr)
         {
           idl_global->err ()->lookup_error (item);
 

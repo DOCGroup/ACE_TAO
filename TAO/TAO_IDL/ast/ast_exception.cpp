@@ -139,7 +139,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
         {
           AST_Field *field = dynamic_cast<AST_Field*> (i.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -154,7 +154,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Exception::")

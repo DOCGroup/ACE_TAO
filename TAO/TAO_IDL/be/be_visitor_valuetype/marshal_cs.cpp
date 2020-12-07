@@ -42,7 +42,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "strm";
     }
@@ -50,7 +50,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << ", TAO_ChunkInfo&";
   // If the valuetype has no fields, and no stateful inherit,
   // the chunking helper arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "ci";
     }
@@ -137,7 +137,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "strm";
     }
@@ -145,7 +145,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << ", TAO_ChunkInfo&";
   // If the valuetype has no fields, and no stateful inherit,
   // the chunking helper arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "ci";
     }
@@ -281,7 +281,7 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
 
       be_field *field = dynamic_cast<be_field*> (d);
 
-      if (field != 0 && attr == 0)
+      if (field != nullptr && attr == nullptr)
         {
           if (n_processed > 0)
             {

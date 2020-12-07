@@ -26,10 +26,10 @@
 be_visitor_connector_dds_ex_base::be_visitor_connector_dds_ex_base (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    t_inst_ (0),
-    t_ref_ (0),
-    t_params_ (0),
-    base_tname_ (0)
+    t_inst_ (nullptr),
+    t_ref_ (nullptr),
+    t_params_ (nullptr),
+    base_tname_ (nullptr)
 {
 }
 
@@ -47,7 +47,7 @@ be_visitor_connector_dds_ex_base::begin (be_connector *node)
 
   AST_Connector *base = node;
 
-  while (this->t_args_.is_empty () && base != 0)
+  while (this->t_args_.is_empty () && base != nullptr)
     {
       this->process_template_args (base);
       base = base->base_connector ();
@@ -78,7 +78,7 @@ be_visitor_connector_dds_ex_base::is_dds_type (
 
   if (base)
     {
-      while (base->base_connector () != 0)
+      while (base->base_connector () != nullptr)
         {
           base = base->base_connector ();
         }
@@ -89,11 +89,11 @@ be_visitor_connector_dds_ex_base::is_dds_type (
         {
           AST_Structure *s = dynamic_cast<AST_Structure*> (d);
 
-          if (s == 0)
+          if (s == nullptr)
             {
               AST_Typedef *td = dynamic_cast<AST_Typedef*> (d);
 
-              if (td != 0)
+              if (td != nullptr)
                 {
                   s = dynamic_cast<AST_Structure*> (td->primitive_base_type ());
                 }
@@ -126,13 +126,13 @@ be_visitor_connector_dds_ex_base::process_template_args (
   /// We assume the connector comes from the instantiation
   /// of a template module, and the regular module it's
   /// defined in (at some level) will have a reference to it.
-  while (this->t_inst_ == 0 && m != 0)
+  while (this->t_inst_ == nullptr && m != nullptr)
     {
       this->t_inst_ = m->from_inst ();
       m = dynamic_cast<AST_Module*> (m->defined_in ());
     }
 
-  if (this->t_inst_ == 0)
+  if (this->t_inst_ == nullptr)
     {
       /// Probably means we're trying the base connector
       /// of DDS_State or DDS_Event, in which case we
@@ -154,7 +154,7 @@ be_visitor_connector_dds_ex_base::process_template_args (
 
   /// We depend on the DDS datatype being the first template
   /// argument for now, this may change.
-  AST_Decl **datatype = 0;
+  AST_Decl **datatype = nullptr;
   int const status = this->t_args_.get (datatype, 0UL);
 
   if (status != 0)
@@ -179,7 +179,7 @@ be_visitor_connector_dds_ex_base::match_template_args (void)
   /// only the args referenced in the alias (see FOR loop
   /// below). Otherwise, we just copy the containing template
   /// module instantiation's arg list.
-  if (this->t_ref_ == 0)
+  if (this->t_ref_ == nullptr)
     {
       this->t_args_ = *this->t_inst_->template_args ();
       return;
@@ -197,12 +197,12 @@ be_visitor_connector_dds_ex_base::match_template_args (void)
            ! ci.done ();
            ci.advance (), ++slot)
         {
-          FE_Utils::T_Param_Info *t_param = 0;
+          FE_Utils::T_Param_Info *t_param = nullptr;
           ci.next (t_param);
 
           if (t_param->name_ == ref_name)
             {
-              AST_Decl **d = 0;
+              AST_Decl **d = nullptr;
               this->t_inst_->template_args ()->get (d, slot);
               this->t_args_.enqueue_tail (*d);
               break;

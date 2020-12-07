@@ -17,7 +17,7 @@
 
 be_visitor_root_ch::be_visitor_root_ch (be_visitor_context *ctx)
   : be_visitor_root (ctx),
-    o_ (0)
+    o_ (nullptr)
 {
 }
 
@@ -185,7 +185,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
     }
 
   size_t index = 0;
-  be_interface_fwd *ifwd = 0;
+  be_interface_fwd *ifwd = nullptr;
 
   *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
@@ -231,7 +231,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
     }
 
   size_t index = 0;
-  AST_Interface *i = 0;
+  AST_Interface *i = nullptr;
 
   *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl

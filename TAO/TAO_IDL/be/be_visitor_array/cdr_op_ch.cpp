@@ -55,7 +55,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 && // Not a typedef.
+  if (this->ctx_->alias () == nullptr && // Not a typedef.
       bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -105,7 +105,7 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
   be_typedef *td = this->ctx_->tdef ();
   ACE_CString arg_name (ACE_CString (parent->full_name ())
                         + "::"
-                        + (td == 0 ? "_" : "")
+                        + (td == nullptr ? "_" : "")
                         + node->local_name ()->get_string ()
                         + "_forany &_tao_array");
 

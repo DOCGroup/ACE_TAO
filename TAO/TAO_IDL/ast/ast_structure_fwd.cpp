@@ -77,11 +77,11 @@ AST_StructureFwd::set_as_defined (void)
 void
 AST_StructureFwd::destroy (void)
 {
-  if (!this->is_defined_ && 0 != this->pd_full_definition)
+  if (!this->is_defined_ && nullptr != this->pd_full_definition)
     {
       this->pd_full_definition->destroy ();
       delete this->pd_full_definition;
-      this->pd_full_definition = 0;
+      this->pd_full_definition = nullptr;
     }
 
   this->AST_Type::destroy ();
@@ -104,7 +104,7 @@ AST_StructureFwd::adjust_found (
   if (ignore_fwd)
     {
       AST_Structure *s = this->full_definition ();
-      return (full_def_only && !s->is_defined () ? 0 : s);
+      return (full_def_only && !s->is_defined () ? nullptr : s);
     }
 
   return this;

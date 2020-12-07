@@ -80,7 +80,7 @@ AST_EnumVal::AST_EnumVal (ACE_CDR::ULong v,
                   AST_Decl::NT_enum_val,
                   new AST_Expression (v),
                   n),
-    enum_parent_ (0)
+    enum_parent_ (nullptr)
 {
 }
 

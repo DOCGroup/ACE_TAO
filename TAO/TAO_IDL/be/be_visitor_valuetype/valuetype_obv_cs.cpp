@@ -214,7 +214,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
   AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
         dynamic_cast<be_valuetype*> (parent);
@@ -231,7 +231,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_base_constructor_args (
       be_attribute *attr =
         dynamic_cast<be_attribute*> (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -250,7 +250,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
   AST_Type *parent = node->inherits_concrete ();
 
   // Generate for inherited members first.
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent = dynamic_cast<be_valuetype*> (parent);
       this->gen_obv_init_constructor_inits (be_parent);
@@ -266,7 +266,7 @@ be_visitor_valuetype_obv_cs::gen_obv_init_constructor_inits (
       be_attribute *attr =
         dynamic_cast<be_attribute*> (si.item ());
 
-      if (f == 0 || attr != 0)
+      if (f == nullptr || attr != nullptr)
         {
           continue;
         }
@@ -287,7 +287,7 @@ be_visitor_valuetype_obv_cs::gen_obv_call_base_constructor_args (
 
   // Generate for inherited members first.
   AST_Type *parent = node->inherits_concrete ();
-  if (parent != 0)
+  if (parent != nullptr)
     {
       be_valuetype *be_parent =
         dynamic_cast<be_valuetype*> (parent);

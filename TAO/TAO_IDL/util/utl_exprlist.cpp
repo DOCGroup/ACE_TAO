@@ -90,11 +90,11 @@ UTL_ExprList::head (void)
 void
 UTL_ExprList::destroy (void)
 {
-  if (this->pd_car_data != 0)
+  if (this->pd_car_data != nullptr)
     {
       this->pd_car_data->destroy ();
       delete this->pd_car_data;
-      this->pd_car_data = 0;
+      this->pd_car_data = nullptr;
     }
 
   this->UTL_List::destroy ();
@@ -109,9 +109,9 @@ UTL_ExprlistActiveIterator::UTL_ExprlistActiveIterator (UTL_ExprList *s)
 AST_Expression *
 UTL_ExprlistActiveIterator::item (void)
 {
-  if (source == 0)
+  if (source == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   return ((UTL_ExprList *) source)->head ();

@@ -83,7 +83,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -102,7 +102,7 @@ be_visitor_field_cdr_op_cs::visit_array (be_array *node)
                   '\0',
                   NAMEBUFSIZE);
 
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays ...
@@ -190,7 +190,7 @@ be_visitor_field_cdr_op_cs::visit_enum (be_enum *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -233,7 +233,7 @@ be_visitor_field_cdr_op_cs::visit_interface (be_interface *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -307,7 +307,7 @@ be_visitor_field_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -410,7 +410,7 @@ be_visitor_field_cdr_op_cs::emit_valuetype_common (void)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -458,7 +458,7 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -581,7 +581,7 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -626,7 +626,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -640,7 +640,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
           if (str->width () == (long) sizeof (char))
             {
@@ -662,7 +662,7 @@ be_visitor_field_cdr_op_cs::visit_string (be_string *str)
 
       break;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      if (str != 0 && str->max_size ()->ev ()->u.ulval != 0)
+      if (str != nullptr && str->max_size ()->ev ()->u.ulval != 0)
         {
           if (str->width () == (long) sizeof (char))
             {
@@ -728,7 +728,7 @@ be_visitor_field_cdr_op_cs::visit_structure (be_structure *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -789,7 +789,7 @@ be_visitor_field_cdr_op_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -823,7 +823,7 @@ be_visitor_field_cdr_op_cs::visit_union (be_union *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_field_cdr_op_cs::"
@@ -889,7 +889,7 @@ be_visitor_cdr_op_field_decl::visit_field (be_field *node)
 {
   be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_cdr_op_field_decl::"
@@ -922,7 +922,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
   be_field *f =
     dynamic_cast<be_field*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_cdr_op_field_decl::"
@@ -939,7 +939,7 @@ be_visitor_cdr_op_field_decl::visit_array (be_array *node)
                   '\0',
                   NAMEBUFSIZE);
 
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && node->is_child (this->ctx_->scope ()->decl ()))
     {
       // For anonymous arrays,
@@ -1005,7 +1005,7 @@ be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
   // The node to be visited in the base primitve type that gets typedefed.
   be_type *bt = node->primitive_base_type ();
 
-  if (bt == 0 || bt->accept (this) == -1)
+  if (bt == nullptr || bt->accept (this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_cdr_op_field_decl::"
@@ -1014,6 +1014,6 @@ be_visitor_cdr_op_field_decl::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

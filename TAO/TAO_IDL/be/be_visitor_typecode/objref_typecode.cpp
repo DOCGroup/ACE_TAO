@@ -30,7 +30,7 @@ TAO::be_visitor_objref_typecode::visit_interface (be_interface * node)
   static char const local_interface[]    = "local_interface";
   static char const objref[]             = "objref";
 
-  char const * kind = 0;
+  char const * kind = nullptr;
 
   if (dynamic_cast<be_component *> (node))
     kind = component;

@@ -13,8 +13,8 @@
 #include "ast_visitor_context.h"
 
 ast_visitor_context::ast_visitor_context (void)
-  : template_params_ (0),
-    template_args_ (0)
+  : template_params_ (nullptr),
+    template_args_ (nullptr)
 {
 }
 

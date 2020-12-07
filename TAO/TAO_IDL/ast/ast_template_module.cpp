@@ -55,7 +55,7 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
        !i.done ();
        i.advance (), ++slot)
     {
-      AST_Decl **item = 0;
+      AST_Decl **item = nullptr;
       i.next (item);
       AST_Decl *d = *item;
 
@@ -66,15 +66,15 @@ AST_Template_Module::match_arg_names (FE_Utils::T_ARGLIST *args)
           d = td->primitive_base_type ();
         }
 
-      FE_Utils::T_Param_Info *param = 0;
+      FE_Utils::T_Param_Info *param = nullptr;
       (void) this->template_params_->get (param, slot);
-      const char *s = 0;
+      const char *s = nullptr;
 
       if (! this->match_one_param (param, d))
         {
           UTL_ScopedName *n = d->name ();
 
-          if (n == 0)
+          if (n == nullptr)
             {
               AST_Constant *c = dynamic_cast<AST_Constant*> (d);
 
@@ -99,15 +99,15 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
                                        UTL_Scope *decl_scope)
 {
   UTL_Scope *s = decl_scope;
-  AST_Template_Module *enclosing = 0;
+  AST_Template_Module *enclosing = nullptr;
 
-  while (enclosing == 0 && s != 0)
+  while (enclosing == nullptr && s != nullptr)
     {
       enclosing = dynamic_cast<AST_Template_Module*> (s);
       s = ScopeAsDecl (s)->defined_in ();
     }
 
-  if (enclosing == 0)
+  if (enclosing == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("AST_Template_Module::")
@@ -124,7 +124,7 @@ AST_Template_Module::match_param_refs (UTL_StrList *refs,
       FE_Utils::T_Param_Info *enclosing_param =
         enclosing->find_param (i.item ());
 
-      if (enclosing_param == 0)
+      if (enclosing_param == nullptr)
         {
           // Enclosing param not found
           return false;
@@ -144,7 +144,7 @@ void
 AST_Template_Module::destroy (void)
 {
   delete this->template_params_;
-  this->template_params_ = 0;
+  this->template_params_ = nullptr;
 
   this->AST_Module::destroy ();
 }
@@ -194,15 +194,15 @@ AST_Template_Module::match_one_param (FE_Utils::T_Param_Info *param,
         ex->check_and_coerce (param->const_type_,
                               param->enum_const_type_decl_);
 
-      if (ev == 0)
+      if (ev == nullptr)
         {
           idl_global->err ()->coercion_error (ex,
                                               param->const_type_);
         }
 
-      bool retval = (ev != 0);
+      bool retval = (ev != nullptr);
       delete ev;
-      ev = 0;
+      ev = nullptr;
       return retval;
     }
 
@@ -217,7 +217,7 @@ AST_Template_Module::find_param (UTL_String *name)
        !i.done ();
        i.advance ())
     {
-      FE_Utils::T_Param_Info *param = 0;
+      FE_Utils::T_Param_Info *param = nullptr;
       i.next (param);
 
       if (param->name_ == name->get_string ())
@@ -226,7 +226,7 @@ AST_Template_Module::find_param (UTL_String *name)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 bool
@@ -238,7 +238,7 @@ AST_Template_Module::match_param_by_type (
        !i.done ();
        i.advance ())
     {
-      FE_Utils::T_Param_Info *my_param = 0;
+      FE_Utils::T_Param_Info *my_param = nullptr;
       i.next (my_param);
 
       if (param->type_ == my_param->type_)

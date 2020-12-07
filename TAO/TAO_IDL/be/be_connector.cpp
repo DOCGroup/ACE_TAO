@@ -16,17 +16,17 @@ be_connector::be_connector (
               n),
     UTL_Scope (AST_Decl::NT_connector),
     AST_Interface (n,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0,
                    false,
                    false),
     AST_Component (n,
                    base_connector,
+                   nullptr,
                    0,
-                   0,
-                   0,
+                   nullptr,
                    0),
     AST_Connector (n,
                    base_connector),
@@ -36,17 +36,17 @@ be_connector::be_connector (
     be_type (AST_Decl::NT_connector,
              n),
     be_interface (n,
+                  nullptr,
                   0,
-                  0,
-                  0,
+                  nullptr,
                   0,
                   false,
                   false),
     be_component (n,
                   base_connector,
+                  nullptr,
                   0,
-                  0,
-                  0,
+                  nullptr,
                   0),
     dds_connector_ (false),
     ami_connector_ (false)
@@ -91,7 +91,7 @@ be_connector::check_ancestors (void)
 {
   AST_Connector *base = this;
 
-  while (base != 0)
+  while (base != nullptr)
     {
       const char *base_fname = base->full_name ();
 
@@ -113,13 +113,13 @@ be_connector::check_ancestors (void)
           // for the moment
           AST_Module *m =
             dynamic_cast<AST_Module*> (this->defined_in ());
-          AST_Template_Module_Inst *t_inst = 0;
-          while (t_inst == 0 && m != 0)
+          AST_Template_Module_Inst *t_inst = nullptr;
+          while (t_inst == nullptr && m != nullptr)
             {
               t_inst = m->from_inst ();
               m = dynamic_cast<AST_Module*> (m->defined_in ());
             }
-          if (t_inst != 0 && t_inst->template_args () != 0)
+          if (t_inst != nullptr && t_inst->template_args () != nullptr)
             {
               if (t_inst->template_args ()->size () > 0)
                 {

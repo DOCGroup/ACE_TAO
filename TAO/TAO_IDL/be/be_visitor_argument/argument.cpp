@@ -39,7 +39,7 @@ be_visitor_args::type_name (be_type *node,
                   '\0',
                   NAMEBUFSIZE);
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Use the typedefed name if that is the one
   // used in the IDL defn.

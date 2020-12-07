@@ -42,7 +42,7 @@ be_argument::be_argument (AST_Argument::Direction d,
   // declared in an included file UNLESS the enclosing
   // interface is abstract, in which case we regenerate the
   // operation.
-  if (dcl != 0
+  if (dcl != nullptr
       && !dcl->is_local ()
       && (idl_global->in_main_file () || dcl->is_abstract ()))
     {

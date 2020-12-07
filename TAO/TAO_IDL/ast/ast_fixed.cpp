@@ -31,11 +31,11 @@ void AST_Fixed::destroy ()
 {
   pd_digits->destroy ();
   delete pd_digits;
-  pd_digits = 0;
+  pd_digits = nullptr;
 
   pd_scale->destroy ();
   delete pd_scale;
-  pd_scale = 0;
+  pd_scale = nullptr;
 
   AST_ConcreteType::destroy ();
 }

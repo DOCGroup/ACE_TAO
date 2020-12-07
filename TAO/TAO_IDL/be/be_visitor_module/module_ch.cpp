@@ -29,7 +29,7 @@ be_visitor_module_ch::visit_module (be_module *node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  TAO_OutStream *aos = 0;
+  TAO_OutStream *aos = nullptr;
 
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;

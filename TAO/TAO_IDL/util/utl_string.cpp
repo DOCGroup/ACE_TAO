@@ -186,8 +186,8 @@ UTL_String::get_canonical_rep (ACE_CString &cstr)
 
 UTL_String::UTL_String (void)
   : copy_taken (false),
-    p_str      (0),
-    c_str      (0)
+    p_str      (nullptr),
+    c_str      (nullptr)
 {
 }
 
@@ -195,7 +195,7 @@ UTL_String::UTL_String (const char *str, bool take_copy)
   : copy_taken (str ? take_copy : false),
     p_str      (this->copy_taken ? ACE::strnew (str)
                                  : const_cast<char *>(str)),
-    c_str      (0)
+    c_str      (nullptr)
 {
 }
 
@@ -203,7 +203,7 @@ UTL_String::UTL_String (UTL_String *s, bool force_copy)
   : copy_taken (force_copy ? true : s->copy_taken),
     p_str      (this->copy_taken ? ACE::strnew (s->p_str)
                                  : const_cast<char *> (s->p_str)),
-    c_str      (0)
+    c_str      (nullptr)
 {
 }
 
@@ -220,13 +220,13 @@ void
 UTL_String::destroy (void)
 {
   delete [] this->c_str;
-  this->c_str = 0;
+  this->c_str = nullptr;
   if (this->copy_taken)
     {
        ACE::strdelete (this->p_str);
        this->copy_taken = 0;
     }
-  this->p_str = 0;
+  this->p_str = nullptr;
 }
 
 // Compare two UTL_String *.

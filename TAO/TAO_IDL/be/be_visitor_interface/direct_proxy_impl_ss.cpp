@@ -61,7 +61,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_INTERFACE_DIRECT_PROXY_IMPL_SS);
@@ -72,7 +72,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_direct_proxy"
@@ -83,14 +83,14 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
 
       AST_Decl::NodeType nt = d->node_type ();
 
-      UTL_ScopedName *item_new_name = 0;
-      UTL_ScopedName *new_name = 0;
+      UTL_ScopedName *item_new_name = nullptr;
+      UTL_ScopedName *new_name = nullptr;
 
       if (AST_Decl::NT_op == nt || AST_Decl::NT_attr == nt)
         {
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
+                                          nullptr),
                           -1);
 
           new_name = (UTL_ScopedName *) node->name ()->copy ();
@@ -126,7 +126,7 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
           AST_Attribute *attr = dynamic_cast<AST_Attribute*> (d);
           be_attribute new_attr (attr->readonly (),
                                  attr->field_type (),
-                                 0,
+                                 nullptr,
                                  attr->is_local (),
                                  attr->is_abstract ());
           new_attr.set_defined_in (node);
@@ -134,21 +134,21 @@ be_visitor_interface_direct_proxy_impl_ss::gen_abstract_ops_helper (
 
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
 
-          if (0 != get_exceptions)
+          if (nullptr != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
 
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
 
-          if (0 != set_exceptions)
+          if (nullptr != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
 
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
-          ctx.attribute (0);
+          ctx.attribute (nullptr);
           new_attr.destroy ();
         }
     }

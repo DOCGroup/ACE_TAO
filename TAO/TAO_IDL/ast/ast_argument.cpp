@@ -87,7 +87,7 @@ direction_to_string (AST_Argument::Direction d)
       return "inout";
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl::NodeType const

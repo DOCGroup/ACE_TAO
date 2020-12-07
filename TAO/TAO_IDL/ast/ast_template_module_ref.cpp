@@ -50,7 +50,7 @@ AST_Template_Module_Ref::destroy (void)
 {
   this->param_refs_->destroy ();
   delete this->param_refs_;
-  this->param_refs_ = 0;
+  this->param_refs_ = nullptr;
 
   this->AST_Field::destroy ();
 }
@@ -72,7 +72,7 @@ AST_Template_Module_Ref::adjust_found (
   bool ignore_fwd,
   bool /*full_def_only*/)
 {
-  return ignore_fwd ? 0 : this;
+  return ignore_fwd ? nullptr : this;
 }
 
 bool

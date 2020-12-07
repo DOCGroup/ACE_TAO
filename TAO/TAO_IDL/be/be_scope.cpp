@@ -43,7 +43,7 @@ be_scope::be_add_field (AST_Field *f)
 AST_Argument *
 be_scope::be_add_argument (AST_Argument *)
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -95,7 +95,7 @@ be_scope::decl (void)
     case AST_Decl::NT_finder:
       return dynamic_cast<be_finder*> (this);
     default:
-      return (be_decl *)0;
+      return (be_decl *)nullptr;
     }
 }
 

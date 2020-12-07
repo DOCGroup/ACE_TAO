@@ -55,7 +55,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_sequence_cs::")
@@ -74,7 +74,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
       be_typedef *tmp = this->ctx_->tdef ();
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
         {

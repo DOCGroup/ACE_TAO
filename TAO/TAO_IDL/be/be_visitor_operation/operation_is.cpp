@@ -64,7 +64,7 @@ be_visitor_operation_is::visit_operation (be_operation *node)
                         -1);
     }
 
-  const char *classname = 0;
+  const char *classname = nullptr;
 
   if (intf)
     {

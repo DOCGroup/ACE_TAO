@@ -48,14 +48,14 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
       module = dynamic_cast<be_module*> (node->defined_in ());
 
-      if (0 == module)
+      if (nullptr == module)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "be_visitor_valuebox_any_op_ch::"
@@ -101,7 +101,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }

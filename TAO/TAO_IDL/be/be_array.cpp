@@ -61,8 +61,8 @@ be_array::create_name (void)
 {
   char namebuf [NAMEBUFSIZE];
   unsigned long i;
-  UTL_ScopedName *n = 0;
-  be_decl *scope = 0;
+  UTL_ScopedName *n = nullptr;
+  be_decl *scope = nullptr;
 
   ACE_OS::memset (namebuf,
                   '\0',
@@ -90,7 +90,7 @@ be_array::create_name (void)
       AST_Expression *expr = this->dims ()[i];
 
       // Dimension value.
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"
@@ -123,15 +123,15 @@ be_array::create_name (void)
       // Make a copy of the enclosing scope's  name.
       n = (UTL_ScopedName *)scope->name ()->copy ();
 
-      Identifier *id = 0;
+      Identifier *id = nullptr;
       ACE_NEW_RETURN (id,
                       Identifier (ACE_OS::strdup (namebuf)),
                       -1);
 
-      UTL_ScopedName *sn = 0;
+      UTL_ScopedName *sn = nullptr;
       ACE_NEW_RETURN (sn,
                       UTL_ScopedName (id,
-                                      0),
+                                      nullptr),
                       -1);
 
       // Add our local name as the last component.
@@ -157,37 +157,37 @@ be_array::compute_tc_name (void)
   // TypeCode.  Generate a TypeCode name that is meant for internal
   // use alone.
 
-  Identifier * tao_id = 0;
+  Identifier * tao_id = nullptr;
   ACE_NEW (tao_id,
            Identifier ("TAO"));
 
   ACE_NEW (this->tc_name_,
            UTL_ScopedName (tao_id,
-                           0));
+                           nullptr));
 
   ACE_CString local_tc_name =
     ACE_CString ("tc_")
     + ACE_CString (this->flat_name ());
 
-  Identifier * typecode_scope = 0;
+  Identifier * typecode_scope = nullptr;
   ACE_NEW (typecode_scope,
            Identifier ("TypeCode"));
 
-  UTL_ScopedName * tc_scope_conc_name = 0;
+  UTL_ScopedName * tc_scope_conc_name = nullptr;
   ACE_NEW (tc_scope_conc_name,
            UTL_ScopedName (typecode_scope,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (tc_scope_conc_name);
 
-  Identifier * id = 0;
+  Identifier * id = nullptr;
   ACE_NEW (id,
            Identifier (local_tc_name.c_str ()));
 
-  UTL_ScopedName * conc_name = 0;
+  UTL_ScopedName * conc_name = nullptr;
   ACE_NEW (conc_name,
            UTL_ScopedName (id,
-                           0));
+                           nullptr));
 
   this->tc_name_->nconc (conc_name);
 }
@@ -208,7 +208,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
       AST_Expression *expr = this->dims ()[i];
 
       // Dimension value.
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"

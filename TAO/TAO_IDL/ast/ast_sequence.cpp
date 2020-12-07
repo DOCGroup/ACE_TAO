@@ -120,7 +120,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
           idl_global->err ()->not_a_type (bt);
           bt->destroy ();
           delete bt;
-          bt = 0;
+          bt = nullptr;
           throw Bailout ();
         }
     }
@@ -128,7 +128,7 @@ AST_Sequence::AST_Sequence (AST_Expression *ms,
   // Check if we are bounded or unbounded. An expression value of 0 means
   // unbounded. If our bound is a template parameter, skip the
   // check altogether, this node will trigger no code generation.
-  if (ms->param_holder () == 0)
+  if (ms->param_holder () == nullptr)
     {
       this->unbounded_ = (ms->ev ()->u.ulval == 0);
     }
@@ -160,7 +160,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   AST_Type *type = dynamic_cast<AST_Type*> (this->base_type ());
 
-  if (type == 0)
+  if (type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("AST_Sequence::in_recursion - ")
@@ -186,7 +186,7 @@ AST_Sequence::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
     }
 
   bool recursion_found = false;
-  AST_Type** recursable_type = 0;
+  AST_Type** recursable_type = nullptr;
   list.get (recursable_type, 0);
   if (!ACE_OS::strcmp (type->full_name (),
                            (*recursable_type)->full_name ()))
@@ -270,12 +270,12 @@ AST_Sequence::destroy (void)
     {
       this->pd_base_type->destroy ();
       delete this->pd_base_type;
-      this->pd_base_type = 0;
+      this->pd_base_type = nullptr;
     }
 
   this->pd_max_size->destroy ();
   delete this->pd_max_size;
-  this->pd_max_size = 0;
+  this->pd_max_size = nullptr;
 
   this->AST_ConcreteType::destroy ();
 }

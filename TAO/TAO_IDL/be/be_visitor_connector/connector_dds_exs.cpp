@@ -61,7 +61,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
           !i.done ();
           i.advance (), ++slot)
         {
-          AST_Decl **item = 0;
+          AST_Decl **item = nullptr;
           i.next (item);
           AST_Decl *d = *item;
 
@@ -77,7 +77,7 @@ be_visitor_connector_dds_exs::visit_connector (be_connector *node)
 
           bool needs_bool = false;
           bool is_fixed = false;
-          FE_Utils::T_Param_Info *param = 0;
+          FE_Utils::T_Param_Info *param = nullptr;
 
           if (this->t_params_->get (param, slot - 1) != 0)
             {

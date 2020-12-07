@@ -73,20 +73,20 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_string.h"
 
 Identifier::Identifier (void)
-  : pv_string (0),
+  : pv_string (nullptr),
     escaped_ (false)
 {
 }
 
 Identifier::Identifier (const char *s)
-  : pv_string (0),
+  : pv_string (nullptr),
     escaped_ (false)
 {
   preprocess_and_replace_string (s);
 }
 
 Identifier::Identifier (const Identifier &other)
-  : pv_string (0),
+  : pv_string (nullptr),
     escaped_ (other.escaped ())
 {
   *this = other;
@@ -94,7 +94,7 @@ Identifier::Identifier (const Identifier &other)
 
 Identifier::~Identifier (void)
 {
-  if (this->pv_string != 0)
+  if (this->pv_string != nullptr)
     {
       ACE::strdelete (this->pv_string);
     }
@@ -121,7 +121,7 @@ Identifier::replace_string (const char * s)
     {
       delete [] this->pv_string;
     }
-  this->pv_string = s ? ACE::strnew (s) : 0;
+  this->pv_string = s ? ACE::strnew (s) : nullptr;
 }
 
 void
@@ -166,7 +166,7 @@ Identifier::preprocess_and_replace_string (const char * s)
           const TAO_IDL_CPP_Keyword_Entry *entry =
             cpp_key_tbl.lookup (str.c_str (), len);
 
-          if (entry != 0)
+          if (entry != nullptr)
             {
               shift = false;
             }
@@ -208,10 +208,10 @@ Identifier::case_compare_quiet (Identifier *o)
 Identifier *
 Identifier::copy (void)
 {
-  Identifier *retval = 0;
+  Identifier *retval = nullptr;
   ACE_NEW_RETURN (retval,
                   Identifier (this->pv_string),
-                  0);
+                  nullptr);
 
   retval->escaped_ = this->escaped_;
 
@@ -228,7 +228,7 @@ Identifier::escaped (void) const
 void
 Identifier::dump (ACE_OSTREAM_TYPE &o)
 {
-  if (this->pv_string == 0)
+  if (this->pv_string == nullptr)
     {
       return;
     }

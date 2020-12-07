@@ -14,7 +14,7 @@
 be_visitor_home_ex_idl::be_visitor_home_ex_idl (
     be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
+    node_ (nullptr),
     os_ (*ctx->stream ())
 {
 }
@@ -234,7 +234,7 @@ be_visitor_home_ex_idl::gen_explicit (void)
 
   AST_Home *base = node_->base_home ();
 
-  if (base == 0)
+  if (base == nullptr)
     {
       os_ << "::Components::HomeExecutorBase";
 
@@ -309,7 +309,7 @@ be_visitor_home_ex_idl::gen_exception_list (
 {
   ACE_CDR::Long cutoff = (init_op ? 1 : 0);
 
-  if (exceptions != 0 && exceptions->length () > cutoff)
+  if (exceptions != nullptr && exceptions->length () > cutoff)
     {
       os_ << be_idt_nl
           << prefix << "raises ( ";
@@ -389,7 +389,7 @@ be_visitor_home_ex_idl::restore_scope (void)
 
       UTL_ScopedName *nconc_name =
         new UTL_ScopedName (d->local_name ()->copy (),
-                            0);
+                            nullptr);
 
       UTL_ScopedName *new_name =
         dynamic_cast<UTL_ScopedName *> (node_->name ()->copy ());

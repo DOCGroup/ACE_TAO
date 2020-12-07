@@ -87,7 +87,7 @@ be_visitor_union_branch_cdr_op_cs::visit_array (be_array *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -187,7 +187,7 @@ be_visitor_union_branch_cdr_op_cs::visit_enum (be_enum *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -262,7 +262,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface (be_interface *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -342,7 +342,7 @@ be_visitor_union_branch_cdr_op_cs::visit_interface_fwd (be_interface_fwd *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -427,7 +427,7 @@ be_visitor_union_branch_cdr_op_cs::emit_valuetype_common (be_type *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -485,7 +485,7 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_cs::"
@@ -673,7 +673,7 @@ be_visitor_union_branch_cdr_op_cs::visit_sequence (be_sequence *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -743,7 +743,7 @@ be_visitor_union_branch_cdr_op_cs::visit_string (be_string *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -866,7 +866,7 @@ be_visitor_union_branch_cdr_op_cs::visit_structure (be_structure *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -928,7 +928,7 @@ be_visitor_union_branch_cdr_op_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -963,7 +963,7 @@ be_visitor_union_branch_cdr_op_cs::visit_union (be_union *node)
   be_union_branch *f =
     dynamic_cast<be_union_branch*> (this->ctx_->node ());
 
-  if (f == 0)
+  if (f == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_union_branch_cdr_op_ci::"
@@ -1028,7 +1028,7 @@ be_visitor_union_branch_cdr_op_cs::explicit_default (void)
            !si.is_done ();
            si.next ())
         {
-          be_union_branch *bub = 0; // union branch node
+          be_union_branch *bub = nullptr; // union branch node
 
           AST_Decl *d = si.item ();
 

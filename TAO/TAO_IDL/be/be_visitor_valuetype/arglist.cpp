@@ -35,13 +35,13 @@ be_visitor_obv_operation_arglist::is_amh_exception_holder (be_operation *node)
   UTL_Scope *scope = node->defined_in ();
   be_interface *iface = dynamic_cast<be_interface*> (scope);
 
-  if (iface != 0)
+  if (iface != nullptr)
     {
       if (ACE_OS::strncmp (iface->local_name (), "AMH_", 4) == 0)
         {
           const char *last_E = ACE_OS::strrchr (iface->full_name (), 'E');
 
-          if (last_E != 0
+          if (last_E != nullptr
               && ACE_OS::strcmp (last_E, "ExceptionHolder") == 0)
             {
               return true;
@@ -124,13 +124,13 @@ be_visitor_obv_operation_arglist::visit_argument (be_argument *node)
     dynamic_cast<be_operation*> (this->ctx_->node ());
 
   // Sometimes the operation is stored in the context scope instead.
-  if (op == 0)
+  if (op == nullptr)
     {
       op =
         dynamic_cast<be_operation*> (this->ctx_->scope ());
     }
 
-  if (op == 0)
+  if (op == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"

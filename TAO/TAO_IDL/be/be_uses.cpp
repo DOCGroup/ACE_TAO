@@ -19,7 +19,7 @@ be_uses::be_uses (UTL_ScopedName *n,
              n),
     be_field (uses_type,
               n),
-    original_uses_ (0)
+    original_uses_ (nullptr)
 {
 }
 

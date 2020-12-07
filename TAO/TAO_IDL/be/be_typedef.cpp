@@ -73,7 +73,7 @@ be_type *
 be_typedef::primitive_base_type (void)
 {
   be_type *d = this;
-  be_typedef *temp = 0;
+  be_typedef *temp = nullptr;
 
   while (d && d->node_type () == AST_Decl::NT_typedef)
     {
