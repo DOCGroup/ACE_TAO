@@ -38,8 +38,8 @@ be_visitor_component_ami_rh_exh::visit_uses (be_uses *node)
       << "public virtual ::CORBA::LocalObject" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << this->class_name_ << " (void);" << be_nl
-      << "virtual ~" << this->class_name_ << " (void);";
+      << this->class_name_ << " ();" << be_nl
+      << "virtual ~" << this->class_name_ << " ();";
 
   /// This overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
@@ -112,7 +112,7 @@ be_visitor_component_ami_rh_exh::visit_operation (
 
   if (count == 0 && vrt)
     {
-      os_ << "void);";
+      os_ << ");";
     }
   else
     {

@@ -126,12 +126,12 @@ be_visitor_home_exs::gen_exec_class ()
       << comment_end_border_;
 
   os_ << be_nl_2
-      << lname << "_exec_i::" << lname << "_exec_i (void)" << be_nl
+      << lname << "_exec_i::" << lname << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
-      << lname << "_exec_i::~" << lname << "_exec_i (void)" << be_nl
+      << lname << "_exec_i::~" << lname << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -188,7 +188,7 @@ be_visitor_home_exs::gen_exec_class ()
 
   os_ << be_nl_2
       << "::Components::EnterpriseComponent_ptr" << be_nl
-      << lname << "_exec_i::create (void)" << be_nl
+      << lname << "_exec_i::create ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl
@@ -213,7 +213,7 @@ be_visitor_home_exs::gen_entrypoint ()
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void)" << be_nl
+      << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::HomeExecutorBase_ptr retval =" << be_idt_nl
       << "::Components::HomeExecutorBase::_nil ();"

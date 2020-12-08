@@ -83,6 +83,6 @@ be_visitor_connector_ami_exh::gen_entrypoint ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_"
       << ScopeAsDecl (this->node_->defined_in ())->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 

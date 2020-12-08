@@ -29,7 +29,7 @@ be_visitor_interface_direct_proxy_impl_ss::visit_interface (
 
   // Destructor Implementation
   *os << node->full_direct_proxy_impl_name () << "::~"
-      << node->direct_proxy_impl_name () << " (void)"
+      << node->direct_proxy_impl_name () << " ()"
       << be_nl << "{" << be_nl << "}" << be_nl_2;
 
   if (this->visit_scope (node) == -1)

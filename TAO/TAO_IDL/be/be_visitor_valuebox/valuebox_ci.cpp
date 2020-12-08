@@ -73,7 +73,7 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (void)"
+      << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
       << "this->_pd_value = " << node->full_name () << "_alloc ();"
       << be_uidt_nl << "}" << be_nl_2;
@@ -111,13 +111,13 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Public accessor and modifier methods
   *os << "ACE_INLINE const " << node->full_name () << "_slice*" << be_nl
-      << vb_node->name () << "::_value (void) const" << be_nl
+      << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice*" << be_nl
-      << vb_node->name () << "::_value (void)" << be_nl
+      << vb_node->name () << "::_value ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -146,19 +146,19 @@ be_visitor_valuebox_ci::visit_array (be_array *node)
 
   // Explicit conversion functions
   *os << "ACE_INLINE const " << node->full_name () << "_slice *" << be_nl
-      << vb_node->name () << "::_boxed_in (void) const" << be_nl
+      << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice *" << be_nl
-      << vb_node->name () << "::_boxed_inout (void)" << be_nl
+      << vb_node->name () << "::_boxed_inout ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "_slice *" << be_nl
-      << vb_node->name () << "::_boxed_out (void)" << be_nl
+      << vb_node->name () << "::_boxed_out ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -228,14 +228,14 @@ be_visitor_valuebox_ci::visit_sequence (be_sequence *node)
 
   // Generate maximum() accessor
   *os << "ACE_INLINE ::CORBA::ULong" << be_nl
-      << vb_node->name () << "::maximum (void) const" << be_nl
+      << vb_node->name () << "::maximum () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->maximum ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Generate length() accessor
   *os << "ACE_INLINE ::CORBA::ULong" << be_nl
-      << vb_node->name () << "::length (void) const" << be_nl
+      << vb_node->name () << "::length () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->length ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -325,7 +325,7 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Accessor function takes no arguments and returns a const char *
   *os << "ACE_INLINE const " << node->full_name () << be_nl
-      << vb_node->name () << "::_value (void) const" << be_nl
+      << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -356,19 +356,19 @@ be_visitor_valuebox_ci::visit_string (be_string *node)
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE const " << node->full_name () << be_nl
-      << vb_node->name () << "::_boxed_in (void) const" << be_nl
+      << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
-      << vb_node->name () << "::_boxed_inout (void)" << be_nl
+      << vb_node->name () << "::_boxed_inout ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
-      << vb_node->name () << "::_boxed_out (void)" << be_nl
+      << vb_node->name () << "::_boxed_out ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -555,7 +555,7 @@ be_visitor_valuebox_ci::visit_union (be_union *node)
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << bt->nested_type_name (node) << be_nl
-      << vb_node->name () << "::_d (void) const" << be_nl
+      << vb_node->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->_d ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -596,7 +596,7 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 
       // Public accessor method
       *os << "ACE_INLINE " << node->full_name () << type_suffix << be_nl
-          << vb_node->name () << "::_value (void) const" << be_nl
+          << vb_node->name () << "::_value () const" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
           << "}" << be_nl_2;
@@ -612,19 +612,19 @@ be_visitor_valuebox_ci::emit_for_predef_enum (be_type *node,
 
       // Explicit conversion functions
       *os << "ACE_INLINE " << node->full_name () << type_suffix << be_nl
-          << vb_node->name () << "::_boxed_in (void) const" << be_nl
+          << vb_node->name () << "::_boxed_in () const" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
           << "}" << be_nl_2;
 
       *os << "ACE_INLINE " << node->full_name () << type_suffix << "&" << be_nl
-          << vb_node->name () << "::_boxed_inout (void)" << be_nl
+          << vb_node->name () << "::_boxed_inout ()" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
           << "}" << be_nl_2;
 
       *os << "ACE_INLINE " << node->full_name () << type_suffix << "&" << be_nl
-          << vb_node->name () << "::_boxed_out (void)" << be_nl
+          << vb_node->name () << "::_boxed_out ()" << be_nl
           << "{" << be_idt_nl
           << "return this->_pd_value;" << be_uidt_nl
           << "}" << be_nl_2;
@@ -645,7 +645,7 @@ be_visitor_valuebox_ci::emit_default_constructor ()
   // Public default constructor
   *os << "ACE_INLINE" << be_nl;
   *os << vb_node->name () << "::" << vb_node->local_name ()
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
   *os << "{}" << be_nl_2;
 }
 
@@ -661,7 +661,7 @@ be_visitor_valuebox_ci::emit_default_constructor_alloc (be_decl *node)
 
   // Public default constructor
   *os << "ACE_INLINE" << be_nl
-      << vb_node->name () << "::" << vb_node->local_name () << " (void)"
+      << vb_node->name () << "::" << vb_node->local_name () << " ()"
       << be_nl << "{" << be_idt_nl
       << node->full_name () << "* p = 0;" << be_nl
       << "ACE_NEW (" << be_idt_nl
@@ -809,14 +809,14 @@ be_visitor_valuebox_ci::emit_accessor_modifier (be_decl *node)
 
   // Public accessor method (const)
   *os << "ACE_INLINE const " << node->full_name () << " &" << be_nl
-      << vb_node->name () << "::_value (void) const" << be_nl
+      << vb_node->name () << "::_value () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   // Public accessor method
   *os << "ACE_INLINE " << node->full_name () << " &" << be_nl
-      << vb_node->name () << "::_value (void)" << be_nl
+      << vb_node->name () << "::_value ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -845,20 +845,20 @@ be_visitor_valuebox_ci::emit_boxed_access (be_decl *node,
 
   // Access to the boxed value for method signatures
   *os << "ACE_INLINE const " << node->full_name () << " &" << be_nl
-      << vb_node->name () << "::_boxed_in (void) const" << be_nl
+      << vb_node->name () << "::_boxed_in () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.in ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name () << "&" << be_nl
-      << vb_node->name () << "::_boxed_inout (void)" << be_nl
+      << vb_node->name () << "::_boxed_inout ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.inout ();" << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "ACE_INLINE " << node->full_name ()
       << out_ref_modifier << "&" << be_nl
-      << vb_node->name () << "::_boxed_out (void)" << be_nl
+      << vb_node->name () << "::_boxed_out ()" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value.out ();" << be_uidt_nl
       << "}" << be_nl_2;

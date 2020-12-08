@@ -35,13 +35,13 @@ be_visitor_component_ami_rh_exs::visit_uses (be_uses *node)
 
   os_ << be_nl_2
       << this->class_name_ << "::"
-      << this->class_name_ << " (void)" << be_nl
+      << this->class_name_ << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << this->class_name_ << "::~"
-      << this->class_name_ << " (void)" << be_nl
+      << this->class_name_ << " ()" << be_nl
       << "{" << be_nl
       << "}";
 

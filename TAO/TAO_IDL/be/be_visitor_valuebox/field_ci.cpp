@@ -138,7 +138,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) const" << be_nl
+      << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name ()
       << ";" << be_uidt_nl

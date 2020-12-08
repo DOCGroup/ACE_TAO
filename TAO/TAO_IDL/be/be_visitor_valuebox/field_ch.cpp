@@ -128,7 +128,7 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
   *os << "void " << field->local_name () << " (" << fname << ");" << be_nl;
 
   *os << "const " << fname << "_slice *" << field->local_name ()
-      << " (void) const;" << be_nl;
+      << " () const;" << be_nl;
 
   return 0;
 }

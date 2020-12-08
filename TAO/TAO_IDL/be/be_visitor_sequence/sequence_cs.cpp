@@ -109,7 +109,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // default constructor
   *os << be_nl_2
       << node->name () << "::" << node->local_name ()
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   // for unbounded sequences, we have a different set of constructors
@@ -204,14 +204,14 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // Destructor.
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   if (be_global->alt_mapping () && node->unbounded ())
     {
       *os << be_nl_2
           << "::CORBA::ULong" << be_nl
-          << node->name () << "::length (void) const" << be_nl
+          << node->name () << "::length () const" << be_nl
           << "{" << be_idt_nl
           << "return this->size ();" << be_uidt_nl
           << "}";
@@ -226,7 +226,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       *os << be_nl_2
           << "::CORBA::ULong" << be_nl
-          << node->name () << "::maximum (void) const" << be_nl
+          << node->name () << "::maximum () const" << be_nl
           << "{" << be_idt_nl
           << "return this->capacity ();" << be_uidt_nl
           << "}";

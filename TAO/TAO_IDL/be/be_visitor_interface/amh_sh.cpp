@@ -107,7 +107,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+      << class_name.c_str () << " ();" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
   // No copy constructor for locality constraint interface.
@@ -128,7 +128,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   // The _interface_repository_id method.
   *os << be_nl
       << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "() const;";
 
   if (this->visit_scope (node) ==  -1)
     {
@@ -373,5 +373,5 @@ be_visitor_amh_interface_sh::this_method (be_interface *node)
   // interfaces is "special", because the returned type is not exactly
   // the type of the class, but the original class that "implied" the
   // AMH one.
-  *os << non_amh_name.c_str () << " *_this (void);\n" << be_uidt;
+  *os << non_amh_name.c_str () << " *_this ();\n" << be_uidt;
 }

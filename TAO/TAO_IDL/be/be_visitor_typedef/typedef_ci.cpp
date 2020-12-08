@@ -170,7 +170,7 @@ be_visitor_typedef_ci::visit_array (be_array *node)
       *os << be_nl
           << "ACE_INLINE" << be_nl
           << tdef->name () << "_slice *" << be_nl;
-      *os << tdef->name () << "_alloc (void)" << be_nl;
+      *os << tdef->name () << "_alloc ()" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return " << bt->name () << "_alloc ();" << be_uidt_nl;
       *os << "}" << be_nl_2;

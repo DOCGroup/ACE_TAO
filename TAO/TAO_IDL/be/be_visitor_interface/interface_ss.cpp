@@ -108,7 +108,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_idt_nl;
+      << " ()" << be_idt_nl;
 
   *os << ": TAO_ServantBase ()" << be_uidt_nl;
 
@@ -143,7 +143,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
   *os << "{" << be_nl;
   *os << "}" << be_nl;
 
@@ -202,7 +202,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "const char* " << full_skel_name
-      << "::_interface_repository_id (void) const"
+      << "::_interface_repository_id () const"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
@@ -374,7 +374,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
   // The _this () operation.
   *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
-      << "::_this (void)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub ();"
       << be_nl_2

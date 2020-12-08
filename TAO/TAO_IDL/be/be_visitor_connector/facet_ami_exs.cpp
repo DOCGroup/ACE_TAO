@@ -268,7 +268,7 @@ be_visitor_facet_ami_exs::gen_reply_handler_class ()
 
   os_ << be_nl_2
       << iface_name << suffix << "::~"
-      << iface_name << suffix << " (void)" << be_nl
+      << iface_name << suffix << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -337,13 +337,13 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 
   os_ << be_nl_2
       << iface_name << suffix << "::"
-      << iface_name << suffix << " (void)" << be_nl
+      << iface_name << suffix << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << iface_name << suffix << "::~"
-      << iface_name << suffix << " (void)" << be_nl
+      << iface_name << suffix << " ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -421,7 +421,7 @@ be_visitor_facet_ami_exs::gen_facet_executor_class ()
 
   os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
-      << iface_name << "_exec_i::_get_component (void)" << be_nl
+      << iface_name << "_exec_i::_get_component ()" << be_nl
       << "{" << be_idt_nl
       << "return" << be_idt_nl
       << "::" << s->name () << smart_scope

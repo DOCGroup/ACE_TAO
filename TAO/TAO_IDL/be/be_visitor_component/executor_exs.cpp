@@ -72,7 +72,7 @@ be_visitor_executor_exs::visit_attribute (be_attribute *node)
   os_ << be_nl
       << this->node_->original_local_name () << "_exec_i::"
       << this->ctx_->port_prefix ().c_str ()
-      << node->local_name () << " (void)" << be_nl
+      << node->local_name () << " ()" << be_nl
       << "{" << be_idt;
 
   be_visitor_attr_return ar_visitor (this->ctx_);
@@ -152,7 +152,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   os_ << be_nl_2
       << lname << "_exec_i::" << lname
-      << "_exec_i (void)";
+      << "_exec_i ()";
 
   /// The overload of traverse_inheritance_graph() used here
   /// doesn't automatically prime the queues.
@@ -195,7 +195,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   os_ << be_nl_2
       << lname << "_exec_i::~" << lname
-      << "_exec_i (void)" << be_nl
+      << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -206,7 +206,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
     {
       os_ << be_nl
           << "ACE_Reactor*" << be_nl
-          << lname << "_exec_i::reactor (void)" << be_nl
+          << lname << "_exec_i::reactor ()" << be_nl
           << "{" << be_idt_nl
           << "ACE_Reactor* reactor = 0;" << be_nl
           << "::CORBA::Object_var ccm_object = " << be_idt_nl
@@ -297,7 +297,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
     {
       os_ << be_nl_2
           << "void" << be_nl
-          << lname << "_exec_i::configuration_complete (void)"
+          << lname << "_exec_i::configuration_complete ()"
           << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
@@ -305,14 +305,14 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
       os_ << be_nl_2
           << "void" << be_nl
-          << lname << "_exec_i::ccm_activate (void)" << be_nl
+          << lname << "_exec_i::ccm_activate ()" << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
           << "}";
 
       os_ << be_nl_2
           << "void" << be_nl
-          << lname << "_exec_i::ccm_passivate (void)" << be_nl
+          << lname << "_exec_i::ccm_passivate ()" << be_nl
           << "{" << be_idt_nl
           << your_code_here_ << be_uidt_nl
           << "}";
@@ -320,7 +320,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
 
   os_ << be_nl_2
       << "void" << be_nl
-      << lname << "_exec_i::ccm_remove (void)" << be_nl
+      << lname << "_exec_i::ccm_remove ()" << be_nl
       << "{" << be_idt_nl
       << your_code_here_ << be_uidt_nl
       << "}";
@@ -352,7 +352,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << global << sname << "::CCM_"
       << iname << "_ptr" << be_nl
       << node_->local_name () << "_exec_i::get_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "if ( ::CORBA::is_nil (this->ciao_" << port_name
       << "_.in ()))" << be_idt_nl

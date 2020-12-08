@@ -51,7 +51,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
       *os << "OBV_";
     }
 
-  *os << node->local_name () << " (void)" << be_nl;
+  *os << node->local_name () << " ()" << be_nl;
   *os << ": require_truncation_ (false)" << be_nl
       << "{}" << be_nl_2;
 
@@ -86,7 +86,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "OBV_";
     }
-  *os << node->local_name () << " (void)" << be_nl
+  *os << node->local_name () << " ()" << be_nl
       << "{}";
 
   // Virtual _copy_value() only provided in OBV_* class when
@@ -100,7 +100,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
-          << node->full_obv_skel_name () << "::_copy_value (void)" << be_nl
+          << node->full_obv_skel_name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::ValueBase *ret_val = 0;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
@@ -160,7 +160,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
         {
           *os << be_nl_2 << "void" << be_nl
               << node->full_obv_skel_name ()
-              << "::_add_ref (void)" << be_nl
+              << "::_add_ref ()" << be_nl
               << "{" << be_idt_nl
               << "this->::CORBA::DefaultValueRefCountBase::_add_ref ();"
               << be_uidt_nl
@@ -168,7 +168,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
           *os << be_nl << "void" << be_nl
               << node->full_obv_skel_name ()
-              << "::_remove_ref (void)" << be_nl
+              << "::_remove_ref ()" << be_nl
               << "{" << be_idt_nl
               << "this->::CORBA::DefaultValueRefCountBase::_remove_ref ();"
               << be_uidt_nl
