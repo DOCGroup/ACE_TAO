@@ -168,7 +168,7 @@ TAO_Hash_LogStore::create(DsLogAdmin::LogFullActionType full_action,
                                              ),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
+  std::unique_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {
@@ -205,7 +205,7 @@ TAO_Hash_LogStore::create_with_id (DsLogAdmin::LogId id,
                                              ),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
+  std::unique_ptr<TAO_Hash_LogRecordStore> recordstore (impl);
 
   if (this->hash_map_.bind (id, recordstore.get ()) != 0)
     {

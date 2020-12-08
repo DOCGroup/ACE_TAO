@@ -284,7 +284,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   METHOD_ENTRY(TAO::PG_FactoryRegistry::register_factory);
 
   RoleInfo * role_info = 0;
-  auto_ptr<RoleInfo> safe_entry;
+  std::unique_ptr<RoleInfo> safe_entry;
   if (this->registry_.find(role, role_info) != 0)
     {
       ORBSVCS_DEBUG(( LM_DEBUG,

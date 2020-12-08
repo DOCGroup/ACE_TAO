@@ -488,7 +488,7 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
       ACE_NEW_RETURN (requests,
                       Requests,
                       0);
-      auto_ptr<Requests> requests_aptr (requests);
+      std::unique_ptr<Requests> requests_aptr (requests);
 
       if (requests->init (this->max_requests_, this->min_purge_count_) == -1
           || this->request_map_.bind (from, requests, entry) == -1)

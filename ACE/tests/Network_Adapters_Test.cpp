@@ -1046,7 +1046,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // to do it right in at least one test.  Notice the lack of
   // ACE_NEW_RETURN, that monstrosity has no business in proper C++
   // code ...
-  auto_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
+  std::unique_ptr<ACE_Timer_Heap_Variable_Time_Source> tq(
       new ACE_Timer_Heap_Variable_Time_Source);
   // ... notice how the policy is in the derived timer queue type.
   // The abstract timer queue does not have a time policy ...

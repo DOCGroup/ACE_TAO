@@ -289,7 +289,7 @@ Prime_Scheduler::svc ()
     {
       // Dequeue the next method request (we use an auto pointer in
       // case an exception is thrown in the <call>).
-      auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
+      std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
