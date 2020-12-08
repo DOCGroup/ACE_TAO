@@ -32,8 +32,6 @@
 
 // Declare the type of the symbol:
 using Hello_Factory = Hello *(*)();
-
-typedef i;
 using PFN = int (*)(Parent *);
 
 int handle_test (ACE_DLL &dll)
