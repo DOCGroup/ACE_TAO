@@ -44,7 +44,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::Endpoint (void)
+TAO::HTIOP::Endpoint::Endpoint ()
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
     port_ (0),
@@ -72,7 +72,7 @@ TAO::HTIOP::Endpoint::Endpoint (const char *host,
     this->htid_ = htid;
 }
 
-TAO::HTIOP::Endpoint::~Endpoint (void)
+TAO::HTIOP::Endpoint::~Endpoint ()
 {
 }
 
@@ -150,7 +150,7 @@ TAO::HTIOP::Endpoint::htid (const char *h)
 }
 
 void
-TAO::HTIOP::Endpoint::reset_hint (void)
+TAO::HTIOP::Endpoint::reset_hint ()
 {
   // Commented out for the time being....
   /*  if (this->hint_)
@@ -158,13 +158,13 @@ TAO::HTIOP::Endpoint::reset_hint (void)
 }
 
 TAO_Endpoint *
-TAO::HTIOP::Endpoint::next (void)
+TAO::HTIOP::Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO::HTIOP::Endpoint::duplicate (void)
+TAO::HTIOP::Endpoint::duplicate ()
 {
   // @@ Bala, we probably need to make sure that the duplicate has the
   // same priority as the original.  Although it does not matter in
@@ -204,7 +204,7 @@ TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO::HTIOP::Endpoint::hash (void)
+TAO::HTIOP::Endpoint::hash ()
 {
   if (this->htid_.in() && ACE_OS::strlen (this->htid_.in()))
     return ACE::hash_pjw(this->htid_.in());

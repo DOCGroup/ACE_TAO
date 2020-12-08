@@ -29,7 +29,7 @@ TAO::HTIOP::Connector::Connector (ACE::HTBP::Environment *ht_env)
 {
 }
 
-TAO::HTIOP::Connector::~Connector (void)
+TAO::HTIOP::Connector::~Connector ()
 {
 }
 
@@ -59,7 +59,7 @@ TAO::HTIOP::Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO::HTIOP::Connector::close (void)
+TAO::HTIOP::Connector::close ()
 {
   delete this->concurrency_strategy_;
   delete this->connect_creation_strategy_;
@@ -341,7 +341,7 @@ TAO::HTIOP::Connector::create_profile (TAO_InputCDR& cdr)
  * @brief Create a profile with a given endpoint.
  */
 TAO_Profile *
-TAO::HTIOP::Connector::make_profile (void)
+TAO::HTIOP::Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -385,7 +385,7 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO::HTIOP::Connector::object_key_delimiter (void) const
+TAO::HTIOP::Connector::object_key_delimiter () const
 {
   return TAO::HTIOP::Profile::object_key_delimiter_;
 }

@@ -29,7 +29,7 @@ RTCP_Channel_In::RTCP_Channel_In (ACE_UINT32 ssrc,
   this->peer_address_ = inet_addr;
 }
 
-RTCP_Channel_In::~RTCP_Channel_In(void)
+RTCP_Channel_In::~RTCP_Channel_In()
 {
   delete this->peer_address_;
 }
@@ -237,7 +237,7 @@ RTCP_Channel_In::recv_rtp_packet(ACE_Message_Block *mb,
 
 
 RR_Block *
-RTCP_Channel_In::getRRBlock(void)
+RTCP_Channel_In::getRRBlock()
 {
   // If no data has been received since the last report, don't create a block.
   if (!this->data_since_last_report_)
@@ -310,7 +310,7 @@ RTCP_Channel_In::getRRBlock(void)
   return local_block_ptr;
 }
 
-RTCP_Channel_Out::RTCP_Channel_Out(void)
+RTCP_Channel_Out::RTCP_Channel_Out()
   :cname_ ("cname"),
    active_ (0),
    timestamp_ (0),
@@ -319,7 +319,7 @@ RTCP_Channel_Out::RTCP_Channel_Out(void)
 {
 }
 
-RTCP_Channel_Out::~RTCP_Channel_Out(void)
+RTCP_Channel_Out::~RTCP_Channel_Out()
 {
 }
 
@@ -337,25 +337,25 @@ RTCP_Channel_Out::updateStatistics (RTP_Packet *data_packet)
 }
 
 ACE_UINT32
-RTCP_Channel_Out::timestamp (void)
+RTCP_Channel_Out::timestamp ()
 {
   return this->timestamp_;
 }
 
 ACE_UINT32
-RTCP_Channel_Out::packets_sent (void)
+RTCP_Channel_Out::packets_sent ()
 {
   return this->packets_sent_;
 }
 
 ACE_UINT32
-RTCP_Channel_Out::octets_sent (void)
+RTCP_Channel_Out::octets_sent ()
 {
   return this->octets_sent_;
 }
 
 char
-RTCP_Channel_Out::active (void)
+RTCP_Channel_Out::active ()
 {
   return this->active_;
 }

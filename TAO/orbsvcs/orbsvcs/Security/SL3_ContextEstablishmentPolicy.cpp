@@ -18,7 +18,7 @@ TAO::SL3::ContextEstablishmentPolicy::ContextEstablishmentPolicy (
 {
 }
 
-TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy (void)
+TAO::SL3::ContextEstablishmentPolicy::~ContextEstablishmentPolicy ()
 {
 }
 
@@ -29,7 +29,7 @@ TAO::SL3::ContextEstablishmentPolicy::creds_directive ()
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::ContextEstablishmentPolicy::creds_list (void)
+TAO::SL3::ContextEstablishmentPolicy::creds_list ()
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
 
@@ -71,7 +71,7 @@ TAO::SL3::ContextEstablishmentPolicy::policy_type ()
 }
 
 CORBA::Policy_ptr
-TAO::SL3::ContextEstablishmentPolicy::copy (void)
+TAO::SL3::ContextEstablishmentPolicy::copy ()
 {
   CORBA::Policy_ptr p = CORBA::Policy_ptr ();
   ACE_NEW_THROW_EX (p,

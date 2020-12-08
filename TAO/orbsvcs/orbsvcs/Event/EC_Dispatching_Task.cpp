@@ -13,7 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
+TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action ()
   : queue_full_action_return_value_ (WAIT_TO_EMPTY)
 {
 }
@@ -21,7 +21,7 @@ TAO_EC_Simple_Queue_Full_Action::TAO_EC_Simple_Queue_Full_Action (void)
 /// Helper function to register the default action into the service
 /// configurator.
 int
-TAO_EC_Simple_Queue_Full_Action::init_svcs (void)
+TAO_EC_Simple_Queue_Full_Action::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_EC_Simple_Queue_Full_Action);
@@ -56,7 +56,7 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_EC_Simple_Queue_Full_Action::fini (void)
+TAO_EC_Simple_Queue_Full_Action::fini ()
 {
   return 0;
 }
@@ -83,7 +83,7 @@ ACE_FACTORY_DEFINE (TAO_RTEvent_Serv, TAO_EC_Simple_Queue_Full_Action)
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 bool
-TAO_EC_Queue::is_full_i (void)
+TAO_EC_Queue::is_full_i ()
 {
   return static_cast<size_t> (this->cur_count_) > this->high_water_mark_;
 }
@@ -91,7 +91,7 @@ TAO_EC_Queue::is_full_i (void)
 // ****************************************************************
 
 int
-TAO_EC_Dispatching_Task::svc (void)
+TAO_EC_Dispatching_Task::svc ()
 {
   bool done = false;
 
@@ -180,27 +180,27 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 
 // ****************************************************************
 
-TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command (void)
+TAO_EC_Dispatch_Command::~TAO_EC_Dispatch_Command ()
 {
 }
 
 // ****************************************************************
 
 int
-TAO_EC_Shutdown_Task_Command::execute (void)
+TAO_EC_Shutdown_Task_Command::execute ()
 {
   return -1;
 }
 
 // ****************************************************************
 
-TAO_EC_Push_Command::~TAO_EC_Push_Command (void)
+TAO_EC_Push_Command::~TAO_EC_Push_Command ()
 {
   this->proxy_->_decr_refcnt ();
 }
 
 int
-TAO_EC_Push_Command::execute (void)
+TAO_EC_Push_Command::execute ()
 {
   this->proxy_->push_to_consumer (this->consumer_.in (),
                                   this->event_);

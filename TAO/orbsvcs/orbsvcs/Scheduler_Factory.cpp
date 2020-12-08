@@ -105,7 +105,7 @@ struct ACE_Scheduler_Factory_Data
   // applications; must be set by either the application or Event
   // Channel.
 
-  ACE_Scheduler_Factory_Data (void)
+  ACE_Scheduler_Factory_Data ()
     : scheduler_ (TAO_SF_config_count,
                   TAO_SF_config_info,
                   TAO_SF_entry_count,
@@ -140,7 +140,7 @@ int ACE_Scheduler_Factory::use_runtime (int cc,
 }
 
 static RtecScheduler::Scheduler_ptr
-static_server (void)
+static_server ()
 {
   RtecScheduler::Scheduler_ptr server_ = 0;
 
@@ -221,7 +221,7 @@ ACE_Scheduler_Factory::server (RtecScheduler::Scheduler_ptr sptr)
 }
 
 RtecScheduler::Scheduler_ptr
-ACE_Scheduler_Factory::server (void)
+ACE_Scheduler_Factory::server ()
 {
   if (server_ == 0 && TAO_SF_entry_count != -1)
     server_ = static_server ();
@@ -730,7 +730,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
 #endif /* HPUX && !g++ */
 
 RtecScheduler::Preemption_Priority_t
-ACE_Scheduler_Factory::preemption_priority (void)
+ACE_Scheduler_Factory::preemption_priority ()
 {
   // Return whatever we've got.  The application or Event Channel is
   // responsible for making sure that it was set.

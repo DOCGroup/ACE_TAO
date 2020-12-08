@@ -14,18 +14,18 @@ TAO_AliasDef_i::TAO_AliasDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_AliasDef_i::~TAO_AliasDef_i (void)
+TAO_AliasDef_i::~TAO_AliasDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_AliasDef_i::def_kind (void)
+TAO_AliasDef_i::def_kind ()
 {
   return CORBA::dk_Alias;
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type (void)
+TAO_AliasDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -35,7 +35,7 @@ TAO_AliasDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_AliasDef_i::type_i (void)
+TAO_AliasDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -68,7 +68,7 @@ TAO_AliasDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def (void)
+TAO_AliasDef_i::original_type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -78,7 +78,7 @@ TAO_AliasDef_i::original_type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_AliasDef_i::original_type_def_i (void)
+TAO_AliasDef_i::original_type_def_i ()
 {
   ACE_TString original_type;
   this->repo_->config ()->get_string_value (this->section_key_,

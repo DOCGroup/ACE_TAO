@@ -13,13 +13,13 @@ TAO_Notify_Method_Request_Shutdown::~TAO_Notify_Method_Request_Shutdown ()
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Shutdown::copy (void)
+TAO_Notify_Method_Request_Shutdown::copy ()
 {
   return new TAO_Notify_Method_Request_Shutdown (this->task_);
 }
 
 int
-TAO_Notify_Method_Request_Shutdown::execute (void)
+TAO_Notify_Method_Request_Shutdown::execute ()
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their

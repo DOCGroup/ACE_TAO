@@ -27,7 +27,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_ECG_Reconnect_ConsumerEC_Control::~TAO_ECG_Reconnect_ConsumerEC_Control (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::~TAO_ECG_Reconnect_ConsumerEC_Control ()
 {
 }
 
@@ -143,7 +143,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::handle_timeout (
 }
 
 int
-TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   try
@@ -190,7 +190,7 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate (void)
 }
 
 int
-TAO_ECG_Reconnect_ConsumerEC_Control::shutdown (void)
+TAO_ECG_Reconnect_ConsumerEC_Control::shutdown ()
 {
   int r = 0;
 

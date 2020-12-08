@@ -40,20 +40,20 @@ TAO_LB_LoadMinimum::TAO_LB_LoadMinimum (PortableServer::POA_ptr poa)
   TAO_LB_Random::init ();
 }
 
-TAO_LB_LoadMinimum::~TAO_LB_LoadMinimum (void)
+TAO_LB_LoadMinimum::~TAO_LB_LoadMinimum ()
 {
   delete this->load_map_;
   delete this->lock_;
 }
 
 char *
-TAO_LB_LoadMinimum::name (void)
+TAO_LB_LoadMinimum::name ()
 {
   return CORBA::string_dup ("LoadMinimum");
 }
 
 CosLoadBalancing::Properties *
-TAO_LB_LoadMinimum::get_properties (void)
+TAO_LB_LoadMinimum::get_properties ()
 {
   CosLoadBalancing::Properties * props = 0;
   ACE_NEW_THROW_EX (props,
@@ -357,7 +357,7 @@ TAO_LB_LoadMinimum::analyze_loads (
 }
 
 PortableServer::POA_ptr
-TAO_LB_LoadMinimum::_default_POA (void)
+TAO_LB_LoadMinimum::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

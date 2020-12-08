@@ -13,7 +13,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Destructor
-TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer (void)
+TAO_CEC_DynamicImplementationServer::~TAO_CEC_DynamicImplementationServer ()
 {
 }
 
@@ -69,7 +69,7 @@ TAO_CEC_DynamicImplementationServer::_primary_interface (const PortableServer::O
 }
 
 PortableServer::POA_ptr
-TAO_CEC_DynamicImplementationServer::_default_POA (void)
+TAO_CEC_DynamicImplementationServer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->poa_.in ());
 }

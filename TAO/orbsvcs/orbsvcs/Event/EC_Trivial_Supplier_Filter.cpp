@@ -44,7 +44,7 @@ TAO_EC_Trivial_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier*)
 }
 
 void
-TAO_EC_Trivial_Supplier_Filter::shutdown (void)
+TAO_EC_Trivial_Supplier_Filter::shutdown ()
 {
 }
 
@@ -68,13 +68,13 @@ TAO_EC_Trivial_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &e
 }
 
 CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_incr_refcnt (void)
+TAO_EC_Trivial_Supplier_Filter::_incr_refcnt ()
 {
   return 1;
 }
 
 CORBA::ULong
-TAO_EC_Trivial_Supplier_Filter::_decr_refcnt (void)
+TAO_EC_Trivial_Supplier_Filter::_decr_refcnt ()
 {
   return 1;
 }

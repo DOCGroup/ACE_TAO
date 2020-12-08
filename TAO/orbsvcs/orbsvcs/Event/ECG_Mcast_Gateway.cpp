@@ -28,7 +28,7 @@ typedef TAO_EC_Shutdown_Command<PortableServer::Servant_var<TAO_ECG_UDP_Receiver
 UDP_Receiver_Shutdown;
 
 int
-TAO_ECG_Mcast_Gateway::init_svcs (void)
+TAO_ECG_Mcast_Gateway::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_ECG_Mcast_Gateway);
@@ -36,7 +36,7 @@ TAO_ECG_Mcast_Gateway::init_svcs (void)
 
 
 int
-TAO_ECG_Mcast_Gateway::fini (void)
+TAO_ECG_Mcast_Gateway::fini ()
 {
   return 0;
 }
@@ -236,7 +236,7 @@ TAO_ECG_Mcast_Gateway::init (
 }
 
 int
-TAO_ECG_Mcast_Gateway::validate_configuration (void)
+TAO_ECG_Mcast_Gateway::validate_configuration ()
 {
   if ((this->handler_type_ == ECG_HANDLER_BASIC
        || this->handler_type_ == ECG_HANDLER_UDP)
@@ -280,7 +280,7 @@ TAO_ECG_Mcast_Gateway::validate_configuration (void)
 }
 
 TAO_ECG_Refcounted_Endpoint
-TAO_ECG_Mcast_Gateway::init_endpoint (void)
+TAO_ECG_Mcast_Gateway::init_endpoint ()
 {
   TAO_ECG_UDP_Out_Endpoint* endpoint = 0;
   TAO_ECG_Refcounted_Endpoint refendpoint;
@@ -351,7 +351,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint (void)
 }
 
 PortableServer::ServantBase *
-TAO_ECG_Mcast_Gateway::init_address_server (void)
+TAO_ECG_Mcast_Gateway::init_address_server ()
 {
   const char * address_server_arg =
     (this->address_server_arg_.length ())

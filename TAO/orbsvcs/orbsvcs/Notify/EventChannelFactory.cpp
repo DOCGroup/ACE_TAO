@@ -45,7 +45,7 @@ TAO_Notify_EventChannel_Find_Worker;
 
 typedef TAO_Notify_Seq_Worker_T<TAO_Notify_EventChannel> TAO_Notify_EventChannel_Seq_Worker;
 
-TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory (void)
+TAO_Notify_EventChannelFactory::TAO_Notify_EventChannelFactory ()
   : topology_save_seq_ (0)
   , topology_factory_(0)
   , reconnect_registry_(*this)
@@ -58,7 +58,7 @@ TAO_Notify_EventChannelFactory::~TAO_Notify_EventChannelFactory ()
 }
 
 void
-TAO_Notify_EventChannelFactory::destroy (void)
+TAO_Notify_EventChannelFactory::destroy ()
 {
   if (this->shutdown () == 1)
     return;
@@ -128,19 +128,19 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 }
 
 void
-TAO_Notify_EventChannelFactory::_add_ref (void)
+TAO_Notify_EventChannelFactory::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_Notify_EventChannelFactory::_remove_ref (void)
+TAO_Notify_EventChannelFactory::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
 
 void
-TAO_Notify_EventChannelFactory::release (void)
+TAO_Notify_EventChannelFactory::release ()
 {
   delete this;
   //@@ inform factory
@@ -154,7 +154,7 @@ TAO_Notify_EventChannelFactory::remove (TAO_Notify_EventChannel* event_channel)
 }
 
 int
-TAO_Notify_EventChannelFactory::shutdown (void)
+TAO_Notify_EventChannelFactory::shutdown ()
 {
   this->stop_validator();
 
@@ -194,7 +194,7 @@ TAO_Notify_EventChannelFactory::create_named_channel (
 }
 
 CosNotifyChannelAdmin::ChannelIDSeq*
-TAO_Notify_EventChannelFactory::get_all_channels (void)
+TAO_Notify_EventChannelFactory::get_all_channels ()
 {
   TAO_Notify_EventChannel_Seq_Worker seq_worker;
 
@@ -222,7 +222,7 @@ TAO_Notify_EventChannelFactory::set_topology_factory(TAO_Notify::Topology_Factor
 }
 
 void
-TAO_Notify_EventChannelFactory::load_topology (void)
+TAO_Notify_EventChannelFactory::load_topology ()
 {
   this->loading_topology_ = true;
   if (this->topology_factory_ != 0)
@@ -292,7 +292,7 @@ TAO_Notify_EventChannelFactory::save_persistent (TAO_Notify::Topology_Saver& sav
 }
 
 void
-TAO_Notify_EventChannelFactory::load_event_persistence (void)
+TAO_Notify_EventChannelFactory::load_event_persistence ()
 {
   TAO_Notify::Event_Persistence_Strategy * strategy =
     ACE_Dynamic_Service <TAO_Notify::Event_Persistence_Strategy>::instance ("Event_Persistence");
@@ -334,7 +334,7 @@ TAO_Notify_EventChannelFactory::load_event_persistence (void)
 }
 
 bool
-TAO_Notify_EventChannelFactory::change_to_parent (void)
+TAO_Notify_EventChannelFactory::change_to_parent ()
 {
   bool saving = false;
   if (! this->loading_topology_)
@@ -396,7 +396,7 @@ TAO_Notify_EventChannelFactory::load_child (const ACE_CString& type,
 }
 
 void
-TAO_Notify_EventChannelFactory::reconnect (void)
+TAO_Notify_EventChannelFactory::reconnect ()
 {
   // Reconnect all children first
   TAO_Notify::Reconnect_Worker<TAO_Notify_EventChannel> wrk;
@@ -434,13 +434,13 @@ TAO_Notify_EventChannelFactory::unregister_callback (
 }
 
 CORBA::Boolean
-TAO_Notify_EventChannelFactory::is_alive (void)
+TAO_Notify_EventChannelFactory::is_alive ()
 {
   return CORBA::Boolean (1);
 }
 
 void
-TAO_Notify_EventChannelFactory::save_topology (void)
+TAO_Notify_EventChannelFactory::save_topology ()
 {
   this->self_change ();
 }
@@ -497,7 +497,7 @@ TAO_Notify_EventChannelFactory::find_proxy_supplier (TAO_Notify::IdVec & id_path
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_Notify_EventChannelFactory::activate_self (void)
+TAO_Notify_EventChannelFactory::activate_self ()
 {
   CORBA::Object_var obj = this->activate (this);
   this->channel_factory_

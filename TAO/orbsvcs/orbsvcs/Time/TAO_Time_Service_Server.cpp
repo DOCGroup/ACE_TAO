@@ -11,12 +11,12 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constructor.
-TAO_Time_Service_Server::TAO_Time_Service_Server (void)
+TAO_Time_Service_Server::TAO_Time_Service_Server ()
 {
 }
 
 // Destructor.
-TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
+TAO_Time_Service_Server::~TAO_Time_Service_Server ()
 {
 }
 
@@ -24,7 +24,7 @@ TAO_Time_Service_Server::~TAO_Time_Service_Server (void)
 // inaccuracy in a UTO.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::universal_time (void)
+TAO_Time_Service_Server::universal_time ()
 {
   TAO_UTO *uto = 0;
 
@@ -51,7 +51,7 @@ TAO_Time_Service_Server::universal_time (void)
 // implemented currently.
 
 CosTime::UTO_ptr
-TAO_Time_Service_Server::secure_universal_time (void)
+TAO_Time_Service_Server::secure_universal_time ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

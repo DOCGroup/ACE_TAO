@@ -83,7 +83,7 @@ TAO_CEC_Reactive_SupplierControl::
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_Reactive_SupplierControl::~TAO_CEC_Reactive_SupplierControl (void)
+TAO_CEC_Reactive_SupplierControl::~TAO_CEC_Reactive_SupplierControl ()
 {
 }
 
@@ -232,7 +232,7 @@ TAO_CEC_Reactive_SupplierControl::handle_timeout (
 }
 
 int
-TAO_CEC_Reactive_SupplierControl::activate (void)
+TAO_CEC_Reactive_SupplierControl::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   try
@@ -283,7 +283,7 @@ TAO_CEC_Reactive_SupplierControl::activate (void)
 }
 
 int
-TAO_CEC_Reactive_SupplierControl::shutdown (void)
+TAO_CEC_Reactive_SupplierControl::shutdown ()
 {
   int r = 0;
 

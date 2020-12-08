@@ -26,7 +26,7 @@ TAO_EC_Per_Supplier_Filter::
   this->event_channel_->create_proxy_collection (this->collection_);
 }
 
-TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter (void)
+TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter ()
 {
   this->event_channel_->destroy_proxy_collection (this->collection_);
   this->collection_ = 0;
@@ -135,7 +135,7 @@ TAO_EC_Per_Supplier_Filter::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 }
 
 void
-TAO_EC_Per_Supplier_Filter::shutdown (void)
+TAO_EC_Per_Supplier_Filter::shutdown ()
 {
   this->collection_->shutdown ();
 }
@@ -160,7 +160,7 @@ TAO_EC_Per_Supplier_Filter::push_scheduled_event (RtecEventComm::EventSet &event
 }
 
 CORBA::ULong
-TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
+TAO_EC_Per_Supplier_Filter::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
@@ -169,7 +169,7 @@ TAO_EC_Per_Supplier_Filter::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_EC_Per_Supplier_Filter::_decr_refcnt (void)
+TAO_EC_Per_Supplier_Filter::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);

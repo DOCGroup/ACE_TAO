@@ -24,14 +24,14 @@ TAO_UTO::TAO_UTO (TimeBase::TimeT time,
 
 // Destructor.
 
-TAO_UTO::~TAO_UTO (void)
+TAO_UTO::~TAO_UTO ()
 {
 }
 
 // Get Method for the readonly attribute time.
 
 TimeBase::TimeT
-TAO_UTO::time (void)
+TAO_UTO::time ()
 {
   return attr_utc_time_.time;
 }
@@ -39,7 +39,7 @@ TAO_UTO::time (void)
 // Get method for the readonly attribute inaccuracy.
 
 TimeBase::InaccuracyT
-TAO_UTO::inaccuracy (void)
+TAO_UTO::inaccuracy ()
 {
   // Construct the Inaccuracy from the
   // inacchi and inacclo.
@@ -53,7 +53,7 @@ TAO_UTO::inaccuracy (void)
 // Get method for the readonly attribute tdf.
 
 TimeBase::TdfT
-TAO_UTO::tdf (void)
+TAO_UTO::tdf ()
 {
   return attr_utc_time_.tdf;
 }
@@ -61,7 +61,7 @@ TAO_UTO::tdf (void)
 // Get method for the readonly attribute utc_time.
 
 TimeBase::UtcT
-TAO_UTO::utc_time (void)
+TAO_UTO::utc_time ()
 {
   return attr_utc_time_;
 }
@@ -70,7 +70,7 @@ TAO_UTO::utc_time (void)
 // the Base Time, UTC and Distributed Time Sync. Algos. [3].
 
 CosTime::UTO_ptr
-TAO_UTO::absolute_time (void)
+TAO_UTO::absolute_time ()
 {
   return CosTime::UTO::_nil ();
 }
@@ -176,7 +176,7 @@ TAO_UTO::time_to_interval (CosTime::UTO_ptr uto)
 // time value in the UTO.
 
 CosTime::TIO_ptr
-TAO_UTO::interval (void)
+TAO_UTO::interval ()
 {
   TAO_TIO *tio = 0;
 
