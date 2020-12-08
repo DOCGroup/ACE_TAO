@@ -51,7 +51,7 @@ namespace {
   // Class to collect and report on data handling for each test pass.
   struct Result_Set {
     int nr_conns;
-    typedef ACE_Array_Map<ACE_HANDLE, unsigned int> report_map;
+    using report_map = ACE_Array_Map<ACE_HANDLE, unsigned int>;
     report_map reports;
 
     void reset (int n_connections)   // Reset for next run

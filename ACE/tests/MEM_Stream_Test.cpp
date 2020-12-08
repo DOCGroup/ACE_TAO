@@ -63,14 +63,14 @@ static const int opt_wfmo_reactor = 1;
 static int opt_select_reactor = 1;
 static ACE_MEM_IO::Signal_Strategy client_strategy = ACE_MEM_IO::Reactive;
 
-typedef ACE_Atomic_Op <ACE_SYNCH_MUTEX, u_short> WaitingCounter;
-typedef ACE_Singleton <WaitingCounter, ACE_SYNCH_RECURSIVE_MUTEX> Waiting;
+using WaitingCounter = ACE_Atomic_Op<ACE_MT_SYNCH::MUTEX, u_short>;
+using Waiting = ACE_Singleton<WaitingCounter, ACE_MT_SYNCH::RECURSIVE_MUTEX>;
 
 // Number of connections that are currently open
 static u_short connection_count = 0;
 
-typedef ACE_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> ACCEPTOR;
-typedef ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_ACCEPTOR> S_ACCEPTOR;
+using ACCEPTOR = ACE_Acceptor<Echo_Handler, ACE_MEM_Acceptor>;
+using S_ACCEPTOR = ACE_Strategy_Acceptor<Echo_Handler, ACE_MEM_Acceptor>;
 
 void reset_handler (int conn)
 {

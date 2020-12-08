@@ -19,7 +19,7 @@
 
 
 // Simple map manager.
-typedef ACE_Map_Manager<int, int, ACE_Null_Mutex> LAZY_MAP;
+using LAZY_MAP = ACE_Map_Manager<int, int, ACE_Null_Mutex>;
 
 // Displaying the contents of a map manager.
 
@@ -163,7 +163,7 @@ map_test ()
 }
 
 // Simple active map manager.
-typedef ACE_Active_Map_Manager<int> ACTIVE_MAP;
+using ACTIVE_MAP = ACE_Active_Map_Manager<int>;
 
 // Displaying the contents of an active map manager.
 

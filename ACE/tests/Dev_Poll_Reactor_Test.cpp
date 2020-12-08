@@ -36,7 +36,7 @@
 #include "ace/OS_NS_netdb.h"
 
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
 // ----------------------------------------------------
 
@@ -310,8 +310,8 @@ Server::handle_close (ACE_HANDLE handle,
 
 // ----------------------------------------------------
 
-typedef ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>   ACCEPTOR;
-typedef ACE_Connector<Client, ACE_SOCK_CONNECTOR> CONNECTOR;
+using ACCEPTOR = ACE_Acceptor<Server, ACE_SOCK_Acceptor>;
+using CONNECTOR = ACE_Connector<Client, ACE_SOCK_Connector>;
 
 // ----------------------------------------------------
 

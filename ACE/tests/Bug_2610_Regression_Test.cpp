@@ -30,7 +30,7 @@ ACE_Thread_Semaphore g_semaphore (0);
 class My_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
+  using super = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
   My_Svc_Handler()
   {
     TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
@@ -58,7 +58,7 @@ bool g_acceptor_accept_fails;
 class My_Acceptor : public ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR>
 {
 public:
-  typedef ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR> super;
+  using super = ACE_Acceptor<My_Svc_Handler, ACE_SOCK_Acceptor>;
   My_Acceptor () : super (ACE_INET_Addr(9000)) {}
 
 protected:
@@ -84,7 +84,7 @@ protected:
 class My_Connector : public ACE_Connector<My_Svc_Handler, ACE_SOCK_CONNECTOR>
 {
 public:
-  typedef ACE_Connector<My_Svc_Handler, ACE_SOCK_CONNECTOR> super;
+  using super = ACE_Connector<My_Svc_Handler, ACE_SOCK_Connector>;
 protected:
   int activate_svc_handler (My_Svc_Handler* /*svc_handler*/) override
   {

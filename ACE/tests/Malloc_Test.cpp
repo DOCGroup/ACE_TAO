@@ -28,7 +28,7 @@
 #if defined (ACE_HAS_PROCESS_SPAWN)
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-typedef ACE_Malloc_T<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex, ACE_PI_Control_Block> MALLOC;
+using MALLOC = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Process_Mutex, ACE_PI_Control_Block>;
 #else
 typedef ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex> MALLOC;
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */

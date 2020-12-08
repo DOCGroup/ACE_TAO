@@ -162,8 +162,8 @@ Write_Handler::send_data ()
 }
 
 // Connection factories
-typedef ACE_Connector<Write_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
-typedef ACE_Acceptor<Read_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using CONNECTOR = ACE_Connector<Write_Handler, ACE_SOCK_Connector>;
+using ACCEPTOR = ACE_Acceptor<Read_Handler, ACE_SOCK_Acceptor>;
 
 // Execute the client tests.
 void *

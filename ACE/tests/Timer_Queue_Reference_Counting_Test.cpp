@@ -249,7 +249,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
     }
 }
 
-typedef int (*Expire_Function) (ACE_Timer_Queue &timer_queue);
+using Expire_Function = int (*)(ACE_Timer_Queue &);
 
 int
 invoke_expire (ACE_Timer_Queue &timer_queue)

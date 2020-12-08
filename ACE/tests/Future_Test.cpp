@@ -30,7 +30,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
+using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 // A counter for the tasks..
 static ATOMIC_INT task_count (0);

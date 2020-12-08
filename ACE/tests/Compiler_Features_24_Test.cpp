@@ -16,7 +16,7 @@ namespace FOO
   template <typename T>
   struct o_t
   {
-    typedef o_r<T>       ref_type;
+    using ref_type = o_r<T>;
   };
   class T_base {};
 
@@ -32,7 +32,7 @@ namespace FOO
     template <typename _Tp1, typename, typename ...Args>
     friend o_r<_Tp1> make_f(Args&& ...args);
   protected:
-    typedef std::shared_ptr<T>    shared_ptr_type;
+    using shared_ptr_type = std::shared_ptr<T>;
     template<typename _Tp1, typename = typename
       std::enable_if<std::is_convertible<_Tp1*, T*>::value>::type>
     explicit o_r (_Tp1*)

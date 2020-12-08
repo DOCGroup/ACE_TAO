@@ -41,9 +41,9 @@
 
 const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
-typedef ACE_Message_Queue<ACE_NULL_SYNCH> QUEUE;
-typedef ACE_Message_Queue_Iterator<ACE_NULL_SYNCH> ITERATOR;
-typedef ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH> REVERSE_ITERATOR;
+using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
+using ITERATOR = ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
+using REVERSE_ITERATOR = ACE_Message_Queue_Reverse_Iterator<ACE_NULL_SYNCH>;
 
 #if defined (ACE_HAS_WINCE)
 static const int MESSAGE_FACTOR = 10000;
@@ -60,7 +60,7 @@ static int max_messages = MAX_MESSAGES;
 static ACE_High_Res_Timer *timer = 0;
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue<ACE_MT_SYNCH> SYNCH_QUEUE;
+using SYNCH_QUEUE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
 struct Queue_Wrapper
 {
