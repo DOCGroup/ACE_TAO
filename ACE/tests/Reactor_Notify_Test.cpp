@@ -364,7 +364,7 @@ run_test (int disable_notify_pipe,
                   -1);
 
   // Make sure this stuff gets cleaned up when this function exits.
-  auto_ptr<ACE_Reactor> r (reactor);
+  unique_ptr<ACE_Reactor> r (reactor);
 
   // Set the Singleton Reactor.
   ACE_Reactor *orig_reactor = ACE_Reactor::instance (reactor);
@@ -465,7 +465,7 @@ run_notify_purge_test (void)
     Purged_Notify *n2;
 
     ACE_NEW_RETURN (n2, Purged_Notify, -1);
-    auto_ptr<Purged_Notify> ap (n2);
+    unique_ptr<Purged_Notify> ap (n2);
 
     // First test:
     // Notify EXCEPT, and purge ALL

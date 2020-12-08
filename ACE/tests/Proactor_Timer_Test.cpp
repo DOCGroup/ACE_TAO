@@ -310,7 +310,7 @@ run_main (int argc, ACE_TCHAR *[])
       // code ...
       typedef ACE_Timer_Heap_T<ACE_Handler*,ACE_Proactor_Handle_Timeout_Upcall,ACE_SYNCH_RECURSIVE_MUTEX,ACE_FPointer_Time_Policy> Timer_Queue;
 
-      auto_ptr<Timer_Queue> tq(new Timer_Queue);
+      unique_ptr<Timer_Queue> tq(new Timer_Queue);
       // ... notice how the policy is in the derived timer queue type.
       // The abstract timer queue does not have a time policy ...
       tq->set_time_policy(&ACE_High_Res_Timer::gettimeofday_hr);

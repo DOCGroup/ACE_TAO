@@ -13,16 +13,18 @@
 
 #include "test_config.h"
 #include "Reactor_Performance_Test.h"
-#include "ace/Profile_Timer.h"
-#include "ace/Get_Opt.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Acceptor.h"
+
 #include "ace/Acceptor.h"
-#include "ace/Connector.h"
-#include "ace/Reactor.h"
-#include "ace/WFMO_Reactor.h"
-#include "ace/Select_Reactor.h"
 #include "ace/Auto_Ptr.h"
+#include "ace/Connector.h"
+#include "ace/Get_Opt.h"
+#include "ace/Profile_Timer.h"
+#include "ace/Reactor.h"
+#include "ace/SOCK_Acceptor.h"
+#include "ace/SOCK_Connector.h"
+#include "ace/Select_Reactor.h"
+#include "ace/WFMO_Reactor.h"
+#include <utility>
 
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
@@ -333,15 +335,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   create_reactor ();
 
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl;
+  unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
+  unique_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor)
     {
-      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = auto_impl;
+      unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
+      impl = std::move(auto_impl);
     }
 
   Read_Handler::set_countdown (opt_nconnections);

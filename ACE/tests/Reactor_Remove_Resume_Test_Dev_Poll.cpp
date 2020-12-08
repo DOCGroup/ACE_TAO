@@ -366,15 +366,15 @@ handle_events (ACE_Reactor & reactor,
 
 // ------------------------------------------------------------
 
-typedef auto_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
+typedef unique_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
 
-auto_ptr<ACE_Reactor_Impl>
+unique_ptr<ACE_Reactor_Impl>
 dev_poll_reactor_factory (void)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_Dev_Poll_Reactor.\n")));
 
-  return auto_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
+  return unique_ptr<ACE_Reactor_Impl> (new ACE_Dev_Poll_Reactor);
 }
 
 // ------------------------------------------------------------
@@ -416,7 +416,7 @@ struct Run_Test : public std::unary_function<reactor_factory_type, void>
                         ACE_TEXT ("** Running removal test **\n")));
           }
 
-        auto_ptr<ACE_Reactor_Impl> the_factory (factory ());
+        unique_ptr<ACE_Reactor_Impl> the_factory (factory ());
         ACE_Reactor reactor (the_factory.get ());
 
         // In this test, it's only okay to close the Bogus_Handler

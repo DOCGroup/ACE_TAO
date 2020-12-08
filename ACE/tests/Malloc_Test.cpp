@@ -87,7 +87,7 @@ static const void *CHILD_BASE_ADDR =
 static MALLOC *
 myallocator (const void *base_addr = 0)
 {
-  static auto_ptr<MALLOC> static_allocator;
+  static unique_ptr<MALLOC> static_allocator;
 
   if (static_allocator.get () == 0)
     {
