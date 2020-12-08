@@ -45,8 +45,8 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
-  virtual int close (u_long = 0);
+  int open (void * = 0) override;
+  int close (u_long = 0) override;
 };
 
 /**
@@ -60,7 +60,7 @@ public:
   Supplier () {}
 
   /// Read data from stdin and pass to consumer.
-  virtual int svc ();
+  int svc () override;
 };
 
 /**
@@ -75,10 +75,10 @@ public:
 
   /// Enqueue the message on the ACE_Message_Queue for subsequent
   /// handling in the svc() method.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0) override;
 
   /// Receive message from Supplier and print to stdout.
-  virtual int svc ();
+  int svc () override;
 private:
 
   /// Amount of time to wait for a timeout.

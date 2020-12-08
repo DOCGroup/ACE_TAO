@@ -40,10 +40,10 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   /// activate/spawn the threads.
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void*);
+  int open (void*) override;
 
   /// svc thread entry point
-  virtual int svc ();
+  int svc () override;
 private:
 
 };

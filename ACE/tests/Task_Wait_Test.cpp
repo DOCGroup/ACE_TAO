@@ -33,9 +33,9 @@ static ACE_Event TaskDone;
 
 class Do_Nothing_Task : public ACE_Task_Base {
 public:
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
 
-  virtual int svc ();
+  int svc () override;
 };
 
 // close tries to wait for other threads. There aren't any, but as long as

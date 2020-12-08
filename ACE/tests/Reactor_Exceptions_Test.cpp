@@ -32,8 +32,8 @@ class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 public:
   My_Handler (const ACE_INET_Addr &local_addr);
 
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
 };
 
 My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
@@ -76,7 +76,7 @@ My_Handler::handle_input (ACE_HANDLE)
 class My_Reactor : public ACE_Select_Reactor
 {
 public:
-  virtual int handle_events (ACE_Time_Value *max_wait_time)
+  int handle_events (ACE_Time_Value *max_wait_time) override
   {
     int ret = 0;
 
@@ -94,7 +94,7 @@ public:
     return ret;
   }
 
-  virtual int handle_events (ACE_Time_Value &max_wait_time)
+  int handle_events (ACE_Time_Value &max_wait_time) override
   {
     return this->handle_events (&max_wait_time);
   }

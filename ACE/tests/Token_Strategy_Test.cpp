@@ -33,13 +33,13 @@ public:
 
   Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy = ACE_Token::FIFO,
                        int threads = 5, int invocations = 10);
-  ~Token_Strategy_Test ();
+  ~Token_Strategy_Test () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  int open (void *a = 0);
+  int open (void *a = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int svc ();
+  int svc () override;
 
 private:
   // Number of threads for the test, must be 5 or more.

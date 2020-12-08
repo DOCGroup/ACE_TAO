@@ -230,9 +230,9 @@ public:
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
-  ~Sender ();
+  ~Sender () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   ssize_t send_message ();
 
@@ -365,7 +365,7 @@ public:
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
-  int svc ();
+  int svc () override;
 
   ACE_Reactor &reactor_;
 
@@ -379,17 +379,17 @@ public:
             ACE_HANDLE handle,
             int nested_upcalls);
 
-  ~Receiver ();
+  ~Receiver () override;
 
-  int svc ();
+  int svc () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int close (u_long flags);
+  int close (u_long flags) override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int resume_handler ();
+  int resume_handler () override;
 
   ACE_HANDLE handle_;
 
@@ -769,7 +769,7 @@ public:
                      int run_receiver_thread,
                      int nested_upcalls);
 
-  int svc ();
+  int svc () override;
 
   Sender *create_connection ();
 
@@ -977,7 +977,7 @@ public:
                        int make_invocations,
                        int run_receiver_thread);
 
-  int svc ();
+  int svc () override;
 
   ACE_Auto_Event &new_connection_event_;
 
@@ -1110,7 +1110,7 @@ public:
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);
 
-  int svc ();
+  int svc () override;
 
   ACE_Reactor &reactor_;
 

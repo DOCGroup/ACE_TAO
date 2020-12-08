@@ -59,14 +59,14 @@ struct Parent
 struct Child : public Child_Base
 {
   Child (ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent);
-  virtual ~Child ();
+  ~Child () override;
 
   // Back pointer to the parent. The child does not own the parent so has no
   // effect on its lifetime.
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent_;
 
   // Perform some operation. Delegates the work to the parent.
-  virtual void do_something ();
+  void do_something () override;
 
   static size_t instance_count_;
 };
@@ -178,10 +178,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print ();
+  ~Method_Request_print () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call ();
+  int call () override;
 
 private:
   Printer_var printer_;
@@ -221,8 +221,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end ();
-  virtual int call ();
+  ~Method_Request_end () override;
+  int call () override;
 
 private:
   Scheduler *scheduler_;

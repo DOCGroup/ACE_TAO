@@ -28,7 +28,7 @@ class Waiter_Task : public ACE_Task_Base
 public:
   Waiter_Task (ACE_Thread_Manager* tm = 0)
     : ACE_Task_Base (tm) {}
-  virtual int svc();
+  int svc() override;
 };
 
 int

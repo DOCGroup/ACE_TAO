@@ -130,7 +130,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// Default destructor.
         ///
         /// @return
-        virtual ~CTestEventHandler()
+        ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));
         }
@@ -139,7 +139,7 @@ class CTestEventHandler : public ICustomEventHandler
         ///
         /// @return int
         /// @param p_vParameter
-        virtual int operator() (void* p_vParameter)
+        int operator() (void* p_vParameter) override
         {
             long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 

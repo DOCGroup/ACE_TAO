@@ -163,13 +163,13 @@ public:
     sem_ ((unsigned int) 0),
     proactor_(0) {}
 
-  virtual ~MyTask()
+  ~MyTask() override
     {
       (void) this->stop ();
       (void) this->delete_proactor();
     }
 
-  virtual int svc ();
+  int svc () override;
 
   int start (int num_threads,
              ProactorType type_proactor,
@@ -377,7 +377,7 @@ class Server : public ACE_Handler
 public:
   Server ();
   Server (TestData *tester, int id);
-  ~Server ();
+  ~Server () override;
 
   int id () { return this->id_; }
   size_t get_total_snd () { return this->total_snd_; }
@@ -398,11 +398,11 @@ protected:
    */
   /// This is called when asynchronous <read> operation from the
   /// socket completes.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
   /// This is called when an asynchronous <write> to the socket
   /// completes.
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 
 private:
   int initiate_read ();
@@ -434,7 +434,7 @@ class Client : public ACE_Handler
 public:
   Client ();
   Client (TestData *tester, int id);
-  ~Client ();
+  ~Client () override;
 
   void go (ACE_HANDLE h, const ACE_INET_Addr &server);
   int id () { return this->id_; }
@@ -444,10 +444,10 @@ public:
   int    get_total_r   () { return this->total_r_; }
 
   // This is called when asynchronous reads from the socket complete
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
   // This is called when asynchronous writes from the socket complete
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 
   void cancel ();
 
@@ -758,10 +758,10 @@ class Master : public ACE_Handler
 {
 public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
-  ~Master ();
+  ~Master () override;
 
   // Called when dgram receive operation completes.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
 private:
   void start_recv ();

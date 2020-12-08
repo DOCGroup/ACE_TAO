@@ -65,14 +65,14 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Terminator.
   virtual int shutdown ();
 
   /// Destructor.
-  virtual ~Prime_Scheduler ();
+  ~Prime_Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
@@ -82,7 +82,7 @@ public:
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
-  virtual int svc ();
+  int svc () override;
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
@@ -107,10 +107,10 @@ public:
                        u_long,
                        int,
                        ACE_Future<u_long> &);
-  virtual ~Method_Request_work ();
+  ~Method_Request_work () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call ();
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -165,10 +165,10 @@ class Method_Request_name : public ACE_Method_Request
 public:
   Method_Request_name (Prime_Scheduler *,
                        ACE_Future<const ACE_TCHAR*> &);
-  virtual ~Method_Request_name ();
+  ~Method_Request_name () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call ();
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;
@@ -207,8 +207,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end ();
-  virtual int call ();
+  ~Method_Request_end () override;
+  int call () override;
 
 private:
   Prime_Scheduler *scheduler_;

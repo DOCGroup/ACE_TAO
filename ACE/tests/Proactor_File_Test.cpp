@@ -46,24 +46,24 @@ class FileIOHandler : public ACE_Handler
 {
 public:
   FileIOHandler ();
-  virtual ~FileIOHandler ();
+  ~FileIOHandler () override;
 
   int
   Connect();
 
   // This method will be called when an asynchronous read
   // completes on a file.
-  virtual void
-  handle_read_file(const ACE_Asynch_Read_File::Result &result);
+  void
+  handle_read_file(const ACE_Asynch_Read_File::Result &result) override;
 
   // This method will be called when an asynchronous write
   // completes on a file.
-  virtual void
-  handle_write_file(const ACE_Asynch_Write_File::Result &result);
+  void
+  handle_write_file(const ACE_Asynch_Write_File::Result &result) override;
 
   // Callback hook invoked by the Proactor's Timer_Queue.
-  virtual void
-  handle_time_out(const ACE_Time_Value &tv, const void *arg);
+  void
+  handle_time_out(const ACE_Time_Value &tv, const void *arg) override;
 
   // Our I/O objects; they're public so others can access them
   ACE_Asynch_Read_File reader_;

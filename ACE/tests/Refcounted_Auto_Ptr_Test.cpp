@@ -75,14 +75,14 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
-  virtual int open (void *args = 0);
+  int open (void *args = 0) override;
 
   /// Terminator.
-  virtual int close (u_long flags = 0);
+  int close (u_long flags = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
-  virtual ~Scheduler ();
+  ~Scheduler () override;
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
@@ -91,7 +91,7 @@ public:
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc ();
+  int svc () override;
 
 private:
   // = These are the <Scheduler> implementation details.
@@ -107,10 +107,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print ();
+  ~Method_Request_print () override;
 
   /// This is the entry point into the Active Object method.
-  virtual int call ();
+  int call () override;
 
 private:
   Printer_var printer_;
@@ -156,8 +156,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end ();
-  virtual int call ();
+  ~Method_Request_end () override;
+  int call () override;
 
 private:
   Scheduler *scheduler_;

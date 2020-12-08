@@ -40,13 +40,13 @@ public:
 
 protected:
 
-  virtual ~Bogus_Handler ();
+  ~Bogus_Handler () override;
 
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  virtual int resume_handler ();
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
+  int resume_handler () override;
 
 private:
 
@@ -127,14 +127,14 @@ public:
 
 protected:
 
-  virtual ~Bad_Handler ();
+  ~Bad_Handler () override;
 
 private:
 
-  virtual ACE_HANDLE get_handle () const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
   int handle_input_result () const;
 

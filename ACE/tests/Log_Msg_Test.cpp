@@ -54,7 +54,7 @@ public:
   Logger (bool be_recursive = true);
 
   /// Logging callback
-  void log (ACE_Log_Record &log_record);
+  void log (ACE_Log_Record &log_record) override;
 
   void verbose (bool be_verbose);
 
@@ -367,7 +367,7 @@ public:
   }
 
   /// Logging callback
-  void log (ACE_Log_Record &)
+  void log (ACE_Log_Record &) override
   {
     ++count_;
   }
@@ -586,7 +586,7 @@ public:
   Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
   /// Logging callback
-  void log (ACE_Log_Record &log_record);
+  void log (ACE_Log_Record &log_record) override;
 
   int  result ();
 

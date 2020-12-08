@@ -48,13 +48,13 @@ public:
 
   Reference_Counted_Event_Handler (int expected_number_of_handle_close_calls);
 
-  ~Reference_Counted_Event_Handler ();
+  ~Reference_Counted_Event_Handler () override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask masks);
+                    ACE_Reactor_Mask masks) override;
 
   int expected_number_of_handle_close_calls_;
   int number_of_handle_close_calls_;
@@ -352,13 +352,13 @@ public:
 
   Simple_Event_Handler ();
 
-  ~Simple_Event_Handler ();
+  ~Simple_Event_Handler () override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 };
 
 Simple_Event_Handler::Simple_Event_Handler ()

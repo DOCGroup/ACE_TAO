@@ -34,7 +34,7 @@ class Test_Handler;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc ()
+  int svc () override
   {
     while (--max_iterations > 0)
       {
@@ -72,7 +72,7 @@ public:
   }
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0)
+  int open (void * = 0) override
   {
   //FUZZ: enable check_for_lack_ACE_OS
     if (ACE_Task<ACE_MT_SYNCH>::activate (THR_NEW_LWP, 1) != 0)
@@ -95,8 +95,8 @@ private:
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));

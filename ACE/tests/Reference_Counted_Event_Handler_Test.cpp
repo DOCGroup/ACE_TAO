@@ -43,23 +43,23 @@ public:
 
   Reference_Counted_Event_Handler (int &events);
 
-  ~Reference_Counted_Event_Handler ();
+  ~Reference_Counted_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference ();
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count remove_reference ();
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 
   ACE_Pipe pipe_;
 
@@ -474,19 +474,19 @@ public:
   Simple_Event_Handler (int &events,
                         int close_count);
 
-  ~Simple_Event_Handler ();
+  ~Simple_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
   ACE_Pipe pipe_;
 
@@ -772,16 +772,16 @@ public:
 
   Closed_In_Upcall_Event_Handler (int &events);
 
-  ~Closed_In_Upcall_Event_Handler ();
+  ~Closed_In_Upcall_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference ();
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count remove_reference ();
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 
   ACE_Pipe pipe_;
 

@@ -220,7 +220,7 @@ namespace {
     Svc_Handler (ACE_Thread_Manager * = 0);
     // Do-nothing constructor.
 
-    virtual int open (void *);
+    int open (void *) override;
     // Initialization hook.
 
     void send_data ();
@@ -229,7 +229,7 @@ namespace {
     void recv_data ();
     // Recv data from client.
 
-    int close (u_long = 0);
+    int close (u_long = 0) override;
     // Shutdown the <Svc_Handler>.
 
   private:

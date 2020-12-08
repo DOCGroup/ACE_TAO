@@ -23,11 +23,11 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Spawn the thread
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Check the cancel settings against what is expected then exit.
-  virtual int svc ();
+  int svc () override;
 
   /// Returns true iff settings match what was requested.
   bool operator! ();
@@ -132,11 +132,11 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the thread
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Check the stack size against what is expected then exit.
-  virtual int svc ();
+  int svc () override;
 
   /// Returns true iff failed_ == false.
   bool operator! ();

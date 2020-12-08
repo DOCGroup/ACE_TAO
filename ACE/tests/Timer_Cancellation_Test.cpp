@@ -20,10 +20,10 @@ class Deadlock : public ACE_Task_Base
 {
 public:
 
-  int svc ();
+  int svc () override;
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 };
 
 int
@@ -59,10 +59,10 @@ public:
   Event_Handler (Deadlock &deadlock);
 
   int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act);
+                      const void *act) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask close_mask);
+                    ACE_Reactor_Mask close_mask) override;
 
   Deadlock &deadlock_;
 };

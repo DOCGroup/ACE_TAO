@@ -44,8 +44,8 @@ public:
     void send_dummy_data();
 
     /// Reactor callback
-    virtual ACE_HANDLE get_handle() const;
-    virtual int handle_input(ACE_HANDLE);
+    ACE_HANDLE get_handle() const override;
+    int handle_input(ACE_HANDLE) override;
 
 private:
     size_t handle_input_count_;
@@ -74,7 +74,7 @@ public:
 
     bool check_expected_results() const;
 
-    virtual int handle_timeout(ACE_Time_Value const &, void const*);
+    int handle_timeout(ACE_Time_Value const &, void const*) override;
 
 private:
     void send_data_through_handlers();

@@ -35,7 +35,7 @@ class User_Data : public ACE_Data_Block
 public:
   User_Data() {}
 
-  ~User_Data()
+  ~User_Data() override
   {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT ("User_Data dtor\n")));
     user_data_dtor_called = true;
@@ -62,16 +62,16 @@ public:
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc ();
+  int svc () override;
 
   /// Allows the producer to pass messages to the <Message_Block>.
-  virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 };
 
 int
