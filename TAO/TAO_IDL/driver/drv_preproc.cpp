@@ -1211,7 +1211,7 @@ DRV_pre_proc (const char *myfile)
   // is often not enough. We determine
   // the required space and arg nr
   // dynamically here.
-  ACE_Process_Options cpp_options (1,       // Inherit environment.
+  ACE_Process_Options cpp_options (true,       // Inherit environment.
                                    DRV_cpp_calc_total_argsize (),
                                    16 * 1024,
                                    512,

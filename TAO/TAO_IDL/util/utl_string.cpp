@@ -224,7 +224,7 @@ UTL_String::destroy ()
   if (this->copy_taken)
     {
        ACE::strdelete (this->p_str);
-       this->copy_taken = 0;
+       this->copy_taken = false;
     }
   this->p_str = nullptr;
 }

@@ -176,7 +176,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Not in recursion.
   if (self_test)
     this->in_recursion_ = 0;
-  return 0; //this->in_recursion_;
+  return false; //this->in_recursion_;
 }
 
 // Dump this AST_Exception node to the ostream o.

@@ -37,7 +37,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                             bool abstract,
                             bool truncatable,
                             bool custom)
-  : COMMON_Base (0,
+  : COMMON_Base (false,
                  abstract),
     AST_Decl (AST_Decl::NT_valuetype,
               n),
@@ -49,7 +49,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                    n_inherits,
                    inherits_flat,
                    n_inherits_flat,
-                   0,
+                   false,
                    abstract),
     be_scope (AST_Decl::NT_valuetype),
     be_decl (AST_Decl::NT_valuetype,
@@ -61,7 +61,7 @@ be_valuetype::be_valuetype (UTL_ScopedName *n,
                   n_inherits,
                   inherits_flat,
                   n_inherits_flat,
-                  0,
+                  false,
                   abstract),
     AST_ValueType (n,
                    inherits,
@@ -197,7 +197,7 @@ be_valuetype::determine_factory_style ()
 
   // Check whether we have at least one operation or not.
   bool have_operation = this->have_operation ();
-  bool have_factory = 0;
+  bool have_factory = false;
 
   // Try only our own scope.
   if (this->nmembers () > 0)
@@ -225,7 +225,7 @@ be_valuetype::determine_factory_style ()
 
           if (node_type == AST_Decl::NT_factory)
             {
-              have_factory = 1;
+              have_factory = true;
               break;
             }
 

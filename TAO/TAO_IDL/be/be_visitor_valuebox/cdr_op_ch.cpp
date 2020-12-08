@@ -50,6 +50,6 @@ be_visitor_valuebox_cdr_op_ch::visit_valuebox (be_valuebox *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

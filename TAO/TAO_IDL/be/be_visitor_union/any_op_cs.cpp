@@ -247,7 +247,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 

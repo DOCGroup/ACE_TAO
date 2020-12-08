@@ -96,8 +96,8 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
                        node->name (),
-                       0,
-                       0);
+                       false,
+                       false);
 
   get_op.set_name ((UTL_IdList *) node->name ()->copy ());
 
@@ -138,8 +138,8 @@ be_visitor_valuetype::visit_attribute (be_attribute *node)
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
                        node->name (),
-                       0,
-                       0);
+                       false,
+                       false);
 
   set_op.set_name ((UTL_IdList *) node->name ()->copy ());
   set_op.be_add_argument (arg);
