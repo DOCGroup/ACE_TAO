@@ -80,12 +80,12 @@ class ReactorTask : public ACE_Task_Base
 {
 public:
 
-  virtual ~ReactorTask ()
+  ~ReactorTask () override
   {
     EE_DEBUG ("ReactorTask", "~ReactorTask", this);
   };
 
-  virtual int svc ( )
+  int svc ( ) override
   {
     EE_DEBUG ("ReactorTask", "svc", this);
 

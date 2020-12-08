@@ -37,7 +37,7 @@ public:
   {
   }
 
-  virtual int close(u_long );
+  int close(u_long ) override;
 
 private:
   bool* close_called_;

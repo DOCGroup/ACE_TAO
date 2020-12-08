@@ -40,13 +40,13 @@ public:
 
   Reference_Counted_Event_Handler ();
 
-  ~Reference_Counted_Event_Handler ();
+  ~Reference_Counted_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  ACE_Event_Handler::Reference_Count add_reference ();
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count remove_reference ();
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 
 };
 
@@ -134,9 +134,9 @@ public:
 
   Simple_Event_Handler (int notifies);
 
-  ~Simple_Event_Handler ();
+  ~Simple_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int notifies_;
 };
@@ -177,7 +177,7 @@ public:
                      ACE_Reactor &reactor,
                      int extra_iterations_needed);
 
-  int svc ();
+  int svc () override;
 
   ACE_Reactor &reactor_;
 

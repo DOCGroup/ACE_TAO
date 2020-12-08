@@ -42,7 +42,7 @@ template <int which>
 class Server_T : public ACE_Service_Object
 {
 public:
-  int init (int, ACE_TCHAR *[])
+  int init (int, ACE_TCHAR *[]) override
   {
     FRAMEWORK_COMPONENT_DLL_TRACE ("Server_T::init");
 
@@ -55,7 +55,7 @@ public:
     return 0;
   }
 
-  int fini ()
+  int fini () override
   {
     FRAMEWORK_COMPONENT_DLL_TRACE ("Server_T::fini");
     return 0;

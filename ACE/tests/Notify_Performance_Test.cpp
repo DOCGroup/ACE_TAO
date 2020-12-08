@@ -53,7 +53,7 @@ class Handler : public ACE_Event_Handler
 {
 public:
   /// The Handler callbacks.
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 };
 
 int

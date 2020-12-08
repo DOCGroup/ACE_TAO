@@ -33,19 +33,19 @@ class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Test_Task ();
-  ~Test_Task ();
+  ~Test_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (void *args = 0);
-  virtual int close (u_long flags = 0);
-  virtual int svc ();
+  int open (void *args = 0) override;
+  int close (u_long flags = 0) override;
+  int svc () override;
 
   // = Event Handler hooks.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd,
-                            ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE fd,
+                            ACE_Reactor_Mask close_mask) override;
 private:
   /// Number of iterations handled.
   size_t handled_;

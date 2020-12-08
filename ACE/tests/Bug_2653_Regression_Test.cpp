@@ -31,7 +31,7 @@ static const char *message =
 class Watchdog : public ACE_Task_Base
 {
 public:
-  int svc ();
+  int svc () override;
   int my_grp_;
 };
 
@@ -52,11 +52,11 @@ class Handler : public ACE_Event_Handler
 public:
   Handler (ACE_Reactor &reactor, bool close_other);
 
-  ~Handler();
+  ~Handler() override;
 
-  int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  int handle_output (ACE_HANDLE fd);
+  int handle_output (ACE_HANDLE fd) override;
 
   ACE_Pipe pipe_;
   ACE_Pipe other_pipe_;

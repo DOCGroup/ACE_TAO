@@ -32,16 +32,16 @@ class Handler : public ACE_Event_Handler
 public:
   Handler (ACE_Reactor &reactor);
 
-  ~Handler();
+  ~Handler() override;
 
   int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg);
+                      const void *arg) override;
 
-  int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
-  int handle_output (ACE_HANDLE fd);
+  int handle_output (ACE_HANDLE fd) override;
 
-  ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with

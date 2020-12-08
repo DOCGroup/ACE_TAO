@@ -30,8 +30,8 @@ public:
   Test_Handler () : nr_expirations_ (0) {}
   int nr_expirations () { return this->nr_expirations_; }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
     ++this->nr_expirations_;

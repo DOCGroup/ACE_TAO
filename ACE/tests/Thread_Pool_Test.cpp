@@ -45,7 +45,7 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool ();
+  ~Thread_Pool () override;
 
   /**
    * Activate the task's thread pool, produce the messages that are
@@ -64,20 +64,20 @@ public:
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc ();
+  int svc () override;
 
   /// Allows the producer to pass messages to the <Thread_Pool>.
-  virtual int put (ACE_Message_Block *mb,
-                   ACE_Time_Value *tv = 0);
+  int put (ACE_Message_Block *mb,
+                   ACE_Time_Value *tv = 0) override;
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Close hook.
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Serialize access to <ACE_Message_Block> reference count, which
   /// will be decremented by multiple threads.

@@ -147,7 +147,7 @@ class ThrMgr_Task : public ACE_Task_Base {
 public:
   ThrMgr_Task (ACE_Thread_Manager *);
 
-  virtual int svc ();
+  int svc () override;
 
   static int errors;
 };

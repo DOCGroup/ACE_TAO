@@ -127,9 +127,9 @@ public:
   MyTask (): sem_ ((unsigned int) 0),
                  my_reactor_ (0) {}
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc ();
+  int svc () override;
 
   int start (int num_threads);
   int stop ();

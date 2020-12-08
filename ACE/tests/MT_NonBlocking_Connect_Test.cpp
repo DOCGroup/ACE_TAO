@@ -63,9 +63,9 @@ public:
 
   Svc_Handler (ACE_Thread_Manager *);
 
-  int open (void *);
+  int open (void *) override;
 
-  int close (u_long flags);
+  int close (u_long flags) override;
 
   bool connected_;
 };
@@ -98,7 +98,7 @@ class Concurrency_Strategy :
   public ACE_Concurrency_Strategy<SVC_HANDLER>
 {
 public:
-  virtual int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg);
+  int activate_svc_handler (SVC_HANDLER *svc_handler, void *arg) override;
 };
 
 template<class SVC_HANDLER> int
@@ -144,7 +144,7 @@ public:
                                 &this->cns_, &this->cts_, &this->cys_);
   }
 
-  int svc ();
+  int svc () override;
 
 private:
   ACE_Reactor &reactor_;

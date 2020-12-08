@@ -25,15 +25,15 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int open (const ACE_TCHAR *logger_key);
+  int open (const ACE_TCHAR *logger_key) override;
 
-  virtual int reset ();
+  int reset () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close ();
+  int close () override;
 
-  virtual ssize_t log (ACE_Log_Record &log_record);
+  ssize_t log (ACE_Log_Record &log_record) override;
 
   // Test probes to see if things worked as specified.
   bool hooks_ok () const;

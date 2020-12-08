@@ -170,13 +170,13 @@ public:
     sem_ ((unsigned int) 0),
     proactor_(0) {}
 
-  virtual ~MyTask()
+  ~MyTask() override
     {
       (void) this->stop ();
       (void) this->delete_proactor();
     }
 
-  virtual int svc ();
+  int svc () override;
 
   int start (int num_threads,
              ProactorType type_proactor,
@@ -622,10 +622,10 @@ class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
 public:
   Acceptor (TestData *tester);
-  virtual ~Acceptor ();
+  ~Acceptor () override;
 
   // Virtual from ACE_Asynch_Acceptor
-  Server *make_handler ();
+  Server *make_handler () override;
 
 private:
   TestData *tester_;
@@ -1056,12 +1056,12 @@ class Connector : public ACE_Asynch_Connector<Client>
 {
 public:
   Connector (TestData *tester);
-  virtual ~Connector ();
+  ~Connector () override;
 
   int  start (const ACE_INET_Addr &addr, int num);
 
   // Virtual from ACE_Asynch_Connector
-  Client *make_handler ();
+  Client *make_handler () override;
 
 private:
   TestData *tester_;

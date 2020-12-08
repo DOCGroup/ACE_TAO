@@ -91,7 +91,7 @@ class Counting_Test_Producer : public ACE_Task<ACE_MT_SYNCH>
 public:
   Counting_Test_Producer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
     : ACE_Task<ACE_MT_SYNCH> (0, queue), sequence_ (0), produced_ (0) {}
-  virtual int svc ();
+  int svc () override;
 
   ACE_Atomic_Op<ACE_Thread_Mutex, long> sequence_;
   ACE_Atomic_Op<ACE_Thread_Mutex, long> produced_;
@@ -102,7 +102,7 @@ class Counting_Test_Consumer : public ACE_Task<ACE_MT_SYNCH>
 public:
   Counting_Test_Consumer (ACE_Message_Queue<ACE_MT_SYNCH> *queue)
     : ACE_Task<ACE_MT_SYNCH> (0, queue), consumed_ (0) {}
-  virtual int svc ();
+  int svc () override;
 
   ACE_Atomic_Op<ACE_Thread_Mutex, long> consumed_;
 };

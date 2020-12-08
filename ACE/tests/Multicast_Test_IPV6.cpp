@@ -458,7 +458,7 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  virtual ~MCT_Event_Handler ();
+  ~MCT_Event_Handler () override;
 
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,
@@ -467,10 +467,10 @@ public:
              const ACE_TCHAR *net_if = 0);
 
   // = Event Handler hooks.
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask);
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
 
-  virtual ACE_HANDLE get_handle () const;
+  ACE_HANDLE get_handle () const override;
 
 protected:
   ACE_SOCK_Dgram_Mcast *mcast ();
@@ -656,12 +656,12 @@ class MCT_Task : public ACE_Task<ACE_NULL_SYNCH>
 public:
   MCT_Task (const MCT_Config &config,
             ACE_Reactor *reactor = ACE_Reactor::instance ());
-  ~MCT_Task ();
+  ~MCT_Task () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = Task hooks.
-  virtual int open (void *args = 0);
-  virtual int svc ();
+  int open (void *args = 0) override;
+  int svc () override;
   //FUZZ: enable check_for_lack_ACE_OS
 
 private:

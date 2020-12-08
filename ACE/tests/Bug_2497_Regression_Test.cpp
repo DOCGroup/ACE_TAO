@@ -20,7 +20,7 @@ public:
   {
   }
 
-  virtual ~Test_Task( )
+  ~Test_Task( ) override
   {
     ++_destructorCalled;
     if (_destructorCalled > 1)

@@ -30,7 +30,7 @@ class Worker : public ACE_Task<ACE_MT_SYNCH>
 public:
   Worker (IManager *manager) : manager_(manager) { }
 
-  virtual int svc ()
+  int svc () override
   {
     ACE_Thread_ID id;
     thread_id_ = id;
@@ -94,7 +94,7 @@ public:
     ACE_TRACE ("Manager::Manager");
   }
 
-  int svc ()
+  int svc () override
   {
     ACE_TRACE ("Manager::svc");
 
@@ -139,7 +139,7 @@ public:
 
   const ACE_Thread_ID& thread_id (Worker *worker);
 
-  virtual int return_to_work (Worker *worker)
+  int return_to_work (Worker *worker) override
   {
     ACE_GUARD_RETURN (ACE_Mutex,
                       worker_mon, this->workers_lock_, -1);

@@ -176,7 +176,7 @@ public:
 
   /// Receive the notifications, but remove itself from the reactor on
   /// on the first one.
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 
 private:
   /// The driver for this test, communicate results to it

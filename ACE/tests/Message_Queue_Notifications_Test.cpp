@@ -62,9 +62,9 @@ public:
   Message_Handler (ACE_Reactor &reactor);
 
   // = Demuxing hooks.
-  virtual int handle_input (ACE_HANDLE);
-  virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_input (ACE_HANDLE) override;
+  int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 
 private:
   int process_message ();
@@ -84,7 +84,7 @@ class Watermark_Test : public ACE_Task<ACE_SYNCH>
 public:
   Watermark_Test ();
 
-  virtual int svc ();
+  int svc () override;
 
   int consumer ();
   int producer ();

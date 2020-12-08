@@ -54,15 +54,15 @@ class Example_Handler : public ACE_Event_Handler
 public:
   Example_Handler (): close_count_ (0) {}
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask) override
   {
     ACE_TEST_ASSERT (mask == ACE_Event_Handler::TIMER_MASK);
     this->close_count_++;
     return 0;
   }
 
-  virtual int handle_timeout (const ACE_Time_Value &,
-                              const void *arg)
+  int handle_timeout (const ACE_Time_Value &,
+                              const void *arg) override
   {
     int *act = (int *) arg;
     ACE_TEST_ASSERT (*act == 42 || *act == 007);
@@ -84,7 +84,7 @@ struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler () : trip_count_ (0) { }
 
-  virtual int handle_timeout (const ACE_Time_Value & , const void *)
+  int handle_timeout (const ACE_Time_Value & , const void *) override
   {
     ++trip_count_;
     return 0;

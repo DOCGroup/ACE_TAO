@@ -50,9 +50,9 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   MyTask () : my_reactor_ (0), my_tq_ (0) {}
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc ();
+  int svc () override;
 
   int start (int num_threads);
   int stop ();
@@ -177,8 +177,8 @@ public:
       timeout_triggered_ (false)
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   bool trigger_in(const ACE_Time_Value &delay);
 
