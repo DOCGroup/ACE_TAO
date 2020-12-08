@@ -18,7 +18,7 @@ TAO_Hash_LogStore::~TAO_Hash_LogStore()
 
 
 DsLogAdmin::LogList*
-TAO_Hash_LogStore::list_logs (void)
+TAO_Hash_LogStore::list_logs ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,
@@ -54,7 +54,7 @@ TAO_Hash_LogStore::list_logs (void)
 }
 
 DsLogAdmin::LogIdList*
-TAO_Hash_LogStore::list_logs_by_id (void)
+TAO_Hash_LogStore::list_logs_by_id ()
 {
   ACE_READ_GUARD_THROW_EX (ACE_SYNCH_RW_MUTEX,
                            guard,

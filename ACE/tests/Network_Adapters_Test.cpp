@@ -86,7 +86,7 @@
  * as not a ICMP_ECHOREPLY message and further ICMP_ECHOREPLY
  * received. Don't worry, be happy - it's ok.
  */
-Echo_Handler::Echo_Handler (void)
+Echo_Handler::Echo_Handler ()
   : ping_socket_ (),
     reply_wait_ (),
     remote_addrs_ (0),
@@ -99,7 +99,7 @@ Echo_Handler::Echo_Handler (void)
 {
 }
 
-Echo_Handler::~Echo_Handler (void)
+Echo_Handler::~Echo_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Echo_Handler::~Echo_Handler - entered.\n")));
@@ -306,7 +306,7 @@ Echo_Handler::open (ACE_Reactor * const reactor,
 }
 
 ACE_Ping_Socket &
-Echo_Handler::ping_socket (void)
+Echo_Handler::ping_socket ()
 {
   return this->ping_socket_;
 }
@@ -378,7 +378,7 @@ Echo_Handler::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 }
 
 ACE_HANDLE
-Echo_Handler::get_handle (void) const
+Echo_Handler::get_handle () const
 {
   return ((ACE_ICMP_Socket &) this->ping_socket_).get_handle ();
 }
@@ -522,7 +522,7 @@ Echo_Handler::handle_timeout (ACE_Time_Value const &,
 }
 
 int
-Echo_Handler::does_echo_test_successful (void)
+Echo_Handler::does_echo_test_successful ()
 {
   for (size_t i = 0; i < this->number_remotes_; ++i)
     {
@@ -544,13 +544,13 @@ Stop_Handler::Stop_Handler (ACE_Reactor * const reactor)
                   sizeof this->handlers_to_stop_);
 }
 
-Stop_Handler::~Stop_Handler (void)
+Stop_Handler::~Stop_Handler ()
 {
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("(%P|%t) Stop_Handler::~Stop_Handler.\n")));
 }
 
 int
-Stop_Handler::open (void)
+Stop_Handler::open ()
 {
   // Register the signal handler object to catch the signals.
 #if (SIGINT != 0)
@@ -747,14 +747,14 @@ Stop_Handler::unregister_handler (ACE_Event_Handler *handler)
 }
 
 
-Repeats_Handler::Repeats_Handler (void)
+Repeats_Handler::Repeats_Handler ()
   : check_handler_ (0),
     seconds_timer_ (60),
     counter_ (0)
 {
 }
 
-Repeats_Handler::~Repeats_Handler (void)
+Repeats_Handler::~Repeats_Handler ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Repeats_Handler::~Repeats_Handler.\n")));

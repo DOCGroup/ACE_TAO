@@ -17,11 +17,11 @@
 class Tester
 {
 public:
-  int test (void);
+  int test ();
 };
 
 int
-Tester::test (void)
+Tester::test ()
 {
   int retval = 0;
 

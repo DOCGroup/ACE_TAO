@@ -42,7 +42,7 @@ public:
   virtual void handle_time_out (const ACE_Time_Value &tv, const void *arg);
 
   /// Return our timer id.
-  long timer_id (void) const;
+  long timer_id () const;
 
   /// Set our timer id;
   void timer_id (long);
@@ -82,7 +82,7 @@ private:
 };
 
 
-Time_Handler::Time_Handler (void)
+Time_Handler::Time_Handler ()
   : timer_id_ (-1)
 {
   // Nothing
@@ -118,7 +118,7 @@ Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
 }
 
 long
-Time_Handler::timer_id (void) const
+Time_Handler::timer_id () const
 {
   return this->timer_id_;
 }
@@ -168,7 +168,7 @@ Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
 }
 
 static void
-test_registering_all_handlers (void)
+test_registering_all_handlers ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
                __LINE__,
@@ -194,7 +194,7 @@ test_registering_all_handlers (void)
 }
 
 static void
-test_registering_one_handler (void)
+test_registering_one_handler ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
                __LINE__,
@@ -222,7 +222,7 @@ test_registering_one_handler (void)
 }
 
 static void
-test_canceling_odd_timers (void)
+test_canceling_odd_timers ()
 {
   ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
                __LINE__,
@@ -259,7 +259,7 @@ test_canceling_odd_timers (void)
 }
 
 static void
-test_cancel_repeat_timer (void)
+test_cancel_repeat_timer ()
 {
   Repeat_Timer_Handler *handler = new Repeat_Timer_Handler;
   ACE_Time_Value timeout (Repeat_Timer_Handler::REPEAT_INTERVAL);

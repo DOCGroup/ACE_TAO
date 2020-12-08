@@ -21,7 +21,7 @@ using namespace ACE_Utils;
 // ----------------------------------------------------
 
 bool
-sizeof_from_lt_sizeof_to (void)
+sizeof_from_lt_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) < sizeof(TO) test\n")));
@@ -120,7 +120,7 @@ sizeof_from_lt_sizeof_to (void)
 }
 
 bool
-sizeof_from_eq_sizeof_to (void)
+sizeof_from_eq_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) == sizeof(TO) test\n")));
@@ -221,7 +221,7 @@ sizeof_from_eq_sizeof_to (void)
 }
 
 bool
-sizeof_from_gt_sizeof_to (void)
+sizeof_from_gt_sizeof_to ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Running sizeof(FROM) > sizeof(TO) test\n")));
@@ -332,7 +332,7 @@ template <typename T>
 struct Caller : public std::unary_function<T, void>
 {
   /// Constructor
-  Caller (void) : success (true) {}
+  Caller () : success (true) {}
 
   /// Function call operator overload.
   void operator() (T f)

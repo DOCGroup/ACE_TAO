@@ -1524,7 +1524,7 @@ YY_DECL
 
 #line 1528 "fe/idl.yy.cpp"
 
-    while ( /*CONSTCOND*/1 )        /* loops until end-of-file is reached */
+    while ( /*CONSTCOND*/true )        /* loops until end-of-file is reached */
         {
         yy_cp = (yy_c_buf_p);
 
@@ -4195,7 +4195,7 @@ idl_valid_version (char *s)
   // Nothing preceding decimal point.
   if (*s == '.')
     {
-      return 0;
+      return false;
     }
 
   char *minor = ACE_OS::strchr (s, '.');
@@ -4204,13 +4204,13 @@ idl_valid_version (char *s)
   if (minor == nullptr)
     {
       // No decimal point.
-      return 0;
+      return false;
     }
 
   if (*(minor + 1) == '\0')
     {
       // Nothing following decimal point.
-      return 0;
+      return false;
     }
 
   char *tmp = minor + 1;
@@ -4219,7 +4219,7 @@ idl_valid_version (char *s)
     {
       if (!isdigit (tmp[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -4229,7 +4229,7 @@ idl_valid_version (char *s)
     {
       if (!isdigit (s[i]))
         {
-          return 0;
+          return false;
         }
     }
 
@@ -4237,10 +4237,10 @@ idl_valid_version (char *s)
   if (ACE_OS::atoi (minor + 1) > ACE_UINT16_MAX
       || ACE_OS::atoi (s) > ACE_UINT16_MAX)
     {
-      return 0;
+      return false;
     }
 
-  return 1;
+  return true;
 }
 
 static AST_Decl *

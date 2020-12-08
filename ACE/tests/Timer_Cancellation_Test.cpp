@@ -20,14 +20,14 @@ class Deadlock : public ACE_Task_Base
 {
 public:
 
-  int svc (void);
+  int svc ();
 
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act);
 };
 
 int
-Deadlock::svc (void)
+Deadlock::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Deadlock starts accessing Reactor and Timer Queue....\n")));

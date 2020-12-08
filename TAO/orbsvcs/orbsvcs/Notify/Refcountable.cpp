@@ -62,7 +62,7 @@ TAO_Notify_Refcountable::diagnostic_dump( const char* title )
 #endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
 
 
-TAO_Notify_Refcountable::TAO_Notify_Refcountable (void)
+TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
 {
 }
 
@@ -90,7 +90,7 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 
 
 CORBA::ULong
-TAO_Notify_Refcountable::_incr_refcnt (void)
+TAO_Notify_Refcountable::_incr_refcnt ()
 {
   CORBA::Long refcount = ++this->refcount_;
   if (TAO_debug_level > 1 )
@@ -110,7 +110,7 @@ TAO_Notify_Refcountable::_incr_refcnt (void)
 }
 
 CORBA::ULong
-TAO_Notify_Refcountable::_decr_refcnt (void)
+TAO_Notify_Refcountable::_decr_refcnt ()
 {
   CORBA::Long refcount = --this->refcount_;
 

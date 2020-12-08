@@ -129,6 +129,6 @@ be_visitor_array_cdr_op_ch::visit_array (be_array *node)
 
   *os << be_global->core_versioning_end ();
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

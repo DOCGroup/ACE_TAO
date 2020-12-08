@@ -378,7 +378,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       // header file.
       *this->client_stubs_ << "\n\n#if !defined (__ACE_INLINE__)";
       *this->client_stubs_ << "\n#include \""
-                           << be_global->be_get_client_inline_fname (1)
+                           << be_global->be_get_client_inline_fname (true)
                            << "\"";
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
@@ -498,7 +498,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       UTL_String idl_name_str (idl_name);
 
       char const * const server_hdr =
-        BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
+        BE_GlobalData::be_get_server_hdr (&idl_name_str, true);
 
       idl_name_str.destroy ();
 
@@ -655,7 +655,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Generate the include statement for the server header.
   *this->server_skeletons_
     << "\n#include \""
-    << be_global->be_get_server_hdr_fname (1)
+    << be_global->be_get_server_hdr_fname (true)
     << "\"";
 
   this->gen_skel_src_includes ();
@@ -956,7 +956,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->anyop_source_ << "\n#include \""
-                       << be_global->be_get_anyop_header_fname (1)
+                       << be_global->be_get_anyop_header_fname (true)
                        << "\"";
 
   this->gen_typecode_includes (this->anyop_source_);
@@ -1608,7 +1608,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                            "",
                            "_H_");
 
-  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
+  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (true);
 
   *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
 
@@ -1695,7 +1695,7 @@ TAO_CodeGen::end_client_header ()
       // Insert the code to include the inline file.
       *this->client_header_ << "#if defined (__ACE_INLINE__)\n";
       *this->client_header_ << "#include \""
-                            << be_global->be_get_client_inline_fname (1)
+                            << be_global->be_get_client_inline_fname (true)
                             << "\"\n";
       *this->client_header_ << "#endif /* defined INLINE */\n\n";
     }
@@ -1838,7 +1838,7 @@ TAO_CodeGen::end_server_template_header ()
       << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
       << be_nl << "#include \""
-      << be_global->be_get_server_template_skeleton_fname (1)
+      << be_global->be_get_server_template_skeleton_fname (true)
       << "\"";
   *this->server_template_header_ << be_nl
       << "#endif /* defined REQUIRED SOURCE */";
@@ -1848,7 +1848,7 @@ TAO_CodeGen::end_server_template_header ()
       << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
       << be_nl << "#pragma implementation (\""
-      << be_global->be_get_server_template_skeleton_fname (1)
+      << be_global->be_get_server_template_skeleton_fname (true)
       << "\")";
   *this->server_template_header_ << be_nl
       << "#endif /* defined REQUIRED PRAGMA */";
@@ -2578,7 +2578,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
               UTL_String idl_name_str = idl_name;
 
               char const * const anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
 
               idl_name_str.destroy ();
 

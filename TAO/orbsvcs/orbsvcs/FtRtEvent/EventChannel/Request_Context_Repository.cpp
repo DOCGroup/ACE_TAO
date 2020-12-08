@@ -80,7 +80,7 @@ get_object_id(CORBA::Any_var a)
 
 
 FtRtecEventChannelAdmin::ObjectId_var
-Request_Context_Repository::get_object_id(void)
+Request_Context_Repository::get_object_id()
 {
   /*
   PortableInterceptor::Current_var pic =
@@ -117,7 +117,7 @@ Request_Context_Repository::set_cached_result(
 }
 
 CORBA::Any_ptr
-Request_Context_Repository::get_cached_result(void)
+Request_Context_Repository::get_cached_result()
 {
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent");
@@ -167,7 +167,7 @@ Request_Context_Repository::set_sequence_number(
 
 
 FTRT::SequenceNumber
-Request_Context_Repository::get_sequence_number(void)
+Request_Context_Repository::get_sequence_number()
 {
   PortableInterceptor::Current_var pic =
     resolve_init<PortableInterceptor::Current>(orb, "PICurrent");

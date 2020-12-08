@@ -16,24 +16,24 @@ TAO_EC_Masked_Type_Filter::
 {
 }
 
-TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter (void)
+TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter ()
 {
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Masked_Type_Filter::begin (void) const
+TAO_EC_Masked_Type_Filter::begin () const
 {
   return 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Masked_Type_Filter::end (void) const
+TAO_EC_Masked_Type_Filter::end () const
 {
   return 0;
 }
 
 int
-TAO_EC_Masked_Type_Filter::size (void) const
+TAO_EC_Masked_Type_Filter::size () const
 {
   return 0;
 }
@@ -87,12 +87,12 @@ TAO_EC_Masked_Type_Filter::push_nocopy (RtecEventComm::EventSet &,
 }
 
 void
-TAO_EC_Masked_Type_Filter::clear (void)
+TAO_EC_Masked_Type_Filter::clear ()
 {
 }
 
 CORBA::ULong
-TAO_EC_Masked_Type_Filter::max_event_size (void) const
+TAO_EC_Masked_Type_Filter::max_event_size () const
 {
   return 1;
 }

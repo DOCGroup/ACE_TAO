@@ -14,7 +14,7 @@ TAO_EC_Default_ProxyPushConsumer::
 {
 }
 
-TAO_EC_Default_ProxyPushConsumer::~TAO_EC_Default_ProxyPushConsumer (void)
+TAO_EC_Default_ProxyPushConsumer::~TAO_EC_Default_ProxyPushConsumer ()
 {
 }
 
@@ -133,19 +133,19 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
 }
 
 PortableServer::POA_ptr
-TAO_EC_Default_ProxyPushConsumer::_default_POA (void)
+TAO_EC_Default_ProxyPushConsumer::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_add_ref (void)
+TAO_EC_Default_ProxyPushConsumer::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::_remove_ref (void)
+TAO_EC_Default_ProxyPushConsumer::_remove_ref ()
 {
   this->_decr_refcnt ();
 }
@@ -158,7 +158,7 @@ TAO_EC_Default_ProxyPushConsumer::activate (
 }
 
 PortableServer::ObjectId
-TAO_EC_Default_ProxyPushConsumer::object_id (void)
+TAO_EC_Default_ProxyPushConsumer::object_id ()
 {
   PortableServer::ObjectId_var result =
     this->default_POA_->servant_to_id (this);

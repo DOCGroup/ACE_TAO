@@ -52,7 +52,7 @@ static long *timer_ids = 0;
 class Example_Handler : public ACE_Event_Handler
 {
 public:
-  Example_Handler (void): close_count_ (0) {}
+  Example_Handler (): close_count_ (0) {}
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask mask)
   {
@@ -82,7 +82,7 @@ public:
 
 struct Interval_Handler : public ACE_Event_Handler
 {
-  Interval_Handler (void) : trip_count_ (0) { }
+  Interval_Handler () : trip_count_ (0) { }
 
   virtual int handle_timeout (const ACE_Time_Value & , const void *)
   {
@@ -521,7 +521,7 @@ test_performance (ACE_Timer_Queue *tq,
 // of ACE_Timer_Heap timer IDs around the boundary of having to enlarge
 // the heap.
 static void
-test_unique_timer_heap_ids (void)
+test_unique_timer_heap_ids ()
 {
   Example_Handler eh;
   ACE_Timer_Heap timer_heap (44);

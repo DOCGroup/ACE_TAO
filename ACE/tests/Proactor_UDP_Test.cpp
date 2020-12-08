@@ -158,7 +158,7 @@ disable_signal (int sigmin, int sigmax)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void):
+  MyTask ():
     lock_ (),
     sem_ ((unsigned int) 0),
     proactor_(0) {}
@@ -169,17 +169,17 @@ public:
       (void) this->delete_proactor();
     }
 
-  virtual int svc (void);
+  virtual int svc ();
 
   int start (int num_threads,
              ProactorType type_proactor,
              size_t max_op );
-  int stop  (void);
+  int stop  ();
 
 private:
   int  create_proactor (ProactorType type_proactor,
                         size_t max_op);
-  int  delete_proactor (void);
+  int  delete_proactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
@@ -273,7 +273,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 }
 
 int
-MyTask::delete_proactor (void)
+MyTask::delete_proactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -335,7 +335,7 @@ MyTask::stop ()
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask started\n")));
 
@@ -377,13 +377,13 @@ class Server : public ACE_Handler
 public:
   Server ();
   Server (TestData *tester, int id);
-  ~Server (void);
+  ~Server ();
 
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  long get_total_w   (void) { return this->total_w_; }
-  long get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  long get_total_w   () { return this->total_w_; }
+  long get_total_r   () { return this->total_r_; }
 
   /// This is called after the new session has been established.
   void go (ACE_HANDLE handle, const ACE_INET_Addr &client);
@@ -405,7 +405,7 @@ protected:
   virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
 
 private:
-  int initiate_read (void);
+  int initiate_read ();
   int initiate_write (ACE_Message_Block *mb, size_t nbytes);
 
   TestData *tester_;
@@ -434,14 +434,14 @@ class Client : public ACE_Handler
 public:
   Client ();
   Client (TestData *tester, int id);
-  ~Client (void);
+  ~Client ();
 
   void go (ACE_HANDLE h, const ACE_INET_Addr &server);
-  int id (void) { return this->id_; }
-  size_t get_total_snd (void) { return this->total_snd_; }
-  size_t get_total_rcv (void) { return this->total_rcv_; }
-  int    get_total_w   (void) { return this->total_w_; }
-  int    get_total_r   (void) { return this->total_r_; }
+  int id () { return this->id_; }
+  size_t get_total_snd () { return this->total_snd_; }
+  size_t get_total_rcv () { return this->total_rcv_; }
+  int    get_total_w   () { return this->total_w_; }
+  int    get_total_r   () { return this->total_r_; }
 
   // This is called when asynchronous reads from the socket complete
   virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
@@ -449,13 +449,13 @@ public:
   // This is called when asynchronous writes from the socket complete
   virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
 
-  void cancel (void);
+  void cancel ();
 
 private:
-  int initiate_read (void);
-  int initiate_write (void);
+  int initiate_read ();
+  int initiate_write ();
       // FUZZ: disable check_for_lack_ACE_OS
-  void close (void);
+  void close ();
       // FUZZ: enable check_for_lack_ACE_OS
 
   TestData *tester_;
@@ -482,13 +482,13 @@ class TestData
 {
 public:
   TestData ();
-  bool testing_done (void);
-  Server *server_up (void);
-  Client *client_up (void);
+  bool testing_done ();
+  Server *server_up ();
+  Client *client_up ();
   void server_done (Server *s);
   void client_done (Client *c);
-  void stop_all (void);
-  void report (void);
+  void stop_all ();
+  void report ();
 
 private:
   struct Local_Stats
@@ -521,7 +521,7 @@ TestData::TestData ()
 }
 
 bool
-TestData::testing_done (void)
+TestData::testing_done ()
 {
   int svr_up = this->servers_.sessions_up_.value ();
   int svr_dn = this->servers_.sessions_down_.value ();
@@ -535,7 +535,7 @@ TestData::testing_done (void)
 }
 
 Server *
-TestData::server_up (void)
+TestData::server_up ()
 {
   ++this->servers_.sessions_up_;
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
@@ -557,7 +557,7 @@ TestData::server_up (void)
 }
 
 Client *
-TestData::client_up (void)
+TestData::client_up ()
 {
   ++this->clients_.sessions_up_;
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
@@ -649,7 +649,7 @@ TestData::client_done (Client *c)
 }
 
 void
-TestData::stop_all (void)
+TestData::stop_all ()
 {
   int i;
 
@@ -686,7 +686,7 @@ TestData::stop_all (void)
 }
 
 void
-TestData::report (void)
+TestData::report ()
 {
   // Print statistics
   ACE_TCHAR bufs [256];
@@ -758,13 +758,13 @@ class Master : public ACE_Handler
 {
 public:
   Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
-  ~Master (void);
+  ~Master ();
 
   // Called when dgram receive operation completes.
   virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
 
 private:
-  void start_recv (void);
+  void start_recv ();
 
   TestData *tester_;
   ACE_INET_Addr recv_addr_;
@@ -796,7 +796,7 @@ Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
     }
 }
 
-Master::~Master (void)
+Master::~Master ()
 {
   if (this->recv_in_progress_)
     this->rd_.cancel ();
@@ -915,7 +915,7 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 }
 
 void
-Master::start_recv (void)
+Master::start_recv ()
 {
   if (this->mb_ == 0)
     return;
@@ -947,7 +947,7 @@ Server::Server (TestData *tester, int id)
 {
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Server %d dtor; %d sends (%B bytes); ")
@@ -1035,7 +1035,7 @@ Server::go (ACE_HANDLE handle, const ACE_INET_Addr &client)
 }
 
 int
-Server::initiate_read (void)
+Server::initiate_read ()
 {
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
     return -1;
@@ -1406,7 +1406,7 @@ Client::Client (TestData *tester, int id)
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Client %d dtor; %d sends (%B bytes); ")
@@ -1508,7 +1508,7 @@ Client::go (ACE_HANDLE handle, const ACE_INET_Addr &server)
 }
 
 int
-Client::initiate_write (void)
+Client::initiate_write ()
 {
   if (this->flg_cancel_ || this->handle () == ACE_INVALID_HANDLE)
     return -1;
@@ -1616,7 +1616,7 @@ Client::initiate_write (void)
 }
 
 int
-Client::initiate_read (void)
+Client::initiate_read ()
 {
   if (this->flg_cancel_ || this->handle_ == ACE_INVALID_HANDLE)
     return -1;

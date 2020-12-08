@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Scheduling_Strategy::~TAO_EC_Scheduling_Strategy (void)
+TAO_EC_Scheduling_Strategy::~TAO_EC_Scheduling_Strategy ()
 {
 }
 

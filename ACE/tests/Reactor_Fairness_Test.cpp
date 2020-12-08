@@ -67,7 +67,7 @@ namespace {
     }
 
     // Return 1 if this looks like a failure wrt fairness.
-    int analyze_reports (void)
+    int analyze_reports ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Results (%d entries):\n"),

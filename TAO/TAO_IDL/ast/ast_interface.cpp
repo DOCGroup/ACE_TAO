@@ -412,7 +412,7 @@ AST_Interface::fwd_redefinition_helper (AST_Interface *&i,
 void
 AST_Interface::redef_clash_populate_r (AST_Type *t)
 {
-  if (this->insert_non_dup (t, 0) == 0)
+  if (this->insert_non_dup (t, false) == 0)
     {
       return;
     }

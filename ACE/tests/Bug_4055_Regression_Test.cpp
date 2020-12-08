@@ -32,7 +32,7 @@
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
-create_timer_queue (void)
+create_timer_queue ()
 {
   ACE_Timer_Queue * tmq = 0;
 
@@ -52,15 +52,15 @@ public:
 
   virtual ~MyTask () { stop (); }
 
-  virtual int svc (void);
+  virtual int svc ();
 
   int start (int num_threads);
-  int stop (void);
+  int stop ();
   ACE_Reactor* get_reactor ();
-  int create_reactor (void);
+  int create_reactor ();
 
 private:
-  int delete_reactor (void);
+  int delete_reactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Reactor *my_reactor_;
@@ -74,7 +74,7 @@ MyTask::get_reactor ()
 }
 
 int
-MyTask::create_reactor (void)
+MyTask::create_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -101,7 +101,7 @@ MyTask::create_reactor (void)
 }
 
 int
-MyTask::delete_reactor (void)
+MyTask::delete_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -133,7 +133,7 @@ MyTask::start (int num_threads)
 
 
 int
-MyTask::stop (void)
+MyTask::stop ()
 {
   if (this->my_reactor_ != 0)
     {
@@ -157,7 +157,7 @@ MyTask::stop (void)
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 

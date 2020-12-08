@@ -75,7 +75,7 @@ TAO_NotifyLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 
 void
-TAO_NotifyLog_i::destroy (void)
+TAO_NotifyLog_i::destroy ()
 {
   notifier_->object_deletion (logid_);
 
@@ -90,7 +90,7 @@ TAO_NotifyLog_i::destroy (void)
 }
 
 void
-TAO_NotifyLog_i::activate (void)
+TAO_NotifyLog_i::activate ()
 {
 
   CosNotifyChannelAdmin::AdminID adminid = 0;
@@ -122,7 +122,7 @@ TAO_NotifyLog_i::activate (void)
 
 //IDL to C++
 CosNotifyFilter::Filter_ptr
-TAO_NotifyLog_i::get_filter (void)
+TAO_NotifyLog_i::get_filter ()
 {
   //TODO: need to add impl
   throw CORBA::NO_IMPLEMENT ();
@@ -137,26 +137,26 @@ TAO_NotifyLog_i::set_filter (CosNotifyFilter::Filter_ptr /* filter */)
 }
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
-TAO_NotifyLog_i::MyFactory (void)
+TAO_NotifyLog_i::MyFactory ()
 {
   //TODO: need to add impl
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CosNotifyChannelAdmin::ConsumerAdmin_ptr
-TAO_NotifyLog_i::default_consumer_admin (void)
+TAO_NotifyLog_i::default_consumer_admin ()
 {
   return this->event_channel_->default_consumer_admin ();
 }
 
 CosNotifyChannelAdmin::SupplierAdmin_ptr
-TAO_NotifyLog_i::default_supplier_admin (void)
+TAO_NotifyLog_i::default_supplier_admin ()
 {
   return this->event_channel_->default_supplier_admin ();
 }
 
 CosNotifyFilter::FilterFactory_ptr
-TAO_NotifyLog_i::default_filter_factory (void)
+TAO_NotifyLog_i::default_filter_factory ()
 {
   return this->event_channel_->default_filter_factory ();
 }
@@ -188,19 +188,19 @@ TAO_NotifyLog_i::get_supplieradmin (CosNotifyChannelAdmin::AdminID id)
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_NotifyLog_i::get_all_consumeradmins (void)
+TAO_NotifyLog_i::get_all_consumeradmins ()
 {
   return this->event_channel_->get_all_consumeradmins ();
 }
 
 CosNotifyChannelAdmin::AdminIDSeq*
-TAO_NotifyLog_i::get_all_supplieradmins (void)
+TAO_NotifyLog_i::get_all_supplieradmins ()
 {
   return this->event_channel_->get_all_supplieradmins ();
 }
 
 CosNotification::AdminProperties*
-TAO_NotifyLog_i::get_admin (void)
+TAO_NotifyLog_i::get_admin ()
 {
   return this->event_channel_->get_admin ();
 }
@@ -212,7 +212,7 @@ TAO_NotifyLog_i::set_admin (const CosNotification::AdminProperties& admin)
 }
 
 CosNotification::QoSProperties*
-TAO_NotifyLog_i::get_qos (void)
+TAO_NotifyLog_i::get_qos ()
 {
   //need to add merging of QoS from Log_i and EventChannel_i
   throw CORBA::NO_IMPLEMENT ();
@@ -236,7 +236,7 @@ TAO_NotifyLog_i::validate_qos (
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_NotifyLog_i::for_consumers (void)
+TAO_NotifyLog_i::for_consumers ()
 {
   return this->event_channel_->for_consumers();
 }

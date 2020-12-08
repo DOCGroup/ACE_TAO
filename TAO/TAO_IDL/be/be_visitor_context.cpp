@@ -23,8 +23,8 @@ be_visitor_context::be_visitor_context ()
     alias_ (nullptr),
     tdef_ (nullptr),
     attr_ (nullptr),
-    exception_ (0),
-    comma_ (0),
+    exception_ (false),
+    comma_ (false),
     interface_ (nullptr)
 {
 }
@@ -85,8 +85,8 @@ be_visitor_context::reset ()
   this->alias_ = nullptr;
   this->tdef_ = nullptr;
   this->attr_ = nullptr;
-  this->exception_ = 0;
-  this->comma_ = 0;
+  this->exception_ = false;
+  this->comma_ = false;
   this->interface_ = nullptr;
   this->template_args_ = nullptr;
   this->template_params_ = nullptr;

@@ -10,19 +10,19 @@ TAO::SSLIOP::TargetCredentials::TargetCredentials (::X509 *cert,
 
 
 SecurityLevel3::CredentialsType
-TAO::SSLIOP::TargetCredentials::creds_type (void)
+TAO::SSLIOP::TargetCredentials::creds_type ()
 {
   return SecurityLevel3::CT_TargetCredentials;
 }
 
 char *
-TAO::SSLIOP::TargetCredentials::context_id (void)
+TAO::SSLIOP::TargetCredentials::context_id ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::TargetCredentials::client_principal (void)
+TAO::SSLIOP::TargetCredentials::client_principal ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -40,7 +40,7 @@ TAO::SSLIOP::TargetCredentials::client_restricted_resources ()
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::TargetCredentials::target_principal (void)
+TAO::SSLIOP::TargetCredentials::target_principal ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -58,49 +58,49 @@ TAO::SSLIOP::TargetCredentials::target_restricted_resources ()
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::TargetCredentials::parent_credentials (void)
+TAO::SSLIOP::TargetCredentials::parent_credentials ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::client_authentication (void)
+TAO::SSLIOP::TargetCredentials::client_authentication ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::target_authentication (void)
+TAO::SSLIOP::TargetCredentials::target_authentication ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::confidentiality (void)
+TAO::SSLIOP::TargetCredentials::confidentiality ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::integrity (void)
+TAO::SSLIOP::TargetCredentials::integrity ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::target_embodied (void)
+TAO::SSLIOP::TargetCredentials::target_embodied ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::TargetCredentials::target_endorsed (void)
+TAO::SSLIOP::TargetCredentials::target_endorsed ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 void
-TAO::SSLIOP::TargetCredentials::release (void)
+TAO::SSLIOP::TargetCredentials::release ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }

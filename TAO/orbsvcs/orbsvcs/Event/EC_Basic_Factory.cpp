@@ -20,11 +20,11 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Basic_Factory::TAO_EC_Basic_Factory (void)
+TAO_EC_Basic_Factory::TAO_EC_Basic_Factory ()
 {
 }
 
-TAO_EC_Basic_Factory::~TAO_EC_Basic_Factory (void)
+TAO_EC_Basic_Factory::~TAO_EC_Basic_Factory ()
 {
 }
 
@@ -194,7 +194,7 @@ TAO_EC_Basic_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSu
 }
 
 ACE_Lock*
-TAO_EC_Basic_Factory::create_consumer_lock (void)
+TAO_EC_Basic_Factory::create_consumer_lock ()
 {
   return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
 }
@@ -206,7 +206,7 @@ TAO_EC_Basic_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_Basic_Factory::create_supplier_lock (void)
+TAO_EC_Basic_Factory::create_supplier_lock ()
 {
   return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
 }

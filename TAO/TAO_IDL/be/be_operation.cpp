@@ -86,7 +86,7 @@ be_operation::be_add_argument (AST_Argument *arg)
 {
   this->add_to_scope (arg);
   this->add_to_referenced (arg,
-                           0,
+                           false,
                            nullptr);
   return arg;
 }

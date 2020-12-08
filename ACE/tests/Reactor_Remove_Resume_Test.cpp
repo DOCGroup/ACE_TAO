@@ -36,13 +36,13 @@ public:
 
 protected:
 
-  virtual ~Bogus_Handler (void);
+  virtual ~Bogus_Handler ();
 
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  virtual int resume_handler (void);
+  virtual int resume_handler ();
 
 private:
 
@@ -65,12 +65,12 @@ Bogus_Handler::Bogus_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bogus_Handler::~Bogus_Handler (void)
+Bogus_Handler::~Bogus_Handler ()
 {
 }
 
 ACE_HANDLE
-Bogus_Handler::get_handle (void) const
+Bogus_Handler::get_handle () const
 {
   return this->read_handle_;
 }
@@ -102,7 +102,7 @@ Bogus_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Bogus_Handler::resume_handler (void)
+Bogus_Handler::resume_handler ()
 {
   // We don't want the reactor to resume this event handler.
   return ACE_APPLICATION_RESUMES_HANDLER;
@@ -119,20 +119,20 @@ public:
                bool & okay_to_close,
                bool suspension_test);
 
-  ACE_HANDLE write_handle (void) const;
+  ACE_HANDLE write_handle () const;
 
 protected:
 
-  virtual ~Bad_Handler (void);
+  virtual ~Bad_Handler ();
 
 private:
 
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
 
-  int handle_input_result (void) const;
+  int handle_input_result () const;
 
 private:
 
@@ -164,12 +164,12 @@ Bad_Handler::Bad_Handler (ACE_Reactor * reactor,
 
 }
 
-Bad_Handler::~Bad_Handler (void)
+Bad_Handler::~Bad_Handler ()
 {
 }
 
 ACE_HANDLE
-Bad_Handler::get_handle (void) const
+Bad_Handler::get_handle () const
 {
   return this->read_handle_;
 }
@@ -243,7 +243,7 @@ Bad_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Bad_Handler::handle_input_result (void) const
+Bad_Handler::handle_input_result () const
 {
   return
     (this->suspension_test_
@@ -362,10 +362,10 @@ handle_events (ACE_Reactor & reactor,
 
 // ------------------------------------------------------------
 
-typedef std::unique_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
+typedef std::unique_ptr<ACE_Reactor_Impl> (*reactor_factory_type) ();
 
 std::unique_ptr<ACE_Reactor_Impl>
-tp_reactor_factory (void)
+tp_reactor_factory ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));

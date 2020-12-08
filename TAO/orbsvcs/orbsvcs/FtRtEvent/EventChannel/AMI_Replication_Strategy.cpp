@@ -44,17 +44,17 @@ AMI_Replication_Strategy::make_primary_strategy()
   return 0;
 }
 
-int  AMI_Replication_Strategy::acquire_read (void)
+int  AMI_Replication_Strategy::acquire_read ()
 {
   return 0;
 }
 
-int  AMI_Replication_Strategy::acquire_write (void)
+int  AMI_Replication_Strategy::acquire_write ()
 {
   return 0;
 }
 
-int  AMI_Replication_Strategy::release (void)
+int  AMI_Replication_Strategy::release ()
 {
   return 0;
 }

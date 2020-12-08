@@ -279,7 +279,7 @@ be_util::prep_be_arg (char *s)
         }
       else if (ACE_OS::strstr (arg, obv_opt_accessor) == arg)
         {
-          be_global->obv_opt_accessor (1);
+          be_global->obv_opt_accessor (true);
         }
       else if (ACE_OS::strstr (arg, ciao_container_type) == arg)
         {

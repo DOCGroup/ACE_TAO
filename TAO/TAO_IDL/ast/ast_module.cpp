@@ -105,7 +105,7 @@ AST_Decl::NodeType const
 AST_Module::AST_Module (UTL_ScopedName *n, AST_Module *previous)
   : AST_Decl (AST_Decl::NT_module, n),
     UTL_Scope (AST_Decl::NT_module),
-    pd_has_nested_valuetype_ (0),
+    pd_has_nested_valuetype_ (false),
     previous_opening_ (previous),
     last_in_same_parent_scope_ (this),
     from_inst_ (nullptr),
@@ -168,7 +168,7 @@ AST_Module::set_has_nested_valuetype ()
         }
     }
 
-  this->pd_has_nested_valuetype_ = 1;
+  this->pd_has_nested_valuetype_ = true;
 }
 
 bool

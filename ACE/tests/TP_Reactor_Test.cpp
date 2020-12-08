@@ -124,19 +124,19 @@ public:
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void): sem_ ((unsigned int) 0),
+  MyTask (): sem_ ((unsigned int) 0),
                  my_reactor_ (0) {}
 
   virtual ~MyTask () { stop (); }
 
-  virtual int svc (void);
+  virtual int svc ();
 
   int start (int num_threads);
-  int stop (void);
+  int stop ();
 
 private:
-  int  create_reactor (void);
-  int  delete_reactor (void);
+  int  create_reactor ();
+  int  delete_reactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
@@ -144,7 +144,7 @@ private:
 };
 
 int
-MyTask::create_reactor (void)
+MyTask::create_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -172,7 +172,7 @@ MyTask::create_reactor (void)
 }
 
 int
-MyTask::delete_reactor (void)
+MyTask::delete_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -213,7 +213,7 @@ MyTask::start (int num_threads)
 
 
 int
-MyTask::stop (void)
+MyTask::stop ()
 {
   if (this->my_reactor_ != 0)
     {
@@ -237,7 +237,7 @@ MyTask::stop (void)
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) MyTask started\n")));
 
@@ -255,7 +255,7 @@ MyTask::svc (void)
 
 // *************************************************************
 
-Acceptor::Acceptor (void)
+Acceptor::Acceptor ()
   : ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR> ((ACE_Reactor *) 0),
     sessions_ (0),
     total_snd_(0),
@@ -269,14 +269,14 @@ Acceptor::Acceptor (void)
      this->list_receivers_[i] =0;
 }
 
-Acceptor::~Acceptor (void)
+Acceptor::~Acceptor ()
 {
   this->reactor (0);
   stop ();
 }
 
 void
-Acceptor::stop (void)
+Acceptor::stop ()
 {
   // this method can be called only after reactor event loop id done
   // in all threads
@@ -384,7 +384,7 @@ Receiver::Receiver (Acceptor * acceptor, size_t index)
 }
 
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   this->reactor (0);
   if (acceptor_ != 0)
@@ -405,7 +405,7 @@ Receiver::~Receiver (void)
 }
 
 int
-Receiver::check_destroy (void)
+Receiver::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
     return -1;
@@ -614,7 +614,7 @@ Receiver::handle_output (ACE_HANDLE h)
 
 // *************************************************************
 
-Connector::Connector (void)
+Connector::Connector ()
   : ACE_Connector<Sender,ACE_SOCK_CONNECTOR> ((ACE_Reactor *) 0),
     sessions_ (0),
     total_snd_(0),
@@ -628,7 +628,7 @@ Connector::Connector (void)
      this->list_senders_[i] = 0;
 }
 
-Connector::~Connector (void)
+Connector::~Connector ()
 {
   this->reactor (0);
   stop ();
@@ -763,7 +763,7 @@ Sender::Sender (Connector* connector, size_t index)
 }
 
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   this->reactor (0);
   if (connector_ != 0)
@@ -784,7 +784,7 @@ Sender::~Sender (void)
 }
 
 int
-Sender::check_destroy (void)
+Sender::check_destroy ()
 {
   if (flg_mask_ == ACE_Event_Handler::NULL_MASK)
     return -1;
@@ -815,7 +815,7 @@ int Sender::open (void *)
 }
 
 int
-Sender::initiate_write (void)
+Sender::initiate_write ()
 {
   if ( this->msg_queue ()->message_count () < 20) // flow control
     {

@@ -35,7 +35,7 @@ public:
 
   int handle_output (ACE_HANDLE fd);
 
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   // We need to add MSG_OOB data transfer to this test to check the
   // order of when <handle_exception> gets called.  I tried with
@@ -76,14 +76,14 @@ Handler::Handler (ACE_Reactor &reactor)
 }
 
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   this->pipe_.close ();
 }
 
 
 ACE_HANDLE
-Handler::get_handle (void) const
+Handler::get_handle () const
 {
   return this->pipe_.read_handle ();
 }

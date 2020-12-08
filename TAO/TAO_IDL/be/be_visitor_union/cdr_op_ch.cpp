@@ -91,6 +91,6 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

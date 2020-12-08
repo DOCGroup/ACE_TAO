@@ -35,7 +35,7 @@ class Do_Nothing_Task : public ACE_Task_Base {
 public:
   virtual int close (u_long flags = 0);
 
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 // close tries to wait for other threads. There aren't any, but as long as
@@ -54,7 +54,7 @@ Do_Nothing_Task::close (u_long)
 
 // svc just waits a second then exits.
 int
-Do_Nothing_Task::svc (void)
+Do_Nothing_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Task 0x%x, thread %t waiting to exit\n"),

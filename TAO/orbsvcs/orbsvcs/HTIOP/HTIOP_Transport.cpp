@@ -30,18 +30,18 @@ TAO::HTIOP::Transport::Transport (TAO::HTIOP::Connection_Handler *h,
 {
 }
 
-TAO::HTIOP::Transport::~Transport (void)
+TAO::HTIOP::Transport::~Transport ()
 {
 }
 
 ACE_Event_Handler *
-TAO::HTIOP::Transport::event_handler_i (void)
+TAO::HTIOP::Transport::event_handler_i ()
 {
   return this->connection_handler_;
 }
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::connection_handler_i (void)
+TAO::HTIOP::Transport::connection_handler_i ()
 {
   return this->connection_handler_;
 }
@@ -106,7 +106,7 @@ TAO::HTIOP::Transport::recv (char *buf,
 }
 
 int
-TAO::HTIOP::Transport::register_handler (void)
+TAO::HTIOP::Transport::register_handler ()
 {
   if (TAO_debug_level > 4)
     {
@@ -355,7 +355,7 @@ TAO::HTIOP::Transport::get_listen_point (::HTIOP::ListenPointList &lp_list,
 
 
 TAO_Connection_Handler *
-TAO::HTIOP::Transport::invalidate_event_handler_i (void)
+TAO::HTIOP::Transport::invalidate_event_handler_i ()
 {
   TAO_Connection_Handler * eh = this->connection_handler_;
   this->connection_handler_ = 0;

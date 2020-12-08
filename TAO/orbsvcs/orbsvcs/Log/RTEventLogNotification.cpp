@@ -29,19 +29,19 @@ TAO_RTEventLogNotification::TAO_RTEventLogNotification (
   obtainProxyConsumer ();
 }
 
-TAO_RTEventLogNotification::~TAO_RTEventLogNotification (void)
+TAO_RTEventLogNotification::~TAO_RTEventLogNotification ()
 {
   // No-Op.
 }
 
 void
-TAO_RTEventLogNotification::disconnect_push_supplier (void)
+TAO_RTEventLogNotification::disconnect_push_supplier ()
 {
   // No-Op.
 }
 
 void
-TAO_RTEventLogNotification::obtainProxyConsumer (void)
+TAO_RTEventLogNotification::obtainProxyConsumer ()
 {
   RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
     event_channel_->for_suppliers();

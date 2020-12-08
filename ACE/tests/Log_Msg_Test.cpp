@@ -32,14 +32,14 @@
 #include "ace/Thread.h"
 
 static void
-cleanup (void)
+cleanup ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("cleanup hook (%P)!\n")));
 }
 
 static void
-cause_error (void)
+cause_error ()
 {
   errno = EWOULDBLOCK;
   ACE_ERROR ((LM_DEBUG,
@@ -138,7 +138,7 @@ Logger::log (ACE_Log_Record &log_record)
 }
 
 static void
-test_callbacks (void)
+test_callbacks ()
 {
   // This message should show up in stderr.
   ACE_DEBUG ((LM_DEBUG,
@@ -459,7 +459,7 @@ test_acelib_category()
 }
 
 static int
-test_ostream (void)
+test_ostream ()
 {
   // This message should show up in the log file.
   ACE_DEBUG ((LM_DEBUG,
@@ -704,7 +704,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
 }
 
 int
-Log_Spec_Verify::result (void)
+Log_Spec_Verify::result ()
 {
   if (this->fail_ == 0)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("All logging specifier tests passed.\n")));
@@ -722,7 +722,7 @@ Log_Spec_Verify::result (void)
 }
 
 static int
-test_format_specs (void)
+test_format_specs ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l1:%l\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l2:%5l\n")));

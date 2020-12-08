@@ -56,7 +56,7 @@ TAO::PG_FactoryRegistry::PG_FactoryRegistry (const char * name)
 {
 }
 
-TAO::PG_FactoryRegistry::~PG_FactoryRegistry (void)
+TAO::PG_FactoryRegistry::~PG_FactoryRegistry ()
 {
 }
 
@@ -111,7 +111,7 @@ const char * TAO::PG_FactoryRegistry::identity () const
   return this->identity_.c_str();
 }
 
-void TAO::PG_FactoryRegistry::_remove_ref (void)
+void TAO::PG_FactoryRegistry::_remove_ref ()
 {
   this->quit_state_ = GONE;
 }
@@ -135,7 +135,7 @@ int TAO::PG_FactoryRegistry::idle (int & result)
 }
 
 
-int TAO::PG_FactoryRegistry::fini (void)
+int TAO::PG_FactoryRegistry::fini ()
 {
   if (this->ior_output_file_ != 0)
   {

@@ -36,7 +36,7 @@ static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), 0
 static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), 0};
 
 static int
-run_test (void)
+run_test ()
 {
   HASH_STRING_MAP colors;
 

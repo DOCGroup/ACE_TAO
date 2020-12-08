@@ -135,7 +135,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n),
     pd_constant_value (v),
     pd_et (t),
-    ifr_added_ (0)
+    ifr_added_ (false)
 {
 }
 
@@ -148,7 +148,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n),
     pd_constant_value (v),
     pd_et (t),
-    ifr_added_ (0)
+    ifr_added_ (false)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
   // literal to a float constant. Must also check that the input
@@ -290,7 +290,7 @@ AST_Constant::enum_full_name ()
     {
       UTL_Scope * const s = this->defined_in ();
       AST_Decl  * const d = s->lookup_by_name (this->pd_constant_value->n (),
-                                               1);
+                                               true);
       return (d ? (ScopeAsDecl (d->defined_in ()))->name () : nullptr);
     }
   else

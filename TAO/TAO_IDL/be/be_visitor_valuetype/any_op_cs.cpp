@@ -207,7 +207,7 @@ be_visitor_valuetype_any_op_cs::visit_valuetype (be_valuetype *node)
       *os << "\n\n#endif";
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 

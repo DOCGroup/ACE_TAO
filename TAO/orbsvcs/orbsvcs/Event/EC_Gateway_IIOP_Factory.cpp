@@ -20,13 +20,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_EC_Gateway_IIOP_Factory::init_svcs (void)
+TAO_EC_Gateway_IIOP_Factory::init_svcs ()
 {
   return ACE_Service_Config::static_svcs ()->
     insert (&ace_svc_desc_TAO_EC_Gateway_IIOP_Factory);
 }
 
-TAO_EC_Gateway_IIOP_Factory::TAO_EC_Gateway_IIOP_Factory (void)
+TAO_EC_Gateway_IIOP_Factory::TAO_EC_Gateway_IIOP_Factory ()
   :  orbid_ (TAO_ECG_DEFAULT_IIOP_ORB_ID),
      consumer_ec_control_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL),
      consumer_ec_control_period_ (TAO_ECG_DEFAULT_IIOP_CONSUMEREC_CONTROL_PERIOD),
@@ -36,12 +36,12 @@ TAO_EC_Gateway_IIOP_Factory::TAO_EC_Gateway_IIOP_Factory (void)
 {
 }
 
-TAO_EC_Gateway_IIOP_Factory::~TAO_EC_Gateway_IIOP_Factory (void)
+TAO_EC_Gateway_IIOP_Factory::~TAO_EC_Gateway_IIOP_Factory ()
 {
 }
 
 int
-TAO_EC_Gateway_IIOP_Factory::fini (void)
+TAO_EC_Gateway_IIOP_Factory::fini ()
 {
   return 0;
 }

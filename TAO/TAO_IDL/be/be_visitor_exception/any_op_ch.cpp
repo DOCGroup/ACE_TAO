@@ -106,7 +106,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
                         -1);
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 

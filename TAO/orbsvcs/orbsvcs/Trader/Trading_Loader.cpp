@@ -30,7 +30,7 @@
 
 
 
-TAO_Trading_Loader::TAO_Trading_Loader (void)
+TAO_Trading_Loader::TAO_Trading_Loader ()
   : federate_ (0),
     ior_output_file_ (0),
     bootstrapper_ (0)
@@ -74,7 +74,7 @@ TAO_Trading_Loader::TAO_Trading_Loader (void)
     }
 }
 
-TAO_Trading_Loader::~TAO_Trading_Loader (void)
+TAO_Trading_Loader::~TAO_Trading_Loader ()
 {
   // Destructor
 }
@@ -112,7 +112,7 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Trading_Loader::fini (void)
+TAO_Trading_Loader::fini ()
 {
   try
     {
@@ -178,7 +178,7 @@ TAO_Trading_Loader::fini (void)
 }
 
 int
-TAO_Trading_Loader::run (void)
+TAO_Trading_Loader::run ()
 {
   int return_value =
     this->orb_manager_.run ();
@@ -266,7 +266,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
 }
 
 int
-TAO_Trading_Loader::bootstrap_to_federation (void)
+TAO_Trading_Loader::bootstrap_to_federation ()
 {
   // If all traders follow this strategy, it creates a complete graph
   // of all known traders on a multicast network.
@@ -364,7 +364,7 @@ TAO_Trading_Loader::bootstrap_to_federation (void)
 }
 
 int
-TAO_Trading_Loader::init_multicast_server (void)
+TAO_Trading_Loader::init_multicast_server ()
 {
 #if defined (ACE_HAS_IP_MULTICAST)
   // Get reactor instance from TAO.

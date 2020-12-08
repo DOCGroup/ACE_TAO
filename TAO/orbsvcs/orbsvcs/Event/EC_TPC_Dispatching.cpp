@@ -119,12 +119,12 @@ TAO_EC_TPC_Dispatching::remove_consumer (RtecEventComm::PushConsumer_ptr consume
 }
 
 void
-TAO_EC_TPC_Dispatching::activate (void)
+TAO_EC_TPC_Dispatching::activate ()
 {
 }
 
 void
-TAO_EC_TPC_Dispatching::shutdown (void)
+TAO_EC_TPC_Dispatching::shutdown ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 

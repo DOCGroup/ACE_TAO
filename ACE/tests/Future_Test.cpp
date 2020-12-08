@@ -69,24 +69,24 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Terminator.
-  virtual int shutdown (void);
+  virtual int shutdown ();
 
   /// Destructor.
-  virtual ~Prime_Scheduler (void);
+  virtual ~Prime_Scheduler ();
 
   // = These methods are part of the Active Object Proxy interface.
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const ACE_TCHAR*> name (void);
-  void end (void);
+  ACE_Future<const ACE_TCHAR*> name ();
+  void end ();
 
 protected:
   /// Runs the Prime_Scheduler's event loop, which dequeues
   /// <Method_Requests> and dispatches them.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = These are the Servant methods that do the actual work.
   u_long work_i (u_long, int);
-  const ACE_TCHAR *name_i (void);
+  const ACE_TCHAR *name_i ();
 
 private:
   // = These are the <Prime_Scheduler> implementation details.
@@ -107,10 +107,10 @@ public:
                        u_long,
                        int,
                        ACE_Future<u_long> &);
-  virtual ~Method_Request_work (void);
+  virtual ~Method_Request_work ();
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  virtual int call ();
 
 private:
   Prime_Scheduler *scheduler_;
@@ -139,14 +139,14 @@ Method_Request_work::Method_Request_work (Prime_Scheduler *new_Prime_Scheduler,
               ACE_TEXT ("(%t) Method_Request_work created\n")));
 }
 
-Method_Request_work::~Method_Request_work (void)
+Method_Request_work::~Method_Request_work ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_work will be deleted.\n")));
 }
 
 int
-Method_Request_work::call (void)
+Method_Request_work::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -165,10 +165,10 @@ class Method_Request_name : public ACE_Method_Request
 public:
   Method_Request_name (Prime_Scheduler *,
                        ACE_Future<const ACE_TCHAR*> &);
-  virtual ~Method_Request_name (void);
+  virtual ~Method_Request_name ();
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  virtual int call ();
 
 private:
   Prime_Scheduler *scheduler_;
@@ -184,14 +184,14 @@ Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
               ACE_TEXT ("(%t) Method_Request_name created\n")));
 }
 
-Method_Request_name::~Method_Request_name (void)
+Method_Request_name::~Method_Request_name ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_name will be deleted.\n")));
 }
 
 int
-Method_Request_name::call (void)
+Method_Request_name::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -207,8 +207,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Prime_Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  virtual ~Method_Request_end ();
+  virtual int call ();
 
 private:
   Prime_Scheduler *scheduler_;
@@ -219,12 +219,12 @@ Method_Request_end::Method_Request_end (Prime_Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end (void)
+Method_Request_end::~Method_Request_end ()
 {
 }
 
 int
-Method_Request_end::call (void)
+Method_Request_end::call ()
 {
   // Shut down the scheduler.
   this->scheduler_->shutdown ();
@@ -247,7 +247,7 @@ Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
 
 // Destructor
 
-Prime_Scheduler::~Prime_Scheduler (void)
+Prime_Scheduler::~Prime_Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s will be destroyed\n"),
@@ -271,7 +271,7 @@ Prime_Scheduler::open (void *)
 // close
 
 int
-Prime_Scheduler::shutdown (void)
+Prime_Scheduler::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Prime_Scheduler %s shutdown\n"),
@@ -283,7 +283,7 @@ Prime_Scheduler::shutdown (void)
 // Service..
 
 int
-Prime_Scheduler::svc (void)
+Prime_Scheduler::svc ()
 {
   for (;;)
     {
@@ -304,7 +304,7 @@ Prime_Scheduler::svc (void)
 }
 
 void
-Prime_Scheduler::end (void)
+Prime_Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -322,13 +322,13 @@ Prime_Scheduler::work_i (u_long param,
 }
 
 const ACE_TCHAR *
-Prime_Scheduler::name_i (void)
+Prime_Scheduler::name_i ()
 {
   return this->name_;
 }
 
 ACE_Future<const ACE_TCHAR *>
-Prime_Scheduler::name (void)
+Prime_Scheduler::name ()
 {
   if (this->scheduler_)
     // Delegate to the Prime_Scheduler.

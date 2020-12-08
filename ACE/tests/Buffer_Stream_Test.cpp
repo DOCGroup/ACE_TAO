@@ -40,7 +40,7 @@ typedef ACE_Task<ACE_MT_SYNCH> MT_Task;
 class Common_Task : public MT_Task
 {
 public:
-  Common_Task (void) {}
+  Common_Task () {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   // = ACE_Task hooks.
@@ -57,10 +57,10 @@ public:
 class Supplier : public Common_Task
 {
 public:
-  Supplier (void) {}
+  Supplier () {}
 
   /// Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 /**
@@ -71,14 +71,14 @@ public:
 class Consumer : public Common_Task
 {
 public:
-  Consumer (void) {}
+  Consumer () {}
 
   /// Enqueue the message on the ACE_Message_Queue for subsequent
   /// handling in the svc() method.
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
 
   /// Receive message from Supplier and print to stdout.
-  virtual int svc (void);
+  virtual int svc ();
 private:
 
   /// Amount of time to wait for a timeout.
@@ -116,7 +116,7 @@ Common_Task::close (u_long exit_status)
 // know when to exit.
 
 int
-Supplier::svc (void)
+Supplier::svc ()
 {
   ACE_Message_Block *mb = 0;
 
@@ -161,7 +161,7 @@ Consumer::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // reading and exit.
 
 int
-Consumer::svc (void)
+Consumer::svc ()
 {
   ACE_Message_Block *mb = 0;
   int result;

@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-double calc_cpu_loading (void)
+double calc_cpu_loading ()
 {
   static char buf[1024];
   static unsigned long prev_idle = 0;
@@ -100,12 +100,12 @@ TAO_LB_CPU_Utilization_Monitor::TAO_LB_CPU_Utilization_Monitor (const char * loc
     }
 }
 
-TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor (void)
+TAO_LB_CPU_Utilization_Monitor::~TAO_LB_CPU_Utilization_Monitor ()
 {
 }
 
 CosLoadBalancing::Location *
-TAO_LB_CPU_Utilization_Monitor::the_location (void)
+TAO_LB_CPU_Utilization_Monitor::the_location ()
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -120,7 +120,7 @@ TAO_LB_CPU_Utilization_Monitor::the_location (void)
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_CPU_Utilization_Monitor::loads (void)
+TAO_LB_CPU_Utilization_Monitor::loads ()
 {
   CORBA::Float load = 0;
 

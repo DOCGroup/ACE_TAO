@@ -20,7 +20,7 @@ struct Task : ACE_Task_Base
 {
   explicit Task (ACE_TSS<X> *tss) : tss_(tss) {}
 
-  int svc (void)
+  int svc ()
   {
     X *x = *tss_;
     ACE_UNUSED_ARG (x);

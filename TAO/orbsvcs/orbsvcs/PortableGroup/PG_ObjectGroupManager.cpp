@@ -12,7 +12,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager ()
   : poa_ (),
     object_group_map_ (TAO_PG_MAX_OBJECT_GROUPS),
     location_map_ (TAO_PG_MAX_LOCATIONS),
@@ -21,7 +21,7 @@ TAO_PG_ObjectGroupManager::TAO_PG_ObjectGroupManager (void)
 {
 }
 
-TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager (void)
+TAO_PG_ObjectGroupManager::~TAO_PG_ObjectGroupManager ()
 {
   for (TAO_PG_Location_Map::iterator i = this->location_map_.begin ();
        i != this->location_map_.end ();

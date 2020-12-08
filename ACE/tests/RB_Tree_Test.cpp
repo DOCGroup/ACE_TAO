@@ -523,14 +523,14 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::ACE_RB_Tree_Test
 // Destructor.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK>
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Test (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::~ACE_RB_Tree_Test ()
 {
 }
 
 // Run the interface and iteration tests.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::run_test (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::run_test ()
 {
   // Run the individual portions of the test, in order.
 
@@ -545,7 +545,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::run_test (void)
 // Tests stable and deprecated insertion interfaces.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion ()
 {
   // Fill in each tree with the key and item from the appropriate
   // arrays, using the shuffle index to create the appropriate
@@ -588,7 +588,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_insertion (v
 // Tests forward and reverse iteration after insertion in both trees.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_iteration (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_iteration ()
 {
   // Reset iterators.
 
@@ -662,7 +662,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_insertion_it
 }
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration(void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration()
 {
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *tree_node = 0;
 
@@ -699,7 +699,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_partial_iteration
 // Tests stable and deprecated deletion interfaces.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_deletion (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_deletion ()
 {
   // Remove the even numbered entries from each of the trees.
 
@@ -725,7 +725,7 @@ ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_tree_deletion (vo
 // Tests forward and reverse iteration after deletions in both trees.
 
 template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> void
-ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_iteration (void)
+ACE_RB_Tree_Test<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::test_post_deletion_iteration ()
 {
   // Reset iterators
 

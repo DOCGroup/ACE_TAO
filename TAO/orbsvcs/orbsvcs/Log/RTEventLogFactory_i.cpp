@@ -19,7 +19,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i (void) :
+TAO_RTEventLogFactory_i::TAO_RTEventLogFactory_i () :
   impl (0),
   notifier_ (0)
 {
@@ -69,7 +69,7 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
 }
 
 RTEventLogAdmin::EventLogFactory_ptr
-TAO_RTEventLogFactory_i::activate (void)
+TAO_RTEventLogFactory_i::activate ()
 {
   RTEventLogAdmin::EventLogFactory_var v_return;
 

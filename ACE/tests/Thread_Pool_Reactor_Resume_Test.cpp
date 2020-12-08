@@ -149,12 +149,12 @@ Request_Handler::open (void *arg)
   return result;
 }
 
-Request_Handler::~Request_Handler (void)
+Request_Handler::~Request_Handler ()
 {
 }
 
 int
-Request_Handler::resume_handler (void)
+Request_Handler::resume_handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) resume_handler () called\n")));

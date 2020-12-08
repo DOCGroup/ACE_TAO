@@ -42,7 +42,7 @@ public:
       lock.acquire ();
   }
 
-  ~Guard (void)
+  ~Guard ()
   {
     if (lock_upcall)
       this->lock_.release ();
@@ -178,7 +178,7 @@ class Event_Loop_Task : public ACE_Task_Base
 {
 public:
   Event_Loop_Task (ACE_Reactor &reactor);
-  int svc (void);
+  int svc ();
 
 private:
   ACE_Reactor &reactor_;
@@ -190,7 +190,7 @@ Event_Loop_Task::Event_Loop_Task (ACE_Reactor &reactor)
 }
 
 int
-Event_Loop_Task::svc (void)
+Event_Loop_Task::svc ()
 {
   return this->reactor_.run_reactor_event_loop ();
 }

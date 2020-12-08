@@ -17,7 +17,7 @@ be_visitor_valuetype_field_ci::be_visitor_valuetype_field_ci (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    in_obv_space_ (0)
+    in_obv_space_ (false)
 {
   setenclosings ("");
 }

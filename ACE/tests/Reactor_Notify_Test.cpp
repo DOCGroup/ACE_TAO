@@ -35,18 +35,18 @@ static const time_t SHORT_TIMEOUT = 2;
 class Quiet_Notify_Tester : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  Quiet_Notify_Tester (void) : result_ (0) {}
-  ~Quiet_Notify_Tester (void) { this->wait (); }
+  Quiet_Notify_Tester () : result_ (0) {}
+  ~Quiet_Notify_Tester () { this->wait (); }
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Start the reactor event thread.
   virtual int open (void * = 0);
 
   // Run the reactor event loop.
-  virtual int svc (void);
+  virtual int svc ();
 
   // Return the test result, 0 ok, -1 fail
-  int result (void) const { return this->result_; }
+  int result () const { return this->result_; }
 
 private:
   ACE_Reactor r_;
@@ -61,7 +61,7 @@ Quiet_Notify_Tester::open (void *)
 }
 
 int
-Quiet_Notify_Tester::svc (void)
+Quiet_Notify_Tester::svc ()
 {
   // Count on the main thread doing a notify in less than LONG_TIMEOUT
   // seconds. If we don't get it, report a failure.
@@ -87,7 +87,7 @@ Quiet_Notify_Tester::svc (void)
 }
 
 static int
-run_quiet_notify_test (void)
+run_quiet_notify_test ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) Starting quiet notify test\n"));
   Quiet_Notify_Tester t;
@@ -113,7 +113,7 @@ public:
                  const ACE_Time_Value &tv);
 
   /// Destructor.
-  ~Supplier_Task (void);
+  ~Supplier_Task ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Make this an Active Object.
@@ -125,7 +125,7 @@ public:
 
   /// Generates events and sends them to the <Reactor>'s <notify>
   /// method.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Releases the <waiter_> semaphore when called by the <Reactor>'s
   /// notify handler.
@@ -139,7 +139,7 @@ public:
   virtual int handle_output (ACE_HANDLE);
 
   /// Release the <waiter_>.
-  void release (void);
+  void release ();
 
 private:
   /// Perform the notifications.
@@ -169,7 +169,7 @@ private:
 };
 
 void
-Supplier_Task::release (void)
+Supplier_Task::release ()
 {
   this->waiter_.release ();
 }
@@ -235,7 +235,7 @@ Supplier_Task::close (u_long)
   return 0;
 }
 
-Supplier_Task::~Supplier_Task (void)
+Supplier_Task::~Supplier_Task ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) ~Supplier_Task\n")));
@@ -292,7 +292,7 @@ Supplier_Task::perform_notifications (int notifications)
 }
 
 int
-Supplier_Task::svc (void)
+Supplier_Task::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) **** starting unlimited notifications test\n")));
@@ -456,7 +456,7 @@ class Purged_Notify : public ACE_Event_Handler
 };
 
 static int
-run_notify_purge_test (void)
+run_notify_purge_test ()
 {
   int status;
   ACE_Reactor *r = ACE_Reactor::instance ();
