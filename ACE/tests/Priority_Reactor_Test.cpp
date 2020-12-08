@@ -273,18 +273,18 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Note:  If opt_priority_reactor is false, the default ACE_Reactor is used
   // and we don't need to set one up.
   ACE_Reactor *orig_reactor = 0;
-  unique_ptr<ACE_Reactor> reactor;
+  std::unique_ptr<ACE_Reactor> reactor;
 
   if (opt_priority_reactor)
     {
       ACE_Select_Reactor *impl_ptr;
       ACE_NEW_RETURN (impl_ptr, ACE_Priority_Reactor, -1);
-      unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+      std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
 
       ACE_Reactor *reactor_ptr;
       ACE_NEW_RETURN (reactor_ptr, ACE_Reactor (impl_ptr, 1), -1);
       auto_impl.release ();   // ACE_Reactor dtor will take it from here
-      unique_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
+      std::unique_ptr<ACE_Reactor> auto_reactor (reactor_ptr);
       reactor = std::move(auto_reactor);
       orig_reactor = ACE_Reactor::instance (reactor_ptr);
     }

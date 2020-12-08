@@ -238,7 +238,7 @@ Scheduler::svc (void)
                       ACE_TEXT ("(%t) activation queue shut down\n")));
           break;
         }
-      unique_ptr<ACE_Method_Request> mo (mo_p);
+      std::unique_ptr<ACE_Method_Request> mo (mo_p);
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) calling method request\n")));
@@ -486,7 +486,7 @@ run_main (int, ACE_TCHAR *[])
                   Scheduler (),
                   -1);
 
-  unique_ptr<Scheduler> scheduler(scheduler_ptr);
+  std::unique_ptr<Scheduler> scheduler(scheduler_ptr);
 
   if (scheduler->open () == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

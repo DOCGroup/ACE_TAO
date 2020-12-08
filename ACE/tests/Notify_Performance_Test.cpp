@@ -193,14 +193,14 @@ run_main (int argc, ACE_TCHAR *argv[])
   create_reactor ();
 
   // Manage memory automagically.
-  unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  unique_ptr<ACE_Reactor_Impl> impl;
+  std::unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
+  std::unique_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor || opt_dev_poll_reactor)
     {
-      unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
+      std::unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
       impl = std::move(auto_impl);
     }
 

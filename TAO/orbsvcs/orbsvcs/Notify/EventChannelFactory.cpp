@@ -228,7 +228,7 @@ TAO_Notify_EventChannelFactory::load_topology (void)
   if (this->topology_factory_ != 0)
   {
     // create_loader will open and load the persistence file for validation
-    unique_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
+    std::unique_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
     if (tl.get () != 0)
     {
       tl->load (this);
@@ -351,7 +351,7 @@ TAO_Notify_EventChannelFactory::change_to_parent (void)
       ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->topology_save_lock_, CORBA::INTERNAL ());
       if (seq == this->topology_save_seq_)
       {
-        unique_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
+        std::unique_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
         if (saver.get() != 0)
         {
           this->save_persistent(*saver);

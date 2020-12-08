@@ -279,7 +279,7 @@ TAO_IFR_Server::create_repository (void)
       CORBA::NO_MEMORY ()
     );
 
-  unique_ptr<TAO_ComponentRepository_i> safety (impl);
+  std::unique_ptr<TAO_ComponentRepository_i> safety (impl);
   TAO_IFR_Service_Utils::repo_ = impl;
 
   POA_CORBA::ComponentIR::Repository_tie<TAO_ComponentRepository_i> *impl_tie = 0;

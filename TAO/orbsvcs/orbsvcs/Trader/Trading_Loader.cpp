@@ -200,7 +200,7 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   this->orb_manager_.activate_poa_manager ();
 
   // Create a Trader Object and set its Service Type Repository.
-  unique_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
+  std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
 
   this->trader_ = std::move(auto_trader);
 
