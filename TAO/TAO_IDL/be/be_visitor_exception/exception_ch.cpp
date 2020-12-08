@@ -126,6 +126,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
     }
 
-  node->cli_hdr_gen (1);
+  node->cli_hdr_gen (true);
   return 0;
 }

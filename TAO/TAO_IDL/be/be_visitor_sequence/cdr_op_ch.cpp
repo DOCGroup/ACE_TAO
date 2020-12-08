@@ -128,6 +128,6 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
           << node->flat_name () << "_H_ */";
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

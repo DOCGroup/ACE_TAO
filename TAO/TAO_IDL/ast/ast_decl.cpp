@@ -895,16 +895,16 @@ AST_Decl::is_child (AST_Decl *s)
       AST_Decl *d = ScopeAsDecl (this->defined_in ());
       if (!d)
         {
-          return 0;
+          return false;
         }
 
       if (!ACE_OS::strcmp (d->full_name (), s->full_name ()))
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0; // Not a child.
+  return false; // Not a child.
 }
 
 bool

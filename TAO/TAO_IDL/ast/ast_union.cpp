@@ -304,7 +304,7 @@ AST_Union::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Not in recursion.
   if (self_test)
     this->in_recursion_ = 0;
-  return 0;
+  return false;
 }
 
 // Look up the default branch in union.
@@ -686,7 +686,7 @@ AST_Union::compute_default_value ()
       this->default_value_.u.wchar_val = 0;
       break;
     case AST_Expression::EV_bool:
-      this->default_value_.u.bool_val = 0;
+      this->default_value_.u.bool_val = false;
       break;
     case AST_Expression::EV_enum:
       this->default_value_.u.enum_val = 0;

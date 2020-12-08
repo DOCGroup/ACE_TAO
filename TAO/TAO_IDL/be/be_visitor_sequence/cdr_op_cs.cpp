@@ -203,7 +203,7 @@ be_visitor_sequence_cdr_op_cs::visit_sequence (be_sequence *node)
       << "#endif /* _TAO_CDR_OP_"
       << node->flat_name () << "_CPP_ */";
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

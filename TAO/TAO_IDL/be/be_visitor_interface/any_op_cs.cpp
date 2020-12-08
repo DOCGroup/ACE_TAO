@@ -251,7 +251,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
                          "codegen for scope failed\n"), -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 

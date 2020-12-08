@@ -121,7 +121,7 @@ be_visitor_typedef_cdr_op_cs::visit_typedef (be_typedef *node)
       this->ctx_->tdef (nullptr); // reset
     }
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

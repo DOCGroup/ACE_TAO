@@ -1212,7 +1212,7 @@ be_visitor_arg_traits::generated (be_decl *node) const
           case TAO_CodeGen::TAO_ROOT_SH:
             return node->srv_arg_traits_gen ();
           default:
-            return 0;
+            return false;
         }
     }
 
