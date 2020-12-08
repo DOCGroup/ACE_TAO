@@ -46,7 +46,7 @@ TAO_RTEventLogFactory_i::init (CORBA::ORB_ptr orb,
                     TAO_EC_Event_Channel (attr),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr <TAO_EC_Event_Channel> ec (impl);
+  unique_ptr <TAO_EC_Event_Channel> ec (impl);
 
   impl->activate ();
 

@@ -147,7 +147,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
     CORBA::NO_MEMORY ());
-  auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
+  unique_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   if (TAO_debug_level > 1)
     ORBSVCS_DEBUG ((LM_DEBUG,
@@ -172,7 +172,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
   ACE_NEW_THROW_EX (notify_constr_expr,
     TAO_Notify_Constraint_Expr (),
     CORBA::NO_MEMORY ());
-  auto_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
+  unique_ptr <TAO_Notify_Constraint_Expr> auto_expr (notify_constr_expr);
 
   CosNotifyFilter::ConstraintExp const & expr =
     constraint.constraint_expression;

@@ -16,6 +16,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
+#include <utility>
+
 #include "orbsvcs/Daemon_Utilities.h"
 
 #include "tao/ORB_Core.h"
@@ -198,9 +200,9 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   this->orb_manager_.activate_poa_manager ();
 
   // Create a Trader Object and set its Service Type Repository.
-  auto_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
+  unique_ptr<TAO_Trader_Factory::TAO_TRADER> auto_trader (TAO_Trader_Factory::create_trader (argc, argv));
 
-  this->trader_ = auto_trader;
+  this->trader_ = std::move(auto_trader);
 
   TAO_Support_Attributes_i &sup_attr =
     this->trader_->support_attributes ();

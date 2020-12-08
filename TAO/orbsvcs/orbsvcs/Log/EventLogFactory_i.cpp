@@ -45,7 +45,7 @@ TAO_EventLogFactory_i::init (PortableServer::POA_ptr /* poa */)
 
   CosEventChannelAdmin::EventChannel_var ec_return;
 
-  auto_ptr <TAO_CEC_EventChannel> ec (impl);
+  unique_ptr <TAO_CEC_EventChannel> ec (impl);
 
   PortableServer::ObjectId_var oid =
     this->poa_->activate_object (ec.get ());

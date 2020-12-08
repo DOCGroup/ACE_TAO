@@ -171,7 +171,7 @@ TAO_PG_ObjectGroupManager::add_member_i (
                             ENOMEM),
                           CORBA::COMPLETED_NO));
 
-      auto_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
+      unique_ptr<TAO_PG_ObjectGroup_Array> safe_groups (groups);
 
       // This should not fail!
       if (this->location_map_.bind (the_location, groups) != 0)
@@ -490,7 +490,7 @@ TAO_PG_ObjectGroupManager::create_object_group (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  auto_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
+  unique_ptr<TAO_PG_ObjectGroup_Map_Entry> safe_group_entry (group_entry);
 
   // Set the RepositoryId associated with the created ObjectGroup_Map
   // entry.
