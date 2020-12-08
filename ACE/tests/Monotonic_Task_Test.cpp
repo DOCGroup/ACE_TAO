@@ -82,7 +82,7 @@ public:
 
   virtual ~MyTask () { stop (); }
 
-  virtual int svc (void);
+  virtual int svc ();
 
   int start ();
 
@@ -179,7 +179,7 @@ MyTask::stop ()
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask::svc started\n")));
 

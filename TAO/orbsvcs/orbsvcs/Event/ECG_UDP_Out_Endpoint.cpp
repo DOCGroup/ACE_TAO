@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint (void)
+TAO_ECG_UDP_Out_Endpoint::~TAO_ECG_UDP_Out_Endpoint ()
 {
   this->dgram_.close ();
 

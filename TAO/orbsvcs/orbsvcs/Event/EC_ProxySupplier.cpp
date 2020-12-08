@@ -35,7 +35,7 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
   this->qos_.is_gateway = false;
 }
 
-TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier (void)
+TAO_EC_ProxyPushSupplier::~TAO_EC_ProxyPushSupplier ()
 {
   this->event_channel_->destroy_supplier_lock (this->lock_);
   this->cleanup_i ();
@@ -80,7 +80,7 @@ TAO_EC_ProxyPushSupplier::disconnected (TAO_EC_ProxyPushSupplier*)
 }
 
 void
-TAO_EC_ProxyPushSupplier::shutdown (void)
+TAO_EC_ProxyPushSupplier::shutdown ()
 {
   // Save the consumer we where connected to, we need to send a
   // disconnect message to it.
@@ -116,7 +116,7 @@ TAO_EC_ProxyPushSupplier::shutdown (void)
 }
 
 void
-TAO_EC_ProxyPushSupplier::cleanup_i (void)
+TAO_EC_ProxyPushSupplier::cleanup_i ()
 {
   this->consumer_ =
     RtecEventComm::PushConsumer::_nil ();
@@ -128,7 +128,7 @@ TAO_EC_ProxyPushSupplier::cleanup_i (void)
 }
 
 void
-TAO_EC_ProxyPushSupplier::deactivate (void) throw ()
+TAO_EC_ProxyPushSupplier::deactivate () throw ()
 {
   try
     {
@@ -145,21 +145,21 @@ TAO_EC_ProxyPushSupplier::deactivate (void) throw ()
 }
 
 CORBA::ULong
-TAO_EC_ProxyPushSupplier::_incr_refcnt (void)
+TAO_EC_ProxyPushSupplier::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 void
-TAO_EC_ProxyPushSupplier::refcount_zero_hook (void)
+TAO_EC_ProxyPushSupplier::refcount_zero_hook ()
 {
   // Use the event channel
   this->event_channel_->destroy_proxy (this);
 }
 
 CORBA::ULong
-TAO_EC_ProxyPushSupplier::_decr_refcnt (void)
+TAO_EC_ProxyPushSupplier::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -430,7 +430,7 @@ TAO_EC_ProxyPushSupplier::consumer_non_existent (
 }
 
 void
-TAO_EC_ProxyPushSupplier::clear (void)
+TAO_EC_ProxyPushSupplier::clear ()
 {
   ACE_GUARD (ACE_Lock, ace_mon, *this->lock_);
 
@@ -438,7 +438,7 @@ TAO_EC_ProxyPushSupplier::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_ProxyPushSupplier::max_event_size (void) const
+TAO_EC_ProxyPushSupplier::max_event_size () const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 

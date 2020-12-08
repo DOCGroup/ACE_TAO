@@ -19,18 +19,18 @@
 
 ACE_DLL_UNLOAD_POLICY (Framework_Component_DLL, ACE_DLL_UNLOAD_POLICY_LAZY)
 
-Simple_Service::Simple_Service (void)
+Simple_Service::Simple_Service ()
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::Simple_Service");
 }
 
-Simple_Service::~Simple_Service (void)
+Simple_Service::~Simple_Service ()
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::~Simple_Service");
 }
 
 const ACE_TCHAR *
-Simple_Service::name (void)
+Simple_Service::name ()
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");
   return ACE_TEXT ("Simple_Service");
@@ -55,7 +55,7 @@ public:
     return 0;
   }
 
-  int fini (void)
+  int fini ()
   {
     FRAMEWORK_COMPONENT_DLL_TRACE ("Server_T::fini");
     return 0;

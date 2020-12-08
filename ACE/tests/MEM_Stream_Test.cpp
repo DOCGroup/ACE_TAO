@@ -151,7 +151,7 @@ Echo_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Echo_Handler::svc (void)
+Echo_Handler::svc ()
 {
   while (this->handle_input (this->get_handle ()) >= 0)
     continue;
@@ -223,7 +223,7 @@ connect_client (void *arg)
 #endif
 
 void
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 

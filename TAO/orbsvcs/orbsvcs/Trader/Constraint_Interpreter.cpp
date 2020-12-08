@@ -51,7 +51,7 @@ TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
     }
 }
 
-TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter (void)
+TAO_Constraint_Interpreter::~TAO_Constraint_Interpreter ()
 {
 }
 
@@ -225,7 +225,7 @@ remove_offer (CosTrading::Offer*& offer)
 
 
 size_t
-TAO_Preference_Interpreter::num_offers (void)
+TAO_Preference_Interpreter::num_offers ()
 {
   return this->offers_.size ();
 }

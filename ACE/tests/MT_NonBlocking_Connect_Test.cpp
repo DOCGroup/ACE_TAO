@@ -56,7 +56,7 @@ static const ACE_TCHAR* hosts[] = {
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
 public:
-  Svc_Handler (void)
+  Svc_Handler ()
   {
     ACE_TEST_ASSERT (0);
   }
@@ -144,7 +144,7 @@ public:
                                 &this->cns_, &this->cts_, &this->cys_);
   }
 
-  int svc (void);
+  int svc ();
 
 private:
   ACE_Reactor &reactor_;
@@ -159,7 +159,7 @@ private:
 };
 
 int
-Connect_Thread::svc (void)
+Connect_Thread::svc ()
 {
   size_t const nr_names = sizeof hosts / sizeof (char *);
   ACE_INET_Addr *addresses = new ACE_INET_Addr[nr_names];

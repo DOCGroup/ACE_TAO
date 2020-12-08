@@ -41,7 +41,7 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
     CORBA::Object::_duplicate (attr.scheduler);
 }
 
-TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
+TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base ()
 {
   // Destroy Strategies in the reverse order of creation, they
   // reference to each other during destruction and thus need to be
@@ -78,7 +78,7 @@ TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::create_strategies (void)
+TAO_EC_Event_Channel_Base::create_strategies ()
 {
   this->dispatching_ =
     this->factory_->create_dispatching (this);
@@ -105,7 +105,7 @@ TAO_EC_Event_Channel_Base::create_strategies (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::activate (void)
+TAO_EC_Event_Channel_Base::activate ()
 {
   {
     // First check if the EC is idle, if it is not then we need to
@@ -129,7 +129,7 @@ TAO_EC_Event_Channel_Base::activate (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::shutdown (void)
+TAO_EC_Event_Channel_Base::shutdown ()
 {
   {
     // First check if the EC is already active, if it is not then we
@@ -161,7 +161,7 @@ TAO_EC_Event_Channel_Base::shutdown (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_supplier_admin ()
 {
   try
     {
@@ -178,7 +178,7 @@ TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_consumer_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_consumer_admin ()
 {
   try
     {
@@ -243,19 +243,19 @@ TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EC_Event_Channel_Base::for_consumers (void)
+TAO_EC_Event_Channel_Base::for_consumers ()
 {
   return this->consumer_admin_->_this ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_EC_Event_Channel_Base::for_suppliers (void)
+TAO_EC_Event_Channel_Base::for_suppliers ()
 {
   return this->supplier_admin_->_this ();
 }
 
 void
-TAO_EC_Event_Channel_Base::destroy (void)
+TAO_EC_Event_Channel_Base::destroy ()
 {
   this->shutdown ();
 }

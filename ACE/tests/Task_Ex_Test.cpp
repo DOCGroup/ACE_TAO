@@ -43,7 +43,7 @@ public:
   int open (void*);
 
   /// svc thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 private:
 
 };

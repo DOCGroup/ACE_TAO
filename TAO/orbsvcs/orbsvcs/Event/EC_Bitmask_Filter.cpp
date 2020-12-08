@@ -12,25 +12,25 @@ TAO_EC_Bitmask_Filter::TAO_EC_Bitmask_Filter (CORBA::ULong source_mask,
   this->adopt_child (this->child_);
 }
 
-TAO_EC_Bitmask_Filter::~TAO_EC_Bitmask_Filter (void)
+TAO_EC_Bitmask_Filter::~TAO_EC_Bitmask_Filter ()
 {
   delete this->child_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Bitmask_Filter::begin (void) const
+TAO_EC_Bitmask_Filter::begin () const
 {
   return const_cast<TAO_EC_Filter**> (&this->child_);
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Bitmask_Filter::end (void) const
+TAO_EC_Bitmask_Filter::end () const
 {
   return const_cast<TAO_EC_Filter**> (&this->child_) + 1;
 }
 
 int
-TAO_EC_Bitmask_Filter::size (void) const
+TAO_EC_Bitmask_Filter::size () const
 {
   return 1;
 }
@@ -80,13 +80,13 @@ TAO_EC_Bitmask_Filter::push_nocopy (RtecEventComm::EventSet &event,
 }
 
 void
-TAO_EC_Bitmask_Filter::clear (void)
+TAO_EC_Bitmask_Filter::clear ()
 {
   this->child_->clear ();
 }
 
 CORBA::ULong
-TAO_EC_Bitmask_Filter::max_event_size (void) const
+TAO_EC_Bitmask_Filter::max_event_size () const
 {
   return this->child_->max_event_size ();
 }

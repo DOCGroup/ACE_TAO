@@ -64,7 +64,7 @@ display_map (LAZY_MAP &map)
 // Test for map manager.
 
 void
-map_test (void)
+map_test ()
 {
   // Map of size 3.
   LAZY_MAP map (3);
@@ -209,7 +209,7 @@ display_map (ACTIVE_MAP &map)
 // Test for active map manager.
 
 void
-active_map_test (void)
+active_map_test ()
 {
   // Map of size 3.
   ACTIVE_MAP map (3);

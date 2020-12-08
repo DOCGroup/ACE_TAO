@@ -59,7 +59,7 @@ void iterate_const(const UNBOUNDED_SET& set)
 
 struct DummyFunctor
 {
-  int operator() (void) { return 0; }
+  int operator() () { return 0; }
 };
 
 int

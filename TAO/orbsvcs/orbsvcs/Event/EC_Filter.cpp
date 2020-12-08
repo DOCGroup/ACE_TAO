@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Filter::~TAO_EC_Filter (void)
+TAO_EC_Filter::~TAO_EC_Filter ()
 {
 }
 
@@ -20,19 +20,19 @@ TAO_EC_Filter::adopt_child (TAO_EC_Filter* child)
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Filter::begin (void) const
+TAO_EC_Filter::begin () const
 {
   return 0;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Filter::end (void) const
+TAO_EC_Filter::end () const
 {
   return 0;
 }
 
 int
-TAO_EC_Filter::size (void) const
+TAO_EC_Filter::size () const
 {
   return 0;
 }
@@ -83,13 +83,13 @@ TAO_EC_Null_Filter::push_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Null_Filter::clear (void)
+TAO_EC_Null_Filter::clear ()
 {
   // do nothing
 }
 
 CORBA::ULong
-TAO_EC_Null_Filter::max_event_size (void) const
+TAO_EC_Null_Filter::max_event_size () const
 {
   // @@ Is there a better way to express this?
   return 0;

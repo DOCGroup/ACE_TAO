@@ -35,7 +35,7 @@ Printer::Printer (const char *message)
   ++Printer::instance_count_;
 }
 
-Printer::~Printer (void)
+Printer::~Printer ()
 {
   --Printer::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
@@ -45,7 +45,7 @@ Printer::~Printer (void)
 }
 
 void
-Printer::print (void)
+Printer::print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) %C\n"),
@@ -71,7 +71,7 @@ class Scheduler : public ACE_Task<ACE_SYNCH>
   friend class Method_Request_end;
 public:
   /// Constructor.
-  Scheduler (void);
+  Scheduler ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Initializer.
@@ -82,16 +82,16 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Destructor.
-  virtual ~Scheduler (void);
+  virtual ~Scheduler ();
 
   // = These methods are part of the Active Object Proxy interface.
   void print (Printer_var &printer);
-  void end (void);
+  void end ();
 
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // = These are the <Scheduler> implementation details.
@@ -107,10 +107,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print (void);
+  virtual ~Method_Request_print ();
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  virtual int call ();
 
 private:
   Printer_var printer_;
@@ -126,7 +126,7 @@ Method_Request_print::Method_Request_print (Printer_var &printer)
               printer_.count ()));
 }
 
-Method_Request_print::~Method_Request_print (void)
+Method_Request_print::~Method_Request_print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
@@ -136,7 +136,7 @@ Method_Request_print::~Method_Request_print (void)
 }
 
 int
-Method_Request_print::call (void)
+Method_Request_print::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -156,8 +156,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  virtual ~Method_Request_end ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -168,12 +168,12 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end (void)
+Method_Request_end::~Method_Request_end ()
 {
 }
 
 int
-Method_Request_end::call (void)
+Method_Request_end::call ()
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their
@@ -186,7 +186,7 @@ Method_Request_end::call (void)
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
-Scheduler::Scheduler (void)
+Scheduler::Scheduler ()
   : activation_queue_ (msg_queue ())
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -195,7 +195,7 @@ Scheduler::Scheduler (void)
 
 // Destructor
 
-Scheduler::~Scheduler (void)
+Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler will be destroyed\n")));
@@ -225,7 +225,7 @@ Scheduler::close (u_long)
 // Service..
 
 int
-Scheduler::svc (void)
+Scheduler::svc ()
 {
   for (;;)
     {
@@ -253,7 +253,7 @@ Scheduler::svc (void)
 }
 
 void
-Scheduler::end (void)
+Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
@@ -323,7 +323,7 @@ static bool expect (const ACE_TCHAR *name,
   return !fail;
 }
 
-static int test_reset_release (void)
+static int test_reset_release ()
 {
   int errors = 0;
 
@@ -381,7 +381,7 @@ static int test_reset_release (void)
   return errors;
 }
 
-static int test_operator(void)
+static int test_operator()
 {
   int errors = 0;
 

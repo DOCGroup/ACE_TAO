@@ -9,7 +9,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_QoSProperties::TAO_Notify_QoSProperties (void)
+TAO_Notify_QoSProperties::TAO_Notify_QoSProperties ()
   : event_reliability_(CosNotification::EventReliability)
   , connection_reliability_(CosNotification::ConnectionReliability)
   , priority_ (CosNotification::Priority)

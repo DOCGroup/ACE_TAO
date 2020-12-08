@@ -139,22 +139,22 @@ class Pipe
 {
 public:
 
-  Pipe (void);
+  Pipe ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (void);
+  int open ();
 
-  ACE_HANDLE read_handle (void) const;
+  ACE_HANDLE read_handle () const;
 
-  ACE_HANDLE write_handle (void) const;
+  ACE_HANDLE write_handle () const;
 
 private:
   ACE_HANDLE handles_[2];
 };
 
 int
-Pipe::open (void)
+Pipe::open ()
 {
   ACE_INET_Addr my_addr;
   ACE_SOCK_Acceptor acceptor;
@@ -200,20 +200,20 @@ Pipe::open (void)
   return 0;
 }
 
-Pipe::Pipe (void)
+Pipe::Pipe ()
 {
   this->handles_[0] = ACE_INVALID_HANDLE;
   this->handles_[1] = ACE_INVALID_HANDLE;
 }
 
 ACE_HANDLE
-Pipe::read_handle (void) const
+Pipe::read_handle () const
 {
   return this->handles_[0];
 }
 
 ACE_HANDLE
-Pipe::write_handle (void) const
+Pipe::write_handle () const
 {
   return this->handles_[1];
 }
@@ -230,15 +230,15 @@ public:
   Sender (ACE_HANDLE handle,
           Connection_Cache &connection_cache);
 
-  ~Sender (void);
+  ~Sender ();
 
   int handle_input (ACE_HANDLE);
 
-  ssize_t send_message (void);
+  ssize_t send_message ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  void close (void);
+  void close ();
 
   ACE_HANDLE handle_;
 
@@ -250,21 +250,21 @@ class Connection_Cache
 {
 public:
 
-  Connection_Cache (void);
+  Connection_Cache ();
 
-  ~Connection_Cache (void);
+  ~Connection_Cache ();
 
   void add_connection (Sender *sender);
 
   void remove_connection (Sender *sender);
 
-  Sender *acquire_connection (void);
+  Sender *acquire_connection ();
 
   void release_connection (Sender *sender);
 
   int find (Sender *sender);
 
-  ACE_SYNCH_MUTEX &lock (void);
+  ACE_SYNCH_MUTEX &lock ();
 
   enum State
     {
@@ -299,7 +299,7 @@ Sender::Sender (ACE_HANDLE handle,
                 this->reference_count_.load ()));
 }
 
-Sender::~Sender (void)
+Sender::~Sender ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -334,7 +334,7 @@ Sender::handle_input (ACE_HANDLE)
 }
 
 void
-Sender::close (void)
+Sender::close ()
 {
   // Remove socket from Reactor (may fail if another thread has already
   // removed the handle from the Reactor).
@@ -348,7 +348,7 @@ Sender::close (void)
 }
 
 ssize_t
-Sender::send_message (void)
+Sender::send_message ()
 {
   ACE_Time_Value timeout (0, close_timeout * 1000);
 
@@ -365,7 +365,7 @@ public:
   Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
                      ACE_Reactor &reactor);
 
-  int svc (void);
+  int svc ();
 
   ACE_Reactor &reactor_;
 
@@ -379,9 +379,9 @@ public:
             ACE_HANDLE handle,
             int nested_upcalls);
 
-  ~Receiver (void);
+  ~Receiver ();
 
-  int svc (void);
+  int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
@@ -389,7 +389,7 @@ public:
 
   int handle_input (ACE_HANDLE);
 
-  int resume_handler (void);
+  int resume_handler ();
 
   ACE_HANDLE handle_;
 
@@ -420,7 +420,7 @@ Receiver::Receiver (ACE_Thread_Manager &thread_manager,
                 this->reference_count_.load ()));
 }
 
-Receiver::~Receiver (void)
+Receiver::~Receiver ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -432,7 +432,7 @@ Receiver::~Receiver (void)
 }
 
 int
-Receiver::svc (void)
+Receiver::svc ()
 {
   //
   // Continuously receive messages from the Sender.  On error, exit
@@ -522,7 +522,7 @@ Receiver::handle_input (ACE_HANDLE handle)
 }
 
 int
-Receiver::resume_handler (void)
+Receiver::resume_handler ()
 {
   /// The application takes responsibility of resuming the handler.
   return ACE_APPLICATION_RESUMES_HANDLER;
@@ -636,7 +636,7 @@ Connector::connect (ACE_HANDLE &client_handle,
   return 0;
 }
 
-Connection_Cache::Connection_Cache (void)
+Connection_Cache::Connection_Cache ()
 {
   // Initialize the connection cache.
   this->entries_ =
@@ -698,7 +698,7 @@ Connection_Cache::remove_connection (Sender *sender)
 }
 
 Sender *
-Connection_Cache::acquire_connection (void)
+Connection_Cache::acquire_connection ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0);
 
@@ -741,12 +741,12 @@ Connection_Cache::release_connection (Sender *sender)
 }
 
 ACE_SYNCH_MUTEX &
-Connection_Cache::lock (void)
+Connection_Cache::lock ()
 {
   return this->lock_;
 }
 
-Connection_Cache::~Connection_Cache (void)
+Connection_Cache::~Connection_Cache ()
 {
   for (int i = 0; i < number_of_connections; ++i)
     {
@@ -769,9 +769,9 @@ public:
                      int run_receiver_thread,
                      int nested_upcalls);
 
-  int svc (void);
+  int svc ();
 
-  Sender *create_connection (void);
+  Sender *create_connection ();
 
   Connection_Cache &connection_cache_;
 
@@ -808,7 +808,7 @@ Invocation_Thread::Invocation_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 Sender *
-Invocation_Thread::create_connection (void)
+Invocation_Thread::create_connection ()
 {
   int result = 0;
 
@@ -867,7 +867,7 @@ Invocation_Thread::create_connection (void)
 }
 
 int
-Invocation_Thread::svc (void)
+Invocation_Thread::svc ()
 {
   int connection_counter = 0;
   ACE_DEBUG ((LM_DEBUG,
@@ -977,7 +977,7 @@ public:
                        int make_invocations,
                        int run_receiver_thread);
 
-  int svc (void);
+  int svc ();
 
   ACE_Auto_Event &new_connection_event_;
 
@@ -1003,7 +1003,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Close_Socket_Thread::svc (void)
+Close_Socket_Thread::svc ()
 {
   unsigned int seed = (unsigned int) ACE_OS::time ();
   ACE_Time_Value timeout (0, close_timeout * 1000);
@@ -1083,7 +1083,7 @@ Event_Loop_Thread::Event_Loop_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Event_Loop_Thread::svc (void)
+Event_Loop_Thread::svc ()
 {
   // Simply run the event loop.
   this->reactor_.owner (ACE_Thread::self ());
@@ -1110,7 +1110,7 @@ public:
                  ACE_Reactor &reactor,
                  Connection_Cache &connection_cache);
 
-  int svc (void);
+  int svc ();
 
   ACE_Reactor &reactor_;
 
@@ -1128,7 +1128,7 @@ Purger_Thread::Purger_Thread (ACE_Thread_Manager &thread_manager,
 }
 
 int
-Purger_Thread::svc (void)
+Purger_Thread::svc ()
 {
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Purger_Thread::svc commencing\n")));

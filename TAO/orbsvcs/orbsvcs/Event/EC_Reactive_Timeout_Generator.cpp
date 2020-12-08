@@ -9,17 +9,17 @@ TAO_EC_Reactive_Timeout_Generator::
 {
 }
 
-TAO_EC_Reactive_Timeout_Generator::~TAO_EC_Reactive_Timeout_Generator (void)
+TAO_EC_Reactive_Timeout_Generator::~TAO_EC_Reactive_Timeout_Generator ()
 {
 }
 
 void
-TAO_EC_Reactive_Timeout_Generator::activate (void)
+TAO_EC_Reactive_Timeout_Generator::activate ()
 {
 }
 
 void
-TAO_EC_Reactive_Timeout_Generator::shutdown (void)
+TAO_EC_Reactive_Timeout_Generator::shutdown ()
 {
   this->reactor_->cancel_timer (&this->event_handler_);
   this->event_handler_.reactor (0);

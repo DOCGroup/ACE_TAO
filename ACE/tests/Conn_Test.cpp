@@ -136,7 +136,7 @@ Svc_Handler::recycle (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   // Send data to server.
 
@@ -148,7 +148,7 @@ Svc_Handler::send_data (void)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 

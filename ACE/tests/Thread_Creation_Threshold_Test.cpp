@@ -57,11 +57,11 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool ();
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Start the threads in the pool.
   void start();
@@ -103,7 +103,7 @@ Thread_Pool::operator!()
   return ! this->failed_;
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
@@ -139,7 +139,7 @@ Thread_Pool::start ()
 }
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   unsigned long t = ++this->total_activated_threads_;
   if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging

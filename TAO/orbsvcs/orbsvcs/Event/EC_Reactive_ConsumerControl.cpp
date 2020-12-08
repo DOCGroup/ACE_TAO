@@ -35,7 +35,7 @@ TAO_EC_Reactive_ConsumerControl::
     this->orb_->orb_core ()->reactor ();
 }
 
-TAO_EC_Reactive_ConsumerControl::~TAO_EC_Reactive_ConsumerControl (void)
+TAO_EC_Reactive_ConsumerControl::~TAO_EC_Reactive_ConsumerControl ()
 {
 }
 
@@ -88,7 +88,7 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
 }
 
 int
-TAO_EC_Reactive_ConsumerControl::activate (void)
+TAO_EC_Reactive_ConsumerControl::activate ()
 {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   try
@@ -134,7 +134,7 @@ TAO_EC_Reactive_ConsumerControl::activate (void)
 }
 
 int
-TAO_EC_Reactive_ConsumerControl::shutdown (void)
+TAO_EC_Reactive_ConsumerControl::shutdown ()
 {
   int r = 0;
 

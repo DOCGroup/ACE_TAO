@@ -34,7 +34,7 @@ class Test_Handler;
 class Test_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  virtual int svc (void)
+  virtual int svc ()
   {
     while (--max_iterations > 0)
       {

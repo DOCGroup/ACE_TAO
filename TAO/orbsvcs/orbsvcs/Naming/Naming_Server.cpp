@@ -770,7 +770,7 @@ TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
 }
 
 TAO_Persistent_Naming_Context_Factory *
-TAO_Naming_Server::persistent_naming_context_factory (void)
+TAO_Naming_Server::persistent_naming_context_factory ()
 {
 #if defined (ACE_HAS_NEW_NOTHROW)
   return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
@@ -780,7 +780,7 @@ TAO_Naming_Server::persistent_naming_context_factory (void)
 }
 
 int
-TAO_Naming_Server::fini (void)
+TAO_Naming_Server::fini ()
 {
   // First get rid of the multi cast handler
   if (this->ior_multicast_)
@@ -852,13 +852,13 @@ TAO_Naming_Server::fini (void)
 }
 
 char*
-TAO_Naming_Server::naming_service_ior (void)
+TAO_Naming_Server::naming_service_ior ()
 {
   return CORBA::string_dup (this->iors_[ROOT].ior_.c_str());
 }
 
 CosNaming::NamingContext_ptr
-TAO_Naming_Server::operator-> (void) const
+TAO_Naming_Server::operator-> () const
 {
   if (CORBA::is_nil (this->iors_[ROOT].ref_))
     {
@@ -872,7 +872,7 @@ TAO_Naming_Server::operator-> (void) const
 }
 
 
-TAO_Naming_Server::~TAO_Naming_Server (void)
+TAO_Naming_Server::~TAO_Naming_Server ()
 {
   delete [] this->iors_;
 

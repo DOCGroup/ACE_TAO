@@ -389,7 +389,7 @@ NS_group_svc::group_unbind (const ACE_TCHAR* path)
  * Displays all object groups that currently exist in the naming service.
  */
 int
-NS_group_svc::group_list (void)
+NS_group_svc::group_list ()
 {
 
   // KCS: The group list is independent of locations. I created a new operation in the

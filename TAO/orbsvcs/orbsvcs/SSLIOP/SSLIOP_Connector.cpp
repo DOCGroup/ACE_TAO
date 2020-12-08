@@ -70,7 +70,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO::SSLIOP::Connector::close (void)
+TAO::SSLIOP::Connector::close ()
 {
   (void) this->TAO::IIOP_SSL_Connector::close ();
 
@@ -214,7 +214,7 @@ TAO::SSLIOP::Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO::SSLIOP::Connector::make_profile (void)
+TAO::SSLIOP::Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -236,7 +236,7 @@ TAO::SSLIOP::Connector::make_profile (void)
 
 
 TAO_Profile *
-TAO::SSLIOP::Connector::make_secure_profile (void)
+TAO::SSLIOP::Connector::make_secure_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key

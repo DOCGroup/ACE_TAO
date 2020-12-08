@@ -15,12 +15,12 @@ TAO_Contained_i::TAO_Contained_i (
 {
 }
 
-TAO_Contained_i::~TAO_Contained_i (void)
+TAO_Contained_i::~TAO_Contained_i ()
 {
 }
 
 void
-TAO_Contained_i::destroy (void)
+TAO_Contained_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -30,7 +30,7 @@ TAO_Contained_i::destroy (void)
 }
 
 void
-TAO_Contained_i::destroy_i (void)
+TAO_Contained_i::destroy_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -85,7 +85,7 @@ TAO_Contained_i::destroy_i (void)
 }
 
 char *
-TAO_Contained_i::id (void)
+TAO_Contained_i::id ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -95,7 +95,7 @@ TAO_Contained_i::id (void)
 }
 
 char *
-TAO_Contained_i::id_i (void)
+TAO_Contained_i::id_i ()
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -157,7 +157,7 @@ TAO_Contained_i::id_i (const char *id)
 }
 
 char *
-TAO_Contained_i::name (void)
+TAO_Contained_i::name ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -167,7 +167,7 @@ TAO_Contained_i::name (void)
 }
 
 char *
-TAO_Contained_i::name_i (void)
+TAO_Contained_i::name_i ()
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -178,7 +178,7 @@ TAO_Contained_i::name_i (void)
 }
 
 char *
-TAO_Contained_i::version (void)
+TAO_Contained_i::version ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -188,7 +188,7 @@ TAO_Contained_i::version (void)
 }
 
 char *
-TAO_Contained_i::version_i (void)
+TAO_Contained_i::version_i ()
 {
   ACE_TString retval;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -260,7 +260,7 @@ TAO_Contained_i::version_i (const char *version)
 }
 
 CORBA::Container_ptr
-TAO_Contained_i::defined_in (void)
+TAO_Contained_i::defined_in ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::Container::_nil ());
 
@@ -270,7 +270,7 @@ TAO_Contained_i::defined_in (void)
 }
 
 CORBA::Container_ptr
-TAO_Contained_i::defined_in_i (void)
+TAO_Contained_i::defined_in_i ()
 {
   ACE_TString container_id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -298,7 +298,7 @@ TAO_Contained_i::defined_in_i (void)
 }
 
 char *
-TAO_Contained_i::absolute_name (void)
+TAO_Contained_i::absolute_name ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -308,7 +308,7 @@ TAO_Contained_i::absolute_name (void)
 }
 
 char *
-TAO_Contained_i::absolute_name_i (void)
+TAO_Contained_i::absolute_name_i ()
 {
   ACE_TString absolute_name;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -319,7 +319,7 @@ TAO_Contained_i::absolute_name_i (void)
 }
 
 CORBA::Repository_ptr
-TAO_Contained_i::containing_repository (void)
+TAO_Contained_i::containing_repository ()
 {
   return this->repo_->repo_objref ();
 }

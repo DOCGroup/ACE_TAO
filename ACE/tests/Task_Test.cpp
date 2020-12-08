@@ -47,7 +47,7 @@ public:
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Reference to the tester barrier.  This controls each iteration of
@@ -94,7 +94,7 @@ Barrier_Task::close (u_long)
 // Iterate <n_iterations> time printing off a message and "waiting"
 // for all other threads to complete this iteration.
 int
-Barrier_Task::svc (void)
+Barrier_Task::svc ()
 {
   for (int iterations = 1;
        iterations <= this->n_iterations_;

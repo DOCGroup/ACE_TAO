@@ -15,13 +15,13 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TimeBase::TimeT
-TAO_FT_Request_Duration_Policy::request_duration_policy_value (void)
+TAO_FT_Request_Duration_Policy::request_duration_policy_value ()
 {
   return this->request_duration_;
 }
 
 CORBA::PolicyType
-TAO_FT_Request_Duration_Policy::policy_type (void)
+TAO_FT_Request_Duration_Policy::policy_type ()
 {
   return FT::REQUEST_DURATION_POLICY;
 }
@@ -43,7 +43,7 @@ TAO_FT_Request_Duration_Policy::create (const CORBA::Any& val)
 }
 
 TAO_FT_Request_Duration_Policy *
-TAO_FT_Request_Duration_Policy::clone (void) const
+TAO_FT_Request_Duration_Policy::clone () const
 {
   TAO_FT_Request_Duration_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -53,7 +53,7 @@ TAO_FT_Request_Duration_Policy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_FT_Request_Duration_Policy::copy (void)
+TAO_FT_Request_Duration_Policy::copy ()
 {
   TAO_FT_Request_Duration_Policy* tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Request_Duration_Policy (*this),
@@ -64,7 +64,7 @@ TAO_FT_Request_Duration_Policy::copy (void)
 }
 
 void
-TAO_FT_Request_Duration_Policy::destroy (void)
+TAO_FT_Request_Duration_Policy::destroy ()
 {
 }
 
@@ -89,7 +89,7 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
 /*****************************************************************/
 
 FT::HeartbeatPolicyValue
-TAO_FT_Heart_Beat_Policy::heartbeat_policy_value (void)
+TAO_FT_Heart_Beat_Policy::heartbeat_policy_value ()
 {
   FT::HeartbeatPolicyValue val;
   val.heartbeat = this->heartbeat_;
@@ -120,14 +120,14 @@ TAO_FT_Heart_Beat_Policy::create (const CORBA::Any& val)
 
 
 CORBA::PolicyType
-TAO_FT_Heart_Beat_Policy::policy_type (void)
+TAO_FT_Heart_Beat_Policy::policy_type ()
 {
   return FT::HEARTBEAT_POLICY;
 }
 
 
 CORBA::Policy_ptr
-TAO_FT_Heart_Beat_Policy::copy (void)
+TAO_FT_Heart_Beat_Policy::copy ()
 {
   TAO_FT_Heart_Beat_Policy * tmp = 0;
   ACE_NEW_THROW_EX (tmp, TAO_FT_Heart_Beat_Policy (*this),
@@ -138,7 +138,7 @@ TAO_FT_Heart_Beat_Policy::copy (void)
 }
 
 TAO_FT_Heart_Beat_Policy *
-TAO_FT_Heart_Beat_Policy::clone (void) const
+TAO_FT_Heart_Beat_Policy::clone () const
 {
   TAO_FT_Heart_Beat_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -148,7 +148,7 @@ TAO_FT_Heart_Beat_Policy::clone (void) const
 }
 
 void
-TAO_FT_Heart_Beat_Policy::destroy (void)
+TAO_FT_Heart_Beat_Policy::destroy ()
 {
 }
 

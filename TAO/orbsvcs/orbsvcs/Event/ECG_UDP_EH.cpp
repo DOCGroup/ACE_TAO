@@ -17,7 +17,7 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH (void)
+TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH ()
 {
 }
 
@@ -50,7 +50,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
 }
 
 int
-TAO_ECG_UDP_EH::shutdown (void)
+TAO_ECG_UDP_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)

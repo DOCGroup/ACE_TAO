@@ -41,7 +41,7 @@ public:
                             ACE_Reactor_Mask close_mask);
 
   /// Return our timer id.
-  long timer_id (void) const;
+  long timer_id () const;
 
   /// Set our timer id;
   void timer_id (long);
@@ -106,7 +106,7 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
 }
 
 long
-Time_Handler::timer_id (void) const
+Time_Handler::timer_id () const
 {
   return this->timer_id_;
 }
@@ -118,7 +118,7 @@ Time_Handler::timer_id (long t)
 }
 
 static void
-test_registering_all_handlers (void)
+test_registering_all_handlers ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_all_handler"),
                __LINE__,
@@ -141,7 +141,7 @@ test_registering_all_handlers (void)
 }
 
 static void
-test_registering_one_handler (void)
+test_registering_one_handler ()
 {
   ACE_Trace t (ACE_TEXT ("test_registering_one_handler"),
                __LINE__,
@@ -166,7 +166,7 @@ test_registering_one_handler (void)
 }
 
 static void
-test_canceling_odd_timers (void)
+test_canceling_odd_timers ()
 {
   ACE_Trace t (ACE_TEXT ("test_canceling_odd_timers"),
                __LINE__,
@@ -203,7 +203,7 @@ test_canceling_odd_timers (void)
 }
 
 static void
-test_resetting_timer_intervals (void)
+test_resetting_timer_intervals ()
 {
   ACE_Trace t (ACE_TEXT ("test_resetting_timer_intervals"),
                __LINE__,

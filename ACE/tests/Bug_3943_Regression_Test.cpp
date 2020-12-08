@@ -223,10 +223,10 @@ namespace {
     virtual int open (void *);
     // Initialization hook.
 
-    void send_data (void);
+    void send_data ();
     // Send data to server.
 
-    void recv_data (void);
+    void recv_data ();
     // Recv data from client.
 
     int close (u_long = 0);
@@ -320,7 +320,7 @@ Svc_Handler::open (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   bool successful = true;
   bool win32_test = false;
@@ -780,7 +780,7 @@ Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 

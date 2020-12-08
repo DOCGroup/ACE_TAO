@@ -146,7 +146,7 @@ Write_Handler::open (void *)
 }
 
 int
-Write_Handler::send_data (void)
+Write_Handler::send_data ()
 {
   int send_size = sizeof (ACE_ALPHABET) - 1;
 
@@ -245,7 +245,7 @@ client (void *arg)
 // Sets up the correct reactor (based on platform and options).
 
 void
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 

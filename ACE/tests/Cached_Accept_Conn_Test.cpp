@@ -112,7 +112,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler (void)
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler ()
 {
   if (ACE::out_of_handles (errno))
     {
@@ -230,7 +230,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
 }
 
 static void
-server (void)
+server ()
 {
   int result = 1;
 
@@ -335,7 +335,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 }
 
 void
-test_caching_strategy_type (void)
+test_caching_strategy_type ()
 {
   CACHING_STRATEGY *caching_strategy = 0;
 

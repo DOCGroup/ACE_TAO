@@ -236,7 +236,7 @@ test (void *args)
 #endif /* ACE_HAS_THREADS */
 
 static void
-spawn (void)
+spawn ()
 {
 #if defined (ACE_HAS_THREADS)
   ACE_TEST_MUTEX mutex;

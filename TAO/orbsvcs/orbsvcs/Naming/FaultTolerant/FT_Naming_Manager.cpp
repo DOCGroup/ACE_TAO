@@ -60,7 +60,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
+TAO_FT_Naming_Manager::TAO_FT_Naming_Manager ()
   : factory_registry_ ("NamingManager::FactoryRegistry"),
     group_factory_ (),
     use_global_ (false),
@@ -79,7 +79,7 @@ TAO_FT_Naming_Manager::TAO_FT_Naming_Manager (void)
     ::FT_Naming::TAO_FT_OBJECT_GROUP_NAME;
 }
 
-TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager (void)
+TAO_FT_Naming_Manager::~TAO_FT_Naming_Manager ()
 {
   this->object_group_property_name_.length (0);
   this->built_in_balancing_strategy_name_.length (0);

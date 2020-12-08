@@ -41,7 +41,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
+TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory ()
 {
     if (orbid_dupped_ != 0)
       {
@@ -50,7 +50,7 @@ TAO_CEC_Default_Factory::~TAO_CEC_Default_Factory (void)
 }
 
 int
-TAO_CEC_Default_Factory::init_svcs (void)
+TAO_CEC_Default_Factory::init_svcs ()
 {
   return
     ACE_Service_Config::static_svcs ()->insert (
@@ -423,7 +423,7 @@ TAO_CEC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_CEC_Default_Factory::fini (void)
+TAO_CEC_Default_Factory::fini ()
 {
   return 0;
 }
@@ -1233,7 +1233,7 @@ TAO_CEC_Default_Factory::destroy_proxy_pull_supplier_collection (TAO_CEC_ProxyPu
 }
 
 ACE_Lock*
-TAO_CEC_Default_Factory::create_consumer_lock (void)
+TAO_CEC_Default_Factory::create_consumer_lock ()
 {
   if (this->consumer_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
@@ -1251,7 +1251,7 @@ TAO_CEC_Default_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_CEC_Default_Factory::create_supplier_lock (void)
+TAO_CEC_Default_Factory::create_supplier_lock ()
 {
   if (this->supplier_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;

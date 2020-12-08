@@ -69,7 +69,7 @@ TAO_EventLog_i::copy_with_id (DsLogAdmin::LogId id)
 
 
 void
-TAO_EventLog_i::destroy (void)
+TAO_EventLog_i::destroy ()
 {
   // Send event to indicate the log has been deleted.
   notifier_->object_deletion (logid_);
@@ -85,7 +85,7 @@ TAO_EventLog_i::destroy (void)
 }
 
 void
-TAO_EventLog_i::activate (void)
+TAO_EventLog_i::activate ()
 {
   CosEventChannelAdmin::ConsumerAdmin_var consumer_admin =
   this->event_channel_->for_consumers ();
@@ -97,13 +97,13 @@ TAO_EventLog_i::activate (void)
 
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EventLog_i::for_consumers (void)
+TAO_EventLog_i::for_consumers ()
 {
   return this->event_channel_->for_consumers ();
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_EventLog_i::for_suppliers (void)
+TAO_EventLog_i::for_suppliers ()
 {
   return this->event_channel_->for_suppliers ();
 }

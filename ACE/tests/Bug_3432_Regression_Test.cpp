@@ -21,7 +21,7 @@
 
 
 int
-strptime_test (void)
+strptime_test ()
 {
   // convert UTC time string to UTC ACE_Time_Value
   int error_count = 0;

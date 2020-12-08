@@ -26,10 +26,10 @@
 
 struct Child_Base
 {
-  virtual ~Child_Base (void);
+  virtual ~Child_Base ();
 
   // Perform some operation.
-  virtual void do_something (void) = 0;
+  virtual void do_something () = 0;
 };
 
 
@@ -37,8 +37,8 @@ struct Child_Base
 // abstract class, and the implementation would be elsewhere.
 struct Parent
 {
-  Parent (void);
-  ~Parent (void);
+  Parent ();
+  ~Parent ();
 
   // Weak pointer to this object used to hand out new references. Must be
   // weak since it can't own itself!
@@ -49,7 +49,7 @@ struct Parent
   ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> child_;
 
   // Called by the child to perform some operation.
-  void do_something (void);
+  void do_something ();
 
   static size_t instance_count_;
 };
@@ -59,26 +59,26 @@ struct Parent
 struct Child : public Child_Base
 {
   Child (ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent);
-  virtual ~Child (void);
+  virtual ~Child ();
 
   // Back pointer to the parent. The child does not own the parent so has no
   // effect on its lifetime.
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent_;
 
   // Perform some operation. Delegates the work to the parent.
-  virtual void do_something (void);
+  virtual void do_something ();
 
   static size_t instance_count_;
 };
 
-Child_Base::~Child_Base (void)
+Child_Base::~Child_Base ()
 {
 }
 
 
 size_t Parent::instance_count_ = 0;
 
-Parent::Parent (void)
+Parent::Parent ()
   : weak_self_(this),
     child_(new Child(weak_self_))
 {
@@ -87,14 +87,14 @@ Parent::Parent (void)
   ++Parent::instance_count_;
 }
 
-Parent::~Parent (void)
+Parent::~Parent ()
 {
   --Parent::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Deleting Parent object\n")));
 }
 
-void Parent::do_something (void)
+void Parent::do_something ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Parent doing something\n")));
@@ -110,14 +110,14 @@ Child::Child (ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> parent)
   ++Child::instance_count_;
 }
 
-Child::~Child (void)
+Child::~Child ()
 {
   --Child::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Deleting Child object\n")));
 }
 
-void Child::do_something (void)
+void Child::do_something ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Child doing something\n")));
@@ -152,7 +152,7 @@ Printer::Printer (const char *message)
   ++Printer::instance_count_;
 }
 
-Printer::~Printer (void)
+Printer::~Printer ()
 {
   --Printer::instance_count_;
   ACE_DEBUG ((LM_DEBUG,
@@ -160,7 +160,7 @@ Printer::~Printer (void)
 }
 
 void
-Printer::print (void)
+Printer::print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) %C\n"),
@@ -178,10 +178,10 @@ class Method_Request_print : public ACE_Method_Request
 {
 public:
   explicit Method_Request_print (Printer_var &printer);
-  virtual ~Method_Request_print (void);
+  virtual ~Method_Request_print ();
 
   /// This is the entry point into the Active Object method.
-  virtual int call (void);
+  virtual int call ();
 
 private:
   Printer_var printer_;
@@ -194,14 +194,14 @@ Method_Request_print::Method_Request_print (Printer_var &printer)
               ACE_TEXT ("(%t) Method_Request_print created\n")));
 }
 
-Method_Request_print::~Method_Request_print (void)
+Method_Request_print::~Method_Request_print ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Method_Request_print will be deleted.\n")));
 }
 
 int
-Method_Request_print::call (void)
+Method_Request_print::call ()
 {
   // Dispatch the Servant's operation and store the result into the
   // Future.
@@ -221,8 +221,8 @@ class Method_Request_end : public ACE_Method_Request
 {
 public:
   Method_Request_end (Scheduler *new_Prime_Scheduler);
-  virtual ~Method_Request_end (void);
-  virtual int call (void);
+  virtual ~Method_Request_end ();
+  virtual int call ();
 
 private:
   Scheduler *scheduler_;
@@ -233,12 +233,12 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end (void)
+Method_Request_end::~Method_Request_end ()
 {
 }
 
 int
-Method_Request_end::call (void)
+Method_Request_end::call ()
 {
   // Shut down the scheduler by deactivating the activation queue's
   // underlying message queue - should pop all worker threads off their
@@ -251,7 +251,7 @@ Method_Request_end::call (void)
 // Associates the activation queue with this task's message queue,
 // allowing easy access to the message queue for shutting it down
 // when it's time to stop this object's service threads.
-Scheduler::Scheduler (void)
+Scheduler::Scheduler ()
   : activation_queue_ (msg_queue ())
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -260,7 +260,7 @@ Scheduler::Scheduler (void)
 
 // Destructor
 
-Scheduler::~Scheduler (void)
+Scheduler::~Scheduler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler will be destroyed\n")));
@@ -290,7 +290,7 @@ Scheduler::close (u_long)
 // Service..
 
 int
-Scheduler::svc (void)
+Scheduler::svc ()
 {
   for (;;)
     {
@@ -317,7 +317,7 @@ Scheduler::svc (void)
 }
 
 void
-Scheduler::end (void)
+Scheduler::end ()
 {
   this->activation_queue_.enqueue (new Method_Request_end (this));
 }
