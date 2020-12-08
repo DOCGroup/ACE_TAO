@@ -101,7 +101,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "protected:" << be_idt_nl;
 
   // Default constructor.
-  *os << class_name.c_str () << " (void);"
+  *os << class_name.c_str () << " ();"
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
@@ -117,7 +117,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);" << be_nl_2;
+      << "virtual ~" << class_name.c_str () << " ();" << be_nl_2;
 
   // _is_a
   *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
@@ -133,7 +133,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // The _interface_repository_id method.
   *os << be_nl
       << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "() const;";
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
@@ -263,7 +263,7 @@ be_visitor_interface_sh::this_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Print out the _this() method.
-  *os << "::" << node->full_name () << " *_this (void);"
+  *os << "::" << node->full_name () << " *_this ();"
       << be_nl;
 }
 

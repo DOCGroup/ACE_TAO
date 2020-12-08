@@ -162,7 +162,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -175,7 +175,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
       this->op_name (bu,
                      os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -650,7 +650,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
                      os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -666,7 +666,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -680,7 +680,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void)" << be_nl
+          << " ()" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -698,7 +698,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -785,7 +785,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (void) const" << be_nl
+      << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -799,7 +799,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -942,7 +942,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (void) const // get method" << be_nl
+      << " () const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1026,7 +1026,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1040,7 +1040,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1138,7 +1138,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1152,7 +1152,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()

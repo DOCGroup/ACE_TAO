@@ -64,7 +64,7 @@ be_visitor_facet_svth::visit_interface (be_interface *node)
       << "typename EXEC::_ptr_type executor," << be_nl
       << "::Components::CCMContext_ptr ctx);" << be_uidt_nl << be_nl;
 
-  os_ << "virtual ~" << lname << "_Servant_T (void);";
+  os_ << "virtual ~" << lname << "_Servant_T ();";
 
   if (is_intf)
     {

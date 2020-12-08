@@ -118,7 +118,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
           << "_" << bt->local_name () << ");" << be_nl;
       // The get method.
       *os << "_" << bt->local_name () << "_slice * " << ub->local_name ()
-          << " (void) const; // get method";
+          << " () const; // get method";
     }
   else
     {
@@ -133,7 +133,7 @@ be_visitor_union_branch_public_ch::visit_array (be_array *node)
           << be_nl;
       // The get method.
       *os << bt->nested_type_name (bu, "_slice *") << " " << ub->local_name ()
-          << " (void) const;";
+          << " () const;";
     }
 
   return 0;
@@ -196,7 +196,7 @@ be_visitor_union_branch_public_ch::visit_enum (be_enum *node)
       << be_nl;
   // the get method.
   *os << bt->nested_type_name (bu) << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -239,7 +239,7 @@ be_visitor_union_branch_public_ch::visit_interface (be_interface *node)
       << ");" << be_nl;
   // Get method.
   *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -282,7 +282,7 @@ be_visitor_union_branch_public_ch::visit_interface_fwd (be_interface_fwd *node)
       << ");" << be_nl;
   // Get method.
   *os << bt->nested_type_name (bu, "_ptr") << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -325,7 +325,7 @@ be_visitor_union_branch_public_ch::visit_valuebox (be_valuebox *node)
       << ");" << be_nl;
   // Get method.
   *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -368,7 +368,7 @@ be_visitor_union_branch_public_ch::visit_valuetype (be_valuetype *node)
       << ");" << be_nl;
   // Get method.
   *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -411,7 +411,7 @@ be_visitor_union_branch_public_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
       << ")" << be_nl;
   // Get method.
   *os << bt->nested_type_name (bu, "*") << " " << ub->local_name ()
-      << " (void) const;";
+      << " () const;";
 
   return 0;
 }
@@ -457,23 +457,23 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
           << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu, "_ptr") << ");" << be_nl;
       *os << bt->nested_type_name (bu, "_ptr") << " "
-          << ub->local_name () << " (void) const;";
+          << ub->local_name () << " () const;";
       break;
     case AST_PredefinedType::PT_value:
       *os << be_nl_2
           << "void " << ub->local_name () << " ( "
           << bt->nested_type_name (bu, " *") << ");" << be_nl;
       *os << bt->nested_type_name (bu, " *") << " "
-          << ub->local_name () << " (void) const;";
+          << ub->local_name () << " () const;";
       break;
     case AST_PredefinedType::PT_any:
       *os << be_nl_2
           << "void " << ub->local_name () << " (const "
           << bt->nested_type_name (bu) << " &);" << be_nl;
       *os << "const " << bt->nested_type_name (bu) << " &"
-          << ub->local_name () << " (void) const;" << be_nl;
+          << ub->local_name () << " () const;" << be_nl;
       *os << bt->nested_type_name (bu) << " &"
-          << ub->local_name () << " (void);";
+          << ub->local_name () << " ();";
       break;
     case AST_PredefinedType::PT_void:
       break;
@@ -482,7 +482,7 @@ be_visitor_union_branch_public_ch::visit_predefined_type (be_predefined_type *no
           << "void " << ub->local_name () << " ( "
           << bt->nested_type_name (bu) << ");" << be_nl;
       *os << bt->nested_type_name (bu) << " "
-          << ub->local_name () << " (void) const;";
+          << ub->local_name () << " () const;";
     }
 
   return 0;
@@ -551,10 +551,10 @@ be_visitor_union_branch_public_ch::visit_sequence (be_sequence *node)
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl;
   *os << "const " << bt->nested_type_name (bu) << " &"
-      << ub->local_name  () << " (void) const;"
+      << ub->local_name  () << " () const;"
       << be_nl;
   *os << bt->nested_type_name (bu) << " &" << ub->local_name ()
-      << " (void);";
+      << " ();";
 
   return 0;
 }
@@ -589,7 +589,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
       *os << "void " << ub->local_name () << " (const ::CORBA::String_var&);"
           << be_nl;
       *os << "const char *" << ub->local_name ()
-          << " (void) const;";
+          << " () const;";
     }
   else
     {
@@ -600,7 +600,7 @@ be_visitor_union_branch_public_ch::visit_string (be_string *node)
       *os << "void " << ub->local_name () << " (const ::CORBA::WString_var&);"
           << be_nl;
       *os << "const ::CORBA::WChar *" << ub->local_name ()
-          << " (void) const;";
+          << " () const;";
     }
 
   return 0;
@@ -659,10 +659,10 @@ be_visitor_union_branch_public_ch::visit_structure (be_structure *node)
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl
       << "const " << bt->nested_type_name (bu) << " &"
-      << ub->local_name  () << " (void) const;"
+      << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()
-      << " (void);";
+      << " ();";
 
   return 0;
 }
@@ -752,10 +752,10 @@ be_visitor_union_branch_public_ch::visit_union (be_union *node)
       << "void " << ub->local_name () << " (const "
       << bt->nested_type_name (bu) << " &);" << be_nl
       << "const " << bt->nested_type_name (bu) << " &"
-      << ub->local_name  () << " (void) const;"
+      << ub->local_name  () << " () const;"
       << be_nl
       << bt->nested_type_name (bu) << " &" << ub->local_name ()
-      << " (void);";
+      << " ();";
 
   return 0;
 }

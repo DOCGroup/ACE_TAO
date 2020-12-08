@@ -195,7 +195,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "public:" << be_idt;
 
       *os << be_nl
-          << node->local_name () << " (void);";
+          << node->local_name () << " ();";
 
       if (node->unbounded ())
         {
@@ -245,16 +245,16 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
           << be_nl;
 
-      *os << "virtual ~" << node->local_name () << " (void);";
+      *os << "virtual ~" << node->local_name () << " ();";
 
       if (be_global->alt_mapping () && node->unbounded ())
         {
           *os << be_nl_2
-              << "virtual ::CORBA::ULong length (void) const;"
+              << "virtual ::CORBA::ULong length () const;"
               << be_nl
               << "virtual void length (::CORBA::ULong);"
               << be_nl_2
-              << "virtual ::CORBA::ULong maximum (void) const;";
+              << "virtual ::CORBA::ULong maximum () const;";
         }
 
       *os << be_nl;

@@ -341,7 +341,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-     << "TAO::Array_Traits<" << fname << "_forany>::alloc (void)"
+     << "TAO::Array_Traits<" << fname << "_forany>::alloc ()"
       << be_idt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl

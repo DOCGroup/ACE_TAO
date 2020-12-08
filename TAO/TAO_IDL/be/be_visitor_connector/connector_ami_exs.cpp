@@ -76,7 +76,7 @@ be_visitor_connector_ami_exs::gen_entrypoint ()
   os_ << be_nl_2
       << "extern \"C\" ::Components::EnterpriseComponent_ptr"
       << be_nl
-      << "create_" << s->flat_name () << "_Impl (void)" << be_nl
+      << "create_" << s->flat_name () << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl

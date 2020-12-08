@@ -66,7 +66,7 @@ be_visitor_amh_interface_ss::this_method (be_interface *node)
 
   *os << non_amh_name.c_str () << "*" << be_nl
       << full_skel_name
-      << "::_this (void)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub ();" << be_nl_2;
 

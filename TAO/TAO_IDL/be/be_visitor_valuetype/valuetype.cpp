@@ -842,7 +842,7 @@ be_visitor_valuetype::gen_init_defn (be_valuetype *node)
   // Generate the body.
   *os << "{" << be_nl
       << "public:" << be_idt_nl
-      << "virtual ~" << node->local_name () << "_init (void);" << be_nl;
+      << "virtual ~" << node->local_name () << "_init ();" << be_nl;
 
   *os << "virtual const char* tao_repository_id (void);\n" << be_nl;
   *os << "// create () goes here" << be_nl;
@@ -880,11 +880,11 @@ be_visitor_valuetype::gen_init_impl (be_valuetype *node)
                    node->local_name ());
 
   // Destructor.
-  *os << fname << "::~" << lname << " (void)" << be_nl
+  *os << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}\n\n";
 
   *os << "const char*" << be_nl
-      << fname << "::tao_repository_id (void)" << be_nl
+      << fname << "::tao_repository_id ()" << be_nl
       << "{" << be_idt_nl
       <<   "return " << node->local_name ()
       <<                "::_tao_obv_static_repository_id ();"

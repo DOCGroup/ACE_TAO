@@ -59,7 +59,7 @@ int
 be_visitor_any_extracted_type_decl::visit_eventtype (
   be_eventtype *node)
 {
-  os_ << node->full_name () << " * " << var_name_ << " = 0;";
+  os_ << node->full_name () << " * " << var_name_ << " = nullptr;";
   return 0;
 }
 

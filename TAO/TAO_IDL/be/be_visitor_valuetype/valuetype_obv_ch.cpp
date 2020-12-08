@@ -145,8 +145,8 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
               << "// " << __FILE__ << ":" << __LINE__ ;
 
-          *os << be_nl_2 << "virtual void _add_ref (void);" << be_nl;
-          *os << "virtual void _remove_ref (void);";
+          *os << be_nl_2 << "virtual void _add_ref ();" << be_nl;
+          *os << "virtual void _remove_ref ();";
         }
 
       if (node->have_operation ())
@@ -166,7 +166,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
           *os << "OBV_";
         }
 
-      *os << node->local_name () << " (void);";
+      *os << node->local_name () << " ();";
 
       // Initializing constructor.
       if (node->has_member ())
@@ -193,7 +193,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
         {
           *os << "OBV_";
         }
-      *os << node->local_name () << " (void);";
+      *os << node->local_name () << " ();";
 
       // Virtual _copy_value() only provided in OBV_* class when
       // ::CORBA::DefaultValueRefCountBase has been included.
@@ -205,7 +205,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       if (this->obv_need_ref_counter (node))
         {
           *os << be_uidt_nl << be_nl << "public:" << be_idt_nl
-              << "virtual ::CORBA::ValueBase *_copy_value (void);";
+              << "virtual ::CORBA::ValueBase *_copy_value ();";
         }
 
       // Map fields to private data.
@@ -228,7 +228,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
               << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
               << be_nl
               << "virtual void "
-              << "truncation_hook (void);"
+              << "truncation_hook ();"
               << be_uidt_nl << be_nl;
 
           *os << "private:" << be_idt;

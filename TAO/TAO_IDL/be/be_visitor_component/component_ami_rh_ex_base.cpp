@@ -153,7 +153,7 @@ be_visitor_component_ami_rh_ex_base::gen_attr_op (
         }
 
       os_ << "set_" << node->local_name ()->get_string ()
-          << " (void)" << (for_defn ? "" : ";");
+          << " ()" << (for_defn ? "" : ";");
 
       this->gen_op_body ();
 

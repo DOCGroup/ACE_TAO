@@ -119,11 +119,11 @@ be_visitor_home_exh::gen_exec_class ()
 
   os_ << be_nl
       << "/// Constructor" << be_nl
-      << lname << "_exec_i (void);";
+      << lname << "_exec_i ();";
 
   os_ << be_nl_2
       << "/// Destructor" << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << "virtual ~" << lname << "_exec_i ();";
 
   be_home *h = node_;
 
@@ -169,7 +169,7 @@ be_visitor_home_exh::gen_exec_class ()
       << "/// Factory method";
 
   os_ << be_nl
-      << "virtual ::Components::EnterpriseComponent_ptr create (void);";
+      << "virtual ::Components::EnterpriseComponent_ptr create ();";
 
   os_ << be_uidt_nl
       << "};";
@@ -185,7 +185,7 @@ be_visitor_home_exh::gen_entrypoint ()
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::HomeExecutorBase_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 
 int

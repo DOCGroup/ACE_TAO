@@ -44,7 +44,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
+  *os << node->name () << "::" << node->local_name () << " ()" << be_nl;
 
   if (node->is_amh_excep_holder ())
     {

@@ -230,7 +230,7 @@ be_visitor_typedef_ch::visit_array (be_array *node)
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl
           << td_name << "_slice *" << be_nl
-          << td_name << "_alloc (void);" << be_nl;
+          << td_name << "_alloc ();" << be_nl;
       // _dup
       *os << be_nl
           << "ACE_INLINE " << static_decl << be_nl

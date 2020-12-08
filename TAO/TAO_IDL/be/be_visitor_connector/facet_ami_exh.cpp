@@ -239,7 +239,7 @@ be_visitor_facet_ami_exh::gen_reply_handler_class ()
       << this->iface_name_
       << "ReplyHandler_ptr callback," << be_nl
       << "::PortableServer::POA_ptr poa);" << be_uidt_nl << be_nl
-      << "virtual ~" << this->iface_name_ << suffix << " (void);";
+      << "virtual ~" << this->iface_name_ << suffix << " ();";
 
   int const status =
     this->callback_iface_->traverse_inheritance_graph (
@@ -288,9 +288,9 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
       << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << iface_name << suffix << " (void);" << be_nl_2
+      << iface_name << suffix << " ();" << be_nl_2
       << "virtual ~" << iface_name << suffix
-      << " (void);";
+      << " ();";
 
 
   ACE_CString handler_str (
@@ -371,7 +371,7 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
   const char *smart_scope = (is_global ? "" : "::");
 
   os_ << be_nl_2
-      << "virtual ::CORBA::Object_ptr _get_component (void);";
+      << "virtual ::CORBA::Object_ptr _get_component ();";
 
   os_ << be_nl_2
       << "virtual void _set_component (" << be_idt_nl
