@@ -28,10 +28,10 @@
 // Type definitions for the four distinct parameterizations of the
 // test.
 
-typedef ACE_RB_Tree_Test<int, int, ACE_Less_Than<int>, ACE_Null_Mutex> INT_INT_RB_TREE_TEST;
-typedef ACE_RB_Tree_Test<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex> INT_STR_RB_TREE_TEST;
-typedef ACE_RB_Tree_Test<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_INT_RB_TREE_TEST;
-typedef ACE_RB_Tree_Test<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex> STR_STR_RB_TREE_TEST;
+using INT_INT_RB_TREE_TEST = ACE_RB_Tree_Test<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
+using INT_STR_RB_TREE_TEST = ACE_RB_Tree_Test<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+using STR_INT_RB_TREE_TEST = ACE_RB_Tree_Test<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+using STR_STR_RB_TREE_TEST = ACE_RB_Tree_Test<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
 
 // Number of entries placed in each tree.
 static int RB_TREE_TEST_ENTRIES = 8;

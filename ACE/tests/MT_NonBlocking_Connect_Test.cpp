@@ -121,12 +121,10 @@ Concurrency_Strategy<SVC_HANDLER>::
     }
 }
 
-typedef ACE_Creation_Strategy<Svc_Handler> CREATION_STRATEGY;
-typedef ACE_Connect_Strategy<Svc_Handler,
-                             ACE_SOCK_CONNECTOR> CONNECT_STRATEGY;
-typedef Concurrency_Strategy<Svc_Handler> CONCURRENCY_STRATEGY;
-typedef ACE_Strategy_Connector<Svc_Handler,
-                               ACE_SOCK_CONNECTOR> BASE_CONNECTOR;
+using CREATION_STRATEGY = ACE_Creation_Strategy<Svc_Handler>;
+using CONNECT_STRATEGY = ACE_Connect_Strategy<Svc_Handler, ACE_SOCK_Connector>;
+using CONCURRENCY_STRATEGY = Concurrency_Strategy<Svc_Handler>;
+using BASE_CONNECTOR = ACE_Strategy_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 class Connect_Thread : public ACE_Task_Base
 {

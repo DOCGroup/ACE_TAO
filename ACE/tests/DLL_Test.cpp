@@ -31,9 +31,10 @@
 #endif /* ACE_WIN32 */
 
 // Declare the type of the symbol:
-typedef Hello *(*Hello_Factory)();
+using Hello_Factory = Hello *(*)();
 
-typedef int ( *PFN )( Parent* );
+typedef i;
+using PFN = int (*)(Parent *);
 
 int handle_test (ACE_DLL &dll)
 {

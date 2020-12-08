@@ -27,7 +27,7 @@
 // Number of iterations for the performance tests.
 static int max_iterations = 30;
 
-typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 
 class Test_Handler;
 

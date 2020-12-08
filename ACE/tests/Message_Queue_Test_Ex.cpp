@@ -34,7 +34,7 @@
 const ACE_TCHAR usage[] =
   ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");
 
-typedef ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH> QUEUE;
+using QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;
 
 static const int MAX_MESSAGES = 10000;
 static const char test_message[] = "ACE_Message_Queue_Ex Test Message";
@@ -61,7 +61,7 @@ print_message (const ACE_TCHAR *message)
 }
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH> SYNCH_QUEUE;
+using SYNCH_QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>;
 
 /**
  * Container for data passed to sender and receiver in

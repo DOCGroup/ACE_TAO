@@ -127,8 +127,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::out_of_sockets_handler ()
   return -1;
 }
 
-typedef Accept_Strategy<Server_Svc_Handler, ACE_SOCK_ACCEPTOR>
-        ACCEPT_STRATEGY;
+using ACCEPT_STRATEGY = Accept_Strategy<Server_Svc_Handler, ACE_SOCK_Acceptor>;
 
 Client_Svc_Handler::Client_Svc_Handler (ACE_Thread_Manager *t)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> (t)

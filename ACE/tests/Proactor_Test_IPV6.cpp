@@ -59,7 +59,7 @@
 
 
 // Proactor Type (UNIX only, Win32 ignored)
-typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
+using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, SUN, CB };
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,

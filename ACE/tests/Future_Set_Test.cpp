@@ -33,7 +33,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Atomic_Op<ACE_Thread_Mutex, int> ATOMIC_INT;
+using ATOMIC_INT = ACE_Atomic_Op<ACE_Thread_Mutex, int>;
 
 // A counter for the tasks..
 static ATOMIC_INT task_count (0);
@@ -363,11 +363,11 @@ Prime_Scheduler::work (u_long newparam,
 // Total number of loops.
 static int n_loops = 100;
 
-typedef ACE_Future_Rep<u_long> *u_long_key;
-typedef ACE_Future_Holder<u_long> *u_long_value;
+using u_long_key = ACE_Future_Rep<u_long> *;
+using u_long_value = ACE_Future_Holder<u_long> *;
 
-typedef ACE_Future_Rep<const ACE_TCHAR *> *char_star_key;
-typedef ACE_Future_Holder<const ACE_TCHAR *> *char_star_value;
+using char_star_key = ACE_Future_Rep<const ACE_TCHAR *> *;
+using char_star_value = ACE_Future_Holder<const ACE_TCHAR *> *;
 
 #endif /* ACE_HAS_THREADS */
 

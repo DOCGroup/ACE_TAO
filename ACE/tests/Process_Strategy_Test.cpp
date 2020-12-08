@@ -58,10 +58,10 @@ ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, Options, ACE_Null_Mutex);
 // Define a <Strategy_Acceptor> that's parameterized by the
 // <Counting_Service>.
 
-typedef ACE_Strategy_Acceptor <Counting_Service, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Counting_Service, ACE_SOCK_Acceptor>;
 
 // Create an Options Singleton.
-typedef ACE_Singleton<Options, ACE_Null_Mutex> OPTIONS;
+using OPTIONS = ACE_Singleton<Options, ACE_Null_Mutex>;
 
 // counter for connections
 static size_t connections = 0;

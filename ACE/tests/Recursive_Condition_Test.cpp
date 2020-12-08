@@ -22,7 +22,7 @@
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap> Thread_Timer_Queue;
+using Thread_Timer_Queue = ACE_Thread_Timer_Queue_Adapter<ACE_Timer_Heap>;
 
 class Test_Handler : public ACE_Event_Handler
 {

@@ -56,11 +56,10 @@ class Void_Pointer : public ACE_Based_Pointer<void>
 #endif /* ACE_WIN32 */
 
 // Declare the type of the DLL symbol:
-typedef void *(*Get_Bp_Repository_Inst)();
+using Get_Bp_Repository_Inst = void *(*)();
 
 // Declare an allocator based MMAP_Memory_Pool
-typedef ACE_Malloc_T< ACE_MMAP_MEMORY_POOL, ACE_Null_Mutex, ACE_PI_Control_Block
-                   > MMAP_Allocator;
+using MMAP_Allocator = ACE_Malloc_T<ACE_MMAP_Memory_Pool, ACE_Null_Mutex, ACE_PI_Control_Block>;
 
 
 // Check that the ACE_Based_Pointer_Repository can be accessed

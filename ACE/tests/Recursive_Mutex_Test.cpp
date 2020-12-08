@@ -35,7 +35,7 @@
   typedef ACE_Process_Mutex ACE_TEST_MUTEX;
 #else
 # include "ace/Thread_Mutex.h"
-  typedef ACE_Recursive_Thread_Mutex ACE_TEST_MUTEX;
+  using ACE_TEST_MUTEX = ACE_Recursive_Thread_Mutex;
 #endif
 
 #if !defined (ACE_HAS_MUTEX_TIMEOUTS)

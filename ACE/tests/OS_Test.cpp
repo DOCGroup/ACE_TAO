@@ -578,7 +578,7 @@ string_emulation_test ()
 }
 
 // Test ACE_OS::snprintf
-typedef int (*SNPrintF_t) (char *buf, size_t maxlen, const char *format, ...);
+using SNPrintF_t = int (*)(char *, size_t, const char *, ...);
 
 int
 snprintf_test (SNPrintF_t fn)

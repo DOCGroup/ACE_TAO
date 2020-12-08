@@ -54,7 +54,7 @@ Printer::print ()
 
 #if defined (ACE_HAS_THREADS)
 
-typedef ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
+using Printer_var = ACE_Refcounted_Auto_Ptr<Printer, ACE_Thread_Mutex>;
 
 /**
  * @class Scheduler
@@ -276,7 +276,7 @@ static int n_loops = 10;
 // This will be used in a single thread to test the reset and release
 // methods. See Bugzilla #1925 for history.
 
-typedef ACE_Refcounted_Auto_Ptr <Printer, ACE_Null_Mutex> Printer_Ptr;
+using Printer_Ptr = ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 
 static bool expect (const ACE_TCHAR *name,
                     const Printer_Ptr &ptr,

@@ -29,7 +29,7 @@ ACE_Thread_Semaphore g_semaphore (0);
 class My_Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH>
 {
 public:
-  typedef ACE_Svc_Handler<ACE_SOCK_STREAM,ACE_NULL_SYNCH> super;
+  using super = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
   My_Svc_Handler()
   {
     TEST_TRACE ("My_Svc_Handler:My_Svc_Handler");
@@ -98,7 +98,7 @@ struct Timer_Handler : public ACE_Event_Handler
    }
 };
 
-typedef ACE_Acceptor<My_Svc_Handler, ACE_SOCK_ACCEPTOR> My_Acceptor;
+using My_Acceptor = ACE_Acceptor<My_Svc_Handler, ACE_SOCK_Acceptor>;
 
 #endif
 
