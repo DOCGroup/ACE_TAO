@@ -276,11 +276,10 @@ public:
   int add (CHAR_TYPE *argv[], bool quote_args = false);
 
 private:
-  /// Copy constructor not implemented.
-  ACE_UNIMPLEMENTED_FUNC (ACE_ARGV_T (const ACE_ARGV_T<CHAR_TYPE>&))
-
-  /// Assignment operator not implemented.
-  ACE_UNIMPLEMENTED_FUNC (ACE_ARGV_T operator= (const ACE_ARGV_T<CHAR_TYPE>&))
+  ACE_ARGV_T (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
+  ACE_ARGV_T operator= (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
+  ACE_ARGV_T (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
+  ACE_ARGV_T operator= (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
 
   /// Creates buf_ from the queue of added args, deletes previous buf_.
   int create_buf_from_queue (void);

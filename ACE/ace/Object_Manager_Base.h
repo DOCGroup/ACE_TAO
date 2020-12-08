@@ -111,9 +111,10 @@ protected:
   /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
 private:
-  // Disallow copying by not implementing the following . . .
-  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &);
-  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &);
+  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &) = delete;
+  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &) = delete;
+  ACE_Object_Manager_Base (ACE_Object_Manager_Base &&) = delete;
+  ACE_Object_Manager_Base &operator= (ACE_Object_Manager_Base &&) = delete;
 };
 
 extern "C"

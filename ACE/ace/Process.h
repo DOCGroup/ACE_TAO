@@ -642,10 +642,10 @@ public:
 #endif /* ACE_WIN32 */
 
 private:
-
-  // Disallow copying and assignment since we don't support this (yet).
-  ACE_Process (const ACE_Process &);
-  void operator= (const ACE_Process &);
+  ACE_Process (const ACE_Process &) = delete;
+  void operator= (const ACE_Process &) = delete;
+  ACE_Process (ACE_Process &&) = delete;
+  void operator= (ACE_Process &&) = delete;
 
 protected:
   /// Set this process's exit code.  ACE_Process_Manager uses this

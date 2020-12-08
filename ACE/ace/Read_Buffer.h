@@ -89,10 +89,10 @@ public:
   void dump (void) const;
 
 private:
-
-  // Disallow copying and assignment...
-  void operator= (const ACE_Read_Buffer &);
-  ACE_Read_Buffer (const ACE_Read_Buffer &);
+  void operator= (const ACE_Read_Buffer &) = delete;
+  ACE_Read_Buffer (const ACE_Read_Buffer &) = delete;
+  void operator= (ACE_Read_Buffer &&) = delete;
+  ACE_Read_Buffer (ACE_Read_Buffer &&) = delete;
 
 private:
   /// Recursive helper method that does the work...

@@ -102,9 +102,10 @@ private:
   //@}
 
 private:
-  // Disallow copying and assignment.
-  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &);
-  void operator= (const TAO_Object_Ref_Table &);
+  TAO_Object_Ref_Table (const TAO_Object_Ref_Table &) = delete;
+  void operator= (const TAO_Object_Ref_Table &) = delete;
+  TAO_Object_Ref_Table (TAO_Object_Ref_Table &&) = delete;
+  void operator= (TAO_Object_Ref_Table &&) = delete;
 
 private:
   /// The implementation.
