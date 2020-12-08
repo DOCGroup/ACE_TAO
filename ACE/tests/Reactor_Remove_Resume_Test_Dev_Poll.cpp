@@ -368,7 +368,7 @@ handle_events (ACE_Reactor & reactor,
 
 typedef std::unique_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
 
-unique_ptr<ACE_Reactor_Impl>
+std::unique_ptr<ACE_Reactor_Impl>
 dev_poll_reactor_factory (void)
 {
   ACE_DEBUG ((LM_INFO,
