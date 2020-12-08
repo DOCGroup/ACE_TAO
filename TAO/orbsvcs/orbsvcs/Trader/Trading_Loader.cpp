@@ -16,8 +16,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Trader/Trading_Loader.h"
 
-#include <utility>
-
 #include "orbsvcs/Daemon_Utilities.h"
 
 #include "tao/ORB_Core.h"

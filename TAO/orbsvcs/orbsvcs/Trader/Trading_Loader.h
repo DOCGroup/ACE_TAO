@@ -27,7 +27,7 @@
 
 #include "tao/Object_Loader.h"
 #include "tao/Utils/ORB_Manager.h"
-#include "ace/Auto_Ptr.h"
+#include <utility>
 
 class TAO_Trading_Serv_Export TAO_Trading_Loader : public TAO_Object_Loader
 {
@@ -56,7 +56,6 @@ public:
                                    ACE_TCHAR *argv[]);
 
 protected:
-
   /// Enable the Trading Service to answer multicast requests for its
   /// IOR.
   int init_multicast_server (void);
@@ -71,7 +70,7 @@ protected:
   TAO_ORB_Manager orb_manager_;
 
   /// Pointer to the linked trader.
-  auto_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
+  std::unique_ptr<TAO_Trader_Factory::TAO_TRADER> trader_;
 
   /// Service Type Repository used by the trading service.
   TAO_Service_Type_Repository type_repos_;
@@ -97,8 +96,8 @@ protected:
 
 private:
   // Disallow copying and assignment.
-  TAO_Trading_Loader (const TAO_Trading_Loader &);
-  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &);
+  TAO_Trading_Loader (const TAO_Trading_Loader &) = delete;
+  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &) = delete;
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)
