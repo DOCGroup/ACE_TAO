@@ -56,10 +56,10 @@ public:
   void dump (void) const {}
 
 private:
-  // Disallow copying and assignment.
-  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
-  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
-
+  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
+  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
+  void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
 };
 // FUZZ: enable check_for_ACE_Guard
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */

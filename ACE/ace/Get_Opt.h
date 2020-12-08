@@ -428,9 +428,10 @@ private:
   /// Set last_option.
   void last_option (const ACE_TString &s);
 
-  // Disallow copying and assignment.
-  ACE_Get_Opt (const ACE_Get_Opt &);
-  ACE_Get_Opt &operator= (const ACE_Get_Opt &);
+  ACE_Get_Opt (const ACE_Get_Opt &) = delete;
+  ACE_Get_Opt &operator= (const ACE_Get_Opt &) = delete;
+  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
 
 private:
 

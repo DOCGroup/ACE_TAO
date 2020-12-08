@@ -193,9 +193,10 @@ private:
   ///
   ACE_Log_Category_TSS* category_;
 
-  /// disallow copying...
-  ACE_Log_Record (const ACE_Log_Record& rhs);
-  ACE_Log_Record& operator= (const ACE_Log_Record& rhs);
+  ACE_Log_Record (const ACE_Log_Record&) = delete;
+  ACE_Log_Record& operator= (const ACE_Log_Record&) = delete;
+  ACE_Log_Record (ACE_Log_Record&&) = delete;
+  ACE_Log_Record& operator= (ACE_Log_Record&& rhs) = delete;
 };
 
 // Forward decls.

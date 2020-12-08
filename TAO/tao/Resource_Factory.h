@@ -71,10 +71,10 @@ public:
   void factory (TAO_Protocol_Factory *factory, int owner = 0);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Protocol_Item (const TAO_Protocol_Item&);
-  void operator= (const TAO_Protocol_Item&);
+  TAO_Protocol_Item (const TAO_Protocol_Item&) = delete;
+  void operator= (const TAO_Protocol_Item&) = delete;
+  TAO_Protocol_Item (TAO_Protocol_Item&&) = delete;
+  void operator= (TAO_Protocol_Item&&) = delete;
 
 private:
   /// Protocol factory name.

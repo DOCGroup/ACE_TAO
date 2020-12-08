@@ -43,9 +43,10 @@ namespace XML
     void resetErrors();
     bool getErrors (void) const;
   private :
-    // Disallow copying
-    XML_Error_Handler (const XML_Error_Handler&);
-    XML_Error_Handler& operator= (const XML_Error_Handler&);
+    XML_Error_Handler (const XML_Error_Handler&) = delete;
+    XML_Error_Handler& operator= (const XML_Error_Handler&) = delete;
+    XML_Error_Handler (XML_Error_Handler&&) = delete;
+    XML_Error_Handler& operator= (XML_Error_Handler&&) = delete;
 
     bool errors_;
   };
