@@ -56,11 +56,10 @@ public:
   TAO_Concurrency_Server concurrency_server_;
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
-  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
-
+  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
+  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

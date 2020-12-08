@@ -115,11 +115,10 @@ public:
   void dump (void) const {}
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &);
-  void operator= (const ACE_Guard<ACE_Null_Mutex> &);
-
+  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  void operator= (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Null_Mutex> &&) = delete;
+  void operator= (ACE_Guard<ACE_Null_Mutex> &&) = delete;
 };
 
 template <class ACE_LOCK>

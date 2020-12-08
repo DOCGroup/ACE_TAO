@@ -96,9 +96,10 @@ protected:
   CORBA::Boolean bootstrapper_;
 
 private:
-  // Disallow copying and assignment.
-  TAO_Trading_Loader (const TAO_Trading_Loader &);
-  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &);
+  TAO_Trading_Loader (const TAO_Trading_Loader &) = delete;
+  TAO_Trading_Loader &operator= (const TAO_Trading_Loader &) = delete;
+  TAO_Trading_Loader (TAO_Trading_Loader &&) = delete;
+  TAO_Trading_Loader &operator= (TAO_Trading_Loader &&) = delete;
 };
 
 ACE_FACTORY_DECLARE (TAO_Trading_Serv, TAO_Trading_Loader)

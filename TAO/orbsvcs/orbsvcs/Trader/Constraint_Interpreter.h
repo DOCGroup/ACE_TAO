@@ -134,9 +134,10 @@ public:
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
 
 private:
-  /// Disallow copying.
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
 
   /// The ordered list of offers.
   Ordered_Offers offers_;
