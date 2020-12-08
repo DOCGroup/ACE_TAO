@@ -56,7 +56,7 @@ public:
     return 0;
   }
 
-  int fini (void)
+  int fini ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("finalizing %s\n"),

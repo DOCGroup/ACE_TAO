@@ -328,7 +328,7 @@ spawn_test(bool ipv6_test)
 }
 
 int
-do_test(void)
+do_test()
 {
   spawn_test(false);
 

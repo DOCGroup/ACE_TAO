@@ -178,7 +178,7 @@ int test_two_allocators ()
 }
 
 static int
-run_test (void)
+run_test ()
 {
   ace_test_allocator.dump ();
 

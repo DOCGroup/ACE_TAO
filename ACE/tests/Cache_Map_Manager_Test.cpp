@@ -416,7 +416,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
 }
 
 void
-test_caching_strategy_type (void)
+test_caching_strategy_type ()
 {
   HASH_MAP_CACHING_STRATEGY *hash_map_caching_strategy = 0;
   MAP_CACHING_STRATEGY *map_caching_strategy = 0;

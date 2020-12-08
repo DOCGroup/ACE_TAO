@@ -39,7 +39,7 @@ class Exit_Handler : public ACE_Event_Handler
 public:
   Exit_Handler (const char *msg): msg_ (msg) { }
 
-  virtual ~Exit_Handler (void) { }
+  virtual ~Exit_Handler () { }
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
   {
@@ -185,7 +185,7 @@ public:
     return 0;
   }
 
-  int svc (void)
+  int svc ()
   {
     int result = 0;
     ACE_exitcode exitcode;
@@ -231,7 +231,7 @@ private:
 
 #ifdef ACE_HAS_PROCESS_SPAWN
 static int
-command_line_test (void)
+command_line_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));

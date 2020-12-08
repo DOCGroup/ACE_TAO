@@ -67,7 +67,7 @@ run_reverse_iterate (STRLIST &list)
 }
 
 static int
-run_test (void)
+run_test ()
 {
   STRLIST list;
 

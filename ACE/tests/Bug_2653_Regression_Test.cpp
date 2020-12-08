@@ -31,12 +31,12 @@ static const char *message =
 class Watchdog : public ACE_Task_Base
 {
 public:
-  int svc (void);
+  int svc ();
   int my_grp_;
 };
 
 int
-Watchdog::svc (void)
+Watchdog::svc ()
 {
   ACE_OS::sleep (5);
   // If we make it through the sleep and haven't been canceled, that
@@ -95,7 +95,7 @@ Handler::Handler (ACE_Reactor &reactor, bool close_other)
     }
 }
 
-Handler::~Handler (void)
+Handler::~Handler ()
 {
   this->other_pipe_.close();
   this->pipe_.close ();

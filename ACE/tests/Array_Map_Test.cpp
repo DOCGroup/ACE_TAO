@@ -40,7 +40,7 @@ static size_t const words_len   = sizeof (words)   / sizeof (words[0]);
 // --------------------------------------------------------------
 
 bool
-insertion_removal_test (void)
+insertion_removal_test ()
 {
   // Instantiate the map.
   typedef ACE_Array_Map<char, ACE_TString> Map;
@@ -220,7 +220,7 @@ insertion_removal_test (void)
 // --------------------------------------------------------------
 
 bool
-index_operator_test (void)
+index_operator_test ()
 {
   // Instantiate the map.
   typedef ACE_Array_Map<char, ACE_TString> Map;
@@ -337,7 +337,7 @@ class RefCounted
 {
 public:
 
-  RefCounted (void)
+  RefCounted ()
     : refcount_ (0)
   {
   }
@@ -347,7 +347,7 @@ public:
   {
   }
 
-  ~RefCounted (void)
+  ~RefCounted ()
   {
     if (this->refcount_)
       --(*this->refcount_);
@@ -370,13 +370,13 @@ public:
   }
 
   unsigned int *
-  refcount_ptr (void) const
+  refcount_ptr () const
   {
     return this->refcount_;
   }
 
   unsigned int
-  refcount (void) const
+  refcount () const
   {
     return *this->refcount_;
   }
@@ -390,7 +390,7 @@ private:
 // --------
 
 bool
-reference_count_test (void)
+reference_count_test ()
 {
   typedef ACE_Array_Map<ACE_TString, RefCounted> Map;
 

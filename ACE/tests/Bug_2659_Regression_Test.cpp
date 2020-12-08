@@ -85,7 +85,7 @@ public:
     EE_DEBUG ("ReactorTask", "~ReactorTask", this);
   };
 
-  virtual int svc (void )
+  virtual int svc ( )
   {
     EE_DEBUG ("ReactorTask", "svc", this);
 

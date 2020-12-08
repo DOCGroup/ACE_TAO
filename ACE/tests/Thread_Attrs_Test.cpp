@@ -27,7 +27,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Check the cancel settings against what is expected then exit.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Returns true iff settings match what was requested.
   bool operator! ();
@@ -50,7 +50,7 @@ Cancel_Check::Cancel_Check (bool enable, bool async)
 }
 
 int
-Cancel_Check::svc (void)
+Cancel_Check::svc ()
 {
 #if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_PTHREAD_CANCEL)
   int state;
@@ -136,7 +136,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   /// Check the stack size against what is expected then exit.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Returns true iff failed_ == false.
   bool operator! ();
@@ -160,7 +160,7 @@ Stack_Size_Check::Stack_Size_Check (size_t stack_size)
 }
 
 int
-Stack_Size_Check::svc (void)
+Stack_Size_Check::svc ()
 {
   size_t my_size = 0;
 

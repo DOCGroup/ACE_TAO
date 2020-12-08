@@ -45,14 +45,14 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool ();
 
   /**
    * Activate the task's thread pool, produce the messages that are
    * consumed by the threads in the thread pool, and demonstate how to
    * shutdown using the <ACE_Message_Queue::deactivate> method.
    */
-  int test_queue_deactivation_shutdown (void);
+  int test_queue_deactivation_shutdown ();
 
   /**
    * Activate the task's thread pool, produce the messages that are,
@@ -60,11 +60,11 @@ public:
    * thread pool, and demonstrate how to shutdown by enqueueing
    * "empty" messages into the queue.
    */
-  int test_empty_message_shutdown (void);
+  int test_empty_message_shutdown ();
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Allows the producer to pass messages to the <Thread_Pool>.
   virtual int put (ACE_Message_Block *mb,
@@ -87,7 +87,7 @@ private:
   int n_threads_;
 };
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
@@ -117,7 +117,7 @@ Thread_Pool::put (ACE_Message_Block *mb,
 // other threads to complete this iteration.
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   // Keep looping, reading a message out of the queue, until we get a
   // message with a length == 0, which signals us to quit.
@@ -195,7 +195,7 @@ Thread_Pool::open (void *)
 // shutdown using the <ACE_Message_Queue::deactivate> method.
 
 int
-Thread_Pool::test_queue_deactivation_shutdown (void)
+Thread_Pool::test_queue_deactivation_shutdown ()
 {
   if (this->open () == -1)
     return -1;
@@ -287,7 +287,7 @@ Thread_Pool::test_queue_deactivation_shutdown (void)
 // messages into the queue.
 
 int
-Thread_Pool::test_empty_message_shutdown (void)
+Thread_Pool::test_empty_message_shutdown ()
 {
   if (this->open () == -1)
     return -1;

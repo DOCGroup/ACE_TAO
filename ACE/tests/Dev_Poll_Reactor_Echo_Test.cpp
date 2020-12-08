@@ -38,7 +38,7 @@ class Client : public SVC_HANDLER
 {
 public:
 
-  Client (void);
+  Client ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   virtual int open (void * = 0);
@@ -66,7 +66,7 @@ class Server : public SVC_HANDLER
 {
 public:
 
-  Server (void);
+  Server ();
 
   virtual int handle_input (ACE_HANDLE handle);
 
@@ -85,7 +85,7 @@ private:
 
 // ----------------------------------------------------
 
-Client::Client (void)
+Client::Client ()
   : call_count_ (0)
 {
 }
@@ -233,7 +233,7 @@ Client::handle_close (ACE_HANDLE handle,
 
 // ----------------------------------------------------
 
-Server::Server (void)
+Server::Server ()
   : offset_ (0)
 {
 }

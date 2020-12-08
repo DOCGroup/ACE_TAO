@@ -48,7 +48,7 @@ public:
 
   Reference_Counted_Event_Handler (int expected_number_of_handle_close_calls);
 
-  ~Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler ();
 
   int handle_timeout (const ACE_Time_Value &,
                       const void *);
@@ -73,7 +73,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
                 this->reference_count_.load ()));
 }
 
-Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
+Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -350,9 +350,9 @@ class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
 
-  Simple_Event_Handler (void);
+  Simple_Event_Handler ();
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler ();
 
   int handle_timeout (const ACE_Time_Value &,
                       const void *);
@@ -361,14 +361,14 @@ public:
                     ACE_Reactor_Mask);
 };
 
-Simple_Event_Handler::Simple_Event_Handler (void)
+Simple_Event_Handler::Simple_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "Simple_Event_Handler()\n"));
 }
 
-Simple_Event_Handler::~Simple_Event_Handler (void)
+Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,

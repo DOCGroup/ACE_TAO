@@ -16,31 +16,31 @@
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
 
-Hello_Impl::Hello_Impl (void)
+Hello_Impl::Hello_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Hello_Impl::Hello_Impl\n"));
 }
 
-Hello_Impl::~Hello_Impl (void)
+Hello_Impl::~Hello_Impl ()
 {
   ACE_DEBUG ((LM_DEBUG, "Hello_Impl::~Hello_Impl\n"));
 }
 
 void
-Hello_Impl::say_next (void)
+Hello_Impl::say_next ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("How are you?\n")));
 }
 
 ACE_TCHAR *
-Hello_Impl::new_info (void)
+Hello_Impl::new_info ()
 {
   return ACE::strnew (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE::strnew()"));
 }
 
 ACE_TCHAR *
-Hello_Impl::malloc_info (void)
+Hello_Impl::malloc_info ()
 {
   return ACE_OS::strdup (ACE_TEXT ("Hello_Impl::new_info() allocated by ACE_OS::malloc()"));
 }
@@ -94,12 +94,12 @@ get_hello (void)
 class Static_Constructor_Test
 {
 public:
-  Static_Constructor_Test (void)
+  Static_Constructor_Test ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Static_Constructor_Test::Static_Constructor_Test\n"));
   }
-  ~Static_Constructor_Test (void)
+  ~Static_Constructor_Test ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 "Static_Constructor_Test::~Static_Constructor_Test\n"));
@@ -110,16 +110,16 @@ static Static_Constructor_Test the_instance;
 
 // --------------------------------------------------------
 
-Child::Child (void)
+Child::Child ()
 {
 }
 
-Child::~Child (void)
+Child::~Child ()
 {
 }
 
 void
-Child::test (void)
+Child::test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
 }

@@ -279,7 +279,7 @@ parent (Test_Data *data)
 }
 
 static int
-child (void)
+child ()
 {
   void *bar = 0;
   // Perform "busy waiting" here until the parent stores data under a

@@ -58,11 +58,11 @@ class Worker_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   /// Activate the task.
-  Worker_Task (void);
+  Worker_Task ();
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Allows the producer to pass messages to the <Message_Block>.
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
@@ -93,7 +93,7 @@ Worker_Task::put (ACE_Message_Block *mb, ACE_Time_Value *tv)
 // other threads to complete this iteration.
 
 int
-Worker_Task::svc (void)
+Worker_Task::svc ()
 {
   // The <ACE_Task::svc_run()> method automatically adds us to the
   // process-wide <ACE_Thread_Manager> when the thread begins.
@@ -238,7 +238,7 @@ Worker_Task::svc (void)
   return 0;
 }
 
-Worker_Task::Worker_Task (void)
+Worker_Task::Worker_Task ()
 {
   // Make us an Active Object.
   if (this->activate (THR_NEW_LWP) == -1)

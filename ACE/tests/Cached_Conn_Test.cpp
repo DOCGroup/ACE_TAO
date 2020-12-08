@@ -154,7 +154,7 @@ static int iterations = 200;
 //====================================================================
 
 static void
-out_of_sockets_handler (void)
+out_of_sockets_handler ()
 {
   if (ACE::out_of_handles (errno))
     {
@@ -311,7 +311,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
 }
 
 void
-test_caching_strategy_type (void)
+test_caching_strategy_type ()
 {
   CACHING_STRATEGY *caching_strategy = 0;
 

@@ -29,7 +29,7 @@ public:
                  ACE_HANDLE read,
                  ACE_HANDLE write);
 
-  ~Event_Handler (void);
+  ~Event_Handler ();
 
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
 
@@ -86,7 +86,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor,
   this->ok_ = true;
 }
 
-Event_Handler::~Event_Handler (void)
+Event_Handler::~Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler::~Event_Handler for %@\n"),

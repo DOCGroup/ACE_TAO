@@ -69,7 +69,7 @@ Read_Handler::set_countdown (int nchildren)
 }
 
 int
-Read_Handler::get_countdown (void)
+Read_Handler::get_countdown ()
 {
   return Read_Handler::waiting_;
 }
@@ -150,7 +150,7 @@ Write_Handler::open (void *)
 }
 
 int
-Write_Handler::svc (void)
+Write_Handler::svc ()
 {
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
