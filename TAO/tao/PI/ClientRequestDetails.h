@@ -50,7 +50,7 @@ namespace TAO
   {
   public:
 
-    ClientRequestDetails (void);
+    ClientRequestDetails ();
 
     void apply_policies (const CORBA::PolicyList& policies);
 

@@ -131,7 +131,7 @@ namespace PortableInterceptor
 
       );
 
-    static ServerRequestInterceptor_ptr _nil (void)
+    static ServerRequestInterceptor_ptr _nil ()
     {
       return static_cast<ServerRequestInterceptor_ptr> (0);
     }
@@ -203,14 +203,14 @@ namespace PortableInterceptor
 
       );
 
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
-    ServerRequestInterceptor (void);
+    ServerRequestInterceptor ();
 
-    virtual ~ServerRequestInterceptor (void);
+    virtual ~ServerRequestInterceptor ();
 
   private:
     // Private and unimplemented for concrete interfaces.
@@ -245,7 +245,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::ServerRequestInfo_ptr
       );
-    static ::PortableInterceptor::ServerRequestInfo_ptr nil (void);
+    static ::PortableInterceptor::ServerRequestInfo_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInfo_ptr p,
         TAO_OutputCDR & cdr
@@ -266,7 +266,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::ServerRequestInterceptor_ptr
       );
-    static ::PortableInterceptor::ServerRequestInterceptor_ptr nil (void);
+    static ::PortableInterceptor::ServerRequestInterceptor_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::ServerRequestInterceptor_ptr p,
         TAO_OutputCDR & cdr

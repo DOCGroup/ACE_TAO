@@ -26,7 +26,7 @@ ACE_Errno_Guard::ACE_Errno_Guard (ACE_ERRNO_TYPE &errno_ref)
 }
 
 ACE_INLINE
-ACE_Errno_Guard::~ACE_Errno_Guard (void)
+ACE_Errno_Guard::~ACE_Errno_Guard ()
 {
 #if defined (ACE_MT_SAFE)
   *errno_ptr_ = this->error_;

@@ -106,7 +106,7 @@ namespace PortableInterceptor
 
       );
 
-    static PolicyFactory_ptr _nil (void)
+    static PolicyFactory_ptr _nil ()
     {
       return static_cast<PolicyFactory_ptr> (0);
     }
@@ -137,14 +137,14 @@ namespace PortableInterceptor
 
       );
 
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
   protected:
     // Abstract or local interface only.
-    PolicyFactory (void);
+    PolicyFactory ();
 
-    virtual ~PolicyFactory (void);
+    virtual ~PolicyFactory ();
 
   private:
     // Private and unimplemented for concrete interfaces.

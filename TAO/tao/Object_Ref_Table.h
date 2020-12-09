@@ -56,7 +56,7 @@ public:
   typedef Table::iterator iterator;
 
   /// Constructor
-  TAO_Object_Ref_Table (void);
+  TAO_Object_Ref_Table ();
 
   /**
    * Register an object reference with the table, and map the given
@@ -78,18 +78,18 @@ public:
   CORBA::Object_ptr resolve_initial_reference (const char * id);
 
   /// Explicitly destroy the contents of the object reference table.
-  void destroy (void);
+  void destroy ();
 
   /**
    * @name Forward Iterators
    */
   //@{
-  iterator begin (void);
-  iterator end (void);
+  iterator begin ();
+  iterator end ();
   //@}
 
   /// Return the current size of the underlying table.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
 private:
   /**

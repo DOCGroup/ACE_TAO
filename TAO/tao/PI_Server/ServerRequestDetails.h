@@ -49,7 +49,7 @@ namespace TAO
   class ServerRequestDetails
   {
   public:
-    ServerRequestDetails (void);
+    ServerRequestDetails ();
 
     void apply_policies (const CORBA::PolicyList& policies);
 

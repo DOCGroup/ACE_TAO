@@ -67,7 +67,7 @@ ACE_Service_Config::parse_args (int argc, ACE_TCHAR *argv[])
 /// Return the global configuration instance. Allways returns the same
 /// instance
 ACE_INLINE ACE_Service_Gestalt *
-ACE_Service_Config::global (void)
+ACE_Service_Config::global ()
 {
   return ACE_Service_Config::singleton()->instance_.get ();
 }
@@ -78,7 +78,7 @@ ACE_Service_Config::global (void)
 /// ACE_Service_Config_Guard provides a way of temporarily replacing
 /// the "current" configuration instance in the context of a thread.
 ACE_INLINE ACE_Service_Gestalt *
-ACE_Service_Config::instance (void)
+ACE_Service_Config::instance ()
 {
   return ACE_Service_Config::current ();
 }
@@ -92,7 +92,7 @@ ACE_Service_Config::instance (void)
 // service registration problems.
 
 ACE_INLINE ACE_Service_Gestalt*
-ACE_Service_Config::static_svcs (void)
+ACE_Service_Config::static_svcs ()
 {
   return ACE_Service_Config::current ();
 }
@@ -154,7 +154,7 @@ ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
 /// Process service configuration requests as indicated in the queue of
 /// svc.conf files.
 ACE_INLINE int
-ACE_Service_Config::process_directives (void)
+ACE_Service_Config::process_directives ()
 {
   return ACE_Service_Config::current ()->process_directives (false);
 }

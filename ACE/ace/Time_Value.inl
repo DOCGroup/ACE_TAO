@@ -101,7 +101,7 @@ ACE_Time_Value::set (const timespec_t &tv)
 }
 
 ACE_INLINE
-ACE_Time_Value::ACE_Time_Value (void)
+ACE_Time_Value::ACE_Time_Value ()
   // : tv_ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
@@ -117,7 +117,7 @@ ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 
 /// Returns number of seconds.
 ACE_INLINE time_t
-ACE_Time_Value::sec (void) const
+ACE_Time_Value::sec () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::sec");
   return this->tv_.tv_sec;
@@ -133,7 +133,7 @@ ACE_Time_Value::sec (time_t sec)
 
 /// Converts from Time_Value format into milli-seconds format.
 ACE_INLINE unsigned long
-ACE_Time_Value::msec (void) const
+ACE_Time_Value::msec () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::msec");
 
@@ -201,7 +201,7 @@ ACE_Time_Value::msec (int milliseconds)
 
 /// Returns number of micro-seconds.
 ACE_INLINE suseconds_t
-ACE_Time_Value::usec (void) const
+ACE_Time_Value::usec () const
 {
   // ACE_OS_TRACE ("ACE_Time_Value::usec");
   return this->tv_.tv_usec;

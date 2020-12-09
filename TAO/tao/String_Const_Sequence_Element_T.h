@@ -51,7 +51,7 @@ public:
     return *this->element_;
   }
 
-  inline const character_type *in (void) const
+  inline const character_type *in () const
   {
     return *this->element_;
   }
