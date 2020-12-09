@@ -87,7 +87,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                     TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
@@ -96,7 +96,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::tao_release (void)
+                     TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -224,7 +224,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+  ) const
 {
   ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
@@ -275,7 +275,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::id_i (void) const
+                     TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -287,7 +287,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::name_i (void) const
+                     TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -299,7 +299,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::member_count_i (void) const
+                     TAO::Null_RefCount_Policy>::member_count_i () const
 {
   return this->nfields_;
 }
@@ -355,7 +355,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::type_modifier_i (void) const
+                     TAO::Null_RefCount_Policy>::type_modifier_i () const
 {
   return this->type_modifier_;
 }
@@ -366,7 +366,7 @@ TAO::TypeCode::Value<char const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::concrete_base_type_i (
-  void) const
+  ) const
 {
   return
     CORBA::TypeCode::_duplicate (

@@ -78,7 +78,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                     TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
@@ -87,7 +87,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::tao_release (void)
+                     TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -198,7 +198,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+  ) const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;
@@ -253,7 +253,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::id_i (
-  void) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -265,7 +265,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::name_i (void) const
+                     TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -277,7 +277,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::member_count_i (void) const
+                     TAO::Null_RefCount_Policy>::member_count_i () const
 {
   return this->ncases_;
 }
@@ -352,7 +352,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::discriminator_type_i (void) const
+                     TAO::Null_RefCount_Policy>::discriminator_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -364,7 +364,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::default_index_i (void) const
+                     TAO::Null_RefCount_Policy>::default_index_i () const
 {
   return this->default_index_;
 }

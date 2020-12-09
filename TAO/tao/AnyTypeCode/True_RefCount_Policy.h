@@ -75,7 +75,7 @@ namespace TAO
   public:
 
     /// Increase the reference count on this object.
-    void add_ref (void);
+    void add_ref ();
 
     /// Decrease the reference count on this object.
     /**
@@ -83,7 +83,7 @@ namespace TAO
      * reference count drops to zero, call @c operator @c delete()
      * on this object.
      */
-    void remove_ref (void);
+    void remove_ref ();
 
   protected:
     /// Constructor.
@@ -91,7 +91,7 @@ namespace TAO
      * @note This constructor is protected since it not meant to be
      *       instantiated/used as a standalone object.
      */
-    True_RefCount_Policy (void);
+    True_RefCount_Policy ();
 
     /// Destructor.
     /**
@@ -100,7 +100,7 @@ namespace TAO
      *       zero, i.e. when @c remove_ref() calls @c operator
      *       @c delete @c this.
      */
-    virtual ~True_RefCount_Policy (void);
+    virtual ~True_RefCount_Policy ();
 
   private:
     /// Reference counter.
