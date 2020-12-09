@@ -544,7 +544,7 @@ be_visitor_valuebox_union_member_ci::emit_member_get (
   *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
       << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) " << const_method << be_nl
+      << " () " << const_method << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name ()
       << " ();" << be_uidt_nl
