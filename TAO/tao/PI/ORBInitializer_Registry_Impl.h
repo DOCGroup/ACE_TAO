@@ -43,7 +43,7 @@ namespace TAO
     : public ORBInitializer_Registry_Adapter
   {
   public:
-    ORBInitializer_Registry (void);
+    ORBInitializer_Registry ();
 
     /// Added to provide registration for the several static service
     /// objects, brought in with this ORBInitializer_Registry
@@ -57,7 +57,7 @@ namespace TAO
 
     /// Service config fini method, release all ORBInitializers at this
     /// moment
-    virtual int fini (void);
+    virtual int fini ();
 
     /// Register an ORBInitializer with the underlying ORBInitializer
     /// array.

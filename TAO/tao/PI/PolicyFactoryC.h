@@ -179,7 +179,7 @@ namespace TAO
     static void release (
         ::PortableInterceptor::PolicyFactory_ptr
       );
-    static ::PortableInterceptor::PolicyFactory_ptr nil (void);
+    static ::PortableInterceptor::PolicyFactory_ptr nil ();
     static ::CORBA::Boolean marshal (
         ::PortableInterceptor::PolicyFactory_ptr p,
         TAO_OutputCDR & cdr

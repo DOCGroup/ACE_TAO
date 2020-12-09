@@ -54,10 +54,10 @@ public:
 
 public:
   /// Constructor
-  TAO_PolicyFactory_Registry (void);
+  TAO_PolicyFactory_Registry ();
 
   /// Destructor.  Releases duplicated PolicyFactory references.
-  ~TAO_PolicyFactory_Registry (void);
+  ~TAO_PolicyFactory_Registry ();
 
   /// Register a PolicyFactory with the underlying PolicyFactory
   /// sequence.  This method should only be called during ORB

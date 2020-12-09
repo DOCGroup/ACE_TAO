@@ -46,7 +46,7 @@ namespace
 }
 
 TAO::PICurrent_Impl *
-TAO::PICurrent::tsc (void)
+TAO::PICurrent::tsc ()
 {
   TAO::PICurrent_Impl *impl =
     static_cast<TAO::PICurrent_Impl *> (
@@ -85,7 +85,7 @@ TAO::PICurrent::check_validity (const PortableInterceptor::SlotId &identifier)
 }
 
 CORBA::ORB_ptr
-TAO::PICurrent::_get_orb (void)
+TAO::PICurrent::_get_orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
