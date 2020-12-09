@@ -23,7 +23,7 @@ Visual_i::calculate (CORBA::Long one,
 }
 
 Test_Interceptors::Visual::VarLenStruct *
-Visual_i::the_structure (void)
+Visual_i::the_structure ()
 {
   Test_Interceptors::Visual::VarLenStruct * s;
 
@@ -40,21 +40,21 @@ Visual_i::the_structure (void)
 }
 
 void
-Visual_i::user (void)
+Visual_i::user ()
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing Silly\n"));
   throw Test_Interceptors::Silly ();
 }
 
 void
-Visual_i::system (void)
+Visual_i::system ()
 {
   ACE_DEBUG ((LM_DEBUG, "Visual::user, throwing INV_OBJREF\n"));
   throw CORBA::INV_OBJREF ();
 }
 
 void
-Visual_i::shutdown (void)
+Visual_i::shutdown ()
 {
   this->orb_->shutdown ();
 }
