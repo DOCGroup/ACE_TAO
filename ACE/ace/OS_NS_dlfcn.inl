@@ -63,7 +63,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
 }
 
 ACE_INLINE ACE_TCHAR *
-ACE_OS::dlerror (void)
+ACE_OS::dlerror ()
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)

@@ -17,13 +17,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
+    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator () :
       etherealize_objects_ (true)
     {
     }
 
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (void)
+    RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -36,7 +36,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (void)
+    RequestProcessingStrategyServantActivator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }

@@ -59,7 +59,7 @@ public:
   virtual void free (void *ptr);
 
   /// These methods are no-ops.
-  virtual int remove (void);
+  virtual int remove ();
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
   virtual int trybind (const char *name, void *&pointer);
   virtual int find (const char *name, void *&pointer);
@@ -73,7 +73,7 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
 #endif /* ACE_HAS_MALLOC_STATS */
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 private:
   // DO NOT ADD ANY STATE (DATA MEMBERS) TO THIS CLASS!!!!  See the
@@ -103,7 +103,7 @@ public:
   virtual void *calloc (size_t nbytes, char initial_value = '\0');
   virtual void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0');
   virtual void free (void *ptr);
-  virtual int remove (void);
+  virtual int remove ();
   virtual int bind (const char *name, void *pointer, int duplicates = 0);
   virtual int trybind (const char *name, void *&pointer);
   virtual int find (const char *name, void *&pointer);
@@ -117,11 +117,11 @@ public:
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats (void) const;
 #endif /* ACE_HAS_MALLOC_STATS */
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 protected:
   /// Don't allow direct instantiations of this class.
-  ACE_Static_Allocator_Base (void);
+  ACE_Static_Allocator_Base ();
 
   /// Pointer to the buffer.
   char *buffer_;

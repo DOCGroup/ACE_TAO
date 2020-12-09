@@ -33,9 +33,9 @@ namespace TAO
       : public RequestProcessingStrategy
     {
     public:
-      RequestProcessingStrategyServantManager (void);
+      RequestProcessingStrategyServantManager ();
 
-      PortableServer::Servant get_servant (void);
+      PortableServer::Servant get_servant ();
 
       void set_servant (PortableServer::Servant servant);
 

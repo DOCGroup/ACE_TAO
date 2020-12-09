@@ -47,13 +47,13 @@ class TAO_Export TAO_TSS_Resources
 public:
 
   /// Constructor
-  TAO_TSS_Resources (void);
+  TAO_TSS_Resources ();
 
   /// Destructor
-  ~TAO_TSS_Resources (void);
+  ~TAO_TSS_Resources ();
 
   /// Return a singleton instance of this class.
-  static TAO_TSS_Resources * instance (void);
+  static TAO_TSS_Resources * instance ();
 
 private:
 

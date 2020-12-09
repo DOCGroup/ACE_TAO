@@ -17,12 +17,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantLocator::RequestProcessingStrategyServantLocator (void)
+    RequestProcessingStrategyServantLocator::RequestProcessingStrategyServantLocator ()
     {
     }
 
     void
-    RequestProcessingStrategyServantLocator::strategy_cleanup(void)
+    RequestProcessingStrategyServantLocator::strategy_cleanup()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -35,7 +35,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantLocator::get_servant_manager (void)
+    RequestProcessingStrategyServantLocator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_locator_.in ());
     }

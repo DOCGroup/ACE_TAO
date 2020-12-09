@@ -32,13 +32,13 @@ namespace TAO
        : public ServantRetentionStrategyNonRetain
     {
     public:
-      ServantRetentionStrategyRetain (void);
+      ServantRetentionStrategyRetain ();
 
-      CORBA::ULong waiting_servant_deactivation (void) const;
+      CORBA::ULong waiting_servant_deactivation () const;
 
       virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      bool &wait_occurred_restart_call);
@@ -85,7 +85,7 @@ namespace TAO
         const PortableServer::ObjectId &system_id,
         CORBA::Short &priority);
 
-      virtual void deactivate_all_objects (void);
+      virtual void deactivate_all_objects ();
 
       virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant);

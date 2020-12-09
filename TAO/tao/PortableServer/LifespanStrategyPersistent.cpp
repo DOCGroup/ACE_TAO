@@ -31,13 +31,13 @@ namespace TAO
     }
 
     char
-    LifespanStrategyPersistent::key_type (void) const
+    LifespanStrategyPersistent::key_type () const
     {
       return 'P';
     }
 
     CORBA::Boolean
-    LifespanStrategyPersistent::is_persistent (void) const
+    LifespanStrategyPersistent::is_persistent () const
     {
       return true;
     }
@@ -59,7 +59,7 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::notify_startup (void)
+    LifespanStrategyPersistent::notify_startup ()
     {
       if (this->use_imr_)
         {
@@ -104,7 +104,7 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::notify_shutdown (void)
+    LifespanStrategyPersistent::notify_shutdown ()
     {
       ImR_Client_Adapter *adapter =
         ACE_Dynamic_Service<ImR_Client_Adapter>::instance (
@@ -122,7 +122,7 @@ namespace TAO
     }
 
     void
-    LifespanStrategyPersistent::check_state (void)
+    LifespanStrategyPersistent::check_state ()
     {
       this->poa_->tao_poa_manager().check_state ();
     }

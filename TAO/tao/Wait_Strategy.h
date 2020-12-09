@@ -46,7 +46,7 @@ public:
   explicit TAO_Wait_Strategy (TAO_Transport *transport);
 
   /// Destructor.
-  virtual ~TAO_Wait_Strategy (void);
+  virtual ~TAO_Wait_Strategy ();
 
   /**
    * The user is going to send a request, prepare any internal
@@ -66,11 +66,11 @@ public:
 
   /// Register the handler needs with the reactor provided that it makes
   /// sense for the strategy.
-  virtual int register_handler (void) = 0;
+  virtual int register_handler () = 0;
 
   /// Returns a value to indicate whether the transport needs to set
   /// the socket on which it is waiting to non-blocking mode or not.
-  virtual bool non_blocking (void) const = 0;
+  virtual bool non_blocking () const = 0;
 
   /// Flag that indicates whether we can process requests while
   /// waiting for the reply.
@@ -80,7 +80,7 @@ public:
    * Wait_On_LF_No_Upcall does not allow the client threads to process
    * requests while waiting for the reply.
    */
-  virtual bool can_process_upcalls (void) const = 0;
+  virtual bool can_process_upcalls () const = 0;
 
   /// Method to support deffering an upcall event till later in
   /// cases where can_process_upcalls() returns false.
@@ -91,7 +91,7 @@ public:
   virtual int defer_upcall (ACE_Event_Handler*);
 
   /// Get method for the flag
-  bool is_registered (void) const;
+  bool is_registered () const;
 
   /// Set method for the flag
   void is_registered (bool flag);

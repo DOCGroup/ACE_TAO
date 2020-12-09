@@ -33,25 +33,25 @@ class ACE_Export ACE_Dynamic
 {
 public:
   /// Constructor.
-  ACE_Dynamic (void);
+  ACE_Dynamic ();
 
   /// Destructor.
-  ~ACE_Dynamic (void);
+  ~ACE_Dynamic ();
 
   /**
    * Sets a flag that indicates that the object was dynamically
    * created. This method is usually called in operator new and then
    * checked and reset in the constructor.
    */
-  void set (void);
+  void set ();
 
   /// @c true if we were allocated dynamically, else @c false.
-  bool is_dynamic (void);
+  bool is_dynamic ();
 
   /// Resets state flag.
-  void reset (void);
+  void reset ();
 
-  static ACE_Dynamic *instance (void);
+  static ACE_Dynamic *instance ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
