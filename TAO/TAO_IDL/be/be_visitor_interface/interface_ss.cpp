@@ -114,8 +114,8 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << flat_name
-      << "_optable;" << be_uidt_nl
+      << "this->optable_ = std::addressof(tao_" << flat_name
+      << "_optable);" << be_uidt_nl
       << "}" << be_nl_2;
 
   // find if we are at the top scope or inside some module
@@ -182,22 +182,15 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "!std::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-      << ")";
+  *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
 
   if (node->has_mixed_parentage ())
     {
-      *os << " ||" << be_uidt_nl
-          << "!std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
-          << be_uidt_nl
-          << ")";
+      *os << " ||" << be_nl
+          << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
-  *os << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 

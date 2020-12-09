@@ -130,6 +130,23 @@ Echo_Server_Request_Interceptor::receive_request (
               "Echo_Server_Request_Interceptor::receive_request from \"%C\"\n",
               op.in ()));
 
+  CORBA::Boolean targetisa = ri->target_is_a ("FOO");
+  if (targetisa)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR in receive_request while checking "
+                  "target_is_a, it is not a FOO\n"));
+    }
+  targetisa = ri->target_is_a ("IDL:Test_Interceptors/Visual:1.0");
+  if (!targetisa)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR in receive_request while checking "
+                  "target_is_a, it should be IDL:Test_Interceptors/Visual:1.0\n"));
+    }
+
   if (std::strcmp (op.in (), "normal") == 0)
     {
       Dynamic::ParameterList_var paramlist = ri->arguments ();
@@ -160,6 +177,14 @@ Echo_Server_Request_Interceptor::receive_request (
   ACE_DEBUG ((LM_DEBUG,
               "Target most derived interface: %C\n",
               tmdi.in ()));
+
+  if (std::strcmp (tmdi.in (), "IDL:Test_Interceptors/Visual:1.0") != 0)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR in receive_request while checking "
+                  "target_most_derived_interface\n"));
+    }
 
   catched_exception = false;
   try
