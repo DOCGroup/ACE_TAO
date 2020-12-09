@@ -21,32 +21,28 @@ class Echo_Server_Request_Interceptor
 {
   // = Server-side echo interceptor.  For checking interceptor visually only.
 public:
-  Echo_Server_Request_Interceptor (void);
-  // cotr.
+  Echo_Server_Request_Interceptor ();
 
-  virtual char * name (void);
+  char * name () override;
   // Canonical name of the interceptor.
 
-  virtual void destroy (void);
+  void destroy () override;
 
-  virtual void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr);
+  void receive_request_service_contexts (PortableInterceptor::ServerRequestInfo_ptr) override;
 
-  virtual void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_reply (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri);
+  void send_exception (PortableInterceptor::ServerRequestInfo_ptr ri) override;
 
-  virtual void send_other (PortableInterceptor::ServerRequestInfo_ptr);
+  void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 protected:
-
-  virtual ~Echo_Server_Request_Interceptor (void);
-  // dotr.
+  ~Echo_Server_Request_Interceptor () override = default;
 
 private:
   const char *myname_;
-
 };
 
 #if defined(_MSC_VER)

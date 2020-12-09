@@ -13,10 +13,6 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
 {
 }
 
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
-{
-}
-
 char *
 Echo_Server_Request_Interceptor::name ()
 {

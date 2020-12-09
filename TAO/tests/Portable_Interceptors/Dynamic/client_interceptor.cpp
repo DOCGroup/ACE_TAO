@@ -13,10 +13,6 @@ Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor ()
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
-{
-}
-
 char *
 Echo_Client_Request_Interceptor::name ()
 {
@@ -227,14 +223,12 @@ void
 Echo_Client_Request_Interceptor::receive_exception (
     PortableInterceptor::ClientRequestInfo_ptr ri)
 {
-
   CORBA::String_var op = ri->operation ();
 
   ACE_DEBUG ((LM_DEBUG,
               "Echo_Client_Request_Interceptor::received_exception "
               "from \"%C\"\n",
               op.in ()));
-
 
   CORBA::String_var exception_id =
     ri->received_exception_id ();
