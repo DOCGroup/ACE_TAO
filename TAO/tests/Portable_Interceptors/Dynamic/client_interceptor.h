@@ -36,8 +36,7 @@ public:
 
   void receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  void receive_exception (
-      PortableInterceptor::ClientRequestInfo_ptr ri) override;
+  void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 protected:
   ~Echo_Client_Request_Interceptor () override = default;
