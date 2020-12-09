@@ -26,8 +26,43 @@ Echo_Server_Request_Interceptor::destroy ()
 
 void
 Echo_Server_Request_Interceptor::receive_request_service_contexts (
-    PortableInterceptor::ServerRequestInfo_ptr)
+    PortableInterceptor::ServerRequestInfo_ptr ri)
 {
+  bool catched_exception = false;
+  try
+    {
+      CORBA::String_var tmdi = ri->target_most_derived_interface ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
+    {
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
+    }
+
+  if (!catched_exception)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when calling target_most_derived_interface from receive_request_service_contexts\n"));
+    }
+
+  catched_exception = false;
+  try
+    {
+      CORBA::Boolean tmdi = ri->target_is_a ("FOO");
+    }
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
+    {
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
+    }
+
+  if (!catched_exception)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when calling target_is_a from receive_request_service_contexts\n"));
+    }
 }
 
 void
