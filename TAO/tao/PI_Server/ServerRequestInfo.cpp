@@ -27,7 +27,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ULong
-TAO::ServerRequestInfo::request_id (void)
+TAO::ServerRequestInfo::request_id ()
 {
   // The request ID returned by this method need not correspond to the
   // GIOP request ID sent with the client request.  The request ID
@@ -65,13 +65,13 @@ TAO::ServerRequestInfo::request_id (void)
 }
 
 char *
-TAO::ServerRequestInfo::operation (void)
+TAO::ServerRequestInfo::operation ()
 {
   return CORBA::string_dup (this->server_request_.operation ());
 }
 
 Dynamic::ParameterList *
-TAO::ServerRequestInfo::arguments (void)
+TAO::ServerRequestInfo::arguments ()
 {
   if (!this->args_)
     {
@@ -115,7 +115,7 @@ TAO::ServerRequestInfo::arguments (void)
 }
 
 Dynamic::ExceptionList *
-TAO::ServerRequestInfo::exceptions (void)
+TAO::ServerRequestInfo::exceptions ()
 {
   if (!this->args_)
     {
@@ -145,19 +145,19 @@ TAO::ServerRequestInfo::exceptions (void)
 }
 
 Dynamic::ContextList *
-TAO::ServerRequestInfo::contexts (void)
+TAO::ServerRequestInfo::contexts ()
 {
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 Dynamic::RequestContext *
-TAO::ServerRequestInfo::operation_context (void)
+TAO::ServerRequestInfo::operation_context ()
 {
   throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
 }
 
 CORBA::Any *
-TAO::ServerRequestInfo::result (void)
+TAO::ServerRequestInfo::result ()
 {
   if (!this->args_)
     {
@@ -180,13 +180,13 @@ TAO::ServerRequestInfo::result (void)
 }
 
 CORBA::Boolean
-TAO::ServerRequestInfo::response_expected (void)
+TAO::ServerRequestInfo::response_expected ()
 {
   return this->server_request_.response_expected ();
 }
 
 Messaging::SyncScope
-TAO::ServerRequestInfo::sync_scope (void)
+TAO::ServerRequestInfo::sync_scope ()
 {
   if (this->server_request_.sync_with_server ())
   {
@@ -197,7 +197,7 @@ TAO::ServerRequestInfo::sync_scope (void)
 }
 
 PortableInterceptor::ReplyStatus
-TAO::ServerRequestInfo::reply_status (void)
+TAO::ServerRequestInfo::reply_status ()
 {
   if (this->server_request_.pi_reply_status () == -1)
   {
@@ -209,7 +209,7 @@ TAO::ServerRequestInfo::reply_status (void)
 }
 
 CORBA::Object_ptr
-TAO::ServerRequestInfo::forward_reference (void)
+TAO::ServerRequestInfo::forward_reference ()
 {
   if (this->server_request_.pi_reply_status () != PortableInterceptor::LOCATION_FORWARD)
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
@@ -282,7 +282,7 @@ TAO::ServerRequestInfo::get_service_context_i (
 // exception from an Any. This method is in place just to be compliant
 // with the spec.
 CORBA::Any *
-TAO::ServerRequestInfo::sending_exception (void)
+TAO::ServerRequestInfo::sending_exception ()
 {
   if (this->server_request_.pi_reply_status () != PortableInterceptor::SYSTEM_EXCEPTION
       && this->server_request_.pi_reply_status () != PortableInterceptor::USER_EXCEPTION)
@@ -314,7 +314,7 @@ TAO::ServerRequestInfo::sending_exception (void)
 }
 
 char *
-TAO::ServerRequestInfo::server_id (void)
+TAO::ServerRequestInfo::server_id ()
 {
   if (this->servant_upcall_)
   {
@@ -325,7 +325,7 @@ TAO::ServerRequestInfo::server_id (void)
 }
 
 char *
-TAO::ServerRequestInfo::orb_id (void)
+TAO::ServerRequestInfo::orb_id ()
 {
   if (this->servant_upcall_)
   {
@@ -336,7 +336,7 @@ TAO::ServerRequestInfo::orb_id (void)
 }
 
 PortableInterceptor::AdapterName *
-TAO::ServerRequestInfo::adapter_name (void)
+TAO::ServerRequestInfo::adapter_name ()
 {
   // The adapter_name attribute defines a name for the object adapter
   // that services requests for the invoked object. In the case of the
@@ -352,7 +352,7 @@ TAO::ServerRequestInfo::adapter_name (void)
 }
 
 PortableInterceptor::ObjectId *
-TAO::ServerRequestInfo::object_id (void)
+TAO::ServerRequestInfo::object_id ()
 {
   if (this->servant_upcall_ != 0)
     {
@@ -391,7 +391,7 @@ TAO::ServerRequestInfo::object_id (void)
 }
 
 CORBA::OctetSeq *
-TAO::ServerRequestInfo::adapter_id (void)
+TAO::ServerRequestInfo::adapter_id ()
 {
   if (this->servant_upcall_)
   {
@@ -402,7 +402,7 @@ TAO::ServerRequestInfo::adapter_id (void)
 }
 
 char *
-TAO::ServerRequestInfo::target_most_derived_interface (void)
+TAO::ServerRequestInfo::target_most_derived_interface ()
 {
   if (this->servant_upcall_ == 0)
   {
