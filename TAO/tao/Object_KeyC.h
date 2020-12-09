@@ -92,12 +92,10 @@ namespace TAO
         CORBA::Octet* buffer,
         CORBA::Boolean release = false
       );
-#if defined (ACE_HAS_CPP11)
     ObjectKey (const ObjectKey &) = default;
     ObjectKey (ObjectKey &&) = default;
     ObjectKey& operator= (const ObjectKey &) = default;
     ObjectKey& operator= (ObjectKey &&) = default;
-#endif /* ACE_HAS_CPP11 */
     ~ObjectKey (void);
 
     typedef ObjectKey_var _var_type;

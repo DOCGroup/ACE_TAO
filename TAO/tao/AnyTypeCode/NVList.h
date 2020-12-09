@@ -26,11 +26,7 @@
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -120,11 +116,7 @@ namespace CORBA
 
   private:
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// holds the value
     Any any_;
@@ -266,11 +258,7 @@ namespace CORBA
     ULong max_;
 
     /// Reference counter.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Protects the incoming pointer.
     TAO_SYNCH_MUTEX lock_;

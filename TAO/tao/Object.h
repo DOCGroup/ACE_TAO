@@ -30,11 +30,7 @@
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 #if defined (HPUX) && defined (IOR)
    /* HP-UX 11.11 defines IOR in /usr/include/pa/inline.h

@@ -36,8 +36,8 @@ TAO_Reply_Dispatcher::intrusive_remove_ref (TAO_Reply_Dispatcher* rd)
 {
   if (rd != nullptr)
     {
-      long const tmp = --rd->refcount_;
-      if (tmp <= 0)
+      uint32_t const tmp = --rd->refcount_;
+      if (tmp == 0)
         {
           if (rd->allocator_)
             {

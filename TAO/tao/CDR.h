@@ -409,9 +409,7 @@ public:
   TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                 TAO_ORB_Core* orb_core = 0);
 
-#if defined (ACE_HAS_CPP11)
   TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
-#endif /* ACE_HAS_CPP11 */
 
   /// Destructor
   virtual ~TAO_InputCDR (void);

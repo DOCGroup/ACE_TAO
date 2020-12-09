@@ -31,6 +31,7 @@
 #include "ace/Synch.h"
 #include "ace/Containers_T.h"
 #include "ace/Vector_T.h"
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -177,7 +178,7 @@ private:
   size_t num_queue_requests_;
 
   /// The number of currently active worker threads.
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, unsigned long> busy_threads_;
+  std::atomic<unsigned long> busy_threads_;
 
   /// The queue of pending servant requests (a.k.a. the "request queue").
   TAO::CSD::TP_Queue queue_;

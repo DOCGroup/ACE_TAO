@@ -20,12 +20,7 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "tao/Basic_Types.h"
-
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -52,11 +47,7 @@ protected:
   TAO_Intrusive_Ref_Count_Base (void);
 
 private:
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<ACE_LOCK, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
   // Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Base (const TAO_Intrusive_Ref_Count_Base&);

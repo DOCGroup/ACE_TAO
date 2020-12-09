@@ -580,11 +580,7 @@ namespace TAO
 
     // We must manage the memory allocated
     // by the call above to alloc().
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr<CORBA::Exception> safety (exception);
-#else
-    auto_ptr<CORBA::Exception> safety (exception);
-#endif /* ACE_HAS_CPP11 */
 
     exception->_raise ();
 
@@ -731,11 +727,7 @@ namespace TAO
     // Without this, the call to create_system_exception() above
     // causes a memory leak. On platforms without native exceptions,
     // the CORBA::Environment class manages the memory.
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr<CORBA::SystemException> safety (ex);
-#else
-    auto_ptr<CORBA::SystemException> safety (ex);
-#endif /* ACE_HAS_CPP11 */
 
     ex->minor (minor);
     ex->completed (CORBA::CompletionStatus (completion));

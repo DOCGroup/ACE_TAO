@@ -22,11 +22,7 @@
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Refcounted_ObjectKey.h"
 #include "tao/Service_Callbacks.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -379,11 +375,7 @@ private:
   TAO_MProfile* forward_to_;
 
   /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
-    std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
+  std::atomic<uint32_t> refcount_;
 
   /// A lock that protects creation of the tagged profile
   TAO_SYNCH_MUTEX tagged_profile_lock_;

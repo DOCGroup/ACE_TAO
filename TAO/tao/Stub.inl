@@ -393,7 +393,7 @@ void TAO_Stub::forwarded_on_exception (bool forwarded)
 ACE_INLINE
 bool TAO_Stub::forwarded_on_exception () const
 {
-  return forwarded_on_exception_.value ();
+  return forwarded_on_exception_;
 }
 
 ACE_INLINE
