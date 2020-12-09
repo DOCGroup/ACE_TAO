@@ -38,12 +38,10 @@ run_test (Test_Interceptors::Visual_ptr server)
 {
   CORBA::String_var msg;
 
-  server->normal (10,
-                  msg.out ());
+  server->normal (10, msg.out ());
 
   CORBA::Long one = 1, two = 1, result = 0;
-  result = server->calculate (one,
-                              two);
+  result = server->calculate (one, two);
 
   ACE_DEBUG ((LM_DEBUG,
               "calculate() result = %d\n",

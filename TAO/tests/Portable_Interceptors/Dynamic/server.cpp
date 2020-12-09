@@ -2,7 +2,6 @@
 #include "test_i.h"
 #include "Echo_Server_ORBInitializer.h"
 #include "ace/OS_NS_stdio.h"
-
 #include "tao/ORBInitializer_Registry.h"
 
 const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
@@ -86,7 +85,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       CORBA::String_var ior =
         orb->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%s>\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Test_Interceptors::Visual: <%C>\n", ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
       if (ior_output_file != 0)
