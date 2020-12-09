@@ -97,8 +97,8 @@ namespace TAO
     /// Prevent copying through the copy constructor and the assignment
     /// operator.
     //@{
-    PICurrent_Impl (const PICurrent_Impl &);
-    void operator= (const PICurrent_Impl &);
+    PICurrent_Impl (const PICurrent_Impl &) = delete;
+    void operator= (const PICurrent_Impl &) = delete;
     //@}
 
   private:

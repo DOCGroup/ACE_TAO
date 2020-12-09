@@ -189,7 +189,6 @@ public:
   */
 
 private:
-
   bool parameter_list (Dynamic::ParameterList &param_list);
 
   bool exception_list (Dynamic::ExceptionList &exception_list);

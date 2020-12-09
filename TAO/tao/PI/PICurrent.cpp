@@ -20,10 +20,6 @@ TAO::PICurrent::PICurrent (TAO_ORB_Core &orb_core)
 {
 }
 
-TAO::PICurrent::~PICurrent (void)
-{
-}
-
 CORBA::Any *
 TAO::PICurrent::get_slot (PortableInterceptor::SlotId identifier)
 {
@@ -57,7 +53,7 @@ TAO::PICurrent::tsc (void)
       this->orb_core_.get_tss_resource (this->tss_slot_));
 
   // If this TSS has not yet been set-up, give it it's own PICurrent_Impl.
-  if (0 == impl)
+  if (!impl)
   {
     ACE_NEW_THROW_EX (impl,
                       TAO::PICurrent_Impl (&this->orb_core_, this->tss_slot_),

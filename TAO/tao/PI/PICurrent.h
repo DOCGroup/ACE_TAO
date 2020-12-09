@@ -98,14 +98,14 @@ namespace TAO
      * counted, and should not be destroyed using delete() by anything
      * other than the reference counting mechanism.
      */
-    virtual ~PICurrent ();
+    virtual ~PICurrent () = default;
 
   private:
     /// Prevent copying through the copy constructor and the assignment
     /// operator.
     //@{
-    PICurrent (const PICurrent &);
-    void operator= (const PICurrent &);
+    PICurrent (const PICurrent &) = delete;
+    void operator= (const PICurrent &) = delete;
     //@}
 
   private:

@@ -81,8 +81,8 @@ namespace TAO
 
   private:
     // Prevent copying
-    ORBInitializer_Registry (const ORBInitializer_Registry &);
-    void operator= (const ORBInitializer_Registry &);
+    ORBInitializer_Registry (const ORBInitializer_Registry &) = delete;
+    void operator= (const ORBInitializer_Registry &) = delete;
 
   private:
     TAO_SYNCH_RECURSIVE_MUTEX lock_;

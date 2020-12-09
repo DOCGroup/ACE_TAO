@@ -49,7 +49,6 @@ namespace TAO
   class ClientRequestDetails
   {
   public:
-
     ClientRequestDetails ();
 
     void apply_policies (const CORBA::PolicyList& policies);
@@ -61,7 +60,6 @@ namespace TAO
     bool should_be_processed (bool is_remote_request) const;
 
   private:
-
     /// The ProcessingMode setting that can be adjusted via the
     /// PortableInterceptor::ProcessingModePolicy.
     PortableInterceptor::ProcessingMode processing_mode_;

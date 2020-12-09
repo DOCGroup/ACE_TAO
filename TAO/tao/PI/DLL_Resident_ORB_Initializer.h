@@ -51,13 +51,9 @@ namespace PortableInterceptor
         const ACE_TCHAR * dll_name);
       virtual ~DLL_Resident_ORB_Initializer ();
 
-      virtual void pre_init (
-        ::PortableInterceptor::ORBInitInfo_ptr info
-      );
+      virtual void pre_init (::PortableInterceptor::ORBInitInfo_ptr info);
 
-    virtual void post_init (
-        ::PortableInterceptor::ORBInitInfo_ptr info
-      );
+    virtual void post_init (::PortableInterceptor::ORBInitInfo_ptr info);
 
   private:
     PortableInterceptor::ORBInitializer_var initializer_;
