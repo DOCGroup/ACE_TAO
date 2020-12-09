@@ -8,15 +8,15 @@
 #include "ace/Log_Msg.h"
 #include <cstring>
 
-Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
-  : myname_ ("Echo_Server_Interceptor")
+Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor (int& result)
+  : result_ (result)
 {
 }
 
 char *
 Echo_Server_Request_Interceptor::name ()
 {
-  return CORBA::string_dup (this->myname_);
+  return CORBA::string_dup ("Echo_Server_Interceptor");
 }
 
 void
@@ -48,6 +48,7 @@ Echo_Server_Request_Interceptor::receive_request (
 
   if (!catched_exception)
     {
+      ++this->result_;
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR, no exception when getting reply status\n"));
     }
@@ -76,6 +77,7 @@ Echo_Server_Request_Interceptor::receive_request (
       CORBA::TypeCode_var second_typecode = paramlist[i].argument.type ();
       if (second_typecode->kind () != CORBA::tk_null)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in receive_request while checking "
                       "the type of the extracted out"

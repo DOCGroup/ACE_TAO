@@ -21,7 +21,7 @@ class Echo_Server_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  Echo_Server_Request_Interceptor ();
+  Echo_Server_Request_Interceptor (int& result);
 
   // Canonical name of the interceptor.
   char * name () override;
@@ -42,7 +42,7 @@ protected:
   ~Echo_Server_Request_Interceptor () override = default;
 
 private:
-  const char *myname_;
+  int& result_;
 };
 
 #if defined(_MSC_VER)

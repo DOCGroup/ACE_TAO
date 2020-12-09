@@ -4,7 +4,6 @@ Visual_i::Visual_i (CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
-  // ctor
 
 void
 Visual_i::normal (CORBA::Long arg,
@@ -25,7 +24,7 @@ Visual_i::calculate (CORBA::Long one,
 Test_Interceptors::Visual::VarLenStruct *
 Visual_i::the_structure ()
 {
-  Test_Interceptors::Visual::VarLenStruct * s;
+  Test_Interceptors::Visual::VarLenStruct * s = nullptr;
 
   ACE_NEW_THROW_EX (s,
                     Test_Interceptors::Visual::VarLenStruct,

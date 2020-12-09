@@ -5,6 +5,10 @@
 
 #include "client_interceptor.h"
 
+Echo_Client_ORBInitializer::Echo_Client_ORBInitializer (int& result) : result_ (result)
+{
+}
+
 void
 Echo_Client_ORBInitializer::pre_init (
     PortableInterceptor::ORBInitInfo_ptr)
@@ -21,7 +25,7 @@ Echo_Client_ORBInitializer::post_init (
 
   // Install the Echo client request interceptor
   ACE_NEW_THROW_EX (interceptor,
-                    Echo_Client_Request_Interceptor,
+                    Echo_Client_Request_Interceptor (this->result_),
                     CORBA::NO_MEMORY ());
 
   PortableInterceptor::ClientRequestInterceptor_var

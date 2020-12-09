@@ -79,6 +79,8 @@ run_test (Test_Interceptors::Visual_ptr server)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  int result = 0;
+
   try
     {
 #if TAO_HAS_INTERCEPTORS == 1
@@ -86,7 +88,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         PortableInterceptor::ORBInitializer::_nil ();
 
       ACE_NEW_RETURN (temp_initializer,
-                      Echo_Client_ORBInitializer,
+                      Echo_Client_ORBInitializer (result),
                       -1);  // No exceptions yet!
       PortableInterceptor::ORBInitializer_var orb_initializer =
         temp_initializer;
@@ -126,5 +128,5 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return 0;
+  return result;
 }

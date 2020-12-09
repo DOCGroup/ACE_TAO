@@ -8,15 +8,15 @@
 #include "ace/Log_Msg.h"
 #include <cstring>
 
-Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor ()
-  : myname_ ("Echo_Client_Interceptor")
+Echo_Client_Request_Interceptor::Echo_Client_Request_Interceptor (int& result)
+  : result_ (result)
 {
 }
 
 char *
 Echo_Client_Request_Interceptor::name ()
 {
-  return CORBA::string_dup (this->myname_);
+  return CORBA::string_dup ("Echo_Client_Interceptor");
 }
 
 void
@@ -47,6 +47,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
   if (!catched_exception)
     {
+      ++this->result_;
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR, no exception when getting reply status\n"));
     }
@@ -65,6 +66,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
       if (paramlist->length () != 2)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) All parameters not available\n"));
         }
@@ -84,6 +86,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
 
       if (param != 10)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -93,6 +96,7 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
       CORBA::TypeCode_var second_typecode = paramlist[second].argument.type ();
       if (second_typecode->kind () != CORBA::tk_null)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the type of the extracted out"
@@ -140,6 +144,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
       if (paramlist[first].mode != CORBA::PARAM_IN ||
           paramlist[second].mode != CORBA::PARAM_OUT)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in the extracted argument list\n"));
         }
@@ -149,6 +154,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
 
       if (param != 10)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -163,6 +169,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
 
       if (std::strcmp (str, "DO_NOT_INSULT_MY_INTELLIGENCE") != 0)
         {
+          ++this->result_;
           ACE_ERROR ((LM_ERROR,
                       "(%P|%t) ERROR in send_request while checking "
                       "the value of the extracted "
@@ -195,7 +202,7 @@ Echo_Client_Request_Interceptor::receive_reply (PortableInterceptor::ClientReque
     {
       CORBA::Any_var a = ri->result ();
 
-      const Test_Interceptors::Visual::VarLenStruct * v = 0;
+      const Test_Interceptors::Visual::VarLenStruct * v = nullptr;
 
       (a.in ()) >>= v;
 
