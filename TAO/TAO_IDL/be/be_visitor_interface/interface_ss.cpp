@@ -375,7 +375,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
-  *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
+  *os << "::CORBA::Object_ptr tmp {};"
       << be_nl_2;
 
   *os << "::CORBA::Boolean const _tao_opt_colloc ="
