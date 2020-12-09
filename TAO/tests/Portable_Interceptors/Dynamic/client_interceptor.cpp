@@ -39,9 +39,10 @@ Echo_Client_Request_Interceptor::send_request (PortableInterceptor::ClientReques
       PortableInterceptor::ReplyStatus rstatus = ri->reply_status ();
       ACE_UNUSED_ARG (rstatus);
     }
-  catch (const ::CORBA::BAD_INV_ORDER&)
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
     {
-      catched_exception = true;
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
     }
 
   if (!catched_exception)
