@@ -30,16 +30,16 @@ class be_native : public virtual AST_Native,
 public:
   be_native (UTL_ScopedName *n);
 
-  virtual ~be_native (void) {}
+  virtual ~be_native () {}
 
   /// Generate the typecode description.
-  virtual int gen_typecode (void);
+  virtual int gen_typecode ();
 
   /// Return typecode size.
-  virtual long tc_size (void);
+  virtual long tc_size ();
 
   /// Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

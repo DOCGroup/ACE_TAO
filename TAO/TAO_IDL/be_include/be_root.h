@@ -28,10 +28,10 @@ class be_root : public virtual AST_Root,
 public:
   be_root (UTL_ScopedName *n);
 
-  virtual ~be_root (void);
+  virtual ~be_root ();
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

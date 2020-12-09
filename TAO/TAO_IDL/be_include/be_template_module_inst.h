@@ -14,10 +14,10 @@ public:
                            AST_Template_Module *ref,
                            FE_Utils::T_ARGLIST *template_args);
 
-  virtual ~be_template_module_inst (void);
+  virtual ~be_template_module_inst ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

@@ -12,13 +12,13 @@ public:
 
   AST_Finder (UTL_ScopedName *n);
 
-  virtual ~AST_Finder (void);
+  virtual ~AST_Finder ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

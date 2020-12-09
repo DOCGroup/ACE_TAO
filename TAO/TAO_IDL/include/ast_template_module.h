@@ -15,10 +15,10 @@ public:
   AST_Template_Module (UTL_ScopedName *n,
                        FE_Utils::T_PARAMLIST_INFO *template_params);
 
-  virtual ~AST_Template_Module (void);
+  virtual ~AST_Template_Module ();
 
   FE_Utils::T_PARAMLIST_INFO *
-  template_params (void) const;
+  template_params () const;
 
   // Checks for errors in the template args of an instantiation.
   bool match_arg_names (FE_Utils::T_ARGLIST *args);
@@ -30,7 +30,7 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

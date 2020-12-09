@@ -31,9 +31,9 @@ class be_porttype : public virtual AST_PortType,
 public:
   be_porttype (UTL_ScopedName *n);
 
-  virtual ~be_porttype (void);
+  virtual ~be_porttype ();
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual int accept (be_visitor *visitor);
 };

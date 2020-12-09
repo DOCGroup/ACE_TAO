@@ -27,7 +27,7 @@ class be_visitor_union_branch_public_ci : public be_visitor_decl
 {
 public:
   be_visitor_union_branch_public_ci (be_visitor_context *ctx);
-  ~be_visitor_union_branch_public_ci (void);
+  ~be_visitor_union_branch_public_ci ();
 
   virtual int visit_union_branch (be_union_branch *node);
 

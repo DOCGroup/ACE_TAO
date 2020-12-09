@@ -100,10 +100,10 @@ public:
   AST_PredefinedType (PredefinedType t,
                       UTL_ScopedName *n);
 
-  virtual ~AST_PredefinedType (void);
+  virtual ~AST_PredefinedType ();
 
   // Data Accessors.
-  PredefinedType pt (void);
+  PredefinedType pt ();
 
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -112,12 +112,12 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
 private:

@@ -84,14 +84,14 @@ public:
                   UTL_ExceptList *cdr);
 
   // Get list item.
-  AST_Type *head (void);
+  AST_Type *head ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Copies the UTL_ExceptList pointers but not the
   // contained AST_Exceptions.
-  virtual UTL_ExceptList *copy (void);
+  virtual UTL_ExceptList *copy ();
 
 private:
   // Data.
@@ -106,7 +106,7 @@ public:
   UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
   // Get current item
-  AST_Type *item (void);
+  AST_Type *item ();
 };
 
 #endif           // _UTL_EXCEPTLIST_UTL_EXCEPTLIST_HH

@@ -15,18 +15,18 @@ public:
                             AST_Template_Module *ref,
                             FE_Utils::T_ARGLIST *template_args);
 
-  virtual ~AST_Template_Module_Inst (void);
+  virtual ~AST_Template_Module_Inst ();
 
-  AST_Template_Module *ref (void) const;
+  AST_Template_Module *ref () const;
 
   FE_Utils::T_ARGLIST const *
-  template_args (void) const;
+  template_args () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
