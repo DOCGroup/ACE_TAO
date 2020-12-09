@@ -212,7 +212,9 @@ CORBA::Object_ptr
 TAO::ServerRequestInfo::forward_reference ()
 {
   if (this->server_request_.pi_reply_status () != PortableInterceptor::LOCATION_FORWARD)
+  {
     throw ::CORBA::BAD_INV_ORDER (CORBA::OMGVMCID | 14, CORBA::COMPLETED_NO);
+  }
 
   // TAO_ServerRequest::forward_location() already duplicates the
   // object reference.  There is no need to duplicate it here.
@@ -359,7 +361,7 @@ TAO::ServerRequestInfo::object_id ()
       const PortableServer::ObjectId &id =
         this->servant_upcall_->user_id ();
 
-      PortableInterceptor::ObjectId *tmp = 0;
+      PortableInterceptor::ObjectId *tmp {};
 
       ACE_NEW_THROW_EX (tmp,
                         PortableInterceptor::ObjectId,

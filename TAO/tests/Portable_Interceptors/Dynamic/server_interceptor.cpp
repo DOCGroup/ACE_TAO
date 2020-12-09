@@ -63,6 +63,42 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
       ACE_ERROR ((LM_ERROR,
                   "(%P|%t) ERROR, no exception when calling target_is_a from receive_request_service_contexts\n"));
     }
+
+  catched_exception = false;
+  try
+    {
+      PortableInterceptor::ReplyStatus tmdi = ri->reply_status ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
+    {
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
+    }
+
+  if (!catched_exception)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when calling reply_status from receive_request_service_contexts\n"));
+    }
+
+  catched_exception = false;
+  try
+    {
+      Dynamic::ParameterList_var paramlist = ri->arguments ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
+    {
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
+    }
+
+  if (!catched_exception)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when calling arguments from receive_request_service_contexts\n"));
+    }
 }
 
 void
@@ -96,8 +132,7 @@ Echo_Server_Request_Interceptor::receive_request (
 
   if (std::strcmp (op.in (), "normal") == 0)
     {
-      Dynamic::ParameterList_var paramlist =
-        ri->arguments ();
+      Dynamic::ParameterList_var paramlist = ri->arguments ();
 
       CORBA::Long param;
       CORBA::ULong i = 0;  // index -- explicitly used to avoid
@@ -125,6 +160,24 @@ Echo_Server_Request_Interceptor::receive_request (
   ACE_DEBUG ((LM_DEBUG,
               "Target most derived interface: %C\n",
               tmdi.in ()));
+
+  catched_exception = false;
+  try
+    {
+      PortableInterceptor::ReplyStatus tmdi = ri->reply_status ();
+    }
+  catch (const ::CORBA::BAD_INV_ORDER& ex)
+    {
+      // BAD_INV_ORDER should be thrown with minor code 14
+      catched_exception = (ex.minor () == (CORBA::OMGVMCID | 14));
+    }
+
+  if (!catched_exception)
+    {
+      ++this->result_;
+      ACE_ERROR ((LM_ERROR,
+                  "(%P|%t) ERROR, no exception when calling reply_status from receive_request\n"));
+    }
 }
 
 void
