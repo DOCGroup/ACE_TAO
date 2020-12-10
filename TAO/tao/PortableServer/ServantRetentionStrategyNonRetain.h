@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Servant_Location.h"
-#include "ace/Atomic_Op.h"
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -123,7 +123,7 @@ namespace TAO
 
     protected:
       TAO_Root_POA *poa_;
-      ACE_Atomic_Op<TAO_SYNCH_MUTEX,ACE_UINT32> sys_id_count_;
+      std::atomic<uint32_t> sys_id_count_;
     };
   }
 }

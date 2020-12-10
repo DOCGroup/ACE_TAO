@@ -170,7 +170,6 @@ ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
                                         std::wstring &x)
 {
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len;
   if (!this->read_4 (cdr, &len))
     return false;
@@ -227,9 +226,6 @@ TAO_UTF16_BOM_Translator::read_wstring (ACE_InputCDR &cdr,
     }
   x.clear ();
   return false;
-#else
-  return this->ACE_WChar_Codeset_Translator::read_wstring (cdr, x);
-#endif
 }
 #endif
 

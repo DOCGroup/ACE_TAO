@@ -110,11 +110,7 @@ CORBA::Object::_remove_ref ()
 CORBA::ULong
 CORBA::Object::_refcount_value() const
 {
-#if defined (ACE_HAS_CPP11)
   return this->refcount_;
-#else
-  return this->refcount_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 void

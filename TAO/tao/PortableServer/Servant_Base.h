@@ -22,11 +22,7 @@
 #include "tao/PortableServer/PS_ForwardC.h"
 #include "tao/PortableServer/Servant_var.h"
 #include "tao/Abstract_Servant_Base.h"
-#if defined (ACE_HAS_CPP11)
 #include <atomic>
-#else
-#include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -208,11 +204,7 @@ protected:
 
 protected:
   /// Reference counter.
-#if defined (ACE_HAS_CPP11)
   std::atomic<uint32_t> ref_count_;
-#else
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> ref_count_;
-#endif /* ACE_HAS_CPP11 */
 
   /// The operation table for this servant.  It is initialized by the
   /// most derived class.

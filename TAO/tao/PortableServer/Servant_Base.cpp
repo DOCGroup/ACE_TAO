@@ -664,11 +664,7 @@ TAO_ServantBase::_remove_ref ()
 CORBA::ULong
 TAO_ServantBase::_refcount_value () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->ref_count_;
-#else
-  return this->ref_count_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 void

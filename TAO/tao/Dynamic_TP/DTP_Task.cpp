@@ -345,7 +345,7 @@ TAO_DTP_Task::svc (void)
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Decrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
-                              this->busy_threads_.value()));
+                              this->busy_threads_.load()));
                 }
 
               ACE_Time_Value tmp_sec = this->thread_idle_time_.to_absolute_time();
@@ -385,7 +385,7 @@ TAO_DTP_Task::svc (void)
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Incrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
-                              this->busy_threads_.value ()));
+                              this->busy_threads_.load ()));
                 }
             }
         }

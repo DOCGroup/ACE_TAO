@@ -25,11 +25,7 @@
 #include "tao/Objref_VarOut_T.h"
 #include "tao/Object.h"  /* For CORBA::Object_var */
 #include "tao/Pseudo_VarOut_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +51,6 @@ namespace CORBA
   class TAO_Valuetype_Export AbstractBase
   {
   public:
-
     /// Constructor.
     /**
      * This constructor is only meant to be called by the
@@ -127,7 +122,6 @@ namespace CORBA
     void _decr_refcount (void);
 
   protected:
-
     AbstractBase (void);
     AbstractBase (const AbstractBase &);
 
@@ -138,7 +132,6 @@ namespace CORBA
     CORBA::Boolean is_objref_;
 
   private:
-
     AbstractBase & operator= (const AbstractBase &);
 
     virtual CORBA::ValueBase *_tao_to_value (void);
@@ -146,13 +139,8 @@ namespace CORBA
     CORBA::Object_ptr create_object (TAO_Stub *stub);
 
   private:
-
     /// Number of outstanding references to this object.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     CORBA::Boolean is_collocated_;
     TAO_Abstract_ServantBase *servant_;
