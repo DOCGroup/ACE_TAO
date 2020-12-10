@@ -46,7 +46,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr arg (void) const;
+    S_ptr arg () const;
 
   private:
     S_var x_;
@@ -64,14 +64,14 @@ namespace TAO
   class Inout_Object_SArgument_T : public InoutArgument
   {
   public:
-    Inout_Object_SArgument_T (void);
+    Inout_Object_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
     virtual CORBA::Boolean demarshal (TAO_InputCDR &);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr & arg (void);
+    S_ptr & arg ();
 
   private:
     S_var x_;
@@ -90,13 +90,13 @@ namespace TAO
   class Out_Object_SArgument_T : public OutArgument
   {
   public:
-    Out_Object_SArgument_T (void);
+    Out_Object_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_out arg (void);
+    S_out arg ();
 
   private:
     S_var x_;
@@ -114,13 +114,13 @@ namespace TAO
   class Ret_Object_SArgument_T : public RetArgument
   {
   public:
-    Ret_Object_SArgument_T (void);
+    Ret_Object_SArgument_T ();
 
     virtual CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S_ptr & arg (void);
+    S_ptr & arg ();
 
   private:
     S_var x_;

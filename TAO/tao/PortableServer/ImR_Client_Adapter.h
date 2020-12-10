@@ -52,7 +52,7 @@ namespace TAO
       public ACE_Service_Object
     {
     public:
-      virtual ~ImR_Client_Adapter (void);
+      virtual ~ImR_Client_Adapter ();
 
       /// ImplRepo helper method, notify the ImplRepo on startup
       virtual void imr_notify_startup (TAO_Root_POA* poa ) = 0;

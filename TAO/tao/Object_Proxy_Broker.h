@@ -50,7 +50,7 @@ namespace TAO
   {
   public:
     /// Destructor
-    virtual ~Object_Proxy_Broker (void);
+    virtual ~Object_Proxy_Broker ();
 
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
                                   const char *logical_type_id) = 0;

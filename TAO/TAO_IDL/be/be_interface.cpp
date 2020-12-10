@@ -2309,10 +2309,7 @@ be_interface::is_a_helper (be_interface * /*derived*/,
                            TAO_OutStream *os)
 {
   // Emit the comparison code.
-  *os << "std::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"" << bi->repoID () << "\"" << be_uidt_nl
-      << ") == 0 ||" << be_uidt_nl;
+  *os << "std::strcmp (value, \"" << bi->repoID () << "\") == 0 ||" << be_nl;
 
   return 0;
 }
@@ -2756,34 +2753,25 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
 
   if (this->is_abstract () || this->has_mixed_parentage ())
     {
-      *os << "std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\"" << be_uidt_nl
-          << ") == 0";
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
   else if (this->is_local ())
     {
-      *os << "std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/LocalObject:1.0\"" << be_uidt_nl
-          << ") == 0";
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/LocalObject:1.0\") == 0";
     }
 
   if (this->has_mixed_parentage () || this->is_local ())
     {
-      *os << " ||" << be_uidt_nl;
+      *os << " ||" << be_nl;
     }
   else if (this->is_abstract ())
     {
-      *os << be_uidt << be_uidt_nl;
+      *os << be_nl;
     }
 
   if (! this->is_abstract ())
     {
-      *os << "std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-          << ") == 0" << be_uidt << be_uidt_nl;
+      *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0" << be_nl;
     }
 
   return 0;

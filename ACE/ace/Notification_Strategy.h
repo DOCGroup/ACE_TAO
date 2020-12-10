@@ -38,19 +38,19 @@ public:
   ACE_Notification_Strategy (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
   /// Destructor.
-  virtual ~ACE_Notification_Strategy (void);
+  virtual ~ACE_Notification_Strategy ();
 
-  virtual int notify (void) = 0;
+  virtual int notify () = 0;
   virtual int notify (ACE_Event_Handler *, ACE_Reactor_Mask mask) = 0;
 
   /// Get the event handler.
-  ACE_Event_Handler *event_handler (void);
+  ACE_Event_Handler *event_handler ();
 
   /// Set the event handler.
   void event_handler (ACE_Event_Handler *eh);
 
   /// Get the reactor mask.
-  ACE_Reactor_Mask mask (void) const;
+  ACE_Reactor_Mask mask () const;
 
   /// Set the reactor mask.
   void mask (ACE_Reactor_Mask m);

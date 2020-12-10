@@ -58,14 +58,14 @@ TAO::TypeCode::Enum<char const *,
 void
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                    TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
-                    TAO::Null_RefCount_Policy>::tao_release (void)
+                    TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -124,7 +124,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  void) const
+  ) const
 {
   ACE_Array_Base<CORBA::String_var> tc_enumerators (this->nenumerators_);
 
@@ -161,7 +161,7 @@ char const *
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::id_i (
-  void) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -172,7 +172,7 @@ char const *
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::name_i (
-  void) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -183,7 +183,7 @@ CORBA::ULong
 TAO::TypeCode::Enum<char const *,
                     char const * const *,
                     TAO::Null_RefCount_Policy>::member_count_i (
-  void) const
+  ) const
 {
   return this->nenumerators_;
 }

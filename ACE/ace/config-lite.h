@@ -46,7 +46,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // For use by <ACE_OS::exit>.
 extern "C"
 {
-  typedef void (*ACE_EXIT_HOOK) (void);
+  typedef void (*ACE_EXIT_HOOK) ();
 }
 
 // Signature for registering a cleanup function that is used by the
@@ -83,11 +83,11 @@ typedef void (*ACE_INIT_LOG_MSG_HOOK) (ACE_OS_Log_Msg_Attributes &attr
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*,
                                           ACE_OS_Log_Msg_Attributes &);
 
-typedef void (*ACE_CLOSE_LOG_MSG_HOOK) (void);
+typedef void (*ACE_CLOSE_LOG_MSG_HOOK) ();
 
 typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
 
-typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) (void);
+typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) ();
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

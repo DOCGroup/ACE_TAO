@@ -69,16 +69,16 @@ namespace TAO
     CORBA::Boolean marshal (TAO_OutputCDR &);
     virtual CORBA::Boolean marshal_value (TAO_OutputCDR &) = 0;
 
-    virtual void free_value (void);
+    virtual void free_value ();
 
-    CORBA::TypeCode_ptr type (void) const;
-    CORBA::TypeCode_ptr _tao_get_typecode (void) const;
+    CORBA::TypeCode_ptr type () const;
+    CORBA::TypeCode_ptr _tao_get_typecode () const;
     void type (CORBA::TypeCode_ptr);
 
-    virtual int _tao_byte_order (void) const;
+    virtual int _tao_byte_order () const;
 
-    virtual void _add_ref (void);
-    virtual void _remove_ref (void);
+    virtual void _add_ref ();
+    virtual void _remove_ref ();
 
     /// Used to release these CORBA basic types.
     static void _tao_any_string_destructor (void *);
@@ -90,13 +90,13 @@ namespace TAO
     virtual CORBA::Boolean to_value (CORBA::ValueBase *&) const;
     virtual CORBA::Boolean to_abstract_base (CORBA::AbstractBase_ptr &) const;
 
-    bool encoded (void) const;
+    bool encoded () const;
 
   protected:
     Any_Impl (_tao_destructor,
               CORBA::TypeCode_ptr,
               bool encoded = false);
-    virtual ~Any_Impl (void);
+    virtual ~Any_Impl ();
 
     TAO::Any_Impl::_tao_destructor value_destructor_;
     CORBA::TypeCode_ptr type_;

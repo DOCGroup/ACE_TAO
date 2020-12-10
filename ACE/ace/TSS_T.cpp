@@ -34,7 +34,7 @@ extern "C" ACE_Export void ACE_TSS_C_cleanup (void *);
 #endif /* defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)) */
 
 template <class TYPE>
-ACE_TSS<TYPE>::~ACE_TSS (void)
+ACE_TSS<TYPE>::~ACE_TSS ()
 {
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
   if (this->once_)
@@ -71,13 +71,13 @@ ACE_TSS<TYPE>::operator-> () const
 }
 
 template <class TYPE>
-ACE_TSS<TYPE>::operator TYPE *(void) const
+ACE_TSS<TYPE>::operator TYPE *() const
 {
   return this->ts_get ();
 }
 
 template <class TYPE> TYPE *
-ACE_TSS<TYPE>::make_TSS_TYPE (void) const
+ACE_TSS<TYPE>::make_TSS_TYPE () const
 {
   TYPE *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -87,7 +87,7 @@ ACE_TSS<TYPE>::make_TSS_TYPE (void) const
 }
 
 template <class TYPE> void
-ACE_TSS<TYPE>::dump (void) const
+ACE_TSS<TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 #if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
@@ -110,7 +110,7 @@ ACE_TSS<TYPE>::cleanup (void *ptr)
 }
 
 template <class TYPE> int
-ACE_TSS<TYPE>::ts_init (void)
+ACE_TSS<TYPE>::ts_init ()
 {
   // Ensure that we are serialized!
   ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->keylock_, 0);
@@ -188,7 +188,7 @@ ACE_TSS<TYPE>::ACE_TSS (TYPE *ts_obj)
 }
 
 template <class TYPE> TYPE *
-ACE_TSS<TYPE>::ts_get (void) const
+ACE_TSS<TYPE>::ts_get () const
 {
   if (!this->once_)
     {
@@ -269,7 +269,7 @@ ACE_TSS<TYPE>::ts_get (void) const
 // otherwise returns a pointer to the ts_obj.
 
 template <class TYPE> TYPE *
-ACE_TSS<TYPE>::ts_object (void) const
+ACE_TSS<TYPE>::ts_object () const
 {
   if (!this->once_) // Return 0 if we've never been initialized.
     return 0;
@@ -342,7 +342,7 @@ ACE_TSS<TYPE>::ts_object (TYPE *new_ts_obj)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_TSS_Guard)
 
 template <class ACE_LOCK> void
-ACE_TSS_Guard<ACE_LOCK>::dump (void) const
+ACE_TSS_Guard<ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -352,7 +352,7 @@ ACE_TSS_Guard<ACE_LOCK>::dump (void) const
 }
 
 template <class ACE_LOCK> void
-ACE_TSS_Guard<ACE_LOCK>::init_key (void)
+ACE_TSS_Guard<ACE_LOCK>::init_key ()
 {
   this->key_ = ACE_OS::NULL_key;
   ACE_Thread::keycreate (&this->key_,
@@ -365,13 +365,13 @@ ACE_TSS_Guard<ACE_LOCK>::init_key (void)
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (void)
+ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard ()
 {
   this->init_key ();
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Guard<ACE_LOCK>::release (void)
+ACE_TSS_Guard<ACE_LOCK>::release ()
 {
   Guard_Type *guard = 0;
 
@@ -391,7 +391,7 @@ ACE_TSS_Guard<ACE_LOCK>::release (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Guard<ACE_LOCK>::remove (void)
+ACE_TSS_Guard<ACE_LOCK>::remove ()
 {
   Guard_Type *guard = 0;
 
@@ -411,7 +411,7 @@ ACE_TSS_Guard<ACE_LOCK>::remove (void)
 }
 
 template <class ACE_LOCK>
-ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard (void)
+ACE_TSS_Guard<ACE_LOCK>::~ACE_TSS_Guard ()
 {
   Guard_Type *guard = 0;
 
@@ -463,7 +463,7 @@ ACE_TSS_Guard<ACE_LOCK>::ACE_TSS_Guard (ACE_LOCK &lock, bool block)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Guard<ACE_LOCK>::acquire (void)
+ACE_TSS_Guard<ACE_LOCK>::acquire ()
 {
   Guard_Type *guard = 0;
 
@@ -483,7 +483,7 @@ ACE_TSS_Guard<ACE_LOCK>::acquire (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Guard<ACE_LOCK>::tryacquire (void)
+ACE_TSS_Guard<ACE_LOCK>::tryacquire ()
 {
   Guard_Type *guard = 0;
 
@@ -523,7 +523,7 @@ ACE_TSS_Write_Guard<ACE_LOCK>::ACE_TSS_Write_Guard (ACE_LOCK &lock,
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Write_Guard<ACE_LOCK>::acquire (void)
+ACE_TSS_Write_Guard<ACE_LOCK>::acquire ()
 {
   Write_Guard_Type *guard = 0;
 
@@ -543,7 +543,7 @@ ACE_TSS_Write_Guard<ACE_LOCK>::acquire (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire (void)
+ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire ()
 {
   Write_Guard_Type *guard = 0;
 
@@ -563,19 +563,19 @@ ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Write_Guard<ACE_LOCK>::acquire_write (void)
+ACE_TSS_Write_Guard<ACE_LOCK>::acquire_write ()
 {
   return this->acquire ();
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire_write (void)
+ACE_TSS_Write_Guard<ACE_LOCK>::tryacquire_write ()
 {
   return this->tryacquire ();
 }
 
 template <class ACE_LOCK> void
-ACE_TSS_Write_Guard<ACE_LOCK>::dump (void) const
+ACE_TSS_Write_Guard<ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TSS_Guard<ACE_LOCK>::dump ();
@@ -603,7 +603,7 @@ ACE_TSS_Read_Guard<ACE_LOCK>::ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Read_Guard<ACE_LOCK>::acquire (void)
+ACE_TSS_Read_Guard<ACE_LOCK>::acquire ()
 {
   Read_Guard_Type *guard = 0;
 
@@ -623,7 +623,7 @@ ACE_TSS_Read_Guard<ACE_LOCK>::acquire (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire (void)
+ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire ()
 {
   Read_Guard_Type *guard = 0;
 
@@ -643,19 +643,19 @@ ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire (void)
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Read_Guard<ACE_LOCK>::acquire_read (void)
+ACE_TSS_Read_Guard<ACE_LOCK>::acquire_read ()
 {
   return this->acquire ();
 }
 
 template <class ACE_LOCK> int
-ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire_read (void)
+ACE_TSS_Read_Guard<ACE_LOCK>::tryacquire_read ()
 {
   return this->tryacquire ();
 }
 
 template <class ACE_LOCK> void
-ACE_TSS_Read_Guard<ACE_LOCK>::dump (void) const
+ACE_TSS_Read_Guard<ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TSS_Guard<ACE_LOCK>::dump ();

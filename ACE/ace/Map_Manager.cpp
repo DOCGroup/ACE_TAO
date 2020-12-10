@@ -57,7 +57,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i ()
 {
   // Free entries.
   this->free_search_structure ();
@@ -385,7 +385,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all ()
 {
   // Go through the entire occupied list.
   for (ACE_UINT32 i = this->occupied_list_.next ();
@@ -551,7 +551,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_UINT32
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::new_size (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::new_size ()
 {
   // Calculate the new size.
   ACE_UINT32 current_size = this->total_size_;
@@ -568,7 +568,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::new_size (void)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure ()
 {
   // Free up the structure.
   if (this->search_structure_ != 0)
@@ -590,7 +590,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::free_search_structure (void)
 }
 
 template <class EXT_ID, class INT_ID> void
-ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
+ACE_Map_Entry<EXT_ID, INT_ID>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -606,7 +606,7 @@ ACE_Map_Entry<EXT_ID, INT_ID>::dump (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -619,7 +619,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
+ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -629,7 +629,7 @@ ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
+ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -639,7 +639,7 @@ ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>::dump_i (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
+ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   this->dump_i ();
@@ -647,7 +647,7 @@ ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
+ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   this->dump_i ();
@@ -655,7 +655,7 @@ ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> void
-ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump (void) const
+ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   this->dump_i ();

@@ -35,7 +35,7 @@ namespace TAO
     }
 
 
-    Cached_Policies::~Cached_Policies (void)
+    Cached_Policies::~Cached_Policies ()
     {
     }
 

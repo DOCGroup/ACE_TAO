@@ -79,7 +79,7 @@ be_visitor_obv_operation_arglist::visit_operation (be_operation *node)
     }
   else
     {
-      *os << "void)";
+      *os << ")";
     }
 
   be_visitor_context ctx = *this->ctx_;

@@ -51,7 +51,7 @@ namespace ACE_OS
   unsigned int alarm (u_int secs);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long allocation_granularity (void);
+  long allocation_granularity ();
 
   /// used by ARGV::argv_to_string() and ACE_OS::fork_exec()
   extern ACE_Export
@@ -125,7 +125,7 @@ namespace ACE_OS
   /// Forks and exec's a process in a manner that works on Solaris and
   /// NT.  argv[0] must be the full path name to the executable.
   ACE_NAMESPACE_INLINE_FUNCTION
-  pid_t fork (void);
+  pid_t fork ();
 
   // not in susv3
   extern ACE_Export
@@ -150,10 +150,10 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  gid_t getgid (void);
+  gid_t getgid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  gid_t getegid (void);
+  gid_t getegid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
@@ -161,22 +161,22 @@ namespace ACE_OS
               const char *optstring);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long getpagesize (void);
+  long getpagesize ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   pid_t getpgid (pid_t pid);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  pid_t getpid (void);
+  pid_t getpid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  pid_t getppid (void);
+  pid_t getppid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  uid_t getuid (void);
+  uid_t getuid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  uid_t geteuid (void);
+  uid_t geteuid ();
 
   // should call gethostname()
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -211,11 +211,11 @@ namespace ACE_OS
 
   /// Get the number of CPUs configured in the machine.
   extern ACE_Export
-  long num_processors (void);
+  long num_processors ();
 
   /// Get the number of CPUs currently online.
   extern ACE_Export
-  long num_processors_online (void);
+  long num_processors_online ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int pipe (ACE_HANDLE handles[]);
@@ -281,7 +281,7 @@ namespace ACE_OS
   int setreuid (uid_t ruid, uid_t euid);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  pid_t setsid (void);
+  pid_t setsid ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int setuid (uid_t);

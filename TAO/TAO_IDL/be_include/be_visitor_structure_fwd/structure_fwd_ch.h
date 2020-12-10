@@ -25,7 +25,7 @@ class be_visitor_structure_fwd_ch : public be_visitor_decl
 public:
   be_visitor_structure_fwd_ch (be_visitor_context *ctx);
 
-  ~be_visitor_structure_fwd_ch (void);
+  ~be_visitor_structure_fwd_ch ();
 
   virtual int visit_structure_fwd (be_structure_fwd *node);
 };

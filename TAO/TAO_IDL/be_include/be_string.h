@@ -39,11 +39,11 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
   /// Overridden method to compute typecode name.
-  virtual void compute_tc_name (void);
+  virtual void compute_tc_name ();
 };
 
 #endif

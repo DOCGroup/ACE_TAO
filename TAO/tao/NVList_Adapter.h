@@ -40,7 +40,7 @@ namespace CORBA
 class TAO_Export TAO_NVList_Adapter : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_NVList_Adapter (void);
+  virtual ~TAO_NVList_Adapter ();
 
   virtual void create_list (CORBA::Long count, CORBA::NVList_ptr &new_list) = 0;
 

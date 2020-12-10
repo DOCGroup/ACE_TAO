@@ -112,7 +112,7 @@ be_visitor_component_ami_rh_exs::visit_operation (
 
   if (count == 0 && vrt)
     {
-      os_ << "void)";
+      os_ << ")";
     }
   else
     {

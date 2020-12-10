@@ -35,7 +35,7 @@ class be_visitor_typecode_defn : public be_visitor_scope
 {
 public:
   be_visitor_typecode_defn (be_visitor_context *ctx);
-  ~be_visitor_typecode_defn (void);
+  ~be_visitor_typecode_defn ();
 
   virtual int visit_array (be_array *node);
   virtual int visit_interface (be_interface *node);
@@ -95,8 +95,8 @@ protected:
    * Utility methods to generate enclosing namespaces for
    * typecodes of bounded (w)strings, sequences and arrays.
    */
-  void gen_begin_NS_for_anon (void);
-  void gen_end_NS_for_anon (void);
+  void gen_begin_NS_for_anon ();
+  void gen_end_NS_for_anon ();
 
 protected:
 

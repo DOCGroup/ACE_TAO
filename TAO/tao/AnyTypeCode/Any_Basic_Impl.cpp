@@ -66,7 +66,7 @@ namespace TAO
     }
   }
 
-  Any_Basic_Impl::~Any_Basic_Impl (void)
+  Any_Basic_Impl::~Any_Basic_Impl ()
   {
   }
 

@@ -31,7 +31,7 @@ public:
   be_visitor_valuebox_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_cdr_op_cs (void);
+  ~be_visitor_valuebox_cdr_op_cs ();
 
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);

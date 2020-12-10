@@ -56,7 +56,7 @@ namespace TAO
     //@}
 
     /// Retrieve underlying argument.
-    S const & arg (void) const;
+    S const & arg () const;
 
   private:
 
@@ -79,7 +79,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    Inout_Fixed_Size_SArgument_T (void);
+    Inout_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -97,7 +97,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
 
@@ -118,7 +118,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    Out_Fixed_Size_SArgument_T (void);
+    Out_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -135,7 +135,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
 
@@ -157,7 +157,7 @@ namespace TAO
   public:
 
     /// Constructor.
-    Ret_Fixed_Size_SArgument_T (void);
+    Ret_Fixed_Size_SArgument_T ();
 
     /**
      * @name @c TAO::Argument Method Overrides
@@ -174,7 +174,7 @@ namespace TAO
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
     //@}
 
-    S & arg (void);
+    S & arg ();
 
   private:
 

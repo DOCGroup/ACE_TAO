@@ -81,13 +81,13 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Attribute (void);
+  virtual ~AST_Attribute ();
 
   // Data Accessors.
 
-  bool readonly (void) const;
-  UTL_ExceptList *get_get_exceptions (void) const;
-  UTL_ExceptList *get_set_exceptions (void) const;
+  bool readonly () const;
+  UTL_ExceptList *get_get_exceptions () const;
+  UTL_ExceptList *get_set_exceptions () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -96,7 +96,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Methods to add exceptions directly, used when copying node.
   UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
@@ -119,7 +119,7 @@ private:
 
   // Scope Management Protocol.
 
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   virtual UTL_NameList *fe_add_get_exceptions (UTL_NameList *e);
   virtual UTL_NameList *fe_add_set_exceptions (UTL_NameList *e);
 };

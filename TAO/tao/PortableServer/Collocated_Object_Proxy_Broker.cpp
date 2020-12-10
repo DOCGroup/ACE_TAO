@@ -210,13 +210,13 @@ namespace TAO
 
 // -----------------------------------------------------
 TAO::Collocated_Object_Proxy_Broker *
-the_tao_collocated_object_proxy_broker (void)
+the_tao_collocated_object_proxy_broker ()
 {
   static TAO::Collocated_Object_Proxy_Broker the_broker;
   return &the_broker;
 }
 
-TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory (void)
+TAO::Object_Proxy_Broker * _TAO_collocation_Object_Proxy_Broker_Factory ()
 {
   return the_tao_collocated_object_proxy_broker ();
 }

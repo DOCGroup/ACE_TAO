@@ -38,10 +38,10 @@ class TAO_Export TAO_GIOP_Fragmentation_Strategy
 {
 public:
   /// Constructor
-  TAO_GIOP_Fragmentation_Strategy (void) {}
+  TAO_GIOP_Fragmentation_Strategy () {}
 
   /// Destructor.
-  virtual ~TAO_GIOP_Fragmentation_Strategy (void);
+  virtual ~TAO_GIOP_Fragmentation_Strategy ();
 
   /// Fragment the (potentially partially) encoded GIOP message.
   /**

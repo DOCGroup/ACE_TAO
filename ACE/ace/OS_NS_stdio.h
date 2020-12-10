@@ -189,7 +189,7 @@ namespace ACE_OS {
   {
   public:
   /// Dump state of the object.
-    void dump (void) const;
+    void dump () const;
 
 # if defined (ACE_WIN32)
     ACE_OVERLAPPED overlapped_;

@@ -32,7 +32,7 @@ public:
   be_visitor_union_cdr_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_cdr_op_cs (void);
+  ~be_visitor_union_cdr_op_cs ();
 
   /// visit union
   virtual int visit_union (be_union *node);

@@ -26,7 +26,7 @@ class be_visitor_valuetype_cs : public be_visitor_valuetype
 public:
   be_visitor_valuetype_cs (be_visitor_context *ctx);
 
-  ~be_visitor_valuetype_cs (void);
+  ~be_visitor_valuetype_cs ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);

@@ -13,7 +13,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::TypeCode::~TypeCode (void)
+CORBA::TypeCode::~TypeCode ()
 {
 }
 
@@ -113,19 +113,19 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
 }
 
 char const *
-CORBA::TypeCode::id_i (void) const
+CORBA::TypeCode::id_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 char const *
-CORBA::TypeCode::name_i (void) const
+CORBA::TypeCode::name_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::ULong
-CORBA::TypeCode::member_count_i (void) const
+CORBA::TypeCode::member_count_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
@@ -149,37 +149,37 @@ CORBA::TypeCode::member_label_i (CORBA::ULong /* index */) const
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::discriminator_type_i (void) const
+CORBA::TypeCode::discriminator_type_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::Long
-CORBA::TypeCode::default_index_i (void) const
+CORBA::TypeCode::default_index_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::ULong
-CORBA::TypeCode::length_i (void) const
+CORBA::TypeCode::length_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::content_type_i (void) const
+CORBA::TypeCode::content_type_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::UShort
-CORBA::TypeCode::fixed_digits_i (void) const
+CORBA::TypeCode::fixed_digits_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::UShort
-CORBA::TypeCode::fixed_scale_i (void) const
+CORBA::TypeCode::fixed_scale_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
@@ -191,20 +191,20 @@ CORBA::TypeCode::member_visibility_i (CORBA::ULong /* index */) const
 }
 
 CORBA::ValueModifier
-CORBA::TypeCode::type_modifier_i (void) const
+CORBA::TypeCode::type_modifier_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 CORBA::TypeCode_ptr
-CORBA::TypeCode::concrete_base_type_i (void) const
+CORBA::TypeCode::concrete_base_type_i () const
 {
   throw ::CORBA::TypeCode::BadKind ();
 }
 
 // ---------------------------------------------------------------
 
-CORBA::TypeCode::Bounds::Bounds (void)
+CORBA::TypeCode::Bounds::Bounds ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/Bounds:1.0",
                           "Bounds")
 {
@@ -217,7 +217,7 @@ CORBA::TypeCode::Bounds::_downcast (CORBA::Exception *ex)
 }
 
 CORBA::Exception *
-CORBA::TypeCode::Bounds::_alloc (void)
+CORBA::TypeCode::Bounds::_alloc ()
 {
   CORBA::Exception *retval = 0;
   ACE_NEW_RETURN (retval, ::CORBA::TypeCode::Bounds, 0);
@@ -225,7 +225,7 @@ CORBA::TypeCode::Bounds::_alloc (void)
 }
 
 CORBA::Exception *
-CORBA::TypeCode::Bounds::_tao_duplicate (void) const
+CORBA::TypeCode::Bounds::_tao_duplicate () const
 {
   CORBA::Exception *result;
   ACE_NEW_RETURN (result,
@@ -235,7 +235,7 @@ CORBA::TypeCode::Bounds::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::Bounds::_raise (void) const
+CORBA::TypeCode::Bounds::_raise () const
 {
   throw *this;
 }
@@ -258,7 +258,7 @@ CORBA::TypeCode::Bounds::_tao_decode (TAO_InputCDR &)
 
 // ****************************************************************
 
-CORBA::TypeCode::BadKind::BadKind (void)
+CORBA::TypeCode::BadKind::BadKind ()
   : CORBA::UserException ("IDL:omg.org/CORBA/TypeCode/BadKind:1.0",
                           "BadKind")
 {
@@ -271,7 +271,7 @@ CORBA::TypeCode::BadKind::_downcast (CORBA::Exception *ex)
 }
 
 CORBA::Exception *
-CORBA::TypeCode::BadKind::_tao_duplicate (void) const
+CORBA::TypeCode::BadKind::_tao_duplicate () const
 {
   CORBA::Exception *result = 0;
   ACE_NEW_RETURN (result,
@@ -281,7 +281,7 @@ CORBA::TypeCode::BadKind::_tao_duplicate (void) const
 }
 
 void
-CORBA::TypeCode::BadKind::_raise (void) const
+CORBA::TypeCode::BadKind::_raise () const
 {
   throw *this;
 }
@@ -402,7 +402,7 @@ namespace TAO
   }
 
   CORBA::TypeCode_ptr
-  Objref_Traits<CORBA::TypeCode>::nil (void)
+  Objref_Traits<CORBA::TypeCode>::nil ()
   {
     return CORBA::TypeCode::_nil ();
   }

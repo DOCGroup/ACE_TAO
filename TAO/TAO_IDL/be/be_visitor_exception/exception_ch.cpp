@@ -61,7 +61,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       << node->local_name () << " ();" << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
-      << "~" << node->local_name () << " (void);\n" << be_nl;
+      << "~" << node->local_name () << " () = default;\n" << be_nl;
 
   // Assignment operator.
   *os << node->local_name () << " &operator= (const "

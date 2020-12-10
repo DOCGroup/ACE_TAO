@@ -28,13 +28,13 @@ class be_visitor_root_exh : public be_visitor_root
 public:
   be_visitor_root_exh (be_visitor_context *ctx);
 
-  ~be_visitor_root_exh (void);
+  ~be_visitor_root_exh ();
 
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_EXH_H_ */

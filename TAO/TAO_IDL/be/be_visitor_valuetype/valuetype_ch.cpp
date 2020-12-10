@@ -243,8 +243,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->n_supports () > 0)
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
-      *os << "virtual void _remove_ref (void) = 0;" << be_nl;
+      *os << be_nl << "virtual void _add_ref () = 0;" << be_nl;
+      *os << "virtual void _remove_ref () = 0;" << be_nl;
       *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
     }
 

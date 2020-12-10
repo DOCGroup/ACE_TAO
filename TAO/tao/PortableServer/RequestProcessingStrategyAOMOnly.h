@@ -36,18 +36,18 @@ namespace TAO
       : public RequestProcessingStrategy
     {
     public:
-      RequestProcessingStrategyAOMOnly (void);
+      RequestProcessingStrategyAOMOnly ();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
       PortableServer::ServantManager_ptr
-      get_servant_manager (void);
+      get_servant_manager ();
 
       void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
       void set_servant (PortableServer::Servant servant);
 
-      PortableServer::Servant get_servant (void);
+      PortableServer::Servant get_servant ();
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
