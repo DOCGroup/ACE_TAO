@@ -308,7 +308,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << ")" << be_nl
+  *os << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -471,7 +471,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
   else
     {
-      *os << "return" << be_idt_nl;
+      *os << "return ";
 
       if (!node->is_abstract ())
         {
@@ -484,18 +484,17 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
               << node->local_name () << ">::" << pre <<" (";
         }
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref";
+      *os << "_tao_objref";
 
       if (ACE_OS::strcmp (pre, "narrow") == 0)
         {
-          *os << "," << be_nl
+          *os << ", "
               << "\"" << node->repoID () << "\"";
         }
 
       *os << ");";
 
-      *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      *os << be_uidt_nl
           << "}" << be_nl_2;
     }
 

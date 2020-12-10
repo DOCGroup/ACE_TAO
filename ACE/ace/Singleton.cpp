@@ -27,7 +27,7 @@ ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_DLL_Singleton_T)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_DLL_Singleton_Adapter_T)
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
+ACE_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::dump");
@@ -41,7 +41,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::dump (void)
 }
 
 template <class TYPE, class ACE_LOCK> ACE_Singleton<TYPE, ACE_LOCK> *&
-ACE_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+ACE_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
@@ -55,7 +55,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-ACE_Singleton<TYPE, ACE_LOCK>::instance (void)
+ACE_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("ACE_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -133,7 +133,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::cleanup (void *param)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Singleton<TYPE, ACE_LOCK>::close (void)
+ACE_Singleton<TYPE, ACE_LOCK>::close ()
 {
   ACE_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Singleton<TYPE, ACE_LOCK>::instance_i ();
@@ -155,7 +155,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::singleton_ = 0;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump");
@@ -170,7 +170,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::dump (void)
 
 template <class TYPE, class ACE_LOCK>
 ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
@@ -184,7 +184,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -237,7 +237,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close (void)
+ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close ()
 {
   ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::instance_i ();
@@ -250,7 +250,7 @@ ACE_Unmanaged_Singleton<TYPE, ACE_LOCK>::close (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump");
@@ -264,7 +264,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 }
 
 template <class TYPE, class ACE_LOCK> ACE_TSS_Singleton<TYPE, ACE_LOCK> *&
-ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
@@ -278,7 +278,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
+ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("ACE_TSS_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -343,7 +343,7 @@ ACE_TSS_Singleton<TYPE, ACE_LOCK>::cleanup (void *)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump");
@@ -358,7 +358,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::dump (void)
 
 template <class TYPE, class ACE_LOCK>
 ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ()
 {
 #if defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   // Pointer to the Singleton instance.  This works around a bug with
@@ -372,7 +372,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i (void)
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance");
 
@@ -426,7 +426,7 @@ ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::close (void)
+ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::close ()
 {
   ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&singleton =
     ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK>::instance_i ();
@@ -454,7 +454,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::singleton_ = 0;
 #endif /* !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES) */
 
 template <class TYPE, class ACE_LOCK> void
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump");
@@ -469,7 +469,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dump (void)
 
 template <class TYPE, class ACE_LOCK>
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i ()
 {
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i");
 
@@ -485,7 +485,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance_i (void)
 }
 
 template <class TYPE, class ACE_LOCK> TYPE *
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
 {
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance");
 
@@ -541,7 +541,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close ()
 {
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close");
 
@@ -553,20 +553,20 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close (void)
 }
 
 template <class TYPE, class ACE_LOCK> void
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton ()
 {
   ACE_TRACE ("ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton");
   ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close ();
 }
 
 template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dll_name (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dll_name ()
 {
   return this->instance ()->dll_name ();
 }
 
 template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name (void)
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name ()
 {
   return this->instance ()->name ();
 }
@@ -575,7 +575,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name (void)
 /**********************************************************************/
 
 template <class TYPE> const ACE_TCHAR*
-ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name (void)
+ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name ()
 {
   // @todo make this a constant somewhere (or it there already is one
   // then use it.

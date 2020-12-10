@@ -22,13 +22,13 @@ TAO_Bind_Dispatcher_Guard::status (TAO_Bind_Dispatcher_Status s)
 }
 
 ACE_INLINE TAO_Bind_Dispatcher_Guard::TAO_Bind_Dispatcher_Status
-TAO_Bind_Dispatcher_Guard::status (void) const
+TAO_Bind_Dispatcher_Guard::status () const
 {
   return this->status_;
 }
 
 ACE_INLINE int
-TAO_Bind_Dispatcher_Guard::unbind_dispatcher (void)
+TAO_Bind_Dispatcher_Guard::unbind_dispatcher ()
 {
   int const retval =
     this->tms_->unbind_dispatcher (this->request_id_);

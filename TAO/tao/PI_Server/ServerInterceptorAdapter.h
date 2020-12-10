@@ -68,7 +68,7 @@ namespace TAO
   {
   public:
     /// Constructor.
-    ServerRequestInterceptor_Adapter_Impl (void);
+    ServerRequestInterceptor_Adapter_Impl ();
 
     /**
      * @name PortableInterceptor Server Side Interception Points
@@ -154,9 +154,9 @@ namespace TAO
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
       const CORBA::PolicyList& policies);
 
-    virtual void destroy_interceptors (void);
+    virtual void destroy_interceptors ();
 
-    virtual TAO::PICurrent_Impl *allocate_pi_current (void);
+    virtual TAO::PICurrent_Impl *allocate_pi_current ();
 
     virtual void deallocate_pi_current (TAO::PICurrent_Impl *picurrent);
 

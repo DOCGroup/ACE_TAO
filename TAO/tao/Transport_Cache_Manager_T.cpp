@@ -73,7 +73,7 @@ namespace TAO
   }
 
   template <typename TT, typename TRDT, typename PSTRAT>
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::~Transport_Cache_Manager_T ()
   {
     delete this->cache_lock_;
     this->cache_lock_ = 0;
@@ -561,7 +561,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   int
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge (void)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::purge ()
   {
     typedef ACE_Unbounded_Set<transport_type*> transport_set_type;
     transport_set_type transports_to_be_closed;

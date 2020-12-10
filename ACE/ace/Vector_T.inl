@@ -18,25 +18,25 @@ ACE_Vector<T, DEFAULT_SIZE>::~ACE_Vector ()
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
-size_t ACE_Vector<T, DEFAULT_SIZE>::capacity (void) const
+size_t ACE_Vector<T, DEFAULT_SIZE>::capacity () const
 {
   return curr_max_size_;
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
-size_t ACE_Vector<T, DEFAULT_SIZE>::size (void) const
+size_t ACE_Vector<T, DEFAULT_SIZE>::size () const
 {
   return length_;
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
-void ACE_Vector<T, DEFAULT_SIZE>::clear (void)
+void ACE_Vector<T, DEFAULT_SIZE>::clear ()
 {
   length_ = 0;
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
-void ACE_Vector<T, DEFAULT_SIZE>::pop_back (void)
+void ACE_Vector<T, DEFAULT_SIZE>::pop_back ()
 {
   if (length_ > 0)
     {
@@ -76,7 +76,7 @@ ACE_Vector<T, DEFAULT_SIZE>::swap (ACE_Vector &rhs)
 // ****************************************************************
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE void
-ACE_Vector_Iterator<T, DEFAULT_SIZE>::dump (void) const
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::dump () const
 {
   // ACE_TRACE ("ACE_Vector_Iterator<T>::dump");
 }
@@ -90,7 +90,7 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::ACE_Vector_Iterator (ACE_Vector<T, DEFAULT
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
-ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance (void)
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance ()
 {
   // ACE_TRACE ("ACE_Vector_Iterator<T>::advance");
 
@@ -105,7 +105,7 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::advance (void)
 }
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE int
-ACE_Vector_Iterator<T, DEFAULT_SIZE>::done (void) const
+ACE_Vector_Iterator<T, DEFAULT_SIZE>::done () const
 {
   ACE_TRACE ("ACE_Vector_Iterator<T>::done");
 

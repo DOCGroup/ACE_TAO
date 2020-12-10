@@ -40,17 +40,17 @@ class ACE_Export ACE_Event_Base
 {
 public:
   /// Implicitly destroy the event variable.
-  virtual ~ACE_Event_Base (void);
+  virtual ~ACE_Event_Base ();
 
   /**
    * Explicitly destroy the event variable.  Note that only one thread
    * should call this method since it doesn't protect against race
    * conditions.
    */
-  int remove (void);
+  int remove ();
 
   /// Underlying handle to event.
-  ACE_event_t handle (void) const;
+  ACE_event_t handle () const;
 
   /**
    * Set the underlying handle to event. Note that this method assumes
@@ -70,7 +70,7 @@ public:
    *    sleep till the event becomes signaled
    *    event resets wait() completes.
    */
-  int wait (void);
+  int wait ();
 
   /// Same as wait() above, but this one can be timed
   /// @a abstime is absolute time-of-day if if @a use_absolute_time
@@ -87,7 +87,7 @@ public:
    *    if thread(s) are waiting, wake up one waiting thread and
    *    reset event
    */
-  int signal (void);
+  int signal ();
 
   /**
    * if MANUAL reset
@@ -97,13 +97,13 @@ public:
    *    wakeup one waiting thread (if present) and
    *    reset event
    */
-  int pulse (void);
+  int pulse ();
 
   /// Set to nonsignaled state.
-  int reset (void);
+  int reset ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;

@@ -24,7 +24,7 @@ public:
   be_visitor_arg_traits (const char *S,
                          be_visitor_context *ctx);
 
-  virtual ~be_visitor_arg_traits (void);
+  virtual ~be_visitor_arg_traits ();
 
   virtual int visit_root (be_root *node);
   virtual int visit_module (be_module *node);
@@ -58,7 +58,7 @@ private:
   void generated (be_decl *node,
                   bool val);
 
-  const char *insert_policy (void);
+  const char *insert_policy ();
 
 private:
   char *S_;

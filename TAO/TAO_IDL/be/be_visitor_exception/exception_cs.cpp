@@ -107,12 +107,6 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "{" << be_nl;
   *os << "}" << be_nl_2;
 
-  // Destructor.
-  *os << node->name () << "::~" << node->local_name ()
-      << " ()" << be_nl;
-  *os << "{" << be_nl;
-  *os << "}" << be_nl_2;
-
   // Copy constructor.
   *os << node->name () << "::" << node->local_name () << " (const ::"
       << node->name () << " &_tao_excp)" << be_idt_nl;
@@ -203,18 +197,18 @@ int be_visitor_exception_cs::visit_exception (be_exception *node)
   *os << "::CORBA::Exception *" << node->name ()
       << "::_alloc ()" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << "::CORBA::Exception *retval = 0;" << be_nl
+  *os << "::CORBA::Exception *retval {};" << be_nl
       << "ACE_NEW_RETURN (retval, ::" << node->name ()
-      << ", 0);" << be_nl
+      << ", nullptr);" << be_nl
       << "return retval;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
   *os << "::CORBA::Exception *" << be_nl
       << node->name () << "::_tao_duplicate () const" << be_nl
       << "{" << be_idt_nl
-      << "::CORBA::Exception *result = 0;" << be_nl
+      << "::CORBA::Exception *result {};" << be_nl
       << "ACE_NEW_RETURN (result, "
-      << "::" << node->name () << " (*this), 0);"
+      << "::" << node->name () << " (*this), nullptr);"
       << be_nl
       << "return result;" << be_uidt_nl
       << "}" << be_nl_2;

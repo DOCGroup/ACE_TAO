@@ -44,21 +44,21 @@ public:
 
   /// Destructor, makes sure the max_wait_time that got passed as pointer
   /// to the constructor is updated with the time elapsed.
-  ~ACE_Countdown_Time_T (void);
+  ~ACE_Countdown_Time_T ();
 
   /// Cache the current time and enter a start state.
-  void start (void);
+  void start ();
 
   /// Subtract the elapsed time from max_wait_time_ and enter a stopped
   /// state.
-  void stop (void);
+  void stop ();
 
   /// Calls stop and then start.  max_wait_time_ is modified by the
   /// call to stop.
-  void update (void);
+  void update ();
 
   /// Returns true if we've already been stopped, else false.
-  bool stopped (void) const;
+  bool stopped () const;
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.

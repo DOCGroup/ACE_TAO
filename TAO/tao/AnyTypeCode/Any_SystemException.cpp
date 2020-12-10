@@ -40,7 +40,7 @@ TAO::Any_SystemException::Any_SystemException (CORBA::TypeCode_ptr tc)
 {
 }
 
-TAO::Any_SystemException::~Any_SystemException (void)
+TAO::Any_SystemException::~Any_SystemException ()
 {
 }
 
@@ -148,7 +148,7 @@ TAO::Any_SystemException::extract (const CORBA::Any & any,
 }
 
 void
-TAO::Any_SystemException::free_value (void)
+TAO::Any_SystemException::free_value ()
 {
   if (this->value_destructor_ != 0)
     {
@@ -161,7 +161,7 @@ TAO::Any_SystemException::free_value (void)
 }
 
 const void *
-TAO::Any_SystemException::value (void) const
+TAO::Any_SystemException::value () const
 {
   return this->value_;
 }

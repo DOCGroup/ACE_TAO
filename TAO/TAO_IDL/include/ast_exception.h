@@ -83,7 +83,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Exception (void);
+  virtual ~AST_Exception ();
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Check if we or the parameter node is in recursion.
@@ -95,7 +95,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 };

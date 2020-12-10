@@ -44,7 +44,7 @@ namespace TAO
     struct TC_Info
     {
       /// Constructor.
-      TC_Info (void) : id (0), type () {}
+      TC_Info () : id (0), type () {}
 
       /// Repository ID.
       char const * id;

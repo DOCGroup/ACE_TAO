@@ -20,10 +20,10 @@ public:
                  bool truncatable,
                  bool custom);
 
-  virtual ~AST_EventType (void);
+  virtual ~AST_EventType ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

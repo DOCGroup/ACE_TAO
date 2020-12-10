@@ -64,15 +64,15 @@ public:
 
   /// Close down the repository and free up dynamically allocated
   /// resources.
-  ~ACE_Service_Repository (void);
+  ~ACE_Service_Repository ();
 
   /// Close down the repository and free up dynamically allocated
   /// resources.
-  int close (void);
+  int close ();
 
   /// Finalize all the services by calling fini() and deleting
   /// dynamically allocated services.
-  int fini (void);
+  int fini ();
 
   /// Get pointer to a process-wide ACE_Service_Repository.
   static ACE_Service_Repository * instance
@@ -83,7 +83,7 @@ public:
   static ACE_Service_Repository *instance (ACE_Service_Repository *);
 
   /// Delete the dynamically allocated Singleton.
-  static void close_singleton (void);
+  static void close_singleton ();
 
   // = Search structure operations (all acquire locks as necessary).
 
@@ -126,13 +126,13 @@ public:
   int suspend (const ACE_TCHAR name[], const ACE_Service_Type **srp = 0);
 
   /// Return the current size of the repository.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns a reference to the lock used by the ACE_Service_Repository
-  ACE_SYNCH_RECURSIVE_MUTEX &lock (void) const;
+  ACE_SYNCH_RECURSIVE_MUTEX &lock () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -224,7 +224,7 @@ public:
                                    bool ignored_suspended = true);
 
   /// Destructor.
-  ~ACE_Service_Repository_Iterator (void);
+  ~ACE_Service_Repository_Iterator ();
 
 
 public:
@@ -235,20 +235,20 @@ public:
   int next (const ACE_Service_Type *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Move forward by one element in the repository.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  bool valid (void) const;
+  bool valid () const;
 
 private:
   ACE_Service_Repository_Iterator (const ACE_Service_Repository_Iterator&);

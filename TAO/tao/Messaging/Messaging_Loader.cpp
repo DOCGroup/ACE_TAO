@@ -8,12 +8,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Messaging_Loader::TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::TAO_Messaging_Loader ()
   : initialized_ (false)
 {
 }
 
-TAO_Messaging_Loader::~TAO_Messaging_Loader (void)
+TAO_Messaging_Loader::~TAO_Messaging_Loader ()
 {
 }
 

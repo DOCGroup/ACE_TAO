@@ -49,11 +49,11 @@ public:
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Implicitly destroy the event variable.
-  virtual ~ACE_Event_T (void);
+  virtual ~ACE_Event_T ();
 
   /// Get the current time of day according to the queue's TIME_POLICY.
   /// Allows users to initialize timeout values using correct time policy.
-  ACE_Time_Value_T<TIME_POLICY> gettimeofday (void) const;
+  ACE_Time_Value_T<TIME_POLICY> gettimeofday () const;
 
   /// Allows applications to control how the event gets the time
   /// of day.

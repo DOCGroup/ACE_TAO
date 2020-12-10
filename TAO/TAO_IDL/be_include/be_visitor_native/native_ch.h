@@ -28,7 +28,7 @@ public:
   be_visitor_native_ch (be_visitor_context *ctx);
 
   /// deenumor
-  ~be_visitor_native_ch (void);
+  ~be_visitor_native_ch ();
 
   /// visit native.
   virtual int visit_native (be_native *node);

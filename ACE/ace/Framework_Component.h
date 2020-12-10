@@ -67,11 +67,11 @@ public:
                            const ACE_TCHAR *name = 0);
 
   /// Close the contained singleton.
-  virtual void close_singleton (void) = 0;
+  virtual void close_singleton () = 0;
 
 protected:
   /// Destructor.
-  virtual ~ACE_Framework_Component (void);
+  virtual ~ACE_Framework_Component ();
 
 private:
   /// Pointer to the actual component.
@@ -106,21 +106,21 @@ public:
 
   /// Close down the repository and free up dynamically allocated
   /// resources.
-  ~ACE_Framework_Repository (void);
+  ~ACE_Framework_Repository ();
 
   /// Initialize the repository.
   int open (int size = DEFAULT_SIZE);
 
   /// Close down the repository and free up dynamically allocated
   /// resources, also called by dtor.
-  int close (void);
+  int close ();
 
   /// Get pointer to a process-wide ACE_Framework_Repository.
   static ACE_Framework_Repository *instance
     (int size = ACE_Framework_Repository::DEFAULT_SIZE);
 
   /// Delete the dynamically allocated Singleton.
-  static void close_singleton (void);
+  static void close_singleton ();
 
   // = Search structure operations (all acquire locks as necessary).
 
@@ -136,13 +136,13 @@ public:
   int remove_dll_components (const ACE_TCHAR *dll_name);
 
   /// Return the current size of the repository.
-  int current_size (void) const;
+  int current_size () const;
 
   /// Return the total size of the repository.
-  int total_size (void) const;
+  int total_size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -157,7 +157,7 @@ private:
 
   /// Compact component_vector_ after components have been removed__maintains
   /// order.
-  void compact (void);
+  void compact ();
 
 private:
   /// Contains all the framework components.

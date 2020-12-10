@@ -84,7 +84,7 @@ namespace TAO
           >
   {
   public:
-    ObjectKey (void);
+    ObjectKey ();
     ObjectKey (CORBA::ULong max);
     ObjectKey (
         CORBA::ULong max,
@@ -96,7 +96,7 @@ namespace TAO
     ObjectKey (ObjectKey &&) = default;
     ObjectKey& operator= (const ObjectKey &) = default;
     ObjectKey& operator= (ObjectKey &&) = default;
-    ~ObjectKey (void);
+    ~ObjectKey ();
 
     typedef ObjectKey_var _var_type;
 

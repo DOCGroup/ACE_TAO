@@ -51,10 +51,10 @@ public:
 
   /// A default constructor. Since no lock is provided by the user,
   /// one will be created internally.
-  TAO_Condition (void);
+  TAO_Condition ();
 
   /// Implicitly destroy the condition variable.
-  ~TAO_Condition (void);
+  ~TAO_Condition ();
 
   // = Lock accessors.
   /**
@@ -66,7 +66,7 @@ public:
   int wait (const ACE_Time_Value *abstime);
 
   /// Block on condition.
-  int wait (void);
+  int wait ();
 
   /**
    * Block on condition or until absolute time-of-day has passed.  If
@@ -79,17 +79,17 @@ public:
   int wait (MUTEX &mutex, const ACE_Time_Value *abstime = 0);
 
   /// Signal one waiting thread.
-  int signal (void);
+  int signal ();
 
   /// Signal *all* waiting threads.
-  int broadcast (void);
+  int broadcast ();
 
   // = Utility methods.
   /// Explicitly destroy the condition variable.
-  int remove (void);
+  int remove ();
 
   /// Returns a reference to the underlying mutex_;
-  MUTEX *mutex (void);
+  MUTEX *mutex ();
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))

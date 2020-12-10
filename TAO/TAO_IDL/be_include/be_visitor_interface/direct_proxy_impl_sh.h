@@ -27,7 +27,7 @@ public:
   // -- Ctor/Dtor Decl. --
   be_visitor_interface_direct_proxy_impl_sh (be_visitor_context *ctx);
 
-  virtual ~be_visitor_interface_direct_proxy_impl_sh (void);
+  virtual ~be_visitor_interface_direct_proxy_impl_sh ();
 
   /// visit an interface
   virtual int visit_interface (be_interface *node);

@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Initialize the bitmask to all 0s and reset the associated fields.
 
 ACE_INLINE void
-ACE_Handle_Set::reset (void)
+ACE_Handle_Set::reset ()
 {
   ACE_TRACE ("ACE_Handle_Set::reset");
   this->max_handle_ =
@@ -53,7 +53,7 @@ ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 // Returns the number of the large bit.
 
 ACE_INLINE ACE_HANDLE
-ACE_Handle_Set::max_set (void) const
+ACE_Handle_Set::max_set () const
 {
   ACE_TRACE ("ACE_Handle_Set::max_set");
   return this->max_handle_;
@@ -133,7 +133,7 @@ ACE_Handle_Set::clr_bit (ACE_HANDLE handle)
 // Returns a count of the number of enabled bits.
 
 ACE_INLINE int
-ACE_Handle_Set::num_set (void) const
+ACE_Handle_Set::num_set () const
 {
   ACE_TRACE ("ACE_Handle_Set::num_set");
 #if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
@@ -159,7 +159,7 @@ ACE_Handle_Set::operator fd_set *()
 // Returns a pointer to the underlying fd_set.
 
 ACE_INLINE fd_set *
-ACE_Handle_Set::fdset (void)
+ACE_Handle_Set::fdset ()
 {
   ACE_TRACE ("ACE_Handle_Set::fdset");
 
@@ -170,7 +170,7 @@ ACE_Handle_Set::fdset (void)
 }
 
 ACE_INLINE
-ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator (void)
+ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator ()
 {
 }
 

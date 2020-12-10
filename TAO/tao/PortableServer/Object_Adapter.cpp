@@ -280,7 +280,7 @@ TAO_Object_Adapter::init_default_policies (TAO_POA_Policy_Set &policies)
 #endif
 }
 
-TAO_Object_Adapter::~TAO_Object_Adapter (void)
+TAO_Object_Adapter::~TAO_Object_Adapter ()
 {
   delete this->hint_strategy_;
   delete this->persistent_poa_name_map_;
@@ -540,7 +540,7 @@ TAO_Object_Adapter::find_servant_i (const TAO::ObjectKey &key,
 }
 
 void
-TAO_Object_Adapter::open (void)
+TAO_Object_Adapter::open ()
 {
   // Add in the default POA policies to the default list.
   this->init_default_policies (this->default_poa_policies ());
@@ -679,7 +679,7 @@ TAO_Object_Adapter::check_close (int wait_for_completion)
 }
 
 int
-TAO_Object_Adapter::priority (void) const
+TAO_Object_Adapter::priority () const
 {
   return 0;
 }
@@ -816,13 +816,13 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
 }
 
 const char *
-TAO_Object_Adapter::name (void) const
+TAO_Object_Adapter::name () const
 {
   return TAO_OBJID_ROOTPOA;
 }
 
 CORBA::Object_ptr
-TAO_Object_Adapter::root (void)
+TAO_Object_Adapter::root ()
 {
   return CORBA::Object::_duplicate (this->root_);
 }
@@ -923,7 +923,7 @@ TAO_Object_Adapter::get_collocated_servant (const TAO_MProfile &mp)
 
 // ****************************************************************
 
-TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy (void)
+TAO_Object_Adapter::Hint_Strategy::~Hint_Strategy ()
 {
 }
 
@@ -938,7 +938,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::Active_Hint_Strategy (CORBA::ULong map
 {
 }
 
-TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy (void)
+TAO_Object_Adapter::Active_Hint_Strategy::~Active_Hint_Strategy ()
 {
 }
 
@@ -1011,7 +1011,7 @@ TAO_Object_Adapter::Active_Hint_Strategy::unbind_persistent_poa (
   return result;
 }
 
-TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy (void)
+TAO_Object_Adapter::No_Hint_Strategy::~No_Hint_Strategy ()
 {
 }
 
@@ -1102,7 +1102,7 @@ TAO_Object_Adapter::poa_name_iterator::operator* () const
 }
 
 TAO_Object_Adapter::poa_name_iterator &
-TAO_Object_Adapter::poa_name_iterator::operator++ (void)
+TAO_Object_Adapter::poa_name_iterator::operator++ ()
 {
   for (this->last_separator_ = this->position_;
        ;
@@ -1128,7 +1128,7 @@ TAO_Object_Adapter::iteratable_poa_name::iteratable_poa_name (
 }
 
 TAO_Object_Adapter::iteratable_poa_name::iterator
-TAO_Object_Adapter::iteratable_poa_name::begin (void) const
+TAO_Object_Adapter::iteratable_poa_name::begin () const
 {
   return iterator (1,
                    this->folded_name_.length (),
@@ -1136,7 +1136,7 @@ TAO_Object_Adapter::iteratable_poa_name::begin (void) const
 }
 
 TAO_Object_Adapter::iteratable_poa_name::iterator
-TAO_Object_Adapter::iteratable_poa_name::end (void) const
+TAO_Object_Adapter::iteratable_poa_name::end () const
 {
   return iterator (0,
                    this->folded_name_.length (),
@@ -1144,7 +1144,7 @@ TAO_Object_Adapter::iteratable_poa_name::end (void) const
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete ()
 {
   // Check if a non-servant upcall is in progress.  If a non-servant
   // upcall is in progress, wait for it to complete.  Unless of
@@ -1161,7 +1161,7 @@ TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete (void)
 }
 
 void
-TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw (void)
+TAO_Object_Adapter::wait_for_non_servant_upcalls_to_complete_no_throw ()
 {
   // Non-exception throwing version.
   try

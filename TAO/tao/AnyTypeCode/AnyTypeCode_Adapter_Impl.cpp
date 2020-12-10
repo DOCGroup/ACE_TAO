@@ -287,7 +287,7 @@ TAO_AnyTypeCode_Adapter_Impl::insert_into_any (CORBA::Any * any, const CORBA::WS
 }
 
 int
-TAO_AnyTypeCode_Adapter_Impl::Initializer (void)
+TAO_AnyTypeCode_Adapter_Impl::Initializer ()
 {
   // The TAO::Unknown_IDL_Type::lock_i () is a PRIVATE thread unsafe singleton
   // which we need to initialise before Unknown_IDL_Types are used in a

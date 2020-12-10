@@ -42,7 +42,7 @@ class ACE_Export ACE_OS_Log_Msg_Attributes
 {
 public:
   /// Constructor
-  ACE_OS_Log_Msg_Attributes (void);
+  ACE_OS_Log_Msg_Attributes ();
 
 protected:
   friend class ACE_Log_Msg;

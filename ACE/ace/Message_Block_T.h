@@ -37,7 +37,7 @@ class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
   /// Default "do-nothing" constructor.
-  ACE_Locked_Data_Block (void);
+  ACE_Locked_Data_Block ();
 
   /// Initialize.
   ACE_Locked_Data_Block (size_t size,
@@ -48,7 +48,7 @@ public:
                          ACE_Allocator *data_block_allocator);
 
   /// Delete all the resources held in the message.
-  virtual ~ACE_Locked_Data_Block (void);
+  virtual ~ACE_Locked_Data_Block ();
 
   /**
    * Return an exact "deep copy" of the message, the dynamic type is

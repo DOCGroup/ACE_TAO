@@ -24,7 +24,7 @@ public:
                  AST_Interface **supports_flat,
                  long n_supports_flat);
 
-  virtual ~AST_Component (void);
+  virtual ~AST_Component ();
 
   // This also calls the base class version.
   virtual void redefine (AST_Interface *from);
@@ -39,11 +39,11 @@ public:
 
   // Accessors.
 
-  AST_Component *base_component (void) const;
+  AST_Component *base_component () const;
 
-  AST_Type **supports (void) const;
+  AST_Type **supports () const;
 
-  long n_supports (void) const;
+  long n_supports () const;
 
   // Override for component of UTL_Scope method.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
@@ -51,7 +51,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Allows adding an uses to a later point
   // The port i is inserted after port ix, if

@@ -35,12 +35,12 @@ public:
            AST_Interface **supports_flat,
            long n_supports_flat);
 
-  virtual ~be_home (void);
+  virtual ~be_home ();
 
   void scan (UTL_Scope *s);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

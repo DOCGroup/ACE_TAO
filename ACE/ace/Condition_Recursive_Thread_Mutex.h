@@ -46,14 +46,14 @@ public:
                  const ACE_Condition_Attributes &attributes);
 
   /// Implicitly destroy the condition variable.
-  ~ACE_Condition (void);
+  ~ACE_Condition ();
 
   /**
    * Explicitly destroy the condition variable.  Note that only one
    * thread should call this method since it doesn't protect against
    * race conditions.
    */
-  int remove (void);
+  int remove ();
 
   /**
    * Block on condition, or until absolute time-of-day has passed.  If
@@ -75,16 +75,16 @@ public:
             const ACE_Time_Value *abstime = 0);
 
   /// Signal one waiting thread.
-  int signal (void);
+  int signal ();
 
   /// Signal *all* waiting threads.
-  int broadcast (void);
+  int broadcast ();
 
   /// Returns a reference to the underlying mutex;
-  ACE_Recursive_Thread_Mutex &mutex (void);
+  ACE_Recursive_Thread_Mutex &mutex ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // = Prevent assignment and copying.

@@ -64,7 +64,7 @@ public:
   ACE_Command_Callback (RECEIVER &recvr, ACTION action);
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Callback (void);
+  virtual ~ACE_Command_Callback ();
 
   /// Invokes the method @c action_ from the object @c receiver_.
   virtual int execute (void *arg = 0);
@@ -89,14 +89,14 @@ template <class RECEIVER>
 class ACE_Member_Function_Command : public ACE_Command_Base
 {
 public:
-  typedef void (RECEIVER::*PTMF)(void);
+  typedef void (RECEIVER::*PTMF)();
 
   /// Con Constructor: sets the <receiver_> of the Command to @a recvr, and the
   /// <action_> of the Command to <action>.
   ACE_Member_Function_Command (RECEIVER &recvr, PTMF ptmf);
 
   /// Virtual destructor.
-  virtual ~ACE_Member_Function_Command (void);
+  virtual ~ACE_Member_Function_Command ();
 
   /// Invokes the method <action_> from the object <receiver_>.  The
   /// parameter is ignored

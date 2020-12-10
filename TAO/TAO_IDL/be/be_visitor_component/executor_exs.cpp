@@ -208,7 +208,7 @@ be_visitor_executor_exs::visit_component (be_component *node)
           << "ACE_Reactor*" << be_nl
           << lname << "_exec_i::reactor ()" << be_nl
           << "{" << be_idt_nl
-          << "ACE_Reactor* reactor = 0;" << be_nl
+          << "ACE_Reactor* reactor {};" << be_nl
           << "::CORBA::Object_var ccm_object = " << be_idt_nl
           << "this->ciao_context_->get_CCM_object();" << be_uidt_nl
           << "if (! ::CORBA::is_nil (ccm_object.in ())) " << be_idt_nl
@@ -357,7 +357,7 @@ be_visitor_executor_exs::visit_provides (be_provides *node)
       << "if ( ::CORBA::is_nil (this->ciao_" << port_name
       << "_.in ()))" << be_idt_nl
       << "{" << be_idt_nl
-      << lname << "_exec_i *tmp = 0;" << be_nl
+      << lname << "_exec_i *tmp {};" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
       << "tmp," << be_nl
       << lname << "_exec_i (" << be_idt_nl

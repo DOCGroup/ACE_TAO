@@ -364,18 +364,12 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
 
   while (ancestor != nullptr)
     {
-      *os << "std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"" << ancestor->repoID () << "\"" << be_uidt_nl
-          << ") == 0 ||" << be_uidt_nl;
+      *os << "std::strcmp (value, \"" << ancestor->repoID () << "\") == 0 ||" << be_nl;
 
       ancestor = ancestor->base_component ();
     }
 
-  *os << "std::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
-      << ") == 0" << be_uidt << be_uidt_nl;
+  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
 
   return 0;
 }

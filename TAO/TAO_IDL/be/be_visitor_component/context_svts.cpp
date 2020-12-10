@@ -192,7 +192,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
 
   os_ << be_nl
       << be_nl
-      << "::Components::Cookie * retv = 0;" << be_nl
+      << "::Components::Cookie * retv {};" << be_nl
       << "ACE_NEW_THROW_EX (retv," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
@@ -397,7 +397,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "                  0);" << be_nl_2;
 
   os_ << "::" << node_->full_name () << "::" << port_name
-      << "Connections * tmp_retv = 0;" << be_nl
+      << "Connections * tmp_retv {};" << be_nl
       << "ACE_NEW_THROW_EX (tmp_retv," << be_nl
       << "                  ::" << node_->full_name ()
       << "::" << port_name << "Connections (" << be_nl
@@ -465,7 +465,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "}";
 
   os_ << be_nl_2
-      << "::Components::Cookie * ck = 0;" << be_nl
+      << "::Components::Cookie * ck {};" << be_nl
       << "ACE_NEW_THROW_EX (ck," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl

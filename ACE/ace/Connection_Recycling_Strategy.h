@@ -27,10 +27,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Connection_Recycling_Strategy
 {
 public:
-  ACE_Connection_Recycling_Strategy (void);
+  ACE_Connection_Recycling_Strategy ();
 
   /// Virtual Destructor
-  virtual ~ACE_Connection_Recycling_Strategy (void);
+  virtual ~ACE_Connection_Recycling_Strategy ();
 
   /// Remove from cache.
   virtual int purge (const void *recycling_act) = 0;

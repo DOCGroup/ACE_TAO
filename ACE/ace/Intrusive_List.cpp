@@ -14,14 +14,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-ACE_Intrusive_List<T>::ACE_Intrusive_List (void)
+ACE_Intrusive_List<T>::ACE_Intrusive_List ()
   : head_ (0)
   , tail_ (0)
 {
 }
 
 template<class T>
-ACE_Intrusive_List<T>::~ACE_Intrusive_List (void)
+ACE_Intrusive_List<T>::~ACE_Intrusive_List ()
 {
 }
 
@@ -64,7 +64,7 @@ ACE_Intrusive_List<T>::push_front (T *node)
 }
 
 template<class T> T *
-ACE_Intrusive_List<T>::pop_front (void)
+ACE_Intrusive_List<T>::pop_front ()
 {
   T *node = this->head_;
   if (node != 0)
@@ -75,7 +75,7 @@ ACE_Intrusive_List<T>::pop_front (void)
 }
 
 template<class T> T *
-ACE_Intrusive_List<T>::pop_back (void)
+ACE_Intrusive_List<T>::pop_back ()
 {
   T *node = this->tail_;
   if (node != 0)

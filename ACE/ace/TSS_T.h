@@ -94,7 +94,7 @@ public:
 
   /// Deregister this object from thread-specific storage administration.
   /// Will cause all threads' copies of TYPE to be destroyed.
-  virtual ~ACE_TSS (void);
+  virtual ~ACE_TSS ();
 
   /**
    * Set the thread-specific object for the calling thread.
@@ -129,7 +129,7 @@ public:
    *          may be 0 under odd error conditions; check errno for further
    *          information.
    */
-  TYPE *ts_object (void) const;
+  TYPE *ts_object () const;
 
   /**
    * Use a "smart pointer" to get the thread-specific data associated
@@ -156,17 +156,17 @@ public:
    *          may be 0 under odd error conditions; check errno for further
    *          information.
    */
-  operator TYPE *(void) const;
+  operator TYPE *() const;
 
   //@}
 
   /// Hook for construction parameters.
-  virtual TYPE *make_TSS_TYPE (void) const;
+  virtual TYPE *make_TSS_TYPE () const;
 
   // = Utility methods.
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -174,11 +174,11 @@ public:
 protected:
   /// Actually implements the code that retrieves the object from
   /// thread-specific storage.
-  TYPE *ts_get (void) const;
+  TYPE *ts_get () const;
 
   /// Factors out common code for initializing TSS.  This must NOT be
   /// called with the lock held...
-  int ts_init (void);
+  int ts_init ();
 
 #if !(defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION)))
   /// This implementation only works for non-threading systems...
@@ -200,7 +200,7 @@ protected:
 # if defined (ACE_HAS_THR_C_DEST)
   ACE_TSS_Adapter *ts_value (void) const;
 # else
-  TYPE *ts_value (void) const;
+  TYPE *ts_value () const;
 # endif /* ACE_HAS_THR_C_DEST */
 
   /// Stores a new plain value in the thread-specific storage.

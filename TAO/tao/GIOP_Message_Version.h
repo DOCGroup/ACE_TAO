@@ -41,13 +41,13 @@ public:
   CORBA::Octet major;
 
   /// Get major version number
-  CORBA::Octet major_version (void) const;
+  CORBA::Octet major_version () const;
 
   /// Minor version number
   CORBA::Octet minor;
 
   /// Get minor version number
-  CORBA::Octet minor_version (void) const;
+  CORBA::Octet minor_version () const;
 
   /// Copy constructor
   TAO_GIOP_Message_Version (const TAO_GIOP_Message_Version &src);

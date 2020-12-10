@@ -99,7 +99,7 @@ public:
    *
    * @return Current buffer size of the vector
    */
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /**
    * Returns the vector's dynamic size / actual current size of the
@@ -109,13 +109,13 @@ public:
    *
    * @return Dynamic size / actual current size of the vector.
    */
-  size_t size (void) const;
+  size_t size () const;
 
   /**
    * Clears out the vector.  It does not reallocate the vector's
    * buffer, it is just sets the vector's dynamic size to 0.
    */
-  void clear (void);
+  void clear ();
 
   /**
    * Resizes the vector to the new capacity.  If the vector's current
@@ -151,7 +151,7 @@ public:
    * vector.  The vector's buffer does not get reallocated for
    * performance.
    */
-  void pop_back (void);
+  void pop_back ();
 
   /**
    * This function dumps the content of the vector.  TO BE MOVED out
@@ -167,7 +167,7 @@ public:
    *
    * This function calls T::dump() for each element of the vector.
    */
-  void dump (void) const;
+  void dump () const;
 
   // = Compare operators
 
@@ -236,13 +236,13 @@ public:
 
   /// Move forward by one element in the vector.  Returns 0 when all the
   /// items in the vector have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

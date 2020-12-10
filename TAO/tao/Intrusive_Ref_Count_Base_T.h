@@ -38,13 +38,13 @@ template <class ACE_LOCK>
 class TAO_Intrusive_Ref_Count_Base
 {
 public:
-  virtual ~TAO_Intrusive_Ref_Count_Base (void);
+  virtual ~TAO_Intrusive_Ref_Count_Base ();
 
-  void _add_ref (void);
-  void _remove_ref (void);
+  void _add_ref ();
+  void _remove_ref ();
 
 protected:
-  TAO_Intrusive_Ref_Count_Base (void);
+  TAO_Intrusive_Ref_Count_Base ();
 
 private:
     std::atomic<uint32_t> refcount_;

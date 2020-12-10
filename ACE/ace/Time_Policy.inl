@@ -11,7 +11,7 @@ ACE_System_Time_Policy::operator()() const
 }
 
 ACE_INLINE void
-ACE_System_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+ACE_System_Time_Policy::set_gettimeofday (ACE_Time_Value (*)())
 {
 }
 
@@ -22,7 +22,7 @@ ACE_HR_Time_Policy::operator()() const
 }
 
 ACE_INLINE void
-ACE_HR_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+ACE_HR_Time_Policy::set_gettimeofday (ACE_Time_Value (*)())
 {
 }
 
@@ -46,7 +46,7 @@ ACE_FPointer_Time_Policy::operator()() const
 }
 
 ACE_INLINE void
-ACE_FPointer_Time_Policy::set_gettimeofday (ACE_Time_Value (*f)(void))
+ACE_FPointer_Time_Policy::set_gettimeofday (ACE_Time_Value (*f)())
 {
   this->function_ = f;
 }
@@ -58,7 +58,7 @@ ACE_Dynamic_Time_Policy_Base::operator()() const
 }
 
 ACE_INLINE void
-ACE_Dynamic_Time_Policy_Base::set_gettimeofday (ACE_Time_Value (*)(void))
+ACE_Dynamic_Time_Policy_Base::set_gettimeofday (ACE_Time_Value (*)())
 {
 }
 
@@ -69,7 +69,7 @@ ACE_Delegating_Time_Policy::operator()() const
 }
 
 ACE_INLINE void
-ACE_Delegating_Time_Policy::set_gettimeofday (ACE_Time_Value (*)(void))
+ACE_Delegating_Time_Policy::set_gettimeofday (ACE_Time_Value (*)())
 {
 }
 

@@ -12,10 +12,10 @@ public:
   AST_ComponentFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ComponentFwd (void);
+  virtual ~AST_ComponentFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);
@@ -24,7 +24,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Is this decl a forward declared type (Yes)
-  virtual bool is_fwd (void);
+  virtual bool is_fwd ();
 
   static AST_Decl::NodeType const NT;
 };
