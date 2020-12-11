@@ -1,9 +1,9 @@
 #include "FP_Scheduler.h"
-#include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
+#include <atomic>
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
+std::atomic<long> server_guid_counter;
 
 RTCORBA::Priority
 Segment_Sched_Param_Policy::value (void)

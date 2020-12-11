@@ -171,6 +171,6 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       *os << "\n\n#endif";
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }

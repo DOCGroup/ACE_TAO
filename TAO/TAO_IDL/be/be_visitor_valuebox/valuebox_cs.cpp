@@ -94,7 +94,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // _copy_value method
   *os << "::CORBA::ValueBase *" << be_nl
-      << node->name () << "::_copy_value (void)" << be_nl
+      << node->name () << "::_copy_value ()" << be_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *result = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
@@ -106,7 +106,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
-      << node->name () << "::_tao_obv_repository_id (void) const"
+      << node->name () << "::_tao_obv_repository_id () const"
       << be_nl << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -155,7 +155,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     {
       *os << "// TAO extension - the virtual _type method." << be_nl;
       *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
+          << "::_tao_type () const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}" << be_nl_2;
@@ -729,7 +729,7 @@ be_visitor_valuebox_cs::emit_destructor ()
   be_decl * const vb_node = this->ctx_->node ();
 
   // Protected destructor
-  os << vb_node->name () << "::~" << vb_node->local_name () << " (void)"
+  os << vb_node->name () << "::~" << vb_node->local_name () << " ()"
      << be_nl << "{" << be_nl << "}" << be_nl_2;
 }
 

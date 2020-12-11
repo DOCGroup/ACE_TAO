@@ -66,7 +66,7 @@ be_visitor_facet_svts::visit_interface (be_interface *node)
 
   os_ << be_nl_2 << "template <typename BASE, typename EXEC, typename CONTEXT>" << be_nl
       << lname << "_Servant_T<BASE, EXEC, CONTEXT>::~"
-      << lname << "_Servant_T (void)" << be_nl
+      << lname << "_Servant_T ()" << be_nl
       << "{" << be_nl
       << "}";
 

@@ -128,7 +128,7 @@ be_visitor_valuebox_field_ch::visit_array (be_array *node)
   *os << "void " << field->local_name () << " (" << fname << ");" << be_nl;
 
   *os << "const " << fname << "_slice *" << field->local_name ()
-      << " (void) const;" << be_nl;
+      << " () const;" << be_nl;
 
   return 0;
 }
@@ -520,5 +520,5 @@ be_visitor_valuebox_field_ch::emit_member_get (be_decl *field,
   TAO_OutStream *os = this->ctx_->stream ();
 
   *os << const_prefix << field_type->name () << type_suffix << " "
-      << field->local_name () << " (void) " << const_method << ";" << be_nl;
+      << field->local_name () << " () " << const_method << ";" << be_nl;
 }

@@ -53,7 +53,7 @@ static size_t test_timeout_count = 3;
 
 // Tests the amount of time spent in a timed wait.
 static int
-test_timeout (void)
+test_timeout ()
 {
   int status = 0;
 
@@ -105,7 +105,7 @@ test_timeout (void)
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-w n_workers] [-n iteration_count]\n")));

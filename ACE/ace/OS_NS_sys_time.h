@@ -36,10 +36,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_Time_Value gettimeofday (void);
+  ACE_Time_Value gettimeofday ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_Time_Value gettimeofday_ (void);
+  ACE_Time_Value gettimeofday_ ();
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

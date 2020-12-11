@@ -1604,9 +1604,9 @@ incompatible_types (AST_Expression::ExprType t1,
         case AST_Expression::EV_ulonglong:
         case AST_Expression::EV_octet:
         case AST_Expression::EV_bool:
-          return 0;
+          return false;
         default:
-          return 1;
+          return true;
       }
     case AST_Expression::EV_float:
     case AST_Expression::EV_double:
@@ -1616,9 +1616,9 @@ incompatible_types (AST_Expression::ExprType t1,
         case AST_Expression::EV_float:
         case AST_Expression::EV_double:
         case AST_Expression::EV_longdouble:
-          return 0;
+          return false;
         default:
-          return 1;
+          return true;
       }
     case AST_Expression::EV_fixed:
       return t2 != AST_Expression::EV_fixed;
@@ -1632,7 +1632,7 @@ incompatible_types (AST_Expression::ExprType t1,
     case AST_Expression::EV_void:
     case AST_Expression::EV_none:
     default:
-      return 0;
+      return false;
   }
 }
 
@@ -2540,8 +2540,8 @@ AST_Expression::type_mismatch (AST_Expression::ExprType t)
       return incompatible_types (this->pd_ev->et, t);
     }
 
-  bool v1_mismatch = 0;
-  bool v2_mismatch = 0;
+  bool v1_mismatch = false;
+  bool v2_mismatch = false;
 
   if (this->pd_v1 != nullptr)
     {
@@ -2567,7 +2567,7 @@ AST_Expression::check_and_coerce (AST_Expression::ExprType t,
     {
       AST_Decl *enum_val =
         idl_global->scopes ().top_non_null ()->lookup_by_name (this->pd_n,
-                                                               1);
+                                                               true);
 
       if (enum_val != nullptr)
         {

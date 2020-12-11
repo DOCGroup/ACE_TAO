@@ -239,7 +239,7 @@ public:
 
   /// Returns the underlying message block, the caller must *not*
   /// release the copy.
-  inline ACE_Message_Block* mb (void) const {
+  inline ACE_Message_Block* mb () const {
     return mb_;
   }
 

@@ -57,7 +57,7 @@ TAO_Notify_Method_Request_Dispatch::~TAO_Notify_Method_Request_Dispatch ()
 {
 }
 
-int TAO_Notify_Method_Request_Dispatch::execute_i (void)
+int TAO_Notify_Method_Request_Dispatch::execute_i ()
 {
   if (this->proxy_supplier_->has_shutdown ())
     return 0; // If we were shutdown while waiting in the queue, return with no action.
@@ -210,7 +210,7 @@ TAO_Notify_Method_Request_Dispatch_Queueable::~TAO_Notify_Method_Request_Dispatc
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_Queueable::execute (void)
+TAO_Notify_Method_Request_Dispatch_Queueable::execute ()
 {
   return this->execute_i ();
 }
@@ -231,13 +231,13 @@ TAO_Notify_Method_Request_Dispatch_No_Copy:: ~TAO_Notify_Method_Request_Dispatch
 }
 
 int
-TAO_Notify_Method_Request_Dispatch_No_Copy::execute (void)
+TAO_Notify_Method_Request_Dispatch_No_Copy::execute ()
 {
   return this->execute_i ();
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Dispatch_No_Copy::copy (void)
+TAO_Notify_Method_Request_Dispatch_No_Copy::copy ()
 {
   TAO_Notify_Method_Request_Queueable* request = 0;
 

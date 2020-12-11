@@ -56,12 +56,12 @@ TAO_EC_Type_Filter::push_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Type_Filter::clear (void)
+TAO_EC_Type_Filter::clear ()
 {
 }
 
 CORBA::ULong
-TAO_EC_Type_Filter::max_event_size (void) const
+TAO_EC_Type_Filter::max_event_size () const
 {
   return 1;
 }

@@ -83,10 +83,10 @@ public:
   };
 
   /// Destructor is virtual to enable proper cleanup.
-  virtual ~ACE_Event_Handler (void);
+  virtual ~ACE_Event_Handler ();
 
   /// Get the I/O handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
@@ -96,7 +96,7 @@ public:
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
   /// to MAX_PRIORITY (which is the "highest priority").
-  virtual int priority (void) const;
+  virtual int priority () const;
 
   /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
@@ -156,7 +156,7 @@ public:
    * @note This method has an affect only when used with the
    * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
-  virtual int resume_handler (void);
+  virtual int resume_handler ();
 
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -166,10 +166,10 @@ public:
   virtual void reactor (ACE_Reactor *reactor);
 
   /// Get the event demultiplexors.
-  virtual ACE_Reactor *reactor (void) const;
+  virtual ACE_Reactor *reactor () const;
 
   /// Get only the reactor's timer related interface.
-  virtual ACE_Reactor_Timer_Interface *reactor_timer_interface (void) const;
+  virtual ACE_Reactor_Timer_Interface *reactor_timer_interface () const;
 
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
@@ -208,7 +208,7 @@ public:
    *
    * @return Current reference count.
    */
-  virtual Reference_Count add_reference (void);
+  virtual Reference_Count add_reference ();
 
   /// Decrement reference count on the handler.
   /**
@@ -219,7 +219,7 @@ public:
    *
    * @return Current reference count.
    */
-  virtual Reference_Count remove_reference (void);
+  virtual Reference_Count remove_reference ();
 
   /**
    * @class Policy
@@ -232,7 +232,7 @@ public:
   public:
 
     /// Virtual destructor.
-    virtual ~Policy (void);
+    virtual ~Policy ();
   };
 
   /**
@@ -263,7 +263,7 @@ public:
       };
 
     /// Current Reference_Counting_Policy.
-    Value value (void) const;
+    Value value () const;
 
     /// Update Reference_Counting_Policy.
     void value (Value value);
@@ -277,7 +277,7 @@ public:
    };
 
   /// Current Reference_Counting_Policy.
-  Reference_Counting_Policy &reference_counting_policy (void);
+  Reference_Counting_Policy &reference_counting_policy ();
 
 protected:
   /// Force ACE_Event_Handler to be an abstract base class.
@@ -313,7 +313,7 @@ class ACE_Export ACE_Event_Handler_var
 {
 public:
   /// Default constructor.
-  ACE_Event_Handler_var (void);
+  ACE_Event_Handler_var ();
 
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
@@ -322,7 +322,7 @@ public:
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
   /// Destructor.
-  ~ACE_Event_Handler_var (void);
+  ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.
   ACE_Event_Handler_var &operator= (ACE_Event_Handler *p);
@@ -334,10 +334,10 @@ public:
   ACE_Event_Handler *operator-> () const;
 
   /// Access the handler.
-  ACE_Event_Handler *handler (void) const;
+  ACE_Event_Handler *handler () const;
 
   /// Release the handler.
-  ACE_Event_Handler *release (void);
+  ACE_Event_Handler *release ();
 
   /// Reset the handler.
   void reset (ACE_Event_Handler *p = 0);
@@ -389,13 +389,13 @@ namespace ACE
 class ACE_Export ACE_Notification_Buffer
 {
 public:
-  ACE_Notification_Buffer (void);
+  ACE_Notification_Buffer ();
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
                            ACE_Reactor_Mask mask);
 
   /// Default destructor.
-  ~ACE_Notification_Buffer (void) = default;
+  ~ACE_Notification_Buffer () = default;
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.

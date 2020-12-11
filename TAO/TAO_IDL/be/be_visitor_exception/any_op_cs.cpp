@@ -258,7 +258,7 @@ be_visitor_exception_any_op_cs::visit_exception (be_exception *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 

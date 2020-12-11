@@ -50,26 +50,26 @@ namespace TAO
     class Active_Policy_Strategies
     {
     public:
-      Active_Policy_Strategies (void);
+      Active_Policy_Strategies ();
 
       void update (Cached_Policies &policies,
                    TAO_Root_POA* poa);
 
-      void cleanup (void);
+      void cleanup ();
 
-      ThreadStrategy *thread_strategy (void) const;
+      ThreadStrategy *thread_strategy () const;
 
-      RequestProcessingStrategy *request_processing_strategy (void) const;
+      RequestProcessingStrategy *request_processing_strategy () const;
 
-      IdAssignmentStrategy *id_assignment_strategy (void) const;
+      IdAssignmentStrategy *id_assignment_strategy () const;
 
-      IdUniquenessStrategy *id_uniqueness_strategy (void) const;
+      IdUniquenessStrategy *id_uniqueness_strategy () const;
 
-      LifespanStrategy *lifespan_strategy (void) const;
+      LifespanStrategy *lifespan_strategy () const;
 
-      ImplicitActivationStrategy *implicit_activation_strategy (void) const;
+      ImplicitActivationStrategy *implicit_activation_strategy () const;
 
-      ServantRetentionStrategy *servant_retention_strategy (void) const;
+      ServantRetentionStrategy *servant_retention_strategy () const;
 
     private:
       ThreadStrategy *thread_strategy_;
@@ -97,9 +97,9 @@ namespace TAO
     {
     public:
       Active_Policy_Strategies_Cleanup_Guard (Active_Policy_Strategies *p);
-      ~Active_Policy_Strategies_Cleanup_Guard (void);
+      ~Active_Policy_Strategies_Cleanup_Guard ();
 
-      Active_Policy_Strategies *_retn (void);
+      Active_Policy_Strategies *_retn ();
 
     private:
       Active_Policy_Strategies *ptr_;

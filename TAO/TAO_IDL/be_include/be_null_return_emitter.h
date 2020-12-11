@@ -23,7 +23,7 @@ class be_null_return_emitter
 {
 public:
   be_null_return_emitter (be_visitor_context *ctx);
-  ~be_null_return_emitter (void);
+  ~be_null_return_emitter ();
 
   int emit (be_type *node);
 

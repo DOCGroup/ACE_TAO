@@ -106,7 +106,7 @@ be_visitor_facet_exs::visit_provides (be_provides *node)
 
   os_ << be_nl_2
       << lname << "_exec_i::~" << lname
-      << "_exec_i (void)" << be_nl
+      << "_exec_i ()" << be_nl
       << "{" << be_nl
       << "}";
 

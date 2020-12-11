@@ -136,7 +136,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       // type is void.  No need to generate argument list.
 
       *os << be_nl_2
-          << "TAO::Argument ** _the_tao_operation_signature = 0;";
+          << "TAO::Argument ** _the_tao_operation_signature {};";
       nargs = 0; // Don't count the reply handler.
     }
   else

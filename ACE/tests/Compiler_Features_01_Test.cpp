@@ -27,7 +27,7 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
 
   // Create a simple list ...
-  typedef std::list<int> collection;
+  using collection = std::list<int>;
   collection c;
 
   // ... insert some elements ...

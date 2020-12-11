@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LB_LoadAlertInfo::TAO_LB_LoadAlertInfo (void)
+TAO_LB_LoadAlertInfo::TAO_LB_LoadAlertInfo ()
   : load_alert (),
     alerted (0)
 {

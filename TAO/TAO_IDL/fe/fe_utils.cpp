@@ -267,7 +267,7 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   idl_global->scopes ().push (c);
 
   AST_Structure *connection =
-    idl_global->gen ()->create_structure (&sn, 0, 0);
+    idl_global->gen ()->create_structure (&sn, false, false);
 
   struct_id.destroy ();
 
@@ -329,8 +329,8 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
     idl_global->gen ()->create_sequence (bound_expr,
                                          connection,
                                          nullptr,
-                                         0,
-                                         0);
+                                         false,
+                                         false);
 
   ACE_CString seq_string (struct_name);
   seq_string += 's';
@@ -340,8 +340,8 @@ FE_Utils::create_uses_multiple_stuff (AST_Component *c,
   AST_Typedef *connections =
     idl_global->gen ()->create_typedef (sequence,
                                         &seq_name,
-                                        0,
-                                        0);
+                                        false,
+                                        false);
   seq_id.destroy ();
 
   (void) c->fe_add_typedef (connections);

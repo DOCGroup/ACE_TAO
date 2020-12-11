@@ -15,7 +15,7 @@ TAO_ECG_Complex_Address_Server::TAO_ECG_Complex_Address_Server (
 {
 }
 
-TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server (void)
+TAO_ECG_Complex_Address_Server::~TAO_ECG_Complex_Address_Server ()
 {
 }
 
@@ -188,7 +188,7 @@ TAO_ECG_Complex_Address_Server::get_address (
 
 
 void
-TAO_ECG_Complex_Address_Server::dump_content (void)
+TAO_ECG_Complex_Address_Server::dump_content ()
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
               this->default_addr_.get_host_addr (),

@@ -287,7 +287,7 @@ be_visitor_component_scope::gen_exec_entrypoint_decl ()
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void);";
+      << "_Impl ();";
 }
 
 void
@@ -297,7 +297,7 @@ be_visitor_component_scope::gen_exec_entrypoint_defn ()
       << "extern \"C\" " << export_macro_.c_str ()
       << " ::Components::EnterpriseComponent_ptr" << be_nl
       << "create_" << node_->flat_name ()
-      << "_Impl (void)" << be_nl
+      << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl

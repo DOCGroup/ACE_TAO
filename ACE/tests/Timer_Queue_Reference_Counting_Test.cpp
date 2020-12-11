@@ -48,13 +48,13 @@ public:
 
   Reference_Counted_Event_Handler (int expected_number_of_handle_close_calls);
 
-  ~Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler () override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
   int handle_close (ACE_HANDLE handle,
-                    ACE_Reactor_Mask masks);
+                    ACE_Reactor_Mask masks) override;
 
   int expected_number_of_handle_close_calls_;
   int number_of_handle_close_calls_;
@@ -73,7 +73,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int expected_n
                 this->reference_count_.load ()));
 }
 
-Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
+Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
@@ -249,7 +249,7 @@ cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
     }
 }
 
-typedef int (*Expire_Function) (ACE_Timer_Queue &timer_queue);
+using Expire_Function = int (*)(ACE_Timer_Queue &);
 
 int
 invoke_expire (ACE_Timer_Queue &timer_queue)
@@ -350,25 +350,25 @@ class Simple_Event_Handler : public ACE_Event_Handler
 {
 public:
 
-  Simple_Event_Handler (void);
+  Simple_Event_Handler ();
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler () override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 };
 
-Simple_Event_Handler::Simple_Event_Handler (void)
+Simple_Event_Handler::Simple_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,
                 "Simple_Event_Handler()\n"));
 }
 
-Simple_Event_Handler::~Simple_Event_Handler (void)
+Simple_Event_Handler::~Simple_Event_Handler ()
 {
   if (debug)
     ACE_DEBUG ((LM_DEBUG,

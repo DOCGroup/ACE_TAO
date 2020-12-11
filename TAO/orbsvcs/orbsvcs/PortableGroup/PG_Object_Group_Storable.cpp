@@ -307,7 +307,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
     }
 }
 
-TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable (void)
+TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable ()
 {
   if (destroyed_)
     {
@@ -330,7 +330,7 @@ TAO::PG_Object_Group_Storable::set_destroyed (bool destroyed)
 }
 
 const PortableGroup::Location &
-TAO::PG_Object_Group_Storable::get_primary_location (void)
+TAO::PG_Object_Group_Storable::get_primary_location ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return TAO::PG_Object_Group::get_primary_location ();
@@ -369,7 +369,7 @@ TAO::PG_Object_Group_Storable::remove_member (
 
 
 PortableGroup::Locations *
-TAO::PG_Object_Group_Storable::locations_of_members (void)
+TAO::PG_Object_Group_Storable::locations_of_members ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return PG_Object_Group::locations_of_members ();
@@ -397,14 +397,14 @@ TAO::PG_Object_Group_Storable::set_name (const char* group_name)
 }
 
 const char*
-TAO::PG_Object_Group_Storable::get_name (void)
+TAO::PG_Object_Group_Storable::get_name ()
 {
   Object_Group_File_Guard fg (*this, SFG::ACCESSOR);
   return PG_Object_Group::get_name ();
 }
 
 void
-TAO::PG_Object_Group_Storable::initial_populate (void)
+TAO::PG_Object_Group_Storable::initial_populate ()
 {
   Object_Group_File_Guard fg (*this, SFG::MUTATOR);
   PG_Object_Group::initial_populate ();
@@ -412,7 +412,7 @@ TAO::PG_Object_Group_Storable::initial_populate (void)
 }
 
 void
-TAO::PG_Object_Group_Storable::minimum_populate (void)
+TAO::PG_Object_Group_Storable::minimum_populate ()
 {
   Object_Group_File_Guard fg (*this, SFG::MUTATOR);
   PG_Object_Group::minimum_populate ();
@@ -650,7 +650,7 @@ TAO::PG_Object_Group_Storable::stale ()
 }
 
 void
-TAO::PG_Object_Group_Storable::state_written (void)
+TAO::PG_Object_Group_Storable::state_written ()
 {
   // No-op. Overridden by derived class.
 }

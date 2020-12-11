@@ -33,7 +33,7 @@ public:
   be_visitor_typedef_any_op_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_typedef_any_op_cs (void);
+  ~be_visitor_typedef_any_op_cs ();
 
   /// visit typedef
   virtual int visit_typedef (be_typedef *node);

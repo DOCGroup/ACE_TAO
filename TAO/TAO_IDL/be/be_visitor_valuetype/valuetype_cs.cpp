@@ -97,7 +97,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
       << node->name ()
-      << "::_tao_obv_repository_id (void) const" << be_nl
+      << "::_tao_obv_repository_id () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();"
       << be_uidt_nl
@@ -146,7 +146,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "// TAO extension - the virtual _type method." << be_nl;
       *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
+          << "::_tao_type () const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}" << be_nl_2;
@@ -161,7 +161,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   //    virtual functions, including virtual destructors, wreaks havoc
   //    with g++ >= 4.0 RTTI support when the
   //    "-fvisibility-inlines-hidden" command line option is used.
-  *os << node->name () << "::~" << node->local_name () << " (void)"
+  *os << node->name () << "::~" << node->local_name () << " ()"
       << be_nl
       << "{}" << be_nl_2;
 
@@ -243,7 +243,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       // The virtual _copy_value method.
       *os << "::CORBA::ValueBase *" << be_nl
-          << node->name () << "::_copy_value (void)" << be_nl
+          << node->name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::ValueBase *ret_val = 0;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
@@ -323,7 +323,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->local_name () << " *&new_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::ValueBase *base = 0;" << be_nl
+      << "::CORBA::ValueBase *base {};" << be_nl
       << "::CORBA::Boolean is_indirected = false;" << be_nl
       << "::CORBA::Boolean is_null_object = false;" << be_nl
       << "::CORBA::Boolean const retval =" << be_idt_nl
@@ -360,7 +360,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
-          << node->name () << "::_tao_to_value (void)" << be_nl
+          << node->name () << "::_tao_to_value ()" << be_nl
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
           << "}";

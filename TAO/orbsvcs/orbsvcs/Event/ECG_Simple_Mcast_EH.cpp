@@ -11,7 +11,7 @@ TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Simple_Mcast_EH::~TAO_ECG_Simple_Mcast_EH (void)
+TAO_ECG_Simple_Mcast_EH::~TAO_ECG_Simple_Mcast_EH ()
 {
 }
 
@@ -59,7 +59,7 @@ TAO_ECG_Simple_Mcast_EH::open (const char * mcast_addr,
 }
 
 int
-TAO_ECG_Simple_Mcast_EH::shutdown (void)
+TAO_ECG_Simple_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)

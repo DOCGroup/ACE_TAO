@@ -75,9 +75,9 @@ class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 public:
   AST_Root (UTL_ScopedName *n);
 
-  virtual ~AST_Root (void);
+  virtual ~AST_Root ();
 
-  virtual unsigned long nmembers (void);
+  virtual unsigned long nmembers ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -89,13 +89,13 @@ public:
   virtual void destroy ();
 
   // Final cleanup.
-  void fini (void);
+  void fini ();
 
   static AST_Decl::NodeType const NT;
 
 private:
   friend class FE_Declarator;
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
 
   // Add protocol.
 

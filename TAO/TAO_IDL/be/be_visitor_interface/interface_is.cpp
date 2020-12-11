@@ -46,7 +46,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << be_global->impl_class_suffix () <<"::"
       << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix ()
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
 
   *os << "{" << be_nl
       << "}" << be_nl_2;
@@ -58,7 +58,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
       << be_global->impl_class_suffix () <<"::~"
       << be_global->impl_class_prefix () << node->flat_name ()
       << be_global->impl_class_suffix ()
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
 
   *os << "{" <<be_nl;
   *os << "}" << be_nl_2;

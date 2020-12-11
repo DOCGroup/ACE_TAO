@@ -59,7 +59,7 @@ TAO::PG_Group_Factory::PG_Group_Factory ()
 {
 }
 
-TAO::PG_Group_Factory::~PG_Group_Factory (void)
+TAO::PG_Group_Factory::~PG_Group_Factory ()
 {
   for (Group_Map_Iterator it = this->group_map_.begin ();
     it != this->group_map_.end ();
@@ -325,7 +325,7 @@ TAO::PG_Group_Factory::groups_at_location (
 }
 
 PortableGroup::ObjectGroups *
-TAO::PG_Group_Factory::all_groups (void)
+TAO::PG_Group_Factory::all_groups ()
 {
   Group_Map & group_map = this->get_group_map ();
   CORBA::ULong const upper_limit = static_cast<CORBA::ULong> (group_map.current_size ());

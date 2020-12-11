@@ -48,7 +48,7 @@ namespace TAO
       : public Policy_Strategy
     {
     public:
-      RequestProcessingStrategy (void);
+      RequestProcessingStrategy ();
 
       virtual void strategy_init(TAO_Root_POA *poa);
 
@@ -56,18 +56,18 @@ namespace TAO
         TAO_Root_POA *poa,
         ::PortableServer::ServantRetentionPolicyValue);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-      virtual PortableServer::ServantManager_ptr get_servant_manager (void) = 0;
+      virtual PortableServer::ServantManager_ptr get_servant_manager () = 0;
 
       virtual void set_servant_manager (
         PortableServer::ServantManager_ptr imgr) = 0;
 
       virtual void set_servant (PortableServer::Servant servant) = 0;
 
-      virtual PortableServer::Servant get_servant (void) = 0;
+      virtual PortableServer::Servant get_servant () = 0;
 
 #endif /* TAO_HAS_MINIMUM_POA == 0 !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 

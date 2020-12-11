@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::ServerRequestInterceptor_Adapter_Impl ()
 {
 }
 
@@ -506,13 +506,13 @@ TAO::ServerRequestInterceptor_Adapter_Impl::add_interceptor (
 }
 
 void
-TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::destroy_interceptors ()
 {
   this->interceptor_list_.destroy_interceptors ();
 }
 
 TAO::PICurrent_Impl *
-TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current (void)
+TAO::ServerRequestInterceptor_Adapter_Impl::allocate_pi_current ()
 {
   TAO::PICurrent_Impl *pi = 0;
   ACE_NEW_RETURN (pi,

@@ -96,7 +96,7 @@ BE_GlobalData::BE_GlobalData ()
     any_support_ (true),
     cdr_support_ (true),
     tc_support_ (true),
-    obv_opt_accessor_ (0),
+    obv_opt_accessor_ (false),
     gen_impl_files_ (false),
     gen_impl_debug_info_ (false),
     gen_copy_ctor_ (false),
@@ -3420,7 +3420,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         else if (av[i][2] == 't')
           {
             // Optimized typecode generation.
-            be_global->opt_tc (1);
+            be_global->opt_tc (true);
           }
         else if (av[i][2] == 'p')
           {
@@ -3488,7 +3488,7 @@ BE_GlobalData::parse_args (long &i, char **av)
             size_t j;
             size_t k = i;
             // Generate implementation files.
-            be_global->gen_impl_files (1);
+            be_global->gen_impl_files (true);
 
             for (j = 0; j < options; ++j)
               {

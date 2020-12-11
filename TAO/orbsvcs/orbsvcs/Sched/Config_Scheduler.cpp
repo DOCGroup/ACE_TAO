@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Config_Scheduler::ACE_Config_Scheduler (void)
+ACE_Config_Scheduler::ACE_Config_Scheduler ()
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
   : scheduler_strategy_ (static_cast<RtecScheduler::Preemption_Priority_t> (TAO_MIN_CRITICAL_PRIORITY))
   , impl (new ACE_Strategy_Scheduler (scheduler_strategy_))
@@ -22,7 +22,7 @@ ACE_Config_Scheduler::ACE_Config_Scheduler (void)
   // impl->output_level (10);
 }
 
-ACE_Config_Scheduler::~ACE_Config_Scheduler (void)
+ACE_Config_Scheduler::~ACE_Config_Scheduler ()
 {
   delete impl;
 }
@@ -438,7 +438,7 @@ void ACE_Config_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Pri
 
 
 RtecScheduler::Preemption_Priority_t
-ACE_Config_Scheduler::last_scheduled_priority (void)
+ACE_Config_Scheduler::last_scheduled_priority ()
 {
 
   RtecScheduler::Preemption_Priority_t priority = impl->minimum_priority_queue ();

@@ -108,14 +108,14 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_idt_nl;
+      << " ()" << be_idt_nl;
 
   *os << ": TAO_ServantBase ()" << be_uidt_nl;
 
   // Default constructor body.
   *os << "{" << be_idt_nl
-      << "this->optable_ = &tao_" << flat_name
-      << "_optable;" << be_uidt_nl
+      << "this->optable_ = std::addressof(tao_" << flat_name
+      << "_optable);" << be_uidt_nl
       << "}" << be_nl_2;
 
   // find if we are at the top scope or inside some module
@@ -143,7 +143,7 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
   *os << "{" << be_nl;
   *os << "}" << be_nl;
 
@@ -182,27 +182,20 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << "!std::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/CORBA/Object:1.0\"" << be_uidt_nl
-      << ")";
+  *os << "std::strcmp (value, \"IDL:omg.org/CORBA/Object:1.0\") == 0";
 
   if (node->has_mixed_parentage ())
     {
-      *os << " ||" << be_uidt_nl
-          << "!std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"IDL:omg.org/CORBA/AbstractBase:1.0\""
-          << be_uidt_nl
-          << ")";
+      *os << " ||" << be_nl
+          << "std::strcmp (value, \"IDL:omg.org/CORBA/AbstractBase:1.0\") == 0";
     }
 
-  *os << be_uidt << be_uidt_nl
+  *os << be_uidt_nl
       << ");" << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
   *os << "const char* " << full_skel_name
-      << "::_interface_repository_id (void) const"
+      << "::_interface_repository_id () const"
       << be_nl;
   *os << "{" << be_idt_nl;
   *os << "return \"" << node->repoID () << "\";" << be_uidt_nl;
@@ -374,7 +367,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
   // The _this () operation.
   *os << node->full_name () << " *" << be_nl
       << node->full_skel_name ()
-      << "::_this (void)" << be_nl
+      << "::_this ()" << be_nl
       << "{" << be_idt_nl
       << "TAO_Stub *stub = this->_create_stub ();"
       << be_nl_2
@@ -382,7 +375,7 @@ be_visitor_interface_ss::this_method (be_interface *node)
 
   /* Coverity whines about an unused return value from _nil() when
      initializing tmp.  Just use zero instead. */
-  *os << "::CORBA::Object_ptr tmp = CORBA::Object_ptr ();"
+  *os << "::CORBA::Object_ptr tmp {};"
       << be_nl_2;
 
   *os << "::CORBA::Boolean const _tao_opt_colloc ="

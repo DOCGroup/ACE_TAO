@@ -17,7 +17,7 @@
 
 be_visitor_valuetype_ci::be_visitor_valuetype_ci (be_visitor_context *ctx)
   : be_visitor_valuetype (ctx),
-    opt_accessor_ (0)
+    opt_accessor_ (false)
 {
 }
 
@@ -35,7 +35,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   if (node->opt_accessor ())
     {
-      this->opt_accessor_ = 1;
+      this->opt_accessor_ = true;
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
@@ -44,7 +44,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   *os << "ACE_INLINE" << be_nl;
-  *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;
+  *os << node->name () << "::" << node->local_name () << " ()" << be_nl;
 
   if (node->is_amh_excep_holder ())
     {
@@ -107,7 +107,7 @@ be_visitor_valuetype_ci::visit_field (be_field *node)
     {
       be_visitor_context ctx (*this->ctx_);
       be_visitor_valuetype_field_cs visitor (&ctx);
-      visitor.in_obv_space_ = 0;
+      visitor.in_obv_space_ = false;
       visitor.setenclosings ("ACE_INLINE ");
 
       if (visitor.visit_field (node) == -1)

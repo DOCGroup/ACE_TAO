@@ -115,7 +115,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       *os << "\n\n#endif";
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 

@@ -19,7 +19,7 @@ TAO_PG_Group_Guard::TAO_PG_Group_Guard (
 {
 }
 
-TAO_PG_Group_Guard::~TAO_PG_Group_Guard (void)
+TAO_PG_Group_Guard::~TAO_PG_Group_Guard ()
 {
   if (!this->released_)
     {
@@ -41,7 +41,7 @@ TAO_PG_Group_Guard::~TAO_PG_Group_Guard (void)
 }
 
 void
-TAO_PG_Group_Guard::release (void)
+TAO_PG_Group_Guard::release ()
 {
   this->released_ = true;
 }

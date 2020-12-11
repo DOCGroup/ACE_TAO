@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::Upcall_Command::~Upcall_Command (void)
+TAO::Upcall_Command::~Upcall_Command ()
 {
 }
 

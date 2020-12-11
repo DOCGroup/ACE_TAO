@@ -176,8 +176,8 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << node->local_name () << " ( ::CORBA::Exception *ex)" << be_idt_nl
           << ": exception (ex)" << be_uidt_nl
           << "{}" << be_nl_2
-          << "virtual ~" << node->local_name () << " (void);" << be_nl
-          << "virtual ::CORBA::ValueBase *_copy_value (void);";
+          << "virtual ~" << node->local_name () << " ();" << be_nl
+          << "virtual ::CORBA::ValueBase *_copy_value ();";
     }
 
   *os << be_nl_2
@@ -190,18 +190,18 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       << node->local_name () << " *&new_object);" << be_uidt
       << be_uidt_nl << be_nl
       << "virtual const char* "
-      << "_tao_obv_repository_id (void) const;"
+      << "_tao_obv_repository_id () const;"
       << be_nl_2
       << "virtual void "
       << "_tao_obv_truncatable_repo_ids (Repository_Id_List &) const;"
       << be_nl_2
       << "static const char* "
-      << "_tao_obv_static_repository_id (void);";
+      << "_tao_obv_static_repository_id ();";
 
   if (be_global->tc_support ())
     {
       *os << be_nl_2
-          << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
+          << "virtual ::CORBA::TypeCode_ptr _tao_type () const;";
     }
 
   // Generate code for the valuetype definition.
@@ -243,20 +243,20 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->n_supports () > 0)
     {
       *os << be_uidt_nl << be_nl << "public:" << be_idt_nl;
-      *os << be_nl << "virtual void _add_ref (void) = 0;" << be_nl;
-      *os << "virtual void _remove_ref (void) = 0;" << be_nl;
-      *os << "virtual ::CORBA::ValueBase *_tao_to_value (void);";
+      *os << be_nl << "virtual void _add_ref () = 0;" << be_nl;
+      *os << "virtual void _remove_ref () = 0;" << be_nl;
+      *os << "virtual ::CORBA::ValueBase *_tao_to_value ();";
     }
 
   // Generate the "protected" constructor so that users cannot
   // instantiate us.
   *os << be_uidt_nl << be_nl << "protected:" << be_idt_nl
       << node->local_name ()
-      << " (void);" << be_nl;
+      << " ();" << be_nl;
 
   if (!is_an_amh_exception_holder)
     {
-      *os << "virtual ~" << node->local_name () << " (void);"
+      *os << "virtual ~" << node->local_name () << " ();"
           << be_nl_2;
     }
 
@@ -307,7 +307,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
           << "::CORBA::Boolean "
           << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
           << "virtual void "
-          << "truncation_hook (void);"
+          << "truncation_hook ();"
           << be_uidt_nl << be_nl;
       *os << "private:" << be_idt_nl;
 

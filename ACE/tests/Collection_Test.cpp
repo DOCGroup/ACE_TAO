@@ -27,14 +27,14 @@ UglyThing::operator== (const UglyThing& r) const
   return this->alloc_ == r.alloc_;
 }
 
-typedef UglyThing DATA;
-typedef ACE_Unbounded_Set<DATA> UNBOUNDED_SET;
-typedef ACE_Unbounded_Set_Iterator<DATA> UNBOUNDED_SET_ITERATOR;
-typedef ACE_Unbounded_Set_Const_Iterator<DATA> UNBOUNDED_SET_CONST_ITERATOR;
+using DATA = UglyThing;
+using UNBOUNDED_SET = ACE_Unbounded_Set<DATA>;
+using UNBOUNDED_SET_ITERATOR = ACE_Unbounded_Set_Iterator<DATA>;
+using UNBOUNDED_SET_CONST_ITERATOR = ACE_Unbounded_Set_Const_Iterator<DATA>;
 
-typedef int ARRAY_DATA;
-typedef ACE_Array<ARRAY_DATA> ARRAY;
-typedef ACE_Array_Iterator<ARRAY_DATA> ARRAY_ITERATOR;
+using ARRAY_DATA = int;
+using ARRAY = ACE_Array<ARRAY_DATA>;
+using ARRAY_ITERATOR = ACE_Array_Iterator<ARRAY_DATA>;
 
 void iterate_const(const UNBOUNDED_SET& set)
 {
@@ -59,7 +59,7 @@ void iterate_const(const UNBOUNDED_SET& set)
 
 struct DummyFunctor
 {
-  int operator() (void) { return 0; }
+  int operator() () { return 0; }
 };
 
 int

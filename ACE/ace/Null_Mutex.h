@@ -38,12 +38,12 @@ class ACE_Export ACE_Null_Mutex
 public:
   ACE_Null_Mutex (const ACE_TCHAR * = 0)
     : lock_ (0) {}
-  ~ACE_Null_Mutex (void) {}
+  ~ACE_Null_Mutex () {}
   /// Return 0.
-  int remove (void) {return 0;}
+  int remove () {return 0;}
 
   /// Return 0.
-  int acquire (void) {return 0;}
+  int acquire () {return 0;}
 
   /// Return -1 with @c errno == @c ETIME.
   int acquire (ACE_Time_Value &) {errno = ETIME; return -1;}
@@ -52,28 +52,28 @@ public:
   int acquire (ACE_Time_Value *) {errno = ETIME; return -1;}
 
   /// Return 0.
-  int tryacquire (void) {return 0;}
+  int tryacquire () {return 0;}
 
   /// Return 0.
-  int release (void) {return 0;}
+  int release () {return 0;}
 
   /// Return 0.
-  int acquire_write (void) {return 0;}
+  int acquire_write () {return 0;}
 
   /// Return 0.
-  int tryacquire_write (void) {return 0;}
+  int tryacquire_write () {return 0;}
 
   /// Return 0.
-  int tryacquire_write_upgrade (void) {return 0;}
+  int tryacquire_write_upgrade () {return 0;}
 
   /// Return 0.
-  int acquire_read (void) {return 0;}
+  int acquire_read () {return 0;}
 
   /// Return 0.
-  int tryacquire_read (void) {return 0;}
+  int tryacquire_read () {return 0;}
 
   /// Dump the state of an object.
-  void dump (void) const {}
+  void dump () const {}
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;
@@ -106,20 +106,19 @@ public:
   ~ACE_Guard (void) {}
 #endif /* ACE_WIN32 */
 
-  int acquire (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  int release (void) { return 0; }
-  void disown (void) {}
-  int locked (void) { return 1; }
-  int remove (void) { return 0; }
-  void dump (void) const {}
+  int acquire () { return 0; }
+  int tryacquire () { return 0; }
+  int release () { return 0; }
+  void disown () {}
+  int locked () { return 1; }
+  int remove () { return 0; }
+  void dump () const {}
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &);
-  void operator= (const ACE_Guard<ACE_Null_Mutex> &);
-
+  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  void operator= (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Null_Mutex> &&) = delete;
+  void operator= (ACE_Guard<ACE_Null_Mutex> &&) = delete;
 };
 
 template <class ACE_LOCK>
@@ -139,11 +138,11 @@ public:
   ACE_Write_Guard (ACE_Null_Mutex &m, int blocked)
     : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
 
-  int acquire_write (void) { return 0; }
-  int acquire (void) { return 0; }
-  int tryacquire_write (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  void dump (void) const {}
+  int acquire_write () { return 0; }
+  int acquire () { return 0; }
+  int tryacquire_write () { return 0; }
+  int tryacquire () { return 0; }
+  void dump () const {}
 };
 
 template <class ACE_LOCK>
@@ -163,11 +162,11 @@ public:
   ACE_Read_Guard (ACE_Null_Mutex &m, int blocked)
     : ACE_Guard<ACE_Null_Mutex> (m, blocked) {}
 
-  int acquire_read (void) { return 0; }
-  int acquire (void) { return 0; }
-  int tryacquire_read (void) { return 0; }
-  int tryacquire (void) { return 0; }
-  void dump (void) const {}
+  int acquire_read () { return 0; }
+  int acquire () { return 0; }
+  int tryacquire_read () { return 0; }
+  int tryacquire () { return 0; }
+  void dump () const {}
 };
 
 // FUZZ: enable check_for_ACE_Guard

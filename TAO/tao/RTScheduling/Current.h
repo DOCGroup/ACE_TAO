@@ -78,7 +78,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
     public ::CORBA::LocalObject
 {
  public:
-  static ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> guid_counter;
+  static std::atomic<long> guid_counter;
 
   TAO_RTScheduler_Current (void);
   virtual ~TAO_RTScheduler_Current (void);

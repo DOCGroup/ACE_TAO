@@ -12,7 +12,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class L>
-ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block (void)
+ACE_Locked_Data_Block<L>::~ACE_Locked_Data_Block ()
 {
 }
 

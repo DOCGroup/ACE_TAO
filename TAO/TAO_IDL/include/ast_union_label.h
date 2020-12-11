@@ -87,11 +87,11 @@ public:
   AST_UnionLabel (UnionLabel lk,
                   AST_Expression *lv);
 
-  virtual ~AST_UnionLabel (void);
+  virtual ~AST_UnionLabel ();
 
-  UnionLabel label_kind (void);
+  UnionLabel label_kind ();
 
-  AST_Expression *label_val (void);
+  AST_Expression *label_val ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -100,7 +100,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 private:
   // Data.

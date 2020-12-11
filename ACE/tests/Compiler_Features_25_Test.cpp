@@ -9,8 +9,8 @@
 
 struct Foo
 {
-  typedef std::true_type is_true;
-  typedef std::false_type is_false;
+  using is_true = std::true_type;
+  using is_false = std::false_type;
 };
 
 int

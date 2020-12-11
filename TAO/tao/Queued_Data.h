@@ -69,34 +69,34 @@ public:
 
   /// Consolidate this fragments chained message blocks into one.
   /// @return -1 if consolidation failed, eg out or memory, otherwise 0
-  int consolidate (void);
+  int consolidate ();
 
   /// Get missing data
-  size_t missing_data (void) const;
+  size_t missing_data () const;
 
   /// Set missing data
   void missing_data (size_t data);
 
   /// Get the GIOP version
-  TAO_GIOP_Message_Version const &giop_version (void) const;
+  TAO_GIOP_Message_Version const &giop_version () const;
 
   /// Get byte_order
-  CORBA::Octet byte_order (void) const;
+  CORBA::Octet byte_order () const;
 
   /// Get more fragments
-  CORBA::Boolean more_fragments (void) const;
+  CORBA::Boolean more_fragments () const;
 
   /// Get message type
-  GIOP::MsgType msg_type (void) const;
+  GIOP::MsgType msg_type () const;
 
   /// Get next
-  TAO_Queued_Data *next (void) const;
+  TAO_Queued_Data *next () const;
 
   /// Set next
   void next (TAO_Queued_Data* qd);
 
   /// Get message block
-  ACE_Message_Block *msg_block (void) const;
+  ACE_Message_Block *msg_block () const;
 
   /// Set message block
   void msg_block (ACE_Message_Block *mb);
@@ -105,7 +105,7 @@ public:
   void state (const TAO_GIOP_Message_State& state);
 
   /// Get the state
-  const TAO_GIOP_Message_State& state (void) const;
+  const TAO_GIOP_Message_State& state () const;
 
 private:
 

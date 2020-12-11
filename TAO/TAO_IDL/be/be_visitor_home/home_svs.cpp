@@ -235,7 +235,7 @@ be_visitor_home_svs::gen_servant_class ()
       << "}";
 
   os_ << be_nl_2
-      << lname << "_Servant::~" << lname << "_Servant (void)"
+      << lname << "_Servant::~" << lname << "_Servant ()"
       << be_nl
       << "{" << be_nl
       << "}";

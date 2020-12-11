@@ -39,7 +39,7 @@ namespace TAO
       typedef alloc_type ALLOC_TYPE;
       TAO_Buffer_Allocator (alloc_type *allocator);
 
-      virtual handler_type *allocate (void);
+      virtual handler_type *allocate ();
       virtual void release (handler_type *ptr);
     private:
       alloc_type* allocator_;

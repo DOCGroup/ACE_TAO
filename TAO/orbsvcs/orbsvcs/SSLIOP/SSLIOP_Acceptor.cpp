@@ -82,7 +82,7 @@ TAO::SSLIOP::Acceptor::Acceptor (::Security::QOP qop,
                   CSIIOP::NoProtection);
 }
 
-TAO::SSLIOP::Acceptor::~Acceptor (void)
+TAO::SSLIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -351,7 +351,7 @@ TAO::SSLIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO::SSLIOP::Acceptor::close (void)
+TAO::SSLIOP::Acceptor::close ()
 {
   int r = this->ssl_acceptor_.close ();
   if (this->IIOP_SSL_Acceptor::close () != 0)

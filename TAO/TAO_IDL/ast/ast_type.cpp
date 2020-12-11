@@ -81,10 +81,10 @@ AST_Type::AST_Type (AST_Decl::NodeType nt,
   : COMMON_Base (),
     AST_Decl (nt,
               n),
-    ifr_added_ (0),
-    ifr_fwd_added_ (0),
+    ifr_added_ (false),
+    ifr_fwd_added_ (false),
     size_type_ (AST_Type::SIZE_UNKNOWN),
-    has_constructor_ (0),
+    has_constructor_ (false),
     nested_type_name_ (nullptr),
     in_recursion_ (-1),
     recursing_in_legal_pk_ (false)
@@ -140,7 +140,7 @@ bool
 AST_Type::in_recursion (ACE_Unbounded_Queue<AST_Type *> & /*list*/)
 {
   // By default we are not involved in recursion.
-  return 0;
+  return false;
 }
 
 bool

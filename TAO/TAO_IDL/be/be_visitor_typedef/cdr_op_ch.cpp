@@ -125,7 +125,7 @@ be_visitor_typedef_cdr_op_ch::visit_typedef (be_typedef *node)
       this->ctx_->tdef (nullptr);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }
 

@@ -39,11 +39,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
-  ~ACE_Bound_Ptr_Counter (void);
+  ~ACE_Bound_Ptr_Counter ();
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate ownership by a strong pointer.
-  static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_strong (void);
+  static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_strong ();
 
   /// Increase both the object and counter reference counts and return
   /// the new object reference count. A return value of -1 indicates
@@ -57,7 +57,7 @@ public:
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate no ownership.
-  static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_weak (void);
+  static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_weak ();
 
   /// Increase the counter reference count and return argument.
   static void attach_weak (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
@@ -130,7 +130,7 @@ public:
   }
 
   /// Destructor.
-  ~ACE_Strong_Bound_Ptr (void);
+  ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
@@ -194,13 +194,13 @@ public:
   bool operator != (X *p) const;
 
   /// Redirection operator
-  X *operator-> (void) const;
+  X *operator-> () const;
 
   /// Dereference operator
-  X &operator * (void) const;
+  X &operator * () const;
 
   /// Get the pointer value.
-  X *get (void) const;
+  X *get () const;
 
   /// Resets the ACE_Strong_Bound_Ptr to refer to a different
   /// underlying object.
@@ -208,7 +208,7 @@ public:
 
   /// Allows us to check for NULL on all ACE_Strong_Bound_Ptr
   /// objects.
-  bool null (void) const;
+  bool null () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -262,7 +262,7 @@ public:
   ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
 
   /// Destructor.
-  ~ACE_Weak_Bound_Ptr (void);
+  ~ACE_Weak_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
   void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
@@ -308,17 +308,17 @@ public:
    * certain of the lifetimes of the object, and do not want to incur
    * the locking overhead, then use the unsafe_get method instead.
    */
-  ACE_Strong_Bound_Ptr<X, ACE_LOCK> operator-> (void) const;
+  ACE_Strong_Bound_Ptr<X, ACE_LOCK> operator-> () const;
 
   /// Obtain a strong pointer corresponding to this weak pointer. This
   /// function is useful to create a temporary strong pointer for
   /// conversion to a reference.
-  ACE_Strong_Bound_Ptr<X, ACE_LOCK> strong (void) const;
+  ACE_Strong_Bound_Ptr<X, ACE_LOCK> strong () const;
 
   /// Get the pointer value. Warning: this does not affect the
   /// reference count of the underlying object, so it may disappear on
   /// you while you are using it if you are not careful.
-  X *unsafe_get (void) const;
+  X *unsafe_get () const;
 
   /// Resets the ACE_Weak_Bound_Ptr to refer to a different underlying
   /// object.
@@ -331,7 +331,7 @@ public:
    * reference counting mechanism such as those used by COM or CORBA
    * servants.
    */
-  long add_ref (void);
+  long add_ref ();
 
   /// Decrement the reference count on the underlying object, which is deleted
   /// if the count has reached zero.
@@ -341,10 +341,10 @@ public:
    * reference counting mechanism such as those used by COM or CORBA
    * servants.
    */
-  long remove_ref (void);
+  long remove_ref ();
 
   /// Allows us to check for NULL on all ACE_Weak_Bound_Ptr objects.
-  bool null (void) const;
+  bool null () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -210,8 +210,8 @@ struct ACE_Export ACE_Numeric_Limits<long double>
 template <typename T>
 struct ACE_Numeric_Limits
 {
-  static T min (void) { return std::numeric_limits<T>::min (); }
-  static T max (void) { return std::numeric_limits<T>::max (); }
+  static T min () { return std::numeric_limits<T>::min (); }
+  static T max () { return std::numeric_limits<T>::max (); }
 };
 
 #endif /* ACE_LACKS_NUMERIC_LIMITS */

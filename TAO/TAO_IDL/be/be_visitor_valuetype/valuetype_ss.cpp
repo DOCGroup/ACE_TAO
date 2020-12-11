@@ -73,7 +73,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << full_skel_name << "::"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}" << be_nl_2;
 
 // @@@ (JP) I'm commenting out the copy constructor for now. The
@@ -112,7 +112,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   *os << full_skel_name << "::~"
       << local_name_prefix << node_local_name
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   return 0;

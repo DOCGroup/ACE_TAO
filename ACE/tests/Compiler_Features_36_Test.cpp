@@ -10,7 +10,7 @@
 template <typename T>
 struct non_instantiatable
 {
-  typedef typename T::THIS_TYPE_CANNOT_BE_INSTANTIATED type;
+  using type = typename T::THIS_TYPE_CANNOT_BE_INSTANTIATED;
 };
 
 int

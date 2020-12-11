@@ -29,7 +29,7 @@ TAO_ECG_Mcast_EH::TAO_ECG_Mcast_EH (TAO_ECG_Dgram_Handler *recv,
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH (void)
+TAO_ECG_Mcast_EH::~TAO_ECG_Mcast_EH ()
 {
   ACE_OS::free (this->net_if_);
 }
@@ -78,7 +78,7 @@ TAO_ECG_Mcast_EH::open (RtecEventChannelAdmin::EventChannel_ptr ec)
 }
 
 int
-TAO_ECG_Mcast_EH::shutdown (void)
+TAO_ECG_Mcast_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -303,7 +303,7 @@ TAO_ECG_Mcast_EH::Observer::update_supplier (
 }
 
 void
-TAO_ECG_Mcast_EH::Observer::shutdown (void)
+TAO_ECG_Mcast_EH::Observer::shutdown ()
 {
   this->eh_ = 0;
   this->deactivator_.deactivate ();

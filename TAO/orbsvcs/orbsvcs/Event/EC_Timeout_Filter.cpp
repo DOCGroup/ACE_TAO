@@ -55,7 +55,7 @@ TAO_EC_Timeout_Filter::TAO_EC_Timeout_Filter (
   //              this->id_));
 }
 
-TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter (void)
+TAO_EC_Timeout_Filter::~TAO_EC_Timeout_Filter ()
 {
   this->event_channel_->timeout_generator ()->cancel_timer (this->qos_info_,
                                                             this->id_);
@@ -111,7 +111,7 @@ TAO_EC_Timeout_Filter::push_nocopy (RtecEventComm::EventSet&,
 }
 
 void
-TAO_EC_Timeout_Filter::clear (void)
+TAO_EC_Timeout_Filter::clear ()
 {
   if (this->type_ == ACE_ES_EVENT_DEADLINE_TIMEOUT)
     {
@@ -133,7 +133,7 @@ TAO_EC_Timeout_Filter::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_Timeout_Filter::max_event_size (void) const
+TAO_EC_Timeout_Filter::max_event_size () const
 {
   return 1;
 }

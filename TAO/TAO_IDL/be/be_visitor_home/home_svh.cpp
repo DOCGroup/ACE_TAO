@@ -153,7 +153,7 @@ be_visitor_home_svh::gen_servant_class ()
       << "_Container_ptr c);" << be_uidt;
 
   os_ << be_nl_2
-      << "virtual ~" << lname << "_Servant (void);";
+      << "virtual ~" << lname << "_Servant ();";
 
   if (this->node_->has_rw_attributes ())
     {

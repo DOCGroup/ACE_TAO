@@ -8,8 +8,8 @@
 #include <array>
 namespace Test
 {
-  typedef std::array< float, 5 > arrayType;
-  typedef std::array< arrayType, 5 > array_array;
+  using arrayType = std::array<float, 5>;
+  using array_array = std::array<arrayType, 5>;
 };
 
 int

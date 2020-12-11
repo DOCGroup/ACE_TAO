@@ -30,10 +30,10 @@ class be_factory : public virtual AST_Factory,
 public:
   be_factory (UTL_ScopedName *n);
 
-  ~be_factory (void);
+  ~be_factory ();
 
   /// Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

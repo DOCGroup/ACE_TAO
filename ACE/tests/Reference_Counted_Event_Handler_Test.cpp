@@ -43,23 +43,23 @@ public:
 
   Reference_Counted_Event_Handler (int &events);
 
-  ~Reference_Counted_Event_Handler (void);
+  ~Reference_Counted_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 
   ACE_Pipe pipe_;
 
@@ -81,7 +81,7 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int &events)
               this->reference_count_.load ()));
 }
 
-Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler (void)
+Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in ~Reference_Counted_Event_Handler() is %d\n",
@@ -182,7 +182,7 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
 }
 
 ACE_Event_Handler::Reference_Count
-Reference_Counted_Event_Handler::add_reference (void)
+Reference_Counted_Event_Handler::add_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::add_reference ();
@@ -195,7 +195,7 @@ Reference_Counted_Event_Handler::add_reference (void)
 }
 
 ACE_Event_Handler::Reference_Count
-Reference_Counted_Event_Handler::remove_reference (void)
+Reference_Counted_Event_Handler::remove_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::remove_reference ();
@@ -474,19 +474,19 @@ public:
   Simple_Event_Handler (int &events,
                         int close_count);
 
-  ~Simple_Event_Handler (void);
+  ~Simple_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
-  int handle_output (ACE_HANDLE);
+  int handle_output (ACE_HANDLE) override;
 
   int handle_timeout (const ACE_Time_Value &,
-                      const void *);
+                      const void *) override;
 
-  int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
   ACE_Pipe pipe_;
 
@@ -509,7 +509,7 @@ Simple_Event_Handler::Simple_Event_Handler (int &events,
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Simple_Event_Handler()\n")));
 }
 
-Simple_Event_Handler::~Simple_Event_Handler (void)
+Simple_Event_Handler::~Simple_Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Simple_Event_Handler()\n")));
 
@@ -772,16 +772,16 @@ public:
 
   Closed_In_Upcall_Event_Handler (int &events);
 
-  ~Closed_In_Upcall_Event_Handler (void);
+  ~Closed_In_Upcall_Event_Handler () override;
 
-  int handle_input (ACE_HANDLE);
+  int handle_input (ACE_HANDLE) override;
 
   int handle_close (ACE_HANDLE,
-                    ACE_Reactor_Mask);
+                    ACE_Reactor_Mask) override;
 
-  ACE_Event_Handler::Reference_Count add_reference (void);
+  ACE_Event_Handler::Reference_Count add_reference () override;
 
-  ACE_Event_Handler::Reference_Count remove_reference (void);
+  ACE_Event_Handler::Reference_Count remove_reference () override;
 
   ACE_Pipe pipe_;
 
@@ -803,7 +803,7 @@ Closed_In_Upcall_Event_Handler::Closed_In_Upcall_Event_Handler (int &events)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closed_In_Upcall_Event_Handler()\n")));
 }
 
-Closed_In_Upcall_Event_Handler::~Closed_In_Upcall_Event_Handler (void)
+Closed_In_Upcall_Event_Handler::~Closed_In_Upcall_Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("~Closed_In_Upcall_Event_Handler()\n")));
 
@@ -860,7 +860,7 @@ Closed_In_Upcall_Event_Handler::handle_close (ACE_HANDLE handle,
 }
 
 ACE_Event_Handler::Reference_Count
-Closed_In_Upcall_Event_Handler::add_reference (void)
+Closed_In_Upcall_Event_Handler::add_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::add_reference ();
@@ -873,7 +873,7 @@ Closed_In_Upcall_Event_Handler::add_reference (void)
 }
 
 ACE_Event_Handler::Reference_Count
-Closed_In_Upcall_Event_Handler::remove_reference (void)
+Closed_In_Upcall_Event_Handler::remove_reference ()
 {
   ACE_Event_Handler::Reference_Count reference_count =
     this->ACE_Event_Handler::remove_reference ();
@@ -940,11 +940,11 @@ template <class REACTOR_IMPLEMENTATION>
 class test
 {
 public:
-  test (void);
+  test ();
 };
 
 template <class REACTOR_IMPLEMENTATION>
-test<REACTOR_IMPLEMENTATION>::test (void)
+test<REACTOR_IMPLEMENTATION>::test ()
 {
   if (test_simple_event_handler)
     simple (new REACTOR_IMPLEMENTATION);

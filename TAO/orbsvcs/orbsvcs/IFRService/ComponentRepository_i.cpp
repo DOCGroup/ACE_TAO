@@ -27,7 +27,7 @@ TAO_ComponentRepository_i::TAO_ComponentRepository_i (
 {
 }
 
-TAO_ComponentRepository_i::~TAO_ComponentRepository_i (void)
+TAO_ComponentRepository_i::~TAO_ComponentRepository_i ()
 {
 }
 

@@ -31,10 +31,10 @@ public:
   ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   /// Destructor
-  ~ACE_Condition_Attributes (void);
+  ~ACE_Condition_Attributes ();
 
   /// Accessor for retrieving the current attributes
-  const ACE_condattr_t& attributes (void) const;
+  const ACE_condattr_t& attributes () const;
 
 protected:
   /// The attributes
@@ -56,7 +56,7 @@ public:
   {}
 
   /// Destructor
-  ~ACE_Condition_Attributes_T (void) {}
+  ~ACE_Condition_Attributes_T () {}
 
 private:
   // = Prevent assignment and initialization.
@@ -75,7 +75,7 @@ public:
   ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   /// Destructor
-  ~ACE_Condition_Attributes_T (void);
+  ~ACE_Condition_Attributes_T ();
 
 private:
   // = Prevent assignment and initialization.

@@ -165,7 +165,7 @@ public:
                  ACE_CDR::Octet giop_minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// destructor
-  ~ACE_OutputCDR (void);
+  ~ACE_OutputCDR ();
 
   /**
    * Disambiguate overload when inserting booleans, octets, chars, and
@@ -338,14 +338,14 @@ public:
    * @retval Pointer to the placeholder; 0 if there is not enough space
    *         in the stream and memory could not be allocated.
    */
-  char* write_long_placeholder (void);
-  char* write_short_placeholder (void);
-  char* write_boolean_placeholder (void);
-  char* write_char_placeholder (void);
-  char* write_longlong_placeholder (void);
-  char* write_octet_placeholder (void);
-  char* write_float_placeholder (void);
-  char* write_double_placeholder (void);
+  char* write_long_placeholder ();
+  char* write_short_placeholder ();
+  char* write_boolean_placeholder ();
+  char* write_char_placeholder ();
+  char* write_longlong_placeholder ();
+  char* write_octet_placeholder ();
+  char* write_float_placeholder ();
+  char* write_double_placeholder ();
 
   /**
    * Writes a new value into a specific location. This is commonly
@@ -403,26 +403,26 @@ public:
   /**
    * @note The only expected error is to run out of memory.
    */
-  bool good_bit (void) const;
+  bool good_bit () const;
 
   /// Reuse the CDR stream to write on the old buffer.
-  void reset (void);
+  void reset ();
 
   /// Add the length of each message block in the chain.
-  size_t total_length (void) const;
+  size_t total_length () const;
 
   /**
    * Return the start of the message block chain for this CDR stream.
    * @note The complete CDR stream is represented by a chain of
    * message blocks.
    */
-  const ACE_Message_Block *begin (void) const;
+  const ACE_Message_Block *begin () const;
 
   /// Return the last message in the chain that is is use.
-  const ACE_Message_Block *end (void) const;
+  const ACE_Message_Block *end () const;
 
   /// Return the <current_> message block in chain.
-  const ACE_Message_Block *current (void) const;
+  const ACE_Message_Block *current () const;
 
   /// Replace the message block chain with a single message block.
   /**
@@ -431,21 +431,21 @@ public:
    *
    * @note The only expected error is to run out of memory.
    */
-  int consolidate (void);
+  int consolidate ();
 
   /**
    * Access the underlying buffer (read only).  @note This
    * method only returns a pointer to the first block in the
    * chain.
    */
-  const char *buffer (void) const;
+  const char *buffer () const;
 
   /**
    * Return the size of first message block in the block chain. @note This
    * method only returns information about the first block in the
    * chain.
    */
-  size_t length (void) const;
+  size_t length () const;
 
   /**
    * Utility function to allow the user more flexibility.
@@ -456,8 +456,8 @@ public:
   int align_write_ptr (size_t alignment);
 
   /// Access the codeset translators. They can be null!
-  ACE_Char_Codeset_Translator *char_translator (void) const;
-  ACE_WChar_Codeset_Translator *wchar_translator (void) const;
+  ACE_Char_Codeset_Translator *char_translator () const;
+  ACE_WChar_Codeset_Translator *wchar_translator () const;
 
   /// Set the char codeset translator.
   void char_translator (ACE_Char_Codeset_Translator *);
@@ -469,14 +469,14 @@ public:
   static void wchar_maxbytes (size_t max_bytes);
 
   /// access the serialized size of wchars.
-  static size_t wchar_maxbytes (void);
+  static size_t wchar_maxbytes ();
 
   /**
    * Return alignment of the wr_ptr(), with respect to the start of
    * the CDR stream.  This is not the same as the alignment of
    * current->wr_ptr()!
    */
-  size_t current_alignment (void) const;
+  size_t current_alignment () const;
 
   void current_alignment (size_t current_alignment);
 
@@ -499,11 +499,11 @@ public:
   /// and false otherwise. For example, it would be true if either
   /// ACE_ENABLE_SWAP_ON_WRITE is defined or a specific byte order was
   /// specified for this stream.
-  bool do_byte_swap (void) const;
+  bool do_byte_swap () const;
 
   /// Returns the byte order this stream is marshaling data in. Will be one
   /// of the values in ACE_CDR::Byte_Order.
-  int byte_order (void) const;
+  int byte_order () const;
 
   /// For use by a gateway, which creates the output stream for the
   /// reply to the client in its native byte order, but which must
@@ -528,9 +528,10 @@ private:
   // that the provide location locates.
   ACE_Message_Block* find (char* loc);
 
-  /// disallow copying...
-  ACE_OutputCDR (const ACE_OutputCDR& rhs);
-  ACE_OutputCDR& operator= (const ACE_OutputCDR& rhs);
+  ACE_OutputCDR (const ACE_OutputCDR&) = delete;
+  ACE_OutputCDR& operator= (const ACE_OutputCDR&) = delete;
+  ACE_OutputCDR (ACE_OutputCDR&&) = delete;
+  ACE_OutputCDR& operator= (ACE_OutputCDR&&) = delete;
 
   ACE_CDR::Boolean write_1 (const ACE_CDR::Octet *x);
   ACE_CDR::Boolean write_2 (const ACE_CDR::UShort *x);
@@ -760,7 +761,7 @@ public:
   ACE_InputCDR (Transfer_Contents rhs);
 
   /// Destructor
-  virtual ~ACE_InputCDR (void);
+  virtual ~ACE_InputCDR ();
 
   /// Disambiguate overloading when extracting octets, chars,
   /// booleans, and bounded strings
@@ -904,20 +905,20 @@ public:
    * Return @c false on failure and @c true on success.
    */
   //@{ @name Skip elements
-  ACE_CDR::Boolean skip_boolean (void);
-  ACE_CDR::Boolean skip_char (void);
-  ACE_CDR::Boolean skip_wchar (void);
-  ACE_CDR::Boolean skip_octet (void);
-  ACE_CDR::Boolean skip_short (void);
-  ACE_CDR::Boolean skip_ushort (void);
-  ACE_CDR::Boolean skip_long (void);
-  ACE_CDR::Boolean skip_ulong (void);
-  ACE_CDR::Boolean skip_longlong (void);
-  ACE_CDR::Boolean skip_ulonglong (void);
-  ACE_CDR::Boolean skip_float (void);
-  ACE_CDR::Boolean skip_double (void);
-  ACE_CDR::Boolean skip_longdouble (void);
-  ACE_CDR::Boolean skip_fixed (void);
+  ACE_CDR::Boolean skip_boolean ();
+  ACE_CDR::Boolean skip_char ();
+  ACE_CDR::Boolean skip_wchar ();
+  ACE_CDR::Boolean skip_octet ();
+  ACE_CDR::Boolean skip_short ();
+  ACE_CDR::Boolean skip_ushort ();
+  ACE_CDR::Boolean skip_long ();
+  ACE_CDR::Boolean skip_ulong ();
+  ACE_CDR::Boolean skip_longlong ();
+  ACE_CDR::Boolean skip_ulonglong ();
+  ACE_CDR::Boolean skip_float ();
+  ACE_CDR::Boolean skip_double ();
+  ACE_CDR::Boolean skip_longdouble ();
+  ACE_CDR::Boolean skip_fixed ();
   //@}
 
   /**
@@ -925,8 +926,8 @@ public:
    * useful in parsing a TypeCode.
    * @return @c false on failure and @c true on success.
    */
-  ACE_CDR::Boolean skip_wstring (void);
-  ACE_CDR::Boolean skip_string (void);
+  ACE_CDR::Boolean skip_wstring ();
+  ACE_CDR::Boolean skip_string ();
 
   /// Skip @a n bytes in the CDR stream.
   /**
@@ -935,7 +936,7 @@ public:
   ACE_CDR::Boolean skip_bytes (size_t n);
 
   /// returns @c false if a problem has been detected.
-  bool good_bit (void) const;
+  bool good_bit () const;
 
   /**
    * @return The start of the message block chain for this CDR
@@ -944,7 +945,7 @@ public:
    * @note In the current implementation the chain has length 1, but
    *       we are planning to change that.
    */
-  const ACE_Message_Block* start (void) const;
+  const ACE_Message_Block* start () const;
 
   // = The following functions are useful to read the contents of the
   //   CDR stream from a socket or file.
@@ -969,7 +970,7 @@ public:
               int byte_order);
 
   /// Steal the contents from the current CDR.
-  ACE_Message_Block *steal_contents (void);
+  ACE_Message_Block *steal_contents ();
 
   /// Steal the contents of @a cdr and make a shallow copy into this
   /// stream.
@@ -993,16 +994,16 @@ public:
 
   /// Re-initialize the CDR stream, forgetting about the old contents
   /// of the stream and allocating a new buffer (from the allocators).
-  void reset_contents (void);
+  void reset_contents ();
 
   /// Returns the current position for the @c rd_ptr.
-  char* rd_ptr (void);
+  char* rd_ptr ();
 
   /// Returns the current position for the @c wr_ptr.
-  char* wr_ptr (void);
+  char* wr_ptr ();
 
   /// Return how many bytes are left in the stream.
-  size_t length (void) const;
+  size_t length () const;
 
   /**
    * Utility function to allow the user more flexibility.
@@ -1015,15 +1016,15 @@ public:
 
   /// If @c true then this stream is writing in non-native byte order.
   /// This is only meaningful if ACE_ENABLE_SWAP_ON_WRITE is defined.
-  bool do_byte_swap (void) const;
+  bool do_byte_swap () const;
 
   /// If @c do_byte_swap() returns @c false, this returns
   /// ACE_CDR_BYTE_ORDER else it returns !ACE_CDR_BYTE_ORDER.
-  int byte_order (void) const;
+  int byte_order () const;
 
   /// Access the codeset translators. They can be nil!
-  ACE_Char_Codeset_Translator *char_translator (void) const;
-  ACE_WChar_Codeset_Translator *wchar_translator (void) const;
+  ACE_Char_Codeset_Translator *char_translator () const;
+  ACE_WChar_Codeset_Translator *wchar_translator () const;
 
   /// Set the codeset translators.
   void char_translator (ACE_Char_Codeset_Translator *);
@@ -1125,7 +1126,7 @@ private:
   void rd_ptr (size_t offset);
 
   /// Points to the continuation field of the current message block.
-  char* end (void);
+  char* end ();
 };
 
 // ****************************************************************

@@ -293,11 +293,11 @@ namespace ACE_OS
   time_t time (time_t *tloc = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long timezone (void);
+  long timezone ();
 
   // wrapper for time zone information.
   ACE_NAMESPACE_INLINE_FUNCTION
-  void tzset (void);
+  void tzset ();
 
   //@}
 } /* namespace ACE_OS */

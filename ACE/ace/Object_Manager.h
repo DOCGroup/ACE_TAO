@@ -204,14 +204,14 @@ public:
    * ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
    * if it had already been called.
    */
-  virtual int init (void);
+  virtual int init ();
 
   /**
    * Explicitly destroy the singleton instance of the
    * ACE_Object_Manager.  Returns 0 on success, -1 on failure, and 1
    * if it had already been called.
    */
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Returns 1 before the ACE_Object_Manager has been constructed.
@@ -222,7 +222,7 @@ public:
    * this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
    * defined.)
    */
-  static int starting_up (void);
+  static int starting_up ();
 
   /**
    * Returns 1 after the ACE_Object_Manager has been destroyed.  This
@@ -231,7 +231,7 @@ public:
    * some static objects before this flag can return 1, if
    * ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
    */
-  static int shutting_down (void);
+  static int shutting_down ();
 
   /**
    * Register an ACE_Cleanup object for cleanup at process
@@ -332,7 +332,7 @@ public:
    * in ACE_Sig_Guard methods.
    * Deprecated: use ACE_Object_Manager::default_mask () instead.
    */
-  static ACE_Sig_Set &default_mask (void);
+  static ACE_Sig_Set &default_mask ();
 
 private:
   /// For at_exit support.
@@ -403,7 +403,7 @@ public:
    * are provided in the interface, this should not be public.  However,
    * it is public so that ACE_Managed_Object<TYPE> can access it.
    */
-  static ACE_Object_Manager *instance (void);
+  static ACE_Object_Manager *instance ();
 
   /// Table of preallocated objects.
   static void *preallocated_object[ACE_PREALLOCATED_OBJECTS];
@@ -416,8 +416,8 @@ public:
   /// hidden here.  They're public so that the ACE_Object_Manager can
   /// be constructed/destructed in <main> with
   /// ACE_HAS_NONSTATIC_OBJECT_MANAGER.
-  ACE_Object_Manager (void);
-  ~ACE_Object_Manager (void);
+  ACE_Object_Manager ();
+  ~ACE_Object_Manager ();
 
 private:
   /// Singleton pointer.
@@ -445,9 +445,10 @@ private:
   friend class ACE_Object_Manager_Manager;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-  /// Disallow copying by not implementing the following . . .
-  ACE_Object_Manager (const ACE_Object_Manager &);
-  ACE_Object_Manager &operator= (const ACE_Object_Manager &);
+  ACE_Object_Manager (const ACE_Object_Manager &) = delete;
+  ACE_Object_Manager &operator= (const ACE_Object_Manager &) = delete;
+  ACE_Object_Manager (ACE_Object_Manager &&) = delete;
+  ACE_Object_Manager &operator= (ACE_Object_Manager &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

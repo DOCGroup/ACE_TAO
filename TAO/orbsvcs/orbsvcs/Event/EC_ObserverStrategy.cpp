@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
+TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy ()
 {
 }
 
@@ -57,7 +57,7 @@ TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*)
 
 // ****************************************************************
 
-TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
+TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy ()
 {
   delete this->lock_;
   this->lock_ = 0;
@@ -262,7 +262,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
 // ****************************************************************
 
-TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy (void)
+TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy ()
 {
 }
 

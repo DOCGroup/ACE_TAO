@@ -11,13 +11,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 inline
-ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii (void)
+ACE_Wide_To_Ascii::~ACE_Wide_To_Ascii ()
 {
   delete [] this->s_;
 }
 
 inline char *
-ACE_Wide_To_Ascii::char_rep (void)
+ACE_Wide_To_Ascii::char_rep ()
 {
   return this->s_;
 }
@@ -101,13 +101,13 @@ ACE_Wide_To_Ascii::ACE_Wide_To_Ascii (const wchar_t *s)
 }
 
 inline
-ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide (void)
+ACE_Ascii_To_Wide::~ACE_Ascii_To_Wide ()
 {
   delete [] this->s_;
 }
 
 inline wchar_t *
-ACE_Ascii_To_Wide::wchar_rep (void)
+ACE_Ascii_To_Wide::wchar_rep ()
 {
   return this->s_;
 }

@@ -12,10 +12,10 @@ public:
   AST_EventTypeFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_EventTypeFwd (void);
+  virtual ~AST_EventTypeFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

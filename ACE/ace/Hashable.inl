@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Hashable::ACE_Hashable (void)
+ACE_Hashable::ACE_Hashable ()
   : hash_value_ (0)
 {
 }

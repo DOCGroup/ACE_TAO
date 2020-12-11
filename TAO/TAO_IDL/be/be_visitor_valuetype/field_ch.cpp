@@ -117,10 +117,10 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // The get method.
       *os << pre_op () << "const _" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void) const" << post_op () << be_nl;
+          << " () const" << post_op () << be_nl;
       *os << pre_op () << "_" << bt->local_name ()
           << "_slice * " << ub->local_name ()
-          << " (void)" << post_op ();
+          << " ()" << post_op ();
     }
   else
     {
@@ -131,11 +131,11 @@ be_visitor_valuetype_field_ch::visit_array (be_array *node)
       // The get method.
       *os << pre_op ()
           << bt->name () << "_slice *" << ub->local_name ()
-          << " (void)" << post_op () << be_nl;
+          << " ()" << post_op () << be_nl;
       // The get (read/write) method.
       *os << pre_op () << "const "
           << bt->name () << "_slice *" << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
 
   return 0;
@@ -195,7 +195,7 @@ be_visitor_valuetype_field_ch::visit_enum (be_enum *node)
       << bt->name () << ")" << post_op () << be_nl;
   // The get method.
   *os << pre_op () << bt->name () << " " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -238,7 +238,7 @@ be_visitor_valuetype_field_ch::visit_interface (be_interface *node)
   // Get method.
   *os << pre_op ()
       << "::" << bt->name () << "_ptr " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -281,7 +281,7 @@ be_visitor_valuetype_field_ch::visit_interface_fwd (be_interface_fwd *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << "_ptr " << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -324,7 +324,7 @@ be_visitor_valuetype_field_ch::visit_valuebox (be_valuebox *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -367,7 +367,7 @@ be_visitor_valuetype_field_ch::visit_valuetype (be_valuetype *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -416,7 +416,7 @@ be_visitor_valuetype_field_ch::visit_valuetype_fwd (be_valuetype_fwd *node)
   // Get method.
   *os << pre_op ()
       << bt->name () << " *" << ub->local_name ()
-      << " (void) const" << post_op ();
+      << " () const" << post_op ();
 
   return 0;
 }
@@ -469,7 +469,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       // Get method.
       *os << pre_op ()
           << "::" << bt->name () << "_ptr " << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
       break;
     case AST_PredefinedType::PT_any:
       // Set method.
@@ -478,11 +478,11 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
           << post_op () << be_nl;
       // Get method (read-only).
       *os << pre_op () << "const ::" << bt->name () << " &"
-          << ub->local_name () << " (void) const"
+          << ub->local_name () << " () const"
           << post_op () << be_nl;
       // Get method (read/write).
       *os << pre_op () << "::" << bt->name () << " &"
-          << ub->local_name () << " (void)"
+          << ub->local_name () << " ()"
           << post_op ();
       break;
     case AST_PredefinedType::PT_void:
@@ -495,7 +495,7 @@ be_visitor_valuetype_field_ch::visit_predefined_type (be_predefined_type *node)
       // Get method.
       *os << pre_op () << "::" << bt->name ()
           << " " << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
 
   return 0;
@@ -577,11 +577,11 @@ be_visitor_valuetype_field_ch::visit_sequence (be_sequence *node)
       << post_op () << be_nl;
   // Read-only.
   *os << pre_op () << "const " << bt->name () << " &"
-      << ub->local_name  () << " (void) const"
+      << ub->local_name  () << " () const"
       << post_op () << be_nl;
   // Read/write.
   *os << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)"
+      << " ()"
       << post_op ();
 
   return 0;
@@ -621,7 +621,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << post_op () << be_nl;
       // Get method.
       *os << pre_op () << "const char *" << ub->local_name ()
-          << " (void) const" << post_op ();
+          << " () const" << post_op ();
     }
   else
     {
@@ -636,7 +636,7 @@ be_visitor_valuetype_field_ch::visit_string (be_string *node)
           << post_op () << be_nl;
       // Get method.
       *os << pre_op() << "const ::CORBA::WChar *" << ub->local_name ()
-          << " (void) const" << post_op();
+          << " () const" << post_op();
     }
 
   return 0;
@@ -697,11 +697,11 @@ be_visitor_valuetype_field_ch::visit_structure (be_structure *node)
       << post_op () << be_nl;
     // Read-only.
   *os << pre_op () << "const " << bt->name () << " &";
-  *os << ub->local_name  () << " (void) const"
+  *os << ub->local_name  () << " () const"
       << post_op () << be_nl
     // Read/write.
       << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)" << post_op ();
+      << " ()" << post_op ();
 
   return 0;
 }
@@ -782,11 +782,11 @@ be_visitor_valuetype_field_ch::visit_union (be_union *node)
       << post_op () << be_nl;
     // Read-only.
   *os << pre_op () << "const " << bt->name () << " &"
-      << ub->local_name  () << " (void) const"
+      << ub->local_name  () << " () const"
       << post_op () << be_nl;
     // Read/write.
   *os << pre_op () << bt->name () << " &" << ub->local_name ()
-      << " (void)" << post_op ();
+      << " ()" << post_op ();
 
   return 0;
 }

@@ -219,7 +219,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   this->class_name (node, os);
 
-  *os << "::truncation_hook (void)" << be_nl
+  *os << "::truncation_hook ()" << be_nl
       << "{" << be_idt_nl
       << "this->require_truncation_ = true;" << be_uidt_nl
       << "}" << be_nl_2;

@@ -34,7 +34,7 @@
 const ACE_TCHAR usage[] =
   ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");
 
-typedef ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH> QUEUE;
+using QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;
 
 static const int MAX_MESSAGES = 10000;
 static const char test_message[] = "ACE_Message_Queue_Ex Test Message";
@@ -61,7 +61,7 @@ print_message (const ACE_TCHAR *message)
 }
 
 #if defined (ACE_HAS_THREADS)
-typedef ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH> SYNCH_QUEUE;
+using SYNCH_QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_MT_SYNCH>;
 
 /**
  * Container for data passed to sender and receiver in
@@ -78,7 +78,7 @@ struct Queue_Wrapper
   User_Class **send_block_;
 
   /// Default constructor.
-  Queue_Wrapper (void)
+  Queue_Wrapper ()
     : q_ (0), send_block_ (0)
   {
   }
@@ -169,7 +169,7 @@ struct Receive_Messages
   {
   }
 
-  int create (void)
+  int create ()
   {
     ACE_NEW_RETURN (this->receive_block_,
                     User_Class *[this->number_of_messages_],
@@ -187,7 +187,7 @@ struct Receive_Messages
 };
 
 static int
-single_thread_performance_test (void)
+single_thread_performance_test ()
 {
   const char test_message[] =
     "ACE_Message_Queue_Ex Test Message";
@@ -253,7 +253,7 @@ single_thread_performance_test (void)
 }
 
 int
-MQ_Ex_N_Tester::single_thread_performance_test (void)
+MQ_Ex_N_Tester::single_thread_performance_test ()
 {
   // Create the messages.  Allocate off the heap in case messages is
   // large relative to the amount of stack space available.
@@ -268,7 +268,7 @@ MQ_Ex_N_Tester::single_thread_performance_test (void)
 }
 
 int
-MQ_Ex_N_Tester::test_enqueue_tail (void)
+MQ_Ex_N_Tester::test_enqueue_tail ()
 {
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_tail");
@@ -320,7 +320,7 @@ MQ_Ex_N_Tester::test_enqueue_tail (void)
 }
 
 int
-MQ_Ex_N_Tester::test_enqueue_head (void)
+MQ_Ex_N_Tester::test_enqueue_head ()
 {
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_head");
@@ -422,7 +422,7 @@ sender (void *arg)
 }
 
 static int
-performance_test (void)
+performance_test ()
 {
   Queue_Wrapper queue_wrapper;
   const ACE_TCHAR *message =
@@ -480,7 +480,7 @@ performance_test (void)
 }
 
 int
-MQ_Ex_N_Tester::performance_test (void)
+MQ_Ex_N_Tester::performance_test ()
 {
   const ACE_TCHAR *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_SYNCH>");

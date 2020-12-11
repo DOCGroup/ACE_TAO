@@ -13,6 +13,8 @@
 //=============================================================================
 
 
+#include <utility>
+
 #include "test_config.h"
 #include "ace/Profile_Timer.h"
 #include "ace/Get_Opt.h"
@@ -51,7 +53,7 @@ class Handler : public ACE_Event_Handler
 {
 public:
   /// The Handler callbacks.
-  virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);
+  int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
 };
 
 int
@@ -90,7 +92,7 @@ client (void *arg)
 // Sets up the correct reactor (based on platform and options)
 
 static void
-create_reactor (void)
+create_reactor ()
 {
   ACE_Reactor_Impl *impl = 0;
 
@@ -191,15 +193,15 @@ run_main (int argc, ACE_TCHAR *argv[])
   create_reactor ();
 
   // Manage memory automagically.
-  auto_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
-  auto_ptr<ACE_Reactor_Impl> impl;
+  std::unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
+  std::unique_ptr<ACE_Reactor_Impl> impl;
 
   // If we are using other that the default implementation, we must
   // clean up.
   if (opt_select_reactor || opt_wfmo_reactor || opt_dev_poll_reactor)
     {
-      auto_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
-      impl = auto_impl;
+      std::unique_ptr<ACE_Reactor_Impl> auto_impl (ACE_Reactor::instance ()->implementation ());
+      impl = std::move(auto_impl);
     }
 
   // Callback object

@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (void)
+ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T ()
   : arg_(0),
     quote_arg_(false)
 {
@@ -30,7 +30,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_
 }
 
 template <typename CHAR_TYPE> ACE_INLINE
-ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T (void)
+ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T ()
 {
   // No-op just to keep some compilers happy...
 }
@@ -38,7 +38,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::~ACE_ARGV_Queue_Entry_T (void)
 // Return the number of args
 template <typename CHAR_TYPE>
 ACE_INLINE int
-ACE_ARGV_T<CHAR_TYPE>::argc (void) const
+ACE_ARGV_T<CHAR_TYPE>::argc () const
 {
   ACE_TRACE ("ACE_ARGV_T::argc");
  // Try to create the argv_ if it isn't there
@@ -51,7 +51,7 @@ ACE_ARGV_T<CHAR_TYPE>::argc (void) const
 // Return the arguments in a space-separated string
 template <typename CHAR_TYPE>
 ACE_INLINE const CHAR_TYPE *
-ACE_ARGV_T<CHAR_TYPE>::buf (void)
+ACE_ARGV_T<CHAR_TYPE>::buf ()
 {
   ACE_TRACE ("ACE_ARGV_T::buf");
 
@@ -65,7 +65,7 @@ ACE_ARGV_T<CHAR_TYPE>::buf (void)
 
 template <typename CHAR_TYPE>
 ACE_INLINE CHAR_TYPE **
-ACE_ARGV_T<CHAR_TYPE>::argv (void)
+ACE_ARGV_T<CHAR_TYPE>::argv ()
 {
   ACE_TRACE ("ACE_ARGV_T::argv");
 

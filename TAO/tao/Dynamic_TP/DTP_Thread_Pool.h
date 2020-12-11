@@ -241,7 +241,6 @@ public:
   // @}
 
 private:
-
   /// @name Helpers
   // @{
 
@@ -253,7 +252,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

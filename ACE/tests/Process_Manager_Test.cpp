@@ -39,15 +39,15 @@ class Exit_Handler : public ACE_Event_Handler
 public:
   Exit_Handler (const char *msg): msg_ (msg) { }
 
-  virtual ~Exit_Handler (void) { }
+  ~Exit_Handler () override { }
 
-  virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask)
+  int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   {
     delete this;
     return 0;
   }
 
-  virtual int handle_exit (ACE_Process *proc)
+  int handle_exit (ACE_Process *proc) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%P) Exit_Handler(%C) got %d: %d\n"),
@@ -176,7 +176,7 @@ public:
 
       // FUZZ: disable check_for_lack_ACE_OS
       /// FUZZ: enable check_for_lack_ACE_OS
-  int open (void*)
+  int open (void*) override
   {
     char tmp[10];
     order += ACE_OS::itoa (sleep_time_, tmp, 10);
@@ -185,7 +185,7 @@ public:
     return 0;
   }
 
-  int svc (void)
+  int svc () override
   {
     int result = 0;
     ACE_exitcode exitcode;
@@ -217,7 +217,7 @@ public:
 
       // FUZZ: disable check_for_lack_ACE_OS
       /// FUZZ: enable check_for_lack_ACE_OS
-  int close (u_long)
+  int close (u_long) override
   {
     --running_tasks;
     return 0;
@@ -231,7 +231,7 @@ private:
 
 #ifdef ACE_HAS_PROCESS_SPAWN
 static int
-command_line_test (void)
+command_line_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));

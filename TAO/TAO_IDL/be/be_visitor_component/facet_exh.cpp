@@ -69,7 +69,7 @@ be_visitor_facet_exh::visit_provides (be_provides *node)
       << this->node_->local_name ()
       << "_Context_ptr ctx);" << be_uidt_nl
       << "/// Destructor" << be_nl
-      << "virtual ~" << lname << "_exec_i (void);";
+      << "virtual ~" << lname << "_exec_i ();";
 
   if (impl->node_type () == AST_Decl::NT_interface)
     {

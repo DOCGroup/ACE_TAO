@@ -182,7 +182,7 @@ server (void *arg)
 }
 
 static int
-test_fifo_msg (void)
+test_fifo_msg ()
 {
   // Reader side opens first - it may fail if fifo not supported on this
   // platform.

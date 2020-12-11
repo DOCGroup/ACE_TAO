@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> TAO_RTScheduler_Current::guid_counter;
+std::atomic<long> TAO_RTScheduler_Current::guid_counter;
 
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const

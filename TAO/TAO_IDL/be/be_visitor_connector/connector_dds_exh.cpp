@@ -154,9 +154,9 @@ be_visitor_connector_dds_exh::visit_connector (be_connector *node)
       os_ << be_uidt << be_uidt << be_uidt_nl
           << "{" << be_nl
           << "public:" << be_idt_nl
-          << this->node_->local_name () << "_exec_i (void);" << be_nl
+          << this->node_->local_name () << "_exec_i ();" << be_nl
           << "virtual ~" << this->node_->local_name ()
-          << "_exec_i (void);" << be_uidt_nl
+          << "_exec_i ();" << be_uidt_nl
           << "};";
 
       this->gen_exec_entrypoint_decl ();

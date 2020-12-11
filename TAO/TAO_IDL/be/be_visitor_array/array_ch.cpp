@@ -306,7 +306,7 @@ int be_visitor_array_ch::visit_array (be_array *node)
       *os << storage_class.c_str() << node->nested_type_name (scope, "_slice", "_")
           << " *" << be_nl;
       *os << node->nested_type_name (scope, "_alloc", "_")
-          << " (void);" << be_nl_2;
+          << " ();" << be_nl_2;
       *os << storage_class.c_str() << "void" << be_nl
           << node->nested_type_name (scope, "_free", "_")
           << " (" << be_idt << be_idt_nl;

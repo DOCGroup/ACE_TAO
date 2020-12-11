@@ -111,7 +111,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
 
   // alloc method.
   *os << fname << "_slice *" << be_nl;
-  *os << fname << "_alloc (void)" << be_nl;
+  *os << fname << "_alloc ()" << be_nl;
   *os << "{" << be_idt_nl;
   *os << fname << "_slice *retval = 0;" << be_nl;
   *os << "ACE_NEW_RETURN (retval, ";

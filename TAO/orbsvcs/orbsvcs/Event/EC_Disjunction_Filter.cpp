@@ -17,7 +17,7 @@ TAO_EC_Disjunction_Filter::
     }
 }
 
-TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter (void)
+TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter ()
 {
   TAO_EC_Filter** end = this->children_ + this->n_;
   for (TAO_EC_Filter** i = this->children_;
@@ -33,19 +33,19 @@ TAO_EC_Disjunction_Filter::~TAO_EC_Disjunction_Filter (void)
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::begin (void) const
+TAO_EC_Disjunction_Filter::begin () const
 {
   return this->children_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Disjunction_Filter::end (void) const
+TAO_EC_Disjunction_Filter::end () const
 {
   return this->children_ + this->n_;
 }
 
 int
-TAO_EC_Disjunction_Filter::size (void) const
+TAO_EC_Disjunction_Filter::size () const
 {
   return static_cast<int> (this->n_);
 }
@@ -99,7 +99,7 @@ TAO_EC_Disjunction_Filter::push_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_Disjunction_Filter::clear (void)
+TAO_EC_Disjunction_Filter::clear ()
 {
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin ();
@@ -111,7 +111,7 @@ TAO_EC_Disjunction_Filter::clear (void)
 }
 
 CORBA::ULong
-TAO_EC_Disjunction_Filter::max_event_size (void) const
+TAO_EC_Disjunction_Filter::max_event_size () const
 {
   CORBA::ULong n = 0;
   ChildrenIterator end = this->end ();

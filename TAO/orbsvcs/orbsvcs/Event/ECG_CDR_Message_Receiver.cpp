@@ -14,12 +14,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor (void)
+TAO_ECG_CDR_Processor::~TAO_ECG_CDR_Processor ()
 {
 }
 // ****************************************************************
 
-TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry (void)
+TAO_ECG_UDP_Request_Entry::~TAO_ECG_UDP_Request_Entry ()
 {
   if (this->own_received_fragments_)
     {
@@ -107,7 +107,7 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
 }
 
 int
-TAO_ECG_UDP_Request_Entry::complete (void) const
+TAO_ECG_UDP_Request_Entry::complete () const
 {
   for (CORBA::ULong i = 0;
        i < this->received_fragments_size_;
@@ -151,7 +151,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
   return 0;
 }
 
-TAO_ECG_CDR_Message_Receiver::Requests::~Requests (void)
+TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
 {
   for (size_t i = 0; i < this->size_; ++i)
     {
@@ -488,7 +488,7 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
       ACE_NEW_RETURN (requests,
                       Requests,
                       0);
-      auto_ptr<Requests> requests_aptr (requests);
+      std::unique_ptr<Requests> requests_aptr (requests);
 
       if (requests->init (this->max_requests_, this->min_purge_count_) == -1
           || this->request_map_.bind (from, requests, entry) == -1)
@@ -504,7 +504,7 @@ TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 }
 
 void
-TAO_ECG_CDR_Message_Receiver::shutdown (void)
+TAO_ECG_CDR_Message_Receiver::shutdown ()
 {
   // ACE_GUARD (ACE_Lock, guard, *this->lock_);
 

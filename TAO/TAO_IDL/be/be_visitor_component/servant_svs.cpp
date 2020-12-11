@@ -110,7 +110,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   os_ << be_nl_2
       << lname << "_Servant::~"
-      << lname << "_Servant (void)" << be_nl
+      << lname << "_Servant ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -285,7 +285,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       os_ << be_nl_2
           << "::" << obj_name << "_ptr" << be_nl
           << node_->local_name () << "_Servant::provide_"
-          << port_name << " (void)" << be_nl
+          << port_name << " ()" << be_nl
           << "{" << be_idt_nl;
 
       os_ << "return" << be_idt_nl
@@ -297,7 +297,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   os_ << be_nl_2
         << "void" << be_nl
         << node_->local_name () << "_Servant::setup_"
-        << port_name << "_i (void)" << be_nl
+        << port_name << "_i ()" << be_nl
         << "{" << be_idt_nl
         << "ACE_CString obj_id (this->ins_name_);" << be_nl
         << "obj_id += \"_" << port_name << "\";" << be_nl_2
@@ -416,7 +416,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   os_ << be_nl
       << node_->local_name () << "_Servant::get_connection"
       << (is_multiple ? "s" : "") << "_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->context_->get_connection"
       << (is_multiple ? "s" : "") << "_"
@@ -486,7 +486,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
   os_ << be_nl_2
       << "::" << obj_name << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::disconnect_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->context_->disconnect_"
       << port_name << " ();" << be_uidt_nl
@@ -529,14 +529,14 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::~" << lname << "Consumer_"
-      << port_name << "_Servant (void)" << be_nl
+      << port_name << "_Servant ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
       << comp_lname << "_Servant::" << lname << "Consumer_"
-      << port_name << "_Servant::_get_component (void)" << be_nl
+      << port_name << "_Servant::_get_component ()" << be_nl
       << "{" << be_idt_nl;
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
@@ -585,7 +585,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       os_ << be_nl_2
           << "::" << fname << "Consumer_ptr" << be_nl
           << node_->local_name () << "_Servant::get_consumer_"
-          << port_name << " (void)" << be_nl
+          << port_name << " ()" << be_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
           << "::" << fname << "Consumer::_duplicate (" << be_idt_nl
@@ -597,7 +597,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::setup_consumer_"
-      << port_name << "_i (void)" << be_nl
+      << port_name << "_i ()" << be_nl
       << "{" << be_idt_nl
       << "ACE_CString obj_id (this->ins_name_);" << be_nl
       << "obj_id += \"_" << port_name << "\";" << be_nl_2
@@ -773,9 +773,9 @@ be_visitor_servant_svs::gen_publishes_top ()
       os_ << be_nl_2
           << "::Components::PublisherDescriptions *" << be_nl
           << node_->local_name ()
-          << "_Servant::get_all_publishers (void)" << be_nl
+          << "_Servant::get_all_publishers ()" << be_nl
           << "{" << be_idt_nl
-          << "::Components::PublisherDescriptions *retval = 0;"
+          << "::Components::PublisherDescriptions *retval {};"
           << be_nl
           << "ACE_NEW_THROW_EX (retval," << be_nl
           << "                  ::Components::PublisherDescriptions,"
@@ -880,9 +880,9 @@ be_visitor_servant_svs::gen_uses_top ()
       os_ << be_nl_2
           << "::Components::ReceptacleDescriptions *" << be_nl
           << node_->local_name ()
-          << "_Servant::get_all_receptacles (void)" << be_nl
+          << "_Servant::get_all_receptacles ()" << be_nl
           << "{" << be_idt_nl
-          << "::Components::ReceptacleDescriptions * retval = 0;"
+          << "::Components::ReceptacleDescriptions * retval {};"
           << be_nl
           << "ACE_NEW_THROW_EX (retval," << be_nl
           << "                  ::Components::ReceptacleDescriptions,"
@@ -1001,9 +1001,9 @@ be_visitor_servant_svs::gen_get_all_emitters ()
   os_ << be_nl_2
       << "::Components::EmitterDescriptions *" << be_nl
       << node_->local_name ()
-      << "_Servant::get_all_emitters (void)" << be_nl
+      << "_Servant::get_all_emitters ()" << be_nl
       << "{" << be_idt_nl
-      << "::Components::EmitterDescriptions *retval = 0;"
+      << "::Components::EmitterDescriptions *retval {};"
       << be_nl
       << "ACE_NEW_THROW_EX (retval," << be_nl
       << "                  ::Components::EmitterDescriptions,"

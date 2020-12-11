@@ -182,10 +182,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &);
-  void operator= (const ACE_Message_Queue_NT &);
+  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &) = delete;
+  void operator= (const ACE_Message_Queue_NT &) = delete;
+  ACE_Message_Queue_NT (ACE_Message_Queue_NT &&) = delete;
+  void operator= (ACE_Message_Queue_NT &&) = delete;
 
 private:
   // = Internal states.

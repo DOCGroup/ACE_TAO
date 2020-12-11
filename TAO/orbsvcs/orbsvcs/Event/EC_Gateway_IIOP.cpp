@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
+TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
   :  busy_count_ (0),
      update_posted_ (0),
      cleanup_posted_ (0),
@@ -48,7 +48,7 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP (void)
     }
 }
 
-TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP (void)
+TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP ()
 {
    delete ec_control_;
    ec_control_ = 0;
@@ -90,7 +90,7 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
 }
 
 void
-TAO_EC_Gateway_IIOP::close (void)
+TAO_EC_Gateway_IIOP::close ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -98,7 +98,7 @@ TAO_EC_Gateway_IIOP::close (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (void)
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -113,7 +113,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_proxies (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::close_i (void)
+TAO_EC_Gateway_IIOP::close_i ()
 {
   // ORBSVCS_DEBUG ((LM_DEBUG, "ECG (%t) Closing gateway\n"));
   this->disconnect_consumer_proxies_i ();
@@ -122,7 +122,7 @@ TAO_EC_Gateway_IIOP::close_i (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (void)
+TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i ()
 {
   if (this->consumer_proxy_map_.current_size () > 0)
     {
@@ -157,7 +157,7 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (void)
+TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()))
     {
@@ -169,7 +169,7 @@ TAO_EC_Gateway_IIOP::disconnect_supplier_proxy_i (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::reconnect_consumer_ec(void)
+TAO_EC_Gateway_IIOP::reconnect_consumer_ec()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -203,7 +203,7 @@ TAO_EC_Gateway_IIOP::update_consumer (
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i (void)
+TAO_EC_Gateway_IIOP::cleanup_consumer_proxies_i ()
 {
   if (this->consumer_proxy_map_.current_size () > 0)
     {
@@ -420,7 +420,7 @@ TAO_EC_Gateway_IIOP::update_supplier (
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_push_consumer (void)
+TAO_EC_Gateway_IIOP::disconnect_push_consumer ()
 {
   // ORBSVCS_DEBUG ((LM_DEBUG,
   //             "ECG (%t): Supplier-consumer received "
@@ -428,7 +428,7 @@ TAO_EC_Gateway_IIOP::disconnect_push_consumer (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::disconnect_push_supplier (void)
+TAO_EC_Gateway_IIOP::disconnect_push_supplier ()
 {
   // ORBSVCS_DEBUG ((LM_DEBUG,
   //            "ECG (%t): Supplier received "
@@ -531,7 +531,7 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
 }
 
 int
-TAO_EC_Gateway_IIOP::shutdown (void)
+TAO_EC_Gateway_IIOP::shutdown ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -566,7 +566,7 @@ TAO_EC_Gateway_IIOP::shutdown (void)
 }
 
 int
-TAO_EC_Gateway_IIOP::cleanup_consumer_ec (void)
+TAO_EC_Gateway_IIOP::cleanup_consumer_ec ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -576,7 +576,7 @@ TAO_EC_Gateway_IIOP::cleanup_consumer_ec (void)
 }
 
 int
-TAO_EC_Gateway_IIOP::cleanup_supplier_ec (void)
+TAO_EC_Gateway_IIOP::cleanup_supplier_ec ()
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, -1);
 
@@ -586,21 +586,21 @@ TAO_EC_Gateway_IIOP::cleanup_supplier_ec (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_consumer_ec_i (void)
+TAO_EC_Gateway_IIOP::cleanup_consumer_ec_i ()
 {
   this->consumer_ec_ =
     RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 void
-TAO_EC_Gateway_IIOP::cleanup_supplier_ec_i (void)
+TAO_EC_Gateway_IIOP::cleanup_supplier_ec_i ()
 {
   this->supplier_ec_ =
     RtecEventChannelAdmin::EventChannel::_nil ();
 }
 
 CORBA::Boolean
-TAO_EC_Gateway_IIOP::is_consumer_ec_connected_i (void) const
+TAO_EC_Gateway_IIOP::is_consumer_ec_connected_i () const
 {
   return !CORBA::is_nil (this->consumer_ec_.in ());
 }
@@ -633,7 +633,7 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
 }
 
 void
-TAO_EC_Gateway_IIOP::suspend_supplier_ec (void)
+TAO_EC_Gateway_IIOP::suspend_supplier_ec ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 0)
     {
@@ -644,7 +644,7 @@ TAO_EC_Gateway_IIOP::suspend_supplier_ec (void)
 }
 
 void
-TAO_EC_Gateway_IIOP::resume_supplier_ec (void)
+TAO_EC_Gateway_IIOP::resume_supplier_ec ()
 {
   if (!CORBA::is_nil (this->supplier_proxy_.in ()) && supplier_ec_suspended_ == 1)
     {

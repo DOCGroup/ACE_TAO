@@ -17,18 +17,18 @@ TAO_InterfaceDef_i::TAO_InterfaceDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_InterfaceDef_i::~TAO_InterfaceDef_i (void)
+TAO_InterfaceDef_i::~TAO_InterfaceDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_InterfaceDef_i::def_kind (void)
+TAO_InterfaceDef_i::def_kind ()
 {
   return CORBA::dk_Interface;
 }
 
 void
-TAO_InterfaceDef_i::destroy (void)
+TAO_InterfaceDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -38,7 +38,7 @@ TAO_InterfaceDef_i::destroy (void)
 }
 
 void
-TAO_InterfaceDef_i::destroy_i (void)
+TAO_InterfaceDef_i::destroy_i ()
 {
   // Destroy our members.
   this->TAO_Container_i::destroy_i ();
@@ -64,7 +64,7 @@ TAO_InterfaceDef_i::destroy_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_InterfaceDef_i::describe (void)
+TAO_InterfaceDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -74,7 +74,7 @@ TAO_InterfaceDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_InterfaceDef_i::describe_i (void)
+TAO_InterfaceDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -137,7 +137,7 @@ TAO_InterfaceDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_InterfaceDef_i::type (void)
+TAO_InterfaceDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -147,7 +147,7 @@ TAO_InterfaceDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_InterfaceDef_i::type_i (void)
+TAO_InterfaceDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -166,7 +166,7 @@ TAO_InterfaceDef_i::type_i (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_InterfaceDef_i::base_interfaces (void)
+TAO_InterfaceDef_i::base_interfaces ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -176,7 +176,7 @@ TAO_InterfaceDef_i::base_interfaces (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_InterfaceDef_i::base_interfaces_i (void)
+TAO_InterfaceDef_i::base_interfaces_i ()
 {
   ACE_Unbounded_Queue<CORBA::DefinitionKind> kind_queue;
   ACE_Unbounded_Queue<ACE_TString> path_queue;
@@ -355,7 +355,7 @@ TAO_InterfaceDef_i::is_a_i (const char *interface_id)
 }
 
 CORBA::InterfaceDef::FullInterfaceDescription *
-TAO_InterfaceDef_i::describe_interface (void)
+TAO_InterfaceDef_i::describe_interface ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -365,7 +365,7 @@ TAO_InterfaceDef_i::describe_interface (void)
 }
 
 CORBA::InterfaceDef::FullInterfaceDescription *
-TAO_InterfaceDef_i::describe_interface_i (void)
+TAO_InterfaceDef_i::describe_interface_i ()
 {
   CORBA::InterfaceDef::FullInterfaceDescription *fifd = 0;
   ACE_NEW_RETURN (fifd,

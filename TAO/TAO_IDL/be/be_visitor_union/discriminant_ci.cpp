@@ -100,7 +100,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
@@ -210,7 +210,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "::" << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
