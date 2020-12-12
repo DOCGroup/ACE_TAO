@@ -62,9 +62,6 @@
 #  ifdef ACE_HAS_EVENT_POLL
 #    undef ACE_HAS_EVENT_POLL
 #  endif
-#  if !defined(ACE_HAS_GLIBC_2_2_3)
-#    define ACE_HAS_CPU_SET_T
-#  endif
 #else
 #  define ACE_HAS_SEMUN
 #endif
@@ -86,6 +83,7 @@
 
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_CLOCK_SETTIME
+#define ACE_HAS_CPU_SET_T
 
 // system errorno is a volatile int
 #define ACE_HAS_VOLATILE_ERRNO
