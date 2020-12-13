@@ -253,3 +253,6 @@ pipes ?= 1
 
 FLAGS_C_CC += -Wall -W -Wpointer-arith
 CCFLAGS += -Wnon-virtual-dtor
+
+# Suppress "ar: creating *.a" Message
+ARFLAGS += -c

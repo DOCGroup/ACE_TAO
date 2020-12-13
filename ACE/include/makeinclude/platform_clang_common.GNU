@@ -144,3 +144,6 @@ else
 endif # shared_libs
 
 FLAGS_C_CC += -W -Wall
+
+# Disable "warning: creating *.a" Message
+ARFLAGS += -c
