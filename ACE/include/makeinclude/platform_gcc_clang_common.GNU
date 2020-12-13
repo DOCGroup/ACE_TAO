@@ -3,6 +3,9 @@
 FLAGS_C_CC += -Wall -Wextra -Wpointer-arith
 CCFLAGS += -Wnon-virtual-dtor
 
+# Suppress "Creating *.a" Message
+ARFLAGS += -c
+
 gcc_template_instantiation_visibility ?= 0
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)
