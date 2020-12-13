@@ -15,10 +15,6 @@ include $(ACE_ROOT)/include/makeinclude/platform_linux_common.GNU
 # as of NDK r6 inlining is required
 inline ?= 1
 
-# as of API level 16 executables can be linked as Position Independent Executables
-# as of API level 21 PIE is mandatory
-PIE	?= -pie
-
 #No rwho on Android
 rwho = 0
 
@@ -110,15 +106,6 @@ endif # threads
 # Use -pipes by default
 pipes ?= 1
 
-# DT_RUNPATH is preferred over DT_RPATH, but the linker will only use it when
-# this extra flag option (enable-new-dtags) is present
-LD_RPATH_FLAGS += -Wl,--enable-new-dtags
-
-# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
-# instead of setting them directly here (older versions of gcc don't set it
-# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
-CPPFLAGS += -D_GNU_SOURCE
-
 # Use LLD, the LLVM linker as recommended by Google
 android_set_lld ?= 1
 ifeq ($(android_set_lld),1)
@@ -126,20 +113,6 @@ ifeq ($(android_set_lld),1)
   # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md#additional-required-arguments
   LDFLAGS += -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--no-rosegment
 endif
-
-DCFLAGS  += -ggdb
-DCCFLAGS += -ggdb
-DLD      = $(CXX)
-LD       = $(CXX) $(PIE)
-
-ifeq ($(optimize),1)
-  SOFLAGS += -Wl,-O3
-endif
-
-SOFLAGS += $(CPPFLAGS) -shared
-SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
-          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
-PRELIB  = @true
 
 include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
 
