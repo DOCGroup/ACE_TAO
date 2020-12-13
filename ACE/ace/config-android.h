@@ -53,14 +53,14 @@
 #  include <android/ndk-version.h>
 #else
 #  ifndef __NDK_MAJOR__
-#    error ndk-version.h is missing, __NDK_MAJOR__ for Android NDK must be defined!
+#    error __NDK_MAJOR__ for Android NDK must be defined!
 #  endif
 #  ifndef __NDK_MINOR__
-#    error ndk-version.h is missing, __NDK_MINOR__ for Android NDK must be defined!
+#    error __NDK_MINOR__ for Android NDK must be defined!
 #  endif
-#  ifndef __NDK_BETA__
-#    define __NDK_BETA__ 0
-#  endif
+#endif
+#ifndef __NDK_BETA__
+#  define __NDK_BETA__ 0
 #endif
 
 // ucontext.h and clock_settime() were added in r10c
