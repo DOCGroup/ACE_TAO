@@ -95,7 +95,6 @@ else
   export CROSS_COMPILE
 endif
 
-FLAGS_C_CC += -Wpointer-arith
 ifeq ($(threads),1)
   CPPFLAGS += -D_REENTRANT
   ifdef PLATFORM_AIO_SUPPORT
