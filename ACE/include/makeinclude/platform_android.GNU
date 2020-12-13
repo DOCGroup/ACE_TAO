@@ -58,9 +58,6 @@ ifeq ($(android_abi),armeabi-v7a)
   else
     FLAGS_C_CC += -mfpu=vfpv3-d16
   endif
-  # NDK says -Wl,--fix-cortex-a8 is required for working around a CPU bug
-  # in some Cortex-A8 implementations
-  LDFLAGS += -Wl,--fix-cortex-a8
 
 else ifeq ($(android_abi),arm64-v8a)
   CROSS_COMPILE := aarch64-linux-android
@@ -122,9 +119,9 @@ LD_RPATH_FLAGS += -Wl,--enable-new-dtags
 # for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
 CPPFLAGS += -D_GNU_SOURCE
 
+# Use LLD, the LLVM linker as recommended by Google
 android_set_lld ?= 1
 ifeq ($(android_set_lld),1)
-  # Use the LLVM linker as recommended by Google
   # The other two arguments are explained by
   # https://android.googlesource.com/platform/ndk/+/master/docs/BuildSystemMaintainers.md#additional-required-arguments
   LDFLAGS += -fuse-ld=lld -Wl,--build-id=sha1 -Wl,--no-rosegment
