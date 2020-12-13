@@ -1,12 +1,12 @@
-#include "ace/Thread_Adapter.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Thread_Exit.h"
-#include "ace/Thread_Hook.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/Service_Config.h"
+#include "Thread_Adapter.h"
+#include "Thread_Manager.h"
+#include "Thread_Exit.h"
+#include "Thread_Hook.h"
+#include "Object_Manager_Base.h"
+#include "Service_Config.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Thread_Adapter.inl"
+# include "Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

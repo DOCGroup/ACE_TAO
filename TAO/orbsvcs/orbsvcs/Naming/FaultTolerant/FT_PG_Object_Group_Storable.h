@@ -15,7 +15,7 @@
 #define FT_TAO_PG_OBJECT_GROUP_STORABLE_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

@@ -14,12 +14,12 @@
 #ifndef ACE_SOCK_SEQPACK_CONNECTOR_H
 #define ACE_SOCK_SEQPACK_CONNECTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
-#include "ace/SOCK_SEQPACK_Association.h"
-#include "ace/Multihomed_INET_Addr.h"
+#include "SOCK_SEQPACK_Association.h"
+#include "Multihomed_INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -319,9 +319,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Connector.inl"
+#include "SOCK_SEQPACK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SOCK_SEQPACK_CONNECTOR_H */

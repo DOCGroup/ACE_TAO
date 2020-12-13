@@ -1,11 +1,11 @@
-#include "tao/GIOP_Message_State.h"
-#include "tao/debug.h"
-#include "tao/GIOP_Message_Base.h"
+#include "GIOP_Message_State.h"
+#include "debug.h"
+#include "GIOP_Message_Base.h"
 
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_State.inl"
+# include "GIOP_Message_State.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "CSD_Strategy_Repository.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

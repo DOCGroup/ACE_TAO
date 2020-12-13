@@ -1,8 +1,8 @@
-#include "tao/PortableServer/Default_Policy_Validator.h"
+#include "Default_Policy_Validator.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

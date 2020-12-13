@@ -10,9 +10,9 @@
 #ifndef ACE_SOCK_NETLINK_H
 #define ACE_SOCK_NETLINK_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
   #pragma once
@@ -20,9 +20,9 @@
 
 #ifdef ACE_HAS_NETLINK
 
-#include "ace/SOCK.h"
-#include "ace/Netlink_Addr.h"
-#include "ace/Addr.h"
+#include "SOCK.h"
+#include "Netlink_Addr.h"
+#include "Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,12 +91,12 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Netlink.inl"
+#include "SOCK_Netlink.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_NETLINK */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SOCK_NETLINK_H */
 

@@ -12,9 +12,9 @@
 #ifndef ACE_LOCAL_SOCK_H
 #define ACE_LOCAL_SOCK_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/SOCK.h"
+#include "SOCK.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -74,9 +74,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/LSOCK.inl"
+#include "LSOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCAL_SOCK_H */

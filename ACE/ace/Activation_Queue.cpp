@@ -1,13 +1,13 @@
-#include "ace/Activation_Queue.h"
+#include "Activation_Queue.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Activation_Queue.inl"
+#include "Activation_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/Method_Request.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Time_Value.h"
+#include "Log_Category.h"
+#include "Method_Request.h"
+#include "Malloc_Base.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

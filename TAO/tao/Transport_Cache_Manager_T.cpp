@@ -1,15 +1,15 @@
-#include "tao/Transport_Cache_Manager_T.h"
-#include "tao/debug.h"
-#include "tao/Connection_Purging_Strategy.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Condition.h"
-#include "tao/Wait_Strategy.h"
+#include "Transport_Cache_Manager_T.h"
+#include "debug.h"
+#include "Connection_Purging_Strategy.h"
+#include "Client_Strategy_Factory.h"
+#include "Condition.h"
+#include "Wait_Strategy.h"
 #include "ace/ACE.h"
 #include "ace/Reactor.h"
 #include "ace/Lock_Adapter_T.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Transport_Cache_Manager_T.inl"
+# include "Transport_Cache_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 // notes on debug level and LM_xxxx codes for transport cache

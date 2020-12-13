@@ -18,7 +18,7 @@
 
 #include "orbsvcs/RtecBaseC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,7 +60,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_QOS_Info.inl"
+#include "EC_QOS_Info.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

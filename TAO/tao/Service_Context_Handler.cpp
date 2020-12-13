@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Service_Context_Handler.h"
+#include "Service_Context_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

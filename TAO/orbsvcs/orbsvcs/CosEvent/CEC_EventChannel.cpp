@@ -1,14 +1,14 @@
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_Pulling_Strategy.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
-#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "CEC_EventChannel.h"
+#include "CEC_Dispatching.h"
+#include "CEC_Pulling_Strategy.h"
+#include "CEC_ConsumerAdmin.h"
+#include "CEC_SupplierAdmin.h"
+#include "CEC_ConsumerControl.h"
+#include "CEC_SupplierControl.h"
 #include "ace/Dynamic_Service.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_EventChannel.inl"
+#include "CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

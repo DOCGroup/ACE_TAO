@@ -3,7 +3,7 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
-#include "ACEXML/common/XML_Codecs.h"
+#include "XML_Codecs.h"
 
 
 

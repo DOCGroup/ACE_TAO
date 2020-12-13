@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogNotificationS.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

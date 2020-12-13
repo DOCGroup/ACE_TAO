@@ -17,8 +17,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object_Proxy_Broker.h"
-#include "tao/orbconf.h"
+#include "Object_Proxy_Broker.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

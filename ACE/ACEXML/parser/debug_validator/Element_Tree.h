@@ -11,7 +11,7 @@
 #define _ACEXML_ELEMENT_TREE_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "Debug_DTD_Manager_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -150,7 +150,7 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/debug_validator/Element_Tree.inl"
+# include "Element_Tree.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

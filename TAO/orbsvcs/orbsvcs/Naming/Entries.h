@@ -21,7 +21,7 @@
 #include "ace/SString.h"
 
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/naming_serv_export.h"
+#include "naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

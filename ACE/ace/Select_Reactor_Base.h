@@ -11,21 +11,21 @@
 #ifndef ACE_SELECT_REACTOR_BASE_H
 #define ACE_SELECT_REACTOR_BASE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Timer_Queuefwd.h"
+#include "Timer_Queuefwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
-#include "ace/Handle_Set.h"
-#include "ace/Pipe.h"
-#include "ace/Reactor_Impl.h"
+#include "Event_Handler.h"
+#include "Handle_Set.h"
+#include "Pipe.h"
+#include "Reactor_Impl.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Notification_Queue.h"
+# include "Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #if defined (ACE_WIN32) || defined (ACE_MQX)
@@ -35,12 +35,12 @@
 #endif
 
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
-# include "ace/Null_Mutex.h"
-# include "ace/Hash_Map_Manager_T.h"
-# include "ace/Functor.h"  /* For ACE_Hash<void *> */
+# include "Null_Mutex.h"
+# include "Hash_Map_Manager_T.h"
+# include "Functor.h"  /* For ACE_Hash<void *> */
 # include <functional>      /* For std::equal_to<>  */
 #else
-# include "ace/Array_Base.h"
+# include "Array_Base.h"
 #endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 
 #if !defined (ACE_DISABLE_NOTIFY_PIPE_DEFAULT)
@@ -592,9 +592,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.inl"
+#include "Select_Reactor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SELECT_REACTOR_BASE_H */

@@ -11,15 +11,15 @@
 
 #ifndef ACE_THREAD_EXIT_H
 #define ACE_THREAD_EXIT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Control.h"
+#include "Thread_Control.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -107,5 +107,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_THREAD_EXIT_H */

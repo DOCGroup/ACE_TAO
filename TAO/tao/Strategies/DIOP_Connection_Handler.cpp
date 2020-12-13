@@ -1,4 +1,4 @@
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -14,8 +14,8 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
-#include "tao/Strategies/DIOP_Transport.h"
-#include "tao/Strategies/DIOP_Endpoint.h"
+#include "DIOP_Transport.h"
+#include "DIOP_Endpoint.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"

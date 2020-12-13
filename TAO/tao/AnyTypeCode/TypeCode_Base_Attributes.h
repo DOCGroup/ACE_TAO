@@ -79,11 +79,11 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/TypeCode_Base_Attributes.inl"
+# include "TypeCode_Base_Attributes.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/TypeCode_Base_Attributes.cpp"
+# include "TypeCode_Base_Attributes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

@@ -1,23 +1,23 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "ProxyConsumer.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ProxyConsumer.inl"
+#include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"
 #include "ace/Atomic_Op.h"
-#include "orbsvcs/Notify/Supplier.h"
-#include "orbsvcs/Notify/AdminProperties.h"
-#include "orbsvcs/Notify/Property.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/Event_Manager.h"
-#include "orbsvcs/Notify/Method_Request_Lookup.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/SupplierAdmin.h"
-#include "orbsvcs/Notify/EventChannel.h"
-#include "orbsvcs/Notify/Routing_Slip.h"
+#include "Supplier.h"
+#include "AdminProperties.h"
+#include "Property.h"
+#include "Proxy.h"
+#include "Event_Manager.h"
+#include "Method_Request_Lookup.h"
+#include "Worker_Task.h"
+#include "Properties.h"
+#include "SupplierAdmin.h"
+#include "EventChannel.h"
+#include "Routing_Slip.h"
 
 //#define DEBUG_LEVEL 10
 #ifndef DEBUG_LEVEL

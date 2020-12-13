@@ -1,17 +1,17 @@
 // -*- C++ -*-
-#include "tao/IIOP_Connection_Handler.h"
+#include "IIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/IIOP_Transport.h"
-#include "tao/IIOP_Endpoint.h"
-#include "tao/IIOPC.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Base_Transport_Property.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Wait_Strategy.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "IIOP_Transport.h"
+#include "IIOP_Endpoint.h"
+#include "IIOPC.h"
+#include "Thread_Lane_Resources.h"
+#include "Base_Transport_Property.h"
+#include "Protocols_Hooks.h"
+#include "Wait_Strategy.h"
 
 #include "ace/os_include/netinet/os_tcp.h"
 #include "ace/os_include/os_netdb.h"

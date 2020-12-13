@@ -1,7 +1,7 @@
-#include "orbsvcs/Log/LogActivator.h"
+#include "LogActivator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-#include "orbsvcs/Log/LogMgr_i.h"
+#include "LogMgr_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

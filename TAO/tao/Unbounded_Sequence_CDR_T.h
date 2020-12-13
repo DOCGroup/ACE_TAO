@@ -9,9 +9,9 @@
  * @author Johnny Willemsen
  */
 
-#include "tao/orbconf.h"
-#include "tao/CORBA_String.h"
-#include "tao/SystemException.h"
+#include "orbconf.h"
+#include "CORBA_String.h"
+#include "SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

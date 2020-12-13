@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Messaging/AMH_Skeletons.h"
+#include "AMH_Skeletons.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/DynamicC.h"

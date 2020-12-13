@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/IFR_Client_Adapter.h"
+#include "IFR_Client_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

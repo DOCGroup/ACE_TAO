@@ -17,7 +17,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -80,7 +80,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter_Builder.inl"
+#include "EC_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

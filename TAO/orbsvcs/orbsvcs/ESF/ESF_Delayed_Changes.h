@@ -10,13 +10,13 @@
 #ifndef TAO_ESF_DELAYED_CHANGES_H
 #define TAO_ESF_DELAYED_CHANGES_H
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/ESF/ESF_Busy_Lock.h"
+#include "ESF_Busy_Lock.h"
 #include "tao/Basic_Types.h"
 #include "ace/Containers.h"
 
@@ -137,11 +137,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
+#include "ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.cpp"
+#include "ESF_Delayed_Changes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

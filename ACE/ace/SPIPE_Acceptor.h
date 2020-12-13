@@ -12,16 +12,16 @@
 
 #ifndef ACE_SPIPE_ACCEPTOR_H
 #define ACE_SPIPE_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SPIPE_Stream.h"
+#include "SPIPE_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_WIN32_NAMED_PIPES)
-#include "ace/Manual_Event.h"
+#include "Manual_Event.h"
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -160,5 +160,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SPIPE_ACCEPTOR_H */

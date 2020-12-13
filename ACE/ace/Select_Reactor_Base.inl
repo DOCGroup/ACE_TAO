@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/Reactor.h"
+#include "Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

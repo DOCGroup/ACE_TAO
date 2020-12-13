@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/debug.h"
+#include "debug.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -6,7 +6,7 @@
  */
 //=============================================================================
 
-#include "tao/PortableServer/LifespanStrategy.h"
+#include "LifespanStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

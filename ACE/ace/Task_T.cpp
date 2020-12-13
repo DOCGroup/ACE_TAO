@@ -1,17 +1,17 @@
 #ifndef ACE_TASK_T_CPP
 #define ACE_TASK_T_CPP
 
-#include "ace/Task_T.h"
+#include "Task_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Module.h"
-#include "ace/Null_Condition.h"
+#include "Module.h"
+#include "Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task_T.inl"
+#include "Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

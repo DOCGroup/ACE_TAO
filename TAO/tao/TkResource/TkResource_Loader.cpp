@@ -1,6 +1,6 @@
-#include "tao/TkResource/TkResource_Loader.h"
+#include "TkResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/TkResource/TkResource_Factory.h"
+#include "TkResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

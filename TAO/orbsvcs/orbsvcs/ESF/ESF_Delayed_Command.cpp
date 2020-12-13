@@ -1,10 +1,10 @@
 #ifndef TAO_ESF_DELAYED_COMMAND_CPP
 #define TAO_ESF_DELAYED_COMMAND_CPP
 
-#include "orbsvcs/ESF/ESF_Delayed_Command.h"
+#include "ESF_Delayed_Command.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Command.inl"
+#include "ESF_Delayed_Command.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -16,8 +16,8 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/TimeServiceS.h"
-#include "orbsvcs/Time/TAO_UTO.h"
-#include "orbsvcs/Time/time_serv_export.h"
+#include "TAO_UTO.h"
+#include "time_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

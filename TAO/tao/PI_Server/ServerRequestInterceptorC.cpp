@@ -26,7 +26,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/PI_Server/ServerRequestInterceptorC.h"
+#include "ServerRequestInterceptorC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_string.h"

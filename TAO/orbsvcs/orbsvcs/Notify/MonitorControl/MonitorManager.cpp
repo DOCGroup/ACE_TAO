@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#include "MonitorManager.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+#include "NotificationServiceMonitor_i.h"
 
 #include "orbsvcs/Naming/Naming_Client.h"
 

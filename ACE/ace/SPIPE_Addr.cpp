@@ -1,10 +1,10 @@
-#include "ace/SPIPE_Addr.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "SPIPE_Addr.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
+#include "os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE_Addr.inl"
+#include "SPIPE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -12,16 +12,16 @@
 #ifndef ACE_FIFO_RECV_H
 #define ACE_FIFO_RECV_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/FIFO.h"
+#include "FIFO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_fcntl.h"
-#include "ace/Default_Constants.h"
+#include "os_include/os_fcntl.h"
+#include "Default_Constants.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -86,9 +86,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv.inl"
+#include "FIFO_Recv.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_FIFO_RECV_H */

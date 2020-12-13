@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI_Server/pi_server_export.h"
+#include "pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,8 +41,8 @@ TAO_Requires_PI_Server_Initializer =
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_PI_SERVER_SAFE_INCLUDE
-#include "tao/PI_Server/ServerRequestInterceptorC.h"
-#include "tao/PI_Server/ServerRequestInfoC.h"
+#include "ServerRequestInterceptorC.h"
+#include "ServerRequestInfoC.h"
 #undef TAO_PI_SERVER_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

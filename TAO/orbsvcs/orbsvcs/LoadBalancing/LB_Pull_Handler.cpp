@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
-#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
+#include "LB_Pull_Handler.h"
+#include "LB_LoadManager.h"
 
 #include "tao/debug.h"
 

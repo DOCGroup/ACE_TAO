@@ -10,9 +10,9 @@
 
 #ifndef ACE_MESSAGE_QUEUE_VX_H
 #define ACE_MESSAGE_QUEUE_VX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Message_Block.h"
+#include "Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,11 +21,11 @@
 #if defined (ACE_VXWORKS)
 
 // Include the templates here.
-#include "ace/Message_Queue_T.h"
+#include "Message_Queue_T.h"
 
 # include /**/ <msgQLib.h>
-# include "ace/Null_Mutex.h"
-# include "ace/Null_Condition.h"
+# include "Null_Mutex.h"
+# include "Null_Condition.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -215,8 +215,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_VXWORKS */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue_Vx.inl"
+#include "Message_Queue_Vx.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MESSAGE_QUEUE_VX_H */

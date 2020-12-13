@@ -3,17 +3,17 @@
 // to ensure the correct EC is referenced.
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.h"
+#include "CEC_EventChannel.h"
+#include "CEC_ConsumerAdmin.h"
+#include "CEC_Reactive_ConsumerControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
+#include "CEC_TypedEventChannel.h"
+#include "CEC_TypedConsumerAdmin.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
+#include "CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPullSupplier.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
@@ -26,7 +26,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_ConsumerControl.inl"
+#include "CEC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

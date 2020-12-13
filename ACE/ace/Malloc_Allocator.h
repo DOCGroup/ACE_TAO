@@ -11,22 +11,22 @@
 #ifndef ACE_MALLOC_ALLOCATOR_H
 #define ACE_MALLOC_ALLOCATOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Base.h"
+#include "Malloc_Base.h"
 
 #if defined (ACE_HAS_MALLOC_STATS)
 #if defined (ACE_HAS_THREADS)
-#include "ace/Process_Mutex.h"
+#include "Process_Mutex.h"
 #define ACE_PROCESS_MUTEX ACE_Process_Mutex
 #else
-#include "ace/SV_Semaphore_Simple.h"
+#include "SV_Semaphore_Simple.h"
 #define ACE_PROCESS_MUTEX ACE_SV_Semaphore_Simple
 #endif /* ACE_HAS_THREADS */
 
@@ -136,9 +136,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc_Allocator.inl"
+#include "Malloc_Allocator.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* MALLOC_ALLOCATOR_H */

@@ -12,15 +12,15 @@
 #define TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/StrategyFactory.h"
-#include "tao/PortableServer/RequestProcessingPolicyC.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
+#include "StrategyFactory.h"
+#include "RequestProcessingPolicyC.h"
+#include "ServantRetentionPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

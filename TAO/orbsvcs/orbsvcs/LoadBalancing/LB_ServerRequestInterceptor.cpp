@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/LoadBalancing/LB_ServerRequestInterceptor.h"
-#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
+#include "LB_ServerRequestInterceptor.h"
+#include "LB_LoadAlert.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 

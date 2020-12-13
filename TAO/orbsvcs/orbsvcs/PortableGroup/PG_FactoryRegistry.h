@@ -24,7 +24,7 @@
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/SString.h"

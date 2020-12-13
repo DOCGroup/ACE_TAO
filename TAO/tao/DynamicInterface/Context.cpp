@@ -1,11 +1,11 @@
-#include "tao/DynamicInterface/Context.h"
+#include "Context.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 #include "ace/Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Context.inl"
+# include "Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

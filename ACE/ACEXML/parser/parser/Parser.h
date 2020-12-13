@@ -13,7 +13,7 @@
 #define _ACEXML_BASIC_PARSER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/parser/parser/Parser_export.h"
+#include "Parser_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -30,9 +30,9 @@
 #include "ace/Unbounded_Set.h"
 #include "ace/Containers_T.h"
 #include "ace/Auto_Ptr.h"
-#include "ACEXML/parser/parser/Entity_Manager.h"
-#include "ACEXML/parser/parser/ParserInternals.h"
-#include "ACEXML/parser/parser/ParserContext.h"
+#include "Entity_Manager.h"
+#include "ParserInternals.h"
+#include "ParserContext.h"
 
 /**
  * @class ACEXML_Parser Parser.h "ACEXML/parser/parser/Parser.h"
@@ -845,7 +845,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/parser/Parser.inl"
+# include "Parser.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

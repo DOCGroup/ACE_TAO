@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ACEXML/common/Transcode.h"
+#include "Transcode.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 

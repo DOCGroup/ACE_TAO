@@ -12,7 +12,7 @@
 #ifndef ACE_METRICS_CACHE_T_H
 #define ACE_METRICS_CACHE_T_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 // helpful macro definitions
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -21,8 +21,8 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Timeprobe.h"
-#include "ace/Timeprobe_T.h"
+#include "Timeprobe.h"
+#include "Timeprobe_T.h"
 
 // Defaults for initializing timeprobes and timeprobe arays.
 #define METRICS_MIN_TIMEPROBE_TABLE_SIZE 256 * 4
@@ -225,11 +225,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Metrics_Cache_T.inl"
+#include "Metrics_Cache_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Metrics_Cache_T.cpp"
+#include "Metrics_Cache_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

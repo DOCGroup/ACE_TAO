@@ -1,12 +1,12 @@
-#include "ace/Shared_Object.h"
-#include "ace/Global_Macros.h"
-#include "ace/config-all.h"
+#include "Shared_Object.h"
+#include "Global_Macros.h"
+#include "config-all.h"
 
 /* Provide the abstract base class used to access dynamic linking
    facilities */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Shared_Object.inl"
+#include "Shared_Object.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

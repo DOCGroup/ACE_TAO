@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/PI_Server/ServerInterceptorAdapter.h"
+#include "ServerInterceptorAdapter.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI_Server/ServerRequestInfo.h"
-#include "tao/PI_Server/PICurrent_Guard.h"
+#include "ServerRequestInfo.h"
+#include "PICurrent_Guard.h"
 
 #include "tao/ServerRequestInterceptor_Adapter.h"
 #include "tao/TAO_Server_Request.h"

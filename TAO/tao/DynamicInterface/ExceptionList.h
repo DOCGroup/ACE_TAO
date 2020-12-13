@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/DynamicInterface/DII_CORBA_methods.h"
+#include "DII_CORBA_methods.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
 #include "tao/orbconf.h"
 #include "tao/Basic_Types.h"
@@ -112,7 +112,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/ExceptionList.inl"
+# include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

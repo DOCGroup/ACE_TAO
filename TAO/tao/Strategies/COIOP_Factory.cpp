@@ -1,9 +1,9 @@
-#include "tao/Strategies/COIOP_Factory.h"
+#include "COIOP_Factory.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Acceptor.h"
-#include "tao/Strategies/COIOP_Connector.h"
+#include "COIOP_Acceptor.h"
+#include "COIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 

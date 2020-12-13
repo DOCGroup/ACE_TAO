@@ -1,19 +1,19 @@
-#include "ace/Ping_Socket.h"
+#include "Ping_Socket.h"
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
 
-#include "ace/INET_Addr.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_unistd.h"
+#include "INET_Addr.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_unistd.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Ping_Socket.inl"
+# include "Ping_Socket.inl"
 #endif  /* !__ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

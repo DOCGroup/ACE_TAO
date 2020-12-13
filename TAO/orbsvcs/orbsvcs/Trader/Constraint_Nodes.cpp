@@ -1,12 +1,12 @@
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/Trader/Constraint_Tokens.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
+#include "Constraint_Tokens.h"
 
 #include "tao/AnyTypeCode/Any.h"
 #include "ace/OS_NS_string.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Trader/Constraint_Nodes.inl"
+#include "Constraint_Nodes.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

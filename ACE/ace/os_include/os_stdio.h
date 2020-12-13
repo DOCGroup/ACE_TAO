@@ -23,8 +23,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // NOTE: stdarg.h must be #included before stdio.h on LynxOS.
-#include "ace/os_include/os_stdarg.h"
-#include "ace/os_include/os_stddef.h"
+#include "os_stdarg.h"
+#include "os_stddef.h"
 
 #if !defined (ACE_LACKS_STDIO_H)
 #  include /**/ <stdio.h>

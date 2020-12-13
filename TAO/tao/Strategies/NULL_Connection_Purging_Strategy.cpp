@@ -1,4 +1,4 @@
-#include "tao/Strategies/NULL_Connection_Purging_Strategy.h"
+#include "NULL_Connection_Purging_Strategy.h"
 #include "tao/Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

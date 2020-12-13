@@ -6,13 +6,13 @@
  */
 //=============================================================================
 
-#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+#include "Storable_Naming_Context_Activator.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-#include "orbsvcs/Naming/Naming_Context_Interface.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/Storable.h"
+#include "Naming_Context_Interface.h"
+#include "Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Factory.h"
+#include "Storable.h"
 #include "tao/Storable_Factory.h"
 #include "ace/Auto_Ptr.h"
 

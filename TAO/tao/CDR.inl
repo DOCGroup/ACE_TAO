@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/SystemException.h"
+#include "SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

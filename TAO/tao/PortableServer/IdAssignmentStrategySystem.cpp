@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/IdAssignmentStrategySystem.h"
+#include "IdAssignmentStrategySystem.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

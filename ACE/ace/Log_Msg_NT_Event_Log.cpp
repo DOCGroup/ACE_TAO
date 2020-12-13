@@ -1,12 +1,12 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if defined (ACE_HAS_LOG_MSG_NT_EVENT_LOG)
 
-#include "ace/Log_Msg_NT_Event_Log.h"
-#include "ace/Log_Category.h"
-#include "ace/Log_Record.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "Log_Msg_NT_Event_Log.h"
+#include "Log_Category.h"
+#include "Log_Record.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
 
 
 

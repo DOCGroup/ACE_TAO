@@ -18,9 +18,9 @@
 #ifndef ACE_ARRAY_MAP_H
 #define ACE_ARRAY_MAP_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -284,17 +284,17 @@ bool operator<  (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "ace/Array_Map.inl"
+# include "Array_Map.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Array_Map.cpp"
+# include "Array_Map.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Array_Map.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif  /* ACE_ARRAY_MAP_H */

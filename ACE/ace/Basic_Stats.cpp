@@ -1,8 +1,8 @@
-#include "ace/Basic_Stats.h"
-#include "ace/Log_Category.h"
+#include "Basic_Stats.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Basic_Stats.inl"
+#include "Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

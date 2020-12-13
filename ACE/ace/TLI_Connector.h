@@ -11,10 +11,10 @@
 
 #ifndef ACE_TLI_CONNECTOR_H
 #define ACE_TLI_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/TLI_Stream.h"
-#include "ace/Log_Category.h"
+#include "TLI_Stream.h"
+#include "Log_Category.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -119,9 +119,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.inl"
+#include "TLI_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TLI_CONNECTOR_H */

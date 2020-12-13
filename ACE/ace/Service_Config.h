@@ -11,19 +11,19 @@
 #ifndef ACE_SERVICE_CONFIG_H
 #define ACE_SERVICE_CONFIG_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Default_Constants.h"
-#include "ace/Intrusive_Auto_Ptr.h"
-#include "ace/Service_Gestalt.h"
-#include "ace/Synch_Traits.h"
+#include /**/ "config-all.h"
+#include "Default_Constants.h"
+#include "Intrusive_Auto_Ptr.h"
+#include "Service_Gestalt.h"
+#include "Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_signal.h"
+#include "OS_NS_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -729,9 +729,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Config.inl"
+#include "Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SERVICE_CONFIG_H */

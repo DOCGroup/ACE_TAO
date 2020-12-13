@@ -7,8 +7,8 @@
 
 #include <ace/XML_Utils/XSCRT/Writer.hpp>
 
-#include <ace/XML_Utils/XMLSchema/Types.hpp>
-#include <ace/XML_Utils/XMLSchema/Traversal.hpp>
+#include "Types.hpp"
+#include "Traversal.hpp"
 
 #include <iostream>
 

@@ -1,15 +1,15 @@
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Endpoint.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/SHMIOP_Connection_Handler.h"
+#include "SHMIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
 #include "ace/OS_NS_stdio.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/SHMIOP_Endpoint.inl"
+# include "SHMIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

@@ -13,16 +13,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Thread_Mutex.h"
-#include /**/ "tao/TAO_Export.h"
-#include "tao/params.h"
-#include "tao/Transport_Cache_Manager.h"
+#include /**/ "TAO_Export.h"
+#include "params.h"
+#include "Transport_Cache_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Allocator;

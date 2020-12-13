@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/Timer_Reactor.h"
-#include "orbsvcs/Notify/Properties.h"
+#include "Timer_Reactor.h"
+#include "Properties.h"
 #include "tao/ORB_Core.h"
 #include "ace/Reactor.h"
 

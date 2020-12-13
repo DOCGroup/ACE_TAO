@@ -1,13 +1,13 @@
-#include "ace/OS_NS_fcntl.h"
+#include "OS_NS_fcntl.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_fcntl.inl"
+# include "OS_NS_fcntl.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_macros.h"
-#include "ace/Object_Manager_Base.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_Thread.h"
+#include "OS_NS_macros.h"
+#include "Object_Manager_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

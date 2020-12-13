@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Security/security_export.h"
+#include "security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Security/SL3_CredentialsCurator.h"
+#include "SL3_CredentialsCurator.h"
 
 #include "orbsvcs/SecurityLevel3C.h"
 

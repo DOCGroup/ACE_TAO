@@ -12,20 +12,20 @@
 
 #ifndef ACE_RW_THREAD_MUTEX_H
 #define ACE_RW_THREAD_MUTEX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_HAS_THREADS)
-#  include "ace/Null_Mutex.h"
+#  include "Null_Mutex.h"
 #else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
-#include "ace/RW_Mutex.h"
+#include "RW_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,10 +63,10 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/RW_Thread_Mutex.inl"
+#include "RW_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_RW_THREAD_MUTEX_H */

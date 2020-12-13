@@ -10,13 +10,13 @@
 #define TAO_Notify_METHOD_REQUEST_SHUTDOWN_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Method_Request.h"
+#include "Method_Request.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

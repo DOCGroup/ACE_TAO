@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/Key_Adapters.h"
+#include "Key_Adapters.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"

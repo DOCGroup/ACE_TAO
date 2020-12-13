@@ -5,8 +5,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
 
-#include "ACEXML/common/HttpCharStream.h"
-#include "ACEXML/common/Encoding.h"
+#include "HttpCharStream.h"
+#include "Encoding.h"
 
 
 

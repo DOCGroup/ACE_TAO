@@ -1,14 +1,14 @@
-#include "ace/Dirent_Selector.h"
+#include "Dirent_Selector.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dirent_Selector.inl"
+#include "Dirent_Selector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_dirent.h"
-#include "ace/OS_NS_stdlib.h"
+#include "OS_NS_dirent.h"
+#include "OS_NS_stdlib.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

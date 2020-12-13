@@ -1,12 +1,12 @@
-#include "tao/PI/ClientRequestInfo.h"
+#include "ClientRequestInfo.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/ExceptionA.h"
 
-#include "tao/PI/PICurrent.h"
-#include "tao/PI/RequestInfo_Util.h"
+#include "PICurrent.h"
+#include "RequestInfo_Util.h"
 
 #include "tao/PolicyC.h"
 #include "tao/PortableInterceptorC.h"

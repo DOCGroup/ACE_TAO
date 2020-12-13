@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/PortableServer/Direct_Collocation_Upcall_Wrapper.h"
+#include "Direct_Collocation_Upcall_Wrapper.h"
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
-# include "tao/PortableServer/ForwardRequestC.h"
+# include "ForwardRequestC.h"
 #endif  /* TAO_HAS_MINIMUM_CORBA == 0 */
 
 #include "tao/Abstract_Servant_Base.h"

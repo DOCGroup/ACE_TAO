@@ -21,7 +21,7 @@
 
 #include "tao/Storable_Base.h"
 #include "ace/SString.h"
-#include "orbsvcs/Naming/naming_serv_export.h"
+#include "naming_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,7 +82,7 @@ class TAO_Naming_Serv_Export TAO_NS_Persistence_Global
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Naming/Storable.inl"
+#include "Storable.inl"
 #endif /* __ACE_INLINE_ */
 
 #endif  /* TAO_NAMING_STORABLE_H */

@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/Transport_Acceptor.h"
+#include "Transport_Acceptor.h"
 #include "ace/Reactor.h"
-#include "tao/debug.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Transport_Acceptor.inl"
+# include "Transport_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

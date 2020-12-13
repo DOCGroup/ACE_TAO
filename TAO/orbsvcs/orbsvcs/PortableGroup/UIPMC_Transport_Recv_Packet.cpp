@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Transport_Recv_Packet.h"
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
+#include "UIPMC_Transport_Recv_Packet.h"
+#include "UIPMC_Mcast_Transport.h"
 
 #include "ace/OS_NS_sys_time.h"
 

@@ -1,5 +1,5 @@
-#include "orbsvcs/Event/EC_Event_Channel.h"
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "EC_Event_Channel.h"
+#include "EC_Default_Factory.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

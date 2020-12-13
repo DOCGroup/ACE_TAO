@@ -5,20 +5,20 @@
 // anything.  It's operator/ only returns 32 bits not 64 bits, among
 // other things.
 
-#include "ace/High_Res_Timer.h"
+#include "High_Res_Timer.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/High_Res_Timer.inl"
+#include "High_Res_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Stats.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/Truncate.h"
+#include "Stats.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_time.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stdlib.h"
+#include "Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,9 +33,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
-# include "ace/Guard_T.h"
-# include "ace/Recursive_Thread_Mutex.h"
-# include "ace/Object_Manager.h"
+# include "Guard_T.h"
+# include "Recursive_Thread_Mutex.h"
+# include "Object_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

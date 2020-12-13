@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/DynamicAny/DynValueCommon_i.h"
+#include "DynValueCommon_i.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

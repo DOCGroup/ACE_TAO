@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/PortableServer/LifespanStrategyPersistent.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/POAManager.h"
-#include "tao/PortableServer/ImR_Client_Adapter.h"
+#include "LifespanStrategyPersistent.h"
+#include "Root_POA.h"
+#include "POAManager.h"
+#include "ImR_Client_Adapter.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Dynamic_Service.h"

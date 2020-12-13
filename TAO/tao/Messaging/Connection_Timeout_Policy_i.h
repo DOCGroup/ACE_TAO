@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Messaging/TAO_ExtC.h"
+#include "TAO_ExtC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

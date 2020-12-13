@@ -1,14 +1,14 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #ifdef ACE_ANDROID
 
 #include <android/log.h> // Android Logging Functions
 
-#include "ace/ACE.h"
-#include "ace/Log_Category.h"
-#include "ace/Log_Msg_Android_Logcat.h"
-#include "ace/Log_Record.h"
-#include "ace/OS_NS_string.h"
+#include "ACE.h"
+#include "Log_Category.h"
+#include "Log_Msg_Android_Logcat.h"
+#include "Log_Record.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

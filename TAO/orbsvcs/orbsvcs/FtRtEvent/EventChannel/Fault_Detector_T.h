@@ -11,7 +11,7 @@
 #ifndef FAULT_DETECTOR_T_H
 #define FAULT_DETECTOR_T_H
 
-#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
+#include "Fault_Detector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -36,7 +36,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector_T.cpp"
+#include "Fault_Detector_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -16,18 +16,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/RequestInterceptor_Adapter.h"
+#include /**/ "TAO_Export.h"
+#include "RequestInterceptor_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/Basic_Types.h"
+#include "orbconf.h"
+#include "Basic_Types.h"
 
 #if TAO_HAS_EXTENDED_FT_INTERCEPTORS == 1
-# include "tao/OctetSeqC.h"
+# include "OctetSeqC.h"
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

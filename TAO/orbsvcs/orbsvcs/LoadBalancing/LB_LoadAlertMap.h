@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancing/LB_LoadAlertInfo.h"
+#include "LB_LoadAlertInfo.h"
 
 #include "orbsvcs/PortableGroup/PG_Location_Hash.h"
 #include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"

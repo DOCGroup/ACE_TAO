@@ -1,4 +1,4 @@
-#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
+#include "TypeCodeFactory_i.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

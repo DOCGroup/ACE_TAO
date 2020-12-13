@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "ace/config-all.h"           /* Need ACE_TRACE */
-#include "ace/Object_Manager_Base.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Global_Macros.h"
-#include "ace/os_include/os_errno.h"
-#include "ace/os_include/os_search.h"
+#include "config-all.h"           /* Need ACE_TRACE */
+#include "Object_Manager_Base.h"
+#include "OS_NS_string.h"
+#include "Global_Macros.h"
+#include "os_include/os_errno.h"
+#include "os_include/os_search.h"
 #if defined (ACE_ANDROID) && (__ANDROID_API__ < 19)
-# include "ace/os_include/os_signal.h"
+# include "os_include/os_signal.h"
 #endif
 
 #if defined (ACE_WCHAR_IN_STD_NAMESPACE)

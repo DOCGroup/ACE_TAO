@@ -3,10 +3,10 @@
 // ACE_TEMPLATES_REQUIRE_SOURCE, ACE.h won't have been pulled in by
 // String_Base.cpp.
 #ifndef ACE_ACE_H
-#  include "ace/ACE.h"
+#  include "ACE.h"
 #endif /* !ACE_ACE_H */
 
-#include "ace/OS_NS_stdlib.h"
+#include "OS_NS_stdlib.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

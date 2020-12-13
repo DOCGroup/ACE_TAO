@@ -1,17 +1,17 @@
 #ifndef ACE_SVC_HANDLER_CPP
 #define ACE_SVC_HANDLER_CPP
 
-#include "ace/Svc_Handler.h"
+#include "Svc_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Object_Manager.h"
-#include "ace/Connection_Recycling_Strategy.h"
+#include "OS_NS_sys_time.h"
+#include "Object_Manager.h"
+#include "Connection_Recycling_Strategy.h"
 
-#include "ace/Dynamic.h"
+#include "Dynamic.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

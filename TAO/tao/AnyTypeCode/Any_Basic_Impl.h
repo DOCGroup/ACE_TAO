@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/Any_Impl.h"
+#include "Any_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

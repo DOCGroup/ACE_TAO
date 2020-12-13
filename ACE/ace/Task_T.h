@@ -10,17 +10,17 @@
 
 #ifndef ACE_TASK_T_H
 #define ACE_TASK_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Message_Queue.h"
+#include "Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_Traits.h"
-#include "ace/Task.h"
-#include "ace/IO_Cntl_Msg.h"
+#include "Synch_Traits.h"
+#include "Task.h"
+#include "IO_Cntl_Msg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -182,16 +182,16 @@ template class ACE_Export ACE_Task<ACE_NULL_SYNCH>;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task_T.inl"
+#include "Task_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Task_T.cpp"
+#include "Task_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Task_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TASK_T_H */

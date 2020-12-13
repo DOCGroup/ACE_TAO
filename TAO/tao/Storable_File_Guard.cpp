@@ -7,11 +7,11 @@
  */
 //=============================================================================
 
-#include "tao/Storable_File_Guard.h"
-#include "tao/Storable_Base.h"
+#include "Storable_File_Guard.h"
+#include "Storable_Base.h"
 
-#include "tao/SystemException.h"
-#include "tao/debug.h"
+#include "SystemException.h"
+#include "debug.h"
 
 TAO::Storable_File_Guard::
 Storable_File_Guard (bool redundant, bool use_backup)

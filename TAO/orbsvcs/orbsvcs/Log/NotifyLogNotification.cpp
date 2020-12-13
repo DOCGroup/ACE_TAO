@@ -1,5 +1,5 @@
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/NotifyLogNotification.h"
+#include "LogNotification.h"
+#include "NotifyLogNotification.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "tao/debug.h"
 

@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_errno.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

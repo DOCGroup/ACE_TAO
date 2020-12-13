@@ -19,11 +19,11 @@
 #ifndef ACE_CONFIG_MACROS_H
 #define ACE_CONFIG_MACROS_H
 
-#include "ace/config.h"
-#include "ace/config-face-safety.h"
+#include "config.h"
+#include "config-face-safety.h"
 
-#include "ace/Version.h"
-#include "ace/Versioned_Namespace.h"
+#include "Version.h"
+#include "Versioned_Namespace.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include <new>

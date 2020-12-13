@@ -1,5 +1,5 @@
-#include "ace/Log_Category.h"
-#include "ace/Reactor_Token_T.h"
+#include "Log_Category.h"
+#include "Reactor_Token_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

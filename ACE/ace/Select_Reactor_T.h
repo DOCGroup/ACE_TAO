@@ -10,16 +10,16 @@
 
 #ifndef ACE_SELECT_REACTOR_T_H
 #define ACE_SELECT_REACTOR_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Select_Reactor_Base.h"
+#include "Select_Reactor_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Token.h"
+#include "Lock_Adapter_T.h"
+#include "Token.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -694,16 +694,16 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_T.inl"
+#include "Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Select_Reactor_T.cpp"
+#include "Select_Reactor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Select_Reactor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SELECT_REACTOR_T_H */

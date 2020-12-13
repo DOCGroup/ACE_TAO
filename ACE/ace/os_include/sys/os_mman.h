@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
+#include "os_types.h"
 
 #if defined (ACE_LACKS_MMAP)
 #  define ACE_LACKS_SYS_MMAN_H

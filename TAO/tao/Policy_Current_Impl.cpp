@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/Policy_Current_Impl.h"
+#include "Policy_Current_Impl.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Current_Impl.inl"
+# include "Policy_Current_Impl.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

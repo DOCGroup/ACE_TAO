@@ -1,9 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/COIOP_Endpoint.h"
+#include "COIOP_Endpoint.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Connection_Handler.h"
+#include "COIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/COIOP_Endpoint.inl"
+# include "COIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

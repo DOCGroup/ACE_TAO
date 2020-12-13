@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/RTScheduling/RTScheduler_Initializer.h"
-#include "tao/RTScheduling/Request_Interceptor.h"
+#include "RTScheduler_Initializer.h"
+#include "Request_Interceptor.h"
 
-#include "tao/RTScheduling/RTScheduler.h"
-#include "tao/RTScheduling/Current.h"
-#include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "RTScheduler.h"
+#include "Current.h"
+#include "RTScheduler_Manager.h"
 
 #include "tao/PI_Server/PI_Server.h"
 

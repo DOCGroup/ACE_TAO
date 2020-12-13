@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ImR_Client/ServerObjectS.h"
-#include "tao/ImR_Client/imr_client_export.h"
+#include "ServerObjectS.h"
+#include "imr_client_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

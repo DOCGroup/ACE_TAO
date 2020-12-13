@@ -1,4 +1,4 @@
-#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "PG_Operators.h"
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

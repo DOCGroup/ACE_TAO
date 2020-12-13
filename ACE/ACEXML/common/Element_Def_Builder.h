@@ -11,15 +11,15 @@
 #define _ACEXML_ELEMENT_DEF_BUILDER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Auto_Ptr.h"
-#include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/SAXExceptions.h"
+#include "XML_Types.h"
+#include "SAXExceptions.h"
 
 /**
  * @class ACEXML_Element_Def_Builder

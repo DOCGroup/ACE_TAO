@@ -10,7 +10,7 @@
 #ifndef TAO_ESF_IMMEDIATE_CHANGES_H
 #define TAO_ESF_IMMEDIATE_CHANGES_H
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
+#include "ESF_Proxy_Collection.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,11 +48,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Immediate_Changes.inl"
+#include "ESF_Immediate_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Immediate_Changes.cpp"
+#include "ESF_Immediate_Changes.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

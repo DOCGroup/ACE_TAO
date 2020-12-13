@@ -16,11 +16,11 @@
 
 #ifndef ACE_SINGLETON_H
 #define ACE_SINGLETON_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/TSS_T.h"
-#include "ace/Cleanup.h"
+#include /**/ "config-all.h"
+#include "TSS_T.h"
+#include "Cleanup.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -331,16 +331,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Singleton.inl"
+#include "Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Singleton.cpp"
+#include "Singleton.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Singleton.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SINGLETON_H */

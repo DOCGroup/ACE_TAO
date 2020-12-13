@@ -1,4 +1,4 @@
-#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
+#include "CEC_SupplierControl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

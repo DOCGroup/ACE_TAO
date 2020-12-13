@@ -21,7 +21,7 @@
 #endif /* _MSC_VER */
 
 #include "tao/LocalObject.h"
-#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
+#include "FT_ClientORB_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -139,7 +139,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
+#include "FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

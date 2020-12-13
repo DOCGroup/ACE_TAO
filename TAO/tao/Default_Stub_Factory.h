@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Stub_Factory.h"
+#include "Stub_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

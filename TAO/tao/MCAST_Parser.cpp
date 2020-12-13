@@ -1,11 +1,11 @@
-#include "tao/MCAST_Parser.h"
+#include "MCAST_Parser.h"
 
 #if (TAO_HAS_MCAST_PARSER == 1)
 
-#include "tao/default_ports.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB.h"
-#include "tao/debug.h"
+#include "default_ports.h"
+#include "ORB_Core.h"
+#include "ORB.h"
+#include "debug.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Dgram.h"
@@ -14,7 +14,7 @@
 #include "ace/Truncate.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/MCAST_Parser.inl"
+#include "MCAST_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 static const char mcast_prefix[] = "mcast:";

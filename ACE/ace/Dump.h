@@ -46,9 +46,9 @@
 
 #ifndef ACE_DUMP_H
 #define ACE_DUMP_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -164,7 +164,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates classes at this point.
-#include "ace/Dump_T.h"
+#include "Dump_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_DUMP_H */

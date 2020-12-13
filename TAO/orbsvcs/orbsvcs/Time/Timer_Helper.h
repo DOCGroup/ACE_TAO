@@ -22,7 +22,7 @@
 
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
-#include "orbsvcs/Time/time_serv_export.h"
+#include "time_serv_export.h"
 
 #include "orbsvcs/TimeServiceS.h"
 

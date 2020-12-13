@@ -1,4 +1,4 @@
-#include "tao/RTCORBA/RT_Policy_i.h"
+#include "RT_Policy_i.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

@@ -1,4 +1,4 @@
-#include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
+#include "Client_Network_Priority_Policy.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 

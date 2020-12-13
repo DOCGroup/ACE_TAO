@@ -1,7 +1,7 @@
 // Shared_Memory_Pool.cpp
-#include "ace/Shared_Memory_Pool.h"
-#include "ace/OS_NS_sys_shm.h"
-#include "ace/Log_Category.h"
+#include "Shared_Memory_Pool.h"
+#include "OS_NS_sys_shm.h"
+#include "Log_Category.h"
 
 
 

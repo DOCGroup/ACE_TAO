@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/PortableServer/LifespanStrategyTransientFactoryImpl.h"
+#include "LifespanStrategyTransientFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
-#include "tao/PortableServer/LifespanStrategyTransient.h"
+#include "LifespanStrategyTransient.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -11,9 +11,9 @@
 #ifndef ACE_SERVICE_TYPE_H
 #define ACE_SERVICE_TYPE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -207,9 +207,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Types.inl"
+#include "Service_Types.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* _SERVICE_TYPE_H */

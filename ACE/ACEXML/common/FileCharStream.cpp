@@ -1,4 +1,4 @@
-#include "ACEXML/common/FileCharStream.h"
+#include "FileCharStream.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"

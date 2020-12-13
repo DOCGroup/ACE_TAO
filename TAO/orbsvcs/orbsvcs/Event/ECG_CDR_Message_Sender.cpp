@@ -1,12 +1,12 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
+#include "ECG_CDR_Message_Sender.h"
 #include "tao/CDR.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_CDR_Message_Sender.inl"
+#include "ECG_CDR_Message_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 

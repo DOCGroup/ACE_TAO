@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/ETCL_FilterFactory.h"
-#include "orbsvcs/Notify/ETCL_Filter.h"
-#include "orbsvcs/Notify/Properties.h"
+#include "ETCL_FilterFactory.h"
+#include "ETCL_Filter.h"
+#include "Properties.h"
 #include "tao/debug.h"
 
 #ifndef DEBUG_LEVEL

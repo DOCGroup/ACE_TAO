@@ -1,9 +1,9 @@
-#include "ace/Registry.h"
+#include "Registry.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
-#  include "ace/os_include/os_netdb.h"
-#  include "ace/OS_NS_unistd.h"
+#  include "os_include/os_netdb.h"
+#  include "OS_NS_unistd.h"
 
 // Funky macro to deal with strange error passing semantics
 // of Win32 Reg*() functions

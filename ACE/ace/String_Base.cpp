@@ -1,15 +1,15 @@
 #ifndef ACE_STRING_BASE_CPP
 #define ACE_STRING_BASE_CPP
 
-#include "ace/ACE.h"
-#include "ace/Malloc_Base.h"
-#include "ace/String_Base.h"
-#include "ace/OS_NS_string.h"
+#include "ACE.h"
+#include "Malloc_Base.h"
+#include "String_Base.h"
+#include "OS_NS_string.h"
 
 #include <algorithm>  // For std::swap<>
 
 #if !defined (__ACE_INLINE__)
-#include "ace/String_Base.inl"
+#include "String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

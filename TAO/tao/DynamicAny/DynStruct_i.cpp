@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/DynamicAny/DynStruct_i.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
-#include "tao/DynamicAny/DynAnyUtils_T.h"
+#include "DynStruct_i.h"
+#include "DynAnyFactory.h"
+#include "DynAnyUtils_T.h"
 
 #include "tao/AnyTypeCode/Marshal.h"
 #include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"

@@ -14,9 +14,9 @@
 #ifndef _FT_NAMING_REPLICATION_IDL_
 #define _FT_NAMING_REPLICATION_IDL_
 
-#include <orbsvcs/CosNaming.idl>
-#include <orbsvcs/FT_NamingManager.idl>
-#include <orbsvcs/FT_CORBA_ORB.idl>
+#include "CosNaming.idl"
+#include "FT_NamingManager.idl"
+#include "FT_CORBA_ORB.idl"
 
 module FT_Naming
 {

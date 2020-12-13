@@ -13,7 +13,7 @@
 #define ACE_QOS_SESSION_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ace/QoS/QoS_Session.h"
+#include "QoS_Session.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

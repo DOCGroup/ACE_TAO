@@ -14,27 +14,27 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Resource_Factory.h"
+#include "Resource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Collocation_Strategy.h"
-#include "tao/params.h"
-#include "tao/ORB_Constants.h"
-#include "tao/Parser_Registry.h"
-#include "tao/Service_Callbacks.h"
-#include "tao/Fault_Tolerance_Service.h"
-#include "tao/Cleanup_Func_Registry.h"
-#include "tao/Object_Ref_Table.h"
-#include "tao/ObjectKey_Table.h"
-#include "tao/Messaging_SyncScopeC.h"
-#include "tao/Object.h"
-#include "tao/Invocation_Utils.h"
-#include "tao/Adapter_Registry.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/Service_Context_Handler_Registry.h"
+#include "Collocation_Strategy.h"
+#include "params.h"
+#include "ORB_Constants.h"
+#include "Parser_Registry.h"
+#include "Service_Callbacks.h"
+#include "Fault_Tolerance_Service.h"
+#include "Cleanup_Func_Registry.h"
+#include "Object_Ref_Table.h"
+#include "ObjectKey_Table.h"
+#include "Messaging_SyncScopeC.h"
+#include "Object.h"
+#include "Invocation_Utils.h"
+#include "Adapter_Registry.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "Service_Context_Handler_Registry.h"
 
 #include "ace/Array_Map.h"
 #include "ace/Thread_Manager.h"
@@ -1394,7 +1394,7 @@ ACE_FACTORY_DECLARE (TAO, TAO_ORB_Core_Static_Resources)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB_Core.inl"
+# include "ORB_Core.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

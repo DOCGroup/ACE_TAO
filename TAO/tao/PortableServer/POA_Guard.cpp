@@ -1,5 +1,5 @@
-#include "tao/PortableServer/POA_Guard.h"
-#include "tao/PortableServer/Root_POA.h"
+#include "POA_Guard.h"
+#include "Root_POA.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

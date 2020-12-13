@@ -16,16 +16,16 @@
 #ifndef ACE_CODECS_H
 #define ACE_CODECS_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
-#include "ace/Global_Macros.h"
+#include "Basic_Types.h"
+#include "Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -105,6 +105,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CODECS_H */

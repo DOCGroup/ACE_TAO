@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_CDR_Message_Receiver.h"
-#include "orbsvcs/Event/ECG_CDR_Message_Sender.h"
+#include "ECG_CDR_Message_Receiver.h"
+#include "ECG_CDR_Message_Sender.h"
 
 #include "tao/Exception.h"
 
@@ -9,7 +9,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_CDR_Message_Receiver.inl"
+#include "ECG_CDR_Message_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

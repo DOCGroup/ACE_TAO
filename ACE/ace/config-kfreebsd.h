@@ -6,7 +6,7 @@
 #include <machine/param.h>
 #undef atop
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 /* Uses ctime_r & asctime_r with only two parameters vs. three. */
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1

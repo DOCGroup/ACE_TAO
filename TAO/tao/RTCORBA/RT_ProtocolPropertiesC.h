@@ -40,7 +40,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/RTCORBA/rtcorba_export.h"
+#include /**/ "rtcorba_export.h"
 #include "tao/Basic_Types.h"
 #include "tao/Object.h"
 #include "tao/Objref_VarOut_T.h"

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Dynamic_TP/dynamic_tp_export.h"
+#include "dynamic_tp_export.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 #include "ace/Service_Config.h"
 

@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/Log_i.h"
-#include "orbsvcs/Log/Log_Persistence_Strategy.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "Log_i.h"
+#include "Log_Persistence_Strategy.h"
+#include "log_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -12,18 +12,18 @@
 #ifndef ACE_MMAP_MEMORY_POOL_H
 #define ACE_MMAP_MEMORY_POOL_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
-#include "ace/Event_Handler.h"
-#include "ace/Sig_Handler.h"
-#include "ace/Mem_Map.h"
+#include "ACE.h"
+#include "Event_Handler.h"
+#include "Sig_Handler.h"
+#include "Mem_Map.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -340,8 +340,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/MMAP_Memory_Pool.inl"
+#include "MMAP_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MMAP_MEMORY_POOL_H */

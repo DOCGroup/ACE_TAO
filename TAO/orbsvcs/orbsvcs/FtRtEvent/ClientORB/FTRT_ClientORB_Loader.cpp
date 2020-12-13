@@ -1,6 +1,6 @@
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Loader.h"
+#include "FTRT_ClientORB_Loader.h"
 
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
+#include "FTRT_ClientORB_Initializer.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"

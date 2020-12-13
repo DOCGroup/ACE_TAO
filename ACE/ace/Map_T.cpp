@@ -1,14 +1,14 @@
 #ifndef ACE_MAP_T_CPP
 #define ACE_MAP_T_CPP
 
-#include "ace/Map_T.h"
+#include "Map_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Map_T.inl"
+#include "Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

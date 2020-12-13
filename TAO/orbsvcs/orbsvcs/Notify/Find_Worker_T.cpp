@@ -1,10 +1,10 @@
 #ifndef TAO_Notify_FIND_WORKER_T_CPP
 #define TAO_Notify_FIND_WORKER_T_CPP
 
-#include "orbsvcs/Notify/Find_Worker_T.h"
+#include "Find_Worker_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Find_Worker_T.inl"
+#include "Find_Worker_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

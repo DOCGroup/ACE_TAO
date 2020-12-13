@@ -1,4 +1,4 @@
-#include "tao/ZIOP_Adapter.h"
+#include "ZIOP_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

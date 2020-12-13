@@ -20,7 +20,7 @@
 #endif // ACE_SIZEOF_LONG_DOUBLE
 
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 #endif /* __GNUG__ */
 
 #define ACE_ISCTYPE_EQUIVALENT __isctype

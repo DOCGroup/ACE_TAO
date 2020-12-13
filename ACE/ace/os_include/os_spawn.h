@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_signal.h"
-#include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/os_sched.h"
+#include "os_signal.h"
+#include "sys/os_types.h"
+#include "os_sched.h"
 
 #if !defined (ACE_LACKS_SPAWN_H)
 # include /**/ <spawn.h>

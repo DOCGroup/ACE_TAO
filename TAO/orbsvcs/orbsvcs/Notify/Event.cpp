@@ -1,16 +1,16 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Event.h"
+#include "Event.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event.inl"
+#include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "orbsvcs/CosNotificationC.h"
 // NOTE: unfortunately we must know about derived types to implement unmarshal
-#include "orbsvcs/Notify/Any/AnyEvent.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
+#include "Any/AnyEvent.h"
+#include "Structured/StructuredEvent.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

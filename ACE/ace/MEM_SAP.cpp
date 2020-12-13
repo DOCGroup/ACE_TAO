@@ -1,9 +1,9 @@
-#include "ace/MEM_SAP.h"
+#include "MEM_SAP.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_SAP.inl"
+#include "MEM_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 

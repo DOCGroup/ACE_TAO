@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "Codeset_Translator_Factory.h"
 #include "tao/CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

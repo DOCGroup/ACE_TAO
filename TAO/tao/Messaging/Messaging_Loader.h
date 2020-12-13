@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/messaging_export.h"
+#include "messaging_export.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"

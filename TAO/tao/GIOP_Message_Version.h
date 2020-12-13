@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/orbconf.h"
+#include "Basic_Types.h"
+#include "orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -70,7 +70,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Version.inl"
+# include "GIOP_Message_Version.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

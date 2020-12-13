@@ -11,10 +11,10 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/SupplierAdmin.h"
+#include "notify_serv_export.h"
+#include "Event.h"
+#include "Proxy.h"
+#include "SupplierAdmin.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -98,7 +98,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ProxyConsumer.inl"
+#include "ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

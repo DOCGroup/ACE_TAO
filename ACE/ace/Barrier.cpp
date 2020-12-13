@@ -1,20 +1,20 @@
-#include "ace/Barrier.h"
+#include "Barrier.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
+#include "Barrier.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_errno.h"
+#include "Guard_T.h"
+#include "OS_NS_errno.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_HAS_DUMP)
-#  include "ace/Log_Category.h"
+#  include "Log_Category.h"
 #endif /* ACE_HAS_DUMP */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

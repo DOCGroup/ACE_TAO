@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
-#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
+#include "UIPMC_Endpoint.h"
+#include "UIPMC_Profile.h"
 
 #include "tao/debug.h"
 #include "ace/Guard_T.h"
@@ -11,7 +11,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/PortableGroup/UIPMC_Endpoint.inl"
+# include "UIPMC_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

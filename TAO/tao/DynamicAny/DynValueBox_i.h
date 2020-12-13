@@ -12,7 +12,7 @@
 #define TAO_DYNVALUEBOX_I_H
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicAny/DynValueCommon_i.h"
+#include "DynValueCommon_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

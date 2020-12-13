@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/EndpointPolicy/EndpointPolicy_Export.h"
+#include "EndpointPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,8 +48,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #define TAO_ENDPOINTPOLICY_SAFE_INCLUDE
-#include "tao/EndpointPolicy/EndpointPolicyC.h"
-#include "tao/EndpointPolicy/EndpointPolicyA.h"
+#include "EndpointPolicyC.h"
+#include "EndpointPolicyA.h"
 #include "tao/IOPC.h"
 #include "tao/AnyTypeCode/Any.h"
 #undef TAO_ENDPOINTPOLICY_SAFE_INCLUDE

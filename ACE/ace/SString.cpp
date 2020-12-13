@@ -1,16 +1,16 @@
-#include "ace/Malloc_T.h"
-#include "ace/OS_Memory.h"
-#include "ace/SString.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Numeric_Limits.h"
+#include "Malloc_T.h"
+#include "OS_Memory.h"
+#include "SString.h"
+#include "OS_NS_string.h"
+#include "Numeric_Limits.h"
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
-# include "ace/streams.h"
+# include "streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SString.inl"
+#include "SString.inl"
 #endif /* __ACE_INLINE__ */
 
 

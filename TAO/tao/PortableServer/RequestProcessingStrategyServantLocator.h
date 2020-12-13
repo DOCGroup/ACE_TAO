@@ -12,7 +12,7 @@
 #define TAO_REQUESTPROCESSINGSTRATEGYSERVANTLOCATOR_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/RequestProcessingStrategyServantManager.h"
+#include "RequestProcessingStrategyServantManager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,9 +20,9 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/PortableServer.h"
-#include "tao/PortableServer/ServantLocatorC.h"
+#include "Servant_Location.h"
+#include "PortableServer.h"
+#include "ServantLocatorC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

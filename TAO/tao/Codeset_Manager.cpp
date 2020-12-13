@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Codeset_Manager.h"
-#include "tao/Codeset_Descriptor_Base.h"
+#include "Codeset_Manager.h"
+#include "Codeset_Descriptor_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

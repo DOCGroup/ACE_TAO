@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/messaging_export.h"
+#include "messaging_export.h"
 
 #define TAO_MESSAGING_SAFE_INCLUDE
-#include "tao/Messaging/MessagingC.h"
+#include "MessagingC.h"
 #undef TAO_MESSAGING_SAFE_INCLUDE
 
-#include "tao/Messaging/MessagingA.h"
-#include "tao/Messaging/TAO_ExtC.h"
+#include "MessagingA.h"
+#include "TAO_ExtC.h"
 #include "tao/Policy_CurrentC.h"
 #include "tao/Policy_ManagerC.h"
 #include "tao/TAOC.h"

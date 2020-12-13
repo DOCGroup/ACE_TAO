@@ -10,7 +10,7 @@
 #define _ACEXML_MEM_MAP_STREAM_H
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,7 +21,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Svc_Handler.h"
-#include "ACEXML/common/XML_Types.h"
+#include "XML_Types.h"
 
 typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> Svc_Handler;
 typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> Connector;

@@ -11,15 +11,15 @@
 #ifndef ACE_TIME_POLICY_T_H
 #define ACE_TIME_POLICY_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Policy.h"
+#include "Time_Policy.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,14 +56,14 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Time_Policy_T.inl"
+#include "Time_Policy_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Time_Policy_T.cpp"
+#include "Time_Policy_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

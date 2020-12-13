@@ -11,18 +11,18 @@
 
 #ifndef ACE_UUID_H
 #define ACE_UUID_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
-#include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
+#include "Auto_Ptr.h"
+#include "SString.h"
+#include "Singleton.h"
+#include "Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -280,8 +280,8 @@ ACE_SINGLETON_DECLARE (ACE_Singleton, ACE_Utils::UUID_Generator, ACE_SYNCH_MUTEX
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/UUID.inl"
+#include "UUID.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif // ACE_UUID_H

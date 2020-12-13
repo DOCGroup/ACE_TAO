@@ -1,8 +1,8 @@
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/ORB_Core.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Pluggable_Messaging_Utils.inl"
+#include "Pluggable_Messaging_Utils.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

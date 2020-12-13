@@ -12,13 +12,13 @@
 #define TAO_DEFAULT_SERVANT_DISPATCHER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Servant_Dispatcher.h"
+#include "Servant_Dispatcher.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

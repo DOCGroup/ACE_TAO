@@ -1,10 +1,10 @@
 #ifndef TAO_ESF_PROXY_RB_TREE_CPP
 #define TAO_ESF_PROXY_RB_TREE_CPP
 
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.h"
+#include "ESF_Proxy_RB_Tree.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_RB_Tree.inl"
+#include "ESF_Proxy_RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

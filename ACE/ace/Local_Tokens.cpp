@@ -1,13 +1,13 @@
-#include "ace/Local_Tokens.h"
+#include "Local_Tokens.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Thread.h"
-#include "ace/Token_Manager.h"
-#include "ace/OS_NS_unistd.h"
+#include "Thread.h"
+#include "Token_Manager.h"
+#include "OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Local_Tokens.inl"
+#include "Local_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
 

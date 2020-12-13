@@ -10,19 +10,19 @@
 
 #ifndef ACE_SERVICE_OBJECT_H
 #define ACE_SERVICE_OBJECT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Shared_Object.h"
-#include "ace/Svc_Conf_Tokens.h"
+#include "Shared_Object.h"
+#include "Svc_Conf_Tokens.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
-#include "ace/DLL.h"
+#include "Event_Handler.h"
+#include "DLL.h"
 
-#include "ace/Service_Gestalt.h"
+#include "Service_Gestalt.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -197,8 +197,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Object.inl"
+#include "Service_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SERVICE_OBJECT_H */

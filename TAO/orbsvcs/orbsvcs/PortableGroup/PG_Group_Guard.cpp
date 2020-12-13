@@ -1,7 +1,7 @@
-#include "orbsvcs/PortableGroup/PG_Group_Guard.h"
+#include "PG_Group_Guard.h"
 
-#include "orbsvcs/PortableGroup/PG_GenericFactory.h"
-#include "orbsvcs/PortableGroup/PG_ObjectGroupManager.h"
+#include "PG_GenericFactory.h"
+#include "PG_ObjectGroupManager.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

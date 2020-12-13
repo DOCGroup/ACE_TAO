@@ -1,5 +1,5 @@
-#include "tao/Compression/bzip2/Bzip2Compressor_Factory.h"
-#include "tao/Compression/bzip2/Bzip2Compressor.h"
+#include "Bzip2Compressor_Factory.h"
+#include "Bzip2Compressor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

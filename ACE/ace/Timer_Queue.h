@@ -12,20 +12,20 @@
 #ifndef ACE_TIMER_QUEUE_H
 #define ACE_TIMER_QUEUE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Synch_Traits.h"
+#include "Synch_Traits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Queuefwd.h"
-#include "ace/Timer_Queue_T.h"
+#include "Timer_Queuefwd.h"
+#include "Timer_Queue_T.h"
 #if defined (ACE_HAS_THREADS)
-#  include "ace/Recursive_Thread_Mutex.h"
+#  include "Recursive_Thread_Mutex.h"
 #else
-#  include "ace/Null_Mutex.h"
+#  include "Null_Mutex.h"
 #endif /* ACE_HAS_THREADS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -43,6 +43,6 @@ typedef ACE_Timer_Queue_Iterator_T<ACE_Event_Handler *>
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_TIMER_QUEUE_H */

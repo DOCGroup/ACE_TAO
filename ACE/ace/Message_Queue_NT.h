@@ -10,17 +10,17 @@
 
 #ifndef ACE_MESSAGE_QUEUE_NT_H
 #define ACE_MESSAGE_QUEUE_NT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Message_Queue.h"
+#include "Message_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-# include "ace/Synch_Traits.h"   /* Needed in ACE_Message_Queue_NT */
-# include "ace/Thread_Mutex.h"   /* Needed in ACE_Message_Queue_NT */
+# include "Synch_Traits.h"   /* Needed in ACE_Message_Queue_NT */
+# include "Thread_Mutex.h"   /* Needed in ACE_Message_Queue_NT */
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -221,8 +221,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue_NT.inl"
+#include "Message_Queue_NT.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MESSAGE_QUEUE_NT_H */

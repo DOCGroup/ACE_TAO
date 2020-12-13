@@ -15,7 +15,7 @@
 //
 // ============================================================================
 
-#include "orbsvcs/Concurrency/CC_Lock.h"
+#include "CC_Lock.h"
 #include "orbsvcs/Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

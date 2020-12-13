@@ -11,13 +11,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/ID_Factory.h"
+#include "ID_Factory.h"
 
 #include "tao/PortableServer/PortableServer.h"
 
@@ -108,7 +108,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/POA_Helper.inl"
+#include "POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

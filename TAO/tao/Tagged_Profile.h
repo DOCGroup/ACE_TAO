@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object_KeyC.h"
-#include /**/ "tao/Versioned_Namespace.h"
+#include "Object_KeyC.h"
+#include /**/ "Versioned_Namespace.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -144,7 +144,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Tagged_Profile.inl"
+# include "Tagged_Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -10,7 +10,7 @@
 #define TAO_Notify_RT_PROPERTIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/rt_notify_export.h"
+#include "rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +59,7 @@ typedef TAO_Notify_RT_Properties TAO_Notify_RT_PROPERTIES;
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/RT_Properties.inl"
+#include "RT_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

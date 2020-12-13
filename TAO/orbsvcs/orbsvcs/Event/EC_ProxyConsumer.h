@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
@@ -216,7 +216,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ProxyConsumer.inl"
+#include "EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

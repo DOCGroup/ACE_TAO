@@ -10,15 +10,15 @@
 
 #ifndef ACE_FILE_H
 #define ACE_FILE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/IO_SAP.h"
+#include "IO_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FILE_Addr.h"
+#include "FILE_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -117,8 +117,8 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE.inl"
+#include "FILE.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FILE_H */

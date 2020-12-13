@@ -1,7 +1,7 @@
-#include "tao/Strategies/LF_Strategy_Null.h"
+#include "LF_Strategy_Null.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/LF_Strategy_Null.inl"
+# include "LF_Strategy_Null.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

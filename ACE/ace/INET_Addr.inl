@@ -1,8 +1,8 @@
 // -*- C++ -*-
 
-#include "ace/OS_NS_string.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_arpa_inet.h"
+#include "OS_NS_string.h"
+#include "Global_Macros.h"
+#include "OS_NS_arpa_inet.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

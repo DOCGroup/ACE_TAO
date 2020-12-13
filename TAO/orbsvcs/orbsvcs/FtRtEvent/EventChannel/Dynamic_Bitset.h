@@ -65,7 +65,7 @@ Dynamic_Bitset operator & (const Dynamic_Bitset& lhs, const Dynamic_Bitset& rhs)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
+#include "Dynamic_Bitset.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif

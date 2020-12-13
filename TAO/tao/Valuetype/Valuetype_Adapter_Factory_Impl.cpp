@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/Valuetype_Adapter_Factory_Impl.h"
+#include "Valuetype_Adapter_Impl.h"
+#include "Valuetype_Adapter_Factory_Impl.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/SystemException.h"

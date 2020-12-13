@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/Hash_LogStore.h"
-#include "orbsvcs/Log/Hash_LogRecordStore.h"
-#include "orbsvcs/Log/LogMgr_i.h"
+#include "Hash_LogStore.h"
+#include "Hash_LogRecordStore.h"
+#include "LogMgr_i.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

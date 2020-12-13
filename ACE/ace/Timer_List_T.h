@@ -10,9 +10,9 @@
 
 #ifndef ACE_TIMER_LIST_T_H
 #define ACE_TIMER_LIST_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Timer_Queue_T.h"
+#include "Timer_Queue_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -218,12 +218,12 @@ private:
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_List_T.cpp"
+#include "Timer_List_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_List_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_LIST_T_H */

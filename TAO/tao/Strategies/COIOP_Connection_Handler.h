@@ -21,10 +21,10 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "tao/Strategies/COIOP_Transport.h"
+#include "COIOP_Transport.h"
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"
 

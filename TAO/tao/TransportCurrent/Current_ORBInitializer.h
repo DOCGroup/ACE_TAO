@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/TransportCurrent/Current_ORBInitializer_Base.h"
+#include "Current_ORBInitializer_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -44,7 +44,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/TransportCurrent/Current_ORBInitializer.cpp"
+#include "Current_ORBInitializer.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

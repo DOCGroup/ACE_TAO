@@ -1,15 +1,15 @@
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_Thread.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_Thread.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_stdio.inl"
+# include "OS_NS_stdio.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if !defined (ACE_LACKS_STDINT_H)
 # include <stdint.h>
 #endif
 
-#include "ace/Malloc_Base.h"
+#include "Malloc_Base.h"
 
 #include <cctype>
 #include <clocale>

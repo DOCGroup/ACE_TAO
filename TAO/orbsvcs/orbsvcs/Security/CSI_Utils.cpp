@@ -1,4 +1,4 @@
-#include "orbsvcs/Security/CSI_Utils.h"
+#include "CSI_Utils.h"
 #include "orbsvcs/CSIC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"

@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/ORB_Table.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "ORB_Table.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

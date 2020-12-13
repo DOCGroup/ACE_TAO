@@ -5,7 +5,7 @@
 //
 // XXX on Windows, make it always use OutputDebugString () instead of stdio.
 
-#include "tao/debug.h"
+#include "debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,7 @@
-#include "tao/Wait_Strategy.h"
+#include "Wait_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Wait_Strategy.inl"
+# include "Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

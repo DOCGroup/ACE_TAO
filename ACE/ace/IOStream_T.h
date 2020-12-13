@@ -15,9 +15,9 @@
 
 #ifndef ACE_IOSTREAM_T_H
 #define ACE_IOSTREAM_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/IOStream.h"
+#include "IOStream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,11 +25,11 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#  include "ace/INET_Addr.h"
-#  include "ace/Global_Macros.h"
+#  include "INET_Addr.h"
+#  include "Global_Macros.h"
 
 #  if defined (ACE_LACKS_IOSTREAM_FX)
-#   include "ace/os_include/os_ctype.h"
+#   include "os_include/os_ctype.h"
 #  endif /**/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -276,11 +276,11 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  if defined (__ACE_INLINE__)
-#    include "ace/IOStream_T.inl"
+#    include "IOStream_T.inl"
 #  endif /* __ACE_INLINE__ */
 
 #  if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#    include "ace/IOStream_T.cpp"
+#    include "IOStream_T.cpp"
 #  endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #  if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -288,5 +288,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_IOSTREAM_T_H */

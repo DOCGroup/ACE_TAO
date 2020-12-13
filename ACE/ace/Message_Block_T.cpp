@@ -1,13 +1,13 @@
 #ifndef ACE_MESSAGE_BLOCK_T_CPP
 #define ACE_MESSAGE_BLOCK_T_CPP
 
-#include "ace/Malloc_Base.h"     /* Need ACE_Allocator */
+#include "Malloc_Base.h"     /* Need ACE_Allocator */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block_T.inl"
+#include "Message_Block_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/os_include/os_errno.h"
+#include "os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

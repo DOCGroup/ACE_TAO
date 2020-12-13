@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PortableServer/Acceptor_Filter_Factory.h"
-#include "tao/PortableServer/Default_Acceptor_Filter.h"
+#include "Acceptor_Filter_Factory.h"
+#include "Default_Acceptor_Filter.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

@@ -22,9 +22,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-#include "tao/orbconf.h"
+#include /**/ "TAO_Export.h"
+#include "Basic_Types.h"
+#include "orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -241,7 +241,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/MProfile.inl"
+# include "MProfile.inl"
 #endif /*__ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

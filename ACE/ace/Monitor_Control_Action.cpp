@@ -1,8 +1,8 @@
-#include "ace/Monitor_Control_Action.h"
+#include "Monitor_Control_Action.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Guard_T.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

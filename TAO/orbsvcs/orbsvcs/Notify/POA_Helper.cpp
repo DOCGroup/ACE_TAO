@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/POA_Helper.h"
+#include "POA_Helper.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/POA_Helper.inl"
+#include "POA_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/debug.h"

@@ -3,8 +3,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/RTP.h"
-#include "orbsvcs/AV/RTCP_Packet.h"
+#include "RTP.h"
+#include "RTCP_Packet.h"
 
 #include "ace/Message_Block.h"
 #include "ace/SString.h"

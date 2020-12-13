@@ -28,7 +28,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/PI_includeC.h"
+#include "PI_includeC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -69,7 +69,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/PI/ClientRequestDetails.inl"
+#include "ClientRequestDetails.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

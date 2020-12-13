@@ -1,11 +1,11 @@
-#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "CEC_ProxyPullSupplier.h"
+#include "CEC_Dispatching.h"
+#include "CEC_EventChannel.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.inl"
+#include "CEC_ProxyPullSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

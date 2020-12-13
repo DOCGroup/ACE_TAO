@@ -13,11 +13,11 @@
 #define TAO_ASYNC_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/async_iortable_export.h"
-#include "tao/IORTable/Async_IORTable.h"
-#include "tao/IORTable/Async_IOR_Table_Impl.h"
+#include "async_iortable_export.h"
+#include "Async_IORTable.h"
+#include "Async_IOR_Table_Impl.h"
 
-#include "tao/IORTable/Table_Adapter.h"
+#include "Table_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,6 +1,6 @@
-#include "tao/PortableServer/Upcall_Wrapper.h"
-#include "tao/PortableServer/Upcall_Command.h"
-#include "tao/PortableServer/Collocated_Arguments_Converter.h"
+#include "Upcall_Wrapper.h"
+#include "Upcall_Command.h"
+#include "Collocated_Arguments_Converter.h"
 #include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1

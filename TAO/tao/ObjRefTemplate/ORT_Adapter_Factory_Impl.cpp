@@ -1,5 +1,5 @@
-#include "tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h"
-#include "tao/ObjRefTemplate/ORT_Adapter_Impl.h"
+#include "ORT_Adapter_Factory_Impl.h"
+#include "ORT_Adapter_Impl.h"
 #include "tao/PortableServer/Root_POA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -10,9 +10,9 @@
 
 #ifndef ACE_SV_SEMAPHORE_COMPLEX_H
 #define ACE_SV_SEMAPHORE_COMPLEX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SV_Semaphore_Simple.h"
+#include "SV_Semaphore_Simple.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -149,8 +149,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Semaphore_Complex.inl"
+#include "SV_Semaphore_Complex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SV_SEMAPHORE_COMPLEX_H */

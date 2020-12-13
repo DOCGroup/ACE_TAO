@@ -12,13 +12,13 @@
 #define _ACEXML_EXCEPTION_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/XML_Types.h"
+#include "XML_Types.h"
 
 /**
  * @class ACEXML_Exception
@@ -69,7 +69,7 @@ protected:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/Exception.inl"
+# include "Exception.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

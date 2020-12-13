@@ -1,11 +1,11 @@
-#include "tao/DynamicInterface/Request.h"
-#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
-#include "tao/DynamicInterface/DII_Arguments.h"
-#include "tao/DynamicInterface/Context.h"
+#include "Request.h"
+#include "DII_Invocation_Adapter.h"
+#include "DII_Arguments.h"
+#include "Context.h"
 
 #if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Asynch_Invocation_Adapter.h"
-#include "tao/DynamicInterface/DII_Reply_Handler.h"
+#include "DII_Reply_Handler.h"
 #endif /* TAO_HAS_AMI */
 
 #include "tao/AnyTypeCode/NVList.h"
@@ -17,7 +17,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Request.inl"
+# include "Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

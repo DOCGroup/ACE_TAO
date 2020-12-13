@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Valuetype/AbstractBase_Invocation_Adapter.h"
-#include "tao/Valuetype/AbstractBase.h"
+#include "AbstractBase_Invocation_Adapter.h"
+#include "AbstractBase.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

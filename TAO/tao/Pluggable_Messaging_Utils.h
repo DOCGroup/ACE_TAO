@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/GIOPC.h"
+#include "GIOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -112,7 +112,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Pluggable_Messaging_Utils.inl"
+#include "Pluggable_Messaging_Utils.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

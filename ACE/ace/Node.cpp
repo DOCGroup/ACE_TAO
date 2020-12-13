@@ -1,10 +1,10 @@
 #ifndef ACE_NODE_CPP
 #define ACE_NODE_CPP
 
-#include "ace/Node.h"
+#include "Node.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

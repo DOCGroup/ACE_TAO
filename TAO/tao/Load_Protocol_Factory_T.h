@@ -15,9 +15,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Protocol_Factory.h"
-#include "tao/Resource_Factory.h"
-#include "tao/debug.h"
+#include "Protocol_Factory.h"
+#include "Resource_Factory.h"
+#include "debug.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Dynamic_Service.h"
 

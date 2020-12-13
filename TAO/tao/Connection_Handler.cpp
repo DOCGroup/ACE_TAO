@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/Resume_Handle.h"
-#include "tao/Transport.h"
-#include "tao/Wait_Strategy.h"
+#include "Connection_Handler.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "Resume_Handle.h"
+#include "Transport.h"
+#include "Wait_Strategy.h"
 
 #include "ace/SOCK.h"
 #include "ace/Reactor.h"
@@ -12,7 +12,7 @@
 #include "ace/Svc_Handler.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Connection_Handler.inl"
+#include "Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

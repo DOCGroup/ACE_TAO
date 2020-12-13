@@ -22,13 +22,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/TypeCode_Base_Attributes.h"
+#include "TypeCode_Base_Attributes.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -102,11 +102,11 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Objref_TypeCode.inl"
+# include "Objref_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Objref_TypeCode.cpp"
+# include "Objref_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

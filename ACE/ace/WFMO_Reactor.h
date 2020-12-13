@@ -12,9 +12,9 @@
 
 #ifndef ACE_WFMO_REACTOR_H
 #define ACE_WFMO_REACTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,16 +22,16 @@
 
 #if defined (ACE_WIN32)
 
-#include "ace/Signal.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Event_Handler.h"
-#include "ace/Auto_Event.h"
-#include "ace/Manual_Event.h"
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Reactor_Impl.h"
-#include "ace/Message_Queue.h"
-#include "ace/Process_Mutex.h"
+#include "Signal.h"
+#include "Timer_Queue.h"
+#include "Event_Handler.h"
+#include "Auto_Event.h"
+#include "Manual_Event.h"
+#include "Condition_Thread_Mutex.h"
+#include "Lock_Adapter_T.h"
+#include "Reactor_Impl.h"
+#include "Message_Queue.h"
+#include "Process_Mutex.h"
 
 // If we don't have WinSOCK2, we need these defined
 #if !defined (ACE_HAS_WINSOCK2) || (ACE_HAS_WINSOCK2 == 0)
@@ -1351,9 +1351,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.inl"
+#include "WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_WFMO_REACTOR_H */

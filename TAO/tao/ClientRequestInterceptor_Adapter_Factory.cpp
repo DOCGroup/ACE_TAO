@@ -1,4 +1,4 @@
-#include "tao/ClientRequestInterceptor_Adapter_Factory.h"
+#include "ClientRequestInterceptor_Adapter_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

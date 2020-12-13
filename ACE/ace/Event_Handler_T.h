@@ -10,9 +10,9 @@
 
 #ifndef ACE_EVENT_HANDLER_T_H
 #define ACE_EVENT_HANDLER_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Event_Handler.h"
+#include "Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -170,16 +170,16 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Event_Handler_T.inl"
+#include "Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Event_Handler_T.cpp"
+#include "Event_Handler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Event_Handler_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_EVENT_HANDLER_H */

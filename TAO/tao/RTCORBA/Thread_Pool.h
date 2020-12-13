@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTCORBA/RTCORBA_includeC.h"
-#include "tao/RTCORBA/RT_ORBInitializer.h"
+#include "RTCORBA_includeC.h"
+#include "RT_ORBInitializer.h"
 #include "ace/Hash_Map_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/New_Leader_Generator.h"
@@ -452,7 +452,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/RTCORBA/Thread_Pool.inl"
+#include "Thread_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

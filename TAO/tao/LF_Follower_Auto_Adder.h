@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Follower.h"
+#include "LF_Follower.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Leader_Follower.h"
+#include "Leader_Follower.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -49,7 +49,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/LF_Follower_Auto_Adder.inl"
+# include "LF_Follower_Auto_Adder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

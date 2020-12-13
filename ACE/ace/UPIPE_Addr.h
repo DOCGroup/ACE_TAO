@@ -12,9 +12,9 @@
 #ifndef ACE_UPIPE_ADDR_H
 #define ACE_UPIPE_ADDR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SPIPE_Addr.h"
+#include "SPIPE_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,6 +26,6 @@ typedef ACE_SPIPE_Addr ACE_UPIPE_Addr;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_UPIPE_ADDR_H */

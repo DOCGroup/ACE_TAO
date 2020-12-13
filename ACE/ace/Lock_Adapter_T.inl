@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/OS_Memory.h"
+#include "OS_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

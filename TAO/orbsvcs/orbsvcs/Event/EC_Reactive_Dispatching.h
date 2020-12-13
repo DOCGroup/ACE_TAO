@@ -16,9 +16,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
+#include "EC_Dispatching.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

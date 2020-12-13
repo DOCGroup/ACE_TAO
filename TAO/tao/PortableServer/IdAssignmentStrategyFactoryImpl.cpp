@@ -1,5 +1,5 @@
-#include "tao/PortableServer/IdAssignmentStrategyFactoryImpl.h"
-#include "tao/PortableServer/IdAssignmentStrategy.h"
+#include "IdAssignmentStrategyFactoryImpl.h"
+#include "IdAssignmentStrategy.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "tao/RTPortableServer/RT_Collocation_Resolver.h"
+#include "RT_Collocation_Resolver.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

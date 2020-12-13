@@ -10,7 +10,7 @@
 #define _ACEXML_URL_ADDR_H
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -18,8 +18,8 @@
 
 #include "ace/Default_Constants.h"
 #include "ace/INET_Addr.h"
-#include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "XML_Types.h"
+#include "ACEXML_Export.h"
 
 /**
  *  @class ACEXML_URL_Addr
@@ -126,7 +126,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/URL_Addr.inl"
+# include "URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

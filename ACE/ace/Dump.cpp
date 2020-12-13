@@ -1,11 +1,11 @@
-#include "ace/Dump.h"
-#include "ace/Guard_T.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Category.h"
+#include "Dump.h"
+#include "Guard_T.h"
+#include "Thread_Mutex.h"
+#include "Object_Manager.h"
+#include "Log_Category.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -22,19 +22,19 @@
 
 #ifndef ACE_HASH_MULTI_MAP_MANAGER_T_H
 #define ACE_HASH_MULTI_MAP_MANAGER_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
-#include "ace/Functor_T.h"
-#include "ace/Log_Category.h"
+#include "Default_Constants.h"
+#include "Functor_T.h"
+#include "Log_Category.h"
 
-#include "ace/Unbounded_Set.h"
+#include "Unbounded_Set.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -943,16 +943,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#  include "ace/Hash_Multi_Map_Manager_T.inl"
+#  include "Hash_Multi_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Hash_Multi_Map_Manager_T.cpp"
+#include "Hash_Multi_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Hash_Multi_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_HASH_MULTI_MAP_MANAGER_T_H */

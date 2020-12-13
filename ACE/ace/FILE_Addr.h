@@ -10,16 +10,16 @@
 
 #ifndef ACE_FILE_ADDR_H
 #define ACE_FILE_ADDR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Addr.h"
+#include "Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Flag_Manip.h"
-#include "ace/os_include/os_dirent.h"
+#include "Flag_Manip.h"
+#include "os_include/os_dirent.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -79,8 +79,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_Addr.inl"
+#include "FILE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FILE_ADDR_H */

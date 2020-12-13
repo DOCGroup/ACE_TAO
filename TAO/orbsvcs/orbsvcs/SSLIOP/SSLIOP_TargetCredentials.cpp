@@ -1,4 +1,4 @@
-#include "orbsvcs/SSLIOP/SSLIOP_TargetCredentials.h"
+#include "SSLIOP_TargetCredentials.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

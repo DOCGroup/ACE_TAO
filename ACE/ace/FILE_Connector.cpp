@@ -1,12 +1,12 @@
-#include "ace/FILE_Connector.h"
-#include "ace/Handle_Ops.h"
-#include "ace/OS_NS_stdlib.h"
+#include "FILE_Connector.h"
+#include "Handle_Ops.h"
+#include "OS_NS_stdlib.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE_Connector.inl"
+#include "FILE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 

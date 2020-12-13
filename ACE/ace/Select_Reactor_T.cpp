@@ -1,28 +1,28 @@
 #ifndef ACE_SELECT_REACTOR_T_CPP
 #define ACE_SELECT_REACTOR_T_CPP
 
-#include "ace/Select_Reactor_T.h"
+#include "Select_Reactor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
-#include "ace/Guard_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Signal.h"
-#include "ace/Sig_Handler.h"
-#include "ace/Thread.h"
-#include "ace/Timer_Heap.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_sys_select.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "ACE.h"
+#include "Guard_T.h"
+#include "Log_Category.h"
+#include "Signal.h"
+#include "Sig_Handler.h"
+#include "Thread.h"
+#include "Timer_Heap.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_sys_select.h"
+#include "OS_NS_sys_stat.h"
 
 // For timer_queue_
-#include "ace/Recursive_Thread_Mutex.h"
+#include "Recursive_Thread_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_T.inl"
+#include "Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/varbase.h"
+#include "varbase.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -116,11 +116,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Objref_VarOut_T.inl"
+#include "Objref_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Objref_VarOut_T.cpp"
+#include "Objref_VarOut_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

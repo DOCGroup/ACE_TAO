@@ -1,9 +1,9 @@
-#include "tao/DynamicInterface/ExceptionList.h"
+#include "ExceptionList.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/ExceptionList.inl"
+# include "ExceptionList.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

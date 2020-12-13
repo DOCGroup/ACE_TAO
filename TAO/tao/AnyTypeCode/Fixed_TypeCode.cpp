@@ -1,11 +1,11 @@
 #ifndef TAO_FIXED_TYPECODE_CPP
 #define TAO_FIXED_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Fixed_TypeCode.h"
+#include "Fixed_TypeCode.h"
 #include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Fixed_TypeCode.inl"
+# include "Fixed_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "orbsvcs/FtRtEvent/EventChannel/Update_Manager.h"
+#include "Update_Manager.h"
 #include "ace/Guard_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -12,9 +12,9 @@
 #ifndef ACE_PI_MALLOC_H
 #define ACE_PI_MALLOC_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/Malloc.h"
-#include "ace/Based_Pointer_T.h"
+#include "Malloc.h"
+#include "Based_Pointer_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -196,11 +196,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/PI_Malloc.inl"
+#include "PI_Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_PI_MALLOC_H */

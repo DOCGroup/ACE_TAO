@@ -1,8 +1,8 @@
 #ifndef ACE_IOSTREAM_T_CPP
 #define ACE_IOSTREAM_T_CPP
 
-#include "ace/IOStream_T.h"
-#include "ace/OS_Memory.h"
+#include "IOStream_T.h"
+#include "OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -11,7 +11,7 @@
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IOStream_T.inl"
+#include "IOStream_T.inl"
 #endif /* !__ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

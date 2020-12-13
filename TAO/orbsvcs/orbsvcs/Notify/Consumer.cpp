@@ -1,15 +1,15 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Consumer.h"
+#include "Consumer.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Consumer.inl"
+#include "Consumer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Timer.h"
-#include "orbsvcs/Notify/ProxySupplier.h"
-#include "orbsvcs/Notify/Method_Request_Event.h"
-#include "orbsvcs/Notify/QoSProperties.h"
-#include "orbsvcs/Notify/Properties.h"
+#include "Timer.h"
+#include "ProxySupplier.h"
+#include "Method_Request_Event.h"
+#include "QoSProperties.h"
+#include "Properties.h"
 
 #include "orbsvcs/Time_Utilities.h"
 

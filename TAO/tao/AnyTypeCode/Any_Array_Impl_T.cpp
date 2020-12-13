@@ -1,11 +1,11 @@
 #ifndef TAO_ANY_ARRAY_IMPL_T_CPP
 #define TAO_ANY_ARRAY_IMPL_T_CPP
 
-#include "tao/AnyTypeCode/Any_Array_Impl_T.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "Any_Array_Impl_T.h"
+#include "Any.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "Marshal.h"
+#include "TypeCode.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
@@ -13,7 +13,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/Any_Array_Impl_T.inl"
+# include "Any_Array_Impl_T.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

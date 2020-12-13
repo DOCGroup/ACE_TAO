@@ -14,9 +14,9 @@
 #ifndef ACE_PROCESS_MUTEX_H
 #define ACE_PROCESS_MUTEX_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,10 +29,10 @@
 #endif /* _ACE_USE_SV_SEM */
 
 #if defined (ACE_HAS_SYSV_IPC) && !defined (ACE_USES_MUTEX_FOR_PROCESS_MUTEX)
-#  include "ace/SV_Semaphore_Complex.h"
+#  include "SV_Semaphore_Complex.h"
 #  define _ACE_USE_SV_SEM
 #else
-#  include "ace/Mutex.h"
+#  include "Mutex.h"
 #endif /* ACE_HAS_SYSV_IPC && !ACE_USES_MUTEX_FOR_PROCESS_MUTEX */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -230,9 +230,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process_Mutex.inl"
+#include "Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_PROCESS_MUTEX_H */

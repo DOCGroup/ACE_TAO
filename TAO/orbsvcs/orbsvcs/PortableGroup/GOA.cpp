@@ -1,6 +1,6 @@
-#include "orbsvcs/PortableGroup/GOA.h"
-#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
-#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
+#include "GOA.h"
+#include "PortableGroup_Acceptor_Registry.h"
+#include "PortableGroup_Request_Dispatcher.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"

@@ -10,11 +10,11 @@
 
 #ifndef ACE_MEM_ACCEPTOR_H
 #define ACE_MEM_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
-#include "ace/SOCK_Acceptor.h"
+#include "SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,11 +22,11 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/MEM_Stream.h"
-#include "ace/MEM_Addr.h"
+#include "MEM_Stream.h"
+#include "MEM_Addr.h"
 
 #if !defined (ACE_HAS_WINCE)
-#include "ace/OS_QoS.h"
+#include "OS_QoS.h"
 #endif  // ACE_HAS_WINCE
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -176,10 +176,10 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Acceptor.inl"
+#include "MEM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MEM_ACCEPTOR_H */

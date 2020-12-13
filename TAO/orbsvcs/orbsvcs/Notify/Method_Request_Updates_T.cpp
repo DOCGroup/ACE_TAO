@@ -1,10 +1,10 @@
 #ifndef TAO_Notify_Method_Request_Updates_T_CPP
 #define TAO_Notify_Method_Request_Updates_T_CPP
 
-#include "orbsvcs/Notify/Method_Request_Updates_T.h"
+#include "Method_Request_Updates_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Method_Request_Updates_T.inl"
+#include "Method_Request_Updates_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

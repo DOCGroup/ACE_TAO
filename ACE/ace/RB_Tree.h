@@ -11,10 +11,10 @@
 
 #ifndef ACE_RB_TREE_H
 #define ACE_RB_TREE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Global_Macros.h"
-#include "ace/Functor_T.h"
+#include "Global_Macros.h"
+#include "Functor_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -876,16 +876,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/RB_Tree.inl"
+#include "RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/RB_Tree.cpp"
+#include "RB_Tree.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("RB_Tree.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ! defined (ACE_RB_TREE_H) */

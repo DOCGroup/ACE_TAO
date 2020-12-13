@@ -1,5 +1,5 @@
-#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Endpoint.h"
+#include "HTIOP_Profile.h"
 
 #include "ace/os_include/os_netdb.h"
 #include "orbsvcs/Log_Macros.h"
@@ -8,7 +8,7 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/HTIOP/HTIOP_Endpoint.inl"
+# include "HTIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

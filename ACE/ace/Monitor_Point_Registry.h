@@ -11,9 +11,9 @@
 #ifndef MONITOR_POINT_REGISTRY_H
 #define MONITOR_POINT_REGISTRY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Thread_Mutex.h"
+#include "Thread_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,11 +21,11 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Monitor_Control_Types.h"
-#include "ace/Singleton.h"
+#include "Synch_Traits.h"
+#include "Null_Mutex.h"
+#include "Hash_Map_Manager_T.h"
+#include "Monitor_Control_Types.h"
+#include "Singleton.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -93,6 +93,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif // MONITOR_POINT_REGISTRY_H

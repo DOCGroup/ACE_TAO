@@ -11,16 +11,16 @@
 
 #ifndef ACE_TLI_ACCEPTOR_H
 #define ACE_TLI_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/TLI.h"
+#include "TLI.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/TLI_Stream.h"
-#include "ace/Default_Constants.h"
+#include "TLI_Stream.h"
+#include "Default_Constants.h"
 
 #if defined (ACE_HAS_TLI)
 
@@ -116,5 +116,5 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TLI */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TLI_ACCEPTOR_H */

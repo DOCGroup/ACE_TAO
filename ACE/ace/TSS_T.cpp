@@ -1,26 +1,26 @@
 #ifndef ACE_TSS_T_CPP
 #define ACE_TSS_T_CPP
 
-#include "ace/TSS_T.h"
+#include "TSS_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TSS_T.inl"
+#include "TSS_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Thread.h"
-#include "ace/Log_Category.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_stdio.h"
+#include "Thread.h"
+#include "Log_Category.h"
+#include "Guard_T.h"
+#include "OS_NS_stdio.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_HAS_THR_C_DEST)
-#  include "ace/TSS_Adapter.h"
+#  include "TSS_Adapter.h"
 #endif /* ACE_HAS_THR_C_DEST */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

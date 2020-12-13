@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
+#include "IIOP_SSL_Connector.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

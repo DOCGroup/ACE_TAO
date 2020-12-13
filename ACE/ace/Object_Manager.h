@@ -12,11 +12,11 @@
 
 #ifndef ACE_OBJECT_MANAGER_H
 #define ACE_OBJECT_MANAGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/Global_Macros.h"
+#include /**/ "ACE_export.h"
+#include "Object_Manager_Base.h"
+#include "Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,7 +43,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  include "ace/Recursive_Thread_Mutex.h"
+#  include "Recursive_Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -453,13 +453,13 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include "ace/Static_Object_Lock.h"
+#include "Static_Object_Lock.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Object_Manager.inl"
+#include "Object_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Managed_Object.h"
+#include "Managed_Object.h"
 
 #if !defined (ACE_LACKS_ACE_SVCCONF)
 // We can't use the ACE_SVC_FACTORY_DECLARE macro here because this
@@ -472,5 +472,5 @@ ACE_FACTORY_DECLARE (ACE, ACE_Service_Manager)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_OBJECT_MANAGER_H */

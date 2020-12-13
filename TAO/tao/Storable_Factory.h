@@ -18,7 +18,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Storable_Base.h"
+#include "Storable_Base.h"
 
 #include "ace/SString.h"
 

@@ -4,7 +4,7 @@
 #define TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/Routing_Slip.h"
+#include "Routing_Slip.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

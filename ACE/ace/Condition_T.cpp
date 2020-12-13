@@ -1,7 +1,7 @@
 #ifndef ACE_CONDITION_T_CPP
 #define ACE_CONDITION_T_CPP
 
-#include "ace/Condition_T.h"
+#include "Condition_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -9,14 +9,14 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Condition_T.inl"
-#include "ace/Time_Value.h"
+#include "Condition_T.inl"
+#include "Time_Value.h"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

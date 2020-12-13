@@ -12,15 +12,15 @@
 #define TAO_ID_UNIQUENESS_STRATEGY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Policy_Strategy.h"
-#include "tao/PortableServer/IdUniquenessPolicyC.h"
-#include "tao/PortableServer/PS_ForwardC.h"
+#include "Policy_Strategy.h"
+#include "IdUniquenessPolicyC.h"
+#include "PS_ForwardC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

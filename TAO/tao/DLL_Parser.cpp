@@ -1,12 +1,12 @@
-#include "tao/DLL_Parser.h"
+#include "DLL_Parser.h"
 
 # if (TAO_HAS_DDL_PARSER == 1)
 
-#include "tao/Object_Loader.h"
-#include "tao/Object.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
-#include "tao/ORB_Core.h"
+#include "Object_Loader.h"
+#include "Object.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
+#include "ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"

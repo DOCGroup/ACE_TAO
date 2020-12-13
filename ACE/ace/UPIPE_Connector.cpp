@@ -1,15 +1,15 @@
-#include "ace/UPIPE_Connector.h"
+#include "UPIPE_Connector.h"
 
 
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Handle_Ops.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stropts.h"
+#include "Handle_Ops.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stropts.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UPIPE_Connector.inl"
+#include "UPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

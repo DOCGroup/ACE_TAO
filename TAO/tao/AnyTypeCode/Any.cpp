@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/Any_Basic_Impl.h"
-#include "tao/AnyTypeCode/Any_Impl_T.h"
-#include "tao/AnyTypeCode/Any_Special_Impl_T.h"
-#include "tao/AnyTypeCode/Any_Dual_Impl_T.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "Any.h"
+#include "Any_Basic_Impl.h"
+#include "Any_Impl_T.h"
+#include "Any_Special_Impl_T.h"
+#include "Any_Dual_Impl_T.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "TypeCode.h"
+#include "TypeCode_Constants.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
@@ -16,7 +16,7 @@
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/Any.inl"
+# include "Any.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

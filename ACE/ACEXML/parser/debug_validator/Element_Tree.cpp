@@ -1,7 +1,7 @@
-#include "ACEXML/parser/debug_validator/Element_Tree.h"
+#include "Element_Tree.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/debug_validator/Element_Tree.inl"
+# include "Element_Tree.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Element_Tree_Node::~ACEXML_Element_Tree_Node ()

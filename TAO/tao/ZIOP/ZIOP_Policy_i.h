@@ -11,13 +11,13 @@
 #ifndef TAO_ZIOP_POLICY_I_H
 #define TAO_ZIOP_POLICY_I_H
 #include /**/ "ace/pre.h"
-#include "tao/ZIOP/ziop_export.h"
+#include "ziop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ZIOP/ZIOP.h"
+#include "ZIOP.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

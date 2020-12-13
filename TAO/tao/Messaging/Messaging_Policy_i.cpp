@@ -1,4 +1,4 @@
-#include "tao/Messaging/Messaging_Policy_i.h"
+#include "Messaging_Policy_i.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -6,7 +6,7 @@
 #include "ace/Truncate.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.inl"
+#include "Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

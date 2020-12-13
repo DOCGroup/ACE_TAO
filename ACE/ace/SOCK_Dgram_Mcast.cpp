@@ -1,16 +1,16 @@
-#include "ace/SOCK_Dgram_Mcast.h"
+#include "SOCK_Dgram_Mcast.h"
 
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/os_include/net/os_if.h"
-#include "ace/os_include/arpa/os_inet.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_NS_errno.h"
+#include "os_include/net/os_if.h"
+#include "os_include/arpa/os_inet.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_IPV6)
-#include "ace/OS_NS_sys_socket.h"
+#include "OS_NS_sys_socket.h"
 #endif
 
 #if defined (ACE_WIN32)
@@ -26,10 +26,10 @@
 #endif /* ACE_HAS_GETIFADDRS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Mcast.inl"
+#include "SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 // This is a workaround for platforms with non-standard
 // definitions of the ip_mreq structure

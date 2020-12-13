@@ -11,7 +11,7 @@
 #define _ACEXML_DEBUG_DTD_Manager_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "Debug_DTD_Manager_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

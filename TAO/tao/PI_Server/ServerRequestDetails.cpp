@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/PI_Server/ServerRequestDetails.h"
+#include "ServerRequestDetails.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PI_Server/ServerRequestDetails.inl"
+#include "ServerRequestDetails.inl"
 #endif /* defined INLINE */
 
 #include "tao/SystemException.h"

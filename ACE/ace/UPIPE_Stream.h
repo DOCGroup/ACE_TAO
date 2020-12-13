@@ -12,9 +12,9 @@
 
 #ifndef ACE_UPIPE_STREAM_H
 #define ACE_UPIPE_STREAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Stream.h"
+#include "Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,9 +22,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/SPIPE.h"
-#include "ace/Message_Queue.h"
-#include "ace/UPIPE_Addr.h"
+#include "SPIPE.h"
+#include "Message_Queue.h"
+#include "UPIPE_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -126,11 +126,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/UPIPE_Stream.inl"
+#include "UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /*ACE_UPIPE_STREAM_H */

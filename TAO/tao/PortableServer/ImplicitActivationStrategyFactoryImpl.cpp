@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/PortableServer/ImplicitActivationStrategyFactoryImpl.h"
+#include "ImplicitActivationStrategyFactoryImpl.h"
 #include "ace/Dynamic_Service.h"
-#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
-#include "tao/PortableServer/ImplicitActivationStrategyExplicit.h"
+#include "ImplicitActivationStrategyImplicit.h"
+#include "ImplicitActivationStrategyExplicit.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

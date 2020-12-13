@@ -4,7 +4,7 @@
 
 #ifndef ACE_CONFIG_VXWORKS_H
 #define ACE_CONFIG_VXWORKS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // If ACE_VXWORKS is not defined try to figure out the VxWorks version
 #if !defined (ACE_VXWORKS)
@@ -41,19 +41,19 @@
 #endif /* ! ACE_VXWORKS */
 
 #if (ACE_VXWORKS == 0x640)
-# include "ace/config-vxworks6.4.h"
+# include "config-vxworks6.4.h"
 #elif (ACE_VXWORKS == 0x650)
-# include "ace/config-vxworks6.5.h"
+# include "config-vxworks6.5.h"
 #elif (ACE_VXWORKS == 0x660)
-# include "ace/config-vxworks6.6.h"
+# include "config-vxworks6.6.h"
 #elif (ACE_VXWORKS == 0x670)
-# include "ace/config-vxworks6.7.h"
+# include "config-vxworks6.7.h"
 #elif (ACE_VXWORKS == 0x680)
-# include "ace/config-vxworks6.8.h"
+# include "config-vxworks6.8.h"
 #elif (ACE_VXWORKS == 0x690)
-# include "ace/config-vxworks6.9.h"
+# include "config-vxworks6.9.h"
 #elif (ACE_VXWORKS == 0x700)
-# include "ace/config-vxworks7.0.h"
+# include "config-vxworks7.0.h"
 #else
 # error Unknown or unsupported VxWorks version
 #endif
@@ -77,6 +77,6 @@
 #  define ACE_VX_TASK_ID_ERROR TASK_ID_ERROR
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_H */
 

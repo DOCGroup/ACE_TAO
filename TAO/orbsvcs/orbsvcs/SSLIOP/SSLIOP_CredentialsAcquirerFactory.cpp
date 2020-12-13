@@ -1,5 +1,5 @@
-#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
-#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirer.h"
+#include "SSLIOP_CredentialsAcquirerFactory.h"
+#include "SSLIOP_CredentialsAcquirer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -22,8 +22,8 @@
 #include "ace/Map_Manager.h"
 #include "ace/Message_Block.h"
 #include "ace/SString.h"
-#include "orbsvcs/Sched/SchedEntry.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "SchedEntry.h"
+#include "sched_export.h"
 #include "ace/Recursive_Thread_Mutex.h"
 
 
@@ -544,7 +544,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Sched/DynSched.inl"
+#include "DynSched.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

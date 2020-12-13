@@ -1,10 +1,10 @@
 #ifndef TAO_ARRAY_VAROUT_T_CPP
 #define TAO_ARRAY_VAROUT_T_CPP
 
-#include "tao/Array_VarOut_T.h"
+#include "Array_VarOut_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Array_VarOut_T.inl"
+#include "Array_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -1,10 +1,10 @@
-#include "ace/Codecs.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_ctype.h"
+#include "Codecs.h"
+#include "Log_Category.h"
+#include "OS_Memory.h"
+#include "OS_NS_ctype.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 namespace

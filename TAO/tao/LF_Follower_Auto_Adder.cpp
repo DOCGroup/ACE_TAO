@@ -1,7 +1,7 @@
-#include "tao/LF_Follower_Auto_Adder.h"
+#include "LF_Follower_Auto_Adder.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LF_Follower_Auto_Adder.inl"
+# include "LF_Follower_Auto_Adder.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

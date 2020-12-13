@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Valuetype/valuetype_export.h"
-#include "tao/Valuetype/ValueFactory_Map.h"
+#include "valuetype_export.h"
+#include "ValueFactory_Map.h"
 #include "tao/Valuetype_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

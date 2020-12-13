@@ -1,23 +1,23 @@
-#include "ace/Log_Record.h"
+#include "Log_Record.h"
 
-#include "ace/Log_Msg.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Truncate.h"
-#include "ace/Log_Category.h"
+#include "Log_Msg.h"
+#include "ACE.h"
+#include "OS_NS_stdio.h"
+#include "CDR_Stream.h"
+#include "Auto_Ptr.h"
+#include "Truncate.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Log_Record.inl"
+# include "Log_Record.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
-# include "ace/streams.h"
+# include "streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-#include "ace/OS_Memory.h"
+#include "OS_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

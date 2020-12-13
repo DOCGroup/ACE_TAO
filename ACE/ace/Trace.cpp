@@ -1,4 +1,4 @@
-#include "ace/Trace.h"
+#include "Trace.h"
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
@@ -6,10 +6,10 @@
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
-#include "ace/Log_Category.h"
-#include "ace/Object_Manager_Base.h"
+#include "Log_Category.h"
+#include "Object_Manager_Base.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

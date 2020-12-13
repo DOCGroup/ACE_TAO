@@ -2,18 +2,18 @@
 #define ACE_GUARD_T_CPP
 
 // FUZZ: disable check_for_ACE_Guard
-#include "ace/Guard_T.h"
+#include "Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Guard_T.inl"
+#include "Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_DUMP)
-# include "ace/Log_Category.h"
+# include "Log_Category.h"
 #endif /* ACE_HAS_DUMP */
 
 // ****************************************************************

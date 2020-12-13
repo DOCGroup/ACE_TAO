@@ -10,15 +10,15 @@
 
 #ifndef ACE_FILE_LOCK_H
 #define ACE_FILE_LOCK_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_stdio.h"
+#include "OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -161,8 +161,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/File_Lock.inl"
+#include "File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FILE_LOCK_H */

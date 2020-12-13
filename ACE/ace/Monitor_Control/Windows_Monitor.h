@@ -21,7 +21,7 @@
 
 #include "ace/os_include/os_pdh.h"
 
-#include "ace/Monitor_Control/Monitor_Control_export.h"
+#include "Monitor_Control_export.h"
 
 #if defined (ACE_HAS_WIN32_PDH)
 

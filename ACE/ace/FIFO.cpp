@@ -1,16 +1,16 @@
-#include "ace/FIFO.h"
+#include "FIFO.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO.inl"
+#include "FIFO.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_fcntl.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_sys_stat.h"
+#include "OS_NS_fcntl.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

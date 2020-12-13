@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
-#include "orbsvcs/Notify/EventType.h"
+#include "Notify_Constraint_Interpreter.h"
+#include "Notify_Constraint_Visitors.h"
+#include "EventType.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

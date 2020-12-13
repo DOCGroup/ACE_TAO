@@ -30,7 +30,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminC.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Lock;
@@ -297,7 +297,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ObserverStrategy.inl"
+#include "EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

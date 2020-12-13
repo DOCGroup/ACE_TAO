@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Endpoint.h"
+#include "COIOP_Endpoint.h"
 #include "tao/Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

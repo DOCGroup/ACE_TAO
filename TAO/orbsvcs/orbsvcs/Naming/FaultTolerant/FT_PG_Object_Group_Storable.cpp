@@ -1,9 +1,9 @@
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
+#include "FT_PG_Object_Group_Storable.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+#include "FT_PG_Group_Factory.h"
+#include "FT_Naming_Replication_Manager.h"
 #include "tao/Stub.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

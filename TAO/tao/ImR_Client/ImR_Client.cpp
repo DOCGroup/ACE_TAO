@@ -1,4 +1,4 @@
-#include "tao/ImR_Client/ImR_Client.h"
+#include "ImR_Client.h"
 
 #include "ace/Vector_T.h"
 #include "tao/debug.h"
@@ -7,8 +7,8 @@
 #include "tao/Profile.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/ImR_Client/ServerObject_i.h"
-#include "tao/ImR_Client/ImplRepoC.h"
+#include "ServerObject_i.h"
+#include "ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

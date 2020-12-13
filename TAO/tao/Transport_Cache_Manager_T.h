@@ -21,8 +21,8 @@
 
 #include "ace/Hash_Map_Manager_T.h"
 
-#include "tao/Cache_Entries_T.h"
-#include "tao/orbconf.h"
+#include "Cache_Entries_T.h"
+#include "orbconf.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"
@@ -266,11 +266,11 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Transport_Cache_Manager_T.inl"
+# include "Transport_Cache_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Transport_Cache_Manager_T.cpp"
+#include "Transport_Cache_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

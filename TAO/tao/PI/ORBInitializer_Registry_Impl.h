@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI/pi_export.h"
+#include "pi_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI/PI.h"
+#include "PI.h"
 
 #include "tao/CORBA_methods.h"
 #include "tao/Objref_VarOut_T.h"

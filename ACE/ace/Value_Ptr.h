@@ -14,7 +14,7 @@
 #ifndef ACE_VALUE_PTR_H
 #define ACE_VALUE_PTR_H
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #include <algorithm>
 

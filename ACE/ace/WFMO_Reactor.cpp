@@ -1,18 +1,18 @@
-#include "ace/WFMO_Reactor.h"
+#include "WFMO_Reactor.h"
 
 #if defined (ACE_WIN32)
 
-#include "ace/Handle_Set.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Thread.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/Null_Condition.h"
+#include "Handle_Set.h"
+#include "Timer_Heap.h"
+#include "Thread.h"
+#include "OS_NS_errno.h"
+#include "Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/WFMO_Reactor.inl"
+#include "WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include "Auto_Ptr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

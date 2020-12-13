@@ -1,5 +1,5 @@
-#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
-#include "tao/DynamicInterface/Request.h"
+#include "DII_Reply_Dispatcher.h"
+#include "Request.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/Pluggable_Messaging_Utils.h"

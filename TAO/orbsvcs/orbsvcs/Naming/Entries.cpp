@@ -6,7 +6,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/Naming/Entries.h"
+#include "Entries.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

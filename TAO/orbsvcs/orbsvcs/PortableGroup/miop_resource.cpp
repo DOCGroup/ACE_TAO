@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/miop_resource.h"
-#include "orbsvcs/PortableGroup/miopconf.h"
-#include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.h"
+#include "miop_resource.h"
+#include "miopconf.h"
+#include "Fragments_Cleanup_Strategy.h"
 
 #include "tao/debug.h"
 

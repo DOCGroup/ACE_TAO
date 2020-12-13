@@ -24,7 +24,7 @@
 #if TAO_HAS_SCIOP == 1
 
 #include "tao/Transport_Acceptor.h"
-#include "tao/Strategies/SCIOP_Connection_Handler.h"
+#include "SCIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"
 
@@ -214,7 +214,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Strategies/SCIOP_Acceptor.inl"
+#include "SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_SCIOP == 1 */

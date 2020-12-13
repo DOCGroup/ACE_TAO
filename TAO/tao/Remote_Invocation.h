@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Invocation_Base.h"
-#include "tao/Transport.h"
+#include "Invocation_Base.h"
+#include "Transport.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/operation_details.h"
+#include "operation_details.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -114,7 +114,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Remote_Invocation.inl"
+# include "Remote_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

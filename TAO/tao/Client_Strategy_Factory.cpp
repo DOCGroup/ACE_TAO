@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Client_Strategy_Factory.h"
+#include "Client_Strategy_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

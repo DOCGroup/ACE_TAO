@@ -1,8 +1,8 @@
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "orbsvcs/Event/EC_Reactive_ConsumerControl.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h" // @@ MSVC 6 bug
+#include "EC_ConsumerAdmin.h"
+#include "EC_Reactive_ConsumerControl.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_ProxySupplier.h"
+#include "EC_ProxyConsumer.h" // @@ MSVC 6 bug
 
 #include "tao/Messaging/Messaging.h"
 #include "tao/ORB_Core.h"
@@ -10,7 +10,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_ConsumerControl.inl"
+#include "EC_Reactive_ConsumerControl.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -9,7 +9,7 @@
 //=============================================================================
 
 // This needs to go outside of the #if !defined() block.  Don't ask...
-#include "ace/Task.h"
+#include "Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -17,7 +17,7 @@
 
 #ifndef ACE_STREAM_MODULES
 #define ACE_STREAM_MODULES
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -153,12 +153,12 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Stream_Modules.cpp"
+#include "Stream_Modules.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Stream_Modules.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_STREAM_MODULES */

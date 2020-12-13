@@ -1,5 +1,5 @@
-#include "tao/PortableServer/IdUniquenessStrategyUniqueFactoryImpl.h"
-#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
+#include "IdUniquenessStrategyUniqueFactoryImpl.h"
+#include "IdUniquenessStrategyUnique.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

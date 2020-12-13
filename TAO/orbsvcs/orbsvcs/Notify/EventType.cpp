@@ -1,14 +1,14 @@
-#include "orbsvcs/Notify/EventType.h"
+#include "EventType.h"
 
 #include "ace/ACE.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_string.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/EventType.inl"
+#include "EventType.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Topology_Saver.h"
+#include "Topology_Saver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

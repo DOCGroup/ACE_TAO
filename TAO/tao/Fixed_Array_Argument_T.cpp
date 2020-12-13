@@ -1,10 +1,10 @@
 #ifndef TAO_FIXED_ARRAY_ARGUMENT_T_CPP
 #define TAO_FIXED_ARRAY_ARGUMENT_T_CPP
 
-#include "tao/Fixed_Array_Argument_T.h"
+#include "Fixed_Array_Argument_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Fixed_Array_Argument_T.inl"
+#include "Fixed_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

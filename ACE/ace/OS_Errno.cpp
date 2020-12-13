@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/OS_Errno.h"
+#include "OS_Errno.h"
 
 // Inlining this class on debug builds with gcc on Solaris can cause
 // deadlocks during static initialization. On non debug builds it
@@ -10,12 +10,12 @@
 #  undef ACE_INLINE
 # endif /* ACE_INLINE */
 # define ACE_INLINE
-# include "ace/OS_Errno.inl"
+# include "OS_Errno.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_HAS_WINCE_BROKEN_ERRNO)
 
-#include "ace/OS_Memory.h"
+#include "OS_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

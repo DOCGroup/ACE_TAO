@@ -1,23 +1,23 @@
 // -*- C++ -*-
-#include "tao/default_resource.h"
+#include "default_resource.h"
 
-#include "tao/debug.h"
-#include "tao/IIOP_Factory.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Connector_Registry.h"
-#include "tao/Reactive_Flushing_Strategy.h"
-#include "tao/Block_Flushing_Strategy.h"
-#include "tao/Leader_Follower_Flushing_Strategy.h"
-#include "tao/LRU_Connection_Purging_Strategy.h"
-#include "tao/LF_Strategy_Complete.h"
-#include "tao/Codeset_Descriptor_Base.h"
-#include "tao/Codeset_Manager_Factory_Base.h"
-#include "tao/Codeset_Manager.h"
-#include "tao/Null_Fragmentation_Strategy.h"
-#include "tao/On_Demand_Fragmentation_Strategy.h"
-#include "tao/MMAP_Allocator.h"
-#include "tao/Load_Protocol_Factory_T.h"
-#include "tao/Time_Policy_Manager.h"
+#include "debug.h"
+#include "IIOP_Factory.h"
+#include "Acceptor_Registry.h"
+#include "Connector_Registry.h"
+#include "Reactive_Flushing_Strategy.h"
+#include "Block_Flushing_Strategy.h"
+#include "Leader_Follower_Flushing_Strategy.h"
+#include "LRU_Connection_Purging_Strategy.h"
+#include "LF_Strategy_Complete.h"
+#include "Codeset_Descriptor_Base.h"
+#include "Codeset_Manager_Factory_Base.h"
+#include "Codeset_Manager.h"
+#include "Null_Fragmentation_Strategy.h"
+#include "On_Demand_Fragmentation_Strategy.h"
+#include "MMAP_Allocator.h"
+#include "Load_Protocol_Factory_T.h"
+#include "Time_Policy_Manager.h"
 
 #include "ace/TP_Reactor.h"
 #include "ace/Malloc.h"
@@ -28,7 +28,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/default_resource.inl"
+#include "default_resource.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

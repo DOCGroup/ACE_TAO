@@ -11,17 +11,17 @@
 
 #ifndef ACE_TLI_STREAM_H
 #define ACE_TLI_STREAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/TLI.h"
+#include "TLI.h"
 
-#include "ace/INET_Addr.h"
+#include "INET_Addr.h"
 
 #if defined (ACE_HAS_TLI)
 
@@ -130,9 +130,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI_Stream.inl"
+#include "TLI_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TLI_STREAM_H */

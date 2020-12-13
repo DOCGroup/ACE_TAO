@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_WIN32_CEGCC_H
 #define ACE_CONFIG_WIN32_CEGCC_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #  error Use config-win32.h in config.h instead of this header
@@ -25,7 +25,7 @@
 #  define ACE_HAS_PENTIUM
 #endif
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 #include /**/ <cegcc.h>
 #include /**/ <w32api.h>
@@ -101,5 +101,5 @@
 
 #define ACE_DLL_PREFIX ACE_TEXT ("lib")
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_CEGCC_H */

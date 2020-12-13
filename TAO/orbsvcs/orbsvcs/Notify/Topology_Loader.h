@@ -12,7 +12,7 @@
 #define TOPOLOGY_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/config-all.h"
 

@@ -6,9 +6,9 @@
  */
 //=============================================================================
 
-#include "orbsvcs/Naming/Storable.h"
+#include "Storable.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Naming/Storable.inl"
+#include "Storable.inl"
 #endif /* __ACE_INLINE__ */
 

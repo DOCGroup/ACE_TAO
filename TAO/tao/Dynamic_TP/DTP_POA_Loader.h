@@ -14,8 +14,8 @@
 #define TAO_DYNAMIC_TP_POA_LOADER_H
 #include /**/ "ace/pre.h"
 #include "tao/orbconf.h"
-#include "tao/Dynamic_TP/dynamic_tp_export.h"
-#include "tao/Dynamic_TP/DTP_Config.h"
+#include "dynamic_tp_export.h"
+#include "DTP_Config.h"
 #include "tao/CSD_Framework/CSD_Strategy_Repository.h"
 #include "ace/Synch.h"
 #include "ace/Service_Object.h"

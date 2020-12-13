@@ -1,10 +1,10 @@
 #ifndef ACE_CHANNEL_CLIENTS_T_CPP
 #define ACE_CHANNEL_CLIENTS_T_CPP
 
-#include "orbsvcs/Channel_Clients_T.h"
+#include "Channel_Clients_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Channel_Clients_T.inl"
+#include "Channel_Clients_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

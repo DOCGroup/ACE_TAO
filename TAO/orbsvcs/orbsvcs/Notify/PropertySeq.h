@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,7 +66,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/PropertySeq.inl"
+#include "PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

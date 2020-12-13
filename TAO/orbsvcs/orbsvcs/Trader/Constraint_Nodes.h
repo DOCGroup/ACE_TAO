@@ -16,7 +16,7 @@
 #include "tao/Basic_Types.h"
 #include "tao/String_Manager_T.h"
 
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "trading_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

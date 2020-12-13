@@ -1,13 +1,13 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
+#include "MC_Notify_Service.h"
 
 #include "tao/debug.h"
 
 #include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 
-#include "orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"
+#include "MC_Default_Factory.h"
+#include "MonitorEventChannelFactory.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

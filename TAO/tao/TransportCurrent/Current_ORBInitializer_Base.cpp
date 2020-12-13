@@ -1,6 +1,6 @@
 
 #include "tao/PI/ORBInitInfo.h"
-#include "tao/TransportCurrent/Current_ORBInitializer_Base.h"
+#include "Current_ORBInitializer_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

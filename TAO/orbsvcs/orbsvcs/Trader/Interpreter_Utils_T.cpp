@@ -1,8 +1,8 @@
 #ifndef TAO_INTERPRETER_UTILS_CPP
 #define TAO_INTERPRETER_UTILS_CPP
 
-#include "orbsvcs/Trader/Interpreter_Utils_T.h"
-#include "orbsvcs/Trader/Constraint_Visitors.h"
+#include "Interpreter_Utils_T.h"
+#include "Constraint_Visitors.h"
 #include "tao/DynamicAny/DynSequence_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

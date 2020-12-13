@@ -1,11 +1,11 @@
 // -*- C++ -*-
-#include "tao/IIOP_Factory.h"
+#include "IIOP_Factory.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IIOP_Acceptor.h"
-#include "tao/IIOP_Connector.h"
-#include "tao/IOPC.h"
+#include "IIOP_Acceptor.h"
+#include "IIOP_Connector.h"
+#include "IOPC.h"
 #include "ace/OS_NS_strings.h"
 
 static const char the_prefix[] = "iiop";

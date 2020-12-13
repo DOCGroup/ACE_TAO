@@ -1,7 +1,7 @@
-#include "tao/BiDir_GIOP/BiDir_ORBInitializer.h"
-#include "tao/BiDir_GIOP/BiDir_PolicyFactory.h"
-#include "tao/BiDir_GIOP/BiDirGIOP.h"
-#include "tao/BiDir_GIOP/BiDir_Service_Context_Handler.h"
+#include "BiDir_ORBInitializer.h"
+#include "BiDir_PolicyFactory.h"
+#include "BiDirGIOP.h"
+#include "BiDir_Service_Context_Handler.h"
 #include "tao/PI/ORBInitInfo.h"
 
 #include "tao/ORB_Constants.h"

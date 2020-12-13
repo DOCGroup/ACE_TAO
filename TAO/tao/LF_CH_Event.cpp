@@ -1,8 +1,8 @@
-#include "tao/LF_CH_Event.h"
-#include "tao/LF_Follower.h"
-#include "tao/debug.h"
-#include "tao/Connection_Handler.h"
-#include "tao/Transport.h"
+#include "LF_CH_Event.h"
+#include "LF_Follower.h"
+#include "debug.h"
+#include "Connection_Handler.h"
+#include "Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

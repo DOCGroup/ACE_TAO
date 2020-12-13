@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/IORInterceptor/IORInterceptor_Details.h"
+#include "IORInterceptor_Details.h"
 #include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

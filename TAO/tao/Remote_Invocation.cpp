@@ -1,16 +1,16 @@
-#include "tao/Remote_Invocation.h"
-#include "tao/Profile.h"
-#include "tao/Profile_Transport_Resolver.h"
-#include "tao/Stub.h"
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Core.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Network_Priority_Protocols_Hooks.h"
-#include "tao/debug.h"
-#include "tao/SystemException.h"
+#include "Remote_Invocation.h"
+#include "Profile.h"
+#include "Profile_Transport_Resolver.h"
+#include "Stub.h"
+#include "Connection_Handler.h"
+#include "ORB_Core.h"
+#include "Protocols_Hooks.h"
+#include "Network_Priority_Protocols_Hooks.h"
+#include "debug.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Remote_Invocation.inl"
+# include "Remote_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,14 +1,14 @@
-#include "tao/Tagged_Profile.h"
-#include "tao/ORB_Core.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/Transport_Acceptor.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/debug.h"
-#include "tao/target_specification.h"
-#include "tao/CDR.h"
+#include "Tagged_Profile.h"
+#include "ORB_Core.h"
+#include "Acceptor_Registry.h"
+#include "Transport_Acceptor.h"
+#include "Thread_Lane_Resources.h"
+#include "debug.h"
+#include "target_specification.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Tagged_Profile.inl"
+# include "Tagged_Profile.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

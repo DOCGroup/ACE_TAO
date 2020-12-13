@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Versioned_Namespace.h"
+#include "Versioned_Namespace.h"
 #include "ace/Time_Policy.h"
 #include "ace/Time_Policy_T.h"
 #include "ace/Countdown_Time_T.h"
@@ -58,7 +58,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB_Time_Policy.inl"
+# include "ORB_Time_Policy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -13,9 +13,9 @@
 #ifndef TAO_STORABLE_BASE_H
 #define TAO_STORABLE_BASE_H
 
-#include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
-#include "tao/CDR.h"
+#include "TAO_Export.h"
+#include "orbconf.h"
+#include "CDR.h"
 
 #include "ace/SString.h"
 
@@ -178,7 +178,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Storable_Base.inl"
+#include "Storable_Base.inl"
 #endif
 
 

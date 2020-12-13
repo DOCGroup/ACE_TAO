@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Buffering_Strategy.h"
+#include "Buffering_Strategy.h"
 
-#include "orbsvcs/Notify/Method_Request.h"
-#include "orbsvcs/Notify/Notify_Extensions.h"
-#include "orbsvcs/Notify/QoSProperties.h"
-#include "orbsvcs/Notify/Notify_Extensions.h"
+#include "Method_Request.h"
+#include "Notify_Extensions.h"
+#include "QoSProperties.h"
+#include "Notify_Extensions.h"
 
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/Time_Utilities.h"

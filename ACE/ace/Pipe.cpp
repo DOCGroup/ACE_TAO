@@ -1,27 +1,27 @@
-#include "ace/Pipe.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_Memory.h"
-#include "ace/Truncate.h"
-#include "ace/Malloc_Base.h"
+#include "Pipe.h"
+#include "SOCK_Acceptor.h"
+#include "SOCK_Connector.h"
+#include "Log_Category.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_Memory.h"
+#include "Truncate.h"
+#include "Malloc_Base.h"
 
 #if defined (ACE_HAS_STREAM_PIPES) || defined (__QNX__)
-#  include "ace/OS_NS_unistd.h"
+#  include "OS_NS_unistd.h"
 #endif  // ACE_HAS_STREAM_PIPES || __QNX__
 
 #if defined (ACE_LACKS_LISTEN) && defined (ACE_LACKS_SOCKETPAIR) \
   && !defined (ACE_HAS_STREAM_PIPES)
-#  include "ace/OS_NS_time.h"
-#  include "ace/os_include/sys/os_un.h"
+#  include "OS_NS_time.h"
+#  include "os_include/sys/os_un.h"
 #endif
 
-#include "ace/os_include/netinet/os_tcp.h"
+#include "os_include/netinet/os_tcp.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Pipe.inl"
+#include "Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
 

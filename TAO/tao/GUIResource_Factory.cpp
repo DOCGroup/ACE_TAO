@@ -1,7 +1,7 @@
-#include "tao/GUIResource_Factory.h"
+#include "GUIResource_Factory.h"
 #include "ace/Reactor.h"
 #include "ace/Guard_T.h"
-#include "tao/debug.h"
+#include "debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

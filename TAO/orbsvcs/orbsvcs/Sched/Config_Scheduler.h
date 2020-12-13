@@ -12,12 +12,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "sched_export.h"
 
 #if defined (TAO_USES_STRATEGY_SCHEDULER)
-#include "orbsvcs/Sched/Strategy_Scheduler.h"
+#include "Strategy_Scheduler.h"
 #else
-#include "orbsvcs/Sched/Scheduler_Generic.h"
+#include "Scheduler_Generic.h"
 #endif /* defined (TAO_USES_STRATEGY_SCHEDULER) */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

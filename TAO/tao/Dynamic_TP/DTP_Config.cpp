@@ -1,8 +1,8 @@
-#include "tao/Dynamic_TP/DTP_Config.h"
+#include "DTP_Config.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/DTP_ORBInitializer.h"
+#include "DTP_ORBInitializer.h"
 
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"

@@ -14,9 +14,9 @@
 #ifndef ACE_DEV_POLL_REACTOR_H
 #define ACE_DEV_POLL_REACTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -28,20 +28,20 @@
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
-#include "ace/Pipe.h"
-#include "ace/Lock_Adapter_T.h"
-#include "ace/Reactor_Impl.h"
-#include "ace/Reactor_Token_T.h"
-#include "ace/Token.h"
+#include "Pipe.h"
+#include "Lock_Adapter_T.h"
+#include "Reactor_Impl.h"
+#include "Reactor_Token_T.h"
+#include "Token.h"
 
 #if defined (ACE_HAS_REACTOR_NOTIFICATION_QUEUE)
-# include "ace/Notification_Queue.h"
+# include "Notification_Queue.h"
 #endif /* ACE_HAS_REACTOR_NOTIFICATION_QUEUE */
 
 #if defined (ACE_HAS_DEV_POLL)
 struct pollfd;
 #elif defined (ACE_HAS_EVENT_POLL)
-#  include "ace/Array_Map.h"
+#  include "Array_Map.h"
 #  include /**/ <sys/epoll.h>
 #endif
 
@@ -1188,11 +1188,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/Dev_Poll_Reactor.inl"
+# include "Dev_Poll_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* ACE_HAS_EVENT_POLL || ACE_HAS_DEV_POLL */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif  /* ACE_DEV_POLL_REACTOR_H */

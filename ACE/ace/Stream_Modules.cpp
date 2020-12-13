@@ -1,8 +1,8 @@
 #ifndef ACE_STREAM_MODULES_CPP
 #define ACE_STREAM_MODULES_CPP
 
-#include "ace/Stream_Modules.h"
-#include "ace/OS_NS_string.h"
+#include "Stream_Modules.h"
+#include "OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

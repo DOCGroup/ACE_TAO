@@ -10,18 +10,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Topology_Object.h"
-#include "orbsvcs/Notify/Topology_Factory.h"
-#include "orbsvcs/Notify/Reconnection_Registry.h"
-#include "orbsvcs/Notify/Routing_Slip.h"
-#include "orbsvcs/Notify/Validate_Client_Task.h"
-#include "orbsvcs/Notify/Name_Value_Pair.h"
+#include "Topology_Object.h"
+#include "Topology_Factory.h"
+#include "Reconnection_Registry.h"
+#include "Routing_Slip.h"
+#include "Validate_Client_Task.h"
+#include "Name_Value_Pair.h"
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/NotifyExtS.h"

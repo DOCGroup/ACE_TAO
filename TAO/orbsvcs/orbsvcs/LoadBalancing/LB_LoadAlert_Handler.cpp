@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/LoadBalancing/LB_LoadAlert_Handler.h"
+#include "LB_LoadAlert_Handler.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

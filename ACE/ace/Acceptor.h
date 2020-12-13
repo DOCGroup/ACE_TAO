@@ -11,16 +11,16 @@
 #ifndef ACE_ACCEPTOR_H
 #define ACE_ACCEPTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Strategies_T.h"
-#include "ace/Synch_Options.h"
+#include "Strategies_T.h"
+#include "Synch_Options.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -686,13 +686,13 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Acceptor.cpp"
+#include "Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_ACCEPTOR_H */

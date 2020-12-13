@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ObjRefTemplate/ort_export.h"
+#include "ort_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/ORT_Adapter.h"
-#include "tao/ObjRefTemplate/ObjectReferenceTemplate_i.h"
+#include "ObjectReferenceTemplate_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

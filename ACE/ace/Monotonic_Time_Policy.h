@@ -6,11 +6,11 @@
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
-#include /**/ "ace/Time_Value_T.h"
+#include /**/ "Time_Value_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -41,8 +41,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Monotonic_Time_Policy.inl"
+#include "Monotonic_Time_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MONOTONIC_TIME_POLICY_H */

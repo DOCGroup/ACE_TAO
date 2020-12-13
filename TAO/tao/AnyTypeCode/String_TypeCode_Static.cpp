@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "String_TypeCode_Static.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/String_TypeCode_Static.inl"
+# include "String_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

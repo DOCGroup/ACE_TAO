@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Server_Strategy_Factory.h"
+#include "Server_Strategy_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

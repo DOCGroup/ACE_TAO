@@ -1,5 +1,5 @@
-#include "tao/PI/PolicyFactory_Registry.h"
-#include "tao/PI/PolicyFactoryC.h"
+#include "PolicyFactory_Registry.h"
+#include "PolicyFactoryC.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PolicyC.h"
 #include "tao/SystemException.h"

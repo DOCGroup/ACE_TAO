@@ -14,7 +14,7 @@
 #define ACE_CONFIG_AIX_7_H
 
 // Diffs from prior AIX versions are related to scandir() arguments.
-#include "ace/config-aix-5.x.h"
+#include "config-aix-5.x.h"
 
 #ifdef ACE_SCANDIR_CMP_USES_VOIDPTR
 #  undef ACE_SCANDIR_CMP_USES_VOIDPTR

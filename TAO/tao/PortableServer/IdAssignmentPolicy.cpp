@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PortableServer/IdAssignmentPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "IdAssignmentPolicy.h"
+#include "PortableServer.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined (CORBA_E_MICRO)

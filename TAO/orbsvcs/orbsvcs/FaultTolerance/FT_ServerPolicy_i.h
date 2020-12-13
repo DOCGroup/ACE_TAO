@@ -14,7 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/FT_CORBA_ORBC.h"
-#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
+#include "FT_ServerORB_export.h"
 #include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -67,7 +67,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
+#include "FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -12,9 +12,9 @@
 #ifndef ACE_TOKENIZER_T_H
 #define ACE_TOKENIZER_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -227,13 +227,13 @@ typedef ACE_Tokenizer_T <ACE_TCHAR> ACE_Tokenizer;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Tokenizer_T.cpp"
+#include "Tokenizer_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Tokenizer_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_TOKENIZER_T_H */

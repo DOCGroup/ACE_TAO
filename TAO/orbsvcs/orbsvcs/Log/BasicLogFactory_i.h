@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/BasicLog_i.h"
+#include "LogMgr_i.h"
+#include "BasicLog_i.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

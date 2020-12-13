@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTCORBA/RTCORBA_includeC.h"
-#include "tao/RTCORBA/RT_ORBInitializer.h"
+#include "RTCORBA_includeC.h"
+#include "RT_ORBInitializer.h"
 #include "tao/LocalObject.h"
 #include "ace/Hash_Map_Manager_T.h"
 

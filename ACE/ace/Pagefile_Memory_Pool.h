@@ -12,9 +12,9 @@
 #ifndef ACE_PAGEFILE_MEMORY_POOL_H
 #define ACE_PAGEFILE_MEMORY_POOL_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
 
-#include "ace/ACE.h"
-#include "ace/os_include/sys/os_mman.h"
+#include "ACE.h"
+#include "os_include/sys/os_mman.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -195,8 +195,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_WIN32 && !ACE_HAS_PHARLAP */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Pagefile_Memory_Pool.inl"
+#include "Pagefile_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MEMORY_POOL_H */

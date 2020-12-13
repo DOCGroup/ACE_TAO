@@ -1,20 +1,20 @@
-#include "ace/Configuration.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
-#include "ace/Tokenizer_T.h"
+#include "Configuration.h"
+#include "Auto_Ptr.h"
+#include "SString.h"
+#include "OS_NS_string.h"
+#include "OS_NS_strings.h"
+#include "Tokenizer_T.h"
 
 #if !defined (ACE_LACKS_ACCESS)
-#  include "ace/OS_NS_unistd.h"
+#  include "OS_NS_unistd.h"
 #endif /* ACE_LACKS_ACCESS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Configuration.inl"
+#include "Configuration.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

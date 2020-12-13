@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/LF_Event_Loop_Thread_Helper.h"
+#include "LF_Event_Loop_Thread_Helper.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LF_Event_Loop_Thread_Helper.inl"
+# include "LF_Event_Loop_Thread_Helper.inl"
 #endif /* __ACE_INLINE__ */
 

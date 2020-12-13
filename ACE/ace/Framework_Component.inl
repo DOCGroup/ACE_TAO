@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/ACE.h"
-#include "ace/Guard_T.h"
+#include "ACE.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

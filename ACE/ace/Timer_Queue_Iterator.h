@@ -1,7 +1,7 @@
 #ifndef ACE_TIMER_QUEUE_ITERATOR_H
 #define ACE_TIMER_QUEUE_ITERATOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 /**
  * @file Timer_Queue_Iterator.h
@@ -9,7 +9,7 @@
  * Re-factored from Timer_Queue_T.h
  */
 
-#include "ace/Time_Value.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -184,16 +184,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_Iterator.inl"
+#include "Timer_Queue_Iterator.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_Queue_Iterator.cpp"
+#include "Timer_Queue_Iterator.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Queue_Iterator.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_QUEUE_ITERATOR_H */

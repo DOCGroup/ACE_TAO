@@ -1,20 +1,20 @@
 #ifndef ACE_MODULE_CPP
 #define ACE_MODULE_CPP
 
-#include "ace/Module.h"
+#include "Module.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Stream_Modules.h"
+#include "Stream_Modules.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Module.inl"
+#include "Module.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

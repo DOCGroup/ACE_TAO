@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

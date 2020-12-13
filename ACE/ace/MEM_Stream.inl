@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/MEM_Stream.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "MEM_Stream.h"
+#include "OS_NS_sys_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

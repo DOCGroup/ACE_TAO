@@ -20,7 +20,7 @@
 
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
-#include "orbsvcs/FaultTolerance/fault_tol_export.h"
+#include "fault_tol_export.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

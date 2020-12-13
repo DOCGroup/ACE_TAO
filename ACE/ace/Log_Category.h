@@ -11,11 +11,11 @@
 #ifndef ACE_LOG_CATEGORY_H
 #define ACE_LOG_CATEGORY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Log_Priority.h"
-#include "ace/Log_Msg.h"
-#include "ace/Thread_Mutex.h"
+#include "Log_Priority.h"
+#include "Log_Msg.h"
+#include "Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -309,8 +309,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Log_Category.inl"
+#include "Log_Category.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOG_CATEGORY_H */

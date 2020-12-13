@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_VXWORKS_6_4_H
 #define ACE_CONFIG_VXWORKS_6_4_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if ! defined (VXWORKS)
 # define VXWORKS
@@ -38,7 +38,7 @@
 
 // Compiler-specific configuration.
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 
 # define ACE_LACKS_IOSTREAM_FX
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
@@ -349,5 +349,5 @@
 # define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 #endif /* ACE_HAS_IP_MULTICAST */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_4_H */

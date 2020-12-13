@@ -1,18 +1,18 @@
-#include "tao/Invocation_Base.h"
-#include "tao/Stub.h"
-#include "tao/operation_details.h"
-#include "tao/ORB_Core.h"
-#include "tao/SystemException.h"
-#include "tao/PortableInterceptor.h"  /* Must always be visible. */
+#include "Invocation_Base.h"
+#include "Stub.h"
+#include "operation_details.h"
+#include "ORB_Core.h"
+#include "SystemException.h"
+#include "PortableInterceptor.h"  /* Must always be visible. */
 
 #include "ace/Dynamic_Service.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "tao/PortableInterceptorC.h"
+# include "PortableInterceptorC.h"
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Invocation_Base.inl"
+# include "Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

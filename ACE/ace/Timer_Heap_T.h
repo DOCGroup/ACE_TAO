@@ -10,16 +10,16 @@
 
 #ifndef ACE_TIMER_HEAP_T_H
 #define ACE_TIMER_HEAP_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Timer_Queue_T.h"
+#include "Timer_Queue_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Free_List.h"
-#include "ace/Unbounded_Set.h"
+#include "Free_List.h"
+#include "Unbounded_Set.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -334,12 +334,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_Heap_T.cpp"
+#include "Timer_Heap_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Heap_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_HEAP_T_H */

@@ -7,7 +7,7 @@
 #include <set>
 #include <vector>
 
-#include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
+#include "ExtendedTypeInfo.hpp"
 
 namespace XSCRT
 {
@@ -258,6 +258,6 @@ namespace XSCRT
   }
 }
 
-#include <ace/XML_Utils/XSCRT/Traversal.tpp>
+#include "Traversal.tpp"
 
 #endif  // XSCRT_TRAVERSAL_HPP

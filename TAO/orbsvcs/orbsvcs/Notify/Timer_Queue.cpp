@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Timer_Queue.h"
+#include "Timer_Queue.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

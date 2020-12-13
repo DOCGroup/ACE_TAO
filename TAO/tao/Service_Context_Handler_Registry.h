@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -10,16 +10,16 @@
 
 #ifndef ACE_ATOMIC_OP_GCC_T_H
 #define ACE_ATOMIC_OP_GCC_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
-#include "ace/ACE_export.h"
+#include "Thread_Mutex.h"
+#include "ACE_export.h"
 
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
 
@@ -117,11 +117,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Atomic_Op_GCC_T.inl"
+#include "Atomic_Op_GCC_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Atomic_Op_GCC_T.cpp"
+#include "Atomic_Op_GCC_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -131,5 +131,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_GCC_ATOMIC_BUILTINS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_ATOMIC_OP_GCC_T_H*/

@@ -1,7 +1,7 @@
 #ifndef ACE_TIMEPROBE_T_CPP
 #define ACE_TIMEPROBE_T_CPP
 
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -9,9 +9,9 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Timeprobe.h"
-#include "ace/High_Res_Timer.h"
-#include "ace/OS_NS_string.h"
+#include "Timeprobe.h"
+#include "High_Res_Timer.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

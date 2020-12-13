@@ -1,9 +1,9 @@
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+#include "FT_Storable_Naming_Context.h"
+#include "FT_Storable_Naming_Context_Factory.h"
+#include "FT_Naming_Manager.h"
+#include "FT_Naming_Replication_Manager.h"
 
 #include "orbsvcs/PortableGroup/PG_Utils.h"
 #include "orbsvcs/PortableGroup/PG_Property_Utils.h"

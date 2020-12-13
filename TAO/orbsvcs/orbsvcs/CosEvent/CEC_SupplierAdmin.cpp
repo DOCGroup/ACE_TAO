@@ -1,11 +1,11 @@
-#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
+#include "CEC_SupplierAdmin.h"
+#include "CEC_ProxyPushConsumer.h"
+#include "CEC_ProxyPullConsumer.h"
+#include "CEC_EventChannel.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_SupplierAdmin.inl"
+#include "CEC_SupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

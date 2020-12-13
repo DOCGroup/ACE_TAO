@@ -1,7 +1,7 @@
 #ifndef ACE_CLEANUP_STRATEGIES_T_CPP
 #define ACE_CLEANUP_STRATEGIES_T_CPP
 
-#include "ace/Cleanup_Strategies_T.h"
+#include "Cleanup_Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

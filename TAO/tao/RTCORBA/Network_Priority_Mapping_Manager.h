@@ -21,8 +21,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
-#include "tao/RTCORBA/Network_Priority_Mapping.h"
+#include "rtcorba_export.h"
+#include "Network_Priority_Mapping.h"
 #include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -148,7 +148,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.inl"
+#include "Network_Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */

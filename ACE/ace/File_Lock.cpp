@@ -1,11 +1,11 @@
-#include "ace/File_Lock.h"
-#include "ace/Log_Category.h"
+#include "File_Lock.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/File_Lock.inl"
+#include "File_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
 

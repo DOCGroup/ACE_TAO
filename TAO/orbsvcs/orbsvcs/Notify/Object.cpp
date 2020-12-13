@@ -1,16 +1,16 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Object.h"
-#include "orbsvcs/Notify/POA_Helper.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Builder.h"
-#include "orbsvcs/Notify/ThreadPool_Task.h"
-#include "orbsvcs/Notify/Reactive_Task.h"
+#include "Object.h"
+#include "POA_Helper.h"
+#include "Worker_Task.h"
+#include "Properties.h"
+#include "Builder.h"
+#include "ThreadPool_Task.h"
+#include "Reactive_Task.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Event_Manager.h"
+#include "Event_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Object.inl"
+#include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

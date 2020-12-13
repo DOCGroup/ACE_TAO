@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/CosNotify_Initializer.h"
-#include "orbsvcs/Notify/CosNotify_Service.h"
+#include "CosNotify_Initializer.h"
+#include "CosNotify_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

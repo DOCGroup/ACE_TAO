@@ -26,11 +26,11 @@
 
 
 #include "orbsvcs/DsEventLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
+#include "Log_i.h"
 #include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/Log/EventLogConsumer.h"
+#include "EventLogConsumer.h"
 
-#include "orbsvcs/Log/eventlog_serv_export.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

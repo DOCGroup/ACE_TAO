@@ -8,7 +8,7 @@
  *
  * @author Johnny Willemsen
  */
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

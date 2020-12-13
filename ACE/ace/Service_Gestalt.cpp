@@ -1,31 +1,31 @@
-#include "ace/Svc_Conf.h"
-#include "ace/Get_Opt.h"
-#include "ace/ARGV.h"
-#include "ace/Malloc.h"
-#include "ace/Service_Manager.h"
-#include "ace/Service_Types.h"
-#include "ace/Containers.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
-#include "ace/DLL.h"
-#include "ace/XML_Svc_Conf.h"
-#include "ace/SString.h"
+#include "Svc_Conf.h"
+#include "Get_Opt.h"
+#include "ARGV.h"
+#include "Malloc.h"
+#include "Service_Manager.h"
+#include "Service_Types.h"
+#include "Containers.h"
+#include "Auto_Ptr.h"
+#include "Reactor.h"
+#include "Thread_Manager.h"
+#include "DLL.h"
+#include "XML_Svc_Conf.h"
+#include "SString.h"
 
 #ifndef ACE_LACKS_UNIX_SIGNALS
-# include "ace/Signal.h"
+# include "Signal.h"
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "OS_NS_time.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_sys_stat.h"
 
-#include "ace/TSS_T.h"
-#include "ace/Service_Gestalt.h"
+#include "TSS_T.h"
+#include "Service_Gestalt.h"
 
-#include "ace/Svc_Conf_Param.h"
+#include "Svc_Conf_Param.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1328,7 +1328,7 @@ ACE_Service_Gestalt::close ()
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Gestalt.inl"
+#include "Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
 
 // Allocate a Service Manager.

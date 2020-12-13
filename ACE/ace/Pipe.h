@@ -11,18 +11,18 @@
 #ifndef ACE_PIPE_H
 #define ACE_PIPE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
+#include "Default_Constants.h"
 
-#include "ace/OS_NS_sys_uio.h"
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_sys_uio.h"
+#include "OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -159,9 +159,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Pipe.inl"
+#include "Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_PIPE_H */

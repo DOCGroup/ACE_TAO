@@ -24,7 +24,7 @@
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-#include "tao/TransportCurrent/Transport_Current_Export.h"
+#include "Transport_Current_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

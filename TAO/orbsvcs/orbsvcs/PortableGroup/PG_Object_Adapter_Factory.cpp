@@ -1,5 +1,5 @@
-#include "orbsvcs/PortableGroup/PG_Object_Adapter_Factory.h"
-#include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
+#include "PG_Object_Adapter_Factory.h"
+#include "PG_Servant_Dispatcher.h"
 
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"

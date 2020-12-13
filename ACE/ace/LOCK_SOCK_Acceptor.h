@@ -11,9 +11,9 @@
 
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_H
 #define ACE_LOCK_SOCK_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SOCK_Acceptor.h"
+#include "SOCK_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,12 +54,12 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/LOCK_SOCK_Acceptor.cpp"
+#include "LOCK_SOCK_Acceptor.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("LOCK_SOCK_Acceptor.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCK_SOCK_ACCEPTOR_H */

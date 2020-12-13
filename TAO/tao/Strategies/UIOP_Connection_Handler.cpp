@@ -1,9 +1,9 @@
-#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "UIOP_Connection_Handler.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Transport.h"
-#include "tao/Strategies/UIOP_Endpoint.h"
+#include "UIOP_Transport.h"
+#include "UIOP_Endpoint.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"

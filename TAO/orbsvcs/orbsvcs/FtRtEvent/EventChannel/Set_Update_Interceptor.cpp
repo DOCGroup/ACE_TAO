@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "tao/CDR.h"
 #include "tao/AnyTypeCode/IOPA.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
+#include "Set_Update_Interceptor.h"
 #include "orbsvcs/FTRTC.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Request_Context_Repository.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,7 +2,7 @@
 
 #ifndef ACE_CONFIG_WIN32_COMMON_H
 #define ACE_CONFIG_WIN32_COMMON_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -12,7 +12,7 @@
 // in the rest of this file. Also, it defined ACE_HAS_WINCE, which is used
 // in this file.
 #if defined (_WIN32_WCE)
-#  include "ace/config-WinCE.h"
+#  include "config-WinCE.h"
 #endif /* _WIN32_WCE */
 
 #if defined(__MINGW32__)
@@ -696,5 +696,5 @@
 #  define ACE_DEFAULT_BACKLOG SOMAXCONN
 #endif /* ACE_DEFAULT_BACKLOG */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_COMMON_H */

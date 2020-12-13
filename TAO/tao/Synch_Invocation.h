@@ -11,13 +11,13 @@
 #define TAO_SYNCH_INVOCATION_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Remote_Invocation.h"
+#include "Remote_Invocation.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -199,7 +199,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Synch_Invocation.inl"
+# include "Synch_Invocation.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

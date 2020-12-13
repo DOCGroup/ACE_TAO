@@ -12,13 +12,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Policy_ForwardC.h"
+#include "Policy_ForwardC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Pseudo_VarOut_T.h"
+#include "Pseudo_VarOut_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;

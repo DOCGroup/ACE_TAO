@@ -1,15 +1,15 @@
-#include "ace/Parse_Node.h"
+#include "Parse_Node.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/Service_Config.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
-#include "ace/Task.h"
-#include "ace/DLL.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/ARGV.h"
+#include "Service_Config.h"
+#include "Service_Repository.h"
+#include "Service_Types.h"
+#include "Task.h"
+#include "DLL.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
+#include "ARGV.h"
 
 #include <list>
 

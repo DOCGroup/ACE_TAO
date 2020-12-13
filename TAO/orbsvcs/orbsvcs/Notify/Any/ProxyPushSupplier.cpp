@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Any/ProxyPushSupplier.h"
+#include "ProxyPushSupplier.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Any/PushConsumer.h"
+#include "PushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/Thread.h"
-#include "ace/Log_Category.h"
+#include "Thread.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

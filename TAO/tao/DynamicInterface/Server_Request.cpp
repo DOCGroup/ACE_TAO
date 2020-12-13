@@ -1,8 +1,8 @@
 // Implementation of the Dynamic Server Skeleton Interface.
 
-#include "tao/DynamicInterface/Server_Request.h"
-#include "tao/DynamicInterface/DII_Arguments.h"
-#include "tao/DynamicInterface/Unknown_User_Exception.h"
+#include "Server_Request.h"
+#include "DII_Arguments.h"
+#include "Unknown_User_Exception.h"
 #include "tao/PortableServer/Collocated_Arguments_Converter.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/GIOP_Utils.h"
@@ -13,7 +13,7 @@
 #include "tao/SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Server_Request.inl"
+# include "Server_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

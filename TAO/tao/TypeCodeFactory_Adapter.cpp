@@ -1,4 +1,4 @@
-#include "tao/TypeCodeFactory_Adapter.h"
+#include "TypeCodeFactory_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
 

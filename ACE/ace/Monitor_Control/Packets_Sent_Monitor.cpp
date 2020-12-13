@@ -1,4 +1,4 @@
-#include "ace/Monitor_Control/Packets_Sent_Monitor.h"
+#include "Packets_Sent_Monitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

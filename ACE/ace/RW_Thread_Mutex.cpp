@@ -6,19 +6,19 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/RW_Thread_Mutex.h"
+#include "RW_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RW_Thread_Mutex.inl"
+#include "RW_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
+#include "Guard_T.h"
 
 
 

@@ -1,14 +1,14 @@
 #ifndef TAO_UNION_TYPECODE_CPP
 #define TAO_UNION_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Union_TypeCode.h"
-#include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
+#include "Union_TypeCode.h"
+#include "TypeCode_Case_Base_T.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Union_TypeCode.inl"
+# include "Union_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "tao/AnyTypeCode/Any.h"
+#include "Any.h"
 
 #include "ace/Value_Ptr.h"
 #include "ace/Truncate.h"

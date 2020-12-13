@@ -1,10 +1,10 @@
 #ifndef TAO_VECTOR_ARGUMENT_T_CPP
 #define TAO_VECTOR_ARGUMENT_T_CPP
 
-#include "tao/Vector_Argument_T.h"
+#include "Vector_Argument_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Vector_Argument_T.inl"
+#include "Vector_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

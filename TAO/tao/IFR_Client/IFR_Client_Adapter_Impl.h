@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IFR_Client/ifr_client_export.h"
+#include "ifr_client_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -26,8 +26,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RTCORBA.h"
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "RTCORBA.h"
+#include "rtcorba_export.h"
 #include "tao/Invocation_Endpoint_Selectors.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

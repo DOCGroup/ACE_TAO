@@ -1,10 +1,10 @@
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.h"
+#include "ECG_UDP_Out_Endpoint.h"
 #include "ace/INET_Addr.h"
 #include "ace/Sock_Connect.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
+#include "ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 

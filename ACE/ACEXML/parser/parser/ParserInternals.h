@@ -12,7 +12,7 @@
 #define _ACEXML_PARSER_INTERNALS_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/parser/parser/Parser_export.h"
+#include "Parser_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once

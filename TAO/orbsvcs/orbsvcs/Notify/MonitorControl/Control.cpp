@@ -1,4 +1,4 @@
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
+#include "Control.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

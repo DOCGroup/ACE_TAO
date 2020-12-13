@@ -1,4 +1,4 @@
-#include "tao/Compression/Compressor_Factory.h"
+#include "Compressor_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

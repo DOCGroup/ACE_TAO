@@ -6,7 +6,7 @@
  */
 //=============================================================================
 
-#include "tao/PortableServer/RequestProcessingStrategy.h"
+#include "RequestProcessingStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

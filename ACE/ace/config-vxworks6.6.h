@@ -6,13 +6,13 @@
 
 #ifndef ACE_CONFIG_VXWORKS_6_6_H
 #define ACE_CONFIG_VXWORKS_6_6_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_VXWORKS)
 # define ACE_VXWORKS 0x660
 #endif /* ! ACE_VXWORKS */
 
-#include "ace/config-vxworks6.5.h"
+#include "config-vxworks6.5.h"
 
 #if defined (ACE_HAS_PENTIUM)
 # define ACE_LACKS_LOG2
@@ -27,6 +27,6 @@
 #define ACE_HAS_CPUSET_T
 #define ACE_HAS_VXCPULIB
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_6_H */
 

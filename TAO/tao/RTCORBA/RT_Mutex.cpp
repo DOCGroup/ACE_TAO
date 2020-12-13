@@ -1,8 +1,8 @@
-#include "tao/RTCORBA/RT_Mutex.h"
+#include "RT_Mutex.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_ORB.h"
+#include "RT_ORB.h"
 #include "tao/SystemException.h"
 #include "ace/OS_NS_sys_time.h"
 

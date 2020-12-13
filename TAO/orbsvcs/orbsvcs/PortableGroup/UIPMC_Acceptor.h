@@ -26,7 +26,7 @@
 #include "ace/Acceptor.h"
 #include "ace/SOCK_Acceptor.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -151,7 +151,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
+#include "UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

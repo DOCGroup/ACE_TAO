@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/Obstack.h"
+#include "Obstack.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,12 +1,12 @@
-#include "tao/RTPortableServer/RT_Object_Adapter_Factory.h"
+#include "RT_Object_Adapter_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/PortableServer/Object_Adapter.h"
 #include "tao/ORB_Core.h"
-#include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
-#include "tao/RTPortableServer/RT_Policy_Validator.h"
-#include "tao/RTPortableServer/RT_Collocation_Resolver.h"
+#include "RT_Servant_Dispatcher.h"
+#include "RT_Policy_Validator.h"
+#include "RT_Collocation_Resolver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

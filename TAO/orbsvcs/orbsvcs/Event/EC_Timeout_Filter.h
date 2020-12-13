@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "EC_QOS_Info.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -104,7 +104,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Filter.inl"
+#include "EC_Timeout_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

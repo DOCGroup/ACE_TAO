@@ -1,4 +1,4 @@
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "LogRecordStore.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

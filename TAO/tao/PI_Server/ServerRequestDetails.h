@@ -69,7 +69,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/PI_Server/ServerRequestDetails.inl"
+#include "ServerRequestDetails.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

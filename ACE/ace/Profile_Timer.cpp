@@ -1,24 +1,24 @@
-#include "ace/Profile_Timer.h"
+#include "Profile_Timer.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Profile_Timer.inl"
+# include "Profile_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
 
 #if defined (ACE_HAS_PRUSAGE_T)
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_unistd.h"
 #endif
 
 
 
 #if (defined (ACE_HAS_PRUSAGE_T) || defined (ACE_HAS_GETRUSAGE)) && !defined (ACE_WIN32)
 
-#include "ace/OS_NS_stdio.h"
+#include "OS_NS_stdio.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,17 +1,17 @@
-#include "ace/UUID.h"
-#include "ace/Guard_T.h"
+#include "UUID.h"
+#include "Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UUID.inl"
+#include "UUID.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/ACE.h"
+#include "Log_Category.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_netdb.h"
+#include "OS_NS_unistd.h"
+#include "ACE.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,4 +1,4 @@
-#include "tao/PortableServer/Active_Object_Map_Entry.h"
+#include "Active_Object_Map_Entry.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

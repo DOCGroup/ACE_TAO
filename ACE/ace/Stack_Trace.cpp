@@ -23,10 +23,10 @@
  */
 //=============================================================================
 
-#include "ace/Stack_Trace.h"
-#include "ace/Min_Max.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
+#include "Stack_Trace.h"
+#include "Min_Max.h"
+#include "OS_NS_string.h"
+#include "OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

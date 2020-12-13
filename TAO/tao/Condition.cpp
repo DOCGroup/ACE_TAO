@@ -1,10 +1,10 @@
 #ifndef TAO_CONDITION_CPP
 #define TAO_CONDITION_CPP
-#include "tao/Condition.h"
-#include "tao/debug.h"
+#include "Condition.h"
+#include "debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Condition.inl"
+# include "Condition.inl"
 #endif /* __ACE_INLINE__ */
 
 

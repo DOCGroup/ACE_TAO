@@ -1,10 +1,10 @@
 #ifndef ACE_INTRUSIVE_AUTO_PTR_CPP
 #define ACE_INTRUSIVE_AUTO_PTR_CPP
 
-#include "ace/Intrusive_Auto_Ptr.h"
+#include "Intrusive_Auto_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Intrusive_Auto_Ptr.inl"
+#include "Intrusive_Auto_Ptr.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -12,19 +12,19 @@
 #ifndef ACE_FILECACHE_H
 #define ACE_FILECACHE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Mem_Map.h"
+#include "Mem_Map.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Synch_Traits.h"
-#include "ace/RW_Thread_Mutex.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "Hash_Map_Manager_T.h"
+#include "Null_Mutex.h"
+#include "Synch_Traits.h"
+#include "RW_Thread_Mutex.h"
+#include "OS_NS_sys_stat.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -350,6 +350,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_FILECACHE_H */

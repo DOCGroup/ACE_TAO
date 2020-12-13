@@ -1,16 +1,16 @@
 #ifndef TAO_ALIAS_TYPECODE_CPP
 #define TAO_ALIAS_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Alias_TypeCode.h"
+#include "Alias_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Alias_TypeCode.inl"
+# include "Alias_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "TypeCode_Traits.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"

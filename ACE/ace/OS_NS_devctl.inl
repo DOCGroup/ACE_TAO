@@ -1,8 +1,8 @@
 #if defined ACE_LACKS_POSIX_DEVCTL && defined ACE_EMULATE_POSIX_DEVCTL
-#include "ace/os_include/os_stropts.h"
+#include "os_include/os_stropts.h"
 #endif
 
-#include "ace/os_include/os_errno.h"
+#include "os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,9 +1,9 @@
-#include "orbsvcs/IOR_Multicast.h"
+#include "IOR_Multicast.h"
 
 #include "tao/debug.h"
 
 #include "ace/SOCK_Connector.h"
-#include "orbsvcs/Log_Macros.h"
+#include "Log_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

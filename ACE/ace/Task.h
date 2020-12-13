@@ -10,15 +10,15 @@
 
 #ifndef ACE_TASK_H
 #define ACE_TASK_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Manager.h"
+#include "Thread_Manager.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -291,11 +291,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task.inl"
+#include "Task.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the ACE_Task templates classes at this point.
-#include "ace/Task_T.h"
+#include "Task_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TASK_H */

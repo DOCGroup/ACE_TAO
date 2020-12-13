@@ -1,6 +1,6 @@
-#include "tao/TSS_Resources.h"
-#include "tao/GUIResource_Factory.h"
-#include "tao/TAO_Singleton.h"
+#include "TSS_Resources.h"
+#include "GUIResource_Factory.h"
+#include "TAO_Singleton.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

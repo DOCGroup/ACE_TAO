@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PS_CurrentC.h"
+#include "PS_CurrentC.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

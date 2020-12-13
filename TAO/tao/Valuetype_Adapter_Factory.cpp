@@ -1,4 +1,4 @@
-#include "tao/Valuetype_Adapter_Factory.h"
+#include "Valuetype_Adapter_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

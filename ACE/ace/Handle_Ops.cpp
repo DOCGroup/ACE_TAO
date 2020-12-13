@@ -1,8 +1,8 @@
-#include "ace/Handle_Ops.h"
+#include "Handle_Ops.h"
 
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/Time_Value.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_fcntl.h"
+#include "Time_Value.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

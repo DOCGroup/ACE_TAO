@@ -3,9 +3,9 @@
 
 #ifndef ACE_CONFIG_LYNXOS_178_H
 #define ACE_CONFIG_LYNXOS_178_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/config-lynxos.h"
+#include "config-lynxos.h"
 
 #undef ACE_HAS_ALLOCA
 #undef ACE_HAS_GETIFADDRS
@@ -57,5 +57,5 @@
 # define ACE_HAS_PTHREAD_SIGMASK_PROTOTYPE
 #endif /* ACE_MT_SAFE */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_LYNXOS_178_H */

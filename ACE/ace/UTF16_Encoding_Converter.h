@@ -14,9 +14,9 @@
 #ifndef ACE_UTF16_ENCODING_CONVERTER_H
 #define ACE_UTF16_ENCODING_CONVERTER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Encoding_Converter.h"
+#include "Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -74,11 +74,11 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/UTF16_Encoding_Converter.inl"
+#include "UTF16_Encoding_Converter.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_USES_WCHAR */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_UTF16_ENCODING_CONVERTER_H */

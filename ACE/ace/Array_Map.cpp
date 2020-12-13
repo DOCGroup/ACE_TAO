@@ -1,13 +1,13 @@
 #ifndef ACE_ARRAY_MAP_CPP
 #define ACE_ARRAY_MAP_CPP
 
-#include "ace/Array_Map.h"
+#include "Array_Map.h"
 
 #ifndef __ACE_INLINE__
-# include "ace/Array_Map.inl"
+# include "Array_Map.inl"
 #endif  /* !__ACE_INLINE__ */
 
-#include "ace/checked_iterator.h"
+#include "checked_iterator.h"
 
 #include <algorithm>
 

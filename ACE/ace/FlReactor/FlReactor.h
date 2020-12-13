@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FlReactor/ACE_FlReactor_export.h"
+#include "ACE_FlReactor_export.h"
 #include "ace/Select_Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

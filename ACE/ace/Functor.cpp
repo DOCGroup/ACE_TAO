@@ -22,11 +22,11 @@
 //=============================================================================
 
 
-#include "ace/Functor_T.h"
-#include "ace/Functor.h"
+#include "Functor_T.h"
+#include "Functor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Functor.inl"
+#include "Functor.inl"
 #endif /* __ACE_INLINE__ */
 
 

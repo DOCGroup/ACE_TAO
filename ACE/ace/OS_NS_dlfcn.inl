@@ -1,20 +1,20 @@
 // -*- C++ -*-
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Default_Constants.h"
-#include "ace/os_include/os_fcntl.h"
-#include "ace/os_include/os_string.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
+#include "Default_Constants.h"
+#include "os_include/os_fcntl.h"
+#include "os_include/os_string.h"
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
+# include "OS_NS_stdio.h"
 #endif
 
 #if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-#  include "ace/OS_Memory.h"
-#  include "ace/OS_NS_string.h"
+#  include "OS_Memory.h"
+#  include "OS_NS_string.h"
 #endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

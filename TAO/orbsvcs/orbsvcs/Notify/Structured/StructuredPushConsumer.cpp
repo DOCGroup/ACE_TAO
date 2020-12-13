@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
+#include "StructuredPushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "tao/Stub.h" // For debug messages printing out ORBid.
 #include "tao/ORB_Core.h"

@@ -12,10 +12,10 @@
 
 #ifndef ACE_SYNCH_TRAITS_H
 #define ACE_SYNCH_TRAITS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"    /* Need to know threads, template settings */
-#include "ace/Lock.h"
+#include /**/ "config-all.h"    /* Need to know threads, template settings */
+#include "Lock.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -110,5 +110,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SYNCH_TRAITS_H */

@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CONV_FRAMEC.h"
+#include "CONV_FRAMEC.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -161,7 +161,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Tagged_Components.inl"
+# include "Tagged_Components.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

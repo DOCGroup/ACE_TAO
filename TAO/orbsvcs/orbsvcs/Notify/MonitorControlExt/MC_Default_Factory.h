@@ -17,7 +17,7 @@
 
 #include "orbsvcs/Notify/Default_Factory.h"
 
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+#include "notify_mc_ext_export.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

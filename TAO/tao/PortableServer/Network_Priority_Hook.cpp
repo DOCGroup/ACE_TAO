@@ -1,6 +1,6 @@
-#include "tao/PortableServer/Network_Priority_Hook.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/POA_Cached_Policies.h"
+#include "Network_Priority_Hook.h"
+#include "Root_POA.h"
+#include "POA_Cached_Policies.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/Handle_Set.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_sys_select.h"
+#include "Handle_Set.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_sys_select.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

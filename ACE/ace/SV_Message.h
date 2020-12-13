@@ -12,9 +12,9 @@
 #ifndef ACE_SV_MESSAGE_H
 #define ACE_SV_MESSAGE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,9 +57,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Message.inl"
+#include "SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SV_MESSAGE_H */

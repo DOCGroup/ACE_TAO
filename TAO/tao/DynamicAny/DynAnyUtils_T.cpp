@@ -13,18 +13,18 @@
 #ifndef TAO_DYNANYUTILS_T_CPP
 #define TAO_DYNANYUTILS_T_CPP
 
-#include "tao/DynamicAny/DynAnyUtils_T.h"
+#include "DynAnyUtils_T.h"
 
-#include "tao/DynamicAny/DynAny_i.h"
-#include "tao/DynamicAny/DynArray_i.h"
-#include "tao/DynamicAny/DynEnum_i.h"
-#include "tao/DynamicAny/DynSequence_i.h"
-#include "tao/DynamicAny/DynStruct_i.h"
-#include "tao/DynamicAny/DynUnion_i.h"
-#include "tao/DynamicAny/DynValue_i.h"
-#include "tao/DynamicAny/DynValueBox_i.h"
+#include "DynAny_i.h"
+#include "DynArray_i.h"
+#include "DynEnum_i.h"
+#include "DynSequence_i.h"
+#include "DynStruct_i.h"
+#include "DynUnion_i.h"
+#include "DynValue_i.h"
+#include "DynValueBox_i.h"
 
-#include "tao/DynamicAny/DynAnyFactory.h"
+#include "DynAnyFactory.h"
 
 #include "ace/Auto_Ptr.h"
 

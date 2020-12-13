@@ -13,9 +13,9 @@
 
 #ifndef ACE_AUTO_PTR_H
 #define ACE_AUTO_PTR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -200,11 +200,11 @@ ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_Ptr.inl"
+#include "Auto_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Auto_Ptr.cpp"
+#include "Auto_Ptr.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -216,5 +216,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_AUTO_PTR_H */

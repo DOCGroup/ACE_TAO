@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Strategies/Optimized_Connection_Endpoint_Selector.h"
+#include "Optimized_Connection_Endpoint_Selector.h"
 
 #include "tao/debug.h"
 #include "tao/Stub.h"

@@ -1,4 +1,4 @@
-#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.h"
+#include "FT_ServerPolicy_i.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
@@ -6,7 +6,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/FaultTolerance/FT_ServerPolicy_i.inl"
+#include "FT_ServerPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

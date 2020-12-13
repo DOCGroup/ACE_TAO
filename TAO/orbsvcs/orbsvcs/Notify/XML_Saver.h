@@ -12,7 +12,7 @@
 #define XML_SAVER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/Topology_Saver.h"
+#include "Topology_Saver.h"
 
 #include "ace/streams.h"
 

@@ -1,8 +1,8 @@
-#include "tao/Wait_On_Reactor.h"
-#include "tao/ORB_Core.h"
-#include "tao/Transport.h"
-#include "tao/Synch_Reply_Dispatcher.h"
-#include "tao/ORB_Time_Policy.h"
+#include "Wait_On_Reactor.h"
+#include "ORB_Core.h"
+#include "Transport.h"
+#include "Synch_Reply_Dispatcher.h"
+#include "ORB_Time_Policy.h"
 
 #include "ace/Reactor.h"
 

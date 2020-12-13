@@ -14,9 +14,9 @@
 
 #ifndef ACE_TOKEN_INVARIANTS_H
 #define ACE_TOKEN_INVARIANTS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,9 +24,9 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Map_Manager.h"
-#include "ace/Local_Tokens.h"
-#include "ace/Null_Mutex.h"
+#include "Map_Manager.h"
+#include "Local_Tokens.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -209,5 +209,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TOKEN_INVARIANTS_H */

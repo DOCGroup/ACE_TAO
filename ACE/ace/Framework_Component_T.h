@@ -10,8 +10,8 @@
 
 #ifndef ACE_FRAMEWORK_COMPONENT_T_H
 #define ACE_FRAMEWORK_COMPONENT_T_H
-#include /**/ "ace/pre.h"
-#include "ace/Framework_Component.h"
+#include /**/ "pre.h"
+#include "Framework_Component.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -58,12 +58,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
           (new ACE_Framework_Component_T<CLASS> (INSTANCE));
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Framework_Component_T.cpp"
+#include "Framework_Component_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Framework_Component_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FRAMEWORK_COMPONENT_T_H */

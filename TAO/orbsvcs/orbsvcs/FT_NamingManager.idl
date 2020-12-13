@@ -12,7 +12,7 @@
 #ifndef _FT_NAMING_MANAGER_IDL_
 #define _FT_NAMING_MANAGER_IDL_
 
-#include "orbsvcs/PortableGroup.idl"
+#include "PortableGroup.idl"
 
 module FT_Naming
 {

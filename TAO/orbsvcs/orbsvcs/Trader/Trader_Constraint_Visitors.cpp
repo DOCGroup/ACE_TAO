@@ -1,4 +1,4 @@
-#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
+#include "Trader_Constraint_Visitors.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

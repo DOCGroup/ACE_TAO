@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/PI_Server/PI_Server.h"
-#include "tao/PI_Server/PI_Server_Loader.h"
-#include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
+#include "PI_Server.h"
+#include "PI_Server_Loader.h"
+#include "ServerRequestInterceptor_Factory_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

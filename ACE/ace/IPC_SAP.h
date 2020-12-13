@@ -10,10 +10,10 @@
 
 #ifndef ACE_IPC_SAP_H
 #define ACE_IPC_SAP_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Flag_Manip.h"
-#include "ace/os_include/sys/os_types.h"
+#include "Flag_Manip.h"
+#include "os_include/sys/os_types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -82,8 +82,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/IPC_SAP.inl"
+#include "IPC_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_IPC_SAP_H */

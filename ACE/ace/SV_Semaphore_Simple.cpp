@@ -1,13 +1,13 @@
-#include "ace/SV_Semaphore_Simple.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/os_include/sys/os_sem.h"
+#include "SV_Semaphore_Simple.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "os_include/sys/os_sem.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Semaphore_Simple.inl"
+#include "SV_Semaphore_Simple.inl"
 #endif /* !__ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

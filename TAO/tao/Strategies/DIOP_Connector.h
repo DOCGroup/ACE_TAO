@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 #include "tao/Transport_Connector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

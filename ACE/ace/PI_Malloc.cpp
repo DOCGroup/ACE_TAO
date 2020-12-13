@@ -1,17 +1,17 @@
 #ifndef ACE_PI_MALLOC_CPP
 #define ACE_PI_MALLOC_CPP
 
-#include "ace/PI_Malloc.h"
+#include "PI_Malloc.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/PI_Malloc.inl"
+#include "PI_Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Object_Manager.h"
-#include "ace/Process_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include "Object_Manager.h"
+#include "Process_Mutex.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

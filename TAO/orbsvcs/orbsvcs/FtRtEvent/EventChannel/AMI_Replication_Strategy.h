@@ -11,7 +11,7 @@
 #ifndef AMI_REPLICATION_STRATEGY_H
 #define AMI_REPLICATION_STRATEGY_H
 
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
+#include "Replication_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

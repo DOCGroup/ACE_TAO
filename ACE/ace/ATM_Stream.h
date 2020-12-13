@@ -10,9 +10,9 @@
 
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,16 +20,16 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include "ace/ATM_Addr.h"
-#include "ace/ATM_Params.h"
+#include "ATM_Addr.h"
+#include "ATM_Params.h"
 
 #if defined (ACE_WIN32)
-#include "ace/SOCK_Stream.h"
+#include "SOCK_Stream.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Stream ATM_Stream;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #else
-#include "ace/TLI_Stream.h"
+#include "TLI_Stream.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_TLI_Stream ATM_Stream;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -95,9 +95,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Stream.inl"
+#include "ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_STREAM_H */

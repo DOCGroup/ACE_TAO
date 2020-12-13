@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/ServerRequestInterceptor_Adapter_Factory.h"
+#include "ServerRequestInterceptor_Adapter_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -24,7 +24,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Select_Reactor.h"
-#include "ace/FoxReactor/ACE_FoxReactor_export.h"
+#include "ACE_FoxReactor_export.h"
 
 #include <fx.h>
 

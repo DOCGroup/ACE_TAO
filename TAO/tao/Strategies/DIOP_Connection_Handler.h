@@ -21,10 +21,10 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Wait_Strategy.h"
 #include "tao/Connection_Handler.h"
-#include "tao/Strategies/DIOP_Transport.h"
+#include "DIOP_Transport.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/Reactor.h"
 #include "ace/Acceptor.h"

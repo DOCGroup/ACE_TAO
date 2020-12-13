@@ -14,9 +14,9 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Persistent_Naming_Context.h"
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 #include "orbsvcs/orbsvcs/PortableGroupC.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "FT_Naming_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

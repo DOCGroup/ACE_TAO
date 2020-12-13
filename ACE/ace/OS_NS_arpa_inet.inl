@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

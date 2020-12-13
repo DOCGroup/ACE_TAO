@@ -30,7 +30,7 @@
 #if defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1
 
 # ifndef TAO_VERSIONED_NAMESPACE_NAME
-#  include "tao/Version.h"
+#  include "Version.h"
 
 // Preprocessor symbols will not be expanded if they are
 // concatenated.  Force the preprocessor to expand them during the

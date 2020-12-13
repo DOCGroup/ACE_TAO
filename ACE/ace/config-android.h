@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_ANDROID_H
 #define ACE_CONFIG_ANDROID_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // NOTE: We must be careful from now on to distinguish between the API level
 // and NDK version.
@@ -21,7 +21,7 @@
 #define ACE_ANDROID
 #define ACE_PLATFORM_CONFIG config-android.h
 
-#include "ace/config-linux-common.h"
+#include "config-linux-common.h"
 
 /*
  * Android NDK Revision Macros
@@ -258,6 +258,6 @@
 #define ACE_LACKS_GETADDRINFO
 #define ACE_LACKS_GETNAMEINFO
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_ANDROID_H */

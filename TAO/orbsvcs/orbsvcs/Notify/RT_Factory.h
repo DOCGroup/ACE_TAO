@@ -10,13 +10,13 @@
 #define TAO_Notify_RT_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/rt_notify_export.h"
+#include "rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Default_Factory.h"
+#include "Default_Factory.h"
 
 #if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
 #  pragma option push -w-8022

@@ -16,15 +16,15 @@
 #define TAO_EC_KOKYU_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_Dispatching.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/rtkokyu_event_export.h"
+#include "rtkokyu_event_export.h"
 
 #include "ace/Thread_Manager.h"
 
@@ -136,7 +136,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Kokyu_Dispatching.inl"
+#include "EC_Kokyu_Dispatching.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

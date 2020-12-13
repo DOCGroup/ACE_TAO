@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
+#include "StructuredEvent.h"
 #include "orbsvcs/Notify/PropertySeq.h"
 #include "orbsvcs/Notify/Consumer.h"
 #include "tao/debug.h"

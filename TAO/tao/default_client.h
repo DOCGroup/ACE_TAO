@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/Invocation_Retry_Params.h"
+#include "Client_Strategy_Factory.h"
+#include "Invocation_Retry_Params.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

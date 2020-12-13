@@ -12,13 +12,13 @@
 #define _ACEXML_INPUTSOURCE_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/CharStream.h"
+#include "CharStream.h"
 #include "ace/Copy_Disabled.h"
 
 /**

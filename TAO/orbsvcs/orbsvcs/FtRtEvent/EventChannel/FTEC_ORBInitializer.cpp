@@ -1,8 +1,8 @@
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ORBInitializer.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Set_Update_Interceptor.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ForwardCtrlServerInterceptor.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FtEventServiceInterceptor.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "FTEC_ORBInitializer.h"
+#include "Set_Update_Interceptor.h"
+#include "ForwardCtrlServerInterceptor.h"
+#include "FtEventServiceInterceptor.h"
+#include "Request_Context_Repository.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

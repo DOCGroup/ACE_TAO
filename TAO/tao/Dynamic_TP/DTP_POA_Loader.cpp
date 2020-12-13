@@ -1,11 +1,11 @@
-#include "tao/Dynamic_TP/DTP_POA_Loader.h"
+#include "DTP_POA_Loader.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #include "tao/debug.h"
 #include "tao/CSD_Framework/CSD_Framework_Loader.h"
-#include "tao/Dynamic_TP/DTP_Config.h"
-#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
+#include "DTP_Config.h"
+#include "DTP_POA_Strategy.h"
 #include "ace/OS_NS_strings.h"
 #include "tao/CSD_Framework/CSD_ORBInitializer.h"
 #include "tao/PI/DLL_Resident_ORB_Initializer.h"

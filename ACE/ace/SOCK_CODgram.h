@@ -11,17 +11,17 @@
 
 #ifndef ACE_SOCK_CODGRAM_H
 #define ACE_SOCK_CODGRAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_IO.h"
-#include "ace/Addr.h"
-#include "ace/INET_Addr.h"
+#include "SOCK_IO.h"
+#include "Addr.h"
+#include "INET_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -134,8 +134,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_CODgram.inl"
+#include "SOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SOCK_CODGRAM_H */

@@ -14,18 +14,18 @@
 #ifndef ACE_PROCESS_SEMAPHORE_H
 #define ACE_PROCESS_SEMAPHORE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !(defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM))
-# include "ace/SV_Semaphore_Complex.h"
+# include "SV_Semaphore_Complex.h"
 #else
-# include "ace/Semaphore.h"
+# include "Semaphore.h"
 #endif /* !(ACE_WIN32 || ACE_HAS_POSIX_SEM) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -150,8 +150,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Process_Semaphore.inl"
+#include "Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_PROCESS_SEMAPHORE_H */

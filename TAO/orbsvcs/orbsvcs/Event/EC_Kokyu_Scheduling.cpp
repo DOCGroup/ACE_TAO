@@ -1,11 +1,11 @@
-#include "orbsvcs/Event/EC_Kokyu_Scheduling.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "EC_Kokyu_Scheduling.h"
+#include "EC_QOS_Info.h"
+#include "EC_ProxyConsumer.h"
+#include "EC_ProxySupplier.h"
+#include "EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Kokyu_Scheduling.inl"
+#include "EC_Kokyu_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

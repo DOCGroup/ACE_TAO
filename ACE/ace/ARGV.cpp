@@ -1,13 +1,13 @@
 #ifndef ACE_ARGV_CPP
 #define ACE_ARGV_CPP
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
+#include "Log_Category.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_string.h"
+#include "OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ARGV.inl"
+#include "ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
 // Open versioned namespace, if enabled by the user.

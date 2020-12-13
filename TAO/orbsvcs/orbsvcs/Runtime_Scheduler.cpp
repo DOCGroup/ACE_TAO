@@ -1,6 +1,6 @@
-#include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Runtime_Scheduler.h"
+#include "Log_Macros.h"
+#include "Time_Utilities.h"
+#include "Runtime_Scheduler.h"
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

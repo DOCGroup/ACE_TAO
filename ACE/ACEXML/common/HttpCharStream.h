@@ -12,15 +12,15 @@
 #define _ACEXML_HTTPCHARSTREAM_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/CharStream.h"
-#include "ACEXML/common/URL_Addr.h"
-#include "ACEXML/common/Mem_Map_Stream.h"
+#include "CharStream.h"
+#include "URL_Addr.h"
+#include "Mem_Map_Stream.h"
 
 /**
  * @class ACEXML_HttpCharStream

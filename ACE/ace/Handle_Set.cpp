@@ -1,14 +1,14 @@
 // Handle_Set.cpp
-#include "ace/Handle_Set.h"
+#include "Handle_Set.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Handle_Set.inl"
+#include "Handle_Set.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

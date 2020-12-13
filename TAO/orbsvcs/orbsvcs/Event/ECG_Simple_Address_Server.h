@@ -11,7 +11,7 @@
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "EC_Lifetime_Utils_T.h"
 #include "ace/INET_Addr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -59,7 +59,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Simple_Address_Server.inl"
+#include "ECG_Simple_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

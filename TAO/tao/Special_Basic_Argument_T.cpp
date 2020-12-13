@@ -1,11 +1,11 @@
 #ifndef TAO_SPECIAL_BASIC_ARGUMENT_T_CPP
 #define TAO_SPECIAL_BASIC_ARGUMENT_T_CPP
 
-#include "tao/Special_Basic_Argument_T.h"
-#include "tao/CDR.h"
+#include "Special_Basic_Argument_T.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Special_Basic_Argument_T.inl"
+#include "Special_Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -13,7 +13,7 @@
 #define TAO_SL3_CREDENTIALS_CURATOR_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Security/security_export.h"
+#include "security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

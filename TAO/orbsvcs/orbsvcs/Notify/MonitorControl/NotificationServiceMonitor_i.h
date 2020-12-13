@@ -3,7 +3,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/MonitorControl/NotificationServiceMCS.h"
+#include "NotificationServiceMCS.h"
 
 #include "tao/ORB.h"
 

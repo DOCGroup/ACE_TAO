@@ -11,15 +11,15 @@
 #ifndef ACE_SHARED_OBJECT_H
 #define ACE_SHARED_OBJECT_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
+#include "os_include/sys/os_types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,9 +51,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Object.inl"
+#include "Shared_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SHARED_OBJECT_H */

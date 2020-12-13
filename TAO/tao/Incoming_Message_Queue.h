@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging_Utils.h"
+#include "Pluggable_Messaging_Utils.h"
 #include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -93,7 +93,7 @@ const size_t TAO_MISSING_DATA_UNDEFINED = ~((size_t) 0); // MAX_SIZE_T
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Incoming_Message_Queue.inl"
+# include "Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

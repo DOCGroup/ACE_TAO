@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "ace/config-macros.h"
+#include "config-macros.h"
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Guard_T.h"
-#include "ace/Time_Value.h"
+#include "Guard_T.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

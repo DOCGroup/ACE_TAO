@@ -1,11 +1,11 @@
-#include "ace/Name_Request_Reply.h"
-#include "ace/Basic_Types.h"
-#include "ace/CDR_Base.h"
-#include "ace/Log_Category.h"
-#include "ace/Time_Value.h"
-#include "ace/Truncate.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/arpa/os_inet.h"
+#include "Name_Request_Reply.h"
+#include "Basic_Types.h"
+#include "CDR_Base.h"
+#include "Log_Category.h"
+#include "Time_Value.h"
+#include "Truncate.h"
+#include "OS_NS_string.h"
+#include "os_include/arpa/os_inet.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

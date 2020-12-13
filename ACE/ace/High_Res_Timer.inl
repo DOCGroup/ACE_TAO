@@ -1,8 +1,8 @@
 // -*- C++ -*- */
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 #if defined (ACE_WIN32)
-#  include "ace/OS_NS_sys_time.h"
+#  include "OS_NS_sys_time.h"
 #endif /* ACE_WIN32 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

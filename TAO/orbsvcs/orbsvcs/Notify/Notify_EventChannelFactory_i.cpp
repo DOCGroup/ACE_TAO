@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Notify_EventChannelFactory_i.h"
+#include "Notify_EventChannelFactory_i.h"
 
-#include "orbsvcs/Notify/Service.h"
+#include "Service.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/ORB_Core.h"

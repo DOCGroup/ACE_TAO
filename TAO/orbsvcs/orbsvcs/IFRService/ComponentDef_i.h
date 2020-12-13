@@ -15,15 +15,15 @@
 #ifndef TAO_COMPONENTDEF_I_H
 #define TAO_COMPONENTDEF_I_H
 
-#include "orbsvcs/IFRService/ExtInterfaceDef_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "ExtInterfaceDef_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/IFR_Client/IFR_ComponentsS.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "IFR_Service_Utils_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

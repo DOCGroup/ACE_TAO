@@ -12,20 +12,20 @@
 
 #ifndef ACE_BARRIER_H
 #define ACE_BARRIER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 // ACE platform supports some form of threading.
 #if !defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_errno.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -47,7 +47,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #else /* ACE_HAS_THREADS */
 
-#include "ace/Condition_Thread_Mutex.h"
+#include "Condition_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -181,10 +181,10 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
+#include "Barrier.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_BARRIER_H */

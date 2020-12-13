@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Invocation_Event.h"
+#include "LF_Invocation_Event.h"
 #include "ace/os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -236,7 +236,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Queued_Message.inl"
+# include "Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 

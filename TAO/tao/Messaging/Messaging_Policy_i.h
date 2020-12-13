@@ -13,7 +13,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/orbconf.h"
-#include "tao/Messaging/Messaging.h"
+#include "Messaging.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)
@@ -144,7 +144,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Messaging/Messaging_Policy_i.inl"
+#include "Messaging_Policy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

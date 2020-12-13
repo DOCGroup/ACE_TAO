@@ -18,12 +18,12 @@
 //
 // ======================================================================
 
-#include "ace/UTF32_Encoding_Converter.h"
+#include "UTF32_Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_Memory.h"
-#include "ace/Min_Max.h"
+#include "OS_NS_stdio.h"
+#include "OS_Memory.h"
+#include "Min_Max.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

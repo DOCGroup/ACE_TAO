@@ -1,8 +1,8 @@
-#include "ace/Remote_Name_Space.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Category.h"
-#include "ace/SString.h"
-#include "ace/OS_NS_string.h"
+#include "Remote_Name_Space.h"
+#include "Auto_Ptr.h"
+#include "Log_Category.h"
+#include "SString.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/COIOP_Connector.h"
+#include "COIOP_Connector.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
@@ -9,7 +9,7 @@
 #include "tao/SystemException.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
-#include "tao/Strategies/COIOP_Profile.h"
+#include "COIOP_Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -10,17 +10,17 @@
 //=============================================================================
 #ifndef ACE_REFCOUNTABLE_T_H
 #define ACE_REFCOUNTABLE_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Atomic_Op.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
+#include "Atomic_Op.h"
+#include "Synch_Traits.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -51,16 +51,16 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Refcountable_T.inl"
+#include "Refcountable_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Refcountable_T.cpp"
+#include "Refcountable_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Refcountable_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_REFCOUNTABLE_T_H*/

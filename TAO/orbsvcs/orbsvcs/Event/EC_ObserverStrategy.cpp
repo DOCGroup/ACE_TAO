@@ -1,14 +1,14 @@
-#include "orbsvcs/Event/EC_ObserverStrategy.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "orbsvcs/Event/EC_SupplierAdmin.h"
+#include "EC_ObserverStrategy.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_ProxySupplier.h"
+#include "EC_ProxyConsumer.h"
+#include "EC_ConsumerAdmin.h"
+#include "EC_SupplierAdmin.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Auto_Ptr.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ObserverStrategy.inl"
+#include "EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
 

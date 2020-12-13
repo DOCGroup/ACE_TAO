@@ -10,22 +10,22 @@
 
 #ifndef ACE_FILE_IO_H
 #define ACE_FILE_IO_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/FILE.h"
+#include "FILE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/FILE_Addr.h"
+#include "FILE_Addr.h"
 
 // Used in the FILE_IO.h file...
-#include "ace/os_include/os_stdio.h"
-#include "ace/os_include/sys/os_uio.h"
+#include "os_include/os_stdio.h"
+#include "os_include/sys/os_uio.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)
-#  include "ace/OS_NS_stropts.h"
+#  include "OS_NS_stropts.h"
 #endif /* ACE_HAS_STREAM_PIPES */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -160,8 +160,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_IO.inl"
+#include "FILE_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FILE_IO_H */

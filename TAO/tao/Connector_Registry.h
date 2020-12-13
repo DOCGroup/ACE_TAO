@@ -14,13 +14,13 @@
 #define TAO_CONNECTOR_REGISTRY_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 #include "ace/Global_Macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -97,7 +97,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Connector_Registry.inl"
+#include "Connector_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

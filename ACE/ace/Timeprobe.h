@@ -35,11 +35,11 @@
 
 #ifndef ACE_TIMEPROBE_H
 #define ACE_TIMEPROBE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
-#include /**/ "ace/ACE_export.h"
-#include "ace/Malloc_Allocator.h"
+#include /**/ "config-lite.h"
+#include /**/ "ACE_export.h"
+#include "Malloc_Allocator.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -54,8 +54,8 @@
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_Thread.h"
+#include "OS_NS_time.h"
+#include "OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -115,13 +115,13 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Timeprobe.inl"
+#include "Timeprobe.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Singleton.h"
-#include "ace/Timeprobe_T.h"
+#include "Synch_Traits.h"
+#include "Null_Mutex.h"
+#include "Singleton.h"
+#include "Timeprobe_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -195,5 +195,5 @@ static int ace_timeprobe_##descriptions##_return = \
 #  define ACE_FUNCTION_TIMEPROBE(X)
 
 #endif /* ACE_ENABLE_TIMEPROBES && ACE_COMPILE_TIMEPROBES */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMEPROBE_H */

@@ -12,10 +12,10 @@
 #ifndef ACE_IO_CNTL_MSG_H
 #define ACE_IO_CNTL_MSG_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/os_include/os_stddef.h"
+#include /**/ "ACE_export.h"
+#include "os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -101,9 +101,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/IO_Cntl_Msg.inl"
+#include "IO_Cntl_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_IO_CNTL_MSG_H */

@@ -15,26 +15,26 @@
 #ifndef ACE_OS_NS_THREAD_H
 # define ACE_OS_NS_THREAD_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-all.h"
+# include "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/Global_Macros.h"
-# include "ace/Basic_Types.h"
-# include "ace/Default_Constants.h"
-# include "ace/os_include/os_pthread.h"
-# include "ace/os_include/os_sched.h"
-# include "ace/Base_Thread_Adapter.h"
-# include "ace/os_include/sys/os_sem.h"
-# include "ace/os_include/os_semaphore.h"
-# include "ace/OS_Memory.h"
-# include "ace/OS_NS_signal.h"
-# include "ace/ACE_export.h"
-# include "ace/Object_Manager_Base.h"
+# include "Global_Macros.h"
+# include "Basic_Types.h"
+# include "Default_Constants.h"
+# include "os_include/os_pthread.h"
+# include "os_include/os_sched.h"
+# include "Base_Thread_Adapter.h"
+# include "os_include/sys/os_sem.h"
+# include "os_include/os_semaphore.h"
+# include "OS_Memory.h"
+# include "OS_NS_signal.h"
+# include "ACE_export.h"
+# include "Object_Manager_Base.h"
 
 #if defined (ACE_HAS_TSS_EMULATION) && !defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
 # if defined (ACE_HAS_VXTHREADS) && !defined (_WRS_CONFIG_SMP) && !defined (INCLUDE_AMP_CPU)
@@ -168,17 +168,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // make sure these are included for VXWORKS.
 // @todo move these to a common place, perhaps the top of the file.
-#     include "ace/os_include/os_fcntl.h"
-#     include "ace/os_include/os_netdb.h"
-#     include "ace/os_include/os_semaphore.h"
-#     include "ace/os_include/os_signal.h"
-#     include "ace/os_include/os_stdio.h"
-#     include "ace/os_include/os_stdlib.h"
-#     include "ace/os_include/os_stropts.h"
-#     include "ace/os_include/os_unistd.h"
-#     include "ace/os_include/arpa/os_inet.h"
-#     include "ace/os_include/sys/os_select.h"
-#     include "ace/os_include/sys/os_socket.h"
+#     include "os_include/os_fcntl.h"
+#     include "os_include/os_netdb.h"
+#     include "os_include/os_semaphore.h"
+#     include "os_include/os_signal.h"
+#     include "os_include/os_stdio.h"
+#     include "os_include/os_stdlib.h"
+#     include "os_include/os_stropts.h"
+#     include "os_include/os_unistd.h"
+#     include "os_include/arpa/os_inet.h"
+#     include "os_include/sys/os_select.h"
+#     include "os_include/sys/os_socket.h"
 
 // task options:  the other options are either obsolete, internal, or for
 // Fortran or Ada support
@@ -2112,8 +2112,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_NS_Thread.inl"
+#   include "OS_NS_Thread.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_OS_NS_THREAD_H */

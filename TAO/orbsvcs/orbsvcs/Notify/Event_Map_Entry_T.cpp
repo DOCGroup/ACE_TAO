@@ -1,15 +1,15 @@
 #ifndef TAO_Notify_EVENT_MAP_ENTRY_CPP
 #define TAO_Notify_EVENT_MAP_ENTRY_CPP
 
-#include "orbsvcs/Notify/Event_Map_Entry_T.h"
+#include "Event_Map_Entry_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Event_Map_Entry_T.inl"
+#include "Event_Map_Entry_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Factory.h"
+#include "Properties.h"
+#include "Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

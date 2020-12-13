@@ -19,7 +19,7 @@
 #define TAO_PG_PROPERTY_SET
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 #include "orbsvcs/PortableGroupS.h"
 #include "orbsvcs/CosNamingC.h"
 #include "ace/Hash_Map_Manager.h"
@@ -186,7 +186,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 ////////////////////////////////////
 // include templated helper function
-#include "orbsvcs/PortableGroup/PG_Property_Set_Find.h"
+#include "PG_Property_Set_Find.h"
 
 #include /**/ "ace/post.h"
 

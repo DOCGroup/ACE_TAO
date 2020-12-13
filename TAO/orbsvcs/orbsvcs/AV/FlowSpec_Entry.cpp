@@ -4,15 +4,15 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "FlowSpec_Entry.h"
+#include "Protocol_Factory.h"
 
 #include "tao/debug.h"
 
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/FlowSpec_Entry.inl"
+#include "FlowSpec_Entry.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/Abstract_Servant_Base.h"
+#include "Abstract_Servant_Base.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Abstract_Servant_Base.inl"
+#include "Abstract_Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,12 +1,12 @@
-#include "orbsvcs/Event/EC_Timeout_Filter.h"
-#include "orbsvcs/Event/EC_Timeout_Generator.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_Timeout_Filter.h"
+#include "EC_Timeout_Generator.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_ProxySupplier.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Event_Service_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Timeout_Filter.inl"
+#include "EC_Timeout_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

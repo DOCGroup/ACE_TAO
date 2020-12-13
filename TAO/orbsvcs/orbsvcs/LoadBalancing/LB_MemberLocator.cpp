@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_LoadManager.h"
-#include "orbsvcs/LoadBalancing/LB_MemberLocator.h"
+#include "LB_LoadManager.h"
+#include "LB_MemberLocator.h"
 
 #include "tao/debug.h"
 

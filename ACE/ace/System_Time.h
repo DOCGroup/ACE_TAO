@@ -12,18 +12,18 @@
 
 #ifndef ACE_SYSTEM_TIME_H
 #define ACE_SYSTEM_TIME_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/os_include/os_time.h"  /* For time_t. */
-#include "ace/os_include/os_limits.h"  /* For MAXPATHLEN. */
-#include "ace/MMAP_Memory_Pool.h"
+#include "Global_Macros.h"
+#include "os_include/os_time.h"  /* For time_t. */
+#include "os_include/os_limits.h"  /* For MAXPATHLEN. */
+#include "MMAP_Memory_Pool.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -93,5 +93,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SYSTEM_TIME_H */

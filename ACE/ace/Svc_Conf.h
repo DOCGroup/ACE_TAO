@@ -12,16 +12,16 @@
 #ifndef ACE_SVC_CONF_H
 #define ACE_SVC_CONF_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Config.h"
+#include "Service_Config.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Parse_Node.h"
-#include "ace/Svc_Conf_Param.h"
+#include "Parse_Node.h"
+#include "Svc_Conf_Param.h"
 
 // Make sure the yacc(1) function declarations are _outside_
 // any ACE versioned namespace. The block below is verbatim
@@ -103,6 +103,6 @@ ace_create_service_type (ACE_TCHAR const *,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SVC_CONF_H */

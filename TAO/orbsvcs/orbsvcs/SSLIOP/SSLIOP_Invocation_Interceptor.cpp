@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "SSLIOP_Invocation_Interceptor.h"
+#include "SSLIOP_Current.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 

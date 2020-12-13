@@ -1,11 +1,11 @@
 // -*- C++ -*-
-#include "ace/OS_NS_arpa_inet.h"
+#include "OS_NS_arpa_inet.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_arpa_inet.inl"
+# include "OS_NS_arpa_inet.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Basic_Types.h"
+#include "Basic_Types.h"
 
 #include <cstdlib>
 

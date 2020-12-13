@@ -14,9 +14,9 @@
 #ifndef ACE_UTF8_ENCODING_CONVERTER_H
 #define ACE_UTF8_ENCODING_CONVERTER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Encoding_Converter.h"
+#include "Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -65,6 +65,6 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_USES_WCHAR */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_UTF8_ENCODING_CONVERTER_H */

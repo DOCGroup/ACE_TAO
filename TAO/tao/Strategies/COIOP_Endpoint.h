@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Endpoint.h"
 #include "ace/UUID.h"
 
@@ -90,7 +90,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/COIOP_Endpoint.inl"
+# include "COIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_COIOP && TAO_HAS_COIOP != 0 */

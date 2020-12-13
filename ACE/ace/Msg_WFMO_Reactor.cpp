@@ -1,11 +1,11 @@
-#include "ace/Msg_WFMO_Reactor.h"
+#include "Msg_WFMO_Reactor.h"
 
 
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.inl"
+#include "Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -415,7 +415,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/Marshal.inl"
+# include "Marshal.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

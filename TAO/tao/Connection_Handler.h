@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_CH_Event.h"
+#include "LF_CH_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 #include "ace/Event_Handler.h"
 #include "ace/Copy_Disabled.h"
 
@@ -230,7 +230,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Connection_Handler.inl"
+#include "Connection_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

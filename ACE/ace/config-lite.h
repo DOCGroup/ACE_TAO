@@ -17,9 +17,9 @@
 #ifndef ACE_CONFIG_LITE_H
 #define ACE_CONFIG_LITE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/config-macros.h"
+#include "config-macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -30,7 +30,7 @@
 // ============================================================================
 
 // Get the unicode (i.e. ACE_TCHAR) defines
-# include "ace/ace_wchar.h"
+# include "ace_wchar.h"
 
 // ============================================================================
 // at_exit declarations
@@ -142,6 +142,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   typedef std::reverse_iterator<const_iterator> const_reverse_iterator;
 #endif  /* _MSC_VER && _WIN64 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_LITE_H */

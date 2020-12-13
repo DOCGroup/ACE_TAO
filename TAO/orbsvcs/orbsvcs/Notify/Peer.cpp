@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/Peer.h"
-#include "orbsvcs/Notify/Proxy.h"
+#include "Peer.h"
+#include "Proxy.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

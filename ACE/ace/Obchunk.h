@@ -10,9 +10,9 @@
 
 #ifndef ACE_OBCHUNK_H
 #define ACE_OBCHUNK_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Malloc.h"
+#include "Malloc.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -67,8 +67,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Obchunk.inl"
+#include "Obchunk.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_OBCHUNK_H */

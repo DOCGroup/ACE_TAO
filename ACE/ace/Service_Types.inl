@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/ACE.h"
+#include "ACE.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

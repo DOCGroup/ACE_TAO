@@ -1,7 +1,7 @@
-#include "ace/Thread.h"
+#include "Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread.inl"
+#include "Thread.inl"
 #endif /* !defined (__ACE_INLINE__) */
 
 #if defined (ACE_HAS_THREADS)

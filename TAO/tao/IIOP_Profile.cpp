@@ -1,13 +1,13 @@
 // -*- C++ -*-
-#include "tao/IIOP_Profile.h"
+#include "IIOP_Profile.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/IIOP_EndpointsC.h"
-#include "tao/CDR.h"
-#include "tao/SystemException.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "IIOP_EndpointsC.h"
+#include "CDR.h"
+#include "SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/Truncate.h"

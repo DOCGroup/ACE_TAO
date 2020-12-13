@@ -1,15 +1,15 @@
 /* -*- C++ -*-  */
 
-#include "orbsvcs/Notify/FilterAdmin.h"
+#include "FilterAdmin.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/FilterAdmin.inl"
+#include "FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Topology_Saver.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
-#include "orbsvcs/Notify/FilterFactory.h"
+#include "Topology_Saver.h"
+#include "Properties.h"
+#include "EventChannelFactory.h"
+#include "FilterFactory.h"
 #include "ace/Bound_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

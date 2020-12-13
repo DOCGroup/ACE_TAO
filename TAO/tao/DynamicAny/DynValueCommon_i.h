@@ -12,7 +12,7 @@
 #define TAO_DYNVALUECOMMON_I_H
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicAny/DynAny_i.h"
+#include "DynAny_i.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

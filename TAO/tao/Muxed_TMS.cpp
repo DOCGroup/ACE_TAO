@@ -1,9 +1,9 @@
-#include "tao/Muxed_TMS.h"
-#include "tao/Reply_Dispatcher.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
+#include "Muxed_TMS.h"
+#include "Reply_Dispatcher.h"
+#include "debug.h"
+#include "Transport.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

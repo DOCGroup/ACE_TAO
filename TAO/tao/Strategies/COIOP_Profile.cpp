@@ -1,4 +1,4 @@
-#include "tao/Strategies/COIOP_Profile.h"
+#include "COIOP_Profile.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
@@ -7,7 +7,7 @@
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/Strategies/COIOP_EndpointsC.h"
+#include "COIOP_EndpointsC.h"
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"

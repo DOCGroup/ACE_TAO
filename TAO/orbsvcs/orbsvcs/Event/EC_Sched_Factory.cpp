@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_Sched_Factory.h"
-#include "orbsvcs/Event/EC_Priority_Dispatching.h"
-#include "orbsvcs/Event/EC_Priority_Scheduling.h"
-#include "orbsvcs/Event/EC_Sched_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
+#include "EC_Sched_Factory.h"
+#include "EC_Priority_Dispatching.h"
+#include "EC_Priority_Scheduling.h"
+#include "EC_Sched_Filter_Builder.h"
+#include "EC_Event_Channel_Base.h"
 #include "orbsvcs/RtecSchedulerC.h"
 
 #include "ace/Arg_Shifter.h"
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
+#include "EC_Sched_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -10,9 +10,9 @@
 
 #ifndef ACE_UNBOUNDED_SET_H
 #define ACE_UNBOUNDED_SET_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Unbounded_Set_Ex.h"
+#include "Unbounded_Set_Ex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -83,16 +83,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Unbounded_Set.inl"
+#include "Unbounded_Set.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Unbounded_Set.cpp"
+#include "Unbounded_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Unbounded_Set.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

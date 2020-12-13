@@ -12,15 +12,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Service_Context.h"
+#include "Service_Context.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
-#include "tao/TimeBaseC.h"
-#include "tao/target_specification.h"
+#include "Exception.h"
+#include "TimeBaseC.h"
+#include "target_specification.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -238,7 +238,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/operation_details.inl"
+# include "operation_details.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -17,7 +17,7 @@
 
 #include "tao/orbconf.h"
 
-#include "tao/ZIOP/ziop_export.h"
+#include "ziop_export.h"
 
 #include "tao/Stub.h"
 

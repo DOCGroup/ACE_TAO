@@ -1,29 +1,29 @@
-#include "ace/Service_Config.h"
+#include "Service_Config.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Config.inl"
+#include "Service_Config.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Service_Types.h"
-#include "ace/Reactor.h"
-#include "ace/Singleton.h"
-#include "ace/Service_Repository.h"
+#include "Service_Types.h"
+#include "Reactor.h"
+#include "Singleton.h"
+#include "Service_Repository.h"
 
 #ifndef ACE_LACKS_UNIX_SIGNALS
-# include "ace/Sig_Adapter.h"
+# include "Sig_Adapter.h"
 #endif  /* !ACE_LACKS_UNIX_SIGNALS */
 
-#include "ace/OS_NS_time.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Thread.h"
-#include "ace/Get_Opt.h"
-#include "ace/ARGV.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
+#include "OS_NS_time.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_unistd.h"
+#include "Thread.h"
+#include "Get_Opt.h"
+#include "ARGV.h"
+#include "Log_Category.h"
+#include "ACE.h"
 
 #ifdef ACE_HAS_TSS_EMULATION
-#include "ace/Object_Manager.h"
+#include "Object_Manager.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

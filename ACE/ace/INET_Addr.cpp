@@ -1,23 +1,23 @@
 // Defines the Internet domain address family address format.
 
-#include "ace/INET_Addr.h"
+#include "INET_Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/INET_Addr.inl"
+#include "INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_arpa_inet.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/Truncate.h"
+#include "Log_Category.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_stdlib.h"
+#include "OS_Memory.h"
+#include "OS_NS_arpa_inet.h"
+#include "OS_NS_netdb.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_sys_socket.h"
+#include "Truncate.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

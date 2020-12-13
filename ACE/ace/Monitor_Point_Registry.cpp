@@ -1,9 +1,9 @@
-#include "ace/Monitor_Point_Registry.h"
+#include "Monitor_Point_Registry.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Monitor_Base.h"
-#include "ace/Guard_T.h"
+#include "Monitor_Base.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

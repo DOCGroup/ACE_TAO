@@ -5,7 +5,7 @@
 #ifndef ACE_CONFIG_CYGWIN32_H
 #define ACE_CONFIG_CYGWIN32_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_MT_SAFE)
 #define ACE_MT_SAFE 1
@@ -67,7 +67,7 @@
 #define ACE_HAS_STRING_CLASS
 
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 #else
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #   error unsupported compiler in ace/config-cygwin32.h
@@ -220,6 +220,6 @@
 #define ACE_HAS_VSWPRINTF
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_CYGWIN32_H */

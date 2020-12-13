@@ -10,13 +10,13 @@
 
 #ifndef ACE_FUTURE_SET_H
 #define ACE_FUTURE_SET_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Thread.h"
-#include "ace/Message_Queue.h"
-#include "ace/Future.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
+#include "Thread.h"
+#include "Message_Queue.h"
+#include "Future.h"
+#include "Hash_Map_Manager_T.h"
+#include "Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -127,7 +127,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Future_Set.cpp"
+#include "Future_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -135,5 +135,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_HAS_THREADS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FUTURE_SET_H */

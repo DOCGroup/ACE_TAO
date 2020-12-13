@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/Messaging/ExceptionHolder_i.h"
+#include "ExceptionHolder_i.h"
 
-#include "tao/Messaging/Messaging.h"
+#include "Messaging.h"
 #include "tao/Exception_Data.h"
 #include "tao/CDR.h"
 

@@ -1,10 +1,10 @@
-#include "ace/UTF8_Encoding_Converter.h"
+#include "UTF8_Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)
-#include "ace/UTF16_Encoding_Converter.h"
-#include "ace/UTF32_Encoding_Converter.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
+#include "UTF16_Encoding_Converter.h"
+#include "UTF32_Encoding_Converter.h"
+#include "OS_NS_string.h"
+#include "OS_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

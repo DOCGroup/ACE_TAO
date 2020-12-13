@@ -4,7 +4,7 @@
 #define _SHUTDOWN_UTILS_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/svc_utils_export.h"
+#include "svc_utils_export.h"
 
 #include "tao/Versioned_Namespace.h"
 

@@ -11,10 +11,10 @@
 
 #ifndef ACE_TIMER_WHEEL_H
 #define ACE_TIMER_WHEEL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Timer_Wheel_T.h"
-#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
+#include "Timer_Wheel_T.h"
+#include "Event_Handler_Handle_Timeout_Upcall.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,5 +38,5 @@ typedef ACE_Timer_Wheel_Iterator_T<ACE_Event_Handler *,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_WHEEL_H */

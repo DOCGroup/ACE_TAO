@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ace/SString.h"
+#include "SString.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

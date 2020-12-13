@@ -13,9 +13,9 @@
 #ifndef ACE_INTRUSIVE_AUTO_PTR_H
 #define ACE_INTRUSIVE_AUTO_PTR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Atomic_Op.h"
+#include "Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -137,17 +137,17 @@ bool operator!=(T * a, ACE_Intrusive_Auto_Ptr<U> const & b);
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Intrusive_Auto_Ptr.inl"
+#include "Intrusive_Auto_Ptr.inl"
 #endif /* __ACE_INLINE __ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Intrusive_Auto_Ptr.cpp"
+#include "Intrusive_Auto_Ptr.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Intrusive_Auto_Ptr.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_INTRUSIVE_AUTO_PTR_H */

@@ -1,6 +1,6 @@
-#include "orbsvcs/Trader/Constraint_Interpreter.h"
-#include "orbsvcs/Trader/Trader_Constraint_Visitors.h"
-#include "orbsvcs/Trader/Constraint_Tokens.h"
+#include "Constraint_Interpreter.h"
+#include "Trader_Constraint_Visitors.h"
+#include "Constraint_Tokens.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

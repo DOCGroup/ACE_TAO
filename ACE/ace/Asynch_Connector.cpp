@@ -1,7 +1,7 @@
 #ifndef ACE_ASYNCH_CONNECTOR_CPP
 #define ACE_ASYNCH_CONNECTOR_CPP
 
-#include "ace/Asynch_Connector.h"
+#include "Asynch_Connector.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -10,12 +10,12 @@
 #if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async I/O.
 
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_Memory.h"
-#include "ace/Flag_Manip.h"
-#include "ace/Log_Category.h"
-#include "ace/Message_Block.h"
-#include "ace/INET_Addr.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_Memory.h"
+#include "Flag_Manip.h"
+#include "Log_Category.h"
+#include "Message_Block.h"
+#include "INET_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

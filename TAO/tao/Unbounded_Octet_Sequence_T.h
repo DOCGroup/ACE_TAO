@@ -7,19 +7,19 @@
  *
  * @author Johnny Willemsen
  */
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
-#include "tao/Unbounded_Value_Sequence_T.h"
+#include "Unbounded_Value_Sequence_T.h"
 #include "ace/OS_NS_string.h"
 
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Unbounded_Value_Allocation_Traits_T.h"
-#include "tao/Value_Traits_T.h"
-#include "tao/Range_Checking_T.h"
+#include /**/ "TAO_Export.h"
+#include "Unbounded_Value_Allocation_Traits_T.h"
+#include "Value_Traits_T.h"
+#include "Range_Checking_T.h"
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 #include "ace/Message_Block.h"
 #include "ace/OS_Memory.h"
 #include "ace/checked_iterator.h"

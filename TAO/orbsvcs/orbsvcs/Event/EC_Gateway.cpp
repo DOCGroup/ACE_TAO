@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Gateway.h"
+#include "EC_Gateway.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

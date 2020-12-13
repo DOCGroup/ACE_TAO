@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
+#include "Objref_TypeCode_Static.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Objref_TypeCode_Static.inl"
+# include "Objref_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/CDR.h"

@@ -12,17 +12,17 @@
 #ifndef ACE_BASED_POINTER_REPOSITORY_H
 #define ACE_BASED_POINTER_REPOSITORY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Singleton.h"
-#include "ace/Synch_Traits.h"
-#include "ace/os_include/os_stddef.h"
+#include "Singleton.h"
+#include "Synch_Traits.h"
+#include "os_include/os_stddef.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -85,6 +85,6 @@ typedef ACE_Singleton<ACE_Based_Pointer_Repository, ACE_SYNCH_RW_MUTEX>
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_BASED_POINTER_REPOSITORY_H */

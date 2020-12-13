@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/TCP.h"
-#include "orbsvcs/AV/AVStreams_i.h"
+#include "TCP.h"
+#include "AVStreams_i.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"

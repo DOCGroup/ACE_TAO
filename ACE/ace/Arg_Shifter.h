@@ -11,15 +11,15 @@
 #ifndef ACE_ARG_SHIFTER_H
 #define ACE_ARG_SHIFTER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -227,13 +227,13 @@ typedef ACE_Arg_Shifter_T<ACE_TCHAR> ACE_Arg_Shifter;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Arg_Shifter.cpp"
+#include "Arg_Shifter.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Arg_Shifter.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_ARG_SHIFTER_H */

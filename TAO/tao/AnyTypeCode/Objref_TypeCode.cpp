@@ -1,10 +1,10 @@
 #ifndef TAO_OBJREF_TYPECODE_CPP
 #define TAO_OBJREF_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Objref_TypeCode.h"
+#include "Objref_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Objref_TypeCode.inl"
+# include "Objref_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "tao/CDR.h"

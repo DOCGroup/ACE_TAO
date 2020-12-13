@@ -1,10 +1,10 @@
 #ifndef TAO_INTRUSIVE_REF_COUNT_OBJECT_T_CPP
 #define TAO_INTRUSIVE_REF_COUNT_OBJECT_T_CPP
 
-#include "tao/Intrusive_Ref_Count_Object_T.h"
+#include "Intrusive_Ref_Count_Object_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Intrusive_Ref_Count_Object_T.inl"
+#include "Intrusive_Ref_Count_Object_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

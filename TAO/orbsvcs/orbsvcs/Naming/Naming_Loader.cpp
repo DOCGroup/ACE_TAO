@@ -12,11 +12,11 @@
 // ================================================================
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/Naming_Loader.h"
+#include "Naming_Loader.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Argv_Type_Converter.h"
 
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "Naming_Server.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

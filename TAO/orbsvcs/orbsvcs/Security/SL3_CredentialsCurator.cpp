@@ -1,5 +1,5 @@
-#include "orbsvcs/Security/SL3_CredentialsCurator.h"
-#include "orbsvcs/Security/SL3_CredentialsAcquirerFactory.h"
+#include "SL3_CredentialsCurator.h"
+#include "SL3_CredentialsAcquirerFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

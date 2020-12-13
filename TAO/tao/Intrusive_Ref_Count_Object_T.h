@@ -17,8 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
-#include /**/ "tao/Intrusive_Ref_Count_Base_T.h"
+#include /**/ "Versioned_Namespace.h"
+#include /**/ "Intrusive_Ref_Count_Base_T.h"
 
 #include "ace/Atomic_Op.h"
 
@@ -56,11 +56,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Intrusive_Ref_Count_Object_T.inl"
+#include "Intrusive_Ref_Count_Object_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Intrusive_Ref_Count_Object_T.cpp"
+#include "Intrusive_Ref_Count_Object_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/DIOP_Connector.h"
+#include "DIOP_Connector.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
@@ -15,7 +15,7 @@
 #include "tao/Thread_Lane_Resources.h"
 #include "ace/os_include/os_netdb.h"
 
-#include "tao/Strategies/DIOP_Profile.h"
+#include "DIOP_Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

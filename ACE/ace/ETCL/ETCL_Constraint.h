@@ -22,7 +22,7 @@
 
 #include "ace/CDR_Base.h"
 
-#include "ace/ETCL/ace_etcl_export.h"
+#include "ace_etcl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -405,7 +405,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ETCL/ETCL_Constraint.inl"
+#include "ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

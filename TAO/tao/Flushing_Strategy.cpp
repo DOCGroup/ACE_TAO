@@ -1,4 +1,4 @@
-#include "tao/Flushing_Strategy.h"
+#include "Flushing_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

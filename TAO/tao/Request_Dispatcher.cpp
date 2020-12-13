@@ -1,6 +1,6 @@
-#include "tao/Request_Dispatcher.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
+#include "ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

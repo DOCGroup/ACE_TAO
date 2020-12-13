@@ -14,8 +14,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Argument.h"
-#include "tao/CORBA_String.h"
+#include "Argument.h"
+#include "CORBA_String.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -168,11 +168,11 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/UB_String_Argument_T.inl"
+#include "UB_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/UB_String_Argument_T.cpp"
+#include "UB_String_Argument_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

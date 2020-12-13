@@ -3,27 +3,27 @@
 
 // #include Message_Queue.h instead of Message_Queue_T.h to avoid
 // circular include problems.
-#include "ace/Message_Queue.h"
-#include "ace/Message_Queue_Vx.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_sys_time.h"
+#include "Message_Queue.h"
+#include "Message_Queue_Vx.h"
+#include "Log_Category.h"
+#include "OS_NS_sys_time.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-#include "ace/Message_Queue_NT.h"
+#include "Message_Queue_NT.h"
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Notification_Strategy.h"
-#include "ace/Truncate.h"
-#include "ace/Condition_Attributes.h"
+#include "Notification_Strategy.h"
+#include "Truncate.h"
+#include "Condition_Attributes.h"
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Monitor_Size.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_unistd.h"
+#include "Monitor_Size.h"
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -16,8 +16,8 @@
 #define TAO_OC_ENDPOINT_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Strategies/strategies_export.h"
-#include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
+#include "strategies_export.h"
+#include "OC_Endpoint_Selector_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

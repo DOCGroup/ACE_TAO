@@ -10,16 +10,16 @@
 
 #ifndef ACE_HANDLE_SET_H
 #define ACE_HANDLE_SET_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_select.h"
-#include "ace/os_include/os_limits.h"
+#include "os_include/sys/os_select.h"
+#include "os_include/os_limits.h"
 
 // Default size of the ACE Reactor.
 #if defined (FD_SETSIZE)
@@ -232,8 +232,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Handle_Set.inl"
+#include "Handle_Set.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_HANDLE_SET */

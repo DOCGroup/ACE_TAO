@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Monitor/Monitor_export.h"
+#include "Monitor_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "tao/Object_Loader.h"
 
@@ -60,9 +60,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #define TAO_MONITOR_SAFE_INCLUDE
-#include "tao/Monitor/Monitor_TypesC.h"
-#include "tao/Monitor/Monitor_TypesA.h"
-#include "tao/Monitor/MonitorC.h"
+#include "Monitor_TypesC.h"
+#include "Monitor_TypesA.h"
+#include "MonitorC.h"
 #undef TAO_MONITOR_SAFE_INCLUDE
 
 #endif  /* TAO_MONITOR_H */

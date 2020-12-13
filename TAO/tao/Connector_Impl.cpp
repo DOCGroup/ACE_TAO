@@ -1,9 +1,9 @@
 #ifndef TAO_CONNECTOR_IMPL_CPP
 #define TAO_CONNECTOR_IMPL_CPP
 
-#include "tao/Connector_Impl.h"
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
+#include "Connector_Impl.h"
+#include "Transport.h"
+#include "ORB_Core.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

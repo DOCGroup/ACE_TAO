@@ -29,7 +29,7 @@
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
+#include "FT_ServerORB_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

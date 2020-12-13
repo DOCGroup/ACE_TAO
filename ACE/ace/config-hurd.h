@@ -2,7 +2,7 @@
 // platforms using GNU C++.
 #ifndef ACE_CONFIG_HURD_H
 #define ACE_CONFIG_HURD_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
@@ -24,7 +24,7 @@
 #  define ACE_HAS_PTHREADS_UNIX98_EXT
 #endif /* _XOPEN_SOURCE - 0 >= 500 */
 
-# include "ace/config-posix.h"
+# include "config-posix.h"
 
 // AIO support pulls in the rt library, which pulls in the pthread
 // library.  Disable AIO in single-threaded builds.
@@ -82,7 +82,7 @@
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 #elif defined (__GNUC__)
 /**
  * GNU C compiler.
@@ -243,6 +243,6 @@
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_REENTRANT_FUNCTIONS
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_HURD_H */

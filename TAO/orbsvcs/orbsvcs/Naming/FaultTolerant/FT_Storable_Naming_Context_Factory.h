@@ -17,7 +17,7 @@
 #include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
 #include "tao/ORB.h"
 #include "orbsvcs/Naming/nsconf.h"
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 #include "orbsvcs/Naming/Hash_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 

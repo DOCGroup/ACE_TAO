@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #ifndef ACE_LINUX_ICC_COMMON_H
 #define ACE_LINUX_ICC_COMMON_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # define ACE_HAS_STDCPP_STL_INCLUDES
@@ -85,5 +85,5 @@
 #  define ACE_HAS_CPP11
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LINUX_ICC_COMMON_H */

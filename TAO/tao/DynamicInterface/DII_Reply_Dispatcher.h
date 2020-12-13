@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #include "tao/orbconf.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
-#include "tao/DynamicInterface/Request.h"
+#include "Request.h"
 
 #if defined (TAO_HAS_AMI)
 #include "tao/Messaging/Messaging.h"

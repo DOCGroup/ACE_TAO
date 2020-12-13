@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Time/Timer_Helper.h"
-#include "orbsvcs/Time/TAO_Time_Service_Clerk.h"
+#include "Timer_Helper.h"
+#include "TAO_Time_Service_Clerk.h"
 
 #include "tao/debug.h"
 

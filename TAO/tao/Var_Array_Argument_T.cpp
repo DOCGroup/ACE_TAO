@@ -1,11 +1,11 @@
 #ifndef TAO_VAR_ARRAY_ARGUMENT_T_CPP
 #define TAO_VAR_ARRAY_ARGUMENT_T_CPP
 
-#include "tao/Var_Array_Argument_T.h"
-#include "tao/Array_Traits_T.h"
+#include "Var_Array_Argument_T.h"
+#include "Array_Traits_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Var_Array_Argument_T.inl"
+#include "Var_Array_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

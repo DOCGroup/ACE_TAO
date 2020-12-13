@@ -1,4 +1,4 @@
-#include "tao/BiDir_Adapter.h"
+#include "BiDir_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

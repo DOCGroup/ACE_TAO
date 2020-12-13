@@ -1,9 +1,9 @@
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
+#include "Network_Priority_Mapping_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.inl"
+#include "Network_Priority_Mapping_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

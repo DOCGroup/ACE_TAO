@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
+#include "UIPMC_Mcast_Transport.h"
 
 #include /**/ "tao/Versioned_Namespace.h"
 
@@ -105,7 +105,7 @@ namespace TAO_PG
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "orbsvcs/PortableGroup/Fragments_Cleanup_Strategy.inl"
+# include "Fragments_Cleanup_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

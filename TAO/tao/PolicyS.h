@@ -10,8 +10,8 @@
 
 #ifndef TAO_PIDL_POLICY_S_H
 #define TAO_PIDL_POLICY_S_H
-#include "tao/PolicyC.h"
-#include "tao/PortableServer/PolicyS.h"
+#include "PolicyC.h"
+#include "PortableServer/PolicyS.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

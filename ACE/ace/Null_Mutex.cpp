@@ -6,10 +6,10 @@
  * @author Justin Wilson <wilsonj@ociweb.com>
  */
 
-#include "ace/Null_Mutex.h"
+#include "Null_Mutex.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

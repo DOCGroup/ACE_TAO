@@ -11,7 +11,7 @@
 #ifndef TAO_ESF_PEER_WORKERS_H
 #define TAO_ESF_PEER_WORKERS_H
 
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -88,11 +88,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Peer_Workers.inl"
+#include "ESF_Peer_Workers.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Peer_Workers.cpp"
+#include "ESF_Peer_Workers.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Reply_Dispatcher.h"
+#include "Reply_Dispatcher.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/LF_Invocation_Event.h"
-#include "tao/CDR.h"
+#include "LF_Invocation_Event.h"
+#include "CDR.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

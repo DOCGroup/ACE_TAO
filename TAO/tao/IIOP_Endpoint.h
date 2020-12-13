@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,9 +23,9 @@
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/CORBA_String.h"
-#include "tao/IIOP_EndpointsC.h"
-#include "tao/Endpoint.h"
+#include "CORBA_String.h"
+#include "IIOP_EndpointsC.h"
+#include "Endpoint.h"
 
 #include "ace/INET_Addr.h"
 #include "ace/Vector_T.h"
@@ -216,7 +216,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/IIOP_Endpoint.inl"
+# include "IIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

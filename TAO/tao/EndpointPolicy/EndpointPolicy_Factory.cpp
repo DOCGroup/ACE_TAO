@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/EndpointPolicy/EndpointPolicy_Factory.h"
+#include "EndpointPolicy_Factory.h"
 
-#include "tao/EndpointPolicy/EndpointPolicy_i.h"
-#include "tao/EndpointPolicy/EndpointPolicyA.h"
-#include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
+#include "EndpointPolicy_i.h"
+#include "EndpointPolicyA.h"
+#include "Endpoint_Value_Impl.h"
 
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"

@@ -9,8 +9,8 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Basic_Types.h"
-#include "tao/SystemException.h"
+#include "Basic_Types.h"
+#include "SystemException.h"
 
 #if !defined (TAO_CHECKED_SEQUENCE_INDEXING) && !defined (ACE_NDEBUG)
 # define TAO_CHECKED_SEQUENCE_INDEXING 1

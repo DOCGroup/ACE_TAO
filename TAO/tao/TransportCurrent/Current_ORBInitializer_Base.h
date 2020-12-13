@@ -22,9 +22,9 @@
 
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
-#include "tao/TransportCurrent/TCC.h"
+#include "TCC.h"
 
-#include "tao/TransportCurrent/Transport_Current_Export.h"
+#include "Transport_Current_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_unistd.h"
-#include "ace/os_include/os_stdio.h" // for FILENAME_MAX on Windows
+#include "os_unistd.h"
+#include "os_stdio.h" // for FILENAME_MAX on Windows
 
 #if !defined (ACE_LACKS_LIMITS_H)
 # include /**/ <limits.h>

@@ -1,10 +1,10 @@
 #ifndef TAO_PORTABLESERVER_SERVANT_VAR_CPP
 #define TAO_PORTABLESERVER_SERVANT_VAR_CPP
 
-#include "tao/PortableServer/Servant_var.h"
+#include "Servant_var.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_var.inl"
+# include "Servant_var.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Exception.h"

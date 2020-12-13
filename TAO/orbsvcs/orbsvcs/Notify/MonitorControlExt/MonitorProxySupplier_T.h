@@ -2,14 +2,14 @@
 #define MONITORPROXYSUPPLIER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+#include "notify_mc_ext_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/SString.h"
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+#include "NotifyMonitoringExtS.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
 #include "orbsvcs/Notify/SupplierAdmin.h"
 
@@ -78,11 +78,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
+#include "MonitorProxySupplier_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.cpp"
+#include "MonitorProxySupplier_T.cpp"
 #pragma implementation ("MonitorProxySupplier_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 

@@ -30,8 +30,8 @@
 #endif /* _MSC_VER */
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/PI/PI_includeC.h"
-#include "tao/PI/PICurrent_Impl.h"
+#include "PI_includeC.h"
+#include "PICurrent_Impl.h"
 #include "tao/CORBA_methods.h"
 #include "tao/ORB_Constants.h"
 #include "tao/LocalObject.h"

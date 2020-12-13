@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 
 #include "orbsvcs/PortableGroup/PG_Group_Factory.h"
 

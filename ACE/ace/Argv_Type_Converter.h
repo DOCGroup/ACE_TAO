@@ -11,10 +11,10 @@
 #ifndef ACE_ARGV_TYPE_CONVERTER_H
 #define ACE_ARGV_TYPE_CONVERTER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/OS_Memory.h"
+#include /**/ "ACE_export.h"
+#include "OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -107,9 +107,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Argv_Type_Converter.inl"
+#include "Argv_Type_Converter.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif  /* ACE_ARGV_TYPE_CONVERTER_H */

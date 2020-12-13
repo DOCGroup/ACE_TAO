@@ -11,9 +11,9 @@
 
 #ifndef ACE_DUMP_T_H
 #define ACE_DUMP_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Dump.h"
+#include "Dump.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -69,12 +69,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_NDEBUG */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Dump_T.cpp"
+#include "Dump_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Dump_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_DUMP_T_H */

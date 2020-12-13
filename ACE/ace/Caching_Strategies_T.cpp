@@ -1,11 +1,11 @@
 #ifndef ACE_CACHING_STRATEGIES_T_CPP
 #define ACE_CACHING_STRATEGIES_T_CPP
 
-#include "ace/Caching_Strategies_T.h"
-#include "ace/Log_Category.h"
+#include "Caching_Strategies_T.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Caching_Strategies_T.inl"
+#include "Caching_Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -1,15 +1,15 @@
-#include "ace/Select_Reactor_Base.h"
-#include "ace/Reactor.h"
-#include "ace/Thread.h"
-#include "ace/SOCK_Acceptor.h"
-#include "ace/SOCK_Connector.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Log_Category.h"
-#include "ace/Signal.h"
-#include "ace/OS_NS_fcntl.h"
+#include "Select_Reactor_Base.h"
+#include "Reactor.h"
+#include "Thread.h"
+#include "SOCK_Acceptor.h"
+#include "SOCK_Connector.h"
+#include "Timer_Queue.h"
+#include "Log_Category.h"
+#include "Signal.h"
+#include "OS_NS_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Select_Reactor_Base.inl"
+#include "Select_Reactor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifndef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP

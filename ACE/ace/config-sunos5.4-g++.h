@@ -4,7 +4,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
@@ -14,7 +14,7 @@
 // this must appear before its #include.
 #define ACE_HAS_STRING_CLASS
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 
@@ -167,5 +167,5 @@
 #define ACE_HAS_GPERF
 #define ACE_HAS_DIRENT
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_H */

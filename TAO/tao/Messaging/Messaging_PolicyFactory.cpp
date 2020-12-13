@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/Messaging/Messaging_PolicyFactory.h"
-#include "tao/Messaging/Messaging_Policy_i.h"
-#include "tao/Messaging/Connection_Timeout_Policy_i.h"
-#include "tao/Messaging/Buffering_Constraint_Policy.h"
+#include "Messaging_PolicyFactory.h"
+#include "Messaging_Policy_i.h"
+#include "Connection_Timeout_Policy_i.h"
+#include "Buffering_Constraint_Policy.h"
 
 #include "tao/PolicyC.h"
 #include "tao/AnyTypeCode/Any.h"

@@ -15,16 +15,16 @@
 #ifndef ACE_OS_NS_SIGNAL_H
 # define ACE_OS_NS_SIGNAL_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-lite.h"
+# include "config-lite.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_signal.h"
-#include /**/ "ace/ACE_export.h"
+#include "os_include/os_signal.h"
+#include /**/ "ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -33,7 +33,7 @@
 
 #if defined (__Lynx__) || defined (__OpenBSD__)
 // LynxOS and OpenBSD define pthread_sigmask() in pthread.h
-# include "ace/os_include/os_pthread.h"
+# include "os_include/os_pthread.h"
 #endif /* __Lynx__ || OpenBSD */
 
 /*
@@ -223,8 +223,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_NS_signal.inl"
+#   include "OS_NS_signal.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_OS_NS_SIGNAL_H */

@@ -88,5 +88,5 @@ typedef long ptrdiff_t;
 #define __FACE_CONFORM____INTPTR_T__
 typedef long intptr_t;
 
-#include "ace/config-posix.h"
-#include "ace/config-g++-common.h"
+#include "config-posix.h"
+#include "config-g++-common.h"

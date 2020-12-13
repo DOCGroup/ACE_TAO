@@ -1,15 +1,15 @@
-#include "tao/Collocated_Invocation.h"
-#include "tao/ORB_Core.h"
-#include "tao/Request_Dispatcher.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Stub.h"
-#include "tao/operation_details.h"
-#include "tao/PortableInterceptor.h"
-#include "tao/SystemException.h"
-#include "tao/Abstract_Servant_Base.h"
+#include "Collocated_Invocation.h"
+#include "ORB_Core.h"
+#include "Request_Dispatcher.h"
+#include "TAO_Server_Request.h"
+#include "Stub.h"
+#include "operation_details.h"
+#include "PortableInterceptor.h"
+#include "SystemException.h"
+#include "Abstract_Servant_Base.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-# include "tao/PortableInterceptorC.h"
+# include "PortableInterceptorC.h"
 #endif /*TAO_HAS_INTERCEPTORS */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

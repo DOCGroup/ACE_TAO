@@ -25,8 +25,8 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
-#include "tao/RTCORBA/Priority_Mapping.h"
+#include "rtcorba_export.h"
+#include "Priority_Mapping.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

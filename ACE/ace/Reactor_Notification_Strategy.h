@@ -10,9 +10,9 @@
 #ifndef ACE_REACTOR_NOTIFICATION_STRATEGY_H
 #define ACE_REACTOR_NOTIFICATION_STRATEGY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Notification_Strategy.h"
+#include "Notification_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,9 +56,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Reactor_Notification_Strategy.inl"
+#include "Reactor_Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /*ACE_REACTOR_NOTIFICATION_STRATEGY_H */

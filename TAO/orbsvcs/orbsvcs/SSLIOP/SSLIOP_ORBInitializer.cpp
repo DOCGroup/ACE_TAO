@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/SSLIOP/SSLIOP_ORBInitializer.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Invocation_Interceptor.h"
+#include "SSLIOP_ORBInitializer.h"
+#include "SSLIOP_Current.h"
+#include "SSLIOP_Invocation_Interceptor.h"
 //#include "SSLIOP_IORInterceptor.h"
-#include "orbsvcs/SSLIOP/SSLIOP_CredentialsAcquirerFactory.h"
+#include "SSLIOP_CredentialsAcquirerFactory.h"
 
 #include "orbsvcs/Security/SL3_SecurityCurrent.h"
 #include "orbsvcs/Security/SL3_CredentialsCurator.h"

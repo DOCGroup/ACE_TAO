@@ -1,4 +1,4 @@
-#include "tao/TAO_Singleton_Manager.h"
+#include "TAO_Singleton_Manager.h"
 
 #include "ace/Guard_T.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -7,7 +7,7 @@
 #include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/TAO_Singleton_Manager.inl"
+# include "TAO_Singleton_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
 namespace

@@ -1,10 +1,10 @@
-#include "ace/Log_Msg.h"
-#include "ace/Log_Category.h"
-#include "ace/Atomic_Op.h"
-#include "ace/OS_NS_Thread.h"
+#include "Log_Msg.h"
+#include "Log_Category.h"
+#include "Atomic_Op.h"
+#include "OS_NS_Thread.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Log_Category.inl"
+#include "Log_Category.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

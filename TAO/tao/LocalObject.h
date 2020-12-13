@@ -27,7 +27,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Object.h"
+#include "Object.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -173,7 +173,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/LocalObject.inl"
+# include "LocalObject.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

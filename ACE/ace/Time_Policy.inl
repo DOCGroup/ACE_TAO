@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/OS_NS_sys_time.h"
-#include "ace/High_Res_Timer.h"
+#include "OS_NS_sys_time.h"
+#include "High_Res_Timer.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

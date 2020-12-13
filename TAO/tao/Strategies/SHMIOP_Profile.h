@@ -24,9 +24,9 @@
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

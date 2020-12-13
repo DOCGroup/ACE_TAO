@@ -18,9 +18,9 @@
 
 #ifndef ACE_ASYNCH_IO_IMPL_H
 #define ACE_ASYNCH_IO_IMPL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -30,7 +30,7 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls.
 
-#include "ace/Asynch_IO.h"
+#include "Asynch_IO.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -785,9 +785,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.inl"
+#include "Asynch_IO_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ASYNCH_IO_IMPL_H */

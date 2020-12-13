@@ -4,7 +4,7 @@
 #define ACE_HAS_IPHONE
 #define ACE_LACKS_SYSTEM
 
-#include "ace/config-macosx-mojave.h"
+#include "config-macosx-mojave.h"
 
 #ifdef ACE_HAS_SYSV_IPC
 #undef ACE_HAS_SYSV_IPC

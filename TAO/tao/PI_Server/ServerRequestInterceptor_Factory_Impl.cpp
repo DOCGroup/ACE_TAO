@@ -8,11 +8,11 @@
  */
 // =================================================================
 
-#include "tao/PI_Server/ServerRequestInterceptor_Factory_Impl.h"
+#include "ServerRequestInterceptor_Factory_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI_Server/ServerInterceptorAdapter.h"
+#include "ServerInterceptorAdapter.h"
 
 #include "tao/ORB.h"
 #include "tao/debug.h"

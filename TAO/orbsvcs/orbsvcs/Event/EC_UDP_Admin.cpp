@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_UDP_Admin.h"
+#include "EC_UDP_Admin.h"
 #include "ace/INET_Addr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -8,7 +8,7 @@
 
 // #include the SunOS 5.6 config file, then add SunOS 5.7 updates below.
 
-#include "ace/config-sunos5.6.h"
+#include "config-sunos5.6.h"
 
 // This may be true for earlier Solaris versions, but I can only verify
 // it for Solaris 7 and later.

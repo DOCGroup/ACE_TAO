@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
+#include "RT_StructuredProxyPushSupplier.h"
 #include "tao/debug.h"
 
 #include "orbsvcs/Notify/Method_Request_Dispatch.h"

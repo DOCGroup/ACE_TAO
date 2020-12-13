@@ -1,9 +1,9 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
+#include "SSLIOP_Credentials.h"
 #include "tao/ORB_Constants.h"
 #include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Credentials.inl"
+# include "SSLIOP_Credentials.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

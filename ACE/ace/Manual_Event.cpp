@@ -1,11 +1,11 @@
-#include "ace/Manual_Event.h"
+#include "Manual_Event.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Manual_Event.inl"
+#include "Manual_Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

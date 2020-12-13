@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Endpoint_Selector_Factory.h"
+#include "Endpoint_Selector_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

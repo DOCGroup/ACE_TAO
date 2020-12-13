@@ -11,15 +11,15 @@
 
 #ifndef ACE_SPIPE_H
 #define ACE_SPIPE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/IPC_SAP.h"
+#include "IPC_SAP.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SPIPE_Addr.h"
+#include "SPIPE_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -107,8 +107,8 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SPIPE.inl"
+#include "SPIPE.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SPIPE_H */

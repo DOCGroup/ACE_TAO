@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +48,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Null_Scheduling.inl"
+#include "EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

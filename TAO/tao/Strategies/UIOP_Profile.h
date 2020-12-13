@@ -25,10 +25,10 @@
 
 # if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Profile.h"
-#include "tao/Strategies/UIOP_Connection_Handler.h"
-#include "tao/Strategies/UIOP_Endpoint.h"
+#include "UIOP_Connection_Handler.h"
+#include "UIOP_Endpoint.h"
 
 #include "ace/UNIX_Addr.h"
 

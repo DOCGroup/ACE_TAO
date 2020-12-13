@@ -1,5 +1,5 @@
-#include "tao/Compression/rle/RLECompressor_Factory.h"
-#include "tao/Compression/rle/RLECompressor.h"
+#include "RLECompressor_Factory.h"
+#include "RLECompressor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

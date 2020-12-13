@@ -12,8 +12,8 @@
 #define TAO_COLLOCATION_STRATEGY_H
 
 #include /**/ "ace/pre.h"
-#include "tao/orbconf.h"
-#include /**/ "tao/Versioned_Namespace.h"
+#include "orbconf.h"
+#include /**/ "Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

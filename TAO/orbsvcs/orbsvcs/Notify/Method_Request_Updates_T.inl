@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Peer.h"
+#include "Peer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

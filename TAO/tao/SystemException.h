@@ -18,13 +18,13 @@
 
 // Do not try removing this. If you remove this for subsetting lots of
 // things go wrong in TAO.
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "Exception.h"
 
 #ifndef TAO_Exception_Export
 #  define TAO_Exception_Export ACE_Proper_Export_Flag
@@ -244,7 +244,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/SystemException.inl"
+# include "SystemException.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/"ace/post.h"

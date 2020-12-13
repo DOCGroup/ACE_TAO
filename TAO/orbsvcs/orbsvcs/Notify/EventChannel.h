@@ -10,17 +10,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/CosNotifyChannelAdminS.h"
-#include "orbsvcs/Notify/Topology_Object.h"
-#include "orbsvcs/Notify/Object.h"
-#include "orbsvcs/Notify/EventChannelFactory.h"
-#include "orbsvcs/Notify/FilterFactory.h"
+#include "Topology_Object.h"
+#include "Object.h"
+#include "EventChannelFactory.h"
+#include "FilterFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

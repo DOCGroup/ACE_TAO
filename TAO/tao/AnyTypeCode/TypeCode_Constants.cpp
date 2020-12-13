@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
-#include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
-#include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
-#include "tao/AnyTypeCode/String_TypeCode_Static.h"
+#include "TypeCode_Constants.h"
+#include "Null_RefCount_Policy.h"
+#include "Empty_Param_TypeCode.h"
+#include "Objref_TypeCode_Static.h"
+#include "String_TypeCode_Static.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

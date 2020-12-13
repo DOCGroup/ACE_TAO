@@ -1,10 +1,10 @@
-#include "tao/Transport_Descriptor_Interface.h"
+#include "Transport_Descriptor_Interface.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Transport_Descriptor_Interface.inl"
+# include "Transport_Descriptor_Interface.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/Endpoint.h"
+#include "Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

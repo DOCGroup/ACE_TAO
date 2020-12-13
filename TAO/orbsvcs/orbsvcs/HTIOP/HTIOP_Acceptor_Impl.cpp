@@ -1,8 +1,8 @@
 #ifndef HTIOP_ACCEPTOR_IMPL_CPP
 #define HTIOP_ACCEPTOR_IMPL_CPP
 
-#include "orbsvcs/HTIOP/HTIOP_Acceptor_Impl.h"
-#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
+#include "HTIOP_Acceptor_Impl.h"
+#include "HTIOP_Completion_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

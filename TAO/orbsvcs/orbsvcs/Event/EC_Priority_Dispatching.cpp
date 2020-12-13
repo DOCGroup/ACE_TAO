@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_Priority_Dispatching.h"
-#include "orbsvcs/Event/EC_Dispatching_Task.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "EC_Priority_Dispatching.h"
+#include "EC_Dispatching_Task.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_QOS_Info.h"
 
 #include "orbsvcs/Event_Service_Constants.h"
 #include "orbsvcs/RtecSchedulerC.h"

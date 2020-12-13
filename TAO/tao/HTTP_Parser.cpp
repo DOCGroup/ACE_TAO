@@ -1,11 +1,11 @@
-#include "tao/HTTP_Parser.h"
+#include "HTTP_Parser.h"
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
-#include "tao/HTTP_Client.h"
-#include "tao/ORB.h"
-#include "tao/Object.h"
-#include "tao/SystemException.h"
+#include "HTTP_Client.h"
+#include "ORB.h"
+#include "Object.h"
+#include "SystemException.h"
 
 #include "ace/Read_Buffer.h"
 #include "ace/Malloc_Base.h"

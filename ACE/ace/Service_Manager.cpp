@@ -1,14 +1,14 @@
-#include "ace/Service_Manager.h"
+#include "Service_Manager.h"
 
-#include "ace/Get_Opt.h"
-#include "ace/Log_Category.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Config.h"
-#include "ace/Service_Types.h"
-#include "ace/Reactor.h"
-#include "ace/WFMO_Reactor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "Get_Opt.h"
+#include "Log_Category.h"
+#include "Service_Repository.h"
+#include "Service_Config.h"
+#include "Service_Types.h"
+#include "Reactor.h"
+#include "WFMO_Reactor.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

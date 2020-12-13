@@ -1,5 +1,5 @@
-#include "tao/LF_Multi_Event.h"
-#include "tao/Connection_Handler.h"
+#include "LF_Multi_Event.h"
+#include "Connection_Handler.h"
 #include "ace/OS_Memory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

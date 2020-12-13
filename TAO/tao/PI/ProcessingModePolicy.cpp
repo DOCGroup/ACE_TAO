@@ -1,4 +1,4 @@
-#include "tao/PI/ProcessingModePolicy.h"
+#include "ProcessingModePolicy.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 

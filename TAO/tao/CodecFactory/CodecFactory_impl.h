@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CodecFactory/IOP_Codec_includeC.h"
+#include "IOP_Codec_includeC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

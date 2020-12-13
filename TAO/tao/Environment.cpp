@@ -1,12 +1,12 @@
-#include "tao/Environment.h"
-#include "tao/ORB_Core.h"
-#include "tao/SystemException.h"
-#include "tao/default_environment.h"
+#include "Environment.h"
+#include "ORB_Core.h"
+#include "SystemException.h"
+#include "default_environment.h"
 
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Environment.inl"
+# include "Environment.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

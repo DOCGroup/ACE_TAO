@@ -1,14 +1,14 @@
 #ifndef ACE_BASED_POINTER_T_CPP
 #define ACE_BASED_POINTER_T_CPP
 
-#include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
-#include "ace/Log_Category.h"
+#include "Based_Pointer_T.h"
+#include "Based_Pointer_Repository.h"
+#include "Log_Category.h"
 
 #   define ACE_TRACEX(X) ACE_Trace ____ (ACE_TEXT (X), __LINE__, ACE_TEXT (__FILE__))
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.inl"
+#include "Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

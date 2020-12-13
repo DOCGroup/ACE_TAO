@@ -13,9 +13,9 @@
 #ifndef ACE_CONFIG_ALL_H
 #define ACE_CONFIG_ALL_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,7 @@
 #if defined ACE_HAS_VERBOSE_NOTSUP
   // Print a console message with the file and line number of the
   // unsupported function.
-# include "ace/OS_NS_stdio.h"
+# include "OS_NS_stdio.h"
 # define ACE_NOTSUP_RETURN(FAILVALUE) do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return FAILVALUE; } while (0)
 # define ACE_NOTSUP do { errno = ENOTSUP; ACE_OS::fprintf (stderr, ACE_TEXT ("ACE_NOTSUP: %s, line %d\n"), __FILE__, __LINE__); return; } while (0)
 #else /* ! ACE_HAS_VERBOSE_NOTSUP */
@@ -50,7 +50,7 @@
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
 #  define ACE_TRACE(X) ACE_TRACE_IMPL(X)
-#  include "ace/Trace.h"
+#  include "Trace.h"
 #endif /* ACE_NTRACE */
 
 // By default we perform no tracing on the OS layer, otherwise the
@@ -67,7 +67,7 @@
 #    define ACE_HAS_TRACE
 #  endif /* ACE_HAS_TRACE */
 #  define ACE_OS_TRACE(X) ACE_TRACE_IMPL(X)
-#  include "ace/Trace.h"
+#  include "Trace.h"
 #endif /* ACE_OS_NTRACE */
 
 #if !defined (ACE_HAS_MONITOR_FRAMEWORK)
@@ -84,8 +84,8 @@
 
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
-#include "ace/OS_main.h"
+#include "OS_main.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_ALL_H */

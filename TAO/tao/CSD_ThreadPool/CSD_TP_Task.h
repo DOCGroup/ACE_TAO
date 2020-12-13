@@ -13,9 +13,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CSD_ThreadPool/CSD_TP_Export.h"
+#include "CSD_TP_Export.h"
 
-#include "tao/CSD_ThreadPool/CSD_TP_Queue.h"
+#include "CSD_TP_Queue.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/Condition.h"
 
@@ -156,7 +156,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Task.inl"
+# include "CSD_TP_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

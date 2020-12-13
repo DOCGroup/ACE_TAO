@@ -14,10 +14,10 @@
 #ifndef ACE_PROACTOR_H
 #define ACE_PROACTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include /**/ "ace/ACE_export.h"
+#include /**/ "config-all.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -27,13 +27,13 @@
 // This only works on Win32 platforms and on Unix platforms supporting
 // POSIX aio calls.
 
-#  include "ace/Asynch_IO.h"
-#  include "ace/Asynch_IO_Impl.h"
-#  include "ace/Thread_Manager.h"
-#  include "ace/Timer_Queue.h"
-#  include "ace/Timer_List.h"
-#  include "ace/Timer_Heap.h"
-#  include "ace/Timer_Wheel.h"
+#  include "Asynch_IO.h"
+#  include "Asynch_IO_Impl.h"
+#  include "Thread_Manager.h"
+#  include "Timer_Queue.h"
+#  include "Timer_List.h"
+#  include "Timer_Heap.h"
+#  include "Timer_Wheel.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -624,13 +624,13 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  if defined (__ACE_INLINE__)
-#    include "ace/Proactor.inl"
+#    include "Proactor.inl"
 #  endif /* __ACE_INLINE__ */
 
 #else /* NOT WIN32 or POSIX with AIO features. */
 
-#  include "ace/os_include/os_stddef.h"
-#  include "ace/os_include/os_signal.h"
+#  include "os_include/os_stddef.h"
+#  include "os_include/os_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -672,6 +672,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_PROACTOR_H */

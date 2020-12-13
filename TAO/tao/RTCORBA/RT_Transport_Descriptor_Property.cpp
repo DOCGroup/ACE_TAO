@@ -1,9 +1,9 @@
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
+#include "RT_Transport_Descriptor_Property.h"
 
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.inl"
+#include "RT_Transport_Descriptor_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

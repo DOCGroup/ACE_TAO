@@ -11,20 +11,20 @@
 #ifndef ACE_MEM_MAP_H
 #define ACE_MEM_MAP_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/Copy_Disabled.h"
-#include "ace/os_include/sys/os_mman.h"
-#include "ace/os_include/os_limits.h"
-#include "ace/os_include/os_fcntl.h"
-#include "ace/Default_Constants.h"
+#include "Global_Macros.h"
+#include "Copy_Disabled.h"
+#include "os_include/sys/os_mman.h"
+#include "os_include/os_limits.h"
+#include "os_include/os_fcntl.h"
+#include "Default_Constants.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -220,9 +220,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Mem_Map.inl"
+#include "Mem_Map.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_MEM_MAP_H */

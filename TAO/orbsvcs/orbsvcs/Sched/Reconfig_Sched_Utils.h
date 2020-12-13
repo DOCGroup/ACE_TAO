@@ -22,7 +22,7 @@
 
 #include "orbsvcs/Scheduler_Factory.h"
 #include "orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "sched_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -694,7 +694,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates here.
-#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
+#include "Reconfig_Sched_Utils_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_RECONFIG_SCHED_UTILS_H */

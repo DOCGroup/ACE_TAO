@@ -1,7 +1,7 @@
-#include "tao/Connection_Purging_Strategy.h"
+#include "Connection_Purging_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Connection_Purging_Strategy.inl"
+# include "Connection_Purging_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

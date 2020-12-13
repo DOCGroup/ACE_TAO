@@ -1,12 +1,12 @@
-#include "tao/Incoming_Message_Queue.h"
-#include "tao/Queued_Data.h"
-#include "tao/debug.h"
+#include "Incoming_Message_Queue.h"
+#include "Queued_Data.h"
+#include "debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Incoming_Message_Queue.inl"
+# include "Incoming_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

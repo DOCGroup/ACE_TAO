@@ -1,4 +1,4 @@
-#include "tao/Adapter_Factory.h"
+#include "Adapter_Factory.h"
 
 // ****************************************************************
 

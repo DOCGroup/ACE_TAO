@@ -12,9 +12,9 @@
 #define TAO_TCL_INTERPRETER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "Constraint_Nodes.h"
+#include "Constraint_Visitors.h"
+#include "trading_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "orbsvcs/Security/Security_PolicyFactory.h"
-#include "orbsvcs/Security/SL2_QOPPolicy.h"
-#include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
+#include "Security_PolicyFactory.h"
+#include "SL2_QOPPolicy.h"
+#include "SL2_EstablishTrustPolicy.h"
 
-#include "orbsvcs/Security/SL3_ContextEstablishmentPolicy.h"
-#include "orbsvcs/Security/SL3_ObjectCredentialsPolicy.h"
+#include "SL3_ContextEstablishmentPolicy.h"
+#include "SL3_ObjectCredentialsPolicy.h"
 
 #include "orbsvcs/SecurityLevel2C.h"
 #include "orbsvcs/SecurityLevel3C.h"

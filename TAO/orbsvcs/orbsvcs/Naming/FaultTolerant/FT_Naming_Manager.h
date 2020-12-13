@@ -15,16 +15,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 
 #include "orbsvcs/FT_NamingManagerS.h"
 #include "orbsvcs/FT_NamingManagerC.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
+#include "FT_Naming_Replication_Manager.h"
 #include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
 #include "orbsvcs/PortableGroup/PG_Properties_Support.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_PG_Group_Factory.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Random.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h"
+#include "FT_PG_Group_Factory.h"
+#include "FT_Random.h"
+#include "FT_Round_Robin.h"
 #include "tao/Condition.h"
 
 #include "ace/Task.h"

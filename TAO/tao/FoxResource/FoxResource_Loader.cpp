@@ -1,6 +1,6 @@
-#include "tao/FoxResource/FoxResource_Loader.h"
+#include "FoxResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/FoxResource/FoxResource_Factory.h"
+#include "FoxResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

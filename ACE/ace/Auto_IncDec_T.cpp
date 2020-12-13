@@ -5,15 +5,15 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_IncDec_T.h"
-#include "ace/Log_Category.h"
+#include "Auto_IncDec_T.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Auto_IncDec_T.inl"
+#include "Auto_IncDec_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

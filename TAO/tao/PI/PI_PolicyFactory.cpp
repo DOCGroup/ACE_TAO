@@ -1,8 +1,8 @@
-#include "tao/PI/PI_PolicyFactory.h"
+#include "PI_PolicyFactory.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/ProcessingModePolicy.h"
+#include "ProcessingModePolicy.h"
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"

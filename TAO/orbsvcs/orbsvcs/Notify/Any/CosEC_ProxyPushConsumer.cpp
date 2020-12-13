@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Any/CosEC_ProxyPushConsumer.h"
+#include "CosEC_ProxyPushConsumer.h"
 #include "tao/debug.h"
 #include "orbsvcs/Notify/AdminProperties.h"
 #include "orbsvcs/Notify/Method_Request_Lookup.h"
 #include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Any/AnyEvent.h"
-#include "orbsvcs/Notify/Any/PushSupplier.h"
+#include "AnyEvent.h"
+#include "PushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

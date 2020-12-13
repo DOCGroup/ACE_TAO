@@ -37,19 +37,19 @@
 #ifndef ACE_CDR_STREAM_H
 #define ACE_CDR_STREAM_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/CDR_Base.h"
+#include "CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SStringfwd.h"
-#include "ace/Message_Block.h"
+#include "SStringfwd.h"
+#include "Message_Block.h"
 
 #if defined (GEN_OSTREAM_OPS)
-#include "ace/streams.h"
+#include "streams.h"
 #endif /* GEN_OSTREAM_OPS */
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
@@ -1354,7 +1354,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.inl"
+# include "CDR_Stream.inl"
 #else /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -1497,6 +1497,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* GEN_OSTREAM_OPS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CDR_STREAM_H */

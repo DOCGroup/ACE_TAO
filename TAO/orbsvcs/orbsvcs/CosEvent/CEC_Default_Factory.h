@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/CEC_Factory.h"
+#include "CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/CEC_Defaults.h"
+#include "CEC_Defaults.h"
 
 #include "ace/Service_Config.h"
 #include "ace/Time_Value.h"
@@ -213,7 +213,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Default_Factory.inl"
+#include "CEC_Default_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_CEC_Default_Factory)

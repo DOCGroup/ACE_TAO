@@ -1,11 +1,11 @@
-#include "ace/Task.h"
-#include "ace/Module.h"
+#include "Task.h"
+#include "Module.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task.inl"
+#include "Task.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -11,18 +11,18 @@
 
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
+#include "FT_Naming_Server.h"
 #include "orbsvcs/Naming/Naming_Server.h"
 
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "FT_Naming_Manager.h"
 #include "orbsvcs/Naming/Storable.h"
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
 
-#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Storable_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Persistent_Naming_Context.h"
+#include "FT_Storable_Naming_Context.h"
+#include "FT_Storable_Naming_Context_Factory.h"
+#include "FT_Persistent_Naming_Context_Factory.h"
+#include "FT_Persistent_Naming_Context.h"
 #include "orbsvcs/Naming/Persistent_Context_Index.h"
 #include "orbsvcs/Naming/Naming_Context_Interface.h"
 

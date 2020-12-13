@@ -1,17 +1,17 @@
 #ifndef ACE_CACHED_CONNECT_STRATEGY_T_CPP
 #define ACE_CACHED_CONNECT_STRATEGY_T_CPP
 
-#include "ace/Cached_Connect_Strategy_T.h"
+#include "Cached_Connect_Strategy_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
-#include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
-#include "ace/Thread_Manager.h"
-#include "ace/WFMO_Reactor.h"
+#include "ACE.h"
+#include "Service_Repository.h"
+#include "Service_Types.h"
+#include "Thread_Manager.h"
+#include "WFMO_Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

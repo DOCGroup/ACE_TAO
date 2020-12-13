@@ -1,7 +1,7 @@
-#include "tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.h"
+#include "CSD_TP_Custom_Asynch_Request.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Custom_Asynch_Request.inl"
+# include "CSD_TP_Custom_Asynch_Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

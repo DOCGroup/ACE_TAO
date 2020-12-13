@@ -30,9 +30,9 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/RTCORBA/rtcorba_export.h"
+#include /**/ "rtcorba_export.h"
 #define TAO_RTCORBA_SAFE_INCLUDE
-#include "tao/RTCORBA/RT_ProtocolPropertiesC.h"
+#include "RT_ProtocolPropertiesC.h"
 #undef TAO_RTCORBA_SAFE_INCLUDE
 
 

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 // FUZZ: disable check_for_ACE_Guard
 
-#include "ace/RW_Thread_Mutex.h"
+#include "RW_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

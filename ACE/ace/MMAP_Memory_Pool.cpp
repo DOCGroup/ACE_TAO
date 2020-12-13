@@ -1,20 +1,20 @@
 // MMAP_Memory_Pool.cpp
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/OS_NS_sys_mman.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/Log_Category.h"
-#include "ace/Truncate.h"
-#include "ace/Lib_Find.h"
+#include "MMAP_Memory_Pool.h"
+#include "OS_NS_sys_mman.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_stat.h"
+#include "Log_Category.h"
+#include "Truncate.h"
+#include "Lib_Find.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-#include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
+#include "Based_Pointer_T.h"
+#include "Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MMAP_Memory_Pool.inl"
+#include "MMAP_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

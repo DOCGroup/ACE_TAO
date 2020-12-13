@@ -4,7 +4,7 @@
 
 #ifndef ACE_CONFIG_LINUX_H
 #define ACE_CONFIG_LINUX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_LINUX)
 #define ACE_LINUX
@@ -18,7 +18,7 @@
 #define ACE_PLATFORM_CONFIG config-linux.h
 #endif
 
-#include "ace/config-linux-common.h"
+#include "config-linux-common.h"
 
 #define ACE_HAS_BYTESEX_H
 
@@ -133,7 +133,7 @@
 #define ACE_HAS_ICMP_SUPPORT 1
 
 #if defined (ACE_LACKS_NETWORKING)
-# include "ace/config-posix-nonetworking.h"
+# include "config-posix-nonetworking.h"
 #else
 # define ACE_HAS_NETLINK
 # define ACE_HAS_GETIFADDRS
@@ -204,6 +204,6 @@
 
 #endif /* __UCLIBC__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_LINUX_H */

@@ -12,7 +12,7 @@
 #ifndef TAO_STORABLE_FILE_GUARD_H
 #define TAO_STORABLE_FILE_GUARD_H
 
-#include "tao/Storable_Base.h"
+#include "Storable_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

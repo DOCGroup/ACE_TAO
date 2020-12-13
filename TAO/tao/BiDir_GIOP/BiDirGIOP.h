@@ -14,7 +14,7 @@
 #define TAO_BIDIR_GIOP_H
 #include /**/ "ace/pre.h"
 
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -70,7 +70,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #define TAO_BIDIRGIOP_SAFE_INCLUDE
-#include "tao/BiDir_GIOP/BiDirPolicyC.h"
+#include "BiDirPolicyC.h"
 #undef TAO_BIDIRGIOP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

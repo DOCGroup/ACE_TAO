@@ -15,7 +15,7 @@
 #ifndef TAO_EC_LIFETIME_UTILS_T_H
 #define TAO_EC_LIFETIME_UTILS_T_H
 
-#include "orbsvcs/Event/EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -90,11 +90,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.inl"
+#include "EC_Lifetime_Utils_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.cpp"
+#include "EC_Lifetime_Utils_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

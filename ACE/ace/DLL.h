@@ -10,17 +10,17 @@
 
 #ifndef ACE_DLL_H
 #define ACE_DLL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/os_include/os_dlfcn.h"
-#include "ace/SString.h"
+#include "Global_Macros.h"
+#include "os_include/os_dlfcn.h"
+#include "SString.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -201,5 +201,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_DLL_H */

@@ -11,10 +11,10 @@
 #ifndef ACE_REFCOUNTED_AUTO_PTR_H
 #define ACE_REFCOUNTED_AUTO_PTR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Atomic_Op.h"
+#include "Auto_Ptr.h"
+#include "Atomic_Op.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -179,16 +179,16 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include "ace/Refcounted_Auto_Ptr.inl"
+#include "Refcounted_Auto_Ptr.inl"
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Refcounted_Auto_Ptr.cpp"
+#include "Refcounted_Auto_Ptr.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Refcounted_Auto_Ptr.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_REFCOUNTED_AUTO_PTR_H */

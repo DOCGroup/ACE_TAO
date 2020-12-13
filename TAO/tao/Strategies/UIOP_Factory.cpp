@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/Strategies/UIOP_Factory.h"
+#include "UIOP_Factory.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Acceptor.h"
-#include "tao/Strategies/UIOP_Connector.h"
+#include "UIOP_Acceptor.h"
+#include "UIOP_Connector.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_strings.h"
 

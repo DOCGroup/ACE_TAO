@@ -17,14 +17,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/EndpointPolicy/EndpointPolicy_Export.h"
+#include "EndpointPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
-#include "tao/EndpointPolicy/EndpointPolicyC.h"
+#include "EndpointPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

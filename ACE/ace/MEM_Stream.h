@@ -12,11 +12,11 @@
 #ifndef ACE_MEM_STREAM_H
 #define ACE_MEM_STREAM_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
-#include "ace/MEM_IO.h"
+#include "MEM_IO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/INET_Addr.h"
+#include "INET_Addr.h"
 
 #if !defined (ACE_MEM_STREAM_MIN_BUFFER)
 # define ACE_MEM_STREAM_MIN_BUFFER 4096
@@ -107,10 +107,10 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_Stream.inl"
+#include "MEM_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MEM_STREAM_H */

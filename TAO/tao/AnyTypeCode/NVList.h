@@ -20,9 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/NVList_Adapter_Impl.h"
+#include "AnyTypeCode_methods.h"
+#include "Any.h"
+#include "NVList_Adapter_Impl.h"
 
 #include "ace/Unbounded_Queue.h"
 #include "ace/Thread_Mutex.h"
@@ -279,7 +279,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/NVList.inl"
+# include "NVList.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

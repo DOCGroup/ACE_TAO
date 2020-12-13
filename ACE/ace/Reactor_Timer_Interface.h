@@ -11,9 +11,9 @@
 #ifndef ACE_REACTOR_TIMER_INTERFACE_H
 #define ACE_REACTOR_TIMER_INTERFACE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Time_Value.h"
+#include "Time_Value.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -71,6 +71,6 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_REACTOR_TIMER_INTERFACE_H */

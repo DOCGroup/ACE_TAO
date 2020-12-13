@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecEventCommC.h"
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 #include "ace/Task.h"
 #include "ace/Message_Block.h"
 #include "ace/Lock_Adapter_T.h"
@@ -188,7 +188,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.inl"
+#include "EC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Simple_Queue_Full_Action)

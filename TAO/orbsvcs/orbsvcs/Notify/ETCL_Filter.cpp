@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/ETCL_Filter.h"
+#include "ETCL_Filter.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Notify_Constraint_Visitors.h"
-#include "orbsvcs/Notify/Topology_Saver.h"
+#include "Notify_Constraint_Visitors.h"
+#include "Topology_Saver.h"
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level

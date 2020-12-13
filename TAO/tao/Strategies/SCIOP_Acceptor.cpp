@@ -1,5 +1,5 @@
-#include "tao/Strategies/SCIOP_Acceptor.h"
-#include "tao/Strategies/SCIOP_Profile.h"
+#include "SCIOP_Acceptor.h"
+#include "SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -12,7 +12,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/SCIOP_Acceptor.inl"
+#include "SCIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

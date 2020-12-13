@@ -33,18 +33,18 @@
 
 #ifndef ACE_FRAMEWORK_COMPONENT_H
 #define ACE_FRAMEWORK_COMPONENT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_signal.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Copy_Disabled.h"
-#include "ace/Synch_Traits.h"
+#include "os_include/os_signal.h"
+#include "Thread_Mutex.h"
+#include "Copy_Disabled.h"
+#include "Synch_Traits.h"
 
 #define ACE_DEFAULT_FRAMEWORK_REPOSITORY_SIZE 1024
 
@@ -185,11 +185,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Framework_Component.inl"
+#include "Framework_Component.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the templates classes at this point.
-#include "ace/Framework_Component_T.h"
+#include "Framework_Component_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FRAMEWORK_COMPONENT_H */

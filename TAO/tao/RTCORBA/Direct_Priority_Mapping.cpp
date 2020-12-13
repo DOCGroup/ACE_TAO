@@ -2,7 +2,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/Direct_Priority_Mapping.h"
+#include "Direct_Priority_Mapping.h"
 #include "ace/Sched_Params.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

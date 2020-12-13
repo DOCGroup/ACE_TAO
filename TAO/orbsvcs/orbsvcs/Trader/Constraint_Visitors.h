@@ -13,8 +13,8 @@
 #define TAO_CONSTRAINT_VISITOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Interpreter_Utils.h"
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "Interpreter_Utils.h"
+#include "trading_serv_export.h"
 #include "ace/Containers.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -87,7 +87,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "orbsvcs/Trader/Constraint_Nodes.h"
+#include "Constraint_Nodes.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,4 +1,4 @@
-#include "tao/LF_Strategy.h"
+#include "LF_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

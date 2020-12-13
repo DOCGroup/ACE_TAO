@@ -10,14 +10,14 @@
 //=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/PG_Group_Factory.h"
-#include "orbsvcs/PortableGroup/PG_Property_Utils.h"
-#include "orbsvcs/PortableGroup/PG_Group_List_Store.h"
-#include "orbsvcs/PortableGroup/PG_conf.h"
+#include "PG_Group_Factory.h"
+#include "PG_Property_Utils.h"
+#include "PG_Group_List_Store.h"
+#include "PG_conf.h"
 #include "orbsvcs/PortableGroupC.h"
-#include "orbsvcs/PortableGroup/PG_Object_Group.h"
-#include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"
-#include <orbsvcs/PortableGroup/PG_Utils.h>
+#include "PG_Object_Group.h"
+#include "PG_Object_Group_Storable.h"
+#include "PG_Utils.h"
 
 #include "tao/Storable_Factory.h"
 

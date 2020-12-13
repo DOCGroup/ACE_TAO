@@ -6,8 +6,8 @@
  */
 // =================================================================
 
-#include "tao/Strategies/OC_Endpoint_Selector_Loader.h"
-#include "tao/Strategies/OC_Endpoint_Selector_Factory.h"
+#include "OC_Endpoint_Selector_Loader.h"
+#include "OC_Endpoint_Selector_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

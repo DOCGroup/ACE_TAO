@@ -9,14 +9,14 @@
  */
 //=============================================================================
 
-#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
+#include "RequestInterceptor_Adapter_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/ORB_Core.h"
-#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
-#include "tao/PI/PICurrent.h"
-#include "tao/PI/PICurrent_Impl.h"
+#include "RequestInterceptor_Adapter_Impl.h"
+#include "PICurrent.h"
+#include "PICurrent_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

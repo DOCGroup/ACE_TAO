@@ -11,8 +11,8 @@
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
 #include "tao/Transport_Selection_Guard.h"
-#include "tao/TransportCurrent/Current_Loader.h"
-#include "tao/TransportCurrent/Current_Impl.h"
+#include "Current_Loader.h"
+#include "Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

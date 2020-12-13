@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PI_Server/ServerRequestInfo.h"
+#include "ServerRequestInfo.h"
 
 #if (TAO_HAS_INTERCEPTORS == 1)
 
@@ -21,7 +21,7 @@
 #include "ace/OS_NS_string.h"
 
 # if !defined (__ACE_INLINE__)
-#   include "tao/PI_Server/ServerRequestInfo.inl"
+#   include "ServerRequestInfo.inl"
 # endif /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

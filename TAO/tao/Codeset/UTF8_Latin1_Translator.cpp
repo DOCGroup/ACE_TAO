@@ -11,7 +11,7 @@
  */
 //=============================================================================
 
-#include "tao/Codeset/UTF8_Latin1_Translator.h"
+#include "UTF8_Latin1_Translator.h"
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 

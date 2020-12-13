@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "RTScheduler_Manager.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTScheduling/RTScheduler_Manager.inl"
+#include "RTScheduler_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
-#include "orbsvcs/HTIOP/HTIOP_Factory.h"
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
-#include "orbsvcs/HTIOP/HTIOP_Connector.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Factory.h"
+#include "HTIOP_Acceptor.h"
+#include "HTIOP_Connector.h"
+#include "HTIOP_Profile.h"
 
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/OS_NS_strings.h"

@@ -12,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DiffServPolicy/DiffServPolicy_Export.h"
+#include "DiffServPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,7 +20,7 @@
 
 #include "tao/LocalObject.h"
 #include "tao/Basic_Types.h"
-#include "tao/DiffServPolicy/DiffServPolicy.h"
+#include "DiffServPolicy.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

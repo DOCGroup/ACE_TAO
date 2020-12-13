@@ -1,5 +1,5 @@
-#include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
-#include "orbsvcs/SSLIOP/SSLIOP_OwnCredentials.h"
+#include "SSLIOP_ClientCredentials.h"
+#include "SSLIOP_OwnCredentials.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

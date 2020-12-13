@@ -1,12 +1,12 @@
-#include "ace/Malloc.h"
+#include "Malloc.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc.inl"
+#include "Malloc.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Object_Manager.h"
-#include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+#include "Object_Manager.h"
+#include "Malloc_Base.h"
+#include "OS_NS_string.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

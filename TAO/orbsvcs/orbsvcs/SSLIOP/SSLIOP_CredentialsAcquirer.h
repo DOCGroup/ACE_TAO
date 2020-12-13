@@ -13,7 +13,7 @@
 #define TAO_SSLIOP_CREDENTIALS_ACQUIRER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

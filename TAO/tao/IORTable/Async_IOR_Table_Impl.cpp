@@ -4,7 +4,7 @@
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 
-#include "tao/IORTable/Async_IOR_Table_Impl.h"
+#include "Async_IOR_Table_Impl.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 #include "tao/DynamicInterface/AMH_DSI_Response_Handler.h"
 #include "ace/Guard_T.h"

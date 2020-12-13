@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/os_include/os_pthread.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_errno.h"
+#include "os_include/os_pthread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

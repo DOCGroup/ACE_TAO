@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/config-all.h"
-#include "ace/OS_NS_errno.h"
+#include "config-all.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

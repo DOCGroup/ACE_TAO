@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ACEXML/common/Encoding.h"
+#include "Encoding.h"
 #include "ace/OS_NS_string.h"
 
 const ACEXML_Char* ACEXML_Encoding::encoding_names_[8] = {

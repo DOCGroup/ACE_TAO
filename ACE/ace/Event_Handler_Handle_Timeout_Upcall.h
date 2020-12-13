@@ -1,7 +1,7 @@
 #ifndef ACE_EVENT_HANDLER_HANDLE_TIMEOUT_UPCALL_H
 #define ACE_EVENT_HANDLER_HANDLE_TIMEOUT_UPCALL_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 /**
  * @file Event_Handler_Handle_Timeout_Upcall.h
@@ -12,8 +12,8 @@
  * Brunsch, Irfan Pyarali and a cast of thousands.
  */
 
-#include "ace/Timer_Queuefwd.h"
-#include "ace/Copy_Disabled.h"
+#include "Timer_Queuefwd.h"
+#include "Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -96,8 +96,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-# include "ace/Event_Handler_Handle_Timeout_Upcall.inl"
+# include "Event_Handler_Handle_Timeout_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_EVENT_HANDLER_HANDLE_TIMEOUT_UPCALL_H */

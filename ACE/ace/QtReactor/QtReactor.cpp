@@ -1,4 +1,4 @@
-#include "ace/QtReactor/QtReactor.h"
+#include "QtReactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

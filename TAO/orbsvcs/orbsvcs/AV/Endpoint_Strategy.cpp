@@ -8,7 +8,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/Endpoint_Strategy.h"
+#include "Endpoint_Strategy.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

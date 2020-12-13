@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Enum_TypeCode_Static.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "Enum_TypeCode_Static.h"
+#include "TypeCode_Traits.h"
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
 #include "tao/TypeCodeFactory_Adapter.h"
@@ -9,7 +9,7 @@
 #include "ace/Dynamic_Service.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Enum_TypeCode_Static.inl"
+# include "Enum_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

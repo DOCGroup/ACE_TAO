@@ -14,15 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI_ForwardC.h"
-#include "tao/Policy_ForwardC.h"
-#include "tao/TAO_Export.h"
+#include "PI_ForwardC.h"
+#include "Policy_ForwardC.h"
+#include "TAO_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T> class ACE_Array_Base;

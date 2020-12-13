@@ -1,4 +1,4 @@
-#include "tao/Monitor/Monitor_Impl.h"
+#include "Monitor_Impl.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

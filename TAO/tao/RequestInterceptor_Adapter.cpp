@@ -9,7 +9,7 @@
  */
 //=============================================================================
 
-#include "tao/RequestInterceptor_Adapter.h"
+#include "RequestInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

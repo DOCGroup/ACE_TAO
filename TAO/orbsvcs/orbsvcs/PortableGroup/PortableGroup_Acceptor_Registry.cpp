@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/PortableGroup_Acceptor_Registry.h"
+#include "PortableGroup_Acceptor_Registry.h"
 #include "tao/ORB_Core.h"
 #include "tao/Profile.h"
 #include "tao/Protocol_Factory.h"

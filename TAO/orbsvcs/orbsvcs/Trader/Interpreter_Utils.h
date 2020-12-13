@@ -21,7 +21,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/SystemException.h"
 
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "trading_serv_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

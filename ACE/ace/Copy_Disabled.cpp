@@ -4,7 +4,7 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-#include "ace/Copy_Disabled.h"
+#include "Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,14 +1,14 @@
 #ifndef TAO_TYPECODE_CASE_ENUM_T_CPP
 #define TAO_TYPECODE_CASE_ENUM_T_CPP
 
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
+#include "Any_Unknown_IDL_Type.h"
 #include "TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "Any.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/TypeCode_Case_Enum_T.inl"
+# include "TypeCode_Case_Enum_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

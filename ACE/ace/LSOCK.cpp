@@ -1,17 +1,17 @@
-#include "ace/LSOCK.h"
+#include "LSOCK.h"
 
 
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "Log_Category.h"
+#include "OS_NS_sys_socket.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/LSOCK.inl"
+#include "LSOCK.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

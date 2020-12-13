@@ -1,4 +1,4 @@
-#include "tao/ORBInitializer_Registry_Adapter.h"
+#include "ORBInitializer_Registry_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

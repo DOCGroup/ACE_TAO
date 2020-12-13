@@ -1,4 +1,4 @@
-#include "ace/Monitor_Control/Windows_Multi_Instance_Monitor.h"
+#include "Windows_Multi_Instance_Monitor.h"
 
 #if defined (ACE_HAS_WIN32_PDH)
 

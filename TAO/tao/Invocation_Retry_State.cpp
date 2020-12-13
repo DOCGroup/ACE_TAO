@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/Invocation_Retry_State.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
+#include "Invocation_Retry_State.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

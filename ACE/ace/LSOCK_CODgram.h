@@ -11,9 +11,9 @@
 
 #ifndef ACE_LOCAL_SOCK_CODGRAM_H
 #define ACE_LOCAL_SOCK_CODGRAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,9 +21,9 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/LSOCK.h"
-#include "ace/SOCK_CODgram.h"
-#include "ace/Addr.h"
+#include "LSOCK.h"
+#include "SOCK_CODgram.h"
+#include "Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -99,9 +99,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/LSOCK_CODgram.inl"
+#include "LSOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCAL_SOCK_CODGRAM_H */

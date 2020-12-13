@@ -1,12 +1,12 @@
-#include "ace/OS_NS_wchar.h"
+#include "OS_NS_wchar.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_wchar.inl"
+# include "OS_NS_wchar.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_HAS_WCHAR)
-#  include "ace/OS_NS_ctype.h"
-#  include "ace/OS_NS_string.h"
+#  include "OS_NS_ctype.h"
+#  include "OS_NS_string.h"
 #endif /* ACE_HAS_WCHAR */
 
 // The following wcs*_emulation methods were created based on BSD code:

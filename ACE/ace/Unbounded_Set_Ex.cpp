@@ -1,16 +1,16 @@
 #ifndef ACE_UNBOUNDED_SET_EX_CPP
 #define ACE_UNBOUNDED_SET_EX_CPP
 
-#include "ace/Unbounded_Set.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Log_Category.h"
+#include "Unbounded_Set.h"
+#include "Malloc_Base.h"
+#include "Log_Category.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Unbounded_Set_Ex.inl"
+#include "Unbounded_Set_Ex.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

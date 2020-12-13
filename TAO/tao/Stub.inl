@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/ORB_Core.h"
+#include "ORB_Core.h"
 #include "ace/Reverse_Lock_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

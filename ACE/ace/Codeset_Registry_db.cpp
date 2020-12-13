@@ -10,7 +10,7 @@
  * copy of this file, with the registry_db_ array properly initialized.
  */
 
-#include "ace/Codeset_Registry.h"
+#include "Codeset_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

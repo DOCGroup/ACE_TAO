@@ -25,7 +25,7 @@
 
 #include "tao/Transport_Connector.h"
 #include "tao/Connector_Impl.h"
-#include "tao/Strategies/SCIOP_Connection_Handler.h"
+#include "SCIOP_Connection_Handler.h"
 #include "ace/SOCK_SEQPACK_Connector.h"
 #include "ace/Connector.h"
 

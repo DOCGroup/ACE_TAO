@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
+#include "MonitorSupplierAdmin.h"
+#include "MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 

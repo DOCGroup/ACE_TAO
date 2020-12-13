@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "orbsvcs/Security/Security_Current.h"
+#include "Security_Current.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/Security/Security_Current.inl"
+# include "Security_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Gateway_Sched.h"
+#include "EC_Gateway_Sched.h"
 #include "orbsvcs/Time_Utilities.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

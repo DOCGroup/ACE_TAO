@@ -1,9 +1,9 @@
-#include "tao/ObjectKey_Table.h"
-#include "tao/ORB_Core.h"
-#include "tao/Refcounted_ObjectKey.h"
+#include "ObjectKey_Table.h"
+#include "ORB_Core.h"
+#include "Refcounted_ObjectKey.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ObjectKey_Table.inl"
+# include "ObjectKey_Table.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

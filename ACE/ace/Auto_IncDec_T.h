@@ -12,15 +12,15 @@
 #ifndef ACE_AUTO_INCDEC_T_H
 #define ACE_AUTO_INCDEC_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,17 +63,17 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Auto_IncDec_T.inl"
+#include "Auto_IncDec_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Auto_IncDec_T.cpp"
+#include "Auto_IncDec_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Auto_IncDec_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_AUTO_INCDEC_T_H */

@@ -7,8 +7,8 @@
 //=============================================================================
 
 
-#include "tao/DynamicAny/DynamicAny.h"
-#include "tao/DynamicAny/DynAnyFactory.h"
+#include "DynamicAny.h"
+#include "DynAnyFactory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

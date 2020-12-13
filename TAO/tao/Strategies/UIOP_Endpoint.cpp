@@ -1,12 +1,12 @@
-#include "tao/Strategies/UIOP_Endpoint.h"
-#include "tao/Strategies/UIOP_Connection_Handler.h"
+#include "UIOP_Endpoint.h"
+#include "UIOP_Connection_Handler.h"
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_string.h"
 
 #if TAO_HAS_UIOP == 1
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/UIOP_Endpoint.inl"
+# include "UIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

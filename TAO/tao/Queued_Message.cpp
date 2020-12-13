@@ -1,7 +1,7 @@
-#include "tao/Queued_Message.h"
+#include "Queued_Message.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Queued_Message.inl"
+# include "Queued_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

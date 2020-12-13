@@ -11,21 +11,21 @@
 // These need to go outside of the #ifdef to avoid problems with
 // circular dependencies...
 
-#include "ace/Log_Priority.h"
+#include "Log_Priority.h"
 
 #ifndef ACE_LOG_RECORD_H
 #define ACE_LOG_RECORD_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
-#include "ace/Basic_Types.h"
-#include "ace/iosfwd.h"
+#include "Default_Constants.h"
+#include "Basic_Types.h"
+#include "iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -210,8 +210,8 @@ ACE_Export int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record)
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Log_Record.inl"
+#include "Log_Record.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOG_RECORD_H */

@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 #include "tao/Basic_Types.h"
 #include <atomic>
 

@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Any_Basic_Impl.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "Any_Basic_Impl.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "Any.h"
+#include "TypeCode.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 

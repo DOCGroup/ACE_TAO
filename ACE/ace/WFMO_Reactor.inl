@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/Handle_Set.h"
-#include "ace/Reactor.h"
-#include "ace/Thread.h"
-#include "ace/Sig_Handler.h"
-#include "ace/OS_NS_errno.h"
+#include "Handle_Set.h"
+#include "Reactor.h"
+#include "Thread.h"
+#include "Sig_Handler.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

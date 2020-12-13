@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/XML_Topology_Factory.h"
-#include "orbsvcs/Notify/XML_Saver.h"
-#include "orbsvcs/Notify/XML_Loader.h"
+#include "XML_Topology_Factory.h"
+#include "XML_Saver.h"
+#include "XML_Loader.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"

@@ -1,8 +1,8 @@
-#include "tao/PortableServer/Active_Object_Map.h"
-#include "tao/PortableServer/Active_Object_Map_Entry.h"
+#include "Active_Object_Map.h"
+#include "Active_Object_Map_Entry.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/Active_Object_Map.inl"
+# include "Active_Object_Map.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/SystemException.h"

@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/os_include/sys/os_time.h"
-#include "ace/os_include/os_errno.h"
+#include "os_include/sys/os_time.h"
+#include "os_include/os_errno.h"
 
 #if defined (ACE_VXWORKS) || defined (ACE_HAS_CLOCK_GETTIME_REALTIME) || defined (ACE_LACKS_GETTIMEOFDAY)
-#  include "ace/OS_NS_time.h"
+#  include "OS_NS_time.h"
 #endif /* ACE_VXWORKS || ACE_HAS_CLOCK_REALTIME */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -11,21 +11,21 @@
 #ifndef ACE_STRATEGIES_T_H
 #define ACE_STRATEGIES_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
+#include "Hash_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Connection_Recycling_Strategy.h"
-#include "ace/Refcountable_T.h"
-#include "ace/Hashable.h"
-#include "ace/Recyclable.h"
-#include "ace/Reverse_Lock_T.h"
+#include "Reactor.h"
+#include "Thread_Manager.h"
+#include "Connection_Recycling_Strategy.h"
+#include "Refcountable_T.h"
+#include "Hashable.h"
+#include "Recyclable.h"
+#include "Reverse_Lock_T.h"
 
 // Needed for broken linkers that can't grok long symbols.
 #define ACE_Refcounted_Hash_Recyclable ARHR
@@ -1042,17 +1042,17 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Strategies_T.inl"
+#include "Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Strategies_T.cpp"
+#include "Strategies_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Strategies_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_STRATEGIES_T_H */

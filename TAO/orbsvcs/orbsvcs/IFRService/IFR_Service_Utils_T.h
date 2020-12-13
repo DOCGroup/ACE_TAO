@@ -108,7 +108,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.cpp"
+#include "IFR_Service_Utils_T.cpp"
 #endif /* defined REQUIRED SOURCE */
 
 #if defined(_MSC_VER)

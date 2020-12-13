@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Resource_Factory.h"
+#include "Resource_Factory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor_Impl;
@@ -346,7 +346,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/default_resource.inl"
+#include "default_resource.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

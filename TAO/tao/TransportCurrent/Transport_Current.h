@@ -2,8 +2,8 @@
 #ifndef TRANSPORT_CURRENT_H
 #define TRANSPORT_CURRENT_H
 
-#include "tao/TransportCurrent/TCC.h"
-#include "tao/TransportCurrent/Current_Loader.h"
+#include "TCC.h"
+#include "Current_Loader.h"
 
 #if defined (TAO_AS_STATIC_LIBS)
 

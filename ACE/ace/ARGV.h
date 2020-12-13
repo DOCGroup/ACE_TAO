@@ -11,16 +11,16 @@
 
 #ifndef ACE_ARGUMENT_VECTOR_H
 #define ACE_ARGUMENT_VECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/Unbounded_Queue.h"
+#include "Global_Macros.h"
+#include "Unbounded_Queue.h"
 
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -317,16 +317,16 @@ typedef ACE_ARGV_T<ACE_TCHAR> ACE_ARGV;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ARGV.inl"
+#include "ARGV.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/ARGV.cpp"
+#include "ARGV.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("ARGV.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ARGUMENT_VECTOR_H */

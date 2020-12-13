@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/GIOP_Message_Generator_Parser_11.h"
+#include "GIOP_Message_Generator_Parser_11.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

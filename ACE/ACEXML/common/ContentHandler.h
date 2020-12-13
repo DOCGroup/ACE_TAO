@@ -11,15 +11,15 @@
 #define _ACEXML_CONTENTHANDLER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/SAXExceptions.h"
-#include "ACEXML/common/Locator.h"
-#include "ACEXML/common/Attributes.h"
+#include "SAXExceptions.h"
+#include "Locator.h"
+#include "Attributes.h"
 
 /**
  * @class ACEXML_ContentHandler

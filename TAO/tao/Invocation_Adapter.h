@@ -18,11 +18,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Invocation_Utils.h"
-#include "tao/Collocation_Strategy.h"
-#include "tao/CORBA_methods.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include /**/ "TAO_Export.h"
+#include "Invocation_Utils.h"
+#include "Collocation_Strategy.h"
+#include "CORBA_methods.h"
+#include "Pseudo_VarOut_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -299,7 +299,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Invocation_Adapter.inl"
+# include "Invocation_Adapter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

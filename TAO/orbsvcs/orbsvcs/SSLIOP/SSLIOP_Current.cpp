@@ -1,8 +1,8 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "SSLIOP_Current.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
+# include "SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

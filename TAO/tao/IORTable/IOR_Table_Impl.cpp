@@ -4,7 +4,7 @@
  * @author Carlos O'Ryan <coryan@uci.edu>
  */
 
-#include "tao/IORTable/IOR_Table_Impl.h"
+#include "IOR_Table_Impl.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 #include "ace/Guard_T.h"
 

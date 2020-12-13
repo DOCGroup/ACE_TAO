@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/XML_Loader.h"
-#include "orbsvcs/Notify/Topology_Object.h"
+#include "XML_Loader.h"
+#include "Topology_Object.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"

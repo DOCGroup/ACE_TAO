@@ -1,4 +1,4 @@
-#include "tao/HR_Time_Policy_Strategy.h"
+#include "HR_Time_Policy_Strategy.h"
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"

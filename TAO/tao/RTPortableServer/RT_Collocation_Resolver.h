@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTPortableServer/rtportableserver_export.h"
+#include "rtportableserver_export.h"
 #include "tao/Collocation_Resolver.h"
 #include "ace/Service_Config.h"
 

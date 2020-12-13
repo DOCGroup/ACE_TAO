@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/Reply_Dispatcher.h"
+#include "Basic_Types.h"
+#include "Reply_Dispatcher.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

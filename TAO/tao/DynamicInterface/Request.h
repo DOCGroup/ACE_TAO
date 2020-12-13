@@ -25,9 +25,9 @@
 
 // To force execution of the static constructor
 // that registers the dynamic service object.
-#include "tao/DynamicInterface/Dynamic_Adapter_Impl.h"
+#include "Dynamic_Adapter_Impl.h"
 
-#include "tao/DynamicInterface/ExceptionList.h"
+#include "ExceptionList.h"
 
 #include "tao/ORB.h"
 #include "tao/Environment.h"
@@ -267,7 +267,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/Request.inl"
+# include "Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

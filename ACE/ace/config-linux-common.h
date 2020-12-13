@@ -17,7 +17,7 @@
 // Needed to differentiate between libc 5 and libc 6 (aka glibc).
 #include <features.h>
 
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
 #ifndef ACE_DEFAULT_BASE_ADDR
 #  if defined (__powerpc__) || defined (__x86_64__)
@@ -50,14 +50,14 @@
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 30) */
 
 #if defined (__INTEL_COMPILER)
-#  include "ace/config-icc-common.h"
+#  include "config-icc-common.h"
 #elif defined (__GNUG__)
   // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
   // this must appear before its #include.
 #  define ACE_HAS_STRING_CLASS
-#  include "ace/config-g++-common.h"
+#  include "config-g++-common.h"
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
-#  include "ace/config-suncc-common.h"
+#  include "config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
 #  define ACE_HAS_CPLUSPLUS_HEADERS

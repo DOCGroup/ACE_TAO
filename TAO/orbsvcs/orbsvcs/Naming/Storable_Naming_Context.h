@@ -12,12 +12,12 @@
 #define TAO_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Naming/Hash_Naming_Context.h"
+#include "Hash_Naming_Context.h"
 #include "tao/Storable_File_Guard.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Auto_Ptr.h"
 
-#include "orbsvcs/Naming/Storable.h"
+#include "Storable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

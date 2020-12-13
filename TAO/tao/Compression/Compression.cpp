@@ -1,5 +1,5 @@
-#include "tao/Compression/Compression.h"
-#include "tao/Compression/Compression_Manager.h"
+#include "Compression.h"
+#include "Compression_Manager.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -11,28 +11,28 @@
 #ifndef ACE_CONTAINERS_T_H
 #define ACE_CONTAINERS_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Need by ACE_DLList_Node.
-#include "ace/Containers.h"
+#include "Containers.h"
 
 // Shared with "ace/Unbounded_Set.h"
-#include "ace/Node.h"
+#include "Node.h"
 
 // Backwards compatibility, please include "ace/Array_Base.h" directly.
-#include "ace/Array_Base.h"
+#include "Array_Base.h"
 
 // Backwards compatibility, please include "ace/Unbounded_Set.h" directly.
-#include "ace/Unbounded_Set.h"
+#include "Unbounded_Set.h"
 
 // Backwards compatibility, please include "ace/Unbounded_Queue.h" directly.
-#include "ace/Unbounded_Queue.h"
+#include "Unbounded_Queue.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -2018,17 +2018,17 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Containers_T.inl"
+#include "Containers_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Containers_T.cpp"
+#include "Containers_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Containers_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONTAINERS_T_H */

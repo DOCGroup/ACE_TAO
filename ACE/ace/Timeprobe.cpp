@@ -1,13 +1,13 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 
 
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Timeprobe.h"
+#include "Timeprobe.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Timeprobe.inl"
+#include "Timeprobe.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_COMPILE_TIMEPROBES */

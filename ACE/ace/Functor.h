@@ -27,16 +27,16 @@
 
 #ifndef ACE_FUNCTOR_H
 #define ACE_FUNCTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/Basic_Types.h"
+#include /**/ "ACE_export.h"
+#include "Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -491,8 +491,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor.inl"
+#include "Functor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FUNCTOR_H */

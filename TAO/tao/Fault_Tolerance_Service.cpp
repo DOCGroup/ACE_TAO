@@ -1,12 +1,12 @@
-#include "tao/Fault_Tolerance_Service.h"
-#include "tao/Services_Activate.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
+#include "Fault_Tolerance_Service.h"
+#include "Services_Activate.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
 
 #include "ace/Dynamic_Service.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Fault_Tolerance_Service.inl"
+# include "Fault_Tolerance_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

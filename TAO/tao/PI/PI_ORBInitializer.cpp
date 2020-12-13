@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "tao/PI/PI_ORBInitializer.h"
+#include "PI_ORBInitializer.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/PI_PolicyFactory.h"
-#include "tao/PI/ProcessingModePolicyC.h"
+#include "PI_PolicyFactory.h"
+#include "ProcessingModePolicyC.h"
 #include "tao/ORB_Core.h"
-#include "tao/PI/ORBInitInfoC.h"
+#include "ORBInitInfoC.h"
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

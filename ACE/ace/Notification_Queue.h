@@ -7,13 +7,13 @@
 #ifndef ACE_NOTIFICATION_QUEUE_H
 #define ACE_NOTIFICATION_QUEUE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Copy_Disabled.h"
-#include "ace/Event_Handler.h"
-#include "ace/Intrusive_List.h"
-#include "ace/Intrusive_List_Node.h"
-#include "ace/Unbounded_Queue.h"
+#include "Copy_Disabled.h"
+#include "Event_Handler.h"
+#include "Intrusive_List.h"
+#include "Intrusive_List_Node.h"
+#include "Unbounded_Queue.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -149,9 +149,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Notification_Queue.inl"
+#include "Notification_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_NOTIFICATION_QUEUE_H */

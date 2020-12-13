@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Basic_Argument_T.h"
+#include "Basic_Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Arg_Traits_T.h"
-#include "tao/Any_Insert_Policy_T.h"
+#include "Arg_Traits_T.h"
+#include "Any_Insert_Policy_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

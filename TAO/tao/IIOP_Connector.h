@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,9 +25,9 @@
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/Transport_Connector.h"
-#include "tao/Connector_Impl.h"
-#include "tao/IIOP_Connection_Handler.h"
+#include "Transport_Connector.h"
+#include "Connector_Impl.h"
+#include "IIOP_Connection_Handler.h"
 
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"

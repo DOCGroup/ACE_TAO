@@ -9,8 +9,8 @@
  * @author Johnny Willemsen
  */
 
-#include "tao/orbconf.h"
-#include "tao/SystemException.h"
+#include "orbconf.h"
+#include "SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

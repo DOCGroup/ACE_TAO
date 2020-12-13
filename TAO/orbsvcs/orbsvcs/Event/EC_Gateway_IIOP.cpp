@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
-#include "orbsvcs/Event/ECG_Defaults.h"
+#include "EC_Gateway_IIOP.h"
+#include "ECG_Defaults.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
-#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
+#include "EC_Gateway_IIOP_Factory.h"
+#include "ECG_ConsumerEC_Control.h"
 
 #include "ace/Dynamic_Service.h"
 

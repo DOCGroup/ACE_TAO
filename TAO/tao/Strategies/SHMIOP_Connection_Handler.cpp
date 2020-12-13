@@ -1,4 +1,4 @@
-#include "tao/Strategies/SHMIOP_Connection_Handler.h"
+#include "SHMIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
@@ -11,7 +11,7 @@
 #include "tao/Base_Transport_Property.h"
 #include "tao/Transport_Cache_Manager.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Endpoint.h"
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 

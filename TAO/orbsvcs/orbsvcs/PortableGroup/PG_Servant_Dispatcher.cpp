@@ -1,5 +1,5 @@
-#include "orbsvcs/PortableGroup/GOA.h"
-#include "orbsvcs/PortableGroup/PG_Servant_Dispatcher.h"
+#include "GOA.h"
+#include "PG_Servant_Dispatcher.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

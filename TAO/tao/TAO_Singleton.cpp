@@ -2,21 +2,21 @@
 #ifndef TAO_SINGLETON_CPP
 #define TAO_SINGLETON_CPP
 
-#include "tao/TAO_Singleton.h"
+#include "TAO_Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Singleton_Manager.h"
+#include "TAO_Singleton_Manager.h"
 
 #include "ace/Guard_T.h"
 #include "ace/Object_Manager.h"
-#include "tao/debug.h"
+#include "debug.h"
 #include "ace/os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/TAO_Singleton.inl"
+#include "TAO_Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

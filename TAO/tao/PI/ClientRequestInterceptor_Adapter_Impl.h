@@ -28,10 +28,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/Interceptor_List_T.h"
-#include "tao/PI/PI_includeC.h"
-#include "tao/PI/ClientRequestDetails.h"
-#include "tao/PI/RequestInterceptor_Adapter_Impl.h"
+#include "Interceptor_List_T.h"
+#include "PI_includeC.h"
+#include "ClientRequestDetails.h"
+#include "RequestInterceptor_Adapter_Impl.h"
 #include "tao/ClientRequestInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -127,7 +127,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/PI/ClientRequestInterceptor_Adapter_Impl.inl"
+#include "ClientRequestInterceptor_Adapter_Impl.inl"
 #endif  /* __ACE_INLINE__ */
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */

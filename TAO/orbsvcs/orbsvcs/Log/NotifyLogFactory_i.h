@@ -22,8 +22,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/NotifyLog_i.h"
+#include "LogMgr_i.h"
+#include "NotifyLog_i.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

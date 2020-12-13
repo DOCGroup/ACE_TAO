@@ -1,15 +1,15 @@
-#include "ace/LSOCK_CODgram.h"
+#include "LSOCK_CODgram.h"
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/LSOCK_CODgram.inl"
+#include "LSOCK_CODgram.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

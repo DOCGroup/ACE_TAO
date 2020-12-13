@@ -11,7 +11,7 @@
 #define TAO_DII_INVOCATION_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/DynamicInterface/dynamicinterface_export.h"
+#include "dynamicinterface_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,7 +20,7 @@
 
 #include "tao/Invocation_Adapter.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
-#include "tao/DynamicInterface/DII_Reply_Dispatcher.h"
+#include "DII_Reply_Dispatcher.h"
 #include "ace/Auto_Functor.h"
 
 #if defined (TAO_HAS_AMI)

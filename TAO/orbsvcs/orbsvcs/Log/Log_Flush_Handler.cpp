@@ -1,5 +1,5 @@
-#include "orbsvcs/Log/Log_Flush_Handler.h"
-#include "orbsvcs/Log/Log_i.h"
+#include "Log_Flush_Handler.h"
+#include "Log_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

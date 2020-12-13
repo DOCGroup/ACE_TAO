@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/Valuetype/Valuetype_Adapter_Impl.h"
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/ValueFactory_Map.h"
-#include "tao/Valuetype/ValueFactory.h"
+#include "Valuetype_Adapter_Impl.h"
+#include "AbstractBase.h"
+#include "ValueBase.h"
+#include "ValueFactory_Map.h"
+#include "ValueFactory.h"
 
 #include "tao/ORB_Core.h"
 

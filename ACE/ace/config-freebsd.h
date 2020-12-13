@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
@@ -17,9 +17,9 @@
 #include <machine/param.h>
 #undef atop
 
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 #if defined (ACE_HAS_PENTIUM)
 # undef ACE_HAS_PENTIUM
@@ -183,6 +183,6 @@ enum schedparam_policy {
 # define ACE_HAS_VOID_UNSETENV
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_H */

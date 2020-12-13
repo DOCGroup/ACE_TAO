@@ -1,17 +1,17 @@
-#include "ace/CDR_Base.h"
+#include "CDR_Base.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR_Base.inl"
+# include "CDR_Base.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "ace/Message_Block.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "Message_Block.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
 
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
-#include "ace/OS_NS_stdio.h"
+#include "OS_NS_stdio.h"
 #else
-#include "ace/streams.h"
+#include "streams.h"
 #endif
 
 #include <cmath>

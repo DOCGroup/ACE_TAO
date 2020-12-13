@@ -11,7 +11,7 @@
 #ifndef UPDATE_MANAGER_H
 #define UPDATE_MANAGER_H
 
-#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
+#include "Dynamic_Bitset.h"
 #include "tao/orbconf.h"
 #include "ace/Auto_Event.h"
 

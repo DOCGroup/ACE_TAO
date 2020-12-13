@@ -11,21 +11,21 @@
 
 #ifndef ACE_TLI_H
 #define ACE_TLI_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_TLI.h"
+#include "OS_TLI.h"
 
 #if defined (ACE_HAS_TLI)
 
-#include "ace/IPC_SAP.h"
-#include "ace/Addr.h"
-#include "ace/os_include/os_fcntl.h"
+#include "IPC_SAP.h"
+#include "Addr.h"
+#include "os_include/os_fcntl.h"
 
 // There's not a universal device name for TLI devices.  If the platform
 // needs something other than /dev/tcp, it needs to be set up in the config.h
@@ -105,9 +105,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/TLI.inl"
+#include "TLI.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TLI */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TLI_H */

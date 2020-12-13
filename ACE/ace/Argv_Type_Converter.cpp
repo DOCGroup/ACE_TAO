@@ -1,11 +1,11 @@
-#include "ace/Argv_Type_Converter.h"
+#include "Argv_Type_Converter.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Argv_Type_Converter.inl"
+#include "Argv_Type_Converter.inl"
 #endif  /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Errno.h"
+#include "OS_NS_string.h"
+#include "OS_Errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

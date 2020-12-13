@@ -11,24 +11,24 @@
 #ifndef ACE_SERVICE_GESTALT_H
 #define ACE_SERVICE_GESTALT_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Default_Constants.h"
+#include /**/ "config-all.h"
+#include "Default_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SString.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Unbounded_Set.h"
-#include "ace/Service_Repository.h"
-#include "ace/Singleton.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Atomic_Op.h"
-#include "ace/Guard_T.h"
+#include "SString.h"
+#include "Unbounded_Queue.h"
+#include "Unbounded_Set.h"
+#include "Service_Repository.h"
+#include "Singleton.h"
+#include "OS_NS_signal.h"
+#include "Synch_Traits.h"
+#include "Atomic_Op.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -509,10 +509,10 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Gestalt.inl"
+#include "Service_Gestalt.inl"
 #endif /* __ACE_INLINE__ */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SERVICE_GESTALT_H */

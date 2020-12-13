@@ -12,8 +12,8 @@
 #define _ACEXML_LOCATOR_H_
 #include /**/ "ace/pre.h"
 
-#include "ACEXML/common/ACEXML_Export.h"
-#include "ACEXML/common/XML_Types.h"
+#include "ACEXML_Export.h"
+#include "XML_Types.h"
 
 /**
  * @class ACEXML_Locator

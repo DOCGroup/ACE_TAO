@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_WIN32_BORLAND_H
 #define ACE_CONFIG_WIN32_BORLAND_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -62,7 +62,7 @@
 # define ACE_CC_PREPROCESSOR "CPP32.EXE"
 #endif
 
-# include "ace/config-win32-common.h"
+# include "config-win32-common.h"
 
 # define ACE_WSTRING_HAS_USHORT_SUPPORT 1
 # define ACE_HAS_DIRENT
@@ -208,6 +208,6 @@
 # endif
 #endif /* __clang__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
 

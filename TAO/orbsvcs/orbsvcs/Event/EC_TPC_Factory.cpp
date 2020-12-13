@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_TPC_Factory.h"
+#include "EC_TPC_Factory.h"
 
-#include "orbsvcs/Event/EC_TPC_Dispatching.h"
-#include "orbsvcs/Event/EC_TPC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
+#include "EC_TPC_Dispatching.h"
+#include "EC_TPC_ProxySupplier.h"
+#include "EC_TPC_ProxyConsumer.h"
 
 #include "tao/ORB_Core.h"
 

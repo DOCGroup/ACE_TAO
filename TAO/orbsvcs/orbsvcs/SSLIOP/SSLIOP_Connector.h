@@ -23,8 +23,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/IIOP_SSL_Connector.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
+#include "IIOP_SSL_Connector.h"
+#include "SSLIOP_Connection_Handler.h"
 
 #include "ace/SSL/SSL_SOCK_Connector.h"
 

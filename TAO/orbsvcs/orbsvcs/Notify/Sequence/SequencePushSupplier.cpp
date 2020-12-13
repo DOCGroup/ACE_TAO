@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Sequence/SequencePushSupplier.h"
+#include "SequencePushSupplier.h"
 #include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

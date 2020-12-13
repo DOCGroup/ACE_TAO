@@ -14,8 +14,8 @@
 #define TAO_SYSTEMEXCEPTIONA_H
 
 #include /**/ "ace/pre.h"
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "TAO_AnyTypeCode_Export.h"
+#include "AnyTypeCode_methods.h"
 #include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

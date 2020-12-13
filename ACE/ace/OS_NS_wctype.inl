@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #if defined (ACE_LACKS_ISWCTYPE)
-#include "ace/OS_NS_errno.h"
+#include "OS_NS_errno.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

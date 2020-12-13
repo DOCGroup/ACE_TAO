@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_Location_Hash.h"
-#include "orbsvcs/PortableGroup/PG_Location_Equal_To.h"
+#include "PG_Location_Hash.h"
+#include "PG_Location_Equal_To.h"
 
 #include "orbsvcs/PortableGroupC.h"
 

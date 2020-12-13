@@ -13,13 +13,13 @@
 #define ACE_SCHEDULER_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecSchedulerC.h"
+#include "RtecSchedulerC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Sched/sched_export.h"
+#include "Sched/sched_export.h"
 
 /**
  * @class ACE_RT_Info
@@ -58,7 +58,7 @@ public:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Utilities.inl"
+#include "Scheduler_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
+#include "HTIOP_Connection_Handler.h"
 
 #include "tao/Transport_Connector.h"
 

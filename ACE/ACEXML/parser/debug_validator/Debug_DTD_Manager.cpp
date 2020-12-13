@@ -1,9 +1,9 @@
 // -*- C++ -*-
 
 #include "ACEXML/common/SAXExceptions.h"
-#include "ACEXML/parser/debug_validator/Debug_DTD_Manager.h"
-#include "ACEXML/parser/debug_validator/Debug_Element_Builder.h"
-#include "ACEXML/parser/debug_validator/Debug_Attributes_Builder.h"
+#include "Debug_DTD_Manager.h"
+#include "Debug_Element_Builder.h"
+#include "Debug_Attributes_Builder.h"
 
 ACEXML_Debug_DTD_Manager::ACEXML_Debug_DTD_Manager ()
 {

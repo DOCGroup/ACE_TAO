@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Sequence_TypeCode_Static.h"
+#include "Sequence_TypeCode_Static.h"
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "TypeCode_Traits.h"
 
 #include "ace/Truncate.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Sequence_TypeCode_Static.inl"
+# include "Sequence_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

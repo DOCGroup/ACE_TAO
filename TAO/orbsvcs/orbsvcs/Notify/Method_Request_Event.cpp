@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/Method_Request_Event.h"
-#include "orbsvcs/Notify/Delivery_Request.h"
+#include "Method_Request_Event.h"
+#include "Delivery_Request.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

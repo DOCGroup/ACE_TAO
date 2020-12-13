@@ -16,20 +16,20 @@
 
 #ifndef ACE_NAME_PROXY_H
 #define ACE_NAME_PROXY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/INET_Addr.h"
+#include "INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Service_Config.h"
-#include "ace/Synch_Options.h"
-#include "ace/Name_Request_Reply.h"
-#include "ace/Event_Handler.h"
+#include "SOCK_Connector.h"
+#include "SOCK_Stream.h"
+#include "Service_Config.h"
+#include "Synch_Options.h"
+#include "Name_Request_Reply.h"
+#include "Event_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,5 +94,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_NAME_PROXY_H */

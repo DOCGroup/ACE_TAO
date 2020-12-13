@@ -23,7 +23,7 @@
 
 #include "ace/ETCL/ETCL_Interpreter.h"
 
-#include "ace/Monitor_Control/Monitor_Control_export.h"
+#include "Monitor_Control_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

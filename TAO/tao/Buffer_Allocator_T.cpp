@@ -1,7 +1,7 @@
 #ifndef TAO_BUFFER_ALLOCATOR_T_CPP
 #define TAO_BUFFER_ALLOCATOR_T_CPP
 
-#include "tao/Buffer_Allocator_T.h"
+#include "Buffer_Allocator_T.h"
 #include "ace/Global_Macros.h"
 
 

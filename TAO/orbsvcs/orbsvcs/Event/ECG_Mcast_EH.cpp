@@ -1,15 +1,15 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_Mcast_EH.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "ECG_Mcast_EH.h"
+#include "ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
+#include "EC_Lifetime_Utils_T.h"
 #include "ace/Unbounded_Set.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Reactor.h"
 #include "ace/os_include/os_fcntl.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Mcast_EH.inl"
+#include "ECG_Mcast_EH.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -26,7 +26,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/PortableServer/PS_ForwardC.h"
+#include "PS_ForwardC.h"
 #include "tao/CDR.h"
 #include "tao/ORB_Core.h"
 

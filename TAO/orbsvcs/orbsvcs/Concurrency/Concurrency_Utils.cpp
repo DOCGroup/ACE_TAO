@@ -11,7 +11,7 @@
 #include "ace/streams.h"
 #include "orbsvcs/CosConcurrencyControlC.h"
 #include "tao/debug.h"
-#include "orbsvcs/Concurrency/Concurrency_Utils.h"
+#include "Concurrency_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

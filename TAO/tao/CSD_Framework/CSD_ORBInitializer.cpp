@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_ORBInitializer.h"
+#include "CSD_ORBInitializer.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"

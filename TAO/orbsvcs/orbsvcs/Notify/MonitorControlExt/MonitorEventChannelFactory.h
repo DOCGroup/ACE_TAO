@@ -14,7 +14,7 @@
 
 #include "orbsvcs/Notify/EventChannelFactory.h"
 #include "orbsvcs/Notify/MonitorControl/Timestamp_Monitor.h"
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+#include "NotifyMonitoringExtS.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

@@ -14,9 +14,9 @@
 
 #ifndef ACE_CODESET_IMB1047_H
 #define ACE_CODESET_IMB1047_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 
 #if defined (ACE_HAS_EBCDIC)
 
-#include "ace/CDR_Stream.h"
+#include "CDR_Stream.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -124,6 +124,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_EBCDIC */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CODESET_IMB1047_H */

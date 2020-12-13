@@ -11,15 +11,15 @@
 #ifndef ACE_SOCK_IO_H
 #define ACE_SOCK_IO_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SOCK.h"
+#include "SOCK.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -128,9 +128,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_IO.inl"
+#include "SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SOCK_IO_H */

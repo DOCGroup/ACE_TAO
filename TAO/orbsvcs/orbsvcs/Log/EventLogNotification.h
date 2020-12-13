@@ -25,8 +25,8 @@
 #include "orbsvcs/DsEventLogAdminS.h"
 #include "orbsvcs/CosEvent/CEC_Default_Factory.h"
 #include "orbsvcs/CosEventCommS.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/eventlog_serv_export.h"
+#include "LogNotification.h"
+#include "eventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

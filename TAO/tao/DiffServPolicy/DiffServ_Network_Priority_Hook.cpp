@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/DiffServPolicy/DiffServ_Network_Priority_Hook.h"
+#include "DiffServ_Network_Priority_Hook.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/PortableServer/POA_Policy_Set.h"
-#include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
-#include "tao/DiffServPolicy/DiffServPolicy.h"
+#include "Server_Network_Priority_Policy.h"
+#include "DiffServPolicy.h"
 #include "tao/Service_Context.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Network_Priority_Protocols_Hooks.h"

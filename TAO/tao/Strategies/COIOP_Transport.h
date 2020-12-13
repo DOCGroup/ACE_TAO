@@ -21,7 +21,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Transport.h"
 #include "ace/SOCK_Stream.h"
 #include "ace/Svc_Handler.h"

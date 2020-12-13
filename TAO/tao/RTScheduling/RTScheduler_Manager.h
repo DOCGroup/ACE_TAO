@@ -12,7 +12,7 @@
 #ifndef TAO_RTSCHEDULER_MANAGER_H
 #define TAO_RTSCHEDULER_MANAGER_H
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "RTScheduler.h"
 #include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -129,7 +129,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/RTScheduling/RTScheduler_Manager.inl"
+#include "RTScheduler_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_RTSCHEDULER_MANAGER_H */

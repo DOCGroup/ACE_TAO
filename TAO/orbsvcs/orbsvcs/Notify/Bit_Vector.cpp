@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Bit_Vector.h"
+#include "Bit_Vector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

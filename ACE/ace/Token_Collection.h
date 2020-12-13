@@ -19,9 +19,9 @@
 
 #ifndef ACE_TOKEN_COLLECTION_H
 #define ACE_TOKEN_COLLECTION_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Map_Manager.h"
+#include "Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -29,8 +29,8 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Local_Tokens.h"
-#include "ace/Null_Mutex.h"
+#include "Local_Tokens.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -218,10 +218,10 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Collection.inl"
+#include "Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TOKEN_COLLECTION_H */

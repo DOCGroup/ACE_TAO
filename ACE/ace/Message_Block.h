@@ -11,18 +11,18 @@
 #ifndef ACE_MESSAGE_BLOCK_H
 #define ACE_MESSAGE_BLOCK_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
-#include /**/ "ace/ACE_export.h"
+#include /**/ "config-lite.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
-#include "ace/Global_Macros.h"
-#include "ace/Time_Value.h"
+#include "Default_Constants.h"
+#include "Global_Macros.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -857,11 +857,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Block.inl"
+#include "Message_Block.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Message_Block_T.h"
+#include "Message_Block_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_MESSAGE_BLOCK_H */

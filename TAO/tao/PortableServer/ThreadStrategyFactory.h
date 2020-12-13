@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/StrategyFactory.h"
+#include "StrategyFactory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ThreadPolicyC.h"
+#include "ThreadPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

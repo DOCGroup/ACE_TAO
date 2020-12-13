@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORInterceptor/iorinterceptor_export.h"
+#include "iorinterceptor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,7 +57,7 @@ ACE_STATIC_SVC_DECLARE (TAO_IORInterceptor_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_IORInterceptor, TAO_IORInterceptor_Adapter_Factory_Impl)
 
 #define TAO_IORINTERCEPTOR_SAFE_INCLUDE
-#include "tao/IORInterceptor/IORInterceptorC.h"
+#include "IORInterceptorC.h"
 #undef TAO_IORINTERCEPTOR_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

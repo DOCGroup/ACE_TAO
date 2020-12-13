@@ -10,16 +10,16 @@
 #define TAO_Notify_PROXYSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
-#include "orbsvcs/Notify/Consumer.h"
+#include "Event.h"
+#include "Proxy.h"
+#include "ConsumerAdmin.h"
+#include "Consumer.h"
 
 #include "orbsvcs/CosEventChannelAdminC.h"
 
@@ -92,7 +92,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ProxySupplier.inl"
+#include "ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

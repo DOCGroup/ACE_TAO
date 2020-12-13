@@ -15,7 +15,7 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/ServantActivatorC.h"

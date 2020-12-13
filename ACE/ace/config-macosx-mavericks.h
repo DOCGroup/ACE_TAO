@@ -11,6 +11,6 @@
 #define ACE_HAS_SSIZE_T
 #endif
 
-#include "ace/config-macosx-mountainlion.h"
+#include "config-macosx-mountainlion.h"
 
 #endif // ACE_CONFIG_MAVERICKS_H

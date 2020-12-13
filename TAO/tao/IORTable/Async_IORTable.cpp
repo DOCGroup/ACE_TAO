@@ -8,8 +8,8 @@
  */
 // =================================================================
 
-#include "tao/IORTable/Async_IORTable.h"
-#include "tao/IORTable/Async_Table_Adapter.h"
+#include "Async_IORTable.h"
+#include "Async_Table_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

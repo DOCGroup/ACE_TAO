@@ -18,8 +18,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
-#include "tao/TAO_Export.h"
+#include "orbconf.h"
+#include "TAO_Export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

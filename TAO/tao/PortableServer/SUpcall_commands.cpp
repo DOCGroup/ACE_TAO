@@ -1,18 +1,18 @@
 // -*- C++ -*-
-#include "tao/PortableServer/SUpcall_commands.h"
+#include "SUpcall_commands.h"
 
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/DynamicC.h"
 
-#include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/SArg_Traits_T.h"
-#include "tao/PortableServer/Basic_SArguments.h"
-#include "tao/PortableServer/Special_Basic_SArguments.h"
-#include "tao/PortableServer/Fixed_Size_SArgument_T.h"
-#include "tao/PortableServer/Var_Size_SArgument_T.h"
-#include "tao/PortableServer/Object_SArg_Traits.h"
-#include "tao/PortableServer/UB_String_SArguments.h"
-#include "tao/PortableServer/get_arg.h"
+#include "Servant_Base.h"
+#include "SArg_Traits_T.h"
+#include "Basic_SArguments.h"
+#include "Special_Basic_SArguments.h"
+#include "Fixed_Size_SArgument_T.h"
+#include "Var_Size_SArgument_T.h"
+#include "Object_SArg_Traits.h"
+#include "UB_String_SArguments.h"
+#include "get_arg.h"
 #include "tao/Object.h"
 
 void

@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_Thread.h"
+#include "OS_NS_ctype.h"
+#include "OS_NS_sys_socket.h"
 
 // Open versioned namespace, if enabled by the user.
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

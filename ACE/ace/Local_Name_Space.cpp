@@ -1,9 +1,9 @@
-#include "ace/Local_Name_Space.h"
-#include "ace/ACE.h"
-#include "ace/RW_Process_Mutex.h"
-#include "ace/SString.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Truncate.h"
+#include "Local_Name_Space.h"
+#include "ACE.h"
+#include "RW_Process_Mutex.h"
+#include "SString.h"
+#include "OS_NS_string.h"
+#include "Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

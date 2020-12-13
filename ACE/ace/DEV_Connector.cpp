@@ -1,12 +1,12 @@
-#include "ace/DEV_Connector.h"
+#include "DEV_Connector.h"
 
-#include "ace/Handle_Ops.h"
+#include "Handle_Ops.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/DEV_Connector.inl"
+#include "DEV_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

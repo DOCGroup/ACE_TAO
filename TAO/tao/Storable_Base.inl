@@ -10,7 +10,7 @@
  */
 //=============================================================================
 
-#include "tao/Storable_Base.h"
+#include "Storable_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

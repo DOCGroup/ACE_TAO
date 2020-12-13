@@ -15,13 +15,13 @@
 #define TAO_EC_MT_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
+#include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Dispatching_Task.h"
+#include "EC_Dispatching_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

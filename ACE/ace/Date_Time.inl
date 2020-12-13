@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "ace/Global_Macros.h"
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_time.h"
+#include "Global_Macros.h"
+#include "Time_Value.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

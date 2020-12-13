@@ -1,13 +1,13 @@
-#include "ace/Dynamic_Message_Strategy.h"
+#include "Dynamic_Message_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic_Message_Strategy.inl"
+#include "Dynamic_Message_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+#include "Guard_T.h"
+#include "Log_Category.h"
+#include "Malloc_Base.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

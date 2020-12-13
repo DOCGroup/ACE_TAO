@@ -1,17 +1,17 @@
-#include "ace/SOCK_Dgram_Bcast.h"
+#include "SOCK_Dgram_Bcast.h"
 
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/net/os_if.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_Memory.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
+#include "os_include/net/os_if.h"
+#include "OS_NS_netdb.h"
+#include "OS_Memory.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Bcast.inl"
+#include "SOCK_Dgram_Bcast.inl"
 #endif /* __ACE_INLINE__ */
 
 

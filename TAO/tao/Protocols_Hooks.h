@@ -19,9 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-#include "tao/IOPC.h"
+#include /**/ "TAO_Export.h"
+#include "Basic_Types.h"
+#include "IOPC.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

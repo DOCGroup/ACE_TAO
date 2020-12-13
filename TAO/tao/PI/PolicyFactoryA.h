@@ -30,8 +30,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI/pi_export.h"
-#include "tao/PI/PolicyFactoryC.h"
+#include "pi_export.h"
+#include "PolicyFactoryC.h"
 #include "tao/AnyTypeCode/PolicyA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

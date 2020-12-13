@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/TkReactor/ACE_TkReactor_export.h"
+#include "ACE_TkReactor_export.h"
 #include "ace/Select_Reactor.h"
 #include /**/ <tk.h>
 

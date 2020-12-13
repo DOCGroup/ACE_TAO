@@ -1,19 +1,19 @@
-#include "ace/OS_NS_sys_sendfile.h"
-#include "ace/OS_NS_sys_mman.h"
+#include "OS_NS_sys_sendfile.h"
+#include "OS_NS_sys_mman.h"
 
 #if defined (ACE_WIN32) || defined (HPUX)
-# include "ace/OS_NS_sys_socket.h"
+# include "OS_NS_sys_socket.h"
 #endif  /* ACE_WIN32 || HPUX */
 
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 
 #ifndef ACE_HAS_INLINED_OSCALLS
-# include "ace/OS_NS_sys_sendfile.inl"
+# include "OS_NS_sys_sendfile.inl"
 #endif  /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Malloc_Base.h"
-#include "ace/OS_Memory.h"
-#include "ace/os_include/os_errno.h"
+#include "Malloc_Base.h"
+#include "OS_Memory.h"
+#include "os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

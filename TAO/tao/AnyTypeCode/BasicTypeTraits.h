@@ -13,8 +13,8 @@
 #ifndef BASIC_TYPE_TRAITS_H
 #define BASIC_TYPE_TRAITS_H
 
-#include "tao/AnyTypeCode/BasicTypeTraits_T.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "BasicTypeTraits_T.h"
+#include "Any.h"
 
 #include "tao/Typecode_typesC.h"
 

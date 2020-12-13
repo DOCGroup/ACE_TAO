@@ -1,4 +1,4 @@
-#include "ACEXML/common/XML_Util.h"
+#include "XML_Util.h"
 
 static const ACEXML_Char ESCAPED_AMP[] = ACE_TEXT("&amp;");
 static const ACEXML_Char ESCAPED_LESS[] = ACE_TEXT("&lt;");

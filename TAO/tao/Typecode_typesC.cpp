@@ -26,8 +26,8 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/Typecode_typesC.h"
-#include "tao/CDR.h"
+#include "Typecode_typesC.h"
+#include "CDR.h"
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70

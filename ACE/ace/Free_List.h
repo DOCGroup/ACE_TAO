@@ -10,17 +10,17 @@
 
 #ifndef ACE_FREE_LIST_H
 #define ACE_FREE_LIST_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/Default_Constants.h"
-#include "ace/os_include/os_stddef.h"
+#include "Global_Macros.h"
+#include "Default_Constants.h"
+#include "os_include/os_stddef.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -138,12 +138,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Free_List.cpp"
+#include "Free_List.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Free_List.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FREE_LIST_H */

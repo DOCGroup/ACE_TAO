@@ -1,5 +1,5 @@
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/FactoryDef_i.h"
+#include "Repository_i.h"
+#include "FactoryDef_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Root_POA.h"
+#include "Root_POA.h"
 
 #if !defined (CORBA_E_MICRO)
 
@@ -71,7 +71,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 // ****************************************************************
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Regular_POA.inl"
+# include "Regular_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

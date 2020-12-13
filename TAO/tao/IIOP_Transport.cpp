@@ -1,19 +1,19 @@
-#include "tao/IIOP_Transport.h"
+#include "IIOP_Transport.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IIOP_Acceptor.h"
-#include "tao/IIOPC.h"
-#include "tao/Acceptor_Registry.h"
-#include "tao/operation_details.h"
-#include "tao/Wait_Strategy.h"
-#include "tao/debug.h"
-#include "tao/GIOP_Message_Base.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/ORB_Core.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Transport_Mux_Strategy.h"
-#include "tao/MMAP_Allocator.h"
+#include "IIOP_Acceptor.h"
+#include "IIOPC.h"
+#include "Acceptor_Registry.h"
+#include "operation_details.h"
+#include "Wait_Strategy.h"
+#include "debug.h"
+#include "GIOP_Message_Base.h"
+#include "Protocols_Hooks.h"
+#include "ORB_Core.h"
+#include "Thread_Lane_Resources.h"
+#include "Transport_Mux_Strategy.h"
+#include "MMAP_Allocator.h"
 
 #include "ace/OS_NS_sys_sendfile.h"
 

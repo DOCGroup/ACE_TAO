@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PortableServer/IdUniquenessPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "IdUniquenessPolicy.h"
+#include "PortableServer.h"
 
 #include "ace/CORBA_macros.h"
 

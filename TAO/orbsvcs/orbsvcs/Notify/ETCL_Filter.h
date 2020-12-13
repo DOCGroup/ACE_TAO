@@ -9,7 +9,7 @@
 #define TAO_Notify_ETCL_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -19,8 +19,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Atomic_Op.h"
 #include "orbsvcs/CosNotifyFilterS.h"
-#include "orbsvcs/Notify/Notify_Constraint_Interpreter.h"
-#include "orbsvcs/Notify/Topology_Object.h"
+#include "Notify_Constraint_Interpreter.h"
+#include "Topology_Object.h"
 #include "ace/Null_Mutex.h"
 
 #if defined(_MSC_VER)

@@ -1,9 +1,9 @@
-#include "ace/ATM_QoS.h"
+#include "ATM_QoS.h"
 
 #if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_QoS.inl"
+#include "ATM_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

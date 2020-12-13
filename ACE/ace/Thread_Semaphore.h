@@ -12,20 +12,20 @@
 
 #ifndef ACE_THREAD_SEMAPHORE_H
 #define ACE_THREAD_SEMAPHORE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_HAS_THREADS)
-#  include "ace/Null_Semaphore.h"
+#  include "Null_Semaphore.h"
 #else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
-#include "ace/Semaphore.h"
+#include "Semaphore.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -76,10 +76,10 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Thread_Semaphore.inl"
+#include "Thread_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_THREAD_SEMAPHORE_H */

@@ -10,16 +10,16 @@
 #define TAO_Notify_METHOD_REQUEST_UPDATES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Method_Request_Updates_T.h"
-#include "orbsvcs/Notify/Method_Request.h"
-#include "orbsvcs/Notify/EventTypeSeq.h"
-#include "orbsvcs/Notify/Proxy.h"
+#include "Method_Request_Updates_T.h"
+#include "Method_Request.h"
+#include "EventTypeSeq.h"
+#include "Proxy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

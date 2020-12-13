@@ -1,6 +1,6 @@
-#include "orbsvcs/Notify/Subscription_Change_Worker.h"
+#include "Subscription_Change_Worker.h"
 
-#include "orbsvcs/Notify/Proxy.h"
+#include "Proxy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,7 @@
-#include "orbsvcs/FtRtEvent/EventChannel/Basic_Replication_Strategy.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Basic_Replication_Strategy.h"
+#include "GroupInfoPublisher.h"
+#include "FTEC_Event_Channel.h"
+#include "Request_Context_Repository.h"
 #include "../Utils/Log.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

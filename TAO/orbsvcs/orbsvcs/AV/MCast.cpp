@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/AVStreams_i.h"
+#include "MCast.h"
+#include "AVStreams_i.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/MCast.inl"
+#include "MCast.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

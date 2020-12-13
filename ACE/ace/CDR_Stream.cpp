@@ -1,10 +1,10 @@
-#include "ace/CDR_Stream.h"
-#include "ace/SString.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Truncate.h"
+#include "CDR_Stream.h"
+#include "SString.h"
+#include "Auto_Ptr.h"
+#include "Truncate.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/CDR_Stream.inl"
+# include "CDR_Stream.inl"
 #endif /* ! __ACE_INLINE__ */
 
 // ****************************************************************

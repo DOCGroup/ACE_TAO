@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTPortableServer/rtportableserver_export.h"
+#include "rtportableserver_export.h"
 #include "tao/Acceptor_Filter.h"
 
 #define TAO_RTCORBA_SAFE_INCLUDE

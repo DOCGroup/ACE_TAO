@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Conjunction_Filter.h"
+#include "EC_Conjunction_Filter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PortableServer/LifespanPolicy.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "LifespanPolicy.h"
+#include "PortableServer.h"
 
 #include "ace/CORBA_macros.h"
 

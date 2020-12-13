@@ -1,18 +1,18 @@
 #ifndef ACE_ARRAY_BASE_CPP
 #define ACE_ARRAY_BASE_CPP
 
-#include "ace/Array_Base.h"
+#include "Array_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Array_Base.inl"
+#include "Array_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Malloc_Base.h"
-#include "ace/os_include/os_errno.h"
+#include "Malloc_Base.h"
+#include "os_include/os_errno.h"
 
 #include <algorithm>
 

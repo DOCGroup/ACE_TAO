@@ -1,18 +1,18 @@
 #ifndef ACE_CONTAINERS_T_CPP
 #define ACE_CONTAINERS_T_CPP
 
-#include "ace/Log_Category.h"
-#include "ace/Malloc_Base.h"
-#include "ace/OS_Memory.h"
+#include "Log_Category.h"
+#include "Malloc_Base.h"
+#include "OS_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers.h"
+#include "Containers.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Containers_T.inl"
+#include "Containers_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

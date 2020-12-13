@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "TypeCode_Traits.h"
 #include "ace/Truncate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

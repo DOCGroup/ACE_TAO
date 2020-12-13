@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Empty_Param_TypeCode.h"
+#include "Empty_Param_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
+# include "Empty_Param_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

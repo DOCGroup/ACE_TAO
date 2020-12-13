@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Event.h"
+#include "LF_Event.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,7 +51,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/LF_Event_Binder.inl"
+# include "LF_Event_Binder.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

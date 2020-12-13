@@ -12,9 +12,9 @@
 #ifndef ACE_SBRK_MEMORY_POOL_H
 #define ACE_SBRK_MEMORY_POOL_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 
 #if !defined (ACE_LACKS_SBRK)
 
-#include "ace/ACE.h"
-#include "ace/os_include/sys/os_mman.h"
+#include "ACE.h"
+#include "os_include/sys/os_mman.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -112,5 +112,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_LACKS_SBRK */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SBRK_MEMORY_POOL_H */

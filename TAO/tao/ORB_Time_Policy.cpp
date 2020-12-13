@@ -1,7 +1,7 @@
-#include "tao/ORB_Time_Policy.h"
+#include "ORB_Time_Policy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/ORB_Time_Policy.inl"
+# include "ORB_Time_Policy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -20,7 +20,7 @@
 
 #include "tao/CONV_FRAMEC.h"
 #include "tao/Codeset_Translator_Base.h"
-#include "tao/Codeset/codeset_export.h"
+#include "codeset_export.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -84,7 +84,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Get the template includes last
-#include "tao/Codeset/Codeset_Translator_Factory_T.h"
+#include "Codeset_Translator_Factory_T.h"
 
 #include /**/ "ace/post.h"
 #endif /* TAO_Codeset_Translator_Factory */

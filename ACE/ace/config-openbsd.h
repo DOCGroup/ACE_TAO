@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
@@ -12,9 +12,9 @@
 // Platform specific directives
 #include <sys/param.h>
 
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_WCSTOK
@@ -125,6 +125,6 @@
 #define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_H */

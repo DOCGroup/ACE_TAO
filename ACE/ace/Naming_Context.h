@@ -12,17 +12,17 @@
 
 #ifndef ACE_NAMING_CONTEXT_H
 #define ACE_NAMING_CONTEXT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
-#include "ace/Name_Space.h"
-#include "ace/os_include/os_netdb.h"
+#include "Service_Object.h"
+#include "Name_Space.h"
+#include "os_include/os_netdb.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -377,8 +377,8 @@ ACE_STATIC_SVC_DECLARE_EXPORT (ACE, ACE_Naming_Context)
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Naming_Context.inl"
+#include "Naming_Context.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_NAMING_CONTEXT_H */

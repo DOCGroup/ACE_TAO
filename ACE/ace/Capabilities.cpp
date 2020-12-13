@@ -1,13 +1,13 @@
-#include "ace/Capabilities.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "Capabilities.h"
+#include "OS_NS_ctype.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Capabilities.inl"
+#include "Capabilities.inl"
 #endif /* !__ACE_INLINE__ */
 
-#include "ace/OS_NS_stdio.h"
+#include "OS_NS_stdio.h"
 
 #define ACE_ESC ((ACE_TCHAR)0x1b)
 

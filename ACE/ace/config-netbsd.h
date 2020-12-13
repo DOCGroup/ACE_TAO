@@ -7,7 +7,7 @@
 #endif
 
 #if defined (__GNUG__)
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 #endif /* __GNUG__ */
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

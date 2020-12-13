@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Structured/StructuredProxyPushConsumer.h"
+#include "StructuredProxyPushConsumer.h"
 #include "ace/Bound_Ptr.h"
 #include "ace/Auto_Ptr.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
+#include "StructuredPushSupplier.h"
+#include "StructuredEvent.h"
 #include "orbsvcs/Notify/AdminProperties.h"
 #include "orbsvcs/Notify/Properties.h"
 

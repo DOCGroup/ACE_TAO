@@ -15,7 +15,7 @@
 #include "orbsvcs/FT_NotifierC.h"
 #include "orbsvcs/FT_FaultDetectorFactoryC.h"
 #include "orbsvcs/FT_ReplicationManagerC.h"
-#include "orbsvcs/FT_ReplicationManager/FT_FaultEventDescriptor.h"
+#include "FT_FaultEventDescriptor.h"
 #include "tao/debug.h"
 #include "ace/OS_NS_string.h"
 

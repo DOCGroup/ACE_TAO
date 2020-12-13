@@ -1,7 +1,7 @@
-#include "ace/Log_Msg_IPC.h"
-#include "ace/Log_Record.h"
-#include "ace/CDR_Stream.h"
-#include "ace/Truncate.h"
+#include "Log_Msg_IPC.h"
+#include "Log_Record.h"
+#include "CDR_Stream.h"
+#include "Truncate.h"
 
 
 

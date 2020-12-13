@@ -1,6 +1,6 @@
 #ifdef USE_ZZIP
 
-#include "ACEXML/common/ZipCharStream.h"
+#include "ZipCharStream.h"
 #include "ace/ACE.h"
 
 

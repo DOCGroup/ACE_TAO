@@ -1,22 +1,22 @@
 // Pagefile_Memory_Pool.cpp
-#include "ace/Pagefile_Memory_Pool.h"
+#include "Pagefile_Memory_Pool.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Pagefile_Memory_Pool.inl"
+#include "Pagefile_Memory_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/RW_Thread_Mutex.h"
-#include "ace/OS_NS_sys_mman.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Truncate.h"
+#include "Log_Category.h"
+#include "Auto_Ptr.h"
+#include "RW_Thread_Mutex.h"
+#include "OS_NS_sys_mman.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_stat.h"
+#include "OS_NS_unistd.h"
+#include "Truncate.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
-#include "ace/Based_Pointer_T.h"
-#include "ace/Based_Pointer_Repository.h"
+#include "Based_Pointer_T.h"
+#include "Based_Pointer_Repository.h"
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1  */
 
 

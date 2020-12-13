@@ -1,12 +1,12 @@
-#include "ace/DEV_Addr.h"
+#include "DEV_Addr.h"
 #if !defined (__ACE_INLINE__)
-#include "ace/DEV_Addr.inl"
+#include "DEV_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

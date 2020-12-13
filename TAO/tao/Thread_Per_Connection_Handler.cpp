@@ -1,8 +1,8 @@
-#include "tao/Thread_Per_Connection_Handler.h"
-#include "tao/Connection_Handler.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
+#include "Thread_Per_Connection_Handler.h"
+#include "Connection_Handler.h"
+#include "debug.h"
+#include "Transport.h"
+#include "ORB_Core.h"
 #include "ace/Flag_Manip.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

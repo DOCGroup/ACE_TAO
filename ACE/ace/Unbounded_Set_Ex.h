@@ -10,10 +10,10 @@
 
 #ifndef ACE_UNBOUNDED_SET_EX_H
 #define ACE_UNBOUNDED_SET_EX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Node.h"
-#include "ace/os_include/os_stddef.h"
+#include "Node.h"
+#include "os_include/os_stddef.h"
 #include <iterator>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -353,16 +353,16 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Unbounded_Set_Ex.inl"
+#include "Unbounded_Set_Ex.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Unbounded_Set_Ex.cpp"
+#include "Unbounded_Set_Ex.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Unbounded_Set_Ex.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_UNBOUNDED_SET_H */

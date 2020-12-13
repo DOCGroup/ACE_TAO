@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-#  include "ace/Guard_T.h"
+#  include "Guard_T.h"
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

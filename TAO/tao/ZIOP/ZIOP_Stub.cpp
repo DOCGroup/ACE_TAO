@@ -1,9 +1,9 @@
-#include "tao/ZIOP/ZIOP_Stub.h"
+#include "ZIOP_Stub.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/ZIOP/ZIOP_Policy_i.h"
-#include "tao/ZIOP/ZIOP.h"
+#include "ZIOP_Policy_i.h"
+#include "ZIOP.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"

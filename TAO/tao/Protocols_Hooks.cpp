@@ -1,4 +1,4 @@
-#include "tao/Protocols_Hooks.h"
+#include "Protocols_Hooks.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

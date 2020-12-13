@@ -11,9 +11,9 @@
 
 #ifndef ACE_REGISTRY_H
 #define ACE_REGISTRY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,8 +22,8 @@
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 // This only works on registry-capable Win32 platforms.
 
-#include "ace/Containers.h"
-#include "ace/SString.h"
+#include "Containers.h"
+#include "SString.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -556,5 +556,5 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_REGISTRY */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_REGISTRY_H */

@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
-#include "orbsvcs/Naming/Bindings_Iterator_T.h"
+#include "Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Factory.h"
+#include "Storable_Naming_Context_ReaderWriter.h"
+#include "Bindings_Iterator_T.h"
 
 #include "tao/debug.h"
 #include "tao/Storable_Base.h"
@@ -1037,7 +1037,7 @@ TAO_Storable_Naming_Context::list (CORBA::ULong how_many,
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "orbsvcs/Naming/Naming_Service_Container.h"
+#include "Naming_Service_Container.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

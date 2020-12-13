@@ -19,17 +19,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/CORBA_methods.h"
-#include "tao/orbconf.h"
-#include "tao/Pseudo_VarOut_T.h"
-#include "tao/default_environment.h"
+#include "Basic_Types.h"
+#include "CORBA_methods.h"
+#include "orbconf.h"
+#include "Pseudo_VarOut_T.h"
+#include "default_environment.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -159,7 +159,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/Environment.inl"
+# include "Environment.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,5 +1,5 @@
-#include "tao/Policy_Validator.h"
-#include "tao/debug.h"
+#include "Policy_Validator.h"
+#include "debug.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

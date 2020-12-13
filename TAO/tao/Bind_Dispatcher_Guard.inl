@@ -10,8 +10,8 @@
 //
 // ===========================================================================
 
-#include "tao/Reply_Dispatcher.h"
-#include "tao/Transport_Mux_Strategy.h"
+#include "Reply_Dispatcher.h"
+#include "Transport_Mux_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

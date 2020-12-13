@@ -14,14 +14,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Credentials.h"
-#include "orbsvcs/SSLIOP/SSLIOP_SSL.h"
+#include "SSLIOP_Credentials.h"
+#include "SSLIOP_SSL.h"
 
 #include "orbsvcs/SecurityLevel3C.h"
 

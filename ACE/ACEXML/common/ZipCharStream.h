@@ -14,14 +14,14 @@
 #ifdef USE_ZZIP
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/CharStream.h"
-#include "ACEXML/common/Encoding.h"
+#include "CharStream.h"
+#include "Encoding.h"
 #include "zzip/zzip.h"
 
 // Ugly wart to get aroung a macro version of read defined in zzip.h. Evil...

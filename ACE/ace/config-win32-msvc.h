@@ -12,7 +12,7 @@
 
 #ifndef ACE_CONFIG_WIN32_MSVC_H
 #define ACE_CONFIG_WIN32_MSVC_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -39,11 +39,11 @@
 
 //FUZZ: disable check_for_msc_ver
 #if (_MSC_VER >= 1920)
-# include "ace/config-win32-msvc-142.h"
+# include "config-win32-msvc-142.h"
 #elif (_MSC_VER >= 1910)
-# include "ace/config-win32-msvc-141.h"
+# include "config-win32-msvc-141.h"
 #elif (_MSC_VER >= 1900)
-# include "ace/config-win32-msvc-14.h"
+# include "config-win32-msvc-14.h"
 #else
 # error This version of Microsoft Visual C++ is not supported.
 #endif
@@ -167,5 +167,5 @@
 #     endif /* !STRICT */
 #   endif /* ACE_HAS_STRICT */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_H */

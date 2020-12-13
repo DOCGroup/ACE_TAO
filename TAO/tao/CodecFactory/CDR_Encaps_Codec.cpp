@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/CodecFactory/CDR_Encaps_Codec.h"
+#include "CDR_Encaps_Codec.h"
 
 #include "tao/CDR.h"
 #include "tao/OctetSeqC.h"

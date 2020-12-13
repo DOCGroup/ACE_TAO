@@ -1,8 +1,8 @@
-#include "tao/RTCORBA/RT_Stub_Factory.h"
+#include "RT_Stub_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_Stub.h"
+#include "RT_Stub.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/SystemException.h"

@@ -10,8 +10,8 @@
 #ifndef ACE_TEST_AND_SET_H
 #define ACE_TEST_AND_SET_H
 
-#include /**/ "ace/pre.h"
-#include "ace/Event_Handler.h"
+#include /**/ "pre.h"
+#include "Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -60,12 +60,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Test_and_Set.cpp"
+#include "Test_and_Set.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Test_and_Set.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TEST_AND_SET_H */

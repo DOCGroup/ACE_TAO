@@ -4,7 +4,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #define ACE_LACKS_STDINT_H
 #define ACE_LACKS_SYS_SELECT_H
@@ -15,7 +15,7 @@
 // this must appear before its #include.
 #  define ACE_HAS_STRING_CLASS
 
-#  include "ace/config-g++-common.h"
+#  include "config-g++-common.h"
 
 #else
 
@@ -92,7 +92,7 @@
 #include /**/ <sys/stdsyms.h>
 
 // HP-UX is a POSIX-compliant system - see what's available.
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
 // config-posix.h sets up ACE_HAS_AIO_CALLS if the headers define the
 // proper things. In HP-UX 11's case, the AIOCB Proactor works the best
@@ -424,5 +424,5 @@
 // gethostbyaddr does not handle IPv6-mapped-IPv4 addresses
 #define ACE_HAS_BROKEN_GETHOSTBYADDR_V4MAPPED
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_H */

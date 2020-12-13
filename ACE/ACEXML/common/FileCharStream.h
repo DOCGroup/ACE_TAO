@@ -12,14 +12,14 @@
 #define _ACEXML_FILECHARSTREAM_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/CharStream.h"
-#include "ACEXML/common/Encoding.h"
+#include "CharStream.h"
+#include "Encoding.h"
 
 /**
  * @class ACEXML_FileCharStream

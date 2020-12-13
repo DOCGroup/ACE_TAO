@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/RTCP_Packet.h"
-#include "orbsvcs/AV/RTP.h"
+#include "RTCP_Packet.h"
+#include "RTP.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

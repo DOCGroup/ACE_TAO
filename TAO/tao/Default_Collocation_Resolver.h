@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Collocation_Resolver.h"
+#include "Collocation_Resolver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

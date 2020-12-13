@@ -10,7 +10,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "ace/Sched_Params.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Sched/Scheduler.h"
+#include "Scheduler.h"
 #include "ace/OS_NS_stdio.h"
 
 #include "ace/Lock_Adapter_T.h"

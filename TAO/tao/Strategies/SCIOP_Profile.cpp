@@ -1,5 +1,5 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/SCIOP_Profile.h"
+#include "SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -9,7 +9,7 @@
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
 #include "tao/StringSeqC.h"
-#include "tao/Strategies/sciop_endpointsC.h"
+#include "sciop_endpointsC.h"
 #include "ace/os_include/os_netdb.h"
 
 static const char prefix_[] = "sciop";

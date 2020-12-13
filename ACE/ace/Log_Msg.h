@@ -10,24 +10,24 @@
 
 #ifndef ACE_LOG_MSG_H
 #define ACE_LOG_MSG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // This stuff must come first to avoid problems with circular
 // headers...
 // ... but ACE_NDEBUG and ACE_NLOGGING can come from the config.h file, so
 // pull that one early.
-#include /**/ "ace/config-all.h"
-#include /**/ "ace/ACE_export.h"
-#include "ace/Global_Macros.h"
-#include "ace/Default_Constants.h"
-#include "ace/Log_Priority.h"
-#include "ace/os_include/os_limits.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Basic_Types.h"
+#include /**/ "config-all.h"
+#include /**/ "ACE_export.h"
+#include "Global_Macros.h"
+#include "Default_Constants.h"
+#include "Log_Priority.h"
+#include "os_include/os_limits.h"
+#include "Synch_Traits.h"
+#include "Basic_Types.h"
 
 // The ACE_ASSERT macro used to be defined here, include ace/Assert.h
 // for backwards compatibility.
-#include "ace/Assert.h"
+#include "Assert.h"
 
 #if defined (ACE_NLOGGING)
 #if !defined (ACE_HEX_DUMP)
@@ -143,7 +143,7 @@
 #endif
 #endif /* ACE_NLOGGING */
 
-#include "ace/OS_Log_Msg_Attributes.h"
+#include "OS_Log_Msg_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -937,8 +937,8 @@ ACE_TSS_CLEANUP_NAME (void *ptr);
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Log_Msg.inl"
+#include "Log_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOG_MSG_H */

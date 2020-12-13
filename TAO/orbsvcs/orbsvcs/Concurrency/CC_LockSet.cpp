@@ -10,7 +10,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Concurrency/CC_LockSet.h"
+#include "CC_LockSet.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,6 +1,6 @@
-#include "tao/Service_Context_Handler_Registry.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Service_Context_Handler.h"
+#include "Service_Context_Handler_Registry.h"
+#include "TAO_Server_Request.h"
+#include "Service_Context_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

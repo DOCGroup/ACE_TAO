@@ -15,21 +15,21 @@
 #ifndef ACE_SOCK_DGRAM_MCAST_H
 #define ACE_SOCK_DGRAM_MCAST_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Dgram.h"
-#include "ace/INET_Addr.h"
+#include "SOCK_Dgram.h"
+#include "INET_Addr.h"
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
-# include "ace/Containers_T.h"
-# include "ace/Synch_Traits.h"
-# include "ace/Thread_Mutex.h"
+# include "Containers_T.h"
+# include "Synch_Traits.h"
+# include "Thread_Mutex.h"
 # if !defined (ACE_SDM_LOCK)
 #  define ACE_SDM_LOCK ACE_SYNCH_MUTEX
 # endif /* ACE_SDM_LOCK */
@@ -400,8 +400,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram_Mcast.inl"
+#include "SOCK_Dgram_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SOCK_DGRAM_MCAST_H */

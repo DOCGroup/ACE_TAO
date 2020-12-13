@@ -1,8 +1,8 @@
 #include "tao/TAO_Singleton.h"
-#include "orbsvcs/Notify/RT_Properties.h"
+#include "RT_Properties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/RT_Properties.inl"
+#include "RT_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

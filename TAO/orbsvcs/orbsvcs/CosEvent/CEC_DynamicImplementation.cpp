@@ -1,13 +1,13 @@
 // -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/CosEvent/CEC_DynamicImplementation.h"
+#include "CEC_DynamicImplementation.h"
 #include "tao/DynamicInterface/Request.h"
 #include "tao/DynamicInterface/Unknown_User_Exception.h"
 #include "tao/debug.h"
-#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
+#include "CEC_TypedEvent.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_DynamicImplementation.inl"
+#include "CEC_DynamicImplementation.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

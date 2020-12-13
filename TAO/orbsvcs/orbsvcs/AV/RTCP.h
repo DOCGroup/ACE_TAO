@@ -47,13 +47,13 @@
 #define TAO_AV_RTCP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/RTCP_Channel.h"
+#include "RTCP_Channel.h"
 
 // FUZZ: disable check_for_math_include
 
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/RTP.h"
+#include "AVStreams_i.h"
+#include "UDP.h"
+#include "RTP.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include <math.h>
 #include <stdlib.h>

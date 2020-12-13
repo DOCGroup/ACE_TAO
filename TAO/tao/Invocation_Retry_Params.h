@@ -10,7 +10,7 @@
 #ifndef TAO_INVOCATION_RETRY_PARAMS_H
 #define TAO_INVOCATION_RETRY_PARAMS_H
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #include "ace/Array_Map.h"
 #include "ace/Time_Value.h"

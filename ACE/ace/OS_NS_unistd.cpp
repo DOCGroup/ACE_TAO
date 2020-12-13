@@ -1,20 +1,20 @@
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_unistd.inl"
+# include "OS_NS_unistd.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Base_Thread_Adapter.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/Default_Constants.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/os_include/sys/os_pstat.h"
+#include "Base_Thread_Adapter.h"
+#include "OS_NS_stdlib.h"
+#include "OS_NS_ctype.h"
+#include "Default_Constants.h"
+#include "OS_Memory.h"
+#include "OS_NS_Thread.h"
+#include "Object_Manager_Base.h"
+#include "Auto_Ptr.h"
+#include "os_include/sys/os_pstat.h"
 #if defined (ACE_HAS_SYSCTL)
-# include "ace/os_include/sys/os_sysctl.h"
+# include "os_include/sys/os_sysctl.h"
 #endif /* ACE_HAS_SYSCTL */
 
 #if defined ACE_HAS_VXCPULIB

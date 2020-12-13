@@ -9,7 +9,7 @@
 //=============================================================================
 
 
-#include "orbsvcs/PortableGroup/PG_Group_List_Store.h"
+#include "PG_Group_List_Store.h"
 
 #include "tao/Storable_Base.h"
 #include "tao/Storable_Factory.h"

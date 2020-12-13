@@ -13,18 +13,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Key_Adapters.h"
-#include "tao/PortableServer/poa_macros.h"
-#include "tao/PortableServer/Servant_Location.h"
-#include "tao/PortableServer/Default_Policy_Validator.h"
-#include "tao/PortableServer/POA_Policy_Set.h"
-#include "tao/PortableServer/POAManagerC.h"
+#include "Key_Adapters.h"
+#include "poa_macros.h"
+#include "Servant_Location.h"
+#include "Default_Policy_Validator.h"
+#include "POA_Policy_Set.h"
+#include "POAManagerC.h"
 
 #include "tao/Adapter.h"
 #include "tao/Adapter_Factory.h"
@@ -35,7 +35,7 @@
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Map_T.h"
 
-#include "tao/PortableServer/Servant_Location.h"
+#include "Servant_Location.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -494,7 +494,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Object_Adapter.inl"
+# include "Object_Adapter.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

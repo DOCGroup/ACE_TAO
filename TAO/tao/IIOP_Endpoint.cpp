@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "tao/IIOP_Endpoint.h"
+#include "IIOP_Endpoint.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IOPC.h"
-#include "tao/debug.h"
-#include "tao/ORB_Core.h"
-#include "tao/IIOP_Profile.h"
+#include "IOPC.h"
+#include "debug.h"
+#include "ORB_Core.h"
+#include "IIOP_Profile.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
@@ -14,7 +14,7 @@
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IIOP_Endpoint.inl"
+# include "IIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"

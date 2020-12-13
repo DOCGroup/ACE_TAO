@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/GIOP_Message_Generator_Parser_11.h"
+#include "GIOP_Message_Generator_Parser_11.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP_Message_Generator_Parser_12.h"
-#include "tao/orbconf.h"
+#include "GIOP_Message_Generator_Parser_12.h"
+#include "orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,7 +56,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_Generator_Parser_Impl.inl"
+# include "GIOP_Message_Generator_Parser_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

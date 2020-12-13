@@ -1,5 +1,5 @@
-#include "tao/CORBA_String.h"
-#include "tao/String_Manager_T.h"
+#include "CORBA_String.h"
+#include "String_Manager_T.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
@@ -9,7 +9,7 @@
 #include "ace/streams.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CORBA_String.inl"
+# include "CORBA_String.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

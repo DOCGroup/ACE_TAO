@@ -18,13 +18,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Factory.h"
+#include "EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_Defaults.h"
+#include "EC_Defaults.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
@@ -344,7 +344,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Event_Channel_Base.inl"
+#include "EC_Event_Channel_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

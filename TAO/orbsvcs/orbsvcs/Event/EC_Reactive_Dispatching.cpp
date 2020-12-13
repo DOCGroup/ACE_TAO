@@ -1,5 +1,5 @@
-#include "orbsvcs/Event/EC_Reactive_Dispatching.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_Reactive_Dispatching.h"
+#include "EC_ProxySupplier.h"
 
 
 

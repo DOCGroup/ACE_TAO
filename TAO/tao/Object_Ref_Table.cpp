@@ -1,13 +1,13 @@
-#include "tao/Object_Ref_Table.h"
-#include "tao/ORB.h"
-#include "tao/debug.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Object_Ref_Table.h"
+#include "ORB.h"
+#include "debug.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/Object_Ref_Table.inl"
+# include "Object_Ref_Table.inl"
 #endif  /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

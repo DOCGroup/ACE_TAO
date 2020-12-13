@@ -19,10 +19,10 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/pi_export.h"
-#include "tao/PI/Interceptor_List_T.h"
-#include "tao/PI/ClientRequestInterceptorC.h"
-#include "tao/PI/ClientRequestDetails.h"
+#include "pi_export.h"
+#include "Interceptor_List_T.h"
+#include "ClientRequestInterceptorC.h"
+#include "ClientRequestDetails.h"
 #include "tao/RequestInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

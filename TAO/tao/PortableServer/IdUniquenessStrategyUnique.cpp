@@ -1,5 +1,5 @@
-#include "tao/PortableServer/IdUniquenessStrategyUnique.h"
-#include "tao/PortableServer/Root_POA.h"
+#include "IdUniquenessStrategyUnique.h"
+#include "Root_POA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

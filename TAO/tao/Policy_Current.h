@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +24,8 @@
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/Policy_CurrentC.h"
-#include "tao/LocalObject.h"
+#include "Policy_CurrentC.h"
+#include "LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,7 +62,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Policy_Current.inl"
+# include "Policy_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */

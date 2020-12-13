@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 #include "tao/Endpoint_Selector_Factory.h"
 #include "ace/Service_Config.h"
 

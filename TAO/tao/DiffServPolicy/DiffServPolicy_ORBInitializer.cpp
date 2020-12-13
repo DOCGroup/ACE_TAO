@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/DiffServPolicy/DiffServPolicy_ORBInitializer.h"
-#include "tao/DiffServPolicy/DiffServPolicy.h"
-#include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
-#include "tao/DiffServPolicy/DiffServ_Service_Context_Handler.h"
-#include "tao/DiffServPolicy/DiffServ_Protocols_Hooks.h"
+#include "DiffServPolicy_ORBInitializer.h"
+#include "DiffServPolicy.h"
+#include "DiffServPolicy_Factory.h"
+#include "DiffServ_Service_Context_Handler.h"
+#include "DiffServ_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 

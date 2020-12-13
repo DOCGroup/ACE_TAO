@@ -1,33 +1,33 @@
-#include "ace/OS_NS_stdlib.h"
+#include "OS_NS_stdlib.h"
 
-#include "ace/Default_Constants.h"
+#include "Default_Constants.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_stdlib.inl"
+# include "OS_NS_stdlib.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/OS_Memory.h"
+#include "OS_Memory.h"
 
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_ctype.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_ctype.h"
 
 #if defined (ACE_LACKS_MKTEMP) \
     || defined (ACE_LACKS_MKSTEMP) \
     || defined (ACE_LACKS_REALPATH)
-#  include "ace/OS_NS_stdio.h"
-#  include "ace/OS_NS_sys_stat.h"
+#  include "OS_NS_stdio.h"
+#  include "OS_NS_sys_stat.h"
 #endif /* ACE_LACKS_MKTEMP || ACE_LACKS_MKSTEMP || ACE_LACKS_REALPATH */
 
 #if defined (ACE_LACKS_MKSTEMP)
-# include "ace/OS_NS_fcntl.h"
-# include "ace/OS_NS_ctype.h"
-# include "ace/OS_NS_sys_time.h"
-# include "ace/OS_NS_Thread.h"
-# include "ace/Numeric_Limits.h"
+# include "OS_NS_fcntl.h"
+# include "OS_NS_ctype.h"
+# include "OS_NS_sys_time.h"
+# include "OS_NS_Thread.h"
+# include "Numeric_Limits.h"
 #endif  /* ACE_LACKS_MKSTEMP */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

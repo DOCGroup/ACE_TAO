@@ -1,7 +1,7 @@
-#include "orbsvcs/FtRtEvent/Utils/UUID.h"
+#include "UUID.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/Utils/UUID.inl"
+#include "UUID.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_unistd.h"

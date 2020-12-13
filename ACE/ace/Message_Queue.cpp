@@ -1,8 +1,8 @@
-#include "ace/Message_Queue.h"
-#include "ace/Log_Category.h"
+#include "Message_Queue.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Queue.inl"
+#include "Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

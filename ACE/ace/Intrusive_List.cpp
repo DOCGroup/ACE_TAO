@@ -1,14 +1,14 @@
 #ifndef ACE_INTRUSIVE_LIST_CPP
 #define ACE_INTRUSIVE_LIST_CPP
 
-#include "ace/Intrusive_List.h"
+#include "Intrusive_List.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Intrusive_List.inl"
+#include "Intrusive_List.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

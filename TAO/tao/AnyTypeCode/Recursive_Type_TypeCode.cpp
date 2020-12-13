@@ -1,7 +1,7 @@
 #include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
+# include "Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"

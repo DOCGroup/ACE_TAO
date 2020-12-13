@@ -1,22 +1,22 @@
 #ifndef ACE_TIMER_QUEUE_T_CPP
 #define ACE_TIMER_QUEUE_T_CPP
 
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Timer_Queue_T.h"
-#include "ace/Guard_T.h"
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Null_Mutex.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Functor.h"
+#include "Timer_Queue_T.h"
+#include "Guard_T.h"
+#include "Reverse_Lock_T.h"
+#include "Log_Category.h"
+#include "Null_Mutex.h"
+#include "OS_NS_sys_time.h"
+#include "Functor.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Timer_Queue_T.inl"
+#include "Timer_Queue_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

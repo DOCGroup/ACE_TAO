@@ -1,8 +1,8 @@
-#include "ace/Thread_Control.h"
-#include "ace/Thread_Manager.h"
+#include "Thread_Control.h"
+#include "Thread_Manager.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Thread_Control.inl"
+# include "Thread_Control.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

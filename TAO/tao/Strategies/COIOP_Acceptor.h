@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Transport_Acceptor.h"
 #include "tao/Acceptor_Impl.h"
 #include "tao/GIOP_Message_Version.h"

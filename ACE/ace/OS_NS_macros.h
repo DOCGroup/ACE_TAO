@@ -15,9 +15,9 @@
 #ifndef ACE_OS_NS_MACROS_H
 # define ACE_OS_NS_MACROS_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-all.h"
+# include "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
@@ -72,7 +72,7 @@
 // required primarily for supporting _FILE_OFFSET_BITS==64 on windows.
 #if defined(ACE_WIN32)
 #  if defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
-#    include "ace/Basic_Types.h"
+#    include "Basic_Types.h"
 
 #    define ACE_LOW_PART(X) static_cast<DWORD>(X)
 
@@ -104,6 +104,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  endif /* _FILE_OFFSET_BITS==64 */
 #endif /* ACE_WIN32 */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 
 #endif /* ACE_OS_NS_MACROS_H */

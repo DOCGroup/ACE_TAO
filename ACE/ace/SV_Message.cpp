@@ -1,12 +1,12 @@
 // SV_Message.cpp
-#include "ace/SV_Message.h"
+#include "SV_Message.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Message.inl"
+#include "SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 

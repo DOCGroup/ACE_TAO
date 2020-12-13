@@ -11,7 +11,7 @@
 //   Jaiganesh Balasubramanian <jai@doc.ece.uci.edu>
 // ================================================================
 
-#include "orbsvcs/Concurrency/Concurrency_Loader.h"
+#include "Concurrency_Loader.h"
 #include "ace/Dynamic_Service.h"
 
 

@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/PortableServer/RequestProcessingStrategyAOMOnlyFactoryImpl.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/RequestProcessingStrategyAOMOnly.h"
+#include "RequestProcessingStrategyAOMOnlyFactoryImpl.h"
+#include "RequestProcessingStrategy.h"
+#include "RequestProcessingStrategyAOMOnly.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

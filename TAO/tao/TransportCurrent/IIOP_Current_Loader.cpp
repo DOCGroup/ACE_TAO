@@ -16,9 +16,9 @@
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-#include "tao/TransportCurrent/Current_ORBInitializer.h"
-#include "tao/TransportCurrent/IIOP_Current_Loader.h"
-#include "tao/TransportCurrent/IIOP_Current_Impl.h"
+#include "Current_ORBInitializer.h"
+#include "IIOP_Current_Loader.h"
+#include "IIOP_Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

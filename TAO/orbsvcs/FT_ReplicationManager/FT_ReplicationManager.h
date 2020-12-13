@@ -30,7 +30,7 @@
 #include <orbsvcs/PortableGroup/PG_Group_Factory.h>
 
 #include <orbsvcs/PortableGroup/PG_FactoryRegistry.h>
-#include <orbsvcs/FT_ReplicationManager/FT_FaultConsumer.h>
+#include "FT_FaultConsumer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

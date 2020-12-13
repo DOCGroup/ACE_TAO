@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Services_Activate.h"
+#include "Services_Activate.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

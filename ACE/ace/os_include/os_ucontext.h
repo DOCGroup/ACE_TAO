@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_signal.h"
+#include "os_signal.h"
 
 #if !defined (ACE_LACKS_UCONTEXT_H)
 #  include /**/ <ucontext.h>

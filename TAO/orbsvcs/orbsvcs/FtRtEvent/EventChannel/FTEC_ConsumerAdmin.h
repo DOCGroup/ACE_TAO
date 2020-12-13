@@ -16,8 +16,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Event/EC_ConsumerAdmin.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ProxySupplierStateWorker.h"
+#include "FT_ProxyAdmin_T.h"
+#include "ProxySupplierStateWorker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

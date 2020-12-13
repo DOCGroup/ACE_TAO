@@ -1,11 +1,11 @@
 // MEM_IO.cpp
-#include "ace/MEM_IO.h"
-#include "ace/Handle_Set.h"
+#include "MEM_IO.h"
+#include "Handle_Set.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_IO.inl"
+#include "MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 

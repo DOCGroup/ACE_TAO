@@ -18,9 +18,9 @@
 #define TAO_FT_NAMING_SERVER_H
 
 #include "orbsvcs/Naming/Naming_Server.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "FT_Naming_Manager.h"
+#include "FT_Naming_Replication_Manager.h"
+#include "ftnaming_export.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_NamingReplicationC.h"
 #include "ace/Recursive_Thread_Mutex.h"

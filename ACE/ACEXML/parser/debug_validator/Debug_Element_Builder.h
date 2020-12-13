@@ -11,14 +11,14 @@
 #define _ACEXML_DEBUG_ELEMENT_BUILDER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/parser/debug_validator/Debug_DTD_Manager_Export.h"
+#include "Debug_DTD_Manager_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ACEXML/common/Element_Def_Builder.h"
-#include "ACEXML/parser/debug_validator/Element_Tree.h"
+#include "Element_Tree.h"
 
 /**
  * @class ACEXML_Debug_Element_Builder Debug_Element_Builder.h "parser/debug_validator/Debug_Element_Builder.h"

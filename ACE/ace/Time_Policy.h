@@ -7,11 +7,11 @@
  *  @author Carlos O'Ryan <coryan@atdesk.com>
  *  @author Martin Corino <mcorino@remedy.nl>
  */
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
-#include /**/ "ace/Time_Value_T.h"
+#include /**/ "Time_Value_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -163,8 +163,8 @@ template class ACE_Export ACE_Time_Value_T<ACE_Delegating_Time_Policy>;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Time_Policy.inl"
+#include "Time_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIME_POLICY_H */

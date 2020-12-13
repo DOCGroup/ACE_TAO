@@ -15,8 +15,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-#include "orbsvcs/Event/ECG_Adapters.h"
+#include /**/ "event_serv_export.h"
+#include "ECG_Adapters.h"
 #include "ace/SOCK_Dgram_Mcast.h"
 
 

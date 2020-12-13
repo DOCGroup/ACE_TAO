@@ -23,9 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/String_TypeCode.h"
-#include "tao/AnyTypeCode/True_RefCount_Policy.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "String_TypeCode.h"
+#include "True_RefCount_Policy.h"
+#include "Any.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

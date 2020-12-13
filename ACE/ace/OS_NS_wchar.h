@@ -15,20 +15,20 @@
 #ifndef ACE_OS_NS_WCHAR_H
 # define ACE_OS_NS_WCHAR_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-all.h"
+# include "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_wchar.h"
-#include "ace/Basic_Types.h"
-#include /**/ "ace/ACE_export.h"
-#include "ace/ace_wchar.h" // include for the time being, but this code needs to be moved.  dhinton
+#include "os_include/os_wchar.h"
+#include "Basic_Types.h"
+#include /**/ "ACE_export.h"
+#include "ace_wchar.h" // include for the time being, but this code needs to be moved.  dhinton
 
-#include "ace/os_include/os_errno.h"
+#include "os_include/os_errno.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -190,8 +190,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_NS_wchar.inl"
+#   include "OS_NS_wchar.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_OS_NS_STDIO_H */

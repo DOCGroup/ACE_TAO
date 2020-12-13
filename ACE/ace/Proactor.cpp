@@ -1,36 +1,36 @@
-#include /**/ "ace/config-lite.h"
-#include "ace/Proactor.h"
+#include /**/ "config-lite.h"
+#include "Proactor.h"
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Proactor_Impl.h"
-#include "ace/Object_Manager.h"
-#include "ace/Task_T.h"
+#include "Auto_Ptr.h"
+#include "Proactor_Impl.h"
+#include "Object_Manager.h"
+#include "Task_T.h"
 
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
-#    include "ace/Service_Config.h"
+#    include "Service_Config.h"
 #endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
 
 
-#include "ace/Task_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Framework_Component.h"
+#include "Task_T.h"
+#include "Log_Category.h"
+#include "Framework_Component.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
-#   include "ace/POSIX_Proactor.h"
-#   include "ace/POSIX_CB_Proactor.h"
+#   include "POSIX_Proactor.h"
+#   include "POSIX_CB_Proactor.h"
 #else /* !ACE_HAS_AIO_CALLS */
-#   include "ace/WIN32_Proactor.h"
+#   include "WIN32_Proactor.h"
 #endif /* ACE_HAS_AIO_CALLS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Proactor.inl"
+#include "Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Event.h"
+#include "Auto_Event.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

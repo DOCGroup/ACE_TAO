@@ -12,9 +12,9 @@
 
 #ifndef ACE_MIN_MAX_H
 #define ACE_MIN_MAX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -63,5 +63,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_MAX(a,b)     ace_max((a),(b))
 # define ACE_RANGE(a,b,c) ace_range((a),(b),(c))
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif  /* ACE_MIN_MAX_H */

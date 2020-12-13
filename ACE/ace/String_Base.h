@@ -12,15 +12,15 @@
 #ifndef ACE_STRING_BASE_H
 #define ACE_STRING_BASE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Global_Macros.h"
+#include "Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/String_Base_Const.h"
+#include "String_Base_Const.h"
 #include <iterator>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -873,17 +873,17 @@ template <class ACE_CHAR_T>
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/String_Base.inl"
+#include "String_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/String_Base.cpp"
+#include "String_Base.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("String_Base.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_STRING_BASE_H */

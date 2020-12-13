@@ -1,9 +1,9 @@
-#include "ace/Token_Collection.h"
+#include "Token_Collection.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Collection.inl"
+#include "Token_Collection.inl"
 #endif /* __ACE_INLINE__ */
 
 

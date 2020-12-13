@@ -1,9 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/DIOP_Endpoint.h"
+#include "DIOP_Endpoint.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 
@@ -11,7 +11,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/DIOP_Endpoint.inl"
+# include "DIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

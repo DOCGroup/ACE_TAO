@@ -1,11 +1,11 @@
-#include "ace/Shared_Memory_MM.h"
+#include "Shared_Memory_MM.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_MM.inl"
+#include "Shared_Memory_MM.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

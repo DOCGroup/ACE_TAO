@@ -13,13 +13,13 @@
 #define ACEXML_LOCALTORIMPL_H
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/Locator.h"
+#include "Locator.h"
 #include "ace/Copy_Disabled.h"
 
 /**
@@ -152,7 +152,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/LocatorImpl.inl"
+# include "LocatorImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

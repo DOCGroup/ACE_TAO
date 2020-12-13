@@ -20,7 +20,7 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancing/LB_Location_Index_Map.h"
+#include "LB_Location_Index_Map.h"
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"

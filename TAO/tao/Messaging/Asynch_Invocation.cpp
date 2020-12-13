@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Messaging/Asynch_Invocation.h"
-#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
+#include "Asynch_Invocation.h"
+#include "Asynch_Reply_Dispatcher.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Invocation_Utils.h"

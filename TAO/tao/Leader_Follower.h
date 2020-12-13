@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/New_Leader_Generator.h"
-#include "tao/LF_Follower.h"
+#include "New_Leader_Generator.h"
+#include "LF_Follower.h"
 #include "ace/Reverse_Lock_T.h"
 #include "ace/Intrusive_List.h"
 #include "ace/Intrusive_List_Node.h"
@@ -330,7 +330,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Leader_Follower.inl"
+# include "Leader_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

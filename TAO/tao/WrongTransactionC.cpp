@@ -26,11 +26,11 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/WrongTransactionC.h"
-#include "tao/CDR.h"
-#include "tao/SystemException.h"
+#include "WrongTransactionC.h"
+#include "CDR.h"
+#include "SystemException.h"
 #include "ace/OS_NS_string.h"
-#include "tao/AnyTypeCode_Adapter.h"
+#include "AnyTypeCode_Adapter.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

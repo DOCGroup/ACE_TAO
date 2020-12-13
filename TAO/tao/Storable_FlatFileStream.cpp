@@ -10,7 +10,7 @@
  */
 //=============================================================================
 
-#include "tao/Storable_FlatFileStream.h"
+#include "Storable_FlatFileStream.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
@@ -19,7 +19,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/Numeric_Limits.h"
 #include "ace/Truncate.h"
-#include "tao/debug.h"
+#include "debug.h"
 
 #if defined (ACE_HAS_MNTENT)
 #include <mntent.h>

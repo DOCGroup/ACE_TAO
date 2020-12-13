@@ -1,6 +1,6 @@
-#include "tao/ZIOP/ZIOP_PolicyFactory.h"
-#include "tao/ZIOP/ZIOP.h"
-#include "tao/ZIOP/ZIOP_Policy_i.h"
+#include "ZIOP_PolicyFactory.h"
+#include "ZIOP.h"
+#include "ZIOP_Policy_i.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/AnyTypeCode/Any.h"

@@ -2,7 +2,7 @@
 #define ALLOC_TRACKER_H
 #include /**/"ace/pre.h"
 
-#include "orbsvcs/Notify/notify_export.h"
+#include "notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

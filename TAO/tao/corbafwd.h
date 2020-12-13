@@ -23,13 +23,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB_Constants.h"
+#include "ORB_Constants.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
+#include "CORBA_methods.h"
 
 #include /**/ "ace/post.h"
 

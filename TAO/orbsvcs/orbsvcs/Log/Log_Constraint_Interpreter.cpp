@@ -1,5 +1,5 @@
-#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "Log_Constraint_Interpreter.h"
+#include "Log_Constraint_Visitors.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

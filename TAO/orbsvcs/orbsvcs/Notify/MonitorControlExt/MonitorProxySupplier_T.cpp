@@ -2,9 +2,9 @@
 #define MONITORPROXYSUPPLIER_T_CPP
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
+#include "MonitorProxySupplier_T.h"
+#include "MonitorConsumerAdmin.h"
+#include "MonitorEventChannel.h"
 #include "orbsvcs/Notify/ThreadPool_Task.h"
 #include "ace/Monitor_Base.h"
 

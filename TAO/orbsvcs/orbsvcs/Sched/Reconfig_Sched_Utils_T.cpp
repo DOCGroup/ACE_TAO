@@ -11,7 +11,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Sched/Reconfig_Sched_Utils_T.h"
+#include "Reconfig_Sched_Utils_T.h"
 #include "ace/Sched_Params.h"
 #include "ace/ACE.h"
 

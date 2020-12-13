@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IOR_Parser.h"
+#include "IOR_Parser.h"
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 

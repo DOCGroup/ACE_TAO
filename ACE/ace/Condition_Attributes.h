@@ -12,15 +12,15 @@
 
 #ifndef ACE_CONDITION_ATTRIBUTES_H
 #define ACE_CONDITION_ATTRIBUTES_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_Thread.h"
+#include "OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -86,8 +86,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Condition_Attributes.inl"
+#include "Condition_Attributes.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONDITION_ATTRIBUTES_H */

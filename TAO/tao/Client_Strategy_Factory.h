@@ -14,14 +14,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
-#include "tao/Basic_Types.h"
+#include /**/ "Versioned_Namespace.h"
+#include "Basic_Types.h"
 
 #include "ace/Service_Object.h"
 

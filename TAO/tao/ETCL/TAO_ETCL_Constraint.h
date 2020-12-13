@@ -20,7 +20,7 @@
 
 #include "tao/AnyTypeCode/Any_Impl.h"
 
-#include "tao/ETCL/tao_etcl_export.h"
+#include "tao_etcl_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

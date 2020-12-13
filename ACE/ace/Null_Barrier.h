@@ -12,7 +12,7 @@
 
 #ifndef ACE_NULL_BARRIER_H
 #define ACE_NULL_BARRIER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -50,5 +50,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_NULL_BARRIER_H */

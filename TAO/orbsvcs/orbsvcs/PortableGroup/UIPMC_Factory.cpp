@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Factory.h"
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
-#include "orbsvcs/PortableGroup/UIPMC_Connector.h"
+#include "UIPMC_Factory.h"
+#include "UIPMC_Acceptor.h"
+#include "UIPMC_Connector.h"
 #include "tao/ORB_Constants.h"
 #include "tao/params.h" // TAO_ORB_Parameters::check_preferred_interfaces_string ()
 #include "ace/OS_NS_strings.h"

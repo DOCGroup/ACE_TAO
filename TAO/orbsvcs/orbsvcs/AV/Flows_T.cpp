@@ -2,7 +2,7 @@
 #define TAO_AV_FLOWS_T_CPP
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/Flows_T.h"
+#include "Flows_T.h"
 #include "tao/debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

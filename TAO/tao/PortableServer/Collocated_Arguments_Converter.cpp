@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/Collocated_Arguments_Converter.h"
+#include "Collocated_Arguments_Converter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/TAO_ExtC.h"
+#include "TAO_ExtC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -83,7 +83,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-#include "tao/Messaging/Buffering_Constraint_Policy.inl"
+#include "Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */

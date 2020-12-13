@@ -10,9 +10,9 @@
 
 #ifndef ACE_ATM_ADDR_H
 #define ACE_ATM_ADDR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,8 +20,8 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/Addr.h"
+#include /**/ "ACE_export.h"
+#include "Addr.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -185,9 +185,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.inl"
+#include "ATM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_ADDR_H */

@@ -21,7 +21,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Transport.h"
 #include "tao/IIOPC.h"
 #include "ace/SOCK_SEQPACK_Association.h"

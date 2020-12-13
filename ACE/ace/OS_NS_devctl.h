@@ -1,16 +1,16 @@
 #ifndef ACE_OS_NS_DEVCTL_H
 #define ACE_OS_NS_DEVCTL_H
 
-#include /**/ "ace/pre.h"
-#include "ace/config-all.h"
+#include /**/ "pre.h"
+#include "config-all.h"
 
 #ifndef ACE_LACKS_PRAGMA_ONCE
 #pragma once
 #endif
 
-#include "ace/os_include/sys/os_types.h"
+#include "os_include/sys/os_types.h"
 
-#include "ace/ACE_export.h"
+#include "ACE_export.h"
 
 #ifdef ACE_EXPORT_MACRO
 # undef ACE_EXPORT_MACRO
@@ -33,8 +33,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  undef ACE_INLINE
 # endif
 # define ACE_INLINE inline
-# include "ace/OS_NS_devctl.inl"
+# include "OS_NS_devctl.inl"
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif // ACE_OS_NS_DEVCTL_H

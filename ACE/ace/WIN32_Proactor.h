@@ -14,9 +14,9 @@
 
 #ifndef ACE_WIN32_PROACTOR_H
 #define ACE_WIN32_PROACTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,12 +25,12 @@
 #if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 // WIN32 implementation of the Proactor.
 
-#include "ace/WIN32_Asynch_IO.h"
-#include "ace/Event_Handler.h"
+#include "WIN32_Asynch_IO.h"
+#include "Event_Handler.h"
 
-#include "ace/Proactor_Impl.h"
-#include "ace/Asynch_Pseudo_Task.h"
-#include "ace/Auto_Event.h"
+#include "Proactor_Impl.h"
+#include "Asynch_Pseudo_Task.h"
+#include "Auto_Event.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -319,5 +319,5 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_PROACTOR_H */

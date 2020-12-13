@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
+#include "LB_MonitorMap.h"
 
 #include "ace/Event_Handler.h"
 

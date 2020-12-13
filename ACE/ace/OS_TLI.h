@@ -11,16 +11,16 @@
 
 #ifndef ACE_OS_TLI_H
 # define ACE_OS_TLI_H
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-all.h"
+# include "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/OS_Errno.h"
-# include "ace/ACE_export.h"
+# include "OS_Errno.h"
+# include "ACE_export.h"
 
 # if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -42,7 +42,7 @@ struct netbuf { };
 
 #   if defined (ACE_HAS_CONFLICTING_XTI_MACROS)
       // Make sure tcp.h gets included before sys/xti.h.
-#     include "ace/os_include/netinet/os_tcp.h"
+#     include "os_include/netinet/os_tcp.h"
 #     undef TCP_NODELAY
 #     undef TCP_MAXSEG
 #   endif /* ACE_HAS_CONFLICTING_XTI_MACROS */
@@ -269,8 +269,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_TLI.inl"
+#   include "OS_TLI.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_OS_TLI_H */

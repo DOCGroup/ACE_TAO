@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ace/QtReactor/ACE_QtReactor_export.h"
+#include "ACE_QtReactor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

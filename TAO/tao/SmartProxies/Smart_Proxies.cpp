@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/SmartProxies/Smart_Proxies.h"
+#include "Smart_Proxies.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/SmartProxies/Smart_Proxies.inl"
+#include "Smart_Proxies.inl"
 #endif /* defined INLINE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

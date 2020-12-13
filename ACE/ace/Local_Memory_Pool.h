@@ -11,16 +11,16 @@
 
 #ifndef ACE_LOCAL_MEMORY_POOL_H
 #define ACE_LOCAL_MEMORY_POOL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/os_include/sys/os_mman.h"   /* Need PROT_RDWR */
-#include "ace/ACE.h"
+#include "os_include/sys/os_mman.h"   /* Need PROT_RDWR */
+#include "ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Set.h"
+#include "Unbounded_Set.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -126,5 +126,5 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCAL_MEMORY_POOL_H */

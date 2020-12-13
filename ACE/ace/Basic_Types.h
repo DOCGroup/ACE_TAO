@@ -37,31 +37,31 @@
  */
 //=============================================================================
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #ifndef ACE_BASIC_TYPES_H
 # define ACE_BASIC_TYPES_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Pull in definitions
-# include "ace/os_include/os_limits.h"     // Integer limits
-# include "ace/os_include/os_float.h"      // Floating point limits
-# include "ace/os_include/os_stdlib.h"     // Other types
-# include "ace/os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
-# include "ace/os_include/arpa/os_inet.h"  // For htons
+# include "os_include/os_limits.h"     // Integer limits
+# include "os_include/os_float.h"      // Floating point limits
+# include "os_include/os_stdlib.h"     // Other types
+# include "os_include/os_stddef.h"     // Get ptrdiff_t - see further comments below
+# include "os_include/arpa/os_inet.h"  // For htons
 
-# include "ace/os_include/sys/os_types.h"
+# include "os_include/sys/os_types.h"
 
 # if !defined (ACE_LACKS_SYS_PARAM_H)
 #  include /**/ <sys/param.h>
 # endif /* ACE_LACKS_SYS_PARAM_H */
 
-# include "ace/ACE_export.h"
+# include "ACE_export.h"
 
 # if !defined (ACE_LACKS_STDINT_H)
 #  include <stdint.h>
@@ -71,7 +71,7 @@
 # endif
 
 #ifdef ACE_LACKS_INTPTR_T
-# include "ace/If_Then_Else.h"
+# include "If_Then_Else.h"
 
 // This intptr_t typedef is here instead of
 // <ace/os_include/os_inttypes.h> since it depends on the template
@@ -582,5 +582,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_DBL_MAX 1.7976931348623158e+308
 #define ACE_DBL_MIN 2.2250738585072014e-308
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_BASIC_TYPES_H */

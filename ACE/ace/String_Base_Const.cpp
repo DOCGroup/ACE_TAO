@@ -1,5 +1,5 @@
-#include "ace/String_Base_Const.h"
-#include "ace/Numeric_Limits.h"
+#include "String_Base_Const.h"
+#include "Numeric_Limits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

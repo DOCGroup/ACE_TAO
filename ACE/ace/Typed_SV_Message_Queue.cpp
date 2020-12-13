@@ -1,17 +1,17 @@
 #ifndef ACE_TYPED_SV_MESSAGE_QUEUE_CPP
 #define ACE_TYPED_SV_MESSAGE_QUEUE_CPP
 
-#include "ace/Typed_SV_Message.h"
+#include "Typed_SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Typed_SV_Message_Queue.h"
-#include "ace/Log_Category.h"
+#include "Typed_SV_Message_Queue.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message_Queue.inl"
+#include "Typed_SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

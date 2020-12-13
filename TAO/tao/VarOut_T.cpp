@@ -1,10 +1,10 @@
 #ifndef TAO_VAROUT_T_CPP
 #define TAO_VAROUT_T_CPP
 
-#include "tao/VarOut_T.h"
+#include "VarOut_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/VarOut_T.inl"
+#include "VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

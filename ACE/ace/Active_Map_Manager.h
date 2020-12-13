@@ -11,15 +11,15 @@
 
 #ifndef ACE_ACTIVE_MAP_MANAGER_H
 #define ACE_ACTIVE_MAP_MANAGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
+#include "Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -103,11 +103,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Active_Map_Manager.inl"
+#include "Active_Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 // Include the templates here.
-#include "ace/Active_Map_Manager_T.h"
+#include "Active_Map_Manager_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ACTIVE_MAP_MANAGER_H */

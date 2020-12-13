@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/String_Alloc.h"
+#include "String_Alloc.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"

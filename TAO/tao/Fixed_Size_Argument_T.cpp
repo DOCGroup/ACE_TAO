@@ -1,10 +1,10 @@
 #ifndef TAO_FIXED_SIZE_ARGUMENT_T_CPP
 #define TAO_FIXED_SIZE_ARGUMENT_T_CPP
 
-#include "tao/Fixed_Size_Argument_T.h"
+#include "Fixed_Size_Argument_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Fixed_Size_Argument_T.inl"
+#include "Fixed_Size_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

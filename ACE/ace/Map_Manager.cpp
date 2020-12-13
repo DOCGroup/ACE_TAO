@@ -1,16 +1,16 @@
 #ifndef ACE_MAP_MANAGER_CPP
 #define ACE_MAP_MANAGER_CPP
 
-#include "ace/Map_Manager.h"
+#include "Map_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Base.h"
+#include "Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Map_Manager.inl"
+#include "Map_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

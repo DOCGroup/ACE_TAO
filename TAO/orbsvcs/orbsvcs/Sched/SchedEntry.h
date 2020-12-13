@@ -13,7 +13,7 @@
 #define SCHEDENTRY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Sched/sched_export.h"
+#include "sched_export.h"
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
 #include "ace/Containers.h"
@@ -644,7 +644,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Sched/SchedEntry.inl"
+#include "SchedEntry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

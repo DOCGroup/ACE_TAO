@@ -26,7 +26,7 @@
 #if (TAO_HAS_INTERCEPTORS == 1)
 
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/PI_Server/PI_Server_includeC.h"
+#include "PI_Server_includeC.h"
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 #include "tao/OctetSeqC.h"
@@ -245,7 +245,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (__ACE_INLINE__)
-#  include "tao/PI_Server/ServerRequestInfo.inl"
+#  include "ServerRequestInfo.inl"
 # endif  /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

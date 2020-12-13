@@ -13,10 +13,10 @@
 #ifndef _FT_REPLICATION_MANAGER_IDL_
 #define _FT_REPLICATION_MANAGER_IDL_
 
-#include "orbsvcs/PortableGroup.idl"
-#include "orbsvcs/FT_CORBA.idl"
-#include "orbsvcs/FT_Replica.idl"
-#include "orbsvcs/FT_Notifier.idl"
+#include "PortableGroup.idl"
+#include "FT_CORBA.idl"
+#include "FT_Replica.idl"
+#include "FT_Notifier.idl"
 
 #pragma prefix "omg.org"
 

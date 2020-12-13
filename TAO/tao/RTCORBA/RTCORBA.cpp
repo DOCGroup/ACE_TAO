@@ -1,8 +1,8 @@
-#include "tao/RTCORBA/RTCORBA.h"
+#include "RTCORBA.h"
 
 #if TAO_HAS_CORBA_MESSAGING == 1
 
-#include "tao/RTCORBA/RT_ORB_Loader.h"
+#include "RT_ORB_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

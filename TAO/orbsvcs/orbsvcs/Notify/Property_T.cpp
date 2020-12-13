@@ -1,13 +1,13 @@
 #ifndef TAO_Notify_PROPERTY_T_CPP
 #define TAO_Notify_PROPERTY_T_CPP
 
-#include "orbsvcs/Notify/Property_T.h"
+#include "Property_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Property_T.inl"
+#include "Property_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/PropertySeq.h"
+#include "PropertySeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Event.h"
-#include "tao/orbconf.h"
+#include "LF_Event.h"
+#include "orbconf.h"
 #include "ace/Hash_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Thread_Mutex.h"

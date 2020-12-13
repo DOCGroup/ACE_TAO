@@ -10,17 +10,17 @@
 
 #ifndef ACE_SERVICE_MANAGER_H
 #define ACE_SERVICE_MANAGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SOCK_Stream.h"
+#include "SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Acceptor.h"
-#include "ace/INET_Addr.h"
-#include "ace/Service_Object.h"
+#include "SOCK_Acceptor.h"
+#include "INET_Addr.h"
+#include "Service_Object.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -113,5 +113,5 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* _SERVICE_MANAGER_H */

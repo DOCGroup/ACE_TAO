@@ -17,7 +17,7 @@
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-#include "tao/TransportCurrent/Current_Loader.h"
+#include "Current_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

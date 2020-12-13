@@ -22,7 +22,7 @@
 
 # if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Endpoint.h"
 #include "ace/UNIX_Addr.h"
 
@@ -91,7 +91,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/UIOP_Endpoint.inl"
+# include "UIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 # endif  /* TAO_HAS_UIOP == 1 */

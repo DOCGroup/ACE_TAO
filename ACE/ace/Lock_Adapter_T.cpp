@@ -1,15 +1,15 @@
 #ifndef ACE_LOCK_ADAPTER_T_CPP
 #define ACE_LOCK_ADAPTER_T_CPP
 
-#include "ace/Lock_Adapter_T.h"
-#include "ace/OS_Memory.h" // for ACE_NEW
+#include "Lock_Adapter_T.h"
+#include "OS_Memory.h" // for ACE_NEW
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Lock_Adapter_T.inl"
+#include "Lock_Adapter_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -9,10 +9,10 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/RTCP.h"
+#include "AVStreams_i.h"
+#include "sfp.h"
+#include "MCast.h"
+#include "RTCP.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -20,7 +20,7 @@
 #include "ace/OS_NS_arpa_inet.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/AVStreams_i.inl"
+#include "AVStreams_i.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

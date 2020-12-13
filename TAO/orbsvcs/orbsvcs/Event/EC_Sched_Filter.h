@@ -14,14 +14,14 @@
 #define TAO_EC_SCHED_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

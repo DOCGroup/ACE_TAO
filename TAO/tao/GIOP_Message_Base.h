@@ -14,20 +14,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/GIOP_Message_Generator_Parser_Impl.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/GIOP_Message_State.h"
-#include "tao/GIOP_Fragmentation_Strategy.h"
-#include "tao/CDR.h"
-#include "tao/Incoming_Message_Stack.h"
+#include "Exception.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "GIOP_Message_Generator_Parser_Impl.h"
+#include "GIOP_Utils.h"
+#include "GIOP_Message_State.h"
+#include "GIOP_Fragmentation_Strategy.h"
+#include "CDR.h"
+#include "Incoming_Message_Stack.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

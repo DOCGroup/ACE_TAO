@@ -10,15 +10,15 @@
 
 #ifndef ACE_THREAD_ADAPTER_H
 #define ACE_THREAD_ADAPTER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Base_Thread_Adapter.h"
+#include "Base_Thread_Adapter.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -90,8 +90,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/Thread_Adapter.inl"
+#   include "Thread_Adapter.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_THREAD_ADAPTER_H */

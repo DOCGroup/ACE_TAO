@@ -10,18 +10,18 @@
 
 #ifndef ACE_ATOMIC_OP_H
 #define ACE_ATOMIC_OP_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Thread_Mutex.h"
+#include "Thread_Mutex.h"
 
 // Include the templates here.
-#include "ace/Atomic_Op_T.h"
+#include "Atomic_Op_T.h"
 
 // Determine whether builtin atomic op support is
 // available on this platform.
@@ -54,7 +54,7 @@
 #endif
 
 // Include the templates here.
-#include "ace/Atomic_Op_GCC_T.h"
+#include "Atomic_Op_GCC_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -373,8 +373,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Atomic_Op.inl"
+#include "Atomic_Op.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_ATOMIC_OP_H*/

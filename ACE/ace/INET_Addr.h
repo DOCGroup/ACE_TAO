@@ -10,15 +10,15 @@
 
 #ifndef ACE_INET_ADDR_H
 #define ACE_INET_ADDR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Sock_Connect.h"
+#include "Sock_Connect.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
+#include "Addr.h"
 #include <vector>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -422,8 +422,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/INET_Addr.inl"
+#include "INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_INET_ADDR_H */

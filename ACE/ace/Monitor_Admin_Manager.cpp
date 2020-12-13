@@ -1,8 +1,8 @@
-#include "ace/Monitor_Admin_Manager.h"
+#include "Monitor_Admin_Manager.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Service_Config.h"
+#include "Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

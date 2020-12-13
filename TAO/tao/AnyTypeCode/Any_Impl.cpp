@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Any_Impl.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Marshal.h"
+#include "Any_Impl.h"
+#include "TypeCode.h"
+#include "Marshal.h"
 #include "tao/ORB_Core.h"
 #include "tao/Valuetype_Adapter.h"
 

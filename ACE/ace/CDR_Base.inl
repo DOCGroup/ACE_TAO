@@ -6,7 +6,7 @@
 #endif  /* ACE_HAS_INTRINSIC_BYTESWAP */
 
 #if defined (ACE_HAS_BSWAP_16) || defined (ACE_HAS_BSWAP_32) || defined (ACE_HAS_BSWAP_64)
-# include "ace/os_include/os_byteswap.h"
+# include "os_include/os_byteswap.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

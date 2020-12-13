@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/BasicLog_i.h"
+#include "BasicLog_i.h"
 
-#include "orbsvcs/Log/LogMgr_i.h"
+#include "LogMgr_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

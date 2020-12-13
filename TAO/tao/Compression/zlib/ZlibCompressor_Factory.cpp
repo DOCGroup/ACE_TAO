@@ -1,5 +1,5 @@
-#include "tao/Compression/zlib/ZlibCompressor_Factory.h"
-#include "tao/Compression/zlib/ZlibCompressor.h"
+#include "ZlibCompressor_Factory.h"
+#include "ZlibCompressor.h"
 #include "ace/Min_Max.h"
 #include "zlib.h"
 

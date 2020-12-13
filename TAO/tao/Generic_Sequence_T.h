@@ -54,7 +54,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Range_Checking_T.h"
+#include "Range_Checking_T.h"
 #include "ace/checked_iterator.h"
 
 #include <algorithm>

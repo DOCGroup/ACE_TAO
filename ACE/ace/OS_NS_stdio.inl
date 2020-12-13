@@ -1,24 +1,24 @@
 // -*- C++ -*-
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_pwd.h"
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_Memory.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stdlib.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_string.h"
+#include "OS_NS_pwd.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_sys_stat.h"
+#include "OS_Memory.h"
 
 #if defined (ACE_HAS_TRIO)
 #  include <trio.h>
 #endif /* ACE_HAS_TRIO */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #ifdef ACE_MQX
-#  include "ace/MQX_Filesystem.h"
+#  include "MQX_Filesystem.h"
 #endif
 
 /*****************************************************************************/

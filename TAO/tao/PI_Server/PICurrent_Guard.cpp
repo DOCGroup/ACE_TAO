@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PI_Server/PICurrent_Guard.h"
+#include "PICurrent_Guard.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 

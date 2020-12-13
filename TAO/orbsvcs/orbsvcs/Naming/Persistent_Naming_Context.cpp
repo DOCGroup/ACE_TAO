@@ -1,6 +1,6 @@
-#include "orbsvcs/Naming/Persistent_Naming_Context.h"
-#include "orbsvcs/Naming/Persistent_Context_Index.h"
-#include "orbsvcs/Naming/Bindings_Iterator_T.h"
+#include "Persistent_Naming_Context.h"
+#include "Persistent_Context_Index.h"
+#include "Bindings_Iterator_T.h"
 #include "ace/OS_NS_stdio.h"
 
 #include "ace/Auto_Ptr.h"

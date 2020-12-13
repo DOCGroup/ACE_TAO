@@ -11,6 +11,6 @@
 #define ACE_LACKS_TEMPNAM
 #endif
 
-#include "ace/config-macosx-lion.h"
+#include "config-macosx-lion.h"
 
 #endif // ACE_CONFIG_MACOSX_MOUNTAIN_LION_H

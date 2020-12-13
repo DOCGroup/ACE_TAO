@@ -10,16 +10,16 @@
 
 #ifndef ACE_TASK_EX_T_H
 #define ACE_TASK_EX_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Synch_Traits.h"
-#include "ace/Task.h"
+#include "Synch_Traits.h"
+#include "Task.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -177,16 +177,16 @@ public: // Should be protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Task_Ex_T.inl"
+#include "Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Task_Ex_T.cpp"
+#include "Task_Ex_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Task_Ex_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TASK_EX_H */

@@ -1,17 +1,17 @@
-#include "ace/Monitor_Base.h"
+#include "Monitor_Base.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/ACE.h"
-#include "ace/Monitor_Admin_Manager.h"
-#include "ace/Monitor_Control_Action.h"
-#include "ace/Monitor_Point_Registry.h"
-#include "ace/Guard_T.h"
-#include "ace/Dynamic_Service.h"
-#include "ace/OS_NS_sys_time.h"
+#include "ACE.h"
+#include "Monitor_Admin_Manager.h"
+#include "Monitor_Control_Action.h"
+#include "Monitor_Point_Registry.h"
+#include "Guard_T.h"
+#include "Dynamic_Service.h"
+#include "OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Monitor_Base.inl"
+#include "Monitor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

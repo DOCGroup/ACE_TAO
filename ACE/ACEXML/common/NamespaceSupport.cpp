@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ACEXML/common/NamespaceSupport.h"
+#include "NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
 
 static const ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");

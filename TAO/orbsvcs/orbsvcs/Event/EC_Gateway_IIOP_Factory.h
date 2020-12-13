@@ -20,7 +20,7 @@
 #include "ace/Service_Object.h"
 #include "ace/SString.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #include "tao/Versioned_Namespace.h"
 
@@ -104,7 +104,7 @@ ACE_STATIC_SVC_DECLARE (TAO_EC_Gateway_IIOP_Factory)
 ACE_FACTORY_DECLARE (TAO_RTEvent_Serv, TAO_EC_Gateway_IIOP_Factory)
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.inl"
+#include "EC_Gateway_IIOP_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

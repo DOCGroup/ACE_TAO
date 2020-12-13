@@ -17,7 +17,7 @@
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Lock_Adapter_T.h"
 
-#include "tao/AnyTypeCode/Any_Impl.h"
+#include "Any_Impl.h"
 #include "tao/CDR.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

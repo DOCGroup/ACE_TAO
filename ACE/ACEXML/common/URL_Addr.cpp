@@ -1,9 +1,9 @@
-#include "ACEXML/common/URL_Addr.h"
+#include "URL_Addr.h"
 
 
 
 #if !defined (__ACEXML_INLINE__)
-#include "ACEXML/common/URL_Addr.inl"
+#include "URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include "ace/Log_Msg.h"

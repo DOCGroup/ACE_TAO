@@ -14,12 +14,12 @@
 #ifndef ACE_ENV_VALUE_T_H
 #define ACE_ENV_VALUE_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/Copy_Disabled.h"
+#include /**/ "config-all.h"
+#include "Global_Macros.h"
+#include "OS_NS_stdlib.h"
+#include "Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -75,11 +75,11 @@ template <class T> void ACE_Convert (const ACE_TCHAR *s, T &t);
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Env_Value_T.inl"
+#include "Env_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Env_Value_T.cpp"
+#include "Env_Value_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -155,5 +155,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #pragma implementation ("Env_Value_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ENV_VALUE_T_H */

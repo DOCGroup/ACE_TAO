@@ -11,17 +11,17 @@
 #ifndef ACE_COUNTDOWN_TIME_T_H
 #define ACE_COUNTDOWN_TIME_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Time_Value.h"
-#include "ace/Time_Policy.h"
-#include "ace/Copy_Disabled.h"
+#include "Time_Value.h"
+#include "Time_Policy.h"
+#include "Copy_Disabled.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -83,14 +83,14 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Countdown_Time_T.inl"
+#include "Countdown_Time_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Countdown_Time_T.cpp"
+#include "Countdown_Time_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

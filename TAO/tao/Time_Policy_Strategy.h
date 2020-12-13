@@ -13,17 +13,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if (TAO_HAS_TIME_POLICY == 1)
 
-#include "tao/Versioned_Namespace.h"
+#include "Versioned_Namespace.h"
 
 #include "ace/Service_Object.h"
 #include "ace/Timer_Queuefwd.h"

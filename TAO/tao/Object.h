@@ -18,18 +18,18 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
-#include "tao/Policy_ForwardC.h"
-#include "tao/Pseudo_VarOut_T.h"
-#include "tao/Object_Argument_T.h"
-#include "tao/Arg_Traits_T.h"
-#include "tao/Any_Insert_Policy_T.h"
+#include "CORBA_methods.h"
+#include "Policy_ForwardC.h"
+#include "Pseudo_VarOut_T.h"
+#include "Object_Argument_T.h"
+#include "Arg_Traits_T.h"
+#include "Any_Insert_Policy_T.h"
 #include <atomic>
 
 #if defined (HPUX) && defined (IOR)
@@ -443,7 +443,7 @@ operator<< (std::ostream&, CORBA::Object_ptr);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Object.inl"
+# include "Object.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

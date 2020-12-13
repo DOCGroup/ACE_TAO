@@ -1,7 +1,7 @@
-#include "ace/Hashable.h"
+#include "Hashable.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Hashable.inl"
+#include "Hashable.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

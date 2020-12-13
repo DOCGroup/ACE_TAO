@@ -12,10 +12,10 @@
 #define REPLCATION_SERVICE_H
 
 #include "orbsvcs/FtRtecEventChannelAdminC.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "FTEC_Become_Primary_Listener.h"
 #include "tao/PortableInterceptorC.h"
 #include "ace/Service_Object.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
+#include "ftrtec_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,15 +1,15 @@
-#include "ace/UNIX_Addr.h"
+#include "UNIX_Addr.h"
 
 
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UNIX_Addr.inl"
+#include "UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

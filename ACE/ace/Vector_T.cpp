@@ -5,10 +5,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Vector_T.h"
+#include "Vector_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Vector_T.inl"
+#include "Vector_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

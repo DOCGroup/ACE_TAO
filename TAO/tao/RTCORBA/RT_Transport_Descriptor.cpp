@@ -1,11 +1,11 @@
-#include "tao/RTCORBA/RT_Transport_Descriptor.h"
+#include "RT_Transport_Descriptor.h"
 #include "ace/OS_Memory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/RT_Transport_Descriptor.inl"
+#include "RT_Transport_Descriptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/RTCORBA/RT_Transport_Descriptor_Property.h"
+#include "RT_Transport_Descriptor_Property.h"
 #include "tao/Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

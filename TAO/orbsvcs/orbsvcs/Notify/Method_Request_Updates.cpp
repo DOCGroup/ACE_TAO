@@ -1,7 +1,7 @@
-#include "orbsvcs/Notify/Method_Request_Updates.h"
+#include "Method_Request_Updates.h"
 #include "tao/debug.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/Peer.h"
+#include "Proxy.h"
+#include "Peer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

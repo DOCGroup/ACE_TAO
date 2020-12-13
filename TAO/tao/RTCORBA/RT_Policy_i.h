@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "RTCORBA_includeC.h"
 #include "tao/LocalObject.h"
 #include "tao/Basic_Types.h"
 

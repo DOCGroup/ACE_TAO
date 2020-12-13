@@ -1,10 +1,10 @@
-#include "tao/Wait_On_Read.h"
-#include "tao/Transport.h"
-#include "tao/Resume_Handle.h"
-#include "tao/Synch_Reply_Dispatcher.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Time_Policy.h"
+#include "Wait_On_Read.h"
+#include "Transport.h"
+#include "Resume_Handle.h"
+#include "Synch_Reply_Dispatcher.h"
+#include "Client_Strategy_Factory.h"
+#include "ORB_Core.h"
+#include "ORB_Time_Policy.h"
 #include "ace/Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

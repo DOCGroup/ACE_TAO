@@ -14,14 +14,14 @@
 #define TAO_EC_KOKYU_FILTER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/rtkokyu_event_export.h"
+#include "rtkokyu_event_export.h"
 #include "ace/SString.h"
 
 //#define EC_KOKYU_LOGGING

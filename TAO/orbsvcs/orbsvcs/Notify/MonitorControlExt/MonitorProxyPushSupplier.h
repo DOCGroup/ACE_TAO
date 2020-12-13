@@ -2,7 +2,7 @@
 #define MONITORPROXYPUSHSUPPLIER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+#include "notify_mc_ext_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -10,7 +10,7 @@
 
 #include "ace/SString.h"
 #include "orbsvcs/Notify/Any/ProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h"
+#include "MonitorProxySupplier_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

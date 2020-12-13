@@ -1,4 +1,4 @@
-#include "tao/Dynamic_TP/DTP_POA_Strategy.h"
+#include "DTP_POA_Strategy.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Remote_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Synch_Request.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Collocated_Asynch_Request.h"
@@ -10,7 +10,7 @@
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Dynamic_TP/DTP_POA_Strategy.inl"
+#include "DTP_POA_Strategy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

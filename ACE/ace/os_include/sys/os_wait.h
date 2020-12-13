@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_signal.h"
-#include "ace/os_include/sys/os_resource.h"
+#include "os_resource.h"
 
 #if !defined (ACE_LACKS_SYS_WAIT_H)
 #  include /**/ <sys/wait.h>

@@ -1,5 +1,5 @@
-#include "orbsvcs/FaultTolerance/FT_Endpoint_Selector_Factory.h"
-#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
+#include "FT_Endpoint_Selector_Factory.h"
+#include "FT_Invocation_Endpoint_Selectors.h"
 #include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

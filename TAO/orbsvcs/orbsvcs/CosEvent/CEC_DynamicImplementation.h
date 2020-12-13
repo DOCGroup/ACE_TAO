@@ -12,8 +12,8 @@
 #ifndef TAO_CEC_DYNAMICIMPLEMENTATION_H
 #define TAO_CEC_DYNAMICIMPLEMENTATION_H
 
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "CEC_TypedProxyPushConsumer.h"
+#include "CEC_TypedEventChannel.h"
 #include "tao/DynamicInterface/Server_Request.h"
 #include "tao/DynamicInterface/Dynamic_Implementation.h"
 #include "tao/ORB.h"
@@ -67,7 +67,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_DynamicImplementation.inl"
+#include "CEC_DynamicImplementation.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_CEC_DYNAMICIMPLEMENTATION_H */

@@ -1,10 +1,10 @@
 #ifndef ACE_AUTO_FUNCTOR_CPP
 #define ACE_AUTO_FUNCTOR_CPP
 
-#include "ace/Auto_Functor.h"
+#include "Auto_Functor.h"
 
 #if !defined(__ACE_INLINE__)
-# include "ace/Auto_Functor.inl"
+# include "Auto_Functor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

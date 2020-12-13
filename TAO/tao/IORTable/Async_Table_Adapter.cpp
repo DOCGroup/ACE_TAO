@@ -4,9 +4,9 @@
  * @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 
-#include "tao/IORTable/Async_Table_Adapter.h"
-#include "tao/IORTable/Async_IOR_Table_Impl.h"
-#include "tao/IORTable/Locate_ResponseHandler.h"
+#include "Async_Table_Adapter.h"
+#include "Async_IOR_Table_Impl.h"
+#include "Locate_ResponseHandler.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"

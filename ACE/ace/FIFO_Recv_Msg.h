@@ -11,9 +11,9 @@
 
 #ifndef ACE_FIFO_RECV_MSG_H
 #define ACE_FIFO_RECV_MSG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/FIFO_Recv.h"
+#include "FIFO_Recv.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -128,8 +128,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv_Msg.inl"
+#include "FIFO_Recv_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FIFO_RECV_MSG_H */

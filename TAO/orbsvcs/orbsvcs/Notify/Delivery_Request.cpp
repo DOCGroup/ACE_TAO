@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Delivery_Request.h"
+#include "Delivery_Request.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Delivery_Request.inl"
+#include "Delivery_Request.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Routing_Slip.h"
+#include "Routing_Slip.h"
 
 #include "tao/debug.h"
 #include "tao/corba.h"

@@ -10,7 +10,7 @@
 #define TAO_NOTIFY_TOPOLOGY_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #include "ace/Service_Object.h"
 

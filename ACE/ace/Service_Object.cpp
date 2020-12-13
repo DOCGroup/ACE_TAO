@@ -1,21 +1,21 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Object.inl"
+#include "Service_Object.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/Service_Types.h"
-#include "ace/DLL.h"
-#include "ace/ACE.h"
-#include "ace/Log_Category.h"
+#include "OS_NS_stdio.h"
+#include "Service_Types.h"
+#include "DLL.h"
+#include "ACE.h"
+#include "Log_Category.h"
 #if defined (ACE_OPENVMS)
-# include "ace/Lib_Find.h"
+# include "Lib_Find.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
-#include "tao/Tagged_Components.h"
-#include "tao/CDR.h"
+#include "Tagged_Components.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Tagged_Components.inl"
+# include "Tagged_Components.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"

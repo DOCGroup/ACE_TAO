@@ -1,4 +1,4 @@
-#include "tao/RTCORBA/Continuous_Priority_Mapping.h"
+#include "Continuous_Priority_Mapping.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

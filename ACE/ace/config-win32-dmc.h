@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_WIN32_DMC_H
 #define ACE_CONFIG_WIN32_DMC_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -93,5 +93,5 @@ typedef long o_gid_t;
 #  define ACE_LD_DECORATOR_STR ACE_TEXT ("d")
 # endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_DMC_H */

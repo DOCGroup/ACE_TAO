@@ -15,14 +15,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/GIOPC.h"
+#include "Basic_Types.h"
+#include "GIOPC.h"
 
 #include "ace/Atomic_Op.h"
 #include "ace/Intrusive_Auto_Ptr.h"
@@ -113,7 +113,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Reply_Dispatcher.inl"
+#include "Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

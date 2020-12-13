@@ -1,4 +1,4 @@
-#include "orbsvcs/Trader/Offer_Iterators.h"
+#include "Offer_Iterators.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

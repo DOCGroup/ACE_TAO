@@ -22,12 +22,12 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/DsLogAdminS.h"
-#include "orbsvcs/Log/LogMgr_i.h"
+#include "LogMgr_i.h"
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecSchedulerS.h"
 
-#include "orbsvcs/Log/RTEventLog_i.h"
-#include "orbsvcs/Log/rteventlog_serv_export.h"
+#include "RTEventLog_i.h"
+#include "rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

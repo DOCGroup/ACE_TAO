@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/RTPortableServer/RT_Servant_Dispatcher.h"
+#include "RT_Servant_Dispatcher.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTPortableServer/RT_POA.h"
+#include "RT_POA.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Core_TSS_Resources.h"

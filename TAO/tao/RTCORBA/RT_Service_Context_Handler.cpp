@@ -1,10 +1,10 @@
-#include "tao/RTCORBA/RT_Service_Context_Handler.h"
+#include "RT_Service_Context_Handler.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_Policy_i.h"
-#include "tao/RTCORBA/RT_Protocols_Hooks.h"
-#include "tao/RTCORBA/RT_Stub.h"
+#include "RT_Policy_i.h"
+#include "RT_Protocols_Hooks.h"
+#include "RT_Stub.h"
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"

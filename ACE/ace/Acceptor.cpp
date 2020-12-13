@@ -1,17 +1,17 @@
 #ifndef ACE_ACCEPTOR_CPP
 #define ACE_ACCEPTOR_CPP
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Acceptor.h"
-#include "ace/Svc_Handler.h"
-#include "ace/WFMO_Reactor.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
+#include "Acceptor.h"
+#include "Svc_Handler.h"
+#include "WFMO_Reactor.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,7 @@
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
-#include "tao/Codeset/UTF8_Latin1_Factory.h"
+#include "UTF8_Latin1_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

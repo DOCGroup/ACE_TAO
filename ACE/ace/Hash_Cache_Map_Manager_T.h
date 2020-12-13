@@ -12,16 +12,16 @@
 #ifndef HASH_CACHE_MAP_MANAGER_T_H
 #define HASH_CACHE_MAP_MANAGER_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Cache_Map_Manager_T.h"
+#include "Hash_Map_Manager_T.h"
+#include "Cache_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -194,17 +194,17 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hash_Cache_Map_Manager_T.inl"
+#include "Hash_Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Hash_Cache_Map_Manager_T.cpp"
+#include "Hash_Cache_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Hash_Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* HASH_CACHE_MAP_MANAGER_T_H */

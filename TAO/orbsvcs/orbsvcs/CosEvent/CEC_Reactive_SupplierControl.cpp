@@ -2,18 +2,18 @@
 // the Typed and Un-typed Event Channels.  A check must be made in the code
 // to ensure the correct EC is referenced.
 
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_SupplierAdmin.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPushConsumer.h"
-#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.h"
+#include "CEC_EventChannel.h"
+#include "CEC_SupplierAdmin.h"
+#include "CEC_ProxyPushConsumer.h"
+#include "CEC_Reactive_SupplierControl.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
-#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.h"
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
+#include "CEC_TypedEventChannel.h"
+#include "CEC_TypedSupplierAdmin.h"
+#include "CEC_TypedProxyPushConsumer.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
+#include "CEC_ProxyPullConsumer.h"
 
 #include "orbsvcs/Time_Utilities.h"
 
@@ -26,7 +26,7 @@
 #include "ace/Reactor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Reactive_SupplierControl.inl"
+#include "CEC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

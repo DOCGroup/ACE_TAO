@@ -1,4 +1,4 @@
-#include "orbsvcs/FtRtEvent/EventChannel/create_persistent_poa.h"
+#include "create_persistent_poa.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

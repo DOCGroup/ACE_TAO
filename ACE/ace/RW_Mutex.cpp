@@ -6,15 +6,15 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/RW_Mutex.h"
+#include "RW_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RW_Mutex.inl"
+#include "RW_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 
 

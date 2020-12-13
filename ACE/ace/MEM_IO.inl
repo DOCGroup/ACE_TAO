@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
-#include "ace/Truncate.h"
+#include "OS_NS_string.h"
+#include "Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

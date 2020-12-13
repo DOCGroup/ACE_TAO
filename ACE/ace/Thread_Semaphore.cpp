@@ -6,19 +6,19 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/Thread_Semaphore.h"
+#include "Thread_Semaphore.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread_Semaphore.inl"
+#include "Thread_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 
 

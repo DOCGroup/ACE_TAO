@@ -17,10 +17,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/TAO_Export.h"
-#include "tao/orbconf.h"
-#include "tao/TAO_Server_Request.h"
-#include "tao/Profile_Transport_Resolver.h"
+#include "TAO_Export.h"
+#include "orbconf.h"
+#include "TAO_Server_Request.h"
+#include "Profile_Transport_Resolver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

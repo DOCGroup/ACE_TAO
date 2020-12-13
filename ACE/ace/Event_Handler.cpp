@@ -1,10 +1,10 @@
 // Event_Handler.cpp
-#include "ace/Event_Handler.h"
-#include "ace/OS_Errno.h"
-#include "ace/Reactor.h"
-#include "ace/Thread_Manager.h"
+#include "Event_Handler.h"
+#include "OS_Errno.h"
+#include "Reactor.h"
+#include "Thread_Manager.h"
 /* Need to see if ACE_HAS_BUILTIN_ATOMIC_OP defined */
-#include "ace/Atomic_Op.h"
+#include "Atomic_Op.h"
 
 #include <algorithm>
 

@@ -1,19 +1,19 @@
-#include /* */  "ace/SOCK_Netlink.h"
+#include /* */  "SOCK_Netlink.h"
 
 #ifdef ACE_HAS_NETLINK
 
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/SOCK_Netlink.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
+#include "SOCK_Netlink.h"
+#include "OS_NS_sys_socket.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Netlink.inl"
+#include "SOCK_Netlink.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "ACEXML/parser/parser/ParserInternals.h"
+#include "ParserInternals.h"
 
 
 const ACEXML_Char* ACEXML_ParserInt::predef_ent_[] = {

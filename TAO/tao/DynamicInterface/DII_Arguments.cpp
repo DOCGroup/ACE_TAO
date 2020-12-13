@@ -1,4 +1,4 @@
-#include "tao/DynamicInterface/DII_Arguments.h"
+#include "DII_Arguments.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/AnyTypeCode/DynamicC.h"
@@ -6,7 +6,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/DynamicInterface/DII_Arguments.inl"
+# include "DII_Arguments.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

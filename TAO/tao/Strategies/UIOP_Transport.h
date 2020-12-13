@@ -23,7 +23,7 @@
 
 # if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "ace/LSOCK_Acceptor.h"
 #include "ace/Svc_Handler.h"
 #include "tao/Transport.h"

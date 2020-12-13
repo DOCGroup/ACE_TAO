@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Endpoint.h"
 #include "tao/CORBA_String.h"
 #include "ace/INET_Addr.h"
@@ -141,7 +141,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/DIOP_Endpoint.inl"
+# include "DIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

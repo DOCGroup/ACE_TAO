@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/FlResource/FlResource_Factory.h"
+#include "FlResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/FlReactor/FlReactor.h"
 

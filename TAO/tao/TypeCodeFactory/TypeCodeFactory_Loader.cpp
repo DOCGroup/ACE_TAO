@@ -8,8 +8,8 @@
  */
 //=============================================================================
 
-#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
-#include "tao/TypeCodeFactory/TypeCodeFactory_i.h"
+#include "TypeCodeFactory_Loader.h"
+#include "TypeCodeFactory_i.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

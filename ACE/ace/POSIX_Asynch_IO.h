@@ -18,7 +18,7 @@
 #ifndef ACE_POSIX_ASYNCH_IO_H
 #define ACE_POSIX_ASYNCH_IO_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -26,17 +26,17 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/os_include/os_aio.h"
+#include "os_include/os_aio.h"
 
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Map_Manager.h"
-#include "ace/Event_Handler.h"
+#include "Asynch_IO_Impl.h"
+#include "Unbounded_Queue.h"
+#include "Map_Manager.h"
+#include "Event_Handler.h"
 #if defined(INTEGRITY)
-#include "ace/ACE.h"
+#include "ACE.h"
 #endif
 
-#include "ace/Null_Mutex.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

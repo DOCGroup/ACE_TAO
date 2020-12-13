@@ -1,5 +1,5 @@
-#include "tao/Server_Strategy_Factory.h"
-#include "tao/orbconf.h"
+#include "Server_Strategy_Factory.h"
+#include "orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -6,15 +6,15 @@
 
 #ifndef ACE_CONFIG_VXWORKS_6_8_H
 #define ACE_CONFIG_VXWORKS_6_8_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_VXWORKS)
 # define ACE_VXWORKS 0x680
 #endif /* ! ACE_VXWORKS */
 
-#include "ace/config-vxworks6.7.h"
+#include "config-vxworks6.7.h"
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_8_H */
 

@@ -1,18 +1,18 @@
 #ifndef ACE_MALLOC_T_CPP
 #define ACE_MALLOC_T_CPP
 
-#include "ace/Malloc_T.h"
+#include "Malloc_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_T.inl"
+#include "Malloc_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

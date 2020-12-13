@@ -1,17 +1,17 @@
 
-#include "orbsvcs/AV/QoS_UDP.h"
+#include "QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/Fill_ACE_QoS.h"
+#include "UDP.h"
+#include "AVStreams_i.h"
+#include "MCast.h"
+#include "Fill_ACE_QoS.h"
 
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/QoS_UDP.inl"
+#include "QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 //------------------------------------------------------------

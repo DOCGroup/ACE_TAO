@@ -1,14 +1,14 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_Dispatching_Task.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
-#include "orbsvcs/Event/EC_Defaults.h"
+#include "EC_Dispatching_Task.h"
+#include "EC_ProxySupplier.h"
+#include "EC_Defaults.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Dispatching_Task.inl"
+#include "EC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

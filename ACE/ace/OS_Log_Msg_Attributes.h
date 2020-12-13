@@ -8,20 +8,20 @@
  */
 //=============================================================================
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #ifndef ACE_OS_LOG_MSG_ATTRIBUTES_H
 #define ACE_OS_LOG_MSG_ATTRIBUTES_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/os_include/os_stdio.h"
-#include "ace/iosfwd.h"
-#include "ace/Global_Macros.h"
+#include /**/ "ACE_export.h"
+#include "os_include/os_stdio.h"
+#include "iosfwd.h"
+#include "Global_Macros.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -82,8 +82,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_Log_Msg_Attributes.inl"
+#   include "OS_Log_Msg_Attributes.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_OS_LOG_MSG_ATTRIBUTES_H */

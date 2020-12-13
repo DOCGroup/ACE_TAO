@@ -1,12 +1,12 @@
-#include "ace/SOCK_SEQPACK_Association.h"
+#include "SOCK_SEQPACK_Association.h"
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "Auto_Ptr.h"
+#include "Log_Category.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Association.inl"
+#include "SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
 
 

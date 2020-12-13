@@ -16,14 +16,14 @@
 #ifndef TAO_TRADING_LOADER_H
 #define TAO_TRADING_LOADER_H
 
-#include "orbsvcs/Trader/Trader.h"
+#include "Trader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/IOR_Multicast.h"
-#include "orbsvcs/Trader/Service_Type_Repository.h"
+#include "Service_Type_Repository.h"
 
 #include "tao/Object_Loader.h"
 #include "tao/Utils/ORB_Manager.h"

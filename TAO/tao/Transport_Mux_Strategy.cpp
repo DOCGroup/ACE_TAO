@@ -1,4 +1,4 @@
-#include "tao/Transport_Mux_Strategy.h"
+#include "Transport_Mux_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

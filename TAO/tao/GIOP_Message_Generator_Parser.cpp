@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/GIOP_Message_Generator_Parser.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/GIOP_Utils.h"
-#include "tao/debug.h"
-#include "tao/CDR.h"
+#include "GIOP_Message_Generator_Parser.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "GIOP_Utils.h"
+#include "debug.h"
+#include "CDR.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

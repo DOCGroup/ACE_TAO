@@ -18,10 +18,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/debug.h"
+#include "Transport.h"
+#include "ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO

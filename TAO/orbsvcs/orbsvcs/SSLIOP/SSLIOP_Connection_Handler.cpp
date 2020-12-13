@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
+#include "SSLIOP_Connection_Handler.h"
+#include "SSLIOP_Endpoint.h"
+#include "SSLIOP_Util.h"
 
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
@@ -17,7 +17,7 @@
 #include "ace/SSL/SSL_Context.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.inl"
+# include "SSLIOP_Connection_Handler.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CSD_ThreadPool/CSD_TP_Export.h"
+#include "CSD_TP_Export.h"
 #include "tao/Versioned_Namespace.h"
 
 

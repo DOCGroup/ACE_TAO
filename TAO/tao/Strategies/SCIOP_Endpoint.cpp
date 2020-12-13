@@ -1,4 +1,4 @@
-#include "tao/Strategies/SCIOP_Endpoint.h"
+#include "SCIOP_Endpoint.h"
 
 #if TAO_HAS_SCIOP == 1
 
@@ -15,7 +15,7 @@
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Strategies/SCIOP_Endpoint.inl"
+# include "SCIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

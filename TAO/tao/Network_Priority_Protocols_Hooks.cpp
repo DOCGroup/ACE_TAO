@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Network_Priority_Protocols_Hooks.h"
+#include "Network_Priority_Protocols_Hooks.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

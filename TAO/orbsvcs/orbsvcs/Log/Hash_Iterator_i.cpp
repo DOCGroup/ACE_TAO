@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/Hash_Iterator_i.h"
-#include "orbsvcs/Log/Log_Constraint_Interpreter.h"
-#include "orbsvcs/Log/Log_Constraint_Visitors.h"
+#include "Hash_Iterator_i.h"
+#include "Log_Constraint_Interpreter.h"
+#include "Log_Constraint_Visitors.h"
 #include "orbsvcs/DsLogAdminC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

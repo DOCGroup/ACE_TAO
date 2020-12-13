@@ -15,13 +15,13 @@
 #define _ACEXML_TRANSCODE_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/XML_Types.h"
+#include "XML_Types.h"
 
 /**
  * @class ACEXML_Transcoder

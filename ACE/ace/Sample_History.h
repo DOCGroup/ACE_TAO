@@ -11,10 +11,10 @@
 
 #ifndef ACE_SAMPLE_HISTORY_H
 #define ACE_SAMPLE_HISTORY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Basic_Types.h"
+#include /**/ "config-all.h"
+#include "Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -88,8 +88,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Sample_History.inl"
+#include "Sample_History.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SAMPLE_HISTORY_H */

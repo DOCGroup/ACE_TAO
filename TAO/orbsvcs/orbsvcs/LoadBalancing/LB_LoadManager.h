@@ -20,10 +20,10 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/LoadBalancing/LB_LoadAlertMap.h"
-#include "orbsvcs/LoadBalancing/LB_MonitorMap.h"
-#include "orbsvcs/LoadBalancing/LB_LoadListMap.h"
-#include "orbsvcs/LoadBalancing/LB_Pull_Handler.h"
+#include "LB_LoadAlertMap.h"
+#include "LB_MonitorMap.h"
+#include "LB_LoadListMap.h"
+#include "LB_Pull_Handler.h"
 
 #include "orbsvcs/PortableGroupC.h"
 

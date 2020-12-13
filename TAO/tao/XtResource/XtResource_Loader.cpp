@@ -1,6 +1,6 @@
-#include "tao/XtResource/XtResource_Loader.h"
+#include "XtResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/XtResource/XtResource_Factory.h"
+#include "XtResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

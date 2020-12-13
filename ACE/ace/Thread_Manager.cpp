@@ -1,16 +1,16 @@
-#include "ace/TSS_T.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Dynamic.h"
-#include "ace/Object_Manager.h"
-#include "ace/Singleton.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Guard_T.h"
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Truncate.h"
+#include "TSS_T.h"
+#include "Thread_Manager.h"
+#include "Dynamic.h"
+#include "Object_Manager.h"
+#include "Singleton.h"
+#include "Auto_Ptr.h"
+#include "Guard_T.h"
+#include "Time_Value.h"
+#include "OS_NS_sys_time.h"
+#include "Truncate.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.inl"
+#include "Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -2,11 +2,11 @@
 #define TAO_VAR_ARRAY_SARGUMENT_T_CPP
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/Var_Array_SArgument_T.h"
+#include "Var_Array_SArgument_T.h"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PortableServer/Var_Array_SArgument_T.inl"
+#include "Var_Array_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

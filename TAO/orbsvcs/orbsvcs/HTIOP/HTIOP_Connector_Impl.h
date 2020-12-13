@@ -12,7 +12,7 @@
 #define HTIOP_CONNECTOR_IMPL_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Export.h"
+#include "HTIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -103,7 +103,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/HTIOP/HTIOP_Connector_Impl.cpp"
+#include "HTIOP_Connector_Impl.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

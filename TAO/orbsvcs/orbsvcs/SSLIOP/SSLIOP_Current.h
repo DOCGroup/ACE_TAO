@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/SSLIOP/SSLIOP_Export.h"
+#include "SSLIOP_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
+#include "SSLIOP_Current_Impl.h"
 
 #include "orbsvcs/SSLIOPC.h"
 #include "tao/ORB_Core.h"
@@ -151,7 +151,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Current.inl"
+# include "SSLIOP_Current.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined(_MSC_VER)

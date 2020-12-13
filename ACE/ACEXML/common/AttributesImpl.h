@@ -13,13 +13,13 @@
 #define ACEXML_ATTRIBUTESIMPL_H
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/Attributes.h"
+#include "Attributes.h"
 #include "ace/Containers_T.h"
 
 #if !defined ACEXML_AttributesImpl_Default_Size
@@ -299,7 +299,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/AttributesImpl.inl"
+# include "AttributesImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

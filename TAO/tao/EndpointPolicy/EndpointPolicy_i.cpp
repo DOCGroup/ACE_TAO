@@ -1,4 +1,4 @@
-#include "tao/EndpointPolicy/EndpointPolicy_i.h"
+#include "EndpointPolicy_i.h"
 #include "tao/SystemException.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

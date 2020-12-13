@@ -11,17 +11,17 @@
 #ifndef ACE_TIME_VALUE_H
 #define ACE_TIME_VALUE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_time.h"
+#include "os_include/os_time.h"
 #include <chrono>
-#include "ace/Truncate.h"
+#include "Truncate.h"
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -30,10 +30,10 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 #define ACE_ONE_SECOND_IN_NSECS 1000000000L
 
 // needed for ACE_UINT64
-#include "ace/Basic_Types.h"
+#include "Basic_Types.h"
 
 // needed to determine if iostreams are present
-#include "ace/iosfwd.h"
+#include "iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -522,7 +522,7 @@ namespace std
 }
 
 #if defined (__ACE_INLINE__)
-#include "ace/Time_Value.inl"
+#include "Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (__MINGW32__)
@@ -535,6 +535,6 @@ static const ACE_Time_Value& __max_time = ACE_Time_Value::max_time;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __MINGW32__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_TIME_VALUE_H */

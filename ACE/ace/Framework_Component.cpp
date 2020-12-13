@@ -1,14 +1,14 @@
-#include "ace/Framework_Component.h"
+#include "Framework_Component.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Framework_Component.inl"
+#include "Framework_Component.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Object_Manager.h"
-#include "ace/Log_Category.h"
-#include "ace/DLL_Manager.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/OS_NS_string.h"
+#include "Object_Manager.h"
+#include "Log_Category.h"
+#include "DLL_Manager.h"
+#include "Recursive_Thread_Mutex.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

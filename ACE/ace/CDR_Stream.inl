@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_Memory.h"
 
 // ****************************************************************
 

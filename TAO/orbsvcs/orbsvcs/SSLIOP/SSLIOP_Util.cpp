@@ -1,6 +1,6 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Util.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Connection_Handler.h"
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "SSLIOP_Util.h"
+#include "SSLIOP_Connection_Handler.h"
+#include "SSLIOP_Current.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

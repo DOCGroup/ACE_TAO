@@ -14,7 +14,7 @@
 #define TAO_COMPRESSION_GIOP_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Compression/compression_export.h"
+#include "compression_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -53,7 +53,7 @@ ACE_STATIC_SVC_DECLARE (TAO_Compression_Loader)
 ACE_FACTORY_DECLARE (TAO_Compression, TAO_Compression_Loader)
 
 #define TAO_COMPRESSION_SAFE_INCLUDE
-#include "tao/Compression/CompressionC.h"
+#include "CompressionC.h"
 #undef TAO_COMPRESSION_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

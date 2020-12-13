@@ -1,14 +1,14 @@
-#include "ace/SOCK_SEQPACK_Acceptor.h"
+#include "SOCK_SEQPACK_Acceptor.h"
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_fcntl.h"
+#include "Auto_Ptr.h"
+#include "Log_Category.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_socket.h"
+#include "os_include/os_fcntl.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Acceptor.inl"
+#include "SOCK_SEQPACK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 

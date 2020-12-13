@@ -15,7 +15,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Topology_Object.h"
+#include "Topology_Object.h"
 
 #include "orbsvcs/NotifyExtS.h"
 

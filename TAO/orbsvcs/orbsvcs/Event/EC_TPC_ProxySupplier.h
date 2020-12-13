@@ -9,7 +9,7 @@
 #define TAO_EC_TPC_PROXYSUPPLIER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Default_ProxySupplier.h"
+#include "EC_Default_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -48,7 +48,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_TPC_ProxySupplier.inl"
+#include "EC_TPC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

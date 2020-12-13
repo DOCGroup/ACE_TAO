@@ -23,7 +23,7 @@
 #include "ace/Dynamic_Service.h"
 #include "ace/Reactor.h"
 
-#include "ace/Monitor_Control/Auto_Update_Starter.h"
+#include "Auto_Update_Starter.h"
 
 typedef ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control::CPU_Load_Monitor
   CPU_LOAD_MONITOR;

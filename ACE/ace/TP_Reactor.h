@@ -27,10 +27,10 @@
 #ifndef ACE_TP_REACTOR_H
 #define ACE_TP_REACTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Select_Reactor.h"
-#include "ace/Timer_Queue.h"    /* Simple forward decl won't work... */
+#include "Select_Reactor.h"
+#include "Timer_Queue.h"    /* Simple forward decl won't work... */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -310,9 +310,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/TP_Reactor.inl"
+#include "TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_TP_REACTOR_H */

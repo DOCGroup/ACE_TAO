@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Invocation_Retry_Params.h"
-#include "tao/Invocation_Utils.h"
+#include "Invocation_Retry_Params.h"
+#include "Invocation_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

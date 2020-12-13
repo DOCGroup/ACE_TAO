@@ -1,4 +1,4 @@
-#include "tao/BiDir_GIOP/BiDir_Policy_i.h"
+#include "BiDir_Policy_i.h"
 
 #include "tao/Stub.h"
 #include "tao/debug.h"

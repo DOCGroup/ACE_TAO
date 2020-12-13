@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/RT_POA_Helper.h"
+#include "RT_POA_Helper.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/debug.h"
 #include "orbsvcs/NotifyExtC.h"
-#include "orbsvcs/Notify/RT_Properties.h"
+#include "RT_Properties.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

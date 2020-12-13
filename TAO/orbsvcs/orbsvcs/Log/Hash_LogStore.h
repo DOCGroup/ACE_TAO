@@ -20,12 +20,12 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogStore.h"
+#include "LogStore.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Synch_Traits.h"
 #include "ace/Null_Mutex.h"
 #include "ace/RW_Thread_Mutex.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Reactor;

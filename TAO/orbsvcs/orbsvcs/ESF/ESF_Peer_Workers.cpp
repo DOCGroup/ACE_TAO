@@ -1,10 +1,10 @@
 #ifndef TAO_ESF_PEER_WORKERS_CPP
 #define TAO_ESF_PEER_WORKERS_CPP
 
-#include "orbsvcs/ESF/ESF_Peer_Workers.h"
+#include "ESF_Peer_Workers.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Peer_Workers.inl"
+#include "ESF_Peer_Workers.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

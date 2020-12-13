@@ -12,7 +12,7 @@
 #define TAO_TYPECODEFACTORY_I_H
 
 #include /**/ "ace/pre.h"
-#include "tao/TypeCodeFactory/TypeCodeFactory_Loader.h"
+#include "TypeCodeFactory_Loader.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

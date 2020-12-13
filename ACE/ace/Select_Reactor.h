@@ -10,10 +10,10 @@
 
 #ifndef ACE_SELECT_REACTOR_H
 #define ACE_SELECT_REACTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Select_Reactor_T.h"
-#include "ace/Reactor_Token_T.h"
+#include "Select_Reactor_T.h"
+#include "Reactor_Token_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,5 +66,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SELECT_REACTOR_H */

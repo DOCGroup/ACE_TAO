@@ -8,9 +8,9 @@
  */
 // =================================================================
 
-#include "tao/Codeset/Codeset_Manager_Factory.h"
+#include "Codeset_Manager_Factory.h"
 #include "ace/Service_Config.h"
-#include "tao/Codeset/Codeset_Manager_i.h"
+#include "Codeset_Manager_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

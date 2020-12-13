@@ -12,9 +12,9 @@
 
 #ifndef ACE_MSG_WFMO_REACTOR_H
 #define ACE_MSG_WFMO_REACTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
-#include "ace/WFMO_Reactor.h"
+#include "WFMO_Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -108,10 +108,10 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Msg_WFMO_Reactor.inl"
+#include "Msg_WFMO_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 && !ACE_LACKS_MSG_WFMO */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MSG_WFMO_REACTOR_H */

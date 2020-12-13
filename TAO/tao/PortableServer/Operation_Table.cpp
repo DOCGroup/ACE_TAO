@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/Operation_Table.h"
+#include "Operation_Table.h"
 #include "tao/ORB.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -10,13 +10,13 @@
 #define TAO_Notify_RT_BUILDER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/rt_notify_export.h"
+#include "rt_notify_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Builder.h"
+#include "Builder.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

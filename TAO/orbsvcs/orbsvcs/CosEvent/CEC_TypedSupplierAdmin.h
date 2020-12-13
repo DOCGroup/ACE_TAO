@@ -24,7 +24,7 @@
 
 #include "orbsvcs/ESF/ESF_Proxy_Admin.h"
 
-#include "orbsvcs/CosEvent/CEC_TypedProxyPushConsumer.h"
+#include "CEC_TypedProxyPushConsumer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,7 +87,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedSupplierAdmin.inl"
+#include "CEC_TypedSupplierAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

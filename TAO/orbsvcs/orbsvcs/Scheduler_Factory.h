@@ -20,9 +20,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "CosNamingC.h"
+#include "RtecSchedulerC.h"
+#include "Sched/sched_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -277,7 +277,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.inl"
+#include "Scheduler_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

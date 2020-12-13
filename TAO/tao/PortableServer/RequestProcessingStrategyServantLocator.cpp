@@ -3,13 +3,13 @@
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 #include "tao/ORB_Constants.h"
-#include "tao/PortableServer/ServantLocatorC.h"
-#include "tao/PortableServer/RequestProcessingStrategyServantLocator.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Servant_Base.h"
+#include "ServantLocatorC.h"
+#include "RequestProcessingStrategyServantLocator.h"
+#include "Root_POA.h"
+#include "POA_Current_Impl.h"
+#include "Servant_Upcall.h"
+#include "Non_Servant_Upcall.h"
+#include "Servant_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,11 +1,11 @@
 // -*- C++ -*-
-#include "tao/Policy_Set.h"
-#include "tao/SystemException.h"
-#include "tao/debug.h"
+#include "Policy_Set.h"
+#include "SystemException.h"
+#include "debug.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Set.inl"
+# include "Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

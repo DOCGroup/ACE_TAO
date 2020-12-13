@@ -15,14 +15,14 @@
 #define TAO_EC_PRIORITY_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -65,7 +65,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Priority_Scheduling.inl"
+#include "EC_Priority_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,5 +1,5 @@
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Strategy.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Event_Channel.h"
+#include "Replication_Strategy.h"
+#include "FTEC_Event_Channel.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

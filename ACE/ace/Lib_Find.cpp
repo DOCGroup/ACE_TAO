@@ -1,25 +1,25 @@
-#include "ace/Lib_Find.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_fcntl.h"
+#include "Lib_Find.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stdlib.h"
+#include "OS_Memory.h"
+#include "OS_NS_fcntl.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if defined (ACE_WIN32)
-#  include "ace/OS_NS_strings.h"
+#  include "OS_NS_strings.h"
 #endif /* ACE_WIN32 */
 
 #if defined (ACE_OPENVMS)
-#include "ace/RB_Tree.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Singleton.h"
+#include "RB_Tree.h"
+#include "Thread_Mutex.h"
+#include "Singleton.h"
 
 #include /**/ "descrip.h"
 #include /**/ "chfdef.h"

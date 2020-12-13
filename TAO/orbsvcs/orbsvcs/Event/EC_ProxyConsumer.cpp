@@ -1,12 +1,12 @@
-#include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_Supplier_Filter.h"
-#include "orbsvcs/Event/EC_Supplier_Filter_Builder.h"
+#include "EC_ProxyConsumer.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_Supplier_Filter.h"
+#include "EC_Supplier_Filter_Builder.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ProxyConsumer.inl"
+#include "EC_ProxyConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

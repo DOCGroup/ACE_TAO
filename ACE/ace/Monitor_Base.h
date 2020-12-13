@@ -11,9 +11,9 @@
 #ifndef MONITOR_BASE_H
 #define MONITOR_BASE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Monitor_Control_Types.h"
+#include "Monitor_Control_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,10 +21,10 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Refcountable_T.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Synch_Traits.h"
-#include "ace/CDR_Base.h"
+#include "Refcountable_T.h"
+#include "Thread_Mutex.h"
+#include "Synch_Traits.h"
+#include "CDR_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -140,11 +140,11 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Monitor_Base.inl"
+#include "Monitor_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif // MONITOR_BASE_H

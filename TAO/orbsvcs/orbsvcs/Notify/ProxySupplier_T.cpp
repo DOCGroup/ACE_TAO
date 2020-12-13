@@ -1,16 +1,16 @@
 #ifndef TAO_Notify_PROXYSUPPLIER_T_CPP
 #define TAO_Notify_PROXYSUPPLIER_T_CPP
 
-#include "orbsvcs/Notify/ProxySupplier_T.h"
+#include "ProxySupplier_T.h"
 
-#include "orbsvcs/Notify/Consumer.h"
-#include "orbsvcs/Notify/Structured/StructuredEvent.h"
-#include "orbsvcs/Notify/Any/AnyEvent.h"
+#include "Consumer.h"
+#include "Structured/StructuredEvent.h"
+#include "Any/AnyEvent.h"
 
-#include "orbsvcs/Notify/Method_Request_Dispatch.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Event_Manager.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "Method_Request_Dispatch.h"
+#include "Worker_Task.h"
+#include "Event_Manager.h"
+#include "ConsumerAdmin.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

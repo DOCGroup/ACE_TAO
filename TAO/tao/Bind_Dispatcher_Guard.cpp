@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/Bind_Dispatcher_Guard.h"
+#include "Bind_Dispatcher_Guard.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Bind_Dispatcher_Guard.inl"
+# include "Bind_Dispatcher_Guard.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

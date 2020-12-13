@@ -1,17 +1,17 @@
 #ifndef ACE_CACHE_MAP_MANAGER_T_CPP
 #define ACE_CACHE_MAP_MANAGER_T_CPP
 
-#include "ace/Cache_Map_Manager_T.h"
+#include "Cache_Map_Manager_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Log_Category.h"
-#include "ace/Malloc_Base.h"
+#include "Log_Category.h"
+#include "Malloc_Base.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.inl"
+#include "Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

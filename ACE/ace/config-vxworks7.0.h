@@ -6,13 +6,13 @@
 
 #ifndef ACE_CONFIG_VXWORKS_7_0_H
 #define ACE_CONFIG_VXWORKS_7_0_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_VXWORKS)
 # define ACE_VXWORKS 0x700
 #endif /* ! ACE_VXWORKS */
 
-#include "ace/config-vxworks6.9.h"
+#include "config-vxworks6.9.h"
 
 #define ACE_HAS_AUTOMATIC_INIT_FINI
 
@@ -28,6 +28,6 @@
 # define ACE_LACKS_ALARM
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_7_0_H */
 

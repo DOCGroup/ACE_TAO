@@ -1,9 +1,9 @@
-#include "orbsvcs/IFRService/InterfaceDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/AttributeDef_i.h"
-#include "orbsvcs/IFRService/OperationDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
+#include "InterfaceDef_i.h"
+#include "Repository_i.h"
+#include "AttributeDef_i.h"
+#include "OperationDef_i.h"
+#include "IFR_Service_Utils.h"
+#include "IFR_Service_Utils_T.h"
 
 #include "ace/SString.h"
 

@@ -14,16 +14,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORInterceptor/iorinterceptor_export.h"
+#include "iorinterceptor_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/IORInterceptor/IORInterceptor.h"
+#include "IORInterceptor.h"
 #include "tao/IORInterceptor_Adapter.h"
 #include "tao/PI/Interceptor_List_T.h"
-#include "tao/IORInterceptor/IORInterceptor_Details.h"
+#include "IORInterceptor_Details.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

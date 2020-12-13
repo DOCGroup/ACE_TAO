@@ -14,8 +14,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include /**/ "TAO_Export.h"
+#include "Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

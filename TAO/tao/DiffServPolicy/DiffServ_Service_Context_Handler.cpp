@@ -1,6 +1,6 @@
-#include "tao/DiffServPolicy/DiffServ_Service_Context_Handler.h"
+#include "DiffServ_Service_Context_Handler.h"
 
-#include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
+#include "Client_Network_Priority_Policy.h"
 #include "tao/CDR.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/Transport.h"

@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #ifndef ACE_SUNCC_COMMON_H
 #define ACE_SUNCC_COMMON_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 # define ACE_HAS_CPLUSPLUS_HEADERS
 # define ACE_HAS_STDCPP_STL_INCLUDES
@@ -53,5 +53,5 @@
 #define ACE_ANY_OPS_USE_NAMESPACE
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SUNCC_COMMON_H */

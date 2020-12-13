@@ -1,5 +1,5 @@
-#include "orbsvcs/Log/Hash_Persistence_Strategy.h"
-#include "orbsvcs/Log/Hash_LogStore.h"
+#include "Hash_Persistence_Strategy.h"
+#include "Hash_LogStore.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

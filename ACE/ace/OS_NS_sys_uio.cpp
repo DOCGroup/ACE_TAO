@@ -1,16 +1,16 @@
-#include "ace/OS_NS_sys_uio.h"
+#include "OS_NS_sys_uio.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_sys_uio.inl"
+# include "OS_NS_sys_uio.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
 
 #ifdef ACE_HAS_ALLOC_HOOKS
-# include "ace/Global_Macros.h"
-# include "ace/Malloc_Base.h"
+# include "Global_Macros.h"
+# include "Malloc_Base.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

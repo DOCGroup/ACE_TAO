@@ -1,5 +1,5 @@
-#include "tao/PortableServer/LifespanStrategyFactoryImpl.h"
-#include "tao/PortableServer/LifespanStrategy.h"
+#include "LifespanStrategyFactoryImpl.h"
+#include "LifespanStrategy.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

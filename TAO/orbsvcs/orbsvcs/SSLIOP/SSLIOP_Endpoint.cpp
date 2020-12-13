@@ -1,4 +1,4 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Endpoint.h"
+#include "SSLIOP_Endpoint.h"
 
 #include "tao/IIOP_Endpoint.h"
 
@@ -9,7 +9,7 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Endpoint.inl"
+# include "SSLIOP_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

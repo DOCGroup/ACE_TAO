@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

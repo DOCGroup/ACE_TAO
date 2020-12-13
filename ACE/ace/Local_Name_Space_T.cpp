@@ -1,18 +1,18 @@
 #ifndef ACE_LOCAL_NAME_SPACE_T_CPP
 #define ACE_LOCAL_NAME_SPACE_T_CPP
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Local_Name_Space.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_regex.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
+#include "Local_Name_Space.h"
+#include "Auto_Ptr.h"
+#include "Guard_T.h"
+#include "OS_NS_regex.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

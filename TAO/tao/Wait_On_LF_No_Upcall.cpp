@@ -1,6 +1,6 @@
-#include "tao/Wait_On_LF_No_Upcall.h"
-#include "tao/Nested_Upcall_Guard.h"
-#include "tao/Leader_Follower.h"
+#include "Wait_On_LF_No_Upcall.h"
+#include "Nested_Upcall_Guard.h"
+#include "Leader_Follower.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

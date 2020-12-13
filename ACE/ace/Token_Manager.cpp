@@ -1,12 +1,12 @@
-#include "ace/Token_Manager.h"
+#include "Token_Manager.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Object_Manager.h"
-#include "ace/os_include/os_typeinfo.h"
+#include "Object_Manager.h"
+#include "os_include/os_typeinfo.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Manager.inl"
+#include "Token_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

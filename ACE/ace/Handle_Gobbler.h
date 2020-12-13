@@ -12,9 +12,9 @@
 
 #ifndef ACE_HANDLE_GOBBLER_H
 #define ACE_HANDLE_GOBBLER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Handle_Set.h"
+#include "Handle_Set.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +59,7 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include "ace/Handle_Gobbler.inl"
+#include "Handle_Gobbler.inl"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_HANDLE_GOBBLER_H */

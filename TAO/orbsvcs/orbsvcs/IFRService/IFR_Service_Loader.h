@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "IFR_Service_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

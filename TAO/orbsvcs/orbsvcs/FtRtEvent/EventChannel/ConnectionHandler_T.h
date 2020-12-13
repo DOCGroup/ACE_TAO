@@ -40,7 +40,7 @@ private:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Group_Manager.h"
+#include "FTEC_Group_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -62,7 +62,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/FtRtEvent/EventChannel/ConnectionHandler_T.cpp"
+#include "ConnectionHandler_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

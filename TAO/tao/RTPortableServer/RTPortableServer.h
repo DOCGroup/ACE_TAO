@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/RTPortableServer/rtportableserver_export.h"
+#include "rtportableserver_export.h"
 #include "tao/orbconf.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
@@ -40,7 +40,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* TAO_HAS_CORBA_MESSAGING && TAO_HAS_CORBA_MESSAGING != 0 */
 
 #define TAO_RT_PORTABLESERVER_SAFE_INCLUDE
-#include "tao/RTPortableServer/RTPortableServerC.h"
+#include "RTPortableServerC.h"
 #undef TAO_RT_PORTABLESERVER_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

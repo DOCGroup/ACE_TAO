@@ -24,7 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTPortableServer/rtportableserver_export.h"
+#include "rtportableserver_export.h"
 #include "tao/Policy_Validator.h"
 #include "tao/RTCORBA/RTCORBA.h"
 

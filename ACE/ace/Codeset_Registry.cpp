@@ -8,12 +8,12 @@
  */
 //=============================================================================
 
-#include "ace/Codeset_Registry.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "Codeset_Registry.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Codeset_Registry.inl"
+#include "Codeset_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

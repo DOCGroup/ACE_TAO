@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Properties.h"
+#include "Properties.h"
 #include "orbsvcs/NotifyExtC.h"
 #include "tao/debug.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Properties.inl"
+#include "Properties.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,16 +1,16 @@
 #ifndef ACE_CACHING_UTILITY_T_CPP
 #define ACE_CACHING_UTILITY_T_CPP
 
-#include "ace/Caching_Utility_T.h"
+#include "Caching_Utility_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/ACE.h"
-#include "ace/Min_Max.h"
-#include "ace/OS_Memory.h"
-#include "ace/Recyclable.h"
+#include "ACE.h"
+#include "Min_Max.h"
+#include "OS_Memory.h"
+#include "Recyclable.h"
 
 //////////////////////////////////////////////////////////////////////////////
 

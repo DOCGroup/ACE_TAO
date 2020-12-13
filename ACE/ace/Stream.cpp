@@ -4,17 +4,17 @@
 
 
 //#include "ace/Module.h"
-#include "ace/Stream.h"
+#include "Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Stream_Modules.h"
-#include "ace/OS_NS_string.h"
+#include "Stream_Modules.h"
+#include "OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Stream.inl"
+#include "Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

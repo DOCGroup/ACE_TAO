@@ -1,13 +1,13 @@
-#include "ace/OS_NS_strings.h"
+#include "OS_NS_strings.h"
 
 
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_strings.inl"
+# include "OS_NS_strings.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_LACKS_STRCASECMP)
-#  include "ace/OS_NS_ctype.h"
+#  include "OS_NS_ctype.h"
 #endif /* ACE_LACKS_STRCASECMP */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

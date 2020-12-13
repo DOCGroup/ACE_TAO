@@ -17,14 +17,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
+#include "CORBA_methods.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)
 #endif /* _MSC_VER */
 
-#include "tao/Pseudo_VarOut_T.h"
+#include "Pseudo_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

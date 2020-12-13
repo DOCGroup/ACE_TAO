@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/Reactor.h"
-#include "ace/Signal.h"
-#include "ace/Sig_Handler.h"
+#include "Reactor.h"
+#include "Signal.h"
+#include "Sig_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

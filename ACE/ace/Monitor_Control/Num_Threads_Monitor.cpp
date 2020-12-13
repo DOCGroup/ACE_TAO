@@ -1,4 +1,4 @@
-#include "ace/Monitor_Control/Num_Threads_Monitor.h"
+#include "Num_Threads_Monitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

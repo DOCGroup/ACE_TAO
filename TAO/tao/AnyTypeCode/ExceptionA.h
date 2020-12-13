@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 #include "tao/Exception.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
-#include "ace/Asynch_Pseudo_Task.h"
+#include "Asynch_Pseudo_Task.h"
 
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_signal.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

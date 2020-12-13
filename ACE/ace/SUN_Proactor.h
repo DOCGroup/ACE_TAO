@@ -11,7 +11,7 @@
 #ifndef ACE_SUN_PROACTOR_H
 #define ACE_SUN_PROACTOR_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -19,7 +19,7 @@
 
 #if defined (ACE_HAS_AIO_CALLS) && defined (sun)
 
-#include "ace/POSIX_Proactor.h"
+#include "POSIX_Proactor.h"
 #include /**/ <sys/asynch.h>    // Sun native aio calls
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

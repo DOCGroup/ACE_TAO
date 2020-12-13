@@ -1,6 +1,6 @@
 // -*- C++ -*-
 
-#include "ACEXML/common/DefaultHandler.h"
+#include "DefaultHandler.h"
 
 ACEXML_DefaultHandler::ACEXML_DefaultHandler (void)
 {

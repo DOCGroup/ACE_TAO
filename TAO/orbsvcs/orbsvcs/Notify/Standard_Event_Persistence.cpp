@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Standard_Event_Persistence.h"
-#include "orbsvcs/Notify/Persistent_File_Allocator.h"
+#include "Standard_Event_Persistence.h"
+#include "Persistent_File_Allocator.h"
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_strings.h"

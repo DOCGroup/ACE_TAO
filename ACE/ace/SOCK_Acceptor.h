@@ -10,9 +10,9 @@
 
 #ifndef ACE_SOCK_ACCEPTOR_H
 #define ACE_SOCK_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SOCK_Stream.h"
+#include "SOCK_Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -179,8 +179,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Acceptor.inl"
+#include "SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SOCK_ACCEPTOR_H */

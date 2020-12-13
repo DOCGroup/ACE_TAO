@@ -15,7 +15,7 @@
 #ifndef ACE_POSIX_PROACTOR_H
 #define ACE_POSIX_PROACTOR_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -25,11 +25,11 @@
 // POSIX implementation of Proactor depends on the <aio_> family of
 // system calls.
 
-#include "ace/Proactor_Impl.h"
-#include "ace/Free_List.h"
-#include "ace/Pipe.h"
-#include "ace/POSIX_Asynch_IO.h"
-#include "ace/Asynch_Pseudo_Task.h"
+#include "Proactor_Impl.h"
+#include "Free_List.h"
+#include "Pipe.h"
+#include "POSIX_Asynch_IO.h"
+#include "Asynch_Pseudo_Task.h"
 
 #define ACE_AIO_MAX_SIZE     2048
 #define ACE_AIO_DEFAULT_SIZE 1024
@@ -650,7 +650,7 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.inl"
+#include "POSIX_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_AIO_CALLS  && ACE_HAS_POSIX_REALTIME_SIGNALS */

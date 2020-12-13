@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/GIOP_Message_Generator_Parser_10.h"
+#include "GIOP_Message_Generator_Parser_10.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

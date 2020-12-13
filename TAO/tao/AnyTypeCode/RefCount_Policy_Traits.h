@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "AnyTypeCode_methods.h"
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

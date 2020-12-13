@@ -1,11 +1,11 @@
 #include "ace/OS_NS_string.h"
 
-#include "ACEXML/common/StreamFactory.h"
-#include "ACEXML/common/FileCharStream.h"
-#include "ACEXML/common/HttpCharStream.h"
+#include "StreamFactory.h"
+#include "FileCharStream.h"
+#include "HttpCharStream.h"
 
 #ifdef USE_ZZIP
-#include "ACEXML/common/ZipCharStream.h"
+#include "ZipCharStream.h"
 #endif /* USE_ZZIP */
 
 

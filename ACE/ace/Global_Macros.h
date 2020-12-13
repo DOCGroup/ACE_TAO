@@ -15,18 +15,18 @@
 #ifndef ACE_GLOBAL_MACROS_H
 #define ACE_GLOBAL_MACROS_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // Included just keep compilers that see #pragma directive first
 // happy.
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/config-lite.h"
-#include "ace/Assert.h" // For ACE_ASSERT
+#include /**/ "config-lite.h"
+#include "Assert.h" // For ACE_ASSERT
 
 // Start Global Macros
 # define ACE_BEGIN_DUMP ACE_TEXT ("\n====\n(%P|%t|%x)\n")
@@ -837,7 +837,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 // ACE_Allocator.malloc ().  The difference between ACE_NEW_MALLOC*
 // with ACE_ALLOCATOR* is that they call constructors also.
 
-#include "ace/OS_Errno.h"    /* Need errno and ENOMEM */
+#include "OS_Errno.h"    /* Need errno and ENOMEM */
 
 # define ACE_ALLOCATOR_RETURN(POINTER,ALLOCATOR,RET_VAL) \
    do { POINTER = ALLOCATOR; \
@@ -1000,6 +1000,6 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #   define ACE_LOCAL_MEMORY_POOL ACE_Local_Memory_Pool
 #   define ACE_PAGEFILE_MEMORY_POOL ACE_Pagefile_Memory_Pool
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /*ACE_GLOBAL_MACROS_H*/

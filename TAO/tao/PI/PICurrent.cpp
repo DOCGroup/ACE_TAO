@@ -1,12 +1,12 @@
-#include "tao/PI/PICurrent.h"
+#include "PICurrent.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PI/PICurrent.inl"
+# include "PICurrent.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "tao/PI/PICurrent_Impl.h"
+#include "PICurrent_Impl.h"
 #include "tao/ORB_Core.h"
 #include "tao/TAO_Server_Request.h"
 #include "ace/CORBA_macros.h"

@@ -1,14 +1,14 @@
 //
 
-#include "ace/WIN32_Proactor.h"
+#include "WIN32_Proactor.h"
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 // WIN implemenatation of the Proactor.
 
-#include "ace/Log_Category.h"
-#include "ace/Object_Manager.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_unistd.h"
+#include "Log_Category.h"
+#include "Object_Manager.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

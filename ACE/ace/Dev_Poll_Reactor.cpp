@@ -1,14 +1,14 @@
-#include "ace/OS_NS_errno.h"
-#include "ace/Dev_Poll_Reactor.h"
-#include "ace/Signal.h"
-#include "ace/Sig_Handler.h"
-#include "ace/Flag_Manip.h"
+#include "OS_NS_errno.h"
+#include "Dev_Poll_Reactor.h"
+#include "Signal.h"
+#include "Sig_Handler.h"
+#include "Flag_Manip.h"
 
 #if defined (ACE_HAS_EVENT_POLL) || defined (ACE_HAS_DEV_POLL)
 
-# include "ace/OS_NS_unistd.h"
-# include "ace/OS_NS_fcntl.h"
-# include "ace/OS_NS_stropts.h"
+# include "OS_NS_unistd.h"
+# include "OS_NS_fcntl.h"
+# include "OS_NS_stropts.h"
 
 # if defined (ACE_HAS_DEV_POLL)
 #    if defined (ACE_LINUX)
@@ -21,24 +21,24 @@
 # endif  /* ACE_HAS_DEV_POLL */
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Dev_Poll_Reactor.inl"
+# include "Dev_Poll_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 
-#include "ace/Handle_Set.h"
-#include "ace/Reactor.h"
-#include "ace/Timer_Heap.h"
-#include "ace/Timer_Queue.h"
-#include "ace/ACE.h"
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Null_Mutex.h"
-#include "ace/os_include/os_poll.h"
-#include "ace/OS_NS_sys_mman.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Functor_T.h"
+#include "Handle_Set.h"
+#include "Reactor.h"
+#include "Timer_Heap.h"
+#include "Timer_Queue.h"
+#include "ACE.h"
+#include "Reverse_Lock_T.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Null_Mutex.h"
+#include "os_include/os_poll.h"
+#include "OS_NS_sys_mman.h"
+#include "Guard_T.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_time.h"
+#include "Functor_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

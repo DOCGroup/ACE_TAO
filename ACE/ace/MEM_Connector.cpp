@@ -1,9 +1,9 @@
-#include "ace/MEM_Connector.h"
+#include "MEM_Connector.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_Connector.inl"
+#include "MEM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -11,15 +11,15 @@
 
 #ifndef ACE_PROFILE_TIMER_H
 #define ACE_PROFILE_TIMER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/High_Res_Timer.h"
+#include "High_Res_Timer.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -128,8 +128,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/Profile_Timer.inl"
+# include "Profile_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_PROFILE_TIMER_H */

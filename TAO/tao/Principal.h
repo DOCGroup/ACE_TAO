@@ -16,14 +16,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CORBA_methods.h"
+#include "CORBA_methods.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/OctetSeqC.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include "OctetSeqC.h"
+#include "Pseudo_VarOut_T.h"
 #include "ace/Thread_Mutex.h"
 #include <atomic>
 
@@ -103,7 +103,7 @@ operator>> (TAO_InputCDR &, CORBA::Principal *&);
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Principal.inl"
+# include "Principal.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

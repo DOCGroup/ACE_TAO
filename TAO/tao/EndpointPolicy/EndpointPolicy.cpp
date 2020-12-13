@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/EndpointPolicy/EndpointPolicy.h"
-#include "tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h"
-#include "tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h"
+#include "EndpointPolicy.h"
+#include "EndpointPolicy_ORBInitializer.h"
+#include "Endpoint_Acceptor_Filter_Factory.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/ORBInitializer_Registry.h"

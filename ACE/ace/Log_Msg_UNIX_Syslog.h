@@ -10,9 +10,9 @@
 
 #ifndef ACE_LOG_MSG_UNIX_SYSLOG_H
 #define ACE_LOG_MSG_UNIX_SYSLOG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,8 +20,8 @@
 
 #if !defined (ACE_LACKS_UNIX_SYSLOG)
 
-#include "ace/Log_Msg_Backend.h"
-#include "ace/Basic_Types.h"
+#include "Log_Msg_Backend.h"
+#include "Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,5 +71,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_LACKS_UNIX_SYSLOG */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOG_MSG_UNIX_SYSLOG_H */

@@ -11,7 +11,7 @@
 #ifndef ACE_WCHAR_H
 #define ACE_WCHAR_H
 
-#include "ace/config-macros.h"
+#include "config-macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -339,6 +339,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_USES_WCHAR */
 #endif /* ACE_WIN32 */
 
-#include "ace/ace_wchar.inl"
+#include "ace_wchar.inl"
 
 #endif /* ACE_WCHAR_H */

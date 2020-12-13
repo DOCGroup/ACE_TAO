@@ -1,4 +1,4 @@
-#include "tao/QtResource/QtResource_Factory.h"
+#include "QtResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/QtReactor/QtReactor.h"
 

@@ -20,8 +20,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Argument.h"
-#include "tao/Any_Insert_Policy_T.h"
+#include "Argument.h"
+#include "Any_Insert_Policy_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -188,11 +188,11 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/BD_String_Argument_T.inl"
+#include "BD_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/BD_String_Argument_T.cpp"
+#include "BD_String_Argument_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

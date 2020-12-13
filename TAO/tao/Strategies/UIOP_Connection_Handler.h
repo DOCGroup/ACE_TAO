@@ -22,7 +22,7 @@
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Transport.h"
+#include "UIOP_Transport.h"
 #include "tao/Connection_Handler.h"
 #include "tao/Wait_Strategy.h"
 #include "ace/Acceptor.h"

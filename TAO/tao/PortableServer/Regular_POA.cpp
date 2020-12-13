@@ -1,7 +1,7 @@
-#include "tao/PortableServer/Regular_POA.h"
+#include "Regular_POA.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/Regular_POA.inl"
+# include "Regular_POA.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #if !defined (CORBA_E_MICRO)

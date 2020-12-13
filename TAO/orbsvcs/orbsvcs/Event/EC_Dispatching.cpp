@@ -1,5 +1,5 @@
-#include "orbsvcs/Event/EC_Dispatching.h"
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_Dispatching.h"
+#include "EC_ProxySupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

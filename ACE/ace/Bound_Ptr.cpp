@@ -2,10 +2,10 @@
 #ifndef ACE_BOUND_PTR_CPP
 #define ACE_BOUND_PTR_CPP
 
-#include "ace/Bound_Ptr.h"
+#include "Bound_Ptr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Bound_Ptr.inl"
+#include "Bound_Ptr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

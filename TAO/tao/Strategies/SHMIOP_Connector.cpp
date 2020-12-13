@@ -1,9 +1,9 @@
-#include "tao/Strategies/SHMIOP_Connector.h"
+#include "SHMIOP_Connector.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/SHMIOP_Profile.h"
-#include "tao/Strategies/SHMIOP_Endpoint.h"
+#include "SHMIOP_Profile.h"
+#include "SHMIOP_Endpoint.h"
 #include "tao/debug.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/ORB_Core.h"

@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include /**/ "tao/Message_Semantics.h"
+#include /**/ "TAO_Export.h"
+#include /**/ "Message_Semantics.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -110,7 +110,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-# include "tao/Wait_Strategy.inl"
+# include "Wait_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,14 +1,14 @@
 #ifndef ACE_TYPED_SV_MESSAGE_CPP
 #define ACE_TYPED_SV_MESSAGE_CPP
 
-#include "ace/Typed_SV_Message.h"
+#include "Typed_SV_Message.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Typed_SV_Message.inl"
+#include "Typed_SV_Message.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

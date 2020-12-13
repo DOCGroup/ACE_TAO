@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CONV_FRAMEC.h"
-#include "tao/Codeset_Translator_Base.h"
+#include "CONV_FRAMEC.h"
+#include "Codeset_Translator_Base.h"
 #include "ace/Service_Object.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

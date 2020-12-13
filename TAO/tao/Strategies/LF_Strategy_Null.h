@@ -12,7 +12,7 @@
 #define TAO_LF_STRATEGY_NULL_H
 #include /**/ "ace/pre.h"
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/LF_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -51,7 +51,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Strategies/LF_Strategy_Null.inl"
+# include "LF_Strategy_Null.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

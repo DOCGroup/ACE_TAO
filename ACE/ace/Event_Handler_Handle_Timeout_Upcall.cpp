@@ -1,9 +1,9 @@
-#include "ace/Event_Handler_Handle_Timeout_Upcall.h"
-#include "ace/Reactor_Timer_Interface.h"
-#include "ace/Abstract_Timer_Queue.h"
+#include "Event_Handler_Handle_Timeout_Upcall.h"
+#include "Reactor_Timer_Interface.h"
+#include "Abstract_Timer_Queue.h"
 
 #if !defined(__ACE_INLINE__)
-# include "ace/Event_Handler_Handle_Timeout_Upcall.inl"
+# include "Event_Handler_Handle_Timeout_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

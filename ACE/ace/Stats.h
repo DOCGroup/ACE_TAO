@@ -12,17 +12,17 @@
 #ifndef ACE_STATS_H
 #define ACE_STATS_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Unbounded_Queue.h"
-#include "ace/Log_Category.h"
-#include "ace/Basic_Stats.h"
+#include "Unbounded_Queue.h"
+#include "Log_Category.h"
+#include "Basic_Stats.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -218,9 +218,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/Stats.inl"
+# include "Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ! ACE_STATS_H */

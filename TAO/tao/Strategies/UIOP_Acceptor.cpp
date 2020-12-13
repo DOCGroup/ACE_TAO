@@ -1,8 +1,8 @@
-#include "tao/Strategies/UIOP_Acceptor.h"
+#include "UIOP_Acceptor.h"
 
 #if TAO_HAS_UIOP == 1
 
-#include "tao/Strategies/UIOP_Profile.h"
+#include "UIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"

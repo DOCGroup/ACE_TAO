@@ -1,13 +1,13 @@
-#include "ace/TP_Reactor.h"
-#include "ace/Thread.h"
-#include "ace/Timer_Queue.h"
-#include "ace/Sig_Handler.h"
-#include "ace/Log_Category.h"
-#include "ace/Functor_T.h"
-#include "ace/OS_NS_sys_time.h"
+#include "TP_Reactor.h"
+#include "Thread.h"
+#include "Timer_Queue.h"
+#include "Sig_Handler.h"
+#include "Log_Category.h"
+#include "Functor_T.h"
+#include "OS_NS_sys_time.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TP_Reactor.inl"
+#include "TP_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -12,10 +12,10 @@
 #ifndef ACE_BASED_POINTER_T_H
 #define ACE_BASED_POINTER_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Basic_Types.h"
+#include /**/ "config-all.h"
+#include "Basic_Types.h"
 
 #if defined (_MSC_VER)
 // Suppress warning e.g. "return type for
@@ -186,17 +186,17 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Based_Pointer_T.inl"
+#include "Based_Pointer_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Based_Pointer_T.cpp"
+#include "Based_Pointer_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Based_Pointer_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_BASED_POINTER_T_H */

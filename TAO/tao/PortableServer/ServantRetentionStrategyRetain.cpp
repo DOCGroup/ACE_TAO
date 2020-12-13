@@ -8,13 +8,13 @@
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
-#include "tao/PortableServer/ServantRetentionStrategyRetain.h"
-#include "tao/PortableServer/Non_Servant_Upcall.h"
-#include "tao/PortableServer/Servant_Upcall.h"
-#include "tao/PortableServer/POA_Current_Impl.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/Active_Object_Map.h"
-#include "tao/PortableServer/Active_Object_Map_Entry.h"
+#include "ServantRetentionStrategyRetain.h"
+#include "Non_Servant_Upcall.h"
+#include "Servant_Upcall.h"
+#include "POA_Current_Impl.h"
+#include "Root_POA.h"
+#include "Active_Object_Map.h"
+#include "Active_Object_Map_Entry.h"
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
 #include "ace/Monitor_Size.h"

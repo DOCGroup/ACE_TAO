@@ -9,9 +9,9 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Bounded_Value_Allocation_Traits_T.h"
-#include "tao/Value_Traits_T.h"
-#include "tao/Generic_Sequence_T.h"
+#include "Bounded_Value_Allocation_Traits_T.h"
+#include "Value_Traits_T.h"
+#include "Generic_Sequence_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -15,8 +15,8 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/Basic_Types.h"
-#include "tao/RTScheduling/rtscheduler_export.h"
-#include "tao/RTScheduling/Current.h"
+#include "rtscheduler_export.h"
+#include "Current.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

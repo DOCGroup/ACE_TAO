@@ -1,19 +1,19 @@
-#include "ace/SOCK_Dgram.h"
+#include "SOCK_Dgram.h"
 
-#include "ace/Log_Category.h"
-#include "ace/INET_Addr.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/os_include/net/os_if.h"
-#include "ace/Truncate.h"
+#include "Log_Category.h"
+#include "INET_Addr.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
+#include "OS_Memory.h"
+#include "OS_NS_ctype.h"
+#include "os_include/net/os_if.h"
+#include "Truncate.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#  include "ace/SOCK_Dgram.inl"
+#  include "SOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_IPV6) && defined (ACE_WIN32)

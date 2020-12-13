@@ -11,17 +11,17 @@
 #ifndef ACE_SV_SHARED_MEMORY_H
 #define ACE_SV_SHARED_MEMORY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_stat.h"
-#include "ace/os_include/sys/os_ipc.h"
-#include "ace/Default_Constants.h"
+#include "os_include/sys/os_stat.h"
+#include "os_include/sys/os_ipc.h"
+#include "Default_Constants.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -110,9 +110,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Shared_Memory.inl"
+#include "SV_Shared_Memory.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SV_SHARED_MEMORY_H */

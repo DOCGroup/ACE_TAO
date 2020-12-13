@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/OS_NS_signal.h"
-#include "ace/config-all.h"
-#include "ace/Trace.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/OS_NS_Thread.h"
+#include "OS_NS_signal.h"
+#include "config-all.h"
+#include "Trace.h"
+#include "Object_Manager_Base.h"
+#include "OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

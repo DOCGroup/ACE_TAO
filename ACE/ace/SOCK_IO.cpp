@@ -1,15 +1,15 @@
-#include "ace/SOCK_IO.h"
+#include "SOCK_IO.h"
 
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_Memory.h"
-#include "ace/Truncate.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_Memory.h"
+#include "Truncate.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_IO.inl"
+#include "SOCK_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 

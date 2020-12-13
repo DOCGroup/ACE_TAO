@@ -13,7 +13,7 @@
 
 #ifndef ACE_CONFIG_WIN32_MSVC_14_H
 #define ACE_CONFIG_WIN32_MSVC_14_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -170,5 +170,5 @@
 #define ACE_HAS_STRNLEN
 #define ACE_HAS_WCSNLEN
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */

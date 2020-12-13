@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_UDP_Receiver.h"
+#include "ECG_UDP_Receiver.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "ace/SString.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Receiver.inl"
+#include "ECG_UDP_Receiver.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

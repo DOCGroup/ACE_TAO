@@ -90,7 +90,7 @@
   // this must appear before its #include.
 # define ACE_HAS_STRING_CLASS
 
-# include "ace/config-g++-common.h"
+# include "config-g++-common.h"
 
 # define ACE_HAS_SSIZE_T
 
@@ -113,7 +113,7 @@
 #endif /* AIX */
 
 // Pick up all the detectable settings.
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
 // Regardless of what config-posix.h may indicate, AIX 5.3 is the first
 // to support sem_timedwait(). Prior to that, use the emulation.

@@ -1,9 +1,9 @@
-#include "ace/OS_NS_stropts.h"
+#include "OS_NS_stropts.h"
 
 
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_stropts.inl"
+# include "OS_NS_stropts.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

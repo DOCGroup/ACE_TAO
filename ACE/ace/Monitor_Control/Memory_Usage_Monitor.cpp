@@ -2,7 +2,7 @@
 #include <sys/sysinfo.h>
 #endif
 
-#include "ace/Monitor_Control/Memory_Usage_Monitor.h"
+#include "Memory_Usage_Monitor.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 

@@ -12,19 +12,19 @@
 #ifndef ACE_REMOTE_MUTEX_H
 #define ACE_REMOTE_MUTEX_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/INET_Addr.h"
+#include "INET_Addr.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_Connector.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Synch_Options.h"
-#include "ace/Local_Tokens.h"
-#include "ace/Token_Request_Reply.h"
+#include "SOCK_Connector.h"
+#include "SOCK_Stream.h"
+#include "Synch_Options.h"
+#include "Local_Tokens.h"
+#include "Token_Request_Reply.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -311,9 +311,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.inl"
+#include "Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_REMOTE_TOKEN_H */

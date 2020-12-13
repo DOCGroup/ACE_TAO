@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,10 +25,10 @@
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/Transport_Acceptor.h"
-#include "tao/IIOP_Connection_Handler.h"
-#include "tao/Acceptor_Impl.h"
-#include "tao/GIOP_Message_Version.h"
+#include "Transport_Acceptor.h"
+#include "IIOP_Connection_Handler.h"
+#include "Acceptor_Impl.h"
+#include "GIOP_Message_Version.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/Acceptor.h"
@@ -261,7 +261,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/IIOP_Acceptor.inl"
+#include "IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_IIOP && TAO_HAS_IIOP != 0 */

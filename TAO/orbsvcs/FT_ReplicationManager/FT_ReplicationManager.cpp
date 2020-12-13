@@ -28,7 +28,7 @@
 #include "orbsvcs/PortableGroup/PG_conf.h"
 
 #include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
-#include "orbsvcs/FT_ReplicationManager/FT_ReplicationManagerFaultAnalyzer.h"
+#include "FT_ReplicationManagerFaultAnalyzer.h"
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.

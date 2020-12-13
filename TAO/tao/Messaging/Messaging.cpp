@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Messaging/Messaging.h"
-#include "tao/Messaging/Messaging_Loader.h"
+#include "Messaging.h"
+#include "Messaging_Loader.h"
 
 #include "tao/debug.h"
 

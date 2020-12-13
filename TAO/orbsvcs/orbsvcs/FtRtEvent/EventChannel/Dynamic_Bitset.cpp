@@ -1,9 +1,9 @@
-#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.h"
+#include "Dynamic_Bitset.h"
 #include <assert.h>
 #include <algorithm>
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/EventChannel/Dynamic_Bitset.inl"
+#include "Dynamic_Bitset.inl"
 #endif /* __ACE_INLINE__ */
 
 //FUZZ: disable check_for_lack_ACE_OS/

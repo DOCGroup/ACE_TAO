@@ -18,7 +18,7 @@
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
 
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
 #include "ace/QoS/QoS_Session_Factory.h"
@@ -293,7 +293,7 @@ ACE_FACTORY_DECLARE (TAO_AV, TAO_AV_UDP_QoS_Factory)
 
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/AV/QoS_UDP.inl"
+#include "QoS_UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */

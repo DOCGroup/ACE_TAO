@@ -19,7 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/corbafwd.h"
-#include "tao/IORManipulation/ior_manip_export.h"
+#include "ior_manip_export.h"
 #include "tao/Environment.h"
 #include "ace/CORBA_macros.h"
 

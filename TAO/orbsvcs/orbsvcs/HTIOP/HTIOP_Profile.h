@@ -21,7 +21,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Object_KeyC.h"
-#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
+#include "HTIOP_Endpoint.h"
 
 #include "ace/Synch.h"
 

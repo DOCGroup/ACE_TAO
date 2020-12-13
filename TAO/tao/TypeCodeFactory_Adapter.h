@@ -18,9 +18,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_methods.h"
-#include "tao/Typecode_typesC.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include "CORBA_methods.h"
+#include "Typecode_typesC.h"
+#include "Pseudo_VarOut_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<class T> class ACE_Array_Base;

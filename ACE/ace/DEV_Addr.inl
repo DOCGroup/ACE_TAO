@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/OS_NS_string.h"
-#include "ace/Global_Macros.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "OS_NS_string.h"
+#include "Global_Macros.h"
+#include "os_include/sys/os_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

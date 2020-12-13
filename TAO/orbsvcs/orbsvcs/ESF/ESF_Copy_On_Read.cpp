@@ -1,8 +1,8 @@
 #ifndef TAO_ESF_COPY_ON_READ_CPP
 #define TAO_ESF_COPY_ON_READ_CPP
 
-#include "orbsvcs/ESF/ESF_Copy_On_Read.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "ESF_Copy_On_Read.h"
+#include "ESF_Worker.h"
 #include "tao/Exception.h"
 #include "ace/Guard_T.h"
 

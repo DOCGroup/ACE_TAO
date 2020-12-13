@@ -7,8 +7,8 @@
 //=============================================================================
 
 
-#include "tao/RTPortableServer/RTPortableServer.h"
-#include "tao/RTPortableServer/RT_Object_Adapter_Factory.h"
+#include "RTPortableServer.h"
+#include "RT_Object_Adapter_Factory.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

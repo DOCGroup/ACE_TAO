@@ -14,12 +14,12 @@
 #ifndef ACE_SVC_CONF_PARAM_H
 #define ACE_SVC_CONF_PARAM_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // Globally visible macros, type decls, and extern var decls for
 // Service Configurator utility.
 
-#include "ace/Obstack.h"
+#include "Obstack.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -135,6 +135,6 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SVC_CONF_PARAM_H */

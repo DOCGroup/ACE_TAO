@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Basic_SArgument_T.h"
-#include "tao/PortableServer/SArg_Traits_T.h"
+#include "Basic_SArgument_T.h"
+#include "SArg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

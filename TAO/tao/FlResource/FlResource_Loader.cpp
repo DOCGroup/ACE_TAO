@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/FlResource/FlResource_Loader.h"
+#include "FlResource_Loader.h"
 #include "tao/ORB_Core.h"
-#include "tao/FlResource/FlResource_Factory.h"
+#include "FlResource_Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

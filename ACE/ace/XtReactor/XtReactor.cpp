@@ -1,4 +1,4 @@
-#include "ace/XtReactor/XtReactor.h"
+#include "XtReactor.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"

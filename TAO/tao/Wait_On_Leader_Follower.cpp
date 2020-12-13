@@ -1,9 +1,9 @@
-#include "tao/Wait_On_Leader_Follower.h"
-#include "tao/LF_Follower.h"
-#include "tao/Leader_Follower.h"
-#include "tao/Transport.h"
-#include "tao/Synch_Reply_Dispatcher.h"
-#include "tao/ORB_Core.h"
+#include "Wait_On_Leader_Follower.h"
+#include "LF_Follower.h"
+#include "Leader_Follower.h"
+#include "Transport.h"
+#include "Synch_Reply_Dispatcher.h"
+#include "ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

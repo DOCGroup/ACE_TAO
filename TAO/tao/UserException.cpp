@@ -1,10 +1,10 @@
-#include "tao/UserException.h"
+#include "UserException.h"
 
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/UserException.inl"
+# include "UserException.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

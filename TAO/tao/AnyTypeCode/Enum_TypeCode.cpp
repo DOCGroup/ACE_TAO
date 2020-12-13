@@ -1,8 +1,8 @@
 #ifndef TAO_ENUM_TYPECODE_CPP
 #define TAO_ENUM_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Enum_TypeCode.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "Enum_TypeCode.h"
+#include "TypeCode_Traits.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/ORB_Core.h"
 #include "tao/CDR.h"
@@ -10,7 +10,7 @@
 #include "ace/Dynamic_Service.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Enum_TypeCode.inl"
+# include "Enum_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

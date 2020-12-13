@@ -7,7 +7,7 @@
 
 #include "tao/Versioned_Namespace.h"
 
-#include "orbsvcs/Notify/MonitorControl/notify_mc_export.h"
+#include "notify_mc_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

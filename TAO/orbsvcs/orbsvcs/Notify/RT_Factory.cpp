@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/RT_Factory.h"
-#include "orbsvcs/Notify/Structured/RT_StructuredProxyPushSupplier.h"
+#include "RT_Factory.h"
+#include "Structured/RT_StructuredProxyPushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

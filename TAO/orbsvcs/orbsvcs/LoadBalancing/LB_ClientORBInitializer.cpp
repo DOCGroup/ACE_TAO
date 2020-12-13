@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
-#include "orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h"
+#include "LB_ClientORBInitializer.h"
+#include "LB_ClientRequestInterceptor.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

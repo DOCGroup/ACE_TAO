@@ -10,8 +10,8 @@
 #ifndef TAO_INVOCATION_RETRY_STATE_H
 #define TAO_INVOCATION_RETRY_STATE_H
 
-#include "tao/Stub.h"
-#include "tao/Invocation_Retry_Params.h"
+#include "Stub.h"
+#include "Invocation_Retry_Params.h"
 
 #include "ace/Array_Map.h"
 

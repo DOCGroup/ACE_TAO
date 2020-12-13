@@ -20,7 +20,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/Log_Persistence_Strategy.h"
+#include "Log_Persistence_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

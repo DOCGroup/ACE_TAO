@@ -1,8 +1,8 @@
 // Local_Memory_Pool.cpp
-#include "ace/Local_Memory_Pool.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/OS_Memory.h"
-#include "ace/Log_Category.h"
+#include "Local_Memory_Pool.h"
+#include "Auto_Ptr.h"
+#include "OS_Memory.h"
+#include "Log_Category.h"
 
 
 

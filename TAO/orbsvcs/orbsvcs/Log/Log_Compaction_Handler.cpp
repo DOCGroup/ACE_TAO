@@ -1,5 +1,5 @@
-#include "orbsvcs/Log/Log_Compaction_Handler.h"
-#include "orbsvcs/Log/Log_i.h"
+#include "Log_Compaction_Handler.h"
+#include "Log_i.h"
 #include "ace/Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

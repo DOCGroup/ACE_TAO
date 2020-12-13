@@ -1,4 +1,4 @@
-#include "tao/Strategies/DIOP_Profile.h"
+#include "DIOP_Profile.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 

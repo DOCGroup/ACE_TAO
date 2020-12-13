@@ -19,8 +19,8 @@
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 
-#include "tao/TransportCurrent/TC_IIOPC.h"
-#include "tao/TransportCurrent/Current_Impl.h"
+#include "TC_IIOPC.h"
+#include "Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

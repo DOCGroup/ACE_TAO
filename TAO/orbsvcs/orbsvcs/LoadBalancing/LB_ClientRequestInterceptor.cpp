@@ -1,4 +1,4 @@
-#include "orbsvcs/LoadBalancing/LB_ClientRequestInterceptor.h"
+#include "LB_ClientRequestInterceptor.h"
 #include "orbsvcs/CosLoadBalancingC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,21 +1,21 @@
-#include "tao/Profile.h"
-#include "tao/Messaging_PolicyValueC.h"
-#include "tao/Stub.h"
-#include "tao/debug.h"
-#include "tao/target_specification.h"
-#include "tao/ORB_Core.h"
-#include "tao/Client_Strategy_Factory.h"
-#include "tao/CDR.h"
-#include "tao/SystemException.h"
-#include "tao/PolicyC.h"
-#include "tao/Endpoint.h"
+#include "Profile.h"
+#include "Messaging_PolicyValueC.h"
+#include "Stub.h"
+#include "debug.h"
+#include "target_specification.h"
+#include "ORB_Core.h"
+#include "Client_Strategy_Factory.h"
+#include "CDR.h"
+#include "SystemException.h"
+#include "PolicyC.h"
+#include "Endpoint.h"
 
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Profile.inl"
+#include "Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

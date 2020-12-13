@@ -1,18 +1,18 @@
-#include "ace/OS_NS_dirent.h"
+#include "OS_NS_dirent.h"
 
 
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_dirent.inl"
+# include "OS_NS_dirent.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_stdlib.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_string.h"
+#include "Log_Category.h"
+#include "OS_NS_stdlib.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

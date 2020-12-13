@@ -15,8 +15,8 @@
 #ifndef TAO_NATIVEDEF_I_H
 #define TAO_NATIVEDEF_I_H
 
-#include "orbsvcs/IFRService/TypedefDef_i.h"
-#include "orbsvcs/IFRService/ifr_service_export.h"
+#include "TypedefDef_i.h"
+#include "ifr_service_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

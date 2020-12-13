@@ -1,4 +1,4 @@
-#include "orbsvcs/PortableGroup/PG_Null_Property_Validator.h"
+#include "PG_Null_Property_Validator.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

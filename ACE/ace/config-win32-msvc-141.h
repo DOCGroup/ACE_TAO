@@ -13,7 +13,7 @@
 
 #ifndef ACE_CONFIG_WIN32_MSVC_141_H
 #define ACE_CONFIG_WIN32_MSVC_141_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
 #error Use config-win32.h in config.h instead of this header
@@ -23,7 +23,7 @@
 #  define ACE_WIN32_VC141
 #endif
 
-#include "ace/config-win32-msvc-14.h"
+#include "config-win32-msvc-14.h"
 
 #if _MSVC_LANG >= 201402L
 # define ACE_HAS_CPP14
@@ -33,5 +33,5 @@
 # define ACE_HAS_CPP17
 #endif /* _MSVC_LANG >= 201703L */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_141_H */

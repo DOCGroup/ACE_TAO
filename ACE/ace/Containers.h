@@ -11,9 +11,9 @@
 #ifndef ACE_CONTAINERS_H
 #define ACE_CONTAINERS_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,11 +59,11 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Containers.inl"
+#include "Containers.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Containers_T.h"
+#include "Containers_T.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONTAINERS_H */

@@ -1,5 +1,5 @@
-#include "tao/PortableServer/Object_Adapter_Factory.h"
-#include "tao/PortableServer/Object_Adapter.h"
+#include "Object_Adapter_Factory.h"
+#include "Object_Adapter.h"
 #include "tao/ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

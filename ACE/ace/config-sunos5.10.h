@@ -8,7 +8,7 @@
 // ACE_CONFIG_H is defined by one of the following #included headers.
 
 // #include the SunOS 5.9 config, then add any SunOS 5.10 updates below.
-#include "ace/config-sunos5.9.h"
+#include "config-sunos5.9.h"
 
 // Solaris 10 can do sem_timedwait() (see ACE_OS::sema_wait).
 #define ACE_HAS_POSIX_SEM_TIMEOUT

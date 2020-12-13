@@ -1,13 +1,13 @@
 // -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Security/Security_ORBInitializer.h"
+#include "Security_ORBInitializer.h"
 
-#include "orbsvcs/Security/Security_Current.h"
-#include "orbsvcs/Security/SL2_SecurityManager.h"
-#include "orbsvcs/Security/SL3_SecurityCurrent.h"
-#include "orbsvcs/Security/SL3_CredentialsCurator.h"
-#include "orbsvcs/Security/SL3_SecurityManager.h"
+#include "Security_Current.h"
+#include "SL2_SecurityManager.h"
+#include "SL3_SecurityCurrent.h"
+#include "SL3_CredentialsCurator.h"
+#include "SL3_SecurityManager.h"
 
 #include "orbsvcs/SecurityC.h"
 

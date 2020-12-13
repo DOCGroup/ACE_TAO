@@ -1,10 +1,10 @@
 
-#include "tao/On_Demand_Fragmentation_Strategy.h"
+#include "On_Demand_Fragmentation_Strategy.h"
 
-#include "tao/Transport.h"
-#include "tao/CDR.h"
-#include "tao/GIOP_Message_Base.h"
-#include "tao/debug.h"
+#include "Transport.h"
+#include "CDR.h"
+#include "GIOP_Message_Base.h"
+#include "debug.h"
 
 #include "ace/Truncate.h"
 

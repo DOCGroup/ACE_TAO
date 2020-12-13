@@ -1,6 +1,6 @@
-#include "orbsvcs/IFRService/concrete_classes.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "concrete_classes.h"
+#include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 

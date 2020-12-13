@@ -10,7 +10,7 @@
 #define TAO_EC_TPC_DISPATCHING_TASK_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching_Task.h"
+#include "EC_Dispatching_Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -11,16 +11,16 @@
 #ifndef ACE_MESSAGE_QUEUE_T_H
 #define ACE_MESSAGE_QUEUE_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Message_Queue.h"
-#include "ace/Dynamic_Message_Strategy.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Guard_T.h"
-#include "ace/Time_Policy.h"
-#include "ace/Time_Value_T.h"
+#include "Message_Queue.h"
+#include "Dynamic_Message_Strategy.h"
+#include "Synch_Traits.h"
+#include "Guard_T.h"
+#include "Time_Policy.h"
+#include "Time_Value_T.h"
 #if defined (ACE_HAS_THREADS)
-# include "ace/Condition_Attributes.h"
+# include "Condition_Attributes.h"
 #endif
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -1574,13 +1574,13 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Message_Queue_T.cpp"
+#include "Message_Queue_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Message_Queue_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_MESSAGE_QUEUE_T_H */

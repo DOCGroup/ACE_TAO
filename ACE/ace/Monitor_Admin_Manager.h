@@ -11,9 +11,9 @@
 #ifndef MONITOR_ADMIN_MANAGER_H
 #define MONITOR_ADMIN_MANAGER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,7 +21,7 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Monitor_Admin.h"
+#include "Monitor_Admin.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,6 +63,6 @@ ACE_FACTORY_DECLARE (ACE, MC_ADMINMANAGER)
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif // MONITOR_ADMIN_MANAGER_H

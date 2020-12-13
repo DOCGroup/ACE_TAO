@@ -1,4 +1,4 @@
-#include "tao/Strategies/SHMIOP_Profile.h"
+#include "SHMIOP_Profile.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 

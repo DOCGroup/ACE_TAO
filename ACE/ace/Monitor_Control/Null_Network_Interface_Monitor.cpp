@@ -1,4 +1,4 @@
-#include "ace/Monitor_Control/Null_Network_Interface_Monitor.h"
+#include "Null_Network_Interface_Monitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

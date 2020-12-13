@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/async_iortable_export.h"
+#include "async_iortable_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -38,8 +38,8 @@ TAO_Requires_Async_IORTable_Initializer = TAO_Async_IORTable_Initializer::init (
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_IORTABLE_SAFE_INCLUDE
-#include "tao/IORTable/Locate_ResponseHandler.h"
-#include "tao/IORTable/Async_IORTableC.h"
+#include "Locate_ResponseHandler.h"
+#include "Async_IORTableC.h"
 #undef TAO_IORTABLE_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

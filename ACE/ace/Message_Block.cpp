@@ -1,16 +1,16 @@
-#include "ace/Message_Block.h"
+#include "Message_Block.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Message_Block.inl"
+#include "Message_Block.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+#include "Guard_T.h"
+#include "Log_Category.h"
+#include "Malloc_Base.h"
+#include "OS_NS_string.h"
 
 //#define ACE_ENABLE_TIMEPROBES
-#include "ace/Timeprobe.h"
+#include "Timeprobe.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

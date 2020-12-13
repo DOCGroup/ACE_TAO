@@ -1,11 +1,11 @@
-#include "tao/Asynch_Reply_Dispatcher_Base.h"
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/ORB_Core.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
+#include "Asynch_Reply_Dispatcher_Base.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "ORB_Core.h"
+#include "debug.h"
+#include "Transport.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Asynch_Reply_Dispatcher_Base.inl"
+#include "Asynch_Reply_Dispatcher_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

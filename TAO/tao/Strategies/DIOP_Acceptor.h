@@ -25,7 +25,7 @@
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
 #include "tao/Transport_Acceptor.h"
-#include "tao/Strategies/DIOP_Connection_Handler.h"
+#include "DIOP_Connection_Handler.h"
 #include "tao/Acceptor_Impl.h"
 
 #include "tao/GIOP_Message_Version.h"
@@ -204,7 +204,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Strategies/DIOP_Acceptor.inl"
+#include "DIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_DIOP && TAO_HAS_DIOP != 0 */

@@ -1,8 +1,8 @@
-#include "tao/Block_Flushing_Strategy.h"
-#include "tao/Transport.h"
-#include "tao/Queued_Message.h"
-#include "tao/Connection_Handler.h"
-#include "tao/ORB_Time_Policy.h"
+#include "Block_Flushing_Strategy.h"
+#include "Transport.h"
+#include "Queued_Message.h"
+#include "Connection_Handler.h"
+#include "ORB_Time_Policy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

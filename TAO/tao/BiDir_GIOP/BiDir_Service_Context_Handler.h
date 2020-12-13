@@ -11,7 +11,7 @@
 #ifndef TAO_BIDIR_SERVICE_CONTEXT_HANDLER_H
 #define TAO_BIDIR_SERVICE_CONTEXT_HANDLER_H
 #include /**/ "ace/pre.h"
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/config-macros.h"
-#include "ace/ace_wchar.h"
+#include "config-macros.h"
+#include "ace_wchar.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_String.h"
-#include "tao/IOR_Parser.h"
+#include "CORBA_String.h"
+#include "IOR_Parser.h"
 
 #if (TAO_HAS_MCAST_PARSER == 1)
 
@@ -100,7 +100,7 @@ ACE_FACTORY_DECLARE (TAO, TAO_MCAST_Parser)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/MCAST_Parser.inl"
+# include "MCAST_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_MCAST_PARSER == 1 */

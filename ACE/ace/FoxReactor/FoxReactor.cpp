@@ -1,4 +1,4 @@
-#include "ace/FoxReactor/FoxReactor.h"
+#include "FoxReactor.h"
 
 FXDEFMAP(ACE_FoxReactor) ACE_FoxReactorMap[]={
   FXMAPFUNCS(SEL_IO_READ,0,MAXKEY,ACE_FoxReactor::onFileEvents),

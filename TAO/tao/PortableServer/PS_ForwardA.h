@@ -30,8 +30,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
-#include "tao/PortableServer/PS_ForwardC.h"
+#include "portableserver_export.h"
+#include "PS_ForwardC.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"
 
 

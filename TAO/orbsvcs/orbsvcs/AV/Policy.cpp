@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
+#include "FlowSpec_Entry.h"
 #include "tao/debug.h"
-#include "orbsvcs/AV/Policy.h"
+#include "Policy.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/AV/Policy.inl"
+#include "Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

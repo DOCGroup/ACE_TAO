@@ -1,13 +1,13 @@
 #ifndef ACE_ARG_SHIFTER_T_CPP
 #define ACE_ARG_SHIFTER_T_CPP
 
-#include "ace/Arg_Shifter.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
-#include "ace/OS_Errno.h"
-#include "ace/OS_Memory.h"
+#include "Arg_Shifter.h"
+#include "OS_NS_string.h"
+#include "OS_NS_strings.h"
+#include "OS_Errno.h"
+#include "OS_Memory.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

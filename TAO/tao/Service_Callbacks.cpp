@@ -1,7 +1,7 @@
-#include "tao/Service_Callbacks.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
-#include "tao/Invocation_Utils.h"
+#include "Service_Callbacks.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
+#include "Invocation_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

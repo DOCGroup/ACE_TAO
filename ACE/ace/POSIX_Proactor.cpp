@@ -1,26 +1,26 @@
-#include "ace/POSIX_Proactor.h"
+#include "POSIX_Proactor.h"
 
 #if defined (ACE_HAS_AIO_CALLS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/POSIX_Proactor.inl"
+#include "POSIX_Proactor.inl"
 #endif /* __ACE_INLINE__ */
 
 # if defined (ACE_HAS_SYS_SYSTEMINFO_H)
 #   include /**/ <sys/systeminfo.h>
 # endif /* ACE_HAS_SYS_SYSTEMINFO_H */
 
-#include "ace/ACE.h"
-#include "ace/Flag_Manip.h"
-#include "ace/Task_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Object_Manager.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_unistd.h"
+#include "ACE.h"
+#include "Flag_Manip.h"
+#include "Task_T.h"
+#include "Log_Category.h"
+#include "Object_Manager.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_signal.h"
+#include "OS_NS_unistd.h"
 
 #if defined (sun)
-#  include "ace/OS_NS_strings.h"
+#  include "OS_NS_strings.h"
 #endif /* sun */
 
 // *********************************************************************

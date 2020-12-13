@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "RTCORBA_includeC.h"
 #include "tao/LocalObject.h"
 
 #if (TAO_HAS_NAMED_RT_MUTEXES == 1)

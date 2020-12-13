@@ -1,7 +1,7 @@
-#include "ace/Notification_Strategy.h"
+#include "Notification_Strategy.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Notification_Strategy.inl"
+#include "Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -16,13 +16,13 @@
 #ifndef TAO_HTTP_CLIENT_H
 #define TAO_HTTP_CLIENT_H
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
@@ -31,7 +31,7 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/Connector.h"
 #include "ace/Message_Block.h"
-#include "tao/HTTP_Handler.h"
+#include "HTTP_Handler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

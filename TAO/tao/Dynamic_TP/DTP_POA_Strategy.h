@@ -17,9 +17,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/dynamic_tp_export.h"
-#include "tao/Dynamic_TP/DTP_Config.h"
-#include "tao/Dynamic_TP/DTP_Task.h"
+#include "dynamic_tp_export.h"
+#include "DTP_Config.h"
+#include "DTP_Task.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Servant_State_Map.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Custom_Request_Operation.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
@@ -205,7 +205,7 @@ class TAO_Dynamic_TP_Export TAO_DTP_POA_Strategy:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Dynamic_TP/DTP_POA_Strategy.inl"
+#include "DTP_POA_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0 */

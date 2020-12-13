@@ -11,9 +11,9 @@
 #ifndef ACE_MEM_SAP_H
 #define ACE_MEM_SAP_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,10 +22,10 @@
 // MEM_SAP requries position independent pointers to work
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/PI_Malloc.h"
-#include "ace/Malloc_T.h"
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Process_Mutex.h"
+#include "PI_Malloc.h"
+#include "Malloc_T.h"
+#include "MMAP_Memory_Pool.h"
+#include "Process_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,11 +150,11 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/MEM_SAP.inl"
+#include "MEM_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SOCK_IO_H */

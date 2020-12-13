@@ -11,7 +11,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
+#include "ECG_ConsumerEC_Control.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -11,9 +11,9 @@
 
 #ifndef ACE_ATM_PARAMS_H
 #define ACE_ATM_PARAMS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,15 +21,15 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if defined (ACE_HAS_FORE_ATM_XTI)
-#include "ace/TLI.h"
+#include "TLI.h"
 #define ATM_PROTOCOL_DEFAULT 0
 typedef struct t_info Param_Info;
 typedef struct netbuf Param_Udata;
 #elif defined (ACE_HAS_FORE_ATM_WS2)
-#include "ace/SOCK.h"
+#include "SOCK.h"
 #define ATM_PROTOCOL_DEFAULT ATMPROTO_AAL5
 #define ACE_XTI_ATM_DEVICE ""
 typedef int Param_Info;
@@ -204,9 +204,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Params.inl"
+#include "ATM_Params.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_PARAMS_H */

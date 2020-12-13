@@ -10,10 +10,10 @@
 
 #ifndef ACE_TIMER_WHEEL_T_H
 #define ACE_TIMER_WHEEL_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Timer_Queue_T.h"
-#include "ace/Copy_Disabled.h"
+#include "Timer_Queue_T.h"
+#include "Copy_Disabled.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -214,12 +214,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Timer_Wheel_T.cpp"
+#include "Timer_Wheel_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Timer_Wheel_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_WHEEL_T_H */

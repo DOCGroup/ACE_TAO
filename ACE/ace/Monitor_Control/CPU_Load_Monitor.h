@@ -22,12 +22,12 @@
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
-#include "ace/Monitor_Control/Windows_Monitor.h"
+#include "Windows_Monitor.h"
 #elif defined (ACE_HAS_KSTAT)
 #include "ace/os_include/os_kstat.h"
 #endif
 
-#include "ace/Monitor_Control/Monitor_Control_export.h"
+#include "Monitor_Control_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

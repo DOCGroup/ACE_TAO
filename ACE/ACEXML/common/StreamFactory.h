@@ -8,13 +8,13 @@
 #define _ACEXML_STREAM_FACTORY_H
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/XML_Types.h"
+#include "XML_Types.h"
 
 // Forward declarations
 

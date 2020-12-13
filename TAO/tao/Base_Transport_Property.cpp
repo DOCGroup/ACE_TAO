@@ -1,8 +1,8 @@
-#include "tao/Base_Transport_Property.h"
+#include "Base_Transport_Property.h"
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Base_Transport_Property.inl"
+# include "Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

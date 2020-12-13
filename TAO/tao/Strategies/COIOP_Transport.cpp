@@ -1,10 +1,10 @@
-#include "tao/Strategies/COIOP_Transport.h"
+#include "COIOP_Transport.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Connection_Handler.h"
-#include "tao/Strategies/COIOP_Acceptor.h"
-#include "tao/Strategies/COIOP_Profile.h"
+#include "COIOP_Connection_Handler.h"
+#include "COIOP_Acceptor.h"
+#include "COIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/operation_details.h"
 #include "tao/Timeprobe.h"

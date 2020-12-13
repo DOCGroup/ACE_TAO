@@ -1,5 +1,5 @@
-#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
-#include "tao/DynamicInterface/DII_Arguments.h"
+#include "DII_Arguments_Converter_Impl.h"
+#include "DII_Arguments.h"
 #include "tao/AnyTypeCode/NVList.h"
 #include "tao/AnyTypeCode/Any_Impl.h"
 #include "tao/operation_details.h"

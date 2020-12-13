@@ -11,16 +11,16 @@
 #ifndef ACE_DYNAMIC_MESSAGE_STRATEGY_H
 #define ACE_DYNAMIC_MESSAGE_STRATEGY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
-#include /**/ "ace/ACE_export.h"
+#include /**/ "config-lite.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Block.h"
+#include "Message_Block.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -204,9 +204,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dynamic_Message_Strategy.inl"
+#include "Dynamic_Message_Strategy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_DYNAMIC_MESSAGE_STRATEGY_H */

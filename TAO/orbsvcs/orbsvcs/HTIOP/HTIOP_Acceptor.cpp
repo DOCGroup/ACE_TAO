@@ -1,8 +1,8 @@
 // This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.h"
-#include "orbsvcs/HTIOP/HTIOP_Profile.h"
+#include "HTIOP_Acceptor.h"
+#include "HTIOP_Profile.h"
 #include "ace/HTBP/HTBP_Environment.h"
 #include "ace/HTBP/HTBP_ID_Requestor.h"
 #include "ace/os_include/os_netdb.h"
@@ -17,7 +17,7 @@
 #include "ace/Auto_Ptr.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/HTIOP/HTIOP_Acceptor.inl"
+#include "HTIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

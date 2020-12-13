@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/EndpointPolicy/Endpoint_Acceptor_Filter_Factory.h"
-#include "tao/EndpointPolicy/Endpoint_Acceptor_Filter.h"
+#include "Endpoint_Acceptor_Filter_Factory.h"
+#include "Endpoint_Acceptor_Filter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/PortableServer/POAManager.h"
-#include "tao/EndpointPolicy/EndpointPolicyC.h"
+#include "EndpointPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

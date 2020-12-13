@@ -20,8 +20,8 @@
 
 #include "ace/Null_Mutex.h"
 
-#include "tao/Object_KeyC.h"
-#include /**/ "tao/Versioned_Namespace.h"
+#include "Object_KeyC.h"
+#include /**/ "Versioned_Namespace.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -136,7 +136,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/ObjectKey_Table.inl"
+# include "ObjectKey_Table.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

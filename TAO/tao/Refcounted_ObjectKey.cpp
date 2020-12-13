@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/Refcounted_ObjectKey.h"
+#include "Refcounted_ObjectKey.h"
 #include "ace/Log_Msg.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Refcounted_ObjectKey.inl"
+#include "Refcounted_ObjectKey.inl"
 #endif /* defined INLINE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

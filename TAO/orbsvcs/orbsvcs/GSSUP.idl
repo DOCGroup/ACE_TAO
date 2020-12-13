@@ -11,7 +11,7 @@
 #ifndef _GSSUP_IDL_
 #define _GSSUP_IDL_
 
-#include <orbsvcs/CSI.idl>
+#include "CSI.idl"
 //import ::CSI;
 
 module GSSUP {

@@ -1,18 +1,18 @@
-#include "ace/OS_NS_time.h"
+#include "OS_NS_time.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_time.inl"
+# include "OS_NS_time.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_LACKS_STRPTIME)
-# include "ace/os_include/os_ctype.h"
+# include "os_include/os_ctype.h"
 #endif /* ACE_LACKS_STRPTIME */
 
-#include "ace/OS_NS_Thread.h"
-#include "ace/Object_Manager_Base.h"
+#include "OS_NS_Thread.h"
+#include "Object_Manager_Base.h"
 
 #if defined (ACE_HAS_WINCE)
-#  include "ace/OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
+#  include "OS_NS_stdio.h"     /* Need ACE_OS::sprintf() */
 
 namespace
 {

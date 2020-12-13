@@ -10,9 +10,9 @@
 
 #ifndef ACE_ATM_CONNECTOR_H
 #define ACE_ATM_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -20,17 +20,17 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include "ace/ATM_Stream.h"
-#include "ace/ATM_Params.h"
-#include "ace/ATM_QoS.h"
+#include "ATM_Stream.h"
+#include "ATM_Params.h"
+#include "ATM_QoS.h"
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_LINUX_ATM)
-#include "ace/SOCK_Connector.h"
+#include "SOCK_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Connector ATM_Connector;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #else
-#include "ace/XTI_ATM_Mcast.h"
+#include "XTI_ATM_Mcast.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_XTI_ATM_Mcast ATM_Connector;
 // Open versioned namespace, if enabled by the user.
@@ -153,9 +153,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Connector.inl"
+#include "ATM_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_CONNECTOR_H */

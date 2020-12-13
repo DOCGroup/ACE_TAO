@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOPC.h"
+#include "IOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -149,7 +149,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Service_Context.inl"
+# include "Service_Context.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

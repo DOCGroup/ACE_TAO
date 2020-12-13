@@ -12,7 +12,7 @@
 #define TAO_PARAMS_H
 
 #include /**/ "ace/pre.h"
-#include "tao/Invocation_Retry_Params.h"
+#include "Invocation_Retry_Params.h"
 #include "ace/Unbounded_Queue.h"
 #include "ace/Array_Map.h"
 #include "ace/Synch.h"
@@ -24,8 +24,8 @@
 
 #include "ace/SString.h"
 
-#include "tao/objectid.h"
-#include "tao/CORBA_String.h"
+#include "objectid.h"
+#include "CORBA_String.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -538,7 +538,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/params.inl"
+# include "params.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -11,7 +11,7 @@
 #define TAO_FT_CLIENT_REQUEST_INTERCEPTOR_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FaultTolerance/FT_ClientORB_export.h"
+#include "FT_ClientORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -10,11 +10,11 @@
 
 #ifndef ACE_DEV_CONNECTOR_H
 #define ACE_DEV_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/DEV_IO.h"
-#include "ace/Log_Category.h"
-#include "ace/os_include/os_fcntl.h"
+#include "DEV_IO.h"
+#include "Log_Category.h"
+#include "os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -100,8 +100,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/DEV_Connector.inl"
+#include "DEV_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_DEV_CONNECTOR_H */

@@ -1,15 +1,15 @@
 #ifndef ACE_TIMER_HASH_T_CPP
 #define ACE_TIMER_HASH_T_CPP
 
-#include "ace/Timer_Hash_T.h"
+#include "Timer_Hash_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_sys_time.h"
-#include "ace/Guard_T.h"
-#include "ace/Log_Category.h"
+#include "OS_NS_sys_time.h"
+#include "Guard_T.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

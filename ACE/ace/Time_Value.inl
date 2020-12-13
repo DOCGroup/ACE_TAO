@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/Truncate.h"
+#include "Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

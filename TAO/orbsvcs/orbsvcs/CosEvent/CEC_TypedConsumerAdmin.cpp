@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "CEC_TypedConsumerAdmin.h"
+#include "CEC_TypedEventChannel.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedConsumerAdmin.inl"
+#include "CEC_TypedConsumerAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

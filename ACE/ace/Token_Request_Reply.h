@@ -15,9 +15,9 @@
 
 #ifndef ACE_TOKEN_REQUEST_REPLY_H
 #define ACE_TOKEN_REQUEST_REPLY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Local_Tokens.h"
+#include "Local_Tokens.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -258,10 +258,10 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.inl"
+#include "Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TOKEN_REQUEST_REPLY_H */

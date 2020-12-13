@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/FT_ReplicationManager/FT_DefaultFaultAnalyzer.h"
+#include "FT_DefaultFaultAnalyzer.h"
 #include "orbsvcs/FT_CORBAC.h"
 
 // Forward declarations.

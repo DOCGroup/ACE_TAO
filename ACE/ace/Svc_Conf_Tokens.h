@@ -20,7 +20,7 @@
 #    define YYSTYPE_IS_DECLARED 1
 #  endif
 
-#  include "ace/Svc_Conf_Token_Table.h"
+#  include "Svc_Conf_Token_Table.h"
 
 #  undef YYSTYPE_IS_DECLARED
 

@@ -5,7 +5,7 @@
 #include "orbsvcs/Time_Utilities.h"
 #include "orbsvcs/Scheduler_Factory.h"
 
-#include "orbsvcs/Sched/Config_Scheduler.h"
+#include "Config_Scheduler.h"
 
 
 

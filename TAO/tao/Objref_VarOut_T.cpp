@@ -1,11 +1,11 @@
 #ifndef TAO_OBJREF_VAROUT_T_CPP
 #define TAO_OBJREF_VAROUT_T_CPP
 
-#include "tao/Objref_VarOut_T.h"
-#include "tao/Environment.h"
+#include "Objref_VarOut_T.h"
+#include "Environment.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Objref_VarOut_T.inl"
+#include "Objref_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
 template <typename T>

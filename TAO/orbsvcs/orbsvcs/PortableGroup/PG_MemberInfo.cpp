@@ -1,5 +1,5 @@
-#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h"
+#include "PG_MemberInfo.h"
+#include "PG_Operators.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

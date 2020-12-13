@@ -1,35 +1,35 @@
 // -*- C++ -*-
-#include "ace/OS_NS_sys_utsname.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/Default_Constants.h"
-#include "ace/OS_Memory.h"
-#include "ace/Truncate.h"
+#include "OS_NS_sys_utsname.h"
+#include "OS_NS_string.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_fcntl.h"
+#include "Default_Constants.h"
+#include "OS_Memory.h"
+#include "Truncate.h"
 
 #if defined (ACE_HAS_CLOCK_GETTIME)
-# include "ace/os_include/os_time.h"
+# include "os_include/os_time.h"
 #endif /* ACE_HAS_CLOCK_GETTIME */
 
 #if defined (ACE_LACKS_ACCESS)
-#  include "ace/OS_NS_stdio.h"
+#  include "OS_NS_stdio.h"
 #endif /* ACE_LACKS_ACCESS */
 
 #if defined (ACE_HAS_ACCESS_EMULATION)
-#  include "ace/os_include/os_unistd.h"
+#  include "os_include/os_unistd.h"
 #endif /* ACE_HAS_ACCESS_EMULATION */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x690)
 #  if defined (__RTP__)
-#    include "ace/os_include/os_strings.h"
+#    include "os_include/os_strings.h"
 #  else
-#    include "ace/os_include/os_string.h"
+#    include "os_include/os_string.h"
 #  endif
 #endif
 
 #ifdef ACE_MQX
-#  include "ace/MQX_Filesystem.h"
+#  include "MQX_Filesystem.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

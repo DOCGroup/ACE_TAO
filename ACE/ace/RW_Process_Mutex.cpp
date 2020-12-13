@@ -1,17 +1,17 @@
-#include "ace/RW_Process_Mutex.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
+#include "RW_Process_Mutex.h"
+#include "Log_Category.h"
+#include "ACE.h"
 
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RW_Process_Mutex.inl"
+#include "RW_Process_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Malloc_T.h"
+#include "Malloc_T.h"
 
 #if defined (ACE_WIN32)
-#include "ace/OS_NS_fcntl.h"
+#include "OS_NS_fcntl.h"
 #endif /* ACE_WIN32 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

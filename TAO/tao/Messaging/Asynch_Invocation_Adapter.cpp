@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/Messaging/Asynch_Invocation_Adapter.h"
-#include "tao/Messaging/Asynch_Reply_Dispatcher.h"
-#include "tao/Messaging/Asynch_Invocation.h"
-#include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
+#include "Asynch_Invocation_Adapter.h"
+#include "Asynch_Reply_Dispatcher.h"
+#include "Asynch_Invocation.h"
+#include "AMI_Arguments_Converter_Impl.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/operation_details.h"

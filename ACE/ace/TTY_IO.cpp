@@ -1,10 +1,10 @@
-#include "ace/TTY_IO.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_strings.h"
+#include "TTY_IO.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_string.h"
+#include "OS_NS_strings.h"
 
 #if defined (ACE_HAS_TERMIOS)
-# include "ace/os_include/os_termios.h"
+# include "os_include/os_termios.h"
 #elif  defined (ACE_HAS_TERMIO)
 # include <termio.h>
 #endif

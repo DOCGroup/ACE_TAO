@@ -15,13 +15,13 @@
 #define TAO_CONNECTOR_H
 
 #include /**/ "ace/pre.h"
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Time_Value;
@@ -222,7 +222,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Transport_Connector.inl"
+# include "Transport_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

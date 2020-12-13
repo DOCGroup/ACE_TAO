@@ -1,24 +1,24 @@
-#include "ace/Svc_Conf_Lexer.h"
+#include "Svc_Conf_Lexer.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
 #if defined (ACE_USES_WCHAR)
-#include "ace/Encoding_Converter.h"
-#include "ace/Encoding_Converter_Factory.h"
+#include "Encoding_Converter.h"
+#include "Encoding_Converter_Factory.h"
 #endif /* ACE_USES_WCHAR */
 
-#include "ace/Svc_Conf_Tokens.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Static_Object_Lock.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Guard_T.h"
-#include "ace/Synch_Traits.h"
-#include "ace/os_include/os_ctype.h"
+#include "Svc_Conf_Tokens.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Static_Object_Lock.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_ctype.h"
+#include "OS_NS_string.h"
+#include "Guard_T.h"
+#include "Synch_Traits.h"
+#include "os_include/os_ctype.h"
 
 #if !defined (__GNUG__)
-# include "ace/Auto_Ptr.h"
+# include "Auto_Ptr.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

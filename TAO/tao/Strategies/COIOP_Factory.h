@@ -22,7 +22,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Protocol_Factory.h"
 #include "ace/Service_Config.h"
 

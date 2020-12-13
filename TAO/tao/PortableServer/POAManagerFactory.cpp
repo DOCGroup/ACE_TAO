@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PortableServer/POAManagerFactory.h"
-#include "tao/PortableServer/POAManager.h"
+#include "POAManagerFactory.h"
+#include "POAManager.h"
 
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"

@@ -1,8 +1,8 @@
-#include "ace/Recyclable.h"
+#include "Recyclable.h"
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Recyclable.inl"
+#include "Recyclable.inl"
 #endif /* __ACE_INLINE __ */
 
 

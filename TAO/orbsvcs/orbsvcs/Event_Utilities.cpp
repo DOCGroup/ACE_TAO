@@ -1,10 +1,10 @@
-#include "orbsvcs/Event_Utilities.h"
-#include "orbsvcs/Log_Macros.h"
+#include "Event_Utilities.h"
+#include "Log_Macros.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.inl"
+#include "Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

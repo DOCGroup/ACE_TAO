@@ -1,14 +1,14 @@
-#include "ace/Base_Thread_Adapter.h"
+#include "Base_Thread_Adapter.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/Base_Thread_Adapter.inl"
+# include "Base_Thread_Adapter.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_HAS_TSS_EMULATION)
-#  include "ace/OS_NS_Thread.h"
+#  include "OS_NS_Thread.h"
 #endif /* ACE_HAS_TSS_EMULATION */
 
-#include "ace/Service_Config.h"
+#include "Service_Config.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

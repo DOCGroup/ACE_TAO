@@ -14,7 +14,7 @@
 #define TAO_SERVICE_TYPE_REPOSITORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Trader.h"
+#include "Trader.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Null_Mutex.h"
 

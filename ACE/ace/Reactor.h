@@ -12,25 +12,25 @@
 #ifndef ACE_REACTOR_H
 #define ACE_REACTOR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // Timer Queue is a complicated template class. A simple forward
 // declaration will not work.
-#include "ace/Timer_Queuefwd.h"
+#include "Timer_Queuefwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Contains the timer related interface for the Reactor.
-#include "ace/Reactor_Timer_Interface.h"
+#include "Reactor_Timer_Interface.h"
 
 // Event_Handler.h contains the definition of ACE_Reactor_Mask
-#include "ace/Event_Handler.h"
+#include "Event_Handler.h"
 
 // Get ACE_Time_Value in
-#include "ace/Time_Value.h"
-#include "ace/Synch_Traits.h"
+#include "Time_Value.h"
+#include "Synch_Traits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -893,9 +893,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/Reactor.inl"
+#include "Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_REACTOR_H */

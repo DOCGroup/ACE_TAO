@@ -10,7 +10,7 @@
 #define TAO_PI_SERVER_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PI_Server/pi_server_export.h"
+#include "pi_server_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

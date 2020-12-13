@@ -12,16 +12,16 @@
 
 #ifndef ACE_EVENT_BASE_H
 #define ACE_EVENT_BASE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_Thread.h"
-#include "ace/Time_Value.h"
+#include "OS_NS_Thread.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -132,8 +132,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Event_Base.inl"
+#include "Event_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_EVENT_BASE_H */

@@ -1,5 +1,5 @@
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "CEC_Dispatching.h"
+#include "CEC_ProxyPushSupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

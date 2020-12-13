@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_TPC_ProxyConsumer.h"
-#include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/Event/EC_TPC_Dispatching.h"
+#include "EC_TPC_ProxyConsumer.h"
+#include "EC_Event_Channel_Base.h"
+#include "EC_TPC_Dispatching.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

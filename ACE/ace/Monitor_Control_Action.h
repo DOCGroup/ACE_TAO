@@ -11,9 +11,9 @@
 #ifndef MONITOR_CONTROL_ACTION_H
 #define MONITOR_CONTROL_ACTION_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Refcountable_T.h"
+#include "Refcountable_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -58,6 +58,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif // MONITOR_CONTROL_ACTION_H

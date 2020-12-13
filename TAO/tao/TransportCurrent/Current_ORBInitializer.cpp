@@ -2,7 +2,7 @@
 #define CURRENT_ORBINITIALIZER_CPP
 
 #include "tao/ORB_Constants.h"
-#include "tao/TransportCurrent/Current_ORBInitializer.h"
+#include "Current_ORBInitializer.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

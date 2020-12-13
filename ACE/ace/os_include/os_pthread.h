@@ -34,13 +34,13 @@
 #  include /**/ <sys/tspriocntl.h>
 #endif /* ACE_HAS_PRIOCNTL */
 
-#include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/os_stdint.h"
+#include "sys/os_types.h"
+#include "os_stdint.h"
 
 // This needs to go here *first* to avoid problems with AIX.
 # if defined (ACE_HAS_PTHREADS)
 #   define ACE_DONT_INCLUDE_ACE_SIGNAL_H
-#     include "ace/os_include/os_signal.h"
+#     include "os_signal.h"
 #   undef ACE_DONT_INCLUDE_ACE_SIGNAL_H
 # endif /* ACE_HAS_PTHREADS */
 

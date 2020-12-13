@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/PG_MemberInfo.h"
+#include "PG_MemberInfo.h"
 
 #include "orbsvcs/PortableGroupC.h"
 

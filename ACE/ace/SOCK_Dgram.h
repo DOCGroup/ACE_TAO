@@ -10,19 +10,19 @@
 
 #ifndef ACE_SOCK_DGRAM_H
 #define ACE_SOCK_DGRAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SOCK.h"
-#include "ace/INET_Addr.h"
+#include "SOCK.h"
+#include "INET_Addr.h"
 
 // Included so users have access to ACE_RECVPKTINFO and ACE_RECVPKTINFO6 .
-#include "ace/OS_NS_sys_socket.h"
+#include "OS_NS_sys_socket.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Addr.h"
+#include "Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -242,8 +242,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_Dgram.inl"
+#include "SOCK_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SOCK_DGRAM_H */

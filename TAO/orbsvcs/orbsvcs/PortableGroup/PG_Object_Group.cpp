@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/PG_Object_Group.h"
-#include "orbsvcs/PortableGroup/PG_conf.h"
+#include "PG_Object_Group.h"
+#include "PG_conf.h"
 
-#include "orbsvcs/PortableGroup/PG_Operators.h" // Borrow operator== on CosNaming::Name
-#include "orbsvcs/PortableGroup/PG_Utils.h"
+#include "PG_Operators.h" // Borrow operator== on CosNaming::Name
+#include "PG_Utils.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"

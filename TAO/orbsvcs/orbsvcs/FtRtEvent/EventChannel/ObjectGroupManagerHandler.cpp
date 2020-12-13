@@ -1,4 +1,4 @@
-#include "orbsvcs/FtRtEvent/EventChannel/ObjectGroupManagerHandler.h"
+#include "ObjectGroupManagerHandler.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

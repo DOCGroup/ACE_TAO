@@ -10,9 +10,9 @@
 #ifndef ACE_NETLINK_ADDR_H
 #define ACE_NETLINK_ADDR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
   #pragma once
@@ -20,12 +20,12 @@
 
 #ifdef  ACE_HAS_NETLINK
 
-#include "ace/OS_NS_string.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/Addr.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "OS_NS_string.h"
+#include "Global_Macros.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
+#include "Addr.h"
+#include "os_include/sys/os_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -101,12 +101,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Netlink_Addr.inl"
+#include "Netlink_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_NETLINK */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_NETLINK_ADDR_H */
 

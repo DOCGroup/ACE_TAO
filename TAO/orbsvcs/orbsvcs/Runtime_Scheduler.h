@@ -13,9 +13,9 @@
 #define ACE_RUNTIME_SCHEDULER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Scheduler_Factory.h"
-#include "orbsvcs/RtecSchedulerS.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "Scheduler_Factory.h"
+#include "RtecSchedulerS.h"
+#include "Sched/sched_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

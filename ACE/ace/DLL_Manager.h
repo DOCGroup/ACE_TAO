@@ -10,20 +10,20 @@
 
 #ifndef ACE_DLL_MANAGER_H
 #define ACE_DLL_MANAGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Containers_T.h"
-#include "ace/SString.h"
-#include "ace/os_include/os_dlfcn.h"
+#include "Containers_T.h"
+#include "SString.h"
+#include "os_include/os_dlfcn.h"
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#  include "ace/Thread_Mutex.h"
+#  include "Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
 #define ACE_DEFAULT_DLL_MANAGER_SIZE 1024
@@ -319,5 +319,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_DLL_MANAGER_H */

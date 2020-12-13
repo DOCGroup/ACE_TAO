@@ -19,7 +19,7 @@
 
 #include "ace/config-all.h"
 
-#include "tao/AnyTypeCode/VisibilityC.h"
+#include "VisibilityC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

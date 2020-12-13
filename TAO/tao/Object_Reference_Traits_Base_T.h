@@ -8,7 +8,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/Objref_VarOut_T.h"
+#include "Objref_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -25,7 +25,7 @@
 // Inclusion of the <aio.h> header may make visible symbols defined in
 // the headers <fcntl.h>, <signal.h>, <sys/types.h>, and <time.h>.
 
-#include "ace/os_include/os_signal.h" // for sigevent
+#include "os_signal.h" // for sigevent
 
 #if !defined (ACE_LACKS_AIO_H)
 # include /**/ <aio.h>

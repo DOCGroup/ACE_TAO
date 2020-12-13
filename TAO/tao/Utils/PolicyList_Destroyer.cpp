@@ -1,7 +1,7 @@
-#include "tao/Utils/PolicyList_Destroyer.h"
+#include "PolicyList_Destroyer.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Utils/PolicyList_Destroyer.inl"
+# include "PolicyList_Destroyer.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,7 +1,7 @@
-#include "orbsvcs/Notify/AdminProperties.h"
+#include "AdminProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/AdminProperties.inl"
+#include "AdminProperties.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "orbsvcs/CosNotificationC.h"

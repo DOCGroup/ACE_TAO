@@ -13,10 +13,10 @@
 #ifndef ACE_CONDITION_T_H
 #define ACE_CONDITION_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/OS_NS_Thread.h"
-#include "ace/Condition_Attributes.h"
+#include "OS_NS_Thread.h"
+#include "Condition_Attributes.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -152,11 +152,11 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Condition_T.inl"
+#include "Condition_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Condition_T.cpp"
+#include "Condition_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -165,5 +165,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONDITION_T_H */

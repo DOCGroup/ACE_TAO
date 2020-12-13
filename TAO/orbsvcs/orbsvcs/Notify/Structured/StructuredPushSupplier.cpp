@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Structured/StructuredPushSupplier.h"
+#include "StructuredPushSupplier.h"
 #include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

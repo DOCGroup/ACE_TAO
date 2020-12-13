@@ -1,4 +1,4 @@
-#include "tao/Strategies/COIOP_Connection_Handler.h"
+#include "COIOP_Connection_Handler.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
@@ -14,8 +14,8 @@
 #include "tao/Protocols_Hooks.h"
 #include "tao/Resume_Handle.h"
 
-#include "tao/Strategies/COIOP_Transport.h"
-#include "tao/Strategies/COIOP_Endpoint.h"
+#include "COIOP_Transport.h"
+#include "COIOP_Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

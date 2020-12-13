@@ -12,17 +12,17 @@
 #ifndef ACE_ACTIVATION_QUEUE_H
 #define ACE_ACTIVATION_QUEUE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Message_Queue.h"
-#include "ace/Copy_Disabled.h"
-#include "ace/Condition_Thread_Mutex.h"
+#include "Message_Queue.h"
+#include "Copy_Disabled.h"
+#include "Condition_Thread_Mutex.h"
 
 /// Define to be compatible with the terminology in the POSA2 book!
 #define ACE_Activation_List ACE_Activation_Queue
@@ -162,8 +162,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Activation_Queue.inl"
+#include "Activation_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ACTIVATION_QUEUE_H */

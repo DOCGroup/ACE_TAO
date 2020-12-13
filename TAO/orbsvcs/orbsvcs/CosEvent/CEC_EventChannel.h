@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/CEC_Factory.h"
+#include "CEC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,8 +25,8 @@
 
 #include "orbsvcs/CosEventChannelAdminS.h"
 
-#include "orbsvcs/CosEvent/CEC_Defaults.h"
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "CEC_Defaults.h"
+#include "event_serv_export.h"
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Truncate.h"
 
@@ -290,7 +290,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_EventChannel.inl"
+#include "CEC_EventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

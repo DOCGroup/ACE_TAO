@@ -1,16 +1,16 @@
 // -*- C++ -*-
-#include "tao/MProfile.h"
-#include "tao/Profile.h"
-#include "tao/PolicyC.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "MProfile.h"
+#include "Profile.h"
+#include "PolicyC.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"
 #include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/MProfile.inl"
+# include "MProfile.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,11 @@
-#include "ace/Asynch_IO_Impl.h"
+#include "Asynch_IO_Impl.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on Win32 platforms and on Unix platforms supporting
 // aio calls.
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Asynch_IO_Impl.inl"
+#include "Asynch_IO_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,6 +1,6 @@
-#include "tao/Time_Policy_Manager.h"
-#include "tao/ORB_Time_Policy.h"
-#include "tao/debug.h"
+#include "Time_Policy_Manager.h"
+#include "ORB_Time_Policy.h"
+#include "debug.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/OS_NS_string.h"

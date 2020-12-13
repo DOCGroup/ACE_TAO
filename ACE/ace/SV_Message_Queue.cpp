@@ -1,11 +1,11 @@
-#include "ace/SV_Message_Queue.h"
-#include "ace/Log_Category.h"
+#include "SV_Message_Queue.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SV_Message_Queue.inl"
+#include "SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 

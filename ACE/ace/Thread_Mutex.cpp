@@ -6,16 +6,16 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/Thread_Mutex.h"
+#include "Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Thread_Mutex.inl"
+#include "Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/Malloc_T.h"
+#include "Log_Category.h"
+#include "Malloc_T.h"
 
 
 

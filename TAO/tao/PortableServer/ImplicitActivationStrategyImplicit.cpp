@@ -1,4 +1,4 @@
-#include "tao/PortableServer/ImplicitActivationStrategyImplicit.h"
+#include "ImplicitActivationStrategyImplicit.h"
 
 #if !defined (CORBA_E_MICRO) && !defined (CORBA_E_COMPACT)
 

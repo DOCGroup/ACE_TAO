@@ -20,7 +20,7 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-#include "ace/XtReactor/ACE_XtReactor_export.h"
+#include "ACE_XtReactor_export.h"
 #include "ace/Select_Reactor.h"
 
 #include /**/ <X11/Intrinsic.h>

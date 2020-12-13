@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/ConsumesDef_i.h"
+#include "Repository_i.h"
+#include "ConsumesDef_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

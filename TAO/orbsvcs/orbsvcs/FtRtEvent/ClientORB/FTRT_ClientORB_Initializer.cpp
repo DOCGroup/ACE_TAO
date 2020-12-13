@@ -1,5 +1,5 @@
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Initializer.h"
-#include "orbsvcs/FtRtEvent/ClientORB/FTRT_ClientORB_Interceptor.h"
+#include "FTRT_ClientORB_Initializer.h"
+#include "FTRT_ClientORB_Interceptor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

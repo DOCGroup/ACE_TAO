@@ -1,7 +1,7 @@
-#include "orbsvcs/Time_Utilities.h"
+#include "Time_Utilities.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/Time_Utilities.inl"
+# include "Time_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 

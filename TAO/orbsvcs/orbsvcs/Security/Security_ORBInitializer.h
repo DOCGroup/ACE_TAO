@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Security/security_export.h"
+#include "security_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -23,7 +23,7 @@
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
-#include "orbsvcs/Security/Security_PolicyFactory.h"
+#include "Security_PolicyFactory.h"
 
 // This is to remove "inherits via dominance" warnings from MSVC.
 // MSVC is being a little too paranoid.

@@ -1,20 +1,20 @@
-#include "ace/Flag_Manip.h"
+#include "Flag_Manip.h"
 
 #if defined (ACE_LACKS_FCNTL)
-#  include "ace/OS_NS_stropts.h"
-#  include "ace/OS_NS_errno.h"
+#  include "OS_NS_stropts.h"
+#  include "OS_NS_errno.h"
 #endif /* ACE_LACKS_FCNTL */
 
 #if defined (ACE_LACKS_IOCTL)
-#  include "ace/OS_NS_devctl.h"
+#  include "OS_NS_devctl.h"
 #endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Flag_Manip.inl"
+#include "Flag_Manip.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (CYGWIN32)
-#  include "ace/os_include/os_termios.h"
+#  include "os_include/os_termios.h"
 #endif /* CYGWIN32 */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

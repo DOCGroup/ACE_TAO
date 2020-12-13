@@ -15,14 +15,14 @@
 #define TAO_EC_PRIORITY_DISPATCHING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Dispatching.h"
+#include "EC_Dispatching.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RtecSchedulerC.h"
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 
 #include "ace/Thread_Manager.h"
 

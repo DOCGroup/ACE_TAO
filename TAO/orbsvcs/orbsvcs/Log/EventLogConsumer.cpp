@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/EventLog_i.h"
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/LogNotification.h"
+#include "EventLog_i.h"
+#include "LogMgr_i.h"
+#include "LogNotification.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

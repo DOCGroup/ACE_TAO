@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_ProxySupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/Persistent_Context_Index.h"
-#include "orbsvcs/Naming/Persistent_Naming_Context.h"
-#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
+#include "Persistent_Context_Index.h"
+#include "Persistent_Naming_Context.h"
+#include "Persistent_Naming_Context_Factory.h"
 
 #include "tao/debug.h"
 

@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/ORB_Core.h"
-#include "tao/Codeset_Manager.h"
-#include "tao/Codeset_Manager_Factory_Base.h"
+#include "ORB_Core.h"
+#include "Codeset_Manager.h"
+#include "Codeset_Manager_Factory_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

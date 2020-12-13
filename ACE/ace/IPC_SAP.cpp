@@ -1,16 +1,16 @@
-#include "ace/IPC_SAP.h"
+#include "IPC_SAP.h"
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_signal.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_fcntl.h"
+#include "Log_Category.h"
+#include "OS_NS_unistd.h"
+#include "os_include/os_signal.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_fcntl.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IPC_SAP.inl"
+#include "IPC_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 

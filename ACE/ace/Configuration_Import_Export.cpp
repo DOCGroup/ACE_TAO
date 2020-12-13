@@ -1,8 +1,8 @@
-#include "ace/Configuration_Import_Export.h"
-#include "ace/OS_Errno.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_string.h"
+#include "Configuration_Import_Export.h"
+#include "OS_Errno.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_ctype.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

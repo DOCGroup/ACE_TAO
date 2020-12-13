@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "Naming_Server.h"
 
 // Placing the include of Messaging.h at this point
 // allows for successful compilation if versioned namespaces
@@ -8,14 +8,14 @@
 #include "tao/Messaging/Messaging.h"
 #endif
 
-#include "orbsvcs/Naming/Transient_Naming_Context.h"
-#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
+#include "Transient_Naming_Context.h"
+#include "Persistent_Naming_Context_Factory.h"
+#include "Storable_Naming_Context_Factory.h"
 
 #if !defined (CORBA_E_MICRO)
-#include "orbsvcs/Naming/Persistent_Context_Index.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
-#include "orbsvcs/Naming/Storable_Naming_Context_Activator.h"
+#include "Persistent_Context_Index.h"
+#include "Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Activator.h"
 
 #include "tao/Storable_FlatFileStream.h"
 

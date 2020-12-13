@@ -14,14 +14,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ORB.h"
+#include "ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/MProfile.h"
-#include "tao/ORB_Core_Auto_Ptr.h"
+#include "MProfile.h"
+#include "ORB_Core_Auto_Ptr.h"
 #include <atomic>
 
 #if defined (HPUX) && defined (IOR)
@@ -442,7 +442,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Stub.inl"
+# include "Stub.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

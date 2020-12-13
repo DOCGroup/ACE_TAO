@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h" // for gid_t
+#include "sys/os_types.h" // for gid_t
 
 #if !defined (ACE_LACKS_GRP_H)
 # include /**/ <grp.h>

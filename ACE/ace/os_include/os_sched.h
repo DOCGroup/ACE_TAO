@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_time.h"
+#include "os_time.h"
 
 #if !defined (ACE_LACKS_SCHED_H)
 # include /**/ <sched.h>

@@ -7,9 +7,9 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/Bounded_Array_Allocation_Traits_T.h"
-#include "tao/Generic_Sequence_T.h"
-#include "tao/Array_Traits_T.h"
+#include "Bounded_Array_Allocation_Traits_T.h"
+#include "Generic_Sequence_T.h"
+#include "Array_Traits_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

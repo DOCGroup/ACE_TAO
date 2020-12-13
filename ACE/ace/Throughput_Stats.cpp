@@ -1,9 +1,9 @@
-#include "ace/Throughput_Stats.h"
+#include "Throughput_Stats.h"
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/High_Res_Timer.h"
-#include "ace/Log_Category.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "High_Res_Timer.h"
+#include "Log_Category.h"
 
 
 

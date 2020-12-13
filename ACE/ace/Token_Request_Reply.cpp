@@ -1,9 +1,9 @@
-#include "ace/Token_Request_Reply.h"
+#include "Token_Request_Reply.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Token_Request_Reply.inl"
+#include "Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
 

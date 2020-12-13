@@ -1,14 +1,14 @@
-#include "tao/params.h"
-#include "tao/orbconf.h"
-#include "tao/Version.h"
+#include "params.h"
+#include "orbconf.h"
+#include "Version.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/params.inl"
+# include "params.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_Thread.h"
 #include "ace/Service_Config.h"
-#include "tao/Invocation_Utils.h"
+#include "Invocation_Utils.h"
 
 #if !defined (TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT)
 # define TAO_ALLOW_ZIOP_NO_SERVER_POLICIES_DEFAULT false

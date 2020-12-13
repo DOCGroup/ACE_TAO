@@ -1,13 +1,13 @@
-#include "tao/CDR.h"
-#include "tao/Timeprobe.h"
-#include "tao/ORB_Core.h"
-#include "tao/SystemException.h"
-#include "tao/GIOP_Fragmentation_Strategy.h"
+#include "CDR.h"
+#include "Timeprobe.h"
+#include "ORB_Core.h"
+#include "SystemException.h"
+#include "GIOP_Fragmentation_Strategy.h"
 
 #include "ace/Truncate.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CDR.inl"
+# include "CDR.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #if defined (ACE_ENABLE_TIMEPROBES)

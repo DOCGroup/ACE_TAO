@@ -9,9 +9,9 @@
 //=============================================================================
 #ifndef ACE_NOTIFICATION_STRATEGY_H
 #define ACE_NOTIFICATION_STRATEGY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Event_Handler.h"
+#include "Event_Handler.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -66,8 +66,8 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Notification_Strategy.inl"
+#include "Notification_Strategy.inl"
 #endif /* __ACE_INLINE __ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_NOTIFICATION_STRATEGY_H */

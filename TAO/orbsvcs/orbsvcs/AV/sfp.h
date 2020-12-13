@@ -12,12 +12,12 @@
 #define TAO_AV_SFP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
+#include "AV_export.h"
 
-#include "orbsvcs/AV/Policy.h"
-#include "orbsvcs/AV/MCast.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/UDP.h"
+#include "Policy.h"
+#include "MCast.h"
+#include "AVStreams_i.h"
+#include "UDP.h"
 
 #include "orbsvcs/sfpC.h"
 

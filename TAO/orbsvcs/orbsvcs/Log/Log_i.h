@@ -18,19 +18,19 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "LogRecordStore.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/Log_Compaction_Handler.h"
-#include "orbsvcs/Log/Log_Flush_Handler.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "Log_Compaction_Handler.h"
+#include "Log_Flush_Handler.h"
+#include "LogNotification.h"
+#include "LogRecordStore.h"
 #include "orbsvcs/DsLogAdminS.h"
 #include "ace/Reactor.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

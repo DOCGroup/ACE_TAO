@@ -5,7 +5,7 @@
 
 #ifndef ACE_GNUG_COMMON_H
 #define ACE_GNUG_COMMON_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_CC_NAME)
 # define ACE_CC_NAME ACE_TEXT ("g++")
@@ -152,5 +152,5 @@
 
 #define ACE_GCC_NO_RETURN __attribute__ ((__noreturn__))
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_GNUG_COMMON_H */

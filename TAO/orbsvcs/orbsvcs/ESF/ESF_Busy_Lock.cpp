@@ -1,10 +1,10 @@
 #ifndef TAO_ESF_BUSY_LOCK_CPP
 #define TAO_ESF_BUSY_LOCK_CPP
 
-#include "orbsvcs/ESF/ESF_Busy_Lock.h"
+#include "ESF_Busy_Lock.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Busy_Lock.inl"
+#include "ESF_Busy_Lock.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

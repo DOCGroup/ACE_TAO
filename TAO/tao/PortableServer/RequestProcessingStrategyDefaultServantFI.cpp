@@ -2,9 +2,9 @@
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
-#include "tao/PortableServer/RequestProcessingStrategyDefaultServantFI.h"
-#include "tao/PortableServer/RequestProcessingStrategy.h"
-#include "tao/PortableServer/RequestProcessingStrategyDefaultServant.h"
+#include "RequestProcessingStrategyDefaultServantFI.h"
+#include "RequestProcessingStrategy.h"
+#include "RequestProcessingStrategyDefaultServant.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

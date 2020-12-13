@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Transport_Selection_Guard.h"
-#include "tao/TSS_Resources.h"
+#include "Transport_Selection_Guard.h"
+#include "TSS_Resources.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,20 +1,20 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.h"
-#include "orbsvcs/Event/ECG_Defaults.h"
+#include "EC_Gateway_IIOP_Factory.h"
+#include "ECG_Defaults.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Time_Utilities.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Arg_Shifter.h"
 
-#include "orbsvcs/Event/ECG_ConsumerEC_Control.h"
-#include "orbsvcs/Event/ECG_Reactive_ConsumerEC_Control.h"
-#include "orbsvcs/Event/ECG_Reconnect_ConsumerEC_Control.h"
-#include "orbsvcs/Event/EC_Gateway_IIOP.h"
+#include "ECG_ConsumerEC_Control.h"
+#include "ECG_Reactive_ConsumerEC_Control.h"
+#include "ECG_Reconnect_ConsumerEC_Control.h"
+#include "EC_Gateway_IIOP.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Gateway_IIOP_Factory.inl"
+#include "EC_Gateway_IIOP_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

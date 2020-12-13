@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Service.h"
+#include "Service.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

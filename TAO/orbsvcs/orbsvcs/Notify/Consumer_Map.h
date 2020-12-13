@@ -10,15 +10,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 
-#include "orbsvcs/Notify/Event_Map_T.h"
-#include "orbsvcs/Notify/ProxySupplier.h"
+#include "Event_Map_T.h"
+#include "ProxySupplier.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

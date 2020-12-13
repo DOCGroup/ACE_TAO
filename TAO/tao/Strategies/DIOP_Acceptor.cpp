@@ -1,9 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/DIOP_Acceptor.h"
+#include "DIOP_Acceptor.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Profile.h"
+#include "DIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -15,7 +15,7 @@
 #include "ace/OS_NS_string.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Strategies/DIOP_Acceptor.inl"
+#include "DIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"

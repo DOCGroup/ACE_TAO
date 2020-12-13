@@ -15,17 +15,17 @@
 #define TAO_CEC_TYPEDEVENTCHANNEL_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/CEC_Defaults.h"
+#include "CEC_Defaults.h"
 
 #include "orbsvcs/CosTypedEventChannelAdminS.h"
 
-#include "orbsvcs/CosEvent/CEC_Factory.h"
+#include "CEC_Factory.h"
 
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/AnyTypeCode/NVList.h"
@@ -372,7 +372,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.inl"
+#include "CEC_TypedEventChannel.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

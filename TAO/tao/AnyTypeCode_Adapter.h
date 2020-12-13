@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 #include "ace/Service_Object.h"
 #include "ace/CDR_Stream.h"
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 #include <string>
 

@@ -18,16 +18,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
-#include "tao/Collocation_Strategy.h"
-#include "tao/CORBA_methods.h"
-#include "tao/Pseudo_VarOut_T.h"
+#include "Basic_Types.h"
+#include "Collocation_Strategy.h"
+#include "CORBA_methods.h"
+#include "Pseudo_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -163,7 +163,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Abstract_Servant_Base.inl"
+#include "Abstract_Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

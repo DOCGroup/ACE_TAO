@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include /**/ "Versioned_Namespace.h"
 
 #include "ace/Array_Base.h"
 
@@ -71,7 +71,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Cleanup_Func_Registry.inl"
+# include "Cleanup_Func_Registry.inl"
 #endif  /* __ACE_INLINE__ */
 
 

@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/Valuetype/ValueFactory_Map.h"
-#include "tao/Valuetype/ValueFactory.h"
+#include "ValueFactory_Map.h"
+#include "ValueFactory.h"
 #include "tao/CORBA_String.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

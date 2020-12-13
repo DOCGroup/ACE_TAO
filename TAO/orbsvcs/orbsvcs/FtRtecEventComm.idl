@@ -11,7 +11,7 @@
 #ifndef FTRTECEVNETCOMM_H
 #define FTRTECEVNETCOMM_H
 
-#include "orbsvcs/RtecEventComm.idl"
+#include "RtecEventComm.idl"
 
 module FtRtecEventComm {
 

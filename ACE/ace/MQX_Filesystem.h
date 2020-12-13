@@ -7,7 +7,7 @@
 #ifndef MQX_FILESYSTEM_HEADER
 #define MQX_FILESYSTEM_HEADER
 
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #ifdef ACE_MQX
 

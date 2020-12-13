@@ -1,4 +1,4 @@
-#include "orbsvcs/IFRService/ComponentModuleDef_i.h"
+#include "ComponentModuleDef_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

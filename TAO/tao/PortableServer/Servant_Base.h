@@ -13,14 +13,14 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/PS_ForwardC.h"
-#include "tao/PortableServer/Servant_var.h"
+#include "PS_ForwardC.h"
+#include "Servant_var.h"
 #include "tao/Abstract_Servant_Base.h"
 #include <atomic>
 
@@ -226,7 +226,7 @@ namespace PortableServer
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Base.inl"
+# include "Servant_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

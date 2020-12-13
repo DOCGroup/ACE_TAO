@@ -1,5 +1,5 @@
-#include "tao/RTScheduling/RTScheduler.h"
-#include "tao/RTScheduling/RTScheduler_Loader.h"
+#include "RTScheduler.h"
+#include "RTScheduler_Loader.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

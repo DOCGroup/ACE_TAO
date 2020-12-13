@@ -1,9 +1,9 @@
-#include "ace/ATM_Params.h"
+#include "ATM_Params.h"
 
 #if defined (ACE_HAS_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Params.inl"
+#include "ATM_Params.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

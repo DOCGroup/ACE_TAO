@@ -7,11 +7,11 @@
  *
  * @author Carlos O'Ryan
  */
-#include "tao/Unbounded_Reference_Allocation_Traits_T.h"
-#include "tao/String_Traits_T.h"
-#include "tao/Generic_Sequence_T.h"
-#include "tao/String_Sequence_Element_T.h"
-#include "tao/String_Const_Sequence_Element_T.h"
+#include "Unbounded_Reference_Allocation_Traits_T.h"
+#include "String_Traits_T.h"
+#include "Generic_Sequence_T.h"
+#include "String_Sequence_Element_T.h"
+#include "String_Const_Sequence_Element_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,8 +1,8 @@
-#include "tao/LF_Follower.h"
-#include "tao/Leader_Follower.h"
+#include "LF_Follower.h"
+#include "Leader_Follower.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LF_Follower.inl"
+# include "LF_Follower.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

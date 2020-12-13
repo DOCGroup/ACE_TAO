@@ -1,9 +1,9 @@
 // This may look like C, but it's really -*- C++ -*-
-#include "tao/Strategies/COIOP_Acceptor.h"
+#include "COIOP_Acceptor.h"
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Profile.h"
+#include "COIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"

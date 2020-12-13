@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/Any.h"
+#include "Any.h"
 #include "tao/Var_Size_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Any_Insert_Policy_T.h"

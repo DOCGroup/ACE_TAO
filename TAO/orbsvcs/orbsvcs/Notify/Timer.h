@@ -10,13 +10,13 @@
 #define TAO_Notify_TIMER_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Refcountable.h"
+#include "Refcountable.h"
 
 #include "ace/Time_Value.h"
 

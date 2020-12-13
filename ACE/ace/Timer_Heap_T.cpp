@@ -1,12 +1,12 @@
 #ifndef ACE_TIMER_HEAP_T_CPP
 #define ACE_TIMER_HEAP_T_CPP
 
-#include "ace/Timer_Heap_T.h"
-#include "ace/Log_Category.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Numeric_Limits.h"
+#include "Timer_Heap_T.h"
+#include "Log_Category.h"
+#include "Guard_T.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_string.h"
+#include "Numeric_Limits.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

@@ -11,7 +11,7 @@
 #ifndef TAO_FTRTEC_EVENTCHANNELADMIN_IDL
 #define TAO_FTRTEC_EVENTCHANNELADMIN_IDL
 
-#include "orbsvcs/RtecEventChannelAdmin.idl"
+#include "RtecEventChannelAdmin.idl"
 #include "FTRT.idl"
 #include "FTRT_GroupManager.idl"
 #include "FtRtecEventComm.idl"

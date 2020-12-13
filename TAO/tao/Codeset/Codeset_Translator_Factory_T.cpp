@@ -12,7 +12,7 @@
 #ifndef TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 #define TAO_CODESET_TRANSLATOR_FACTORY_T_CPP
 
-#include "tao/Codeset/Codeset_Translator_Factory_T.h"
+#include "Codeset_Translator_Factory_T.h"
 #include "tao/debug.h"
 #include "tao/CDR.h"
 #include "ace/Log_Msg.h"

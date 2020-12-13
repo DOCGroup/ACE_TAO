@@ -1,27 +1,27 @@
 #ifndef ACE_STRATEGIES_T_CPP
 #define ACE_STRATEGIES_T_CPP
 
-#include "ace/Strategies_T.h"
+#include "Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Repository.h"
-#include "ace/Service_Types.h"
-#include "ace/Thread_Manager.h"
-#include "ace/WFMO_Reactor.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_dlfcn.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_Errno.h"
-#include "ace/Svc_Handler.h"
+#include "Service_Repository.h"
+#include "Service_Types.h"
+#include "Thread_Manager.h"
+#include "WFMO_Reactor.h"
+#include "ACE.h"
+#include "OS_NS_dlfcn.h"
+#include "OS_NS_string.h"
+#include "OS_Errno.h"
+#include "Svc_Handler.h"
 #if defined (ACE_OPENVMS)
-# include "ace/Lib_Find.h"
+# include "Lib_Find.h"
 #endif
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Strategies_T.inl"
+#include "Strategies_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

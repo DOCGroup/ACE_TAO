@@ -1,6 +1,6 @@
 // -*- C++ -*-
 //
-#include "tao/Transport.h"
+#include "Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

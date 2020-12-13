@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Any_SystemException.h"
-#include "tao/AnyTypeCode/Any.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "Any_SystemException.h"
+#include "Any.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "Marshal.h"
+#include "TypeCode.h"
 
 #include "tao/CDR.h"
 #include "tao/Exception.h"

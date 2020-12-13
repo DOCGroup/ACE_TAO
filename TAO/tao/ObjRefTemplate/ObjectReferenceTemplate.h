@@ -14,7 +14,7 @@
 #define TAO_OBJECT_REFERENCE_TEMPLATE_H
 #include /**/ "ace/pre.h"
 
-#include "tao/ObjRefTemplate/ORT_Adapter_Factory_Impl.h"
+#include "ORT_Adapter_Factory_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

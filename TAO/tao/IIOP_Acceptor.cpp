@@ -1,18 +1,18 @@
-#include "tao/IIOP_Acceptor.h"
+#include "IIOP_Acceptor.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IIOP_Profile.h"
-#include "tao/MProfile.h"
-#include "tao/debug.h"
-#include "tao/Protocols_Hooks.h"
-#include "tao/Codeset_Manager.h"
-#include "tao/Transport.h"
-#include "tao/ORB_Core.h"
-#include "tao/CDR.h"
+#include "IIOP_Profile.h"
+#include "MProfile.h"
+#include "debug.h"
+#include "Protocols_Hooks.h"
+#include "Codeset_Manager.h"
+#include "Transport.h"
+#include "ORB_Core.h"
+#include "CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/IIOP_Acceptor.inl"
+#include "IIOP_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"

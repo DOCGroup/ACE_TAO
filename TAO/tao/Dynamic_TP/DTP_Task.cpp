@@ -1,4 +1,4 @@
-#include "tao/Dynamic_TP/DTP_Task.h"
+#include "DTP_Task.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -7,7 +7,7 @@
 #include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Dynamic_TP/DTP_Task.inl"
+# include "DTP_Task.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

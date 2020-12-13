@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
-#include "orbsvcs/PortableGroup/miopconf.h"
+#include "UIPMC_Profile.h"
+#include "miopconf.h"
 #include "tao/CDR.h"
 #include "tao/ORB.h"
 #include "tao/ORB_Core.h"

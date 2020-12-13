@@ -11,7 +11,7 @@
 #ifndef ACE_TTY_IO_H
 #define ACE_TTY_IO_H
 
-#include "ace/DEV_IO.h"
+#include "DEV_IO.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

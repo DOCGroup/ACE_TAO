@@ -20,9 +20,9 @@
 
 #ifndef ACE_WIN32_ASYNCH_IO_H
 #define ACE_WIN32_ASYNCH_IO_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -31,12 +31,12 @@
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) && \
     (defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 == 1))
 
-#include "ace/Asynch_IO_Impl.h"
-#include "ace/Addr.h"
-#include "ace/Event_Handler.h"
-#include "ace/Handle_Set.h"
-#include "ace/Map_Manager.h"
-#include "ace/Null_Mutex.h"
+#include "Asynch_IO_Impl.h"
+#include "Addr.h"
+#include "Event_Handler.h"
+#include "Handle_Set.h"
+#include "Map_Manager.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1919,5 +1919,5 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO && ACE_HAS_WINSOCK2 */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_WIN32_ASYNCH_IO_H */

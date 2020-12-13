@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_Framework_Loader.h"
-#include "tao/CSD_Framework/CSD_Object_Adapter_Factory.h"
-#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "CSD_Framework_Loader.h"
+#include "CSD_Object_Adapter_Factory.h"
+#include "CSD_Strategy_Repository.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -3,9 +3,9 @@
 // inline, not ACE_INLINE.
 // FUZZ: disable check_for_inline
 
-#include "ace/ACE.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_fcntl.h"
+#include "ACE.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_fcntl.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

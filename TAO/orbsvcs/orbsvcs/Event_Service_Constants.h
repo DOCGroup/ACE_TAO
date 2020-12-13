@@ -21,7 +21,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Time_Utilities.h"
+#include "Time_Utilities.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

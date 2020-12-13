@@ -14,15 +14,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/CORBA_String.h"
-#include "tao/Object.h"
-#include /**/ "tao/TAO_Export.h"
+#include "CORBA_String.h"
+#include "Object.h"
+#include /**/ "TAO_Export.h"
 
 #include "ace/Array_Map.h"
 
@@ -118,7 +118,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "tao/Object_Ref_Table.inl"
+# include "Object_Ref_Table.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

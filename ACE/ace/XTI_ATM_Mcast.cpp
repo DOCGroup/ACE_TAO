@@ -1,11 +1,11 @@
-#include "ace/XTI_ATM_Mcast.h"
+#include "XTI_ATM_Mcast.h"
 
 
 
 #if defined (ACE_HAS_XTI_ATM)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/XTI_ATM_Mcast.inl"
+#include "XTI_ATM_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

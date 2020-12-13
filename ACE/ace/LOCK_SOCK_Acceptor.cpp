@@ -1,8 +1,8 @@
 #ifndef ACE_LOCK_SOCK_ACCEPTOR_CPP
 #define ACE_LOCK_SOCK_ACCEPTOR_CPP
 
-#include "ace/Guard_T.h"
-#include "ace/LOCK_SOCK_Acceptor.h"
+#include "Guard_T.h"
+#include "LOCK_SOCK_Acceptor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

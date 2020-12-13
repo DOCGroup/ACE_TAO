@@ -9,9 +9,9 @@
 //=============================================================================
 #ifndef ACE_CONNECTION_RECYCLING_STRATEGY_H
 #define ACE_CONNECTION_RECYCLING_STRATEGY_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Recyclable.h"
+#include "Recyclable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -57,6 +57,6 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /*ACE_CONNECTION_RECYCLING_STRATEGY*/

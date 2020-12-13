@@ -1,9 +1,9 @@
-#include "tao/RTCORBA/Thread_Pool.h"
+#include "Thread_Pool.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/RTCORBA/Thread_Pool.inl"
+#include "Thread_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Exception.h"
@@ -13,7 +13,7 @@
 #include "tao/ORB.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/debug.h"
-#include "tao/RTCORBA/Priority_Mapping_Manager.h"
+#include "Priority_Mapping_Manager.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 #include "ace/Auto_Ptr.h"

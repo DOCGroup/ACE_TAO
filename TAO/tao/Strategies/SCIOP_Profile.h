@@ -23,7 +23,7 @@
 
 #if TAO_HAS_SCIOP == 1
 
-#include "tao/Strategies/SCIOP_Endpoint.h"
+#include "SCIOP_Endpoint.h"
 #include "tao/Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

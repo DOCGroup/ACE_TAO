@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/PortableGroup_ORBInitializer.h"
-#include "orbsvcs/PortableGroup/PortableGroup_Request_Dispatcher.h"
+#include "PortableGroup_ORBInitializer.h"
+#include "PortableGroup_Request_Dispatcher.h"
 
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"

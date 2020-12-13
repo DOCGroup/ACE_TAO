@@ -1,4 +1,4 @@
-#include "tao/System_Time_Policy_Strategy.h"
+#include "System_Time_Policy_Strategy.h"
 
 #include "ace/Timer_Heap_T.h"
 #include "ace/Event_Handler_Handle_Timeout_Upcall.h"

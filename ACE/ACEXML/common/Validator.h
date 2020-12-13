@@ -11,14 +11,14 @@
 #define _ACEXML_VALIDATOR_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/Attributes.h"
-#include "ACEXML/common/SAXExceptions.h"
+#include "Attributes.h"
+#include "SAXExceptions.h"
 
 /**
  * @class ACEXML_Validator

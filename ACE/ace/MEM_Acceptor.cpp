@@ -1,15 +1,15 @@
-#include "ace/MEM_Acceptor.h"
-#include "ace/Lib_Find.h"
+#include "MEM_Acceptor.h"
+#include "Lib_Find.h"
 
 #if (ACE_HAS_POSITION_INDEPENDENT_POINTERS == 1)
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/MEM_Acceptor.inl"
+#include "MEM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 

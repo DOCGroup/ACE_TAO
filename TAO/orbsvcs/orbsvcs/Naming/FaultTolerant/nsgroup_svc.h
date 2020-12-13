@@ -10,7 +10,7 @@
 #define i_nsgroup_svc_h
 
 #include "orbsvcs/FT_NamingManagerC.h"
-#include /**/ "orbsvcs/Naming/FaultTolerant/ftnaming_intf_export.h"
+#include /**/ "ftnaming_intf_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

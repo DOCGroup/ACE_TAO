@@ -1,16 +1,16 @@
-#include "ace/IO_SAP.h"
+#include "IO_SAP.h"
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/os_include/os_signal.h"
+#include "Log_Category.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_fcntl.h"
+#include "os_include/os_signal.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/IO_SAP.inl"
+#include "IO_SAP.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

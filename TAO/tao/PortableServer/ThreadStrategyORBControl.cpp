@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/ThreadStrategyORBControl.h"
+#include "ThreadStrategyORBControl.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

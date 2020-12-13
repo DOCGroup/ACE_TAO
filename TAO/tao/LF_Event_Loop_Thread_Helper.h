@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/LF_Strategy.h"
+#include "LF_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -56,7 +56,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/LF_Event_Loop_Thread_Helper.inl"
+# include "LF_Event_Loop_Thread_Helper.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

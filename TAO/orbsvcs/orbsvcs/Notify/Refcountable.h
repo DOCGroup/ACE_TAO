@@ -11,8 +11,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
-#include "orbsvcs/Notify/Refcountable_Guard_T.h"
+#include "notify_serv_export.h"
+#include "Refcountable_Guard_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

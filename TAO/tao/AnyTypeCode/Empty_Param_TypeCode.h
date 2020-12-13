@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -86,7 +86,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Empty_Param_TypeCode.inl"
+# include "Empty_Param_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -12,16 +12,16 @@
 
 #ifndef ACE_GUARD_T_H
 #define ACE_GUARD_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Lock.h"
+#include "Lock.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_Thread.h"
+#include "Global_Macros.h"
+#include "OS_NS_Thread.h"
 
 // FUZZ: disable check_for_ACE_Guard
 
@@ -379,16 +379,16 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Guard_T.inl"
+#include "Guard_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Guard_T.cpp"
+#include "Guard_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Guard_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_GUARD_T_H */

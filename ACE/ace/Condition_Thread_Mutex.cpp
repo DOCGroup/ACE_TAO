@@ -7,15 +7,15 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/Condition_Thread_Mutex.h"
+#include "Condition_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Condition_Thread_Mutex.inl"
+#include "Condition_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

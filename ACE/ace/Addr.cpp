@@ -1,13 +1,13 @@
-#include "ace/Addr.h"
+#include "Addr.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Addr.inl"
+#include "Addr.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "Log_Category.h"
+#include "os_include/sys/os_socket.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

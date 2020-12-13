@@ -1,14 +1,14 @@
-#include "ace/Mutex.h"
+#include "Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Mutex.inl"
+#include "Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/sys/os_mman.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
+#include "os_include/sys/os_mman.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

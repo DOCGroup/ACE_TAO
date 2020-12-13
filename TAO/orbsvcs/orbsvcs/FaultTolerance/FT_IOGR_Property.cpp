@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/FaultTolerance/FT_IOGR_Property.h"
+#include "FT_IOGR_Property.h"
 
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
@@ -12,7 +12,7 @@
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"
+# include "FT_IOGR_Property.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

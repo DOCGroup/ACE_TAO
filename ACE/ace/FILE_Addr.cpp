@@ -1,12 +1,12 @@
-#include "ace/FILE_Addr.h"
-#include "ace/Lib_Find.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "FILE_Addr.h"
+#include "Lib_Find.h"
+#include "Log_Category.h"
+#include "OS_NS_stdlib.h"
+#include "OS_NS_string.h"
+#include "os_include/sys/os_socket.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE_Addr.inl"
+#include "FILE_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 

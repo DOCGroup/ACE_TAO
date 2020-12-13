@@ -1,12 +1,12 @@
-#include "ace/Map_Manager.h"
-#include "ace/Based_Pointer_Repository.h"
-#include "ace/Guard_T.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Synch_Traits.h"
-#include "ace/RW_Thread_Mutex.h"
+#include "Map_Manager.h"
+#include "Based_Pointer_Repository.h"
+#include "Guard_T.h"
+#include "Null_Mutex.h"
+#include "Synch_Traits.h"
+#include "RW_Thread_Mutex.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

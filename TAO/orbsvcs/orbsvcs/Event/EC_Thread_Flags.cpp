@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Thread_Flags.h"
+#include "EC_Thread_Flags.h"
 
 #include "ace/OS_NS_Thread.h"
 #include "ace/OS_NS_string.h"

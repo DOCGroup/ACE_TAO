@@ -1,5 +1,5 @@
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/WstringDef_i.h"
+#include "Repository_i.h"
+#include "WstringDef_i.h"
 
 #include "ace/SString.h"
 

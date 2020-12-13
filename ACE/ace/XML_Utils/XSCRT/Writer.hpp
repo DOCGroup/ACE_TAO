@@ -6,7 +6,7 @@
 #include <stack>
 #include <string>
 
-#include "ace/XML_Utils/XSCRT/XML.hpp"
+#include "XML.hpp"
 
 namespace XSCRT
 {

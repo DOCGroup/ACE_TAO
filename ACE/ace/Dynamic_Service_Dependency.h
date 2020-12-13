@@ -11,16 +11,16 @@
 #ifndef ACE_DYNAMIC_SERVICE_DEPENDENCY_H
 #define ACE_DYNAMIC_SERVICE_DEPENDENCY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Dynamic_Service_Base.h"
-#include "ace/Service_Object.h"
-#include "ace/DLL.h"
+#include "Dynamic_Service_Base.h"
+#include "Service_Object.h"
+#include "DLL.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,6 +63,6 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_DYNAMIC_SERVICE_DEPENDENCY_H */

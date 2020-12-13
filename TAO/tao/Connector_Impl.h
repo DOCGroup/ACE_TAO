@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Thread_Manager;
@@ -90,7 +90,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Connector_Impl.cpp"
+#include "Connector_Impl.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

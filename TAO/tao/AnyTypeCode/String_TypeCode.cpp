@@ -1,11 +1,11 @@
 #ifndef TAO_STRING_TYPECODE_CPP
 #define TAO_STRING_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/String_TypeCode.h"
+#include "String_TypeCode.h"
 #include "tao/CDR.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/String_TypeCode.inl"
+# include "String_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,5 @@
-#include "tao/ORB_Core_TSS_Resources.h"
-#include "tao/ORB_Core.h"
+#include "ORB_Core_TSS_Resources.h"
+#include "ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

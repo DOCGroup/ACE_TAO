@@ -1,11 +1,11 @@
-#include "ace/Dynamic.h"
-#include "ace/Singleton.h"
-#include "ace/TSS_T.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Null_Mutex.h"
+#include "Dynamic.h"
+#include "Singleton.h"
+#include "TSS_T.h"
+#include "Synch_Traits.h"
+#include "Null_Mutex.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic.inl"
+#include "Dynamic.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

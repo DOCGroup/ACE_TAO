@@ -14,10 +14,10 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventChannelAdminC.h"
-#include "orbsvcs/Event_Service_Constants.h"
+#include "RtecEventChannelAdminC.h"
+#include "Event_Service_Constants.h"
 
-#include "orbsvcs/Event/event_export.h"
+#include "Event/event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -247,7 +247,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event_Utilities.inl"
+#include "Event_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

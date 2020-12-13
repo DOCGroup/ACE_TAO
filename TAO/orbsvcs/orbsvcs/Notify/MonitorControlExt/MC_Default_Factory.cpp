@@ -1,11 +1,11 @@
-#include "orbsvcs/Notify/MonitorControlExt/MC_Default_Factory.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannelFactory.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorSupplierAdmin.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorStructuredProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorSequenceProxyPushSupplier.h"
+#include "MC_Default_Factory.h"
+#include "MonitorEventChannel.h"
+#include "MonitorEventChannelFactory.h"
+#include "MonitorSupplierAdmin.h"
+#include "MonitorConsumerAdmin.h"
+#include "MonitorProxyPushSupplier.h"
+#include "MonitorStructuredProxyPushSupplier.h"
+#include "MonitorSequenceProxyPushSupplier.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

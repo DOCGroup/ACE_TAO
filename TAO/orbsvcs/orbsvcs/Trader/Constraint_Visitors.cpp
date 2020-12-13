@@ -1,7 +1,7 @@
-#include "orbsvcs/Trader/Constraint_Visitors.h"
-#include "orbsvcs/Trader/Constraint_Nodes.h"
-#include "orbsvcs/Trader/Interpreter_Utils_T.h"
-#include "orbsvcs/Trader/Constraint_Tokens.h"
+#include "Constraint_Visitors.h"
+#include "Constraint_Nodes.h"
+#include "Interpreter_Utils_T.h"
+#include "Constraint_Tokens.h"
 
 #include "tao/DynamicAny/DynSequence_i.h"
 

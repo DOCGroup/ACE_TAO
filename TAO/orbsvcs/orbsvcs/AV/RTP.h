@@ -48,8 +48,8 @@
 #define TAO_AV_RTP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
+#include "AV_export.h"
+#include "Protocol_Factory.h"
 
 #include "ace/Service_Config.h"
 
@@ -135,9 +135,9 @@
 
 #define MAXHDR 24
 
-#include "orbsvcs/AV/Policy.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/MCast.h"
+#include "Policy.h"
+#include "FlowSpec_Entry.h"
+#include "MCast.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

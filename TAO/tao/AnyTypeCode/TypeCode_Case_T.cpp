@@ -1,15 +1,15 @@
 #ifndef TAO_TYPECODE_CASE_T_CPP
 #define TAO_TYPECODE_CASE_T_CPP
 
-#include "tao/AnyTypeCode/TypeCode_Case_T.h"
+#include "TypeCode_Case_T.h"
 
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "Any.h"
 #include "ace/CORBA_macros.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/TypeCode_Case_T.inl"
+# include "TypeCode_Case_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

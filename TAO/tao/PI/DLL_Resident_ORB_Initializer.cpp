@@ -7,7 +7,7 @@
  */
 //=============================================================================
 
-#include "tao/PI/DLL_Resident_ORB_Initializer.h"
+#include "DLL_Resident_ORB_Initializer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

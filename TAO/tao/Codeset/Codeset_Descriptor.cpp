@@ -11,8 +11,8 @@
 //=============================================================================
 
 
-#include "tao/Codeset/Codeset_Descriptor.h"
-#include "tao/Codeset/Codeset_Translator_Factory.h"
+#include "Codeset_Descriptor.h"
+#include "Codeset_Translator_Factory.h"
 
 #include "ace/Codeset_Registry.h"
 #include "ace/Log_Msg.h"

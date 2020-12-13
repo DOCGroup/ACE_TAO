@@ -26,14 +26,14 @@
 
 #ifndef ACE_CONFIGURATION_H
 #define ACE_CONFIGURATION_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SStringfwd.h"
-#include "ace/Hash_Map_With_Allocator_T.h"
-#include "ace/Malloc_T.h"
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Local_Memory_Pool.h"
-#include "ace/Synch_Traits.h"
+#include "SStringfwd.h"
+#include "Hash_Map_With_Allocator_T.h"
+#include "Malloc_T.h"
+#include "MMAP_Memory_Pool.h"
+#include "Local_Memory_Pool.h"
+#include "Synch_Traits.h"
 
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -896,8 +896,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Configuration.inl"
+#include "Configuration.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIGURATION_H */

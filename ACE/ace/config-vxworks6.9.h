@@ -6,7 +6,7 @@
 
 #ifndef ACE_CONFIG_VXWORKS_6_9_H
 #define ACE_CONFIG_VXWORKS_6_9_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if !defined (ACE_VXWORKS)
 # define ACE_VXWORKS 0x690
@@ -14,7 +14,7 @@
 
 #define ACE_HAS_SSIZE_T
 
-#include "ace/config-vxworks6.8.h"
+#include "config-vxworks6.8.h"
 
 #ifndef ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 // already defined for earlier RTP versions
@@ -37,6 +37,6 @@
 #  undef ACE_HAS_BROKEN_ACCEPT_ADDR
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_VXWORKS_6_9_H */
 

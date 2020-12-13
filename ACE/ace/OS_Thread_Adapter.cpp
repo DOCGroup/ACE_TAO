@@ -1,12 +1,12 @@
-#include "ace/OS_Thread_Adapter.h"
+#include "OS_Thread_Adapter.h"
 
-#include "ace/Thread_Hook.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_Thread.h"
+#include "Thread_Hook.h"
+#include "Object_Manager_Base.h"
+#include "Global_Macros.h"
+#include "OS_NS_Thread.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

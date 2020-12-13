@@ -1,19 +1,19 @@
 #ifndef ACE_UNBOUNDED_QUEUE_CPP
 #define ACE_UNBOUNDED_QUEUE_CPP
 
-#include "ace/Unbounded_Queue.h"
+#include "Unbounded_Queue.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Unbounded_Queue.inl"
+#include "Unbounded_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Malloc_Base.h"
-#include "ace/Log_Category.h"
-#include "ace/os_include/os_errno.h"
+#include "Malloc_Base.h"
+#include "Log_Category.h"
+#include "os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

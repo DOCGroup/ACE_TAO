@@ -14,7 +14,7 @@
 #define TAO_ZIOP_H
 #include /**/ "ace/pre.h"
 
-#include "tao/ZIOP/ziop_export.h"
+#include "ziop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -133,7 +133,7 @@ ACE_FACTORY_DECLARE (TAO_ZIOP, TAO_ZIOP_Loader)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_ZIOP_SAFE_INCLUDE
-#include "tao/ZIOP/ZIOPC.h"
+#include "ZIOPC.h"
 #undef TAO_ZIOP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

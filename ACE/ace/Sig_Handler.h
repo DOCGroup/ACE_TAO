@@ -10,15 +10,15 @@
 
 #ifndef ACE_SIGNAL_HANDLER_H
 #define ACE_SIGNAL_HANDLER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Handler.h"
+#include "Event_Handler.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -236,8 +236,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Sig_Handler.inl"
+#include "Sig_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SIG_HANDLER_H */

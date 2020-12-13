@@ -17,21 +17,21 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/UserException.h"
+#include "UserException.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orb_typesC.h"
-#include "tao/objectid.h"
-#include "tao/VarOut_T.h"
-#include "tao/Pseudo_VarOut_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
-#include "tao/Sequence_T.h"
-#include "tao/Policy_ForwardC.h"
-#include "tao/ServicesC.h"
+#include "orb_typesC.h"
+#include "objectid.h"
+#include "VarOut_T.h"
+#include "Pseudo_VarOut_T.h"
+#include "Seq_Var_T.h"
+#include "Seq_Out_T.h"
+#include "Sequence_T.h"
+#include "Policy_ForwardC.h"
+#include "ServicesC.h"
 
 #include "ace/Thread_Mutex.h"
 #include "ace/Guard_T.h"
@@ -592,7 +592,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/ORB.inl"
+# include "ORB.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

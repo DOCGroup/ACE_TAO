@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_ConsumerControl.h"
+#include "EC_ConsumerControl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

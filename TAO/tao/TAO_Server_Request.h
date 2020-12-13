@@ -24,11 +24,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Tagged_Profile.h"
-#include "tao/Service_Context.h"
-#include "tao/Object.h"
-#include "tao/Transport_Selection_Guard.h"
-#include "tao/GIOPC.h"
+#include "Tagged_Profile.h"
+#include "Service_Context.h"
+#include "Object.h"
+#include "Transport_Selection_Guard.h"
+#include "GIOPC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
@@ -41,7 +41,7 @@ namespace TAO
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "tao/PortableInterceptorC.h"
+#include "PortableInterceptorC.h"
 
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
@@ -406,7 +406,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/TAO_Server_Request.inl"
+# include "TAO_Server_Request.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

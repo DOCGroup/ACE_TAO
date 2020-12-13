@@ -7,7 +7,7 @@
  */
 //=============================================================================
 
-#include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
+#include "Endpoint_Value_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

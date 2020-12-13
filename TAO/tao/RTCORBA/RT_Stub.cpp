@@ -1,8 +1,8 @@
-#include "tao/RTCORBA/RT_Stub.h"
+#include "RT_Stub.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RT_Policy_i.h"
+#include "RT_Policy_i.h"
 #include "tao/ORB_Core.h"
 #include "tao/Policy_Set.h"
 #include "tao/Policy_Manager.h"

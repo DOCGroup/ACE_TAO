@@ -11,8 +11,8 @@
 #ifndef TAO_ESF_PROXY_ADMIN_H
 #define TAO_ESF_PROXY_ADMIN_H
 
-#include "orbsvcs/ESF/ESF_Proxy_Collection.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
+#include "ESF_Proxy_Collection.h"
+#include "ESF_Worker.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -140,11 +140,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_Admin.inl"
+#include "ESF_Proxy_Admin.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/ESF/ESF_Proxy_Admin.cpp"
+#include "ESF_Proxy_Admin.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

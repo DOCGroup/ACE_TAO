@@ -14,8 +14,8 @@
 #define ORBSVCS_TIME_UTILITIES_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/TimeBaseC.h"
-#include "orbsvcs/svc_utils_export.h"
+#include "TimeBaseC.h"
+#include "svc_utils_export.h"
 #include "ace/OS_NS_time.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -106,7 +106,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Time_Utilities.inl"
+#include "Time_Utilities.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -2,18 +2,18 @@
 #include "ace/Reactor.h"
 #include "ace/Auto_Ptr.h"
 
-#include "tao/Leader_Follower.h"
-#include "tao/LF_Follower_Auto_Ptr.h"
-#include "tao/LF_Follower_Auto_Adder.h"
-#include "tao/LF_Event_Binder.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
-#include "tao/GUIResource_Factory.h"
-#include "tao/ORB_Core.h"
-#include "tao/ORB_Time_Policy.h"
+#include "Leader_Follower.h"
+#include "LF_Follower_Auto_Ptr.h"
+#include "LF_Follower_Auto_Adder.h"
+#include "LF_Event_Binder.h"
+#include "debug.h"
+#include "Transport.h"
+#include "GUIResource_Factory.h"
+#include "ORB_Core.h"
+#include "ORB_Time_Policy.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Leader_Follower.inl"
+# include "Leader_Follower.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

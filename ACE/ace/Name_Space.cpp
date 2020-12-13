@@ -1,7 +1,7 @@
 // Name_Space.cpp
-#include "ace/Name_Space.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdlib.h"
+#include "Name_Space.h"
+#include "OS_NS_string.h"
+#include "OS_NS_stdlib.h"
 
 
 

@@ -15,17 +15,17 @@
 #ifndef ACE_OS_NS_SYS_STAT_H
 # define ACE_OS_NS_SYS_STAT_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-all.h"
+# include "config-all.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_stat.h"
-#include "ace/Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
-#include /**/ "ace/ACE_export.h"
+#include "os_include/sys/os_stat.h"
+#include "Default_Constants.h" // for ACE_DEFAULT_DIR_PERMS
+#include /**/ "ACE_export.h"
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -135,8 +135,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/OS_NS_sys_stat.inl"
+#   include "OS_NS_sys_stat.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_OS_NS_SYS_STAT_H */

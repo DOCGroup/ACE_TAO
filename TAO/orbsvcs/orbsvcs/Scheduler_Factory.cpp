@@ -1,14 +1,14 @@
-#include "orbsvcs/Log_Macros.h"
+#include "Log_Macros.h"
 #include "ace/Singleton.h"
 #include "ace/Null_Mutex.h"
 
-#include "orbsvcs/Runtime_Scheduler.h"
-#include "orbsvcs/Sched/Reconfig_Scheduler.h"
-#include "orbsvcs/Sched/Reconfig_Sched_Utils.h"
-#include "orbsvcs/Scheduler_Factory.h"
+#include "Runtime_Scheduler.h"
+#include "Sched/Reconfig_Scheduler.h"
+#include "Sched/Reconfig_Sched_Utils.h"
+#include "Scheduler_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Scheduler_Factory.inl"
+#include "Scheduler_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

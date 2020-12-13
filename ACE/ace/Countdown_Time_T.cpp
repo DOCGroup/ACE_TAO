@@ -1,10 +1,10 @@
 #ifndef ACE_COUNTDOWN_TIME_T_CPP
 #define ACE_COUNTDOWN_TIME_T_CPP
 
-#include "ace/Countdown_Time_T.h"
+#include "Countdown_Time_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Countdown_Time_T.inl"
+#include "Countdown_Time_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

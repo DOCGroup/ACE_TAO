@@ -14,13 +14,13 @@
 #define TAO_EC_SCHED_FACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Default_Factory.h"
+#include "EC_Default_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Event/sched_event_export.h"
+#include "sched_event_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -58,7 +58,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Sched_Factory.inl"
+#include "EC_Sched_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_STATIC_SVC_DECLARE (TAO_EC_Sched_Factory)

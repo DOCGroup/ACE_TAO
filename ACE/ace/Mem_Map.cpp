@@ -1,18 +1,18 @@
 // Defines the member functions for the memory mapping facility.
 
-#include "ace/Mem_Map.h"
+#include "Mem_Map.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Mem_Map.inl"
+#include "Mem_Map.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Log_Category.h"
-#include "ace/Truncate.h"
+#include "OS_NS_sys_stat.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_string.h"
+#include "Log_Category.h"
+#include "Truncate.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

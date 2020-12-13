@@ -1,10 +1,10 @@
-#include "tao/PI/ClientRequestDetails.h"
+#include "ClientRequestDetails.h"
 #include "tao/SystemException.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PI/ClientRequestDetails.inl"
+#include "ClientRequestDetails.inl"
 #endif /* defined INLINE */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

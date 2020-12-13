@@ -12,17 +12,17 @@
 #ifndef ACE_SVC_HANDLER_H
 #define ACE_SVC_HANDLER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Synch_Options.h"
+#include "Synch_Options.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Task.h"
-#include "ace/Recyclable.h"
-#include "ace/Reactor.h"
+#include "Task.h"
+#include "Recyclable.h"
+#include "Reactor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -345,13 +345,13 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Svc_Handler.cpp"
+#include "Svc_Handler.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Svc_Handler.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SVC_HANDLER_H */

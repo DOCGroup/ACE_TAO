@@ -1,7 +1,7 @@
 #ifndef TAO_BINDINGS_ITERATOR_T_CPP
 #define TAO_BINDINGS_ITERATOR_T_CPP
 
-#include "orbsvcs/Naming/Bindings_Iterator_T.h"
+#include "Bindings_Iterator_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

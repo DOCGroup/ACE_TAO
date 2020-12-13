@@ -17,9 +17,9 @@
 
 #ifndef ACE_STREAMS_H
 #define ACE_STREAMS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -130,5 +130,5 @@
 #pragma warning(pop)
 #endif /* _MSC_VER */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_STREAMS_H */

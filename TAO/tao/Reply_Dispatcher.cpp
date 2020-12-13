@@ -1,7 +1,7 @@
-#include "tao/Reply_Dispatcher.h"
+#include "Reply_Dispatcher.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Reply_Dispatcher.inl"
+#include "Reply_Dispatcher.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

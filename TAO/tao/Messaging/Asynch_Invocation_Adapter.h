@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Messaging/messaging_export.h"
+#include "messaging_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Messaging/Messaging.h"
+#include "Messaging.h"
 #include "tao/Asynch_Reply_Dispatcher_Base.h"
 #include "tao/Invocation_Adapter.h"
 #include "ace/Global_Macros.h"

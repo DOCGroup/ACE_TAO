@@ -1,9 +1,9 @@
-#include "orbsvcs/Event/EC_Group_Scheduling.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
-#include "orbsvcs/Event/EC_Supplier_Filter.h"
+#include "EC_Group_Scheduling.h"
+#include "EC_QOS_Info.h"
+#include "EC_Supplier_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Group_Scheduling.inl"
+#include "EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 void

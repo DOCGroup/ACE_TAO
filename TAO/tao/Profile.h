@@ -13,15 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Tagged_Components.h"
+#include "Tagged_Components.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOP_Message_Version.h"
-#include "tao/Refcounted_ObjectKey.h"
-#include "tao/Service_Callbacks.h"
+#include "GIOP_Message_Version.h"
+#include "Refcounted_ObjectKey.h"
+#include "Service_Callbacks.h"
 #include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -447,7 +447,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Profile.inl"
+# include "Profile.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

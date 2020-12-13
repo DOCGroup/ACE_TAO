@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/EndpointPolicy/EndpointPolicy_Export.h"
+#include "EndpointPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,8 +24,8 @@
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/EndpointPolicy/IIOPEndpointValueC.h"
-#include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
+#include "IIOPEndpointValueC.h"
+#include "Endpoint_Value_Impl.h"
 #include "tao/LocalObject.h"
 #include "ace/INET_Addr.h"
 

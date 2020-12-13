@@ -1,11 +1,11 @@
-#include "tao/Policy_Current.h"
+#include "Policy_Current.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
-#include "tao/TSS_Resources.h"
+#include "TSS_Resources.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Current.inl"
+# include "Policy_Current.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/DiffServPolicy/DiffServPolicy_Export.h"
+#include "DiffServPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -50,7 +50,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #define TAO_DIFFSERVPOLICY_SAFE_INCLUDE
-#include "tao/DiffServPolicy/DiffServPolicyC.h"
+#include "DiffServPolicyC.h"
 #undef TAO_DIFFSERVPOLICY_SAFE_INCLUDE
 
 #endif /* TAO_DIFFSERVPOLICY_H */

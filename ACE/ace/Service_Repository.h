@@ -11,19 +11,19 @@
 #ifndef ACE_SERVICE_REPOSITORY_H
 #define ACE_SERVICE_REPOSITORY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Array_Map.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Recursive_Thread_Mutex.h"
+#include "Default_Constants.h"
+#include "Synch_Traits.h"
+#include "Array_Map.h"
+#include "Malloc_Base.h"
+#include "Recursive_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -266,9 +266,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Service_Repository.inl"
+#include "Service_Repository.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* _SERVICE_REPOSITORY_H */

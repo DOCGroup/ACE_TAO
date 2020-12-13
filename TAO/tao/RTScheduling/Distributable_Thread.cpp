@@ -1,4 +1,4 @@
-#include "tao/RTScheduling/Distributable_Thread.h"
+#include "Distributable_Thread.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -19,16 +19,16 @@
 #ifndef ACE_CDR_SIZE_H
 #define ACE_CDR_SIZE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/CDR_Base.h"
-#include "ace/CDR_Stream.h" // for ACE_OutputCDR::from_*
+#include "CDR_Base.h"
+#include "CDR_Stream.h" // for ACE_OutputCDR::from_*
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SStringfwd.h"
+#include "SStringfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -178,7 +178,7 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_SizeCDR &ss,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Size.inl"
+# include "CDR_Size.inl"
 #else /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -240,6 +240,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* __ACE_INLINE__ */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CDR_SIZE_H */

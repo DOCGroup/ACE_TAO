@@ -7,12 +7,12 @@
  */
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_UDP_Sender.h"
+#include "ECG_UDP_Sender.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "tao/CDR.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Sender.inl"
+#include "ECG_UDP_Sender.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

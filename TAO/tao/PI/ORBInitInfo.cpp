@@ -1,4 +1,4 @@
-#include "tao/PI/ORBInitInfo.h"
+#include "ORBInitInfo.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB.h"
 #include "tao/Object_Loader.h"
@@ -9,11 +9,11 @@
 #include "ace/CORBA_macros.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/PI/PICurrent.h"
+#include "PICurrent.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PI/ORBInitInfo.inl"
+#include "ORBInitInfo.inl"
 #endif /* defined INLINE */
 
 #include "ace/OS_NS_string.h"

@@ -9,15 +9,15 @@
 #define TAO_Notify_COSNOTIFY_SERVICE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Service.h"
-#include "orbsvcs/Notify/Builder.h"
-#include "orbsvcs/Notify/Factory.h"
+#include "Service.h"
+#include "Builder.h"
+#include "Factory.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

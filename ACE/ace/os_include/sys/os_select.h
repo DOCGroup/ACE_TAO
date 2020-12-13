@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_time.h"
+#include "os_time.h"
 #include "ace/os_include/os_signal.h"
 #include "ace/os_include/os_unistd.h"
 

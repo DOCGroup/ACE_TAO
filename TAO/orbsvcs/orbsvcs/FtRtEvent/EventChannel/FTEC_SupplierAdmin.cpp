@@ -1,7 +1,7 @@
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_SupplierAdmin.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
+#include "FTEC_SupplierAdmin.h"
+#include "FTEC_ProxyConsumer.h"
 #include "tao/Stub.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

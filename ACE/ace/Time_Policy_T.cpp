@@ -1,10 +1,10 @@
 #ifndef ACE_TIME_POLICY_T_CPP
 #define ACE_TIME_POLICY_T_CPP
 
-#include "ace/Time_Policy_T.h"
+#include "Time_Policy_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Time_Policy_T.inl"
+#include "Time_Policy_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

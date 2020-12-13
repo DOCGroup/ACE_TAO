@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PortableServer/ImplicitActivationStrategy.h"
+#include "ImplicitActivationStrategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

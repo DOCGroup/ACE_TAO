@@ -1,14 +1,14 @@
-#include "ace/Atomic_Op.h"
-#include "ace/OS_NS_unistd.h"
+#include "Atomic_Op.h"
+#include "OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Atomic_Op.inl"
+#include "Atomic_Op.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
 #if defined (ACE_INCLUDE_ATOMIC_OP_SPARC)
-# include "ace/Atomic_Op_Sparc.h"
+# include "Atomic_Op_Sparc.h"
 #endif /* ACE_INCLUDE_ATOMIC_OP_SPARC */
 
 namespace {

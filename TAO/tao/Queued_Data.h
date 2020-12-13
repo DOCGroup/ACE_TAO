@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Pluggable_Messaging_Utils.h"
-#include "tao/GIOP_Message_State.h"
+#include "Pluggable_Messaging_Utils.h"
+#include "GIOP_Message_State.h"
 #include "ace/Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -142,7 +142,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Queued_Data.inl"
+# include "Queued_Data.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -10,7 +10,7 @@
  */
 
 #include <algorithm>
-#include "tao/Array_VarOut_T.h"
+#include "Array_VarOut_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

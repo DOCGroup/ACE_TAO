@@ -1,11 +1,11 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.h"
+#include "SSLIOP_Current_Impl.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/SSLIOP/SSLIOP_Current_Impl.inl"
+# include "SSLIOP_Current_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/SSLIOP/SSLIOP_X509.h"
-#include "orbsvcs/SSLIOP/SSLIOP_ClientCredentials.h"
+#include "SSLIOP_X509.h"
+#include "SSLIOP_ClientCredentials.h"
 
 #include "tao/ORB_Constants.h"
 

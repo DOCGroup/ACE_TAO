@@ -27,8 +27,8 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/Event/EC_ProxySupplier.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/rteventlog_serv_export.h"
+#include "LogNotification.h"
+#include "rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -1,13 +1,13 @@
-#include "ace/Sig_Handler.h"
-#include "ace/Sig_Adapter.h"
-#include "ace/Signal.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Managed_Object.h"
-#include "ace/Containers.h"
-#include "ace/Guard_T.h"
+#include "Sig_Handler.h"
+#include "Sig_Adapter.h"
+#include "Signal.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Managed_Object.h"
+#include "Containers.h"
+#include "Guard_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Sig_Handler.inl"
+#include "Sig_Handler.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_SIG_C_FUNC)

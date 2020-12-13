@@ -1,12 +1,12 @@
-#include "ace/System_Time.h"
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Malloc_T.h"
-#include "ace/Null_Mutex.h"
-#include "ace/Time_Value.h"
-#include "ace/Lib_Find.h"
+#include "System_Time.h"
+#include "MMAP_Memory_Pool.h"
+#include "Malloc_T.h"
+#include "Null_Mutex.h"
+#include "Time_Value.h"
+#include "Lib_Find.h"
 
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_time.h"
+#include "OS_NS_string.h"
+#include "OS_NS_time.h"
 
 
 

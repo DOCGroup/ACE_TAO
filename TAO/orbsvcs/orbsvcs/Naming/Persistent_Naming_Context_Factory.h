@@ -13,11 +13,11 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/ORB.h"
-#include "orbsvcs/Naming/nsconf.h"
-#include "orbsvcs/Naming/naming_serv_export.h"
-#include "orbsvcs/Naming/Hash_Naming_Context.h"
-#include "orbsvcs/Naming/Persistent_Entries.h"
-#include "orbsvcs/Naming/Persistent_Naming_Context.h"
+#include "nsconf.h"
+#include "naming_serv_export.h"
+#include "Hash_Naming_Context.h"
+#include "Persistent_Entries.h"
+#include "Persistent_Naming_Context.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

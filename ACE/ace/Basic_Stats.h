@@ -9,10 +9,10 @@
 
 #ifndef ACE_BASIC_STATS_H
 #define ACE_BASIC_STATS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Basic_Types.h"
+#include /**/ "config-all.h"
+#include "Basic_Types.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -83,8 +83,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Basic_Stats.inl"
+#include "Basic_Stats.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_BASIC_STATS_H */

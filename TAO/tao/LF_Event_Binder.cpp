@@ -1,7 +1,7 @@
-#include "tao/LF_Event_Binder.h"
+#include "LF_Event_Binder.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LF_Event_Binder.inl"
+# include "LF_Event_Binder.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

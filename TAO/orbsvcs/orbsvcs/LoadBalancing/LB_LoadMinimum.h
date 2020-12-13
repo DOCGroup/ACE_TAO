@@ -15,7 +15,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/LoadBalancing/LB_LoadMap.h"
+#include "LB_LoadMap.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #   pragma once
@@ -174,7 +174,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/LoadBalancing/LB_LoadMinimum.inl"
+#include "LB_LoadMinimum.inl"
 #endif /* defined INLINE */
 
 #include /**/ "ace/post.h"

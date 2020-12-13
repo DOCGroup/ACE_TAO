@@ -1,4 +1,4 @@
-#include "ace/ATM_Acceptor.h"
+#include "ATM_Acceptor.h"
 
 #if defined (ACE_HAS_ATM)
 
@@ -7,7 +7,7 @@
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Acceptor.inl"
+#include "ATM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 // Open versioned namespace, if enabled by the user.

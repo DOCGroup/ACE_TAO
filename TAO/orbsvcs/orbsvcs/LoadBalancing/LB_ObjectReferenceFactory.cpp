@@ -1,5 +1,5 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/LoadBalancing/LB_ObjectReferenceFactory.h"
+#include "LB_ObjectReferenceFactory.h"
 #include "tao/debug.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_strings.h"

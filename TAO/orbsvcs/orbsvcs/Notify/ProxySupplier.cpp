@@ -1,17 +1,17 @@
-#include "orbsvcs/Notify/ProxySupplier.h"
+#include "ProxySupplier.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ProxySupplier.inl"
+#include "ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Event_Manager.h"
-#include "orbsvcs/Notify/AdminProperties.h"
-#include "orbsvcs/Notify/Consumer.h"
-#include "orbsvcs/Notify/Method_Request_Dispatch.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Buffering_Strategy.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/ConsumerAdmin.h"
+#include "Event_Manager.h"
+#include "AdminProperties.h"
+#include "Consumer.h"
+#include "Method_Request_Dispatch.h"
+#include "Worker_Task.h"
+#include "Buffering_Strategy.h"
+#include "Properties.h"
+#include "ConsumerAdmin.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

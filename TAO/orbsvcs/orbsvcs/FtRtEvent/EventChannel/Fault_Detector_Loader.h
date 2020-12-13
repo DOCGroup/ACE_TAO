@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FtRtEvent/EventChannel/ftrtec_export.h"
+#include "ftrtec_export.h"
 
 #include "tao/orbconf.h"
 

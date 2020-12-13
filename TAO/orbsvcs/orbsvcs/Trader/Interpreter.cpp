@@ -1,4 +1,4 @@
-#include "orbsvcs/Trader/Interpreter.h"
+#include "Interpreter.h"
 #include "ace/OS_NS_string.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,4 +1,4 @@
-#include "ace/Monitor_Control/Constraint_Interpreter.h"
+#include "Constraint_Interpreter.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
@@ -6,7 +6,7 @@
 
 #include "ace/ETCL/ETCL_Constraint.h"
 
-#include "ace/Monitor_Control/Constraint_Visitor.h"
+#include "Constraint_Visitor.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

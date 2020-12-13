@@ -1,8 +1,8 @@
 #ifndef TAO_ABSTRACT_BASE_T_CPP
 #define TAO_ABSTRACT_BASE_T_CPP
 
-#include "tao/Valuetype/AbstractBase_T.h"
-#include "tao/Valuetype/AbstractBase.h"
+#include "AbstractBase_T.h"
+#include "AbstractBase.h"
 #include "tao/Stub.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

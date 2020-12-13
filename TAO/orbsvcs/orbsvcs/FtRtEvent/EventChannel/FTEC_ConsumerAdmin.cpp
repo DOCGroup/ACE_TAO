@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_ProxyConsumer.h"
 #include "orbsvcs/Event/EC_Event_Channel_Base.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ConsumerAdmin.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxySupplier.h"
-#include "orbsvcs/FtRtEvent/EventChannel/ProxySupplierStateWorker.h"
+#include "FTEC_ConsumerAdmin.h"
+#include "FTEC_ProxySupplier.h"
+#include "ProxySupplierStateWorker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -11,18 +11,18 @@
 #ifndef ACE_SV_SEMAPHORE_SIMPLE_H
 #define ACE_SV_SEMAPHORE_SIMPLE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_stat.h"
-#include "ace/os_include/sys/os_ipc.h"
-#include "ace/os_include/sys/os_sem.h"
-#include "ace/Default_Constants.h"
+#include "os_include/sys/os_stat.h"
+#include "os_include/sys/os_ipc.h"
+#include "os_include/sys/os_sem.h"
+#include "Default_Constants.h"
 
 #if defined (ACE_WIN32)
    // Default semaphore key and mutex name
@@ -189,9 +189,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Semaphore_Simple.inl"
+#include "SV_Semaphore_Simple.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* _SV_SEMAPHORE_SIMPLE_H */

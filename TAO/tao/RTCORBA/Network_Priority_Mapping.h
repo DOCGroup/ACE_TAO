@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/RTCORBA_includeC.h"
+#include "RTCORBA_includeC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

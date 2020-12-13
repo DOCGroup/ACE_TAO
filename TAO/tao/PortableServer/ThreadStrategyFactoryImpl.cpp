@@ -1,5 +1,5 @@
-#include "tao/PortableServer/ThreadStrategyFactoryImpl.h"
-#include "tao/PortableServer/ThreadStrategy.h"
+#include "ThreadStrategyFactoryImpl.h"
+#include "ThreadStrategy.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
 

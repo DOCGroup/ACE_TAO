@@ -17,15 +17,15 @@
 
 // Do not try removing this. If you remove this for subsetting lots of
 // things go wrong in TAO.
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
-#include "tao/CORBA_String.h"
+#include /**/ "TAO_Export.h"
+#include "Basic_Types.h"
+#include "CORBA_String.h"
 #include "ace/SStringfwd.h"
 #include "ace/iosfwd.h"
 #include "ace/CORBA_macros.h"
@@ -218,7 +218,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Exception.inl"
+# include "Exception.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/"ace/post.h"

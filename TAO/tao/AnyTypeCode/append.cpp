@@ -11,12 +11,12 @@
 //=============================================================================
 
 
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/Any_Unknown_IDL_Type.h"
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
-#include "tao/AnyTypeCode/OctetSeqA.h"
-#include "tao/AnyTypeCode/Any.h"
+#include "TypeCode.h"
+#include "Marshal.h"
+#include "Any_Unknown_IDL_Type.h"
+#include "TypeCode_Constants.h"
+#include "OctetSeqA.h"
+#include "Any.h"
 #include "tao/debug.h"
 #include "tao/Valuetype_Adapter.h"
 #include "tao/ORB_Core.h"

@@ -11,19 +11,19 @@
 
 #ifndef ACE_CAPABILITIES_H
 #define ACE_CAPABILITIES_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Containers.h"
-#include "ace/SString.h"
-#include "ace/Functor_String.h"
+#include "Null_Mutex.h"
+#include "Hash_Map_Manager_T.h"
+#include "Containers.h"
+#include "SString.h"
+#include "Functor_String.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -182,8 +182,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Capabilities.inl"
+#include "Capabilities.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* __ACE_CAPABILITIES_H__ */

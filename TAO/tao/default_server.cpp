@@ -1,5 +1,5 @@
-#include "tao/default_server.h"
-#include "tao/debug.h"
+#include "default_server.h"
+#include "debug.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 

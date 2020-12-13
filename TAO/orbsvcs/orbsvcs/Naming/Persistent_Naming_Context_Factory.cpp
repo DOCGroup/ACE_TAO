@@ -1,5 +1,5 @@
-#include "orbsvcs/Naming/Persistent_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/Persistent_Naming_Context.h"
+#include "Persistent_Naming_Context_Factory.h"
+#include "Persistent_Naming_Context.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_stddef.h" // size_t
+#include "os_stddef.h" // size_t
 
 #if !defined (ACE_LACKS_WORDEXP_H)
 #  include /**/ <wordexp.h>

@@ -23,9 +23,9 @@
 
 #ifndef ACE_ASYNCH_IO_H
 #define ACE_ASYNCH_IO_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -33,17 +33,17 @@
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Synch_Traits.h"
+#include "Synch_Traits.h"
 #if defined (ACE_HAS_THREADS)
-#  include "ace/Thread_Mutex.h"
+#  include "Thread_Mutex.h"
 #else
-#  include "ace/Null_Mutex.h"
+#  include "Null_Mutex.h"
 #endif /* ACE_HAS_THREADS */
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "Refcounted_Auto_Ptr.h"
 
-#include "ace/os_include/os_signal.h"
-#include "ace/os_include/sys/os_socket.h"
-#include "ace/os_include/sys/os_types.h"
+#include "os_include/os_signal.h"
+#include "os_include/sys/os_socket.h"
+#include "os_include/sys/os_types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -1732,5 +1732,5 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS*/
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ASYNCH_IO_H */

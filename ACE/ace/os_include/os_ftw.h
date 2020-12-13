@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_stat.h"
+#include "sys/os_stat.h"
 
 #if !defined (ACE_LACKS_FTW_H)
 # include /**/ <ftw.h>

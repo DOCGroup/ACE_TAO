@@ -16,16 +16,16 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Cache_Manager.h"
+#include "Transport_Cache_Manager.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Transport_Timer.h"
-#include "tao/Incoming_Message_Queue.h"
-#include "tao/Incoming_Message_Stack.h"
-#include "tao/Message_Semantics.h"
+#include "Transport_Timer.h"
+#include "Incoming_Message_Queue.h"
+#include "Incoming_Message_Stack.h"
+#include "Message_Semantics.h"
 #include "ace/Time_Value.h"
 #include "ace/Basic_Stats.h"
 
@@ -1287,7 +1287,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Transport.inl"
+# include "Transport.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

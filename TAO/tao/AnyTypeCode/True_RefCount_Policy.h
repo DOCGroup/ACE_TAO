@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,7 +108,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/True_RefCount_Policy.inl"
+# include "True_RefCount_Policy.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

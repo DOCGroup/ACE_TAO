@@ -12,7 +12,7 @@
 
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
+#include "Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
 #include "ace/Auto_Ptr.h"
 

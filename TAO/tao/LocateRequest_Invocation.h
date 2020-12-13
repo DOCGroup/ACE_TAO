@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Synch_Invocation.h"
+#include "Synch_Invocation.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

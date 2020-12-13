@@ -23,7 +23,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 #include "tao/IOPC.h"
-#include "orbsvcs/FaultTolerance/FT_ORB_Utils_export.h"
+#include "FT_ORB_Utils_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -113,7 +113,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "orbsvcs/FaultTolerance/FT_IOGR_Property.inl"
+# include "FT_IOGR_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

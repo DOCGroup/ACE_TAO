@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/NotifyLogFactory_i.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/NotifyLogNotification.h"
+#include "NotifyLogFactory_i.h"
+#include "LogNotification.h"
+#include "NotifyLogNotification.h"
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

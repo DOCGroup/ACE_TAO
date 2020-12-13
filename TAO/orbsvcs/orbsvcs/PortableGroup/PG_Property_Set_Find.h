@@ -19,8 +19,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
-#include "orbsvcs/PortableGroup/PG_Property_Set.h"
+#include "portablegroup_export.h"
+#include "PG_Property_Set.h"
 
 #include "ace/Hash_Map_Manager.h"
 

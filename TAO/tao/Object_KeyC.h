@@ -37,12 +37,12 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/ORB.h"
-#include "tao/Environment.h"
-#include "tao/Sequence_T.h"
-#include "tao/Seq_Var_T.h"
-#include "tao/Seq_Out_T.h"
+#include /**/ "TAO_Export.h"
+#include "ORB.h"
+#include "Environment.h"
+#include "Sequence_T.h"
+#include "Seq_Var_T.h"
+#include "Seq_Out_T.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

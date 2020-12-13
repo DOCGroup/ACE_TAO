@@ -1,19 +1,19 @@
 #ifndef ACE_RB_TREE_CPP
 #define ACE_RB_TREE_CPP
 
-#include "ace/Global_Macros.h"
-#include "ace/RB_Tree.h"
-#include "ace/SString.h"
+#include "Global_Macros.h"
+#include "RB_Tree.h"
+#include "SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/RB_Tree.inl"
+#include "RB_Tree.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

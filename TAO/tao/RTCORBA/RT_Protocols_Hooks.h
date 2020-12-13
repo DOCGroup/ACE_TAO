@@ -17,9 +17,9 @@
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/rtcorba_export.h"
-#include "tao/RTCORBA/Priority_Mapping_Manager.h"
-#include "tao/RTCORBA/Network_Priority_Mapping_Manager.h"
+#include "rtcorba_export.h"
+#include "Priority_Mapping_Manager.h"
+#include "Network_Priority_Mapping_Manager.h"
 
 #include "tao/Protocols_Hooks.h"
 

@@ -11,7 +11,7 @@
 
 #include "orbsvcs/Notify/ConsumerAdmin.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"
-#include "orbsvcs/Notify/MonitorControlExt/NotifyMonitoringExtS.h"
+#include "NotifyMonitoringExtS.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

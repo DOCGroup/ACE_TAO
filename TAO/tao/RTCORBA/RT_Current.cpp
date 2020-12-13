@@ -1,8 +1,8 @@
-#include "tao/RTCORBA/RT_Current.h"
+#include "RT_Current.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/RTCORBA/Priority_Mapping.h"
+#include "Priority_Mapping.h"
 
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"

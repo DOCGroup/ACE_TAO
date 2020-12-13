@@ -2,11 +2,11 @@
 #define TAO_SPECIAL_BASIC_SARGUMENT_T_CPP
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/Special_Basic_SArgument_T.h"
+#include "Special_Basic_SArgument_T.h"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PortableServer/Special_Basic_SArgument_T.inl"
+#include "Special_Basic_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 

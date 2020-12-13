@@ -20,7 +20,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Log/LogRecordStore.h"
+#include "LogRecordStore.h"
 #include "ace/Containers.h"
 #include "ace/RB_Tree.h"
 #include "ace/Synch_Traits.h"
@@ -28,7 +28,7 @@
 #include "ace/RW_Thread_Mutex.h"
 #include "ace/Reactor.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "orbsvcs/Log/log_serv_export.h"
+#include "log_serv_export.h"
 
 #define LOG_DEFAULT_MAX_REC_LIST_LEN 100
 

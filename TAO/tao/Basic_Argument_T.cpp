@@ -1,10 +1,10 @@
 #ifndef TAO_BASIC_ARGUMENT_T_CPP
 #define TAO_BASIC_ARGUMENT_T_CPP
 
-#include "tao/Basic_Argument_T.h"
+#include "Basic_Argument_T.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Basic_Argument_T.inl"
+#include "Basic_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,11 +1,11 @@
 // -*- C++ -*-
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_fcntl.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_macros.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_fcntl.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_macros.h"
 
 #ifdef ACE_MQX
-#  include "ace/MQX_Filesystem.h"
+#  include "MQX_Filesystem.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

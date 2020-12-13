@@ -12,13 +12,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Transport_Descriptor_Interface.h"
+#include "Transport_Descriptor_Interface.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Endpoint.h"
+#include "Endpoint.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -64,7 +64,7 @@ public:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Base_Transport_Property.inl"
+# include "Base_Transport_Property.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

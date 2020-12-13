@@ -7,7 +7,7 @@
 // ACE_CONFIG_H is defined by one of the following #included headers.
 
 // #include the SunOS 5.7 config, then add any SunOS 5.8 updates below.
-#include "ace/config-sunos5.7.h"
+#include "config-sunos5.7.h"
 
 #undef ACE_WCHAR_IN_STD_NAMESPACE
 

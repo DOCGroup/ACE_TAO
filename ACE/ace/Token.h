@@ -13,19 +13,19 @@
 
 #ifndef ACE_TOKEN_H
 #define ACE_TOKEN_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Null_Mutex.h"
+#include "Null_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Thread_Mutex.h"
+#include "Thread_Mutex.h"
 
 #if (defined (ACE_WIN32) && !defined (ACE_USES_WINCE_SEMA_SIMULATION)) || defined (ACE_HAS_VXTHREADS)
 // If platforms support semaphores with timed wait, then we use semaphores instead of c.v.
@@ -33,10 +33,10 @@
 #endif /* ACE_WIN32 || ACE_HAS_VXTHREADS */
 
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
-#  include "ace/Semaphore.h"
+#  include "Semaphore.h"
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 
-#include "ace/Condition_Thread_Mutex.h"
+#include "Condition_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -363,9 +363,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Token.inl"
+#include "Token.inl"
 #endif /* __ACE_INLINE__ */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TOKEN_H */

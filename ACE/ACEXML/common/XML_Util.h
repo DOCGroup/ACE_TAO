@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/XML_Types.h"
+#include "XML_Types.h"
 
 ACEXML_Export ACEXML_String ACEXML_escape_string(const ACEXML_String& str);
 ACEXML_Export void ACEXML_escape_string(const ACEXML_String& in, ACEXML_String& out);

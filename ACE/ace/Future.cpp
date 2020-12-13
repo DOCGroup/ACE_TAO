@@ -1,7 +1,7 @@
 #ifndef ACE_FUTURE_CPP
 #define ACE_FUTURE_CPP
 
-#include "ace/Future.h"
+#include "Future.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -9,8 +9,8 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#  include "ace/Guard_T.h"
-#  include "ace/Recursive_Thread_Mutex.h"
+#  include "Guard_T.h"
+#  include "Recursive_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

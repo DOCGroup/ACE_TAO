@@ -1,11 +1,11 @@
 #ifndef TAO_VAR_SIZE_ARGUMENT_T_CPP
 #define TAO_VAR_SIZE_ARGUMENT_T_CPP
 
-#include "tao/Var_Size_Argument_T.h"
+#include "Var_Size_Argument_T.h"
 #include "ace/OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Var_Size_Argument_T.inl"
+#include "Var_Size_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

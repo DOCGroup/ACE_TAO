@@ -1,10 +1,10 @@
-#include "orbsvcs/Notify/Property_Boolean.h"
+#include "Property_Boolean.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Property_Boolean.inl"
+#include "Property_Boolean.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/PropertySeq.h"
+#include "PropertySeq.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,15 +1,15 @@
-#include "ace/ACE.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_stdlib.h"
+#include "ACE.h"
+#include "Global_Macros.h"
+#include "OS_NS_string.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_stdlib.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_string.inl"
+# include "OS_NS_string.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

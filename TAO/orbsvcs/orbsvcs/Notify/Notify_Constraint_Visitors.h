@@ -28,7 +28,7 @@
 
 #include "orbsvcs/CosNotificationC.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

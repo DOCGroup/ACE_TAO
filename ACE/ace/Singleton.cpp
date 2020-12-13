@@ -1,21 +1,21 @@
 #ifndef ACE_SINGLETON_CPP
 #define ACE_SINGLETON_CPP
 
-#include "ace/Singleton.h"
+#include "Singleton.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Singleton.inl"
+#include "Singleton.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Object_Manager.h"
-#include "ace/Log_Category.h"
-#include "ace/Framework_Component.h"
-#include "ace/Guard_T.h"
-#include "ace/os_include/os_typeinfo.h"
+#include "Object_Manager.h"
+#include "Log_Category.h"
+#include "Framework_Component.h"
+#include "Guard_T.h"
+#include "os_include/os_typeinfo.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

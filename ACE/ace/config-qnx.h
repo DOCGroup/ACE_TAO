@@ -6,7 +6,7 @@
 // various NTO versions.
 #ifndef ACE_CONFIG_QNX_H
 #define ACE_CONFIG_QNX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #include <sys/neutrino.h>
 #if !defined(_NTO_VERSION)
@@ -23,7 +23,7 @@
 # define ACE_CC_NAME ACE_TEXT ("QNX-RTP compiler ??")
 #endif
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 // /usr/nto/include/float.h defines
 //  FLT_MAX_EXP 127
@@ -190,5 +190,5 @@
 #endif
 #define FD_SETSIZE 1000
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_QNX_H */

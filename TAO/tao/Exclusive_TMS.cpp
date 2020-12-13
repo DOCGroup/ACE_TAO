@@ -1,7 +1,7 @@
-#include "tao/Exclusive_TMS.h"
-#include "tao/Reply_Dispatcher.h"
-#include "tao/debug.h"
-#include "tao/Transport.h"
+#include "Exclusive_TMS.h"
+#include "Reply_Dispatcher.h"
+#include "debug.h"
+#include "Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

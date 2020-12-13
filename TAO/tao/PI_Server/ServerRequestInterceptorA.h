@@ -30,8 +30,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PI_Server/pi_server_export.h"
-#include "tao/PI_Server/ServerRequestInterceptorC.h"
+#include "pi_server_export.h"
+#include "ServerRequestInterceptorC.h"
 #include "tao/PI/InterceptorA.h"
 #include "tao/PI/PIForwardRequestA.h"
 #include "tao/AnyTypeCode/OctetSeqA.h"

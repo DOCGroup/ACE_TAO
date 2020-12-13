@@ -21,9 +21,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/Exception.h"
-#include "tao/params.h"
+#include /**/ "TAO_Export.h"
+#include "Exception.h"
+#include "params.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Addr;
@@ -144,7 +144,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "tao/Acceptor_Registry.inl"
+#include "Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

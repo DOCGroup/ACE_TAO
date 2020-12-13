@@ -9,9 +9,9 @@
  */
 //=============================================================================
 
-#include "orbsvcs/Naming/Storable_Naming_Context_ReaderWriter.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
-#include "orbsvcs/Naming/Storable.h"
+#include "Storable_Naming_Context_ReaderWriter.h"
+#include "Storable_Naming_Context.h"
+#include "Storable.h"
 
 #include "tao/Storable_Base.h"
 #include "tao/Storable_FlatFileStream.h"

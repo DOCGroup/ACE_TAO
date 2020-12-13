@@ -1,5 +1,5 @@
-#include "tao/Default_Collocation_Resolver.h"
-#include "tao/Object.h"
+#include "Default_Collocation_Resolver.h"
+#include "Object.h"
 #include "ace/Log_Msg.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

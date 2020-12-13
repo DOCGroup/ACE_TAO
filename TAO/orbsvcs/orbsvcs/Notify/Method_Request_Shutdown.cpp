@@ -1,5 +1,5 @@
-#include "orbsvcs/Notify/Method_Request_Shutdown.h"
-#include "orbsvcs/Notify/ThreadPool_Task.h"
+#include "Method_Request_Shutdown.h"
+#include "ThreadPool_Task.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,5 +1,5 @@
-#include "orbsvcs/LoadBalancing/LB_ClientComponent.h"
-#include "orbsvcs/LoadBalancing/LB_ClientORBInitializer.h"
+#include "LB_ClientComponent.h"
+#include "LB_ClientORBInitializer.h"
 
 #include "tao/ORB_Constants.h"
 #include "tao/ORBInitializer_Registry.h"

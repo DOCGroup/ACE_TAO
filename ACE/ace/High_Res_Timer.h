@@ -10,17 +10,17 @@
 
 #ifndef ACE_HIGH_RES_TIMER_H
 #define ACE_HIGH_RES_TIMER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
-#include "ace/OS_NS_time.h"
-#include "ace/Time_Value.h"
+#include "Basic_Types.h"
+#include "OS_NS_time.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -300,8 +300,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/High_Res_Timer.inl"
+#include "High_Res_Timer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_HIGH_RES_TIMER_H */

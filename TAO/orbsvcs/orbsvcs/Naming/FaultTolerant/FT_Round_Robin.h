@@ -20,12 +20,12 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Naming/FaultTolerant/FT_Location_Index_Map.h"
+#include "FT_Location_Index_Map.h"
 
 
 #include "orbsvcs/CosLoadBalancingS.h"
 #include "ace/Vector_T.h"
-#include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
+#include "ftnaming_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

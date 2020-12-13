@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Security/SL2_SecurityManager.h"
+#include "SL2_SecurityManager.h"
 
 #include "tao/ORB_Constants.h"
 #include "ace/Functor.h"

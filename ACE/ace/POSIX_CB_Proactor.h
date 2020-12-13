@@ -11,7 +11,7 @@
 #ifndef ACE_POSIX_CB_PROACTOR_H
 #define ACE_POSIX_CB_PROACTOR_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -19,11 +19,11 @@
 
 #if defined (ACE_HAS_AIO_CALLS)
 
-#include "ace/Synch_Traits.h"
-#include "ace/Thread_Semaphore.h"
-#include "ace/Null_Semaphore.h"
+#include "Synch_Traits.h"
+#include "Thread_Semaphore.h"
+#include "Null_Semaphore.h"
 
-#include "ace/POSIX_Proactor.h"
+#include "POSIX_Proactor.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

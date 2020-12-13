@@ -10,21 +10,21 @@
  */
 //=============================================================================
 
-#include "tao/AnyTypeCode/BasicTypeTraits.h"
-#include "tao/AnyTypeCode/BooleanSeqA.h"
-#include "tao/AnyTypeCode/CharSeqA.h"
-#include "tao/AnyTypeCode/OctetSeqA.h"
-#include "tao/AnyTypeCode/WCharSeqA.h"
-#include "tao/AnyTypeCode/ShortSeqA.h"
-#include "tao/AnyTypeCode/UShortSeqA.h"
-#include "tao/AnyTypeCode/LongSeqA.h"
-#include "tao/AnyTypeCode/ULongSeqA.h"
-#include "tao/AnyTypeCode/LongLongSeqA.h"
-#include "tao/AnyTypeCode/ULongLongSeqA.h"
-#include "tao/AnyTypeCode/FloatSeqA.h"
-#include "tao/AnyTypeCode/DoubleSeqA.h"
-#include "tao/AnyTypeCode/LongDoubleSeqA.h"
-#include "tao/AnyTypeCode/AnySeqA.h"
+#include "BasicTypeTraits.h"
+#include "BooleanSeqA.h"
+#include "CharSeqA.h"
+#include "OctetSeqA.h"
+#include "WCharSeqA.h"
+#include "ShortSeqA.h"
+#include "UShortSeqA.h"
+#include "LongSeqA.h"
+#include "ULongSeqA.h"
+#include "LongLongSeqA.h"
+#include "ULongLongSeqA.h"
+#include "FloatSeqA.h"
+#include "DoubleSeqA.h"
+#include "LongDoubleSeqA.h"
+#include "AnySeqA.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

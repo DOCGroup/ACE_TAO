@@ -3,14 +3,14 @@
 
 //#define ACE_BUILD_DLL
 
-#include "ace/Metrics_Cache_T.h"
+#include "Metrics_Cache_T.h"
 
 #if defined (ACE_COMPILE_TIMEPROBES)
 
-#include "ace/Metrics_Cache.h"
+#include "Metrics_Cache.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Metrics_Cache_T.inl"
+#include "Metrics_Cache_T.inl"
 #endif /* __ACE_INLINE__ */
 
 /// Const strings for timeprobe event type descriptions.

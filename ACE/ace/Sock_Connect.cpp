@@ -1,34 +1,34 @@
-#include "ace/Sock_Connect.h"
-#include "ace/INET_Addr.h"
-#include "ace/Log_Category.h"
-#include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
-#include "ace/SString.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/ACE.h"
+#include "Sock_Connect.h"
+#include "INET_Addr.h"
+#include "Log_Category.h"
+#include "Handle_Set.h"
+#include "Auto_Ptr.h"
+#include "SString.h"
+#include "OS_Memory.h"
+#include "OS_NS_stdio.h"
+#include "ACE.h"
 
 #if defined (sparc)
-#  include "ace/OS_NS_fcntl.h"
+#  include "OS_NS_fcntl.h"
 #endif  // sparc
 
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_netdb.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/net/os_if.h"
+#include "OS_NS_stdlib.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_netdb.h"
+#include "OS_NS_unistd.h"
+#include "os_include/net/os_if.h"
 
 #if defined (ACE_HAS_IPV6)
-#  include "ace/Guard_T.h"
-#  include "ace/Recursive_Thread_Mutex.h"
+#  include "Guard_T.h"
+#  include "Recursive_Thread_Mutex.h"
 # if defined (_AIX)
 #  include /**/ <netinet/in6_var.h>
 # endif /* _AIX */
 #endif /* ACE_HAS_IPV6 */
 
 #if defined (ACE_HAS_GETIFADDRS)
-#  include "ace/os_include/os_ifaddrs.h"
+#  include "os_include/os_ifaddrs.h"
 #endif /* ACE_HAS_GETIFADDRS */
 
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670) && defined (__RTP__) && defined (ACE_HAS_IPV6)
@@ -48,7 +48,7 @@ const struct in6_addr in6addr_loopback = IN6ADDR_LOOPBACK_INIT;
 #endif  // ACE_HAS_WINCE
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
+# include "OS_NS_stdio.h"
 #endif
 
 #if defined (ACE_HAS_IPV6)
@@ -98,7 +98,7 @@ const struct in6_addr in6addr_loopback = IN6ADDR_LOOPBACK_INIT;
 # endif /* SIOCGLIFCONF */
 
 # if defined (ACE_HAS_THREADS)
-#  include "ace/Object_Manager.h"
+#  include "Object_Manager.h"
 # endif /* ACE_HAS_THREADS */
 
 namespace

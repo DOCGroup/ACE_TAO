@@ -11,12 +11,12 @@
 //=============================================================================
 
 
-#include "ace/Codeset_IBM1047.h"
+#include "Codeset_IBM1047.h"
 
 #if defined (ACE_HAS_EBCDIC)
 
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
 
 namespace
 {

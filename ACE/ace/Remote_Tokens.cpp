@@ -1,11 +1,11 @@
-#include "ace/Remote_Tokens.h"
+#include "Remote_Tokens.h"
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Singleton.h"
+#include "Singleton.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Remote_Tokens.inl"
+#include "Remote_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

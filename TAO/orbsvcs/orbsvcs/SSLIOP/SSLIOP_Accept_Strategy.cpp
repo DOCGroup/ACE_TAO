@@ -1,4 +1,4 @@
-#include "orbsvcs/SSLIOP/SSLIOP_Accept_Strategy.h"
+#include "SSLIOP_Accept_Strategy.h"
 #include "orbsvcs/Log_Macros.h"
 #include "tao/debug.h"
 

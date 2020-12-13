@@ -12,9 +12,9 @@
 #ifndef ACE_PARSE_NODE_H
 #define ACE_PARSE_NODE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,10 +22,10 @@
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/Auto_Ptr.h"
-#include "ace/DLL.h"
-#include "ace/SString.h"
-#include "ace/Svc_Conf.h"
+#include "Auto_Ptr.h"
+#include "DLL.h"
+#include "SString.h"
+#include "Svc_Conf.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -517,6 +517,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif  /* ACE_PARSE_NODE_H */

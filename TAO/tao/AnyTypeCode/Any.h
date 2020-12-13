@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
+#include "AnyTypeCode_methods.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Object.h"
@@ -353,7 +353,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/Any.inl"
+# include "Any.inl"
 #else
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

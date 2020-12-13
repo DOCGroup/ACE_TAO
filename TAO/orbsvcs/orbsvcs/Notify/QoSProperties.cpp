@@ -1,11 +1,11 @@
-#include "orbsvcs/Notify/QoSProperties.h"
+#include "QoSProperties.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/QoSProperties.inl"
+#include "QoSProperties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Property.h"
-#include "orbsvcs/Notify/Notify_Extensions.h"
+#include "Property.h"
+#include "Notify_Extensions.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

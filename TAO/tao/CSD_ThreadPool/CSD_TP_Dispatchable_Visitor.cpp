@@ -1,7 +1,7 @@
-#include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.h"
+#include "CSD_TP_Dispatchable_Visitor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Dispatchable_Visitor.inl"
+# include "CSD_TP_Dispatchable_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

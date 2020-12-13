@@ -1,9 +1,9 @@
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/AnyTypeCode/TypeCode.h"
 
-#include "tao/RTScheduling/Request_Interceptor.h"
-#include "tao/RTScheduling/Current.h"
-#include "tao/RTScheduling/Distributable_Thread.h"
+#include "Request_Interceptor.h"
+#include "Current.h"
+#include "Distributable_Thread.h"
 
 #include "tao/TSS_Resources.h"
 #include "tao/debug.h"

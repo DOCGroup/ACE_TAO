@@ -11,9 +11,9 @@
 
 #ifndef ACE_ATM_ACCEPTOR_H
 #define ACE_ATM_ACCEPTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,21 +21,21 @@
 
 #if defined (ACE_HAS_ATM)
 
-#include "ace/ATM_Stream.h"
-#include "ace/ATM_Params.h"
-#include "ace/ATM_QoS.h"
+#include "ATM_Stream.h"
+#include "ATM_Params.h"
+#include "ATM_QoS.h"
 
 #if defined (ACE_HAS_LINUX_ATM)
 #include /**/ "atm.h"
 #endif /* ACE_HAS_LINUX_ATM */
 
 #if defined (ACE_HAS_FORE_ATM_WS2) || defined (ACE_HAS_LINUX_ATM)
-#include "ace/SOCK_Acceptor.h"
+#include "SOCK_Acceptor.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Acceptor ATM_Acceptor;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_FORE_ATM_XTI)
-#include "ace/TLI_Acceptor.h"
+#include "TLI_Acceptor.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_TLI_Acceptor ATM_Acceptor;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -111,9 +111,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_Acceptor.inl"
+#include "ATM_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_ACCEPTOR_H */

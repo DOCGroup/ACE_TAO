@@ -1,8 +1,8 @@
-#include "tao/Strategies/SHMIOP_Acceptor.h"
+#include "SHMIOP_Acceptor.h"
 
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
-#include "tao/Strategies/SHMIOP_Profile.h"
+#include "SHMIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"

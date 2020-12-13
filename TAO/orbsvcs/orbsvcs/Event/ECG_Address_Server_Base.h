@@ -9,9 +9,9 @@
 #define TAO_ECG_ADDRESS_SERVER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 #include "orbsvcs/RtecUDPAdminS.h"
-#include "orbsvcs/Event/EC_Lifetime_Utils.h"
+#include "EC_Lifetime_Utils.h"
 #include "ace/Auto_Ptr.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

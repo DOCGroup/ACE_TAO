@@ -15,16 +15,16 @@
 #ifndef ACE_SOCK_SEQPACK_ASSOCIATION_H
 #define ACE_SOCK_SEQPACK_ASSOCIATION_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SOCK_IO.h"
-#include "ace/Multihomed_INET_Addr.h"
+#include "SOCK_IO.h"
+#include "Multihomed_INET_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -191,9 +191,9 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Association.inl"
+#include "SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SOCK_SEQPACK_ASSOCIATION_H */

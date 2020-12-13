@@ -1,8 +1,8 @@
 // = AUTHOR
 //    Sumedh Mungee <sumedh@cs.wustl.edu>
 
-#include "tao/Utils/ORB_Manager.h"
-#include "tao/Utils/PolicyList_Destroyer.h"
+#include "ORB_Manager.h"
+#include "PolicyList_Destroyer.h"
 
 #include "tao/PortableServer/POAManagerC.h"
 #include "tao/PortableServer/IdAssignmentPolicyC.h"

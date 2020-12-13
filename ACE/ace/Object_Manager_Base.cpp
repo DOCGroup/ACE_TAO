@@ -1,12 +1,12 @@
-#include "ace/Object_Manager_Base.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_stdio.h"
+#include "Object_Manager_Base.h"
+#include "OS_Memory.h"
+#include "OS_NS_Thread.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_signal.h"
+#include "OS_NS_stdio.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

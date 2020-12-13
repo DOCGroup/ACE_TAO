@@ -1,16 +1,16 @@
-#include "ace/Service_Repository.h"
+#include "Service_Repository.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Service_Repository.inl"
+#include "Service_Repository.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Service_Types.h"
-#include "ace/Object_Manager.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_string.h"
+#include "Service_Types.h"
+#include "Object_Manager.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

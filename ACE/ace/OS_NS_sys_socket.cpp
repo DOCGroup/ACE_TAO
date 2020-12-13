@@ -1,10 +1,10 @@
-#include "ace/OS_NS_sys_socket.h"
+#include "OS_NS_sys_socket.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_sys_socket.inl"
+# include "OS_NS_sys_socket.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/Containers_T.h"
+#include "Containers_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -2,11 +2,11 @@
 #define TAO_OBJECT_SARGUMENT_T_CPP
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
-#include "tao/PortableServer/Object_SArgument_T.h"
+#include "Object_SArgument_T.h"
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #if !defined (__ACE_INLINE__)
-#include "tao/PortableServer/Object_SArgument_T.inl"
+#include "Object_SArgument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

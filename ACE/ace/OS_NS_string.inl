@@ -1,8 +1,8 @@
 // -*- C++ -*-
 // OS_NS_wchar.h is only needed to get the emulation methods.
 // Perhaps they should be moved.  dhinton
-#include "ace/OS_NS_wchar.h"
-#include "ace/os_include/os_string.h"
+#include "OS_NS_wchar.h"
+#include "os_include/os_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

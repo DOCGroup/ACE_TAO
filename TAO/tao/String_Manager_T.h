@@ -13,15 +13,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/OS_NS_string.h"
-#include "tao/Basic_Types.h"
-#include "tao/String_Traits_Base_T.h"
+#include "Basic_Types.h"
+#include "String_Traits_Base_T.h"
 
 #include <algorithm>
 

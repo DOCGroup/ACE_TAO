@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/Async_IORTable.h"
+#include "Async_IORTable.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,7 +25,7 @@
 #include "tao/LocalObject.h"
 #include "ace/SString.h"
 #include "tao/Objref_VarOut_T.h"
-#include "tao/IORTable/IOR_Table_Impl.h"
+#include "IOR_Table_Impl.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

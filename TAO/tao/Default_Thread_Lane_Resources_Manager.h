@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Thread_Lane_Resources_Manager.h"
+#include "Thread_Lane_Resources_Manager.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

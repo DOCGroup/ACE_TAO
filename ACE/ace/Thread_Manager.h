@@ -10,24 +10,24 @@
 
 #ifndef ACE_THREAD_MANAGER_H
 #define ACE_THREAD_MANAGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Thread.h"
-#include "ace/Thread_Adapter.h"
-#include "ace/Thread_Exit.h"
+#include "Thread.h"
+#include "Thread_Adapter.h"
+#include "Thread_Exit.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Unbounded_Queue.h"
-#include "ace/Containers.h"
-#include "ace/Free_List.h"
-#include "ace/Singleton.h"
-#include "ace/Log_Category.h"
-#include "ace/Synch_Traits.h"
-#include "ace/Basic_Types.h"
+#include "Condition_Thread_Mutex.h"
+#include "Unbounded_Queue.h"
+#include "Containers.h"
+#include "Free_List.h"
+#include "Singleton.h"
+#include "Log_Category.h"
+#include "Synch_Traits.h"
+#include "Basic_Types.h"
 
 // The following macros control how a Thread Manager manages a pool of
 // Thread_Descriptor.  Currently, the default behavior is not to
@@ -1272,8 +1272,8 @@ typedef ACE_Singleton<ACE_Thread_Manager, ACE_SYNCH_MUTEX> ACE_THREAD_MANAGER_SI
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Thread_Manager.inl"
+#include "Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_THREAD_MANAGER_H */

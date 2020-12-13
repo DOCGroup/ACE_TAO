@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Trader.h"
+#include "Trader.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

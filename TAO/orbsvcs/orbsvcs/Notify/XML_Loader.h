@@ -19,7 +19,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Topology_Loader.h"
+#include "Topology_Loader.h"
 
 #include "ACEXML/common/DefaultHandler.h"
 #include "ACEXML/parser/parser/Parser.h"

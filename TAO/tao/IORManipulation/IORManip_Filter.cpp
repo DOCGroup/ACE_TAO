@@ -1,5 +1,5 @@
-#include "tao/IORManipulation/IORManip_Filter.h"
-#include "tao/IORManipulation/IORManip_Loader.h"
+#include "IORManip_Filter.h"
+#include "IORManip_Loader.h"
 #include "tao/MProfile.h"
 #include "tao/ORB_Core.h"
 #include "tao/Stub.h"

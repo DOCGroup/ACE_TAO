@@ -1,4 +1,4 @@
-#include "orbsvcs/Notify/Routing_Slip_Queue.h"
+#include "Routing_Slip_Queue.h"
 
 #include "tao/debug.h"
 #include "ace/Dynamic_Service.h"

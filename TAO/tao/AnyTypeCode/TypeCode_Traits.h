@@ -14,7 +14,7 @@
 #include /**/ "ace/pre.h"
 
 #include "tao/CORBA_String.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

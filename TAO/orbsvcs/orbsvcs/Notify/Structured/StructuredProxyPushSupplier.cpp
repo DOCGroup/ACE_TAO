@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
+#include "StructuredProxyPushSupplier.h"
 
 #include "tao/PortableServer/Servant_Base.h"
 #include "tao/debug.h"
 
-#include "orbsvcs/Notify/Structured/StructuredPushConsumer.h"
+#include "StructuredPushConsumer.h"
 #include "orbsvcs/Notify/Properties.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

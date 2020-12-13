@@ -16,7 +16,7 @@
 #endif
 #endif
 
-#include "ace/ETCL/ETCL_Constraint.h"
+#include "ETCL_Constraint.h"
 
 #ifdef __cplusplus
 
@@ -456,8 +456,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 //=============================================================================
 
 
-#include "ace/ETCL/ETCL_Interpreter.h"
-#include "ace/ETCL/ETCL_y.h"
+#include "ETCL_Interpreter.h"
+#include "ETCL_y.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -9,7 +9,7 @@
 #ifndef TAO_TRANSPORT_IIOP_CURRENT_IDL
 #define TAO_TRANSPORT_IIOP_CURRENT_IDL
 
-#include "tao/TransportCurrent/TC.idl"
+#include "TC.idl"
 
 /// Provide a forward reference for the SSLIOP::Current
 module SSLIOP

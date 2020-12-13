@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Codeset/codeset_export.h"
+#include "codeset_export.h"
 #include "ace/CDR_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/POA_Current_Impl.h"
+#include "POA_Current_Impl.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)
@@ -237,7 +237,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Servant_Upcall.inl"
+# include "Servant_Upcall.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -14,7 +14,7 @@
 #define TAO_CORBALOC_PARSER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IOR_Parser.h"
+#include "IOR_Parser.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 
 #include "ace/Service_Config.h"
 #include "ace/Containers_T.h"
-#include "tao/Profile.h"
+#include "Profile.h"
 #include "ace/SString.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -90,7 +90,7 @@ ACE_FACTORY_DECLARE (TAO, TAO_CORBALOC_Parser)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/CORBALOC_Parser.inl"
+# include "CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* TAO_HAS_CORBALOC_PARSER == 1 */

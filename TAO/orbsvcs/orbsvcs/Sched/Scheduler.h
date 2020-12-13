@@ -25,7 +25,7 @@
 
 #include "orbsvcs/RtecSchedulerC.h"
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Sched/sched_export.h"
+#include "sched_export.h"
 
 /**
  * @class ACE_Scheduler

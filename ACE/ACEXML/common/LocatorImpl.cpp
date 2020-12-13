@@ -1,9 +1,9 @@
 // -*- C++ -*-
 
-#include "ACEXML/common/LocatorImpl.h"
+#include "LocatorImpl.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/common/LocatorImpl.inl"
+# include "LocatorImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (void)

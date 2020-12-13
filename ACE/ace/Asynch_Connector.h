@@ -10,9 +10,9 @@
 
 #ifndef ACE_ASYNCH_CONNECTOR_H
 #define ACE_ASYNCH_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,8 +21,8 @@
 #if (defined (ACE_WIN32) || defined (ACE_HAS_AIO_CALLS)) && !defined(ACE_HAS_WINCE)
 // This only works on platforms that support async i/o.
 
-#include "ace/Asynch_IO.h"
-#include "ace/INET_Addr.h"
+#include "Asynch_IO.h"
+#include "INET_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -156,7 +156,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Asynch_Connector.cpp"
+#include "Asynch_Connector.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -164,5 +164,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 #endif /* ACE_WIN32 || ACE_HAS_AIO_CALLS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ASYNCH_CONNECTOR_H */

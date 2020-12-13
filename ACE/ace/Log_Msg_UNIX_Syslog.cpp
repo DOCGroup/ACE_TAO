@@ -1,13 +1,13 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if !defined (ACE_LACKS_UNIX_SYSLOG)
 
-#include "ace/ACE.h"
-#include "ace/Log_Category.h"
-#include "ace/Log_Msg_UNIX_Syslog.h"
-#include "ace/Log_Record.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/os_syslog.h"
+#include "ACE.h"
+#include "Log_Category.h"
+#include "Log_Msg_UNIX_Syslog.h"
+#include "Log_Record.h"
+#include "OS_NS_string.h"
+#include "os_include/os_syslog.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

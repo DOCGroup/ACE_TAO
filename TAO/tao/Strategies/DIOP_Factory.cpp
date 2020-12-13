@@ -1,9 +1,9 @@
-#include "tao/Strategies/DIOP_Factory.h"
+#include "DIOP_Factory.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Acceptor.h"
-#include "tao/Strategies/DIOP_Connector.h"
+#include "DIOP_Acceptor.h"
+#include "DIOP_Connector.h"
 
 #include "tao/ORB_Constants.h"
 

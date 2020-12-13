@@ -1,19 +1,19 @@
-#include "ace/SOCK_SEQPACK_Connector.h"
+#include "SOCK_SEQPACK_Connector.h"
 
-#include "ace/INET_Addr.h"
-#include "ace/Log_Category.h"
-#include "ace/Time_Value.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_fcntl.h"
+#include "INET_Addr.h"
+#include "Log_Category.h"
+#include "Time_Value.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_socket.h"
+#include "os_include/os_fcntl.h"
 
 #if defined (ACE_WIN32)
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 #endif /* ACE_WIN32 */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_SEQPACK_Connector.inl"
+#include "SOCK_SEQPACK_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
 

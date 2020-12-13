@@ -12,20 +12,20 @@
 
 #ifndef ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
 #define ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_HAS_THREADS)
-#  include "ace/Null_Condition.h"
+#  include "Null_Condition.h"
 #else /* ACE_HAS_THREADS */
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Condition_Attributes.h"
-#include "ace/Condition_T.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Condition_Attributes.h"
+#include "Condition_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -105,5 +105,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONDITION_RECURSIVE_THREAD_MUTEX_H */

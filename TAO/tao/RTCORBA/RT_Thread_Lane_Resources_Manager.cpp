@@ -1,4 +1,4 @@
-#include "tao/RTCORBA/RT_Thread_Lane_Resources_Manager.h"
+#include "RT_Thread_Lane_Resources_Manager.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
@@ -6,7 +6,7 @@
 #include "tao/ORB_Core_TSS_Resources.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
-#include "tao/RTCORBA/Thread_Pool.h"
+#include "Thread_Pool.h"
 #include "tao/LF_Follower.h"
 #include "tao/Leader_Follower.h"
 

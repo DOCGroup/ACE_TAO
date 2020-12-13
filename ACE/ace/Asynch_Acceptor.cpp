@@ -2,7 +2,7 @@
 #ifndef ACE_ASYNCH_ACCEPTOR_C
 #define ACE_ASYNCH_ACCEPTOR_C
 
-#include "ace/Asynch_Acceptor.h"
+#include "Asynch_Acceptor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -11,14 +11,14 @@
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on platforms that support async i/o.
 
-#include "ace/OS_Errno.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/Log_Category.h"
-#include "ace/Message_Block.h"
-#include "ace/INET_Addr.h"
-#include "ace/SOCK_Stream.h"
-#include "ace/Sock_Connect.h"
+#include "OS_Errno.h"
+#include "OS_Memory.h"
+#include "OS_NS_sys_socket.h"
+#include "Log_Category.h"
+#include "Message_Block.h"
+#include "INET_Addr.h"
+#include "SOCK_Stream.h"
+#include "Sock_Connect.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

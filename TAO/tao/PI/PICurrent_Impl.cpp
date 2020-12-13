@@ -1,11 +1,11 @@
-#include "tao/PI/PICurrent_Impl.h"
+#include "PICurrent_Impl.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
 
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PI/PICurrent_Impl.inl"
+# include "PICurrent_Impl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/TAO_Server_Request.h"

@@ -10,15 +10,15 @@
 
 #ifndef ACE_THREAD_HOOK_H
 #define ACE_THREAD_HOOK_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -59,5 +59,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_THREAD_HOOK_H */

@@ -1,9 +1,9 @@
-#include "tao/SystemException.h"
-#include "tao/ORB_Constants.h"
-#include "tao/CORBA_String.h"
-#include "tao/CDR.h"
-#include "tao/debug.h"
-#include "tao/AnyTypeCode_Adapter.h"
+#include "SystemException.h"
+#include "ORB_Constants.h"
+#include "CORBA_String.h"
+#include "CDR.h"
+#include "debug.h"
+#include "AnyTypeCode_Adapter.h"
 
 #include "ace/Malloc.h"
 #include "ace/SString.h"
@@ -18,7 +18,7 @@
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 
 #if !defined (__ACE_INLINE__)
-# include "tao/SystemException.inl"
+# include "SystemException.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

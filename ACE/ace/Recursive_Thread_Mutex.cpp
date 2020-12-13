@@ -6,17 +6,17 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/Recursive_Thread_Mutex.h"
+#include "Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Recursive_Thread_Mutex.inl"
+#include "Recursive_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
-#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Transport.h"
-#include "orbsvcs/PortableGroup/miop_resource.h"
+#include "UIPMC_Mcast_Connection_Handler.h"
+#include "UIPMC_Endpoint.h"
+#include "UIPMC_Mcast_Transport.h"
+#include "miop_resource.h"
 
 #include "tao/Timeprobe.h"
 #include "tao/debug.h"

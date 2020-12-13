@@ -11,13 +11,13 @@
 #define ACEXML_XMLFILTERIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "ACEXML/common/XMLFilter.h"
-#include "ACEXML/common/XMLReader.h"
-#include "ACEXML/common/Locator.h"
-#include "ACEXML/common/ContentHandler.h"
-#include "ACEXML/common/DTDHandler.h"
-#include "ACEXML/common/EntityResolver.h"
-#include "ACEXML/common/ErrorHandler.h"
+#include "XMLFilter.h"
+#include "XMLReader.h"
+#include "Locator.h"
+#include "ContentHandler.h"
+#include "DTDHandler.h"
+#include "EntityResolver.h"
+#include "ErrorHandler.h"
 
 /**
  * @class ACEXML_XMLFilterImpl
@@ -255,7 +255,7 @@ private:
 };
 
 #if defined (__ACEXML_INLINE__)
-# include "ACEXML/common/XMLFilterImpl.inl"
+# include "XMLFilterImpl.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include /**/ "ace/post.h"

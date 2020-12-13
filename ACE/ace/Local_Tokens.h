@@ -39,9 +39,9 @@
 
 #ifndef ACE_LOCAL_MUTEX_H
 #define ACE_LOCAL_MUTEX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -49,15 +49,15 @@
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
-#include "ace/Synch_Traits.h"
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/TSS_T.h"
-#include "ace/Containers.h"
-#include "ace/Synch_Options.h"
-#include "ace/Map_Manager.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/os_netdb.h"
+#include "Synch_Traits.h"
+#include "Condition_Thread_Mutex.h"
+#include "TSS_T.h"
+#include "Containers.h"
+#include "Synch_Options.h"
+#include "Map_Manager.h"
+#include "Log_Category.h"
+#include "OS_NS_string.h"
+#include "os_include/os_netdb.h"
 
 #if !(defined (ACE_HAS_THREADS) && defined (ACE_HAS_THREAD_SPECIFIC_STORAGE))
 # define ACE_NO_TSS_TOKENS 1
@@ -1109,7 +1109,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_HAS_TOKENS_LIBRARY */
 
 #if defined (__ACE_INLINE__)
-#include "ace/Local_Tokens.inl"
+#include "Local_Tokens.inl"
 #endif /* __ACE_INLINE__ */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCAL_MUTEX_H */

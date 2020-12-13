@@ -8,7 +8,7 @@
 
 // #include the SunOS 5.5 config file, then add SunOS 5.6 updates below.
 
-#include "ace/config-sunos5.5.h"
+#include "config-sunos5.5.h"
 
 #if (defined(_POSIX_C_SOURCE) && _POSIX_C_SOURCE > 2) || \
     defined (__EXTENSIONS__)

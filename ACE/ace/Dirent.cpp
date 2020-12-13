@@ -1,5 +1,5 @@
-#include "ace/Dirent.h"
+#include "Dirent.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dirent.inl"
+#include "Dirent.inl"
 #endif /* __ACE_INLINE__ */

@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/Thread_Lane_Resources_Manager.h"
-#include "tao/ORB_Core.h"
-#include "tao/LF_Strategy.h"
+#include "Thread_Lane_Resources_Manager.h"
+#include "ORB_Core.h"
+#include "LF_Strategy.h"
 
 #include "ace/Dynamic_Service.h"
 

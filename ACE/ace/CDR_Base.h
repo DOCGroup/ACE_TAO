@@ -24,18 +24,18 @@
 #ifndef ACE_CDR_BASE_H
 #define ACE_CDR_BASE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Basic_Types.h"
-#include "ace/Default_Constants.h"
-#include "ace/Global_Macros.h"
-#include "ace/iosfwd.h"
+#include "Basic_Types.h"
+#include "Default_Constants.h"
+#include "Global_Macros.h"
+#include "iosfwd.h"
 
 #include <iterator>
 
@@ -536,10 +536,10 @@ ACE_CDR::Fixed operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/CDR_Base.inl"
+# include "CDR_Base.inl"
 #endif  /* __ACE_INLINE__ */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CDR_BASE_H */

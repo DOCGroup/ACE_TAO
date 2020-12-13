@@ -4,11 +4,11 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Monitor/MonitorS.h"
+#include "MonitorS.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "tao/Monitor/Monitor_export.h"
+#include "Monitor_export.h"
 #include "ace/Monitor_Base.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

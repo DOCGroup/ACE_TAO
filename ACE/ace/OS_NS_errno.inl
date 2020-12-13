@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/config-all.h"    /* Need ACE_TRACE */
+#include "config-all.h"    /* Need ACE_TRACE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

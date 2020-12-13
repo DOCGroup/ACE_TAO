@@ -17,13 +17,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/GIOP_Message_Version.h"
+#include "GIOP_Message_Version.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/GIOPC.h"
+#include "GIOPC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -131,7 +131,7 @@ static const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
 static const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
-# include "tao/GIOP_Message_State.inl"
+# include "GIOP_Message_State.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

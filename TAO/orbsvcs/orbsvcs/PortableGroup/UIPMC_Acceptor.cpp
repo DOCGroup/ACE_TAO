@@ -1,7 +1,7 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/UIPMC_Profile.h"
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.h"
-#include "orbsvcs/PortableGroup/UIPMC_Mcast_Connection_Handler.h"
+#include "UIPMC_Profile.h"
+#include "UIPMC_Acceptor.h"
+#include "UIPMC_Mcast_Connection_Handler.h"
 
 #include "tao/ORB_Core.h"
 #include "tao/debug.h"
@@ -9,7 +9,7 @@
 #include "ace/os_include/os_netdb.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/PortableGroup/UIPMC_Acceptor.inl"
+#include "UIPMC_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

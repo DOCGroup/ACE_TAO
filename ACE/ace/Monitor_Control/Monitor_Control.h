@@ -23,16 +23,16 @@
 
 #include "ace/Monitor_Admin_Manager.h"
 
-#include "ace/Monitor_Control/CPU_Load_Monitor.h"
-#include "ace/Monitor_Control/Memory_Usage_Monitor.h"
-#include "ace/Monitor_Control/Num_Threads_Monitor.h"
-#include "ace/Monitor_Control/Bytes_Sent_Monitor.h"
-#include "ace/Monitor_Control/Packets_Sent_Monitor.h"
-#include "ace/Monitor_Control/Bytes_Received_Monitor.h"
-#include "ace/Monitor_Control/Packets_Received_Monitor.h"
-#include "ace/Monitor_Control/Monitor_Group.h"
-#include "ace/Monitor_Control/Monitor_Query.h"
-#include "ace/Monitor_Control/Monitor_Control_utils.h"
+#include "CPU_Load_Monitor.h"
+#include "Memory_Usage_Monitor.h"
+#include "Num_Threads_Monitor.h"
+#include "Bytes_Sent_Monitor.h"
+#include "Packets_Sent_Monitor.h"
+#include "Bytes_Received_Monitor.h"
+#include "Packets_Received_Monitor.h"
+#include "Monitor_Group.h"
+#include "Monitor_Query.h"
+#include "Monitor_Control_utils.h"
 
 static int
 ACE_Requires_MC_Initializer = MC_ADMINMANAGER::Initializer ();

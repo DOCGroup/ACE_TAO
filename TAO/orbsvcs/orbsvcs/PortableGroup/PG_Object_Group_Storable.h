@@ -14,7 +14,7 @@
 #define TAO_PG_OBJECT_GROUP_STORABLE_H_
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -23,7 +23,7 @@
 
 /////////////////////////////////
 // Includes needed by this header
-#include "orbsvcs/PortableGroup/PG_Object_Group.h"
+#include "PG_Object_Group.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/LF_Invocation_Event.h"
+#include "LF_Invocation_Event.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

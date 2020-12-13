@@ -1,9 +1,9 @@
 #ifndef TAO_STRUCT_TYPECODE_CPP
 #define TAO_STRUCT_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Struct_TypeCode.h"
-#include "tao/AnyTypeCode/TypeCode_Struct_Field.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "Struct_TypeCode.h"
+#include "TypeCode_Struct_Field.h"
+#include "TypeCode_Traits.h"
 #include "tao/ORB_Core.h"
 #include "tao/TypeCodeFactory_Adapter.h"
 #include "tao/CDR.h"
@@ -11,7 +11,7 @@
 
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Struct_TypeCode.inl"
+# include "Struct_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "ace/Dynamic_Service.h"

@@ -1,13 +1,13 @@
-#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerAdmin.h"
-#include "orbsvcs/CosEvent/CEC_SupplierControl.h"
-#include "orbsvcs/CosEvent/CEC_ProxyPullSupplier.h"
+#include "CEC_ProxyPullConsumer.h"
+#include "CEC_EventChannel.h"
+#include "CEC_ConsumerAdmin.h"
+#include "CEC_SupplierControl.h"
+#include "CEC_ProxyPullSupplier.h"
 
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPullConsumer.inl"
+#include "CEC_ProxyPullConsumer.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

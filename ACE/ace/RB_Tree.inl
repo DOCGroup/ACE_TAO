@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/Guard_T.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Log_Category.h"
+#include "Guard_T.h"
+#include "Malloc_Base.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

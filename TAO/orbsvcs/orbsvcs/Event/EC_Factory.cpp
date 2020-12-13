@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Factory.h"
+#include "EC_Factory.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

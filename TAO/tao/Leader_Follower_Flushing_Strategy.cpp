@@ -1,9 +1,9 @@
-#include "tao/Leader_Follower_Flushing_Strategy.h"
-#include "tao/LF_Follower.h"
-#include "tao/Leader_Follower.h"
-#include "tao/Transport.h"
-#include "tao/Queued_Message.h"
-#include "tao/ORB_Core.h"
+#include "Leader_Follower_Flushing_Strategy.h"
+#include "LF_Follower.h"
+#include "Leader_Follower.h"
+#include "Transport.h"
+#include "Queued_Message.h"
+#include "ORB_Core.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

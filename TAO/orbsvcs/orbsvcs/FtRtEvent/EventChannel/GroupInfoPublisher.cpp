@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
+#include "GroupInfoPublisher.h"
 #include "../Utils/resolve_init.h"
-#include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Identification_Service.h"
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_Become_Primary_Listener.h"
+#include "IOGR_Maker.h"
+#include "Identification_Service.h"
+#include "FTEC_Become_Primary_Listener.h"
 #include "../Utils/Log.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

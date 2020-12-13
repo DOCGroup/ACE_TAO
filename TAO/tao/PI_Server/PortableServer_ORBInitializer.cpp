@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/PI_Server/PortableServer_ORBInitializer.h"
-#include "tao/PI_Server/PortableServer_PolicyFactory.h"
+#include "PortableServer_ORBInitializer.h"
+#include "PortableServer_PolicyFactory.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/PortableServer.h"

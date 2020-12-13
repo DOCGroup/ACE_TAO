@@ -1,4 +1,4 @@
-#include "tao/Compression/Compression_Manager.h"
+#include "Compression_Manager.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

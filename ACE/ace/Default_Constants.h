@@ -14,18 +14,18 @@
 
 #ifndef ACE_DEFAULT_CONSTANTS_H
 #define ACE_DEFAULT_CONSTANTS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // Included just keep compilers that see #pragma directive first
 // happy.
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // For _POSIX_TIMER_MAX
-#include "ace/os_include/os_limits.h"
+#include "os_include/os_limits.h"
 
 // Define the default constants for ACE.  Many of these are used for
 // the ACE tests and applications.  You can change these values by
@@ -588,5 +588,5 @@
 # define ACE_DEFAULT_ACCEPTOR_USE_SELECT 1
 #endif /* ACE_DEFAULT_ACCEPTOR_USE_SELECT */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_DEFAULT_CONSTANTS_H*/

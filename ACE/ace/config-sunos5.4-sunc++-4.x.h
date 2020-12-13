@@ -4,7 +4,7 @@
 
 #ifndef ACE_CONFIG_H
 #define ACE_CONFIG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
@@ -175,5 +175,5 @@
 // <operator new> throws an exception instead of returning 0.
 #define ACE_NEW_THROWS_EXCEPTIONS
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIG_H */

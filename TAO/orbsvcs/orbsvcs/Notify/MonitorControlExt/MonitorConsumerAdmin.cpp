@@ -1,11 +1,11 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorConsumerAdmin.h"
+#include "MonitorConsumerAdmin.h"
 
 #include "ace/Monitor_Size.h"
 #include "ace/Monitor_Base.h"
 
-#include "orbsvcs/Notify/MonitorControlExt/MonitorEventChannel.h"
+#include "MonitorEventChannel.h"
 #include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 #include "orbsvcs/Notify/MonitorControl/Control.h"
 #include "orbsvcs/Notify/Buffering_Strategy.h"

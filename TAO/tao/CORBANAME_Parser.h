@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/IOR_Parser.h"
+#include "IOR_Parser.h"
 
 #if (TAO_HAS_CORBANAME_PARSER == 1)
 

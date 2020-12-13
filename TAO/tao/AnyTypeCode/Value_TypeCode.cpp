@@ -1,8 +1,8 @@
 #ifndef TAO_VALUE_TYPECODE_CPP
 #define TAO_VALUE_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Value_TypeCode.h"
-#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
+#include "Value_TypeCode.h"
+#include "TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
 
@@ -13,7 +13,7 @@
 #include "ace/Truncate.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Value_TypeCode.inl"
+# include "Value_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

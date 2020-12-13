@@ -37,7 +37,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/varbase.h"
+#include "varbase.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -122,11 +122,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Pseudo_VarOut_T.inl"
+#include "Pseudo_VarOut_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Pseudo_VarOut_T.cpp"
+#include "Pseudo_VarOut_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -10,15 +10,15 @@
 
 #ifndef ACE_MESSAGE_QUEUE_H
 #define ACE_MESSAGE_QUEUE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Message_Block.h"
+#include "Message_Block.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/IO_Cntl_Msg.h"
+#include "IO_Cntl_Msg.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -213,11 +213,11 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 // Include the templates here.
-#include "ace/Message_Queue_T.h"
+#include "Message_Queue_T.h"
 
 #if defined (__ACE_INLINE__)
-#include "ace/Message_Queue.inl"
+#include "Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MESSAGE_QUEUE_H */

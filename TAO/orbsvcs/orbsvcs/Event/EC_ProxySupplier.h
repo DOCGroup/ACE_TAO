@@ -17,7 +17,7 @@
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -196,7 +196,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_ProxySupplier.inl"
+#include "EC_ProxySupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

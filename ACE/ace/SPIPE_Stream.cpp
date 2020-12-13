@@ -1,12 +1,12 @@
-#include "ace/SPIPE_Stream.h"
-#include "ace/OS_Memory.h"
+#include "SPIPE_Stream.h"
+#include "OS_Memory.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SPIPE_Stream.inl"
+#include "SPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 

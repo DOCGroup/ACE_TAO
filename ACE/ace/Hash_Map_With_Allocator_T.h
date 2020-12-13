@@ -11,10 +11,10 @@
 
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_H
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Null_Mutex.h"
+#include "Hash_Map_Manager_T.h"
+#include "Null_Mutex.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -94,11 +94,11 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hash_Map_With_Allocator_T.inl"
+#include "Hash_Map_With_Allocator_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Hash_Map_With_Allocator_T.cpp"
+#include "Hash_Map_With_Allocator_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -106,5 +106,5 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_HASH_MAP_WITH_ALLOCATOR_T_H */

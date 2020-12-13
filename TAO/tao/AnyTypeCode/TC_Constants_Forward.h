@@ -13,6 +13,6 @@
 #ifndef TAO_TC_CONSTANTS_FORWARD_H
 #define TAO_TC_CONSTANTS_FORWARD_H
 
-#include "tao/AnyTypeCode/TypeCode_Constants.h"
+#include "TypeCode_Constants.h"
 
 #endif  /* TAO_TC_CONSTANTS_FORWARD_H */

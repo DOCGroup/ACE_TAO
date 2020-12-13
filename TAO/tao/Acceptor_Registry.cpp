@@ -1,17 +1,17 @@
-#include "tao/Acceptor_Registry.h"
-#include "tao/Profile.h"
-#include "tao/Transport_Acceptor.h"
-#include "tao/Protocol_Factory.h"
-#include "tao/ORB_Core.h"
-#include "tao/params.h"
-#include "tao/MProfile.h"
-#include "tao/debug.h"
-#include "tao/Acceptor_Filter.h"
-#include "tao/Endpoint.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Acceptor_Registry.h"
+#include "Profile.h"
+#include "Transport_Acceptor.h"
+#include "Protocol_Factory.h"
+#include "ORB_Core.h"
+#include "params.h"
+#include "MProfile.h"
+#include "debug.h"
+#include "Acceptor_Filter.h"
+#include "Endpoint.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 #if defined (ACE_WIN32) && defined (ACE_HAS_IPV6)
-# include "tao/IIOP_Acceptor.h"
+# include "IIOP_Acceptor.h"
 #endif /* ACE_WIN32 && ACE_HAS_IPV6 */
 
 #include "ace/Auto_Ptr.h"
@@ -19,7 +19,7 @@
 #include "ace/OS_NS_ctype.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Acceptor_Registry.inl"
+#include "Acceptor_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

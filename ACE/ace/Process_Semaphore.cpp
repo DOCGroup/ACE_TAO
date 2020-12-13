@@ -1,15 +1,15 @@
-#include "ace/Process_Semaphore.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_Memory.h"
+#include "Process_Semaphore.h"
+#include "Log_Category.h"
+#include "OS_Memory.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Process_Semaphore.inl"
+#include "Process_Semaphore.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 
 

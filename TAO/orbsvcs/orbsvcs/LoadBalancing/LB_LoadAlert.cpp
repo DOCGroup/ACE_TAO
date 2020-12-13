@@ -1,7 +1,7 @@
-#include "orbsvcs/LoadBalancing/LB_LoadAlert.h"
+#include "LB_LoadAlert.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/LoadBalancing/LB_LoadAlert.inl"
+# include "LB_LoadAlert.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

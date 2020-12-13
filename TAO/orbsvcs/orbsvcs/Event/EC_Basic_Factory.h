@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Factory.h"
+#include "EC_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

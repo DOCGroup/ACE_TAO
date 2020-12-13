@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_time.h"
+#include "sys/os_time.h"
 
 #if !defined (ACE_LACKS_UTMPX_H)
 #  include /**/ <utmpx.h>

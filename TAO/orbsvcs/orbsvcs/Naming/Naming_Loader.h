@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Naming/Naming_Server.h"
+#include "Naming_Server.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

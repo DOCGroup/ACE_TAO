@@ -24,7 +24,7 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/DIOP_Endpoint.h"
+#include "DIOP_Endpoint.h"
 #include "tao/Profile.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

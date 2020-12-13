@@ -25,16 +25,16 @@
 
 #ifndef ACE_FUNCTOR_T_H
 #define ACE_FUNCTOR_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Functor.h"
+#include "Functor.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Functor_String.h"
-#include "ace/Truncate.h"
+#include "Functor_String.h"
+#include "Truncate.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -177,17 +177,17 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor_T.inl"
+#include "Functor_T.inl"
 #endif /* __ACE_INLINE__ */
 
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Functor_T.cpp"
+#include "Functor_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Functor_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FUNCTOR_T_H */

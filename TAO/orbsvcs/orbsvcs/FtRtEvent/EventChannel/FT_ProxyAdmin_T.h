@@ -10,9 +10,9 @@
 #ifndef FT_PROXYADMIN_H
 #define FT_PROXYADMIN_H
 
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h"
+#include "FT_ProxyAdmin_Base.h"
 #include "../Utils/ScopeGuard.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
+#include "Request_Context_Repository.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_T.cpp"
+#include "FT_ProxyAdmin_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

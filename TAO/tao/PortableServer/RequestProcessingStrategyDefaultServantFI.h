@@ -12,14 +12,14 @@
 #define TAO_PORTABLESERVER_REQUESTPROCESSINGSTRATEGYDEFAULTSERVANTFACTORYIMPL_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Service_Config.h"
-#include "tao/PortableServer/RequestProcessingStrategyFactory.h"
+#include "RequestProcessingStrategyFactory.h"
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 

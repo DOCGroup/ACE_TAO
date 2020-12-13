@@ -1,15 +1,15 @@
-#include "ace/Read_Buffer.h"
+#include "Read_Buffer.h"
 
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Read_Buffer.inl"
+#include "Read_Buffer.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/Malloc_Base.h"
-#include "ace/Service_Config.h"
-#include "ace/OS_NS_stdio.h"
+#include "Log_Category.h"
+#include "Malloc_Base.h"
+#include "Service_Config.h"
+#include "OS_NS_stdio.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

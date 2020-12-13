@@ -1,7 +1,7 @@
-#include "orbsvcs/IFRService/StructDef_i.h"
-#include "orbsvcs/IFRService/RecursDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "StructDef_i.h"
+#include "RecursDef_i.h"
+#include "Repository_i.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/Auto_Ptr.h"
 #include "ace/SString.h"

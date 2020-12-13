@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // ctype.h, string.h, stdarg.h, stdio.h, stdlib.h, time.h
-#include "ace/os_include/os_wchar.h"
+#include "os_wchar.h"
 
 #if !defined (ACE_LACKS_WCTYPE_H)
 #  include /**/ <wctype.h>

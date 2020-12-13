@@ -1,7 +1,7 @@
 #ifndef ACE_REFCOUNTED_AUTO_PTR_CPP
 #define ACE_REFCOUNTED_AUTO_PTR_CPP
 
-#include "ace/Refcounted_Auto_Ptr.h"
+#include "Refcounted_Auto_Ptr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

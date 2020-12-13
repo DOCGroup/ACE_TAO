@@ -1,4 +1,4 @@
-#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.h"
+#include "FT_ClientPolicy_i.h"
 
 #include "tao/debug.h"
 #include "orbsvcs/Log_Macros.h"
@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/FaultTolerance/FT_ClientPolicy_i.inl"
+#include "FT_ClientPolicy_i.inl"
 #endif /* __ACE_INLINE__ */
 
 

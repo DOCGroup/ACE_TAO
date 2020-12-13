@@ -3,8 +3,8 @@
 // both resumed and suspended entries).
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-#include "ace/Guard_T.h"
-#include "ace/Thread_Mutex.h"
+#include "Guard_T.h"
+#include "Thread_Mutex.h"
 #endif /* ACE_MT_SAFE */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

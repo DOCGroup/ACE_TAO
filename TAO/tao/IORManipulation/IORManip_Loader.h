@@ -14,7 +14,7 @@
 #define TAO_IORMANIP_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IORManipulation/ior_manip_export.h"
+#include "ior_manip_export.h"
 #include "tao/Object_Loader.h"
 #include "ace/Service_Config.h"
 
@@ -49,7 +49,7 @@ ACE_FACTORY_DECLARE (TAO_IORManip, TAO_IORManip_Loader)
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #define TAO_IORMANIP_SAFE_INCLUDE
-#include "tao/IORManipulation/IORC.h"
+#include "IORC.h"
 #undef TAO_IORMANIP_SAFE_INCLUDE
 
 #include /**/ "ace/post.h"

@@ -15,9 +15,9 @@
 #ifndef ACE_SSTRINGFWD_H
 #define ACE_SSTRINGFWD_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Basic_Types.h"   /* ACE_WCHAR_T definition */
+#include "Basic_Types.h"   /* ACE_WCHAR_T definition */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,7 @@
 #if (defined (__HP_aCC) && (36300 <= __HP_aCC) && (__HP_aCC <= 37300))
 // Due to a bug in the aCC 3.xx compiler need to define the ACE_String_Base
 // template before we can typedef ACE_CString
-# include "ace/String_Base.h"
+# include "String_Base.h"
 #endif /* __HP_aCC */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -48,6 +48,6 @@ typedef ACE_CString ACE_TString;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif  /* ACE_SSTRINGFWD_H */

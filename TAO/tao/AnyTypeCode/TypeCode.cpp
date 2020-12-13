@@ -1,7 +1,7 @@
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/TypeCode.inl"
+# include "TypeCode.inl"
 #endif /* ! __ACE_INLINE__ */
 
 #include "tao/CDR.h"

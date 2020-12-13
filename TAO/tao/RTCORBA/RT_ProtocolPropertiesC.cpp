@@ -26,7 +26,7 @@
 // be\be_codegen.cpp:371
 
 
-#include "tao/RTCORBA/RTCORBA.h"
+#include "RTCORBA.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

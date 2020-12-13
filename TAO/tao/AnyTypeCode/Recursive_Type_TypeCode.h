@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/ValueModifierC.h"
+#include "ValueModifierC.h"
 #include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
 #include "ace/Recursive_Thread_Mutex.h"
@@ -171,11 +171,11 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode.inl"
+# include "Recursive_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #ifdef ACE_TEMPLATES_REQUIRE_SOURCE
-# include "tao/AnyTypeCode/Recursive_Type_TypeCode.cpp"
+# include "Recursive_Type_TypeCode.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #ifdef ACE_TEMPLATES_REQUIRE_PRAGMA

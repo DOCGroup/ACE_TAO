@@ -1,22 +1,22 @@
-#include "ace/Get_Opt.h"
-#include "ace/Naming_Context.h"
-#include "ace/Remote_Name_Space.h"
-#include "ace/Local_Name_Space_T.h"
-#include "ace/Registry_Name_Space.h"
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Lib_Find.h"
-#include "ace/RW_Process_Mutex.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
+#include "Get_Opt.h"
+#include "Naming_Context.h"
+#include "Remote_Name_Space.h"
+#include "Local_Name_Space_T.h"
+#include "Registry_Name_Space.h"
+#include "MMAP_Memory_Pool.h"
+#include "Lib_Find.h"
+#include "RW_Process_Mutex.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
 #if defined (ACE_HAS_TRACE)
-# include "ace/OS_NS_strings.h"
-# include "ace/Trace.h"
+# include "OS_NS_strings.h"
+# include "Trace.h"
 #endif /* ACE_HAS_TRACE */
 
 
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Naming_Context.inl"
+#include "Naming_Context.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

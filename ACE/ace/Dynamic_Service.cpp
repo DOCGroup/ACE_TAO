@@ -1,16 +1,16 @@
 #ifndef ACE_DYNAMIC_SERVICE_CPP
 #define ACE_DYNAMIC_SERVICE_CPP
 
-#include "ace/Dynamic_Service.h"
+#include "Dynamic_Service.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Service_Object.h"
+#include "Service_Object.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service.inl"
+#include "Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

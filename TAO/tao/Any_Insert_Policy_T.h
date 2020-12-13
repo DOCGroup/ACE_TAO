@@ -13,20 +13,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/UB_String_Argument_T.h"
+#include "UB_String_Argument_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Arg_Traits_T.h"
-#include "tao/Argument.h"
-#include "tao/AnyTypeCode_Adapter.h"
+#include "Arg_Traits_T.h"
+#include "Argument.h"
+#include "AnyTypeCode_Adapter.h"
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"
-#include "tao/debug.h"
-#include "tao/IFR_Client_Adapter.h"
+#include "debug.h"
+#include "IFR_Client_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

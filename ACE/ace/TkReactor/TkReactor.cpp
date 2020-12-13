@@ -1,4 +1,4 @@
-#include "ace/TkReactor/TkReactor.h"
+#include "TkReactor.h"
 
 #include "ace/SOCK_Acceptor.h"
 #include "ace/SOCK_Connector.h"

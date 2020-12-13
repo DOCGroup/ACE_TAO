@@ -13,16 +13,16 @@
 //==========================================================================
 #ifndef ACE_FUNCTOR_STRING_H
 #define ACE_FUNCTOR_STRING_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/SStringfwd.h"
+#include /**/ "ACE_export.h"
+#include "SStringfwd.h"
 #include <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -159,8 +159,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Functor_String.inl"
+#include "Functor_String.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /*ACE_FUNCTOR_STRING_H*/

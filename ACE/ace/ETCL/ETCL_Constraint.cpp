@@ -1,11 +1,11 @@
 // -*- C++ -*-
 #include "ace/ACE.h"
 
-#include "ace/ETCL/ETCL_Constraint.h"
-#include "ace/ETCL/ETCL_Constraint_Visitor.h"
+#include "ETCL_Constraint.h"
+#include "ETCL_Constraint_Visitor.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "ace/ETCL/ETCL_Constraint.inl"
+#include "ETCL_Constraint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_string.h"

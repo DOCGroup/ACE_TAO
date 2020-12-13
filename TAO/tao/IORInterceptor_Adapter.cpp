@@ -1,4 +1,4 @@
-#include "tao/IORInterceptor_Adapter.h"
+#include "IORInterceptor_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,16 +1,16 @@
-#include "orbsvcs/Notify/Proxy.h"
+#include "Proxy.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Proxy.inl"
+#include "Proxy.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/Peer.h"
-#include "orbsvcs/Notify/Proxy.h"
-#include "orbsvcs/Notify/Method_Request_Updates.h"
-#include "orbsvcs/Notify/Worker_Task.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/POA_Helper.h"
-#include "orbsvcs/Notify/Topology_Saver.h"
+#include "Peer.h"
+#include "Proxy.h"
+#include "Method_Request_Updates.h"
+#include "Worker_Task.h"
+#include "Properties.h"
+#include "POA_Helper.h"
+#include "Topology_Saver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

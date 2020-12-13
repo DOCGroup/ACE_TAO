@@ -13,17 +13,17 @@
 #ifndef ACE_TRUNCATE_H
 #define ACE_TRUNCATE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/config-all.h"
+#include "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/If_Then_Else.h"
-#include "ace/Numeric_Limits.h"
+#include "Global_Macros.h"
+#include "If_Then_Else.h"
+#include "Numeric_Limits.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -463,6 +463,6 @@ namespace ACE_Utils
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_TRUNCATE_H*/

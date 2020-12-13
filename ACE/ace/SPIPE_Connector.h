@@ -11,10 +11,10 @@
 
 #ifndef ACE_SPIPE_CONNECTOR_H
 #define ACE_SPIPE_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SPIPE_Stream.h"
-#include "ace/os_include/os_fcntl.h"
+#include "SPIPE_Stream.h"
+#include "os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -108,8 +108,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SPIPE_Connector.inl"
+#include "SPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SPIPE_CONNECTOR_H */

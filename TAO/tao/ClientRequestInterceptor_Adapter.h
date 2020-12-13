@@ -18,15 +18,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
-#include "tao/RequestInterceptor_Adapter.h"
+#include /**/ "TAO_Export.h"
+#include "RequestInterceptor_Adapter.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Invocation_Utils.h"
-#include "tao/Basic_Types.h"
+#include "Invocation_Utils.h"
+#include "Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

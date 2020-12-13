@@ -11,17 +11,17 @@
 #ifndef ACE_CACHE_MAP_MANAGER_T_H
 #define ACE_CACHE_MAP_MANAGER_T_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
-#include "ace/Global_Macros.h"
-#include "ace/Pair_T.h"
+#include "Default_Constants.h"
+#include "Global_Macros.h"
+#include "Pair_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -382,17 +382,17 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Cache_Map_Manager_T.inl"
+#include "Cache_Map_Manager_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Cache_Map_Manager_T.cpp"
+#include "Cache_Map_Manager_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Cache_Map_Manager_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CACHE_MAP_MANAGER_T_H */

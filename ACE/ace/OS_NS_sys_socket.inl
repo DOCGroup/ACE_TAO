@@ -1,15 +1,15 @@
 // -*- C++ -*-
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_macros.h"
-#include "ace/OS_NS_sys_uio.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_QoS.h"
-#include "ace/Global_Macros.h"
-#include "ace/os_include/netinet/os_in.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_macros.h"
+#include "OS_NS_sys_uio.h"
+#include "OS_NS_stdio.h"
+#include "OS_QoS.h"
+#include "Global_Macros.h"
+#include "os_include/netinet/os_in.h"
 
 #if defined (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO) \
          && (ACE_GETNAME_RETURNS_RANDOM_SIN_ZERO == 1)
-#include "ace/OS_NS_string.h"
+#include "OS_NS_string.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

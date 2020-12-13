@@ -15,7 +15,7 @@
 
 #include "ace/Hash_Map_With_Allocator_T.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/Naming/naming_serv_export.h"
+#include "naming_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

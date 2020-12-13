@@ -12,16 +12,16 @@
 #ifndef ACE_REMOTE_NAME_SPACE_H
 #define ACE_REMOTE_NAME_SPACE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Name_Proxy.h"
-#include "ace/Name_Space.h"
+#include "Name_Proxy.h"
+#include "Name_Space.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -141,6 +141,6 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_REMOTE_NAME_SPACE_H */

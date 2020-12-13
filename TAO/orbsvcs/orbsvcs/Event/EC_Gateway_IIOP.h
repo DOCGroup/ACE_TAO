@@ -17,8 +17,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
-#include "orbsvcs/Event/EC_Gateway.h"
+#include /**/ "event_serv_export.h"
+#include "EC_Gateway.h"
 
 #include "orbsvcs/RtecEventChannelAdminS.h"
 #include "orbsvcs/RtecEventCommS.h"

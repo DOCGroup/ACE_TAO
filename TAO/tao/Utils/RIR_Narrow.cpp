@@ -1,7 +1,7 @@
 #ifndef TAO_UTILS_RIR_NARROW_CPP
 #define TAO_UTILS_RIR_NARROW_CPP
 
-#include "tao/Utils/RIR_Narrow.h"
+#include "RIR_Narrow.h"
 #include "tao/SystemException.h"
 #include <stdexcept>
 

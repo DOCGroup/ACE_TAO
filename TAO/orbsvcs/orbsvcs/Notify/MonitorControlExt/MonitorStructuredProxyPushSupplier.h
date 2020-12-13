@@ -2,14 +2,14 @@
 #define MONITORSTRUCTUREDPROXYPUSHSUPPLIER_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/Notify/MonitorControlExt/notify_mc_ext_export.h"
+#include "notify_mc_ext_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/Notify/Structured/StructuredProxyPushSupplier.h"
-#include "orbsvcs/Notify/MonitorControlExt/MonitorProxySupplier_T.h"
+#include "MonitorProxySupplier_T.h"
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 

@@ -1,13 +1,13 @@
-#include "tao/PortableServer/POAManager.h"
-#include "tao/PortableServer/POAManagerFactory.h"
-#include "tao/PortableServer/Root_POA.h"
-#include "tao/PortableServer/poa_macros.h"
+#include "POAManager.h"
+#include "POAManagerFactory.h"
+#include "Root_POA.h"
+#include "poa_macros.h"
 #include "tao/Server_Strategy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/IORInterceptor_Adapter.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POAManager.inl"
+# include "POAManager.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

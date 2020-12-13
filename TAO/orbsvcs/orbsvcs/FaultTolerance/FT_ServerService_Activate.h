@@ -14,7 +14,7 @@
 #define TAO_FT_SERVERACTIVATE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/FaultTolerance/FT_ServerORB_export.h"
+#include "FT_ServerORB_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

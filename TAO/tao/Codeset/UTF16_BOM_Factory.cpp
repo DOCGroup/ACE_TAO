@@ -11,7 +11,7 @@
 //=============================================================================
 
 #include "tao/debug.h"
-#include "tao/Codeset/UTF16_BOM_Factory.h"
+#include "UTF16_BOM_Factory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/Dynamic_Service.h"
 #include "ace/Log_Msg.h"

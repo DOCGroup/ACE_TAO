@@ -11,7 +11,7 @@
 #define FTRTEC_LOG_H
 
 #include /**/ "ace/pre.h"
-#include "orbsvcs/FtRtEvent/Utils/ftrtevent_export.h"
+#include "ftrtevent_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/Log_Msg.h"
 
@@ -38,7 +38,7 @@ namespace TAO_FTRTEC {
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/Utils/Log.inl"
+#include "Log.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

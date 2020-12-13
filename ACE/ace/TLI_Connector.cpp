@@ -1,17 +1,17 @@
-#include "ace/TLI_Connector.h"
+#include "TLI_Connector.h"
 
 
 
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI_Connector.inl"
+#include "TLI_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Handle_Set.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_string.h"
-#include "ace/Time_Value.h"
+#include "Handle_Set.h"
+#include "ACE.h"
+#include "OS_NS_string.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

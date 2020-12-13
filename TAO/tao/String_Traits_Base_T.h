@@ -9,7 +9,7 @@
  * @author Carlos O'Ryan
  */
 
-#include "tao/String_Alloc.h"
+#include "String_Alloc.h"
 #include "ace/CDR_Stream.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

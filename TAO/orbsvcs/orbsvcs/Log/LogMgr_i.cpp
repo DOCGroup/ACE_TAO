@@ -1,9 +1,9 @@
-#include "orbsvcs/Log/LogMgr_i.h"
-#include "orbsvcs/Log/LogActivator.h"
+#include "LogMgr_i.h"
+#include "LogActivator.h"
 #include "ace/Dynamic_Service.h"
 #include "tao/Utils/PolicyList_Destroyer.h"
-#include "orbsvcs/Log/Hash_Persistence_Strategy.h"
-#include "orbsvcs/Log/LogStore.h"
+#include "Hash_Persistence_Strategy.h"
+#include "LogStore.h"
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

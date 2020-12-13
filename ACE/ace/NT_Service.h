@@ -11,9 +11,9 @@
 #ifndef ACE_NT_SERVICE_H
 #define ACE_NT_SERVICE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,11 +21,11 @@
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
-#include "ace/ACE.h"
-#include "ace/OS_Log_Msg_Attributes.h"
-#include "ace/Service_Object.h"
-#include "ace/Task.h"
-#include "ace/OS_NS_errno.h" // needed for those using our macros
+#include "ACE.h"
+#include "OS_Log_Msg_Attributes.h"
+#include "Service_Object.h"
+#include "Task.h"
+#include "OS_NS_errno.h" // needed for those using our macros
 
 // ACE_NT_SERVICE_START_TIMEOUT is an estimate of the number of
 // milliseconds your service will take to start.  Default is 5
@@ -426,11 +426,11 @@ extern VOID WINAPI ace_nt_svc_main_##SVCNAME (DWORD dwArgc,                \
   int RET = ACE_TEXT_StartServiceCtrlDispatcher(_ace_nt_svc_table);
 
 #if defined (__ACE_INLINE__)
-#include "ace/NT_Service.inl"
+#include "NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_WIN32 && !ACE_LACKS_WIN32_SERVICES */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SERVICE_OBJECT_H */

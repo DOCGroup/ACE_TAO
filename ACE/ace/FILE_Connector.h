@@ -10,11 +10,11 @@
 
 #ifndef ACE_FILE_CONNECTOR_H
 #define ACE_FILE_CONNECTOR_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/FILE_IO.h"
-#include "ace/Log_Category.h"
-#include "ace/os_include/os_fcntl.h"
+#include "FILE_IO.h"
+#include "Log_Category.h"
+#include "os_include/os_fcntl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -103,8 +103,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FILE_Connector.inl"
+#include "FILE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FILE_CONNECTOR_H */

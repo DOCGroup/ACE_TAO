@@ -1,10 +1,10 @@
-#include "orbsvcs/Event/EC_Filter.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "EC_Filter.h"
+#include "EC_QOS_Info.h"
 
 #include "tao/ORB_Constants.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter.inl"
+#include "EC_Filter.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

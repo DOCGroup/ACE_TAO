@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Messaging/AMI_Arguments_Converter_Impl.h"
+#include "AMI_Arguments_Converter_Impl.h"
 #include "tao/operation_details.h"
 #include "tao/SystemException.h"
 #include "tao/Pluggable_Messaging_Utils.h"

@@ -1,12 +1,12 @@
-#include "ace/FIFO_Recv.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_fcntl.h"
+#include "FIFO_Recv.h"
+#include "Log_Category.h"
+#include "OS_NS_fcntl.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FIFO_Recv.inl"
+#include "FIFO_Recv.inl"
 #endif /* __ACE_INLINE__ */
 
 

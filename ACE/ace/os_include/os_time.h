@@ -23,7 +23,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // @todo should we include anything from signal.h?
-#include "ace/os_include/sys/os_types.h"
+#include "sys/os_types.h"
 
 // To get the proper select() signature, this is required for HP-UX, and
 // maybe other platforms that offer both int and fdset forms of select().

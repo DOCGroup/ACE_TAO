@@ -11,7 +11,7 @@
 #ifndef TAO_DIFFSERV_SERVICE_CONTEXT_HANDLER_H
 #define TAO_DIFFSERV_SERVICE_CONTEXT_HANDLER_H
 #include /**/ "ace/pre.h"
-#include "tao/DiffServPolicy/DiffServPolicy_Export.h"
+#include "DiffServPolicy_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

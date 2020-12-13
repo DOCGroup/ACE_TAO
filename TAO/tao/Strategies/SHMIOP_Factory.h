@@ -22,7 +22,7 @@
 #if defined (TAO_HAS_SHMIOP) && (TAO_HAS_SHMIOP != 0)
 
 #include "tao/Protocol_Factory.h"
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 
 #include "ace/Service_Config.h"
 

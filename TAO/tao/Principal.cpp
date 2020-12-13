@@ -2,11 +2,11 @@
 // All Rights Reserved
 // ORB: Principal identifier pseudo-objref
 
-#include "tao/Principal.h"
-#include "tao/CDR.h"
+#include "Principal.h"
+#include "CDR.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Principal.inl"
+#include "Principal.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

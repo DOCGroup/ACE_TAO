@@ -1,13 +1,13 @@
-#include "ace/UPIPE_Stream.h"
+#include "UPIPE_Stream.h"
 
 
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_string.h"
+#include "OS_NS_string.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UPIPE_Stream.inl"
+#include "UPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

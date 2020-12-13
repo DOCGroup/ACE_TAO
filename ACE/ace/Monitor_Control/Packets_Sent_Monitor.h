@@ -22,20 +22,20 @@
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
 #if defined (ACE_HAS_PDH_H) && !defined (ACE_LACKS_PDH_H)
-#include "ace/Monitor_Control/Windows_Multi_Instance_Monitor.h"
+#include "Windows_Multi_Instance_Monitor.h"
 #elif defined (ACE_LINUX) || defined (AIX)
-#include "ace/Monitor_Control/Linux_Network_Interface_Monitor.h"
+#include "Linux_Network_Interface_Monitor.h"
 #elif defined (ACE_HAS_KSTAT)
-#include "ace/Monitor_Control/Solaris_Network_Interface_Monitor.h"
+#include "Solaris_Network_Interface_Monitor.h"
 #elif defined (__FreeBSD__) || defined (__Lynx__)
-#include "ace/Monitor_Control/FreeBSD_Network_Interface_Monitor.h"
+#include "FreeBSD_Network_Interface_Monitor.h"
 #elif defined (__NetBSD__) || defined (__OpenBSD__)
-#include "ace/Monitor_Control/BSD_Network_Interface_Monitor.h"
+#include "BSD_Network_Interface_Monitor.h"
 #else
-#include "ace/Monitor_Control/Null_Network_Interface_Monitor.h"
+#include "Null_Network_Interface_Monitor.h"
 #endif
 
-#include "ace/Monitor_Control/Monitor_Control_export.h"
+#include "Monitor_Control_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

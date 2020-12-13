@@ -23,7 +23,7 @@
 
 #if TAO_HAS_INTERCEPTORS == 1
 
-#include "tao/PI/pi_export.h"
+#include "pi_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

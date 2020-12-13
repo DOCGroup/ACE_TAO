@@ -1,8 +1,8 @@
 // -*- C++ -*-
-# include "tao/Cache_Entries_T.h"
+# include "Cache_Entries_T.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Cache_Entries_T.inl"
+# include "Cache_Entries_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

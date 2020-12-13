@@ -12,13 +12,13 @@
 #define TAO_THREADSTRATEGYSINGLE_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ThreadStrategy.h"
+#include "ThreadStrategy.h"
 
 #include "tao/orbconf.h"
 

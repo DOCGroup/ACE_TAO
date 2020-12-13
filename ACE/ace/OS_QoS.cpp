@@ -10,8 +10,8 @@
 // */
 //=============================================================================
 
-#include "ace/OS_QoS.h"
-#include "ace/OS_NS_errno.h"
+#include "OS_QoS.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

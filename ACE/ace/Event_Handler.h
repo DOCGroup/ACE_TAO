@@ -10,16 +10,16 @@
 
 #ifndef ACE_EVENT_HANDLER_H
 #define ACE_EVENT_HANDLER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_signal.h"
-#include "ace/OS_NS_Thread.h"
+#include "os_include/os_signal.h"
+#include "OS_NS_Thread.h"
 #include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -407,5 +407,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_EVENT_HANDLER_H */

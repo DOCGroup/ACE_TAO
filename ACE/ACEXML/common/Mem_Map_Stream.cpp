@@ -2,7 +2,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Truncate.h"
 
-#include "ACEXML/common/Mem_Map_Stream.h"
+#include "Mem_Map_Stream.h"
 
 ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream (void)
   : svc_handler_ (0),

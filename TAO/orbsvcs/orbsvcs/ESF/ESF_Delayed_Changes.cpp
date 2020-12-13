@@ -1,15 +1,15 @@
 #ifndef TAO_ESF_DELAYED_CHANGES_CPP
 #define TAO_ESF_DELAYED_CHANGES_CPP
 
-#include "orbsvcs/ESF/ESF_Delayed_Changes.h"
+#include "ESF_Delayed_Changes.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Delayed_Changes.inl"
+#include "ESF_Delayed_Changes.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/ESF/ESF_Defaults.h"
-#include "orbsvcs/ESF/ESF_Worker.h"
-#include "orbsvcs/ESF/ESF_Delayed_Command.h"
+#include "ESF_Defaults.h"
+#include "ESF_Worker.h"
+#include "ESF_Delayed_Command.h"
 #include "tao/SystemException.h"
 
 #include "ace/Functor.h"

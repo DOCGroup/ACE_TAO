@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/OS_NS_sys_uio.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_sys_uio.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_unistd.h"
 #if defined (ACE_WIN32)
-#include "ace/OS_NS_sys_socket.h"
+#include "OS_NS_sys_socket.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

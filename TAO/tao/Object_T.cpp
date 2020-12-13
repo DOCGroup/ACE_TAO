@@ -1,10 +1,10 @@
 #ifndef TAO_OBJECT_T_CPP
 #define TAO_OBJECT_T_CPP
 
-#include "tao/Object_T.h"
-#include "tao/Object.h"
-#include "tao/Stub.h"
-#include "tao/SystemException.h"
+#include "Object_T.h"
+#include "Object.h"
+#include "Stub.h"
+#include "SystemException.h"
 #include "ace/CORBA_macros.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

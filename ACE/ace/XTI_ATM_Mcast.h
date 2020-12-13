@@ -11,9 +11,9 @@
 
 #ifndef ACE_XTI_ATM_MCAST_H
 #define ACE_XTI_ATM_MCAST_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,8 +21,8 @@
 
 #if defined (ACE_HAS_XTI_ATM)
 
-#include "ace/TLI_Connector.h"
-#include "ace/ATM_Addr.h"
+#include "TLI_Connector.h"
+#include "ATM_Addr.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -124,11 +124,11 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/XTI_ATM_Mcast.inl"
+#include "XTI_ATM_Mcast.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_XTI_ATM */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_XTI_ATM_MCAST_H */

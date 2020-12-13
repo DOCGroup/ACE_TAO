@@ -12,9 +12,9 @@
 #ifndef ACE_UNIX_ADDR_H
 #define ACE_UNIX_ADDR_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,10 +22,10 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-#include "ace/Addr.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/os_include/sys/os_un.h"
+#include "Addr.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "os_include/sys/os_un.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -104,11 +104,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/UNIX_Addr.inl"
+#include "UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_UNIX_ADDR_H */

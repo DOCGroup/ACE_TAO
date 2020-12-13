@@ -13,20 +13,20 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object.h"
+#include "Object.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Invocation_Utils.h"
-#include "tao/GIOPC.h"
+#include "Invocation_Utils.h"
+#include "GIOPC.h"
 
 #if TAO_HAS_INTERCEPTORS == 1
-#include "tao/Exception.h"
-#include "tao/PI_ForwardC.h"
-#include "tao/ClientRequestInterceptor_Adapter.h"
-#include "tao/ServerRequestInterceptor_Adapter.h"
+#include "Exception.h"
+#include "PI_ForwardC.h"
+#include "ClientRequestInterceptor_Adapter.h"
+#include "ServerRequestInterceptor_Adapter.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -237,7 +237,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Invocation_Base.inl"
+# include "Invocation_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

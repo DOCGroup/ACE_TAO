@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "ace/Guard_T.h"
+#include "Guard_T.h"
 
 #include <algorithm>
 

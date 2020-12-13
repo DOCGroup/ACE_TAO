@@ -1,37 +1,37 @@
 // -*- C++ -*-
-#include "ace/OS_NS_netdb.h"
+#include "OS_NS_netdb.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_netdb.inl"
+# include "OS_NS_netdb.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if defined (ACE_WIN32) && defined (ACE_HAS_PHARLAP)
-# include "ace/OS_NS_stdio.h"
+# include "OS_NS_stdio.h"
 #endif
 
-#include "ace/os_include/net/os_if.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_arpa_inet.h"
-#include "ace/OS_NS_stdlib.h"
-#include "ace/OS_NS_stropts.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/OS_NS_unistd.h"
+#include "os_include/net/os_if.h"
+#include "Global_Macros.h"
+#include "OS_NS_arpa_inet.h"
+#include "OS_NS_stdlib.h"
+#include "OS_NS_stropts.h"
+#include "OS_NS_sys_socket.h"
+#include "OS_NS_unistd.h"
 
 #if defined (ACE_LINUX) && !defined (ACE_LACKS_NETWORKING)
-#  include "ace/os_include/os_ifaddrs.h"
+#  include "os_include/os_ifaddrs.h"
 #endif /* ACE_LINUX && !ACE_LACKS_NETWORKING */
 
 #ifdef ACE_LACKS_IOCTL
-#include "ace/OS_NS_devctl.h"
+#include "OS_NS_devctl.h"
 #endif
 
 #ifdef ACE_VXWORKS
-# include "ace/os_include/sys/os_sysctl.h"
+# include "os_include/sys/os_sysctl.h"
 # include <net/route.h>
 #endif
 
 #ifdef ACE_HAS_ALLOC_HOOKS
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif
 
 // Include if_arp so that getmacaddr can use the
@@ -557,8 +557,8 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 # if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) && defined (ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
-#   include "ace/OS_NS_Thread.h"
-#   include "ace/Object_Manager_Base.h"
+#   include "OS_NS_Thread.h"
+#   include "Object_Manager_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

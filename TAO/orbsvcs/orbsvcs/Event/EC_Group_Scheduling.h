@@ -14,7 +14,7 @@
 #define TAO_EC_GROUP_SCHEDULING_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_Scheduling_Strategy.h"
+#include "EC_Scheduling_Strategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -45,7 +45,7 @@ private:
 };
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Group_Scheduling.inl"
+#include "EC_Group_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

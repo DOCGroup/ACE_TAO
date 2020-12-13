@@ -12,11 +12,11 @@
 #ifndef ACE_SHARED_MEMORY_H
 #define ACE_SHARED_MEMORY_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
-#include "ace/os_include/os_stddef.h"
+#include "os_include/os_stddef.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -51,6 +51,6 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SHARED_MEMORY_H */

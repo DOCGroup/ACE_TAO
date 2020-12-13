@@ -2,14 +2,14 @@
 #ifndef ACE_EVENT_HANDLER_T_CPP
 #define ACE_EVENT_HANDLER_T_CPP
 
-#include "ace/Event_Handler_T.h"
+#include "Event_Handler_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Event_Handler_T.inl"
+#include "Event_Handler_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

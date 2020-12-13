@@ -14,19 +14,19 @@
 #define TAO_POA_CACHED_POLICIES_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/ThreadPolicyC.h"
-#include "tao/PortableServer/LifespanPolicyC.h"
-#include "tao/PortableServer/IdUniquenessPolicyC.h"
-#include "tao/PortableServer/IdAssignmentPolicyC.h"
-#include "tao/PortableServer/ImplicitActivationPolicyC.h"
-#include "tao/PortableServer/ServantRetentionPolicyC.h"
-#include "tao/PortableServer/RequestProcessingPolicyC.h"
+#include "ThreadPolicyC.h"
+#include "LifespanPolicyC.h"
+#include "IdUniquenessPolicyC.h"
+#include "IdAssignmentPolicyC.h"
+#include "ImplicitActivationPolicyC.h"
+#include "ServantRetentionPolicyC.h"
+#include "RequestProcessingPolicyC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -147,7 +147,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Cached_Policies.inl"
+# include "POA_Cached_Policies.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

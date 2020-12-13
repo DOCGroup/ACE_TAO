@@ -1,10 +1,10 @@
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_CPP
 #define ACE_TIMER_QUEUE_ADAPTERS_CPP
 
-#include "ace/Timer_Queue_Adapters.h"
+#include "Timer_Queue_Adapters.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
-#include "ace/Functor.h"
+#include "Functor.h"
 #endif /* ACE_HAS_DEFERRED_TIMER_COMMANDS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -12,13 +12,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 # if !defined (__ACE_INLINE__)
-#  include "ace/Timer_Queue_Adapters.inl"
+#  include "Timer_Queue_Adapters.inl"
 # endif /* __ACE_INLINE__ */
 
-#include "ace/Reverse_Lock_T.h"
-#include "ace/Signal.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_time.h"
+#include "Reverse_Lock_T.h"
+#include "Signal.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_sys_time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

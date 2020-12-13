@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/ACE.h"
-#include "ace/OS_NS_sys_wait.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/OS_NS_pwd.h"
-#include "ace/OS_NS_string.h"
+#include "ACE.h"
+#include "OS_NS_sys_wait.h"
+#include "OS_NS_signal.h"
+#include "OS_NS_pwd.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

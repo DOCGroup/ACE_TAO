@@ -11,9 +11,9 @@
 #ifndef ACE_HASHABLE_H
 #define ACE_HASHABLE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -52,9 +52,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Hashable.inl"
+#include "Hashable.inl"
 #endif /* __ACE_INLINE __ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /*ACE_HASHABLE_H*/

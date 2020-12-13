@@ -1,12 +1,12 @@
-#include "ace/Event_Base.h"
+#include "Event_Base.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Event_Base.inl"
+#include "Event_Base.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

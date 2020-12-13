@@ -15,13 +15,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/PortableGroup/portablegroup_export.h"
+#include "portablegroup_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/PortableGroup/UIPMC_Endpoint.h"
+#include "UIPMC_Endpoint.h"
 
 #include "orbsvcs/PortableGroupC.h"
 

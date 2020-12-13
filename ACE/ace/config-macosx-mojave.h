@@ -7,6 +7,6 @@
 #define __APPLE_USE_RFC_3542
 #endif
 
-#include "ace/config-macosx-highsierra.h"
+#include "config-macosx-highsierra.h"
 
 #endif // ACE_CONFIG_MACOSX_MOJAVE_H

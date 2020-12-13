@@ -1,4 +1,4 @@
-#include "ace/FlReactor/FlReactor.h"
+#include "FlReactor.h"
 
 #include /**/ <FL/Fl.H>
 

@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_Current.h"
+#include "SSLIOP_Current.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

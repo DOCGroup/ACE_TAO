@@ -12,17 +12,17 @@
 
 #ifndef ACE_EVENT_H
 #define ACE_EVENT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Event_Base.h"
-#include "ace/Time_Policy.h"
-#include "ace/Time_Value_T.h"
+#include "Event_Base.h"
+#include "Time_Policy.h"
+#include "Time_Value_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -78,16 +78,16 @@ typedef ACE_Event_T<ACE_System_Time_Policy> ACE_Event;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Event.inl"
+#include "Event.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Event.cpp"
+#include "Event.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Event.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_EVENT_H */

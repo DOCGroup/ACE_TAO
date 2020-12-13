@@ -1,15 +1,15 @@
-#include "ace/config-all.h"
+#include "config-all.h"
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_SERVICES)
 
-#include "ace/NT_Service.h"
+#include "NT_Service.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/NT_Service.inl"
+#include "NT_Service.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Log_Category.h"
-#include "ace/Service_Object.h"
-#include "ace/OS_NS_errno.h"
+#include "Log_Category.h"
+#include "Service_Object.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

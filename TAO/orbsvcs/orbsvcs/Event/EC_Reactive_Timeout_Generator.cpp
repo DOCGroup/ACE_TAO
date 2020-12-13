@@ -1,4 +1,4 @@
-#include "orbsvcs/Event/EC_Reactive_Timeout_Generator.h"
+#include "EC_Reactive_Timeout_Generator.h"
 #include "ace/Reactor.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

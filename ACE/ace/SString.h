@@ -10,22 +10,22 @@
 
 #ifndef ACE_SSTRING_H
 #define ACE_SSTRING_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SStringfwd.h"
+#include "SStringfwd.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/String_Base.h"
+#include "String_Base.h"
 
 #if !defined (ACE_DEFAULT_GROWSIZE)
 #define ACE_DEFAULT_GROWSIZE 32
 #endif /* ACE_DEFAULT_GROWSIZE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-#include "ace/iosfwd.h"
+#include "iosfwd.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
 ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
@@ -292,8 +292,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SString.inl"
+#include "SString.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SSTRING_H */

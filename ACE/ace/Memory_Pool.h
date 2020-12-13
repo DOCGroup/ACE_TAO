@@ -11,19 +11,19 @@
 
 #ifndef ACE_MEMORY_POOL_H
 #define ACE_MEMORY_POOL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Local_Memory_Pool.h"
-#include "ace/MMAP_Memory_Pool.h"
-#include "ace/Sbrk_Memory_Pool.h"
-#include "ace/Shared_Memory_Pool.h"
-#include "ace/Pagefile_Memory_Pool.h"
+#include "Local_Memory_Pool.h"
+#include "MMAP_Memory_Pool.h"
+#include "Sbrk_Memory_Pool.h"
+#include "Shared_Memory_Pool.h"
+#include "Pagefile_Memory_Pool.h"
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MEMORY_POOL_H */

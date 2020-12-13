@@ -1,4 +1,4 @@
-#include "ace/Log_Msg_Callback.h"
+#include "Log_Msg_Callback.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

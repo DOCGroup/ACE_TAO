@@ -21,7 +21,7 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/SSLIOP/SSLIOP_OpenSSL_st_T.h"
+#include "SSLIOP_OpenSSL_st_T.h"
 
 #include <openssl/ssl.h>
 #include <openssl/crypto.h>

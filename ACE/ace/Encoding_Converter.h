@@ -14,12 +14,12 @@
 #ifndef ACE_ENCODING_CONVERTER_H
 #define ACE_ENCODING_CONVERTER_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Basic_Types.h"
+#include "Basic_Types.h"
 
 #if defined (ACE_USES_WCHAR)
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -63,6 +63,6 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_USES_WCHAR */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_ENCODING_CONVERTER_H */

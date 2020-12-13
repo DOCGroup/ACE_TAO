@@ -1,17 +1,17 @@
-#include "ace/Time_Value.h"
+#include "Time_Value.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Time_Value.inl"
+#include "Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Numeric_Limits.h"
-#include "ace/If_Then_Else.h"
-#include "ace/OS_NS_math.h"
-#include "ace/Time_Policy.h"
+#include "Numeric_Limits.h"
+#include "If_Then_Else.h"
+#include "OS_NS_math.h"
+#include "Time_Policy.h"
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
 # include <ostream>

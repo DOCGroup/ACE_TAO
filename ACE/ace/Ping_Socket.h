@@ -12,9 +12,9 @@
 #ifndef ACE_PING_SOCKET_H
 #define ACE_PING_SOCKET_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,7 +22,7 @@
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
 
-#include "ace/ICMP_Socket.h"
+#include "ICMP_Socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -102,11 +102,11 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/Ping_Socket.inl"
+# include "Ping_Socket.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_PING_SOCKET_H */

@@ -1,8 +1,8 @@
 // ""
 
-#include "tao/Valuetype/AbstractBase.h"
-#include "tao/Valuetype/ValueBase.h"
-#include "tao/Valuetype/ValueFactory.h"
+#include "AbstractBase.h"
+#include "ValueBase.h"
+#include "ValueFactory.h"
 #include "tao/AnyTypeCode/Objref_TypeCode_Static.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
@@ -11,7 +11,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Valuetype/AbstractBase.inl"
+# include "AbstractBase.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,24 +1,24 @@
-#include "ace/OS_NS_Thread.h"
+#include "OS_NS_Thread.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_Thread.inl"
+# include "OS_NS_Thread.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
-#include "ace/OS_NS_stdio.h"
-#include "ace/Sched_Params.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_Thread_Adapter.h"
-#include "ace/Min_Max.h"
-#include "ace/Object_Manager_Base.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/Log_Category.h" // for ACE_ASSERT
-#include "ace/Auto_Ptr.h"
-#include "ace/Thread_Mutex.h"
-#include "ace/Condition_Thread_Mutex.h"
-#include "ace/Guard_T.h"
+#include "OS_NS_stdio.h"
+#include "Sched_Params.h"
+#include "OS_Memory.h"
+#include "OS_Thread_Adapter.h"
+#include "Min_Max.h"
+#include "Object_Manager_Base.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_ctype.h"
+#include "Log_Category.h" // for ACE_ASSERT
+#include "Auto_Ptr.h"
+#include "Thread_Mutex.h"
+#include "Condition_Thread_Mutex.h"
+#include "Guard_T.h"
 #ifdef ACE_HAS_GETTID
-#  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
+#  include "OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
 
 extern "C" void
@@ -4855,7 +4855,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 # include /**/ <usrLib.h>   /* for ::sp() */
 # include /**/ <sysLib.h>   /* for ::sysClkRateGet() */
-# include "ace/Service_Config.h"
+# include "Service_Config.h"
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
 

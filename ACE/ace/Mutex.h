@@ -11,17 +11,17 @@
 #ifndef ACE_MUTEX_H
 #define ACE_MUTEX_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/OS_NS_Thread.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/os_include/os_fcntl.h"
+#include "OS_NS_Thread.h"
+#include "OS_NS_unistd.h"
+#include "os_include/os_fcntl.h"
 
 #if !defined (ACE_DEFAULT_MUTEX_A)
 # define ACE_DEFAULT_MUTEX_A "ACE_MUTEX"
@@ -198,9 +198,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Mutex.inl"
+#include "Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_MUTEX_H */

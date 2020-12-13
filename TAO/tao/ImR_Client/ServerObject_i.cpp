@@ -1,4 +1,4 @@
-#include "tao/ImR_Client/ServerObject_i.h"
+#include "ServerObject_i.h"
 #include "tao/PortableServer/Root_POA.h"
 #include "tao/orbconf.h"
 

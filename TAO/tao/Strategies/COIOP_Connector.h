@@ -23,7 +23,7 @@
 
 #if defined (TAO_HAS_COIOP) && (TAO_HAS_COIOP != 0)
 
-#include "tao/Strategies/COIOP_Connection_Handler.h"
+#include "COIOP_Connection_Handler.h"
 #include "tao/Transport_Connector.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

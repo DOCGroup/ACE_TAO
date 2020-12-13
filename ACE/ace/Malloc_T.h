@@ -11,18 +11,18 @@
 
 #ifndef ACE_MALLOC_T_H
 #define ACE_MALLOC_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Malloc.h"               /* Need ACE_Control_Block */
-#include "ace/Malloc_Base.h"          /* Need ACE_Allocator */
+#include "Malloc.h"               /* Need ACE_Control_Block */
+#include "Malloc_Base.h"          /* Need ACE_Allocator */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Malloc_Allocator.h"
-#include "ace/Free_List.h"
-#include "ace/Guard_T.h"
+#include "Malloc_Allocator.h"
+#include "Free_List.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -878,16 +878,16 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Malloc_T.inl"
+#include "Malloc_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Malloc_T.cpp"
+#include "Malloc_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Malloc_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MALLOC_H */

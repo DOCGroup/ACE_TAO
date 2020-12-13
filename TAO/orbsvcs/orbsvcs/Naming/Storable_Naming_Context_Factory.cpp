@@ -1,5 +1,5 @@
-#include "orbsvcs/Naming/Storable_Naming_Context_Factory.h"
-#include "orbsvcs/Naming/Storable_Naming_Context.h"
+#include "Storable_Naming_Context_Factory.h"
+#include "Storable_Naming_Context.h"
 
 #include "tao/Storable_Factory.h"
 

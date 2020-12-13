@@ -1,9 +1,9 @@
 #include "tao/AnyTypeCode/TypeCode.h"
 #include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/DynamicInterface/DII_Invocation_Adapter.h"
-#include "tao/DynamicInterface/DII_Invocation.h"
-#include "tao/DynamicInterface/DII_Arguments_Converter_Impl.h"
-#include "tao/DynamicInterface/Request.h"
+#include "DII_Invocation_Adapter.h"
+#include "DII_Invocation.h"
+#include "DII_Arguments_Converter_Impl.h"
+#include "Request.h"
 
 #include "tao/Exception.h"
 #include "tao/Exception_Data.h"

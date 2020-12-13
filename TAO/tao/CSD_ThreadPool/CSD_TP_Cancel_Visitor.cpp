@@ -1,8 +1,8 @@
-#include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Request.h"
+#include "CSD_TP_Cancel_Visitor.h"
+#include "CSD_TP_Request.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Cancel_Visitor.inl"
+# include "CSD_TP_Cancel_Visitor.inl"
 #endif /* ! __ACE_INLINE__ */
 
 

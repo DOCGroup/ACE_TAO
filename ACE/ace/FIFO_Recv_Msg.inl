@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "ace/Min_Max.h"
-#include "ace/OS_NS_stropts.h"
-#include "ace/Truncate.h"
+#include "Min_Max.h"
+#include "OS_NS_stropts.h"
+#include "Truncate.h"
 
 #if !defined (ACE_HAS_STREAM_PIPES)
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -11,10 +11,10 @@
 #ifndef ACE_STRING_BASE_CONST_H
 #define ACE_STRING_BASE_CONST_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/Malloc_Base.h"
+#include /**/ "ACE_export.h"
+#include "Malloc_Base.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -43,5 +43,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_STRING_BASE_CONST_H */

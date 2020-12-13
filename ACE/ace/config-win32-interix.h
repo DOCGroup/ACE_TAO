@@ -5,9 +5,9 @@
 #ifndef ACE_CONFIG_WIN32_INTERIX_H
 #define ACE_CONFIG_WIN32_INTERIX_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 #define ACE_HAS_SYS_SIGINFO_H
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
@@ -116,6 +116,6 @@
 #define ACE_HAS_TSS_EMULATION              // It would appear to be broken in Interix!
 
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_WIN32_INTERIX_H */

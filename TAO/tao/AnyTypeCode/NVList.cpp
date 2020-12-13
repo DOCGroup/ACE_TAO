@@ -1,10 +1,10 @@
 // Implementation of Named Value List and NamedValue classes
 
-#include "tao/AnyTypeCode/NVList.h"
-#include "tao/AnyTypeCode/BoundsC.h"
-#include "tao/AnyTypeCode/TypeCode.h"
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/Any_Impl.h"
+#include "NVList.h"
+#include "BoundsC.h"
+#include "TypeCode.h"
+#include "Marshal.h"
+#include "Any_Impl.h"
 
 #include "tao/CORBA_String.h"
 #include "tao/CDR.h"
@@ -16,7 +16,7 @@
 #include "ace/CORBA_macros.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/NVList.inl"
+# include "NVList.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

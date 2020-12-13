@@ -1,16 +1,16 @@
 #ifndef ACE_OBSTACK_T_CPP
 #define ACE_OBSTACK_T_CPP
 
-#include "ace/Obstack_T.h"
-#include "ace/Malloc_Base.h"
-#include "ace/OS_NS_string.h"
+#include "Obstack_T.h"
+#include "Malloc_Base.h"
+#include "OS_NS_string.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Obstack_T.inl"
+#include "Obstack_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

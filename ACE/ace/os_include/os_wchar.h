@@ -23,11 +23,11 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // ctype.h, string.h, stdarg.h, stdio.h, stdlib.h, time.h
-#include "ace/os_include/os_stdio.h"
-#include "ace/os_include/os_stdlib.h"
-#include "ace/os_include/os_time.h"
-#include "ace/os_include/os_string.h"
-#include "ace/os_include/os_ctype.h"
+#include "os_stdio.h"
+#include "os_stdlib.h"
+#include "os_time.h"
+#include "os_string.h"
+#include "os_ctype.h"
 
 #if !defined (ACE_LACKS_WCHAR_H)
 #  include /**/ <wchar.h>

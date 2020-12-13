@@ -1,16 +1,16 @@
 /* Defines the member functions for the base class of the ACE_TLI_Stream
    abstraction. */
 
-#include "ace/TLI_Stream.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_unistd.h"
+#include "TLI_Stream.h"
+#include "ACE.h"
+#include "OS_NS_unistd.h"
 
 
 
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/TLI_Stream.inl"
+#include "TLI_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

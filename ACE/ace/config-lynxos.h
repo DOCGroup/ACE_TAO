@@ -3,7 +3,7 @@
 
 #ifndef ACE_CONFIG_LYNXOS_H
 #define ACE_CONFIG_LYNXOS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
 // System include files are not in sys/, this gets rid of warning.
 #define __NO_INCLUDE_WARN__
@@ -12,14 +12,14 @@
 #include <param.h>
 #undef __FREEBSDCODE__
 
-#include "ace/config-g++-common.h"
+#include "config-g++-common.h"
 
 // Compile using multi-thread libraries.
 #if !defined (ACE_MT_SAFE)
 #  define ACE_MT_SAFE 1
 #endif
 
-#include "ace/config-posix.h"
+#include "config-posix.h"
 
 #if defined (__x86__)
 #  define ACE_HAS_PENTIUM
@@ -180,6 +180,6 @@
 #  define ACE_SYS_SIGLIST __sys_siglist
 #endif
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_CONFIG_LYNXOS_H */

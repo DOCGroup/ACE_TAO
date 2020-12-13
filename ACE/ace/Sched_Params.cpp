@@ -8,14 +8,14 @@
 //=============================================================================
 
 
-#include "ace/Sched_Params.h"
+#include "Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Sched_Params.inl"
+#include "Sched_Params.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_PRIOCNTL) && defined (ACE_HAS_STHREADS)
-#  include "ace/OS_NS_string.h"
+#  include "OS_NS_string.h"
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL && ACE_HAS_THREADS */
 

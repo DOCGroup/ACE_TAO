@@ -15,15 +15,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Environment.h"
+#include "Environment.h"
 
-#include "tao/Policy_Current_Impl.h"
+#include "Policy_Current_Impl.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -14,18 +14,18 @@
 
 #ifndef ACE_OBJECT_MANAGER_BASE_H
 #define ACE_OBJECT_MANAGER_BASE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-lite.h"
+#include /**/ "config-lite.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
-#include "ace/Cleanup.h"
-#include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/os_signal.h"
+#include /**/ "ACE_export.h"
+#include "Cleanup.h"
+#include "os_include/sys/os_types.h"
+#include "os_include/os_signal.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -243,5 +243,5 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_OBJECT_MANAGER_BASE_H */

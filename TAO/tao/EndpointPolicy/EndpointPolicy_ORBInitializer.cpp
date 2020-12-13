@@ -1,7 +1,7 @@
-#include "tao/EndpointPolicy/EndpointPolicy_ORBInitializer.h"
+#include "EndpointPolicy_ORBInitializer.h"
 
-#include "tao/EndpointPolicy/EndpointPolicyC.h"
-#include "tao/EndpointPolicy/EndpointPolicy_Factory.h"
+#include "EndpointPolicyC.h"
+#include "EndpointPolicy_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 

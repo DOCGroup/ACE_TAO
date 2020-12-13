@@ -1,9 +1,9 @@
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 
 #if defined (ACE_HAS_GCC_ATOMIC_BUILTINS) && (ACE_HAS_GCC_ATOMIC_BUILTINS == 1)
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Atomic_Op_GCC_T.inl"
+#include "Atomic_Op_GCC_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

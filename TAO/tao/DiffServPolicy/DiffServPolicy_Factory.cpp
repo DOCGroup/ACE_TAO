@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/DiffServPolicy/DiffServPolicy_Factory.h"
-#include "tao/DiffServPolicy/Client_Network_Priority_Policy.h"
-#include "tao/DiffServPolicy/Server_Network_Priority_Policy.h"
+#include "DiffServPolicy_Factory.h"
+#include "Client_Network_Priority_Policy.h"
+#include "Server_Network_Priority_Policy.h"
 #include "tao/PolicyC.h"
 #include "tao/ORB_Constants.h"
 

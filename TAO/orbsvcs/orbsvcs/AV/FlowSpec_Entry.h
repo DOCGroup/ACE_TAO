@@ -12,8 +12,8 @@
 #define TAO_AV_FLOWSPEC_ENTRY_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
-#include "orbsvcs/AV/AV_Core.h"
+#include "AV_export.h"
+#include "AV_Core.h"
 #include "ace/Addr.h"
 #include "ace/Containers.h"
 #include "ace/SString.h"
@@ -346,10 +346,10 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#include "orbsvcs/AV/Transport.h"
+#include "Transport.h"
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/AV/FlowSpec_Entry.inl"
+#include "FlowSpec_Entry.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

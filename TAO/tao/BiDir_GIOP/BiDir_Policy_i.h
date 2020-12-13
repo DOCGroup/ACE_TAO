@@ -11,13 +11,13 @@
 #ifndef TAO_BIDIR_POLICY_I_H
 #define TAO_BIDIR_POLICY_I_H
 #include /**/ "ace/pre.h"
-#include "tao/BiDir_GIOP/bidirgiop_export.h"
+#include "bidirgiop_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/BiDir_GIOP/BiDirGIOP.h"
+#include "BiDirGIOP.h"
 #include "tao/LocalObject.h"
 
 #if defined(_MSC_VER)

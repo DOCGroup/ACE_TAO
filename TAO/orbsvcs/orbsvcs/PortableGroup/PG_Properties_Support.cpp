@@ -10,7 +10,7 @@
  */
 //=============================================================================
 
-#include "orbsvcs/PortableGroup/PG_Properties_Support.h"
+#include "PG_Properties_Support.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

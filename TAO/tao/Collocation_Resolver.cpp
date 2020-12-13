@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/Collocation_Resolver.h"
+#include "Collocation_Resolver.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

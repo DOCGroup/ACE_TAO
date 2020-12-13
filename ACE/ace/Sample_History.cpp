@@ -1,15 +1,15 @@
-#include "ace/Sample_History.h"
+#include "Sample_History.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Sample_History.inl"
+#include "Sample_History.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Basic_Stats.h"
-#include "ace/Log_Category.h"
-#include "ace/OS_Memory.h"
+#include "Basic_Stats.h"
+#include "Log_Category.h"
+#include "OS_Memory.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

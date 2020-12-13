@@ -11,8 +11,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
-#include "orbsvcs/Notify/Admin.h"
+#include "notify_serv_export.h"
+#include "Admin.h"
 
 #include "orbsvcs/NotifyExtS.h"
 

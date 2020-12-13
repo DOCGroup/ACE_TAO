@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#include "tao/Default_Stub_Factory.h"
-#include "tao/Stub.h"
-#include "tao/ORB_Constants.h"
-#include "tao/SystemException.h"
+#include "Default_Stub_Factory.h"
+#include "Stub.h"
+#include "ORB_Constants.h"
+#include "SystemException.h"
 #include "ace/CORBA_macros.h"
 #include "ace/Log_Msg.h"
 

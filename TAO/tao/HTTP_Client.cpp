@@ -1,11 +1,11 @@
-#include "tao/HTTP_Client.h"
+#include "HTTP_Client.h"
 
 #if (TAO_HAS_HTTP_PARSER == 1)
 
-#include "tao/HTTP_Handler.h"
+#include "HTTP_Handler.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Truncate.h"
-#include "tao/debug.h"
+#include "debug.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

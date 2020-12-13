@@ -3,7 +3,7 @@
 #ifndef DISTRIBUTABLE_THREAD_H
 #define DISTRIBUTABLE_THREAD_H
 
-#include "tao/RTScheduling/RTScheduler.h"
+#include "RTScheduler.h"
 #include "tao/LocalObject.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

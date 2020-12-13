@@ -8,10 +8,10 @@
  */
 //=============================================================================
 
-#include "tao/Storable_Base.h"
+#include "Storable_Base.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/Storable_Base.inl"
+#include "Storable_Base.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -13,13 +13,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Valuetype/valuetype_export.h"
+#include "valuetype_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Valuetype/Value_CORBA_methods.h"
+#include "Value_CORBA_methods.h"
 #include "tao/Object_Argument_T.h"
 #include "tao/Arg_Traits_T.h"
 #include "tao/Objref_VarOut_T.h"
@@ -186,7 +186,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/Valuetype/AbstractBase.inl"
+# include "AbstractBase.inl"
 #endif /* __ACE_INLINE__) */
 
 #include /**/ "ace/post.h"

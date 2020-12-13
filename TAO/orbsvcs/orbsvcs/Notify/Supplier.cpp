@@ -1,16 +1,16 @@
 #include "tao/corba.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Supplier.h"
+#include "Properties.h"
+#include "Supplier.h"
 #include "tao/debug.h"
 #include "tao/Messaging/Messaging_TypesC.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/Supplier.inl"
+#include "Supplier.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/Notify/ProxyConsumer.h"
-#include "orbsvcs/Notify/Proxy.h"
+#include "ProxyConsumer.h"
+#include "Proxy.h"
 
 #ifndef DEBUG_LEVEL
 # define DEBUG_LEVEL TAO_debug_level

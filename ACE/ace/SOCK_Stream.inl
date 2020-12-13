@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/SOCK_Stream.h"
-#include "ace/OS_NS_sys_socket.h"
+#include "SOCK_Stream.h"
+#include "OS_NS_sys_socket.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

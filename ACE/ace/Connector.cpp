@@ -1,11 +1,11 @@
 #ifndef ACE_CONNECTOR_CPP
 #define ACE_CONNECTOR_CPP
 
-#include "ace/Connector.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_string.h"
-#include "ace/os_include/os_fcntl.h"     /* Has ACE_NONBLOCK */
+#include "Connector.h"
+#include "ACE.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_string.h"
+#include "os_include/os_fcntl.h"     /* Has ACE_NONBLOCK */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

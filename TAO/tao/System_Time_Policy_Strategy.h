@@ -13,17 +13,17 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/orbconf.h"
+#include "orbconf.h"
 
 #if (TAO_HAS_TIME_POLICY == 1)
 
-#include "tao/Time_Policy_Strategy.h"
+#include "Time_Policy_Strategy.h"
 
 #include "ace/Time_Policy_T.h"
 #include "ace/Service_Config.h"

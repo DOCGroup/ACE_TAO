@@ -12,7 +12,7 @@
 #define TAO_LIFESPANSTRATEGYPERSISTENT_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/LifespanStrategy.h"
+#include "LifespanStrategy.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

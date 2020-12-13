@@ -1,16 +1,16 @@
-#include "ace/Get_Opt.h"
+#include "Get_Opt.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Get_Opt.inl"
+#include "Get_Opt.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/ACE.h"
-#include "ace/Log_Category.h"
-#include "ace/SString.h"
-#include "ace/OS_Memory.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_ctype.h"
-#include "ace/OS_NS_stdlib.h"
+#include "ACE.h"
+#include "Log_Category.h"
+#include "SString.h"
+#include "OS_Memory.h"
+#include "OS_NS_string.h"
+#include "OS_NS_ctype.h"
+#include "OS_NS_stdlib.h"
 
 /*
  * Copyright (c) 1987, 1993, 1994

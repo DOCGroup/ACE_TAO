@@ -7,7 +7,7 @@
  *
  * @author Vladimir Zykov
  */
-#include "tao/Unbounded_Basic_String_Sequence_T.h"
+#include "Unbounded_Basic_String_Sequence_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

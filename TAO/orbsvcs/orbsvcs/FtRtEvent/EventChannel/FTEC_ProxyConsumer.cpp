@@ -1,6 +1,6 @@
-#include "orbsvcs/FtRtEvent/EventChannel/FTEC_ProxyConsumer.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Request_Context_Repository.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
+#include "FTEC_ProxyConsumer.h"
+#include "Request_Context_Repository.h"
+#include "Replication_Service.h"
 #include "../Utils/activate_with_id.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

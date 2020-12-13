@@ -15,25 +15,25 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 // Object Adapter
-#include "tao/PortableServer/Object_Adapter.h"
+#include "Object_Adapter.h"
 
 // POA Policy Set
-#include "tao/PortableServer/POA_Policy_Set.h"
+#include "POA_Policy_Set.h"
 
 // Cached POA Policies
-#include "tao/PortableServer/POA_Cached_Policies.h"
-#include "tao/PortableServer/Active_Policy_Strategies.h"
+#include "POA_Cached_Policies.h"
+#include "Active_Policy_Strategies.h"
 
-#include "tao/PortableServer/ORT_Adapter.h"
+#include "ORT_Adapter.h"
 
-#include "tao/PortableServer/PortableServer.h"
+#include "PortableServer.h"
 
 // Object_Key
 #include "tao/Object_KeyC.h"
@@ -844,7 +844,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 #endif /* _MSC_VER */
 
 #if defined (__ACE_INLINE__)
-# include "tao/PortableServer/Root_POA.inl"
+# include "Root_POA.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

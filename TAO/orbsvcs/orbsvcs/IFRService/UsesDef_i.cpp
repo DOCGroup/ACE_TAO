@@ -1,7 +1,7 @@
-#include "orbsvcs/IFRService/Repository_i.h"
-#include "orbsvcs/IFRService/UsesDef_i.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils_T.h"
-#include "orbsvcs/IFRService/IFR_Service_Utils.h"
+#include "Repository_i.h"
+#include "UsesDef_i.h"
+#include "IFR_Service_Utils_T.h"
+#include "IFR_Service_Utils.h"
 
 #include "ace/SString.h"
 

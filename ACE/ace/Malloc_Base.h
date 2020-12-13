@@ -11,17 +11,17 @@
 
 #ifndef ACE_MALLOC_BASE_H
 #define ACE_MALLOC_BASE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_types.h"
-#include "ace/os_include/sys/os_mman.h"
-#include "ace/os_include/sys/os_types.h"
+#include "os_include/sys/os_types.h"
+#include "os_include/sys/os_mman.h"
+#include "os_include/sys/os_types.h"
 #include <limits>
 #include <new>
 
@@ -225,5 +225,5 @@ bool operator!=(const ACE_Allocator_Std_Adapter<T>&, const ACE_Allocator_Std_Ada
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MALLOC_BASE_H */

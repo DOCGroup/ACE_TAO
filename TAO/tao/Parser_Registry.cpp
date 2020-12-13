@@ -1,12 +1,12 @@
 // -*- C++ -*-
-#include "tao/Parser_Registry.h"
-#include "tao/IOR_Parser.h"
-#include "tao/ORB_Core.h"
+#include "Parser_Registry.h"
+#include "IOR_Parser.h"
+#include "ORB_Core.h"
 
 #include "ace/Dynamic_Service.h"
 
 #if !defined(__ACE_INLINE__)
-#include "tao/Parser_Registry.inl"
+#include "Parser_Registry.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

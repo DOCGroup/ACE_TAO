@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/PI_Server/PortableServer_PolicyFactory.h"
+#include "PortableServer_PolicyFactory.h"
 #include "tao/PortableServer/ThreadPolicy.h"
 #include "tao/PortableServer/LifespanPolicy.h"
 #include "tao/PortableServer/IdAssignmentPolicy.h"
@@ -8,7 +8,7 @@
 #include "tao/PortableServer/RequestProcessingPolicy.h"
 #include "tao/PortableServer/ServantRetentionPolicy.h"
 #include "tao/PortableServer/PortableServer.h"
-#include "tao/PI_Server/Policy_Creator_T.h"
+#include "Policy_Creator_T.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

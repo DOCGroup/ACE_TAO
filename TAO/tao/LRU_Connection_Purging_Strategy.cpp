@@ -1,5 +1,5 @@
-#include "tao/LRU_Connection_Purging_Strategy.h"
-#include "tao/Transport.h"
+#include "LRU_Connection_Purging_Strategy.h"
+#include "Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

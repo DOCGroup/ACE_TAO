@@ -1,14 +1,14 @@
 #ifndef ACE_ATOMIC_OP_T_CPP
 #define ACE_ATOMIC_OP_T_CPP
 
-#include "ace/Atomic_Op_T.h"
+#include "Atomic_Op_T.h"
 
 #ifdef ACE_HAS_DUMP
-# include "ace/Log_Category.h"
+# include "Log_Category.h"
 #endif  /* ACE_HAS_DUMP */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -16,7 +16,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Atomic_Op_T.inl"
+#include "Atomic_Op_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

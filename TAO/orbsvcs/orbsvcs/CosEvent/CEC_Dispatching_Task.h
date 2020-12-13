@@ -14,13 +14,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/CosEvent/event_serv_export.h"
+#include "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
+#include "CEC_ProxyPushSupplier.h"
 
 #include "tao/Basic_Types.h"
 
@@ -29,7 +29,7 @@
 #include "ace/Task.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
+#include "CEC_TypedEvent.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -151,7 +151,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_Dispatching_Task.inl"
+#include "CEC_Dispatching_Task.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -1,15 +1,15 @@
-#include "ace/FILE_IO.h"
+#include "FILE_IO.h"
 
-#include "ace/Log_Category.h"
-#include "ace/OS_NS_sys_stat.h"
-#include "ace/OS_Memory.h"
-#include "ace/Truncate.h"
+#include "Log_Category.h"
+#include "OS_NS_sys_stat.h"
+#include "OS_Memory.h"
+#include "Truncate.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE_IO.inl"
+#include "FILE_IO.inl"
 #endif /* __ACE_INLINE__ */
 
 

@@ -1,8 +1,8 @@
-#include "orbsvcs/AV/SCTP_SEQ.h"
+#include "SCTP_SEQ.h"
 
 #if defined (ACE_HAS_SCTP)
 
-#include "orbsvcs/AV/AVStreams_i.h"
+#include "AVStreams_i.h"
 #include "ace/Multihomed_INET_Addr.h"
 #include "tao/debug.h"
 #include "ace/Arg_Shifter.h"

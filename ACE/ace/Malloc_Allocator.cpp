@@ -1,14 +1,14 @@
-#include "ace/Malloc_Allocator.h"
-#include "ace/Object_Manager.h"
+#include "Malloc_Allocator.h"
+#include "Object_Manager.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Malloc_Allocator.inl"
+#include "Malloc_Allocator.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Log_Category.h"  // for ACE_ASSERT
-#include "ace/OS_NS_string.h"
+#include "Guard_T.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Log_Category.h"  // for ACE_ASSERT
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

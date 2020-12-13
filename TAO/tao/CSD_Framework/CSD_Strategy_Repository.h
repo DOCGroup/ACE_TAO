@@ -13,8 +13,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/CSD_Framework/CSD_FW_Export.h"
-#include "tao/CSD_Framework/CSD_FrameworkC.h"
+#include "CSD_FW_Export.h"
+#include "CSD_FrameworkC.h"
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
 #include "ace/Synch.h"

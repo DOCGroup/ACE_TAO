@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/FaultTolerance/FT_ClientRequest_Interceptor.h"
-#include "orbsvcs/FaultTolerance/FT_Service_Callbacks.h"
+#include "FT_ClientRequest_Interceptor.h"
+#include "FT_Service_Callbacks.h"
 #include "orbsvcs/FT_CORBA_ORBC.h"
 
 #include "tao/CORBA_String.h"

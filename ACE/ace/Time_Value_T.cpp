@@ -1,17 +1,17 @@
 #ifndef ACE_TIME_VALUE_T_CPP
 #define ACE_TIME_VALUE_T_CPP
 
-#include "ace/Time_Value_T.h"
+#include "Time_Value_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Time_Value_T.inl"
+#include "Time_Value_T.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/OS_Memory.h"
+#include "OS_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

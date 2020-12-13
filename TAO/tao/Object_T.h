@@ -21,8 +21,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
-#include "tao/Collocation_Strategy.h"
+#include /**/ "Versioned_Namespace.h"
+#include "Collocation_Strategy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Object_T.cpp"
+#include "Object_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

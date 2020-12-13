@@ -1,14 +1,14 @@
 #ifndef ACE_HASH_MAP_WITH_ALLOCATOR_T_CPP
 #define ACE_HASH_MAP_WITH_ALLOCATOR_T_CPP
 
-#include "ace/Hash_Map_With_Allocator_T.h"
+#include "Hash_Map_With_Allocator_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Hash_Map_With_Allocator_T.inl"
+#include "Hash_Map_With_Allocator_T.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

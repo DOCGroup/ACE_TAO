@@ -19,11 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/Object_SArgument_T.h"
-#include "tao/PortableServer/SArg_Traits_T.h"
+#include "Object_SArgument_T.h"
+#include "SArg_Traits_T.h"
 #include "tao/Pseudo_VarOut_T.h"
 #include "tao/Any_Insert_Policy_T.h"
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

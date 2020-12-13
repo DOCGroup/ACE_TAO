@@ -1,9 +1,9 @@
-#include "tao/Policy_Manager.h"
+#include "Policy_Manager.h"
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
 #if !defined (__ACE_INLINE__)
-# include "tao/Policy_Manager.inl"
+# include "Policy_Manager.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

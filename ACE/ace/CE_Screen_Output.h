@@ -11,7 +11,7 @@
 #ifndef ACE_CE_SCREEN_OUTPUT_H
 #define ACE_CE_SCREEN_OUTPUT_H
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -19,8 +19,8 @@
 
 #if defined (ACE_HAS_WINCE)
 
-#include "ace/Log_Msg_Callback.h"
-#include "ace/Log_Record.h"
+#include "Log_Msg_Callback.h"
+#include "Log_Record.h"
 
 namespace
 {

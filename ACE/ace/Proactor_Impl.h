@@ -12,17 +12,17 @@
 
 #ifndef ACE_PROACTOR_IMPL_H
 #define ACE_PROACTOR_IMPL_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 // This only works on standard Win32 platforms and on Unix platforms supporting
 // aio calls.
 
-#include "ace/Asynch_IO.h"
-#include "ace/Reactor.h"
-#include "ace/Countdown_Time.h"
+#include "Asynch_IO.h"
+#include "Reactor.h"
+#include "Countdown_Time.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -259,5 +259,5 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO || ACE_HAS_AIO_CALLS */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_PROACTOR_IMPL_H */

@@ -12,7 +12,7 @@
 #ifndef ACE_METRICS_CACHE_H
 #define ACE_METRICS_CACHE_H
 
-#include "ace/Timeprobe.h"
+#include "Timeprobe.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -105,8 +105,8 @@ do { if((METRICS_PTR->metrics_enabled())) { \
 METRICS_PTR->report_##NAME##_stop(); \
 } } while (0)
 
-#include "ace/Metrics_Cache_T.h"
-#include "ace/Singleton.h"
+#include "Metrics_Cache_T.h"
+#include "Singleton.h"
 
 #if defined (_MSC_VER)
 // Disable warning of using Microsoft Extension.

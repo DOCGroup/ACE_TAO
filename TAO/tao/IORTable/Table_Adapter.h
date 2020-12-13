@@ -13,9 +13,9 @@
 #define TAO_TABLE_ADAPTER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/IORTable/iortable_export.h"
-#include "tao/IORTable/IORTable.h"
-#include "tao/IORTable/IOR_Table_Impl.h"
+#include "iortable_export.h"
+#include "IORTable.h"
+#include "IOR_Table_Impl.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

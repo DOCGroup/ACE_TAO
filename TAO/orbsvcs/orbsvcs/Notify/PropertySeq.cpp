@@ -1,7 +1,7 @@
-#include "orbsvcs/Notify/PropertySeq.h"
+#include "PropertySeq.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/PropertySeq.inl"
+#include "PropertySeq.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

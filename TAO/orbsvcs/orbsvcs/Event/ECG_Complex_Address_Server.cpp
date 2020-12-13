@@ -1,10 +1,10 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/ECG_Complex_Address_Server.h"
+#include "ECG_Complex_Address_Server.h"
 #include "ace/SString.h"
 #include "ace/streams.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_Complex_Address_Server.inl"
+#include "ECG_Complex_Address_Server.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

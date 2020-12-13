@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/FtRtEvent/Utils/Log.h"
+#include "Log.h"
 
 #if !defined(__ACE_INLINE__)
-#include "orbsvcs/FtRtEvent/Utils/Log.inl"
+#include "Log.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "ace/OS_NS_stdio.h"

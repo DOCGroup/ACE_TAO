@@ -14,7 +14,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Wait_On_Leader_Follower.h"
+#include "Wait_On_Leader_Follower.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

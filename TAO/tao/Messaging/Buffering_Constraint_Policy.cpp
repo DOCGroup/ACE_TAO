@@ -1,13 +1,13 @@
-#include "tao/Messaging/Buffering_Constraint_Policy.h"
+#include "Buffering_Constraint_Policy.h"
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
-#include "tao/Messaging/TAO_ExtA.h"
+#include "TAO_ExtA.h"
 #include "tao/SystemException.h"
 #include "ace/CORBA_macros.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Messaging/Buffering_Constraint_Policy.inl"
+#include "Buffering_Constraint_Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

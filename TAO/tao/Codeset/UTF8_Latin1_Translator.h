@@ -18,7 +18,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Codeset/codeset_export.h"
+#include "codeset_export.h"
 #include "tao/Versioned_Namespace.h"
 #include "ace/CDR_Stream.h"
 

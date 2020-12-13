@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_SupplierControl.h"
+#include "EC_SupplierControl.h"
 
 #include "orbsvcs/ESF/ESF_Worker.h"
 
@@ -152,7 +152,7 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Reactive_SupplierControl.inl"
+#include "EC_Reactive_SupplierControl.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

@@ -12,7 +12,7 @@
 #define TAO_TOXRESOURCE_FACTORY_H
 #include /**/ "ace/pre.h"
 #include "ace/FoxReactor/FoxReactor.h"
-#include "tao/FoxResource/TAO_FoxResource_Export.h"
+#include "TAO_FoxResource_Export.h"
 #include "tao/GUIResource_Factory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

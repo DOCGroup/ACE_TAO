@@ -26,7 +26,7 @@
 // be\be_codegen.cpp:277
 
 
-#include "tao/PI/PolicyFactoryC.h"
+#include "PolicyFactoryC.h"
 #include "tao/CDR.h"
 #include "ace/OS_NS_string.h"
 

@@ -1,4 +1,4 @@
-#include "tao/AnyTypeCode_Adapter.h"
+#include "AnyTypeCode_Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -23,7 +23,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Concurrency/Concurrency_Utils.h"
+#include "Concurrency_Utils.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

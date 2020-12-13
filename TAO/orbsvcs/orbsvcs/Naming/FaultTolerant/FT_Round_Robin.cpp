@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "orbsvcs/Naming/FaultTolerant/FT_Round_Robin.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
+#include "FT_Round_Robin.h"
+#include "FT_Naming_Manager.h"
 
 #include "orbsvcs/PortableGroup/PG_conf.h"
 

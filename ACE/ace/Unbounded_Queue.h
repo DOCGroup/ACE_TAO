@@ -10,15 +10,15 @@
 
 #ifndef ACE_UNBOUNDED_QUEUE_H
 #define ACE_UNBOUNDED_QUEUE_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Node.h"
+#include "Node.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_stddef.h"
+#include "os_include/os_stddef.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -276,16 +276,16 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Unbounded_Queue.inl"
+#include "Unbounded_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Unbounded_Queue.cpp"
+#include "Unbounded_Queue.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Unbounded_Queue.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_UNBOUNDED_QUEUE_H */

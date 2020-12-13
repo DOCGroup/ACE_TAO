@@ -1,10 +1,10 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_Strategy_Proxy.h"
+#include "CSD_Strategy_Proxy.h"
 #include "tao/TAO_Server_Request.h"
 #include "tao/debug.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_Framework/CSD_Strategy_Proxy.inl"
+# include "CSD_Strategy_Proxy.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

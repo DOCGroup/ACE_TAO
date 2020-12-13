@@ -17,7 +17,7 @@
 #define TAO_IOR_MULTICAST_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/svc_utils_export.h"
+#include "svc_utils_export.h"
 #include "tao/ORB.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

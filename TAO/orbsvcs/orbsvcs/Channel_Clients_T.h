@@ -19,7 +19,7 @@
 #define ACE_CHANNEL_CLIENTS_T_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/RtecEventCommS.h"
+#include "RtecEventCommS.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -73,11 +73,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Channel_Clients_T.inl"
+#include "Channel_Clients_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "orbsvcs/Channel_Clients_T.cpp"
+#include "Channel_Clients_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "orbsvcs/Security/SL2_EstablishTrustPolicy.h"
+#include "SL2_EstablishTrustPolicy.h"
 #include "tao/ORB_Constants.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

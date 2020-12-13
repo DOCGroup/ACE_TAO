@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/IORInterceptor/IORInfo.h"
+#include "IORInfo.h"
 #include "tao/PortableServer/Root_POA.h"
 
 #include "tao/PolicyC.h"
@@ -7,7 +7,7 @@
 #include "tao/ORB_Constants.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/IORInterceptor/IORInfo.inl"
+# include "IORInfo.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

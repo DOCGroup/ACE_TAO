@@ -37,7 +37,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PI_Server/pi_server_export.h"
+#include "pi_server_export.h"
 #include "tao/ORB.h"
 #include "tao/SystemException.h"
 #include "tao/Object.h"

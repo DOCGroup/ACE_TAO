@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/TAO_Export.h"
+#include /**/ "TAO_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Exception.h"
+#include "Exception.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -78,7 +78,7 @@ namespace CORBA
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/UserException.inl"
+# include "UserException.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/"ace/post.h"

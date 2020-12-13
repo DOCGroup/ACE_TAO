@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/OS_NS_sys_shm.h"
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_errno.h"
+#include "OS_NS_sys_shm.h"
+#include "Global_Macros.h"
+#include "OS_NS_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

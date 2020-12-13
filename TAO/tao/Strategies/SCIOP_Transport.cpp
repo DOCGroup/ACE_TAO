@@ -1,10 +1,10 @@
-#include "tao/Strategies/SCIOP_Transport.h"
+#include "SCIOP_Transport.h"
 
 #if TAO_HAS_SCIOP == 1
 
-#include "tao/Strategies/SCIOP_Connection_Handler.h"
-#include "tao/Strategies/SCIOP_Acceptor.h"
-#include "tao/Strategies/SCIOP_Profile.h"
+#include "SCIOP_Connection_Handler.h"
+#include "SCIOP_Acceptor.h"
+#include "SCIOP_Profile.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/operation_details.h"

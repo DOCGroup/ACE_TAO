@@ -1,8 +1,8 @@
-#include "orbsvcs/Event/EC_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Filter.h"
+#include "EC_Filter_Builder.h"
+#include "EC_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Filter_Builder.inl"
+#include "EC_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

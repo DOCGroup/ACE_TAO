@@ -26,9 +26,9 @@
 // be\be_codegen.cpp:291
 
 
-#include "tao/Object_KeyC.h"
-#include "tao/CDR.h"
-#include "tao/ORB_Core.h"
+#include "Object_KeyC.h"
+#include "CDR.h"
+#include "ORB_Core.h"
 
 #include "ace/ACE.h"
 #include "ace/Truncate.h"

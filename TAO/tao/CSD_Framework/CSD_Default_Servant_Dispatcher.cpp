@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_Default_Servant_Dispatcher.h"
-#include "tao/CSD_Framework/CSD_POA.h"
-#include "tao/CSD_Framework/CSD_Strategy_Repository.h"
+#include "CSD_Default_Servant_Dispatcher.h"
+#include "CSD_POA.h"
+#include "CSD_Strategy_Repository.h"
 #include "ace/Dynamic_Service.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

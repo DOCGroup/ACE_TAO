@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/ObjRefTemplate/ort_export.h"
+#include "ort_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ObjRefTemplate/Default_ORTC.h"
+#include "Default_ORTC.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

@@ -21,10 +21,10 @@
 
 #ifndef ACE_CONFIGURATION_IMPORT_EXPORT_H
 #define ACE_CONFIGURATION_IMPORT_EXPORT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Configuration.h"
-#include "ace/SString.h"
+#include "Configuration.h"
+#include "SString.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -207,5 +207,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONFIGURATION_IMPORT_EXPORT_H */

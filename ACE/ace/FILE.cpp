@@ -1,17 +1,17 @@
 /* Defines the member functions for the base class of the ACE_IO_SAP
    ACE_FILE abstraction. */
 
-#include "ace/FILE.h"
+#include "FILE.h"
 
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_sys_stat.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_sys_stat.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/FILE.inl"
+#include "FILE.inl"
 #endif /* __ACE_INLINE__ */
 
 

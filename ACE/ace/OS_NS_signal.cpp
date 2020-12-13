@@ -1,7 +1,7 @@
-#include "ace/OS_NS_signal.h"
+#include "OS_NS_signal.h"
 
 #if !defined (ACE_HAS_INLINED_OSCALLS)
-# include "ace/OS_NS_signal.inl"
+# include "OS_NS_signal.inl"
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 #if !defined (ACE_HAS_SIGINFO_T)

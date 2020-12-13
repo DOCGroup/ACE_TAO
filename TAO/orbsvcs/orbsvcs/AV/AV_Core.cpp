@@ -1,22 +1,22 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/AV_Core.h"
-#include "orbsvcs/AV/FlowSpec_Entry.h"
-#include "orbsvcs/AV/Transport.h"
-#include "orbsvcs/AV/Protocol_Factory.h"
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/TCP.h"
-#include "orbsvcs/AV/RTP.h"
-#include "orbsvcs/AV/RTCP.h"
-#include "orbsvcs/AV/sfp.h"
-#include "orbsvcs/AV/default_resource.h"
+#include "AV_Core.h"
+#include "FlowSpec_Entry.h"
+#include "Transport.h"
+#include "Protocol_Factory.h"
+#include "UDP.h"
+#include "TCP.h"
+#include "RTP.h"
+#include "RTCP.h"
+#include "sfp.h"
+#include "default_resource.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)
-#include "orbsvcs/AV/QoS_UDP.h"
+#include "QoS_UDP.h"
 #endif /* ACE_HAS_RAPI || ACE_HAS_WINSOCK2_GQOS */
 
 #if defined (ACE_HAS_SCTP)
-#include "orbsvcs/AV/SCTP_SEQ.h"
+#include "SCTP_SEQ.h"
 #endif // ACE_HAS_SCTP
 
 #include "tao/debug.h"

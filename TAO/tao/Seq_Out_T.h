@@ -12,13 +12,13 @@
 #define TAO_SEQ_OUT_T_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include /**/ "Versioned_Namespace.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/Basic_Types.h"
+#include "Basic_Types.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -56,11 +56,11 @@ private:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "tao/Seq_Out_T.inl"
+#include "Seq_Out_T.inl"
 #endif /* defined INLINE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "tao/Seq_Out_T.cpp"
+#include "Seq_Out_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)

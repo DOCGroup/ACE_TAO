@@ -12,18 +12,18 @@
 
 #ifndef ACE_LOCAL_NAME_SPACE_T_H
 #define ACE_LOCAL_NAME_SPACE_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Name_Space.h"
+#include "Name_Space.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Naming_Context.h"
-#include "ace/SString.h"
-#include "ace/Local_Name_Space.h"
-#include "ace/Null_Mutex.h"
+#include "Naming_Context.h"
+#include "SString.h"
+#include "Local_Name_Space.h"
+#include "Null_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -33,7 +33,7 @@ typedef ACE_Unbounded_Set<ACE_NS_WString> ACE_WSTRING_SET;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-# include "ace/Hash_Map_Manager_T.h"
+# include "Hash_Map_Manager_T.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_Hash_Map_Manager_Ex<ACE_NS_String, ACE_NS_Internal, ACE_Hash<ACE_NS_String>, ACE_Equal_To<ACE_NS_String>, ACE_Null_Mutex> MAP_MANAGER;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -255,12 +255,12 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Local_Name_Space_T.cpp"
+#include "Local_Name_Space_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Local_Name_Space_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOCAL_NAME_SPACE_T_H */

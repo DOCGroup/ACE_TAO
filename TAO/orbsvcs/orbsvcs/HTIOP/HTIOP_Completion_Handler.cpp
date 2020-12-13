@@ -1,9 +1,9 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/HTIOP/HTIOP_Completion_Handler.h"
+#include "HTIOP_Completion_Handler.h"
 
-#include "orbsvcs/HTIOP/HTIOP_Transport.h"
-#include "orbsvcs/HTIOP/HTIOP_Endpoint.h"
+#include "HTIOP_Transport.h"
+#include "HTIOP_Endpoint.h"
 
 #include "ace/HTBP/HTBP_Stream.h"
 #include "ace/HTBP/HTBP_Session.h"

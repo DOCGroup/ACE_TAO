@@ -1,7 +1,7 @@
 // -*- C++ -*-
 #if (TAO_HAS_MCAST_PARSER == 1)
 
-#include "tao/default_ports.h"
+#include "default_ports.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -1,8 +1,8 @@
 #ifndef TAO_VALUE_VAROUT_T_CPP
 #define TAO_VALUE_VAROUT_T_CPP
 
-#include "tao/Valuetype/Value_VarOut_T.h"
-#include "tao/Valuetype/Value_CORBA_methods.h"
+#include "Value_VarOut_T.h"
+#include "Value_CORBA_methods.h"
 
 #include <algorithm>  /* For std::swap<>() */
 

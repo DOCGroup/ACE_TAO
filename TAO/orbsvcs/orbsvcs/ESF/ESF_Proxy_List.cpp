@@ -1,10 +1,10 @@
 #ifndef TAO_ESF_PROXY_LIST_CPP
 #define TAO_ESF_PROXY_LIST_CPP
 
-#include "orbsvcs/ESF/ESF_Proxy_List.h"
+#include "ESF_Proxy_List.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_List.inl"
+#include "ESF_Proxy_List.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

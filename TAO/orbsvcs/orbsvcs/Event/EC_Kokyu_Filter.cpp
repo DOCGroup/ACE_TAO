@@ -1,5 +1,5 @@
-#include "orbsvcs/Event/EC_Kokyu_Filter.h"
-#include "orbsvcs/Event/EC_QOS_Info.h"
+#include "EC_Kokyu_Filter.h"
+#include "EC_QOS_Info.h"
 #include "orbsvcs/Log_Macros.h"
 
 TAO_EC_Kokyu_Filter::

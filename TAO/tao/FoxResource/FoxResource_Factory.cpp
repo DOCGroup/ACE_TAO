@@ -1,4 +1,4 @@
-#include "tao/FoxResource/FoxResource_Factory.h"
+#include "FoxResource_Factory.h"
 #include "tao/debug.h"
 #include "ace/FoxReactor/FoxReactor.h"
 

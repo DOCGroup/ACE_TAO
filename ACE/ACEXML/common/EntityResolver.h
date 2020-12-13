@@ -11,14 +11,14 @@
 #define _ACEXML_ENTITYHANDLER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/InputSource.h"
-#include "ACEXML/common/SAXExceptions.h"
+#include "InputSource.h"
+#include "SAXExceptions.h"
 
 /**
  * @class ACEXML_EntityResolver

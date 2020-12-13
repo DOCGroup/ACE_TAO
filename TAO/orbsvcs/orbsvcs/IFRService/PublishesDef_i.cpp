@@ -1,6 +1,6 @@
 /* -*- C++ -*- */
-#include "orbsvcs/IFRService/PublishesDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
+#include "PublishesDef_i.h"
+#include "Repository_i.h"
 
 TAO_PublishesDef_i::TAO_PublishesDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),

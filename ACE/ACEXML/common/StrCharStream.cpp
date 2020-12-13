@@ -1,5 +1,5 @@
-#include "ACEXML/common/StrCharStream.h"
-#include "ACEXML/common/Encoding.h"
+#include "StrCharStream.h"
+#include "Encoding.h"
 #include "ace/ACE.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"

@@ -22,9 +22,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/netinet/os_in.h"
-#include "ace/os_include/os_limits.h"
-#include "ace/os_include/sys/os_socket.h"
+#include "netinet/os_in.h"
+#include "os_limits.h"
+#include "sys/os_socket.h"
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus

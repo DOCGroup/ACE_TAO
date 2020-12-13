@@ -1,7 +1,7 @@
-#include "orbsvcs/Security/SL3_SecurityCurrent.h"
+#include "SL3_SecurityCurrent.h"
 
 #if !defined (__ACE_INLINE__)
-# include "orbsvcs/Security/SL3_SecurityCurrent.inl"
+# include "SL3_SecurityCurrent.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

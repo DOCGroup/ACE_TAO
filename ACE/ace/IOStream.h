@@ -11,9 +11,9 @@
 
 #ifndef ACE_IOSTREAM_H
 #define ACE_IOSTREAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -21,7 +21,7 @@
 
 // Needed on Windows for streambuf
 // FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include "streams.h"
 
 // This is a temporary restriction - ACE_IOStream is only enabled if the
 // compiler does not supply the standard C++ library (and standard iostreams)
@@ -92,8 +92,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #  endif /* ACE_HAS_STRING_CLASS */
 
-#  include "ace/Time_Value.h"
-#  include "ace/os_include/sys/os_types.h"
+#  include "Time_Value.h"
+#  include "os_include/sys/os_types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -495,8 +495,8 @@ typedef ostream& (*__omanip_)(ostream&);
 #define GETPUT_SIG_SET(MT)      GET_SIG_SET(MT) PUT_SIG_SET(MT)
 
 // Include the templates here.
-#  include "ace/IOStream_T.h"
+#  include "IOStream_T.h"
 #endif /* !ACE_LACKS_ACE_IOSTREAM && ACE_USES_OLD_IOSTREAMS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_IOSTREAM_H */

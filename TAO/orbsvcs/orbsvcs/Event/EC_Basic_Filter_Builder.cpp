@@ -1,16 +1,16 @@
 #include "orbsvcs/Event_Service_Constants.h"
-#include "orbsvcs/Event/EC_Basic_Filter_Builder.h"
-#include "orbsvcs/Event/EC_Type_Filter.h"
-#include "orbsvcs/Event/EC_Conjunction_Filter.h"
-#include "orbsvcs/Event/EC_Disjunction_Filter.h"
-#include "orbsvcs/Event/EC_And_Filter.h"
-#include "orbsvcs/Event/EC_Negation_Filter.h"
-#include "orbsvcs/Event/EC_Bitmask_Filter.h"
-#include "orbsvcs/Event/EC_Masked_Type_Filter.h"
-#include "orbsvcs/Event/EC_Timeout_Filter.h"
+#include "EC_Basic_Filter_Builder.h"
+#include "EC_Type_Filter.h"
+#include "EC_Conjunction_Filter.h"
+#include "EC_Disjunction_Filter.h"
+#include "EC_And_Filter.h"
+#include "EC_Negation_Filter.h"
+#include "EC_Bitmask_Filter.h"
+#include "EC_Masked_Type_Filter.h"
+#include "EC_Timeout_Filter.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Event/EC_Basic_Filter_Builder.inl"
+#include "EC_Basic_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

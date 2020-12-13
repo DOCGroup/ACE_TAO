@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/EndpointPolicy/Endpoint_Acceptor_Filter.h"
-#include "tao/EndpointPolicy/EndpointPolicyC.h"
-#include "tao/EndpointPolicy/Endpoint_Value_Impl.h"
+#include "Endpoint_Acceptor_Filter.h"
+#include "EndpointPolicyC.h"
+#include "Endpoint_Value_Impl.h"
 
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"

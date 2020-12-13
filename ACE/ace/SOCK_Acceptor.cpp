@@ -1,20 +1,20 @@
-#include "ace/SOCK_Acceptor.h"
+#include "SOCK_Acceptor.h"
 
-#include "ace/Log_Category.h"
-#include "ace/OS_Errno.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_sys_socket.h"
-#include "ace/os_include/os_fcntl.h"
+#include "Log_Category.h"
+#include "OS_Errno.h"
+#include "OS_NS_string.h"
+#include "OS_NS_sys_socket.h"
+#include "os_include/os_fcntl.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Acceptor.inl"
+#include "SOCK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 #if !defined (ACE_HAS_WINCE)
-#include "ace/OS_QoS.h"
+#include "OS_QoS.h"
 #endif  // ACE_HAS_WINCE
 
 

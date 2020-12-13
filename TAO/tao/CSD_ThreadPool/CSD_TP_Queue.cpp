@@ -1,9 +1,9 @@
-#include "tao/CSD_ThreadPool/CSD_TP_Queue.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Request.h"
-#include "tao/CSD_ThreadPool/CSD_TP_Queue_Visitor.h"
+#include "CSD_TP_Queue.h"
+#include "CSD_TP_Request.h"
+#include "CSD_TP_Queue_Visitor.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_ThreadPool/CSD_TP_Queue.inl"
+# include "CSD_TP_Queue.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "orbsvcs/FaultTolerance/FT_Invocation_Endpoint_Selectors.h"
+#include "FT_Invocation_Endpoint_Selectors.h"
 
 #include "tao/Profile_Transport_Resolver.h"
 #include "tao/Stub.h"

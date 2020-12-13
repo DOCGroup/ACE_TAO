@@ -22,7 +22,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/sys/os_uio.h"
+#include "os_uio.h"
 
 #if !defined (ACE_LACKS_SYS_SOCKET_H)
 #  include /**/ <sys/socket.h>

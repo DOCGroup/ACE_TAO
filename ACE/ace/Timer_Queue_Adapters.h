@@ -11,20 +11,20 @@
 
 #ifndef ACE_TIMER_QUEUE_ADAPTERS_H
 #define ACE_TIMER_QUEUE_ADAPTERS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Task.h"
+#include "Task.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Signal.h"
-#include "ace/Sig_Handler.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "Signal.h"
+#include "Sig_Handler.h"
+#include "Condition_Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_DEFERRED_TIMER_COMMANDS)
-#  include "ace/Unbounded_Queue.h"
+#  include "Unbounded_Queue.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Command_Base;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -249,16 +249,16 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "ace/Timer_Queue_Adapters.inl"
+# include "Timer_Queue_Adapters.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Timer_Queue_Adapters.cpp"
+# include "Timer_Queue_Adapters.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 # pragma implementation ("Timer_Queue_Adapters.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_TIMER_QUEUE_ADAPTERS_H */

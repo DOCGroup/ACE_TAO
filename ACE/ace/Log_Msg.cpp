@@ -1,5 +1,5 @@
 // We need this to get the status of ACE_NTRACE...
-#include "ace/config-all.h"
+#include "config-all.h"
 
 // Turn off tracing for the duration of this file.
 #if defined (ACE_NTRACE)
@@ -7,48 +7,48 @@
 #endif /* ACE_NTRACE */
 #define ACE_NTRACE 1
 
-#include "ace/ACE.h"
-#include "ace/Thread_Manager.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_errno.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_wchar.h"
-#include "ace/OS_NS_signal.h"
-#include "ace/os_include/os_typeinfo.h"
+#include "ACE.h"
+#include "Thread_Manager.h"
+#include "Guard_T.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_errno.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_string.h"
+#include "OS_NS_wchar.h"
+#include "OS_NS_signal.h"
+#include "os_include/os_typeinfo.h"
 
 #if !defined (ACE_MT_SAFE) || (ACE_MT_SAFE != 0)
-# include "ace/Object_Manager.h"
+# include "Object_Manager.h"
 #endif /* ! ACE_MT_SAFE */
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
-# include "ace/streams.h"
+# include "streams.h"
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #if defined (ACE_HAS_TRACE)
-# include "ace/Trace.h"
+# include "Trace.h"
 #endif /* ACE_HAS_TRACE */
 
-#include "ace/Log_Msg.h"
-#include "ace/Log_Msg_Callback.h"
-#include "ace/Log_Msg_IPC.h"
-#include "ace/Log_Msg_NT_Event_Log.h"
-#include "ace/Log_Msg_UNIX_Syslog.h"
-#include "ace/Log_Record.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Stack_Trace.h"
-#include "ace/Atomic_Op.h"
+#include "Log_Msg.h"
+#include "Log_Msg_Callback.h"
+#include "Log_Msg_IPC.h"
+#include "Log_Msg_NT_Event_Log.h"
+#include "Log_Msg_UNIX_Syslog.h"
+#include "Log_Record.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Stack_Trace.h"
+#include "Atomic_Op.h"
 
 #include <algorithm>
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Log_Msg.inl"
+#include "Log_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
 #ifdef ACE_ANDROID
-#  include "ace/Log_Msg_Android_Logcat.h"
+#  include "Log_Msg_Android_Logcat.h"
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

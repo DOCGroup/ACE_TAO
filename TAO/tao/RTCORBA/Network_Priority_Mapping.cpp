@@ -1,6 +1,6 @@
 #include "tao/orbconf.h"
 
-#include "tao/RTCORBA/Network_Priority_Mapping.h"
+#include "Network_Priority_Mapping.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 

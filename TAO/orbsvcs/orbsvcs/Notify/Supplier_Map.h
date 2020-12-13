@@ -10,14 +10,14 @@
 #define TAO_Notify_SUPPLIER_MAP_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Notify/notify_serv_export.h"
+#include "notify_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "orbsvcs/Notify/Event_Map_T.h"
-#include "orbsvcs/Notify/ProxyConsumer.h"
+#include "Event_Map_T.h"
+#include "ProxyConsumer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

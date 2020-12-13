@@ -1,10 +1,10 @@
-#include "ace/Notification_Queue.h"
+#include "Notification_Queue.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Notification_Queue.inl"
+#include "Notification_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Guard_T.h"
+#include "Guard_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

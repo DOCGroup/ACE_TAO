@@ -1,12 +1,12 @@
 #ifndef ACE_IOSTREAM_CPP
 #define ACE_IOSTREAM_CPP
 
-#include "ace/IOStream.h"
+#include "IOStream.h"
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#  include "ace/OS_NS_errno.h"
-#  include "ace/OS_Memory.h"
+#  include "OS_NS_errno.h"
+#  include "OS_Memory.h"
 
 ///////////////////////////////////////////////////////////////////////////
 

@@ -14,10 +14,10 @@
 #ifndef ACE_FUTURE_H
 #define ACE_FUTURE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Unbounded_Set.h"
-#include "ace/Strategies_T.h"
+#include "Unbounded_Set.h"
+#include "Strategies_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -25,9 +25,9 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Synch_Traits.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "Synch_Traits.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Condition_Recursive_Thread_Mutex.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -367,7 +367,7 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Future.cpp"
+#include "Future.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
@@ -376,6 +376,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_FUTURE_H */

@@ -1,5 +1,5 @@
-#include "orbsvcs/IFRService/EmitsDef_i.h"
-#include "orbsvcs/IFRService/Repository_i.h"
+#include "EmitsDef_i.h"
+#include "Repository_i.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

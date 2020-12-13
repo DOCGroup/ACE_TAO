@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/Global_Macros.h"
-#include "ace/OS_NS_Thread.h"
+#include "Global_Macros.h"
+#include "OS_NS_Thread.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

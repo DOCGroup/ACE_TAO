@@ -10,12 +10,12 @@
 
 #ifndef ACE_MAP_T_H
 #define ACE_MAP_T_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Map_Manager.h"
-#include "ace/Hash_Map_Manager_T.h"
-#include "ace/Active_Map_Manager.h"
-#include "ace/Pair_T.h"
+#include "Map_Manager.h"
+#include "Hash_Map_Manager_T.h"
+#include "Active_Map_Manager.h"
+#include "Pair_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -1585,16 +1585,16 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Map_T.inl"
+#include "Map_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-#include "ace/Map_T.cpp"
+#include "Map_T.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 #pragma implementation ("Map_T.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_MAP_T_H */

@@ -1,6 +1,6 @@
-#include "orbsvcs/Log/EventLogFactory_i.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/EventLogNotification.h"
+#include "EventLogFactory_i.h"
+#include "LogNotification.h"
+#include "EventLogNotification.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_stdio.h"
 

@@ -12,16 +12,16 @@
 
 #ifndef ACE_NULL_CONDITION_H
 #define ACE_NULL_CONDITION_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Null_Mutex.h"
-#include "ace/Condition_T.h"
+#include "Null_Mutex.h"
+#include "Condition_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_errno.h"
+#include "os_include/os_errno.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -87,5 +87,5 @@ typedef ACE_Condition<ACE_Null_Mutex> ACE_Null_Condition;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_NULL_CONDITION_H */

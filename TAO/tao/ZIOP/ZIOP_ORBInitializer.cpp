@@ -1,11 +1,11 @@
-#include "tao/ZIOP/ZIOP_ORBInitializer.h"
+#include "ZIOP_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/ZIOP/ZIOP.h"
-#include "tao/ZIOP/ZIOP_Stub_Factory.h"
-#include "tao/ZIOP/ZIOP_PolicyFactory.h"
-#include "tao/ZIOP/ZIOP_Service_Context_Handler.h"
+#include "ZIOP.h"
+#include "ZIOP_Stub_Factory.h"
+#include "ZIOP_PolicyFactory.h"
+#include "ZIOP_Service_Context_Handler.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"
 

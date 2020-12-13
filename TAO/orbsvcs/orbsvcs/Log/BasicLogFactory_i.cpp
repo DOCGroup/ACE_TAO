@@ -1,4 +1,4 @@
-#include "orbsvcs/Log/BasicLogFactory_i.h"
+#include "BasicLogFactory_i.h"
 #include "ace/OS_NS_stdio.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

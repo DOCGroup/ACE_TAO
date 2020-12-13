@@ -16,8 +16,8 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/Object.h"
-#include "tao/GIOPC.h"
+#include "Object.h"
+#include "GIOPC.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

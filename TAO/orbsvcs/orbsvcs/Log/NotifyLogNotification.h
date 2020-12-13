@@ -24,8 +24,8 @@
 #include "orbsvcs/CosEventCommS.h"
 #include "orbsvcs/CosNotifyChannelAdminS.h"
 #include "orbsvcs/CosNotifyCommC.h"
-#include "orbsvcs/Log/LogNotification.h"
-#include "orbsvcs/Log/notifylog_serv_export.h"
+#include "LogNotification.h"
+#include "notifylog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

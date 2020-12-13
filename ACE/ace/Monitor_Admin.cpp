@@ -1,9 +1,9 @@
-#include "ace/Monitor_Admin.h"
+#include "Monitor_Admin.h"
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Reactor.h"
-#include "ace/Monitor_Point_Registry.h"
+#include "Reactor.h"
+#include "Monitor_Point_Registry.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

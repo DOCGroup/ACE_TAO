@@ -18,11 +18,11 @@
 
 #include "ace/Hash_Map_Manager.h"
 
-#include "orbsvcs/Notify/ID_Factory.h"
-#include "orbsvcs/Notify/Event.h"
-#include "orbsvcs/Notify/notify_serv_export.h"
-#include "orbsvcs/Notify/Topology_Object.h"
-#include "orbsvcs/Notify/EventChannel.h"
+#include "ID_Factory.h"
+#include "Event.h"
+#include "notify_serv_export.h"
+#include "Topology_Object.h"
+#include "EventChannel.h"
 
 class TAO_Notify_EventChannel;
 
@@ -91,7 +91,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/FilterAdmin.inl"
+#include "FilterAdmin.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

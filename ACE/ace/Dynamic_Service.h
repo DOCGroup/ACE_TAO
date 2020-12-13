@@ -12,16 +12,16 @@
 #ifndef ACE_DYNAMIC_SERVICE_H
 #define ACE_DYNAMIC_SERVICE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
-#include "ace/Global_Macros.h"
+#include /**/ "config-all.h"
+#include "Global_Macros.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Dynamic_Service_Base.h"
+#include "Dynamic_Service_Base.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -71,17 +71,17 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Dynamic_Service.inl"
+#include "Dynamic_Service.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)
-# include "ace/Dynamic_Service.cpp"
+# include "Dynamic_Service.cpp"
 #endif /* ACE_TEMPLATES_REQUIRE_SOURCE */
 
 #if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)
 # pragma implementation ("Dynamic_Service.cpp")
 #endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_DYNAMIC_SERVICE_H */

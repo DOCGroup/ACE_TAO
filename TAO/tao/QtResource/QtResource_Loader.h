@@ -13,7 +13,7 @@
 #define TAO_QTRESOURCE_LOADER_H
 #include /**/ "ace/pre.h"
 
-#include "tao/QtResource/TAO_QtResource_Export.h"
+#include "TAO_QtResource_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

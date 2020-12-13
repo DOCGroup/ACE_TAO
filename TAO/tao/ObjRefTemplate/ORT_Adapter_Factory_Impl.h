@@ -19,7 +19,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/ObjRefTemplate/ort_export.h"
+#include "ort_export.h"
 #include "tao/PortableServer/ORT_Adapter_Factory.h"
 #include "tao/Versioned_Namespace.h"
 
@@ -60,7 +60,7 @@ ACE_STATIC_SVC_DECLARE (ORT_Adapter_Factory_Impl)
 ACE_FACTORY_DECLARE (TAO_ORT, ORT_Adapter_Factory_Impl)
 
 #define TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
-#include "tao/ObjRefTemplate/ObjectReferenceTemplateC.h"
+#include "ObjectReferenceTemplateC.h"
 #undef TAO_OBJREF_TEMPLATE_SAFE_INCLUDE
 #include /**/ "ace/post.h"
 

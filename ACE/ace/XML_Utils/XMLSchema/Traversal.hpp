@@ -4,7 +4,7 @@
 #define XMLSCHEMA_TRAVERSAL_HPP
 
 #include <ace/XML_Utils/XSCRT/Traversal.hpp>
-#include <ace/XML_Utils/XMLSchema/Types.hpp>
+#include "Types.hpp"
 
 namespace XMLSchema
 {

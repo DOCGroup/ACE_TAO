@@ -1,7 +1,7 @@
-#include "ACEXML/parser/parser/Parser.h"
+#include "Parser.h"
 
 #if !defined (__ACEXML_INLINE__)
-# include "ACEXML/parser/parser/Parser.inl"
+# include "Parser.inl"
 #endif /* __ACEXML_INLINE__ */
 
 #include "ace/ACE.h"
@@ -9,7 +9,7 @@
 #include "ACEXML/common/AttributesImpl.h"
 #include "ACEXML/common/StrCharStream.h"
 #include "ACEXML/common/StreamFactory.h"
-#include "ACEXML/parser/parser/ParserInternals.h"
+#include "ParserInternals.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 

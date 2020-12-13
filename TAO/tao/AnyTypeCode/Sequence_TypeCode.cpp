@@ -1,12 +1,12 @@
 #ifndef TAO_SEQUENCE_TYPECODE_CPP
 #define TAO_SEQUENCE_TYPECODE_CPP
 
-#include "tao/AnyTypeCode/Sequence_TypeCode.h"
+#include "Sequence_TypeCode.h"
 #include "tao/CDR.h"
-#include "tao/AnyTypeCode/TypeCode_Traits.h"
+#include "TypeCode_Traits.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Sequence_TypeCode.inl"
+# include "Sequence_TypeCode.inl"
 #endif  /* !__ACE_INLINE__ */
 
 #include "ace/Truncate.h"

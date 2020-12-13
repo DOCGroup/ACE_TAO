@@ -1,14 +1,14 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/AV/UDP.h"
-#include "orbsvcs/AV/AVStreams_i.h"
-#include "orbsvcs/AV/MCast.h"
+#include "UDP.h"
+#include "AVStreams_i.h"
+#include "MCast.h"
 
 #include "tao/debug.h"
 #include "ace/OS_NS_strings.h"
 
 #if !defined (__ACE_INLINE__)
-#include "orbsvcs/AV/UDP.inl"
+#include "UDP.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

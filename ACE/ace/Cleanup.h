@@ -15,21 +15,21 @@
 #ifndef ACE_CLEANUP_H
 # define ACE_CLEANUP_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
-# include "ace/config-lite.h"
+# include "config-lite.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
-# include "ace/Intrusive_List.h"
-# include "ace/Intrusive_List_Node.h"
+# include "Intrusive_List.h"
+# include "Intrusive_List_Node.h"
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
-# include "ace/Global_Macros.h"
+# include "Global_Macros.h"
 # define ACE_CLEANUP_DESTROYER_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ace_cleanup_destroyer)
 #else
 # define ACE_CLEANUP_DESTROYER_NAME ace_cleanup_destroyer
@@ -153,8 +153,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #     undef ACE_INLINE
 #   endif /* ACE_INLINE */
 #   define ACE_INLINE inline
-#   include "ace/Cleanup.inl"
+#   include "Cleanup.inl"
 # endif /* ACE_HAS_INLINED_OSCALLS */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 #endif /* ACE_CLEANUP_H */

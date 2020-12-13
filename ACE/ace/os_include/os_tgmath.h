@@ -22,8 +22,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/os_include/os_math.h"
-#include "ace/os_include/os_complex.h"
+#include "os_math.h"
+#include "os_complex.h"
 
 #if !defined (ACE_LACKS_TGMATH_H)
 #  include /**/ <tgmath.h>

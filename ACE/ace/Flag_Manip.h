@@ -13,16 +13,16 @@
 #ifndef ACE_FLAG_MANIP_H
 #define ACE_FLAG_MANIP_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Global_Macros.h"
-#include "ace/os_include/os_fcntl.h"   /* For values passed to these methods */
+#include "Global_Macros.h"
+#include "os_include/os_fcntl.h"   /* For values passed to these methods */
 
 #if defined (ACE_EXPORT_MACRO)
 #  undef ACE_EXPORT_MACRO
@@ -49,8 +49,8 @@ namespace ACE
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Flag_Manip.inl"
+#include "Flag_Manip.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif  /* ACE_FLAG_MANIP_H */

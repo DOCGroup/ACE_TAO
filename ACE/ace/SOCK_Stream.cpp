@@ -1,11 +1,11 @@
-#include "ace/SOCK_Stream.h"
+#include "SOCK_Stream.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/SOCK_Stream.inl"
+#include "SOCK_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

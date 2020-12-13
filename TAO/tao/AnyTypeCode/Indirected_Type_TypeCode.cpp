@@ -1,9 +1,9 @@
 #include "tao/CDR.h"
 
-#include "tao/AnyTypeCode/Indirected_Type_TypeCode.h"
+#include "Indirected_Type_TypeCode.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Indirected_Type_TypeCode.inl"
+# include "Indirected_Type_TypeCode.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include "ace/Guard_T.h"

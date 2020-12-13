@@ -1,10 +1,10 @@
-#include "tao/Dynamic_TP/DTP_ORBInitializer.h"
+#include "DTP_ORBInitializer.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
-#include "tao/Dynamic_TP/DTP_Config.h"
-#include "tao/Dynamic_TP/DTP_Thread_Lane_Resources_Manager.h"
-#include "tao/Dynamic_TP/DTP_Thread_Pool.h"
+#include "DTP_Config.h"
+#include "DTP_Thread_Lane_Resources_Manager.h"
+#include "DTP_Thread_Pool.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Core.h"
 #include "tao/PI/ORBInitInfo.h"

@@ -175,6 +175,6 @@ namespace XSCRT
   }
 }
 
-#include <ace/XML_Utils/XSCRT/ExtendedTypeInfo.ipp>
+#include "ExtendedTypeInfo.ipp"
 
 #endif  // XSCRT_EXTENDED_TYPE_INFO_HPP

@@ -10,17 +10,17 @@
 
 #ifndef ACE_SPIPE_STREAM_H
 #define ACE_SPIPE_STREAM_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SPIPE.h"
+#include "SPIPE.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SPIPE_Addr.h"
-#include "ace/ACE.h"
-#include "ace/OS_NS_stropts.h"
+#include "SPIPE_Addr.h"
+#include "ACE.h"
+#include "OS_NS_stropts.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -163,8 +163,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SPIPE_Stream.inl"
+#include "SPIPE_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SPIPE_STREAM_H */

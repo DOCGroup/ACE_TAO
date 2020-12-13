@@ -14,11 +14,11 @@
 #ifndef SVC_CONF_LEXER_H
 #define SVC_CONF_LEXER_H
 
-#include /**/ "ace/pre.h"
-#include "ace/Svc_Conf.h"
+#include /**/ "pre.h"
+#include "Svc_Conf.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
-#include "ace/Encoding_Converter_Factory.h"
+#include "Encoding_Converter_Factory.h"
 
 class ACE_Encoding_Converter;
 
@@ -63,6 +63,6 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ACE_USES_CLASSIC_SVC_CONF = 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* SVC_CONF_LEXER_H */

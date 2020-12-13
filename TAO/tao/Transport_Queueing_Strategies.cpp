@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "tao/Transport_Queueing_Strategies.h"
-#include "tao/Stub.h"
-#include "tao/debug.h"
+#include "Transport_Queueing_Strategies.h"
+#include "Stub.h"
+#include "debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_sys_time.h"

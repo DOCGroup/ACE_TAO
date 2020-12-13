@@ -1,12 +1,12 @@
-#include "tao/PortableServer/POA_Policy_Set.h"
-#include "tao/PortableServer/POA_Cached_Policies.h"
-#include "tao/PortableServer/PortableServer.h"
+#include "POA_Policy_Set.h"
+#include "POA_Cached_Policies.h"
+#include "PortableServer.h"
 
 #include "tao/Policy_Validator.h"
 #include "tao/ORB_Core.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/PortableServer/POA_Policy_Set.inl"
+# include "POA_Policy_Set.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

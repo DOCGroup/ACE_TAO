@@ -12,19 +12,19 @@
  */
 //=============================================================================
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #ifndef ACE_OS_MAIN_H
 # define ACE_OS_MAIN_H
 
-# include /**/ "ace/pre.h"
+# include /**/ "pre.h"
 
 # if !defined (ACE_LACKS_PRAGMA_ONCE)
 #  pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_MQX)
-# include "ace/MQX_Filesystem.h"
+# include "MQX_Filesystem.h"
 #endif
 
 # if !defined (ACE_DOESNT_DEFINE_MAIN)
@@ -51,7 +51,7 @@ extern char* rtems_progname;
 #   if defined (ACE_USES_WCHAR)    /* Not Win32, but uses wchar */
       // Replace main() with a version that converts the char** argv to
       // ACE_TCHAR and calls the ACE_TMAIN entrypoint.
-#     include "ace/Argv_Type_Converter.h"
+#     include "Argv_Type_Converter.h"
 #     define ACE_TMAIN \
         ace_main_i (int, ACE_TCHAR *[]); /* forward declaration */ \
         int main (int argc, char *argv[]) { \
@@ -287,7 +287,7 @@ int ace_wmain_i
 // Supporting legacy 'main' is A LOT easier for users than changing existing
 // code on WinCE. Unfortunately, evc 3 can't grok a #include within the macro
 // expansion, so it needs to go out here.
-#     include "ace/Argv_Type_Converter.h"
+#     include "Argv_Type_Converter.h"
 #     define main \
 ace_main_i (int, ACE_TCHAR *[]); \
 ACE_Export int ace_os_winmain_i (ACE_Main_Base&, hInstance, hPrevInstance, lpCmdLine, nCmdShow);  /* forward declaration */ \
@@ -307,7 +307,7 @@ int ace_main_i
 
 #  ifdef ACE_MQX
 #    include <iar_dynamic_init.h>
-#    include "ace/MQX_Filesystem.h"
+#    include "MQX_Filesystem.h"
 #    define ACE_TMAIN \
 ace_main_i(int argc, ACE_TCHAR *argv[]); \
 static void main_task(uint32_t param) { \
@@ -332,6 +332,6 @@ int ace_main_i
 
 #endif /* ACE_DOESNT_DEFINE_MAIN */
 
-# include /**/ "ace/post.h"
+# include /**/ "post.h"
 
 #endif /* ACE_OS_MAIN_H */

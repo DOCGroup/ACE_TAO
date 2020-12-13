@@ -16,7 +16,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Event/EC_ProxySupplier.h"
+#include "EC_ProxySupplier.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -24,7 +24,7 @@
 
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

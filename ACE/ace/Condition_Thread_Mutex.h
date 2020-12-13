@@ -12,22 +12,22 @@
 
 #ifndef ACE_CONDITION_THREAD_MUTEX_H
 #define ACE_CONDITION_THREAD_MUTEX_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if !defined (ACE_HAS_THREADS)
-#  include "ace/Null_Condition.h"
+#  include "Null_Condition.h"
 #else /* ACE_HAS_THREADS */
 // ACE platform supports some form of threading.
 
-#include "ace/Thread_Mutex.h"
-#include "ace/Condition_Attributes.h"
-#include "ace/Condition_T.h"
+#include "Thread_Mutex.h"
+#include "Condition_Attributes.h"
+#include "Condition_T.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -135,10 +135,10 @@ typedef ACE_Condition<ACE_Thread_Mutex> ACE_Condition_Thread_Mutex;
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Condition_Thread_Mutex.inl"
+#include "Condition_Thread_Mutex.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_CONDITION_THREAD_MUTEX_H */

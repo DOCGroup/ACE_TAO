@@ -1,13 +1,13 @@
-#include "ace/OS_main.h"
+#include "OS_main.h"
 
 #if !defined (ACE_DOESNT_DEFINE_MAIN)
 
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER) && !defined (ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER)
 
-#include "ace/Init_ACE.h"
+#include "Init_ACE.h"
 
 #  if !defined (ACE_HAS_MINIMAL_ACE_OS)
-#    include "ace/Object_Manager.h"
+#    include "Object_Manager.h"
 #  endif /* ! ACE_HAS_MINIMAL_ACE_OS */
 
 // Rename "main ()" on platforms that don't allow it to be called "main ()".
@@ -98,10 +98,10 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 // CE only gets a command line string;  no argv. So we need to convert it
 // when the main entrypoint expects argc/argv. ACE_ARGV supports this.
-#    include "ace/OS_NS_string.h"
-#    include "ace/OS_NS_ctype.h"
-#    include "ace/ACE.h"
-#    include "ace/ARGV.h"
+#    include "OS_NS_string.h"
+#    include "OS_NS_ctype.h"
+#    include "ACE.h"
+#    include "ARGV.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

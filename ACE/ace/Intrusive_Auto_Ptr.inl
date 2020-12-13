@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "ace/Guard_T.h"
-#include "ace/Log_Category.h"
+#include "Guard_T.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

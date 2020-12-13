@@ -11,15 +11,15 @@
 
 #ifndef ACE_SHARED_MALLOC_SV_H
 #define ACE_SHARED_MALLOC_SV_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Shared_Memory.h"
+#include "Shared_Memory.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SV_Shared_Memory.h"
+#include "SV_Shared_Memory.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -91,8 +91,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Shared_Memory_SV.inl"
+#include "Shared_Memory_SV.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_SHARED_MALLOC_SV_H */

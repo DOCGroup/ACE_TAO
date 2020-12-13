@@ -12,9 +12,9 @@
 #ifndef ACE_ICMP_SOCKET_H
 #define ACE_ICMP_SOCKET_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/ACE_export.h"
+#include /**/ "ACE_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -22,9 +22,9 @@
 
 #if defined (ACE_HAS_ICMP_SUPPORT) && (ACE_HAS_ICMP_SUPPORT == 1)
 
-#include "ace/SOCK.h"
-#include "ace/Time_Value.h"
-#include "ace/os_include/netinet/os_in.h"
+#include "SOCK.h"
+#include "Time_Value.h"
+#include "os_include/netinet/os_in.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -101,6 +101,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif  /* ACE_HAS_ICMP_SUPPORT == 1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_ICMP_SOCKET_H */

@@ -1,8 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Notify/ThreadPool_Task.h"
-#include "orbsvcs/Notify/Properties.h"
-#include "orbsvcs/Notify/Timer_Queue.h"
-#include "orbsvcs/Notify/Buffering_Strategy.h"
+#include "ThreadPool_Task.h"
+#include "Properties.h"
+#include "Timer_Queue.h"
+#include "Buffering_Strategy.h"
 
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"

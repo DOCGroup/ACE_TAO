@@ -1,4 +1,4 @@
-#include "tao/ZIOP/ZIOP_Service_Context_Handler.h"
+#include "ZIOP_Service_Context_Handler.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 #include "tao/CDR.h"
@@ -7,7 +7,7 @@
 #include "tao/GIOP_Message_Base.h"
 #include "tao/operation_details.h"
 #include "tao/Stub.h"
-#include "tao/ZIOP/ZIOP_Policy_i.h"
+#include "ZIOP_Policy_i.h"
 #include "tao/Messaging_PolicyValueC.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

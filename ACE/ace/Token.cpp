@@ -1,19 +1,19 @@
-#include "ace/Token.h"
+#include "Token.h"
 
 #if !defined (__ACE_INLINE__)
-# include "ace/Token.inl"
+# include "Token.inl"
 #endif /* __ACE_INLINE__ */
 
 
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Thread.h"
-#include "ace/Log_Category.h"
+#include "Thread.h"
+#include "Log_Category.h"
 
 #if defined (ACE_TOKEN_DEBUGGING)
 // FUZZ: disable check_for_streams_include
-#include "ace/streams.h"
+#include "streams.h"
 #endif /* ACE_TOKEN_DEBUGGING */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

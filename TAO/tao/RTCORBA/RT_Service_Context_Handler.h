@@ -11,7 +11,7 @@
 #ifndef TAO_RT_SERVICE_CONTEXT_HANDLER_H
 #define TAO_RT_SERVICE_CONTEXT_HANDLER_H
 #include /**/ "ace/pre.h"
-#include "tao/RTCORBA/rtcorba_export.h"
+#include "rtcorba_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

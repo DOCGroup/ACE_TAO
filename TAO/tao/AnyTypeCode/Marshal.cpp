@@ -12,11 +12,11 @@
  */
 //=============================================================================
 
-#include "tao/AnyTypeCode/Marshal.h"
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "Marshal.h"
+#include "TypeCode.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/Marshal.inl"
+# include "Marshal.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

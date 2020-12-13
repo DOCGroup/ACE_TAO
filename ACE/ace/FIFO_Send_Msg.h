@@ -11,16 +11,16 @@
 
 #ifndef ACE_FIFO_SEND_MSG_H
 #define ACE_FIFO_SEND_MSG_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/FIFO_Send.h"
+#include "FIFO_Send.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #if defined (ACE_HAS_STREAM_PIPES)
-#  include "ace/OS_NS_stropts.h"
+#  include "OS_NS_stropts.h"
 #endif /* ACE_HAS_STREAM_PIPES */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -81,8 +81,8 @@ public:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/FIFO_Send_Msg.inl"
+#include "FIFO_Send_Msg.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_FIFO_SEND_MSG_H */

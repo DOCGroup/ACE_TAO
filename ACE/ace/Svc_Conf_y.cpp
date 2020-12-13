@@ -104,14 +104,14 @@
 /* Copy the first part of user declarations.  */
 
 
-#include "ace/Svc_Conf.h"
+#include "Svc_Conf.h"
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 
-#include "ace/Module.h"
-#include "ace/Stream.h"
-#include "ace/Service_Types.h"
-#include "ace/ace_wchar.h"
+#include "Module.h"
+#include "Stream.h"
+#include "Service_Types.h"
+#include "ace_wchar.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

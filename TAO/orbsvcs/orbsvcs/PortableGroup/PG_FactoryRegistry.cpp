@@ -1,6 +1,6 @@
 // -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/PortableGroup/PG_FactoryRegistry.h"
+#include "PG_FactoryRegistry.h"
 
 #include "ace/Get_Opt.h"
 #include "ace/Vector_T.h"
@@ -10,7 +10,7 @@
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/PortableServer/POAManagerC.h"
-#include "orbsvcs/PortableGroup/PG_Operators.h" // operator == on CosNaming::Name
+#include "PG_Operators.h" // operator == on CosNaming::Name
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

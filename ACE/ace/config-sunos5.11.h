@@ -8,6 +8,6 @@
 // ACE_CONFIG_H is defined by one of the following #included headers.
 
 // #include the SunOS 5.10 config, then add any SunOS 5.11 updates below.
-#include "ace/config-sunos5.10.h"
+#include "config-sunos5.10.h"
 
 #endif /* ACE_CONFIG_H */

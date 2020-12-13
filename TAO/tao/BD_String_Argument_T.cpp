@@ -1,11 +1,11 @@
 #ifndef TAO_BD_STRING_ARGUMENT_T_CPP
 #define TAO_BD_STRING_ARGUMENT_T_CPP
 
-#include "tao/BD_String_Argument_T.h"
-#include "tao/SystemException.h"
+#include "BD_String_Argument_T.h"
+#include "SystemException.h"
 
 #if !defined (__ACE_INLINE__)
-#include "tao/BD_String_Argument_T.inl"
+#include "BD_String_Argument_T.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

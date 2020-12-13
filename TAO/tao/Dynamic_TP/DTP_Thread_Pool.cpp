@@ -1,9 +1,9 @@
-#include "tao/Dynamic_TP/DTP_Thread_Pool.h"
+#include "DTP_Thread_Pool.h"
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
 
 #if ! defined (__ACE_INLINE__)
-#include "tao/Dynamic_TP/DTP_Thread_Pool.inl"
+#include "DTP_Thread_Pool.inl"
 #endif /* __ACE_INLINE__ */
 
 #include "tao/Exception.h"

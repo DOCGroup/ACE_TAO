@@ -17,15 +17,15 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TAO_AnyTypeCode_Export.h"
+#include "TAO_AnyTypeCode_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/AnyTypeCode_methods.h"
-#include "tao/AnyTypeCode/ValueModifierC.h"
-#include "tao/AnyTypeCode/VisibilityC.h"
+#include "AnyTypeCode_methods.h"
+#include "ValueModifierC.h"
+#include "VisibilityC.h"
 #include "tao/UserException.h"
 #include "tao/Basic_Types.h"
 #include "tao/Typecode_typesC.h"
@@ -565,7 +565,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-# include "tao/AnyTypeCode/TypeCode.inl"
+# include "TypeCode.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

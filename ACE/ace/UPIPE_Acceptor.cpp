@@ -1,13 +1,13 @@
-#include "ace/UPIPE_Acceptor.h"
+#include "UPIPE_Acceptor.h"
 
 
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/OS_NS_unistd.h"
+#include "OS_NS_unistd.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UPIPE_Acceptor.inl"
+#include "UPIPE_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -10,28 +10,28 @@
 
 #ifndef ACE_LOG_MSG_LOGGER_H
 #define ACE_LOG_MSG_LOGGER_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Log_Msg_Backend.h"
+#include "Log_Msg_Backend.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Default_Constants.h"
+#include "Default_Constants.h"
 
 // IPC conduit between sender and client daemon.  This should be
 // included in the ACE_Log_Msg class, but due to "order of include"
 // problems it can't be...
 #if (ACE_HAS_STREAM_LOG_MSG_IPC == 1)
-# include "ace/SPIPE_Connector.h"
+# include "SPIPE_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SPIPE_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SPIPE_Connector ACE_LOG_MSG_IPC_CONNECTOR;
 typedef ACE_SPIPE_Addr ACE_LOG_MSG_IPC_ADDR;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #else
-# include "ace/SOCK_Connector.h"
+# include "SOCK_Connector.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef ACE_SOCK_Stream ACE_LOG_MSG_IPC_STREAM;
 typedef ACE_SOCK_Connector ACE_LOG_MSG_IPC_CONNECTOR;
@@ -77,5 +77,5 @@ private:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_LOG_MSG_H */

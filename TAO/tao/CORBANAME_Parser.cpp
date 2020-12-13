@@ -1,14 +1,14 @@
 // -*- C++ -*-
-#include "tao/CORBANAME_Parser.h"
+#include "CORBANAME_Parser.h"
 
 #if (TAO_HAS_CORBANAME_PARSER == 1)
 
-#include "tao/ORB.h"
-#include "tao/Object.h"
-#include "tao/SystemException.h"
-#include "tao/UB_String_Arguments.h"
-#include "tao/Invocation_Adapter.h"
-#include "tao/debug.h"
+#include "ORB.h"
+#include "Object.h"
+#include "SystemException.h"
+#include "UB_String_Arguments.h"
+#include "Invocation_Adapter.h"
+#include "debug.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/SString.h"

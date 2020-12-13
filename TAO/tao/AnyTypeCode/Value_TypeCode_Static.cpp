@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#include "tao/AnyTypeCode/Value_TypeCode_Static.h"
-#include "tao/AnyTypeCode/TypeCode_Value_Field.h"
+#include "Value_TypeCode_Static.h"
+#include "TypeCode_Value_Field.h"
 #include "tao/CDR.h"
 
 #include "tao/ORB_Core.h"
@@ -11,7 +11,7 @@
 #include "ace/Truncate.h"
 
 #ifndef __ACE_INLINE__
-# include "tao/AnyTypeCode/Value_TypeCode_Static.inl"
+# include "Value_TypeCode_Static.inl"
 #endif  /* !__ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

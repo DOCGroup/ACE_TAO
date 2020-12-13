@@ -1,7 +1,7 @@
 // -*- C++ -*-
-#include "ace/ACE.h"
-#include "ace/OS_NS_sys_uio.h"
-#include "ace/OS_NS_unistd.h"
+#include "ACE.h"
+#include "OS_NS_sys_uio.h"
+#include "OS_NS_unistd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

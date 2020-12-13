@@ -10,8 +10,8 @@
 //=============================================================================
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Replication_Manager.h"
-#include "orbsvcs/Naming/FaultTolerant/FT_Naming_Server.h"
+#include "FT_Naming_Replication_Manager.h"
+#include "FT_Naming_Server.h"
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"

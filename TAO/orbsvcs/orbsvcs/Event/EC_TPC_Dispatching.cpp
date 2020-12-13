@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Event/EC_TPC_Dispatching.h"
-#include "orbsvcs/Event/EC_Defaults.h"
+#include "EC_TPC_Dispatching.h"
+#include "EC_Defaults.h"
 
 #include <ace/Dynamic_Service.h>
 

@@ -11,9 +11,9 @@
 #ifndef MONITOR_CONTROL_TYPES_H
 #define MONITOR_CONTROL_TYPES_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/Vector_T.h"
+#include "Vector_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -21,9 +21,9 @@
 
 #if defined (ACE_HAS_MONITOR_FRAMEWORK) && (ACE_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "ace/Array_Map.h"
-#include "ace/SString.h"
-#include "ace/Time_Value.h"
+#include "Array_Map.h"
+#include "SString.h"
+#include "Time_Value.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -114,6 +114,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_MONITOR_FRAMEWORK==1 */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif // MONITOR_CONTROL_TYPES_H

@@ -11,18 +11,18 @@
 #ifndef ACE_SV_MESSAGE_QUEUE_H
 #define ACE_SV_MESSAGE_QUEUE_H
 
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/SV_Message.h"
-#include "ace/os_include/sys/os_stat.h"
-#include "ace/os_include/sys/os_ipc.h"
-#include "ace/Default_Constants.h"
+#include "SV_Message.h"
+#include "os_include/sys/os_stat.h"
+#include "os_include/sys/os_ipc.h"
+#include "Default_Constants.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -94,9 +94,9 @@ protected:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/SV_Message_Queue.inl"
+#include "SV_Message_Queue.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 
 #endif /* ACE_SV_MESSAGE_QUEUE_H */

@@ -22,13 +22,13 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "orbsvcs/RTEventLogAdminS.h"
-#include "orbsvcs/Log/Log_i.h"
+#include "Log_i.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
 #include "orbsvcs/Event/EC_Factory.h"
 #include "orbsvcs/Event/EC_Defaults.h"
-#include "orbsvcs/Log/RTEventLogConsumer.h"
+#include "RTEventLogConsumer.h"
 
-#include "orbsvcs/Log/rteventlog_serv_export.h"
+#include "rteventlog_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

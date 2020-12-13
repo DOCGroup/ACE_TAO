@@ -14,14 +14,14 @@
 #define TAO_POAMANAGERFACTORY_H
 #include /**/ "ace/pre.h"
 
-#include "tao/PortableServer/portableserver_export.h"
+#include "portableserver_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/PortableServer/POAManagerFactoryC.h"
-#include "tao/PortableServer/Object_Adapter.h"
+#include "POAManagerFactoryC.h"
+#include "Object_Adapter.h"
 #include "tao/LocalObject.h"
 #include "ace/Unbounded_Set.h"
 

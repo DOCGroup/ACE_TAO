@@ -12,7 +12,7 @@
 #define TAO_AV_CORE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/AV/AV_export.h"
+#include "AV_export.h"
 #include "orbsvcs/AVStreamsC.h"
 
 #include "tao/PortableServer/PortableServer.h"

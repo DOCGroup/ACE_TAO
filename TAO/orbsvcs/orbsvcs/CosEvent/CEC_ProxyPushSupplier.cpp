@@ -5,16 +5,16 @@
 #include "orbsvcs/Log_Macros.h"
 #include "tao/DynamicInterface/DII_CORBA_methods.h"
 
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.h"
-#include "orbsvcs/CosEvent/CEC_Dispatching.h"
-#include "orbsvcs/CosEvent/CEC_EventChannel.h"
-#include "orbsvcs/CosEvent/CEC_ConsumerControl.h"
+#include "CEC_ProxyPushSupplier.h"
+#include "CEC_Dispatching.h"
+#include "CEC_EventChannel.h"
+#include "CEC_ConsumerControl.h"
 #include "orbsvcs/ESF/ESF_RefCount_Guard.h"
 #include "orbsvcs/ESF/ESF_Proxy_RefCount_Guard.h"
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-#include "orbsvcs/CosEvent/CEC_TypedEvent.h"
-#include "orbsvcs/CosEvent/CEC_TypedEventChannel.h"
+#include "CEC_TypedEvent.h"
+#include "CEC_TypedEventChannel.h"
 #include "tao/DynamicInterface/Request.h"
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
@@ -22,7 +22,7 @@
 #include "ace/Reverse_Lock_T.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/CosEvent/CEC_ProxyPushSupplier.inl"
+#include "CEC_ProxyPushSupplier.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -16,13 +16,13 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/AnyTypeCode/TypeCode.h"
+#include "TypeCode.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "tao/AnyTypeCode/Null_RefCount_Policy.h"
+#include "Null_RefCount_Policy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -109,7 +109,7 @@ namespace TAO
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #ifdef __ACE_INLINE__
-# include "tao/AnyTypeCode/Sequence_TypeCode_Static.inl"
+# include "Sequence_TypeCode_Static.inl"
 #endif  /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

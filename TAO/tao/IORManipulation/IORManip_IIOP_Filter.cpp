@@ -1,8 +1,8 @@
-#include "tao/IORManipulation/IORManip_IIOP_Filter.h"
+#include "IORManip_IIOP_Filter.h"
 
 #if defined (TAO_HAS_IIOP) && (TAO_HAS_IIOP != 0)
 
-#include "tao/IORManipulation/IORManip_Loader.h"
+#include "IORManip_Loader.h"
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/CDR.h"

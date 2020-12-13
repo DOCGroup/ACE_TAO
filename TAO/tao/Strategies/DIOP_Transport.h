@@ -21,7 +21,7 @@
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
 
-#include "tao/Strategies/strategies_export.h"
+#include "strategies_export.h"
 #include "tao/Transport.h"
 #include "ace/SOCK_Dgram.h"
 #include "ace/Svc_Handler.h"

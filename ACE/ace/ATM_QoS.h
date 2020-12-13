@@ -10,9 +10,9 @@
 
 #ifndef ACE_ATM_QoS_H
 #define ACE_ATM_QoS_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include /**/ "ace/config-all.h"
+#include /**/ "config-all.h"
 
 #if !defined(ACE_LACKS_PRAGMA_ONCE)
 #pragma once
@@ -31,7 +31,7 @@ typedef struct netbuf ATM_QoS;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #elif defined (ACE_HAS_LINUX_ATM)
 #include /**/ "atm.h"
-#include "ace/ATM_Params.h"
+#include "ATM_Params.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef struct atm_qos ATM_QoS;
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -103,9 +103,9 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/ATM_QoS.inl"
+#include "ATM_QoS.inl"
 #endif /* __ACE_INLINE__ */
 
 #endif /* ACE_HAS_ATM */
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_ATM_QoS_H */

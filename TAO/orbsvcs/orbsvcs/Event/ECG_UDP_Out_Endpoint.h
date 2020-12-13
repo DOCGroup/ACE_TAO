@@ -12,7 +12,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "orbsvcs/Event/event_serv_export.h"
+#include /**/ "event_serv_export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -98,7 +98,7 @@ typedef ACE_Refcounted_Auto_Ptr<TAO_ECG_UDP_Out_Endpoint,ACE_Null_Mutex> TAO_ECG
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/Event/ECG_UDP_Out_Endpoint.inl"
+#include "ECG_UDP_Out_Endpoint.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

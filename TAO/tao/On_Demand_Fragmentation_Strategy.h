@@ -13,7 +13,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include "tao/GIOP_Fragmentation_Strategy.h"
+#include "GIOP_Fragmentation_Strategy.h"
 #include "ace/CDR_Base.h"
 #include "ace/Copy_Disabled.h"
 

@@ -11,10 +11,10 @@
 
 #ifndef ACE_GET_OPT_H
 #define ACE_GET_OPT_H
-#include /**/ "ace/pre.h"
+#include /**/ "pre.h"
 
-#include "ace/SStringfwd.h"
-#include "ace/Containers.h"
+#include "SStringfwd.h"
+#include "Containers.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -487,8 +487,8 @@ private:
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (__ACE_INLINE__)
-#include "ace/Get_Opt.inl"
+#include "Get_Opt.inl"
 #endif /* __ACE_INLINE__ */
 
-#include /**/ "ace/post.h"
+#include /**/ "post.h"
 #endif /* ACE_GET_OPT_H */

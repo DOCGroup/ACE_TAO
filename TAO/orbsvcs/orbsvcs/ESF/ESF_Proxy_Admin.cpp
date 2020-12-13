@@ -2,10 +2,10 @@
 #define TAO_ESF_PROXY_ADMIN_CPP
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/ESF/ESF_Proxy_Admin.inl"
+#include "ESF_Proxy_Admin.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
+#include "ESF_Shutdown_Proxy.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

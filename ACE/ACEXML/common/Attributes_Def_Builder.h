@@ -11,14 +11,14 @@
 #define _ACEXML_ATTRIBUTES_DEF_BUILDER_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/SAXExceptions.h"
+#include "XML_Types.h"
+#include "SAXExceptions.h"
 #include "ace/Auto_Ptr.h"
 
 /**

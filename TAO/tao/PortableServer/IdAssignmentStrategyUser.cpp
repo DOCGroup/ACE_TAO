@@ -1,4 +1,4 @@
-#include "tao/PortableServer/IdAssignmentStrategyUser.h"
+#include "IdAssignmentStrategyUser.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

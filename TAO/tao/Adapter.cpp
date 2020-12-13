@@ -1,4 +1,4 @@
-#include "tao/Adapter.h"
+#include "Adapter.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

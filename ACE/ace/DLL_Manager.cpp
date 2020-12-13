@@ -1,17 +1,17 @@
-#include "ace/DLL_Manager.h"
+#include "DLL_Manager.h"
 
-#include "ace/Auto_Ptr.h"
-#include "ace/Log_Category.h"
-#include "ace/ACE.h"
-#include "ace/Framework_Component.h"
+#include "Auto_Ptr.h"
+#include "Log_Category.h"
+#include "ACE.h"
+#include "Framework_Component.h"
 
-#include "ace/Lib_Find.h"
-#include "ace/Object_Manager.h"
-#include "ace/SString.h"
-#include "ace/Recursive_Thread_Mutex.h"
-#include "ace/Guard_T.h"
-#include "ace/OS_NS_dlfcn.h"
-#include "ace/OS_NS_string.h"
+#include "Lib_Find.h"
+#include "Object_Manager.h"
+#include "SString.h"
+#include "Recursive_Thread_Mutex.h"
+#include "Guard_T.h"
+#include "OS_NS_dlfcn.h"
+#include "OS_NS_string.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

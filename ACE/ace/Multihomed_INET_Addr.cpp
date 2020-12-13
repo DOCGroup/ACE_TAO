@@ -1,10 +1,10 @@
 // Extends ACE_INET_Addr with support for multi-homed addresses.
 
-#include "ace/Multihomed_INET_Addr.h"
-#include "ace/Log_Category.h"
+#include "Multihomed_INET_Addr.h"
+#include "Log_Category.h"
 
 #if !defined (__ACE_INLINE__)
-#  include "ace/Multihomed_INET_Addr.inl"
+#  include "Multihomed_INET_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

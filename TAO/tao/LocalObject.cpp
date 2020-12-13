@@ -1,12 +1,12 @@
-#include "tao/LocalObject.h"
+#include "LocalObject.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/LocalObject.inl"
+# include "LocalObject.inl"
 #endif /* ! __ACE_INLINE__ */
 
-#include "tao/SystemException.h"
-#include "tao/debug.h"
-#include "tao/ORB_Constants.h"
+#include "SystemException.h"
+#include "debug.h"
+#include "ORB_Constants.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/Guard_T.h"

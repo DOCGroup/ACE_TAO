@@ -1,21 +1,21 @@
 #ifndef ACE_TASK_EX_T_CPP
 #define ACE_TASK_EX_T_CPP
 
-#include "ace/Task_Ex_T.h"
+#include "Task_Ex_T.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Module.h"
-#include "ace/Null_Condition.h"
+#include "Module.h"
+#include "Null_Condition.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/Task_Ex_T.inl"
+#include "Task_Ex_T.inl"
 #endif /* __ACE_INLINE__ */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -1,8 +1,8 @@
-#include "ace/OS_NS_sys_utsname.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_errno.h"
+#include "OS_NS_sys_utsname.h"
+#include "OS_NS_string.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_errno.h"
 
 #if defined (ACE_VXWORKS) && defined (ACE_LACKS_UNAME) && !defined (__RTP__)
 // for sysBspRev(), sysModel()

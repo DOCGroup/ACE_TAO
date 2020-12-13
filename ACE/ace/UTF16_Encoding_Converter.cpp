@@ -17,15 +17,15 @@
 //
 // ======================================================================
 
-#include "ace/UTF16_Encoding_Converter.h"
+#include "UTF16_Encoding_Converter.h"
 
 #if defined (ACE_USES_WCHAR)
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_Memory.h"
-#include "ace/Min_Max.h"
+#include "OS_NS_stdio.h"
+#include "OS_Memory.h"
+#include "Min_Max.h"
 
 #if !defined (__ACE_INLINE__)
-#include "ace/UTF16_Encoding_Converter.inl"
+#include "UTF16_Encoding_Converter.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

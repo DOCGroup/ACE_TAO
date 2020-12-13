@@ -8,11 +8,11 @@
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 
-#include "ace/Condition_Recursive_Thread_Mutex.h"
+#include "Condition_Recursive_Thread_Mutex.h"
 
 #if defined (ACE_HAS_THREADS)
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

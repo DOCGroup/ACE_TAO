@@ -15,7 +15,7 @@
 #define TAO_TRADER_BASE_H
 #include /**/ "ace/pre.h"
 
-#include "orbsvcs/Trader/Interpreter_Utils.h"
+#include "Interpreter_Utils.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -26,7 +26,7 @@
 #include "orbsvcs/CosTradingS.h"
 #include "orbsvcs/CosTradingReposS.h"
 #include "orbsvcs/CosTradingDynamicS.h"
-#include "orbsvcs/Trader/trading_serv_export.h"
+#include "trading_serv_export.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

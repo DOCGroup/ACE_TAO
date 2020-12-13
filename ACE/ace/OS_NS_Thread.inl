@@ -1,19 +1,19 @@
 // -*- C++ -*-
-#include "ace/OS_NS_macros.h"
+#include "OS_NS_macros.h"
 // for timespec_t, perhaps move it to os_time.h
-#include "ace/Time_Value.h"
-#include "ace/OS_NS_sys_mman.h"
-#include "ace/OS_NS_sys_time.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_NS_stdio.h"
-#include "ace/OS_NS_errno.h"
+#include "Time_Value.h"
+#include "OS_NS_sys_mman.h"
+#include "OS_NS_sys_time.h"
+#include "OS_NS_string.h"
+#include "OS_NS_unistd.h"
+#include "OS_NS_stdio.h"
+#include "OS_NS_errno.h"
 
 #if defined (ACE_USES_FIFO_SEM)
-#  include "ace/OS_NS_sys_stat.h"
-#  include "ace/OS_NS_sys_select.h"
-#  include "ace/OS_NS_fcntl.h"
-#  include "ace/Handle_Set.h"
+#  include "OS_NS_sys_stat.h"
+#  include "OS_NS_sys_select.h"
+#  include "OS_NS_fcntl.h"
+#  include "Handle_Set.h"
 # endif /* ACE_USES_FIFO_SEM */
 
 #if defined (ACE_HAS_PRIOCNTL)
@@ -21,7 +21,7 @@
 #endif /* ACE_HAS_PRIOCNTL */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-# include "ace/Malloc_Base.h"
+# include "Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

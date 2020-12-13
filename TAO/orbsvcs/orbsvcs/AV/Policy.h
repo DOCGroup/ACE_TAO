@@ -19,7 +19,7 @@
 #include "tao/CORBA_String.h"
 #include "tao/Sequence_T.h"
 #include "ace/Time_Value.h"
-#include "orbsvcs/AV/AV_export.h"
+#include "AV_export.h"
 
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -166,7 +166,7 @@ protected:
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #if defined(__ACE_INLINE__)
-#include "orbsvcs/AV/Policy.inl"
+#include "Policy.inl"
 #endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"

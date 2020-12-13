@@ -11,15 +11,15 @@
 #define _ACEXML_DTD_Manager_H_
 
 #include /**/ "ace/pre.h"
-#include "ACEXML/common/ACEXML_Export.h"
+#include "ACEXML_Export.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ACEXML/common/Attributes_Def_Builder.h"
-#include "ACEXML/common/Element_Def_Builder.h"
-#include "ACEXML/common/Validator.h"
+#include "Attributes_Def_Builder.h"
+#include "Element_Def_Builder.h"
+#include "Validator.h"
 
 /**
  * @class ACEXML_DTD_Manager

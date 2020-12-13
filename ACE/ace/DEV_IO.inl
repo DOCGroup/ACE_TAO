@@ -1,9 +1,9 @@
 // -*- C++ -*-
-#include "ace/OS_NS_sys_uio.h"
-#include "ace/OS_NS_unistd.h"
-#include "ace/OS_Memory.h"
+#include "OS_NS_sys_uio.h"
+#include "OS_NS_unistd.h"
+#include "OS_Memory.h"
 
-#include "ace/ACE.h"
+#include "ACE.h"
 
 // Send exactly N bytes from BUF to this device.  Keeping trying until
 // this many bytes are sent.

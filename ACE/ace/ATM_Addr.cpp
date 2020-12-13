@@ -1,16 +1,16 @@
 // Defines the Internet domain address family address format.
 
-#include "ace/ATM_Addr.h"
+#include "ATM_Addr.h"
 #if defined (ACE_HAS_ATM)
 
-#include "ace/Log_Category.h"
+#include "Log_Category.h"
 
 #if defined (ACE_HAS_FORE_ATM_WS2)
 #include /**/ "forews2.h"
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 
 #if !defined (__ACE_INLINE__)
-#include "ace/ATM_Addr.inl"
+#include "ATM_Addr.inl"
 #endif /* __ACE_INLINE__ */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

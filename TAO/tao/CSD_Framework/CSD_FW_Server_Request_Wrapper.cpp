@@ -1,5 +1,5 @@
 // -*- C++ -*-
-#include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.h"
+#include "CSD_FW_Server_Request_Wrapper.h"
 #include "tao/debug.h"
 #include "tao/ORB_Constants.h"
 #include "tao/ORB_Core.h"
@@ -7,7 +7,7 @@
 #include "tao/CDR.h"
 
 #if !defined (__ACE_INLINE__)
-# include "tao/CSD_Framework/CSD_FW_Server_Request_Wrapper.inl"
+# include "CSD_FW_Server_Request_Wrapper.inl"
 #endif /* ! __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

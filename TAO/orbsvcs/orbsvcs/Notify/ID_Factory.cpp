@@ -1,7 +1,7 @@
-#include "orbsvcs/Notify/ID_Factory.h"
+#include "ID_Factory.h"
 
 #if ! defined (__ACE_INLINE__)
-#include "orbsvcs/Notify/ID_Factory.inl"
+#include "ID_Factory.inl"
 #endif /* __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
