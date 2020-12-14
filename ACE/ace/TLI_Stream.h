@@ -41,18 +41,18 @@ public:
   friend class ACE_TLI_Connector;
 
   /// Default constructor.
-  ACE_TLI_Stream (void);
+  ACE_TLI_Stream ();
 
   // = TLI-specific shutdown operations.
   /// Close down and release resources.
-  int close (void);
+  int close ();
 
   /// Send a release and then await the release from the other side.
-  int active_close (void);
+  int active_close ();
 
   /// Acknowledge the release from the other side and then send the
   /// release to the other side.
-  int passive_close (void);
+  int passive_close ();
 
   /// Return address of remotely connected peer.
   int get_remote_addr (ACE_Addr &) const;

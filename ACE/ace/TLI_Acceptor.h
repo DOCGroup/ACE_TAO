@@ -46,7 +46,7 @@ public:
   friend class ACE_Request_Queue;
 
   /// Default constructor.
-  ACE_TLI_Acceptor (void);
+  ACE_TLI_Acceptor ();
 
   /// Initiate a passive mode socket.
   ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
@@ -65,7 +65,7 @@ public:
                    const char device[] = ACE_TLI_TCP_DEVICE);
 
   /// Close down the acceptor and release resources.
-  int close (void);
+  int close ();
 
   // = Passive connection acceptance method.
 
