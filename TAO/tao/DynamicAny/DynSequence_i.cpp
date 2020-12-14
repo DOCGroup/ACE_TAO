@@ -16,12 +16,12 @@ TAO_DynSequence_i::TAO_DynSequence_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynSequence_i::~TAO_DynSequence_i (void)
+TAO_DynSequence_i::~TAO_DynSequence_i ()
 {
 }
 
 void
-TAO_DynSequence_i::init_common (void)
+TAO_DynSequence_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -137,7 +137,7 @@ TAO_DynSequence_i::_narrow (CORBA::Object_ptr _tao_objref)
 // ****************************************************************
 
 CORBA::TypeCode_ptr
-TAO_DynSequence_i::get_element_type (void)
+TAO_DynSequence_i::get_element_type ()
 {
   CORBA::TypeCode_var element_type =
     CORBA::TypeCode::_duplicate (this->type_.in ());
@@ -161,7 +161,7 @@ TAO_DynSequence_i::get_element_type (void)
 // = Functions specific to DynSequence.
 
 CORBA::ULong
-TAO_DynSequence_i::get_length (void)
+TAO_DynSequence_i::get_length ()
 {
   if (this->destroyed_)
     {
@@ -247,7 +247,7 @@ TAO_DynSequence_i::set_length (CORBA::ULong length)
 }
 
 DynamicAny::AnySeq *
-TAO_DynSequence_i::get_elements (void)
+TAO_DynSequence_i::get_elements ()
 {
   if (this->destroyed_)
     {
@@ -360,7 +360,7 @@ TAO_DynSequence_i::set_elements (const DynamicAny::AnySeq & value)
 }
 
 DynamicAny::DynAnySeq *
-TAO_DynSequence_i::get_elements_as_dyn_any (void)
+TAO_DynSequence_i::get_elements_as_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -562,7 +562,7 @@ TAO_DynSequence_i::from_any (const CORBA::Any & any)
 }
 
 CORBA::Any_ptr
-TAO_DynSequence_i::to_any (void)
+TAO_DynSequence_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -668,7 +668,7 @@ TAO_DynSequence_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynSequence_i::destroy (void)
+TAO_DynSequence_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -690,7 +690,7 @@ TAO_DynSequence_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynSequence_i::current_component (void)
+TAO_DynSequence_i::current_component ()
 {
   if (this->destroyed_)
     {
