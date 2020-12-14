@@ -354,19 +354,19 @@ ACE_Event_Handler_var::reset (ACE_Event_Handler *p)
 
 ACE_Event_Handler_var::operator bool() const
 {
-  return this->ptr_ == nullptr ? false : true;
+  return this->ptr_ != nullptr;
 }
 
 bool
 ACE_Event_Handler_var::operator ==(std::nullptr_t) const
 {
-  return this->ptr_ == nullptr ? true : false;
+  return this->ptr_ == nullptr;
 }
 
 bool
 ACE_Event_Handler_var::operator !=(std::nullptr_t) const
 {
-  return this->ptr_ == nullptr ? false : true;
+  return this->ptr_ != nullptr;
 
 }
 
