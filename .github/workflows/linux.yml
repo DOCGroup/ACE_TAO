@@ -126,6 +126,10 @@ jobs:
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action
+      with:
+        access_token: ${{ github.token }}
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
     - name: checkout MPC

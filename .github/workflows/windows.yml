@@ -89,6 +89,10 @@ jobs:
       SSL_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       SSL_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
     steps:
+    - name: Cancel Previous Runs
+      uses: styfle/cancel-workflow-action
+      with:
+        access_token: ${{ github.token }}
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
     - name: checkout MPC
