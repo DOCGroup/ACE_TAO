@@ -134,7 +134,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   ptrdiff_t target_;

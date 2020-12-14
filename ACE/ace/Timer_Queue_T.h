@@ -166,7 +166,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /// Dump the state of a object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Method used to return a timer node to the queue's ownership
   /// after it is returned by a method like <remove_first>.

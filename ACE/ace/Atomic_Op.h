@@ -129,7 +129,7 @@ public:
   long value (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Explicitly return @c value_ (by reference).
   volatile long &value_i (void);
@@ -227,7 +227,7 @@ public:
   unsigned long value (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Explicitly return @c value_ (by reference).
   volatile unsigned long &value_i (void);

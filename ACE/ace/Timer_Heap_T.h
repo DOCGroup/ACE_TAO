@@ -184,7 +184,7 @@ public:
   ACE_Timer_Node_T <TYPE> *remove_first (void);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Reads the earliest node from the queue and returns it.
   virtual ACE_Timer_Node_T<TYPE> *get_first (void);

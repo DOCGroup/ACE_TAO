@@ -64,7 +64,7 @@ public:
   static int get_nesting_indent (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // Keeps track of how deeply the call stack is nested (this is

@@ -346,7 +346,7 @@ public:
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -605,7 +605,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -619,7 +619,7 @@ public:
    * constructed successfully.  If not, the user should invoke @c
    * remove and release the object (it is not usable.)
    * @retval 0 if all is fine.  non-zero if this malloc object is
-   *         unuable.
+   *         unusable.
    */
   int bad (void);
 
@@ -726,7 +726,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -798,7 +798,7 @@ public:
   int start (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

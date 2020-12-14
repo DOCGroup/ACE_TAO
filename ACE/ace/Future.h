@@ -154,7 +154,7 @@ private:
   operator T ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -344,7 +344,7 @@ public:
   int detach (ACE_Future_Observer<T> *observer);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /**
    * Get the underlying ACE_Future_Rep pointer. Note that this method should

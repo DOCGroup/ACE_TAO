@@ -172,7 +172,7 @@ public:
     void set (Common_Info &common_info);
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
   };
 
   /**
@@ -249,7 +249,7 @@ public:
               bool suspend_entry = false);
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
   };
 
   /**
@@ -290,7 +290,7 @@ public:
               bool resume_entry = false);
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
   };
 
   /// Constructor.
@@ -427,7 +427,7 @@ public:
                               long &existing_masks);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Reference to our WFMO_Reactor.
@@ -572,7 +572,7 @@ public:
                                            ACE_Reactor_Mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 private:
   /// Pointer to the wfmo_reactor's timer queue.
@@ -1167,7 +1167,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
 protected:
   /// Registration workhorse
