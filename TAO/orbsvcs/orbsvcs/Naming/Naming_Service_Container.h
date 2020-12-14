@@ -86,7 +86,7 @@ public:
   int done (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -174,7 +174,7 @@ public:
   size_t size (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Reset the <ACE_Unbounded_List> to be empty.
   void reset (void);

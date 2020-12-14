@@ -313,7 +313,7 @@ public:
   const ACE_TCHAR *last_option (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.

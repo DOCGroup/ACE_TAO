@@ -119,7 +119,7 @@ public:
   void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info);
 
   /// Dump the state of an TYPE.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

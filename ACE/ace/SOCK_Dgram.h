@@ -204,7 +204,7 @@ public:
   typedef ACE_INET_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Set NIC to use as multicast interface.
   int set_nic (const ACE_TCHAR *net_if,

@@ -93,7 +93,7 @@ public:
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Destructor.
-  ~ACE_Mem_Map (void);
+  ~ACE_Mem_Map ();
 
   /// Open the file without mapping it.
   int open (const ACE_TCHAR *filename,
@@ -102,28 +102,28 @@ public:
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Close down the <handle_> if necessary and unmap the mapping.
-  int close (void);
+  int close ();
 
   /// Close down the <handle_> if necessary.
-  int close_handle (void);
+  int close_handle ();
 
   /**
    * Close down the internal <file_mapping_> if necessary.  This is
    * mostly necessary on Win32, which has a different handle for
    * file-mapping kernel object.
    */
-  int close_filemapping_handle (void);
+  int close_filemapping_handle ();
 
   /// This operator passes back the starting address of the mapped
   /// file.
   int operator () (void *&addr);
 
   /// Return the base address.
-  void *addr (void) const;
+  void *addr () const;
 
   /// This function returns the number of bytes currently mapped in the
   /// file.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Unmap the region starting at base_addr_.
   int unmap (ssize_t len = -1);
@@ -165,19 +165,19 @@ public:
   int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Close and remove the file from the file system.
-  int remove (void);
+  int remove ();
 
   /// Hook into the underlying VM system.
   int advise (int behavior, int len = -1);
 
   /// Return the underlying <handle_>.
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename (void) const;
+  const ACE_TCHAR *filename () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -195,7 +195,6 @@ private:
               LPSECURITY_ATTRIBUTES sa = 0);
 
 private:
-
   /// Base address of the memory-mapped file.
   void *base_addr_;
 
@@ -214,7 +213,6 @@ private:
   /// Keeps track of whether we need to close the handle.  This is set
   /// if we opened the file.
   bool close_handle_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -49,13 +49,13 @@ public:
 
   // = Control the tracing level.
   /// Determine if tracing is enabled or not
-  static bool is_tracing(void);
+  static bool is_tracing();
 
   /// Enable the tracing facility.
-  static void start_tracing (void);
+  static void start_tracing ();
 
   /// Disable the tracing facility.
-  static void stop_tracing (void);
+  static void stop_tracing ();
 
   /// Change the nesting indentation level.
   static void set_nesting_indent (int indent);
@@ -64,7 +64,7 @@ public:
   static int get_nesting_indent (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // Keeps track of how deeply the call stack is nested (this is
