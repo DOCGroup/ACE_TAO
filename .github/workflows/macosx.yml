@@ -22,7 +22,7 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: Cancel Previous Runs
-      uses: styfle/cancel-workflow-action@0
+      uses: styfle/cancel-workflow-action@0.6.0
       with:
         access_token: ${{ github.token }}
     - name: checkout ACE/TAO
