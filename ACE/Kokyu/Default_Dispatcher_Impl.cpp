@@ -2,6 +2,7 @@
 
 #include "ace/Sched_Params.h"
 #include <utility>
+#include <memory>
 
 #if ! defined (__ACE_INLINE__)
 #include "Default_Dispatcher_Impl.inl"

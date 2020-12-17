@@ -18,6 +18,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include <utility>
+#include <memory>
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 

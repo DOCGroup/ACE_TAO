@@ -5,7 +5,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_time.h"
-#include <utility>
+#include <memory>
 
 ACE_CString sched_policy_str = "fifo";
 

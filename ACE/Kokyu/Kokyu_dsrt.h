@@ -12,6 +12,7 @@
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
+#include <memory>
 
 namespace Kokyu
 {

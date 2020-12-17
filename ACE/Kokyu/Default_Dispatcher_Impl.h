@@ -19,11 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
+#include <memory>
 
 namespace Kokyu
 {
