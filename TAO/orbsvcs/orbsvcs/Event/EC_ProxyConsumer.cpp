@@ -46,7 +46,7 @@ TAO_EC_ProxyPushConsumer::supplier_non_existent (
         ACE_Lock, ace_mon, *this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
+    disconnected = false;
     if (!this->is_connected_i ())
       {
         disconnected = true;

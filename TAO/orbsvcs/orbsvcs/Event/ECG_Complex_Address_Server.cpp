@@ -44,7 +44,7 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
                             -1);
         }
       size_t len = location - data;
-      key_string.set (data, len, 1);
+      key_string.set (data, len, true);
       data += len + 1;
 
       // Extract mcast address to be mapped to just extracted lookup
@@ -54,14 +54,14 @@ TAO_ECG_Complex_Address_Server::init (const char *arg)
       if (location)
         {
           len = location - data;
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len + 1;
         }
       else
         {
           // This must be the last entry in the mapping.
           len = ACE_OS::strlen (data);
-          mcast_string.set (data, len, 1);
+          mcast_string.set (data, len, true);
           data += len;
         }
 

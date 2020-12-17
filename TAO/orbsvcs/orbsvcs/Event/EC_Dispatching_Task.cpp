@@ -50,7 +50,7 @@ TAO_EC_Simple_Queue_Full_Action::init (int argc, ACE_TCHAR* argv[])
       ;
     // probably ought to print an error message here
 #endif
-  } while (0);
+  } while (false);
 
   return 0;
 }

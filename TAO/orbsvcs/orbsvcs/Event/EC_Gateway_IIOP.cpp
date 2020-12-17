@@ -615,11 +615,11 @@ TAO_EC_Gateway_IIOP::consumer_ec_non_existent (
         TAO_SYNCH_MUTEX, ace_mon, this->lock_,
         CORBA::INTERNAL ());
 
-    disconnected = 0;
+    disconnected = false;
     if (this->is_consumer_ec_connected_i () == 0)
       {
-        disconnected = 1;
-        return 0;
+        disconnected = true;
+        return false;
       }
 
     consumer_ec = CORBA::Object::_duplicate (this->consumer_ec_.in ());

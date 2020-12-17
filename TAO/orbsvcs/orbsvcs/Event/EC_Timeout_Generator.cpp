@@ -35,7 +35,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
       e.header.type = filter->type ();
       e.header.source = 0;
 
-      RtecEventComm::EventSet single_event (1, 1, &e, 0);
+      RtecEventComm::EventSet single_event (1, 1, &e, false);
 
       TAO_EC_QOS_Info qos_info = filter->qos_info ();
       filter->push_to_proxy (single_event,

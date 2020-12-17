@@ -60,7 +60,7 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
 
     this->supplier_ =
       RtecEventComm::PushSupplier::_duplicate (push_supplier);
-    this->connected_ = 1;
+    this->connected_ = true;
     this->qos_ = qos;
 
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
@@ -104,7 +104,7 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
 
     connected = this->is_connected_i ();
     supplier = this->supplier_._retn ();
-    this->connected_ = 0;
+    this->connected_ = false;
 
     if (connected)
       this->cleanup_i ();

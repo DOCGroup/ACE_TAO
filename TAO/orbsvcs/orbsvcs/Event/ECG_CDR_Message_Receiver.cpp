@@ -230,7 +230,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
 // ****************************************************************
 
 TAO_ECG_UDP_Request_Entry
-TAO_ECG_CDR_Message_Receiver::Request_Completed_ (0, 0, 0, 0);
+TAO_ECG_CDR_Message_Receiver::Request_Completed_ (false, 0, 0, 0);
 
 int
 TAO_ECG_CDR_Message_Receiver::handle_input (
