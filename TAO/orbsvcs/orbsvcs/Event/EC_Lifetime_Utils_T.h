@@ -63,12 +63,11 @@ public:
   void disallow_command ();
 
 private:
-
   TAO_EC_Auto_Command (const TAO_EC_Auto_Command &);
   TAO_EC_Auto_Command & operator=  (const TAO_EC_Auto_Command &);
 
   T command_;
-  int allow_command_;
+  bool allow_command_;
 };
 
 
