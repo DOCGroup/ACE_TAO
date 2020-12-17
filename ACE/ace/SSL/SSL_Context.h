@@ -35,17 +35,17 @@ class ACE_SSL_Export ACE_SSL_Data_File
 {
 public:
   /// Default constructor
-  ACE_SSL_Data_File (void);
+  ACE_SSL_Data_File ();
 
   /// Constructor from a file name and the file type.
   ACE_SSL_Data_File (const char *file_name,
                      int type = SSL_FILETYPE_PEM);
 
   /// The file name
-  const char *file_name (void) const;
+  const char *file_name () const;
 
   /// The type
-  int type (void) const;
+  int type () const;
 
 private:
   /// The file name
@@ -110,17 +110,17 @@ public:
   };
 
   /// Constructor
-  ACE_SSL_Context (void);
+  ACE_SSL_Context ();
 
   /// Destructor
-  ~ACE_SSL_Context (void);
+  ~ACE_SSL_Context ();
 
   /// The Singleton context, the SSL components use the singleton if
   /// nothing else is available.
-  static ACE_SSL_Context *instance (void);
+  static ACE_SSL_Context *instance ();
 
   /// Explicitly delete the Singleton context.
-  static void close (void);
+  static void close ();
 
   /**
    * Set the CTX mode.  The mode can be set only once, afterwards the
@@ -132,14 +132,14 @@ public:
    */
   int set_mode (int mode = ACE_SSL_Context::SSLv23);
 
-  int get_mode (void) const;
+  int get_mode () const;
 
   /// Get the SSL context
-  SSL_CTX *context (void);
+  SSL_CTX *context ();
 
   /// Get the file name and file format used for the private key
-  int private_key_type (void) const;
-  const char *private_key_file_name (void) const;
+  int private_key_type () const;
+  const char *private_key_file_name () const;
 
   /// Set the private key file.
   /**
@@ -155,11 +155,11 @@ public:
    *       been set since key verification is performed against the
    *       certificate, among other things.
    */
-  int verify_private_key (void);
+  int verify_private_key ();
 
   /// Get the file name and file format used for the certificate file
-  int certificate_type (void) const;
-  const char *certificate_file_name (void) const;
+  int certificate_type () const;
+  const char *certificate_file_name () const;
 
   /// Set the certificate file.
   int certificate (const char *file_name,
@@ -255,7 +255,7 @@ public:
    *  @retval >0  The number of successful CA load attempts.
    *  @retval  0  If all CA load attempts have failed.
    */
-  int have_trusted_ca (void) const;
+  int have_trusted_ca () const;
 
   /**
    *  @todo Complete this documentation where elipses(...) are used
@@ -298,7 +298,7 @@ public:
    * It can be overriden on a per-ACE_SSL object.
    */
   void default_verify_mode (int mode);
-  int default_verify_mode (void) const;
+  int default_verify_mode () const;
 
   /**
    * Set and query the default verify callback for this context, it is
@@ -306,7 +306,7 @@ public:
    * It can be overriden on a per-ACE_SSL object.
    */
   void default_verify_callback (extern_C_CallBackVerify_t);
-  extern_C_CallBackVerify_t  default_verify_callback (void) const;
+  extern_C_CallBackVerify_t  default_verify_callback () const;
 
   /**
    * @name OpenSSL Random Number Generator Seed Related Methods
@@ -336,7 +336,7 @@ public:
   static void report_error (unsigned long error_code);
 
   /// Print the last SSL error for the current thread.
-  static void report_error (void);
+  static void report_error ();
 
   /**
    * @name Diffie-Hellman (DH) Parameters
@@ -361,7 +361,7 @@ public:
 
 private:
   /// Verify if the context has been initialized or not.
-  void check_context (void);
+  void check_context ();
 
   /// @@ More to document
   void ssl_library_init ();

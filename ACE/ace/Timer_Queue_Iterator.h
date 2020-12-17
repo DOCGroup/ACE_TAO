@@ -42,10 +42,10 @@ class ACE_Timer_Node_T
 {
 public:
   /// Default constructor
-  ACE_Timer_Node_T (void);
+  ACE_Timer_Node_T ();
 
   /// Destructor
-  ~ACE_Timer_Node_T (void);
+  ~ACE_Timer_Node_T ();
 
   /// Useful typedef ..
   typedef ACE_Timer_Node_Dispatch_Info_T <TYPE> DISPATCH_INFO;
@@ -70,43 +70,43 @@ public:
   // = Accessors
 
   /// Get the type.
-  TYPE &get_type (void);
+  TYPE &get_type ();
 
   /// Set the type.
   void set_type (TYPE &type);
 
   /// Get the asynchronous completion token.
-  const void *get_act (void);
+  const void *get_act ();
 
   /// Set the asynchronous completion token.
   void set_act (void *act);
 
   /// Get the timer value.
-  const ACE_Time_Value &get_timer_value (void) const;
+  const ACE_Time_Value &get_timer_value () const;
 
   /// Set the timer value.
   void set_timer_value (const ACE_Time_Value &timer_value);
 
   /// Get the timer interval.
-  const ACE_Time_Value &get_interval (void) const;
+  const ACE_Time_Value &get_interval () const;
 
   /// Set the timer interval.
   void set_interval (const ACE_Time_Value &interval);
 
   /// Get the previous pointer.
-  ACE_Timer_Node_T<TYPE> *get_prev (void);
+  ACE_Timer_Node_T<TYPE> *get_prev ();
 
   /// Set the previous pointer.
   void set_prev (ACE_Timer_Node_T<TYPE> *prev);
 
   /// Get the next pointer.
-  ACE_Timer_Node_T<TYPE> *get_next (void);
+  ACE_Timer_Node_T<TYPE> *get_next ();
 
   /// Set the next pointer.
   void set_next (ACE_Timer_Node_T<TYPE> *next);
 
   /// Get the timer_id.
-  long get_timer_id (void) const;
+  long get_timer_id () const;
 
   /// Set the timer_id.
   void set_timer_id (long timer_id);
@@ -119,7 +119,7 @@ public:
   void get_dispatch_info (ACE_Timer_Node_Dispatch_Info_T <TYPE> &info);
 
   /// Dump the state of an TYPE.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -163,22 +163,22 @@ class ACE_Timer_Queue_Iterator_T
 {
 public:
   /// Constructor.
-  ACE_Timer_Queue_Iterator_T (void);
+  ACE_Timer_Queue_Iterator_T ();
 
   /// Destructor.
-  virtual ~ACE_Timer_Queue_Iterator_T (void);
+  virtual ~ACE_Timer_Queue_Iterator_T ();
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first (void) = 0;
+  virtual void first () = 0;
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next (void) = 0;
+  virtual void next () = 0;
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone (void) const = 0;
+  virtual bool isdone () const = 0;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE> *item (void) = 0;
+  virtual ACE_Timer_Node_T<TYPE> *item () = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
