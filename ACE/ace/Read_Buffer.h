@@ -86,7 +86,7 @@ public:
   ACE_Allocator *alloc (void) const;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   void operator= (const ACE_Read_Buffer &) = delete;

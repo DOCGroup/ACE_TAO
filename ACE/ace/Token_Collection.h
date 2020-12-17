@@ -186,7 +186,7 @@ public:
   ~ACE_Token_Collection (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Return the name of the collection.  Not very functionally
   /// important, but sometimes a useful debugging tool.

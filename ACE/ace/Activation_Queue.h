@@ -127,7 +127,7 @@ public:
   int is_full (void) const;
 
   /// Dump the state of an request.
-  void dump (void) const;
+  void dump () const;
 
   /// Get a pointer to the underlying queue.
   ACE_Message_Queue<ACE_SYNCH> *queue (void) const;

@@ -43,7 +43,7 @@ public:
 
   /// Concrete dump method (simply delegates to the dump() method of
   /// <class Concrete>).
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Delegate to methods in the Concrete class.
   Concrete *operator->() const;
