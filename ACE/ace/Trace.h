@@ -42,29 +42,29 @@ public:
 
   /// Perform the second part of the trace, which prints out the NAME
   /// as the function is exited.
-  ~ACE_Trace (void);
+  ~ACE_Trace ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Control the tracing level.
   /// Determine if tracing is enabled or not
-  static bool is_tracing(void);
+  static bool is_tracing();
 
   /// Enable the tracing facility.
-  static void start_tracing (void);
+  static void start_tracing ();
 
   /// Disable the tracing facility.
-  static void stop_tracing (void);
+  static void stop_tracing ();
 
   /// Change the nesting indentation level.
   static void set_nesting_indent (int indent);
 
   /// Get the nesting indentation level.
-  static int get_nesting_indent (void);
+  static int get_nesting_indent ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // Keeps track of how deeply the call stack is nested (this is
