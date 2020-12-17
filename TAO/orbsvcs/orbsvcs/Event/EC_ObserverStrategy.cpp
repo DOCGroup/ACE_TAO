@@ -11,8 +11,6 @@
 #include "orbsvcs/Event/EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy ()
