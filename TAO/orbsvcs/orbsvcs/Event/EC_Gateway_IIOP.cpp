@@ -22,26 +22,26 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
      consumer_is_active_ (false),
      supplier_ (this),
      supplier_is_active_ (false),
-     ec_control_ (0),
-     factory_ (0),
+     ec_control_ (nullptr),
+     factory_ (nullptr),
      use_ttl_ (1),
      use_consumer_proxy_map_ (1)
 {
-  if (this->factory_ == 0)
+  if (this->factory_ == nullptr)
     {
       this->factory_ =
              ACE_Dynamic_Service<TAO_EC_Gateway_IIOP_Factory>::instance ("EC_Gateway_IIOP_Factory");
 
-      if (this->factory_ == 0)
+      if (this->factory_ == nullptr)
         {
-          TAO_EC_Gateway_IIOP_Factory *f = 0;
+          TAO_EC_Gateway_IIOP_Factory *f = nullptr;
           ACE_NEW (f,
                    TAO_EC_Gateway_IIOP_Factory);
           this->factory_ = f;
         }
     }
 
-  if (this->factory_ != 0)
+  if (this->factory_ != nullptr)
     {
       this->use_ttl_ = this->factory_->use_ttl();
       this->use_consumer_proxy_map_ = this->factory_->use_consumer_proxy_map();
@@ -51,7 +51,7 @@ TAO_EC_Gateway_IIOP::TAO_EC_Gateway_IIOP ()
 TAO_EC_Gateway_IIOP::~TAO_EC_Gateway_IIOP ()
 {
    delete ec_control_;
-   ec_control_ = 0;
+   ec_control_ = nullptr;
 }
 
 int
@@ -74,7 +74,7 @@ TAO_EC_Gateway_IIOP::init_i (RtecEventChannelAdmin::EventChannel_ptr supplier_ec
       this->consumer_ec_ =
         RtecEventChannelAdmin::EventChannel::_duplicate (consumer_ec);
 
-      if (ec_control_ == 0)
+      if (ec_control_ == nullptr)
         {
           ec_control_ = factory_->create_consumerec_control(this);
           ec_control_->activate();
@@ -262,7 +262,7 @@ TAO_EC_Gateway_IIOP::open_i (
     {
       sub.dependencies[i].rt_info = this->supplier_info_;
 
-      RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
+      RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
       const RtecEventComm::EventHeader &h =
         sub.dependencies[i].event.header;
 
@@ -466,7 +466,7 @@ TAO_EC_Gateway_IIOP::push (const RtecEventComm::EventSet &events)
             continue;
         }
 
-      RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = 0;
+      RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
       RtecEventComm::EventSourceID sid = events[i].header.source;
       if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0
           || this->consumer_proxy_map_.find (sid, proxy) == -1)

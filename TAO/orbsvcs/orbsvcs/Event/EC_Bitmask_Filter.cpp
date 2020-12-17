@@ -67,7 +67,7 @@ void
 TAO_EC_Bitmask_Filter::push (const RtecEventComm::EventSet &event,
                              TAO_EC_QOS_Info &qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     this->parent ()->push (event, qos_info);
 }
 
@@ -75,7 +75,7 @@ void
 TAO_EC_Bitmask_Filter::push_nocopy (RtecEventComm::EventSet &event,
                                     TAO_EC_QOS_Info &qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     this->parent ()->push_nocopy (event, qos_info);
 }
 

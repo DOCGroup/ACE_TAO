@@ -99,7 +99,7 @@ TAO_EC_Dispatching_Task::svc ()
     {
       try
         {
-          ACE_Message_Block *mb = 0;
+          ACE_Message_Block *mb = nullptr;
 
           if (this->getq (mb) == -1)
             {
@@ -117,7 +117,7 @@ TAO_EC_Dispatching_Task::svc ()
           TAO_EC_Dispatch_Command *command =
             dynamic_cast<TAO_EC_Dispatch_Command*> (mb);
 
-          if (command == 0)
+          if (command == nullptr)
             {
               ACE_Message_Block::release (mb);
               continue;
@@ -148,7 +148,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
 {
   if (this->msg_queue()->is_full ())
     {
-      if (0 != this->queue_full_service_object_)
+      if (nullptr != this->queue_full_service_object_)
         {
           int action =
             this->queue_full_service_object_->queue_full_action (this, proxy,
@@ -161,12 +161,12 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
         // else go ahead and queue it
     }
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     this->allocator_ = ACE_Allocator::instance ();
 
   void* buf = this->allocator_->malloc (sizeof (TAO_EC_Push_Command));
 
-  if (buf == 0)
+  if (buf == nullptr)
     throw CORBA::NO_MEMORY (TAO::VMCID, CORBA::COMPLETED_NO);
 
   ACE_Message_Block *mb =

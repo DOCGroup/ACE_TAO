@@ -26,7 +26,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
   TAO_EC_Timeout_Filter *filter =
     static_cast<TAO_EC_Timeout_Filter*> (const_cast<void*> (vp));
 
-  if (filter == 0)
+  if (filter == nullptr)
     return 0;
 
   try
