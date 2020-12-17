@@ -38,17 +38,17 @@ public:
   typedef ACE_Unbounded_Set_Iterator<PROXY*> Iterator;
 
   /// Constructor
-  TAO_ESF_Proxy_List (void);
+  TAO_ESF_Proxy_List ();
 
   /// Return the first element in the collection, or end() if there
   /// are none
-  ACE_Unbounded_Set_Iterator<PROXY*> begin (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> begin ();
 
   /// Return one past the last element in the collection
-  ACE_Unbounded_Set_Iterator<PROXY*> end (void);
+  ACE_Unbounded_Set_Iterator<PROXY*> end ();
 
   /// Return the number of elements in the collection
-  size_t size (void) const;
+  size_t size () const;
 
   /// Insert a new element to the collection
   void connected (PROXY *);
@@ -61,7 +61,7 @@ public:
 
   /// Shutdown the collection, i.e. remove all elements and release
   /// resources
-  void shutdown (void);
+  void shutdown ();
 
 private:
   /// The underlying implementation object

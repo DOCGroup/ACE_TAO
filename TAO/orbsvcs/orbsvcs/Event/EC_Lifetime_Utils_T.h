@@ -53,14 +53,14 @@ template <class T>
 class TAO_EC_Auto_Command
 {
 public:
-  TAO_EC_Auto_Command (void);
+  TAO_EC_Auto_Command ();
   TAO_EC_Auto_Command (const T & command);
-  ~TAO_EC_Auto_Command (void);
+  ~TAO_EC_Auto_Command ();
   void set_command (const T & command);
   void set_command (TAO_EC_Auto_Command<T> & auto_command);
-  void execute (void);
-  void allow_command (void);
-  void disallow_command (void);
+  void execute ();
+  void allow_command ();
+  void disallow_command ();
 
 private:
 
@@ -78,9 +78,9 @@ template <class T>
 class TAO_EC_Shutdown_Command
 {
 public:
-  TAO_EC_Shutdown_Command (void);
+  TAO_EC_Shutdown_Command ();
   TAO_EC_Shutdown_Command (T target);
-  void execute (void);
+  void execute ();
 
 private:
 
