@@ -121,7 +121,7 @@ public:
                          const ACE_NS_WString &pattern);
 
   /// Dump the state of the object
-  void dump (void) const;
+  void dump () const;
 
 private:
 

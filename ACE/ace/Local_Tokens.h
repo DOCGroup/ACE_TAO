@@ -158,7 +158,7 @@ public:
   void call_sleep_hook (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   // = Used to block the thread if an acquire fails with EWOULDBLOCK.
   ACE_TOKEN_CONST::COND_VAR cond_var_;
@@ -225,7 +225,7 @@ public:
   operator ACE_TPQ_Entry *(void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 #if defined (ACE_NO_TSS_TOKENS)
   ACE_TPQ_Entry *operator-> (void)
@@ -278,7 +278,7 @@ public:
   void advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   ACE_TPQ_Entry *current_;
@@ -334,7 +334,7 @@ public:
   int size (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Head.
@@ -432,7 +432,7 @@ public:
   int dec_reference (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /**
    * These are the Token types supported by the library at ship time.
@@ -552,7 +552,7 @@ public:
   virtual int release (ACE_TPQ_Entry *caller);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns ACE_Tokens::MUTEX.
   virtual int type (void) const;
@@ -647,7 +647,7 @@ public:
   virtual int release (ACE_TPQ_Entry *caller);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// These are the types that proxies can be.
   enum PROXY_TYPE { READER, WRITER };
@@ -713,7 +713,7 @@ public:
   void name (const ACE_TCHAR *new_name);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 private:
   /// Name of the token.
@@ -862,7 +862,7 @@ public:
   virtual ACE_Token_Proxy *clone (void) const = 0;
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /**
    * This method can be used be Tokens (e.g. Readers/Writer Tokens) to
@@ -942,7 +942,7 @@ public:
   virtual ACE_Token_Proxy *clone (void) const { return new ACE_Null_Token; }
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Do not allow the Token Manager to create us.
   virtual ACE_Tokens *create_token (const ACE_TCHAR *) { return 0; }
@@ -984,7 +984,7 @@ public:
   ~ACE_Local_Mutex (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Return deep copy.
   virtual ACE_Token_Proxy *clone (void) const;
@@ -1036,7 +1036,7 @@ public:
   ~ACE_Local_RLock (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK.
   virtual int type (void) const;
@@ -1091,7 +1091,7 @@ public:
   ~ACE_Local_WLock (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK.
   virtual int type (void) const;

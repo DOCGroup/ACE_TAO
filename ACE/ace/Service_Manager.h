@@ -80,7 +80,7 @@ protected:
   virtual int resume (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   int open (const ACE_INET_Addr &sia);

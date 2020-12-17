@@ -619,7 +619,7 @@ public:
    * constructed successfully.  If not, the user should invoke @c
    * remove and release the object (it is not usable.)
    * @retval 0 if all is fine.  non-zero if this malloc object is
-   *         unuable.
+   *         unusable.
    */
   int bad ();
 

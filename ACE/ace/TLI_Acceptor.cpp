@@ -38,7 +38,7 @@ public:
   ACE_TLI_Request *alloc (void);
   void    free (ACE_TLI_Request *node);
 
-  void dump (void) const;
+  void dump () const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;

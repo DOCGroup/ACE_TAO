@@ -330,7 +330,7 @@ public:
    * Logs the setting of all options, the bound address, the send address and
    * interface, and the list of current subscriptions.
    */
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

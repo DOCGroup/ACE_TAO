@@ -173,7 +173,7 @@ public:
   // = Notification hook.
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Get the handle to the underlying completion port.
   virtual ACE_HANDLE completion_port (void);
