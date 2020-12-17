@@ -292,21 +292,21 @@ ACE_SSL_SOCK_Stream::send_n (const void *buf,
 }
 
 ACE_INLINE int
-ACE_SSL_SOCK_Stream::close_reader (void)
+ACE_SSL_SOCK_Stream::close_reader ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_reader");
   return this->stream_.close_reader ();
 }
 
 ACE_INLINE int
-ACE_SSL_SOCK_Stream::close_writer (void)
+ACE_SSL_SOCK_Stream::close_writer ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close_writer");
   return this->stream_.close_writer ();
 }
 
 ACE_INLINE int
-ACE_SSL_SOCK_Stream::close (void)
+ACE_SSL_SOCK_Stream::close ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::close");
 
@@ -348,14 +348,14 @@ ACE_SSL_SOCK_Stream::close (void)
 }
 
 ACE_INLINE ACE_SOCK_Stream &
-ACE_SSL_SOCK_Stream::peer (void)
+ACE_SSL_SOCK_Stream::peer ()
 {
   ACE_TRACE ("ACE_SSL_SOCK_Stream::peer");
   return this->stream_;
 }
 
 ACE_INLINE SSL *
-ACE_SSL_SOCK_Stream::ssl (void) const
+ACE_SSL_SOCK_Stream::ssl () const
 {
   return this->ssl_;
 }

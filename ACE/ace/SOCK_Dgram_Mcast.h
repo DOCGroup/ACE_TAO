@@ -206,7 +206,7 @@ public:
    * done by the destructor.  If not, most systems will automatically
    * unsubscribe upon the close of the socket.
    */
-  ~ACE_SOCK_Dgram_Mcast (void);
+  ~ACE_SOCK_Dgram_Mcast ();
 
   /**
    * Explicitly open/bind the socket and define the network interface
@@ -374,7 +374,7 @@ protected:
               int reuse_addr = 1);
 
   /// Empty the dynamic subscription list.
-  int clear_subs_list (void);
+  int clear_subs_list ();
 
 private:
   /// Per-instance options..

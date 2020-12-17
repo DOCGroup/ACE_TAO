@@ -42,7 +42,7 @@ public:
 
   /// Perform the second part of the trace, which prints out the NAME
   /// as the function is exited.
-  ~ACE_Trace (void);
+  ~ACE_Trace ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -61,7 +61,7 @@ public:
   static void set_nesting_indent (int indent);
 
   /// Get the nesting indentation level.
-  static int get_nesting_indent (void);
+  static int get_nesting_indent ();
 
   /// Dump the state of an object.
   void dump () const;

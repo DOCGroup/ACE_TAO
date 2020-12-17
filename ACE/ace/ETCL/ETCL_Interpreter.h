@@ -44,10 +44,10 @@ class ETCL_Parser_Export ETCL_Interpreter
 {
 protected:
   /// Constructor.
-  ETCL_Interpreter (void);
+  ETCL_Interpreter ();
 
   /// Destructor.
-  virtual ~ETCL_Interpreter (void);
+  virtual ~ETCL_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing @a constraints from the tokens returned by it.
@@ -65,9 +65,9 @@ private:
 
 
 // Functions we need for parsing.
-extern int yyparse (void);
+extern int yyparse ();
 extern void yyrestart (FILE*);
-extern int yylex (void);
+extern int yylex ();
 
 // Have yylex read from the constraint string, not from stdin.
 #undef YY_INPUT

@@ -48,10 +48,10 @@ class ACE_Export ACE_SOCK_IO : public ACE_SOCK
 {
 public:
   /// Constructor.
-  ACE_SOCK_IO (void);
+  ACE_SOCK_IO ();
 
   /// Destructor.
-  ~ACE_SOCK_IO (void);
+  ~ACE_SOCK_IO ();
 
   /// Recv an @a n byte buffer from the connected socket.
   ssize_t recv (void *buf,

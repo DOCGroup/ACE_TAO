@@ -95,7 +95,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul(opt, 0, 10);
+              unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_ec_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }
@@ -171,7 +171,7 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
   else if (this->consumer_ec_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
       ACE_Time_Value rate (0, this->consumer_ec_control_period_);
@@ -180,13 +180,13 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
   else if (this->consumer_ec_control_ == 2)
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
       ACE_Time_Value rate (0, this->consumer_ec_control_period_);
       return new TAO_ECG_Reconnect_ConsumerEC_Control (rate, consumer_ec_control_timeout_, gateway, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 void

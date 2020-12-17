@@ -36,7 +36,7 @@ public:
   ACE_Obchunk (size_t size);
 
   /// Dtor.
-  ~ACE_Obchunk (void);
+  ~ACE_Obchunk ();
 
   /// Dump the state of an object.
   void dump () const;

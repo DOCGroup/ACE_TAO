@@ -45,7 +45,7 @@ public:
   friend class ACE_FILE_Connector;
 
   /// Default constructor.
-  ACE_FILE_IO (void);
+  ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;

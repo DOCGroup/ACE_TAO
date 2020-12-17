@@ -46,7 +46,7 @@ public:
                                 PROXY *proxy);
 
   /// Destructor
-  ~TAO_ESF_Proxy_RefCount_Guard (void);
+  ~TAO_ESF_Proxy_RefCount_Guard ();
 
 protected:
   /// The reference count, if it gets to zero then the object must be

@@ -58,7 +58,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_ObserverStrategy
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_ObserverStrategy (void);
+  virtual ~TAO_EC_ObserverStrategy ();
 
   /// The basic methods to support the EC strategies.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -91,7 +91,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Null_ObserverStrategy : public TAO_EC_Obser
 {
 public:
   /// Constructor
-  TAO_EC_Null_ObserverStrategy (void);
+  TAO_EC_Null_ObserverStrategy ();
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -130,7 +130,7 @@ public:
                                  ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Basic_ObserverStrategy (void);
+  virtual ~TAO_EC_Basic_ObserverStrategy ();
 
   // = The TAO_EC_ObserverStrategy methods.
   virtual RtecEventChannelAdmin::Observer_Handle
@@ -156,7 +156,7 @@ public:
    */
   struct Observer_Entry
   {
-    Observer_Entry (void);
+    Observer_Entry ();
     Observer_Entry (RtecEventChannelAdmin::Observer_Handle h,
                     RtecEventChannelAdmin::Observer_ptr o);
 
@@ -241,7 +241,7 @@ public:
                                     ACE_Lock* lock);
 
   /// Destructor
-  virtual ~TAO_EC_Reactive_ObserverStrategy (void);
+  virtual ~TAO_EC_Reactive_ObserverStrategy ();
 
 protected:
   /// Helpers.

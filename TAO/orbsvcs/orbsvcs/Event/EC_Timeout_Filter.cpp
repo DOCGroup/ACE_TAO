@@ -67,7 +67,7 @@ TAO_EC_Timeout_Filter::push_to_proxy (const RtecEventComm::EventSet& event,
 {
   qos_info.timer_id_ = this->id_;
 
-  if (this->supplier_ != 0)
+  if (this->supplier_ != nullptr)
     this->supplier_->filter (event,
                              qos_info);
 }
@@ -77,7 +77,7 @@ TAO_EC_Timeout_Filter::filter (const RtecEventComm::EventSet &event,
                                TAO_EC_QOS_Info &qos_info)
 {
   if (qos_info.timer_id_ == this->id_
-      && this->parent () != 0)
+      && this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
       return 1;
@@ -90,7 +90,7 @@ TAO_EC_Timeout_Filter::filter_nocopy (RtecEventComm::EventSet &event,
                                       TAO_EC_QOS_Info &qos_info)
 {
   if (qos_info.timer_id_ == this->id_
-      && this->parent () != 0)
+      && this->parent () != nullptr)
     {
       this->parent ()->push_nocopy (event, qos_info);
       return 1;

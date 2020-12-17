@@ -22,13 +22,13 @@ TAO_EC_Filter::adopt_child (TAO_EC_Filter* child)
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Filter::begin () const
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Filter::end () const
 {
-  return 0;
+  return nullptr;
 }
 
 int
@@ -70,7 +70,7 @@ void
 TAO_EC_Null_Filter::push (const RtecEventComm::EventSet& event,
                           TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     this->parent ()->push (event, qos_info);
 }
 
@@ -78,7 +78,7 @@ void
 TAO_EC_Null_Filter::push_nocopy (RtecEventComm::EventSet& event,
                                  TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     this->parent ()->push_nocopy (event, qos_info);
 }
 

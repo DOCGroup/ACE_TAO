@@ -15,7 +15,7 @@ TAO_EC_MT_Dispatching::TAO_EC_MT_Dispatching (int nthreads,
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
-     task_(0, service_object),
+     task_(nullptr, service_object),
      active_ (0)
 {
   this->task_.open (&this->thread_manager_);

@@ -42,10 +42,10 @@ class ACE_Export ACE_Sig_Handler
 {
 public:
   /// Default constructor.
-  ACE_Sig_Handler (void);
+  ACE_Sig_Handler ();
 
   /// Destructor
-  virtual ~ACE_Sig_Handler (void);
+  virtual ~ACE_Sig_Handler ();
 
   // = Registration and removal methods.
   /**
@@ -75,7 +75,7 @@ public:
 
   // Set/get signal status.
   /// True if there is a pending signal.
-  static int sig_pending (void);
+  static int sig_pending ();
 
   /// Reset the value of <sig_pending_> so that no signal is pending.
   static void sig_pending (int);
@@ -164,7 +164,7 @@ class ACE_Export ACE_Sig_Handlers : public ACE_Sig_Handler
 {
 public:
   /// Default constructor
-  ACE_Sig_Handlers (void);
+  ACE_Sig_Handlers ();
 
   // = Registration and removal methods.
   /**

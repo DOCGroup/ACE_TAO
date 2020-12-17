@@ -38,7 +38,7 @@ class ACE_Export ACE_SOCK_Dgram : public ACE_SOCK
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Dgram (void);
+  ACE_SOCK_Dgram ();
 
   /// This is a BSD-style method (i.e., no QoS) for initiating a socket
   /// dgram that will accept datagrams at the <local> address.
@@ -85,7 +85,7 @@ public:
             int ipv6_only = 0);
 
   /// Default dtor.
-  ~ACE_SOCK_Dgram (void);
+  ~ACE_SOCK_Dgram ();
 
   // = Data transfer routines.
   /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).

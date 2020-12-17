@@ -38,7 +38,7 @@ class ACE_Export ACE_FILE_Connector
 {
 public:
   /// Default constructor.
-  ACE_FILE_Connector (void);
+  ACE_FILE_Connector ();
 
   /**
    * Actively ``connect'' and produce a @a new_io ACE_FILE_IO object

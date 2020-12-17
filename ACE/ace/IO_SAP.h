@@ -38,7 +38,7 @@ public:
   };
 
   /// Default dtor.
-  ~ACE_IO_SAP (void);
+  ~ACE_IO_SAP ();
 
   /// Interface for ioctl.
   int control (int cmd, void *) const;
@@ -60,7 +60,7 @@ public:
   int disable (int value) const;
 
   /// Get the underlying handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set the underlying handle.
   void set_handle (ACE_HANDLE handle);
@@ -73,7 +73,7 @@ public:
 
 protected:
   /// Ensure that ACE_IO_SAP is an abstract base class.
-  ACE_IO_SAP (void);
+  ACE_IO_SAP ();
 
 private:
   /// Underlying I/O handle.

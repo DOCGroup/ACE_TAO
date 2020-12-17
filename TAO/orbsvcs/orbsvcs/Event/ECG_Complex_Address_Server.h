@@ -58,7 +58,7 @@ public:
          create (int is_source_mapping = 1);
 
   /// Destructor
-  virtual ~TAO_ECG_Complex_Address_Server (void);
+  virtual ~TAO_ECG_Complex_Address_Server ();
 
   /// Initializes the mapping from the @a arg string.  See class notes
   /// for the expected format.
@@ -72,7 +72,7 @@ public:
 
   /// Prints out complete content of the address server. Useful for
   /// debugging.
-  void dump_content (void);
+  void dump_content ();
 
 protected:
 

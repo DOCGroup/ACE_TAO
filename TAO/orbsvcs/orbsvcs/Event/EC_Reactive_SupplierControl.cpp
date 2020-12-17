@@ -110,7 +110,7 @@ TAO_EC_Reactive_SupplierControl::activate ()
         // handle_timeout uses these policies, if done in front, the channel
         // can crash when the timeout expires before initiazation is ready.
         timer_id_ = this->reactor_->schedule_timer (&this->adapter_,
-                                                    0,
+                                                    nullptr,
                                                     this->rate_,
                                                     this->rate_);
         if (timer_id_ == -1)
@@ -134,7 +134,7 @@ TAO_EC_Reactive_SupplierControl::shutdown ()
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   r = this->reactor_->cancel_timer (timer_id_);
 #endif /* TAO_HAS_CORBA_MESSAGING */
-  this->adapter_.reactor (0);
+  this->adapter_.reactor (nullptr);
   return r;
 }
 

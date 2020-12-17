@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_EC_Per_Supplier_Filter::
     TAO_EC_Per_Supplier_Filter (TAO_EC_Event_Channel_Base* ec)
   :  event_channel_ (ec),
-     consumer_ (0),
+     consumer_ (nullptr),
      refcnt_ (1)
 {
   this->event_channel_->create_proxy_collection (this->collection_);
@@ -29,7 +29,7 @@ TAO_EC_Per_Supplier_Filter::
 TAO_EC_Per_Supplier_Filter::~TAO_EC_Per_Supplier_Filter ()
 {
   this->event_channel_->destroy_proxy_collection (this->collection_);
-  this->collection_ = 0;
+  this->collection_ = nullptr;
 }
 
 void
@@ -37,7 +37,7 @@ TAO_EC_Per_Supplier_Filter::bind (TAO_EC_ProxyPushConsumer* consumer)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ == 0)
+  if (this->consumer_ == nullptr)
     {
       this->consumer_ = consumer;
     }
@@ -48,10 +48,10 @@ TAO_EC_Per_Supplier_Filter::unbind (TAO_EC_ProxyPushConsumer* consumer)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ == 0 || this->consumer_ != consumer)
+  if (this->consumer_ == nullptr || this->consumer_ != consumer)
     return;
 
-  this->consumer_ = 0;
+  this->consumer_ = nullptr;
 
   try
     {
@@ -68,7 +68,7 @@ TAO_EC_Per_Supplier_Filter::connected (TAO_EC_ProxyPushSupplier* supplier)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ != 0)
+  if (this->consumer_ != nullptr)
     {
       const RtecEventChannelAdmin::SupplierQOS& pub =
         this->consumer_->publications_i ();
@@ -104,7 +104,7 @@ TAO_EC_Per_Supplier_Filter::reconnected (TAO_EC_ProxyPushSupplier* supplier)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  if (this->consumer_ != 0)
+  if (this->consumer_ != nullptr)
     {
       const RtecEventChannelAdmin::SupplierQOS& pub =
         this->consumer_->publications_i ();
