@@ -786,21 +786,34 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         ACE_OS::ace_isdigit (net_if[0]) &&
         (if_ix = ACE_OS::atoi (net_if)) > 0;
 
-      IP_ADAPTER_ADDRESSES tmp_addrs;
-      // Initial call to determine actual memory size needed
-      ULONG bufLen = 0;
-      char *buf = 0;
-      if (::GetAdaptersAddresses (AF_INET6, 0, 0, &tmp_addrs, &bufLen)
-          == ERROR_BUFFER_OVERFLOW)
+      ULONG bufLen = 15000; // Initial size as per Microsoft
+      char* buf = 0;
+      ACE_NEW_RETURN(buf, char[bufLen], -1);
+      DWORD dwRetVal = 0;
+      ULONG iterations = 0;
+      const ULONG maxTries = 3;
+      PIP_ADAPTER_ADDRESSES pAddrs;
+      do
         {
-          ACE_NEW_RETURN (buf, char[bufLen], -1);
-        }
+          pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
+          dwRetVal = ::GetAdaptersAddresses(AF_INET6, 0, 0, pAddrs, &bufLen);
+          if (dwRetVal == ERROR_BUFFER_OVERFLOW)
+            {
+              delete[] buf;
+              ACE_NEW_RETURN(buf, char[bufLen], -1);
+              iterations++;
+            } 
+          else
+            {
+              break;
+            }
+        } while ((dwRetVal == ERROR_BUFFER_OVERFLOW) && (iterations < maxTries));
 
-      // Get required output buffer and retrieve info for real.
-      PIP_ADAPTER_ADDRESSES pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-      if (::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen) != NO_ERROR)
+      if (dwRetVal != NO_ERROR)
         {
-          pAddrs = 0;
+          delete[] buf;
+          errno = EINVAL;
+          return -1;
         }
 
       while (pAddrs)
@@ -819,14 +832,11 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
       delete[] buf; // clean up
 
-#endif /* ACE_WIN32 */
+#else /* ACE_WIN32 */
 #ifndef ACE_LACKS_IF_NAMETOINDEX
-      if (lmreq.ipv6mr_interface == 0)
-        {
-          lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
-        }
-
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex(ACE_TEXT_ALWAYS_CHAR(net_if));
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
+#endif /* ACE_WIN32 */
       if (lmreq.ipv6mr_interface == 0)
         {
           errno = EINVAL;
