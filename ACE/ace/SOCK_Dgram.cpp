@@ -802,7 +802,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
               delete[] buf;
               ACE_NEW_RETURN(buf, char[bufLen], -1);
               iterations++;
-            } 
+            }
           else
             {
               break;
