@@ -15,6 +15,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
   }
 
   IDL_Files {
+    array.idl
     Bug_2350_Regression.idl
     Bug_2577_Regression.idl
     Bug_2582_Regression.idl
@@ -41,22 +42,24 @@ project(*IDL): taoserver, messaging, gen_ostream {
     old_union2.idl
     params.idl
     reopened_modules.idl
+    sequence.idl
     struct.idl
     string_value.idl
     reopen_include1.idl
     reopen_include2.idl
     typeprefix.idl
+    union.idl
   }
 
   IDL_Files {
     idlflags += -as
     enum_in_struct.idl
-    array.idl
+    array_anonymous.idl
     array_anon_nested.idl
     included.idl
     including.idl
-    sequence.idl
-    union.idl
+    sequence_anonymous.idl
+    union_anonymous.idl
     anyunion.idl
     valuetype.idl
   }
@@ -109,6 +112,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     anyunionS.cpp
     arrayC.cpp
     arrayS.cpp
+    array_anonymousC.cpp
+    array_anonymousS.cpp
     array_anon_nestedC.cpp
     array_anon_nestedS.cpp
     array_onlyA.cpp
@@ -201,6 +206,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     repo_id_modS.cpp
     sequenceC.cpp
     sequenceS.cpp
+    sequence_anonymousC.cpp
+    sequence_anonymousS.cpp
     simple2C.cpp
     simple2S.cpp
     simpleC.cpp
@@ -219,6 +226,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     typeprefixS.cpp
     unionC.cpp
     unionS.cpp
+    union_anonymousC.cpp
+    union_anonymousS.cpp
     valuetypeC.cpp
     valuetypeS.cpp
   }
@@ -261,6 +270,7 @@ project(*NDDS_IDL): ndds_cck_ts_defaults {
   NDDSTypeSupport_Files {
     anonymous.idl
     array.idl
+    array_anonymous.idl
     array_only.idl
     attribute.idl
     Bug_2350_Regression.idl
@@ -301,6 +311,7 @@ project(*NDDS_IDL): ndds_cck_ts_defaults {
     reopen_include2.idl
     repo_id_mod.idl
     sequence.idl
+    sequence_anonymous.idl
     simple.idl
     simple2.idl
     struct.idl
@@ -308,6 +319,7 @@ project(*NDDS_IDL): ndds_cck_ts_defaults {
     typedef.idl
     typeprefix.idl
     union.idl
+    union_anonymous.idl
     valuetype.idl
   }
 }
@@ -318,6 +330,7 @@ project(*CoreDX_IDL): coredx_ts_defaults {
   CoreDXTypeSupport_Files {
     anonymous.idl
     array.idl
+    array_anonymous.idl
     array_only.idl
     attribute.idl
     Bug_2350_Regression.idl
@@ -358,6 +371,7 @@ project(*CoreDX_IDL): coredx_ts_defaults {
     reopen_include2.idl
     repo_id_mod.idl
     sequence.idl
+    sequence_anonymous.idl
     simple.idl
     simple2.idl
     struct.idl
@@ -365,6 +379,7 @@ project(*CoreDX_IDL): coredx_ts_defaults {
     typedef.idl
     typeprefix.idl
     union.idl
+    uion_anonymous.idl
     valuetype.idl
   }
 }
@@ -390,6 +405,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
     array.cxx
     arrayPlugin.cxx
     arraySupport.cxx
+    array_anonymous.cxx
+    array_anonymousPlugin.cxx
+    array_anonymousSupport.cxx
     array_only.cxx
     array_onlyPlugin.cxx
     array_onlySupport.cxx
@@ -500,6 +518,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    sequence.cxx
 //    sequencePlugin.cxx
 //    sequenceSupport.cxx
+//    sequence_anonymous.cxx
+//    sequence_anonymousPlugin.cxx
+//    sequence_anonymousSupport.cxx
     simple.cxx
     simple2.cxx
     simple2Plugin.cxx
@@ -521,6 +542,9 @@ project(*NDDS_Lib): taolib, messaging, gen_ostream, nddslib {
 //    union.cxx
 //    unionPlugin.cxx
 //    unionSupport.cxx
+//    union_anonymous.cxx
+//    union_anonymousPlugin.cxx
+//    union_anonymousSupport.cxx
 //    valuetype.cxx
 //    valuetypePlugin.cxx
 //    valuetypeSupport.cxx
