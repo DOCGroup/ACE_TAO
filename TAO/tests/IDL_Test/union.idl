@@ -256,16 +256,26 @@ union U85 switch (long) {
   case 2: U42 b_85_2;
 };
 
+typedef string UString[2];
 union U86 switch (long) {
   case 1: string b_86_1;
+  case 2: long b_86_2;
+};
+union U88 switch (long) {
+  case 1: UString b_86_1;
   case 2: long b_86_2;
 };
 
 struct UBar {
   long foo;
 };
+typedef UBar UBarArray[2];
 
 union U87 switch (long) {
   case 1: UBar b_87_1;
+  case 2: long b_87_2;
+};
+union U89 switch (long) {
+  case 1: UBarArray b_87_1;
   case 2: long b_87_2;
 };
