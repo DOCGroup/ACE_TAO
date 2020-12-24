@@ -248,3 +248,24 @@ union TestUnion switch (short)
   case 2: TestTwoEnum twoEnum;
 };
 
+typedef long U41[2][3];
+typedef long U42[2];
+
+union U85 switch (long) {
+  case 1: U41 b_85_1;
+  case 2: U42 b_85_2;
+};
+
+union U86 switch (long) {
+  case 1: string b_86_1;
+  case 2: long b_86_2;
+};
+
+struct UBar {
+  long foo;
+};
+
+union U87 switch (long) {
+  case 1: UBar b_87_1;
+  case 2: long b_87_2;
+};
