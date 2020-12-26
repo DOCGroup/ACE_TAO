@@ -157,12 +157,6 @@ another machine or used in cross-compilation, it can be overridden at runtime
 by setting the environment variables TAO_IDL_PREPROCESSOR and
 TAO_IDL_PREPROCESSOR_ARGS.</P>
 
-<P>In previous versions, the environment variables CPP_LOCATION and
-TAO_IDL_DEFAULT_CPP_FLAGS were used for this purpose.  Both will still work,
-but TAO_IDL will display a deprecation warning if it detects one of these.
-It is possible that support for these old variables will be removed in a
-future version of TAO.</P>
-
 <P>If ACE_ROOT or TAO_ROOT are defined, then TAO_IDL
 will use them to include the $(ACE_ROOT)/TAO/tao or $(TAO_ROOT)/tao
 directories. This is to allow TAO_IDL to automatically find
