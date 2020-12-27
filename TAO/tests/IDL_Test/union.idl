@@ -279,3 +279,34 @@ union U89 switch (long) {
   case 1: UBarArray b_87_1;
   case 2: long b_87_2;
 };
+
+enum U90
+{
+  U90_1,
+  U90_2
+};
+
+typedef U90 U90Array[2];
+
+union U91 switch (long) {
+  case 1: U90Array b_91_1;
+  case 2: long b_92_2;
+};
+
+union U92 switch (long) {
+  case 1: UBar b_92_1;
+  case 2: long b_92_2;
+  default: UBar b_92_3;
+};
+
+union U93 switch (long) {
+  case 1: UBarArray b_93_1;
+  case 2: long b_93_2;
+  default: UBarArray b_93_3;
+};
+
+union U94 switch (long) {
+  case 1: U90Array b_94_1;
+  case 2: long b_94_2;
+  default: U90Array b_94_3;
+};
