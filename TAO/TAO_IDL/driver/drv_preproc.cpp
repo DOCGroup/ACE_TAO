@@ -582,6 +582,11 @@ DRV_add_include_path (ACE_CString& include_path,
 void
 DRV_cpp_post_init ()
 {
+  char idl_version_arg[128];
+  ACE_OS::sprintf (idl_version_arg, "-D__TAO_IDL_IDL_VERSION=%s",
+    idl_global->idl_version_.to_macro ());
+  DRV_cpp_putarg (idl_version_arg);
+
   // Add include path for TAO_ROOT/orbsvcs.
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
 
