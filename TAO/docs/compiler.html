@@ -199,6 +199,45 @@ directories. This is to allow TAO_IDL to automatically find
 display a warning message when neither is defined.</P>
 
 <hr>
+<h2>IDL Preprocessor Macros</h2>
+
+<p>The preprocessor macros available in IDL include all the ones built-in to
+the preprocessor when it's being used for C/C++. In addition to the ones
+built-in to the preprocessor, the following are also defined by
+<code>tao_idl</code>:</p>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th>Description</th>
+  </tr>
+
+  <tr>
+    <td><code>__TAO_IDL</code></td>
+    <td>
+      <p>The version of ACE that <code>tao_idl</code> was built with. The format
+      is three bytes for each version field in hex format. For example, in TAO
+      version 3.2.1, which corresponds to ACE version 7.3.1,
+      <code>__TAO_IDL</code> would be <code>0x070201</code>.</p>
+
+      <p>It's also possible to include <code>tao/Version.h</code> and use the
+      same macros from that header file as you can use in C++.</p>
+    </td>
+  </tr>
+
+  <tr id="tao_idl_idl_version">
+    <td><code>__TAO_IDL_IDL_VERSION</code></td>
+    <td>Version of the IDL specification the compiler that can be changed using
+      <a href="#idl-version"><code>--idl-version</code></a>. Note that this
+      doesn't mean that the compiler will support all those features of the
+      IDL spec version. The format is the same as <code>__TAO_IDL</code>,
+      which is three byte fields in a hex format. For example IDL version 3 is
+      <code>0x030000</code>.
+    </td>
+  </tr>
+</table>
+
+<hr>
 <h2>Operation Demuxing Strategies</h2>
 
 The server skeleton can use different demuxing strategies to match the
@@ -299,17 +338,22 @@ also receives other options that are specific to it.</p>
     <td>&nbsp;</td>
   </tr>
 
-  <tr>
+  <tr id="idl-version">
     <td><code>&#8209;&#8209;idl&#8209;version&nbsp;VERSION</code></td>
 
-    <td>Set the IDL version to use</td>
+    <td>Set the IDL version to use. This will be available in IDL as the
+      <a href="#tao_idl_idl_version"><code>__TAO_IDL_IDL_VERSION</code> macro</a>.</td>
+
     <td>&nbsp;</td>
   </tr>
 
   <tr>
     <td><code>&#8209;&#8209;default&#8209;idl&#8209;version</code></td>
 
-    <td>Prints the default IDL version for the compiler and exits</td>
+    <td>Prints the default IDL version for the compiler and exits. This will be
+      available in IDL as the
+      <a href="#tao_idl_idl_version"><code>__TAO_IDL_IDL_VERSION</code> macro</a>.</td>
+
     <td>&nbsp;</td>
   </tr>
 
