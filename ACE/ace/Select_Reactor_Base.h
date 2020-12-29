@@ -57,13 +57,6 @@ typedef int (ACE_Event_Handler::*ACE_EH_PTMF) (ACE_HANDLE);
 class ACE_Select_Reactor_Impl;
 class ACE_Sig_Handler;
 
-/*
- * Hook to specialize the Select_Reactor_Base implementation
- * with the concrete reactor, e.g., select or tp reactor
- * specified at build/compilation time.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class ACE_Select_Reactor_Handle_Set
  *
@@ -228,7 +221,7 @@ public:
       ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -376,7 +369,7 @@ public:
   max_handlep1_type max_handlep1 (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -438,7 +431,7 @@ public:
   bool advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -487,13 +480,6 @@ public:
   /// the application.  The select reactor has no handlers that can be
   /// resumed by the  application. So return 0;
   virtual int resumable_handler (void);
-
-  /*
-   * Hook to add concrete methods required to specialize the
-   * implementation with concrete methods required for the concrete
-   * reactor implementation, for example, select, tp reactors.
-   */
-  //@@ REACTOR_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
   /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.

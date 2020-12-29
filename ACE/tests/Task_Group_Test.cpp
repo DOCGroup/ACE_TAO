@@ -28,11 +28,11 @@ class Waiter_Task : public ACE_Task_Base
 public:
   Waiter_Task (ACE_Thread_Manager* tm = 0)
     : ACE_Task_Base (tm) {}
-  virtual int svc(void);
+  int svc() override;
 };
 
 int
-Waiter_Task::svc(void)
+Waiter_Task::svc()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t|grp_id=%d) waiting for thread cancellation.\n"), this->grp_id ()));

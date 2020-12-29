@@ -45,7 +45,7 @@ public:
   TAO_DynEnum_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynEnum_i (void);
+  ~TAO_DynEnum_i ();
 
   /// Initialize using just a TypeCode.
   void init (CORBA::TypeCode_ptr tc);
@@ -58,11 +58,11 @@ public:
 
   // = Functions specific to DynEnum.
 
-  virtual char * get_as_string (void);
+  virtual char * get_as_string ();
 
   virtual void set_as_string (const char * value);
 
-  virtual CORBA::ULong get_as_ulong (void);
+  virtual CORBA::ULong get_as_ulong ();
 
   virtual void set_as_ulong (CORBA::ULong value);
 
@@ -70,17 +70,17 @@ public:
 
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   // Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   // = Use copy() or assign() instead of these.
   TAO_DynEnum_i (const TAO_DynEnum_i &src);

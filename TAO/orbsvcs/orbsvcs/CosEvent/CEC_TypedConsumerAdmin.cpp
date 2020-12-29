@@ -18,7 +18,7 @@ TAO_CEC_TypedConsumerAdmin::TAO_CEC_TypedConsumerAdmin (TAO_CEC_TypedEventChanne
 }
 
 // Implementation skeleton destructor
-TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin (void)
+TAO_CEC_TypedConsumerAdmin::~TAO_CEC_TypedConsumerAdmin ()
 {
 }
 
@@ -49,7 +49,7 @@ TAO_CEC_TypedConsumerAdmin::disconnected (TAO_CEC_ProxyPushSupplier *supplier)
 }
 
 void
-TAO_CEC_TypedConsumerAdmin::shutdown (void)
+TAO_CEC_TypedConsumerAdmin::shutdown ()
 {
   this->typed_push_admin_.shutdown ();
 }
@@ -77,19 +77,19 @@ TAO_CEC_TypedConsumerAdmin::obtain_typed_push_supplier (
 }
 
 CosEventChannelAdmin::ProxyPushSupplier_ptr
-TAO_CEC_TypedConsumerAdmin::obtain_push_supplier (void)
+TAO_CEC_TypedConsumerAdmin::obtain_push_supplier ()
 {
     throw CORBA::NO_IMPLEMENT ();
 }
 
 CosEventChannelAdmin::ProxyPullSupplier_ptr
-TAO_CEC_TypedConsumerAdmin::obtain_pull_supplier (void)
+TAO_CEC_TypedConsumerAdmin::obtain_pull_supplier ()
 {
     throw CORBA::NO_IMPLEMENT ();
 }
 
 PortableServer::POA_ptr
-TAO_CEC_TypedConsumerAdmin::_default_POA (void)
+TAO_CEC_TypedConsumerAdmin::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }

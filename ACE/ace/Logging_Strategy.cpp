@@ -234,7 +234,7 @@ ACE_Logging_Strategy::parse_args (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_Logging_Strategy::ACE_Logging_Strategy (void)
+ACE_Logging_Strategy::ACE_Logging_Strategy ()
   : thread_priority_mask_ (0),
     process_priority_mask_ (0),
     flags_ (0),
@@ -278,7 +278,7 @@ ACE_Logging_Strategy::ACE_Logging_Strategy (void)
 #endif /* ACE_DEFAULT_LOGFILE */
 }
 
-ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
+ACE_Logging_Strategy::~ACE_Logging_Strategy ()
 {
   // This is allocated in constructor, so it must be deallocated in
   // the destructor!
@@ -290,7 +290,7 @@ ACE_Logging_Strategy::~ACE_Logging_Strategy (void)
 }
 
 int
-ACE_Logging_Strategy::fini (void)
+ACE_Logging_Strategy::fini ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(this->filename_);
@@ -603,7 +603,7 @@ ACE_Logging_Strategy::reactor (ACE_Reactor *r)
 }
 
 ACE_Reactor *
-ACE_Logging_Strategy::reactor (void) const
+ACE_Logging_Strategy::reactor () const
 {
   return ACE_Service_Object::reactor ();
 }

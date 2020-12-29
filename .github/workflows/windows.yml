@@ -4,10 +4,10 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 7 * * SUN'
+    - cron: '0 1 * * SUN'
 
 jobs:
-  build:
+  msvc:
     strategy:
       matrix:
         include:
@@ -97,9 +97,9 @@ jobs:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
     - name: Install vcpkg
-      uses: lukka/run-vcpkg@v3
+      uses: lukka/run-vcpkg@v6
       with:
-        vcpkgGitCommitId: f6948aeb686c015d7b582aa4d76702a2f92602b1
+        vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
@@ -129,8 +129,79 @@ jobs:
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
     - name: Setup msbuild
-      uses: microsoft/setup-msbuild@v1.0.1
+      uses: microsoft/setup-msbuild@v1
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
+  mingw:
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        compiler: [gcc]
+        msystem: [MINGW64]
+        include:
+          - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_mingw32.GNU
+    name: ${{ matrix.msystem }}-${{ matrix.compiler }}
+    env:
+      ACE_ROOT: ${{ github.workspace }}/ACE
+      TAO_ROOT: ${{ github.workspace }}/TAO
+      MPC_ROOT: ${{ github.workspace }}/MPC
+    steps:
+    - name: checkout ACE/TAO
+      uses: actions/checkout@v2
+    - name: checkout MPC
+      uses: actions/checkout@v2
+      with:
+        repository: DOCGroup/MPC
+        path: ${{ env.MPC_ROOT }}
+    - uses: msys2/setup-msys2@v2
+      with:
+        msystem: ${{ matrix.msystem }}
+        install: make
+    - run: pacman --noconfirm -S mingw-w64-x86_64-${{ matrix.compiler }}
+      shell: msys2 {0}
+    - run: ${{ matrix.compiler }} --version
+      shell: msys2 {0}
+    - name: create $ACE_ROOT/ace/config.h
+      run: |
+        '#include "ace/config-win32.h"' > ${env:ACE_ROOT}/ace/config.h
+      shell: pwsh
+    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+      run: |
+        echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+    - name: Add optional features ${{ matrix.OptionalFeatures }}
+      run: |
+        echo "${{ matrix.OptionalFeatures }}" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      shell: pwsh
+      if: matrix.OptionalFeatures != ''
+    - name: add optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.optional_macros != ''
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
+        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+      shell: pwsh
+    - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+      shell: pwsh
+    - name: Build TAO_ACE project
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        make -j 6 -C $TAO_ROOT
+      shell: msys2 {0}
+    - name: Build ACE/tests project
+      run: |
+        export ACE_ROOT=`cygpath -u $ACE_ROOT`
+        export TAO_ROOT=`cygpath -u $TAO_ROOT`
+        make -j 6 -C $ACE_ROOT/tests
+      shell: msys2 {0}

@@ -45,12 +45,6 @@ namespace TAO
   class Profile_Transport_Resolver;
 }
 
-/*
- * Hook to add includes and forward declaration
- * to the Connector class.
- */
-//@@ TAO_CONNECTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Connector
  *
@@ -122,8 +116,6 @@ public:
 
   /// Return the object key delimiter to use or expect.
   virtual char object_key_delimiter (void) const = 0;
-
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_ADD_HOOK
 
 protected:
   /// A flag indicating the actual connector supports parallel connection
@@ -216,22 +208,16 @@ protected:
   TAO_ORB_Core *orb_core (void);
 
 protected:
-
   /// The (a)synch connect strategy
   TAO_Connect_Strategy *active_connect_strategy_;
 
 private:
-
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
   /// Pointer to our ORB core
   TAO_ORB_Core *orb_core_;
-
-  //@@ TAO_CONNECTOR_SPL_PRIVATE_DATA_ADD_HOOK
 };
-
-//@@ TAO_CONNECTOR_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

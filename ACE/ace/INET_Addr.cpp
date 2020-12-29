@@ -77,7 +77,7 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
 }
 
 void
-ACE_INET_Addr::dump (void) const
+ACE_INET_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_INET_Addr::dump");
@@ -142,7 +142,7 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
 
 
 u_long
-ACE_INET_Addr::hash (void) const
+ACE_INET_Addr::hash () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
@@ -156,7 +156,7 @@ ACE_INET_Addr::hash (void) const
 }
 
 bool
-ACE_INET_Addr::next (void)
+ACE_INET_Addr::next ()
 {
   if (this->inet_addrs_.empty () ||
       this->inet_addrs_iter_ == this->inet_addrs_.end ())
@@ -168,13 +168,13 @@ ACE_INET_Addr::next (void)
 }
 
 void
-ACE_INET_Addr::reset (void)
+ACE_INET_Addr::reset ()
 {
   this->inet_addrs_iter_ = this->inet_addrs_.begin ();
   this->next ();
 }
 
-ACE_INET_Addr::ACE_INET_Addr (void)
+ACE_INET_Addr::ACE_INET_Addr ()
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   // ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
@@ -620,7 +620,7 @@ ACE_INET_Addr::set (const sockaddr_in *addr, int len)
 
 // Return the address.
 void *
-ACE_INET_Addr::get_addr (void) const
+ACE_INET_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr");
   return (void*)&this->inet_addr_;
@@ -746,7 +746,7 @@ ACE_INET_Addr::ACE_INET_Addr (const wchar_t port_name[],
 }
 #endif /* ACE_HAS_WCHAR */
 
-ACE_INET_Addr::~ACE_INET_Addr (void)
+ACE_INET_Addr::~ACE_INET_Addr ()
 {
 }
 
@@ -811,7 +811,7 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
 // Return the character representation of the hostname.
 
 const char *
-ACE_INET_Addr::get_host_name (void) const
+ACE_INET_Addr::get_host_name () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_name");
 
@@ -1077,7 +1077,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 
 // Return the dotted Internet address.
 const char *
-ACE_INET_Addr::get_host_addr (void) const
+ACE_INET_Addr::get_host_addr () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_host_addr");
 #if defined (ACE_HAS_IPV6)
@@ -1091,7 +1091,7 @@ ACE_INET_Addr::get_host_addr (void) const
 
 // Return the 4-byte IP address, converting it into host byte order.
 ACE_UINT32
-ACE_INET_Addr::get_ip_address (void) const
+ACE_INET_Addr::get_ip_address () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_ip_address");
 #if defined (ACE_HAS_IPV6)

@@ -38,9 +38,9 @@ class TAO_Export TAO_ServerRequestInterceptor_Adapter_Factory
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_ServerRequestInterceptor_Adapter_Factory (void);
+  virtual ~TAO_ServerRequestInterceptor_Adapter_Factory ();
 
-  virtual TAO::ServerRequestInterceptor_Adapter * create (void) = 0;
+  virtual TAO::ServerRequestInterceptor_Adapter * create () = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

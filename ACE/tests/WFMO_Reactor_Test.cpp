@@ -37,7 +37,7 @@ Event_Handler::Event_Handler (ACE_Reactor &reactor)
 
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Event_Handler() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   this->reactor (&reactor);
 
@@ -62,7 +62,7 @@ Event_Handler::~Event_Handler (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in ~Event_Handler() is %d\n",
-              this->reference_count_.value ()));
+              this->reference_count_.load ()));
 
   ++number_of_closes;
 }

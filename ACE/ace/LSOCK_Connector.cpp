@@ -18,7 +18,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Connector)
 
 void
-ACE_LSOCK_Connector::dump (void) const
+ACE_LSOCK_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK_Connector::dump");
@@ -29,7 +29,7 @@ ACE_LSOCK_Connector::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_LSOCK_Connector::ACE_LSOCK_Connector (void)
+ACE_LSOCK_Connector::ACE_LSOCK_Connector ()
 {
   ACE_TRACE ("ACE_LSOCK_Connector::ACE_LSOCK_Connector");
 }

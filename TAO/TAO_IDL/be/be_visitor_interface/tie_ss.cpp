@@ -18,7 +18,7 @@ be_visitor_interface_tie_ss::be_visitor_interface_tie_ss (
 {
 }
 
-be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss (void)
+be_visitor_interface_tie_ss::~be_visitor_interface_tie_ss ()
 {
 }
 
@@ -111,7 +111,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "{}" << be_nl_2;
 
   *os << "template <class T>" << be_nl
-      << fulltiename << "<T>::~" << localtiename << " (void)" << be_nl
+      << fulltiename << "<T>::~" << localtiename << " ()" << be_nl
       << "{" << be_idt_nl
       << "if (this->rel_)" << be_idt_nl
       << "{" << be_idt_nl
@@ -120,7 +120,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "template <class T> T *" << be_nl
-      << fulltiename << "<T>::_tied_object (void)" << be_nl
+      << fulltiename << "<T>::_tied_object ()" << be_nl
       << "{" << be_idt_nl
       << "return this->ptr_;" << be_uidt_nl
       << "}" << be_nl_2;
@@ -149,7 +149,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "template <class T>  ::CORBA::Boolean" << be_nl
-      << fulltiename << "<T>::_is_owner (void)" << be_nl
+      << fulltiename << "<T>::_is_owner ()" << be_nl
       << "{" << be_idt_nl
       << "return this->rel_;" << be_uidt_nl
       << "}" << be_nl_2;

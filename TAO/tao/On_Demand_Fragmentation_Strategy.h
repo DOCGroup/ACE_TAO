@@ -52,9 +52,10 @@ public:
                         ACE_CDR::ULong pending_length);
 
 private:
-  // Disallow copying and assignment.
-  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &);
-  void operator= (TAO_On_Demand_Fragmentation_Strategy const &);
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
 
 private:
   /// Pointer to the underlying transport object.

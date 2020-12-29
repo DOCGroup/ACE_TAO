@@ -20,7 +20,7 @@
 class Except {};
 
 static void
-throw_exception (void)
+throw_exception ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) throw exception\n")));
@@ -32,8 +32,8 @@ class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 public:
   My_Handler (const ACE_INET_Addr &local_addr);
 
-  virtual ACE_HANDLE get_handle (void) const;
-  virtual int handle_input (ACE_HANDLE handle);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
 };
 
 My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
@@ -42,7 +42,7 @@ My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
 }
 
 ACE_HANDLE
-My_Handler::get_handle (void) const
+My_Handler::get_handle () const
 {
   return ACE_SOCK_Dgram::get_handle ();
 }
@@ -76,7 +76,7 @@ My_Handler::handle_input (ACE_HANDLE)
 class My_Reactor : public ACE_Select_Reactor
 {
 public:
-  virtual int handle_events (ACE_Time_Value *max_wait_time)
+  int handle_events (ACE_Time_Value *max_wait_time) override
   {
     int ret = 0;
 
@@ -94,7 +94,7 @@ public:
     return ret;
   }
 
-  virtual int handle_events (ACE_Time_Value &max_wait_time)
+  int handle_events (ACE_Time_Value &max_wait_time) override
   {
     return this->handle_events (&max_wait_time);
   }
@@ -102,7 +102,7 @@ public:
 
 #if defined (ACE_HAS_THREADS)
 static int
-worker (void)
+worker ()
 {
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
 

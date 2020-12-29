@@ -180,13 +180,13 @@ FtEventServiceInterceptor::instance()
 }
 
 char *
-FtEventServiceInterceptor::name (void)
+FtEventServiceInterceptor::name ()
 {
   return CORBA::string_dup ("FtEventServiceInterceptor");
 }
 
 void
-FtEventServiceInterceptor::destroy (void)
+FtEventServiceInterceptor::destroy ()
 {
 }
 

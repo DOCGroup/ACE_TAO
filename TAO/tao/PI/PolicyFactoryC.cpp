@@ -63,7 +63,7 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::release (
 }
 
 PortableInterceptor::PolicyFactory_ptr
-TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil (void)
+TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::nil ()
 {
   return PortableInterceptor::PolicyFactory::_nil ();
 }
@@ -77,10 +77,10 @@ TAO::Objref_Traits<PortableInterceptor::PolicyFactory>::marshal (
   return ::CORBA::Object::marshal (p, cdr);
 }
 
-PortableInterceptor::PolicyFactory::PolicyFactory (void)
+PortableInterceptor::PolicyFactory::PolicyFactory ()
 {}
 
-PortableInterceptor::PolicyFactory::~PolicyFactory (void)
+PortableInterceptor::PolicyFactory::~PolicyFactory ()
 {}
 
 PortableInterceptor::PolicyFactory_ptr
@@ -146,7 +146,7 @@ PortableInterceptor::PolicyFactory::_is_a (const char *value)
     }
 }
 
-const char* PortableInterceptor::PolicyFactory::_interface_repository_id (void) const
+const char* PortableInterceptor::PolicyFactory::_interface_repository_id () const
 {
   return "IDL:omg.org/PortableInterceptor/PolicyFactory:1.0";
 }

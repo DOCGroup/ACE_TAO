@@ -46,19 +46,19 @@ public:
   ACE_Timer_Wheel_Iterator_T (Wheel &);
 
   /// Destructor
-  virtual ~ACE_Timer_Wheel_Iterator_T (void);
+  virtual ~ACE_Timer_Wheel_Iterator_T ();
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first (void);
+  virtual void first ();
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next (void);
+  virtual void next ();
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone (void) const;
+  virtual bool isdone () const;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE>* item (void);
+  virtual ACE_Timer_Node_T<TYPE>* item ();
 
 protected:
   /// Pointer to the ACE_Timer_List that we are iterating over.
@@ -114,14 +114,14 @@ public:
                      TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
-  virtual ~ACE_Timer_Wheel_T (void);
+  virtual ~ACE_Timer_Wheel_T ();
 
   /// True if queue is empty, else false.
-  virtual bool is_empty (void) const;
+  virtual bool is_empty () const;
 
   /// Returns the time of the earlier node in the ACE_Timer_Wheel.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value& earliest_time (void) const;
+  virtual const ACE_Time_Value& earliest_time () const;
 
   /// Changes the interval of a timer (and can make it periodic or non
   /// periodic by setting it to ACE_Time_Value::zero or not).
@@ -157,16 +157,16 @@ public:
   int expire (const ACE_Time_Value& current_time);
 
   /// Returns a pointer to this <ACE_Timer_Queue_T>'s iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE> & iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE> & iter ();
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE>* remove_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* remove_first ();
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE>* get_first (void);
+  virtual ACE_Timer_Node_T<TYPE>* get_first ();
 
 protected:
   /// Schedules a timer.

@@ -17,7 +17,7 @@ be_visitor_structure_fwd_ch::be_visitor_structure_fwd_ch (
 {
 }
 
-be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch (void)
+be_visitor_structure_fwd_ch::~be_visitor_structure_fwd_ch ()
 {
 }
 
@@ -33,7 +33,7 @@ be_visitor_structure_fwd_ch::visit_structure_fwd (be_structure_fwd *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   be_structure *fd =
-    be_structure::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_structure*> (node->full_definition ());
 
   // This will be a no-op if it has already been done for this node.
   fd->gen_common_varout (os);

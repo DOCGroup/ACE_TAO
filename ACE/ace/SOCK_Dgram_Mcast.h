@@ -206,7 +206,7 @@ public:
    * done by the destructor.  If not, most systems will automatically
    * unsubscribe upon the close of the socket.
    */
-  ~ACE_SOCK_Dgram_Mcast (void);
+  ~ACE_SOCK_Dgram_Mcast ();
 
   /**
    * Explicitly open/bind the socket and define the network interface
@@ -330,7 +330,7 @@ public:
    * Logs the setting of all options, the bound address, the send address and
    * interface, and the list of current subscriptions.
    */
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -352,7 +352,7 @@ private:
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
-  /// (Layered method for <subscribe> processing).
+  /// (Layered method for subscribe() processing).
   int subscribe_i (const ACE_INET_Addr &mcast_addr,
                    int reuse_addr = 1,
                    const ACE_TCHAR *net_if = 0);
@@ -374,7 +374,7 @@ protected:
               int reuse_addr = 1);
 
   /// Empty the dynamic subscription list.
-  int clear_subs_list (void);
+  int clear_subs_list ();
 
 private:
   /// Per-instance options..

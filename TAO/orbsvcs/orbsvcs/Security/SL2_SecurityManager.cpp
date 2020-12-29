@@ -27,7 +27,7 @@ TAO::Security::SecurityManager::SecurityManager (/* unknown */)
   this->access_decision_ = ad;
 }
 
-TAO::Security::SecurityManager::~SecurityManager (void)
+TAO::Security::SecurityManager::~SecurityManager ()
 {
 }
 
@@ -315,7 +315,7 @@ TAO::Security::AccessDecision::remove_object
 }
 
 CORBA::Boolean
-TAO::Security::AccessDecision::default_decision (void)
+TAO::Security::AccessDecision::default_decision ()
 {
   return this->default_allowance_decision_;
 }
@@ -327,7 +327,7 @@ TAO::Security::AccessDecision::default_decision (CORBA::Boolean d)
 }
 
 CORBA::Boolean
-TAO::Security::AccessDecision::default_collocated_decision (void)
+TAO::Security::AccessDecision::default_collocated_decision ()
 {
   return this->default_collocated_decision_;
 }

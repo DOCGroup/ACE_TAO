@@ -315,7 +315,7 @@ endif # ! COMPSPEC
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
-  ACE_NUL = nul
+  ACE_NUL = $(if $(findstring /bin/sh,$(SHELL)),/dev/null,nul)
 else  # ! WIN32
   ACE_NUL = /dev/null
 endif # ! WIN32
@@ -703,6 +703,12 @@ zlib ?= 1
 valgrind ?=
 ifeq ($(valgrind),1)
   CPPFLAGS += -DACE_HAS_VALGRIND
+endif
+# Does the valgrind version support --keep-debug-info, if not
+# we disable dlclose in ACE to get complete callstacks
+valgrind_keep_debuginfo ?=
+ifeq ($(valgrind_keep_debuginfo),0)
+  CPPFLAGS += -DACE_LACKS_DLCLOSE
 endif
 
 profile ?=

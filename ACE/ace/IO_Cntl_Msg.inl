@@ -11,7 +11,7 @@ ACE_IO_Cntl_Msg::ACE_IO_Cntl_Msg (ACE_IO_Cntl_Cmds c) :
 }
 
 ACE_INLINE ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds
-ACE_IO_Cntl_Msg::cmd (void)
+ACE_IO_Cntl_Msg::cmd ()
 {
   return this->cmd_;
 }
@@ -23,7 +23,7 @@ ACE_IO_Cntl_Msg::cmd (ACE_IO_Cntl_Cmds c)
 }
 
 ACE_INLINE size_t
-ACE_IO_Cntl_Msg::count (void)
+ACE_IO_Cntl_Msg::count ()
 {
   return this->count_;
 }
@@ -35,7 +35,7 @@ ACE_IO_Cntl_Msg::count (size_t c)
 }
 
 ACE_INLINE int
-ACE_IO_Cntl_Msg::error (void)
+ACE_IO_Cntl_Msg::error ()
 {
   return this->error_;
 }
@@ -47,7 +47,7 @@ ACE_IO_Cntl_Msg::error (int e)
 }
 
 ACE_INLINE int
-ACE_IO_Cntl_Msg::rval (void)
+ACE_IO_Cntl_Msg::rval ()
 {
   return this->rval_;
 }

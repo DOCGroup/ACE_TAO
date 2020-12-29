@@ -45,10 +45,10 @@ class TAO_Export TAO_Parser_Registry
 {
 public:
   /// Default constructor.
-  TAO_Parser_Registry (void);
+  TAO_Parser_Registry ();
 
   /// Dstructor.
-  ~TAO_Parser_Registry (void);
+  ~TAO_Parser_Registry ();
 
   /// Initialize the parser registry with the list of known protocols.
   /// Invoked by the ORB during startup.
@@ -60,8 +60,8 @@ public:
 
   // = Iterator.
   typedef TAO_IOR_Parser** Parser_Iterator;
-  Parser_Iterator begin (void) const;
-  Parser_Iterator end (void) const;
+  Parser_Iterator begin () const;
+  Parser_Iterator end () const;
 
 private:
 

@@ -35,7 +35,7 @@ TAO_NotifyLogNotification::TAO_NotifyLogNotification (
   proxy_consumer_->connect_any_push_supplier (objref.in ());
 }
 
-TAO_NotifyLogNotification::~TAO_NotifyLogNotification (void)
+TAO_NotifyLogNotification::~TAO_NotifyLogNotification ()
 {
   // No-Op.
 }
@@ -55,7 +55,7 @@ TAO_NotifyLogNotification::subscription_change
 }
 
 void
-TAO_NotifyLogNotification::disconnect_push_supplier (void)
+TAO_NotifyLogNotification::disconnect_push_supplier ()
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 

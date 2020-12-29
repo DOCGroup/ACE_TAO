@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK)
 
 void
-ACE_LSOCK::dump (void) const
+ACE_LSOCK::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LSOCK::dump");

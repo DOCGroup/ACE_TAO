@@ -16,12 +16,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Connector::TAO_UIPMC_Connector (void)
+TAO_UIPMC_Connector::TAO_UIPMC_Connector ()
   : TAO_Connector (IOP::TAG_UIPMC)
 {
 }
 
-TAO_UIPMC_Connector::~TAO_UIPMC_Connector (void)
+TAO_UIPMC_Connector::~TAO_UIPMC_Connector ()
 {
 }
 
@@ -38,7 +38,7 @@ TAO_UIPMC_Connector::open (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_UIPMC_Connector::close (void)
+TAO_UIPMC_Connector::close ()
 {
   return 0;
 }
@@ -293,7 +293,7 @@ TAO_UIPMC_Connector::create_profile (TAO_InputCDR& cdr)
 }
 
 TAO_Profile *
-TAO_UIPMC_Connector::make_profile (void)
+TAO_UIPMC_Connector::make_profile ()
 {
   // The endpoint should be of the form:
   //    N.n@host:port/object_key
@@ -336,7 +336,7 @@ TAO_UIPMC_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_UIPMC_Connector::object_key_delimiter (void) const
+TAO_UIPMC_Connector::object_key_delimiter () const
 {
   return TAO_UIPMC_Profile::object_key_delimiter_;
 }

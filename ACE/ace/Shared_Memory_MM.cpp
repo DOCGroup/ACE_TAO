@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_MM)
 
 void
-ACE_Shared_Memory_MM::dump (void) const
+ACE_Shared_Memory_MM::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Shared_Memory_MM::dump");
@@ -49,7 +49,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
 
 // The "do-nothing" constructor.
 
-ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (void)
+ACE_Shared_Memory_MM::ACE_Shared_Memory_MM ()
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
@@ -57,7 +57,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (void)
 // The overall size of the segment.
 
 size_t
-ACE_Shared_Memory_MM::get_segment_size (void) const
+ACE_Shared_Memory_MM::get_segment_size () const
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::get_segment_size");
   // This cast is legit since the original length in open() is an int.
@@ -67,7 +67,7 @@ ACE_Shared_Memory_MM::get_segment_size (void) const
 // Unmaps the shared memory segment.
 
 int
-ACE_Shared_Memory_MM::remove (void)
+ACE_Shared_Memory_MM::remove ()
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::remove");
   return shared_memory_.remove ();
@@ -76,7 +76,7 @@ ACE_Shared_Memory_MM::remove (void)
 // Closes (unmaps) the shared memory segment.
 
 int
-ACE_Shared_Memory_MM::close (void)
+ACE_Shared_Memory_MM::close ()
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::close");
   return shared_memory_.unmap ();
@@ -92,7 +92,7 @@ ACE_Shared_Memory_MM::malloc (size_t)
 }
 
 ACE_HANDLE
-ACE_Shared_Memory_MM::get_id (void) const
+ACE_Shared_Memory_MM::get_id () const
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::get_id");
   return this->shared_memory_.handle ();

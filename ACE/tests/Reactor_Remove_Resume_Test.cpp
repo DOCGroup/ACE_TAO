@@ -36,13 +36,13 @@ public:
 
 protected:
 
-  virtual ~Bogus_Handler (void);
+  ~Bogus_Handler () override;
 
-  virtual ACE_HANDLE get_handle (void) const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
-  virtual int resume_handler (void);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
+  int resume_handler () override;
 
 private:
 
@@ -65,12 +65,12 @@ Bogus_Handler::Bogus_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bogus_Handler::~Bogus_Handler (void)
+Bogus_Handler::~Bogus_Handler ()
 {
 }
 
 ACE_HANDLE
-Bogus_Handler::get_handle (void) const
+Bogus_Handler::get_handle () const
 {
   return this->read_handle_;
 }
@@ -102,7 +102,7 @@ Bogus_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Bogus_Handler::resume_handler (void)
+Bogus_Handler::resume_handler ()
 {
   // We don't want the reactor to resume this event handler.
   return ACE_APPLICATION_RESUMES_HANDLER;
@@ -119,20 +119,20 @@ public:
                bool & okay_to_close,
                bool suspension_test);
 
-  ACE_HANDLE write_handle (void) const;
+  ACE_HANDLE write_handle () const;
 
 protected:
 
-  virtual ~Bad_Handler (void);
+  ~Bad_Handler () override;
 
 private:
 
-  virtual ACE_HANDLE get_handle (void) const;
-  virtual int handle_input (ACE_HANDLE handle);
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask close_mask);
+  ACE_HANDLE get_handle () const override;
+  int handle_input (ACE_HANDLE handle) override;
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask close_mask) override;
 
-  int handle_input_result (void) const;
+  int handle_input_result () const;
 
 private:
 
@@ -164,12 +164,12 @@ Bad_Handler::Bad_Handler (ACE_Reactor * reactor,
 
 }
 
-Bad_Handler::~Bad_Handler (void)
+Bad_Handler::~Bad_Handler ()
 {
 }
 
 ACE_HANDLE
-Bad_Handler::get_handle (void) const
+Bad_Handler::get_handle () const
 {
   return this->read_handle_;
 }
@@ -243,7 +243,7 @@ Bad_Handler::handle_close (ACE_HANDLE,
 }
 
 int
-Bad_Handler::handle_input_result (void) const
+Bad_Handler::handle_input_result () const
 {
   return
     (this->suspension_test_
@@ -362,15 +362,15 @@ handle_events (ACE_Reactor & reactor,
 
 // ------------------------------------------------------------
 
-typedef auto_ptr<ACE_Reactor_Impl> (*reactor_factory_type) (void);
+using reactor_factory_type = std::unique_ptr<ACE_Reactor_Impl> (*)();
 
-auto_ptr<ACE_Reactor_Impl>
-tp_reactor_factory (void)
+std::unique_ptr<ACE_Reactor_Impl>
+tp_reactor_factory ()
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Creating ACE_TP_Reactor.\n")));
 
-  return auto_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
+  return std::unique_ptr<ACE_Reactor_Impl> (new ACE_TP_Reactor);
 }
 
 // ------------------------------------------------------------
@@ -412,7 +412,7 @@ struct Run_Test : public std::unary_function<reactor_factory_type, void>
                         ACE_TEXT ("** Running removal test **\n")));
           }
 
-        auto_ptr<ACE_Reactor_Impl> the_factory (factory ());
+        std::unique_ptr<ACE_Reactor_Impl> the_factory (factory ());
         ACE_Reactor reactor (the_factory.get ());
 
         // In this test, it's only okay to close the Bogus_Handler
@@ -461,7 +461,6 @@ run_main (int, ACE_TCHAR *[])
     ACE_ERROR ((LM_INFO,
                 ACE_TEXT ("Test passed.\n")));
 
-#if defined (ACE_HAS_CPP11)
   ACE_Event_Handler_var nullvar;
   if (!nullvar)
   {
@@ -496,7 +495,6 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("EH_var explicit operator!= nullptr FAILED\n")));
     ++overall_result;
   }
-#endif
 
   ACE_END_TEST;
 

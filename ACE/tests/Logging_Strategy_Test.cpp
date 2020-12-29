@@ -95,7 +95,7 @@ run_reactor (void *)
 // Initiate the cycle of messages.
 
 static
-void print_till_death (void)
+void print_till_death ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n-> start generating messages...\n"));
@@ -125,7 +125,7 @@ void print_till_death (void)
 // Count the generated files.
 
 static void
-count_files (void)
+count_files ()
 {
   int i = 0;
   int error = 0;
@@ -217,7 +217,7 @@ get_statistics (ACE_TCHAR *f_name)
 
 // analyse the file order
 static void
-order (void)
+order ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\n-> start testing order...\n")));
@@ -283,7 +283,7 @@ order (void)
 // remove log_files
 
 static void
-remove_files (void)
+remove_files ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("-> removing existent files...\n")));

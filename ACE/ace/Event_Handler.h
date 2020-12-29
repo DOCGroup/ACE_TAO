@@ -19,9 +19,8 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_signal.h"
-#include "ace/Atomic_Op.h"
 #include "ace/OS_NS_Thread.h"
-#include "ace/Synch_Traits.h"
+#include <atomic>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,10 +83,10 @@ public:
   };
 
   /// Destructor is virtual to enable proper cleanup.
-  virtual ~ACE_Event_Handler (void);
+  virtual ~ACE_Event_Handler ();
 
   /// Get the I/O handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Set the I/O handle.
   virtual void set_handle (ACE_HANDLE);
@@ -97,7 +96,7 @@ public:
   /// Get the priority of the Event_Handler.
   /// @note Priorities run from MIN_PRIORITY (which is the "lowest priority")
   /// to MAX_PRIORITY (which is the "highest priority").
-  virtual int priority (void) const;
+  virtual int priority () const;
 
   /// Set the priority of the Event_Handler.
   virtual void priority (int priority);
@@ -157,7 +156,7 @@ public:
    * @note This method has an affect only when used with the
    * ACE_Dev_Poll_Reactor (and then, only on Linux) or the ACE_TP_Reactor.
    */
-  virtual int resume_handler (void);
+  virtual int resume_handler ();
 
   virtual int handle_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
   virtual int handle_group_qos (ACE_HANDLE = ACE_INVALID_HANDLE);
@@ -167,10 +166,10 @@ public:
   virtual void reactor (ACE_Reactor *reactor);
 
   /// Get the event demultiplexors.
-  virtual ACE_Reactor *reactor (void) const;
+  virtual ACE_Reactor *reactor () const;
 
   /// Get only the reactor's timer related interface.
-  virtual ACE_Reactor_Timer_Interface *reactor_timer_interface (void) const;
+  virtual ACE_Reactor_Timer_Interface *reactor_timer_interface () const;
 
   /**
    * Used to read from non-socket ACE_HANDLEs in our own thread to
@@ -209,7 +208,7 @@ public:
    *
    * @return Current reference count.
    */
-  virtual Reference_Count add_reference (void);
+  virtual Reference_Count add_reference ();
 
   /// Decrement reference count on the handler.
   /**
@@ -220,7 +219,7 @@ public:
    *
    * @return Current reference count.
    */
-  virtual Reference_Count remove_reference (void);
+  virtual Reference_Count remove_reference ();
 
   /**
    * @class Policy
@@ -233,7 +232,7 @@ public:
   public:
 
     /// Virtual destructor.
-    virtual ~Policy (void);
+    virtual ~Policy ();
   };
 
   /**
@@ -255,7 +254,6 @@ public:
     friend class ACE_Event_Handler;
 
   public:
-
     enum Value
       {
         /// Perform reference counting.
@@ -265,13 +263,12 @@ public:
       };
 
     /// Current Reference_Counting_Policy.
-    Value value (void) const;
+    Value value () const;
 
     /// Update Reference_Counting_Policy.
     void value (Value value);
 
   private:
-
     /// Private constructor.
     Reference_Counting_Policy (Value value);
 
@@ -280,7 +277,7 @@ public:
    };
 
   /// Current Reference_Counting_Policy.
-  Reference_Counting_Policy &reference_counting_policy (void);
+  Reference_Counting_Policy &reference_counting_policy ();
 
 protected:
   /// Force ACE_Event_Handler to be an abstract base class.
@@ -288,13 +285,12 @@ protected:
                      int priority = ACE_Event_Handler::LO_PRIORITY);
 
   /// Typedef for implementation of reference counting.
-  typedef ACE_Atomic_Op<ACE_SYNCH_MUTEX, Reference_Count> Atomic_Reference_Count;
+  typedef std::atomic<Reference_Count> Atomic_Reference_Count;
 
   /// Reference count.
   Atomic_Reference_Count reference_count_;
 
 private:
-
   /// Priority of this Event_Handler.
   int priority_;
 
@@ -317,7 +313,7 @@ class ACE_Export ACE_Event_Handler_var
 {
 public:
   /// Default constructor.
-  ACE_Event_Handler_var (void);
+  ACE_Event_Handler_var ();
 
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
@@ -326,7 +322,7 @@ public:
   ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
 
   /// Destructor.
-  ~ACE_Event_Handler_var (void);
+  ~ACE_Event_Handler_var ();
 
   /// Assignment to a handler.
   ACE_Event_Handler_var &operator= (ACE_Event_Handler *p);
@@ -338,30 +334,25 @@ public:
   ACE_Event_Handler *operator-> () const;
 
   /// Access the handler.
-  ACE_Event_Handler *handler (void) const;
+  ACE_Event_Handler *handler () const;
 
   /// Release the handler.
-  ACE_Event_Handler *release (void);
+  ACE_Event_Handler *release ();
 
   /// Reset the handler.
   void reset (ACE_Event_Handler *p = 0);
 
-#if defined (ACE_HAS_CPP11)
   /// Bool operator to check if the ACE_Event_Handler_var has a value
   explicit operator bool() const;
   /// Equality operator to compare with nullptr_t
   bool operator ==(std::nullptr_t) const;
   /// Not equal operator to compare with nullptr_t
   bool operator !=(std::nullptr_t) const;
-#endif
 
 private:
-
   /// Handler.
   ACE_Event_Handler *ptr_;
 };
-
-#if defined ACE_HAS_CPP11
 
 /// Define that we can use in user code to check if this
 /// helper factory method is there
@@ -389,8 +380,6 @@ namespace ACE
   }
 }
 
-#endif
-
 /**
  * @class ACE_Notification_Buffer
  *
@@ -400,13 +389,13 @@ namespace ACE
 class ACE_Export ACE_Notification_Buffer
 {
 public:
-  ACE_Notification_Buffer (void);
+  ACE_Notification_Buffer ();
 
   ACE_Notification_Buffer (ACE_Event_Handler *eh,
                            ACE_Reactor_Mask mask);
 
   /// Default destructor.
-  ~ACE_Notification_Buffer (void);
+  ~ACE_Notification_Buffer () = default;
 
   /// Pointer to the Event_Handler that will be dispatched
   /// by the main event loop.
@@ -417,10 +406,6 @@ public:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Event_Handler.inl"
-#endif /* __ACE_INLINE__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_EVENT_HANDLER_H */

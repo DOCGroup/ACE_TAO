@@ -12,24 +12,24 @@ TAO::SSLIOP::ClientCredentials::ClientCredentials (
 {
 }
 
-TAO::SSLIOP::ClientCredentials::~ClientCredentials (void)
+TAO::SSLIOP::ClientCredentials::~ClientCredentials ()
 {
 }
 
 SecurityLevel3::CredentialsType
-TAO::SSLIOP::ClientCredentials::creds_type (void)
+TAO::SSLIOP::ClientCredentials::creds_type ()
 {
   return SecurityLevel3::CT_ClientCredentials;
 }
 
 char *
-TAO::SSLIOP::ClientCredentials::context_id (void)
+TAO::SSLIOP::ClientCredentials::context_id ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::ClientCredentials::client_principal (void)
+TAO::SSLIOP::ClientCredentials::client_principal ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -47,7 +47,7 @@ TAO::SSLIOP::ClientCredentials::client_restricted_resources ()
 }
 
 SecurityLevel3::Principal *
-TAO::SSLIOP::ClientCredentials::target_principal (void)
+TAO::SSLIOP::ClientCredentials::target_principal ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -65,7 +65,7 @@ TAO::SSLIOP::ClientCredentials::target_restricted_resources ()
 }
 
 SecurityLevel3::OwnCredentials_ptr
-TAO::SSLIOP::ClientCredentials::parent_credentials (void)
+TAO::SSLIOP::ClientCredentials::parent_credentials ()
 {
   SecurityLevel3::OwnCredentials_ptr creds =
     SecurityLevel3::OwnCredentials::_nil ();
@@ -92,19 +92,19 @@ TAO::SSLIOP::ClientCredentials::client_authentication ()
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::target_authentication (void)
+TAO::SSLIOP::ClientCredentials::target_authentication ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::confidentiality (void)
+TAO::SSLIOP::ClientCredentials::confidentiality ()
 {
   throw CORBA::NO_IMPLEMENT ();
 }
 
 CORBA::Boolean
-TAO::SSLIOP::ClientCredentials::integrity (void)
+TAO::SSLIOP::ClientCredentials::integrity ()
 {
   // TAO's SSLIOP pluggable transport always provides integrity.  Note
   // that if we

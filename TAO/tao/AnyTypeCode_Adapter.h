@@ -62,7 +62,7 @@ class TAO_Export TAO_AnyTypeCode_Adapter
   : public ACE_Service_Object
 {
 public:
-  virtual ~TAO_AnyTypeCode_Adapter (void);
+  virtual ~TAO_AnyTypeCode_Adapter ();
 
 #define ANYTYPECODE__EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \

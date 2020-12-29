@@ -39,7 +39,7 @@ class TAO_DynamicAny_Export TAO_DynAnyFactory
 {
 public:
   /// Constructor.
-  TAO_DynAnyFactory (void);
+  TAO_DynAnyFactory ();
 
   // = The DynamicAnyFactory methods.
   virtual DynamicAny::DynAny_ptr create_dyn_any (const CORBA::Any & value);

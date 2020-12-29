@@ -4,7 +4,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Peer::TAO_Notify_Peer (void)
+TAO_Notify_Peer::TAO_Notify_Peer ()
 {
 }
 
@@ -19,13 +19,13 @@ TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/
 }
 
 void
-TAO_Notify_Peer::shutdown (void)
+TAO_Notify_Peer::shutdown ()
 {
   // NOP.
 }
 
 void
-TAO_Notify_Peer::handle_dispatch_exception (void)
+TAO_Notify_Peer::handle_dispatch_exception ()
 {
   // Sever all association when a remote client misbehaves. Other strategies like reties are possible but not implemented.
   this->proxy ()->destroy ();
@@ -100,13 +100,13 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
 }
 
 CORBA::ULong
-TAO_Notify_Peer::_incr_refcnt (void)
+TAO_Notify_Peer::_incr_refcnt ()
 {
   return this->proxy ()->_incr_refcnt ();
 }
 
 CORBA::ULong
-TAO_Notify_Peer::_decr_refcnt (void)
+TAO_Notify_Peer::_decr_refcnt ()
 {
   return this->proxy ()->_decr_refcnt ();
 }

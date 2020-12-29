@@ -2,7 +2,7 @@
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Literal_Constraint::ETCL_Literal_Constraint (void)
+ETCL_Literal_Constraint::ETCL_Literal_Constraint ()
   : type_ (ACE_ETCL_UNKNOWN)
 {
 }
@@ -16,7 +16,7 @@ ETCL_Identifier::ETCL_Identifier (const char *value)
 }
 
 ACE_INLINE const char *
-ETCL_Identifier::value (void) const
+ETCL_Identifier::value () const
 {
   return this->string_.c_str ();
 }
@@ -44,19 +44,19 @@ ETCL_Union_Value::ETCL_Union_Value (ETCL_Constraint *string)
 }
 
 ACE_INLINE int
-ETCL_Union_Value::sign (void) const
+ETCL_Union_Value::sign () const
 {
   return this->sign_;
 }
 
 ACE_INLINE ETCL_Literal_Constraint *
-ETCL_Union_Value::integer (void) const
+ETCL_Union_Value::integer () const
 {
   return this->integer_;
 }
 
 ACE_INLINE ETCL_Literal_Constraint *
-ETCL_Union_Value::string (void) const
+ETCL_Union_Value::string () const
 {
   return this->string_;
 }
@@ -73,13 +73,13 @@ ETCL_Union_Pos::ETCL_Union_Pos (ETCL_Constraint *union_value,
 }
 
 ACE_INLINE ETCL_Union_Value *
-ETCL_Union_Pos::union_value (void) const
+ETCL_Union_Pos::union_value () const
 {
   return this->union_value_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Union_Pos::component (void) const
+ETCL_Union_Pos::component () const
 {
   return this->component_;
 }
@@ -97,13 +97,13 @@ ETCL_Component_Pos::ETCL_Component_Pos (
 }
 
 ACE_INLINE ETCL_Literal_Constraint *
-ETCL_Component_Pos::integer (void) const
+ETCL_Component_Pos::integer () const
 {
   return this->integer_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Component_Pos::component (void) const
+ETCL_Component_Pos::component () const
 {
   return this->component_;
 }
@@ -121,13 +121,13 @@ ETCL_Component_Assoc::ETCL_Component_Assoc (
 }
 
 ACE_INLINE ETCL_Identifier *
-ETCL_Component_Assoc::identifier (void) const
+ETCL_Component_Assoc::identifier () const
 {
   return this->identifier_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Component_Assoc::component (void) const
+ETCL_Component_Assoc::component () const
 {
   return this->component_;
 }
@@ -145,13 +145,13 @@ ETCL_Component_Array::ETCL_Component_Array (
 }
 
 ACE_INLINE ETCL_Literal_Constraint *
-ETCL_Component_Array::integer (void) const
+ETCL_Component_Array::integer () const
 {
   return this->integer_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Component_Array::component (void) const
+ETCL_Component_Array::component () const
 {
   return this->component_;
 }
@@ -159,7 +159,7 @@ ETCL_Component_Array::component (void) const
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Special::ETCL_Special (void)
+ETCL_Special::ETCL_Special ()
   : type_ (0)
 {}
 
@@ -169,7 +169,7 @@ ETCL_Special::ETCL_Special (int type)
 {}
 
 ACE_INLINE int
-ETCL_Special::type (void) const
+ETCL_Special::type () const
 {
   return this->type_;
 }
@@ -186,13 +186,13 @@ ETCL_Component::ETCL_Component (ETCL_Constraint *identifier,
 }
 
 ACE_INLINE ETCL_Identifier *
-ETCL_Component::identifier (void) const
+ETCL_Component::identifier () const
 {
   return this->identifier_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Component::component (void) const
+ETCL_Component::component () const
 {
   return this->component_;
 }
@@ -206,7 +206,7 @@ ETCL_Dot::ETCL_Dot (ETCL_Constraint *component)
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Dot::component (void) const
+ETCL_Dot::component () const
 {
   return this->component_;
 }
@@ -220,7 +220,7 @@ ETCL_Eval::ETCL_Eval (ETCL_Constraint *component)
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Eval::component (void) const
+ETCL_Eval::component () const
 {
   return this->component_;
 }
@@ -234,7 +234,7 @@ ETCL_Default::ETCL_Default (ETCL_Constraint *component)
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Default::component (void) const
+ETCL_Default::component () const
 {
   return this->component_;
 }
@@ -248,7 +248,7 @@ ETCL_Exist::ETCL_Exist (ETCL_Constraint *component)
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Exist::component (void) const
+ETCL_Exist::component () const
 {
   return this->component_;
 }
@@ -263,13 +263,13 @@ ETCL_Unary_Expr::ETCL_Unary_Expr (int type,
 {}
 
 ACE_INLINE int
-ETCL_Unary_Expr::type (void) const
+ETCL_Unary_Expr::type () const
 {
   return this->type_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Unary_Expr::subexpr (void) const
+ETCL_Unary_Expr::subexpr () const
 {
   return this->subexpr_;
 }
@@ -286,19 +286,19 @@ ETCL_Binary_Expr::ETCL_Binary_Expr (int type,
 {}
 
 ACE_INLINE int
-ETCL_Binary_Expr::type (void) const
+ETCL_Binary_Expr::type () const
 {
   return this->type_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Binary_Expr::rhs (void) const
+ETCL_Binary_Expr::rhs () const
 {
   return this->rhs_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Binary_Expr::lhs (void) const
+ETCL_Binary_Expr::lhs () const
 {
   return this->lhs_;
 }
@@ -306,7 +306,7 @@ ETCL_Binary_Expr::lhs (void) const
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Preference::ETCL_Preference (void)
+ETCL_Preference::ETCL_Preference ()
   : type_ (0),
     subexpr_ (0)
 {}
@@ -319,13 +319,13 @@ ETCL_Preference::ETCL_Preference (int type,
 {}
 
 ACE_INLINE int
-ETCL_Preference::type (void) const
+ETCL_Preference::type () const
 {
   return this->type_;
 }
 
 ACE_INLINE ETCL_Constraint *
-ETCL_Preference::subexpr (void) const
+ETCL_Preference::subexpr () const
 {
   return this->subexpr_;
 }

@@ -53,11 +53,7 @@ private:
   char *type_;
 };
 
-#if defined ACE_HAS_CPP11
 typedef std::unique_ptr<Name_Binding> Name_Binding_Ptr;
-#else
-typedef auto_ptr<Name_Binding> Name_Binding_Ptr;
-#endif
 // Listing 1
 
 #endif /* NAME_BINDING_H */

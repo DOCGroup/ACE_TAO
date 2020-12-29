@@ -26,13 +26,10 @@ public:
   be_param_holder (UTL_ScopedName *parameter_name,
                    FE_Utils::T_Param_Info *info);
 
-  virtual ~be_param_holder (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL (be_param_holder);
+  virtual ~be_param_holder ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

@@ -245,16 +245,16 @@ public:
   };
 
   /// Returns a pointer to the Singleton.
-  static ACE_Log_Msg *instance (void);
+  static ACE_Log_Msg *instance ();
 
   /// Returns last error.
-  static int last_error_adapter (void);
+  static int last_error_adapter ();
 
   /// Returns non-null if an ACE_Log_Msg exists for the calling thread.
-  static int exists (void);
+  static int exists ();
 
   /// Returns the current program name used for logging.
-  static const ACE_TCHAR * program_name (void);
+  static const ACE_TCHAR * program_name ();
 
   /// Clears the flag from the default priority mask used to
   /// initialize ACE_Log_Msg instances.
@@ -265,10 +265,10 @@ public:
   static void enable_debug_messages (ACE_Log_Priority priority = LM_DEBUG);
 
   /// Initialize logger.
-  ACE_Log_Msg (void);
+  ACE_Log_Msg ();
 
   /// cleanup logger.
-  ~ACE_Log_Msg (void);
+  ~ACE_Log_Msg ();
 
   /// Initialize the ACE logging facility.
   /**
@@ -308,7 +308,7 @@ public:
   /**
    * Return the bits in the logger's options flags.
    */
-  u_long flags (void);
+  u_long flags ();
 
   /** @name Allow apps to acquire and release internal synchronization
    *        lock
@@ -320,10 +320,10 @@ public:
   //@{
 
   /// Acquire the internal lock.
-  int acquire (void);
+  int acquire ();
 
   /// Release the internal lock.
-  int release (void);
+  int release ();
   //@}
 
   /// Call after doing a @c fork() to resynchronize the process id and
@@ -339,7 +339,7 @@ public:
 
   /// Get the result of the operation status (by convention, -1 means
   /// error).
-  int op_status (void) const;
+  int op_status () const;
 
   /// Set the value of the errnum (by convention this corresponds to
   /// errno).
@@ -347,25 +347,25 @@ public:
 
   /// Get the value of the errnum (by convention this corresponds to
   /// errno).
-  int errnum (void) const;
+  int errnum () const;
 
   /// Set the line number where an error occurred.
   void linenum (int);
 
   /// Get the line number where an error occurred.
-  int linenum (void) const;
+  int linenum () const;
 
   /// Set the file name where an error occurred.
   void file (const char *);
 
   /// Get the file name where an error occurred.
-  const char *file (void);
+  const char *file ();
 
   /// Set the message that describes what type of error occurred.
   void msg (const ACE_TCHAR *);
 
   /// Get the message that describes what type of error occurred.
-  const ACE_TCHAR *msg (void);
+  const ACE_TCHAR *msg ();
 
   /// Set the field that indicates whether interrupted calls should be
   /// restarted.
@@ -373,7 +373,7 @@ public:
 
   /// Get the field that indicates whether interrupted calls should be
   /// restarted.
-  bool restart (void) const;
+  bool restart () const;
 
   // = Notice that the following two function is equivalent to
   //   "void msg_ostream (HANDLE)" and "HANDLE msg_ostream (void)"
@@ -390,7 +390,7 @@ public:
   void msg_ostream (ACE_OSTREAM_TYPE *, bool delete_ostream);
 
   /// Get the ostream that is used to print error messages.
-  ACE_OSTREAM_TYPE *msg_ostream (void) const;
+  ACE_OSTREAM_TYPE *msg_ostream () const;
 
   /**
    * Set a new callback object and return the existing callback to
@@ -399,7 +399,7 @@ public:
    * them in each thread.
    */
   ACE_Log_Msg_Callback *msg_callback (ACE_Log_Msg_Callback *c);
-  ACE_Log_Msg_Callback *msg_callback (void) const;
+  ACE_Log_Msg_Callback *msg_callback () const;
 
   /**
    * Set a new backend object and return the existing backend to
@@ -411,28 +411,28 @@ public:
    * on a backend object.
    */
   static ACE_Log_Msg_Backend *msg_backend (ACE_Log_Msg_Backend *b);
-  static ACE_Log_Msg_Backend *msg_backend (void);
+  static ACE_Log_Msg_Backend *msg_backend ();
 
   /// Nesting depth increment.
-  int inc (void);
+  int inc ();
 
   /// Nesting depth decrement.
-  int dec (void);
+  int dec ();
 
   /// Get trace depth.
-  int trace_depth (void) const;
+  int trace_depth () const;
 
   /// Set trace depth.
   void trace_depth (int);
 
   /// Get trace active status.
-  bool trace_active (void) const;
+  bool trace_active () const;
 
   /// Set  trace active status.
   void trace_active (bool value);
 
   /// Get the TSS thread descriptor.
-  ACE_Thread_Descriptor *thr_desc (void) const;
+  ACE_Thread_Descriptor *thr_desc () const;
 
   /**
    * Set the TSS thread descriptor.  This method will call
@@ -442,13 +442,13 @@ public:
   void thr_desc (ACE_Thread_Descriptor *td);
 
   /// Stop tracing status on a per-thread basis...
-  void stop_tracing (void);
+  void stop_tracing ();
 
   /// Start tracing status on a per-thread basis...
-  void start_tracing (void);
+  void start_tracing ();
 
   /// Query tracing status on a per-thread basis...
-  bool tracing_enabled (void) const;
+  bool tracing_enabled () const;
 
   typedef enum
   {
@@ -486,10 +486,10 @@ public:
 
   /// Optimize reading of the pid (avoids a system call if the value is
   /// cached...).
-  pid_t getpid (void) const;
+  pid_t getpid () const;
 
   /// Get the name of the local host.
-  const ACE_TCHAR *local_host (void) const;
+  const ACE_TCHAR *local_host () const;
 
   /// Set the name of the local host.
   void local_host (const ACE_TCHAR *);
@@ -626,7 +626,7 @@ public:
                             ACE_OS_Log_Msg_Attributes &attributes);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -749,13 +749,13 @@ private:
 #endif /* ACE_MT_SAFE */
 
   /// For cleanup, at program termination.
-  static void close (void);
+  static void close ();
 
   /// Decouple the OS layer from the ACE_Log_Msg layer.
   static void sync_hook (const ACE_TCHAR *prg_name);
 
   /// Return the TSS singleton thread descriptor
-  static ACE_OS_Thread_Descriptor *thr_desc_hook (void);
+  static ACE_OS_Thread_Descriptor *thr_desc_hook ();
 
   //friend void ACE_OS::cleanup_tss (const u_int);
 

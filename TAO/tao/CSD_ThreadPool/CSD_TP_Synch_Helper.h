@@ -41,7 +41,6 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Synch_Helper
     {
     public:
-
       /// Constructor.  Sets initial state to PENDING.
       TP_Synch_Helper();
 
@@ -62,7 +61,6 @@ namespace TAO
       /// Change the state of this helper to CANCELLED, which will cause
       /// wait_while_pending() to unblock.
       void cancelled();
-
 
     private:
       /// Enumeration Type for all possible states of this helper object.
@@ -89,7 +87,6 @@ namespace TAO
       /// state is something other than the PENDING state.
       ConditionType condition_;
     };
-
   }
 }
 

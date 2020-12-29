@@ -17,7 +17,7 @@ be_visitor_exception_cdr_op_cs::be_visitor_exception_cdr_op_cs (
 {
 }
 
-be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs (void)
+be_visitor_exception_cdr_op_cs::~be_visitor_exception_cdr_op_cs ()
 {
 }
 
@@ -177,7 +177,7 @@ be_visitor_exception_cdr_op_cs::visit_exception (be_exception *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

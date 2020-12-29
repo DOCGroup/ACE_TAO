@@ -85,7 +85,7 @@ class TAO_OutStream;
 class be_visitor
 {
 public:
-  virtual ~be_visitor (void);
+  virtual ~be_visitor ();
 
   virtual int visit_decl (be_decl *d);
   virtual int visit_scope (be_scope *node);
@@ -142,7 +142,7 @@ public:
 
 protected:
   // Not abstract but we want to force subclassing anyway.
-  be_visitor (void);
+  be_visitor ();
 };
 
 #endif // TAO_BE_VISITOR_H

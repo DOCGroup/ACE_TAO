@@ -64,7 +64,7 @@ test_simple_argv (ACE_TCHAR *argv[])
 }
 
 static int
-test_argv_type_converter (void)
+test_argv_type_converter ()
 {
   char *argv[20];
   argv[0] = ACE_OS::strdup ("one");
@@ -108,7 +108,7 @@ test_argv_type_converter (void)
 }
 
 static int
-test_argv_type_converter2 (void)
+test_argv_type_converter2 ()
 {
   ACE_TCHAR *argv[20];
   argv[0] = ACE_OS::strdup (ACE_TEXT ("one"));
@@ -145,7 +145,7 @@ test_argv_type_converter2 (void)
 }
 
 static int
-test_argv_buf (void)
+test_argv_buf ()
 {
   pid_t parent_pid = ACE_OS::getpid ();
 
@@ -178,7 +178,7 @@ test_argv_buf (void)
 }
 
 static int
-test_argv_quotes (void)
+test_argv_quotes ()
 {
   const ACE_TCHAR *argv_const[] = { ACE_TEXT ("first without quotes"),
                                     ACE_TEXT ("'second in single quotes'"),

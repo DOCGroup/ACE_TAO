@@ -36,11 +36,9 @@ class TAO_Notify_MC_Ext_Export TAO_MC_Default_Factory:
                                  public TAO_Notify_Default_Factory
 {
 public:
-#if !defined (__GNUC__) || (__GNUC__ >= 3)
   /// Instruct the compiler that we want the create
   /// methods from the base class as well
   using TAO_Notify_Default_Factory::create;
-#endif /* !__GNUC__ || __GNUC__ >= 3 */
 
   /// Create the channel factory.
   virtual void create (TAO_Notify_EventChannelFactory*& factory,

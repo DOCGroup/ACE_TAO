@@ -38,13 +38,13 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::tao_marshal (
 
 void
 TAO::TypeCode::Objref<char const *,
-                      TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                      TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
 TAO::TypeCode::Objref<char const *,
-                      TAO::Null_RefCount_Policy>::tao_release (void)
+                      TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -70,7 +70,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::equivalent_i (
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Objref<char const *,
-                      TAO::Null_RefCount_Policy>::get_compact_typecode_i (void) const
+                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -116,7 +116,7 @@ TAO::TypeCode::Objref<char const *,
 
 char const *
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
-  void) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -125,7 +125,7 @@ TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::id_i (
 
 char const *
 TAO::TypeCode::Objref<char const *, TAO::Null_RefCount_Policy>::name_i (
-  void) const
+  ) const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

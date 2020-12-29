@@ -45,7 +45,7 @@ public:
   friend class ACE_FILE_Connector;
 
   /// Default constructor.
-  ACE_FILE_IO (void);
+  ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;
@@ -148,7 +148,7 @@ public:
                    int n) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

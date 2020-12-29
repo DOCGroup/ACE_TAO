@@ -58,8 +58,7 @@ public:
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb)
-    = 0;
+  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

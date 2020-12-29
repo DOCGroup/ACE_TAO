@@ -76,12 +76,12 @@ TAO::SSLIOP::CredentialsAcquirer::CredentialsAcquirer (
 {
 }
 
-TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer (void)
+TAO::SSLIOP::CredentialsAcquirer::~CredentialsAcquirer ()
 {
 }
 
 char *
-TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
+TAO::SSLIOP::CredentialsAcquirer::acquisition_method ()
 {
   this->check_validity ();
 
@@ -89,7 +89,7 @@ TAO::SSLIOP::CredentialsAcquirer::acquisition_method (void)
 }
 
 SecurityLevel3::AcquisitionStatus
-TAO::SSLIOP::CredentialsAcquirer::current_status (void)
+TAO::SSLIOP::CredentialsAcquirer::current_status ()
 {
   this->check_validity ();
 
@@ -97,7 +97,7 @@ TAO::SSLIOP::CredentialsAcquirer::current_status (void)
 }
 
 CORBA::ULong
-TAO::SSLIOP::CredentialsAcquirer::nth_iteration (void)
+TAO::SSLIOP::CredentialsAcquirer::nth_iteration ()
 {
   this->check_validity ();
 
@@ -170,7 +170,7 @@ TAO::SSLIOP::CredentialsAcquirer::get_credentials (CORBA::Boolean on_list)
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::destroy (void)
+TAO::SSLIOP::CredentialsAcquirer::destroy ()
 {
   this->check_validity ();
 
@@ -188,7 +188,7 @@ TAO::SSLIOP::CredentialsAcquirer::destroy (void)
 }
 
 void
-TAO::SSLIOP::CredentialsAcquirer::check_validity (void)
+TAO::SSLIOP::CredentialsAcquirer::check_validity ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,

@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher (void)
+TAO_PG_Servant_Dispatcher::~TAO_PG_Servant_Dispatcher ()
 {
 }
 

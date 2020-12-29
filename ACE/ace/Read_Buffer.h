@@ -86,13 +86,13 @@ public:
   ACE_Allocator *alloc (void) const;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 private:
-
-  // Disallow copying and assignment...
-  void operator= (const ACE_Read_Buffer &);
-  ACE_Read_Buffer (const ACE_Read_Buffer &);
+  void operator= (const ACE_Read_Buffer &) = delete;
+  ACE_Read_Buffer (const ACE_Read_Buffer &) = delete;
+  void operator= (ACE_Read_Buffer &&) = delete;
+  ACE_Read_Buffer (ACE_Read_Buffer &&) = delete;
 
 private:
   /// Recursive helper method that does the work...

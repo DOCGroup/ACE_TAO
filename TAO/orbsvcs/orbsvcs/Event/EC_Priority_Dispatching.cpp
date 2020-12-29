@@ -22,7 +22,7 @@ TAO_EC_Priority_Dispatching::TAO_EC_Priority_Dispatching (TAO_EC_Event_Channel_B
 }
 
 void
-TAO_EC_Priority_Dispatching::activate (void)
+TAO_EC_Priority_Dispatching::activate ()
 {
   if (this->tasks_ != 0)
     return;
@@ -83,7 +83,7 @@ TAO_EC_Priority_Dispatching::activate (void)
 }
 
 void
-TAO_EC_Priority_Dispatching::shutdown (void)
+TAO_EC_Priority_Dispatching::shutdown ()
 {
   if (this->tasks_ == 0)
     return;

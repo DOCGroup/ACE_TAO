@@ -30,12 +30,12 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
 {
 }
 
-TAO_Regular_POA::~TAO_Regular_POA (void)
+TAO_Regular_POA::~TAO_Regular_POA ()
 {
 }
 
 void
-TAO_Regular_POA::remove_from_parent_i (void)
+TAO_Regular_POA::remove_from_parent_i ()
 {
   // Remove POA from the parent
   if (this->parent_ != 0)
@@ -49,13 +49,13 @@ TAO_Regular_POA::remove_from_parent_i (void)
 }
 
 CORBA::Boolean
-TAO_Regular_POA::root (void) const
+TAO_Regular_POA::root () const
 {
   return (parent_ == 0);
 }
 
 char
-TAO_Regular_POA::root_key_type (void)
+TAO_Regular_POA::root_key_type ()
 {
   if (this->parent_ != 0)
     {

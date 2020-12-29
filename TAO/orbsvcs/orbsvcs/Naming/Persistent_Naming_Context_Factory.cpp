@@ -4,14 +4,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Constructor.
-TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory (void)
+TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory ()
 {
 
 }
 
 /// Destructor.  Does not deallocate the hash map: if an instance of
 /// this class goes out of scope, its hash_map remains in persistent storage.
-TAO_Persistent_Naming_Context_Factory::~TAO_Persistent_Naming_Context_Factory (void)
+TAO_Persistent_Naming_Context_Factory::~TAO_Persistent_Naming_Context_Factory ()
 {
 }
 

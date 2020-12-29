@@ -19,7 +19,7 @@ be_visitor_field_ci::be_visitor_field_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ci::~be_visitor_field_ci (void)
+be_visitor_field_ci::~be_visitor_field_ci ()
 {
 }
 
@@ -27,7 +27,7 @@ int
 be_visitor_field_ci::visit_field (be_field *node)
 {
   be_type *bt =
-    be_type::narrow_from_decl (node->field_type ());
+    dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -111,7 +111,7 @@ be_visitor_field_ci::visit_structure_fwd (
   be_structure_fwd *node)
 {
   be_structure *s =
-    be_structure::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_structure*> (node->full_definition ());
 
   return this->visit_structure (s);
 }
@@ -131,7 +131,7 @@ be_visitor_field_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -162,7 +162,7 @@ int
 be_visitor_field_ci::visit_union_fwd (be_union_fwd *node)
 {
   be_union *u =
-    be_union::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_union*> (node->full_definition ());
 
   return this->visit_union (u);
 }

@@ -27,7 +27,7 @@ ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (
 }
 
 void
-ACE_Shared_Memory_Pool::dump (void) const
+ACE_Shared_Memory_Pool::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Shared_Memory_Pool::dump");
@@ -283,7 +283,7 @@ ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
                 ACE_TEXT ("ACE_Sig_Handler::register_handler")));
 }
 
-ACE_Shared_Memory_Pool::~ACE_Shared_Memory_Pool (void)
+ACE_Shared_Memory_Pool::~ACE_Shared_Memory_Pool ()
 {
 }
 
@@ -443,7 +443,7 @@ ACE_Shared_Memory_Pool::protect (void *, size_t, int)
 }
 
 void *
-ACE_Shared_Memory_Pool::base_addr (void) const
+ACE_Shared_Memory_Pool::base_addr () const
 {
   ACE_TRACE ("ACE_Shared_Memory_Pool::base_addr");
   return this->base_addr_;

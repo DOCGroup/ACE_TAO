@@ -87,12 +87,12 @@ namespace TAO
   {
   public:
     /// Default Constructor and destructor..
-    ObjectKey_Table (void);
+    ObjectKey_Table ();
 
-    ~ObjectKey_Table (void);
+    ~ObjectKey_Table ();
 
     /// Iterates and unbinds the contents of the table.
-    int destroy (void);
+    int destroy ();
 
     /// Bind the ObjectKey in the table.
     /**

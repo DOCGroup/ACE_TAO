@@ -94,11 +94,6 @@
 
 # define ACE_HAS_SSIZE_T
 
-# if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ == 0))
-// We have to explicitly instantiate static template members prior to g++ 4.1
-#   define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
-#endif /* g++ prior to 4.1 */
-
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
 #   if !defined (_REENTRANT)
@@ -312,7 +307,6 @@
 // AIX 5.1 has netinet/tcp.h
 #undef ACE_LACKS_NETINET_TCP_H
 
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_SCANDIR
 #define ACE_SCANDIR_CMP_USES_VOIDPTR
 #define ACE_SCANDIR_SEL_LACKS_CONST

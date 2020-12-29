@@ -19,7 +19,7 @@ be_visitor_valuetype_init_cs::be_visitor_valuetype_init_cs (
 {
 }
 
-be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs (void)
+be_visitor_valuetype_init_cs::~be_visitor_valuetype_init_cs ()
 {
 }
 
@@ -74,12 +74,12 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
 
   // ctor
   *os << be_nl_2
-      << fname << "::" << lname << " (void)" << be_nl
+      << fname << "::" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
 
   // dtor
   *os << be_nl_2
-      << fname << "::~" << lname << " (void)" << be_nl
+      << fname << "::~" << lname << " ()" << be_nl
       << "{" << be_nl << "}";
 
   // The _downcast method.
@@ -94,7 +94,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
   // tao_repository_id
   *os << be_nl_2
       << "const char*" << be_nl
-      << fname << "::tao_repository_id (void)" << be_nl
+      << fname << "::tao_repository_id ()" << be_nl
       << "{" << be_idt_nl
       <<   "return ::" << node->full_name ()
       <<                "::_tao_obv_static_repository_id ();"
@@ -106,9 +106,9 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
       // generate create_for_unmarshal()
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
-          << fname << "::create_for_unmarshal (void)" << be_nl
+          << fname << "::create_for_unmarshal ()" << be_nl
           << "{" << be_idt_nl
-          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val = nullptr;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
           << "ret_val," << be_nl
           << "OBV_" << node->full_name () << "," << be_nl
@@ -121,9 +121,9 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
           {
             *os << be_nl_2
                 << "::CORBA::AbstractBase_ptr" << be_nl
-                << fname << "::create_for_unmarshal_abstract (void)" << be_nl
+                << fname << "::create_for_unmarshal_abstract ()" << be_nl
                 << "{" << be_idt_nl
-                << "::CORBA::AbstractBase *ret_val = 0;" << be_nl
+                << "::CORBA::AbstractBase *ret_val = nullptr;" << be_nl
                 << "ACE_NEW_THROW_EX (" << be_idt << be_idt_nl
                 << "ret_val," << be_nl
                 << "OBV_" << node->full_name () << "," << be_nl

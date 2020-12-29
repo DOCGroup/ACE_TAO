@@ -31,13 +31,13 @@ public:
                 bool abstract);
 
   // Non-virtual override of frontend method.
-  be_type *field_type (void) const;
+  be_type *field_type () const;
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   /// Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Sets the original attribute from which this one was created,
   /// applies only to implied IDL.
@@ -46,10 +46,6 @@ public:
   /// Returns the original attribute from which this one was created,
   /// applies only to implied IDL
   be_attribute *original_attribute ();
-
-  // Narrowing
-
-  DEF_NARROW_FROM_DECL (be_attribute);
 };
 
 #endif

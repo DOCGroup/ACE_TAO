@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Stream)
 
 void
-ACE_SPIPE_Stream::dump (void) const
+ACE_SPIPE_Stream::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Stream::dump");
@@ -24,7 +24,7 @@ ACE_SPIPE_Stream::dump (void) const
 
 // Simple-minded do nothing constructor.
 
-ACE_SPIPE_Stream::ACE_SPIPE_Stream (void)
+ACE_SPIPE_Stream::ACE_SPIPE_Stream ()
 {
   // ACE_TRACE ("ACE_SPIPE_Stream::ACE_SPIPE_Stream");
 }

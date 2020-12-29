@@ -46,10 +46,10 @@ public:
   explicit ACE_Timer_Queue_Upcall_Base(FUNCTOR * upcall_functor = 0);
 
   /// Destructor
-  virtual ~ACE_Timer_Queue_Upcall_Base (void);
+  virtual ~ACE_Timer_Queue_Upcall_Base ();
 
   /// Accessor to the upcall functor
-  FUNCTOR & upcall_functor (void);
+  FUNCTOR & upcall_functor ();
 
 protected:
   /// Upcall functor
@@ -88,7 +88,7 @@ public:
 
   /// Destructor - make virtual for proper destruction of inherited
   /// classes.
-  virtual ~ACE_Timer_Queue_T (void);
+  virtual ~ACE_Timer_Queue_T ();
 
   /**
    * Implement ACE_Abstract_Timer_Queue<TYPE>::schedule () with the right
@@ -105,7 +105,7 @@ public:
    * locking strategy.
    */
   virtual int expire (const ACE_Time_Value &current_time);
-  virtual int expire (void);
+  virtual int expire ();
   virtual int expire_single(ACE_Command_Base & pre_dispatch_command);
   //@}
 
@@ -121,7 +121,7 @@ public:
   /**
    * Implement the gettimeofday() virtual function
    */
-  virtual ACE_Time_Value gettimeofday (void);
+  virtual ACE_Time_Value gettimeofday ();
   //@}
 
   /**
@@ -132,7 +132,7 @@ public:
    *             is ACE_FPointer_Time_Policy. Other standard ACE time
    *             policies will ignore this.
    */
-  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)(void));
+  virtual void gettimeofday (ACE_Time_Value (*gettimeofday)());
 
   /// Implement an inlined, non-abstract version of gettimeofday(),
   /// through this  member function the internals of the class can
@@ -160,13 +160,13 @@ public:
   void timer_skew (const ACE_Time_Value &skew);
 
   /// Get the timer skew for the Timer_Queue.
-  const ACE_Time_Value &timer_skew (void) const;
+  const ACE_Time_Value &timer_skew () const;
 
   /// Synchronization variable used by the queue
-  ACE_LOCK &mutex (void);
+  ACE_LOCK &mutex ();
 
   /// Dump the state of a object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Method used to return a timer node to the queue's ownership
   /// after it is returned by a method like <remove_first>.
@@ -197,7 +197,7 @@ protected:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *) = 0;
 
   /// Factory method that allocates a new node.
-  virtual ACE_Timer_Node_T<TYPE> *alloc_node (void);
+  virtual ACE_Timer_Node_T<TYPE> *alloc_node ();
 
   /// Factory method that frees a previously allocated node.
   virtual void free_node (ACE_Timer_Node_T<TYPE> *);

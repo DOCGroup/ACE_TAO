@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IntId::TAO_IntId (void)
+TAO_IntId::TAO_IntId ()
   : type_ (CosNaming::nobject)
 {
   ref_ = CORBA::Object::_nil ();
@@ -29,7 +29,7 @@ TAO_IntId::TAO_IntId (const TAO_IntId &rhs)
   ref_ = CORBA::Object::_duplicate (rhs.ref_);
 }
 
-TAO_IntId::~TAO_IntId (void)
+TAO_IntId::~TAO_IntId ()
 {
   CORBA::release (ref_);
 }
@@ -47,7 +47,7 @@ TAO_IntId::operator= (const TAO_IntId &rhs)
   ref_ = CORBA::Object::_duplicate (rhs.ref_);
 }
 
-TAO_ExtId::TAO_ExtId (void)
+TAO_ExtId::TAO_ExtId ()
   : kind_ (),
     id_ ()
 {
@@ -66,18 +66,18 @@ TAO_ExtId::TAO_ExtId (const TAO_ExtId &rhs)
   kind_ = rhs.kind_;
 }
 
-TAO_ExtId::~TAO_ExtId (void)
+TAO_ExtId::~TAO_ExtId ()
 {
 }
 
 const char *
-TAO_ExtId::id (void)
+TAO_ExtId::id ()
 {
   return id_.fast_rep ();
 }
 
 const char *
-TAO_ExtId::kind (void)
+TAO_ExtId::kind ()
 {
   return kind_.fast_rep ();
 }
@@ -106,7 +106,7 @@ TAO_ExtId::operator!= (const TAO_ExtId &rhs) const
 }
 
 u_long
-TAO_ExtId::hash (void) const
+TAO_ExtId::hash () const
 {
   ACE_CString temp (id_);
   temp += kind_;

@@ -94,7 +94,7 @@ AST_UnionBranch::AST_UnionBranch (UTL_LabelList *ll,
 {
 }
 
-AST_UnionBranch::~AST_UnionBranch (void)
+AST_UnionBranch::~AST_UnionBranch ()
 {
 }
 
@@ -130,17 +130,17 @@ AST_UnionBranch::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_UnionBranch::destroy (void)
+AST_UnionBranch::destroy ()
 {
   this->pd_ll->destroy ();
   delete this->pd_ll;
-  this->pd_ll = 0;
+  this->pd_ll = nullptr;
 
   this->AST_Field::destroy ();
 }
 
 UTL_LabelList *
-AST_UnionBranch::labels (void) const
+AST_UnionBranch::labels () const
 {
   return this->pd_ll;
 }
@@ -162,11 +162,11 @@ AST_UnionBranch::label (unsigned long index)
       ++i;
     }
 
-  return 0;
+  return nullptr;
 }
 
 unsigned long
-AST_UnionBranch::label_list_length (void)
+AST_UnionBranch::label_list_length ()
 {
   if (this->pd_ll)
     {
@@ -211,10 +211,10 @@ AST_UnionBranch::add_labels (AST_Union *u)
       if (enum_labels)
         {
           ex->ev ()->et = AST_Expression::EV_enum;
-          AST_Enum *disc = AST_Enum::narrow_from_decl (u->disc_type ());
+          AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
           AST_EnumVal *dval = disc->lookup_by_value (ex);
 
-          if (dval == 0)
+          if (dval == nullptr)
             {
               idl_global->err ()->incompatible_disc_error (disc, ex);
               throw Bailout ();
@@ -241,5 +241,3 @@ AST_UnionBranch::coerce_labels (AST_Union *u)
       lv->set_ev (lv->coerce (u->udisc_type ()));
     }
 }
-
-IMPL_NARROW_FROM_DECL(AST_UnionBranch)

@@ -397,10 +397,15 @@ public:
          };
 
          class Iterator
-           : public std::iterator<std::bidirectional_iterator_tag, Proxy>
-           , private IteratorBase
+           : private IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Proxy value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Proxy* pointer;
+           typedef Proxy& reference;
+
            explicit Iterator (Fixed *outer, int digit = 0);
            Proxy operator* ();
            Iterator &operator+= (std::ptrdiff_t n);
@@ -415,10 +420,15 @@ public:
          };
 
          class ConstIterator
-           : public std::iterator<std::bidirectional_iterator_tag, Octet>
-           , private IteratorBase
+           : public IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Octet value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Octet* pointer;
+           typedef Octet& reference;
+
            explicit ConstIterator (const Fixed *outer, int digit = 0);
            Octet operator* ();
            ConstIterator &operator+= (std::ptrdiff_t n);

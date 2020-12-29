@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_File_Lock)
 
 void
-ACE_File_Lock::dump (void) const
+ACE_File_Lock::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_File_Lock::dump");
@@ -64,7 +64,7 @@ ACE_File_Lock::open (const ACE_TCHAR *name,
   return ACE_OS::flock_init (&this->lock_, flags, name, perms);
 }
 
-ACE_File_Lock::~ACE_File_Lock (void)
+ACE_File_Lock::~ACE_File_Lock ()
 {
 // ACE_TRACE ("ACE_File_Lock::~ACE_File_Lock");
   this->remove (this->unlink_in_destructor_);

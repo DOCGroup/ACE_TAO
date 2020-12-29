@@ -37,15 +37,15 @@ namespace TAO
       : public RequestProcessingStrategy
     {
     public:
-      RequestProcessingStrategyDefaultServant (void);
+      RequestProcessingStrategyDefaultServant ();
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
-      PortableServer::ServantManager_ptr get_servant_manager (void);
+      PortableServer::ServantManager_ptr get_servant_manager ();
 
       void set_servant_manager (PortableServer::ServantManager_ptr imgr);
 
-      PortableServer::Servant get_servant (void);
+      PortableServer::Servant get_servant ();
 
       void set_servant (PortableServer::Servant servant);
 

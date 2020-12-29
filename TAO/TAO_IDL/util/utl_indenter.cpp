@@ -74,21 +74,21 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 /*
  * Constructors
  */
-UTL_Indenter::UTL_Indenter (void)
+UTL_Indenter::UTL_Indenter ()
   : pd_indent_level (0)
 {
 }
 
 // Reset indentation level.
 void
-UTL_Indenter::reset (void)
+UTL_Indenter::reset ()
 {
   this->pd_indent_level = 0;
 }
 
 // Increase indentation level.
 void
-UTL_Indenter::increase (void)
+UTL_Indenter::increase ()
 {
   ++this->pd_indent_level;
 }

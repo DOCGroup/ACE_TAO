@@ -87,7 +87,7 @@ public:
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 };
 
 // Forward decl.
@@ -409,7 +409,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
@@ -755,7 +755,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -800,7 +800,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -920,7 +920,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 

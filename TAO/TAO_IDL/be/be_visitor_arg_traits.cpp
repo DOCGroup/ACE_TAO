@@ -51,7 +51,7 @@ be_visitor_arg_traits::be_visitor_arg_traits (const char *S,
 {
 }
 
-be_visitor_arg_traits::~be_visitor_arg_traits (void)
+be_visitor_arg_traits::~be_visitor_arg_traits ()
 {
   delete [] this->S_;
 }
@@ -209,7 +209,7 @@ be_visitor_arg_traits::visit_interface_fwd (be_interface_fwd *node)
     }
 
   be_interface *fd =
-    be_interface::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_interface*> (node->full_definition ());
 
   // The logic in visit_interface() should handle what gets generated
   // and what doesn't.
@@ -368,7 +368,7 @@ be_visitor_arg_traits::visit_valuetype_fwd (be_valuetype_fwd *node)
     }
 
   be_valuetype *fd =
-    be_valuetype::narrow_from_decl (node->full_definition ());
+    dynamic_cast<be_valuetype*> (node->full_definition ());
 
   // The logic in visit_valuetype() should handle what gets generated
   // and what doesn't.
@@ -418,7 +418,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
   // Arg_Traits<> template parameter.
   if (nt == AST_Decl::NT_string || nt == AST_Decl::NT_wstring)
     {
-      AST_String *str = AST_String::narrow_from_decl (rt);
+      AST_String *str = dynamic_cast<AST_String*> (rt);
       ACE_CDR::ULong bound = str->max_size ()->ev ()->u.ulval;
 
       if (bound > 0)
@@ -484,14 +484,14 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
 int
 be_visitor_arg_traits::visit_attribute (be_attribute *node)
 {
-  if (this->ctx_->alias () != 0 || this->generated (node))
+  if (this->ctx_->alias () != nullptr || this->generated (node))
     {
       return 0;
     }
 
-  AST_String *st = AST_String::narrow_from_decl (node->field_type ());
+  AST_String *st = dynamic_cast<AST_String*> (node->field_type ());
 
-  if (st == 0)
+  if (st == nullptr)
     {
       return 0;
     }
@@ -559,7 +559,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 int
 be_visitor_arg_traits::visit_argument (be_argument *node)
 {
-  if (this->ctx_->alias () != 0 || this->generated (node))
+  if (this->ctx_->alias () != nullptr || this->generated (node))
     {
       return 0;
     }
@@ -575,7 +575,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
       return 0;
     }
 
-  be_string *st = be_string::narrow_from_decl (bt);
+  be_string *st = dynamic_cast<be_string*> (bt);
   ACE_CDR::ULong bound = st->max_size ()->ev ()->u.ulval;
 
   if (bound == 0)
@@ -674,7 +674,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
   be_typedef *alias = this->ctx_->alias ();
 
   /// No arg traits for anonymous sequences.
-  if (alias == 0)
+  if (alias == nullptr)
     {
       return 0;
     }
@@ -741,7 +741,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
   // since a bounded (w)string of the same length may be used or typedef'd
   // more than once.
 
-  if (alias == 0)
+  if (alias == nullptr)
     {
       os->gen_ifdef_macro (node->flat_name (), guard_suffix.c_str (), false);
     }
@@ -758,14 +758,14 @@ be_visitor_arg_traits::visit_string (be_string *node)
         }
 
       size_t bound_length = num_digits + 1;
-      char* bound_string = 0;
+      char* bound_string = nullptr;
       ACE_NEW_RETURN (bound_string, char[bound_length], -1) ;
       ACE_OS::sprintf (bound_string, ACE_UINT32_FORMAT_SPECIFIER_ASCII, bound);
 
       size_t cat_length = ACE_OS::strlen (alias->local_name ()->get_string ()) +
                           ACE_OS::strlen (bound_string) +
                           1;
-      char* cat_string = 0;
+      char* cat_string = nullptr;
       ACE_NEW_RETURN (cat_string, char[cat_length], -1) ;
       ACE_OS::strcpy (cat_string, alias->local_name ()->get_string ()) ;
       ACE_OS::strcat (cat_string, bound_string);
@@ -785,7 +785,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       *os << be_nl_2
           << "struct ";
 
-      if (alias == 0)
+      if (alias == nullptr)
         {
           *os << node->flat_name ();
         }
@@ -802,7 +802,7 @@ be_visitor_arg_traits::visit_string (be_string *node)
       << "class "
       << this->S_ << "Arg_Traits<";
 
-  if (0 == alias)
+  if (nullptr == alias)
     {
       *os << node->flat_name ();
     }
@@ -845,7 +845,7 @@ be_visitor_arg_traits::visit_array (be_array *node)
 
  // Add the alias check here because anonymous arrays can't be
  // operation arguments.
- if (this->generated (node) || this->ctx_->alias () == 0)
+ if (this->generated (node) || this->ctx_->alias () == nullptr)
     {
       return 0;
     }
@@ -992,7 +992,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
 int
 be_visitor_arg_traits::visit_field (be_field *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -1106,7 +1106,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
 int
 be_visitor_arg_traits::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -1172,7 +1172,7 @@ be_visitor_arg_traits::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -1212,7 +1212,7 @@ be_visitor_arg_traits::generated (be_decl *node) const
           case TAO_CodeGen::TAO_ROOT_SH:
             return node->srv_arg_traits_gen ();
           default:
-            return 0;
+            return false;
         }
     }
 
@@ -1242,7 +1242,7 @@ be_visitor_arg_traits::generated (be_decl *node,
 }
 
 const char *
-be_visitor_arg_traits::insert_policy (void)
+be_visitor_arg_traits::insert_policy ()
 {
   if (be_global->any_support ())
     {

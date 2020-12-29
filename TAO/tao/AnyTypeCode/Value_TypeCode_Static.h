@@ -79,8 +79,8 @@ namespace TAO
        */
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
     protected:
@@ -95,15 +95,15 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual char const * id_i (void) const;
-      virtual char const * name_i (void) const;
-      virtual CORBA::ULong member_count_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual char const * id_i () const;
+      virtual char const * name_i () const;
+      virtual CORBA::ULong member_count_i () const;
       virtual char const * member_name_i (CORBA::ULong index) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
       virtual CORBA::Visibility member_visibility_i (CORBA::ULong index) const;
-      virtual CORBA::ValueModifier type_modifier_i (void) const;
-      virtual CORBA::TypeCode_ptr concrete_base_type_i (void) const;
+      virtual CORBA::ValueModifier type_modifier_i () const;
+      virtual CORBA::TypeCode_ptr concrete_base_type_i () const;
       //@}
 
     private:

@@ -19,7 +19,7 @@ be_visitor_valuetype_marshal_cs::be_visitor_valuetype_marshal_cs (
 {
 }
 
-be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs (void)
+be_visitor_valuetype_marshal_cs::~be_visitor_valuetype_marshal_cs ()
 {
 }
 
@@ -42,7 +42,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "strm";
     }
@@ -50,7 +50,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << ", TAO_ChunkInfo&";
   // If the valuetype has no fields, and no stateful inherit,
   // the chunking helper arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "ci";
     }
@@ -137,7 +137,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "strm";
     }
@@ -145,7 +145,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   *os << ", TAO_ChunkInfo&";
   // If the valuetype has no fields, and no stateful inherit,
   // the chunking helper arg is unused.
-  if (inh != 0 || node->data_members_count () > 0)
+  if (inh != nullptr || node->data_members_count () > 0)
     {
       *os << "ci";
     }
@@ -219,7 +219,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   this->class_name (node, os);
 
-  *os << "::truncation_hook (void)" << be_nl
+  *os << "::truncation_hook ()" << be_nl
       << "{" << be_idt_nl
       << "this->require_truncation_ = true;" << be_uidt_nl
       << "}" << be_nl_2;
@@ -240,7 +240,7 @@ be_visitor_valuetype_marshal_cs::class_name (be_valuetype *node,
   if (node->opt_accessor ())
     {
       be_decl *scope =
-        be_scope::narrow_from_scope (node->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
       *os << scope->name () << "::"
           << node->local_name ();
@@ -277,11 +277,11 @@ be_visitor_valuetype_marshal_cs::gen_fields (be_valuetype *node,
 
       // (JP) 2010-10-21
       // be_attribute now inherits from be_field, so we need this check.
-      be_attribute *attr = be_attribute::narrow_from_decl (d);
+      be_attribute *attr = dynamic_cast<be_attribute*> (d);
 
-      be_field *field = be_field::narrow_from_decl (d);
+      be_field *field = dynamic_cast<be_field*> (d);
 
-      if (field != 0 && attr == 0)
+      if (field != nullptr && attr == nullptr)
         {
           if (n_processed > 0)
             {

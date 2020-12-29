@@ -74,8 +74,8 @@ namespace ACE
        */
       struct ACE_Export Constraint
       {
-        Constraint (void);
-        ~Constraint (void);
+        Constraint ();
+        ~Constraint ();
 
         /// Implemented explicitly so reference counting of control
         /// actions can be managed.

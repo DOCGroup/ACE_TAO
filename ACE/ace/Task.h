@@ -68,7 +68,7 @@ public:
   ACE_Task_Base (ACE_Thread_Manager * = 0);
 
   /// Destructor.
-  virtual ~ACE_Task_Base (void);
+  virtual ~ACE_Task_Base ();
 
   // These methods should be overridden by subclasses if you'd like to
   // provide <Task>-specific initialization and termination behavior.
@@ -97,7 +97,7 @@ public:
    * close(0) will be also called when a thread associated with the
    * ACE_Task instance exits.
    */
-  virtual int module_closed (void);
+  virtual int module_closed ();
 
   // = Immediate and deferred processing methods, respectively.
 
@@ -110,7 +110,7 @@ public:
   virtual int put (ACE_Message_Block *, ACE_Time_Value * = 0);
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Active object activation method.
   /**
@@ -193,7 +193,7 @@ public:
    * @retval 0  Success.
    * @retval -1 Failure (consult errno for further information).
    */
-  virtual int wait (void);
+  virtual int wait ();
 
   // = Suspend/resume a Task.
 
@@ -201,34 +201,34 @@ public:
   // since they are inherently error-prone to use.  They are only here
   // for (the rare) applications that know how to use them correctly.
   /// Suspend a task.
-  virtual int suspend (void);
+  virtual int suspend ();
   /// Resume a suspended task.
-  virtual int resume (void);
+  virtual int resume ();
 
   /// Get the current group id.
-  int grp_id (void) const;
+  int grp_id () const;
 
   /// Set the current group id.
   void grp_id (int);
 
   /// Get the thread manager associated with this Task.
-  ACE_Thread_Manager *thr_mgr (void) const;
+  ACE_Thread_Manager *thr_mgr () const;
 
   /// Set the thread manager associated with this Task.
   void thr_mgr (ACE_Thread_Manager *);
 
   /// True if queue is a reader, else false.
-  int is_reader (void) const;
+  int is_reader () const;
 
   /// True if queue is a writer, else false.
-  int is_writer (void) const;
+  int is_writer () const;
 
   /**
    * Returns the number of threads currently running within a task.
    * If we're a passive object this value is 0, else it's greater than
    * 0.
    */
-  size_t thr_count (void) const;
+  size_t thr_count () const;
 
   /**
    * Returns the thread ID of the thread whose exit caused this object's
@@ -246,7 +246,7 @@ public:
    *          is not yet known; for example, if no threads are active, or if
    *          multiple threads are active.
    */
-  ACE_thread_t last_thread (void) const;
+  ACE_thread_t last_thread () const;
 
   /// Routine that runs the service routine as a daemon thread.
   static ACE_THR_FUNC_RETURN svc_run (void *);

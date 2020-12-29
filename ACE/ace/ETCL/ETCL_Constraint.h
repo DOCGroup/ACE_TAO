@@ -34,8 +34,8 @@ class ACE_ETCL_Export ETCL_Constraint
 {
 public:
   /// Constructor and destructor
-  ETCL_Constraint (void);
-  virtual ~ETCL_Constraint (void);
+  ETCL_Constraint ();
+  virtual ~ETCL_Constraint ();
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -59,7 +59,7 @@ class ACE_ETCL_Export ETCL_Literal_Constraint
   : public ETCL_Constraint
 {
 public:
-  ETCL_Literal_Constraint (void);
+  ETCL_Literal_Constraint ();
 
   // = Constructors for each of the various types of literals.
   explicit ETCL_Literal_Constraint (ACE_CDR::ULong uinteger);
@@ -72,22 +72,22 @@ public:
   ETCL_Literal_Constraint (const ETCL_Literal_Constraint& lit);
 
   /// Destructor.
-  virtual ~ETCL_Literal_Constraint(void);
+  virtual ~ETCL_Literal_Constraint();
 
   /// Visitor accept method.
   virtual int accept (ETCL_Constraint_Visitor* visitor);
 
-  Literal_Type expr_type (void) const;
+  Literal_Type expr_type () const;
 
   /// Assignment operator.
   void operator= (const ETCL_Literal_Constraint& co);
 
   // Conversion routines.
-  operator ACE_CDR::Boolean (void) const;
-  operator ACE_CDR::ULong (void) const;
-  operator ACE_CDR::Long (void) const;
-  operator ACE_CDR::Double (void) const;
-  operator const char* (void) const;
+  operator ACE_CDR::Boolean () const;
+  operator ACE_CDR::ULong () const;
+  operator ACE_CDR::Long () const;
+  operator ACE_CDR::Double () const;
+  operator const char* () const;
 
   // Return the type represented by this MysteryOperand.
 
@@ -127,7 +127,7 @@ public:
 
   // Unary minus.
   ETCL_Literal_Constraint
-  operator- (void);
+  operator- ();
 
   /// Ensure both operands are of the same simple numeric type.
   virtual Literal_Type
@@ -159,7 +159,7 @@ public:
   ETCL_Identifier (const char *value);
 
   /// Get the value
-  const char *value (void) const;
+  const char *value () const;
 
   // = The Constraint methods.
   int accept (ETCL_Constraint_Visitor *visitor);
@@ -177,11 +177,11 @@ public:
   ETCL_Union_Value (int sign,
                     ETCL_Constraint *integer);
   explicit ETCL_Union_Value (ETCL_Constraint *string = 0);
-  virtual ~ETCL_Union_Value (void);
+  virtual ~ETCL_Union_Value ();
 
-  int sign (void) const;
-  ETCL_Literal_Constraint *integer (void) const;
-  ETCL_Literal_Constraint *string (void) const;
+  int sign () const;
+  ETCL_Literal_Constraint *integer () const;
+  ETCL_Literal_Constraint *string () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -196,10 +196,10 @@ class ACE_ETCL_Export ETCL_Union_Pos : public ETCL_Constraint
 public:
   ETCL_Union_Pos (ETCL_Constraint *union_value = 0,
                   ETCL_Constraint *component = 0);
-  virtual ~ETCL_Union_Pos (void);
+  virtual ~ETCL_Union_Pos ();
 
-  ETCL_Union_Value *union_value (void) const;
-  ETCL_Constraint *component (void) const;
+  ETCL_Union_Value *union_value () const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -213,10 +213,10 @@ class ACE_ETCL_Export ETCL_Component_Pos : public ETCL_Constraint
 public:
   ETCL_Component_Pos (ETCL_Constraint *integer = 0,
                       ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Pos (void);
+  virtual ~ETCL_Component_Pos ();
 
-  ETCL_Literal_Constraint *integer (void) const;
-  ETCL_Constraint *component (void) const;
+  ETCL_Literal_Constraint *integer () const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -230,10 +230,10 @@ class ACE_ETCL_Export ETCL_Component_Assoc : public ETCL_Constraint
 public:
   ETCL_Component_Assoc (ETCL_Constraint *identifier = 0,
                         ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Assoc (void);
+  virtual ~ETCL_Component_Assoc ();
 
-  ETCL_Identifier *identifier (void) const;
-  ETCL_Constraint *component (void) const;
+  ETCL_Identifier *identifier () const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -247,10 +247,10 @@ class ACE_ETCL_Export ETCL_Component_Array : public ETCL_Constraint
 public:
   ETCL_Component_Array (ETCL_Constraint *integer = 0,
                         ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component_Array (void);
+  virtual ~ETCL_Component_Array ();
 
-  ETCL_Literal_Constraint *integer (void) const;
-  ETCL_Constraint *component (void) const;
+  ETCL_Literal_Constraint *integer () const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -262,11 +262,11 @@ private:
 class ACE_ETCL_Export ETCL_Special : public ETCL_Constraint
 {
 public:
-  ETCL_Special (void);
+  ETCL_Special ();
   ETCL_Special (int type);
-  virtual ~ETCL_Special (void);
+  virtual ~ETCL_Special ();
 
-  int type (void) const;
+  int type () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -279,10 +279,10 @@ class ACE_ETCL_Export ETCL_Component : public ETCL_Constraint
 public:
   ETCL_Component (ETCL_Constraint *identifier = 0,
                   ETCL_Constraint *component = 0);
-  virtual ~ETCL_Component (void);
+  virtual ~ETCL_Component ();
 
-  ETCL_Identifier *identifier (void) const;
-  ETCL_Constraint *component (void) const;
+  ETCL_Identifier *identifier () const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -295,9 +295,9 @@ class ACE_ETCL_Export ETCL_Dot : public ETCL_Constraint
 {
 public:
   explicit ETCL_Dot (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Dot (void);
+  virtual ~ETCL_Dot ();
 
-  ETCL_Constraint *component (void) const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -309,9 +309,9 @@ class ACE_ETCL_Export ETCL_Eval : public ETCL_Constraint
 {
 public:
   explicit ETCL_Eval (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Eval (void);
+  virtual ~ETCL_Eval ();
 
-  ETCL_Constraint *component (void) const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -323,9 +323,9 @@ class ACE_ETCL_Export ETCL_Default : public ETCL_Constraint
 {
 public:
   explicit ETCL_Default (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Default (void);
+  virtual ~ETCL_Default ();
 
-  ETCL_Constraint *component (void) const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -337,9 +337,9 @@ class ACE_ETCL_Export ETCL_Exist : public ETCL_Constraint
 {
 public:
   explicit ETCL_Exist (ETCL_Constraint *component = 0);
-  virtual ~ETCL_Exist (void);
+  virtual ~ETCL_Exist ();
 
-  ETCL_Constraint *component (void) const;
+  ETCL_Constraint *component () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -352,10 +352,10 @@ class ACE_ETCL_Export ETCL_Unary_Expr : public ETCL_Constraint
 public:
   ETCL_Unary_Expr (int type,
                    ETCL_Constraint *subexpr);
-  virtual ~ETCL_Unary_Expr (void);
+  virtual ~ETCL_Unary_Expr ();
 
-  int type (void) const;
-  ETCL_Constraint *subexpr (void) const;
+  int type () const;
+  ETCL_Constraint *subexpr () const;
 
   int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -370,11 +370,11 @@ public:
   ETCL_Binary_Expr (int type,
                     ETCL_Constraint *lhs,
                     ETCL_Constraint *rhs);
-  virtual ~ETCL_Binary_Expr (void);
+  virtual ~ETCL_Binary_Expr ();
 
-  int type (void) const;
-  ETCL_Constraint *rhs (void) const;
-  ETCL_Constraint *lhs (void) const;
+  int type () const;
+  ETCL_Constraint *rhs () const;
+  ETCL_Constraint *lhs () const;
 
   int accept (ETCL_Constraint_Visitor *visitor);
 
@@ -387,13 +387,13 @@ private:
 class ACE_ETCL_Export ETCL_Preference : public ETCL_Constraint
 {
 public:
-  ETCL_Preference (void);
+  ETCL_Preference ();
   ETCL_Preference (int type,
                    ETCL_Constraint *subexpr = 0);
-  virtual ~ETCL_Preference (void);
+  virtual ~ETCL_Preference ();
 
-  int type (void) const;
-  ETCL_Constraint *subexpr (void) const;
+  int type () const;
+  ETCL_Constraint *subexpr () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 

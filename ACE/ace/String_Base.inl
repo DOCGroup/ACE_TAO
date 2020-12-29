@@ -7,7 +7,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_CHAR_T> ACE_INLINE void
-ACE_String_Base<ACE_CHAR_T>::dump (void) const
+ACE_String_Base<ACE_CHAR_T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::dump");
@@ -24,27 +24,27 @@ ACE_String_Base<ACE_CHAR_T>::assign_nocopy (const ACE_String_Base<ACE_CHAR_T> &s
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::size_type
-ACE_String_Base<ACE_CHAR_T>::length (void) const
+ACE_String_Base<ACE_CHAR_T>::length () const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::length");
   return this->len_;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE size_t
-ACE_String_Base<ACE_CHAR_T>::capacity (void) const
+ACE_String_Base<ACE_CHAR_T>::capacity () const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::capacity");
   return this->buf_len_;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::is_empty (void) const
+ACE_String_Base<ACE_CHAR_T>::is_empty () const
 {
   return this->len_ == 0;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::empty (void) const
+ACE_String_Base<ACE_CHAR_T>::empty () const
 {
   return this->is_empty ();
 }
@@ -79,13 +79,13 @@ ACE_String_Base<ACE_CHAR_T>::operator[] (
 }
 
 template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T *
-ACE_String_Base<ACE_CHAR_T>::fast_rep (void) const
+ACE_String_Base<ACE_CHAR_T>::fast_rep () const
 {
   return this->rep_;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T *
-ACE_String_Base<ACE_CHAR_T>::c_str (void) const
+ACE_String_Base<ACE_CHAR_T>::c_str () const
 {
   return this->rep_;
 }
@@ -140,28 +140,28 @@ ACE_String_Base<ACE_CHAR_T>::strstr (const ACE_String_Base<ACE_CHAR_T> &s) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::iterator
-ACE_String_Base<ACE_CHAR_T>::begin (void)
+ACE_String_Base<ACE_CHAR_T>::begin ()
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::begin");
   return iterator (*this);
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::const_iterator
-ACE_String_Base<ACE_CHAR_T>::begin (void) const
+ACE_String_Base<ACE_CHAR_T>::begin () const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::begin");
   return const_iterator (*this);
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::iterator
-ACE_String_Base<ACE_CHAR_T>::end (void)
+ACE_String_Base<ACE_CHAR_T>::end ()
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::end");
   return iterator (*this, 1);
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::const_iterator
-ACE_String_Base<ACE_CHAR_T>::end (void) const
+ACE_String_Base<ACE_CHAR_T>::end () const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::end");
   return const_iterator (*this, 1);
@@ -188,13 +188,13 @@ ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter)
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-ACE_String_Base_Iterator <ACE_CHAR_T>::~ACE_String_Base_Iterator (void)
+ACE_String_Base_Iterator <ACE_CHAR_T>::~ACE_String_Base_Iterator ()
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::~ACE_String_Base_Iterator");
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-int ACE_String_Base_Iterator <ACE_CHAR_T>::done (void) const
+int ACE_String_Base_Iterator <ACE_CHAR_T>::done () const
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::done");
 
@@ -202,7 +202,7 @@ int ACE_String_Base_Iterator <ACE_CHAR_T>::done (void) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-ACE_CHAR_T & ACE_String_Base_Iterator <ACE_CHAR_T>::operator * (void)
+ACE_CHAR_T & ACE_String_Base_Iterator <ACE_CHAR_T>::operator * ()
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator *");
 
@@ -211,7 +211,7 @@ ACE_CHAR_T & ACE_String_Base_Iterator <ACE_CHAR_T>::operator * (void)
 
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Iterator <ACE_CHAR_T> &
-ACE_String_Base_Iterator <ACE_CHAR_T>::operator ++ (void)
+ACE_String_Base_Iterator <ACE_CHAR_T>::operator ++ ()
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator ++");
 
@@ -237,7 +237,7 @@ ACE_String_Base_Iterator <ACE_CHAR_T>::operator ++ (int)
 
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Iterator <ACE_CHAR_T> &
-ACE_String_Base_Iterator <ACE_CHAR_T>::operator -- (void)
+ACE_String_Base_Iterator <ACE_CHAR_T>::operator -- ()
 {
   ACE_TRACE ("ACE_String_Base_Iterator<ACE_CHAR_T>::operator --");
 
@@ -324,13 +324,13 @@ ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-ACE_String_Base_Const_Iterator <ACE_CHAR_T>::~ACE_String_Base_Const_Iterator (void)
+ACE_String_Base_Const_Iterator <ACE_CHAR_T>::~ACE_String_Base_Const_Iterator ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::~ACE_String_Base_Const_Iterator");
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::done (void) const
+int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::done () const
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::done");
 
@@ -338,7 +338,7 @@ int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::done (void) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-const ACE_CHAR_T & ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator * (void)
+const ACE_CHAR_T & ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator * ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator *");
 
@@ -347,7 +347,7 @@ const ACE_CHAR_T & ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator * (void
 
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Const_Iterator <ACE_CHAR_T> &
-ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator ++ (void)
+ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator ++ ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator ++");
 
@@ -373,7 +373,7 @@ ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator ++ (int)
 
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Const_Iterator <ACE_CHAR_T> &
-ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator -- (void)
+ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator -- ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator --");
 

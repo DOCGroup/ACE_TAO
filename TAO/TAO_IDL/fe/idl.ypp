@@ -765,7 +765,7 @@ template_module_ref
             }
 
           AST_Template_Module *ref =
-            AST_Template_Module::narrow_from_decl (d);
+            dynamic_cast<AST_Template_Module*> (d);
 
           if (ref == 0)
             {
@@ -857,7 +857,7 @@ template_module_inst
             }
           else
             {
-              ref = AST_Template_Module::narrow_from_decl (d);
+              ref = dynamic_cast<AST_Template_Module*> (d);
 
               if (ref == 0)
                 {
@@ -1174,7 +1174,7 @@ value_concrete_decl :
           idl_global->set_parse_state (IDL_GlobalData::PS_ValueTypeQsSeen);
 
           AST_ValueType *vt =
-            AST_ValueType::narrow_from_scope (
+            dynamic_cast<AST_ValueType*> (
                 idl_global->scopes ().top_non_null ()
               );
 
@@ -1217,13 +1217,13 @@ value_abs_decl :
                     false,
                     false
                   );
-              i = AST_Interface::narrow_from_decl (v);
+              i = dynamic_cast<AST_Interface*> (v);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the valuetype to its definition scope
                */
-              v = AST_ValueType::narrow_from_decl (i);
+              v = dynamic_cast<AST_ValueType*> (i);
               (void) s->fe_add_valuetype (v);
 
               // FE_OBVHeader is not automatically destroyed in the AST
@@ -1401,11 +1401,11 @@ value_box_decl
               */
               AST_Type *tp = 0;
               AST_Typedef *td
-                = AST_Typedef::narrow_from_decl ($2);
+                = dynamic_cast<AST_Typedef*> ($2);
 
               if (td == 0)
                 {
-                  tp = AST_Type::narrow_from_decl ($2);
+                  tp = dynamic_cast<AST_Type*> ($2);
                 }
               else
                 {
@@ -1967,7 +1967,7 @@ const_type
                */
               while (d->node_type () == AST_Decl::NT_typedef)
                 {
-                  t = AST_Typedef::narrow_from_decl (d);
+                  t = dynamic_cast<AST_Typedef*> (d);
 
                   if (t == 0)
                     {
@@ -1979,7 +1979,7 @@ const_type
 
               if (d->node_type () == AST_Decl::NT_pre_defined)
                 {
-                  c = AST_PredefinedType::narrow_from_decl (d);
+                  c = dynamic_cast<AST_PredefinedType*> (d);
 
                   $$ = FE_Utils::PredefinedTypeToExprType (c->pt ());
                 }
@@ -1995,7 +1995,7 @@ const_type
                 {
                   $$ = AST_Expression::EV_enum;
                   tao_enum_constant_decl =
-                    AST_Enum::narrow_from_decl (d);
+                    dynamic_cast<AST_Enum*> (d);
                 }
               else
                 {
@@ -2512,7 +2512,7 @@ annotation_appl
             lookup_by_name (name);
           if (d)
             {
-              decl = AST_Annotation_Decl::narrow_from_decl (d);
+              decl = dynamic_cast<AST_Annotation_Decl*> (d);
               if (decl)
                 {
                   idl_global->scopes ().push (decl);
@@ -3116,7 +3116,7 @@ struct_type
           /*
            * Done with this struct. Pop its scope off the scopes stack.
            */
-          $$ = AST_Structure::narrow_from_scope (
+          $$ = dynamic_cast<AST_Structure*> (
                    idl_global->scopes ().top_non_null ()
                  );
           idl_global->scopes ().pop ();
@@ -3256,9 +3256,9 @@ union_type
                                                     s->is_local (),
                                                     s->is_abstract ());
 
-              AST_Structure *st = AST_Structure::narrow_from_decl (u);
+              AST_Structure *st = dynamic_cast<AST_Structure*> (u);
               AST_Structure::fwd_redefinition_helper (st, s);
-              u = AST_Union::narrow_from_decl (st);
+              u = dynamic_cast<AST_Union*> (st);
               (void) s->fe_add_union (u);
             }
 
@@ -3297,7 +3297,7 @@ union_type
           if ($7 != 0 && s != 0)
             {
               AST_ConcreteType *tp =
-                AST_ConcreteType::narrow_from_decl ($7);
+                dynamic_cast<AST_ConcreteType*> ($7);
 
               if (tp == 0)
                 {
@@ -3313,7 +3313,7 @@ union_type
                                                         s->is_abstract ());
 
                   /* Narrow the enclosing scope. */
-                  AST_Union *e = AST_Union::narrow_from_scope (top);
+                  AST_Union *e = dynamic_cast<AST_Union*> (top);
 
                   e->redefine (u);
                   e->disc_annotations (*disc_annotations); // Set Discriminator Annotations
@@ -3349,7 +3349,7 @@ union_type
           /*
            * Done with this union. Pop its scope from the scopes stack.
            */
-          $$ = AST_Union::narrow_from_scope (
+          $$ = dynamic_cast<AST_Union*> (
                    idl_global->scopes ().top_non_null ()
                  );
 
@@ -3426,7 +3426,7 @@ switch_type_spec :
                       found = true;
                       break;
                     case AST_Decl::NT_pre_defined:
-                      p = AST_PredefinedType::narrow_from_decl (d);
+                      p = dynamic_cast<AST_PredefinedType*> (d);
 
                       if (p != 0)
                         {
@@ -3466,7 +3466,7 @@ switch_type_spec :
 
                       break;
                     case AST_Decl::NT_typedef:
-                      t = AST_Typedef::narrow_from_decl (d);
+                      t = dynamic_cast<AST_Typedef*> (d);
 
                       if (t != 0)
                         {
@@ -3789,7 +3789,7 @@ enum_type :
             }
           else
             {
-              $$ = AST_Enum::narrow_from_scope (
+              $$ = dynamic_cast<AST_Enum*> (
                        idl_global->scopes ().top_non_null ()
                      );
               idl_global->scopes ().pop ();
@@ -3828,7 +3828,7 @@ enumerator :
           if (s != 0
               && s->scope_node_type () == AST_Decl::NT_enum)
             {
-              c = AST_Enum::narrow_from_scope (s);
+              c = dynamic_cast<AST_Enum*> (s);
 
               if (c != 0)
                 {
@@ -3907,7 +3907,7 @@ sequence_type_spec
             }
           else if (type)
             {
-              AST_Type *tp = AST_Type::narrow_from_decl (type);
+              AST_Type *tp = dynamic_cast<AST_Type*> (type);
 
               if (0 == tp)
                 {
@@ -3969,7 +3969,7 @@ sequence_type_spec
            */
           if (type)
             {
-              AST_Type *tp = AST_Type::narrow_from_decl (type);
+              AST_Type *tp = dynamic_cast<AST_Type*> (type);
 
               if (tp == 0)
                 {
@@ -4073,7 +4073,7 @@ string_type_spec
                * Add this AST_String to the types defined in the global scope.
                */
               idl_global->root ()->fe_add_string (
-                AST_String::narrow_from_decl (
+                dynamic_cast<AST_String*> (
                   tao_string_decl));
 
               idl_global->err ()->anonymous_type_diagnostic ();
@@ -4102,7 +4102,7 @@ string_type_spec
            * Add this AST_String to the types defined in the global scope.
            */
           idl_global->root ()->fe_add_string (
-            AST_String::narrow_from_decl (
+            dynamic_cast<AST_String*> (
               tao_string_decl));
 
           $$ = tao_string_decl;
@@ -4148,7 +4148,7 @@ wstring_type_spec
                * Add this AST_String to the types defined in the global scope.
                */
               idl_global->root ()->fe_add_string (
-                AST_String::narrow_from_decl (
+                dynamic_cast<AST_String*> (
                   string));
 
               idl_global->err ()->anonymous_type_diagnostic ();
@@ -4174,7 +4174,7 @@ wstring_type_spec
            * Add this AST_String to the types defined in the global scope.
            */
           idl_global->root ()->fe_add_string (
-            AST_String::narrow_from_decl (
+            dynamic_cast<AST_String*> (
               string));
 
           $$ = string;
@@ -4570,7 +4570,7 @@ operation
            */
           if (scope != 0 && type_node != 0)
             {
-              AST_Type *type = AST_Type::narrow_from_decl (type_node);
+              AST_Type *type = dynamic_cast<AST_Type*> (type_node);
 
               if (type == 0)
                 {
@@ -4629,7 +4629,7 @@ operation
            */
           if (s != 0 && s->scope_node_type () == AST_Decl::NT_op)
             {
-              o = AST_Operation::narrow_from_scope (s);
+              o = dynamic_cast<AST_Operation*> (s);
 
               if ($8 != 0 && o != 0)
                 {
@@ -4739,7 +4739,7 @@ init_decl
           if ($7)
             {
               UTL_Scope *s = idl_global->scopes ().top_non_null ();
-              AST_Factory *f = AST_Factory::narrow_from_scope (s);
+              AST_Factory *f = dynamic_cast<AST_Factory*> (s);
               (void) f->fe_add_exceptions ($7);
             }
 
@@ -4940,7 +4940,7 @@ param_type_spec
             {
               d->last_referenced_as ($1);
               AST_Decl::NodeType nt = d->node_type ();
-              AST_Type *t = AST_Type::narrow_from_decl (d);
+              AST_Type *t = dynamic_cast<AST_Type*> (d);
               AST_Typedef *td = 0;
               bool can_be_undefined = false;
 
@@ -4949,14 +4949,14 @@ param_type_spec
                   // This code block ensures that a sequence of
                   // as-yet-undefined struct or union isn't used
                   // as a return type or argument.
-                  td = AST_Typedef::narrow_from_decl (d);
+                  td = dynamic_cast<AST_Typedef*> (d);
                   AST_Type *pbt = td->primitive_base_type ();
 
                   if (pbt->node_type () == AST_Decl::NT_sequence)
                     {
                       t = pbt;
                       AST_Sequence *seq_type =
-                        AST_Sequence::narrow_from_decl (pbt);
+                        dynamic_cast<AST_Sequence*> (pbt);
                       AST_Type *elem_type =
                         seq_type->base_type ();
                       AST_Decl::NodeType elem_nt =
@@ -4965,7 +4965,7 @@ param_type_spec
                       if (elem_nt == AST_Decl::NT_typedef)
                         {
                           AST_Typedef *elem_td =
-                            AST_Typedef::narrow_from_decl (elem_type);
+                            dynamic_cast<AST_Typedef*> (elem_type);
                           elem_type = elem_td->primitive_base_type ();
                           elem_nt = elem_type->node_type ();
                         }
@@ -4997,7 +4997,7 @@ param_type_spec
                   // want the full definition, but we need to
                   // check that it's been fully defined.
                   AST_StructureFwd *fwd =
-                    AST_StructureFwd::narrow_from_decl (d);
+                    dynamic_cast<AST_StructureFwd*> (d);
 
                   if (fwd != 0)
                     {
@@ -5501,7 +5501,7 @@ provides_decl : IDL_PROVIDES interface_type id
                   case AST_Decl::NT_interface:
                     break;
                   case AST_Decl::NT_param_holder:
-                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    ph = dynamic_cast<AST_Param_Holder*> (d);
                     nt = ph->info ()->type_;
 
                     if (nt != AST_Decl::NT_type
@@ -5542,7 +5542,7 @@ provides_decl : IDL_PROVIDES interface_type id
           if (so_far_so_good)
             {
               AST_Type *port_interface_type =
-                AST_Type::narrow_from_decl (d);
+                dynamic_cast<AST_Type*> (d);
 
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
@@ -5625,7 +5625,7 @@ uses_decl : uses_opt_multiple interface_type id
                   case AST_Decl::NT_interface:
                     break;
                   case AST_Decl::NT_param_holder:
-                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    ph = dynamic_cast<AST_Param_Holder*> (d);
                     nt = ph->info ()->type_;
 
                     if (nt != AST_Decl::NT_type
@@ -5666,7 +5666,7 @@ uses_decl : uses_opt_multiple interface_type id
           if (so_far_so_good)
             {
               AST_Type *port_interface_type =
-                AST_Type::narrow_from_decl (d);
+                dynamic_cast<AST_Type*> (d);
 
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
@@ -5679,7 +5679,7 @@ uses_decl : uses_opt_multiple interface_type id
               s->fe_add_uses (uses);
 
               AST_Component *c =
-                AST_Component::narrow_from_scope (s);
+                dynamic_cast<AST_Component*> (s);
 
               if (c != 0
                   && uses->is_multiple ()
@@ -5751,7 +5751,7 @@ emits_decl
                   case AST_Decl::NT_eventtype:
                     break;
                   case AST_Decl::NT_param_holder:
-                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    ph = dynamic_cast<AST_Param_Holder*> (d);
                     nt = ph->info ()->type_;
 
                     if (nt != AST_Decl::NT_type
@@ -5776,7 +5776,7 @@ emits_decl
           if (so_far_so_good)
             {
               AST_Type *event_type =
-                AST_Type::narrow_from_decl (d);
+                dynamic_cast<AST_Type*> (d);
 
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
@@ -5826,7 +5826,7 @@ publishes_decl
                   case AST_Decl::NT_eventtype:
                     break;
                   case AST_Decl::NT_param_holder:
-                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    ph = dynamic_cast<AST_Param_Holder*> (d);
                     nt = ph->info ()->type_;
 
                     if (nt != AST_Decl::NT_type
@@ -5851,7 +5851,7 @@ publishes_decl
           if (so_far_so_good)
             {
               AST_Type *event_type =
-                AST_Type::narrow_from_decl (d);
+                dynamic_cast<AST_Type*> (d);
 
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
@@ -5898,7 +5898,7 @@ consumes_decl
                   case AST_Decl::NT_eventtype:
                     break;
                   case AST_Decl::NT_param_holder:
-                    ph = AST_Param_Holder::narrow_from_decl (d);
+                    ph = dynamic_cast<AST_Param_Holder*> (d);
                     nt = ph->info ()->type_;
 
                     if (nt != AST_Decl::NT_type
@@ -5923,7 +5923,7 @@ consumes_decl
           if (so_far_so_good)
             {
               AST_Type *event_type =
-                AST_Type::narrow_from_decl (d);
+                dynamic_cast<AST_Type*> (d);
 
               // Strip off _cxx_, if any, for port name.
               FE_Utils::original_local_name ($3);
@@ -6336,13 +6336,13 @@ event_abs_decl :
                     false,
                     false
                   );
-              i = AST_Interface::narrow_from_decl (e);
+              i = dynamic_cast<AST_Interface*> (e);
               AST_Interface::fwd_redefinition_helper (i,
                                                       s);
               /*
                * Add the eventetype to its definition scope
                */
-              e = AST_EventType::narrow_from_decl (i);
+              e = dynamic_cast<AST_EventType*> (i);
               (void) s->fe_add_eventtype (e);
             }
 
@@ -6811,7 +6811,7 @@ extended_port_decl
             }
           else
             {
-              pt = AST_PortType::narrow_from_decl (d);
+              pt = dynamic_cast<AST_PortType*> (d);
 
               if (pt == 0)
                 {
@@ -6841,12 +6841,12 @@ extended_port_decl
                 {
                   d = i.item ();
 
-                  AST_Uses *u = AST_Uses::narrow_from_decl (d);
+                  AST_Uses *u = dynamic_cast<AST_Uses*> (d);
 
                   if (u != 0 && u->is_multiple ())
                     {
                       AST_Component *c =
-                        AST_Component::narrow_from_scope (s);
+                        dynamic_cast<AST_Component*> (s);
 
                       FE_Utils::create_uses_multiple_stuff (
                         c,
@@ -6878,7 +6878,7 @@ extended_port_decl
             }
            else
              {
-               pt = AST_PortType::narrow_from_decl (d);
+               pt = dynamic_cast<AST_PortType*> (d);
 
                if (pt == 0)
                  {
@@ -7044,7 +7044,7 @@ connector_header
                 }
 
               parent =
-                AST_Connector::narrow_from_decl (d);
+                dynamic_cast<AST_Connector*> (d);
 
               if (parent == 0)
                 {

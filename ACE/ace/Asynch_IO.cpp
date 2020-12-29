@@ -13,61 +13,61 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
-ACE_Asynch_Result::bytes_transferred (void) const
+ACE_Asynch_Result::bytes_transferred () const
 {
   return this->implementation ()->bytes_transferred ();
 }
 
 const void *
-ACE_Asynch_Result::act (void) const
+ACE_Asynch_Result::act () const
 {
   return this->implementation ()->act ();
 }
 
 int
-ACE_Asynch_Result::success (void) const
+ACE_Asynch_Result::success () const
 {
   return this->implementation ()->success ();
 }
 
 const void *
-ACE_Asynch_Result::completion_key (void) const
+ACE_Asynch_Result::completion_key () const
 {
   return this->implementation ()->completion_key ();
 }
 
 unsigned long
-ACE_Asynch_Result::error (void) const
+ACE_Asynch_Result::error () const
 {
   return this->implementation ()->error ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Result::event (void) const
+ACE_Asynch_Result::event () const
 {
   return this->implementation ()->event ();
 }
 
 unsigned long
-ACE_Asynch_Result::offset (void) const
+ACE_Asynch_Result::offset () const
 {
   return this->implementation ()->offset ();
 }
 
 unsigned long
-ACE_Asynch_Result::offset_high (void) const
+ACE_Asynch_Result::offset_high () const
 {
   return this->implementation ()->offset_high ();
 }
 
 int
-ACE_Asynch_Result::priority (void) const
+ACE_Asynch_Result::priority () const
 {
   return this->implementation ()->priority ();
 }
 
 int
-ACE_Asynch_Result::signal_number (void) const
+ACE_Asynch_Result::signal_number () const
 {
   return this->implementation ()->signal_number ();
 }
@@ -77,13 +77,13 @@ ACE_Asynch_Result::ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation)
 {
 }
 
-ACE_Asynch_Result::~ACE_Asynch_Result (void)
+ACE_Asynch_Result::~ACE_Asynch_Result ()
 {
   // Proactor deletes the implementation when the <complete> finishes.
 }
 
 ACE_Asynch_Result_Impl *
-ACE_Asynch_Result::implementation (void) const
+ACE_Asynch_Result::implementation () const
 {
   return this->implementation_;
 }
@@ -103,7 +103,7 @@ ACE_Asynch_Operation::open (ACE_Handler &handler,
 }
 
 int
-ACE_Asynch_Operation::cancel (void)
+ACE_Asynch_Operation::cancel ()
 {
   if (0 == this->implementation ())
     {
@@ -114,7 +114,7 @@ ACE_Asynch_Operation::cancel (void)
 }
 
 ACE_Proactor *
-ACE_Asynch_Operation::proactor (void) const
+ACE_Asynch_Operation::proactor () const
 {
   if (0 == this->implementation ())
     {
@@ -124,11 +124,11 @@ ACE_Asynch_Operation::proactor (void) const
   return this->implementation ()->proactor ();
 }
 
-ACE_Asynch_Operation::ACE_Asynch_Operation (void)
+ACE_Asynch_Operation::ACE_Asynch_Operation ()
 {
 }
 
-ACE_Asynch_Operation::~ACE_Asynch_Operation (void)
+ACE_Asynch_Operation::~ACE_Asynch_Operation ()
 {
 }
 
@@ -149,12 +149,12 @@ ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
 
 // ************************************************************
 
-ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream (void)
+ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Read_Stream::~ACE_Asynch_Read_Stream (void)
+ACE_Asynch_Read_Stream::~ACE_Asynch_Read_Stream ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -222,7 +222,7 @@ ACE_Asynch_Read_Stream::readv (ACE_Message_Block &message_block,
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Read_Stream::implementation (void) const
+ACE_Asynch_Read_Stream::implementation () const
 {
   return this->implementation_;
 }
@@ -230,19 +230,19 @@ ACE_Asynch_Read_Stream::implementation (void) const
 // ************************************************************
 
 size_t
-ACE_Asynch_Read_Stream::Result::bytes_to_read (void) const
+ACE_Asynch_Read_Stream::Result::bytes_to_read () const
 {
   return this->implementation ()->bytes_to_read ();
 }
 
 ACE_Message_Block &
-ACE_Asynch_Read_Stream::Result::message_block (void) const
+ACE_Asynch_Read_Stream::Result::message_block () const
 {
   return this->implementation ()->message_block ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Read_Stream::Result::handle (void) const
+ACE_Asynch_Read_Stream::Result::handle () const
 {
   return this->implementation ()->handle ();
 }
@@ -253,26 +253,26 @@ ACE_Asynch_Read_Stream::Result::Result (ACE_Asynch_Read_Stream_Result_Impl *impl
 {
 }
 
-ACE_Asynch_Read_Stream::Result::~Result (void)
+ACE_Asynch_Read_Stream::Result::~Result ()
 {
   // Proactor will delete the implementation after <complete> is
   // finished.
 }
 
 ACE_Asynch_Read_Stream_Result_Impl *
-ACE_Asynch_Read_Stream::Result::implementation (void) const
+ACE_Asynch_Read_Stream::Result::implementation () const
 {
   return this->implementation_;
 }
 
 // ***************************************************
 
-ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream (void)
+ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Write_Stream::~ACE_Asynch_Write_Stream (void)
+ACE_Asynch_Write_Stream::~ACE_Asynch_Write_Stream ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -340,7 +340,7 @@ ACE_Asynch_Write_Stream::writev (ACE_Message_Block &message_block,
 #endif /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Write_Stream::implementation (void) const
+ACE_Asynch_Write_Stream::implementation () const
 {
   return this->implementation_;
 }
@@ -348,19 +348,19 @@ ACE_Asynch_Write_Stream::implementation (void) const
 // ************************************************************
 
 size_t
-ACE_Asynch_Write_Stream::Result::bytes_to_write (void) const
+ACE_Asynch_Write_Stream::Result::bytes_to_write () const
 {
   return this->implementation ()->bytes_to_write ();
 }
 
 ACE_Message_Block &
-ACE_Asynch_Write_Stream::Result::message_block (void) const
+ACE_Asynch_Write_Stream::Result::message_block () const
 {
   return this->implementation ()->message_block ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Write_Stream::Result::handle (void) const
+ACE_Asynch_Write_Stream::Result::handle () const
 {
   return this->implementation ()->handle ();
 }
@@ -371,26 +371,26 @@ ACE_Asynch_Write_Stream::Result::Result (ACE_Asynch_Write_Stream_Result_Impl *im
 {
 }
 
-ACE_Asynch_Write_Stream::Result::~Result (void)
+ACE_Asynch_Write_Stream::Result::~Result ()
 {
   // Proactor will delte the implementation when the <complete> call
   // finishes.
 }
 
 ACE_Asynch_Write_Stream_Result_Impl *
-ACE_Asynch_Write_Stream::Result::implementation (void) const
+ACE_Asynch_Write_Stream::Result::implementation () const
 {
   return this->implementation_;
 }
 
 // ************************************************************
 
-ACE_Asynch_Read_File::ACE_Asynch_Read_File (void)
+ACE_Asynch_Read_File::ACE_Asynch_Read_File ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Read_File::~ACE_Asynch_Read_File (void)
+ACE_Asynch_Read_File::~ACE_Asynch_Read_File ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -466,7 +466,7 @@ ACE_Asynch_Read_File::readv (ACE_Message_Block &message_block,
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Read_File::implementation (void) const
+ACE_Asynch_Read_File::implementation () const
 {
   return this->implementation_;
 }
@@ -479,26 +479,26 @@ ACE_Asynch_Read_File::Result::Result (ACE_Asynch_Read_File_Result_Impl *implemen
 {
 }
 
-ACE_Asynch_Read_File::Result::~Result (void)
+ACE_Asynch_Read_File::Result::~Result ()
 {
   // Proactor will delete the implementation when <complete> call
   // completes.
 }
 
 ACE_Asynch_Read_File_Result_Impl *
-ACE_Asynch_Read_File::Result::implementation (void) const
+ACE_Asynch_Read_File::Result::implementation () const
 {
   return this->implementation_;
 }
 
 // ************************************************************
 
-ACE_Asynch_Write_File::ACE_Asynch_Write_File (void)
+ACE_Asynch_Write_File::ACE_Asynch_Write_File ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Write_File::~ACE_Asynch_Write_File (void)
+ACE_Asynch_Write_File::~ACE_Asynch_Write_File ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -574,7 +574,7 @@ ACE_Asynch_Write_File::writev (ACE_Message_Block &message_block,
 #endif /* (defined (ACE_WIN32) && !defined (ACE_HAS_WINCE)) */
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Write_File::implementation (void) const
+ACE_Asynch_Write_File::implementation () const
 {
   return this->implementation_;
 }
@@ -587,26 +587,26 @@ ACE_Asynch_Write_File::Result::Result (ACE_Asynch_Write_File_Result_Impl *implem
 {
 }
 
-ACE_Asynch_Write_File::Result::~Result (void)
+ACE_Asynch_Write_File::Result::~Result ()
 {
   // Proactor will delete the implementation when the <complete> call
   // completes.
 }
 
 ACE_Asynch_Write_File_Result_Impl *
-ACE_Asynch_Write_File::Result::implementation (void) const
+ACE_Asynch_Write_File::Result::implementation () const
 {
   return this->implementation_;
 }
 
 // *********************************************************************
 
-ACE_Asynch_Accept::ACE_Asynch_Accept (void)
+ACE_Asynch_Accept::ACE_Asynch_Accept ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Accept::~ACE_Asynch_Accept (void)
+ACE_Asynch_Accept::~ACE_Asynch_Accept ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -657,7 +657,7 @@ ACE_Asynch_Accept::accept (ACE_Message_Block &message_block,
 }
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Accept::implementation (void)  const
+ACE_Asynch_Accept::implementation ()  const
 {
   return this->implementation_;
 }
@@ -665,25 +665,25 @@ ACE_Asynch_Accept::implementation (void)  const
 // ************************************************************
 
 size_t
-ACE_Asynch_Accept::Result::bytes_to_read (void) const
+ACE_Asynch_Accept::Result::bytes_to_read () const
 {
   return this->implementation ()->bytes_to_read ();
 }
 
 ACE_Message_Block &
-ACE_Asynch_Accept::Result::message_block (void) const
+ACE_Asynch_Accept::Result::message_block () const
 {
   return this->implementation ()->message_block ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Accept::Result::listen_handle (void) const
+ACE_Asynch_Accept::Result::listen_handle () const
 {
   return this->implementation ()->listen_handle ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Accept::Result::accept_handle (void) const
+ACE_Asynch_Accept::Result::accept_handle () const
 {
   return this->implementation ()->accept_handle ();
 }
@@ -694,14 +694,14 @@ ACE_Asynch_Accept::Result::Result (ACE_Asynch_Accept_Result_Impl *implementation
 {
 }
 
-ACE_Asynch_Accept::Result::~Result (void)
+ACE_Asynch_Accept::Result::~Result ()
 {
   // Proactor will delete the implementation when the <complete> call
   // completes.
 }
 
 ACE_Asynch_Accept_Result_Impl *
-ACE_Asynch_Accept::Result::implementation (void) const
+ACE_Asynch_Accept::Result::implementation () const
 {
   return this->implementation_;
 }
@@ -710,12 +710,12 @@ ACE_Asynch_Accept::Result::implementation (void) const
 
 // *********************************************************************
 
-ACE_Asynch_Connect::ACE_Asynch_Connect (void)
+ACE_Asynch_Connect::ACE_Asynch_Connect ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Connect::~ACE_Asynch_Connect (void)
+ACE_Asynch_Connect::~ACE_Asynch_Connect ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -766,7 +766,7 @@ ACE_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 }
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Connect::implementation (void)  const
+ACE_Asynch_Connect::implementation ()  const
 {
   return this->implementation_;
 }
@@ -779,33 +779,33 @@ ACE_Asynch_Connect::Result::Result (ACE_Asynch_Connect_Result_Impl *implementati
 {
 }
 
-ACE_Asynch_Connect::Result::~Result (void)
+ACE_Asynch_Connect::Result::~Result ()
 {
   // Proactor will delete the implementation when the <complete> call
   // completes.
 }
 
 ACE_HANDLE
-ACE_Asynch_Connect::Result::connect_handle (void) const
+ACE_Asynch_Connect::Result::connect_handle () const
 {
   return this->implementation ()->connect_handle ();
 }
 
 
 ACE_Asynch_Connect_Result_Impl *
-ACE_Asynch_Connect::Result::implementation (void) const
+ACE_Asynch_Connect::Result::implementation () const
 {
   return this->implementation_;
 }
 
 // ************************************************************
 
-ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File (void)
+ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Transmit_File::~ACE_Asynch_Transmit_File (void)
+ACE_Asynch_Transmit_File::~ACE_Asynch_Transmit_File ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -862,7 +862,7 @@ ACE_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
 }
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Transmit_File::implementation (void) const
+ACE_Asynch_Transmit_File::implementation () const
 {
   return this->implementation_;
 }
@@ -870,37 +870,37 @@ ACE_Asynch_Transmit_File::implementation (void) const
 // ****************************************************************************
 
 ACE_HANDLE
-ACE_Asynch_Transmit_File::Result::socket (void) const
+ACE_Asynch_Transmit_File::Result::socket () const
 {
   return this->implementation ()->socket ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Transmit_File::Result::file (void) const
+ACE_Asynch_Transmit_File::Result::file () const
 {
   return this->implementation ()->file ();
 }
 
 ACE_Asynch_Transmit_File::Header_And_Trailer *
-ACE_Asynch_Transmit_File::Result::header_and_trailer (void) const
+ACE_Asynch_Transmit_File::Result::header_and_trailer () const
 {
   return this->implementation ()->header_and_trailer ();
 }
 
 size_t
-ACE_Asynch_Transmit_File::Result::bytes_to_write (void) const
+ACE_Asynch_Transmit_File::Result::bytes_to_write () const
 {
   return this->implementation ()->bytes_to_write ();
 }
 
 size_t
-ACE_Asynch_Transmit_File::Result::bytes_per_send (void) const
+ACE_Asynch_Transmit_File::Result::bytes_per_send () const
 {
   return this->implementation ()->bytes_per_send ();
 }
 
 unsigned long
-ACE_Asynch_Transmit_File::Result::flags (void) const
+ACE_Asynch_Transmit_File::Result::flags () const
 {
   return this->implementation ()->flags ();
 }
@@ -911,12 +911,12 @@ ACE_Asynch_Transmit_File::Result::Result (ACE_Asynch_Transmit_File_Result_Impl *
 {
 }
 
-ACE_Asynch_Transmit_File::Result::~Result (void)
+ACE_Asynch_Transmit_File::Result::~Result ()
 {
 }
 
 ACE_Asynch_Transmit_File_Result_Impl *
-ACE_Asynch_Transmit_File::Result::implementation (void) const
+ACE_Asynch_Transmit_File::Result::implementation () const
 {
   return this->implementation_;
 }
@@ -934,7 +934,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::Header_And_Trailer (ACE_Message_Bl
 {
 }
 
-ACE_Asynch_Transmit_File::Header_And_Trailer::~Header_And_Trailer (void)
+ACE_Asynch_Transmit_File::Header_And_Trailer::~Header_And_Trailer ()
 {
 }
 
@@ -951,7 +951,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::header_and_trailer (ACE_Message_Bl
 }
 
 ACE_Message_Block *
-ACE_Asynch_Transmit_File::Header_And_Trailer::header (void) const
+ACE_Asynch_Transmit_File::Header_And_Trailer::header () const
 {
   return this->header_;
 }
@@ -963,7 +963,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::header (ACE_Message_Block *message
 }
 
 size_t
-ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (void) const
+ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes () const
 {
   return this->header_bytes_;
 }
@@ -975,7 +975,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::header_bytes (size_t bytes)
 }
 
 ACE_Message_Block *
-ACE_Asynch_Transmit_File::Header_And_Trailer::trailer (void) const
+ACE_Asynch_Transmit_File::Header_And_Trailer::trailer () const
 {
   return this->trailer_;
 }
@@ -987,7 +987,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::trailer (ACE_Message_Block *messag
 }
 
 size_t
-ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (void) const
+ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes () const
 {
   return this->trailer_bytes_;
 }
@@ -999,7 +999,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::trailer_bytes (size_t bytes)
 }
 
 ACE_LPTRANSMIT_FILE_BUFFERS
-ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
+ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers ()
 {
   // If both are zero, return zero
   if (this->header_ == 0 && this->trailer_ == 0)
@@ -1051,7 +1051,7 @@ ACE_Asynch_Transmit_File::Header_And_Trailer::transmit_buffers (void)
 
 // *********************************************************************
 
-ACE_Handler::ACE_Handler (void)
+ACE_Handler::ACE_Handler ()
   : proactor_ (0), handle_ (ACE_INVALID_HANDLE)
 {
   ACE_Handler::Proxy *p;
@@ -1067,7 +1067,7 @@ ACE_Handler::ACE_Handler (ACE_Proactor *d)
   this->proxy_.reset (p);
 }
 
-ACE_Handler::~ACE_Handler (void)
+ACE_Handler::~ACE_Handler ()
 {
   ACE_Handler::Proxy *p = this->proxy_.get ();
   if (p)
@@ -1126,12 +1126,12 @@ ACE_Handler::handle_time_out (const ACE_Time_Value & /* tv */,
 }
 
 void
-ACE_Handler::handle_wakeup (void)
+ACE_Handler::handle_wakeup ()
 {
 }
 
 ACE_Proactor *
-ACE_Handler::proactor (void)
+ACE_Handler::proactor ()
 {
   return this->proactor_;
 }
@@ -1143,7 +1143,7 @@ ACE_Handler::proactor (ACE_Proactor *p)
 }
 
 ACE_HANDLE
-ACE_Handler::handle (void) const
+ACE_Handler::handle () const
 {
   return this->handle_;
 }
@@ -1155,18 +1155,18 @@ ACE_Handler::handle (ACE_HANDLE h)
 }
 
 ACE_Refcounted_Auto_Ptr<ACE_Handler::Proxy, ACE_SYNCH_MUTEX> &
-ACE_Handler::proxy (void)
+ACE_Handler::proxy ()
 {
   return this->proxy_;
 }
 
 // ************************************************************
 
-ACE_Service_Handler::ACE_Service_Handler (void)
+ACE_Service_Handler::ACE_Service_Handler ()
 {
 }
 
-ACE_Service_Handler::~ACE_Service_Handler (void)
+ACE_Service_Handler::~ACE_Service_Handler ()
 {
 }
 
@@ -1190,12 +1190,12 @@ ACE_Service_Handler::open (ACE_HANDLE,
 
 // ************************************************************
 
-ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram (void)
+ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Read_Dgram::~ACE_Asynch_Read_Dgram (void)
+ACE_Asynch_Read_Dgram::~ACE_Asynch_Read_Dgram ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -1246,7 +1246,7 @@ ACE_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
 }
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Read_Dgram::implementation (void) const
+ACE_Asynch_Read_Dgram::implementation () const
 {
   return this->implementation_;
 }
@@ -1260,25 +1260,25 @@ ACE_Asynch_Read_Dgram::Result::remote_address (ACE_Addr& addr) const
 }
 
 ACE_Message_Block*
-ACE_Asynch_Read_Dgram::Result::message_block (void) const
+ACE_Asynch_Read_Dgram::Result::message_block () const
 {
   return this->implementation ()->message_block ();
 }
 
 int
-ACE_Asynch_Read_Dgram::Result::flags (void) const
+ACE_Asynch_Read_Dgram::Result::flags () const
 {
   return this->implementation ()->flags ();
 }
 
 size_t
-ACE_Asynch_Read_Dgram::Result::bytes_to_read (void) const
+ACE_Asynch_Read_Dgram::Result::bytes_to_read () const
 {
   return this->implementation ()->bytes_to_read ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Read_Dgram::Result::handle (void) const
+ACE_Asynch_Read_Dgram::Result::handle () const
 {
   return this->implementation ()->handle();
 }
@@ -1289,12 +1289,12 @@ ACE_Asynch_Read_Dgram::Result::Result (ACE_Asynch_Read_Dgram_Result_Impl *implem
 {
 }
 
-ACE_Asynch_Read_Dgram::Result::~Result (void)
+ACE_Asynch_Read_Dgram::Result::~Result ()
 {
 }
 
 ACE_Asynch_Read_Dgram_Result_Impl *
-ACE_Asynch_Read_Dgram::Result::implementation (void) const
+ACE_Asynch_Read_Dgram::Result::implementation () const
 {
   return this->implementation_;
 }
@@ -1302,12 +1302,12 @@ ACE_Asynch_Read_Dgram::Result::implementation (void) const
 // ************************************************************
 
 
-ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram (void)
+ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram ()
   : implementation_ (0)
 {
 }
 
-ACE_Asynch_Write_Dgram::~ACE_Asynch_Write_Dgram (void)
+ACE_Asynch_Write_Dgram::~ACE_Asynch_Write_Dgram ()
 {
   // Delete the implementation.
   delete this->implementation_;
@@ -1358,7 +1358,7 @@ ACE_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
 }
 
 ACE_Asynch_Operation_Impl *
-ACE_Asynch_Write_Dgram::implementation (void) const
+ACE_Asynch_Write_Dgram::implementation () const
 {
   return this->implementation_;
 }
@@ -1366,7 +1366,7 @@ ACE_Asynch_Write_Dgram::implementation (void) const
 // ************************************************************
 
 size_t
-ACE_Asynch_Write_Dgram::Result::bytes_to_write (void) const
+ACE_Asynch_Write_Dgram::Result::bytes_to_write () const
 {
   return this->implementation ()->bytes_to_write ();
 }
@@ -1378,19 +1378,19 @@ ACE_Asynch_Write_Dgram::Result::message_block () const
 }
 
 int
-ACE_Asynch_Write_Dgram::Result::flags (void) const
+ACE_Asynch_Write_Dgram::Result::flags () const
 {
   return this->implementation ()->flags ();
 }
 
 ACE_HANDLE
-ACE_Asynch_Write_Dgram::Result::handle (void) const
+ACE_Asynch_Write_Dgram::Result::handle () const
 {
   return this->implementation ()->handle ();
 }
 
 ACE_Asynch_Write_Dgram_Result_Impl *
-ACE_Asynch_Write_Dgram::Result::implementation (void) const
+ACE_Asynch_Write_Dgram::Result::implementation () const
 {
   return this->implementation_;
 }
@@ -1401,7 +1401,7 @@ ACE_Asynch_Write_Dgram::Result::Result (ACE_Asynch_Write_Dgram_Result_Impl *impl
 {
 }
 
-ACE_Asynch_Write_Dgram::Result::~Result (void)
+ACE_Asynch_Write_Dgram::Result::~Result ()
 {
 }
 

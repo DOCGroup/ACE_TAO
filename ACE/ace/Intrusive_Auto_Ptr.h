@@ -73,7 +73,7 @@ public:
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
   /// the representation object will also be destroyed.
-  virtual ~ACE_Intrusive_Auto_Ptr (void);
+  virtual ~ACE_Intrusive_Auto_Ptr ();
 
   /// Assignment operator that binds the current object and @a r to the same
   /// ACE_Intrusive_Auto_Ptr_Rep. An ACE_Intrusive_Auto_Ptr_Rep
@@ -81,24 +81,24 @@ public:
   void operator = (const ACE_Intrusive_Auto_Ptr<X> &r);
 
   /// Redirection operator
-  X *operator-> (void) const;
+  X *operator-> () const;
 
   /// Accessor method.
   X &operator *() const;
 
   /// Releases the reference to the underlying representation object.
   /// @retval The pointer value prior to releasing it.
-  X *release (void);
+  X *release ();
 
   /// Releases the current pointer value and then sets a new
   /// pointer value specified by @a p.
   void reset (X *p = 0);
 
   /// Get the pointer value.
-  X *get (void) const;
+  X *get () const;
 
    /// Get the reference count value.
-  long count (void) const;
+  long count () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

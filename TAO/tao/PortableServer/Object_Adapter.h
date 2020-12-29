@@ -85,7 +85,7 @@ public:
                       TAO_ORB_Core &orb_core);
 
   /// Destructor.
-  ~TAO_Object_Adapter (void);
+  ~TAO_Object_Adapter ();
 
   int dispatch_servant (const TAO::ObjectKey &key,
                         TAO_ServerRequest &req,
@@ -113,31 +113,31 @@ public:
   int activate_poa (const poa_name &folded_name,
                     TAO_Root_POA *&poa);
 
-  ACE_Lock &lock (void);
+  ACE_Lock &lock ();
 
-  TAO_SYNCH_MUTEX &thread_lock (void);
+  TAO_SYNCH_MUTEX &thread_lock ();
 
-  ACE_Reverse_Lock<ACE_Lock> &reverse_lock (void);
+  ACE_Reverse_Lock<ACE_Lock> &reverse_lock ();
 
   /// Access the root poa.
-  TAO_Root_POA *root_poa (void) const;
+  TAO_Root_POA *root_poa () const;
 
   /// Access to ORB Core.
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
 
   /// Wait for non-servant upcalls to complete.
-  void wait_for_non_servant_upcalls_to_complete (void);
+  void wait_for_non_servant_upcalls_to_complete ();
 
   /// Non-exception throwing version.
-  void wait_for_non_servant_upcalls_to_complete_no_throw (void);
+  void wait_for_non_servant_upcalls_to_complete_no_throw ();
 
-  static CORBA::ULong transient_poa_name_size (void);
+  static CORBA::ULong transient_poa_name_size ();
 
   /// Return the validator.
-  TAO_Policy_Validator &validator (void);
+  TAO_Policy_Validator &validator ();
 
   /// Return the set of default policies.
-  TAO_POA_Policy_Set &default_poa_policies (void);
+  TAO_POA_Policy_Set &default_poa_policies ();
 
   /// Set the servant dispatcher method.  Ownership is transferred to
   /// this Object Adapter.  Note: This should only be called
@@ -149,15 +149,15 @@ public:
 
   // = The TAO_Adapter methods, please check tao/Adapter.h for the
   // documentation
-  virtual void open (void);
+  virtual void open ();
   virtual void close (int wait_for_completion);
   virtual void check_close (int wait_for_completion);
-  virtual int priority (void) const;
+  virtual int priority () const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out forward_to);
-  virtual const char *name (void) const;
-  virtual CORBA::Object_ptr root (void);
+  virtual const char *name () const;
+  virtual CORBA::Object_ptr root ();
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);
 
@@ -176,7 +176,7 @@ protected:
 
   void locate_poa (const TAO::ObjectKey &key,
                    PortableServer::ObjectId &id,
-                   TAO_Root_POA *&poa                  );
+                   TAO_Root_POA *&poa);
 
   int find_transient_poa (const poa_name &system_name,
                           CORBA::Boolean root,
@@ -215,7 +215,7 @@ public:
   {
   public:
 
-    virtual ~Hint_Strategy (void);
+    virtual ~Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa) = 0;
@@ -249,7 +249,7 @@ public:
 
     Active_Hint_Strategy (CORBA::ULong map_size);
 
-    virtual ~Active_Hint_Strategy (void);
+    virtual ~Active_Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa);
@@ -286,7 +286,7 @@ public:
   {
   public:
 
-    virtual ~No_Hint_Strategy (void);
+    virtual ~No_Hint_Strategy ();
 
     virtual int find_persistent_poa (const poa_name &system_name,
                                      TAO_Root_POA *&poa);
@@ -403,7 +403,7 @@ public:
     ACE_CString operator* () const;
 
     /// Prefix advance.
-    poa_name_iterator &operator++ (void);
+    poa_name_iterator &operator++ ();
 
   protected:
 
@@ -426,8 +426,8 @@ public:
 
     iteratable_poa_name (const poa_name &folded_name);
 
-    iterator begin (void) const;
-    iterator end (void) const;
+    iterator begin () const;
+    iterator end () const;
 
   protected:
 
@@ -442,7 +442,7 @@ public:
 
   /// Pointer to the non-servant upcall in progress.  If no non-servant
   /// upcall is in progress, this pointer is zero.
-  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress (void) const;
+  TAO::Portable_Server::Non_Servant_Upcall *non_servant_upcall_in_progress () const;
 
 private:
 

@@ -44,6 +44,10 @@ template <class X, class ACE_LOCK> class ACE_Refcounted_Auto_Ptr;
 template <class X, class ACE_LOCK>
 class ACE_Refcounted_Auto_Ptr
 {
+  /// Used to define a proper boolean conversion for "if (sp) ..."
+  static void unspecified_bool(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***){};
+  typedef void (*unspecified_bool_type)(ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>***);
+
 public:
   /// Constructor that initializes an ACE_Refcounted_Auto_Ptr to
   /// the specified pointer value.
@@ -57,7 +61,7 @@ public:
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
   /// the representation object will also be destroyed.
-  virtual ~ACE_Refcounted_Auto_Ptr (void);
+  virtual ~ACE_Refcounted_Auto_Ptr ();
 
   /// Assignment operator that binds the current object and @a r to the same
   /// ACE_Refcounted_Auto_Ptr_Rep. An ACE_Refcounted_Auto_Ptr_Rep
@@ -77,7 +81,7 @@ public:
   bool operator != (const ACE_Refcounted_Auto_Ptr<X, ACE_LOCK> &r) const;
 
   /// Redirection operator
-  X *operator-> (void) const;
+  X *operator-> () const;
 
   /// Accessor method.
   X &operator *() const;
@@ -86,24 +90,24 @@ public:
   bool operator !() const;
 
   /// Check rep easily.
-  operator bool () const;
+  operator unspecified_bool_type() const;
 
   /// Releases the reference to the underlying representation object.
   /// @retval The pointer value prior to releasing it.
-  X *release (void);
+  X *release ();
 
   /// Releases the current pointer value and then sets a new
   /// pointer value specified by @a p.
   void reset (X *p = 0);
 
   /// Get the pointer value.
-  X *get (void) const;
+  X *get () const;
 
   /// Get the reference count value.
-  long count (void) const;
+  long count () const;
 
   /// Returns @c true if this object does not contain a valid pointer.
-  bool null (void) const;
+  bool null () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -133,10 +137,10 @@ private:
   friend class ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>;
 
   /// Get the pointer value.
-  X *get (void) const;
+  X *get () const;
 
   /// Get the reference count value.
-  long count (void) const;
+  long count () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -174,7 +178,7 @@ private:
 private:
   // = Constructor and destructor private.
   ACE_Refcounted_Auto_Ptr_Rep (X *p = 0);
-  ~ACE_Refcounted_Auto_Ptr_Rep (void);
+  ~ACE_Refcounted_Auto_Ptr_Rep ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

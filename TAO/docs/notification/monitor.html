@@ -109,7 +109,7 @@ method.  The Data union has the following definition:</p>
   };
 </pre>
 <p>The <b>get_statistic_names()</b> method returns a <b>NameList</b> which
-contains the names that are currently known by the statistic monitor. 
+contains the names that are currently known by the statistic monitor.
 This list will change over time.</p>
 <p>The <b>get_statistic(in string name)</b> returns a <b>Data</b> union which
 contains either a <b>Numeric</b> object or a <b>NameList</b>, depending upon
@@ -119,7 +119,7 @@ thrown.
 </p>
 <p> The <b>get_statistics(in NameList names)</b> returns a
 <b>DataList</b>, which is a sequence of <b>Data</b>.  The order of the
-<b>DataList</b> is the same order as provided within the <b>NameList</b>. 
+<b>DataList</b> is the same order as provided within the <b>NameList</b>.
 If any one name provided within the list does not correspond to a known
 statistic, the <b>InvalidName</b> exception will be thrown.
 </p>
@@ -141,36 +141,36 @@ thrown.
 If ACE and TAO are built as static libraries, follow the instructions above
 with these modifications:
 <ul>
-<li>On the mwc.pl command used to generate the build files, add the 
+<li>On the mwc.pl command used to generate the build files, add the
 -features -features "notify_monitor_control=1" option.  For example
-to build for VC9, the mwc commmand would look like:
+to build for VC9, the mwc command would look like:
 <ul><li><pre>
 mwc.pl -type vc9 -static -features "notify_monitor_control=1" TAO_ACE.mwc
 </pre></li></ul>
 </li>
 <li>Replace the "dynamic" service configuration commands with a "static"
-commands.  <i>Note that these commands have different syntaxes.</i>   
+commands.  <i>Note that these commands have different syntaxes.</i>
 <br/>For example if
 the service configuration commands for a dynamic build are (Lines wrapped
 for illustrative purposes.  In the service conf file the following should
 appear on two lines):
 <ul><li><pre>
-  dynamic TAO_MonitorAndControl Service_Object * 
-    TAO_CosNotification_MC:_make_TAO_MonitorAndControl () 
-    "-o monitor.ior 
+  dynamic TAO_MonitorAndControl Service_Object *
+    TAO_CosNotification_MC:_make_TAO_MonitorAndControl ()
+    "-o monitor.ior
     -ORBArg \"-ORBInitRef -ORBArg NameService=corbaloc:iiop:localhost:10637/NameService\""
-    
+
   dynamic TAO_MC_Notify_Service Service_Object *
     TAO_CosNotification_MC_Ext:_make_TAO_MC_Notify_Service ()
     "-DispatchingThreads 1"
-    
+
 </pre></li></ul>  you should replace them with
 <ul><li><pre>
-  static TAO_MonitorAndControl 
-    "-o monitor.ior 
-    -ORBArg -ORBInitRef 
+  static TAO_MonitorAndControl
+    "-o monitor.ior
+    -ORBArg -ORBInitRef
       -ORBArg NameService=corbaloc:iiop:localhost:10637/NameService"
-  
+
   static TAO_MC_Notify_Service "-DispatchingThreads 1"
 </pre></li></ul>
 Please note that the parser for the static service configuration directives

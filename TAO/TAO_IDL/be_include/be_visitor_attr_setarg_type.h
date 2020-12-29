@@ -28,7 +28,7 @@ class be_visitor_attr_setarg_type : public be_visitor_decl
 {
 public:
   be_visitor_attr_setarg_type (be_visitor_context *ctx);
-  virtual ~be_visitor_attr_setarg_type (void);
+  virtual ~be_visitor_attr_setarg_type ();
 
   virtual int visit_array (be_array *);
   virtual int visit_component (be_component *);

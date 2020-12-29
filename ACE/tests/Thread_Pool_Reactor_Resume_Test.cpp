@@ -43,7 +43,7 @@
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Resume_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_Acceptor>;
 
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address
@@ -149,12 +149,12 @@ Request_Handler::open (void *arg)
   return result;
 }
 
-Request_Handler::~Request_Handler (void)
+Request_Handler::~Request_Handler ()
 {
 }
 
 int
-Request_Handler::resume_handler (void)
+Request_Handler::resume_handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) resume_handler () called\n")));

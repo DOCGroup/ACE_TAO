@@ -80,9 +80,9 @@ public:
     this->thr_mgr (&this->tm_);
   }
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc (void);
+  int svc () override;
 
   int start ();
 
@@ -179,7 +179,7 @@ MyTask::stop ()
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask::svc started\n")));
 
