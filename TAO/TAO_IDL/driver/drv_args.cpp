@@ -84,7 +84,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 extern long DRV_nfiles;
 extern char *DRV_files[];
 
-void process_long_option(long ac, char **av, long &i);
+void process_long_option (long ac, char **av, long &i);
 
 // Push a file into the list of files to be processed
 void
@@ -156,6 +156,10 @@ DRV_usage ()
     ACE_TEXT (" --unknown-annotations ARG     Set reaction to unknown annotations.\n")
     ACE_TEXT ("                               ARG must be `warn-once` (default), `warn-all`,\n")
     ACE_TEXT ("                               `error`, or `ignore`.\n")
+    ACE_TEXT (" --preprocessor-input KIND     Set C preprocessor file input method. KIND must \n")
+    ACE_TEXT ("                               be `guess` (default), `direct-with-e`, \n")
+    ACE_TEXT ("                               `direct-without-e`, `direct-gcc`, or `copy`.\n")
+    ACE_TEXT ("                               See docs/compiler.html for more info.\n")
   ));
 
   be_util::usage ();
@@ -485,7 +489,7 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  process_long_option(ac, av, i);
+                  process_long_option (ac, av, i);
                 }
               break;
 
@@ -556,7 +560,7 @@ DRV_parse_args (long ac, char **av)
 }
 
 void
-print_idl_versions()
+print_idl_versions ()
 {
   ACE_DEBUG ((LM_INFO,
     ACE_TEXT ("These are the valid IDL versions this compiler will accept:\n")
@@ -570,7 +574,7 @@ print_idl_versions()
 }
 
 void
-process_long_option(long ac, char **av, long &i)
+process_long_option (long ac, char **av, long &i)
 {
   const char *long_option = av[i] + 2;
   bool no_more_args = i + 1 >= ac;
@@ -680,7 +684,7 @@ process_long_option(long ac, char **av, long &i)
             {
               invalid_argument = true;
               ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("\"%C\" is not a valid argument.\n"),
+                ACE_TEXT ("\"%C\" is not a valid argument to --unknown-annotations.\n"),
                 av[i]
                 ));
             }
@@ -688,10 +692,55 @@ process_long_option(long ac, char **av, long &i)
       if (invalid_argument)
         {
           ACE_ERROR ((LM_ERROR,
-            ACE_TEXT ("Use either \"warn-once\", \"warn-all\", ")
-            ACE_TEXT ("\"error\" or \"ignore\".\n"),
+            ACE_TEXT ("Use \"warn-once\", \"warn-all\", \"error\" or \"ignore\".\n"),
             av[i]
             ));
+          idl_global->parse_args_exit (1);
+        }
+    }
+  else if (!ACE_OS::strcmp (long_option, "preprocessor-input"))
+    {
+      bool invalid_argument = no_more_args;
+      if (no_more_args)
+        {
+          ACE_ERROR ((LM_ERROR,
+            ACE_TEXT ("--preprocessor-input is missing its required argument.")));
+        }
+      else
+        {
+          i++;
+          if (!ACE_OS::strcmp (av[i], "guess"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputGuess;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-with-e"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectWithE;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-without-e"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectWithoutE;
+            }
+          else if (!ACE_OS::strcmp (av[i], "direct-gcc"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputDirectGcc;
+            }
+          else if (!ACE_OS::strcmp (av[i], "copy"))
+            {
+              idl_global->preprocessor_input_ = IDL_GlobalData::PreprocessorInputCopy;
+            }
+          else
+            {
+              invalid_argument = true;
+              ACE_ERROR ((LM_ERROR,
+                ACE_TEXT ("\"%C\" is not a valid argument to --preprocessor-input.\n"), av[i]));
+            }
+        }
+      if (invalid_argument)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Use \"guess\", \"direct-with-e\", ")
+            ACE_TEXT ("\"direct-without-e\", \"direct-gcc\", or \"copy\".\n"),
+            av[i]));
           idl_global->parse_args_exit (1);
         }
     }
