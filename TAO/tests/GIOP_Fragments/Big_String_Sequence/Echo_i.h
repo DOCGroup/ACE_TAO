@@ -28,20 +28,20 @@ public:
   Echo_i (CORBA::ORB_ptr o);
 
   /// Destructor.
-  virtual ~Echo_i (void);
+  ~Echo_i () override = default;
 
   /// Return the result sequences to the cllient.
-  virtual Echo::List *return_list ();
-  virtual Echo::WList *return_wlist ();
+  Echo::List *return_list () override;
+  Echo::WList *return_wlist () override;
 
   /// Shutdown the server.
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// ORB pointer.
   CORBA::ORB_var orb_;
 
-  void operator= (const Echo_i&);
+  void operator= (const Echo_i&) = delete;
 };
 
 #endif /* ECHO_I_H */

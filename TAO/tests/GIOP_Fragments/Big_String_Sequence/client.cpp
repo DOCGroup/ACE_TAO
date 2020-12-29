@@ -61,7 +61,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        ACE_ERROR_RETURN ((LM_ERROR, "Expected length 2\n"), -1);
     }
     const char* value = (*list)[0].in();
-    size_t length = strlen(value);
+    size_t length = std::strlen(value);
     ACE_DEBUG ((LM_DEBUG,
                 "First element has length %u\n",
                 length));
@@ -75,9 +75,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
        }
     }
     value = (*list)[1].in();
-    length = strlen(value);
+    length = std::strlen(value);
     ACE_DEBUG ((LM_DEBUG,
-                "Second element has length %u, value: %s\n",
+                "Second element has length %u, value: <%C>\n",
                 length, value));
     if (strcmp(value, "Hello World") != 0)
     {
