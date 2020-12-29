@@ -11,13 +11,10 @@ function, the specialized variant is *not* called for pointers to
 derived classes. This will work only if TAO ensures that all nil
 object references that have been narrowed to a derived class are
 converted to null pointers, i.e., to ensure that the generic template
-produces the corrcet result.
+produces the correct result.
 
 This test has the server return a nil object reference and the client
-uses lazy resource usage, to comfirm that CORBA::is_nil corrcetly
+uses lazy resource usage, to confirm that CORBA::is_nil correctly
 identifies the nil object reference. See issue #1203, which pointed
 out that only CORBA::Object_ptr has a template specialization for
 CORBA::is_nil, but not derived interfaces.
-
-
-

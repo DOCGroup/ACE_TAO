@@ -14,10 +14,10 @@ public:
   Hello (CORBA::ORB_ptr orb);
 
   // = The skeleton methods
-  virtual char * get_string ();
-  virtual Test::Hello_ptr get_Hello ();
+  char * get_string () override;
+  Test::Hello_ptr get_Hello () override;
 
-  virtual void shutdown ();
+  void shutdown () override;
 
 private:
   /// Use an ORB reference to convert strings to objects and shutdown
