@@ -179,7 +179,7 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::pre_invoke_collocated_request (void)
+    Servant_Upcall::pre_invoke_collocated_request ()
     {
       this->object_adapter_->servant_dispatcher_->pre_invoke_collocated_request (
         this->poa (),
@@ -188,14 +188,14 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::post_invoke (void)
+    Servant_Upcall::post_invoke ()
     {
       this->object_adapter_->servant_dispatcher_->post_invoke (
         this->poa (),
         this->pre_invoke_state_);
     }
 
-    Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State (void)
+    Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State ()
       : state_ (NO_ACTION_REQUIRED),
         original_native_priority_ (0),
         original_CORBA_priority_ (0)
@@ -225,13 +225,13 @@ namespace TAO
       return this->poa_;
     }
 
-    Servant_Upcall::~Servant_Upcall (void)
+    Servant_Upcall::~Servant_Upcall ()
     {
       this->upcall_cleanup ();
     }
 
     void
-    Servant_Upcall::upcall_cleanup (void)
+    Servant_Upcall::upcall_cleanup ()
     {
       this->post_invoke ();
 
@@ -292,14 +292,14 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::post_invoke_servant_cleanup (void)
+    Servant_Upcall::post_invoke_servant_cleanup ()
     {
       this->poa_->post_invoke_servant_cleanup (this->current_context_.object_id (),
                                                *this);
     }
 
     void
-    Servant_Upcall::single_threaded_poa_setup (void)
+    Servant_Upcall::single_threaded_poa_setup ()
     {
 #if (TAO_HAS_MINIMUM_POA == 0)
       // Serialize servants (if necessary).
@@ -317,7 +317,7 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::single_threaded_poa_cleanup (void)
+    Servant_Upcall::single_threaded_poa_cleanup ()
     {
 #if (TAO_HAS_MINIMUM_POA == 0)
       // Since the servant lock was acquired, we must release it.
@@ -328,7 +328,7 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::increment_servant_refcount (void)
+    Servant_Upcall::increment_servant_refcount ()
     {
       // Cleanup servant related stuff.
       if (this->active_object_map_entry_ != 0)
@@ -336,7 +336,7 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::servant_cleanup (void)
+    Servant_Upcall::servant_cleanup ()
     {
       // Cleanup servant related stuff.
       if (this->active_object_map_entry_ != 0)
@@ -369,7 +369,7 @@ namespace TAO
     }
 
     void
-    Servant_Upcall::poa_cleanup (void)
+    Servant_Upcall::poa_cleanup ()
     {
       // Decrease <poa->outstanding_requests_> now that the upcall
       // is complete.

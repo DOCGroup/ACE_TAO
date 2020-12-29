@@ -47,7 +47,6 @@ struct TAO_Dynamic_TP_Export TAO_DTP_Definition
     stack_size_(ACE_DEFAULT_THREAD_STACKSIZE),
     timeout_(60,0),
     queue_depth_(0){}
-
 };
 
 class TAO_Dynamic_TP_Export TAO_DTP_Config_Registry_Installer
@@ -101,7 +100,6 @@ private:
   int parse_string (int &curarg, int argc, ACE_TCHAR* argv[], const ACE_TCHAR *match, ACE_TCHAR *&value);
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);
-
 };
 
 static TAO_DTP_Config_Registry_Installer config_installer;

@@ -15,7 +15,7 @@ TAO_EC_RTCORBA_Factory::
 {
 }
 
-TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory (void)
+TAO_EC_RTCORBA_Factory::~TAO_EC_RTCORBA_Factory ()
 {
 }
 
@@ -27,7 +27,7 @@ TAO_EC_RTCORBA_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_EC_RTCORBA_Factory::fini (void)
+TAO_EC_RTCORBA_Factory::fini ()
 {
   return this->body_->fini ();
 }
@@ -212,7 +212,7 @@ TAO_EC_RTCORBA_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPush
 }
 
 ACE_Lock*
-TAO_EC_RTCORBA_Factory::create_consumer_lock (void)
+TAO_EC_RTCORBA_Factory::create_consumer_lock ()
 {
   return this->body_->create_consumer_lock ();
 }
@@ -224,7 +224,7 @@ TAO_EC_RTCORBA_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_RTCORBA_Factory::create_supplier_lock (void)
+TAO_EC_RTCORBA_Factory::create_supplier_lock ()
 {
   return this->body_->create_supplier_lock ();
 }

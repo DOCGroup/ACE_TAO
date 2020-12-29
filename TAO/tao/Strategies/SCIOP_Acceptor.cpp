@@ -190,7 +190,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number()
           && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
@@ -525,7 +525,7 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       ACE_Multihomed_INET_Addr a(addr);
 
-      int found_a_port = 0;
+      bool found_a_port = false;
       ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
       if (last_port > ACE_MAX_DEFAULT_PORT)
         {
@@ -547,13 +547,13 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)
             {
-              found_a_port = 1;
+              found_a_port = true;
               break;
             }
         }
 
       // Now, if we couldn't locate a port, we punt
-      if (! found_a_port)
+      if (!found_a_port)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -1000,7 +1000,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
+              int const range = ACE_OS::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 TAOLIB_ERROR_RETURN ((LM_ERROR,

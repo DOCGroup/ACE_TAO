@@ -5,19 +5,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_Utils
 {
   ACE_INLINE
-  const UUID_Node::Node_ID & UUID_Node::node_ID (void) const
+  const UUID_Node::Node_ID & UUID_Node::node_ID () const
   {
     return this->node_ID_;
   }
 
   ACE_INLINE
-  UUID_Node::Node_ID & UUID_Node::node_ID (void)
+  UUID_Node::Node_ID & UUID_Node::node_ID ()
   {
     return this->node_ID_;
   }
 
   ACE_INLINE
-  UUID::UUID (void)
+  UUID::UUID ()
   {
     this->init ();
   }
@@ -31,26 +31,26 @@ namespace ACE_Utils
   }
 
   ACE_INLINE
-  UUID::~UUID (void)
+  UUID::~UUID ()
   {
 
   }
 
   ACE_INLINE void
-  UUID::init (void)
+  UUID::init ()
   {
     ACE_OS::memset (&this->uuid_, 0, BINARY_SIZE);
   }
 
   ACE_INLINE unsigned long
-  UUID::hash (void) const
+  UUID::hash () const
   {
     return ACE::hash_pjw (reinterpret_cast <const char *> (&this->uuid_),
                           UUID::BINARY_SIZE);
   }
 
   ACE_INLINE ACE_UINT32
-  UUID::time_low (void) const
+  UUID::time_low () const
   {
     return this->uuid_.time_low_;
   }
@@ -62,7 +62,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE ACE_UINT16
-  UUID::time_mid (void) const
+  UUID::time_mid () const
   {
     return this->uuid_.time_mid_;
   }
@@ -74,7 +74,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE ACE_UINT16
-  UUID::time_hi_and_version (void) const
+  UUID::time_hi_and_version () const
   {
     return this->uuid_.time_hi_and_version_;
   }
@@ -86,7 +86,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE u_char
-  UUID::clock_seq_hi_and_reserved (void) const
+  UUID::clock_seq_hi_and_reserved () const
   {
     return this->uuid_.clock_seq_hi_and_reserved_;
   }
@@ -98,7 +98,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE u_char
-  UUID::clock_seq_low (void) const
+  UUID::clock_seq_low () const
   {
     return this->uuid_.clock_seq_low_;
   }
@@ -110,13 +110,13 @@ namespace ACE_Utils
   }
 
   ACE_INLINE const UUID_Node &
-  UUID::node (void) const
+  UUID::node () const
   {
     return this->uuid_.node_;
   }
 
   ACE_INLINE UUID_Node &
-  UUID::node (void)
+  UUID::node ()
   {
     return this->uuid_.node_;
   }
@@ -130,7 +130,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE ACE_CString*
-  UUID::thr_id (void)
+  UUID::thr_id ()
   {
     return &this->thr_id_;
   }
@@ -142,7 +142,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE ACE_CString*
-  UUID::pid (void)
+  UUID::pid ()
   {
     return &this->pid_;
   }

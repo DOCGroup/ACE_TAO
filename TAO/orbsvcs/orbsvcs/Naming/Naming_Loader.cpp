@@ -31,7 +31,7 @@ TAO_Naming_Loader::TAO_Naming_Loader (TAO_Naming_Server *server)
     ACE_NEW (naming_server_, TAO_Naming_Server);
 }
 
-TAO_Naming_Loader::~TAO_Naming_Loader (void)
+TAO_Naming_Loader::~TAO_Naming_Loader ()
 {
   // Destroy the naming server that was created
   delete naming_server_;
@@ -65,7 +65,7 @@ TAO_Naming_Loader::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-TAO_Naming_Loader::fini (void)
+TAO_Naming_Loader::fini ()
 {
   // Remove the Naming Service.
   if (this->naming_server_ == 0)

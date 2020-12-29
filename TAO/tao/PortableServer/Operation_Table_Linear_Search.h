@@ -34,7 +34,7 @@ class TAO_PortableServer_Export TAO_Linear_Search_OpTable
 {
 public:
   /// Destructor.
-  ~TAO_Linear_Search_OpTable (void);
+  ~TAO_Linear_Search_OpTable ();
 
   /// See the documentation in the base class for details.
   virtual int find (const char *opname,

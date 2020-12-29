@@ -32,14 +32,11 @@
 
 // Create timer queue with hr support
 ACE_Timer_Queue *
-create_timer_queue (void)
+create_timer_queue ()
 {
   ACE_Timer_Queue * tmq = 0;
 
-  typedef ACE_Timer_Heap_T<ACE_Event_Handler *,
-                           ACE_Event_Handler_Handle_Timeout_Upcall,
-                           ACE_SYNCH_RECURSIVE_MUTEX,
-                           ACE_HR_Time_Policy> timer_queue_type;
+  using timer_queue_type = ACE_Timer_Heap_T<ACE_Event_Handler *, ACE_Event_Handler_Handle_Timeout_Upcall, ACE_MT_SYNCH::RECURSIVE_MUTEX, ACE_HR_Time_Policy>;
   ACE_NEW_RETURN (tmq, timer_queue_type (), 0);
 
   return tmq;
@@ -50,17 +47,17 @@ class MyTask : public ACE_Task<ACE_MT_SYNCH>
 public:
   MyTask () : my_reactor_ (0), my_tq_ (0) {}
 
-  virtual ~MyTask () { stop (); }
+  ~MyTask () override { stop (); }
 
-  virtual int svc (void);
+  int svc () override;
 
   int start (int num_threads);
-  int stop (void);
+  int stop ();
   ACE_Reactor* get_reactor ();
-  int create_reactor (void);
+  int create_reactor ();
 
 private:
-  int delete_reactor (void);
+  int delete_reactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Reactor *my_reactor_;
@@ -74,7 +71,7 @@ MyTask::get_reactor ()
 }
 
 int
-MyTask::create_reactor (void)
+MyTask::create_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -101,7 +98,7 @@ MyTask::create_reactor (void)
 }
 
 int
-MyTask::delete_reactor (void)
+MyTask::delete_reactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -133,7 +130,7 @@ MyTask::start (int num_threads)
 
 
 int
-MyTask::stop (void)
+MyTask::stop ()
 {
   if (this->my_reactor_ != 0)
     {
@@ -157,7 +154,7 @@ MyTask::stop (void)
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) MyTask started\n")));
 
@@ -177,8 +174,8 @@ public:
       timeout_triggered_ (false)
   {}
 
-  virtual int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg);
+  int handle_timeout (const ACE_Time_Value &tv,
+                              const void *arg) override;
 
   bool trigger_in(const ACE_Time_Value &delay);
 

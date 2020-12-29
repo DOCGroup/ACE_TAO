@@ -13,7 +13,7 @@ ACE_Notification_Strategy::ACE_Notification_Strategy (ACE_Event_Handler *eh,
 {
 }
 
-ACE_Notification_Strategy::~ACE_Notification_Strategy (void)
+ACE_Notification_Strategy::~ACE_Notification_Strategy ()
 {
 }
 

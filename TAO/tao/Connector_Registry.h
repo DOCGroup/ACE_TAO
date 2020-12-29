@@ -81,9 +81,10 @@ public:
   TAO_ConnectorSetIterator end (void) const;
 
 private:
-  // Disallow copying and assignment.
-  TAO_Connector_Registry (const TAO_Connector_Registry&);
-  void operator= (const TAO_Connector_Registry&);
+  TAO_Connector_Registry (const TAO_Connector_Registry&) = delete;
+  void operator= (const TAO_Connector_Registry&) = delete;
+  TAO_Connector_Registry (TAO_Connector_Registry&&) = delete;
+  void operator= (TAO_Connector_Registry&&) = delete;
 
 private:
   /// List of connectors that are currently open.

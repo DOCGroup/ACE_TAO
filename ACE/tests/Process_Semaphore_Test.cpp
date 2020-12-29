@@ -37,7 +37,7 @@ static const char *sema_pong_name = "ACE_Pong_Semaphore";
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-i #iterations] [-c (child process)]\n")));
@@ -68,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static void
-acquire_release (void)
+acquire_release ()
 {
 #if defined (ACE_WIN32) || \
       defined (ACE_USES_FIFO_SEM) || \

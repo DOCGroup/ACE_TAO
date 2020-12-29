@@ -22,7 +22,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition<ACE_Thread_Mutex>)
 
 void
-ACE_Condition<ACE_Thread_Mutex>::dump (void) const
+ACE_Condition<ACE_Thread_Mutex>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::dump");
@@ -69,7 +69,7 @@ ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
                 ACE_TEXT ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>")));
 }
 
-ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition (void)
+ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition<ACE_Thread_Mutex>");
   this->remove ();
@@ -80,7 +80,7 @@ ACE_Condition<ACE_Thread_Mutex>::~ACE_Condition (void)
 // <abstime> using the <cond_timedwait> function.
 
 int
-ACE_Condition<ACE_Thread_Mutex>::wait (void)
+ACE_Condition<ACE_Thread_Mutex>::wait ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
   return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock ());
@@ -104,14 +104,14 @@ ACE_Condition<ACE_Thread_Mutex>::wait (const ACE_Time_Value *abstime)
 }
 
 int
-ACE_Condition<ACE_Thread_Mutex>::signal (void)
+ACE_Condition<ACE_Thread_Mutex>::signal ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::signal");
   return ACE_OS::cond_signal (&this->cond_);
 }
 
 int
-ACE_Condition<ACE_Thread_Mutex>::broadcast (void)
+ACE_Condition<ACE_Thread_Mutex>::broadcast ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::broadcast");
   return ACE_OS::cond_broadcast (&this->cond_);

@@ -22,11 +22,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //   should not be too limiting, as the ACE_Log_Msg class itself can
 //   be used to control thread specific logging behavior.
 
-ACE_Log_Msg_UNIX_Syslog::ACE_Log_Msg_UNIX_Syslog (void)
+ACE_Log_Msg_UNIX_Syslog::ACE_Log_Msg_UNIX_Syslog ()
 {
 }
 
-ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog (void)
+ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog ()
 {
   (void) this->close ();
 }
@@ -70,13 +70,13 @@ ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::reset (void)
+ACE_Log_Msg_UNIX_Syslog::reset ()
 {
   return this->close ();
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::close (void)
+ACE_Log_Msg_UNIX_Syslog::close ()
 {
   closelog();
   return 0;

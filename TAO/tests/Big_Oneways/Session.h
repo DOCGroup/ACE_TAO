@@ -85,7 +85,7 @@ private:
   /// Helper class to run svc() in a separate thread
   Session_Task task_;
 
-  /// Barrier to start all threads simultaenously
+  /// Barrier to start all threads simultaneously
 #if defined(ACE_HAS_THREADS)
   typedef ACE_Thread_Barrier Barrier;
 #else

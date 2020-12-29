@@ -17,7 +17,7 @@
 
 #include /**/ "ace/pre.h"
 
-// Included just keep compilers that see #pragma dierctive first
+// Included just keep compilers that see #pragma directive first
 // happy.
 #include /**/ "ace/ACE_export.h"
 
@@ -61,24 +61,15 @@
 #  define ACE_ENDLESS_LOOP
 # endif /* ! ACE_ENDLESS_LOOP */
 
-# if defined (ACE_NEEDS_FUNC_DEFINITIONS) && !defined (ACE_HAS_CPP11)
-    // It just evaporated ;-)  Not pleasant.
-#   define ACE_UNIMPLEMENTED_FUNC(f)
-# else
-#   if defined (ACE_HAS_CPP11)
-#     define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
-#   else
-#     define ACE_UNIMPLEMENTED_FUNC(f) f;
-#   endif
-# endif /* ACE_NEEDS_FUNC_DEFINITIONS */
+#if !defined (ACE_HAS_CPP11)
+# error ACE/TAO require C++11 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
+#endif /* !ACE_HAS_CPP11 */
+
+#define ACE_UNIMPLEMENTED_FUNC(f) f = delete;
 
 // noexcept(false) specification to specify that the operation can
 // throw an exception
-#if defined (ACE_HAS_CPP11)
 #define ACE_NOEXCEPT_FALSE noexcept(false)
-#else
-#define ACE_NOEXCEPT_FALSE
-#endif
 
 // ----------------------------------------------------------------
 
@@ -162,7 +153,7 @@
 
 /* Using ACE_UNEXPECTED_RETURNS is ill-advised because, in many cases,
  *   it fails to inform callers of the error condition.
- * It exists mainly to provide back-compatibility with old, dangegrous,
+ * It exists mainly to provide back-compatibility with old, dangerous,
  *   incorrect behavior.
  * Code that previously used ACE_GUARD() or ACE_GUARD_RETURN() to return
  *   upon failure to acquire a lock can now use:

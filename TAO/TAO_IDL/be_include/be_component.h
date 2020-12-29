@@ -33,17 +33,17 @@ public:
                 AST_Interface **supports_flat,
                 long n_supports_flat);
 
-  ~be_component (void);
+  ~be_component ();
 
   /// Override of the AST method to eliminate narrowing of
   /// the return value. Non-virtual.
-  be_component *base_component (void) const;
+  be_component *base_component () const;
 
   /// Catch BE-specific members before delegating to the base class.
   virtual void redefine (AST_Interface *from);
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
@@ -53,14 +53,14 @@ public:
   AST_Structure *be_add_structure (AST_Structure *t);
   AST_Typedef *be_add_typedef (AST_Typedef *t);
 
-  ACE_CDR::ULong n_provides (void) const;
-  ACE_CDR::ULong n_remote_provides (void) const;
-  ACE_CDR::ULong n_uses (void) const;
-  ACE_CDR::ULong n_remote_uses (void) const;
-  bool has_uses_multiple (void) const;
-  ACE_CDR::ULong n_publishes (void) const;
-  ACE_CDR::ULong n_consumes (void) const;
-  ACE_CDR::ULong n_emits (void) const;
+  ACE_CDR::ULong n_provides () const;
+  ACE_CDR::ULong n_remote_provides () const;
+  ACE_CDR::ULong n_uses () const;
+  ACE_CDR::ULong n_remote_uses () const;
+  bool has_uses_multiple () const;
+  ACE_CDR::ULong n_publishes () const;
+  ACE_CDR::ULong n_consumes () const;
+  ACE_CDR::ULong n_emits () const;
 
   /// Update the has_* members.
   void scan (UTL_Scope *s);
@@ -73,11 +73,6 @@ public:
 
   /// Generate the string compares for ancestors in _is_a().
   virtual int gen_is_a_ancestors (TAO_OutStream *os);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_component);
-  DEF_NARROW_FROM_SCOPE (be_component);
 
 private:
   /// Specialized version for mirror ports.

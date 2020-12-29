@@ -53,9 +53,9 @@ namespace TAO
       Non_Servant_Upcall (::TAO_Root_POA &poa);
 
       /// Destructor.
-      ~Non_Servant_Upcall (void);
+      ~Non_Servant_Upcall ();
 
-      ::TAO_Root_POA &poa (void) const;
+      ::TAO_Root_POA &poa () const;
 
     protected:
 

@@ -22,7 +22,7 @@
 #include "tao/TAO_Server_Request.h"
 
 void
-_is_a_amh_Upcall_Command::execute (void)
+_is_a_amh_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
@@ -83,7 +83,7 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
-_non_existent_amh_Upcall_Command::execute (void)
+_non_existent_amh_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
@@ -163,7 +163,7 @@ TAO_AMH_Skeletons::_interface_amh_skel (TAO_ServerRequest & server_request,
 }
 
 void
-_get_component_amh_Upcall_Command::execute (void)
+_get_component_amh_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
@@ -214,7 +214,7 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
 
 
 void
-_repository_id_amh_Upcall_Command::execute (void)
+_repository_id_amh_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< char *>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< char *> (

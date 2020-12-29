@@ -195,7 +195,7 @@ public:
                int long_only = 0);
 #endif
   /// Default dtor.
-  ~ACE_Get_Opt (void);
+  ~ACE_Get_Opt ();
 
   /**
    * Scan elements of @a argv (whose length is @a argc) for short option
@@ -233,14 +233,14 @@ public:
    * @a optstring up unto the first short option character for '+', '-',
    * and ':' in order to determine ordering and missing argument behavior.
    */
-  int operator () (void);
+  int operator () ();
 
   /**
    * For communication from @c operator() to the caller.  When
    * @c operator() finds an option that takes an argument, the argument
    * value is returned from this method, otherwise it returns 0.
    */
-  ACE_TCHAR *opt_arg (void) const;
+  ACE_TCHAR *opt_arg () const;
 
   /**
    * Returns the most recently matched option character. Especially
@@ -248,7 +248,7 @@ public:
    * that's required, since this allows the caller to learn what option
    * was specified without its required argument.
    */
-  int opt_opt (void);
+  int opt_opt ();
 
   /**
    * Index in @a argv of the next element to be scanned.  This is used
@@ -262,7 +262,7 @@ public:
    * Otherwise, @c opt_ind() communicates from one call to the next how
    * much of @a argv has been scanned so far.
    */
-  int &opt_ind (void);
+  int &opt_ind ();
 
   /// Adds a long option with no corresponding short option.
   /**
@@ -298,26 +298,26 @@ public:
 
   /// Returns the name of the long option found on the last call to
   /// @c operator() or 0 if none was found.
-  const ACE_TCHAR *long_option (void) const;
+  const ACE_TCHAR *long_option () const;
 
   /// The number of arguments in the internal @c argv_.
-  int argc (void) const;
+  int argc () const;
 
   /// Accessor for the internal @c argv_ pointer.
-  ACE_TCHAR **argv (void) const;
+  ACE_TCHAR **argv () const;
 
   /// Accessor for the @c last_option that was processed.  This allows
   /// applications to know if the found option was a short or long
   /// option, and is especially useful in cases where it was invalid
   /// and the caller wants to print out the invalid value.
-  const ACE_TCHAR *last_option (void) const;
+  const ACE_TCHAR *last_option () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Return the @a optstring.  This is handy to verify that calls to
   /// long_option added short options as expected.
-  const ACE_TCHAR *optstring (void) const;
+  const ACE_TCHAR *optstring () const;
 
 public:
   /*
@@ -387,7 +387,7 @@ private:
                              int val = 0);
 
     /// Dtor.
-    ~ACE_Get_Opt_Long_Option (void);
+    ~ACE_Get_Opt_Long_Option ();
 
     bool operator < (const ACE_Get_Opt_Long_Option &rhs);
 
@@ -409,28 +409,29 @@ private:
   };
 
   /// Updates nextchar_.
-  int nextchar_i (void);
+  int nextchar_i ();
 
   /// Handles long options.
-  int long_option_i (void);
+  int long_option_i ();
 
   /// Handles short options.
-  int short_option_i (void);
+  int short_option_i ();
 
   /// If permuting args, this functions manages the nonopt_start_ and
   /// nonopt_end_ indexes and makes calls to permute to actually
   /// reorder the <argv>-elements.
-  void permute_args (void);
+  void permute_args ();
 
   /// Handles reordering <argv>-elements.
-  int permute (void);
+  int permute ();
 
   /// Set last_option.
   void last_option (const ACE_TString &s);
 
-  // Disallow copying and assignment.
-  ACE_Get_Opt (const ACE_Get_Opt &);
-  ACE_Get_Opt &operator= (const ACE_Get_Opt &);
+  ACE_Get_Opt (const ACE_Get_Opt &) = delete;
+  ACE_Get_Opt &operator= (const ACE_Get_Opt &) = delete;
+  ACE_Get_Opt (ACE_Get_Opt &&) = delete;
+  ACE_Get_Opt &operator= (ACE_Get_Opt &&) = delete;
 
 private:
 

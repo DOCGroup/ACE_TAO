@@ -40,7 +40,7 @@ class TAO_PortableServer_Export TAO_Binary_Search_OpTable
 public:
 
   /// Do nothing destructor.
-  virtual ~TAO_Binary_Search_OpTable (void);
+  virtual ~TAO_Binary_Search_OpTable ();
 
   /// See the documentation in the base class for details.
   virtual int find (const char *opname,

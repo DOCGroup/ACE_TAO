@@ -119,8 +119,6 @@
 
 #define ACE_HAS_3_PARAM_WCSTOK
 
-#define ACE_HAS_3_PARAM_READDIR_R
-
 #if !defined (ACE_DEFAULT_BASE_ADDR)
 #  define ACE_DEFAULT_BASE_ADDR ((char *) 0x80000000)
 #endif /* ! ACE_DEFAULT_BASE_ADDR */
@@ -208,12 +206,12 @@
 
 #define ACE_HAS_DIRENT
 
-#define ACE_HAS_STRBUF_T
-
 #define ACE_SIZEOF_WCHAR 4
 
 #define ACE_LACKS_GETIPNODEBYADDR
 #define ACE_LACKS_GETIPNODEBYNAME
+#define ACE_LACKS_STROPTS_H
+#define ACE_LACKS_STRRECVFD
 
 // Platform has POSIX terminal interface.
 #define ACE_HAS_TERMIOS

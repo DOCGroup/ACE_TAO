@@ -57,14 +57,14 @@ TAO::TypeCode::Alias<char const *,
 void
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::tao_duplicate (void)
+                     TAO::Null_RefCount_Policy>::tao_duplicate ()
 {
 }
 
 void
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::tao_release (void)
+                     TAO::Null_RefCount_Policy>::tao_release ()
 {
 }
 
@@ -100,7 +100,7 @@ TAO::TypeCode::Alias<char const *,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::get_compact_typecode_i (void) const
+                     TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -132,7 +132,7 @@ TAO::TypeCode::Alias<char const *,
 char const *
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::id_i (void) const
+                     TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -142,7 +142,7 @@ TAO::TypeCode::Alias<char const *,
 char const *
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::name_i (void) const
+                     TAO::Null_RefCount_Policy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -152,7 +152,7 @@ TAO::TypeCode::Alias<char const *,
 CORBA::TypeCode_ptr
 TAO::TypeCode::Alias<char const *,
                      CORBA::TypeCode_ptr const *,
-                     TAO::Null_RefCount_Policy>::content_type_i (void) const
+                     TAO::Null_RefCount_Policy>::content_type_i () const
 {
   return
      CORBA::TypeCode::_duplicate (

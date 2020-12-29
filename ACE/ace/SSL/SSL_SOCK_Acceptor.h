@@ -50,10 +50,10 @@ class ACE_SSL_Export ACE_SSL_SOCK_Acceptor : public ACE_SSL_SOCK
 {
 public:
   /// Default constructor.
-  ACE_SSL_SOCK_Acceptor (void);
+  ACE_SSL_SOCK_Acceptor ();
 
   /// Default destructor.
-  ~ACE_SSL_SOCK_Acceptor (void);
+  ~ACE_SSL_SOCK_Acceptor ();
 
   /**
    * Initiate a passive mode SSL/BSD-style acceptor socket.
@@ -112,7 +112,7 @@ public:
             int ipv6_only = 0);
 
   /// Close the listening socket.
-  int close (void);
+  int close ();
 
   /**
    * @name Passive Connection "accept" Methods

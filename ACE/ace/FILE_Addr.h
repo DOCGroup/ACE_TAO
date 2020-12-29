@@ -32,7 +32,7 @@ class ACE_Export ACE_FILE_Addr : public ACE_Addr
 {
 public:
   /// Default constructor.
-  ACE_FILE_Addr (void);
+  ACE_FILE_Addr ();
 
   /// Copy constructor.
   ACE_FILE_Addr (const ACE_FILE_Addr &sa);
@@ -51,7 +51,7 @@ public:
   ACE_FILE_Addr &operator= (const ACE_FILE_Addr &);
 
   /// Return a pointer to the address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
@@ -63,10 +63,10 @@ public:
   bool operator != (const ACE_FILE_Addr &SAP) const;
 
   /// Return the path name used for the rendezvous point.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

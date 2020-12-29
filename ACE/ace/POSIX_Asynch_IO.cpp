@@ -15,7 +15,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
-ACE_POSIX_Asynch_Result::bytes_transferred (void) const
+ACE_POSIX_Asynch_Result::bytes_transferred () const
 {
   return this->bytes_transferred_;
 }
@@ -27,25 +27,25 @@ ACE_POSIX_Asynch_Result::set_bytes_transferred (size_t nbytes)
 }
 
 const void *
-ACE_POSIX_Asynch_Result::act (void) const
+ACE_POSIX_Asynch_Result::act () const
 {
   return this->act_;
 }
 
 int
-ACE_POSIX_Asynch_Result::success (void) const
+ACE_POSIX_Asynch_Result::success () const
 {
   return this->success_;
 }
 
 const void *
-ACE_POSIX_Asynch_Result::completion_key (void) const
+ACE_POSIX_Asynch_Result::completion_key () const
 {
   return this->completion_key_;
 }
 
 u_long
-ACE_POSIX_Asynch_Result::error (void) const
+ACE_POSIX_Asynch_Result::error () const
 {
   return this->error_;
 }
@@ -56,19 +56,19 @@ ACE_POSIX_Asynch_Result::set_error (u_long errcode)
   this->error_=errcode;
 }
 ACE_HANDLE
-ACE_POSIX_Asynch_Result::event (void) const
+ACE_POSIX_Asynch_Result::event () const
 {
   return ACE_INVALID_HANDLE;
 }
 
 u_long
-ACE_POSIX_Asynch_Result::offset (void) const
+ACE_POSIX_Asynch_Result::offset () const
 {
   return this->aio_offset;
 }
 
 u_long
-ACE_POSIX_Asynch_Result::offset_high (void) const
+ACE_POSIX_Asynch_Result::offset_high () const
 {
   //
   // @@ Support aiocb64??
@@ -77,13 +77,13 @@ ACE_POSIX_Asynch_Result::offset_high (void) const
 }
 
 int
-ACE_POSIX_Asynch_Result::priority (void) const
+ACE_POSIX_Asynch_Result::priority () const
 {
   return this->aio_reqprio;
 }
 
 int
-ACE_POSIX_Asynch_Result::signal_number (void) const
+ACE_POSIX_Asynch_Result::signal_number () const
 {
   return this->aio_sigevent.sigev_signo;
 }
@@ -101,7 +101,7 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
   return posix_proactor->post_completion (this);
 }
 
-ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result (void)
+ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result ()
 {
 }
 
@@ -175,7 +175,7 @@ ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 }
 
 int
-ACE_POSIX_Asynch_Operation::cancel (void)
+ACE_POSIX_Asynch_Operation::cancel ()
 {
   if (!posix_proactor_)
     return -1;
@@ -183,18 +183,18 @@ ACE_POSIX_Asynch_Operation::cancel (void)
 }
 
 ACE_Proactor *
-ACE_POSIX_Asynch_Operation::proactor (void) const
+ACE_POSIX_Asynch_Operation::proactor () const
 {
   return this->proactor_;
 }
 
 ACE_POSIX_Proactor *
-ACE_POSIX_Asynch_Operation::posix_proactor (void) const
+ACE_POSIX_Asynch_Operation::posix_proactor () const
 {
   return this->posix_proactor_;
 }
 
-ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation (void)
+ACE_POSIX_Asynch_Operation::~ACE_POSIX_Asynch_Operation ()
 {
 }
 
@@ -207,19 +207,19 @@ ACE_POSIX_Asynch_Operation::ACE_POSIX_Asynch_Operation (ACE_POSIX_Proactor *posi
 // *********************************************************************
 
 size_t
-ACE_POSIX_Asynch_Read_Stream_Result::bytes_to_read (void) const
+ACE_POSIX_Asynch_Read_Stream_Result::bytes_to_read () const
 {
   return this->aio_nbytes;
 }
 
 ACE_Message_Block &
-ACE_POSIX_Asynch_Read_Stream_Result::message_block (void) const
+ACE_POSIX_Asynch_Read_Stream_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Read_Stream_Result::handle (void) const
+ACE_POSIX_Asynch_Read_Stream_Result::handle () const
 {
   return this->aio_fildes;
 }
@@ -268,7 +268,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_read_stream (result);
 }
 
-ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result (void)
+ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result ()
 {
 }
 
@@ -317,26 +317,26 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Read_Stream::~ACE_POSIX_Asynch_Read_Stream (void)
+ACE_POSIX_Asynch_Read_Stream::~ACE_POSIX_Asynch_Read_Stream ()
 {
 }
 
 // *********************************************************************
 
 size_t
-ACE_POSIX_Asynch_Write_Stream_Result::bytes_to_write (void) const
+ACE_POSIX_Asynch_Write_Stream_Result::bytes_to_write () const
 {
   return this->aio_nbytes;
 }
 
 ACE_Message_Block &
-ACE_POSIX_Asynch_Write_Stream_Result::message_block (void) const
+ACE_POSIX_Asynch_Write_Stream_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Write_Stream_Result::handle (void) const
+ACE_POSIX_Asynch_Write_Stream_Result::handle () const
 {
   return this->aio_fildes;
 }
@@ -386,7 +386,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
     handler->handle_write_stream (result);
 }
 
-ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result (void)
+ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result ()
 {
 }
 
@@ -435,7 +435,7 @@ ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream (void)
+ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream ()
 {
 }
 
@@ -495,7 +495,7 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
     handler->handle_read_file (result);
 }
 
-ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result (void)
+ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result ()
 {
 }
 
@@ -548,7 +548,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Read_File::~ACE_POSIX_Asynch_Read_File (void)
+ACE_POSIX_Asynch_Read_File::~ACE_POSIX_Asynch_Read_File ()
 {
 }
 
@@ -622,7 +622,7 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
     handler->handle_write_file (result);
 }
 
-ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  (void)
+ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  ()
 {
 }
 
@@ -675,7 +675,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
   return return_val;
 }
 
-ACE_POSIX_Asynch_Write_File::~ACE_POSIX_Asynch_Write_File (void)
+ACE_POSIX_Asynch_Write_File::~ACE_POSIX_Asynch_Write_File ()
 {
 }
 
@@ -697,25 +697,25 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
 
 
 size_t
-ACE_POSIX_Asynch_Accept_Result::bytes_to_read (void) const
+ACE_POSIX_Asynch_Accept_Result::bytes_to_read () const
 {
   return this->aio_nbytes;
 }
 
 ACE_Message_Block &
-ACE_POSIX_Asynch_Accept_Result::message_block (void) const
+ACE_POSIX_Asynch_Accept_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Accept_Result::listen_handle (void) const
+ACE_POSIX_Asynch_Accept_Result::listen_handle () const
 {
   return this->listen_handle_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Accept_Result::accept_handle (void) const
+ACE_POSIX_Asynch_Accept_Result::accept_handle () const
 {
   return this->aio_fildes;
 }
@@ -764,7 +764,7 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
     handler->handle_accept (result);
 }
 
-ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result (void)
+ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result ()
 {
 }
 
@@ -776,14 +776,14 @@ ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_pro
 {
 }
 
-ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept (void)
+ACE_POSIX_Asynch_Accept::~ACE_POSIX_Asynch_Accept ()
 {
   this->close ();
   this->reactor (0); // to avoid purge_pending_notifications
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Accept::get_handle (void) const
+ACE_POSIX_Asynch_Accept::get_handle () const
 {
   return this->handle_;
 }
@@ -959,7 +959,7 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
 }
 
 int
-ACE_POSIX_Asynch_Accept::cancel (void)
+ACE_POSIX_Asynch_Accept::cancel ()
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Accept::cancel");
 
@@ -1130,7 +1130,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
 // *********************************************************************
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Connect_Result::connect_handle (void) const
+ACE_POSIX_Asynch_Connect_Result::connect_handle () const
 {
   return this->aio_fildes;
 }
@@ -1176,7 +1176,7 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
     handler->handle_connect (result);
 }
 
-ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result (void)
+ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result ()
 {
 }
 
@@ -1188,14 +1188,14 @@ ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_p
 {
 }
 
-ACE_POSIX_Asynch_Connect::~ACE_POSIX_Asynch_Connect (void)
+ACE_POSIX_Asynch_Connect::~ACE_POSIX_Asynch_Connect ()
 {
   this->close ();
   this->reactor(0); // to avoid purge_pending_notifications
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Connect::get_handle (void) const
+ACE_POSIX_Asynch_Connect::get_handle () const
 {
   ACE_ASSERT (0);
   return  ACE_INVALID_HANDLE;
@@ -1489,7 +1489,7 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 }
 
 int
-ACE_POSIX_Asynch_Connect::cancel (void)
+ACE_POSIX_Asynch_Connect::cancel ()
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::cancel");
 
@@ -1521,7 +1521,7 @@ ACE_POSIX_Asynch_Connect::cancel (void)
 }
 
 int
-ACE_POSIX_Asynch_Connect::close (void)
+ACE_POSIX_Asynch_Connect::close ()
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::close");
 
@@ -1611,37 +1611,37 @@ ACE_POSIX_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 // *********************************************************************
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Transmit_File_Result::socket (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::socket () const
 {
   return this->socket_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Transmit_File_Result::file (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::file () const
 {
   return this->aio_fildes;
 }
 
 ACE_Asynch_Transmit_File::Header_And_Trailer *
-ACE_POSIX_Asynch_Transmit_File_Result::header_and_trailer (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::header_and_trailer () const
 {
   return this->header_and_trailer_;
 }
 
 size_t
-ACE_POSIX_Asynch_Transmit_File_Result::bytes_to_write (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::bytes_to_write () const
 {
   return this->aio_nbytes;
 }
 
 size_t
-ACE_POSIX_Asynch_Transmit_File_Result::bytes_per_send (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::bytes_per_send () const
 {
   return this->bytes_per_send_;
 }
 
 u_long
-ACE_POSIX_Asynch_Transmit_File_Result::flags (void) const
+ACE_POSIX_Asynch_Transmit_File_Result::flags () const
 {
   return this->flags_;
 }
@@ -1708,7 +1708,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
     handler->handle_transmit_file (result);
 }
 
-ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result (void)
+ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result ()
 {
 }
 
@@ -1734,11 +1734,11 @@ public:
                                      ACE_POSIX_Asynch_Transmit_File_Result *result);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Transmit_Handler (void);
+  ~ACE_POSIX_Asynch_Transmit_Handler () override;
 
   /// Do the transmission. All the info to do the transmission is in
   /// the <result> member.
-  int transmit (void);
+  int transmit ();
 
 protected:
 
@@ -1775,13 +1775,13 @@ protected:
   size_t bytes_transferred_;
 
   /// This is called when asynchronous writes from the socket complete.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 
   /// This is called when asynchronous reads from the file complete.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
 
   /// Issue asynch read from  the file.
-  int initiate_read_file (void);
+  int initiate_read_file ();
 
   /// To read from the file to be transmitted.
   ACE_POSIX_Asynch_Read_File rf_;
@@ -1816,7 +1816,7 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
 }
 
 // Destructor.
-ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler (void)
+ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler ()
 {
   delete result_;
   mb_->release ();
@@ -1827,7 +1827,7 @@ ACE_POSIX_Asynch_Transmit_Handler::~ACE_POSIX_Asynch_Transmit_Handler (void)
 // Initiate transmitting the header. When that completes
 // handle_write_stream will be called, there start transmitting the file.
 int
-ACE_POSIX_Asynch_Transmit_Handler::transmit (void)
+ACE_POSIX_Asynch_Transmit_Handler::transmit ()
 {
   // No proactor is given for the <open>'s. Because we are using the
   // concrete implementations of the  Asynch_Operations, and we have
@@ -2005,7 +2005,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File:
 }
 
 int
-ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file (void)
+ACE_POSIX_Asynch_Transmit_Handler::initiate_read_file ()
 {
   // Is there something to read.
   if (this->file_offset_ >= this->file_size_)
@@ -2123,13 +2123,13 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
   return 0;
 }
 
-ACE_POSIX_Asynch_Transmit_File::~ACE_POSIX_Asynch_Transmit_File (void)
+ACE_POSIX_Asynch_Transmit_File::~ACE_POSIX_Asynch_Transmit_File ()
 {
 }
 
 // *********************************************************************
 size_t
-ACE_POSIX_Asynch_Read_Dgram_Result::bytes_to_read (void) const
+ACE_POSIX_Asynch_Read_Dgram_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
@@ -2158,13 +2158,13 @@ ACE_POSIX_Asynch_Read_Dgram_Result::saddr () const
 
 
 int
-ACE_POSIX_Asynch_Read_Dgram_Result::flags (void) const
+ACE_POSIX_Asynch_Read_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Read_Dgram_Result::handle (void) const
+ACE_POSIX_Asynch_Read_Dgram_Result::handle () const
 {
   return this->handle_;
 }
@@ -2231,26 +2231,26 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
     handler->handle_read_dgram (result);
 }
 
-ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result (void)
+ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result ()
 {
   delete this->remote_address_;
 }
 
 //***************************************************************************
 size_t
-ACE_POSIX_Asynch_Write_Dgram_Result::bytes_to_write (void) const
+ACE_POSIX_Asynch_Write_Dgram_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 int
-ACE_POSIX_Asynch_Write_Dgram_Result::flags (void) const
+ACE_POSIX_Asynch_Write_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_POSIX_Asynch_Write_Dgram_Result::handle (void) const
+ACE_POSIX_Asynch_Write_Dgram_Result::handle () const
 {
   return this->handle_;
 }
@@ -2312,12 +2312,12 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
     handler->handle_write_dgram (result);
 }
 
-ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result (void)
+ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result ()
 {
 }
 
 /***************************************************************************/
-ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram (void)
+ACE_POSIX_Asynch_Read_Dgram::~ACE_POSIX_Asynch_Read_Dgram ()
 {
 }
 
@@ -2361,7 +2361,7 @@ ACE_POSIX_Asynch_Read_Dgram::ACE_POSIX_Asynch_Read_Dgram (ACE_POSIX_Proactor *po
 
 //***************************************************************************
 
-ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram (void)
+ACE_POSIX_Asynch_Write_Dgram::~ACE_POSIX_Asynch_Write_Dgram ()
 {
 }
 

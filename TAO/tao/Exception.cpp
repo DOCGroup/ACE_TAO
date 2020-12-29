@@ -45,13 +45,13 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 // responsible for releasing any storage owned by the exception.  It
 // can do this because it's got the local name and the id.
 
-CORBA::Exception::Exception (void)
+CORBA::Exception::Exception ()
   : id_ (),
     name_ ()
 {
 }
 
-CORBA::Exception::~Exception (void)
+CORBA::Exception::~Exception ()
 {
 }
 
@@ -68,13 +68,13 @@ CORBA::Exception::operator= (const CORBA::Exception &src)
 }
 
 const char *
-CORBA::Exception::_rep_id (void) const
+CORBA::Exception::_rep_id () const
 {
   return this->id_.in ();
 }
 
 const char *
-CORBA::Exception::_name (void) const
+CORBA::Exception::_name () const
 {
   return this->name_.in ();
 }

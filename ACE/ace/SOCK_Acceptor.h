@@ -38,7 +38,7 @@ class ACE_Export ACE_SOCK_Acceptor : public ACE_SOCK
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Acceptor (void);
+  ACE_SOCK_Acceptor ();
 
   /**
    * Initialize a passive-mode BSD-style acceptor socket (no QoS).
@@ -98,10 +98,10 @@ public:
             int ipv6_only = 0);
 
   /// Close the socket.  Returns 0 on success and -1 on failure.
-  int close (void);
+  int close ();
 
   /// Default dtor.
-  ~ACE_SOCK_Acceptor (void);
+  ~ACE_SOCK_Acceptor ();
 
   // = Passive connection <accept> methods.
   /**
@@ -143,7 +143,7 @@ public:
   typedef ACE_SOCK_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

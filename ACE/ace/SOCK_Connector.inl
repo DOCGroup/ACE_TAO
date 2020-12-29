@@ -5,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // the specified REMOTE_SAP address using a blocking open.
 
 ACE_INLINE
-ACE_SOCK_Connector::~ACE_SOCK_Connector (void)
+ACE_SOCK_Connector::~ACE_SOCK_Connector ()
 {
   ACE_TRACE ("ACE_SOCK_Connector::~ACE_SOCK_Connector");
 }
@@ -13,7 +13,7 @@ ACE_SOCK_Connector::~ACE_SOCK_Connector (void)
 // Do-nothing constructor...
 
 ACE_INLINE
-ACE_SOCK_Connector::ACE_SOCK_Connector (void)
+ACE_SOCK_Connector::ACE_SOCK_Connector ()
 {
   ACE_TRACE ("ACE_SOCK_Connector::ACE_SOCK_Connector");
 }

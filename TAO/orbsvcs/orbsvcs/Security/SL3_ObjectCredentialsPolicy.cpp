@@ -8,12 +8,12 @@ TAO::SL3::ObjectCredentialsPolicy::ObjectCredentialsPolicy (
 {
 }
 
-TAO::SL3::ObjectCredentialsPolicy::~ObjectCredentialsPolicy (void)
+TAO::SL3::ObjectCredentialsPolicy::~ObjectCredentialsPolicy ()
 {
 }
 
 SecurityLevel3::OwnCredentialsList *
-TAO::SL3::ObjectCredentialsPolicy::creds_list (void)
+TAO::SL3::ObjectCredentialsPolicy::creds_list ()
 {
   SecurityLevel3::OwnCredentialsList * creds = 0;
 
@@ -31,7 +31,7 @@ TAO::SL3::ObjectCredentialsPolicy::policy_type ()
 }
 
 CORBA::Policy_ptr
-TAO::SL3::ObjectCredentialsPolicy::copy (void)
+TAO::SL3::ObjectCredentialsPolicy::copy ()
 {
   CORBA::Policy_ptr p = CORBA::Policy_ptr ();
   ACE_NEW_THROW_EX (p,
@@ -42,7 +42,7 @@ TAO::SL3::ObjectCredentialsPolicy::copy (void)
 }
 
 void
-TAO::SL3::ObjectCredentialsPolicy::destroy (void)
+TAO::SL3::ObjectCredentialsPolicy::destroy ()
 {
   this->creds_list_.length (0);
 }

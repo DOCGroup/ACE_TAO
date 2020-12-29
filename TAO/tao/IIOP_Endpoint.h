@@ -45,8 +45,6 @@ class TAO_IIOP_Profile;
 class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
 public:
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   // @todo Lose these friends!
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
@@ -69,9 +67,6 @@ public:
   TAO_IIOP_Endpoint (const char *host,
                      CORBA::UShort port,
                      CORBA::Short priority);
-
-
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
   /// Destructor.
   ~TAO_IIOP_Endpoint (void);
@@ -113,12 +108,6 @@ public:
 
   // = IIOP_Endpoint-specific methods.
 
-  /*
-   * Hook to copy only the non virtual concrete methods implemented
-   * in this class to the derived class in the specialization.
-   */
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   /// Return a reference to the <object_addr>.
   const ACE_INET_Addr &object_addr (void) const;
 
@@ -147,9 +136,6 @@ public:
   bool is_ipv6_decimal (void) const;
 #endif /* ACE_HAS_IPV6 */
 
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
-
-
   /// Need to have an assignment operator since the IIOP_Profile class may
   /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
   TAO_IIOP_Endpoint & operator= (const TAO_IIOP_Endpoint& other);
@@ -168,9 +154,6 @@ private:
                                       bool ipv6_only,
                                       bool prefer_ipv6,
                                       bool want_ipv6);
-
-
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START
 
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
@@ -228,8 +211,6 @@ private:
   /// IIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
-
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

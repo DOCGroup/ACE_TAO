@@ -15,12 +15,12 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_At_Thread_Exit::~ACE_At_Thread_Exit (void)
+ACE_At_Thread_Exit::~ACE_At_Thread_Exit ()
 {
   this->do_apply ();
 }
 
-ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
+ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func ()
 {
   this->do_apply ();
 }
@@ -28,7 +28,7 @@ ACE_At_Thread_Exit_Func::~ACE_At_Thread_Exit_Func (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_At_Thread_Exit_Func)
 
 void
-ACE_At_Thread_Exit_Func::apply (void)
+ACE_At_Thread_Exit_Func::apply ()
 {
   this->func_ (this->object_, this->param_);
 }
@@ -58,7 +58,7 @@ ACE_Thread_Manager::set_thr_exit (ACE_TSS_TYPE (ACE_Thread_Exit) *ptr)
 }
 
 void
-ACE_Thread_Manager::dump (void)
+ACE_Thread_Manager::dump ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Manager::dump");
@@ -82,7 +82,7 @@ ACE_Thread_Manager::dump (void)
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Descriptor::~ACE_Thread_Descriptor (void)
+ACE_Thread_Descriptor::~ACE_Thread_Descriptor ()
 {
   delete this->sync_;
 }
@@ -242,7 +242,7 @@ ACE_Thread_Descriptor::at_exit (void *object,
 }
 
 void
-ACE_Thread_Descriptor::dump (void) const
+ACE_Thread_Descriptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Descriptor::dump");
@@ -258,7 +258,7 @@ ACE_Thread_Descriptor::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
+ACE_Thread_Descriptor::ACE_Thread_Descriptor ()
   : log_msg_ (0),
     at_exit_list_ (0),
     tm_ (0),
@@ -270,7 +270,7 @@ ACE_Thread_Descriptor::ACE_Thread_Descriptor (void)
 }
 
 void
-ACE_Thread_Descriptor::acquire_release (void)
+ACE_Thread_Descriptor::acquire_release ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -291,7 +291,7 @@ ACE_Thread_Descriptor::acquire_release (void)
 }
 
 void
-ACE_Thread_Descriptor::acquire (void)
+ACE_Thread_Descriptor::acquire ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -303,7 +303,7 @@ ACE_Thread_Descriptor::acquire (void)
 }
 
 void
-ACE_Thread_Descriptor::release (void)
+ACE_Thread_Descriptor::release ()
 {
   // Just try to acquire the lock then release it.
 #if defined (ACE_THREAD_MANAGER_USES_SAFE_SPAWN)
@@ -401,7 +401,7 @@ ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attribut
 
 #if ! defined (ACE_THREAD_MANAGER_LACKS_STATICS)
 ACE_Thread_Manager *
-ACE_Thread_Manager::instance (void)
+ACE_Thread_Manager::instance ()
 {
   ACE_TRACE ("ACE_Thread_Manager::instance");
 
@@ -439,7 +439,7 @@ ACE_Thread_Manager::instance (ACE_Thread_Manager *tm)
 }
 
 void
-ACE_Thread_Manager::close_singleton (void)
+ACE_Thread_Manager::close_singleton ()
 {
   ACE_TRACE ("ACE_Thread_Manager::close_singleton");
 
@@ -479,7 +479,7 @@ ACE_Thread_Manager::close ()
   return 0;
 }
 
-ACE_Thread_Manager::~ACE_Thread_Manager (void)
+ACE_Thread_Manager::~ACE_Thread_Manager ()
 {
   ACE_TRACE ("ACE_Thread_Manager::~ACE_Thread_Manager");
   this->close ();
@@ -588,11 +588,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   // Create a new thread running <func>.  *Must* be called with the
   // <lock_> held...
   // Get a "new" Thread Descriptor from the freelist.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
-#else
-  auto_ptr<ACE_Thread_Descriptor> new_thr_desc (this->thread_desc_freelist_.remove ());
-#endif /* ACE_HAS_CPP11 */
 
   // Reset thread descriptor status
   new_thr_desc->reset (this);
@@ -619,11 +615,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       flags),
                   -1);
 # endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-#if defined ACE_HAS_CPP11
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
-#else
-  auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
-#endif
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
   ACE_hthread_t thr_handle;
@@ -981,7 +973,7 @@ ACE_Thread_Manager::remove_thr (ACE_Thread_Descriptor *td,
 // Repeatedly call remove_thr on all table entries until there
 // is no thread left.   Must be called with lock held.
 void
-ACE_Thread_Manager::remove_thr_all (void)
+ACE_Thread_Manager::remove_thr_all ()
 {
   ACE_Thread_Descriptor *td = 0;
 
@@ -1450,14 +1442,14 @@ ACE_Thread_Manager::apply_all (ACE_THR_MEMBER_FUNC func, int arg)
 // Resume all threads that are suspended.
 
 int
-ACE_Thread_Manager::resume_all (void)
+ACE_Thread_Manager::resume_all ()
 {
   ACE_TRACE ("ACE_Thread_Manager::resume_all");
   return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::resume_thr));
 }
 
 int
-ACE_Thread_Manager::suspend_all (void)
+ACE_Thread_Manager::suspend_all ()
 {
   ACE_TRACE ("ACE_Thread_Manager::suspend_all");
   return this->apply_all (ACE_THR_MEMBER_FUNC (&ACE_Thread_Manager::suspend_thr));
@@ -1496,14 +1488,14 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       {
         if (ACE_OS::thr_equal (biter.next ()->thr_id_, tid))
           {
-            ACE_Thread_Descriptor_Base *tdbl = biter.advance_and_remove (false);
+            std::unique_ptr<ACE_Thread_Descriptor_Base> tdbl (biter.advance_and_remove (false));
+            ace_mon.release();
 #ifndef ACE_LACKS_PTHREAD_JOIN
             if (ACE_Thread::join (tdbl->thr_handle_, status) == -1)
               {
                 return -1;
               }
 #endif
-            delete tdbl;
 
             // return immediately if we've found the thread we want to join.
             return 0;
@@ -1511,7 +1503,7 @@ ACE_Thread_Manager::join (ACE_thread_t tid, ACE_THR_FUNC_RETURN *status)
       }
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we
@@ -1586,7 +1578,7 @@ ACE_Thread_Manager::wait_grp (int grp_id)
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we
@@ -1725,7 +1717,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
   ACE_Auto_Ptr<ACE_Time_Value> local_timeout;
   // Check to see if we're using absolute time or not.
-  if (use_absolute_time == false && timeout != 0)
+  if (!use_absolute_time && timeout != 0)
     {
       // create time value duplicate (preserves time policy)
       local_timeout.reset (timeout->duplicate ());
@@ -1876,7 +1868,7 @@ ACE_Thread_Manager::wait_task (ACE_Task_Base *task)
                     -1);
 #endif /* !ACE_HAS_VXTHREADS */
 
-    typedef ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor> iter_t;
+    using iter_t = ACE_Double_Linked_List_Iterator<ACE_Thread_Descriptor>;
     for (iter_t iter (this->thr_list_); !iter.done (); iter.advance ())
       {
         // If threads are created as THR_DETACHED or THR_DAEMON, we

@@ -58,10 +58,10 @@ class ACE_Export ACE_Command_Base
 {
 public:
   /// Default constructor.
-  ACE_Command_Base (void);
+  ACE_Command_Base ();
 
   /// Virtual destructor.
-  virtual ~ACE_Command_Base (void);
+  virtual ~ACE_Command_Base ();
 
   /**
    * Invokes the method encapsulated by the command, passing along the

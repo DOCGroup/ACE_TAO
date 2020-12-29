@@ -59,7 +59,7 @@ public:
   void operator= (const ACE_Mutex_Invariants &rhs);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 private:
   /// Number of owners.  This had better be 0 >= owners_ <= 1;
@@ -101,7 +101,7 @@ public:
   void operator= (const ACE_RWLock_Invariants &rhs);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 private:
   /// Number of owning writers.
@@ -162,7 +162,7 @@ public:
   void rwlock_releasing (const ACE_TCHAR *token_name);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   // = The following two method should be in the protected part of the
   //   class.  Bugs with certain compilers preclude this.

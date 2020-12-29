@@ -95,11 +95,11 @@ public:
 
   /// Transform into a copy of the ASCII character representation.
   /// (caller must delete)
-  char *char_rep (void) const;
+  char *char_rep () const;
 
   /// Transform into a copy of a USHORT16 representation (caller must
   /// delete).  Note, behavior is undefined when sizeof (wchar_t) != 2.
-  ACE_UINT16 *ushort_rep (void) const;
+  ACE_UINT16 *ushort_rep () const;
 };
 
 ACE_Export
@@ -152,7 +152,7 @@ public:
   ACE_SString (char c, ACE_Allocator *alloc = 0);
 
   /// Default destructor.
-  ~ACE_SString (void);
+  ~ACE_SString ();
 
   /// Return the slot'th character in the string (doesn't perform
   /// bounds checking).
@@ -176,23 +176,23 @@ public:
   ACE_SString substr (size_type offset, size_type length = npos) const;
 
   /// Returns a hash value for this string.
-  u_long hash (void) const;
+  u_long hash () const;
 
   /// Return the length of the string.
-  size_type length (void) const;
+  size_type length () const;
 
   /// Set the underlying pointer.  Since this does not copy memory or
   /// delete existing memory use with extreme caution!!!
   void rep (char *s);
 
   /// Get the underlying pointer.
-  const char *rep (void) const;
+  const char *rep () const;
 
   /// Get the underlying pointer.
-  const char *fast_rep (void) const;
+  const char *fast_rep () const;
 
   /// Same as STL String's c_str() and fast_rep().
-  const char *c_str (void) const;
+  const char *c_str () const;
 
   /// Comparison operator that will match substrings.  Returns the
   /// slot of the first location that matches, else @c npos.
@@ -230,7 +230,7 @@ public:
   int compare (const ACE_SString &s) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -277,12 +277,12 @@ public:
   explicit ACE_Auto_String_Free (char* p = 0);
   ACE_Auto_String_Free (ACE_Auto_String_Free &rhs);
   ACE_Auto_String_Free& operator= (ACE_Auto_String_Free &rhs);
-  ~ACE_Auto_String_Free (void);
+  ~ACE_Auto_String_Free ();
 
   char* operator* () const;
   char operator[] (size_t i) const;
-  char* get (void) const;
-  char* release (void);
+  char* get () const;
+  char* release ();
   void reset (char* p = 0);
 
 private:

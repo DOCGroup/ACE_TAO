@@ -60,10 +60,10 @@ class TAO_Export TAO_Acceptor_Registry
 {
 public:
   ///  Default constructor.
-  TAO_Acceptor_Registry (void);
+  TAO_Acceptor_Registry ();
 
   ///  Default destructor.
-  ~TAO_Acceptor_Registry (void);
+  ~TAO_Acceptor_Registry ();
 
   /// Initialize all registered acceptors.  Return -1 on error.
   int open (TAO_ORB_Core *orb_core,
@@ -72,10 +72,10 @@ public:
             bool ignore_address);
 
   /// Close all open acceptors.
-  int close_all (void);
+  int close_all ();
 
   /// Returns the total number of endpoints in all of its acceptors.
-  size_t endpoint_count (void);
+  size_t endpoint_count ();
 
   /// Check if there is at least one profile in @a mprofile that
   /// corresponds to a collocated object.
@@ -85,8 +85,8 @@ public:
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
   // = Iterator.
-  TAO_AcceptorSetIterator begin (void);
-  TAO_AcceptorSetIterator end (void);
+  TAO_AcceptorSetIterator begin ();
+  TAO_AcceptorSetIterator end ();
 
 private:
   ACE_UNIMPLEMENTED_FUNC (TAO_Acceptor_Registry (const TAO_Acceptor_Registry &))

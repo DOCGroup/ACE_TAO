@@ -74,7 +74,7 @@ TAO_RTEventLog_i::copy_with_id (DsLogAdmin::LogId id)
 }
 
 void
-TAO_RTEventLog_i::destroy (void)
+TAO_RTEventLog_i::destroy ()
 {
   notifier_->object_deletion (logid_);
 
@@ -88,7 +88,7 @@ TAO_RTEventLog_i::destroy (void)
 }
 
 void
-TAO_RTEventLog_i::activate (void)
+TAO_RTEventLog_i::activate ()
 {
   RtecEventChannelAdmin::ConsumerAdmin_var consumer_admin =
     this->event_channel_->for_consumers ();
@@ -98,13 +98,13 @@ TAO_RTEventLog_i::activate (void)
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_RTEventLog_i::for_consumers (void)
+TAO_RTEventLog_i::for_consumers ()
 {
   return this->event_channel_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_RTEventLog_i::for_suppliers (void)
+TAO_RTEventLog_i::for_suppliers ()
 {
   return this->event_channel_->for_suppliers();
 }

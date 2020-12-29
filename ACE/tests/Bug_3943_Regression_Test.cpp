@@ -53,7 +53,7 @@
      typedef ACE_Null_Mutex ACCEPTOR_LOCKING;
 #  else
 #    include "ace/Process_Mutex.h"
-     typedef ACE_Process_Mutex ACCEPTOR_LOCKING;
+     using ACCEPTOR_LOCKING = ACE_Process_Mutex;
 #    define CLEANUP_PROCESS_MUTEX
 #  endif /* ACE_HAS_THREAD_SAFE_ACCEPT */
 #endif /* ACE_LACKS_FORK */
@@ -88,7 +88,7 @@ namespace {
 #if defined (ACE_LACKS_IOVEC)
   typedef u_long buffer_len;
 #else
-  typedef size_t buffer_len;
+  using buffer_len = size_t;
 #endif /* ACE_LACKS_IOVEC */
 
 #if defined (ACE_WIN32)
@@ -220,16 +220,16 @@ namespace {
     Svc_Handler (ACE_Thread_Manager * = 0);
     // Do-nothing constructor.
 
-    virtual int open (void *);
+    int open (void *) override;
     // Initialization hook.
 
-    void send_data (void);
+    void send_data ();
     // Send data to server.
 
-    void recv_data (void);
+    void recv_data ();
     // Recv data from client.
 
-    int close (u_long = 0);
+    int close (u_long = 0) override;
     // Shutdown the <Svc_Handler>.
 
   private:
@@ -248,10 +248,8 @@ namespace {
   };
 } // namespace ""
 
-typedef ACE_Oneshot_Acceptor<Svc_Handler,
-                             LOCK_SOCK_ACCEPTOR> ACCEPTOR;
-typedef ACE_Connector<Svc_Handler,
-                      ACE_SOCK_CONNECTOR> CONNECTOR;
+using ACCEPTOR = ACE_Oneshot_Acceptor<Svc_Handler, ACE_LOCK_SOCK_Acceptor<ACCEPTOR_LOCKING>>;
+using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 
 IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
@@ -320,7 +318,7 @@ Svc_Handler::open (void *)
 }
 
 void
-Svc_Handler::send_data (void)
+Svc_Handler::send_data ()
 {
   bool successful = true;
   bool win32_test = false;
@@ -780,7 +778,7 @@ Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
 }
 
 void
-Svc_Handler::recv_data (void)
+Svc_Handler::recv_data ()
 {
   ACE_SOCK_Stream &new_stream = this->peer ();
 

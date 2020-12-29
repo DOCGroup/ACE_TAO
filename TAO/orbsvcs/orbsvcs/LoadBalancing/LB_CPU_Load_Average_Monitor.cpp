@@ -51,12 +51,12 @@ TAO_LB_CPU_Load_Average_Monitor::TAO_LB_CPU_Load_Average_Monitor (
     }
 }
 
-TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor (void)
+TAO_LB_CPU_Load_Average_Monitor::~TAO_LB_CPU_Load_Average_Monitor ()
 {
 }
 
 CosLoadBalancing::Location *
-TAO_LB_CPU_Load_Average_Monitor::the_location (void)
+TAO_LB_CPU_Load_Average_Monitor::the_location ()
 {
   CosLoadBalancing::Location * location;
   ACE_NEW_THROW_EX (location,
@@ -71,7 +71,7 @@ TAO_LB_CPU_Load_Average_Monitor::the_location (void)
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_CPU_Load_Average_Monitor::loads (void)
+TAO_LB_CPU_Load_Average_Monitor::loads ()
 {
   CORBA::Float load = 0;
 

@@ -8,7 +8,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    StrategyFactory::~StrategyFactory (void)
+    StrategyFactory::~StrategyFactory ()
     {
     }
   } /* namespace Portable_Server */

@@ -206,7 +206,7 @@ ifeq ($(64bitoffsets),1)
   endif
 endif
 
-ifeq ($(c++0x),1)
+ifeq ($(c++11),1)
   CCFLAGS += -Ax
 endif
 

@@ -74,7 +74,7 @@ public:
    * Releases the transport and in case of an error, sends the appropriate
    * exception back to the client
    */
-  virtual ~TAO_AMH_Response_Handler (void);
+  virtual ~TAO_AMH_Response_Handler ();
 
   /**
    * Stores necessary information from a TAO_Server_Request onto the heap
@@ -84,17 +84,17 @@ public:
 
   /// @name Mutators for refcount
   //@{
-  virtual void _remove_ref (void);
+  virtual void _remove_ref ();
   //@}
 
 protected:
   /// Sets up the various parameters in anticipation of returning a reply
   /// to the client. return/OUT/INOUT arguments are marshalled into the
   /// Output stream after this method has been called.
-  void _tao_rh_init_reply (void);
+  void _tao_rh_init_reply ();
 
   /// Sends the marshalled reply back to the client.
-  void _tao_rh_send_reply (void);
+  void _tao_rh_send_reply ();
 
   /// Send back an exception to the client.
   void _tao_rh_send_exception (const CORBA::Exception &ex);

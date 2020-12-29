@@ -38,7 +38,7 @@ ACE_Event_T<TIME_POLICY>::ACE_Event_T (int manual_reset,
 }
 
 template <class TIME_POLICY>
-ACE_Event_T<TIME_POLICY>::~ACE_Event_T (void)
+ACE_Event_T<TIME_POLICY>::~ACE_Event_T ()
 {
 }
 

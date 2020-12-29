@@ -31,7 +31,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_unistd.h"
 
-typedef void* (*a_function_pointer) (void*);
+using a_function_pointer = void *(*)(void *);
 
 static
 u_int

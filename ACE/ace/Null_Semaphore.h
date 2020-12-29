@@ -51,12 +51,12 @@ public:
                        const ACE_TCHAR * = 0,
                        void * = 0,
                        int = 0x7fffffff) {}
-  ~ACE_Null_Semaphore (void) {}
+  ~ACE_Null_Semaphore () {}
   /// Return 0.
-  int remove (void) {return 0;}
+  int remove () {return 0;}
 
   /// Return 0.
-  int acquire (void) {return 0;}
+  int acquire () {return 0;}
 
   /// Return -1 with @c errno == @c ETIME.
   int acquire (ACE_Time_Value &) {errno = ETIME; return -1;}
@@ -65,31 +65,31 @@ public:
   int acquire (ACE_Time_Value *) {errno = ETIME; return -1;}
 
   /// Return 0.
-  int tryacquire (void) {return 0;}
+  int tryacquire () {return 0;}
 
   /// Return 0.
-  int release (void) {return 0;}
+  int release () {return 0;}
 
   /// Return 0.
   int release (size_t) {return 0;}
 
   /// Return 0.
-  int acquire_write (void) {return 0;}
+  int acquire_write () {return 0;}
 
   /// Return 0.
-  int tryacquire_write (void) {return 0;}
+  int tryacquire_write () {return 0;}
 
   /// Return 0.
-  int tryacquire_write_upgrade (void) {return 0;}
+  int tryacquire_write_upgrade () {return 0;}
 
   /// Return 0.
-  int acquire_read (void) {return 0;}
+  int acquire_read () {return 0;}
 
   /// Return 0.
-  int tryacquire_read (void) {return 0;}
+  int tryacquire_read () {return 0;}
 
   /// Dump the state of an object.
-  void dump (void) const {}
+  void dump () const {}
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;

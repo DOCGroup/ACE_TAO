@@ -29,11 +29,7 @@
 
 #include "tao/TAO_Server_Request.h"
 #include "tao/CDR.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -150,11 +146,7 @@ namespace CORBA
     CORBA::Any_ptr exception_;
 
     /// Reference counting.
-#if defined (ACE_HAS_CPP11)
     std::atomic<uint32_t> refcount_;
-#else
-    ACE_Atomic_Op<TAO_SYNCH_MUTEX, unsigned long> refcount_;
-#endif /* ACE_HAS_CPP11 */
 
     /// Request from the ORB.
     TAO_ServerRequest &orb_server_request_;

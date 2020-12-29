@@ -470,7 +470,7 @@ ACE_OS::time (time_t *tloc)
 #if defined (__GNUG__)
 namespace ACE_OS {
   ACE_INLINE long
-  timezone (void)
+  timezone ()
   {
     return ::ace_timezone ();
   }
@@ -484,7 +484,7 @@ ACE_OS::timezone (void)
 #endif /* ACE_LINUX */
 
 ACE_INLINE void
-ACE_OS::tzset (void)
+ACE_OS::tzset ()
 {
 #if defined (ACE_LACKS_TZSET)
   errno = ENOTSUP;

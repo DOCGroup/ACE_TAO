@@ -141,8 +141,8 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         geteuid() system call exists.
 ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
 ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-                                        Non-C++ Complient compilers that automatically
-                                        provide storeage for class static const int
+                                        Non-C++ Compliant compilers that automatically
+                                        provide storage for class static const int
                                         when their declaration is seen. I.e. they object
                                         to explicit definitions being seen in the .cpp
                                         file.
@@ -691,48 +691,6 @@ ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
 ACE_LACKS_UINTMAX_T                     Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
 ACE_LACKS_UINTPTR_T                     Platform lacks the uintptr_t type.
-
-ACE_HAS_INT8_T                          Platform provides the int8_t type.
-ACE_HAS_INT16_T                         Platform provides the int16_t type.
-ACE_HAS_INT32_T                         Platform provides the int32_t type.
-ACE_HAS_INT64_T                         Platform provides the int64_t type.
-ACE_HAS_UINT8_T                         Platform provides the uint8_t type.
-ACE_HAS_UINT16_T                        Platform provides the uint16_t type.
-ACE_HAS_UINT32_T                        Platform provides the uint32_t type.
-ACE_HAS_UINT64_T                        Platform provides the uint64_t type.
-
-ACE_INT8_TYPE                           Specific type to use for ACE_INT8.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT8_T has been defined
-ACE_INT16_TYPE                          Specific type to use for ACE_INT16.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT16_T has been defined
-ACE_INT32_TYPE                          Specific type to use for ACE_INT32.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT32_T has been defined
-ACE_INT64_TYPE                          Specific type to use for ACE_INT64.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT64_T has been defined
-ACE_UINT8_TYPE                          Specific type to use for ACE_UINT8.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT8_T has been defined
-ACE_UINT16_TYPE                         Specific type to use for ACE_UINT16.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT16_T has been defined
-ACE_UINT32_TYPE                         Specific type to use for ACE_UINT32.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT32_T has been defined
-ACE_UINT64_TYPE                         Specific type to use for ACE_UINT64.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT64_T has been defined
 
 ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf
                                         format specifier (including the '%')

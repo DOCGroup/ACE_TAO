@@ -37,7 +37,7 @@ struct array_traits
     TAO::Array_Traits<forany_type>::free (value);
   }
 
-  inline static slice_type * alloc (void)
+  inline static slice_type * alloc ()
   {
     return TAO::Array_Traits<forany_type>::alloc ();
   }

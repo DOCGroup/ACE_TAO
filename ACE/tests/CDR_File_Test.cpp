@@ -48,7 +48,7 @@ class CDR_Test
 
 public:
   /// Default constructor.
-  CDR_Test (void);
+  CDR_Test ();
 
   /// Constructor.
   CDR_Test (ACE_CDR::Char o,
@@ -121,7 +121,7 @@ operator << (ostream &os,
   return os;
 }
 
-CDR_Test::CDR_Test (void)
+CDR_Test::CDR_Test ()
   : char_ (0),
     word2_ (0),
     word4_ (0),

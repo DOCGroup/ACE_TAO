@@ -34,13 +34,13 @@ TAO_RelativeRoundtripTimeoutPolicy::TAO_RelativeRoundtripTimeoutPolicy (
 }
 
 TimeBase::TimeT
-TAO_RelativeRoundtripTimeoutPolicy::relative_expiry (void)
+TAO_RelativeRoundtripTimeoutPolicy::relative_expiry ()
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_RelativeRoundtripTimeoutPolicy::policy_type (void)
+TAO_RelativeRoundtripTimeoutPolicy::policy_type ()
 {
   return Messaging::RELATIVE_RT_TIMEOUT_POLICY_TYPE;
 }
@@ -121,7 +121,7 @@ TAO_RelativeRoundtripTimeoutPolicy::create (const CORBA::Any& val)
 }
 
 TAO_RelativeRoundtripTimeoutPolicy *
-TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
+TAO_RelativeRoundtripTimeoutPolicy::clone () const
 {
   TAO_RelativeRoundtripTimeoutPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -131,7 +131,7 @@ TAO_RelativeRoundtripTimeoutPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_RelativeRoundtripTimeoutPolicy::copy (void)
+TAO_RelativeRoundtripTimeoutPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -145,12 +145,12 @@ TAO_RelativeRoundtripTimeoutPolicy::copy (void)
 }
 
 void
-TAO_RelativeRoundtripTimeoutPolicy::destroy (void)
+TAO_RelativeRoundtripTimeoutPolicy::destroy ()
 {
 }
 
 TAO_Cached_Policy_Type
-TAO_RelativeRoundtripTimeoutPolicy::_tao_cached_type (void) const
+TAO_RelativeRoundtripTimeoutPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_RELATIVE_ROUNDTRIP_TIMEOUT;
 }
@@ -200,7 +200,7 @@ TAO_Sync_Scope_Policy::TAO_Sync_Scope_Policy (const TAO_Sync_Scope_Policy &rhs)
 }
 
 CORBA::PolicyType
-TAO_Sync_Scope_Policy::policy_type (void)
+TAO_Sync_Scope_Policy::policy_type ()
 {
   return Messaging::SYNC_SCOPE_POLICY_TYPE;
 }
@@ -268,7 +268,7 @@ TAO_Sync_Scope_Policy::create (const CORBA::Any& val)
 }
 
 TAO_Sync_Scope_Policy *
-TAO_Sync_Scope_Policy::clone (void) const
+TAO_Sync_Scope_Policy::clone () const
 {
   TAO_Sync_Scope_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -278,13 +278,13 @@ TAO_Sync_Scope_Policy::clone (void) const
 }
 
 Messaging::SyncScope
-TAO_Sync_Scope_Policy::synchronization (void)
+TAO_Sync_Scope_Policy::synchronization ()
 {
   return this->synchronization_;
 }
 
 CORBA::Policy_ptr
-TAO_Sync_Scope_Policy::copy (void)
+TAO_Sync_Scope_Policy::copy ()
 {
   TAO_Sync_Scope_Policy *servant = 0;
   ACE_NEW_THROW_EX (servant,
@@ -295,11 +295,11 @@ TAO_Sync_Scope_Policy::copy (void)
 }
 
 void
-TAO_Sync_Scope_Policy::destroy (void)
+TAO_Sync_Scope_Policy::destroy ()
 {
 }
 TAO_Cached_Policy_Type
-TAO_Sync_Scope_Policy::_tao_cached_type (void) const
+TAO_Sync_Scope_Policy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_SYNC_SCOPE;
 }

@@ -132,8 +132,7 @@ TAO_SCIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SCIOP_Profile::parse_string_i (const char *ior
-                                   )
+TAO_SCIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -257,8 +256,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::hash (CORBA::ULong max
-                        )
+TAO_SCIOP_Profile::hash (CORBA::ULong max)
 {
   // Get the hash value for all endpoints.
   CORBA::ULong hashval = 0;

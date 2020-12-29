@@ -34,7 +34,7 @@ public:
   be_visitor_array_cdr_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_array_cdr_op_ch (void);
+  ~be_visitor_array_cdr_op_ch ();
 
   /// visit array
   virtual int visit_array (be_array *node);

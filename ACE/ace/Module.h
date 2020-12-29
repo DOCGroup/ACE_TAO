@@ -77,10 +77,10 @@ class ACE_Module : public ACE_Module_Base
 {
 public:
   /// Create an empty Module.
-  ACE_Module (void);
+  ACE_Module ();
 
   /// Shutdown the Module.
-  virtual ~ACE_Module (void);
+  virtual ~ACE_Module ();
 
   /// Create an initialized module with @a module_name as its identity
   /// and @a reader and @a writer as its tasks.
@@ -114,7 +114,7 @@ public:
 
   // = ACE_Task manipulation routines
   /// Get the writer task.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer ();
 
   /**
    * Set the writer task. @a flags can be used to indicate that the
@@ -126,7 +126,7 @@ public:
   void writer (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q, int flags = M_DELETE_WRITER);
 
   /// Get the reader task.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *reader ();
 
   /**
    * Set the reader task. @a flags can be used to indicate that the
@@ -142,14 +142,14 @@ public:
 
   // = Identify the module
   /// Get the module name.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   /// Set the module name.
   void name (const ACE_TCHAR *);
 
   // = Argument to the Tasks.
   /// Get the argument passed to the tasks.
-  void *arg (void) const;
+  void *arg () const;
 
   /// Set the argument passed to the tasks.
   void arg (void *);
@@ -158,13 +158,13 @@ public:
   void link (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
 
   /// Get the next pointer to the module above in the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next (void);
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
   /// Set the next pointer to the module above in the stream.
-  void next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
+  virtual void next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

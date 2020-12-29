@@ -46,7 +46,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Dev_Poll_Reactor)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dev_Poll_Reactor::Event_Tuple)
 ACE_ALLOC_HOOK_DEFINE(ACE_Dev_Poll_Reactor_Notify)
 
-ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify (void)
+ACE_Dev_Poll_Reactor_Notify::ACE_Dev_Poll_Reactor_Notify ()
   : dp_reactor_ (0)
   , notification_pipe_ ()
   , max_notify_iterations_ (-1)
@@ -111,7 +111,7 @@ ACE_Dev_Poll_Reactor_Notify::open (ACE_Reactor_Impl *r,
 }
 
 int
-ACE_Dev_Poll_Reactor_Notify::close (void)
+ACE_Dev_Poll_Reactor_Notify::close ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::close");
 
@@ -292,7 +292,7 @@ ACE_Dev_Poll_Reactor_Notify::handle_input (ACE_HANDLE /*handle*/)
 }
 
 ACE_HANDLE
-ACE_Dev_Poll_Reactor_Notify::notify_handle (void)
+ACE_Dev_Poll_Reactor_Notify::notify_handle ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::notify_handle");
 
@@ -364,7 +364,7 @@ ACE_Dev_Poll_Reactor_Notify::max_notify_iterations (int iterations)
 }
 
 int
-ACE_Dev_Poll_Reactor_Notify::max_notify_iterations (void)
+ACE_Dev_Poll_Reactor_Notify::max_notify_iterations ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::max_notify_iterations");
 
@@ -390,7 +390,7 @@ ACE_Dev_Poll_Reactor_Notify::purge_pending_notifications (
 }
 
 void
-ACE_Dev_Poll_Reactor_Notify::dump (void) const
+ACE_Dev_Poll_Reactor_Notify::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor_Notify::dump");
@@ -415,7 +415,7 @@ ACE_Dev_Poll_Reactor_Notify::dequeue_one (ACE_Notification_Buffer &nb)
 
 // -----------------------------------------------------------------
 
-ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::Handler_Repository ()
   : size_ (0),
     max_size_ (0),
     handlers_ (0)
@@ -469,7 +469,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::open (size_t size)
 }
 
 int
-ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all");
 
@@ -495,7 +495,7 @@ ACE_Dev_Poll_Reactor::Handler_Repository::unbind_all (void)
 }
 
 int
-ACE_Dev_Poll_Reactor::Handler_Repository::close (void)
+ACE_Dev_Poll_Reactor::Handler_Repository::close ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::Handler_Repository::close");
 
@@ -663,7 +663,7 @@ ACE_Dev_Poll_Reactor::ACE_Dev_Poll_Reactor (size_t size,
                 ACE_TEXT ("failed inside ACE_Dev_Poll_Reactor::CTOR")));
 }
 
-ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor (void)
+ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::~ACE_Dev_Poll_Reactor");
 
@@ -818,13 +818,13 @@ ACE_Dev_Poll_Reactor::timer_queue (ACE_Timer_Queue *tq)
 }
 
 ACE_Timer_Queue *
-ACE_Dev_Poll_Reactor::timer_queue (void) const
+ACE_Dev_Poll_Reactor::timer_queue () const
 {
   return this->timer_queue_;
 }
 
 int
-ACE_Dev_Poll_Reactor::close (void)
+ACE_Dev_Poll_Reactor::close ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::close");
 
@@ -1081,7 +1081,7 @@ ACE_Dev_Poll_Reactor::dispatch (Token_Guard &guard)
 int
 ACE_Dev_Poll_Reactor::dispatch_timer_handler (Token_Guard &guard)
 {
-  typedef ACE_Member_Function_Command<Token_Guard> Guard_Release;
+  using Guard_Release = ACE_Member_Function_Command<Token_Guard>;
 
   Guard_Release release(guard, &Token_Guard::release_token);
   return this->timer_queue_->expire_single(release);
@@ -1381,7 +1381,7 @@ ACE_Dev_Poll_Reactor::alertable_handle_events (ACE_Time_Value &max_wait_time)
 }
 
 int
-ACE_Dev_Poll_Reactor::deactivated (void)
+ACE_Dev_Poll_Reactor::deactivated ()
 {
   return this->deactivated_;
 }
@@ -1747,7 +1747,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (const ACE_Handle_Set &handles)
 }
 
 int
-ACE_Dev_Poll_Reactor::suspend_handlers (void)
+ACE_Dev_Poll_Reactor::suspend_handlers ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::suspend_handlers");
 
@@ -1858,7 +1858,7 @@ ACE_Dev_Poll_Reactor::resume_handler (const ACE_Handle_Set &handles)
 }
 
 int
-ACE_Dev_Poll_Reactor::resume_handlers (void)
+ACE_Dev_Poll_Reactor::resume_handlers ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handlers");
 
@@ -1932,7 +1932,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
 }
 
 int
-ACE_Dev_Poll_Reactor::resumable_handler (void)
+ACE_Dev_Poll_Reactor::resumable_handler ()
 {
   // @@ Is this correct?
 
@@ -1940,7 +1940,7 @@ ACE_Dev_Poll_Reactor::resumable_handler (void)
 }
 
 bool
-ACE_Dev_Poll_Reactor::uses_event_associations (void)
+ACE_Dev_Poll_Reactor::uses_event_associations ()
 {
   // Since the Dev_Poll_Reactor does not do any event associations,
   // this method always return false.
@@ -2078,7 +2078,7 @@ ACE_Dev_Poll_Reactor::max_notify_iterations (int iterations)
 }
 
 int
-ACE_Dev_Poll_Reactor::max_notify_iterations (void)
+ACE_Dev_Poll_Reactor::max_notify_iterations ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::max_notify_iterations");
 
@@ -2156,7 +2156,7 @@ ACE_Dev_Poll_Reactor::handler (int signum,
 }
 
 bool
-ACE_Dev_Poll_Reactor::initialized (void)
+ACE_Dev_Poll_Reactor::initialized ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::initialized");
 
@@ -2166,13 +2166,13 @@ ACE_Dev_Poll_Reactor::initialized (void)
 }
 
 size_t
-ACE_Dev_Poll_Reactor::size (void) const
+ACE_Dev_Poll_Reactor::size () const
 {
   return this->handler_rep_.size ();
 }
 
 ACE_Lock &
-ACE_Dev_Poll_Reactor::lock (void)
+ACE_Dev_Poll_Reactor::lock ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::lock");
 
@@ -2180,7 +2180,7 @@ ACE_Dev_Poll_Reactor::lock (void)
 }
 
 void
-ACE_Dev_Poll_Reactor::wakeup_all_threads (void)
+ACE_Dev_Poll_Reactor::wakeup_all_threads ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::wakeup_all_threads");
 
@@ -2215,7 +2215,7 @@ ACE_Dev_Poll_Reactor::owner (ACE_thread_t * /* owner */)
 }
 
 bool
-ACE_Dev_Poll_Reactor::restart (void)
+ACE_Dev_Poll_Reactor::restart ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::restart");
 
@@ -2243,7 +2243,7 @@ ACE_Dev_Poll_Reactor::requeue_position (int)
 }
 
 int
-ACE_Dev_Poll_Reactor::requeue_position (void)
+ACE_Dev_Poll_Reactor::requeue_position ()
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::requeue_position");
 
@@ -2432,7 +2432,7 @@ ACE_Dev_Poll_Reactor::ready_ops (ACE_HANDLE /* handle */,
 }
 
 void
-ACE_Dev_Poll_Reactor::dump (void) const
+ACE_Dev_Poll_Reactor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dev_Poll_Reactor::dump");

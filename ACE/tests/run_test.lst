@@ -63,7 +63,7 @@ Bug_3912_Regression_Test: !STATIC
 Bug_3943_Regression_Test: !ACE_FOR_TAO
 Bug_3974_Regression_Test
 Bug_4055_Regression_Test: !ST
-Bug_4189_Regression_Test: !ST
+Bug_4189_Regression_Test: !ST !ACE_FOR_TAO
 CDR_Array_Test: !ACE_FOR_TAO
 CDR_File_Test: !ACE_FOR_TAO
 CDR_Fixed_Test: !ACE_FOR_TAO
@@ -283,4 +283,4 @@ Wild_Match_Test
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO !FIXED_BUGS_ONLY
 SSL/Thread_Pool_Reactor_SSL_Test: SSL
-UNIX_Addr_Test
+UNIX_Addr_Test: !ACE_FOR_TAO

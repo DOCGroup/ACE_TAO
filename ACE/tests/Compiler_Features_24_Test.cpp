@@ -5,8 +5,6 @@
 
 #include "test_config.h"
 
-#if defined (ACE_HAS_CPP11)
-
 #include <type_traits>
 #include <memory>
 
@@ -18,7 +16,7 @@ namespace FOO
   template <typename T>
   struct o_t
   {
-    typedef o_r<T>       ref_type;
+    using ref_type = o_r<T>;
   };
   class T_base {};
 
@@ -34,7 +32,7 @@ namespace FOO
     template <typename _Tp1, typename, typename ...Args>
     friend o_r<_Tp1> make_f(Args&& ...args);
   protected:
-    typedef std::shared_ptr<T>    shared_ptr_type;
+    using shared_ptr_type = std::shared_ptr<T>;
     template<typename _Tp1, typename = typename
       std::enable_if<std::is_convertible<_Tp1*, T*>::value>::type>
     explicit o_r (_Tp1*)
@@ -92,18 +90,3 @@ run_main (int, ACE_TCHAR *[])
   return 0;
 #endif
 }
-
-#else
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT("Compiler_Features_24_Test"));
-
-  ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("No C++11 support enabled\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif

@@ -31,9 +31,8 @@
 #endif /* ACE_WIN32 */
 
 // Declare the type of the symbol:
-typedef Hello *(*Hello_Factory)(void);
-
-typedef int ( *PFN )( Parent* );
+using Hello_Factory = Hello *(*)();
+using PFN = int (*)(Parent *);
 
 int handle_test (ACE_DLL &dll)
 {
@@ -93,7 +92,7 @@ int basic_test (ACE_DLL &dll)
                        dll.error ()),
                       -1);
 
-  auto_ptr<Hello> my_hello (factory ());
+  std::unique_ptr<Hello> my_hello (factory ());
 
   // Make the method calls, as the object pointer is available.
   my_hello->say_hello ();

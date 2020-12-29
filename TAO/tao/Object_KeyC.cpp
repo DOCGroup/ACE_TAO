@@ -52,7 +52,7 @@ namespace TAO
 #if !defined (_TAO_OBJECTKEY_CS_)
 #define _TAO_OBJECTKEY_CS_
 
-TAO::ObjectKey::ObjectKey (void)
+TAO::ObjectKey::ObjectKey ()
 {}
 
 TAO::ObjectKey::ObjectKey (
@@ -76,7 +76,7 @@ TAO::ObjectKey::ObjectKey (
     (max, length, buffer, release)
 {}
 
-TAO::ObjectKey::~ObjectKey (void)
+TAO::ObjectKey::~ObjectKey ()
 {}
 
 // Hand crafted.
@@ -143,7 +143,7 @@ TAO::ObjectKey::decode_string_to_sequence (
   TAO::unbounded_value_sequence<CORBA::Octet> & seq,
   char const * str)
 {
-  if (str == 0)
+  if (str == nullptr)
     {
       seq.length (0);
       return;

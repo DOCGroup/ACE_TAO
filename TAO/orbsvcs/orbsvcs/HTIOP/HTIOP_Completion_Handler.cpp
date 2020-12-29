@@ -44,7 +44,7 @@ TAO::HTIOP::Completion_Handler::Completion_Handler (TAO_ORB_Core *orb_core,
 }
 
 
-TAO::HTIOP::Completion_Handler::~Completion_Handler (void)
+TAO::HTIOP::Completion_Handler::~Completion_Handler ()
 {
   delete this->creation_strategy_;
   delete this->concurrency_strategy_;
@@ -66,7 +66,7 @@ TAO::HTIOP::Completion_Handler::open (void*)
 }
 
 int
-TAO::HTIOP::Completion_Handler::resume_handler (void)
+TAO::HTIOP::Completion_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }

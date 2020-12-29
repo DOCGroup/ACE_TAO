@@ -23,7 +23,7 @@ be_visitor_exception_ch::be_visitor_exception_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_exception_ch::~be_visitor_exception_ch (void)
+be_visitor_exception_ch::~be_visitor_exception_ch ()
 {
 }
 
@@ -58,10 +58,10 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   // Constructors and destructor.
   *os << be_nl_2
-      << node->local_name () << " (void);" << be_nl
+      << node->local_name () << " ();" << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
-      << "~" << node->local_name () << " (void);\n" << be_nl;
+      << "~" << node->local_name () << " () = default;\n" << be_nl;
 
   // Assignment operator.
   *os << node->local_name () << " &operator= (const "
@@ -77,11 +77,11 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
       << "static const " << node->local_name ()
       << " *_downcast ( ::CORBA::Exception const *);" << be_nl_2;
 
-  *os << "static ::CORBA::Exception *_alloc (void);" << be_nl_2;
+  *os << "static ::CORBA::Exception *_alloc ();" << be_nl_2;
 
   *os << "virtual ::CORBA::Exception *"
-      << "_tao_duplicate (void) const;\n" << be_nl
-      << "virtual void _raise (void) const;\n" << be_nl
+      << "_tao_duplicate () const;\n" << be_nl
+      << "virtual void _raise () const;\n" << be_nl
       << "virtual void _tao_encode (TAO_OutputCDR &cdr) const;" << be_nl
       << "virtual void _tao_decode (TAO_InputCDR &cdr);";
 
@@ -106,7 +106,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
   if (be_global->tc_support ())
     {
       *os << be_nl_2
-          << "virtual ::CORBA::TypeCode_ptr _tao_type (void) const;";
+          << "virtual ::CORBA::TypeCode_ptr _tao_type () const;";
     }
 
   *os << be_uidt_nl << "};";
@@ -126,6 +126,6 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
         }
     }
 
-  node->cli_hdr_gen (1);
+  node->cli_hdr_gen (true);
   return 0;
 }

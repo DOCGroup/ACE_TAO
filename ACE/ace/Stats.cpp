@@ -12,7 +12,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_UINT32
-ACE_Stats_Value::fractional_field (void) const
+ACE_Stats_Value::fractional_field () const
 {
   if (precision () == 0)
     {
@@ -190,7 +190,7 @@ ACE_Stats::std_dev (ACE_Stats_Value &std_dev,
 
 
 void
-ACE_Stats::reset (void)
+ACE_Stats::reset ()
 {
   overflow_ = 0u;
   number_of_samples_ = 0u;

@@ -32,7 +32,7 @@ public:
   be_visitor_args_vardecl_ss (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_args_vardecl_ss (void);
+  virtual ~be_visitor_args_vardecl_ss ();
 
   /// visit the argument node
   virtual int visit_argument (be_argument *node);

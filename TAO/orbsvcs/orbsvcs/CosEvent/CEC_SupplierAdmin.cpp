@@ -19,12 +19,12 @@ TAO_CEC_SupplierAdmin::TAO_CEC_SupplierAdmin (TAO_CEC_EventChannel *ec)
     this->event_channel_->supplier_poa ();
 }
 
-TAO_CEC_SupplierAdmin::~TAO_CEC_SupplierAdmin (void)
+TAO_CEC_SupplierAdmin::~TAO_CEC_SupplierAdmin ()
 {
 }
 
 PortableServer::POA_ptr
-TAO_CEC_SupplierAdmin::_default_POA (void)
+TAO_CEC_SupplierAdmin::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
@@ -66,7 +66,7 @@ TAO_CEC_SupplierAdmin::disconnected (TAO_CEC_ProxyPullConsumer *consumer)
 }
 
 void
-TAO_CEC_SupplierAdmin::shutdown (void)
+TAO_CEC_SupplierAdmin::shutdown ()
 {
   this->push_admin_.shutdown ();
 
@@ -74,13 +74,13 @@ TAO_CEC_SupplierAdmin::shutdown (void)
 }
 
 CosEventChannelAdmin::ProxyPushConsumer_ptr
-TAO_CEC_SupplierAdmin::obtain_push_consumer (void)
+TAO_CEC_SupplierAdmin::obtain_push_consumer ()
 {
   return this->push_admin_.obtain ();
 }
 
 CosEventChannelAdmin::ProxyPullConsumer_ptr
-TAO_CEC_SupplierAdmin::obtain_pull_consumer (void)
+TAO_CEC_SupplierAdmin::obtain_pull_consumer ()
 {
   return this->pull_admin_.obtain ();
 }

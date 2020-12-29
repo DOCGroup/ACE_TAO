@@ -59,7 +59,7 @@
 
 
 // Proactor Type (UNIX only, Win32 ignored)
-typedef enum { DEFAULT = 0, AIOCB, SIG, SUN, CB } ProactorType;
+using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, SUN, CB };
 static ProactorType proactor_type = DEFAULT;
 
 // POSIX : > 0 max number aio operations  proactor,
@@ -165,28 +165,28 @@ disable_signal (int sigmin, int sigmax)
 class MyTask : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  MyTask (void):
+  MyTask ():
     lock_ (),
     sem_ ((unsigned int) 0),
     proactor_(0) {}
 
-  virtual ~MyTask()
+  ~MyTask() override
     {
       (void) this->stop ();
       (void) this->delete_proactor();
     }
 
-  virtual int svc (void);
+  int svc () override;
 
   int start (int num_threads,
              ProactorType type_proactor,
              size_t max_op );
-  int stop  (void);
+  int stop  ();
 
 private:
   int  create_proactor (ProactorType type_proactor,
                         size_t max_op);
-  int  delete_proactor (void);
+  int  delete_proactor ();
 
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
@@ -280,7 +280,7 @@ MyTask::create_proactor (ProactorType type_proactor, size_t max_op)
 }
 
 int
-MyTask::delete_proactor (void)
+MyTask::delete_proactor ()
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX,
                     monitor,
@@ -342,7 +342,7 @@ MyTask::stop ()
 }
 
 int
-MyTask::svc (void)
+MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask started\n")));
 
@@ -365,13 +365,13 @@ class TestData
 {
 public:
   TestData ();
-  bool testing_done (void);
-  Server *server_up (void);
-  Client *client_up (void);
+  bool testing_done ();
+  Server *server_up ();
+  Client *client_up ();
   void server_done (Server *s);
   void client_done (Client *c);
-  void stop_all (void);
-  void report (void);
+  void stop_all ();
+  void report ();
 
 private:
   struct Local_Stats
@@ -404,7 +404,7 @@ TestData::TestData ()
 }
 
 bool
-TestData::testing_done (void)
+TestData::testing_done ()
 {
   int svr_up = this->servers_.sessions_up_.value ();
   int svr_dn = this->servers_.sessions_down_.value ();
@@ -418,7 +418,7 @@ TestData::testing_done (void)
 }
 
 Server *
-TestData::server_up (void)
+TestData::server_up ()
 {
   ++this->servers_.sessions_up_;
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
@@ -440,7 +440,7 @@ TestData::server_up (void)
 }
 
 Client *
-TestData::client_up (void)
+TestData::client_up ()
 {
   ++this->clients_.sessions_up_;
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, monitor, this->list_lock_, 0);
@@ -532,7 +532,7 @@ TestData::client_done (Client *c)
 }
 
 void
-TestData::stop_all (void)
+TestData::stop_all ()
 {
   int i;
 
@@ -569,7 +569,7 @@ TestData::stop_all (void)
 }
 
 void
-TestData::report (void)
+TestData::report ()
 {
   // Print statistics
   ACE_TCHAR bufs [256];
@@ -622,10 +622,10 @@ class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
 public:
   Acceptor (TestData *tester);
-  virtual ~Acceptor (void);
+  ~Acceptor () override;
 
   // Virtual from ACE_Asynch_Acceptor
-  Server *make_handler (void);
+  Server *make_handler () override;
 
 private:
   TestData *tester_;
@@ -637,13 +637,13 @@ Acceptor::Acceptor (TestData *tester)
 {
 }
 
-Acceptor::~Acceptor (void)
+Acceptor::~Acceptor ()
 {
   this->cancel ();
 }
 
 Server *
-Acceptor::make_handler (void)
+Acceptor::make_handler ()
 {
   return this->tester_->server_up ();
 }
@@ -667,7 +667,7 @@ Server::Server (TestData *tester, int id)
 {
 }
 
-Server::~Server (void)
+Server::~Server ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Server %d dtor; %d sends (%d bytes); ")
@@ -777,7 +777,7 @@ Server::open (ACE_HANDLE handle, ACE_Message_Block &)
 }
 
 int
-Server::initiate_read_stream (void)
+Server::initiate_read_stream ()
 {
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;
@@ -1056,12 +1056,12 @@ class Connector : public ACE_Asynch_Connector<Client>
 {
 public:
   Connector (TestData *tester);
-  virtual ~Connector (void);
+  ~Connector () override;
 
   int  start (const ACE_INET_Addr &addr, int num);
 
   // Virtual from ACE_Asynch_Connector
-  Client *make_handler (void);
+  Client *make_handler () override;
 
 private:
   TestData *tester_;
@@ -1074,13 +1074,13 @@ Connector::Connector (TestData *tester)
 {
 }
 
-Connector::~Connector (void)
+Connector::~Connector ()
 {
   this->cancel ();
 }
 
 Client *
-Connector::make_handler (void)
+Connector::make_handler ()
 {
   return this->tester_->client_up ();
 }
@@ -1143,7 +1143,7 @@ Client::Client (TestData *tester, int id)
 {
 }
 
-Client::~Client (void)
+Client::~Client ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Client %d dtor; %d sends (%d bytes); ")
@@ -1312,7 +1312,7 @@ Client::open (ACE_HANDLE handle, ACE_Message_Block &)
 }
 
 int
-Client::initiate_write_stream (void)
+Client::initiate_write_stream ()
 {
   if (this->flg_cancel_ != 0 ||
       this->stop_writing_ ||
@@ -1394,7 +1394,7 @@ Client::initiate_write_stream (void)
 }
 
 int
-Client::initiate_read_stream (void)
+Client::initiate_read_stream ()
 {
   if (this->flg_cancel_ != 0 || this->handle_ == ACE_INVALID_HANDLE)
     return -1;

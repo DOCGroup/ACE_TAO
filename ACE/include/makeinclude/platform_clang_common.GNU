@@ -70,7 +70,7 @@ gcc_template_instantiation_visibility ?= 0
 # Only modify LDFLAGS if DLD has been set.
 ifneq ($(DLD),)
   ifeq ($(DLD),$(CXX_FOR_VERSION_TEST)) # only try this is we are using ld through gcc
-    LD_FOR_VERSION_TEST = $(shell $(CXX_FOR_VERSION_TEST) -print-prog-name=ld)
+    LD_FOR_VERSION_TEST = $(subst \,/,$(shell $(CXX_FOR_VERSION_TEST) -print-prog-name=ld))
   else
     LD_FOR_VERSION_TEST = $(DLD)
   endif # DLD = CXX_FOR_VERSION_TEST
@@ -86,13 +86,9 @@ ifeq ($(no_strict_aliasing), 1)
   CCFLAGS += -fno-strict-aliasing
 endif
 
-ifeq ($(c++0x),1)
-  CCFLAGS += -std=c++0x
-else
-  ifeq ($(c++11),1)
-    CCFLAGS += -std=c++11
-  endif # c++11
-endif # c++0x
+ifeq ($(c++11),1)
+  CCFLAGS += -std=c++11
+endif # c++11
 
 ifeq ($(shared_libs), 1)
   ifneq ($(static_libs_only), 1)

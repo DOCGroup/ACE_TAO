@@ -94,7 +94,7 @@ ACE_OS::alarm (u_int secs)
 }
 
 ACE_INLINE long
-ACE_OS::getpagesize (void)
+ACE_OS::getpagesize ()
 {
   ACE_OS_TRACE ("ACE_OS::getpagesize");
 #if defined (ACE_WIN32) && !defined (ACE_HAS_PHARLAP)
@@ -112,7 +112,7 @@ ACE_OS::getpagesize (void)
 }
 
 ACE_INLINE long
-ACE_OS::allocation_granularity (void)
+ACE_OS::allocation_granularity ()
 {
 #if defined (ACE_WIN32)
   SYSTEM_INFO sys_info;
@@ -361,7 +361,7 @@ ACE_OS::execvp (const char *file,
 }
 
 ACE_INLINE pid_t
-ACE_OS::fork (void)
+ACE_OS::fork ()
 {
   ACE_OS_TRACE ("ACE_OS::fork");
 #if defined (ACE_LACKS_FORK)
@@ -451,7 +451,7 @@ ACE_OS::getcwd (wchar_t *buf, size_t size)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE gid_t
-ACE_OS::getgid (void)
+ACE_OS::getgid ()
 {
   ACE_OS_TRACE ("ACE_OS::getgid");
 #if defined (ACE_LACKS_GETGID)
@@ -462,7 +462,7 @@ ACE_OS::getgid (void)
 }
 
 ACE_INLINE gid_t
-ACE_OS::getegid (void)
+ACE_OS::getegid ()
 {
   ACE_OS_TRACE ("ACE_OS::getegid");
 #if defined (ACE_LACKS_GETEGID)
@@ -505,7 +505,7 @@ ACE_OS::getpgid (pid_t pid)
 }
 
 ACE_INLINE pid_t
-ACE_OS::getpid (void)
+ACE_OS::getpid ()
 {
   // ACE_OS_TRACE ("ACE_OS::getpid");
 #if defined (ACE_LACKS_GETPID)
@@ -518,7 +518,7 @@ ACE_OS::getpid (void)
 }
 
 ACE_INLINE pid_t
-ACE_OS::getppid (void)
+ACE_OS::getppid ()
 {
   ACE_OS_TRACE ("ACE_OS::getppid");
 #if defined (ACE_LACKS_GETPPID)
@@ -529,7 +529,7 @@ ACE_OS::getppid (void)
 }
 
 ACE_INLINE uid_t
-ACE_OS::getuid (void)
+ACE_OS::getuid ()
 {
   ACE_OS_TRACE ("ACE_OS::getuid");
 #if defined (ACE_LACKS_GETUID)
@@ -540,7 +540,7 @@ ACE_OS::getuid (void)
 }
 
 ACE_INLINE uid_t
-ACE_OS::geteuid (void)
+ACE_OS::geteuid ()
 {
   ACE_OS_TRACE ("ACE_OS::geteuid");
 #if defined (ACE_LACKS_GETEUID)
@@ -931,7 +931,7 @@ ACE_OS::setreuid (uid_t ruid, uid_t euid)
 }
 
 ACE_INLINE pid_t
-ACE_OS::setsid (void)
+ACE_OS::setsid ()
 {
   ACE_OS_TRACE ("ACE_OS::setsid");
 #if defined (ACE_LACKS_SETSID)

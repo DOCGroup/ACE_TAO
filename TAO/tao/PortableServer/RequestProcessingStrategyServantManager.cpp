@@ -14,12 +14,12 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantManager::RequestProcessingStrategyServantManager (void)
+    RequestProcessingStrategyServantManager::RequestProcessingStrategyServantManager ()
     {
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyServantManager::get_servant (void)
+    RequestProcessingStrategyServantManager::get_servant ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }

@@ -34,7 +34,7 @@ namespace TAO
   public:
     First_Request_Guard (TAO_Transport &transport);
 
-    ~First_Request_Guard (void);
+    ~First_Request_Guard ();
 
   private:
     /// The transport that we guard.
@@ -50,7 +50,7 @@ namespace TAO
     this->is_first_ = this->transport_.first_request ();
   }
 
-  First_Request_Guard::~First_Request_Guard (void)
+  First_Request_Guard::~First_Request_Guard ()
   {
     this->transport_.first_request_sent (this->is_first_);
   }
@@ -71,7 +71,7 @@ namespace TAO
   {
     TAO::ORB_Countdown_Time countdown (max_wait_time);
 
-    TAO_Synch_Reply_Dispatcher *rd_p = 0;
+    TAO_Synch_Reply_Dispatcher *rd_p = nullptr;
     ACE_NEW_NORETURN (rd_p, TAO_Synch_Reply_Dispatcher (this->resolver_.stub ()->orb_core (),
                                           this->details_.reply_service_info ()));
     if (!rd_p)
@@ -148,7 +148,7 @@ namespace TAO
     TAO_InputCDR &cdr = rd.reply_cdr ();
 
     // Set the translators
-    this->resolver_.transport ()->assign_translators (&cdr, 0);
+    this->resolver_.transport ()->assign_translators (&cdr, nullptr);
 
     switch (rd.locate_reply_status ())
       {

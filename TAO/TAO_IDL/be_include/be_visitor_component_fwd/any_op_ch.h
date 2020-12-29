@@ -30,7 +30,7 @@ public:
   be_visitor_component_fwd_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_component_fwd_any_op_ch (void);
+  ~be_visitor_component_fwd_any_op_ch ();
 
   /// visit component_fwd
   virtual int visit_component_fwd (be_component_fwd *node);

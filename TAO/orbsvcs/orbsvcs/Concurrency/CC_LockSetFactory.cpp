@@ -15,17 +15,17 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor
-CC_LockSetFactory::CC_LockSetFactory (void)
+CC_LockSetFactory::CC_LockSetFactory ()
 {
 }
 
 // Destructor.
-CC_LockSetFactory::~CC_LockSetFactory (void)
+CC_LockSetFactory::~CC_LockSetFactory ()
 {
 }
 
 CosConcurrencyControl::LockSet_ptr
-CC_LockSetFactory::create (void)
+CC_LockSetFactory::create ()
 {
   CC_LockSet *ls = 0;
 

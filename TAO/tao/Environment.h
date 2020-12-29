@@ -74,7 +74,7 @@ namespace CORBA
   public:
     /// The default constructor.  The environment will hold no
     /// exceptions.
-    Environment (void);
+    Environment ();
 
     /// Copy constructor.
     Environment (const Environment &ACE_TRY_ENV);
@@ -83,11 +83,11 @@ namespace CORBA
     Environment &operator=(const Environment &ACE_TRY_ENV);
 
     /// Destructor, release the exception.
-    ~Environment (void);
+    ~Environment ();
 
     /// Some static methods that need to be defined in every pseudo object
     static Environment * _duplicate (Environment *);
-    static Environment * _nil (void);
+    static Environment * _nil ();
 
     /// Return the contained CORBA::Exception.
     /**
@@ -98,7 +98,7 @@ namespace CORBA
      * "C++ Language Mapping" (formal/00-01-02). Section 1.27
      * Environment (page 1-113)
      */
-    CORBA::Exception* exception (void) const;
+    CORBA::Exception* exception () const;
 
     /// Set the contained CORBA::Exception to @a ex
     /**
@@ -114,20 +114,20 @@ namespace CORBA
 
     /// Return if the exception is a user exception or a system
     /// exception.
-    int exception_type (void) const;
+    int exception_type () const;
 
     /// return the repository ID for the exception.
-    const char *exception_id (void) const;
+    const char *exception_id () const;
 
     /// Clear the exception.
-    void clear (void);
+    void clear ();
 
     /// Print the exception to output determined by f.  This function
     /// is not CORBA compliant.
     void print_exception (const char *info, FILE *f=stdout) const;
 
     // = Obtain a default environment to use with TAO.
-    static CORBA::Environment &default_environment (void);
+    static CORBA::Environment &default_environment ();
 
     // Useful for template programming.
     typedef CORBA::Environment_ptr _ptr_type;

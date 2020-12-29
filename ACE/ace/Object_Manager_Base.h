@@ -47,10 +47,10 @@ class ACE_Export ACE_Object_Manager_Base
 {
 protected:
   /// Default constructor.
-  ACE_Object_Manager_Base (void);
+  ACE_Object_Manager_Base ();
 
   /// Destructor.
-  virtual ~ACE_Object_Manager_Base (void);
+  virtual ~ACE_Object_Manager_Base ();
 
 public:
   /**
@@ -58,14 +58,14 @@ public:
    * to dynamic allocation failure (in which case errno is set to
    * ENOMEM), or 1 if it had already been called.
    */
-  virtual int init (void) = 0;
+  virtual int init () = 0;
 
   /**
    * Explicitly destroy.  Returns 0 on success, -1 on failure because
    * the number of fini () calls hasn't reached the number of init ()
    * calls, or 1 if it had already been called.
    */
-  virtual int fini (void) = 0;
+  virtual int fini () = 0;
 
   enum Object_Manager_State
     {
@@ -86,7 +86,7 @@ protected:
    * this flag returns 0, if ACE_HAS_NONSTATIC_OBJECT_MANAGER is not
    * defined.)
    */
-  int starting_up_i (void);
+  int starting_up_i ();
 
   /**
    * Returns 1 after ACE_Object_Manager_Base has been destroyed.  This
@@ -95,7 +95,7 @@ protected:
    * some static objects before this flag can return 1, if
    * ACE_HAS_NONSTATIC_OBJECT_MANAGER is not defined.)
    */
-  int shutting_down_i (void);
+  int shutting_down_i ();
 
   /// State of the Object_Manager;
   Object_Manager_State object_manager_state_;
@@ -111,15 +111,14 @@ protected:
   /// Link to next Object_Manager, for chaining.
   ACE_Object_Manager_Base *next_;
 private:
-  // Disallow copying by not implementing the following . . .
-  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &);
-  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &);
+  ACE_Object_Manager_Base (const ACE_Object_Manager_Base &) = delete;
+  ACE_Object_Manager_Base &operator= (const ACE_Object_Manager_Base &) = delete;
+  ACE_Object_Manager_Base (ACE_Object_Manager_Base &&) = delete;
+  ACE_Object_Manager_Base &operator= (ACE_Object_Manager_Base &&) = delete;
 };
 
 extern "C"
-void
-ACE_OS_Object_Manager_Internal_Exit_Hook (void);
-
+void ACE_OS_Object_Manager_Internal_Exit_Hook (void);
 
 // @@ This forward declaration should go away.
 class ACE_Log_Msg;
@@ -130,21 +129,21 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Explicitly initialize.
-  virtual int init (void);
+  virtual int init ();
 
   /// Explicitly destroy.
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Returns 1 before the ACE_OS_Object_Manager has been
    * constructed.  See <ACE_Object_Manager::starting_up> for more
    * information.
    */
-  static int starting_up (void);
+  static int starting_up ();
 
   /// Returns 1 after the ACE_OS_Object_Manager has been destroyed.
   /// See <ACE_Object_Manager::shutting_down> for more information.
-  static int shutting_down (void);
+  static int shutting_down ();
 
   /// Unique identifiers for preallocated objects.
   enum Preallocated_Object
@@ -172,10 +171,10 @@ public:
 
   /// Accesses a default signal set used, for example, in
   /// ACE_Sig_Guard methods.
-  static sigset_t *default_mask (void);
+  static sigset_t *default_mask ();
 
   /// Returns the current thread hook for the process.
-  static ACE_Thread_Hook *thread_hook (void);
+  static ACE_Thread_Hook *thread_hook ();
 
   /// Returns the existing thread hook and assign a <new_thread_hook>.
   static ACE_Thread_Hook *thread_hook (ACE_Thread_Hook *new_thread_hook);
@@ -196,13 +195,13 @@ public:
   // constructed/destructed in <main> with
   // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
   /// Constructor.
-  ACE_OS_Object_Manager (void);
+  ACE_OS_Object_Manager ();
 
   /// Destructor.
-  ~ACE_OS_Object_Manager (void);
+  ~ACE_OS_Object_Manager ();
 
   /// Accessor to singleton instance.
-  static ACE_OS_Object_Manager *instance (void);
+  static ACE_OS_Object_Manager *instance ();
 
   /// For <ACE_OS::atexit> support.
   int at_exit (ACE_EXIT_HOOK func, const char* name = 0);

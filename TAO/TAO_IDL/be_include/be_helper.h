@@ -17,10 +17,8 @@
 #include "ace/CDR_Base.h"
 #include "ace/SString.h"
 
-#if defined (ACE_HAS_CPP11)
 #include "ace/OS_NS_stdio.h"
 #include <type_traits>
-#endif /* ACE_HAS_CPP11 */
 
 class Identifier;
 class UTL_IdList;
@@ -30,12 +28,12 @@ class AST_Expression;
 // and use the current indentation for the succeeding line
 struct TAO_NL
 {
-  TAO_NL (void);
+  TAO_NL ();
 };
 
 struct TAO_NL_2
 {
-  TAO_NL_2 (void);
+  TAO_NL_2 ();
 };
 
 /**
@@ -125,9 +123,9 @@ public:
       CIAO_AMI_RH_IMPL_SRC
     };
 
-  TAO_OutStream (void);
+  TAO_OutStream ();
 
-  virtual ~TAO_OutStream (void);
+  virtual ~TAO_OutStream ();
 
   /// Open the underlying low-level handle for output.
   int open (const char *fname,
@@ -137,10 +135,10 @@ public:
   void stream_type (TAO_OutStream::STREAM_TYPE);
 
   /// Return the stream type
-  TAO_OutStream::STREAM_TYPE stream_type (void);
+  TAO_OutStream::STREAM_TYPE stream_type ();
 
   /// Return the underlying lowlevel file pointer.
-  FILE *&file (void);
+  FILE *&file ();
 
   /// Increment the indentation level and by default actually indent the output
   /// accordingly
@@ -151,13 +149,13 @@ public:
   int decr_indent (unsigned short flag = 1);
 
   /// Reset indentation level to 0
-  int reset (void);
+  int reset ();
 
   /// Indent starting next line
-  int indent (void);
+  int indent ();
 
   /// Put a newline and indent on the next line
-  int nl (void);
+  int nl ();
 
   /// "printf" style variable argument print
   int print (const char *format, ...)
@@ -169,10 +167,9 @@ public:
                        bool add_stream_type_suffix = true);
 
   /// Generate an endif statement
-  int gen_endif (void);
+  int gen_endif ();
 
   // =overloaded operators
-#if defined (ACE_HAS_CPP11)
   // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
   typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
@@ -187,7 +184,6 @@ public:
 
     return *this;
   }
-#endif /* ACE_HAS_CPP11 */
 
   TAO_OutStream &operator<< (const char *str);
   TAO_OutStream &operator<< (const ACE_CString &str);

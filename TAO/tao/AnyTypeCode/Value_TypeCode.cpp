@@ -162,8 +162,7 @@ TAO::TypeCode::Value<StringType,
     tc->concrete_base_type ();
 
   CORBA::Boolean const equal_concrete_base_types =
-    this->equal (rhs_concrete_base_type.in ()
-                );
+    this->equal (rhs_concrete_base_type.in ());
 
   if (!equal_concrete_base_types)
     return false;
@@ -180,9 +179,7 @@ TAO::TypeCode::Value<StringType,
         this->fields_[i];
 
       CORBA::Visibility const lhs_visibility = lhs_field.visibility;
-      CORBA::Visibility const rhs_visibility =
-        tc->member_visibility (i
-                              );
+      CORBA::Visibility const rhs_visibility = tc->member_visibility (i);
 
       if (lhs_visibility != rhs_visibility)
         return false;
@@ -262,8 +259,7 @@ TAO::TypeCode::Value<StringType,
         tc->member_type (i);
 
       CORBA::Boolean const equiv_types =
-        lhs_tc->equivalent (rhs_tc.in ()
-                           );
+        lhs_tc->equivalent (rhs_tc.in ());
 
       if (!equiv_types)
         return false;
@@ -300,8 +296,7 @@ TAO::TypeCode::Value<StringType,
           tc_fields[i].name = empty_name;
           tc_fields[i].type =
             Traits<StringType>::get_typecode (
-              this->fields_[i].type)->get_compact_typecode (
-                );
+              this->fields_[i].type)->get_compact_typecode ();
           tc_fields[i].visibility = this->fields_[i].visibility;
         }
     }

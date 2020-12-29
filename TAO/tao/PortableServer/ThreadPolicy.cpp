@@ -18,7 +18,7 @@ namespace TAO
     }
 
     CORBA::Policy_ptr
-    ThreadPolicy::copy (void)
+    ThreadPolicy::copy ()
     {
       ThreadPolicy *copy = 0;
       ACE_NEW_THROW_EX (copy,
@@ -29,30 +29,30 @@ namespace TAO
     }
 
     void
-    ThreadPolicy::destroy (void)
+    ThreadPolicy::destroy ()
     {
     }
 
     ::PortableServer::ThreadPolicyValue
-    ThreadPolicy::value (void)
+    ThreadPolicy::value ()
     {
       return value_;
     }
 
     CORBA::PolicyType
-    ThreadPolicy::policy_type (void)
+    ThreadPolicy::policy_type ()
     {
       return ::PortableServer::THREAD_POLICY_ID;
     }
 
     TAO_Cached_Policy_Type
-    ThreadPolicy::_tao_cached_type (void) const
+    ThreadPolicy::_tao_cached_type () const
     {
       return TAO_CACHED_POLICY_THREAD;
     }
 
     TAO_Policy_Scope
-    ThreadPolicy::_tao_scope (void) const
+    ThreadPolicy::_tao_scope () const
     {
       return TAO_POLICY_POA_SCOPE;
     }

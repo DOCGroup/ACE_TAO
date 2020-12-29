@@ -38,14 +38,14 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
   ACE_OS_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");
 }
 
-ACE_Thread_Adapter::~ACE_Thread_Adapter (void)
+ACE_Thread_Adapter::~ACE_Thread_Adapter ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Adapter);
 
 ACE_THR_FUNC_RETURN
-ACE_Thread_Adapter::invoke (void)
+ACE_Thread_Adapter::invoke ()
 {
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.
@@ -97,7 +97,7 @@ ACE_Thread_Adapter::invoke (void)
 }
 
 ACE_THR_FUNC_RETURN
-ACE_Thread_Adapter::invoke_i (void)
+ACE_Thread_Adapter::invoke_i ()
 {
   // Extract the arguments.
   ACE_THR_FUNC func = reinterpret_cast<ACE_THR_FUNC> (this->user_func_);

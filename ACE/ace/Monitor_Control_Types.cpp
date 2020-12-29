@@ -26,7 +26,7 @@ namespace ACE
 
     //=============================================================
 
-    Monitor_Control_Types::Constraint::Constraint (void)
+    Monitor_Control_Types::Constraint::Constraint ()
       : control_action (0)
     {}
 
@@ -40,7 +40,7 @@ namespace ACE
         }
     }
 
-    Monitor_Control_Types::Constraint::~Constraint (void)
+    Monitor_Control_Types::Constraint::~Constraint ()
     {
       if (this->control_action != 0)
         {

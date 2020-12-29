@@ -46,11 +46,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // get the profile lists, start by initialize the composite reference
   // by using the first Object.  Then for each subsequent Object verify
   // they are the same type and they do not have duplicate profiles.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     throw TAO_IOP::Invalid_IOR ();
   CORBA::String_var id =
@@ -145,11 +141,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     throw TAO_IOP::Invalid_IOR ();
 
@@ -165,8 +157,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Diff_Profiles
-                                         );
+                                          Diff_Profiles);
 
   // Make the stub memory allocation exception safe for the duration
   // of this method.
@@ -278,13 +269,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
   CORBA::ULong count = 0;
   TAO_Profile *pfile1 = 0;
   TAO_Profile *pfile2 = 0;
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
-  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
 
   tmp_pfiles1->rewind ();
   while ((pfile1 = tmp_pfiles1->get_next ()) != 0)

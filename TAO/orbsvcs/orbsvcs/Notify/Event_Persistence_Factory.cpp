@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify::Event_Persistence_Factory::~Event_Persistence_Factory (void)
+TAO_Notify::Event_Persistence_Factory::~Event_Persistence_Factory ()
 {
 }
 

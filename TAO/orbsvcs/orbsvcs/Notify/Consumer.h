@@ -205,9 +205,8 @@ protected:
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, ACE_Time_Value> last_ping_;
 
 private:
-
   /// Events pending to be delivered.
-  ACE_Auto_Ptr< Request_Queue > pending_events_;
+  ACE_Auto_Ptr<Request_Queue> pending_events_;
 
   CORBA::Object_var rtt_obj_;
 };

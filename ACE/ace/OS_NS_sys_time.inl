@@ -9,7 +9,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Time_Value
-ACE_OS::gettimeofday (void)
+ACE_OS::gettimeofday ()
 {
   // ACE_OS_TRACE ("ACE_OS::gettimeofday");
 
@@ -81,7 +81,7 @@ ACE_OS::gettimeofday (void)
 }
 
 ACE_INLINE ACE_Time_Value
-ACE_OS::gettimeofday_ (void)
+ACE_OS::gettimeofday_ ()
 {
   return ACE_OS::gettimeofday ();
 }

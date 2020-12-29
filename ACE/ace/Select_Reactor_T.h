@@ -23,12 +23,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*
- * Hook for specializing the reactor with the concrete
- * type, for example, select, or thread pool.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 typedef ACE_Token ACE_SELECT_TOKEN;
 #else
@@ -536,7 +530,7 @@ public:
   virtual ACE_Lock &lock (void);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

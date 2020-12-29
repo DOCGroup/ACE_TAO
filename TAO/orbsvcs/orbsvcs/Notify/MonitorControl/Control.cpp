@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_NS_Control::~TAO_NS_Control (void)
+TAO_NS_Control::~TAO_NS_Control ()
 {
 }
 
@@ -12,7 +12,7 @@ TAO_NS_Control::TAO_NS_Control (const char* name)
 }
 
 const ACE_CString&
-TAO_NS_Control::name (void) const
+TAO_NS_Control::name () const
 {
   return this->name_;
 }

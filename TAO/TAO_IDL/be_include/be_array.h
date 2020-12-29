@@ -31,7 +31,7 @@ public:
             bool local,
             bool abstract);
 
-  ~be_array (void);
+  ~be_array ();
 
   /// Generate dimensions. If slice == 1, generate dimensions for the slice
   /// definition.
@@ -50,17 +50,13 @@ public:
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (be_array);
+  virtual void destroy ();
 
 protected:
   /// Create a name for us.
-  virtual int create_name (void);
+  virtual int create_name ();
 
-  virtual void compute_tc_name (void);
+  virtual void compute_tc_name ();
 };
 
 #endif

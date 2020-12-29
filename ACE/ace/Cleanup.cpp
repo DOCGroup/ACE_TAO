@@ -20,7 +20,7 @@ ACE_Cleanup::cleanup (void *)
   delete this;
 }
 
-ACE_Cleanup::~ACE_Cleanup (void)
+ACE_Cleanup::~ACE_Cleanup ()
 {
 }
 
@@ -34,7 +34,7 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 
 /*****************************************************************************/
 
-ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void)
+ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
   : object_ (0),
     cleanup_hook_ (0),
     param_ (0),
@@ -53,7 +53,7 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
 {
 }
 
-ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node (void)
+ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node ()
 {
   if (this->name_)
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -82,11 +82,11 @@ ACE_Cleanup_Info_Node::operator!= (const ACE_Cleanup_Info_Node &o) const
 
 /*****************************************************************************/
 
-ACE_OS_Exit_Info::ACE_OS_Exit_Info (void)
+ACE_OS_Exit_Info::ACE_OS_Exit_Info ()
 {
 }
 
-ACE_OS_Exit_Info::~ACE_OS_Exit_Info (void)
+ACE_OS_Exit_Info::~ACE_OS_Exit_Info ()
 {
 }
 
@@ -153,7 +153,7 @@ ACE_OS_Exit_Info::remove (void *object)
 
 
 void
-ACE_OS_Exit_Info::call_hooks (void)
+ACE_OS_Exit_Info::call_hooks ()
 {
   // Call all registered cleanup hooks, in reverse order of
   // registration.

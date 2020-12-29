@@ -1444,7 +1444,7 @@ return 0;
 // Routine to return a handle from which ioctl() requests can be made.
 
 ACE_HANDLE
-ACE::get_handle (void)
+ACE::get_handle ()
 {
   // Solaris 2.x
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
@@ -1508,7 +1508,7 @@ ip_check (int &ipvn_enabled, int pf)
 #endif /* ACE_HAS_IPV6 */
 
 bool
-ACE::ipv4_enabled (void)
+ACE::ipv4_enabled ()
 {
 #if defined (ACE_HAS_IPV6)
   return static_cast<bool> (ace_ipv4_enabled == -1 ?
@@ -1522,7 +1522,7 @@ ACE::ipv4_enabled (void)
 }
 
 int
-ACE::ipv6_enabled (void)
+ACE::ipv6_enabled ()
 {
 #if defined (ACE_HAS_IPV6)
   return ace_ipv6_enabled == -1 ?

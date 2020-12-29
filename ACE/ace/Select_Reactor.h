@@ -21,7 +21,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
 typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
 
 #if defined (_MSC_VER) && (_MSC_VER >= 1600)
@@ -29,7 +28,6 @@ template class ACE_Export ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
 #endif /* _MSC_VER */
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
-//@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE == 0)
 // FUZZ: disable check_for_ACE_Guard
@@ -58,10 +56,10 @@ public:
   void dump (void) const {}
 
 private:
-  // Disallow copying and assignment.
-  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
-  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &);
-
+  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
+  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
+  void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
 };
 // FUZZ: enable check_for_ACE_Guard
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE == 0 */

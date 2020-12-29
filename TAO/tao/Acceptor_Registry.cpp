@@ -24,13 +24,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Acceptor_Registry::TAO_Acceptor_Registry (void)
-  : acceptors_ (0),
+TAO_Acceptor_Registry::TAO_Acceptor_Registry ()
+  : acceptors_ (nullptr),
     size_ (0)
 {
 }
 
-TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
+TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
   this->close_all ();
 
@@ -38,7 +38,7 @@ TAO_Acceptor_Registry::~TAO_Acceptor_Registry (void)
 }
 
 size_t
-TAO_Acceptor_Registry::endpoint_count (void)
+TAO_Acceptor_Registry::endpoint_count ()
 {
   size_t count = 0;
   const TAO_AcceptorSetIterator end = this->end ();
@@ -77,7 +77,7 @@ TAO_Acceptor_Registry::is_collocated (const TAO_MProfile &mprofile)
               //       operation if the below is_collocated() call
               //       also executes a loop.
               for (TAO_Endpoint *endp = pf->endpoint ();
-                   endp != 0;
+                   endp != nullptr;
                    endp = endp->next ())
                 {
                   if ((*i)->is_collocated (endp))
@@ -106,7 +106,7 @@ TAO_Acceptor_Registry::get_acceptor (CORBA::ULong tag)
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 int
@@ -121,7 +121,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
       // All TAO pluggable protocols are expected to have the ability
       // to create a default endpoint.
-      && this->open_default (orb_core, reactor, 0) == -1)
+      && this->open_default (orb_core, reactor, nullptr) == -1)
     {
       throw ::CORBA::INTERNAL (
         CORBA::SystemException::_tao_minor_code (
@@ -135,7 +135,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
   size_t acceptor_count = 0;
   TAO_EndpointSetIterator endpts (endpoint_set);
 
-  for (ACE_CString *ep = 0;
+  for (ACE_CString *ep = nullptr;
        endpts.next (ep) != 0;
        endpts.advance ())
     {
@@ -199,7 +199,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         ep->c_str () + ACE_OS::strlen (ep->c_str ());
 
       for (const char *e = ACE_OS::strchr (ep->c_str (), ',');
-           e != 0 && e != ep_end;
+           e != nullptr && e != ep_end;
            e = ACE_OS::strchr (e, ','))
         {
           ++acceptor_count;
@@ -209,7 +209,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
   // The array containing the TAO_Acceptors will never contain more
   // than the number of endpoints stored in TAO_ORB_Parameters.
-  if (this->acceptors_ == 0)
+  if (this->acceptors_ == nullptr)
     {
       ACE_NEW_THROW_EX (this->acceptors_,
                         TAO_Acceptor *[acceptor_count],
@@ -222,7 +222,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
 
   TAO_EndpointSetIterator endpoints (endpoint_set);
 
-  for (ACE_CString *endpoint = 0;
+  for (ACE_CString *endpoint = nullptr;
        endpoints.next (endpoint) != 0;
        endpoints.advance ())
     {
@@ -482,7 +482,7 @@ int TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // endpoints were specified by the user, meaning that the number of
   // acceptors will never be more than the number of loaded protocols
   // in the ORB core.
-  if (this->acceptors_ == 0)
+  if (this->acceptors_ == nullptr)
     {
       ACE_NEW_RETURN (this->acceptors_,
                       TAO_Acceptor *[pfs->size ()],
@@ -552,7 +552,7 @@ TAO_Acceptor_Registry::open_default (TAO_ORB_Core *orb_core,
   // Make an acceptor
   TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
-  if (acceptor == 0)
+  if (acceptor == nullptr)
     {
       if (TAO_debug_level > 0)
         {
@@ -611,13 +611,13 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_Acceptor_Registry::close_all (void)
+TAO_Acceptor_Registry::close_all ()
 {
   const TAO_AcceptorSetIterator end = this->end ();
 
   for (TAO_AcceptorSetIterator i = this->begin (); i != end; ++i)
     {
-      if (*i != 0)
+      if (*i != nullptr)
         {
           (*i)->close ();
           delete *i;
@@ -679,14 +679,14 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
   ACE_CString options_tmp;
   this->extract_endpoint_options (addrs, options_tmp, (*factory)->factory ());
 
-  const char *options = 0;
+  const char *options = nullptr;
 
   if (options_tmp.length () > 0)
     {
       options = options_tmp.c_str ();
     }
 
-  char *last_addr = 0;
+  char *last_addr = nullptr;
   ACE_Auto_Basic_Array_Ptr<char> addr_str (addrs.rep ());
 
   const char *astr = ACE_OS::strtok_r (addr_str.get (), ",", &last_addr);
@@ -699,11 +699,11 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
       // possible for astr to be 0.  This indicates that
       // the user is requesting the default endpoint for
       // the specified protocol.
-      ACE_CString address (astr == 0 ? "" : astr);
+      ACE_CString address (astr == nullptr ? "" : astr);
 
       TAO_Acceptor *acceptor = (*factory)->factory ()->make_acceptor ();
 
-      if (acceptor != 0)
+      if (acceptor != nullptr)
         {
           // Extract the desired endpoint/protocol version if one
           // exists.
@@ -878,7 +878,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             CORBA::COMPLETED_NO);
         }
     }
-  while (astr != 0 && (astr = ACE_OS::strtok_r (0, ",", &last_addr)) != 0);
+  while (astr != nullptr && (astr = ACE_OS::strtok_r (nullptr, ",", &last_addr)) != nullptr);
 
   return 0;
 }

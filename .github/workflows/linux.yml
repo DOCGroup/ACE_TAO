@@ -4,7 +4,7 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 7 * * SUN'
+    - cron: '0 1 * * SUN'
 
 jobs:
   build:
@@ -40,7 +40,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-20.04
+            os: ubuntu-18.04
           - CC: clang-5.0
             CXX: clang++-5.0
             PackageDeps: clang-5.0
@@ -73,8 +73,52 @@ jobs:
             Repo: llvm-toolchain-$(lsb_release -cs)-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
             os: ubuntu-20.04
+          - CC: clang-11
+            CXX: clang++-11
+            PackageDeps: clang-11
+            Repo: llvm-toolchain-$(lsb_release -cs)-11
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
+            os: ubuntu-20.04
+          - feature: CORBA/e micro
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-18.04
+            optional_feature: corba_e_micro=1
+            optional_macros: corba_e_micro=1
+          - feature: CORBA/e compact
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-18.04
+            optional_feature: corba_e_compact=1
+            optional_macros: corba_e_compact=1
+          - feature: ACE for TAO
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: ace_for_tao=1
+            optional_macros: ace_for_tao=1
+          - feature: wchar
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
+            optional_feature: uses_wchar=1
+            optional_macros: inline=0
+          - feature: CodeQL
+            CC: gcc-10
+            CXX: g++-10
+            PackageDeps: g++-10
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-20.04
     runs-on: ${{ matrix.os }}
-    name: ${{ matrix.os }} ${{ matrix.CXX }}
+    name: ${{ matrix.os }} ${{ matrix.CXX }} ${{ matrix.feature }}
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
@@ -88,7 +132,7 @@ jobs:
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
-        path: MPC
+        path: ${{ env.MPC_ROOT }}
     - name: Add Repo
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
@@ -107,6 +151,14 @@ jobs:
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+    - name: add optional optional macros
+      run: |
+        '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+      shell: pwsh
+      if: matrix.optional_macros != ''
+    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+      run: |
         '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
@@ -116,6 +168,16 @@ jobs:
         'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
+    - name: add optional optional feature
+      run: |
+        '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+      if: matrix.optional_feature != ''
+      shell: pwsh
+    - name: initialize CodeQL
+      uses: github/codeql-action/init@v1
+      with:
+        languages: cpp
+      if: matrix.feature == 'CodeQL'
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
@@ -132,3 +194,6 @@ jobs:
       run: |
         make -j 6 -C ${env:ACE_ROOT}/tests
       shell: pwsh
+    - name: Perform CodeQL Analysis
+      uses: github/codeql-action/analyze@v1
+      if: matrix.feature == 'CodeQL'

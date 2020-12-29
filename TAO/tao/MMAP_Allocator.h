@@ -44,7 +44,6 @@ class TAO_MMAP_Allocator
   : public TAO_MMAP_Allocator_Base
 {
 public:
-
   /// Constructor
   TAO_MMAP_Allocator (void);
 
@@ -59,11 +58,10 @@ public:
   off_t offset (void * p);
 
 private:
-
-  // Disallow copying.
-  TAO_MMAP_Allocator (TAO_MMAP_Allocator const &);
-  void operator= (TAO_MMAP_Allocator const &);
-
+  TAO_MMAP_Allocator (TAO_MMAP_Allocator const &) = delete;
+  void operator= (TAO_MMAP_Allocator const &) = delete;
+  TAO_MMAP_Allocator (TAO_MMAP_Allocator &&) = delete;
+  void operator= (TAO_MMAP_Allocator &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

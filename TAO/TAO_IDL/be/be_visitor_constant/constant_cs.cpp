@@ -16,7 +16,7 @@ be_visitor_constant_cs::be_visitor_constant_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_cs::~be_visitor_constant_cs (void)
+be_visitor_constant_cs::~be_visitor_constant_cs ()
 {
 }
 
@@ -56,7 +56,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
   *os << be_nl_2;
   if (be_global->gen_inline_constants () && !forbidden_in_class)
     {
-      // Some compilers (especially Microsoft) always define storeage
+      // Some compilers (especially Microsoft) always define storage
       // when the initialiser is given, therefore the header has already
       // done this (which is non-C++ complient by the way).
       *os << "#ifndef ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE" << be_nl << "  ";

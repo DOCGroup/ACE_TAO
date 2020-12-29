@@ -17,6 +17,8 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <utility>
+#include <memory>
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 
@@ -74,10 +76,10 @@ namespace Kokyu
   private:
     /// Auto ptr to the implementation. Implementation will be created on the
     /// heap and deleted automatically when the dispatcher object is destructed.
-    auto_ptr<Dispatcher_Impl> dispatcher_impl_;
+    std::unique_ptr<Dispatcher_Impl> dispatcher_impl_;
   };
 
-  typedef auto_ptr<Dispatcher> Dispatcher_Auto_Ptr;
+  typedef std::unique_ptr<Dispatcher> Dispatcher_Auto_Ptr;
 
   /**
    * @class Dispatcher_Factory

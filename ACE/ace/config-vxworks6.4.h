@@ -87,7 +87,6 @@
 
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_NET_IF_DL_H
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_INET_ADDR

@@ -35,7 +35,7 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
 }
 
 
-TAO_FT_Storable_Naming_Context::~TAO_FT_Storable_Naming_Context (void)
+TAO_FT_Storable_Naming_Context::~TAO_FT_Storable_Naming_Context ()
 {
   // Perform appropriate cleanup based on the destruction level specified.
 }
@@ -124,14 +124,14 @@ TAO_FT_Storable_Naming_Context::stale (bool is_stale)
 
 
 bool
-TAO_FT_Storable_Naming_Context::stale (void)
+TAO_FT_Storable_Naming_Context::stale ()
 {
   return stale_;
 }
 
 
 void
-TAO_FT_Storable_Naming_Context::context_written (void)
+TAO_FT_Storable_Naming_Context::context_written ()
 {
   FT_Naming::ChangeType change_type;
 

@@ -76,7 +76,7 @@ TAO::be_visitor_enum_typecode::visit_members (be_enum * node)
        i.next ())
     {
       AST_Decl * const d = i.item  ();
-      AST_EnumVal * const item = AST_EnumVal::narrow_from_decl (d);
+      AST_EnumVal * const item = dynamic_cast<AST_EnumVal*> (d);
 
       // os << item->name ();
       os << "\"" << item->original_local_name () << "\"";

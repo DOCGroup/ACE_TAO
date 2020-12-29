@@ -14,12 +14,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_IFR_Service_Loader::TAO_IFR_Service_Loader (void)
+TAO_IFR_Service_Loader::TAO_IFR_Service_Loader ()
 {
   // Constructor
 }
 
-TAO_IFR_Service_Loader::~TAO_IFR_Service_Loader (void)
+TAO_IFR_Service_Loader::~TAO_IFR_Service_Loader ()
 {
   // Destructor
 }
@@ -50,7 +50,7 @@ TAO_IFR_Service_Loader::init (int argc,
 }
 
 int
-TAO_IFR_Service_Loader::fini (void)
+TAO_IFR_Service_Loader::fini ()
 {
   // Remove the IFR_Service Service.
   return this->ifr_server_.fini ();

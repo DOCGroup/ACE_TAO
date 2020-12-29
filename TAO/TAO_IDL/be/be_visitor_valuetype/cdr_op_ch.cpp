@@ -19,7 +19,7 @@ be_visitor_valuetype_cdr_op_ch::be_visitor_valuetype_cdr_op_ch (
 {
 }
 
-be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch (void)
+be_visitor_valuetype_cdr_op_ch::~be_visitor_valuetype_cdr_op_ch ()
 {
 }
 
@@ -87,7 +87,7 @@ be_visitor_valuetype_cdr_op_ch::visit_valuetype (be_valuetype *node)
       visitor.visit_valuetype (node);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }
 

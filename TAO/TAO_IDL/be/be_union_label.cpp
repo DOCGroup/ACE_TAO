@@ -15,7 +15,7 @@ be_union_label::accept (be_visitor *visitor)
 }
 
 void
-be_union_label::destroy (void)
+be_union_label::destroy ()
 {
   this->AST_UnionLabel::destroy ();
 }

@@ -59,8 +59,7 @@ namespace TAO
       /// the given attribute type list associated with the current
       /// request.
       virtual ::Security::AttributeList * get_attributes (
-          const ::Security::AttributeTypeList & attributes)
-        = 0;
+          const ::Security::AttributeTypeList & attributes) = 0;
       //@}
 
       /**
@@ -72,8 +71,7 @@ namespace TAO
       //@{
       /// Return the Credentials received from the client associate with
       /// the current request.
-      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials ()
-        = 0;
+      virtual SecurityLevel2::ReceivedCredentials_ptr received_credentials () = 0;
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.

@@ -10,13 +10,13 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Event::TAO_LF_Event (void)
+TAO_LF_Event::TAO_LF_Event ()
   : state_ (TAO_LF_Event::LFS_IDLE)
-  , follower_ (0)
+  , follower_ (nullptr)
 {
 }
 
-TAO_LF_Event::~TAO_LF_Event (void)
+TAO_LF_Event::~TAO_LF_Event ()
 {
 }
 
@@ -30,7 +30,7 @@ TAO_LF_Event::state_changed (LFS_STATE new_state, TAO_Leader_Follower &lf)
       this->state_changed_i (new_state);
 
       /// Sort of double-checked optimization..
-      if (this->follower_ != 0)
+      if (this->follower_ != nullptr)
         this->follower_->signal ();
     }
 }

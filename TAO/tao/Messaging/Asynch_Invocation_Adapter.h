@@ -94,7 +94,7 @@ namespace TAO
 
   private:
     /// Don't allow default initializations
-    Asynch_Invocation_Adapter (void);
+    Asynch_Invocation_Adapter ();
 
     Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &);
     Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &);

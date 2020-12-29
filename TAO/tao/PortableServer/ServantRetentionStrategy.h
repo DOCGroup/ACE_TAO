@@ -37,7 +37,7 @@ namespace TAO
       : public Policy_Strategy
     {
     public:
-      virtual CORBA::ULong waiting_servant_deactivation (void) const = 0;
+      virtual CORBA::ULong waiting_servant_deactivation () const = 0;
 
       virtual int is_servant_in_map (PortableServer::Servant servant,
                                      bool &wait_occurred_restart_call) = 0;
@@ -81,7 +81,7 @@ namespace TAO
         const PortableServer::ObjectId &id,
         bool indirect) = 0;
 
-      virtual void deactivate_all_objects (void) = 0;
+      virtual void deactivate_all_objects () = 0;
 
       virtual PortableServer::ObjectId *servant_to_user_id (
         PortableServer::Servant servant) = 0;

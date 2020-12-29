@@ -168,25 +168,25 @@ ACE_WIN32_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 int
 ACE_WIN32_Asynch_Operation::cancel (void)
 {
-#if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
+#if defined (ACE_HAS_CANCEL_IO)
   // All I/O operations that are canceled will complete with the error
   // ERROR_OPERATION_ABORTED. All completion notifications for the I/O
   // operations will occur normally.
 
-  // @@ This API returns 0 on failure. So, I am returning -1 in that
-  //    case. Is that right? (Alex).
+#if (_WIN32_WINNT < 0x0600)
   int const result = (int) ::CancelIo (this->handle_);
-
+#else
+  int const result = (int) ::CancelIoEx (this->handle_, 0);
+#endif // < _WIN32_WINNT_VISTA
   if (result == 0)
     // Couldn't cancel the operations.
     return 2;
 
   // result is non-zero. All the operations are cancelled then.
   return 0;
-
-#else /* !ACE_HAS_WIN32_OVERLAPPED_IO */
+#else /* !ACE_HAS_CANCEL_IO */
   ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_HAS_AIO_CALLS */
+#endif /* ACE_HAS_CANCEL_IO */
 }
 
 ACE_Proactor *

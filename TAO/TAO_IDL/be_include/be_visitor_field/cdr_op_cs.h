@@ -24,7 +24,7 @@ class be_visitor_field_cdr_op_cs : public be_visitor_decl
 {
 public:
   be_visitor_field_cdr_op_cs (be_visitor_context *ctx);
-  ~be_visitor_field_cdr_op_cs (void);
+  ~be_visitor_field_cdr_op_cs ();
 
   /// visit the field node
   virtual int visit_field (be_field *node);
@@ -52,7 +52,7 @@ public:
   virtual int visit_union_fwd (be_union_fwd *node);
 
  private:
-  int emit_valuetype_common (void);
+  int emit_valuetype_common ();
 };
 
 /**

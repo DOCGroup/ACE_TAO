@@ -42,13 +42,13 @@ class ACE_Cleanup_Adapter : public ACE_Cleanup
 {
 public:
   /// Default constructor.
-  ACE_Cleanup_Adapter (void);
+  ACE_Cleanup_Adapter ();
 
   /// Virtual destructor, needed by some compilers for vtable placement.
-  virtual ~ACE_Cleanup_Adapter (void);
+  virtual ~ACE_Cleanup_Adapter ();
 
   /// Accessor for contained object.
-  TYPE &object (void);
+  TYPE &object ();
 
 private:
   ACE_UNIMPLEMENTED_FUNC (ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &))

@@ -53,17 +53,17 @@ public:
                     ACE_mutexattr_t *attributes = 0);
 
   /// Implicitly destroy the mutex.
-  ~ACE_Thread_Mutex (void);
+  ~ACE_Thread_Mutex ();
 
   /**
    * Explicitly destroy the mutex.  Note that only one thread should
    * call this method since it doesn't protect against race
    * conditions.
    */
-  int remove (void);
+  int remove ();
 
   /// Acquire lock ownership (wait on queue if necessary).
-  int acquire (void);
+  int acquire ();
 
   /**
    * Block the thread until we acquire the mutex or until @a tv times
@@ -89,24 +89,24 @@ public:
    * -1 on failure.  If we "failed" because someone else already had
    * the lock, @c errno is set to @c EBUSY.
    */
-  int tryacquire (void);
+  int tryacquire ();
 
   /// Release lock and unblock a thread at head of queue.
-  int release (void);
+  int release ();
 
   /**
    * Acquire mutex ownership.  This calls acquire() and is only here
    * to make the ACE_Thread_Mutex interface consistent with the
    * other synchronization APIs.
    */
-  int acquire_read (void);
+  int acquire_read ();
 
   /**
    * Acquire mutex ownership.  This calls acquire() and is only here
    * to make the ACE_Thread_Mutex interface consistent with the
    * other synchronization APIs.
    */
-  int acquire_write (void);
+  int acquire_write ();
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
@@ -115,7 +115,7 @@ public:
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
    */
-  int tryacquire_read (void);
+  int tryacquire_read ();
 
   /**
    * Conditionally acquire mutex (i.e., won't block).  This calls
@@ -124,7 +124,7 @@ public:
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
    */
-  int tryacquire_write (void);
+  int tryacquire_write ();
 
   /**
    * This is only here to make the ACE_Thread_Mutex interface
@@ -132,14 +132,14 @@ public:
    * caller has already acquired the mutex using one of the above
    * calls, and returns 0 (success) always.
    */
-  int tryacquire_write_upgrade (void);
+  int tryacquire_write_upgrade ();
 
   /// Return the underlying mutex.
-  const ACE_thread_mutex_t &lock (void) const;
-  ACE_thread_mutex_t &lock (void);
+  const ACE_thread_mutex_t &lock () const;
+  ACE_thread_mutex_t &lock ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
