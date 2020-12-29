@@ -1,5 +1,3 @@
-
-
 portspan Test
 -------------
 
@@ -17,5 +15,5 @@ The test accepts the following mutually-exclusive protocol arguments to
 determine which protocol gets tested for portspan support. You must supply
 exactly one of these arguments:
 
-• -iiop
+• -iiop
 • -diop
