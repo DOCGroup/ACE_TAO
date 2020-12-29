@@ -216,9 +216,9 @@ built-in to the preprocessor, the following are also defined by
     <td><code>__TAO_IDL</code></td>
     <td>
       <p>The version of ACE that <code>tao_idl</code> was built with. The format
-      is three bytes for each version field in hex format. For example, in TAO
-      version 3.2.1, which corresponds to ACE version 7.3.1,
-      <code>__TAO_IDL</code> would be <code>0x070201</code>.</p>
+      is one byte for each version field in hex format. For example, in a
+      theoretical TAO version 3.2.1, which would correspond to ACE version
+      7.3.1, <code>__TAO_IDL</code> would be <code>0x070201</code>.</p>
 
       <p>It's also possible to include <code>tao/Version.h</code> and use the
       same macros from that header file as you can use in C++.</p>
@@ -231,8 +231,8 @@ built-in to the preprocessor, the following are also defined by
       <a href="#idl-version"><code>--idl-version</code></a>. Note that this
       doesn't mean that the compiler will support all those features of the
       IDL spec version. The format is the same as <code>__TAO_IDL</code>,
-      which is three byte fields in a hex format. For example IDL version 3 is
-      <code>0x030000</code>.
+      which is three one-byte fields in a hex format. For example IDL version 3
+      is <code>0x030000</code>.
     </td>
   </tr>
 </table>
@@ -1435,6 +1435,45 @@ also receives other options that are specific to it.</p>
       is that with <code>warn-once</code> using annotations the same local name
       will not be warned about more than once, while <code>warn-all</code> will
       warn with every usage.
+    </td>
+  </tr>
+
+  <tr>
+    <td><code>&#8209;&#8209;preprocessor&#8209;input&nbsp;KIND</code></td>
+
+    <td>
+      <p>Set the C preprocessor file input method. <code>KIND</code> must be
+      <code>guess</code>, <code>direct&#8209;with&#8209;e</code>,
+      <code>direct&#8209;without&#8209;e</code>, <code>direct&#8209;gcc</code>,
+      or <code>copy (default)</code>.</p>
+
+      <p><code>direct-without-e</code> passes the IDL file path to the
+      preprocessor directly. Most, if not all, standalone C preprocessors like
+      GNU and Clang <code>cpp</code> or <code>mcpp</code> can use this.</p>
+
+      <p><code>direct-with-e</code> is the same as
+      <code>direct-without-e</code> except <code>&#8209;E</code> is also
+      passed. <code>CL</code>, the Visual Studio C++ compiler can use this.</p>
+
+      <p><code>direct&#8209;gcc</code> is same as
+      <code>direct&#8209;with&#8209;e</code>, but it's for <code>g++</code> and
+      <code>clang++</code> which also require <code>&#8209;x c++</code> to be
+      passed.</p>
+
+      <p><code>copy</code> makes a copy of the IDL file to a temporary location
+      and passes that to the preprocessor.</p>
+
+      <p><code>guess</code> picks one of the previous based on the name of the
+      preprocessor.</p>
+    </td>
+
+    <td>
+      Although <code>copy</code> should work with all compilers, it only
+      approximates relative includes using <code>&#8209;I.</code>, which fails under
+      certain conditions. Therefore the direct kinds are preferred by
+      <code>guess</code>. For compatibility, in TAO 2 <code>copy</code> is the
+      default since that was the bevaior before. In TAO 3 <code>guess</code> is
+      the default.
     </td>
   </tr>
 

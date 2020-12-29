@@ -1,0 +1,7 @@
+project(*): taoidldefaults {
+  custom_only = 1
+  IDL_Files {
+    idlflags = --preprocessor-input guess
+    a/b/b.idl
+  }
+}

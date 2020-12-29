@@ -122,6 +122,7 @@ IDL_GlobalData::IDL_GlobalData (void)
     ignore_files_ (false),
     ignore_lookup_errors_ (false),
     unknown_annotations_ (UNKNOWN_ANNOTATIONS_WARN_ONCE),
+    preprocessor_input_ (PreprocessorInputCopy),
     pd_root (0),
     pd_gen (0),
     pd_primary_key_base (0),
