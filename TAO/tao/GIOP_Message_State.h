@@ -39,7 +39,7 @@ class TAO_Export TAO_GIOP_Message_State
 {
 public:
   /// Constructor
-  TAO_GIOP_Message_State (void);
+  TAO_GIOP_Message_State ();
 
   /// Parse the message header.
   ///
@@ -50,27 +50,27 @@ public:
   int parse_message_header (ACE_Message_Block &incoming);
 
   /// Return the message size
-  CORBA::ULong message_size (void) const;
+  CORBA::ULong message_size () const;
 
   /// Return the message size
-  CORBA::ULong payload_size (void) const;
+  CORBA::ULong payload_size () const;
 
   /// Return the byte order information
-  CORBA::Octet byte_order (void) const;
+  CORBA::Octet byte_order () const;
 
   /// Return the message type
-  GIOP::MsgType message_type (void) const;
+  GIOP::MsgType message_type () const;
 
   /// Return the more fragments
-  CORBA::Boolean more_fragments (void) const;
+  CORBA::Boolean more_fragments () const;
 
   void more_fragments (CORBA::Boolean fragment);
 
   /// Get the GIOP version
-  TAO_GIOP_Message_Version const &giop_version (void) const;
+  TAO_GIOP_Message_Version const &giop_version () const;
 
   /// Return the compressed information
-  CORBA::Boolean compressed (void) const;
+  CORBA::Boolean compressed () const;
 
 private:
   /// Parse the message header.

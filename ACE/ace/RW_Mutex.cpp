@@ -21,7 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_RW_Mutex::dump (void) const
+ACE_RW_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_RW_Mutex::dump");
@@ -42,7 +42,7 @@ ACE_RW_Mutex::ACE_RW_Mutex (int type, const ACE_TCHAR *name, void *arg)
                 ACE_TEXT ("ACE_RW_Mutex::ACE_RW_Mutex")));
 }
 
-ACE_RW_Mutex::~ACE_RW_Mutex (void)
+ACE_RW_Mutex::~ACE_RW_Mutex ()
 {
 // ACE_TRACE ("ACE_RW_Mutex::~ACE_RW_Mutex");
   this->remove ();

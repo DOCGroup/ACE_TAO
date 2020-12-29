@@ -16,7 +16,7 @@ be_visitor_array::be_visitor_array (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array::~be_visitor_array (void)
+be_visitor_array::~be_visitor_array ()
 {
 }
 
@@ -147,7 +147,7 @@ be_visitor_array::visit_typedef (be_typedef *node)
 
   if (nt == AST_Decl::NT_pre_defined)
     {
-      AST_PredefinedType *pdt = AST_PredefinedType::narrow_from_decl (pbt);
+      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (pbt);
       pt = pdt->pt ();
     }
 
@@ -169,7 +169,7 @@ int
 be_visitor_array::visit_node (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -196,7 +196,7 @@ int
 be_visitor_array::emit_common (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {

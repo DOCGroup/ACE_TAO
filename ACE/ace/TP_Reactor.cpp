@@ -305,7 +305,7 @@ int
 ACE_TP_Reactor::handle_timer_events (int & /*event_count*/,
                                      ACE_TP_Token_Guard &guard)
 {
-  typedef ACE_Member_Function_Command<ACE_TP_Token_Guard> Guard_Release;
+  using Guard_Release = ACE_Member_Function_Command<ACE_TP_Token_Guard>;
 
   Guard_Release release(guard, &ACE_TP_Token_Guard::release_token);
   return this->timer_queue_->expire_single(release);
@@ -605,7 +605,7 @@ ACE_TP_Reactor::post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,
 }
 
 int
-ACE_TP_Reactor::resumable_handler (void)
+ACE_TP_Reactor::resumable_handler ()
 {
   return 1;
 }
@@ -632,7 +632,7 @@ ACE_TP_Reactor::notify_handle (ACE_HANDLE,
 }
 
 ACE_HANDLE
-ACE_TP_Reactor::get_notify_handle (void)
+ACE_TP_Reactor::get_notify_handle ()
 {
   // Call the notify handler to get a handle on which we would have a
   // notify waiting

@@ -32,13 +32,13 @@ TAO_ConnectionTimeoutPolicy::TAO_ConnectionTimeoutPolicy (
 }
 
 TimeBase::TimeT
-TAO_ConnectionTimeoutPolicy::relative_expiry (void)
+TAO_ConnectionTimeoutPolicy::relative_expiry ()
 {
   return this->relative_expiry_;
 }
 
 CORBA::PolicyType
-TAO_ConnectionTimeoutPolicy::policy_type (void)
+TAO_ConnectionTimeoutPolicy::policy_type ()
 {
   return TAO::CONNECTION_TIMEOUT_POLICY_TYPE;
 }
@@ -119,7 +119,7 @@ TAO_ConnectionTimeoutPolicy::create (const CORBA::Any& val)
 }
 
 TAO_ConnectionTimeoutPolicy *
-TAO_ConnectionTimeoutPolicy::clone (void) const
+TAO_ConnectionTimeoutPolicy::clone () const
 {
   TAO_ConnectionTimeoutPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -129,7 +129,7 @@ TAO_ConnectionTimeoutPolicy::clone (void) const
 }
 
 CORBA::Policy_ptr
-TAO_ConnectionTimeoutPolicy::copy (void)
+TAO_ConnectionTimeoutPolicy::copy ()
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
@@ -143,12 +143,12 @@ TAO_ConnectionTimeoutPolicy::copy (void)
 }
 
 void
-TAO_ConnectionTimeoutPolicy::destroy (void)
+TAO_ConnectionTimeoutPolicy::destroy ()
 {
 }
 
 TAO_Cached_Policy_Type
-TAO_ConnectionTimeoutPolicy::_tao_cached_type (void) const
+TAO_ConnectionTimeoutPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_CONNECTION_TIMEOUT;
 }

@@ -31,7 +31,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Base_var
 {
 public:
-  TAO_Base_var (void) {}
+  TAO_Base_var () {}
 
 private:
 

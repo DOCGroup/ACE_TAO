@@ -53,10 +53,10 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event_T (void);
+  virtual ~ACE_Auto_Event_T ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks
   ACE_ALLOC_HOOK_DECLARE;
@@ -87,7 +87,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Auto_Event (void)
+  virtual ~ACE_Auto_Event ()
   {
   }
 };

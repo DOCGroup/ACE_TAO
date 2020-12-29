@@ -13,18 +13,18 @@ TAO_EventDef_i::TAO_EventDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_EventDef_i::~TAO_EventDef_i (void)
+TAO_EventDef_i::~TAO_EventDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_EventDef_i::def_kind (void)
+TAO_EventDef_i::def_kind ()
 {
   return CORBA::dk_Event;
 }
 
 void
-TAO_EventDef_i::destroy (void)
+TAO_EventDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -34,14 +34,14 @@ TAO_EventDef_i::destroy (void)
 }
 
 void
-TAO_EventDef_i::destroy_i (void)
+TAO_EventDef_i::destroy_i ()
 {
   // An event type is a restriction of a value type, not an extension.
   this->TAO_ExtValueDef_i::destroy_i ();
 }
 
 CORBA::Contained::Description *
-TAO_EventDef_i::describe (void)
+TAO_EventDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -51,7 +51,7 @@ TAO_EventDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_EventDef_i::describe_i (void)
+TAO_EventDef_i::describe_i ()
 {
   return this->TAO_ValueDef_i::describe_i ();
 }

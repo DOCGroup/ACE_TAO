@@ -61,23 +61,23 @@ public:
   explicit ACE_Proactor_Timer_Handler (ACE_Proactor &proactor);
 
   /// Destructor.
-  virtual ~ACE_Proactor_Timer_Handler (void);
+  ~ACE_Proactor_Timer_Handler () override;
 
   /// Proactor calls this to shut down the timer handler
   /// gracefully. Just calling the destructor alone doesnt do what
   /// <destroy> does. <destroy> make sure the thread exits properly.
-  int destroy (void);
+  int destroy ();
 
   /// Proactor calls this to refresh the timer event thread, to wake
   /// up the thread from a sleep.  This is needed to make the thread
   /// recompute its sleep time after changes to the timer queue.
-  int signal (void);
+  int signal ();
 
 protected:
   /// Run by a daemon thread to handle deferred processing. In other
   /// words, this method will do the waiting on the earliest timer and
   /// event.
-  virtual int svc (void);
+  int svc () override;
 
   /// Event to wait on.
   ACE_Auto_Event timer_event_;
@@ -96,13 +96,13 @@ ACE_Proactor_Timer_Handler::ACE_Proactor_Timer_Handler (ACE_Proactor &proactor)
 {
 }
 
-ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler (void)
+ACE_Proactor_Timer_Handler::~ACE_Proactor_Timer_Handler ()
 {
   this->destroy();
 }
 
 int
-ACE_Proactor_Timer_Handler::destroy (void)
+ACE_Proactor_Timer_Handler::destroy ()
 {
   // Mark for closing down.
   this->shutting_down_ = 1;
@@ -116,13 +116,13 @@ ACE_Proactor_Timer_Handler::destroy (void)
 }
 
 int
-ACE_Proactor_Timer_Handler::signal (void)
+ACE_Proactor_Timer_Handler::signal ()
 {
   return this->timer_event_.signal ();
 }
 
 int
-ACE_Proactor_Timer_Handler::svc (void)
+ACE_Proactor_Timer_Handler::svc ()
 {
   ACE_Time_Value absolute_time;
   ACE_Time_Value relative_time;
@@ -178,7 +178,7 @@ ACE_Proactor_Timer_Handler::svc (void)
 
 // *********************************************************************
 
-ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall (void)
+ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
   : proactor_ (0)
 {
 }
@@ -243,11 +243,7 @@ ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                        ACE_TEXT ("create_asynch_timer failed")),
                       -1);
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
-#else
-  auto_ptr<ACE_Asynch_Result_Impl> safe_asynch_timer (asynch_timer);
-#endif /* ACE_HAS_CPP11 */
 
   // Post a completion.
   if (-1 == safe_asynch_timer->post_completion
@@ -365,7 +361,7 @@ ACE_Proactor::ACE_Proactor (ACE_Proactor_Impl *implementation,
                 ACE_TEXT ("Task::activate:could not create thread\n")));
 }
 
-ACE_Proactor::~ACE_Proactor (void)
+ACE_Proactor::~ACE_Proactor ()
 {
   this->close ();
 }
@@ -413,7 +409,7 @@ ACE_Proactor::instance (ACE_Proactor * r, bool delete_proactor)
 }
 
 void
-ACE_Proactor::close_singleton (void)
+ACE_Proactor::close_singleton ()
 {
   ACE_TRACE ("ACE_Proactor::close_singleton");
 
@@ -429,13 +425,13 @@ ACE_Proactor::close_singleton (void)
 }
 
 const ACE_TCHAR *
-ACE_Proactor::dll_name (void)
+ACE_Proactor::dll_name ()
 {
   return ACE_TEXT ("ACE");
 }
 
 const ACE_TCHAR *
-ACE_Proactor::name (void)
+ACE_Proactor::name ()
 {
   return ACE_TEXT ("ACE_Proactor");
 }
@@ -563,7 +559,7 @@ ACE_Proactor::proactor_run_event_loop (ACE_Time_Value &tv,
 }
 
 int
-ACE_Proactor::proactor_reset_event_loop(void)
+ACE_Proactor::proactor_reset_event_loop()
 {
   ACE_TRACE ("ACE_Proactor::proactor_reset_event_loop");
 
@@ -575,7 +571,7 @@ ACE_Proactor::proactor_reset_event_loop(void)
 }
 
 int
-ACE_Proactor::proactor_end_event_loop (void)
+ACE_Proactor::proactor_end_event_loop ()
 {
   ACE_TRACE ("ACE_Proactor::proactor_end_event_loop");
 
@@ -601,7 +597,7 @@ ACE_Proactor::proactor_end_event_loop (void)
 }
 
 int
-ACE_Proactor::proactor_event_loop_done (void)
+ACE_Proactor::proactor_event_loop_done ()
 {
   ACE_TRACE ("ACE_Proactor::proactor_event_loop_done");
 
@@ -611,7 +607,7 @@ ACE_Proactor::proactor_event_loop_done (void)
 }
 
 int
-ACE_Proactor::close (void)
+ACE_Proactor::close ()
 {
   // Close the implementation.
   if (this->implementation ()->close () == -1)
@@ -731,13 +727,13 @@ ACE_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_Proactor::handle_events (void)
+ACE_Proactor::handle_events ()
 {
   return this->implementation ()->handle_events ();
 }
 
 int
-ACE_Proactor::wake_up_dispatch_threads (void)
+ACE_Proactor::wake_up_dispatch_threads ()
 {
   return 0;
 }
@@ -749,7 +745,7 @@ ACE_Proactor::close_dispatch_threads (int)
 }
 
 size_t
-ACE_Proactor::number_of_threads (void) const
+ACE_Proactor::number_of_threads () const
 {
   return this->implementation ()->number_of_threads ();
 }
@@ -761,7 +757,7 @@ ACE_Proactor::number_of_threads (size_t threads)
 }
 
 ACE_Proactor_Timer_Queue *
-ACE_Proactor::timer_queue (void) const
+ACE_Proactor::timer_queue () const
 {
   return this->timer_queue_;
 }
@@ -794,7 +790,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
     }
 
   // Set the proactor in the timer queue's functor
-  typedef ACE_Timer_Queue_Upcall_Base<ACE_Handler*,ACE_Proactor_Handle_Timeout_Upcall> TQ_Base;
+  using TQ_Base = ACE_Timer_Queue_Upcall_Base<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
 
   TQ_Base * tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
 
@@ -805,68 +801,68 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
 }
 
 ACE_HANDLE
-ACE_Proactor::get_handle (void) const
+ACE_Proactor::get_handle () const
 {
   return this->implementation ()->get_handle ();
 }
 
 ACE_Proactor_Impl *
-ACE_Proactor::implementation (void) const
+ACE_Proactor::implementation () const
 {
   return this->implementation_;
 }
 
 
 ACE_Asynch_Read_Stream_Impl *
-ACE_Proactor::create_asynch_read_stream (void)
+ACE_Proactor::create_asynch_read_stream ()
 {
   return this->implementation ()->create_asynch_read_stream ();
 }
 
 ACE_Asynch_Write_Stream_Impl *
-ACE_Proactor::create_asynch_write_stream (void)
+ACE_Proactor::create_asynch_write_stream ()
 {
   return this->implementation ()->create_asynch_write_stream ();
 }
 
 ACE_Asynch_Read_Dgram_Impl *
-ACE_Proactor::create_asynch_read_dgram (void)
+ACE_Proactor::create_asynch_read_dgram ()
 {
   return this->implementation ()->create_asynch_read_dgram ();
 }
 
 ACE_Asynch_Write_Dgram_Impl *
-ACE_Proactor::create_asynch_write_dgram (void)
+ACE_Proactor::create_asynch_write_dgram ()
 {
   return this->implementation ()->create_asynch_write_dgram ();
 }
 
 ACE_Asynch_Read_File_Impl *
-ACE_Proactor::create_asynch_read_file (void)
+ACE_Proactor::create_asynch_read_file ()
 {
   return this->implementation ()->create_asynch_read_file ();
 }
 
 ACE_Asynch_Write_File_Impl *
-ACE_Proactor::create_asynch_write_file (void)
+ACE_Proactor::create_asynch_write_file ()
 {
   return this->implementation ()->create_asynch_write_file ();
 }
 
 ACE_Asynch_Accept_Impl *
-ACE_Proactor::create_asynch_accept (void)
+ACE_Proactor::create_asynch_accept ()
 {
   return this->implementation ()->create_asynch_accept ();
 }
 
 ACE_Asynch_Connect_Impl *
-ACE_Proactor::create_asynch_connect (void)
+ACE_Proactor::create_asynch_connect ()
 {
   return this->implementation ()->create_asynch_connect ();
 }
 
 ACE_Asynch_Transmit_File_Impl *
-ACE_Proactor::create_asynch_transmit_file (void)
+ACE_Proactor::create_asynch_transmit_file ()
 {
   return this->implementation ()->create_asynch_transmit_file ();
 }

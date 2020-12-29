@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Recv)
 
 void
-ACE_FIFO_Recv::dump (void) const
+ACE_FIFO_Recv::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Recv::dump");
@@ -28,7 +28,7 @@ ACE_FIFO_Recv::dump (void) const
 }
 
 int
-ACE_FIFO_Recv::close (void)
+ACE_FIFO_Recv::close ()
 {
   ACE_TRACE ("ACE_FIFO_Recv::close");
   int result = ACE_FIFO::close ();
@@ -63,7 +63,7 @@ ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
     return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
 }
 
-ACE_FIFO_Recv::ACE_FIFO_Recv (void)
+ACE_FIFO_Recv::ACE_FIFO_Recv ()
   : aux_handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");

@@ -119,15 +119,6 @@ TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
 <%endif%>
-<%if(xsc_bin)%>
-XSC_BIN = <%xsc_bin%>
-<%endif%>
-<%if(xsc_dep)%>
-XSC_DEP = <%xsc_dep%>$(EXEEXT)
-<%endif%>
-<%if(xsc_flags)%>
-XSC_FLAGS = <%xsc_flags%>
-<%endif%>
 <%if(tao_idl3_to_idl2)%>
 TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
 <%endif%>
@@ -209,15 +200,6 @@ VSHDIR = <%targetoutdir%>.shobj/
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 <%marker(extension)%>
-<%if(ciao)%>
-include $(CIAO_ROOT)/rules.ciao.GNU
-<%endif%>
-<%if(dance)%>
-include $(DANCE_ROOT)/rules.dance.GNU
-<%endif%>
-<%if(tao)%>
-include $(TAO_ROOT)/rules.tao.GNU
-<%endif%>
 
 <%if(version)%>
 GNUACE_PROJECT_VERSION = <%version%>
@@ -579,6 +561,9 @@ export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%cust
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
 GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
+<%if(precious_files)%>
+PRECIOUS_FILES +=<%foreach(precious_files)%><%foreach(custom_type->input_file->output_files)%><%if(contains(custom_type->input_file->output_file, precious_file))%> <%custom_type->input_file->output_file%><%endif%><%endfor%><%endfor%>
+<%endif%>
 <%if(custom_type->input_file->non_source_output_files)%>
 OBJS_DEPEND_ON_GENERATED = 1
 <%endif%>
@@ -744,7 +729,7 @@ incremental_depend_idl::
 
 realclean: clean
 ifneq ($(GENERATED_DIRTY),)
-	-$(RM) -r $(GENERATED_DIRTY)
+	-$(RM) -r $(filter-out $(PRECIOUS_FILES),$(GENERATED_DIRTY))
 endif
 <%if(postclean)%>
 	-<%eval(postclean)%>

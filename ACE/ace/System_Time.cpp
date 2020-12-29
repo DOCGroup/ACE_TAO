@@ -51,7 +51,7 @@ ACE_System_Time::ACE_System_Time (const ACE_TCHAR *poolname)
            ALLOCATOR (this->poolname_));
 }
 
-ACE_System_Time::~ACE_System_Time (void)
+ACE_System_Time::~ACE_System_Time ()
 {
   ACE_TRACE ("ACE_System_Time::~ACE_System_Time");
   delete this->shmem_;

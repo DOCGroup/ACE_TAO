@@ -51,7 +51,7 @@ public:
   explicit TAO_Adapter_Registry (TAO_ORB_Core *);
 
   /// Close the
-  ~TAO_Adapter_Registry (void);
+  ~TAO_Adapter_Registry ();
 
   /**
    * Close each of of the Adapters and then cleanup the Registry.

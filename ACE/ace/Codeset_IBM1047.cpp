@@ -123,7 +123,6 @@ ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
                                   std::string & x)
 {
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len;
 
   in.read_ulong (len);
@@ -150,9 +149,6 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
 
   x.clear ();
   return false;
-#else
-  return this->ACE_Char_Codeset_Translator::read_string (in, x);
-#endif
 }
 
 ACE_CDR::Boolean
@@ -276,7 +272,6 @@ ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
                                   std::string & x)
 {
-#if defined (ACE_HAS_CPP11)
   ACE_CDR::ULong len;
 
   in.read_ulong (len);
@@ -303,9 +298,6 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
 
   x.clear ();
   return false;
-#else
-  return this->ACE_Char_Codeset_Translator::read_string (in, x);
-#endif
 }
 
 ACE_CDR::Boolean

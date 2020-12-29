@@ -56,8 +56,8 @@ TAO_IIOP_Connection_Handler::remove_reference (void)
 
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
-  : TAO_IIOP_SVC_HANDLER (t, 0 , 0),
-    TAO_Connection_Handler (0),
+  : TAO_IIOP_SVC_HANDLER (t, nullptr , nullptr),
+    TAO_Connection_Handler (nullptr),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
   // This constructor should *never* get called, it is just here to
@@ -71,11 +71,11 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (ACE_Thread_Manager *t)
 
 TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   TAO_ORB_Core *orb_core)
-  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), 0, 0),
+  : TAO_IIOP_SVC_HANDLER (orb_core->thr_mgr (), nullptr, nullptr),
     TAO_Connection_Handler (orb_core),
     dscp_codepoint_ (IPDSFIELD_DSCP_DEFAULT << 2)
 {
-  TAO_IIOP_Transport* specific_transport = 0;
+  TAO_IIOP_Transport* specific_transport = nullptr;
   ACE_NEW (specific_transport,
            TAO_IIOP_Transport (this, orb_core));
 
@@ -86,7 +86,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@\n"),
-                  tport != 0 ? tport->id () : 0,
+                  tport != nullptr ? tport->id () : 0,
                   this));
     }
 
@@ -94,7 +94,7 @@ TAO_IIOP_Connection_Handler::TAO_IIOP_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
+TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler ()
 {
   if (TAO_debug_level > 9)
     {
@@ -103,7 +103,7 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
                   ACE_TEXT("TAO (%P|%t) - IIOP_Connection_Handler[%d]::")
                   ACE_TEXT("~IIOP_Connection_Handler, ")
                   ACE_TEXT("this=%@, transport=%@\n"),
-                  tport != 0 ? tport->id () : 0,
+                  tport != nullptr ? tport->id () : 0,
                   this,
                   tport));
     }
@@ -119,13 +119,6 @@ TAO_IIOP_Connection_Handler::~TAO_IIOP_Connection_Handler (void)
                   ACE_TEXT("release_os_resources() failed %m\n")));
     }
 }
-
-/* Copy hook that copies over the concrete methods from this class
- * to the base Connection_Handler class as a part of the specialization
- * process. Add all concrete and virtual
- * methods implemented in this class within this hook.
- */
-//@@ CONNECTION_HANDLER_SPL_COPY_HOOK_START
 
 int
 TAO_IIOP_Connection_Handler::open_handler (void *v)
@@ -157,7 +150,7 @@ TAO_IIOP_Connection_Handler::open (void*)
 
   TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-  if (tph != 0)
+  if (tph != nullptr)
     {
       try
         {
@@ -365,13 +358,13 @@ TAO_IIOP_Connection_Handler::open (void*)
 }
 
 int
-TAO_IIOP_Connection_Handler::resume_handler (void)
+TAO_IIOP_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_IIOP_Connection_Handler::close_connection (void)
+TAO_IIOP_Connection_Handler::close_connection ()
 {
   // To maintain maximum compatibility, we only set this socket option
   // if the user has provided a linger timeout.
@@ -467,13 +460,13 @@ TAO_IIOP_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_IIOP_Connection_Handler::release_os_resources (void)
+TAO_IIOP_Connection_Handler::release_os_resources ()
 {
   return this->peer ().close ();
 }
 
 int
-TAO_IIOP_Connection_Handler::add_transport_to_cache (void)
+TAO_IIOP_Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 
@@ -651,7 +644,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
     {
       TAO_Protocols_Hooks *tph = this->orb_core ()->get_protocols_hooks ();
 
-      if (tph != 0)
+      if (tph != nullptr)
         {
           CORBA::Long codepoint = tph->get_dscp_codepoint ();
 
@@ -664,7 +657,7 @@ TAO_IIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 }
 
 void
-TAO_IIOP_Connection_Handler::abort (void)
+TAO_IIOP_Connection_Handler::abort ()
 {
   struct linger lval = { 0, 0 };
   lval.l_onoff = 1;
@@ -689,12 +682,6 @@ TAO_IIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *timeout)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), timeout);
 }
-
-
-//@@ CONNECTION_HANDLER_SPL_COPY_HOOK_END
-/*
- * End copy hook
- */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

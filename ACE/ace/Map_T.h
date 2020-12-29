@@ -56,13 +56,13 @@ class ACE_Incremental_Key_Generator
 public:
 
   /// Constructor.
-  ACE_Incremental_Key_Generator (void);
+  ACE_Incremental_Key_Generator ();
 
   /// Functor method: generates a new key.
   int operator () (T &t);
 
   /// Returns the current value.
-  const T& current_value (void) const;
+  const T& current_value () const;
 
 protected:
 
@@ -83,22 +83,22 @@ class ACE_Iterator_Impl
 public:
 
   /// Destructor.
-  virtual ~ACE_Iterator_Impl (void);
+  virtual ~ACE_Iterator_Impl ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone (void) const = 0;
+  virtual ACE_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
 
   /// Dereference.
-  virtual T dereference (void) const = 0;
+  virtual T dereference () const = 0;
 
   /// Advance.
-  virtual void plus_plus (void) = 0;
+  virtual void plus_plus () = 0;
 
   /// Reverse.
-  virtual void minus_minus (void) = 0;
+  virtual void minus_minus () = 0;
 };
 
 /**
@@ -114,22 +114,22 @@ class ACE_Reverse_Iterator_Impl
 public:
 
   /// Destructor.
-  virtual ~ACE_Reverse_Iterator_Impl (void);
+  virtual ~ACE_Reverse_Iterator_Impl ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const = 0;
+  virtual ACE_Reverse_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
 
   /// Dereference.
-  virtual T dereference (void) const = 0;
+  virtual T dereference () const = 0;
 
   /// Advance.
-  virtual void plus_plus (void) = 0;
+  virtual void plus_plus () = 0;
 
   /// Reverse.
-  virtual void minus_minus (void) = 0;
+  virtual void minus_minus () = 0;
 };
 
 /**
@@ -155,7 +155,7 @@ public:
   ACE_Iterator (const ACE_Iterator<T> &rhs);
 
   /// Destructor.
-  ~ACE_Iterator (void);
+  ~ACE_Iterator ();
 
   /// Assignment operator.
   ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
@@ -168,19 +168,19 @@ public:
   T operator *() const;
 
   /// Prefix advance.
-  ACE_Iterator<T> &operator++ (void);
+  ACE_Iterator<T> &operator++ ();
 
   /// Postfix advance.
   ACE_Iterator<T> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Iterator<T> &operator-- (void);
+  ACE_Iterator<T> &operator-- ();
 
   /// Postfix reverse.
   ACE_Iterator<T> operator-- (int);
 
   /// Accessor to implementation object.
-  ACE_Iterator_Impl<T> &impl (void);
+  ACE_Iterator_Impl<T> &impl ();
 
 protected:
 
@@ -211,7 +211,7 @@ public:
   ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
 
   /// Destructor.
-  ~ACE_Reverse_Iterator (void);
+  ~ACE_Reverse_Iterator ();
 
   /// Assignment operator.
   ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
@@ -230,19 +230,19 @@ public:
   T operator *() const;
 
   /// Prefix advance.
-  ACE_Reverse_Iterator<T> &operator++ (void);
+  ACE_Reverse_Iterator<T> &operator++ ();
 
   /// Postfix advance.
   ACE_Reverse_Iterator<T> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Reverse_Iterator<T> &operator-- (void);
+  ACE_Reverse_Iterator<T> &operator-- ();
 
   /// Postfix reverse.
   ACE_Reverse_Iterator<T> operator-- (int);
 
   /// Accessor to implementation object.
-  ACE_Reverse_Iterator_Impl<T> &impl (void);
+  ACE_Reverse_Iterator_Impl<T> &impl ();
 
 protected:
 
@@ -279,14 +279,14 @@ public:
           reverse_iterator_implementation;
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Map (void);
+  virtual ~ACE_Map ();
 
   /// Initialize a map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0) = 0;
 
   /// Close down a <Map> and release dynamically allocated resources.
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -404,36 +404,36 @@ public:
                       VALUE &value) = 0;
 
   /// Return the current size of the map.
-  virtual size_t current_size (void) const = 0;
+  virtual size_t current_size () const = 0;
 
   /// Return the total size of the map.
-  virtual size_t total_size (void) const = 0;
+  virtual size_t total_size () const = 0;
 
   /// Dump the state of an object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  iterator begin (void);
-  iterator end (void);
+  iterator begin ();
+  iterator end ();
 
   /// Return reverse iterator.
-  reverse_iterator rbegin (void);
-  reverse_iterator rend (void);
+  reverse_iterator rbegin ();
+  reverse_iterator rend ();
 
 protected:
 
   // = Protected no-op constructor.
-  ACE_Map (void);
+  ACE_Map ();
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void) = 0;
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void) = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl () = 0;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void) = 0;
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void) = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl () = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl () = 0;
 
 private:
 
@@ -462,25 +462,25 @@ public:
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Impl_Iterator_Adapter (void);
+  virtual ~ACE_Map_Impl_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  IMPLEMENTATION &impl (void);
+  IMPLEMENTATION &impl ();
 
 protected:
 
@@ -508,25 +508,25 @@ public:
   ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter (void);
+  virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  IMPLEMENTATION &impl (void);
+  IMPLEMENTATION &impl ();
 
 protected:
 
@@ -563,14 +563,14 @@ public:
                 ACE_Allocator *alloc = 0);
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Map_Impl (void);
+  virtual ~ACE_Map_Impl ();
 
   /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
   /// Close down a <Map> and release dynamically allocated resources.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -688,16 +688,16 @@ public:
                       VALUE &value);
 
   /// Return the current size of the map.
-  virtual size_t current_size (void) const;
+  virtual size_t current_size () const;
 
   /// Return the total size of the map.
-  virtual size_t total_size (void) const;
+  virtual size_t total_size () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Accessor to implementation object.
-  IMPLEMENTATION &impl (void);
+  IMPLEMENTATION &impl ();
 
 protected:
 
@@ -707,12 +707,12 @@ protected:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
 
@@ -741,25 +741,25 @@ public:
   ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Active_Map_Manager_Iterator_Adapter (void);
+  virtual ~ACE_Active_Map_Manager_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
+  ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -787,25 +787,25 @@ public:
   ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter (void);
+  virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl (void);
+  ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -843,14 +843,14 @@ public:
                                   ACE_Allocator *alloc = 0);
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Active_Map_Manager_Adapter (void);
+  virtual ~ACE_Active_Map_Manager_Adapter ();
 
   /// Initialize a Map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
   /// Close down a Map and release dynamically allocated resources.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -967,19 +967,19 @@ public:
                       VALUE &value);
 
   /// Return the current size of the map.
-  virtual size_t current_size (void) const;
+  virtual size_t current_size () const;
 
   /// Return the total size of the map.
-  virtual size_t total_size (void) const;
+  virtual size_t total_size () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Accessor to implementation object.
-  ACE_Active_Map_Manager<std::pair<KEY, VALUE> > &impl (void);
+  ACE_Active_Map_Manager<std::pair<KEY, VALUE> > &impl ();
 
   /// Accessor to key adapter.
-  KEY_ADAPTER &key_adapter (void);
+  KEY_ADAPTER &key_adapter ();
 
 protected:
 
@@ -1000,12 +1000,12 @@ protected:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
 
@@ -1034,25 +1034,25 @@ public:
   ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter (void);
+  virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
+  ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -1080,25 +1080,25 @@ public:
   ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (void);
+  virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
+  ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -1134,14 +1134,14 @@ public:
                                    ACE_Allocator *alloc = 0);
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Hash_Map_Manager_Ex_Adapter (void);
+  virtual ~ACE_Hash_Map_Manager_Ex_Adapter ();
 
   /// Initialize a Map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
   /// Close down a Map and release dynamically allocated resources.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -1259,19 +1259,19 @@ public:
                       VALUE &value);
 
   /// Return the current size of the map.
-  virtual size_t current_size (void) const;
+  virtual size_t current_size () const;
 
   /// Return the total size of the map.
-  virtual size_t total_size (void) const;
+  virtual size_t total_size () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Accessor to implementation object.
-  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl (void);
+  ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl ();
 
   /// Accessor to key generator.
-  KEY_GENERATOR &key_generator (void);
+  KEY_GENERATOR &key_generator ();
 
 protected:
 
@@ -1284,12 +1284,12 @@ protected:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
 
@@ -1318,25 +1318,25 @@ public:
   ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Manager_Iterator_Adapter (void);
+  virtual ~ACE_Map_Manager_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
+  ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -1364,25 +1364,25 @@ public:
   ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter (void);
+  virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter ();
 
   /// Clone.
-  virtual ACE_Reverse_Iterator_Impl<T> *clone (void) const;
+  virtual ACE_Reverse_Iterator_Impl<T> *clone () const;
 
   /// Comparison.
   virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const;
 
   /// Dereference.
-  virtual T dereference (void) const;
+  virtual T dereference () const;
 
   /// Advance.
-  virtual void plus_plus (void);
+  virtual void plus_plus ();
 
   /// Reverse.
-  virtual void minus_minus (void);
+  virtual void minus_minus ();
 
   /// Accessor to implementation object.
-  ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl (void);
+  ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
 protected:
 
@@ -1418,14 +1418,14 @@ public:
                            ACE_Allocator *alloc = 0);
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Map_Manager_Adapter (void);
+  virtual ~ACE_Map_Manager_Adapter ();
 
   /// Initialize a <Map> with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
                     ACE_Allocator *alloc = 0);
 
   /// Close down a <Map> and release dynamically allocated resources.
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Add @a key / @a value pair to the map.  If @a key is already in the
@@ -1543,19 +1543,19 @@ public:
                       VALUE &value);
 
   /// Return the current size of the map.
-  virtual size_t current_size (void) const;
+  virtual size_t current_size () const;
 
   /// Return the total size of the map.
-  virtual size_t total_size (void) const;
+  virtual size_t total_size () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Accessor to implementation object.
-  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> &impl (void);
+  ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex> &impl ();
 
   /// Accessor to key generator.
-  KEY_GENERATOR &key_generator (void);
+  KEY_GENERATOR &key_generator ();
 
 protected:
 
@@ -1568,12 +1568,12 @@ protected:
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl (void);
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl (void);
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl ();
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *end_impl ();
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl (void);
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl (void);
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rbegin_impl ();
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *rend_impl ();
 
 private:
 

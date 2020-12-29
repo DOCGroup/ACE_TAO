@@ -180,8 +180,7 @@ public:
    * ``round robin.''  If the group contains no members, <no_such_member>
    * exception is thrown.
    */
-  CORBA::Object_ptr resolve (void)
-    = 0;
+  CORBA::Object_ptr resolve (void) = 0;
 
   /**
    * Returns an object with the specified <Member_ID>.  If this

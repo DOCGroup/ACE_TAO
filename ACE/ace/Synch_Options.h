@@ -100,14 +100,14 @@ public:
   void operator= (unsigned long option);
 
   /// Returns the "magic cookie" argument.
-  const void *arg (void) const;
+  const void *arg () const;
 
   /// Set the "magic cookie" argument.
   void arg (const void *);
 
   /// Returns a reference to the ACE_Time_Value.  This value only makes
   /// sense if (*this)[USE_TIMEOUT] is true.
-  const ACE_Time_Value &timeout (void) const;
+  const ACE_Time_Value &timeout () const;
 
   /// Set the timeout value. This method does not alter the options; in
   /// particular, it doesn't add USE_TIMEOUT to the options when a non-zero
@@ -119,7 +119,7 @@ public:
    * This should be used with care, e.g., the timeout pointer should not
    * be stored in a manner that will lead to dangling pointers.
    */
-  const ACE_Time_Value *time_value (void) const;
+  const ACE_Time_Value *time_value () const;
 
   // = Static data members (singletons)
 
@@ -134,7 +134,7 @@ public:
   static ACE_Synch_Options asynch;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

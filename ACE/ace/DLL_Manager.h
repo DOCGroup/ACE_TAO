@@ -121,7 +121,7 @@ public:
 
   /// If @a symbol_name is in the symbol table of the DLL a pointer to
   /// the @a symbol_name is returned.  Otherwise, returns 0.  Set the
-  /// ignore_errors flag to supress logging errors if symbol_name isn't
+  /// @a ignore_errors flag to suppress logging errors if @a symbol_name isn't
   /// found.  This is nice if you just want to probe a dll to see what's
   /// available, since missing functions in that case aren't really errors.
   void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors = false);
@@ -147,7 +147,7 @@ private:
 
   /// Builds array of DLL names to try to dlopen, based on platform
   /// and configured DLL prefixes/suffixes.
-  /// Returns the array of names to try in try_names.
+  /// Returns the array of names to try in @a try_names.
   void get_dll_names (const ACE_TCHAR *dll_name,
                       ACE_Array<ACE_TString> &try_names);
 
@@ -170,9 +170,10 @@ private:
    */
   bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
 
-  /// Disallow copying and assignment since we don't handle them.
-  ACE_DLL_Handle (const ACE_DLL_Handle &);
-  void operator= (const ACE_DLL_Handle &);
+  ACE_DLL_Handle (const ACE_DLL_Handle &) = delete;
+  void operator= (const ACE_DLL_Handle &) = delete;
+  ACE_DLL_Handle (ACE_DLL_Handle &&) = delete;
+  void operator= (ACE_DLL_Handle &&) = delete;
 
 private:
   /// Keep track of how many ACE_DLL objects have a reference to this
@@ -288,9 +289,10 @@ private:
   /// Close the singleton instance.
   static void close_singleton (void);
 
-  /// Disallow copying and assignment since we don't handle these.
-  ACE_DLL_Manager (const ACE_DLL_Manager &);
-  void operator= (const ACE_DLL_Manager &);
+  ACE_DLL_Manager (const ACE_DLL_Manager &) = delete;
+  void operator= (const ACE_DLL_Manager &) = delete;
+  ACE_DLL_Manager (ACE_DLL_Manager &&) = delete;
+  void operator= (ACE_DLL_Manager &&) = delete;
 
 private:
   /// Vector containing all loaded handle objects.

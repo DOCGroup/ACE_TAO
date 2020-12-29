@@ -18,11 +18,11 @@ namespace FTRTEC {
     ACE_SOCK_Connector, ConnectionDetectHandler<ACE_SOCK_STREAM> >
     TCP_Fault_Detector;
 
-  Fault_Detector_Loader::Fault_Detector_Loader (void)
+  Fault_Detector_Loader::Fault_Detector_Loader ()
   {
   }
 
-  Fault_Detector_Loader::~Fault_Detector_Loader (void)
+  Fault_Detector_Loader::~Fault_Detector_Loader ()
   {
   }
 

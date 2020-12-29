@@ -110,7 +110,7 @@ public:
   virtual void *base_addr (void) const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -122,7 +122,6 @@ protected:
   /// Implement the algorithm for rounding up the request to an
   /// appropriate chunksize.
   virtual size_t round_up (size_t nbytes);
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

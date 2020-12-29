@@ -73,7 +73,7 @@ public:
   virtual ~ACE_Name_Proxy (void);
 
   /// Dump the state of the object;
-  void dump (void) const;
+  void dump () const;
 
 private:
 

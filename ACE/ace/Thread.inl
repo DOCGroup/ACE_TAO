@@ -50,7 +50,7 @@ ACE_Thread::getspecific (ACE_thread_key_t key, void **valuep)
 }
 
 ACE_INLINE ACE_thread_t
-ACE_Thread::self (void)
+ACE_Thread::self ()
 {
 //  ACE_TRACE ("ACE_Thread::self");
   return ACE_OS::thr_self ();
@@ -64,7 +64,7 @@ ACE_Thread::exit (ACE_THR_FUNC_RETURN status)
 }
 
 ACE_INLINE void
-ACE_Thread::yield (void)
+ACE_Thread::yield ()
 {
   ACE_TRACE ("ACE_Thread::yield");
   ACE_OS::thr_yield ();
@@ -135,7 +135,7 @@ ACE_Thread::join (ACE_hthread_t wait_for,
 }
 
 ACE_INLINE int
-ACE_Thread::getconcurrency (void)
+ACE_Thread::getconcurrency ()
 {
   ACE_TRACE ("ACE_Thread::getconcurrency");
   return ACE_OS::thr_getconcurrency ();
@@ -245,7 +245,7 @@ ACE_Thread::cancel (ACE_thread_t t_id)
 }
 
 ACE_INLINE void
-ACE_Thread::testcancel (void)
+ACE_Thread::testcancel ()
 {
   ACE_TRACE ("ACE_Thread::testcancel");
 

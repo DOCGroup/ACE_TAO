@@ -84,16 +84,13 @@ namespace Test
     //@}
 
   protected:
-
     /// The number of requests intercepted by this interceptor.
     CORBA::ULong request_count_;
 
     CORBA::String_var orb_id_;
 
     TEST test_;
-
   };
-
 }
 
 #endif  /* SERVER_REQUEST_INTERCEPTOR_H */

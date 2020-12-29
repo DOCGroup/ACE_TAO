@@ -1,6 +1,6 @@
 # Set the version number here.
-%define ACEVER  6.5.11
-%define TAOVER  2.5.11
+%define ACEVER  6.5.12
+%define TAOVER  2.5.12
 
 # Conditional build
 # Default values are
@@ -949,7 +949,6 @@ EOF
 
 cat > $ACE_ROOT/bin/MakeProjectCreator/config/default.features <<EOF
 ssl=1
-cidl=0
 EOF
 
 %if %{?_with_bzip2:1}%{!?_with_bzip2:0}

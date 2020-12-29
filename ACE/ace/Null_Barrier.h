@@ -30,14 +30,14 @@ public:
                     void * = 0) {};
 
   /// Default dtor.
-  ~ACE_Null_Barrier (void) {};
+  ~ACE_Null_Barrier () {};
 
   /// Block the caller until all <count> threads have called <wait> and
   /// then allow all the caller threads to continue in parallel.
-  int wait (void) { return 0; };
+  int wait () { return 0; };
 
   /// Dump the state of an object.
-  void dump (void) const {};
+  void dump () const {};
 
   /// Declare the dynamic allocation hooks.
   //ACE_ALLOC_HOOK_DECLARE;

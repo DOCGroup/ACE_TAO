@@ -24,9 +24,9 @@ class ACE_Based_Pointer_Repository_Rep
 {
 public:
   // Useful typedefs.
-  typedef ACE_Map_Manager <void *, size_t, ACE_Null_Mutex> MAP_MANAGER;
-  typedef ACE_Map_Iterator <void *, size_t, ACE_Null_Mutex> MAP_ITERATOR;
-  typedef ACE_Map_Entry <void *, size_t> MAP_ENTRY;
+  using MAP_MANAGER = ACE_Map_Manager<void *, size_t, ACE_Null_Mutex>;
+  using MAP_ITERATOR = ACE_Map_Iterator<void *, size_t, ACE_Null_Mutex>;
+  using MAP_ENTRY = ACE_Map_Entry<void *, size_t>;
 
   /// Keeps track of the mapping between addresses and their associated
   /// values.
@@ -40,14 +40,14 @@ public:
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Based_Pointer_Repository_Rep);
 
-ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository (void)
+ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::ACE_Based_Pointer_Repository");
   ACE_NEW (this->rep_,
            ACE_Based_Pointer_Repository_Rep);
 }
 
-ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository (void)
+ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository ()
 {
   ACE_TRACE ("ACE_Based_Pointer_Repository::~ACE_Based_Pointer_Repository");
   delete this->rep_;

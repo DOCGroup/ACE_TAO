@@ -28,38 +28,38 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Numeric_Limits.h"
 
-TAO_CodeGen * tao_cg = 0;
+TAO_CodeGen * tao_cg = nullptr;
 
-TAO_CodeGen::TAO_CodeGen (void)
-  : client_header_ (0),
-    client_stubs_ (0),
-    client_inline_ (0),
-    server_header_ (0),
-    implementation_header_(0),
-    implementation_skeleton_(0),
-    server_template_header_ (0),
-    server_skeletons_ (0),
-    server_template_skeletons_ (0),
-    anyop_header_ (0),
-    anyop_source_ (0),
-    gperf_input_stream_ (0),
-    ciao_svnt_header_ (0),
-    ciao_svnt_source_ (0),
-    ciao_svnt_template_header_ (0),
-    ciao_svnt_template_source_ (0),
-    ciao_exec_header_ (0),
-    ciao_exec_source_ (0),
-    ciao_exec_idl_ (0),
-    ciao_conn_header_ (0),
-    ciao_conn_source_ (0),
-    ciao_ami_conn_idl_ (0),
-    gperf_input_filename_ (0),
+TAO_CodeGen::TAO_CodeGen ()
+  : client_header_ (nullptr),
+    client_stubs_ (nullptr),
+    client_inline_ (nullptr),
+    server_header_ (nullptr),
+    implementation_header_(nullptr),
+    implementation_skeleton_(nullptr),
+    server_template_header_ (nullptr),
+    server_skeletons_ (nullptr),
+    server_template_skeletons_ (nullptr),
+    anyop_header_ (nullptr),
+    anyop_source_ (nullptr),
+    gperf_input_stream_ (nullptr),
+    ciao_svnt_header_ (nullptr),
+    ciao_svnt_source_ (nullptr),
+    ciao_svnt_template_header_ (nullptr),
+    ciao_svnt_template_source_ (nullptr),
+    ciao_exec_header_ (nullptr),
+    ciao_exec_source_ (nullptr),
+    ciao_exec_idl_ (nullptr),
+    ciao_conn_header_ (nullptr),
+    ciao_conn_source_ (nullptr),
+    ciao_ami_conn_idl_ (nullptr),
+    gperf_input_filename_ (nullptr),
     strategy_ (TAO_PERFECT_HASH)
 {
 }
 
 // destructor
-TAO_CodeGen::~TAO_CodeGen (void)
+TAO_CodeGen::~TAO_CodeGen ()
 {
 }
 
@@ -123,7 +123,7 @@ TAO_CodeGen::downcase (const char *str)
 int
 TAO_CodeGen::start_client_header (const char *fname)
 {
-  if (0 == fname)
+  if (nullptr == fname)
     {
       // Bad file name.
       return -1;
@@ -173,14 +173,14 @@ TAO_CodeGen::start_client_header (const char *fname)
                                "_H_");
     }
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       *this->client_header_ << "#include /**/ \""
                             << be_global->pre_include ()
                             << "\"\n\n";
     }
 
-  if (be_global->include_guard () != 0)
+  if (be_global->include_guard () != nullptr)
     {
       *this->client_header_ << "#ifndef "
                             << be_global->include_guard ()
@@ -189,7 +189,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       *this->client_header_ << "#error "
                             << "You should not include " << fname;
 
-      if (be_global->safe_include () != 0)
+      if (be_global->safe_include () != nullptr)
         {
           *this->client_header_ << ", use " << be_global->safe_include ();
         }
@@ -226,14 +226,14 @@ TAO_CodeGen::start_client_header (const char *fname)
 
   // Other include files.
 
-  if (be_global->stub_export_include () != 0)
+  if (be_global->stub_export_include () != nullptr)
     {
       *this->client_header_ << "\n#include /**/ \""
                             << be_global->stub_export_include ()
                             << "\"";
     }
 
-  if (be_global->unique_include () != 0)
+  if (be_global->unique_include () != nullptr)
     {
       *this->client_header_ << "\n#include \""
                             << be_global->unique_include ()
@@ -276,7 +276,7 @@ TAO_CodeGen::start_client_header (const char *fname)
           idl_name_str.destroy ();
 
           // Sanity check and then print.
-          if (client_hdr != 0)
+          if (client_hdr != nullptr)
             {
               this->client_header_->print ("\n#include \"%s\"",
                                            client_hdr);
@@ -296,7 +296,7 @@ TAO_CodeGen::start_client_header (const char *fname)
        !i.done ();
        i.advance ())
     {
-      char **tmp = 0;
+      char **tmp = nullptr;
       i.next (tmp);
 
       // Make a String out of it.
@@ -310,7 +310,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       idl_name_str.destroy ();
 
       // Sanity check and then print.
-      if (client_hdr != 0)
+      if (client_hdr != nullptr)
         {
           this->client_header_->print ("\n#include \"%s\"",
                                        client_hdr);
@@ -341,7 +341,7 @@ TAO_CodeGen::start_client_header (const char *fname)
 
 // Get the client header stream.
 TAO_OutStream *
-TAO_CodeGen::client_header (void)
+TAO_CodeGen::client_header ()
 {
   return this->client_header_;
 }
@@ -378,7 +378,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       // header file.
       *this->client_stubs_ << "\n\n#if !defined (__ACE_INLINE__)";
       *this->client_stubs_ << "\n#include \""
-                           << be_global->be_get_client_inline_fname (1)
+                           << be_global->be_get_client_inline_fname (true)
                            << "\"";
       *this->client_stubs_ << "\n#endif /* !defined INLINE */";
     }
@@ -392,7 +392,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
 
 // Get the client stubs stream.
 TAO_OutStream *
-TAO_CodeGen::client_stubs (void)
+TAO_CodeGen::client_stubs ()
 {
   return this->client_stubs_;
 }
@@ -425,7 +425,7 @@ TAO_CodeGen::start_client_inline (const char *fname)
 
 // Get the client inline stream.
 TAO_OutStream *
-TAO_CodeGen::client_inline (void)
+TAO_CodeGen::client_inline ()
 {
   return this->client_inline_;
 }
@@ -460,7 +460,7 @@ TAO_CodeGen::start_server_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       *this->server_header_ << "#include /**/ \""
                             << be_global->pre_include ()
@@ -498,7 +498,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       UTL_String idl_name_str (idl_name);
 
       char const * const server_hdr =
-        BE_GlobalData::be_get_server_hdr (&idl_name_str, 1);
+        BE_GlobalData::be_get_server_hdr (&idl_name_str, true);
 
       idl_name_str.destroy ();
 
@@ -523,7 +523,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
       this->gen_skel_hdr_includes ();
 
-      if (be_global->skel_export_include () != 0)
+      if (be_global->skel_export_include () != nullptr)
         {
           *this->server_header_ << "\n\n#include /**/ \""
                                 << be_global->skel_export_include ()
@@ -549,7 +549,7 @@ TAO_CodeGen::start_server_header (const char *fname)
 
 // Get the server header stream.
 TAO_OutStream *
-TAO_CodeGen::server_header (void)
+TAO_CodeGen::server_header ()
 {
   return this->server_header_;
 }
@@ -591,7 +591,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       *this->server_template_header_ << "#include /**/ \""
                                      << be_global->pre_include ()
@@ -608,7 +608,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
 
 // Get the server header stream.
 TAO_OutStream *
-TAO_CodeGen::server_template_header (void)
+TAO_CodeGen::server_template_header ()
 {
   return this->server_template_header_;
 }
@@ -655,7 +655,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
   // Generate the include statement for the server header.
   *this->server_skeletons_
     << "\n#include \""
-    << be_global->be_get_server_hdr_fname (1)
+    << be_global->be_get_server_hdr_fname (true)
     << "\"";
 
   this->gen_skel_src_includes ();
@@ -670,7 +670,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
 
 // Get the server skeletons stream.
 TAO_OutStream *
-TAO_CodeGen::server_skeletons (void)
+TAO_CodeGen::server_skeletons ()
 {
   return this->server_skeletons_;
 }
@@ -723,7 +723,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
 
 // Get the server template skeletons stream.
 TAO_OutStream *
-TAO_CodeGen::server_template_skeletons (void)
+TAO_CodeGen::server_template_skeletons ()
 {
   return this->server_template_skeletons_;
 }
@@ -786,7 +786,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
                            "_TAO_IDL_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       *this->anyop_header_ << "#include /**/ \""
                            << be_global->pre_include ()
@@ -794,13 +794,13 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     }
 
   // If anyop macro hasn't been set, default to stub macro.
-  if (be_global->anyop_export_include () != 0)
+  if (be_global->anyop_export_include () != nullptr)
     {
       *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->anyop_export_include ()
                            << "\"";
     }
-  else if (be_global->stub_export_include () != 0)
+  else if (be_global->stub_export_include () != nullptr)
     {
       *this->anyop_header_ << "\n#include /**/ \""
                            << be_global->stub_export_include ()
@@ -822,7 +822,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
     {
       const char *stub_incl_dir = be_global->stub_include_dir ();
 
-      if (stub_incl_dir == 0)
+      if (stub_incl_dir == nullptr)
         {
           tao_prefix = "tao/";
         }
@@ -956,7 +956,7 @@ TAO_CodeGen::start_anyop_source (const char *fname)
   // Generate the include statement for the client header. We just
   // need to put only the base names. Path info is not required.
   *this->anyop_source_ << "\n#include \""
-                       << be_global->be_get_anyop_header_fname (1)
+                       << be_global->be_get_anyop_header_fname (true)
                        << "\"";
 
   this->gen_typecode_includes (this->anyop_source_);
@@ -972,13 +972,13 @@ TAO_CodeGen::start_anyop_source (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::anyop_header (void)
+TAO_CodeGen::anyop_header ()
 {
   return this->anyop_header_;
 }
 
 TAO_OutStream *
-TAO_CodeGen::anyop_source (void)
+TAO_CodeGen::anyop_source ()
 {
   return this->anyop_source_;
 }
@@ -1021,7 +1021,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
                            "CIAO_SESSION_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1032,13 +1032,13 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->svnt_export_include () != 0)
+  if (be_global->svnt_export_include () != nullptr)
     {
       os << "\n#include /**/ \""
          << be_global->svnt_export_include ()
          << "\"\n";
     }
-  else if (be_global->skel_export_include () != 0)
+  else if (be_global->skel_export_include () != nullptr)
     {
       os << "\n#include /**/ \""
          << be_global->skel_export_include ()
@@ -1053,7 +1053,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
      << be_nl;
 
 
-  char **path_tmp = 0;
+  char **path_tmp = nullptr;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
          idl_global->ciao_lem_file_names ());
@@ -1167,7 +1167,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
                            "CIAO_SERVANT_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1178,13 +1178,13 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->svnt_export_include () != 0)
+  if (be_global->svnt_export_include () != nullptr)
     {
       os << "\n#include /**/ \""
          << be_global->svnt_export_include ()
          << "\"\n";
     }
-  else if (be_global->skel_export_include () != 0)
+  else if (be_global->skel_export_include () != nullptr)
     {
       os << "\n#include /**/ \""
          << be_global->skel_export_include ()
@@ -1255,25 +1255,25 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_svnt_header (void)
+TAO_CodeGen::ciao_svnt_header ()
 {
   return this->ciao_svnt_header_;
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_svnt_source (void)
+TAO_CodeGen::ciao_svnt_source ()
 {
   return this->ciao_svnt_source_;
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_svnt_template_header (void)
+TAO_CodeGen::ciao_svnt_template_header ()
 {
   return this->ciao_svnt_template_header_;
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_svnt_template_source (void)
+TAO_CodeGen::ciao_svnt_template_source ()
 {
   return this->ciao_svnt_template_source_;
 }
@@ -1311,7 +1311,7 @@ TAO_CodeGen::start_ciao_exec_header (const char *fname)
                            "CIAO_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1364,13 +1364,13 @@ TAO_CodeGen::start_ciao_exec_source (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_exec_header (void)
+TAO_CodeGen::ciao_exec_header ()
 {
   return this->ciao_exec_header_;
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_exec_source (void)
+TAO_CodeGen::ciao_exec_source ()
 {
   return this->ciao_exec_source_;
 }
@@ -1413,7 +1413,7 @@ TAO_CodeGen::start_ciao_exec_idl (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_exec_idl (void)
+TAO_CodeGen::ciao_exec_idl ()
 {
   return this->ciao_exec_idl_;
 }
@@ -1456,7 +1456,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
                            "CIAO_",
                            "_H_");
 
-  if (be_global->pre_include () != 0)
+  if (be_global->pre_include () != nullptr)
     {
       os << "#include /**/ \""
          << be_global->pre_include ()
@@ -1464,7 +1464,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
     }
 
   // This will almost certainly be true, but just in case...
-  if (be_global->conn_export_include () != 0)
+  if (be_global->conn_export_include () != nullptr)
     {
       this->gen_standard_include (
         this->ciao_conn_header_,
@@ -1484,7 +1484,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_conn_header (void)
+TAO_CodeGen::ciao_conn_header ()
 {
   return this->ciao_conn_header_;
 }
@@ -1528,7 +1528,7 @@ TAO_CodeGen::start_ciao_conn_source (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_conn_source (void)
+TAO_CodeGen::ciao_conn_source ()
 {
   return this->ciao_conn_source_;
 }
@@ -1571,7 +1571,7 @@ TAO_CodeGen::start_ciao_ami_conn_idl (const char *fname)
 }
 
 TAO_OutStream *
-TAO_CodeGen::ciao_ami_conn_idl (void)
+TAO_CodeGen::ciao_ami_conn_idl ()
 {
   return this->ciao_ami_conn_idl_;
 }
@@ -1608,7 +1608,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                            "",
                            "_H_");
 
-  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (1);
+  const char* server_hdr = BE_GlobalData::be_get_server_hdr_fname (true);
 
   *this->implementation_header_<< "#include \"" << server_hdr <<"\"";
 
@@ -1627,7 +1627,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
 
 // Get the implementation header stream.
 TAO_OutStream *
-TAO_CodeGen::implementation_header (void)
+TAO_CodeGen::implementation_header ()
 {
   return this->implementation_header_;
 }
@@ -1670,14 +1670,14 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
 
 // Get the implementation header stream.
 TAO_OutStream *
-TAO_CodeGen::implementation_skeleton (void)
+TAO_CodeGen::implementation_skeleton ()
 {
   return this->implementation_skeleton_;
 }
 
 // Put the last #endif in the client and server headers.
 int
-TAO_CodeGen::end_client_header (void)
+TAO_CodeGen::end_client_header ()
 {
   // Generate the <<= and >>= operators here.
 
@@ -1695,14 +1695,14 @@ TAO_CodeGen::end_client_header (void)
       // Insert the code to include the inline file.
       *this->client_header_ << "#if defined (__ACE_INLINE__)\n";
       *this->client_header_ << "#include \""
-                            << be_global->be_get_client_inline_fname (1)
+                            << be_global->be_get_client_inline_fname (true)
                             << "\"\n";
       *this->client_header_ << "#endif /* defined INLINE */\n\n";
     }
 
   // Code to put the last #endif.
 
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->client_header_ << "#include /**/ \""
                             << be_global->post_include ()
@@ -1716,7 +1716,7 @@ TAO_CodeGen::end_client_header (void)
 }
 
 void
-TAO_CodeGen::end_client_inline (void)
+TAO_CodeGen::end_client_inline ()
 {
   *this->client_inline_ << "\n";
 
@@ -1728,7 +1728,7 @@ TAO_CodeGen::end_client_inline (void)
 }
 
 void
-TAO_CodeGen::end_client_stubs (void)
+TAO_CodeGen::end_client_stubs ()
 {
   *this->client_stubs_ << "\n";
 
@@ -1740,7 +1740,7 @@ TAO_CodeGen::end_client_stubs (void)
 }
 
 int
-TAO_CodeGen::end_server_header (void)
+TAO_CodeGen::end_server_header ()
 {
   TAO_OutStream *os = this->server_header_;
 
@@ -1761,7 +1761,7 @@ TAO_CodeGen::end_server_header (void)
         }
     }
 
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *os << be_nl_2
           << "#include /**/ \""
@@ -1779,7 +1779,7 @@ TAO_CodeGen::end_server_header (void)
 int
 TAO_CodeGen::end_implementation_header (const char *fname)
 {
-  if (fname == 0)
+  if (fname == nullptr)
     {
       // Bad file name.
       return -1;
@@ -1787,7 +1787,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 
   const char *suffix = ACE_OS::strrchr (fname, '.');
 
-  if (suffix == 0)
+  if (suffix == nullptr)
     {
       // File seems to have no extension, so let us take the name
       // as it is.
@@ -1823,7 +1823,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 }
 
 int
-TAO_CodeGen::end_server_template_header (void)
+TAO_CodeGen::end_server_template_header ()
 {
   *this->server_template_header_ << be_nl_2 << "// TAO_IDL - Generated from"
                                  << be_nl << "// "
@@ -1838,7 +1838,7 @@ TAO_CodeGen::end_server_template_header (void)
       << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)";
   *this->server_template_header_
       << be_nl << "#include \""
-      << be_global->be_get_server_template_skeleton_fname (1)
+      << be_global->be_get_server_template_skeleton_fname (true)
       << "\"";
   *this->server_template_header_ << be_nl
       << "#endif /* defined REQUIRED SOURCE */";
@@ -1848,7 +1848,7 @@ TAO_CodeGen::end_server_template_header (void)
       << be_nl_2 << "#if defined (ACE_TEMPLATES_REQUIRE_PRAGMA)";
   *this->server_template_header_
       << be_nl << "#pragma implementation (\""
-      << be_global->be_get_server_template_skeleton_fname (1)
+      << be_global->be_get_server_template_skeleton_fname (true)
       << "\")";
   *this->server_template_header_ << be_nl
       << "#endif /* defined REQUIRED PRAGMA */";
@@ -1856,7 +1856,7 @@ TAO_CodeGen::end_server_template_header (void)
   // Code to put the last #endif.
   *this->server_template_header_ << "\n\n";
 
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->server_template_header_ << "#include /**/ \""
                                      << be_global->post_include ()
@@ -1869,7 +1869,7 @@ TAO_CodeGen::end_server_template_header (void)
 }
 
 int
-TAO_CodeGen::end_server_template_skeletons (void)
+TAO_CodeGen::end_server_template_skeletons ()
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
@@ -1883,7 +1883,7 @@ TAO_CodeGen::end_server_template_skeletons (void)
 }
 
 int
-TAO_CodeGen::end_server_skeletons (void)
+TAO_CodeGen::end_server_skeletons ()
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
@@ -1897,14 +1897,14 @@ TAO_CodeGen::end_server_skeletons (void)
 }
 
 int
-TAO_CodeGen::end_anyop_header (void)
+TAO_CodeGen::end_anyop_header ()
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
   *this->anyop_header_ << be_global->versioning_end ();
 
 
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->anyop_header_ << "\n\n#include /**/ \""
                            << be_global->post_include ()
@@ -1918,7 +1918,7 @@ TAO_CodeGen::end_anyop_header (void)
 }
 
 int
-TAO_CodeGen::end_anyop_source (void)
+TAO_CodeGen::end_anyop_source ()
 {
   // End versioned namespace support.  Do not place include directives
   // before this.
@@ -1930,9 +1930,9 @@ TAO_CodeGen::end_anyop_source (void)
 }
 
 int
-TAO_CodeGen::end_ciao_svnt_header (void)
+TAO_CodeGen::end_ciao_svnt_header ()
 {
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->ciao_svnt_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -1945,7 +1945,7 @@ TAO_CodeGen::end_ciao_svnt_header (void)
 }
 
 int
-TAO_CodeGen::end_ciao_svnt_source (void)
+TAO_CodeGen::end_ciao_svnt_source ()
 {
   *this->ciao_svnt_source_ << "\n";
 
@@ -1953,7 +1953,7 @@ TAO_CodeGen::end_ciao_svnt_source (void)
 }
 
 int
-TAO_CodeGen::end_ciao_svnt_template_header (void)
+TAO_CodeGen::end_ciao_svnt_template_header ()
 {
   *this->ciao_svnt_template_header_ << be_nl_2
                                     << "#if defined (ACE_TEMPLATES_REQUIRE_SOURCE)"
@@ -1969,7 +1969,7 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
                                     << be_nl << "#endif /* ACE_TEMPLATES_REQUIRE_PRAGMA */"
                                     << be_nl;
 
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->ciao_svnt_template_header_ << "\n\n#include /**/ \""
                                         << be_global->post_include ()
@@ -1982,7 +1982,7 @@ TAO_CodeGen::end_ciao_svnt_template_header (void)
 }
 
 int
-TAO_CodeGen::end_ciao_svnt_template_source (void)
+TAO_CodeGen::end_ciao_svnt_template_source ()
 {
   *this->ciao_svnt_template_source_ << "\n\n#endif /* ifndef */\n";
 
@@ -1992,9 +1992,9 @@ TAO_CodeGen::end_ciao_svnt_template_source (void)
 }
 
 int
-TAO_CodeGen::end_ciao_exec_header (void)
+TAO_CodeGen::end_ciao_exec_header ()
 {
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->ciao_exec_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -2007,7 +2007,7 @@ TAO_CodeGen::end_ciao_exec_header (void)
 }
 
 int
-TAO_CodeGen::end_ciao_exec_source (void)
+TAO_CodeGen::end_ciao_exec_source ()
 {
   *this->ciao_exec_source_ << "\n";
 
@@ -2015,7 +2015,7 @@ TAO_CodeGen::end_ciao_exec_source (void)
 }
 
 int
-TAO_CodeGen::end_ciao_exec_idl (void)
+TAO_CodeGen::end_ciao_exec_idl ()
 {
   *this->ciao_exec_idl_ << "\n\n#endif /* ifndef */\n";
 
@@ -2023,9 +2023,9 @@ TAO_CodeGen::end_ciao_exec_idl (void)
 }
 
 int
-TAO_CodeGen::end_ciao_conn_header (void)
+TAO_CodeGen::end_ciao_conn_header ()
 {
-  if (be_global->post_include () != 0)
+  if (be_global->post_include () != nullptr)
     {
       *this->ciao_conn_header_ << "\n\n#include /**/ \""
                                << be_global->post_include ()
@@ -2038,7 +2038,7 @@ TAO_CodeGen::end_ciao_conn_header (void)
 }
 
 int
-TAO_CodeGen::end_ciao_conn_source (void)
+TAO_CodeGen::end_ciao_conn_source ()
 {
   *this->ciao_conn_source_ << "\n";
 
@@ -2046,7 +2046,7 @@ TAO_CodeGen::end_ciao_conn_source (void)
 }
 
 int
-TAO_CodeGen::end_ciao_ami_conn_idl (void)
+TAO_CodeGen::end_ciao_ami_conn_idl ()
 {
   *this->ciao_ami_conn_idl_ << "\n\n#endif /* ifndef */\n";
 
@@ -2066,7 +2066,7 @@ TAO_CodeGen::gperf_input_stream (TAO_OutStream *os)
 }
 
 TAO_OutStream *
-TAO_CodeGen::gperf_input_stream (void)
+TAO_CodeGen::gperf_input_stream ()
 {
   return this->gperf_input_stream_;
 }
@@ -2079,7 +2079,7 @@ TAO_CodeGen::gperf_input_filename (char *filename)
 }
 
 char *
-TAO_CodeGen::gperf_input_filename (void)
+TAO_CodeGen::gperf_input_filename ()
 {
   return this->gperf_input_filename_;
 }
@@ -2089,39 +2089,39 @@ TAO_CodeGen::gen_ident_string (TAO_OutStream *stream) const
 {
   const char *str = idl_global->ident_string ();
 
-  if (str != 0)
+  if (str != nullptr)
     {
       *stream << "#" << str << be_nl_2;
     }
 }
 
 void
-TAO_CodeGen::gen_export_files (void)
+TAO_CodeGen::gen_export_files ()
 {
   if (be_global->gen_stub_export_hdr_file ()
-      && be_global->stub_export_macro () != 0
-      && (be_global->stub_export_include () != 0 || be_global->stub_export_file () != 0))
+      && be_global->stub_export_macro () != nullptr
+      && (be_global->stub_export_include () != nullptr || be_global->stub_export_file () != nullptr))
     {
       this->gen_export_file (
-        (be_global->stub_export_file () != 0) ? be_global->stub_export_file () : be_global->stub_export_include (),
+        (be_global->stub_export_file () != nullptr) ? be_global->stub_export_file () : be_global->stub_export_include (),
         be_global->stub_export_macro (),
         "stub");
     }
 
   if (be_global->gen_skel_export_hdr_file ()
-      && be_global->skel_export_macro () != 0
-      && be_global->skel_export_include () != 0)
+      && be_global->skel_export_macro () != nullptr
+      && be_global->skel_export_include () != nullptr)
     {
       this->gen_export_file (
-        (be_global->skel_export_file () != 0) ? be_global->skel_export_file () : be_global->skel_export_include (),
+        (be_global->skel_export_file () != nullptr) ? be_global->skel_export_file () : be_global->skel_export_include (),
         be_global->skel_export_macro (),
         "skel",
         true);
     }
 
   if (be_global->gen_svnt_export_hdr_file ()
-      && be_global->svnt_export_macro () != 0
-      && be_global->svnt_export_include () != 0)
+      && be_global->svnt_export_macro () != nullptr
+      && be_global->svnt_export_include () != nullptr)
     {
       this->gen_export_file (
         be_global->svnt_export_include (),
@@ -2130,8 +2130,8 @@ TAO_CodeGen::gen_export_files (void)
     }
 
   if (be_global->gen_exec_export_hdr_file ()
-      && be_global->exec_export_macro () != 0
-      && be_global->exec_export_include () != 0)
+      && be_global->exec_export_macro () != nullptr
+      && be_global->exec_export_include () != nullptr)
     {
       this->gen_export_file (
         be_global->exec_export_include (),
@@ -2140,8 +2140,8 @@ TAO_CodeGen::gen_export_files (void)
     }
 
   if (be_global->gen_conn_export_hdr_file ()
-      && be_global->conn_export_macro () != 0
-      && be_global->conn_export_include () != 0)
+      && be_global->conn_export_macro () != nullptr
+      && be_global->conn_export_include () != nullptr)
     {
       this->gen_export_file (
         be_global->conn_export_include (),
@@ -2159,7 +2159,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
   // Svnt export macro may correctly default to skel
   // export macro, so we just return silently. The
   // null filename check below will catch a real error.
-  if (macro == 0)
+  if (macro == nullptr)
     {
       return;
     }
@@ -2170,7 +2170,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
   const char *output_path =
     be_util::get_output_path (false, for_skel, false);
 
-  if (output_path != 0)
+  if (output_path != nullptr)
     {
       // Turn '\' and '\\' into '/'.
       char* i = const_cast<char*> (output_path);
@@ -2313,7 +2313,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 
   const char *extension = ACE_OS::strrchr (fname, '.');
 
-  if (extension == 0)
+  if (extension == nullptr)
     {
       // File seems to have no extension, so let us take the name
       // as it is.
@@ -2359,7 +2359,7 @@ TAO_CodeGen::gen_ifndef_string (const char *fname,
 }
 
 void
-TAO_CodeGen::gen_stub_hdr_includes (void)
+TAO_CodeGen::gen_stub_hdr_includes ()
 {
   // Include valuetype and Any/TypeCode headers before ORB core
   // headers to make sure some things are parsed before some templates
@@ -2468,7 +2468,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
         {
           ACE_Unbounded_Queue<char *> &ts_files =
             idl_global->ciao_oci_ts_file_names ();
-          char **tmp = 0;
+          char **tmp = nullptr;
 
           for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
               !i.done ();
@@ -2578,7 +2578,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
               UTL_String idl_name_str = idl_name;
 
               char const * const anyop_hdr =
-                BE_GlobalData::be_get_anyop_header (&idl_name_str, 1);
+                BE_GlobalData::be_get_anyop_header (&idl_name_str, true);
 
               idl_name_str.destroy ();
 
@@ -2640,7 +2640,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
                               "tao/Versioned_Namespace.h",
                               true);
 
-  if ((be_global->versioning_include () != 0) && (ACE_OS::strlen (be_global->versioning_include ()) > 0))
+  if ((be_global->versioning_include () != nullptr) && (ACE_OS::strlen (be_global->versioning_include ()) > 0))
     {
       this->gen_standard_include (this->client_header_,
                                   be_global->versioning_include (),
@@ -2659,7 +2659,7 @@ TAO_CodeGen::gen_stub_hdr_includes (void)
 }
 
 void
-TAO_CodeGen::gen_stub_src_includes (void)
+TAO_CodeGen::gen_stub_src_includes ()
 {
   // Generate the include statement for the precompiled header file.
   if (be_global->pch_include ())
@@ -2793,7 +2793,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
     {
       // Needed for _narrow(), which is now template-based.
       this->gen_standard_include (this->client_stubs_,
-                                  "ace/OS_NS_string.h");
+                                  "cstring");
     }
 
   if (be_global->gen_amh_classes ())
@@ -2805,7 +2805,7 @@ TAO_CodeGen::gen_stub_src_includes (void)
 }
 
 void
-TAO_CodeGen::gen_skel_hdr_includes (void)
+TAO_CodeGen::gen_skel_hdr_includes ()
 {
   // Include the definitions for the PortableServer namespace,
   // this forces the application to link the POA library, a good
@@ -2836,7 +2836,7 @@ TAO_CodeGen::gen_skel_hdr_includes (void)
 }
 
 void
-TAO_CodeGen::gen_skel_src_includes (void)
+TAO_CodeGen::gen_skel_src_includes ()
 {
   // Only non-local interfaces generate anything in the skeleton.
   if (!(idl_global->non_local_iface_seen_
@@ -2940,10 +2940,14 @@ TAO_CodeGen::gen_skel_src_includes (void)
   // For Static_Allocator_Base
   this->gen_standard_include (this->server_skeletons_,
                               "ace/Malloc_Allocator.h");
+
+  // For std::strcmp
+  this->gen_standard_include (this->server_skeletons_,
+                              "cstring");
 }
 
 void
-TAO_CodeGen::gen_seq_file_includes (void)
+TAO_CodeGen::gen_seq_file_includes ()
 {
   // @@@ (JP) These can get more specialized, after the TAO seq template
   // files have been split up.
@@ -3007,7 +3011,7 @@ TAO_CodeGen::gen_any_file_includes (TAO_OutStream * stream)
 }
 
 void
-TAO_CodeGen::gen_var_file_includes (void)
+TAO_CodeGen::gen_var_file_includes ()
 {
   this->gen_cond_file_include (
       idl_global->valuetype_seen_
@@ -3459,13 +3463,13 @@ TAO_CodeGen::gen_svnt_src_includes (TAO_OutStream *stream)
 }
 
 void
-TAO_CodeGen::gen_exec_hdr_includes (void)
+TAO_CodeGen::gen_exec_hdr_includes ()
 {
   // All CIAO examples so far have component skeleton and servant
   // generated code in the same library, using the skel export macro,
   // so the values for the servant export default to the skel values.
   // Eventually, there should be a way to completely decouple them.
-  if (be_global->exec_export_include () != 0)
+  if (be_global->exec_export_include () != nullptr)
     {
       this->gen_standard_include (
         this->ciao_exec_header_,
@@ -3479,7 +3483,7 @@ TAO_CodeGen::gen_exec_hdr_includes (void)
 }
 
 void
-TAO_CodeGen::gen_exec_src_includes (void)
+TAO_CodeGen::gen_exec_src_includes ()
 {
   // Generate the include statement for the exec source.
   this->gen_standard_include (
@@ -3495,7 +3499,7 @@ TAO_CodeGen::gen_exec_src_includes (void)
 }
 
 void
-TAO_CodeGen::gen_exec_idl_includes (void)
+TAO_CodeGen::gen_exec_idl_includes ()
 {
   if (!be_global->gen_noeventccm ())
     {
@@ -3558,7 +3562,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
         idl_global->stripped_filename ()->get_string ());
     }
 
-  char **path_tmp = 0;
+  char **path_tmp = nullptr;
 
   for (ACE_Unbounded_Queue_Iterator<char *>riter (
          idl_global->ciao_lem_file_names ());
@@ -3574,7 +3578,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
       // special case for ami4ccm, if xxxE.idl. don't include xxxAE.idl.
       char *exe_idl_fname = ACE_OS::strdup(exec_idl_fname);
       char * base = ACE_OS::strstr(exe_idl_fname, "E.idl");
-      if (base != 0)
+      if (base != nullptr)
         {
           static char test[MAXPATHLEN];
           ACE_OS::memset (test, 0, MAXPATHLEN);
@@ -3582,7 +3586,7 @@ TAO_CodeGen::gen_exec_idl_includes (void)
           ACE_OS::strncpy(test, exe_idl_fname, base - exe_idl_fname);
           ACE_OS::strcat (test, "AE.idl");
 
-          if (ACE_OS::strstr ( *path_tmp,  test) != 0)
+          if (ACE_OS::strstr ( *path_tmp,  test) != nullptr)
            {
              //skip include
              skip_incl = true;
@@ -3609,12 +3613,12 @@ TAO_CodeGen::is_system_file (const char * idl_name) const
 }
 
 void
-TAO_CodeGen::gen_conn_hdr_includes (void)
+TAO_CodeGen::gen_conn_hdr_includes ()
 {
   ACE_Unbounded_Queue<char *> &lem_file_names =
     idl_global->ciao_lem_file_names ();
 
-  char **path_tmp  = 0;
+  char **path_tmp  = nullptr;
 
   for (ACE_Unbounded_Queue_Iterator<char *> riter (
          lem_file_names);
@@ -3712,7 +3716,7 @@ TAO_CodeGen::gen_conn_hdr_includes (void)
 }
 
 void
-TAO_CodeGen::gen_conn_src_includes (void)
+TAO_CodeGen::gen_conn_src_includes ()
 {
   // Generate the include statement for the connector exec source.
   this->gen_standard_include (
@@ -3729,7 +3733,7 @@ TAO_CodeGen::gen_conn_src_includes (void)
 }
 
 void
-TAO_CodeGen::gen_ami_conn_idl_includes (void)
+TAO_CodeGen::gen_ami_conn_idl_includes ()
 {
   // Include the AMI4CCM library entry point, if AMI4CCM is enabled.
   if (be_global->ami4ccm_call_back ())
@@ -3819,7 +3823,7 @@ TAO_CodeGen::gen_conn_ts_includes (
       *this->ciao_conn_header_ << be_nl;
     }
 
-  char **tmp = 0;
+  char **tmp = nullptr;
 
   for (ACE_Unbounded_Queue_Iterator<char *> i (ts_files);
        !i.done ();
@@ -3832,7 +3836,7 @@ TAO_CodeGen::gen_conn_ts_includes (
 }
 
 void
-TAO_CodeGen::destroy (void)
+TAO_CodeGen::destroy ()
 {
   delete this->client_header_;
   delete this->server_header_;

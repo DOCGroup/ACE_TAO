@@ -16,7 +16,7 @@
 #include "tao/Object.h"
 
 void
-_is_a_thru_poa_Upcall_Command::execute (void)
+_is_a_thru_poa_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
@@ -35,7 +35,7 @@ _is_a_thru_poa_Upcall_Command::execute (void)
 }
 
 void
-_is_a_Upcall_Command::execute (void)
+_is_a_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
@@ -50,7 +50,7 @@ _is_a_Upcall_Command::execute (void)
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 void
-_non_existent_thru_poa_Upcall_Command::execute (void)
+_non_existent_thru_poa_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
@@ -62,7 +62,7 @@ _non_existent_thru_poa_Upcall_Command::execute (void)
 }
 
 void
-_non_existent_Upcall_Command::execute (void)
+_non_existent_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
     static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
@@ -74,7 +74,7 @@ _non_existent_Upcall_Command::execute (void)
 
 # if !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 void
-_get_component_thru_poa_Upcall_Command::execute (void)
+_get_component_thru_poa_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
@@ -86,7 +86,7 @@ _get_component_thru_poa_Upcall_Command::execute (void)
 }
 
 void
-_get_component_Upcall_Command::execute (void)
+_get_component_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
     static_cast<TAO::SArg_Traits< ::CORBA::Object>::ret_val *> (this->args_[0])->arg ();
@@ -99,7 +99,7 @@ _get_component_Upcall_Command::execute (void)
 
 
 void
-_repository_id_thru_poa_Upcall_Command::execute (void)
+_repository_id_thru_poa_Upcall_Command::execute ()
 {
   TAO::SArg_Traits< char *>::ret_arg_type retval =
     TAO::Portable_Server::get_ret_arg< char *> (
@@ -111,7 +111,7 @@ _repository_id_thru_poa_Upcall_Command::execute (void)
 }
 
 void
-_repository_id_Upcall_Command::execute(void )
+_repository_id_Upcall_Command::execute( )
 {
   TAO::SArg_Traits< char *>::ret_arg_type retval =
     static_cast<TAO::SArg_Traits< char *>::ret_val *> (this->args_[0])->arg ();

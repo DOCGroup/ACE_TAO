@@ -18,16 +18,16 @@ public:
                 UTL_NameList *supports,
                 bool truncatable,
                 bool is_eventtype = false);
-  virtual ~FE_OBVHeader (void);
+  virtual ~FE_OBVHeader ();
 
   // Data Accessors.
-  AST_Type **supports (void) const;
-  long n_supports (void) const;
-  AST_Type *inherits_concrete (void) const;
-  AST_Type *supports_concrete (void) const;
-  bool truncatable (void) const;
+  AST_Type **supports () const;
+  long n_supports () const;
+  AST_Type *inherits_concrete () const;
+  AST_Type *supports_concrete () const;
+  bool truncatable () const;
 
-  virtual void destroy (void);
+  virtual void destroy ();
   // Destroy anything allocated for this class.
 
 protected:

@@ -26,7 +26,6 @@
 class test_i : public virtual POA_Test
 {
 public:
-
   /// Constructor.
   test_i (CORBA::ORB_ptr orb);
 
@@ -41,10 +40,8 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

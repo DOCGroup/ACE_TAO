@@ -73,7 +73,7 @@ TAO_Notify_StructuredPushConsumer::init (CosNotifyComm::StructuredPushConsumer_p
 }
 
 void
-TAO_Notify_StructuredPushConsumer::release (void)
+TAO_Notify_StructuredPushConsumer::release ()
 {
   delete this;
   //@@ inform factory
@@ -161,7 +161,7 @@ TAO_Notify_StructuredPushConsumer::reconnect_from_consumer (TAO_Notify_Consumer*
 }
 
 ACE_CString
-TAO_Notify_StructuredPushConsumer::get_ior (void) const
+TAO_Notify_StructuredPushConsumer::get_ior () const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
@@ -178,7 +178,7 @@ TAO_Notify_StructuredPushConsumer::get_ior (void) const
 }
 
 CORBA::Object_ptr
-TAO_Notify_StructuredPushConsumer::get_consumer (void)
+TAO_Notify_StructuredPushConsumer::get_consumer ()
 {
   return CosNotifyComm::StructuredPushConsumer::_duplicate (this->push_consumer_.in ());
 }

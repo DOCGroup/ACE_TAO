@@ -9,7 +9,7 @@ Event_Channel::~Event_Channel (void)
 {
 }
 
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #  endif
@@ -18,7 +18,7 @@ Event_Channel::Event_Channel (void)
     consumer_acceptor_ (*this, 'C')
 {
 }
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif
 

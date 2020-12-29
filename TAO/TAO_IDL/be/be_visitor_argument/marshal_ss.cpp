@@ -24,7 +24,7 @@ be_visitor_args_marshal_ss (be_visitor_context *ctx)
 }
 
 be_visitor_args_marshal_ss::
-~be_visitor_args_marshal_ss (void)
+~be_visitor_args_marshal_ss ()
 {
 }
 
@@ -32,7 +32,7 @@ int be_visitor_args_marshal_ss::visit_argument (
   be_argument *node)
 {
   this->ctx_->node (node);
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {
@@ -130,7 +130,7 @@ int be_visitor_args_marshal_ss::visit_array (be_array *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -173,7 +173,7 @@ int be_visitor_args_marshal_ss::visit_enum (be_enum *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -252,7 +252,7 @@ int be_visitor_args_marshal_ss::visit_sequence (be_sequence *)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -297,7 +297,7 @@ int be_visitor_args_marshal_ss::visit_string (be_string *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
   ACE_CDR::ULong bound = node->max_size ()->ev ()->u.ulval;
   bool wide =
@@ -394,7 +394,7 @@ int be_visitor_args_marshal_ss::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -439,11 +439,11 @@ be_visitor_args_marshal_ss::visit_home (
 }
 
 int
-be_visitor_args_marshal_ss::emit_common (void)
+be_visitor_args_marshal_ss::emit_common ()
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
 
   if (this->ctx_->sub_state () == TAO_CodeGen::TAO_CDR_INPUT)
@@ -488,7 +488,7 @@ be_visitor_args_marshal_ss::emit_common2 (be_type *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
   be_argument *arg =
-    be_argument::narrow_from_decl (this->ctx_->node ());
+    dynamic_cast<be_argument*> (this->ctx_->node ());
   const char *lname = arg->local_name ()->get_string ();
   AST_Type::SIZE_TYPE st = node->size_type ();
 

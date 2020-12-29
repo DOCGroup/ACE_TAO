@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_IO)
 
 void
-ACE_SOCK_IO::dump (void) const
+ACE_SOCK_IO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_IO::dump");

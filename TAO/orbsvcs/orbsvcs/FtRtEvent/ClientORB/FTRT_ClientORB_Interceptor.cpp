@@ -18,18 +18,18 @@ FTRT_ClientORB_Interceptor (CORBA::Long transaction_depth)
 {
 }
 
-FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor (void)
+FTRT_ClientORB_Interceptor::~FTRT_ClientORB_Interceptor ()
 {
 }
 
 char *
-FTRT_ClientORB_Interceptor::name (void)
+FTRT_ClientORB_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-FTRT_ClientORB_Interceptor::destroy (void)
+FTRT_ClientORB_Interceptor::destroy ()
 {
 }
 

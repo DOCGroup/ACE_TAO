@@ -40,10 +40,10 @@ namespace ACE_OS
   //@{ @name A set of wrappers for password routines.
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void endpwent (void);
+  void endpwent ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct passwd *getpwent (void);
+  struct passwd *getpwent ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   struct passwd *getpwnam (const char *user);
@@ -56,7 +56,7 @@ namespace ACE_OS
                   struct passwd **result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void setpwent (void);
+  void setpwent ();
   //@}
 } /* namespace ACE_OS */
 

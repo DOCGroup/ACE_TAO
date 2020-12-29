@@ -18,7 +18,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory (void)
+TAO_EC_Sched_Factory::~TAO_EC_Sched_Factory ()
 {
 }
 
@@ -162,7 +162,7 @@ TAO_EC_Sched_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_EC_Sched_Factory::fini (void)
+TAO_EC_Sched_Factory::fini ()
 {
   return 0;
 }

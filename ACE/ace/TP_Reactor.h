@@ -66,9 +66,10 @@ public:
 private:
   bool dispatch_;
 
-  // Disallow copying and assignment.
-  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &);
-  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &);
+  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info &&) = delete;
+  ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info &&) = delete;
 };
 
 
@@ -114,13 +115,13 @@ public:
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
 
 private:
-
   // Disallow default construction.
   ACE_TP_Token_Guard (void);
 
-  // Disallow copying and assignment.
-  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &);
-  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &);
+  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;
+  ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
 private:
 

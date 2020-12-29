@@ -19,11 +19,11 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
+#include <memory>
 
 namespace Kokyu
 {
@@ -48,7 +48,7 @@ namespace Kokyu
     Dispatcher_Task* find_task_with_preemption_prio (Priority_t);
 
   private:
-    typedef auto_ptr<Dispatcher_Task> Dispatcher_Task_Auto_Ptr;
+    typedef std::unique_ptr<Dispatcher_Task> Dispatcher_Task_Auto_Ptr;
     ACE_Auto_Array_Ptr<Dispatcher_Task_Auto_Ptr> tasks_;
     int ntasks_;
     ConfigInfoSet curr_config_info_;

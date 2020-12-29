@@ -19,7 +19,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Acceptor)
 
 // Do nothing routine for constructor.
 
-ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (void)
+ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor ()
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor");
 }
@@ -150,7 +150,7 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
 }
 
 void
-ACE_SOCK_SEQPACK_Acceptor::dump (void) const
+ACE_SOCK_SEQPACK_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::dump");
@@ -595,7 +595,7 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_
 }
 
 int
-ACE_SOCK_SEQPACK_Acceptor::close (void)
+ACE_SOCK_SEQPACK_Acceptor::close ()
 {
   return ACE_SOCK::close ();
 }

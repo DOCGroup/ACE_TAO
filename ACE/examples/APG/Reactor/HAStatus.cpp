@@ -93,9 +93,9 @@ ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
 int
 ClientAcceptor::handle_input (ACE_HANDLE)
 {
-  ClientService *client;
+  ClientService *client = 0;
   ACE_NEW_RETURN (client, ClientService, -1);
-  auto_ptr<ClientService> p (client);
+  std::unique_ptr<ClientService> p (client);
 
   if (this->acceptor_.accept (client->peer ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

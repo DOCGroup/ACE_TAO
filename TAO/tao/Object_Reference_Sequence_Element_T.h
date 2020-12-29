@@ -89,11 +89,11 @@ public:
     return *this->element_;
   }
 
-  inline object_reference_type *in (void) const {
+  inline object_reference_type *in () const {
     return *this->element_;
   }
 
-  inline object_reference_type *&inout (void) const {
+  inline object_reference_type *&inout () const {
     return *this->element_;
   }
 

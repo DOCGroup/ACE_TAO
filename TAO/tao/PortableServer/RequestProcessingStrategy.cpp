@@ -14,7 +14,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategy::RequestProcessingStrategy (void)
+    RequestProcessingStrategy::RequestProcessingStrategy ()
       : poa_ (0)
     {
     }
@@ -35,7 +35,7 @@ namespace TAO
     }
 
     void
-    RequestProcessingStrategy::strategy_cleanup(void)
+    RequestProcessingStrategy::strategy_cleanup()
     {
       poa_ = 0;
     }

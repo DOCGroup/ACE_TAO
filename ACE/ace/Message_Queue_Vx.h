@@ -128,7 +128,7 @@ public:
   // = Activation control methods.
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -190,10 +190,10 @@ protected:
   MSG_Q_ID msgq (void);
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &);
-  void operator= (const ACE_Message_Queue_Vx &);
+  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &) = delete;
+  void operator= (const ACE_Message_Queue_Vx &) = delete;
+  ACE_Message_Queue_Vx (ACE_Message_Queue_Vx &&) = delete;
+  void operator= (ACE_Message_Queue_Vx &&) = delete;
 
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *tv = 0);

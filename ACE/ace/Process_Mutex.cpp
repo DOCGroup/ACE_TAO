@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Mutex)
 
 void
-ACE_Process_Mutex::dump (void) const
+ACE_Process_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Process_Mutex::dump");
@@ -27,7 +27,7 @@ ACE_Process_Mutex::dump (void) const
 }
 
 const ACE_TCHAR *
-ACE_Process_Mutex::unique_name (void)
+ACE_Process_Mutex::unique_name ()
 {
   // For all platforms other than Win32, we are going to create a
   // machine-wide unique name if one is not provided by the user.  On
@@ -92,7 +92,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
 #endif /* _ACE_USE_SV_SEM */
 }
 #endif /* ACE_HAS_WCHAR */
-ACE_Process_Mutex::~ACE_Process_Mutex (void)
+ACE_Process_Mutex::~ACE_Process_Mutex ()
 {
 }
 

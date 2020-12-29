@@ -94,7 +94,7 @@ be_decl::be_decl (AST_Decl::NodeType type,
 {
 }
 
-be_decl::~be_decl (void)
+be_decl::~be_decl ()
 {
 }
 
@@ -103,7 +103,7 @@ be_decl::compute_full_name  (const char *prefix,
                              const char *suffix,
                              char *&name)
 {
-  if (prefix == 0 || suffix == 0)
+  if (prefix == nullptr || suffix == nullptr)
     {
       return;
     }
@@ -113,7 +113,7 @@ be_decl::compute_full_name  (const char *prefix,
   ACE_CString result_str;
 
   // Get parent.
-  if (this->defined_in () == 0)
+  if (this->defined_in () == nullptr)
     {
       // Global scope.
 
@@ -130,9 +130,9 @@ be_decl::compute_full_name  (const char *prefix,
     {
       // Get scope name.
       be_decl * const parent =
-        be_scope::narrow_from_scope (this->defined_in ())->decl ();
+        dynamic_cast<be_scope*> (this->defined_in ())->decl ();
 
-      if (parent == 0)
+      if (parent == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
@@ -169,7 +169,7 @@ be_decl::compute_flat_name  (const char *prefix,
                              const char *suffix,
                              char *&name)
 {
-  if (prefix == 0 || suffix == 0)
+  if (prefix == nullptr || suffix == nullptr)
     {
       return;
     }
@@ -180,7 +180,7 @@ be_decl::compute_flat_name  (const char *prefix,
   ACE_CString result_str;
 
   // Get parent.
-  if (this->defined_in () == 0)
+  if (this->defined_in () == nullptr)
     {
       // Global scope.
 
@@ -199,8 +199,8 @@ be_decl::compute_flat_name  (const char *prefix,
     {
       // Get scope name.
       be_decl * const parent =
-        be_scope::narrow_from_scope (this->defined_in ())->decl ();
-      if (parent == 0)
+        dynamic_cast<be_scope*> (this->defined_in ())->decl ();
+      if (parent == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
                       "(%N:%l) be_decl::"
@@ -233,7 +233,7 @@ be_decl::compute_flat_name  (const char *prefix,
 }
 
 void
-be_decl::destroy (void)
+be_decl::destroy ()
 {
 }
 
@@ -245,7 +245,7 @@ be_decl::set_local (bool val)
 
 // Return the scope created by this node (if one exists, else NULL).
 be_scope *
-be_decl::scope (void)
+be_decl::scope ()
 {
   be_decl *d = this;
 
@@ -255,312 +255,312 @@ be_decl::scope (void)
       // Resolve forward declared interface by looking at full_definition()
       // field and iterating.
       d =
-        be_interface::narrow_from_decl (
-            (be_interface_fwd::narrow_from_decl (this))->full_definition ()
+        dynamic_cast<be_interface*> (
+            (dynamic_cast<be_interface_fwd*> (this))->full_definition ()
           );
     // Fall through
     case AST_Decl::NT_interface:
-      return be_interface::narrow_from_decl (d);
+      return dynamic_cast<be_interface*> (d);
     case AST_Decl::NT_module:
-      return be_module::narrow_from_decl (d);
+      return dynamic_cast<be_module*> (d);
     case AST_Decl::NT_root:
-      return be_root::narrow_from_decl (d);
+      return dynamic_cast<be_root*> (d);
     case AST_Decl::NT_except:
-      return be_exception::narrow_from_decl (d);
+      return dynamic_cast<be_exception*> (d);
     case AST_Decl::NT_union:
-      return be_union::narrow_from_decl (d);
+      return dynamic_cast<be_union*> (d);
     case AST_Decl::NT_struct:
-      return be_structure::narrow_from_decl (d);
+      return dynamic_cast<be_structure*> (d);
     case AST_Decl::NT_enum:
-      return be_enum::narrow_from_decl (d);
+      return dynamic_cast<be_enum*> (d);
     case AST_Decl::NT_op:
-      return be_operation::narrow_from_decl (d);
+      return dynamic_cast<be_operation*> (d);
     case AST_Decl::NT_factory:
-      return be_factory::narrow_from_decl (d);
+      return dynamic_cast<be_factory*> (d);
     case AST_Decl::NT_finder:
-      return be_finder::narrow_from_decl (d);
+      return dynamic_cast<be_finder*> (d);
     case AST_Decl::NT_sequence:
-      return be_sequence::narrow_from_decl (d);
+      return dynamic_cast<be_sequence*> (d);
     case AST_Decl::NT_valuetype:
-      return be_valuetype::narrow_from_decl (d);
+      return dynamic_cast<be_valuetype*> (d);
     case AST_Decl::NT_component:
-      return be_component::narrow_from_decl (d);
+      return dynamic_cast<be_component*> (d);
     case AST_Decl::NT_eventtype:
-      return be_eventtype::narrow_from_decl (d);
+      return dynamic_cast<be_eventtype*> (d);
     case AST_Decl::NT_home:
-      return be_home::narrow_from_decl (d);
+      return dynamic_cast<be_home*> (d);
     default:
-      return (be_scope *)0;
+      return nullptr;
   }
 }
 
 // Boolean methods to test if code was already generated.
 bool
-be_decl::cli_hdr_gen (void)
+be_decl::cli_hdr_gen ()
 {
   return this->cli_hdr_gen_;
 }
 
 bool
-be_decl::cli_stub_gen (void)
+be_decl::cli_stub_gen ()
 {
   return this->cli_stub_gen_;
 }
 
 bool
-be_decl::cli_hdr_any_op_gen (void)
+be_decl::cli_hdr_any_op_gen ()
 {
   return this->cli_hdr_any_op_gen_;
 }
 
 bool
-be_decl::cli_stub_any_op_gen (void)
+be_decl::cli_stub_any_op_gen ()
 {
   return this->cli_stub_any_op_gen_;
 }
 
 bool
-be_decl::cli_hdr_cdr_op_gen (void)
+be_decl::cli_hdr_cdr_op_gen ()
 {
   return this->cli_hdr_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_stub_cdr_op_gen (void)
+be_decl::cli_stub_cdr_op_gen ()
 {
   return this->cli_stub_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_inline_cdr_op_gen (void)
+be_decl::cli_inline_cdr_op_gen ()
 {
   return this->cli_inline_cdr_op_gen_;
 }
 
 bool
-be_decl::cli_inline_cdr_decl_gen (void)
+be_decl::cli_inline_cdr_decl_gen ()
 {
   return this->cli_inline_cdr_decl_gen_;
 }
 
 bool
-be_decl::cli_traits_gen (void)
+be_decl::cli_traits_gen ()
 {
   return this->cli_traits_gen_;
 }
 
 bool
-be_decl::cli_arg_traits_gen (void)
+be_decl::cli_arg_traits_gen ()
 {
   return this->cli_arg_traits_gen_;
 }
 
 bool
-be_decl::srv_arg_traits_gen (void)
+be_decl::srv_arg_traits_gen ()
 {
   return this->srv_arg_traits_gen_;
 }
 
 bool
-be_decl::srv_sarg_traits_gen (void)
+be_decl::srv_sarg_traits_gen ()
 {
   return this->srv_sarg_traits_gen_;
 }
 
 bool
-be_decl::cli_pragma_inst_gen (void)
+be_decl::cli_pragma_inst_gen ()
 {
   return this->cli_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inarg_tmpl_class_gen (void)
+be_decl::cli_inarg_tmpl_class_gen ()
 {
   return this->cli_inarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_inarg_pragma_inst_gen (void)
+be_decl::cli_inarg_pragma_inst_gen ()
 {
   return this->cli_inarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inoutarg_tmpl_class_gen (void)
+be_decl::cli_inoutarg_tmpl_class_gen ()
 {
   return this->cli_inoutarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_inoutarg_pragma_inst_gen (void)
+be_decl::cli_inoutarg_pragma_inst_gen ()
 {
   return this->cli_inoutarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_outarg_tmpl_class_gen (void)
+be_decl::cli_outarg_tmpl_class_gen ()
 {
   return this->cli_outarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_outarg_pragma_inst_gen (void)
+be_decl::cli_outarg_pragma_inst_gen ()
 {
   return this->cli_outarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_retarg_tmpl_class_gen (void)
+be_decl::cli_retarg_tmpl_class_gen ()
 {
   return this->cli_retarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::cli_retarg_pragma_inst_gen (void)
+be_decl::cli_retarg_pragma_inst_gen ()
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_tmpl_class_gen (void)
+be_decl::srv_tmpl_class_gen ()
 {
   return this->srv_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_pragma_inst_gen (void)
+be_decl::srv_pragma_inst_gen ()
 {
   return this->srv_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_inarg_tmpl_class_gen (void)
+be_decl::srv_inarg_tmpl_class_gen ()
 {
   return this->srv_inarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_inarg_pragma_inst_gen (void)
+be_decl::srv_inarg_pragma_inst_gen ()
 {
   return this->srv_inarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_inoutarg_tmpl_class_gen (void)
+be_decl::srv_inoutarg_tmpl_class_gen ()
 {
   return this->srv_inoutarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_inoutarg_pragma_inst_gen (void)
+be_decl::srv_inoutarg_pragma_inst_gen ()
 {
   return this->srv_inoutarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_outarg_tmpl_class_gen (void)
+be_decl::srv_outarg_tmpl_class_gen ()
 {
   return this->srv_outarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_outarg_pragma_inst_gen (void)
+be_decl::srv_outarg_pragma_inst_gen ()
 {
   return this->srv_outarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::srv_retarg_tmpl_class_gen (void)
+be_decl::srv_retarg_tmpl_class_gen ()
 {
   return this->srv_retarg_tmpl_class_gen_;
 }
 
 bool
-be_decl::srv_retarg_pragma_inst_gen (void)
+be_decl::srv_retarg_pragma_inst_gen ()
 {
   return this->cli_retarg_pragma_inst_gen_;
 }
 
 bool
-be_decl::cli_inline_gen (void)
+be_decl::cli_inline_gen ()
 {
   return this->cli_inline_gen_;
 }
 
 bool
-be_decl::srv_hdr_gen (void)
+be_decl::srv_hdr_gen ()
 {
   return this->srv_hdr_gen_;
 }
 
 bool
-be_decl::impl_hdr_gen (void)
+be_decl::impl_hdr_gen ()
 {
   return this->impl_hdr_gen_;
 }
 
 bool
-be_decl::srv_skel_gen (void)
+be_decl::srv_skel_gen ()
 {
   return this->srv_skel_gen_;
 }
 
 bool
-be_decl::impl_skel_gen (void)
+be_decl::impl_skel_gen ()
 {
   return this->impl_skel_gen_;
 }
 
 bool
-be_decl::srv_inline_gen (void)
+be_decl::srv_inline_gen ()
 {
   return this->srv_inline_gen_;
 }
 
 bool
-be_decl::tie_skel_gen (void)
+be_decl::tie_skel_gen ()
 {
   return this->tie_skel_gen_;
 }
 
 bool
-be_decl::ccm_pre_proc_gen (void)
+be_decl::ccm_pre_proc_gen ()
 {
   return this->ccm_pre_proc_gen_;
 }
 
 bool
-be_decl::ex_idl_facet_gen (void)
+be_decl::ex_idl_facet_gen ()
 {
   return this->ex_idl_facet_gen_;
 }
 
 bool
-be_decl::svnt_hdr_facet_gen (void)
+be_decl::svnt_hdr_facet_gen ()
 {
   return this->svnt_hdr_facet_gen_;
 }
 
 bool
-be_decl::svnt_src_facet_gen (void)
+be_decl::svnt_src_facet_gen ()
 {
   return this->svnt_src_facet_gen_;
 }
 
 bool
-be_decl::exec_hdr_facet_gen (void)
+be_decl::exec_hdr_facet_gen ()
 {
   return this->exec_hdr_facet_gen_;
 }
 
 bool
-be_decl::exec_src_facet_gen (void)
+be_decl::exec_src_facet_gen ()
 {
   return this->exec_src_facet_gen_;
 }
 
 bool
-be_decl::ami4ccm_ex_idl_gen (void)
+be_decl::ami4ccm_ex_idl_gen ()
 {
   return this->ami4ccm_ex_idl_gen_;
 }
@@ -838,7 +838,3 @@ be_decl::accept (be_visitor *visitor)
 {
   return visitor->visit_decl (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_decl)

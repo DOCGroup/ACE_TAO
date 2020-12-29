@@ -16,7 +16,7 @@ TAO::TypeCode::Empty_Param::tao_marshal (TAO_OutputCDR &, CORBA::ULong) const
 }
 
 void
-TAO::TypeCode::Empty_Param::tao_duplicate (void)
+TAO::TypeCode::Empty_Param::tao_duplicate ()
 {
   // No-op since empty parameter TypeCodes are never created
   // dynamically, meaning there is no need to implement reference
@@ -24,7 +24,7 @@ TAO::TypeCode::Empty_Param::tao_duplicate (void)
 }
 
 void
-TAO::TypeCode::Empty_Param::tao_release (void)
+TAO::TypeCode::Empty_Param::tao_release ()
 {
   // No-op since empty parameter TypeCodes are never created
   // dynamically, meaning there is no need to implement reference
@@ -58,7 +58,7 @@ TAO::TypeCode::Empty_Param::equivalent_i (CORBA::TypeCode_ptr tc) const
 }
 
 CORBA::TypeCode_ptr
-TAO::TypeCode::Empty_Param::get_compact_typecode_i (void) const
+TAO::TypeCode::Empty_Param::get_compact_typecode_i () const
 {
   // Already compact since parameter list is empty.
 

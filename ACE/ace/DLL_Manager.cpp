@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 sig_atomic_t ACE_DLL_Handle::open_called_ = 0;
 
-ACE_DLL_Handle::ACE_DLL_Handle (void)
+ACE_DLL_Handle::ACE_DLL_Handle ()
   : refcount_ (0),
     dll_name_ (0),
     handle_ (ACE_SHLIB_INVALID_HANDLE)
@@ -25,7 +25,7 @@ ACE_DLL_Handle::ACE_DLL_Handle (void)
   ACE_TRACE ("ACE_DLL_Handle::ACE_DLL_Handle");
 }
 
-ACE_DLL_Handle::~ACE_DLL_Handle (void)
+ACE_DLL_Handle::~ACE_DLL_Handle ()
 {
   ACE_TRACE ("ACE_DLL_Handle::~ACE_DLL_Handle");
   this->close (1);
@@ -39,7 +39,7 @@ ACE_DLL_Handle::~ACE_DLL_Handle (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_DLL_Handle)
 
 const ACE_TCHAR  *
-ACE_DLL_Handle::dll_name (void) const
+ACE_DLL_Handle::dll_name () const
 {
   ACE_TRACE ("ACE_DLL_Handle::dll_name");
   return this->dll_name_;
@@ -157,7 +157,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
                     }
                   open_mode |= RTLD_MEMBER;
 
-                  if (this->open_i (aix_pathname, open_mode))
+                  if (this->open_i (aix_pathname, open_mode, errors))
                     break;
                 }
 #endif /* AIX */
@@ -263,7 +263,7 @@ ACE_DLL_Handle::close (int unload)
 }
 
 sig_atomic_t
-ACE_DLL_Handle::refcount (void) const
+ACE_DLL_Handle::refcount () const
 {
   return this->refcount_;
 }
@@ -518,7 +518,7 @@ ACE_DLL_Manager::instance (int size)
 }
 
 void
-ACE_DLL_Manager::close_singleton (void)
+ACE_DLL_Manager::close_singleton ()
 {
   ACE_TRACE ("ACE_DLL_Manager::close_singleton");
 
@@ -543,7 +543,7 @@ ACE_DLL_Manager::ACE_DLL_Manager (int size)
                 ACE_TEXT ("handle_vector_.\n")));
 }
 
-ACE_DLL_Manager::~ACE_DLL_Manager (void)
+ACE_DLL_Manager::~ACE_DLL_Manager ()
 {
   ACE_TRACE ("ACE_DLL_Manager::~ACE_DLL_Manager");
 
@@ -629,7 +629,7 @@ ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
 }
 
 u_long
-ACE_DLL_Manager::unload_policy (void) const
+ACE_DLL_Manager::unload_policy () const
 {
   ACE_TRACE ("ACE_DLL_Manager::unload_policy");
   return this->unload_policy_;
@@ -686,7 +686,7 @@ ACE_DLL_Manager::open (int size)
 }
 
 int
-ACE_DLL_Manager::close (void)
+ACE_DLL_Manager::close ()
 {
   ACE_TRACE ("ACE_DLL_Manager::close");
 
@@ -754,7 +754,7 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
           else
             {
               // Declare the type of the symbol:
-              typedef int (*dll_unload_policy)(void);
+              using dll_unload_policy = int (*)();
 
               void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), 1);

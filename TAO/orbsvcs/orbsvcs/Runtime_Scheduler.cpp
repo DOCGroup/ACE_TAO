@@ -422,7 +422,7 @@ ACE_Runtime_Scheduler::dispatch_configuration (RtecScheduler::Preemption_Priorit
 // to the number returned, inclusive.
 
 RtecScheduler::Preemption_Priority_t
-ACE_Runtime_Scheduler::last_scheduled_priority (void)
+ACE_Runtime_Scheduler::last_scheduled_priority ()
 {
   // throw an exception if a valid schedule has not been loaded
   if (config_count_ <= 0)

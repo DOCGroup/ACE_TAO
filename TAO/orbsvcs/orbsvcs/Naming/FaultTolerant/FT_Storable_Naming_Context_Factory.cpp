@@ -24,7 +24,7 @@ TAO_FT_Storable_Naming_Context_Factory (size_t hash_table_size,
 
   /// Destructor.  Does not deallocate the hash map: if an instance of
   /// this class goes out of scope, its hash_map remains in persistent storage.
-TAO_FT_Storable_Naming_Context_Factory::~TAO_FT_Storable_Naming_Context_Factory (void)
+TAO_FT_Storable_Naming_Context_Factory::~TAO_FT_Storable_Naming_Context_Factory ()
 {
 }
 

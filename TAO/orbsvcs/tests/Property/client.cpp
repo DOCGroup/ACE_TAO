@@ -170,7 +170,7 @@ Client::test_get_all_property_names (void)
   CORBA::ULong how_many = num_of_properties / 2;
 
   // The extra ptr's and out's required to avoind SunnCC's warning
-  // when foo.out () is passed to a funtion.
+  // when foo.out () is passed to a function.
   CosPropertyService::PropertyNames_var names_var;
   CosPropertyService::PropertyNames     *names_ptr = 0;
   CosPropertyService::PropertyNames_out names_out (names_ptr);
@@ -502,7 +502,7 @@ Client::test_get_all_properties (void)
           CosPropertyService::Property* property_ptr = 0;
           CosPropertyService::Property_out property_out (property_ptr);
 
-          // Call the funtion.
+          // Call the function.
           CORBA::Boolean next_one_result = iterator->next_one (property_out);
 
           // Get the value to the _var variable.

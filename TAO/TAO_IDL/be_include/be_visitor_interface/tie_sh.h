@@ -28,7 +28,7 @@ public:
   be_visitor_interface_tie_sh (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_interface_tie_sh (void);
+  ~be_visitor_interface_tie_sh ();
 
   /// set the right context and make a visitor
   virtual int visit_interface (be_interface *node);

@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T> ACE_INLINE T *
-ACE_Cached_Mem_Pool_Node<T>::addr (void)
+ACE_Cached_Mem_Pool_Node<T>::addr ()
 {
   // This should be done using a single reinterpret_cast, but Sun/CC
   // (4.2) gets awfully confused when T is a char[20] (and maybe other
@@ -13,7 +13,7 @@ ACE_Cached_Mem_Pool_Node<T>::addr (void)
 }
 
 template <class T> ACE_INLINE ACE_Cached_Mem_Pool_Node<T> *
-ACE_Cached_Mem_Pool_Node<T>::get_next (void)
+ACE_Cached_Mem_Pool_Node<T>::get_next ()
 {
   return this->next_;
 }
@@ -27,19 +27,19 @@ ACE_Cached_Mem_Pool_Node<T>::set_next (ACE_Cached_Mem_Pool_Node<T> *ptr)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Cached_Mem_Pool_Node)
 
 template <class T, class ACE_LOCK> ACE_INLINE size_t
-ACE_Cached_Allocator<T, ACE_LOCK>::pool_depth (void)
+ACE_Cached_Allocator<T, ACE_LOCK>::pool_depth ()
 {
   return this->free_list_.size ();
 }
 
 template <class ACE_LOCK> ACE_INLINE size_t
-ACE_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth (void)
+ACE_Dynamic_Cached_Allocator<ACE_LOCK>::pool_depth ()
 {
   return this->free_list_.size ();
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter ()
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
   if (this->cb_ptr_ != 0)
@@ -49,7 +49,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ref_counter (void)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bad (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bad ()
 {
   return this->bad_flag_;
 }
@@ -77,7 +77,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::release (int close)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_MEM_POOL &
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::memory_pool (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::memory_pool ()
 {
   ACE_TRACE ("ACE_Malloc_T<MEMORY_POOL, ACE_LOCK, ACE_CB>::memory_pool");
   return this->memory_pool_;
@@ -118,13 +118,13 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::protect (void *addr,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE ACE_LOCK &
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::mutex (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::mutex ()
 {
   return *this->lock_;
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> ACE_INLINE void *
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::base_addr (void)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::base_addr ()
 {
   return this->cb_ptr_;
 }

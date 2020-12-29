@@ -20,7 +20,7 @@ be_visitor_sequence_cs::be_visitor_sequence_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_sequence_cs::~be_visitor_sequence_cs (void)
+be_visitor_sequence_cs::~be_visitor_sequence_cs ()
 {
 }
 
@@ -53,9 +53,9 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_sequence_cs::")
@@ -74,7 +74,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       // to create_name will not get confused and give our anonymous
       // sequence element type the same name as we have.
       be_typedef *tmp = this->ctx_->tdef ();
-      this->ctx_->tdef (0);
+      this->ctx_->tdef (nullptr);
 
       if (bt->accept (this) != 0)
         {
@@ -109,7 +109,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // default constructor
   *os << be_nl_2
       << node->name () << "::" << node->local_name ()
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   // for unbounded sequences, we have a different set of constructors
@@ -204,14 +204,14 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
   // Destructor.
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{}";
 
   if (be_global->alt_mapping () && node->unbounded ())
     {
       *os << be_nl_2
           << "::CORBA::ULong" << be_nl
-          << node->name () << "::length (void) const" << be_nl
+          << node->name () << "::length () const" << be_nl
           << "{" << be_idt_nl
           << "return this->size ();" << be_uidt_nl
           << "}";
@@ -226,7 +226,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
       *os << be_nl_2
           << "::CORBA::ULong" << be_nl
-          << node->name () << "::maximum (void) const" << be_nl
+          << node->name () << "::maximum () const" << be_nl
           << "{" << be_idt_nl
           << "return this->capacity ();" << be_uidt_nl
           << "}";

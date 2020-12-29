@@ -94,9 +94,10 @@ protected:
   CosNaming::Name channel_name_;
 
 private:
-  // Disallow copying and assignment.
-  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &);
-  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &);
+  TAO_CEC_Event_Loader (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader &operator= (const TAO_CEC_Event_Loader &) = delete;
+  TAO_CEC_Event_Loader (TAO_CEC_Event_Loader &&) = delete;
+  TAO_CEC_Event_Loader &operator= (TAO_CEC_Event_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

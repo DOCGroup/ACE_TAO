@@ -226,7 +226,7 @@ TAO_FTEC_Event_Channel_Impl::activate_object (
 /// The default implementation is:
 ///    this->consumer_admin ()->_this ();
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_FTEC_Event_Channel_Impl::for_consumers (void)
+TAO_FTEC_Event_Channel_Impl::for_consumers ()
 {
   CORBA::Object_var obj = consumer_admin()->reference();
   obj = IOGR_Maker::instance()->forge_iogr(obj.in());
@@ -237,7 +237,7 @@ TAO_FTEC_Event_Channel_Impl::for_consumers (void)
 /// The default implementation is:
 ///    this->supplier_admin ()->_this ();
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_FTEC_Event_Channel_Impl::for_suppliers (void)
+TAO_FTEC_Event_Channel_Impl::for_suppliers ()
 {
   CORBA::Object_var obj = supplier_admin()->reference();
   obj = IOGR_Maker::instance()->forge_iogr(obj.in());
@@ -419,14 +419,14 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
 }
 
 
-TAO_FTEC_ConsumerAdmin* TAO_FTEC_Event_Channel_Impl::consumer_admin (void) const
+TAO_FTEC_ConsumerAdmin* TAO_FTEC_Event_Channel_Impl::consumer_admin () const
 {
   return static_cast<TAO_FTEC_ConsumerAdmin*> (TAO_EC_Event_Channel_Base::consumer_admin());
 }
 
 /// Access the supplier admin implementation, useful for controlling
 /// the activation...
-TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin (void) const
+TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin () const
 {
   return static_cast<TAO_FTEC_SupplierAdmin*> (TAO_EC_Event_Channel_Base::supplier_admin());
 }

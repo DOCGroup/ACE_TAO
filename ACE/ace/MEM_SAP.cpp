@@ -13,7 +13,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_SAP)
 
 void
-ACE_MEM_SAP::dump (void) const
+ACE_MEM_SAP::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_SAP::dump");
@@ -27,14 +27,14 @@ ACE_MEM_SAP::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_MEM_SAP::ACE_MEM_SAP (void)
+ACE_MEM_SAP::ACE_MEM_SAP ()
   : handle_ (ACE_INVALID_HANDLE),
     shm_malloc_ (0)
 {
   // ACE_TRACE ("ACE_MEM_SAP::ACE_MEM_SAP");
 }
 
-ACE_MEM_SAP::~ACE_MEM_SAP (void)
+ACE_MEM_SAP::~ACE_MEM_SAP ()
 {
   // ACE_TRACE ("ACE_MEM_SAP::~ACE_MEM_SAP");
   delete this->shm_malloc_;
@@ -75,7 +75,7 @@ ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_SAP::close_shm_malloc (void)
+ACE_MEM_SAP::close_shm_malloc ()
 {
   ACE_TRACE ("ACE_MEM_SAP::close_shm_malloc");
 

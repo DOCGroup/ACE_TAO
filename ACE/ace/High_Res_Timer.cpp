@@ -73,7 +73,7 @@ int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
 #if defined (ACE_LINUX) && !defined (ACE_LACKS_SSCANF)
 // Determine the apparent CPU clock speed from /proc/cpuinfo
 ACE_UINT32
-ACE_High_Res_Timer::get_cpuinfo (void)
+ACE_High_Res_Timer::get_cpuinfo ()
 {
   ACE_UINT32 scale_factor = 1u;
 
@@ -186,7 +186,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 #endif /* ACE_LINUX && !ACE_LACKS_SSCANF*/
 
 ACE_High_Res_Timer::global_scale_factor_type
-ACE_High_Res_Timer::global_scale_factor (void)
+ACE_High_Res_Timer::global_scale_factor ()
 {
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
      defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
@@ -251,7 +251,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
   return ACE_High_Res_Timer::global_scale_factor_;
 }
 
-ACE_High_Res_Timer::ACE_High_Res_Timer (void)
+ACE_High_Res_Timer::ACE_High_Res_Timer ()
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
 
@@ -304,7 +304,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 }
 
 void
-ACE_High_Res_Timer::dump (void) const
+ACE_High_Res_Timer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_High_Res_Timer::dump");
@@ -330,7 +330,7 @@ ACE_High_Res_Timer::dump (void) const
 }
 
 void
-ACE_High_Res_Timer::reset (void)
+ACE_High_Res_Timer::reset ()
 {
   ACE_TRACE ("ACE_High_Res_Timer::reset");
 

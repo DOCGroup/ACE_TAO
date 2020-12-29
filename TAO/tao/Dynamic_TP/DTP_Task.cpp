@@ -153,8 +153,7 @@ TAO_DTP_Task::open (void* /* args */)
                     this->max_pool_threads_,
                     this->max_request_queue_depth_,
                     this->thread_stack_size_,
-                    this->thread_idle_time_.sec ())
-                   );
+                    this->thread_idle_time_.sec ()));
     }
 
   // We can't activate 0 threads.  Make sure this isn't the case.
@@ -346,7 +345,7 @@ TAO_DTP_Task::svc (void)
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Decrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
-                              this->busy_threads_.value()));
+                              this->busy_threads_.load()));
                 }
 
               ACE_Time_Value tmp_sec = this->thread_idle_time_.to_absolute_time();
@@ -386,7 +385,7 @@ TAO_DTP_Task::svc (void)
                               ACE_TEXT ("TAO (%P|%t) - DTP_Task::svc() ")
                               ACE_TEXT ("Incrementing busy_threads_. ")
                               ACE_TEXT ("Busy thread count:%d\n"),
-                              this->busy_threads_.value ()));
+                              this->busy_threads_.load ()));
                 }
             }
         }

@@ -101,7 +101,7 @@ namespace TAO
       const char *orbid);
 
     /// Destructor
-    ~Transport_Cache_Manager_T (void);
+    ~Transport_Cache_Manager_T ();
 
     /// Add the transport to the cache.
     /**
@@ -122,7 +122,7 @@ namespace TAO
       size_t & busy_count);
 
     /// Remove entries from the cache depending upon the strategy.
-    int purge (void);
+    int purge ();
 
     /// Purge the entry from the Cache Map
     int purge_entry (HASH_MAP_ENTRY *& entry);
@@ -158,13 +158,13 @@ namespace TAO
     bool blockable_client_transports (Connection_Handler_Set &handlers);
 
     /// Return the current size of the cache.
-    size_t current_size (void) const;
+    size_t current_size () const;
 
     /// Return the total size of the cache.
-    size_t total_size (void) const;
+    size_t total_size () const;
 
     /// Return the underlying cache map
-    HASH_MAP &map (void);
+    HASH_MAP &map ();
 
   private:
     /// Lookup entry<key,value> in the cache. Grabs the lock and calls the

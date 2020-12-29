@@ -31,7 +31,7 @@ ACE_Bcast_Node::ACE_Bcast_Node (ACE_INET_Addr &addr,
 ACE_ALLOC_HOOK_DEFINE(ACE_Bcast_Node)
 
 void
-ACE_SOCK_Dgram_Bcast::dump (void) const
+ACE_SOCK_Dgram_Bcast::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::dump");
@@ -41,7 +41,7 @@ ACE_SOCK_Dgram_Bcast::dump (void) const
 // Close up and release resources.
 
 int
-ACE_SOCK_Dgram_Bcast::close (void)
+ACE_SOCK_Dgram_Bcast::close ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::close");
 
@@ -63,7 +63,7 @@ ACE_SOCK_Dgram_Bcast::close (void)
 
 // Here's the simple-minded constructor.
 
-ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (void)
+ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
   : if_list_ (0)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");

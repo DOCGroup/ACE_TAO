@@ -41,7 +41,7 @@ public:
   ACE_TSS_Adapter (void *object, ACE_THR_DEST f);
 
   /// Perform the cleanup operation.
-  void cleanup (void);
+  void cleanup ();
 
   ACE_ALLOC_HOOK_DECLARE;
 

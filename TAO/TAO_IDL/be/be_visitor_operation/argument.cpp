@@ -23,7 +23,7 @@ be_visitor_operation_argument::be_visitor_operation_argument (
 {
 }
 
-be_visitor_operation_argument::~be_visitor_operation_argument (void)
+be_visitor_operation_argument::~be_visitor_operation_argument ()
 {
 }
 
@@ -87,9 +87,9 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   // inside the scope of the interface node. In such cases, we would like to
   // generate the appropriate relative scoped names.
   be_operation *op =
-    be_operation::narrow_from_scope (this->ctx_->scope ());
+    dynamic_cast<be_operation*> (this->ctx_->scope ());
 
-  if (op == 0)
+  if (op == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"
@@ -103,8 +103,8 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   // information from the context.
   be_interface *intf;
   intf = this->ctx_->attribute ()
-    ? be_interface::narrow_from_scope (this->ctx_->attribute ()->defined_in ())
-    : be_interface::narrow_from_scope (op->defined_in ());
+    ? dynamic_cast<be_interface*> (this->ctx_->attribute ()->defined_in ())
+    : dynamic_cast<be_interface*> (op->defined_in ());
 
   if (!intf)
     {

@@ -44,9 +44,9 @@ public:
    *
    */
   //@{
-  T *prev (void) const;
+  T *prev () const;
   void prev (T *);
-  T *next (void) const;
+  T *next () const;
   void next (T *);
   //@}
 
@@ -56,7 +56,7 @@ protected:
    * The constructor is protected, because only derived classes should
    * be instantiated.
    */
-  ACE_Intrusive_List_Node (void);
+  ACE_Intrusive_List_Node ();
 
 private:
   /// Head and tail of the list

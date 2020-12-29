@@ -21,7 +21,7 @@ static const char mcast_prefix[] = "mcast:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_MCAST_Parser::~TAO_MCAST_Parser (void)
+TAO_MCAST_Parser::~TAO_MCAST_Parser ()
 {
 }
 
@@ -247,13 +247,13 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                             result));
               // Wait for response until timeout.
               ACE_Time_Value tv (
-                timeout == 0
+                timeout == nullptr
                 ? ACE_Time_Value (TAO_DEFAULT_SERVICE_RESOLUTION_TIMEOUT)
                 : *timeout);
 
               // Accept reply connection from server.
               if (acceptor.accept (stream,
-                                   0,
+                                   nullptr,
                                    &tv) == -1)
                 {
                   if (TAO_debug_level > 0)
@@ -293,7 +293,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
                       if (ior_len >= TAO_DEFAULT_IOR_SIZE)
                         {
                           buf = CORBA::string_alloc (ior_len);
-                          if (buf == 0)
+                          if (buf == nullptr)
                             {
                               if (TAO_debug_level > 0)
                                 {

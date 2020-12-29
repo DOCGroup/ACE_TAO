@@ -87,11 +87,6 @@ namespace ACE_OS {
   struct ACE_DIRENT *readdir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int readdir_r (ACE_DIR *dirp,
-                 struct ACE_DIRENT *entry,
-                 struct ACE_DIRENT **result);
-
-  ACE_NAMESPACE_INLINE_FUNCTION
   void rewinddir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION

@@ -57,7 +57,7 @@ static long                                    n_awoken2;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-w n_workers] [-s]\n")));

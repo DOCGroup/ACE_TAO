@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Virtual.  Do not inline.
-CORBA::UserException::~UserException (void)
+CORBA::UserException::~UserException ()
 {
 }
 
@@ -23,13 +23,13 @@ CORBA::UserException::operator= (CORBA::UserException const & rhs)
 
 // Virtual.  Do not inline.
 CORBA::TypeCode_ptr
-CORBA::UserException::_tao_type (void) const
+CORBA::UserException::_tao_type () const
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_CString
-CORBA::UserException::_info (void) const
+CORBA::UserException::_info () const
 {
   // @@ we can use the exception's typecode to dump all the data held
   // within it ...

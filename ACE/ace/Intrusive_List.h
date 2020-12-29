@@ -57,15 +57,15 @@ class ACE_Intrusive_List
 public:
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  ACE_Intrusive_List (void);
+  ACE_Intrusive_List ();
 
   /// Destructor.
-  ~ACE_Intrusive_List (void);
+  ~ACE_Intrusive_List ();
 
   // = Check boundary conditions.
 
   /// Returns true if the container is empty, otherwise returns false.
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /// Insert an element at the beginning of the list
   void push_front (T *node);
@@ -74,16 +74,16 @@ public:
   void push_back (T *node);
 
   /// Remove the element at the beginning of the list
-  T *pop_front (void);
+  T *pop_front ();
 
   /// Remove the element at the end of the list
-  T *pop_back (void);
+  T *pop_back ();
 
   /// Get the element at the head of the queue
-  T *head (void) const;
+  T *head () const;
 
   /// Get the element at the tail of the queue
-  T *tail (void) const;
+  T *tail () const;
 
   /// Remove a element from the list
   /**

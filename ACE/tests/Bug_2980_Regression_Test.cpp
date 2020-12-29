@@ -50,7 +50,7 @@ namespace {
 #endif
 
 
-typedef int (* voidfunction)(void);
+using voidfunction = int (*)();
 
 
 #if defined (CAN_RUN_TEST)

@@ -62,28 +62,27 @@ public:
   TAO_EC_ProxyPushConsumer (TAO_EC_Event_Channel_Base* event_channel);
 
   /// destructor...
-  virtual ~TAO_EC_ProxyPushConsumer (void);
+  virtual ~TAO_EC_ProxyPushConsumer ();
 
   /// Activate in the POA
   virtual void activate (
-          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy)
-    = 0;
+          RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy) = 0;
 
   /// Deactivate from the POA
-  virtual void deactivate (void);
+  virtual void deactivate ();
 
   /// Disconnect this from
   virtual void disconnect_push_consumer () = 0;
 
   /// Return false if no supplier is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /// Return the consumer object reference. It returns nil() if it has
   /// not connected yet.
-  RtecEventComm::PushSupplier_ptr supplier (void) const;
+  RtecEventComm::PushSupplier_ptr supplier () const;
 
   /// The QoS (subscription) used to connect to the EC.
-  const RtecEventChannelAdmin::SupplierQOS& publications (void) const;
+  const RtecEventChannelAdmin::SupplierQOS& publications () const;
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -105,15 +104,15 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushConsumer* consumer);
 
   /// The event channel is shutting down
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /// The QoS (subscription) used to connect to the EC, assumes the
   /// locks are held, use with care!
-  const RtecEventChannelAdmin::SupplierQOS& publications_i (void) const;
+  const RtecEventChannelAdmin::SupplierQOS& publications_i () const;
 
   /// Increment and decrement the reference count.
-  CORBA::ULong _incr_refcnt (void);
-  CORBA::ULong _decr_refcnt (void);
+  CORBA::ULong _incr_refcnt ();
+  CORBA::ULong _decr_refcnt ();
 
 
 protected:
@@ -126,13 +125,13 @@ protected:
   // The guard needs access to the following protected methods.
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Return the current filter, assumes the locks are held.
-  TAO_EC_Supplier_Filter *filter_i (void) const;
+  TAO_EC_Supplier_Filter *filter_i () const;
 
   /// Release the filter and the supplier
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// The supplier admin, used for activation and memory management.
   TAO_EC_Event_Channel_Base* event_channel_;
@@ -161,10 +160,10 @@ protected:
 
 private:
   /// Template method hooks.
-  virtual void shutdown_hook (void);
-  virtual void refcount_zero_hook (void);
+  virtual void shutdown_hook ();
+  virtual void refcount_zero_hook ();
 
-  virtual PortableServer::ObjectId object_id (void) = 0;
+  virtual PortableServer::ObjectId object_id () = 0;
 };
 
 // ****************************************************************
@@ -189,10 +188,10 @@ public:
                                   TAO_EC_ProxyPushConsumer *proxy);
 
   /// Destructor
-  ~TAO_EC_ProxyPushConsumer_Guard (void);
+  ~TAO_EC_ProxyPushConsumer_Guard ();
 
   /// Returns true if the reference count successfully acquired
-  bool locked (void) const;
+  bool locked () const;
 
   TAO_EC_Supplier_Filter *filter;
 

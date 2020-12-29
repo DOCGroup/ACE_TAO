@@ -18,15 +18,10 @@ class TAO_IDL_FE_Export AST_PortType
 public:
   AST_PortType (UTL_ScopedName *n);
 
-  virtual ~AST_PortType (void);
+  virtual ~AST_PortType ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL (AST_PortType);
-  DEF_NARROW_FROM_SCOPE (AST_PortType);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

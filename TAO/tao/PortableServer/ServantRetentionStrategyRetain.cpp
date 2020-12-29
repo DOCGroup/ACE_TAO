@@ -26,7 +26,7 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    ServantRetentionStrategyRetain::ServantRetentionStrategyRetain (void) :
+    ServantRetentionStrategyRetain::ServantRetentionStrategyRetain () :
       ServantRetentionStrategyNonRetain (),
       active_object_map_ (),
       waiting_servant_deactivation_ (0)
@@ -61,7 +61,7 @@ namespace TAO
     }
 
     void
-    ServantRetentionStrategyRetain::strategy_cleanup (void)
+    ServantRetentionStrategyRetain::strategy_cleanup ()
     {
     }
 
@@ -433,13 +433,13 @@ namespace TAO
     }
 
     CORBA::ULong
-    ServantRetentionStrategyRetain::waiting_servant_deactivation (void) const
+    ServantRetentionStrategyRetain::waiting_servant_deactivation () const
     {
       return waiting_servant_deactivation_;
     }
 
     void
-    ServantRetentionStrategyRetain::deactivate_all_objects (void)
+    ServantRetentionStrategyRetain::deactivate_all_objects ()
     {
       // If the etherealize_objects parameter is TRUE, the POA has the
       // RETAIN policy, and a servant manager is registered with the POA,
@@ -963,7 +963,7 @@ namespace TAO
 
 
     ::PortableServer::ServantRetentionPolicyValue
-    ServantRetentionStrategyRetain::type(void) const
+    ServantRetentionStrategyRetain::type() const
     {
       return ::PortableServer::RETAIN;
     }

@@ -23,7 +23,7 @@ public:
   be_visitor_operation_upcall_command_ss (be_visitor_context * ctx);
 
   /// destructor
-  ~be_visitor_operation_upcall_command_ss (void);
+  ~be_visitor_operation_upcall_command_ss ();
 
   /// Same as visit_operation() but override full_skel_name and
   /// upcall_command_name.

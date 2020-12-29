@@ -3,7 +3,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::SL3::SecurityCurrent_Impl::~SecurityCurrent_Impl (void)
+TAO::SL3::SecurityCurrent_Impl::~SecurityCurrent_Impl ()
 {
 }
 

@@ -32,14 +32,14 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
 {
 }
 
-ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter (void)
+ACE_OS_Thread_Adapter::~ACE_OS_Thread_Adapter ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_OS_Thread_Adapter)
 
 ACE_THR_FUNC_RETURN
-ACE_OS_Thread_Adapter::invoke (void)
+ACE_OS_Thread_Adapter::invoke ()
 {
   // Inherit the logging features if the parent thread has an
   // ACE_Log_Msg instance in thread-specific storage.

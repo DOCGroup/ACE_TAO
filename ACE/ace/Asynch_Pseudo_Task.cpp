@@ -17,7 +17,7 @@ ACE_Asynch_Pseudo_Task::~ACE_Asynch_Pseudo_Task ()
 }
 
 int
-ACE_Asynch_Pseudo_Task::start (void)
+ACE_Asynch_Pseudo_Task::start ()
 {
   if (this->reactor_.initialized () == 0)
     ACELIB_ERROR_RETURN ((LM_ERROR,
@@ -29,7 +29,7 @@ ACE_Asynch_Pseudo_Task::start (void)
 }
 
 int
-ACE_Asynch_Pseudo_Task::stop (void)
+ACE_Asynch_Pseudo_Task::stop ()
 {
   if (this->thr_count () == 0)  // already stopped
     return 0;
@@ -43,7 +43,7 @@ ACE_Asynch_Pseudo_Task::stop (void)
 }
 
 int
-ACE_Asynch_Pseudo_Task::svc (void)
+ACE_Asynch_Pseudo_Task::svc ()
 {
 #if !defined (ACE_WIN32)
 

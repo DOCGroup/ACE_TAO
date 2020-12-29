@@ -109,10 +109,6 @@
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
 
-# if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ <= 3))
-#   define ACE_LACKS_STD_WSTRING  1
-# endif
-
 #else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
 #    error unsupported compiler in ace/config-sunos5.5.h
@@ -347,10 +343,6 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
-
-#if defined (_POSIX_PTHREAD_SEMANTICS) || (_FILE_OFFSET_BITS == 64) || (_POSIX_C_SOURCE - 0 >= 199506L)
-#  define ACE_HAS_3_PARAM_READDIR_R
-#endif
 
 // Sum of the iov_len values can't be larger then SSIZE_MAX
 #define ACE_HAS_SOCK_BUF_SIZE_MAX

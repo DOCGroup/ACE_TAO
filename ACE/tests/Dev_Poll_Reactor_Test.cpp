@@ -36,7 +36,7 @@
 #include "ace/OS_NS_netdb.h"
 
 
-typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> SVC_HANDLER;
+using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
 // ----------------------------------------------------
 
@@ -44,19 +44,19 @@ class Client : public SVC_HANDLER
 {
 public:
 
-  Client (void);
+  Client ();
 
   //FUZZ: disable check_for_lack_ACE_OS
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int handle_output (ACE_HANDLE handle);
+  int handle_output (ACE_HANDLE handle) override;
 
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask) override;
 
 private:
 
@@ -69,15 +69,15 @@ class Server : public SVC_HANDLER
 {
 public:
 
-  Server (void);
+  Server ();
 
-  virtual int handle_input (ACE_HANDLE handle);
+  int handle_input (ACE_HANDLE handle) override;
 
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act);
+  int handle_timeout (const ACE_Time_Value &current_time,
+                              const void *act) override;
 
-  virtual int handle_close (ACE_HANDLE handle,
-                            ACE_Reactor_Mask mask);
+  int handle_close (ACE_HANDLE handle,
+                            ACE_Reactor_Mask mask) override;
 
 private:
 
@@ -87,7 +87,7 @@ private:
 
 // ----------------------------------------------------
 
-Client::Client (void)
+Client::Client ()
   : call_count_ (0)
 {
 }
@@ -198,7 +198,7 @@ Client::handle_close (ACE_HANDLE handle,
 
 // ----------------------------------------------------
 
-Server::Server (void)
+Server::Server ()
   : call_count_ (0)
 {
 }
@@ -310,8 +310,8 @@ Server::handle_close (ACE_HANDLE handle,
 
 // ----------------------------------------------------
 
-typedef ACE_Acceptor<Server, ACE_SOCK_ACCEPTOR>   ACCEPTOR;
-typedef ACE_Connector<Client, ACE_SOCK_CONNECTOR> CONNECTOR;
+using ACCEPTOR = ACE_Acceptor<Server, ACE_SOCK_Acceptor>;
+using CONNECTOR = ACE_Connector<Client, ACE_SOCK_Connector>;
 
 // ----------------------------------------------------
 
@@ -319,7 +319,7 @@ class TestAcceptor : public ACCEPTOR
 {
 public:
 
-  virtual int accept_svc_handler (Server * handler)
+  int accept_svc_handler (Server * handler) override
   {
     int result = this->ACCEPTOR::accept_svc_handler (handler);
 
@@ -369,14 +369,14 @@ class TestConnector : public CONNECTOR
 {
 public:
 
-  virtual int connect_svc_handler (
+  int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     const CONNECTOR::addr_type &remote_addr,
     ACE_Time_Value *timeout,
     const CONNECTOR::addr_type &local_addr,
     int reuse_addr,
     int flags,
-    int perms)
+    int perms) override
   {
     const int result = this->CONNECTOR::connect_svc_handler (handler,
                                                              remote_addr,
@@ -423,7 +423,7 @@ public:
     return result;
   }
 
-  virtual int connect_svc_handler (
+  int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     CONNECTOR::handler_type *& sh_copy,
     const CONNECTOR::addr_type &remote_addr,
@@ -431,7 +431,7 @@ public:
     const CONNECTOR::addr_type &local_addr,
     int reuse_addr,
     int flags,
-    int perms) {
+    int perms) override {
     sh_copy = handler;
     return this->connect_svc_handler (handler, remote_addr, timeout,
                                       local_addr, reuse_addr, flags,

@@ -19,7 +19,7 @@ ACE_Addr::operator != (const ACE_Addr &sap) const
 
 /// Return the size of the address.
 ACE_INLINE int
-ACE_Addr::get_size (void) const
+ACE_Addr::get_size () const
 {
   return this->addr_size_;
 }
@@ -33,7 +33,7 @@ ACE_Addr::set_size (int size)
 
 /// Return the type of the address.
 ACE_INLINE int
-ACE_Addr::get_type (void) const
+ACE_Addr::get_type () const
 {
   return this->addr_type_;
 }
@@ -46,7 +46,7 @@ ACE_Addr::set_type (int type)
 }
 
 ACE_INLINE unsigned long
-ACE_Addr::hash (void) const
+ACE_Addr::hash () const
 {
   return 0;
 }

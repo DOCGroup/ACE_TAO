@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Basic_Stats::ACE_Basic_Stats (void)
+ACE_Basic_Stats::ACE_Basic_Stats ()
   : samples_count_ (0)
   , min_ (0)
   , min_at_ (0)
@@ -13,7 +13,7 @@ ACE_Basic_Stats::ACE_Basic_Stats (void)
 }
 
 ACE_INLINE ACE_UINT32
-ACE_Basic_Stats::samples_count (void) const
+ACE_Basic_Stats::samples_count () const
 {
   return this->samples_count_;
 }

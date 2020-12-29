@@ -15,13 +15,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Adapter_Registry::TAO_Adapter_Registry (TAO_ORB_Core *)
   : adapters_capacity_ (16), // @@ Make it configurable
     adapters_count_ (0),
-    adapters_ (0)
+    adapters_ (nullptr)
 {
   ACE_NEW (this->adapters_,
            TAO_Adapter*[this->adapters_capacity_]);
 }
 
-TAO_Adapter_Registry::~TAO_Adapter_Registry (void)
+TAO_Adapter_Registry::~TAO_Adapter_Registry ()
 {
   for (size_t i = 0; i != this->adapters_count_; ++i)
     delete this->adapters_[i];
@@ -67,7 +67,7 @@ TAO_Adapter_Registry::insert (TAO_Adapter *adapter)
   if (this->adapters_capacity_ == this->adapters_count_)
     {
       this->adapters_capacity_ *= 2;
-      TAO_Adapter **tmp = 0;
+      TAO_Adapter **tmp = nullptr;
       ACE_NEW_THROW_EX (tmp,
                         TAO_Adapter*[this->adapters_capacity_],
                         CORBA::NO_MEMORY ());
@@ -126,7 +126,7 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
     {
       CORBA::Object_ptr x =
         this->adapters_[i]->create_collocated_object (stub, mprofile);
-      if (x != 0)
+      if (x != nullptr)
         {
           if (!stub->collocated_servant ())
             {
@@ -145,7 +145,7 @@ TAO_Adapter_Registry::create_collocated_object (TAO_Stub *stub,
           return x;
         }
     }
-  return 0;
+  return nullptr;
 }
 
 CORBA::Long
@@ -174,7 +174,7 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
     if (ACE_OS::strcmp ((*i)->name (), name) == 0)
       return *i;
 
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

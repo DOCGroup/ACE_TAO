@@ -454,14 +454,10 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::string &x)
 {
-#if defined (ACE_HAS_CPP11)
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
                         sizeof (char))
     && static_cast<ACE_OutputCDR &> (os) << x;
-#else
-  return os << x.c_str ();
-#endif
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
@@ -479,16 +475,12 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       const std::wstring &x)
 {
-#if defined (ACE_HAS_CPP11)
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2
                          ? ACE_CDR::SHORT_ALIGN
                          : ACE_CDR::LONG_ALIGN),
                         sizeof (CORBA::WChar))
     && static_cast<ACE_OutputCDR &> (os) << x;
-#else
-  return os << x.c_str ();
-#endif
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,

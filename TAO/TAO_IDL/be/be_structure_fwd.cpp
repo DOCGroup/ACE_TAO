@@ -29,12 +29,12 @@ be_structure_fwd::be_structure_fwd (AST_Structure *dummy,
 {
 }
 
-be_structure_fwd::~be_structure_fwd (void)
+be_structure_fwd::~be_structure_fwd ()
 {
 }
 
 void
-be_structure_fwd::destroy (void)
+be_structure_fwd::destroy ()
 {
   this->be_type::destroy ();
   this->AST_StructureFwd::destroy ();
@@ -45,7 +45,3 @@ be_structure_fwd::accept (be_visitor *visitor)
 {
   return visitor->visit_structure_fwd (this);
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_structure_fwd)

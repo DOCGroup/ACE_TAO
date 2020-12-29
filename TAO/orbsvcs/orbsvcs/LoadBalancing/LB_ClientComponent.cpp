@@ -13,13 +13,13 @@ TAO_LB_ClientComponent::init (int /* argc */, ACE_TCHAR * /* argv */[])
 }
 
 int
-TAO_LB_ClientComponent::fini (void)
+TAO_LB_ClientComponent::fini ()
 {
   return 0;
 }
 
 int
-TAO_LB_ClientComponent::register_orb_initializer (void)
+TAO_LB_ClientComponent::register_orb_initializer ()
 {
   try
     {
