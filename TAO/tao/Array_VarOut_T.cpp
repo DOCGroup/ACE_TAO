@@ -28,8 +28,7 @@ TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 template<typename T, typename T_slice, typename TAG>
 TAO_FixedArray_Var_T<T,T_slice,TAG> &
 TAO_FixedArray_Var_T<T,T_slice,TAG>::operator= (
-    const TAO_FixedArray_Var_T<T,T_slice,TAG> & p
-  )
+    const TAO_FixedArray_Var_T<T,T_slice,TAG> & p)
 {
   if (this != &p)
     {
@@ -62,8 +61,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (T_slice * p)
 template<typename T, typename T_slice, typename TAG>
 TAO_VarArray_Var_T<T,T_slice,TAG> &
 TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
-    const TAO_VarArray_Var_T<T,T_slice,TAG> & p
-  )
+    const TAO_VarArray_Var_T<T,T_slice,TAG> & p)
 {
   if (this != &p)
     {
@@ -81,8 +79,7 @@ TAO_VarArray_Var_T<T,T_slice,TAG>::operator= (
 template<typename T, typename T_slice, typename TAG>
 void
 TAO_Array_Forany_T<T,T_slice,TAG>::_tao_any_destructor (
-    void * _tao_void_pointer
-  )
+    void * _tao_void_pointer)
 {
   T_slice * tmp = static_cast<T_slice *> (_tao_void_pointer);
   TAO::Array_Traits<FORANY>::free (tmp);
