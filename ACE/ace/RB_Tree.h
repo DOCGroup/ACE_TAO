@@ -56,34 +56,34 @@ public:
   ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
 
   /// Destructor.
-  ~ACE_RB_Tree_Node (void);
+  ~ACE_RB_Tree_Node ();
 
   /// Key accessor.
-  EXT_ID &key (void);
+  EXT_ID &key ();
 
   /// Item accessor.
-  INT_ID &item (void);
+  INT_ID &item ();
 
   /// Set color of the node.
   void color (RB_Tree_Node_Color c);
 
   /// Get color of the node.
-  RB_Tree_Node_Color color (void);
+  RB_Tree_Node_Color color ();
 
   /// Accessor for node's parent pointer.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent (void);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *parent ();
 
   /// Mutator for node's parent pointer.
   void parent (ACE_RB_Tree_Node<EXT_ID, INT_ID> * p);
 
   /// Accessor for node's left child pointer.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left (void);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *left ();
 
   /// Mutator for node's left child pointer.
   void left (ACE_RB_Tree_Node<EXT_ID, INT_ID> *l);
 
   /// Accessor for node's right child pointer.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right (void);
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *right ();
 
   /// Mutator for node's right child pointer
   void right (ACE_RB_Tree_Node<EXT_ID, INT_ID> * r);
@@ -125,7 +125,7 @@ public:
    *       of this method occurred.  Placing the definition inline in
    *       the header avoids such errors.
    */
-  ACE_Allocator * allocator (void) const { return this->allocator_; }
+  ACE_Allocator * allocator () const { return this->allocator_; }
 
 protected:
   // = Protected members.
@@ -210,10 +210,10 @@ public:
 
   /// Close down an RB_Tree and release dynamically allocated
   /// resources.
-  int close (void);
+  int close ();
 
   /// Destructor.
-  virtual ~ACE_RB_Tree (void);
+  virtual ~ACE_RB_Tree ();
 
   // = insertion, removal, and search methods.
 
@@ -352,7 +352,7 @@ public:
   // = Public helper methods.
 
   /// Returns the current number of nodes in the tree.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Assignment operator.
   void operator= (const ACE_RB_Tree<EXT_ID,
@@ -368,31 +368,31 @@ public:
    * guard the state of an iterator.
    * @note The right name would be <lock>, but HP/C++ will choke on that!
    */
-  ACE_LOCK &mutex (void);
+  ACE_LOCK &mutex ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
   /// Return forward iterator positioned at first node in tree.
-  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> begin (void);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> begin ();
 
   /// Return forward iterator positioned at last node in tree.
-  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> end (void);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> end ();
 
   /// Return reverse iterator positioned at last node in tree.
-  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rbegin (void);
+  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rbegin ();
 
   /// Return reverse iterator positioned at first node in tree.
-  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rend (void);
+  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> rend ();
 
   /// Recursively tests the invariant red-black properties at each
   /// node of the tree.  Returns 0 if invariant holds, else -1.
   /// This method is computationally expensive, and should only be
   /// called for testing purposes, and not in code that depends on the
   /// algorithmic complexity bounds provided by the other methods.
-  int test_invariant (void);
+  int test_invariant ();
 
   // = DEPRECATED methods.
   //   Please migrate your code to use the new methods instead
@@ -431,7 +431,7 @@ public:
 
   /// @deprecated
   /// Destroys all nodes and sets the root pointer null.
-  void clear (void);
+  void clear ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -504,7 +504,7 @@ protected:
 
   /// Close down an RB_Tree.  this method should
   /// only be called with locks already held.
-  int close_i (void);
+  int close_i ();
 
   /**
    * Retrieves a pointer to the item corresponding to the
@@ -599,18 +599,18 @@ public:
   // = Iteration methods.
 
   /// Returns 1 when the iteration has completed, otherwise 0.
-  int done (void) const;
+  int done () const;
 
   /// STL-like iterator dereference operator: returns a reference
   /// to the node underneath the iterator.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> & operator* (void) const;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> & operator* () const;
 
   /// STL-like iterator dereference operator: returns a pointer
   /// to the node underneath the iterator.
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> * operator-> (void) const;
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> * operator-> () const;
 
   /// Returns a const reference to the tree over which we're iterating.
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree (void);
+  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree ();
 
   /// Comparison operator: returns 1 if both iterators point to the same position, otherwise 0.
   bool operator== (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
@@ -624,7 +624,7 @@ public:
 protected:
   /// Create the singular iterator.  No valid iterator can be equal to
   /// it, it is illegal to dereference a singular iterator, etc. etc.
-  ACE_RB_Tree_Iterator_Base (void);
+  ACE_RB_Tree_Iterator_Base ();
 
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
@@ -650,20 +650,20 @@ protected:
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
 
   /// Destructor.
-  ~ACE_RB_Tree_Iterator_Base (void);
+  ~ACE_RB_Tree_Iterator_Base ();
 
   // = Internal methods
 
   /// Move forward by one element in the tree.  Returns 0 when
   /// there are no more elements in the tree, otherwise 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move back by one element in the tree.  Returns 0 when
   /// there are no more elements in the tree, otherwise 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   // = Protected members.
 
@@ -689,7 +689,7 @@ public:
    * It is illegal to deference the iterator, no valid iterator is
    * equal to a singular iterator, etc. etc.
    */
-  ACE_RB_Tree_Iterator (void);
+  ACE_RB_Tree_Iterator ();
 
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
@@ -714,27 +714,27 @@ public:
                         ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   /// Destructor.
-  ~ACE_RB_Tree_Iterator (void);
+  ~ACE_RB_Tree_Iterator ();
 
   // = ACE-style iteration methods.
 
   /// Move forward by one element in the tree.  Returns
   /// 0 when all elements have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL-style iteration methods.
 
   /// Prefix advance.
-  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ (void);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ ();
 
   /// Postfix advance.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator-- (void);
+  ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator-- ();
 
   /// Postfix reverse.
   ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator-- (int);
@@ -759,34 +759,34 @@ public:
 
   /// @deprecated
   /// Accessor for key of node under iterator (if any).
-  EXT_ID *key (void);
+  EXT_ID *key ();
 
   /// @deprecated
   /// Accessor for item of node under iterator (if any).
-  INT_ID *item (void);
+  INT_ID *item ();
 
   /// @deprecated
   /// Move to the first item in the iteration (and in the tree).
-  int first (void);
+  int first ();
 
   /// @deprecated
   /// Move to the last item in the iteration (and in the tree).
-  int last (void);
+  int last ();
 
   /// @deprecated
   /// Move to the next item in the iteration (and in the tree).
-  int next (void);
+  int next ();
 
   /// @deprecated
   /// Move to the previous item in the iteration (and in the tree).
-  int previous (void);
+  int previous ();
 
   /**
    * @deprecated: use the base class <done> method instead.
    * Returns 0 if the iterator is positioned over a valid ACE_RB_Tree
    * node, returns 1 if not.
    */
-  int is_done (void);
+  int is_done ();
 
 };
 
@@ -804,7 +804,7 @@ public:
    * It is illegal to deference the iterator, no valid iterator is
    * equal to a singular iterator, etc. etc.
    */
-  ACE_RB_Tree_Reverse_Iterator (void);
+  ACE_RB_Tree_Reverse_Iterator ();
 
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
@@ -830,27 +830,27 @@ public:
                                 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   /// Destructor.
-  ~ACE_RB_Tree_Reverse_Iterator (void);
+  ~ACE_RB_Tree_Reverse_Iterator ();
 
   // = ACE-style iteration methods.
 
   /// Move forward by one element in the tree.  Returns
   /// 0 when all elements have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL-style iteration methods.
 
   /// Prefix advance.
-  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ (void);
+  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator++ ();
 
   /// Postfix advance.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator-- (void);
+  ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> & operator-- ();
 
   /// Postfix reverse.
   ACE_RB_Tree_Reverse_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> operator-- (int);

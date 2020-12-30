@@ -44,7 +44,7 @@ namespace CORBA
     UserException (UserException const &rhs);
 
     /// Destructor.
-    virtual ~UserException (void);
+    virtual ~UserException ();
 
     /// Assignment operator.
     UserException &operator= (UserException const &rhs);
@@ -55,9 +55,9 @@ namespace CORBA
     /// The const version of narrow operation
     static const UserException *_downcast (CORBA::Exception const *exception);
 
-    virtual void _raise (void) const = 0;
+    virtual void _raise () const = 0;
 
-    virtual CORBA::TypeCode_ptr _tao_type (void) const;
+    virtual CORBA::TypeCode_ptr _tao_type () const;
 
     // = TAO specific extension.
 
@@ -66,11 +66,11 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info (void) const;
+    virtual ACE_CString _info () const;
 
   protected:
     /// Default constructor.
-    UserException (void);
+    UserException ();
   };
 
 }

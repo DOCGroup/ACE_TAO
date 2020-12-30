@@ -77,10 +77,10 @@ public:
   AST_ConcreteType (AST_Decl::NodeType nt,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ConcreteType (void);
+  virtual ~AST_ConcreteType ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   virtual bool annotatable () const { return true; }
 };

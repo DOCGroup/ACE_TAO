@@ -31,9 +31,9 @@ namespace TAO
       : public IdAssignmentStrategy
     {
     public:
-      virtual char id_assignment_key_type (void) const;
+      virtual char id_assignment_key_type () const;
 
-      virtual bool has_system_id (void) const;
+      virtual bool has_system_id () const;
     };
   }
 }

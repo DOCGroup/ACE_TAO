@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_PG_Object_Adapter_Factory::TAO_PG_Object_Adapter_Factory (void)
+TAO_PG_Object_Adapter_Factory::TAO_PG_Object_Adapter_Factory ()
 {
 }
 

@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Acceptor)
 
 void
-ACE_MEM_Acceptor::dump (void) const
+ACE_MEM_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Acceptor::dump");
@@ -28,7 +28,7 @@ ACE_MEM_Acceptor::dump (void) const
 
 // Do nothing routine for constructor.
 
-ACE_MEM_Acceptor::ACE_MEM_Acceptor (void)
+ACE_MEM_Acceptor::ACE_MEM_Acceptor ()
   : mmap_prefix_ (0),
     malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
@@ -36,7 +36,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (void)
   ACE_TRACE ("ACE_MEM_Acceptor::ACE_MEM_Acceptor");
 }
 
-ACE_MEM_Acceptor::~ACE_MEM_Acceptor (void)
+ACE_MEM_Acceptor::~ACE_MEM_Acceptor ()
 {
   ACE_TRACE ("ACE_MEM_Acceptor::~ACE_MEM_Acceptor");
 #if defined (ACE_HAS_ALLOC_HOOKS)

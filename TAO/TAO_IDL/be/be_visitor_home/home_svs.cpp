@@ -13,8 +13,8 @@
 
 be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ()),
     for_finder_ (false)
@@ -29,7 +29,7 @@ be_visitor_home_svs::be_visitor_home_svs (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svs::~be_visitor_home_svs (void)
+be_visitor_home_svs::~be_visitor_home_svs ()
 {
 }
 
@@ -203,7 +203,7 @@ be_visitor_home_svs::visit_finder (be_finder *node)
 }
 
 int
-be_visitor_home_svs::gen_servant_class (void)
+be_visitor_home_svs::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -235,7 +235,7 @@ be_visitor_home_svs::gen_servant_class (void)
       << "}";
 
   os_ << be_nl_2
-      << lname << "_Servant::~" << lname << "_Servant (void)"
+      << lname << "_Servant::~" << lname << "_Servant ()"
       << be_nl
       << "{" << be_nl
       << "}";
@@ -274,7 +274,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   AST_Type *pk = node_->primary_key ();
 
-  if (pk != 0)
+  if (pk != nullptr)
     {
       os_ << be_nl_2
           << "::" << comp_->name () << "_ptr" << be_nl
@@ -329,7 +329,7 @@ be_visitor_home_svs::gen_servant_class (void)
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -379,7 +379,7 @@ be_visitor_home_svs::gen_servant_class (void)
 }
 
 void
-be_visitor_home_svs::gen_entrypoint (void)
+be_visitor_home_svs::gen_entrypoint ()
 {
   ACE_CString sname_str (
     ScopeAsDecl (node_->defined_in ())->full_name ());
@@ -442,14 +442,14 @@ be_visitor_home_attr_set::be_visitor_home_attr_set (
 {
 }
 
-be_visitor_home_attr_set::~be_visitor_home_attr_set (void)
+be_visitor_home_attr_set::~be_visitor_home_attr_set ()
 {
 }
 
 int
 be_visitor_home_attr_set::visit_home (be_home *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }

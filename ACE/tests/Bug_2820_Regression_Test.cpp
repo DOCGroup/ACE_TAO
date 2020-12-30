@@ -30,10 +30,10 @@ public:
   Simple_Handler(ACE_Reactor * reactor);
 
   /// Destructor
-  ~Simple_Handler();
+  ~Simple_Handler() override;
 
   /// Receive (and ignore) the notifications
-  virtual int handle_exception(ACE_HANDLE);
+  int handle_exception(ACE_HANDLE) override;
 };
 
 int

@@ -18,7 +18,7 @@ be_visitor_operation_ami_cs::be_visitor_operation_ami_cs (
 {
 }
 
-be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs (void)
+be_visitor_operation_ami_cs::~be_visitor_operation_ami_cs ()
 {
 }
 
@@ -64,7 +64,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   be_decl *parent =
     dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
-  if (parent == 0)
+  if (parent == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_operation_ami_cs::"
@@ -103,7 +103,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
   if (node->has_native ()) // native exists => no stub
     {
       be_predefined_type bpt (AST_PredefinedType::PT_void,
-                              0);
+                              nullptr);
 
       int const status = this->gen_raise_exception ("::CORBA::MARSHAL",
                                                     "");
@@ -136,7 +136,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
       // type is void.  No need to generate argument list.
 
       *os << be_nl_2
-          << "TAO::Argument ** _the_tao_operation_signature = 0;";
+          << "TAO::Argument ** _the_tao_operation_signature {};";
       nargs = 0; // Don't count the reply handler.
     }
   else
@@ -156,7 +156,7 @@ be_visitor_operation_ami_cs::visit_operation (be_operation *node)
           << "{" << be_idt_nl
           << "std::addressof(_tao_retval)";
 
-      AST_Argument *arg = 0;
+      AST_Argument *arg = nullptr;
       UTL_ScopeActiveIterator arg_list_iter (ami_op,
                                              UTL_Scope::IK_decls);
 
@@ -245,7 +245,7 @@ int
 be_visitor_operation_ami_cs::visit_argument (be_argument *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0; // argument type
+  be_type *bt = nullptr; // argument type
 
   // Retrieve the type for this argument.
   bt = dynamic_cast<be_type*> (node->field_type ());

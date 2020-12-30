@@ -10,13 +10,13 @@ ACE_Reference_Pair<T1, T2>::ACE_Reference_Pair (T1 &t1,
 }
 
 template <class T1, class T2> ACE_INLINE T1 &
-ACE_Reference_Pair<T1, T2>::first (void) const
+ACE_Reference_Pair<T1, T2>::first () const
 {
   return this->first_;
 }
 
 template <class T1, class T2> ACE_INLINE T2 &
-ACE_Reference_Pair<T1, T2>::second (void) const
+ACE_Reference_Pair<T1, T2>::second () const
 {
   return this->second_;
 }

@@ -178,7 +178,7 @@ namespace TAO
 
     /// The destructor calls Invocation_Base::invoke_status with the
     /// right invoke status, which is useful for PI's.
-    ~Reply_Guard (void);
+    ~Reply_Guard ();
 
     /// Mutator to set the invocation status.
     void set_status (Invocation_Status s);

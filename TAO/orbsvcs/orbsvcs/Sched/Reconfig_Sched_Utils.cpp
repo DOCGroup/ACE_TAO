@@ -705,7 +705,7 @@ effective_exec_multiplier (CORBA::Long l)
 
 ///////////////////////////
 
-TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor (void)
+TAO_Reconfig_Sched_Entry_Visitor::~TAO_Reconfig_Sched_Entry_Visitor ()
 {
 }
 
@@ -910,7 +910,7 @@ enabled_state (RtecScheduler::RT_Info_Enabled_Type_t et)
 
 ////////////////////////////////////////////
 
-TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor (void)
+TAO_RT_Info_Tuple_Visitor::~TAO_RT_Info_Tuple_Visitor ()
 {
 }
 

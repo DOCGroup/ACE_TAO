@@ -15,11 +15,11 @@
 be_visitor_operation_svs::be_visitor_operation_svs (
       be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    scope_ (0)
+    scope_ (nullptr)
 {
 }
 
-be_visitor_operation_svs::~be_visitor_operation_svs (void)
+be_visitor_operation_svs::~be_visitor_operation_svs ()
 {
 }
 
@@ -39,7 +39,7 @@ be_visitor_operation_svs::visit_operation (be_operation *node)
   // Retrieve the operation return type.
   be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "be_visitor_operation_svs::"

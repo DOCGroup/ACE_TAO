@@ -86,7 +86,7 @@ bool
 AST_illegal_interface_recursion (AST_Decl *t)
 {
   // Can't be 0 since we know we have an interface or valuetype.
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
 
   // If we encounter the argument in an enclosing scope, it's illegal.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
@@ -114,7 +114,7 @@ AST_illegal_interface_recursion (AST_Decl *t)
 bool
 AST_illegal_recursive_type (AST_Decl *t)
 {
-  if (t == 0)
+  if (t == nullptr)
     {
       return false;
     }
@@ -122,7 +122,7 @@ AST_illegal_recursive_type (AST_Decl *t)
   AST_Decl::NodeType nt;
   AST_Type *ut = dynamic_cast<AST_Type*> (t);
 
-  if (ut != 0)
+  if (ut != nullptr)
     {
       ut = ut->unaliased_type ();
       nt = ut->node_type ();
@@ -145,8 +145,8 @@ AST_illegal_recursive_type (AST_Decl *t)
 
   bool check_for_struct = false;
   bool check_for_union = false;
-  AST_Structure  *st1 = 0;
-  AST_Union  *un1 = 0;
+  AST_Structure  *st1 = nullptr;
+  AST_Union  *un1 = nullptr;
 
   // Narrow the type appropriately so comparison will work.
   if (t->node_type () == AST_Decl::NT_struct)
@@ -154,7 +154,7 @@ AST_illegal_recursive_type (AST_Decl *t)
       check_for_struct = true;
       st1 = dynamic_cast<AST_Structure*> (t);
 
-      if (st1 == 0)
+      if (st1 == nullptr)
         {
           return false;  // NOT ILLEGAL.
         }
@@ -164,15 +164,15 @@ AST_illegal_recursive_type (AST_Decl *t)
       check_for_union = true;
       un1 = dynamic_cast<AST_Union*> (t);
 
-      if (un1 == 0)
+      if (un1 == nullptr)
         {
           return false;  // NOT ILLEGAL.
         }
     }
 
-  UTL_Scope  *s = 0;
-  AST_Structure *st2 = 0;
-  AST_Union *un2 = 0;
+  UTL_Scope  *s = nullptr;
+  AST_Structure *st2 = nullptr;
+  AST_Union *un2 = nullptr;
 
   // OK, iterate up the stack.
   for (UTL_ScopeStackActiveIterator i (idl_global->scopes ());
@@ -183,7 +183,7 @@ AST_illegal_recursive_type (AST_Decl *t)
 
       // If we hit a NULL we're done since it means that we're nested inside
       // a sequence, where recursive types may be used.
-      if (s == 0)
+      if (s == nullptr)
         {
           return false;  // NOT ILLEGAL.
         }
@@ -194,7 +194,7 @@ AST_illegal_recursive_type (AST_Decl *t)
         {
           st2 = dynamic_cast<AST_Structure*> (s);
 
-          if (st2 != 0 && st2 == st1)
+          if (st2 != nullptr && st2 == st1)
             {
               return true;  // ILLEGAL RECURSIVE TYPE USE.
             }
@@ -204,7 +204,7 @@ AST_illegal_recursive_type (AST_Decl *t)
         {
           un2 = dynamic_cast<AST_Union*> (s);
 
-          if (un2 != 0 && un2 == un1)
+          if (un2 != nullptr && un2 == un1)
             {
               return true;  // ILLEGAL RECURSIVE TYPE USE.
             }

@@ -73,12 +73,12 @@ be_component::be_component (UTL_ScopedName *n,
   this->has_constructor (true);
 }
 
-be_component::~be_component (void)
+be_component::~be_component ()
 {
 }
 
 be_component *
-be_component::base_component (void) const
+be_component::base_component () const
 {
   return dynamic_cast<be_component*> (this->AST_Component::base_component ());
 }
@@ -119,49 +119,49 @@ be_component::be_add_typedef (AST_Typedef *t)
 }
 
 ACE_CDR::ULong
-be_component::n_provides (void) const
+be_component::n_provides () const
 {
   return this->n_provides_;
 }
 
 ACE_CDR::ULong
-be_component::n_remote_provides (void) const
+be_component::n_remote_provides () const
 {
   return this->n_remote_provides_;
 }
 
 ACE_CDR::ULong
-be_component::n_uses (void) const
+be_component::n_uses () const
 {
   return this->n_uses_;
 }
 
 ACE_CDR::ULong
-be_component::n_remote_uses (void) const
+be_component::n_remote_uses () const
 {
   return this->n_remote_uses_;
 }
 
 bool
-be_component::has_uses_multiple (void) const
+be_component::has_uses_multiple () const
 {
   return this->has_uses_multiple_;
 }
 
 ACE_CDR::ULong
-be_component::n_publishes (void) const
+be_component::n_publishes () const
 {
   return this->n_publishes_;
 }
 
 ACE_CDR::ULong
-be_component::n_consumes (void) const
+be_component::n_consumes () const
 {
   return this->n_consumes_;
 }
 
 ACE_CDR::ULong
-be_component::n_emits (void) const
+be_component::n_emits () const
 {
   return this->n_emits_;
 }
@@ -169,16 +169,16 @@ be_component::n_emits (void) const
 void
 be_component::scan (UTL_Scope *s)
 {
-  if (s == 0)
+  if (s == nullptr)
     {
       return;
     }
 
-  AST_Extended_Port *ep = 0;
-  AST_Mirror_Port *mp = 0;
-  AST_Uses *u = 0;
-  AST_Provides *p = 0;
-  AST_Attribute *a = 0;
+  AST_Extended_Port *ep = nullptr;
+  AST_Mirror_Port *mp = nullptr;
+  AST_Uses *u = nullptr;
+  AST_Provides *p = nullptr;
+  AST_Attribute *a = nullptr;
   AST_Decl::NodeType my_nt;
   AST_Decl::NodeType scope_nt;
 
@@ -259,9 +259,9 @@ be_component::scan (UTL_Scope *s)
     }
 
   AST_Component *c = dynamic_cast<AST_Component*> (s);
-  AST_Interface *iface = 0;
+  AST_Interface *iface = nullptr;
 
-  if (c != 0)
+  if (c != nullptr)
     {
       for (long i = 0; i < c->n_supports (); ++i)
         {
@@ -275,7 +275,7 @@ be_component::scan (UTL_Scope *s)
       // will be 0 and the call will return immediately.
       this->scan (c->base_component ());
     }
-  else if ((iface = dynamic_cast<AST_Interface*> (s)) != 0)
+  else if ((iface = dynamic_cast<AST_Interface*> (s)) != nullptr)
     {
       for (long i = 0; i < iface->n_inherits (); ++i)
         {
@@ -295,7 +295,7 @@ be_component::gen_stub_inheritance (TAO_OutStream *os)
 
   AST_Component *parent = this->base_component ();
 
-  if (parent != 0)
+  if (parent != nullptr)
     {
       *os << parent->name ();
     }
@@ -330,7 +330,7 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
 {
   AST_Component *base = this->base_component ();
 
-  if (base != 0)
+  if (base != nullptr)
     {
       *os << "public virtual POA_" << base->name ();
     }
@@ -341,7 +341,7 @@ be_component::gen_skel_inheritance (TAO_OutStream *os)
 
   long nsupports = this->n_inherits ();
   AST_Type **supports = this->supports ();
-  AST_Type *supported = 0;
+  AST_Type *supported = nullptr;
 
   for (long i = 0; i < nsupports; ++i)
     {
@@ -362,20 +362,14 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
 {
   AST_Component *ancestor = this;
 
-  while (ancestor != 0)
+  while (ancestor != nullptr)
     {
-      *os << "std::strcmp (" << be_idt << be_idt_nl
-          << "value," << be_nl
-          << "\"" << ancestor->repoID () << "\"" << be_uidt_nl
-          << ") == 0 ||" << be_uidt_nl;
+      *os << "std::strcmp (value, \"" << ancestor->repoID () << "\") == 0 ||" << be_nl;
 
       ancestor = ancestor->base_component ();
     }
 
-  *os << "std::strcmp (" << be_idt << be_idt_nl
-      << "value," << be_nl
-      << "\"IDL:omg.org/Components/CCMObject:1.0\"" << be_uidt_nl
-      << ") == 0" << be_uidt << be_uidt_nl;
+  *os << "std::strcmp (value, \"IDL:omg.org/Components/CCMObject:1.0\") == 0" << be_nl;
 
   return 0;
 }
@@ -383,9 +377,9 @@ be_component::gen_is_a_ancestors (TAO_OutStream *os)
 void
 be_component::mirror_scan (AST_PortType *pt)
 {
-  AST_Uses *u = 0;
-  AST_Provides *p = 0;
-  AST_Attribute *a = 0;
+  AST_Uses *u = nullptr;
+  AST_Provides *p = nullptr;
+  AST_Attribute *a = nullptr;
 
   for (UTL_ScopeActiveIterator i (pt, UTL_Scope::IK_decls);
        !i.is_done ();

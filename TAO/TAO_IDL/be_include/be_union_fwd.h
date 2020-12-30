@@ -31,10 +31,10 @@ public:
   be_union_fwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
-  virtual ~be_union_fwd (void);
+  virtual ~be_union_fwd ();
 
   /// Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int accept (be_visitor* visitor);

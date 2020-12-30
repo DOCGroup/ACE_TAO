@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ (void)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++ ()
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator++");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
@@ -30,7 +30,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator+= (
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-- (void)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator-- ()
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::operator--");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
@@ -161,7 +161,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::exchange (TYPE newval)
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value (void) const
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value () const
 {
   // ACE_TRACE ("ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value");
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, this->value_);
@@ -170,7 +170,7 @@ ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value (void) const
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE &
-ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i (void)
+ACE_Atomic_Op_Ex<ACE_LOCK, TYPE>::value_i ()
 {
   // Explicitly return <value_> (by reference).  This gives the user
   // full, unrestricted access to the underlying value.  This method
@@ -223,7 +223,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator= (
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ (void)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator++ ()
 {
   return ++this->impl_;
 }
@@ -245,7 +245,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::operator+= (
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- (void)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::operator-- ()
 {
   return --this->impl_;
 }
@@ -322,14 +322,14 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::exchange (TYPE newval)
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE
-ACE_Atomic_Op<ACE_LOCK, TYPE>::value (void) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::value () const
 {
   return this->impl_.value ();
 }
 
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE void
-ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
+ACE_Atomic_Op<ACE_LOCK, TYPE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   this->impl_.dump ();
@@ -338,7 +338,7 @@ ACE_Atomic_Op<ACE_LOCK, TYPE>::dump (void) const
 }
 template <class ACE_LOCK, class TYPE>
 ACE_INLINE TYPE &
-ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i (void)
+ACE_Atomic_Op<ACE_LOCK, TYPE>::value_i ()
 {
   return this->impl_.value_i ();
 }

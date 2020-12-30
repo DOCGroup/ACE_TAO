@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE)
 
 void
-ACE_FILE::dump (void) const
+ACE_FILE::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE::dump");
@@ -31,7 +31,7 @@ ACE_FILE::dump (void) const
 
 // This is the do-nothing constructor.
 
-ACE_FILE::ACE_FILE (void)
+ACE_FILE::ACE_FILE ()
 {
   ACE_TRACE ("ACE_FILE::ACE_FILE");
 }
@@ -39,7 +39,7 @@ ACE_FILE::ACE_FILE (void)
 // Close the file
 
 int
-ACE_FILE::close (void)
+ACE_FILE::close ()
 {
   ACE_TRACE ("ACE_FILE::close");
   int result = 0;
@@ -92,7 +92,7 @@ ACE_FILE::seek (ACE_OFF_T offset, int startpos)
 }
 
 ACE_OFF_T
-ACE_FILE::tell (void)
+ACE_FILE::tell ()
 {
   ACE_TRACE ("ACE_FILE::tell");
   return ACE_OS::lseek (this->get_handle (), 0, SEEK_CUR);
@@ -130,7 +130,7 @@ ACE_FILE::get_remote_addr (ACE_Addr &addr) const
 }
 
 int
-ACE_FILE::remove (void)
+ACE_FILE::remove ()
 {
   ACE_TRACE ("ACE_FILE::remove");
 
@@ -139,7 +139,7 @@ ACE_FILE::remove (void)
 }
 
 int
-ACE_FILE::unlink (void)
+ACE_FILE::unlink ()
 {
   ACE_TRACE ("ACE_FILE::unlink");
 

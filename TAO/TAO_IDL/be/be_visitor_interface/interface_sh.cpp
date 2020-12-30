@@ -16,7 +16,7 @@ be_visitor_interface_sh::be_visitor_interface_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_sh::~be_visitor_interface_sh (void)
+be_visitor_interface_sh::~be_visitor_interface_sh ()
 {
 }
 
@@ -101,7 +101,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
       << "protected:" << be_idt_nl;
 
   // Default constructor.
-  *os << class_name.c_str () << " (void);"
+  *os << class_name.c_str () << " ();"
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
@@ -117,7 +117,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // Copy constructor and destructor.
   *os << class_name.c_str () << " (const "
       << class_name.c_str () << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);" << be_nl_2;
+      << "virtual ~" << class_name.c_str () << " ();" << be_nl_2;
 
   // _is_a
   *os << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
@@ -133,7 +133,7 @@ be_visitor_interface_sh::visit_interface (be_interface *node)
   // The _interface_repository_id method.
   *os << be_nl
       << "virtual const char* _interface_repository_id "
-      << "(void) const;";
+      << "() const;";
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)
@@ -194,7 +194,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
   ctx.state (TAO_CodeGen::TAO_ROOT_SH);
@@ -205,7 +205,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_interface_sh::")
@@ -215,7 +215,7 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
         }
 
       UTL_ScopedName item_new_name (d->local_name (),
-                                    0);
+                                    nullptr);
 
       if (d->node_type () == AST_Decl::NT_op)
         {
@@ -235,21 +235,21 @@ be_visitor_interface_sh::gen_abstract_ops_helper (
 
           UTL_ExceptList *get_exceptions = attr->get_get_exceptions ();
 
-          if (0 != get_exceptions)
+          if (nullptr != get_exceptions)
             {
               new_attr.be_add_get_exceptions (get_exceptions->copy ());
             }
 
           UTL_ExceptList *set_exceptions = attr->get_set_exceptions ();
 
-          if (0 != set_exceptions)
+          if (nullptr != set_exceptions)
             {
               new_attr.be_add_set_exceptions (set_exceptions->copy ());
             }
 
           be_visitor_attribute attr_visitor (&ctx);
           attr_visitor.visit_attribute (&new_attr);
-          ctx.attribute (0);
+          ctx.attribute (nullptr);
           new_attr.destroy ();
         }
     }
@@ -263,7 +263,7 @@ be_visitor_interface_sh::this_method (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Print out the _this() method.
-  *os << "::" << node->full_name () << " *_this (void);"
+  *os << "::" << node->full_name () << " *_this ();"
       << be_nl;
 }
 

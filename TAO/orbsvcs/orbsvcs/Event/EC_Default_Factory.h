@@ -46,18 +46,18 @@ class TAO_RTEvent_Serv_Export TAO_EC_Default_Factory : public TAO_EC_Factory
 {
 public:
   /// Constructor
-  TAO_EC_Default_Factory (void);
+  TAO_EC_Default_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_Default_Factory (void);
+  virtual ~TAO_EC_Default_Factory ();
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The EC_Factory methods
   virtual TAO_EC_Dispatching*
@@ -109,9 +109,9 @@ public:
   virtual void
       destroy_proxy_push_supplier_collection (TAO_EC_ProxyPushSupplier_Collection*);
 
-  virtual ACE_Lock* create_consumer_lock (void);
+  virtual ACE_Lock* create_consumer_lock ();
   virtual void destroy_consumer_lock (ACE_Lock*);
-  virtual ACE_Lock* create_supplier_lock (void);
+  virtual ACE_Lock* create_supplier_lock ();
   virtual void destroy_supplier_lock (ACE_Lock*);
 
   virtual TAO_EC_ConsumerControl*
@@ -124,16 +124,16 @@ public:
       destroy_supplier_control (TAO_EC_SupplierControl*);
 
   /// Accessors to consumer collection flags
-  int consumer_collection (void) const;
+  int consumer_collection () const;
 
   /// Accessors to supplier collection flags
-  int supplier_collection (void) const;
+  int supplier_collection () const;
 
   /// Accessors to supplier filtering flags
-  int supplier_filtering (void) const;
+  int supplier_filtering () const;
 
   /// Accessor to ORBid
-  const ACE_CString& orb_id (void) const;
+  const ACE_CString& orb_id () const;
 
 protected:
   /// Helper for agrument parsing.  Prints out an error message about

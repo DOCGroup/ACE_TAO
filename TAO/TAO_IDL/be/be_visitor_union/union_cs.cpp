@@ -16,7 +16,7 @@ be_visitor_union_cs::be_visitor_union_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_cs::~be_visitor_union_cs (void)
+be_visitor_union_cs::~be_visitor_union_cs ()
 {
 }
 
@@ -77,7 +77,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
 
   // Generate the copy constructor and the assignment operator here.
   *os << be_nl_2
-      << node->name () << "::" << node->local_name () << " (void)" << be_nl
+      << node->name () << "::" << node->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "ACE_OS::memset (&this->u_, 0, sizeof (this->u_));" << be_nl;
 
@@ -89,11 +89,11 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << "this->disc_ = ";
 
   UTL_ScopeActiveIterator si (node, UTL_Scope::IK_decls);
-  be_union_branch *ub = 0;
+  be_union_branch *ub = nullptr;
 
   // In case we have some bogus enum values from an enum declared
   // in our scope.
-  while (ub == 0)
+  while (ub == nullptr)
     {
       // Just get the union's first member.
       AST_Decl *d = si.item ();
@@ -189,7 +189,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   *os << be_uidt_nl << "}" << be_nl_2;
 
   *os << node->name () << "::~" << node->local_name ()
-      << " (void)" << be_nl
+      << " ()" << be_nl
       << "{" << be_idt_nl
       << "// Finalize." << be_nl
       << "this->_reset ();" << be_uidt_nl
@@ -267,7 +267,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   this->ctx_->state (TAO_CodeGen::TAO_UNION_PUBLIC_RESET_CS);
 
   *os << "/// Reset method to reset old values of a union." << be_nl;
-  *os << "void " << node->name () << "::_reset (void)" << be_nl;
+  *os << "void " << node->name () << "::_reset ()" << be_nl;
   *os << "{" << be_idt_nl;
 
   if (!boolDisc)

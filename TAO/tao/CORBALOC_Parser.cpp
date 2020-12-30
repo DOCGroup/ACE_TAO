@@ -31,7 +31,7 @@ static const char iiop_token_len = sizeof iiop_token - 1;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser (void)
+TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser ()
 {
 }
 
@@ -49,7 +49,7 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
                                               TAO_MProfile &mprofile)
 {
   // Create a TAO_Stub.
-  TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) 0, mprofile);
+  TAO_Stub *data = orb->orb_core ()->create_stub ((const char *) nullptr, mprofile);
 
   TAO_Stub_Auto_Ptr safe_data (data);
 
@@ -137,10 +137,10 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     size_t ndx = endpoints.size();
     endpoints.size(ndx+1);
     bool uiop_compatible = false;
-    TAO_ConnectorSetIterator conn_iter = 0;
+    TAO_ConnectorSetIterator conn_iter = nullptr;
     for (conn_iter = conn_reg->begin();
          conn_iter != conn_reg->end() &&
-           endpoints[ndx].profile_ == 0;
+           endpoints[ndx].profile_ == nullptr;
          conn_iter ++)
       {
         endpoints[ndx].profile_ =
@@ -156,7 +156,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
           }
       }
 
-    if (endpoints[ndx].profile_ == 0)
+    if (endpoints[ndx].profile_ == nullptr)
       {
         if (TAO_debug_level)
           TAOLIB_ERROR ((LM_ERROR,
@@ -212,7 +212,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
       endpoints[i].profile_->parse_string (str);
       int const share = orb->orb_core()->orb_params()->shared_profile();
       if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
-        endpoints[i].profile_ = 0;
+        endpoints[i].profile_ = nullptr;
       else
         {
           // Although this ought never happen, we want to make some
@@ -252,7 +252,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   const char *addr_tail = ior + prot_addr_len;
   // skip past version, if any
   separator = ACE_OS::strchr (addr_base,'@');
-  if (separator != 0 && separator < addr_tail)
+  if (separator != nullptr && separator < addr_tail)
     {
       canonical_endpoint.set (addr_base,(separator - addr_base)+1,1);
       addr_base = separator + 1;
@@ -293,7 +293,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
     }
 #endif /* ACE_HAS_IPV6 */
 
-  if (separator != 0 && separator < addr_tail)
+  if (separator != nullptr && separator < addr_tail)
     {
       // we have a port number
       raw_host.set (addr_base, (separator - addr_base), 1);

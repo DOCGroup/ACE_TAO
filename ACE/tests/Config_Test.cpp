@@ -334,7 +334,7 @@ test_subkey_path (ACE_Configuration* config)
 }
 
 static int
-run_tests (void)
+run_tests ()
 {
   int status;
 

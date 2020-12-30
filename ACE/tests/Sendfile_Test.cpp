@@ -262,7 +262,7 @@ server (void *arg)
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;

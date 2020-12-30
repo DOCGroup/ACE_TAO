@@ -13,12 +13,12 @@
 #include "tao/debug.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/High_Res_Timer.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -205,8 +205,6 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
       ACE_Scheduler_Factory::use_config (naming_context.in ());
 #endif /* 0 */
 
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl;
-
       TAO_EC_Event_Channel_Attributes attr (root_poa.in (),
                                             root_poa.in ());
 
@@ -215,8 +213,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 
       ec->activate ();
 
-      auto_ptr<POA_RtecEventChannelAdmin::EventChannel> auto_ec_impl (ec);
-      ec_impl = auto_ec_impl;
+      std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel> ec_impl (ec);
 
       RtecEventChannelAdmin::EventChannel_var channel =
         ec_impl->_this ();

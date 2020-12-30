@@ -44,13 +44,13 @@ Dispatch_Command::Dispatch_Command (int dont_delete,
 }
 
 ACE_INLINE
-int Dispatch_Command::can_be_deleted (void) const
+int Dispatch_Command::can_be_deleted () const
 {
   return !dont_delete_;
 }
 
 ACE_INLINE
-void Dispatch_Command::destroy (void)
+void Dispatch_Command::destroy ()
 {
   if (allocator_)
   {

@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send_Msg)
 
 void
-ACE_FIFO_Send_Msg::dump (void) const
+ACE_FIFO_Send_Msg::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Send_Msg::dump");
@@ -53,7 +53,7 @@ ACE_FIFO_Send_Msg::send (const ACE_Str_Buf &send_msg)
 #endif /* ACE_HAS_STREAM_PIPES */
 }
 
-ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg (void)
+ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg ()
 {
 //  ACE_TRACE ("ACE_FIFO_Send_Msg::ACE_FIFO_Send_Msg");
 }

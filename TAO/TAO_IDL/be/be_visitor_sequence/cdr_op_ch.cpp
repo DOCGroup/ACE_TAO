@@ -23,7 +23,7 @@ be_visitor_sequence_cdr_op_ch::be_visitor_sequence_cdr_op_ch (
 {
 }
 
-be_visitor_sequence_cdr_op_ch::~be_visitor_sequence_cdr_op_ch (void)
+be_visitor_sequence_cdr_op_ch::~be_visitor_sequence_cdr_op_ch ()
 {
 }
 
@@ -66,7 +66,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
 
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.
-  if (tdef == 0)
+  if (tdef == nullptr)
     {
       *os << "\n\n#if !defined _TAO_CDR_OP_"
           << node->flat_name () << "_H_"
@@ -122,12 +122,12 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   *os << be_nl
       << be_global->core_versioning_end () << be_nl;
 
-  if (tdef == 0)
+  if (tdef == nullptr)
     {
       *os << "\n\n#endif /* _TAO_CDR_OP_"
           << node->flat_name () << "_H_ */";
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

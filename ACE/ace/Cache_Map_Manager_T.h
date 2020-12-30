@@ -196,7 +196,7 @@ public:
   size_t total_size (void) const;
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
@@ -295,7 +295,7 @@ public:
   IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -368,7 +368,7 @@ public:
   REVERSE_IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -16,7 +16,7 @@ be_visitor_valuebox_cs::be_visitor_valuebox_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuebox_cs::~be_visitor_valuebox_cs (void)
+be_visitor_valuebox_cs::~be_visitor_valuebox_cs ()
 {
 }
 
@@ -94,7 +94,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // _copy_value method
   *os << "::CORBA::ValueBase *" << be_nl
-      << node->name () << "::_copy_value (void)" << be_nl
+      << node->name () << "::_copy_value ()" << be_nl
       << "{" << be_idt_nl
       << "::CORBA::ValueBase *result = 0;" << be_nl
       << "ACE_NEW_RETURN (" << be_idt_nl
@@ -106,7 +106,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
-      << node->name () << "::_tao_obv_repository_id (void) const"
+      << node->name () << "::_tao_obv_repository_id () const"
       << be_nl << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();" << be_uidt_nl
       << "}" << be_nl_2;
@@ -155,7 +155,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
     {
       *os << "// TAO extension - the virtual _type method." << be_nl;
       *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
+          << "::_tao_type () const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}" << be_nl_2;
@@ -180,7 +180,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   const char * unmarshal_arg;
   be_predefined_type *bpt = dynamic_cast<be_predefined_type*> (bt);
 
-  if (bpt != 0)
+  if (bpt != nullptr)
     {
       switch (bpt->pt())
         {
@@ -214,7 +214,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
           unmarshal_arg = "vb_object->_pd_value";
         }
     }
-  else if (dynamic_cast<be_array*> (bt) != 0)
+  else if (dynamic_cast<be_array*> (bt) != nullptr)
     {
       is_array = true;
       unmarshal_arg = "temp";
@@ -271,7 +271,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   *os << "return (strm >> ";
 
   be_string *str = dynamic_cast<be_string*> (bt);
-  if (str != 0 &&
+  if (str != nullptr &&
       str->max_size ()->ev ()->u.ulval != 0)
     {
       if (str->width () == (long) sizeof (char))
@@ -450,7 +450,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   // generation for it.
   be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_valuebox_cs::"
@@ -721,7 +721,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
 }
 
 void
-be_visitor_valuebox_cs::emit_destructor (void)
+be_visitor_valuebox_cs::emit_destructor ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -729,7 +729,7 @@ be_visitor_valuebox_cs::emit_destructor (void)
   be_decl * const vb_node = this->ctx_->node ();
 
   // Protected destructor
-  os << vb_node->name () << "::~" << vb_node->local_name () << " (void)"
+  os << vb_node->name () << "::~" << vb_node->local_name () << " ()"
      << be_nl << "{" << be_nl << "}" << be_nl_2;
 }
 

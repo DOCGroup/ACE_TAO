@@ -15,7 +15,7 @@ be_visitor_interface_cs::be_visitor_interface_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_interface_cs::~be_visitor_interface_cs (void)
+be_visitor_interface_cs::~be_visitor_interface_cs ()
 {
 }
 
@@ -27,7 +27,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       return 0;
     }
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Set the right type.
   if (this->ctx_->alias ())
@@ -83,7 +83,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
       *os << be_nl_2
           << node->name () << "_ptr" << be_nl
-          << "TAO::Objref_Traits<" << node->name () << ">::nil (void)"
+          << "TAO::Objref_Traits<" << node->name () << ">::nil ()"
           << be_nl
           << "{" << be_idt_nl
           << "return " << node->name () << "::_nil ();" << be_uidt_nl
@@ -99,7 +99,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "return ";
 
 
-      if (node->is_abstract () || c != 0)
+      if (node->is_abstract () || c != nullptr)
         {
           *os << "cdr << p;";
         }
@@ -129,12 +129,12 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "  return false;" << be_nl
           << "}" << be_nl << be_nl
           << "TAO_Cached_Policy_Type" << be_nl
-          << "CORBA::Policy::_tao_cached_type (void) const" << be_nl
+          << "CORBA::Policy::_tao_cached_type () const" << be_nl
           << "{" << be_nl
             << "return TAO_CACHED_POLICY_UNCACHED;" << be_nl
           << "}" << be_nl << be_nl
           << "TAO_Policy_Scope" << be_nl
-          << "CORBA::Policy::_tao_scope (void) const" << be_nl
+          << "CORBA::Policy::_tao_scope () const" << be_nl
           << "{" << be_nl
           << "  return TAO_POLICY_DEFAULT_SCOPE;" << be_nl
           << "}" << be_nl;
@@ -189,7 +189,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl_2
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl
+          << " ()" << be_nl
           << "{}";
     }
 
@@ -197,7 +197,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     {
       *os << be_nl_2
           << node->name () << "::" << node->local_name ()
-          << " (void)" << be_nl;
+          << " ()" << be_nl;
 
       *os << "{" << be_nl;
 
@@ -206,7 +206,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   *os << be_nl_2
       << node->name () << "::~" << node->local_name ()
-      << " (void)" << be_nl;
+      << " ()" << be_nl;
   *os << "{" << be_nl << "}" << be_nl_2;
 
   bool gen_any_destructor =
@@ -230,7 +230,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (node->has_mixed_parentage ())
     {
       *os << "void" << be_nl
-          << node->name () << "::_add_ref (void)" << be_nl
+          << node->name () << "::_add_ref ()" << be_nl
           << "{" << be_idt_nl
           << "this->::CORBA::Object::_add_ref ();"
           << be_uidt_nl
@@ -248,7 +248,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
     }
 
   // The _unchecked_narrow method, not for components.
-  if (c == 0 && ! this->gen_xxx_narrow ("unchecked_narrow", node))
+  if (c == nullptr && ! this->gen_xxx_narrow ("unchecked_narrow", node))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_interface_cs::")
@@ -260,7 +260,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   // The _nil method
   *os << node->full_name () << "_ptr" << be_nl
-      << node->full_name () << "::_nil (void)"
+      << node->full_name () << "::_nil ()"
       << be_nl
       << "{" << be_idt_nl
       << "return nullptr;" << be_uidt_nl
@@ -280,7 +280,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   // The _tao_release method
-  if (c == 0)
+  if (c == nullptr)
     {
       *os << "void" << be_nl
           << node->full_name () << "::_tao_release ("
@@ -308,7 +308,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
                         -1);
     }
 
-  *os << ")" << be_nl
+  *os << ")" << be_uidt_nl
       << "{" << be_idt_nl
       << "return true; // success using local knowledge" << be_uidt_nl
       << "}" << be_uidt_nl
@@ -328,7 +328,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
       << "}" << be_nl_2;
 
   *os << "const char* " << node->full_name ()
-      << "::_interface_repository_id (void) const"
+      << "::_interface_repository_id () const"
       << be_nl
       << "{" << be_idt_nl
       << "return \"" << node->repoID ()
@@ -338,7 +338,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
   if (be_global->gen_static_desc_operations ())
     {
       *os << be_nl_2 << "const char* " << node->full_name ()
-          << "::_desc_repository_id (void)"
+          << "::_desc_repository_id ()"
           << be_nl
           << "{" << be_idt_nl
           << "return \"" << node->repoID ()
@@ -346,7 +346,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
           << "}";
 
       *os << be_nl_2 << "const char* " << node->full_name ()
-          << "::_desc_interface_name (void)"
+          << "::_desc_interface_name ()"
           << be_nl
           << "{" << be_idt_nl
           << "return \"" << node->local_name()
@@ -471,7 +471,7 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
     }
   else
     {
-      *os << "return" << be_idt_nl;
+      *os << "return ";
 
       if (!node->is_abstract ())
         {
@@ -484,18 +484,17 @@ be_visitor_interface_cs::gen_xxx_narrow (const char *pre,
               << node->local_name () << ">::" << pre <<" (";
         }
 
-      *os << be_idt << be_idt_nl
-          << "_tao_objref";
+      *os << "_tao_objref";
 
       if (ACE_OS::strcmp (pre, "narrow") == 0)
         {
-          *os << "," << be_nl
+          *os << ", "
               << "\"" << node->repoID () << "\"";
         }
 
       *os << ");";
 
-      *os << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      *os << be_uidt_nl
           << "}" << be_nl_2;
     }
 
@@ -584,7 +583,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
       return 0;
     }
 
-  AST_Decl *d = 0;
+  AST_Decl *d = nullptr;
   be_visitor_context ctx;
   ctx.stream (os);
 
@@ -594,7 +593,7 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
     {
       d = si.item ();
 
-      if (d == 0)
+      if (d == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_visitor_interface_cs::"
@@ -605,10 +604,10 @@ be_visitor_interface_cs::gen_abstract_ops_helper (be_interface *node,
 
       if (d->node_type () == AST_Decl::NT_op)
         {
-          UTL_ScopedName *item_new_name  = 0;
+          UTL_ScopedName *item_new_name  = nullptr;
           ACE_NEW_RETURN (item_new_name,
                           UTL_ScopedName (d->local_name ()->copy (),
-                                          0),
+                                          nullptr),
                           -1);
 
           UTL_ScopedName *new_op_name =

@@ -59,11 +59,11 @@ public:
 
   /// Helper function to register the default action into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
@@ -84,7 +84,7 @@ public:
 protected:
   // = Override the default definition in the Message_Queue, to count
   // the number of messages (and not their size).
-  virtual bool is_full_i (void);
+  virtual bool is_full_i ();
 };
 
 /**
@@ -106,7 +106,7 @@ public:
 #endif
 
   /// Process the events in the queue.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
@@ -138,10 +138,10 @@ public:
                            ACE_Allocator *mb_allocator = 0);
 
   /// Destructor
-  virtual ~TAO_EC_Dispatch_Command (void);
+  virtual ~TAO_EC_Dispatch_Command ();
 
   /// Command callback
-  virtual int execute (void) = 0;
+  virtual int execute () = 0;
 };
 
 // ****************************************************************
@@ -153,7 +153,7 @@ public:
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = 0);
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 };
 
 // ****************************************************************
@@ -169,10 +169,10 @@ public:
                        ACE_Allocator *mb_allocator);
 
   /// Destructor
-  virtual ~TAO_EC_Push_Command (void);
+  virtual ~TAO_EC_Push_Command ();
 
   /// Command callback
-  virtual int execute (void);
+  virtual int execute ();
 
 private:
   /// The proxy

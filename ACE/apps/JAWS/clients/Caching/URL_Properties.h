@@ -113,7 +113,7 @@ public:
   size_t decode (void *buf);
 
   /// Dump out this object for debug.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Property name pointer.
@@ -184,7 +184,7 @@ public:
   size_t decode (void *buf);
 
   /// Dump this object for debug.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// URL of this offer.

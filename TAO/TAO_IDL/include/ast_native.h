@@ -15,10 +15,10 @@ class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 public:
   AST_Native (UTL_ScopedName *n);
 
-  virtual ~AST_Native (void);
+  virtual ~AST_Native ();
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

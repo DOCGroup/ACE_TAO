@@ -16,7 +16,7 @@ be_visitor_union_ch::be_visitor_union_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_union_ch::~be_visitor_union_ch (void)
+be_visitor_union_ch::~be_visitor_union_ch ()
 {
 }
 
@@ -49,11 +49,11 @@ int be_visitor_union_ch::visit_union (be_union *node)
       << "public:" << be_idt_nl
 
     // Generate default and copy constructors.
-      << node->local_name () << " (void);" << be_nl
+      << node->local_name () << " ();" << be_nl
       << node->local_name () << " (const " << node->local_name ()
       << " &);" << be_nl
     // Generate destructor.
-      << "~" << node->local_name () << " (void);";
+      << "~" << node->local_name () << " ();";
 
     // Generate assignment operator.
   *os << be_nl_2
@@ -123,7 +123,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.
       *os << be_nl_2
-          << "void _default (void);";
+          << "void _default ();";
     }
 
   *os << be_uidt_nl;
@@ -154,7 +154,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
   // The reset method (TAO extension).
   *os << be_nl_2
       << "/// TAO extension - frees any allocated storage." << be_nl;
-  *os << "void _reset (void);";
+  *os << "void _reset ();";
 
   *os << be_uidt_nl << "};";
 

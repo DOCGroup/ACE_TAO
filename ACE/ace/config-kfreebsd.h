@@ -11,9 +11,6 @@
 /* Uses ctime_r & asctime_r with only two parameters vs. three. */
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
 
-/* Define to 1 if platform has 3 parameter readdir_r() */
-#define ACE_HAS_3_PARAM_READDIR_R 1
-
 /* Define to 1 if platform has 3 parameter wcstok() */
 #define ACE_HAS_3_PARAM_WCSTOK 1
 

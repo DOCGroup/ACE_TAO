@@ -6,7 +6,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete (void)
+TAO_LF_Strategy_Complete::~TAO_LF_Strategy_Complete ()
 {
 }
 

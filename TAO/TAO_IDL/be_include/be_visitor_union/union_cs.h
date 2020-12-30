@@ -29,7 +29,7 @@ public:
   be_visitor_union_cs (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_union_cs (void);
+  ~be_visitor_union_cs ();
 
   /// visit union. We provide code for this method in the derived class
   virtual int visit_union (be_union *node);

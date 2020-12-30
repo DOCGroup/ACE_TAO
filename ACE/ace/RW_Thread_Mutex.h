@@ -41,7 +41,7 @@ public:
                        void *arg = 0);
 
   /// Default dtor.
-  ~ACE_RW_Thread_Mutex (void);
+  ~ACE_RW_Thread_Mutex ();
 
   /**
    * Conditionally upgrade a read lock to a write lock.  This only
@@ -51,10 +51,10 @@ public:
    * already possess this lock as a read lock (but this condition is
    * not checked by the current implementation).
    */
-  int tryacquire_write_upgrade (void);
+  int tryacquire_write_upgrade ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

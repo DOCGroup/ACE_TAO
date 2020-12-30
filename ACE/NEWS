@@ -2,7 +2,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
 =====================================================
 
 . C++11 is now a mandatory compiler feature which is
-  required for ACE
+  required for ACE. Cleaned up part of the support for compilers
+  that lack C++11 support
 
 . When valgrind is enabled we don't disable dlclose anymore,
   this reduces the amount of leaks reported related to dlclose.
@@ -10,6 +11,17 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
   you can use `--keep-debuginfo=yes` as valgrind options as alternative
   or you can disable dlclose yourself by adding
   `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
+
+. Removed `ACE_OS::readdir_r`. `readdir_r` was marked as depracated in glibc
+  and FreeBSD libc. Also removed `ACE_Dirent::read (ACE_DIRENT *, ACE_DIRENT **)`
+  which used it. `ACE_LACKS_READDIR_R` will now always be defined.
+
+. Modernized part of the code using clang-type, added override, use nullptr,
+  use unique_ptr, remove redundant void, use bool, simplify boolean expressions,
+  make use of std::atomic, use using
+
+. New Latest_ACE7TAO3_ branches which can be used to always checkout the
+  latest ACE7/TAO3 micro/minor release
 
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================

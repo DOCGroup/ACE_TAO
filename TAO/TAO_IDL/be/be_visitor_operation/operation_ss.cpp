@@ -16,7 +16,7 @@ be_visitor_operation_ss::be_visitor_operation_ss (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_ss::~be_visitor_operation_ss (void)
+be_visitor_operation_ss::~be_visitor_operation_ss ()
 {
 }
 
@@ -30,7 +30,7 @@ be_visitor_operation_ss::visit_operation (be_operation * node)
     }
 
   TAO_OutStream *os = this->ctx_->stream ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   this->ctx_->node (node);
 
@@ -129,7 +129,7 @@ be_visitor_operation_ss::gen_skel_operation_body (be_operation * node,
 
   be_interface *intf = dynamic_cast<be_interface*> (s);
 
-  if (intf == 0)
+  if (intf == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_operation_ss::")

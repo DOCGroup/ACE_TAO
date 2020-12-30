@@ -14,10 +14,10 @@ public:
   AST_UnionFwd (AST_Union *dummy,
                 UTL_ScopedName *n);
 
-  virtual ~AST_UnionFwd (void);
+  virtual ~AST_UnionFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

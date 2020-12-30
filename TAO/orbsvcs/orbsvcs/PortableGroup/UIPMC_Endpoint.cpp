@@ -16,7 +16,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (void)
+TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint ()
   : TAO_Endpoint (IOP::TAG_UIPMC),
     host_ (),
     port_ (0),
@@ -55,7 +55,7 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
   this->update_object_addr ();
 }
 
-TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint (void)
+TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint ()
 {
   delete this->next_;
 }
@@ -72,7 +72,7 @@ TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
 }
 
 const char *
-TAO_UIPMC_Endpoint::host (void) const
+TAO_UIPMC_Endpoint::host () const
 {
   return this->host_.in ();
 }
@@ -112,13 +112,13 @@ TAO_UIPMC_Endpoint::addr_to_string (char *buffer, size_t length)
 }
 
 TAO_Endpoint *
-TAO_UIPMC_Endpoint::next (void)
+TAO_UIPMC_Endpoint::next ()
 {
   return this->next_;
 }
 
 TAO_Endpoint *
-TAO_UIPMC_Endpoint::duplicate (void)
+TAO_UIPMC_Endpoint::duplicate ()
 {
   TAO_UIPMC_Endpoint *endpoint = 0;
 
@@ -144,7 +144,7 @@ TAO_UIPMC_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
 }
 
 CORBA::ULong
-TAO_UIPMC_Endpoint::hash (void)
+TAO_UIPMC_Endpoint::hash ()
 {
   if (this->hash_val_ != 0)
     return this->hash_val_;
@@ -239,14 +239,14 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 }
 
 bool
-TAO_UIPMC_Endpoint::is_preferred_network (void) const
+TAO_UIPMC_Endpoint::is_preferred_network () const
 {
   return (this->preferred_path_.host.in () != 0 &&
           this->preferred_path_.host.in ()[0] != 0);
 }
 
 const char *
-TAO_UIPMC_Endpoint::preferred_network (void) const
+TAO_UIPMC_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();
 }

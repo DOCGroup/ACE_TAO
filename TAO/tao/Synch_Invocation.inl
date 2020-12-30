@@ -12,7 +12,7 @@ namespace TAO
   }
 
   ACE_INLINE
-  Reply_Guard::~Reply_Guard (void)
+  Reply_Guard::~Reply_Guard ()
   {
 #if TAO_HAS_INTERCEPTORS == 1
     this->invocation_->invoke_status (this->status_);

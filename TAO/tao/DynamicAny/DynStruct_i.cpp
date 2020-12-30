@@ -16,7 +16,7 @@ TAO_DynStruct_i::TAO_DynStruct_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynStruct_i::~TAO_DynStruct_i (void)
+TAO_DynStruct_i::~TAO_DynStruct_i ()
 {
 }
 
@@ -34,7 +34,7 @@ TAO_DynStruct_i::check_typecode (CORBA::TypeCode_ptr tc)
 }
 
 void
-TAO_DynStruct_i::init_common (void)
+TAO_DynStruct_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -179,7 +179,7 @@ TAO_DynStruct_i::_narrow (CORBA::Object_ptr _tao_objref)
 // ****************************************************************
 
 DynamicAny::FieldName
-TAO_DynStruct_i::current_member_name (void)
+TAO_DynStruct_i::current_member_name ()
 {
   if (this->destroyed_)
     {
@@ -208,7 +208,7 @@ TAO_DynStruct_i::current_member_name (void)
 
 // Returns the unaliased TCKind.
 CORBA::TCKind
-TAO_DynStruct_i::current_member_kind (void)
+TAO_DynStruct_i::current_member_kind ()
 {
   if (this->destroyed_)
     {
@@ -238,7 +238,7 @@ TAO_DynStruct_i::current_member_kind (void)
 }
 
 DynamicAny::NameValuePairSeq *
-TAO_DynStruct_i::get_members (void)
+TAO_DynStruct_i::get_members ()
 {
   if (this->destroyed_)
     {
@@ -334,7 +334,7 @@ TAO_DynStruct_i::set_members (const DynamicAny::NameValuePairSeq & values)
 }
 
 DynamicAny::NameDynAnyPairSeq *
-TAO_DynStruct_i::get_members_as_dyn_any (void)
+TAO_DynStruct_i::get_members_as_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -506,7 +506,7 @@ TAO_DynStruct_i::from_any (const CORBA::Any & any)
 }
 
 CORBA::Any_ptr
-TAO_DynStruct_i::to_any (void)
+TAO_DynStruct_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -615,7 +615,7 @@ TAO_DynStruct_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynStruct_i::destroy (void)
+TAO_DynStruct_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -637,7 +637,7 @@ TAO_DynStruct_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynStruct_i::current_component (void)
+TAO_DynStruct_i::current_component ()
 {
   if (this->destroyed_)
     {

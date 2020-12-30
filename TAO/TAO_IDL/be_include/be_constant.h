@@ -32,7 +32,7 @@ public:
   virtual int accept (be_visitor *visitor);
 
   //Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 };
 
 #endif // if !defined

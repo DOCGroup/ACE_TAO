@@ -170,9 +170,10 @@ private:
    */
   bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
 
-  /// Disallow copying and assignment since we don't handle them.
-  ACE_DLL_Handle (const ACE_DLL_Handle &);
-  void operator= (const ACE_DLL_Handle &);
+  ACE_DLL_Handle (const ACE_DLL_Handle &) = delete;
+  void operator= (const ACE_DLL_Handle &) = delete;
+  ACE_DLL_Handle (ACE_DLL_Handle &&) = delete;
+  void operator= (ACE_DLL_Handle &&) = delete;
 
 private:
   /// Keep track of how many ACE_DLL objects have a reference to this
@@ -288,9 +289,10 @@ private:
   /// Close the singleton instance.
   static void close_singleton (void);
 
-  /// Disallow copying and assignment since we don't handle these.
-  ACE_DLL_Manager (const ACE_DLL_Manager &);
-  void operator= (const ACE_DLL_Manager &);
+  ACE_DLL_Manager (const ACE_DLL_Manager &) = delete;
+  void operator= (const ACE_DLL_Manager &) = delete;
+  ACE_DLL_Manager (ACE_DLL_Manager &&) = delete;
+  void operator= (ACE_DLL_Manager &&) = delete;
 
 private:
   /// Vector containing all loaded handle objects.

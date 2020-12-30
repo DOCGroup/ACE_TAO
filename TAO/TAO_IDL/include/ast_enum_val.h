@@ -78,7 +78,7 @@ public:
   AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
 
-  virtual ~AST_EnumVal (void);
+  virtual ~AST_EnumVal ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

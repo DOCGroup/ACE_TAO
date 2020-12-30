@@ -17,7 +17,7 @@ be_visitor_operation_tie_ss::be_visitor_operation_tie_ss (
 {
 }
 
-be_visitor_operation_tie_ss::~be_visitor_operation_tie_ss (void)
+be_visitor_operation_tie_ss::~be_visitor_operation_tie_ss ()
 {
 }
 
@@ -129,7 +129,7 @@ int be_visitor_operation_tie_ss::visit_operation (be_operation *node)
 
   be_predefined_type *pdt = dynamic_cast<be_predefined_type*> (bt);
 
-  if (pdt == 0 || pdt->pt () != AST_PredefinedType::PT_void)
+  if (pdt == nullptr || pdt->pt () != AST_PredefinedType::PT_void)
     {
       *os << "return ";
     }

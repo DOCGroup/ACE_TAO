@@ -76,10 +76,10 @@ public:
   TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
-  virtual ~TAO_Acceptor (void);
+  virtual ~TAO_Acceptor ();
 
   /// The tag, each concrete class will have a specific tag value.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Set the amount of time to delay accepting new connections in the
   /// event that we encounter an error that may be transient.
@@ -104,7 +104,7 @@ public:
                             const char *options = 0) = 0;
 
   /// Closes the acceptor
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Create the corresponding profile for this endpoint.
@@ -125,7 +125,7 @@ public:
    * is used for determining how many profiles will be generated
    * for this acceptor.
    */
-  virtual CORBA::ULong endpoint_count (void) = 0;
+  virtual CORBA::ULong endpoint_count () = 0;
 
   /**
    * This method fetches the @a key from the @a profile. Protocols that
@@ -173,7 +173,7 @@ public:
   {
   }
 
-  virtual int handle_accept_error (void)
+  virtual int handle_accept_error ()
   {
     return this->acceptor_->handle_accept_error (this);
   }

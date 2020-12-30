@@ -19,7 +19,7 @@ be_visitor_exception_ctor_assign::be_visitor_exception_ctor_assign (
 {
 }
 
-be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign (void)
+be_visitor_exception_ctor_assign::~be_visitor_exception_ctor_assign ()
 {
 }
 
@@ -394,7 +394,7 @@ be_visitor_exception_ctor_assign::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

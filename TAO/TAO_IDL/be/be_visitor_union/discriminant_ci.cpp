@@ -17,7 +17,7 @@ be_visitor_union_discriminant_ci::be_visitor_union_discriminant_ci (
 {
 }
 
-be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci (void)
+be_visitor_union_discriminant_ci::~be_visitor_union_discriminant_ci ()
 {
 }
 
@@ -26,7 +26,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
 {
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -100,7 +100,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
@@ -116,7 +116,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   be_union *bu =
     dynamic_cast<be_union*> (this->ctx_->node ());
 
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   if (this->ctx_->alias ())
     {
@@ -210,7 +210,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
   *os << "// Accessor to get the discriminant." << be_nl
       << "ACE_INLINE" << be_nl
       << "::" << bt->name () << be_nl
-      << bu->name () << "::_d (void) const" << be_nl
+      << bu->name () << "::_d () const" << be_nl
       << "{" << be_idt_nl
       << "return this->disc_;" << be_uidt_nl
       << "}";
@@ -235,6 +235,6 @@ be_visitor_union_discriminant_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }

@@ -456,21 +456,21 @@ TAO_GIOP_Message_Generator_Parser_10::parse_locate_reply (
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::major_version (void) const
+TAO_GIOP_Message_Generator_Parser_10::major_version () const
 {
   // Any harm in hardcoding??
   return static_cast<CORBA::Octet> (1);
 }
 
 CORBA::Octet
-TAO_GIOP_Message_Generator_Parser_10::minor_version (void) const
+TAO_GIOP_Message_Generator_Parser_10::minor_version () const
 {
   // Any harm in hardcoding??
   return 0;
 }
 
 size_t
-TAO_GIOP_Message_Generator_Parser_10::fragment_header_length (void) const
+TAO_GIOP_Message_Generator_Parser_10::fragment_header_length () const
 {
   return 0;
 }

@@ -16,7 +16,7 @@ be_visitor_constant_ch::be_visitor_constant_ch (be_visitor_context *ctx)
 {
 }
 
-be_visitor_constant_ch::~be_visitor_constant_ch (void)
+be_visitor_constant_ch::~be_visitor_constant_ch ()
 {
 }
 
@@ -43,7 +43,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
   AST_Expression::ExprType etype = node->et ();
   AST_Decl::NodeType snt = node->defined_in ()->scope_node_type ();
 
-  if (tdef != 0)
+  if (tdef != nullptr)
     {
       nt = tdef->node_type ();
       be_typedef *td = dynamic_cast<be_typedef*> (tdef);

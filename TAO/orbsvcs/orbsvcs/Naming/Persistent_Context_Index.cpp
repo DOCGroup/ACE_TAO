@@ -92,7 +92,7 @@ TAO_Persistent_Context_Index::TAO_Persistent_Context_Index
 {
 }
 
-TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
+TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index ()
 {
   delete allocator_;
   delete context_impl_factory_;
@@ -100,19 +100,19 @@ TAO_Persistent_Context_Index::~TAO_Persistent_Context_Index (void)
 }
 
 ACE_Allocator*
-TAO_Persistent_Context_Index::allocator (void)
+TAO_Persistent_Context_Index::allocator ()
 {
   return allocator_;
 }
 
 CosNaming::NamingContext_ptr
-TAO_Persistent_Context_Index::root_context (void)
+TAO_Persistent_Context_Index::root_context ()
 {
   return CosNaming::NamingContext::_duplicate (root_context_.in ());
 }
 
 CORBA::ORB_ptr
-TAO_Persistent_Context_Index::orb (void)
+TAO_Persistent_Context_Index::orb ()
 {
   return orb_.in ();
 }
@@ -160,7 +160,7 @@ TAO_Persistent_Context_Index::init (size_t context_size)
 }
 
 int
-TAO_Persistent_Context_Index::recreate_all (void)
+TAO_Persistent_Context_Index::recreate_all ()
 {
   CONTEXT_INDEX::ITERATOR *index_iter = 0;
 
@@ -239,7 +239,7 @@ TAO_Persistent_Context_Index::create_naming_context_impl (
 }
 
 int
-TAO_Persistent_Context_Index::create_index (void)
+TAO_Persistent_Context_Index::create_index ()
 {
   // Make sure that the file name is of the legal length.
   if (ACE_OS::strlen (index_file_) >= MAXNAMELEN + MAXPATHLEN)

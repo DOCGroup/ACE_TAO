@@ -23,7 +23,7 @@ be_visitor_operation_argument::be_visitor_operation_argument (
 {
 }
 
-be_visitor_operation_argument::~be_visitor_operation_argument (void)
+be_visitor_operation_argument::~be_visitor_operation_argument ()
 {
 }
 
@@ -89,7 +89,7 @@ be_visitor_operation_argument::visit_argument (be_argument *node)
   be_operation *op =
     dynamic_cast<be_operation*> (this->ctx_->scope ());
 
-  if (op == 0)
+  if (op == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_arglist::"

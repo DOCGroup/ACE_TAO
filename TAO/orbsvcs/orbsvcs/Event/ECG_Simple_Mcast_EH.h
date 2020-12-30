@@ -50,7 +50,7 @@ public:
   TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   /// Destructor.
-  virtual ~TAO_ECG_Simple_Mcast_EH (void);
+  virtual ~TAO_ECG_Simple_Mcast_EH ();
 
   /// Join the specified multicast group and register itself with the
   /// reactor.
@@ -62,7 +62,7 @@ public:
 
   /// TAO_ECG_Handler_Shutdown method.
   /// Unsubscribe from the reactor and close the datagram.
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Main method - reactor callback.  Notify <receiver_> that

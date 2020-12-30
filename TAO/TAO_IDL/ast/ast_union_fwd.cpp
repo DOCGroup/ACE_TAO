@@ -23,7 +23,7 @@ AST_UnionFwd::AST_UnionFwd (AST_Union *dummy,
 {
 }
 
-AST_UnionFwd::~AST_UnionFwd (void)
+AST_UnionFwd::~AST_UnionFwd ()
 {
 }
 
@@ -44,7 +44,7 @@ AST_UnionFwd::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_UnionFwd::destroy (void)
+AST_UnionFwd::destroy ()
 {
   this->AST_StructureFwd::destroy ();
 }

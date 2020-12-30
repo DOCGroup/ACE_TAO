@@ -18,7 +18,7 @@ be_visitor_connector_ami_exs::be_visitor_connector_ami_exs (
 {
 }
 
-be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs (void)
+be_visitor_connector_ami_exs::~be_visitor_connector_ami_exs ()
 {
 }
 
@@ -69,14 +69,14 @@ be_visitor_connector_ami_exs::visit_connector (be_connector *node)
 }
 
 void
-be_visitor_connector_ami_exs::gen_entrypoint (void)
+be_visitor_connector_ami_exs::gen_entrypoint ()
 {
   AST_Decl *s = ScopeAsDecl (this->node_->defined_in ());
 
   os_ << be_nl_2
       << "extern \"C\" ::Components::EnterpriseComponent_ptr"
       << be_nl
-      << "create_" << s->flat_name () << "_Impl (void)" << be_nl
+      << "create_" << s->flat_name () << "_Impl ()" << be_nl
       << "{" << be_idt_nl
       << "::Components::EnterpriseComponent_ptr retval ="
       << be_idt_nl

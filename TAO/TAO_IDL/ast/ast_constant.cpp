@@ -119,7 +119,7 @@ AST_Constant::exprtype_to_string (AST_Expression::ExprType et)
       break;
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl::NodeType const
@@ -135,7 +135,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n),
     pd_constant_value (v),
     pd_et (t),
-    ifr_added_ (0)
+    ifr_added_ (false)
 {
 }
 
@@ -148,7 +148,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
               n),
     pd_constant_value (v),
     pd_et (t),
-    ifr_added_ (0)
+    ifr_added_ (false)
 {
   // Avoids a truncation warning on MSVC when assigning a decimal
   // literal to a float constant. Must also check that the input
@@ -171,7 +171,7 @@ AST_Constant::AST_Constant (AST_Expression::ExprType t,
     }
 }
 
-AST_Constant::~AST_Constant (void)
+AST_Constant::~AST_Constant ()
 {
 }
 
@@ -199,13 +199,13 @@ AST_Constant::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Constant::destroy (void)
+AST_Constant::destroy ()
 {
-  if (this->pd_constant_value != 0)
+  if (this->pd_constant_value != nullptr)
     {
       this->pd_constant_value->destroy ();
       delete this->pd_constant_value;
-      this->pd_constant_value = 0;
+      this->pd_constant_value = nullptr;
     }
 
   this->AST_Decl::destroy ();
@@ -214,19 +214,19 @@ AST_Constant::destroy (void)
 // Data accessors.
 
 AST_Expression *
-AST_Constant::constant_value (void)
+AST_Constant::constant_value ()
 {
   return this->pd_constant_value;
 }
 
 AST_Expression::ExprType
-AST_Constant::et (void)
+AST_Constant::et ()
 {
   return this->pd_et;
 }
 
 bool
-AST_Constant::ifr_added (void)
+AST_Constant::ifr_added ()
 {
   return this->ifr_added_;
 }
@@ -238,7 +238,7 @@ AST_Constant::ifr_added (bool val)
 }
 
 const char *
-AST_Constant::exprtype_to_string (void)
+AST_Constant::exprtype_to_string ()
 {
   switch (this->pd_et)
     {
@@ -277,24 +277,24 @@ AST_Constant::exprtype_to_string (void)
     case AST_Expression::EV_fixed:
       return "Fixed";
     default:
-      return 0;
+      return nullptr;
     }
 
-  return 0;
+  return nullptr;
 }
 
 UTL_ScopedName *
-AST_Constant::enum_full_name (void)
+AST_Constant::enum_full_name ()
 {
   if (this->pd_et == AST_Expression::EV_enum)
     {
       UTL_Scope * const s = this->defined_in ();
       AST_Decl  * const d = s->lookup_by_name (this->pd_constant_value->n (),
-                                               1);
-      return (d ? (ScopeAsDecl (d->defined_in ()))->name () : 0);
+                                               true);
+      return (d ? (ScopeAsDecl (d->defined_in ()))->name () : nullptr);
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }

@@ -17,7 +17,7 @@ be_visitor_union_any_op_ch::be_visitor_union_any_op_ch (
 {
 }
 
-be_visitor_union_any_op_ch::~be_visitor_union_any_op_ch (void)
+be_visitor_union_any_op_ch::~be_visitor_union_any_op_ch ()
 {
 }
 
@@ -36,14 +36,14 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   AST_Decl *decl = node;
   if (decl->is_nested ())
     {
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
         {
-          be_interface *intf = 0;
+          be_interface *intf = nullptr;
           intf = dynamic_cast<be_interface*> (node->defined_in ());
           decl = intf;
         }
@@ -94,7 +94,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }
@@ -107,7 +107,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
       AST_Decl *d = si.item ();
 
       be_enum *e = dynamic_cast<be_enum*> (d);
-      if (e != 0)
+      if (e != nullptr)
         {
           be_visitor_enum_any_op_ch visitor (&ctx);
 
@@ -131,7 +131,7 @@ be_visitor_union_any_op_ch::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 

@@ -14,7 +14,7 @@ ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (
 
 template <class ACE_LOCKING_MECHANISM>
 ACE_INLINE
-ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter (void)
+ACE_Lock_Adapter<ACE_LOCKING_MECHANISM>::ACE_Lock_Adapter ()
   : lock_ (0),
     delete_lock_ (true)
 {

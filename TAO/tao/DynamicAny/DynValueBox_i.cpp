@@ -18,12 +18,12 @@ TAO_DynValueBox_i::TAO_DynValueBox_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValueBox_i::~TAO_DynValueBox_i (void)
+TAO_DynValueBox_i::~TAO_DynValueBox_i ()
 {
 }
 
 void
-TAO_DynValueBox_i::set_to_value (void)
+TAO_DynValueBox_i::set_to_value ()
 {
   if (CORBA::is_nil (this->boxed_.in ()))
     {
@@ -87,7 +87,7 @@ TAO_DynValueBox_i::_narrow (CORBA::Object_ptr _tao_objref)
 }
 
 CORBA::Any *
-TAO_DynValueBox_i::get_boxed_value (void)
+TAO_DynValueBox_i::get_boxed_value ()
 {
   if (this->destroyed_)
     {
@@ -127,7 +127,7 @@ TAO_DynValueBox_i::set_boxed_value (const CORBA::Any & boxed)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynValueBox_i::get_boxed_value_as_dyn_any (void)
+TAO_DynValueBox_i::get_boxed_value_as_dyn_any ()
 {
   if (this->destroyed_)
     {
@@ -216,7 +216,7 @@ TAO_DynValueBox_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynValueBox_i::destroy (void)
+TAO_DynValueBox_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -237,7 +237,7 @@ TAO_DynValueBox_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynValueBox_i::current_component (void)
+TAO_DynValueBox_i::current_component ()
 {
   if (this->destroyed_)
     {
@@ -324,7 +324,7 @@ TAO_DynValueBox_i::set_from_any (const CORBA::Any & any)
 }
 
 CORBA::Any_ptr
-TAO_DynValueBox_i::to_any (void)
+TAO_DynValueBox_i::to_any ()
 {
   if (this->destroyed_)
     {

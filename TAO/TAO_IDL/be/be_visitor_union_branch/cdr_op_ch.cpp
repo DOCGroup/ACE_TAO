@@ -16,7 +16,7 @@ be_visitor_union_branch_cdr_op_ch::be_visitor_union_branch_cdr_op_ch (
 {
 }
 
-be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch (void)
+be_visitor_union_branch_cdr_op_ch::~be_visitor_union_branch_cdr_op_ch ()
 {
 }
 
@@ -167,7 +167,7 @@ be_visitor_union_branch_cdr_op_ch::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

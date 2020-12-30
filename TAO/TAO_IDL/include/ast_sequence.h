@@ -81,30 +81,30 @@ public:
                 bool local,
                 bool abstract);
 
-  virtual ~AST_Sequence (void);
+  virtual ~AST_Sequence ();
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
-  AST_Expression *max_size (void);
+  AST_Expression *max_size ();
 
-  AST_Type *base_type (void) const;
+  AST_Type *base_type () const;
 
-  virtual bool unbounded (void) const;
+  virtual bool unbounded () const;
   // Is this sequence bounded or not.
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
 
   // Is the element type a forward declared struct or union
   // that hasn't yet been fully defined?
-  virtual bool is_defined (void);
+  virtual bool is_defined ();
 
   // Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);

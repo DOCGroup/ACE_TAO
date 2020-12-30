@@ -19,7 +19,7 @@ be_visitor_operation_upcall_command_ss::be_visitor_operation_upcall_command_ss (
 }
 
 be_visitor_operation_upcall_command_ss::~be_visitor_operation_upcall_command_ss (
-  void)
+  )
 {
 }
 
@@ -47,7 +47,7 @@ be_visitor_operation_upcall_command_ss::visit (
                         -1);
     }
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -59,7 +59,7 @@ be_visitor_operation_upcall_command_ss::visit (
     {
       module = dynamic_cast<be_module*> (intf->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_operation_")
@@ -134,7 +134,7 @@ be_visitor_operation_upcall_command_ss::visit (
      << "}" << be_nl_2;
 
   // Generate execute() method.
-  os << "virtual void execute (void)" << be_nl
+  os << "virtual void execute ()" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
@@ -200,7 +200,7 @@ be_visitor_operation_upcall_command_ss::visit (
   os << be_uidt_nl
      << "};";
 
-  if (module != 0)
+  if (module != nullptr)
     {
       be_util::gen_nested_namespace_end (&os, module);
     }
@@ -239,7 +239,7 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
           be_valuetype *value_type =
             dynamic_cast<be_valuetype*> (argument->field_type ());
 
-          if (value_type != 0)
+          if (value_type != nullptr)
             {
               static const char *excepholder = "ExceptionHolder";
               static const size_t excepholder_len =

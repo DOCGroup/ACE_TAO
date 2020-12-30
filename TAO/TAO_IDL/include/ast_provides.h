@@ -10,10 +10,10 @@ public:
   AST_Provides (UTL_ScopedName *n,
                 AST_Type *provides_type);
 
-  virtual ~AST_Provides (void);
+  virtual ~AST_Provides ();
 
   // Data Accessor.
-  AST_Type *provides_type (void) const;
+  AST_Type *provides_type () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -22,7 +22,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 };

@@ -15,14 +15,14 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK)
 
 void
-ACE_SOCK::dump (void) const
+ACE_SOCK::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_SOCK::ACE_SOCK (void)
+ACE_SOCK::ACE_SOCK ()
 {
   // ACE_TRACE ("ACE_SOCK::ACE_SOCK");
 }
@@ -69,7 +69,7 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
 // Close down a ACE_SOCK.
 
 int
-ACE_SOCK::close (void)
+ACE_SOCK::close ()
 {
   ACE_TRACE ("ACE_SOCK::close");
   int result = 0;

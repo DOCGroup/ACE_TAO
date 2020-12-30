@@ -68,7 +68,7 @@ void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
   }
 }
 
-void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer (void)
+void TAO_FTEC_ProxyPushConsumer::disconnect_push_consumer ()
 {
   if (Request_Context_Repository().is_executed_request())
     return;

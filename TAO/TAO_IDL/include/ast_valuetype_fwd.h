@@ -12,10 +12,10 @@ public:
   AST_ValueTypeFwd (AST_Interface *dummy,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ValueTypeFwd (void);
+  virtual ~AST_ValueTypeFwd ();
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &);

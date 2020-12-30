@@ -10,7 +10,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-Timer_Helper::Timer_Helper (void)
+Timer_Helper::Timer_Helper ()
   : clerk_ (0)
 {
 }
@@ -21,7 +21,7 @@ Timer_Helper::Timer_Helper (TAO_Time_Service_Clerk *clerk)
 
 }
 
-Timer_Helper::~Timer_Helper (void)
+Timer_Helper::~Timer_Helper ()
 {
 }
 

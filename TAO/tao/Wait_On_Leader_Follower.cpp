@@ -13,12 +13,12 @@ TAO_Wait_On_Leader_Follower::TAO_Wait_On_Leader_Follower
 {
 }
 
-TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower (void)
+TAO_Wait_On_Leader_Follower::~TAO_Wait_On_Leader_Follower ()
 {
 }
 
 int
-TAO_Wait_On_Leader_Follower::register_handler (void)
+TAO_Wait_On_Leader_Follower::register_handler ()
 {
   if (!this->is_registered_)
     {
@@ -29,7 +29,7 @@ TAO_Wait_On_Leader_Follower::register_handler (void)
 }
 
 bool
-TAO_Wait_On_Leader_Follower::non_blocking (void) const
+TAO_Wait_On_Leader_Follower::non_blocking () const
 {
   return true;
 }
@@ -57,7 +57,7 @@ TAO_Wait_On_Leader_Follower::wait (ACE_Time_Value *max_wait_time,
 }
 
 bool
-TAO_Wait_On_Leader_Follower::can_process_upcalls (void) const
+TAO_Wait_On_Leader_Follower::can_process_upcalls () const
 {
   return true;
 }

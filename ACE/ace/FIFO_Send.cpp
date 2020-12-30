@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FIFO_Send)
 
 void
-ACE_FIFO_Send::dump (void) const
+ACE_FIFO_Send::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Send::dump");
@@ -23,7 +23,7 @@ ACE_FIFO_Send::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_FIFO_Send::ACE_FIFO_Send (void)
+ACE_FIFO_Send::ACE_FIFO_Send ()
 {
 //  ACE_TRACE ("ACE_FIFO_Send::ACE_FIFO_Send");
 }

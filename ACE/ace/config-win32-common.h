@@ -241,7 +241,6 @@
 #define ACE_HAS_WIN32_GETVERSION
 
 /* LACKS dir-related facilities */
-#define ACE_LACKS_READDIR_R
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_TELLDIR

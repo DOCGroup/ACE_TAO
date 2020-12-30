@@ -78,7 +78,7 @@ ACE_Log_Record::priority_name (ACE_Log_Priority p,
 }
 
 u_long
-ACE_Log_Record::priority (void) const
+ACE_Log_Record::priority () const
 {
   ACE_TRACE ("ACE_Log_Record::priority");
 
@@ -99,7 +99,7 @@ ACE_Log_Record::priority (u_long p)
 }
 
 void
-ACE_Log_Record::dump (void) const
+ACE_Log_Record::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   // ACE_TRACE ("ACE_Log_Record::dump");
@@ -191,7 +191,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 }
 
 void
-ACE_Log_Record::round_up (void)
+ACE_Log_Record::round_up ()
 {
   // ACE_TRACE ("ACE_Log_Record::round_up");
   // Determine the length of the payload.
@@ -203,7 +203,7 @@ ACE_Log_Record::round_up (void)
   this->length_ = static_cast<ACE_UINT32> (len);
 }
 
-ACE_Log_Record::ACE_Log_Record (void)
+ACE_Log_Record::ACE_Log_Record ()
   : length_ (0),
     type_ (0),
     secs_ (0),

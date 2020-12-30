@@ -42,7 +42,7 @@ be_field::be_field (AST_Type *ft,
 }
 
 be_type *
-be_field::field_type (void) const
+be_field::field_type () const
 {
   return
     dynamic_cast<be_type*>  (
@@ -63,7 +63,7 @@ be_field::gen_member_ostream_operator (TAO_OutStream *os,
 }
 
 bool
-be_field::port_name_prefixed (void) const
+be_field::port_name_prefixed () const
 {
   return this->port_name_prefixed_;
 }
@@ -81,7 +81,7 @@ be_field::accept (be_visitor *visitor)
 }
 
 void
-be_field::destroy (void)
+be_field::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_Field::destroy ();

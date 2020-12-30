@@ -28,7 +28,7 @@ public:
   be_visitor_enum_ch (be_visitor_context *ctx);
 
   /// deenumor
-  ~be_visitor_enum_ch (void);
+  ~be_visitor_enum_ch ();
 
   /// visit enum.
   virtual int visit_enum (be_enum *node);

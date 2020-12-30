@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-  ExceptionHolder::ExceptionHolder (void) :
+  ExceptionHolder::ExceptionHolder () :
     data_ (0),
     count_ (0),
     char_translator_ (0),
@@ -47,7 +47,7 @@ namespace TAO
     this->count_ = exceptions_count;
   }
 
-  void ExceptionHolder::raise_exception (void)
+  void ExceptionHolder::raise_exception ()
     {
       TAO_InputCDR _tao_in ((const char*) this->marshaled_exception ().get_buffer (),
                             this->marshaled_exception ().length (),
@@ -138,7 +138,7 @@ namespace TAO
     }
 
   CORBA::ValueBase*
-  ExceptionHolder::_copy_value (void)
+  ExceptionHolder::_copy_value ()
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,
@@ -156,7 +156,7 @@ namespace TAO
   }
 
   CORBA::ValueBase *
-  ExceptionHolderFactory::create_for_unmarshal (void)
+  ExceptionHolderFactory::create_for_unmarshal ()
   {
     TAO::ExceptionHolder* ret_val = 0;
     ACE_NEW_THROW_EX (ret_val,

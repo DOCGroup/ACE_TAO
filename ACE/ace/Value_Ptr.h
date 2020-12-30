@@ -70,13 +70,13 @@ namespace ACE
     explicit Value_Ptr (T * p = 0) : p_ (p) { }
 
     /// Destructor.
-    ~Value_Ptr (void) { delete this->p_; }
+    ~Value_Ptr () { delete this->p_; }
 
     /// Deference operator.
-    T & operator* (void) const { return *this->p_; }
+    T & operator* () const { return *this->p_; }
 
     /// Pointer operator.
-    T * operator-> (void) const { return this->p_; }
+    T * operator-> () const { return this->p_; }
 
     /// Non-throwing swap operation used to make assignment strongly
     /// exception-safe.

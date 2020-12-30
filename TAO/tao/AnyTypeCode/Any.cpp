@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using namespace TAO;
 
-CORBA::Any::Any (void)
+CORBA::Any::Any ()
   : impl_ (0)
 {
 }
@@ -37,7 +37,7 @@ CORBA::Any::Any (const CORBA::Any &rhs)
     }
 }
 
-CORBA::Any::~Any (void)
+CORBA::Any::~Any ()
 {
   if (this->impl_ != 0)
     {
@@ -80,7 +80,7 @@ CORBA::Any::replace (TAO::Any_Impl *new_impl)
 }
 
 CORBA::TypeCode_ptr
-CORBA::Any::type (void) const
+CORBA::Any::type () const
 {
   if (this->impl_ != 0)
     {
@@ -91,7 +91,7 @@ CORBA::Any::type (void) const
 }
 
 CORBA::TypeCode_ptr
-CORBA::Any::_tao_get_typecode (void) const
+CORBA::Any::_tao_get_typecode () const
 {
   if (this->impl_ != 0)
     {
@@ -116,7 +116,7 @@ CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
 }
 
 int
-CORBA::Any::_tao_byte_order (void) const
+CORBA::Any::_tao_byte_order () const
 {
   if (this->impl_ != 0)
     {

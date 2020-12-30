@@ -3,7 +3,7 @@ Section: devel
 Priority: optional
 Maintainer: Debian ACE maintainers <team+ace@tracker.debian.org>
 Uploaders: Thomas Girard <thomas.g.girard@free.fr>, Johnny Willemsen <jwillemsen@remedy.nl>
-Build-Depends: debhelper-compat (=12), libssl-dev, libxt-dev (>= 4.3.0), libfltk1.1-dev (>= 1.1.4), tk-dev (>= 8.5), libfox-1.6-dev, docbook-to-man, libxerces-c-dev
+Build-Depends: debhelper-compat (=12), libssl-dev, libxt-dev (>= 4.3.0), libfltk1.3-dev, tk-dev (>= 8.5), libfox-1.6-dev, docbook-to-man, libxerces-c-dev
 Build-Depends-Indep: doxygen, graphviz
 Standards-Version: 4.5.0
 Vcs-Git: https://salsa.debian.org/debian/ace.git
@@ -304,7 +304,7 @@ Description: ACE-GUI reactor integration for FLTK
 Package: libace-flreactor-dev
 Architecture: any
 Section: libdevel
-Depends: libace-flreactor-6.5.12 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.1-dev (>= 1.1.4), ${misc:Depends}
+Depends: libace-flreactor-6.5.12 (= ${binary:Version}), libace-dev (= ${binary:Version}), libfltk1.3-dev, ${misc:Depends}
 Description: ACE-GUI reactor integration for FLTK - development files
  This package contains header files and static library for the ACE-FLTK
  reactor integration.

@@ -18,7 +18,7 @@ be_visitor_interface_svts::be_visitor_interface_svts (
 {
 }
 
-be_visitor_interface_svts::~be_visitor_interface_svts (void)
+be_visitor_interface_svts::~be_visitor_interface_svts ()
 {
 }
 

@@ -53,7 +53,7 @@ ACE_TSS<TYPE>::ts_value (void) const
 }
 # else
 template <class TYPE> ACE_INLINE TYPE *
-ACE_TSS<TYPE>::ts_value (void) const
+ACE_TSS<TYPE>::ts_value () const
 {
   void *temp = 0;
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)

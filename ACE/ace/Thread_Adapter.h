@@ -62,21 +62,21 @@ public:
    * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual ACE_THR_FUNC_RETURN invoke (void);
+  virtual ACE_THR_FUNC_RETURN invoke ();
 
   /// Accessor for the optional ACE_Thread_Manager.
-  ACE_Thread_Manager *thr_mgr (void);
+  ACE_Thread_Manager *thr_mgr ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Ensure that this object must be allocated on the heap.
-  ~ACE_Thread_Adapter (void);
+  ~ACE_Thread_Adapter ();
 
 private:
   /// Called by invoke, mainly here to separate the SEH stuff because
   /// SEH on Win32 doesn't compile with local vars with destructors.
-  virtual ACE_THR_FUNC_RETURN invoke_i (void);
+  virtual ACE_THR_FUNC_RETURN invoke_i ();
 
 private:
   /// Optional thread manager.

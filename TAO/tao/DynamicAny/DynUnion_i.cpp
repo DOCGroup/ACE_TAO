@@ -18,12 +18,12 @@ TAO_DynUnion_i::TAO_DynUnion_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynUnion_i::~TAO_DynUnion_i (void)
+TAO_DynUnion_i::~TAO_DynUnion_i ()
 {
 }
 
 void
-TAO_DynUnion_i::init_common (void)
+TAO_DynUnion_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;
@@ -283,7 +283,7 @@ TAO_DynUnion_i::set_from_any (const CORBA::Any & any)
 // ****************************************************************
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::get_discriminator (void)
+TAO_DynUnion_i::get_discriminator ()
 {
   if (this->destroyed_)
     {
@@ -425,7 +425,7 @@ TAO_DynUnion_i::set_discriminator (DynamicAny::DynAny_ptr value)
 }
 
 void
-TAO_DynUnion_i::set_to_default_member (void)
+TAO_DynUnion_i::set_to_default_member ()
 {
   if (this->destroyed_)
     {
@@ -468,7 +468,7 @@ TAO_DynUnion_i::set_to_default_member (void)
 }
 
 void
-TAO_DynUnion_i::set_to_no_active_member (void)
+TAO_DynUnion_i::set_to_no_active_member ()
 {
   if (this->destroyed_)
     {
@@ -517,7 +517,7 @@ TAO_DynUnion_i::set_to_no_active_member (void)
 }
 
 CORBA::Boolean
-TAO_DynUnion_i::has_no_active_member (void)
+TAO_DynUnion_i::has_no_active_member ()
 {
   if (this->destroyed_)
     {
@@ -529,7 +529,7 @@ TAO_DynUnion_i::has_no_active_member (void)
 }
 
 CORBA::TCKind
-TAO_DynUnion_i::discriminator_kind (void)
+TAO_DynUnion_i::discriminator_kind ()
 {
   if (this->destroyed_)
     {
@@ -543,7 +543,7 @@ TAO_DynUnion_i::discriminator_kind (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::member (void)
+TAO_DynUnion_i::member ()
 {
   if (this->destroyed_)
     {
@@ -566,7 +566,7 @@ TAO_DynUnion_i::member (void)
 }
 
 char *
-TAO_DynUnion_i::member_name (void)
+TAO_DynUnion_i::member_name ()
 {
   if (this->destroyed_)
     {
@@ -587,7 +587,7 @@ TAO_DynUnion_i::member_name (void)
 }
 
 CORBA::TCKind
-TAO_DynUnion_i::member_kind (void)
+TAO_DynUnion_i::member_kind ()
 {
   if (this->destroyed_)
     {
@@ -640,7 +640,7 @@ TAO_DynUnion_i::from_any (const CORBA::Any& any)
 }
 
 CORBA::Any_ptr
-TAO_DynUnion_i::to_any (void)
+TAO_DynUnion_i::to_any ()
 {
   if (this->destroyed_)
     {
@@ -770,7 +770,7 @@ TAO_DynUnion_i::equal (DynamicAny::DynAny_ptr rhs)
 }
 
 void
-TAO_DynUnion_i::destroy (void)
+TAO_DynUnion_i::destroy ()
 {
   if (this->destroyed_)
     {
@@ -797,7 +797,7 @@ TAO_DynUnion_i::destroy (void)
 }
 
 DynamicAny::DynAny_ptr
-TAO_DynUnion_i::current_component (void)
+TAO_DynUnion_i::current_component ()
 {
   if (this->destroyed_)
     {

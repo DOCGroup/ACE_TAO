@@ -18,7 +18,7 @@ class Scoped_Compute_Queue_Guard
 {
 public:
   Scoped_Compute_Queue_Guard (be_visitor_typecode_defn* );
-  ~Scoped_Compute_Queue_Guard (void);
+  ~Scoped_Compute_Queue_Guard ();
 
 private:
   be_visitor_typecode_defn* customer_;
@@ -29,7 +29,7 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
   )
   :customer_ (customer)
 {
-  if (customer_ != 0)
+  if (customer_ != nullptr)
     {
       // Reset the compute queue to set the stage for computing our
       // encapsulation length.
@@ -37,9 +37,9 @@ Scoped_Compute_Queue_Guard::Scoped_Compute_Queue_Guard (
     }
 }
 
-Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard (void)
+Scoped_Compute_Queue_Guard::~Scoped_Compute_Queue_Guard ()
 {
-  if (customer_ != 0)
+  if (customer_ != nullptr)
     {
       // Reset the compute queue since we must not affect computation of other
       // nodes.
@@ -70,7 +70,7 @@ be_visitor_typecode_defn::be_visitor_typecode_defn (be_visitor_context * ctx)
     }
 }
 
-be_visitor_typecode_defn::~be_visitor_typecode_defn (void)
+be_visitor_typecode_defn::~be_visitor_typecode_defn ()
 {
   this->queue_reset (this->tc_queue_);
   this->queue_reset (this->compute_queue_);
@@ -100,7 +100,7 @@ be_visitor_typecode_defn::gen_typecode_ptr (be_type * node)
       be_module * const module =
         dynamic_cast<be_module*> (node->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_typecode_defn::")
@@ -190,7 +190,7 @@ be_visitor_typecode_defn::gen_forward_declared_typecode (be_type * node)
       be_module * const module =
         dynamic_cast<be_module*> (node->defined_in ());
 
-      if (module == 0)
+      if (module == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("be_visitor_typecode_defn::")
@@ -238,7 +238,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
                                                          true);
 
       be_interface * const intf =
-        d != 0 ? dynamic_cast<be_interface*> (d) : 0;
+        d != nullptr ? dynamic_cast<be_interface*> (d) : nullptr;
 
       if (intf && intf->is_defined ())
         {
@@ -263,7 +263,7 @@ be_visitor_typecode_defn::is_typecode_generation_required (be_type * node)
 }
 
 void
-be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
+be_visitor_typecode_defn::gen_begin_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -276,7 +276,7 @@ be_visitor_typecode_defn::gen_begin_NS_for_anon (void)
 }
 
 void
-be_visitor_typecode_defn::gen_end_NS_for_anon (void)
+be_visitor_typecode_defn::gen_end_NS_for_anon ()
 {
   TAO_OutStream & os = *this->ctx_->stream ();
 
@@ -711,9 +711,9 @@ be_visitor_typecode_defn::queue_insert (
     ACE_CDR::Long offset
   )
 {
-  be_visitor_typecode_defn::QNode *qnode = 0;
+  be_visitor_typecode_defn::QNode *qnode = nullptr;
 
-  ACE_NEW_RETURN (qnode, be_visitor_typecode_defn::QNode, 0);
+  ACE_NEW_RETURN (qnode, be_visitor_typecode_defn::QNode, nullptr);
 
   qnode->node = node;
   qnode->offset = offset;
@@ -741,8 +741,8 @@ be_visitor_typecode_defn::queue_lookup (
        !iter.done ();
        iter.advance ())
     {
-      be_visitor_typecode_defn::QNode **addr = 0;
-      be_visitor_typecode_defn::QNode *item = 0;
+      be_visitor_typecode_defn::QNode **addr = nullptr;
+      be_visitor_typecode_defn::QNode *item = nullptr;
       iter.next (addr);
       item = *addr;
 
@@ -754,7 +754,7 @@ be_visitor_typecode_defn::queue_lookup (
         }
     }
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -763,7 +763,7 @@ queue_reset (ACE_Unbounded_Queue <be_visitor_typecode_defn::QNode *> & queue)
 {
   while (!queue.is_empty ())
     {
-      be_visitor_typecode_defn::QNode * qnode = 0;
+      be_visitor_typecode_defn::QNode * qnode = nullptr;
       (void) queue.dequeue_head (qnode);
       delete qnode;
     }

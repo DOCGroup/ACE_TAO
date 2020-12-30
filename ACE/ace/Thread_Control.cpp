@@ -8,7 +8,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Thread_Control::dump (void) const
+ACE_Thread_Control::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_Thread_Control::dump");
@@ -47,7 +47,7 @@ ACE_Thread_Control::ACE_Thread_Control (ACE_Thread_Manager *t,
 }
 
 // Automatically kill thread on exit.
-ACE_Thread_Control::~ACE_Thread_Control (void)
+ACE_Thread_Control::~ACE_Thread_Control ()
 {
   ACE_OS_TRACE ("ACE_Thread_Control::~ACE_Thread_Control");
 

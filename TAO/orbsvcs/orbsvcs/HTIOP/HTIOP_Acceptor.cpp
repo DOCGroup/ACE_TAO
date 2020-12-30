@@ -40,7 +40,7 @@ TAO::HTIOP::Acceptor::Acceptor (ACE::HTBP::Environment *ht_env,
 {
 }
 
-TAO::HTIOP::Acceptor::~Acceptor (void)
+TAO::HTIOP::Acceptor::~Acceptor ()
 {
   // Make sure we are closed before we start destroying the
   // strategies.
@@ -246,7 +246,7 @@ TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 }
 
 int
-TAO::HTIOP::Acceptor::close (void)
+TAO::HTIOP::Acceptor::close ()
 {
   return this->base_acceptor_.close ();
 }
@@ -743,7 +743,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 }
 
 CORBA::ULong
-TAO::HTIOP::Acceptor::endpoint_count (void)
+TAO::HTIOP::Acceptor::endpoint_count ()
 {
   return this->endpoint_count_;
 }

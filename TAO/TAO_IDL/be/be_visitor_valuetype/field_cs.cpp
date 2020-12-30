@@ -16,12 +16,12 @@
 be_visitor_valuetype_field_cs::be_visitor_valuetype_field_cs (
     be_visitor_context *ctx)
   : be_visitor_decl (ctx),
-    in_obv_space_ (0)
+    in_obv_space_ (false)
 {
   setenclosings ("");
 }
 
-be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs (void)
+be_visitor_valuetype_field_cs::~be_visitor_valuetype_field_cs ()
 {
 }
 
@@ -61,7 +61,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -162,7 +162,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -175,7 +175,7 @@ be_visitor_valuetype_field_cs::visit_array (be_array *node)
       this->op_name (bu,
                      os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -191,7 +191,7 @@ be_visitor_valuetype_field_cs::visit_enum (be_enum *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -260,7 +260,7 @@ be_visitor_valuetype_field_cs::visit_interface (be_interface *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -329,7 +329,7 @@ be_visitor_valuetype_field_cs::visit_interface_fwd (be_interface_fwd *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -403,7 +403,7 @@ be_visitor_valuetype_field_cs::valuetype_common (be_type *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -484,7 +484,7 @@ be_visitor_valuetype_field_cs::visit_valuetype_fwd (be_valuetype_fwd *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -560,7 +560,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -650,7 +650,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
                      os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -666,7 +666,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -680,7 +680,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void)" << be_nl
+          << " ()" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -698,7 +698,7 @@ be_visitor_valuetype_field_cs::visit_predefined_type (be_predefined_type *node)
       this->op_name (bu, os);
 
       *os << "::" << ub->local_name ()
-          << " (void) const" << be_nl
+          << " () const" << be_nl
           << "{" << be_idt_nl
           << "return this->"
           << bu->field_pd_prefix () << ub->local_name ()
@@ -718,7 +718,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -785,7 +785,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (void) const" << be_nl
+      << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -799,7 +799,7 @@ be_visitor_valuetype_field_cs::visit_sequence (be_sequence *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -942,7 +942,7 @@ be_visitor_valuetype_field_cs::visit_string (be_string *node)
                  os);
 
   *os << "::" << ub->local_name ()
-      << " (void) const // get method" << be_nl
+      << " () const // get method" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -959,7 +959,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -1026,7 +1026,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1040,7 +1040,7 @@ be_visitor_valuetype_field_cs::visit_structure (be_structure *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl;
   *os << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1066,7 +1066,7 @@ be_visitor_valuetype_field_cs::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -1076,7 +1076,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   be_decl *ub = this->ctx_->node ();
   be_valuetype *bu =
     dynamic_cast<be_valuetype*> (this->ctx_->scope ()->decl ());
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -1138,7 +1138,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void) const" << be_nl
+  *os << "::" << ub->local_name () << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()
@@ -1152,7 +1152,7 @@ be_visitor_valuetype_field_cs::visit_union (be_union *node)
   this->op_name (bu,
                  os);
 
-  *os << "::" << ub->local_name () << " (void)" << be_nl
+  *os << "::" << ub->local_name () << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->"
       << bu->field_pd_prefix () << ub->local_name ()

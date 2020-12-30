@@ -18,9 +18,7 @@ be_visitor_interface_smart_proxy_cs::be_visitor_interface_smart_proxy_cs (
 {
 }
 
-be_visitor_interface_smart_proxy_cs::~be_visitor_interface_smart_proxy_cs (
-    void
-  )
+be_visitor_interface_smart_proxy_cs::~be_visitor_interface_smart_proxy_cs ()
 {
 }
 
@@ -67,7 +65,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       *os << "TAO_"<< node->flat_name ()
           << "_Default_Proxy_Factory::~";
       *os <<"TAO_"
-          << node->flat_name () << "_Default_Proxy_Factory (void)"
+          << node->flat_name () << "_Default_Proxy_Factory ()"
           << be_nl << be_uidt << be_uidt
           << "{" << be_nl
           << "}";
@@ -100,7 +98,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::";
       *os << "TAO_"
-          << node->flat_name () << "_Proxy_Factory_Adapter (void)" << be_idt_nl
+          << node->flat_name () << "_Proxy_Factory_Adapter ()" << be_idt_nl
           << ": proxy_factory_ (0)," << be_idt_nl
           << "one_shot_factory_ (false)," << be_nl
           << "disable_factory_ (false)" << be_uidt << be_uidt_nl
@@ -118,7 +116,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os << "TAO_" << node->flat_name () << "_Proxy_Factory_Adapter::";
       *os << "~TAO_"
-          << node->flat_name () << "_Proxy_Factory_Adapter (void)" << be_nl
+          << node->flat_name () << "_Proxy_Factory_Adapter ()" << be_nl
           << "{" << be_idt_nl
           << "// Making sure the factory which the adapter"
           << " has is destroyed with it."
@@ -169,7 +167,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os << "TAO_"<< node->flat_name ()
-          << "_Proxy_Factory_Adapter::unregister_proxy_factory (void)" << be_nl
+          << "_Proxy_Factory_Adapter::unregister_proxy_factory ()" << be_nl
           << "{" << be_idt_nl
           << "ACE_MT (" << be_idt << be_idt_nl
           << "ACE_GUARD (" << be_idt << be_idt_nl
@@ -238,7 +236,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "TAO_"
-          <<  node->flat_name () << "_Smart_Proxy_Base (void)" << be_uidt_nl
+          <<  node->flat_name () << "_Smart_Proxy_Base ()" << be_uidt_nl
           << "{" << be_nl
           << "}" << be_nl_2;
 
@@ -251,7 +249,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
       *os << "~TAO_"
-          <<  node->flat_name () << "_Smart_Proxy_Base (void)" <<be_nl
+          <<  node->flat_name () << "_Smart_Proxy_Base ()" <<be_nl
           << "{" << be_nl
           << "}\n\n";
 
@@ -265,7 +263,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
-      *os << "_stubobj (void) const"<<be_nl
+      *os << "_stubobj () const"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
           << "}"<< be_nl_2;
@@ -279,7 +277,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
       if (node->is_nested ())
         *os << "::";
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::";
-      *os << "_stubobj (void)"<<be_nl
+      *os << "_stubobj ()"<<be_nl
           << "{" << be_idt_nl
           << "return this->base_proxy_->_stubobj ();"<< be_uidt_nl
           << "}" << be_nl_2;
@@ -304,7 +302,7 @@ int be_visitor_interface_smart_proxy_cs::visit_interface (be_interface *node)
         *os << "::";
 
       *os <<  "TAO_" << node->flat_name () << "_Smart_Proxy_Base::"
-          << "get_proxy (void)" << be_idt_nl
+          << "get_proxy ()" << be_idt_nl
           << be_uidt_nl;
 
       *os << "{" << be_idt_nl

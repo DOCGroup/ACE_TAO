@@ -59,7 +59,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 struct ace_yy_buffer_state
 {
-  ace_yy_buffer_state (void)
+  ace_yy_buffer_state ()
    : input_ (),
      index_ (0),
      size_ (0),
@@ -77,7 +77,7 @@ struct ace_yy_buffer_state
 #  pragma warning (pop)
 #endif /* VC8 */
 
-  ~ace_yy_buffer_state (void)
+  ~ace_yy_buffer_state ()
   {
 #if defined (ACE_USES_WCHAR)
     delete converter_;

@@ -30,7 +30,7 @@ public:
   be_visitor_valuetype_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_any_op_ch (void);
+  ~be_visitor_valuetype_any_op_ch ();
 
   virtual int visit_valuetype (be_valuetype *node);
   virtual int visit_eventtype (be_eventtype *node);

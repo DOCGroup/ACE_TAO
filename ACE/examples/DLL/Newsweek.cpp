@@ -7,8 +7,7 @@
 
 // Implementation of the abstract class method which describes
 // the magazine.
-
-void Newsweek::title (void)
+void Newsweek::title ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Newsweek: Vol. 44923 Stardate: 12.3054\n"));

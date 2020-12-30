@@ -103,7 +103,7 @@ namespace ACE_OS {
   void _exit [[noreturn]] (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void abort [[noreturn]] (void);
+  void abort [[noreturn]] ();
 
   /**
    * Register an at exit hook. The @a name can be used to analyze shutdown
@@ -195,7 +195,7 @@ namespace ACE_OS {
 
   // not in spec
   extern ACE_Export
-  ACE_TCHAR *getenvstrings (void);
+  ACE_TCHAR *getenvstrings ();
 
   // itoa not in spec
   /// Converts an integer to a string.
@@ -276,7 +276,7 @@ namespace ACE_OS {
   int unsetenv(const char *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rand (void);
+  int rand ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rand_r (unsigned int *seed);

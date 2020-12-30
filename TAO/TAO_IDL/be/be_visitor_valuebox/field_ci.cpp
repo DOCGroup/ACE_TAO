@@ -17,11 +17,11 @@ be_visitor_valuebox_field_ci::be_visitor_valuebox_field_ci (
     be_visitor_context *ctx
   )
   : be_visitor_decl (ctx),
-    vb_node_ (0)
+    vb_node_ (nullptr)
 {
 }
 
-be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci (void)
+be_visitor_valuebox_field_ci::~be_visitor_valuebox_field_ci ()
 {
 }
 
@@ -63,7 +63,7 @@ int
 be_visitor_valuebox_field_ci::visit_array (be_array *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -138,7 +138,7 @@ be_visitor_valuebox_field_ci::visit_array (be_array *node)
 
   *os << "ACE_INLINE const " << fname << "_slice *" << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) const" << be_nl
+      << " () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name ()
       << ";" << be_uidt_nl
@@ -151,7 +151,7 @@ int
 be_visitor_valuebox_field_ci::visit_enum (be_enum *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -188,7 +188,7 @@ int
 be_visitor_valuebox_field_ci::visit_interface (be_interface *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -234,7 +234,7 @@ int
 be_visitor_valuebox_field_ci::visit_interface_fwd (be_interface_fwd *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -308,7 +308,7 @@ int
 be_visitor_valuebox_field_ci::visit_predefined_type (be_predefined_type *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -370,7 +370,7 @@ int
 be_visitor_valuebox_field_ci::visit_sequence (be_sequence *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -407,7 +407,7 @@ int
 be_visitor_valuebox_field_ci::visit_string (be_string *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -465,7 +465,7 @@ int
 be_visitor_valuebox_field_ci::visit_structure (be_structure *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -513,7 +513,7 @@ be_visitor_valuebox_field_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 
@@ -521,7 +521,7 @@ int
 be_visitor_valuebox_field_ci::visit_union (be_union *node)
 {
   be_decl *field = this->ctx_->node ();
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // Check if we are visiting this node via a visit to a typedef node.
   if (this->ctx_->alias ())
@@ -589,7 +589,7 @@ be_visitor_valuebox_field_ci::emit_member_get (be_decl *field,
   *os << "ACE_INLINE " << const_prefix << field_type->name () << type_suffix
       << be_nl
       << vb_node_->name () << "::" << field->local_name ()
-      << " (void) " << const_method << be_nl
+      << " () " << const_method << be_nl
       << "{" << be_idt_nl
       << "return this->_pd_value->" << field->local_name () << access_modifier
       << ";" << be_uidt_nl

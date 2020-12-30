@@ -39,7 +39,7 @@ TAO::be_visitor_struct_typecode::visit_structure (be_structure * node)
       // we're repeated and we're recursive so just leave
       return 0;
     }
-  else if (this->queue_insert (this->tc_queue_, node, 0) == 0)
+  else if (this->queue_insert (this->tc_queue_, node, 0) == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_struct_typecode::"
@@ -175,7 +175,7 @@ TAO::be_visitor_struct_typecode::visit (AST_Structure * node,
 int
 TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 {
-  AST_Field ** member_ptr = 0;
+  AST_Field ** member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
 
   for (ACE_CDR::ULong i = 0; i < count; ++i)
@@ -217,7 +217,7 @@ TAO::be_visitor_struct_typecode::gen_member_typecodes (AST_Structure * node)
 int
 TAO::be_visitor_struct_typecode::visit_members (AST_Structure * node)
 {
-  AST_Field ** member_ptr = 0;
+  AST_Field ** member_ptr = nullptr;
   ACE_CDR::ULong const count = node->nfields ();
   TAO_OutStream & os = *this->ctx_->stream ();
 

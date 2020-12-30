@@ -22,7 +22,7 @@ be_visitor_structure_any_op_ch::be_visitor_structure_any_op_ch (
 {
 }
 
-be_visitor_structure_any_op_ch::~be_visitor_structure_any_op_ch (void)
+be_visitor_structure_any_op_ch::~be_visitor_structure_any_op_ch ()
 {
 }
 
@@ -41,7 +41,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  be_module *module = 0;
+  be_module *module = nullptr;
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -61,7 +61,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
             }
         }
 
-      if (module != 0)
+      if (module != nullptr)
         {
           // Some compilers handle "any" operators in a namespace
           // corresponding to their module, others do not.
@@ -95,7 +95,7 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }
@@ -110,14 +110,14 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
                         -1);
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 
 int
 be_visitor_structure_any_op_ch::visit_field (be_field *node)
 {
-  be_type *bt = 0;
+  be_type *bt = nullptr;
 
   // First generate the type information.
   bt = dynamic_cast<be_type*> (node->field_type ());

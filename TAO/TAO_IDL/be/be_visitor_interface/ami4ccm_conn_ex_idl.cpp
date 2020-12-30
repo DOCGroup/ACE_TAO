@@ -18,7 +18,7 @@ be_visitor_ami4ccm_conn_ex_idl::be_visitor_ami4ccm_conn_ex_idl (
 {
 }
 
-be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl (void)
+be_visitor_ami4ccm_conn_ex_idl::~be_visitor_ami4ccm_conn_ex_idl ()
 {
 }
 

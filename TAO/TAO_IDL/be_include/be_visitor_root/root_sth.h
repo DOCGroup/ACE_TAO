@@ -28,7 +28,7 @@ class be_visitor_root_sth : public be_visitor_root
 public:
   be_visitor_root_sth (be_visitor_context *ctx);
 
-  ~be_visitor_root_sth (void);
+  ~be_visitor_root_sth ();
 
   virtual int visit_root (be_root *node);
 
@@ -40,7 +40,7 @@ public:
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 };
 
 #endif /* _BE_VISITOR_ROOT_ROOT_STH_H_ */

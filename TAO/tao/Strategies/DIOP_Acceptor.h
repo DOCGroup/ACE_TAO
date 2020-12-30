@@ -149,7 +149,16 @@ protected:
    */
   int probe_interfaces (TAO_ORB_Core *orb_core, int def_type = AF_UNSPEC);
 
-  /// Parse protocol specific options.
+  /**
+   * Parse protocol specific options.
+   *
+   * Currently supported:
+   *    portspan -- specifies the range of ports over which the acceptor
+   *                should scan looking for a free port (this is convenient
+   *                for situations where you might normally use an ephemeral
+   *                port but can't because you're behind a firewall and don't
+   *                want to permit passage on all ephemeral ports)
+   */
   virtual int parse_options (const char *options);
 
   /// Helper method to add a new profile to the mprofile for
@@ -168,6 +177,13 @@ protected:
   /// Array of ACE_INET_Addr instances, each one corresponding to a
   /// given network interface.
   ACE_INET_Addr *addrs_;
+
+  /**
+   * The number of ports over which the acceptor should search (starting
+   * at the port specified in each element of addrs_) for an available
+   * port.  This is specified via the "portspan=" option to the endpoint.
+   */
+  unsigned short port_span_;
 
   /**
    * Cache the information about the endpoints serviced by this

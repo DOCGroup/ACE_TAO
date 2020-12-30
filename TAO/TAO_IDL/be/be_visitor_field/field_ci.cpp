@@ -19,7 +19,7 @@ be_visitor_field_ci::be_visitor_field_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_field_ci::~be_visitor_field_ci (void)
+be_visitor_field_ci::~be_visitor_field_ci ()
 {
 }
 
@@ -131,7 +131,7 @@ be_visitor_field_ci::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

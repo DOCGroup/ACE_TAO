@@ -17,7 +17,7 @@ be_visitor_interface_cdr_op_cs::be_visitor_interface_cdr_op_cs (
 {
 }
 
-be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs (void)
+be_visitor_interface_cdr_op_cs::~be_visitor_interface_cdr_op_cs ()
 {
 }
 
@@ -137,7 +137,7 @@ be_visitor_interface_cdr_op_cs::visit_interface (be_interface *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_stub_cdr_op_gen (1);
+  node->cli_stub_cdr_op_gen (true);
   return 0;
 }
 

@@ -18,7 +18,7 @@ be_visitor_union_cdr_op_ch::be_visitor_union_cdr_op_ch (
 {
 }
 
-be_visitor_union_cdr_op_ch::~be_visitor_union_cdr_op_ch (void)
+be_visitor_union_cdr_op_ch::~be_visitor_union_cdr_op_ch ()
 {
 }
 
@@ -66,7 +66,7 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
       AST_Decl *d = si.item ();
 
       be_enum *e = dynamic_cast<be_enum*> (d);
-      if (e != 0)
+      if (e != nullptr)
         {
           be_visitor_enum_cdr_op_ch visitor (&ctx);
 
@@ -91,6 +91,6 @@ be_visitor_union_cdr_op_ch::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

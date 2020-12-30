@@ -15,11 +15,11 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
                               UTL_ScopedName *managed_component,
                               UTL_ScopedName *primary_key)
   : FE_ComponentHeader (n,
-                        0,
+                        nullptr,
                         supports,
                         false),
-    base_home_ (0),
-    primary_key_ (0)
+    base_home_ (nullptr),
+    primary_key_ (nullptr)
 {
   // No need to call compile_supports(), it got done in
   // the call to the base class FE_ComponentHeader.
@@ -28,24 +28,24 @@ FE_HomeHeader::FE_HomeHeader (UTL_ScopedName *n,
   this->compile_primary_key (primary_key);
 }
 
-FE_HomeHeader::~FE_HomeHeader (void)
+FE_HomeHeader::~FE_HomeHeader ()
 {
 }
 
 AST_Home *
-FE_HomeHeader::base_home (void) const
+FE_HomeHeader::base_home () const
 {
   return this->base_home_;
 }
 
 AST_Component *
-FE_HomeHeader::managed_component (void) const
+FE_HomeHeader::managed_component () const
 {
   return this->managed_component_;
 }
 
 AST_Type *
-FE_HomeHeader::primary_key (void) const
+FE_HomeHeader::primary_key () const
 {
   return this->primary_key_;
 }
@@ -53,7 +53,7 @@ FE_HomeHeader::primary_key (void) const
 void
 FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 {
-  if (base_home == 0)
+  if (base_home == nullptr)
     {
       return;
     }
@@ -62,7 +62,7 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
   AST_Decl *d = s->lookup_by_name (base_home,
                                    true);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       idl_global->err ()->lookup_error (base_home);
 
@@ -78,7 +78,7 @@ FE_HomeHeader::compile_inheritance (UTL_ScopedName *base_home)
 
   this->base_home_ = dynamic_cast<AST_Home*> (d);
 
-  if (this->base_home_ == 0)
+  if (this->base_home_ == nullptr)
     {
       idl_global->err ()->inheritance_error (this->name (), d);
     }
@@ -88,7 +88,7 @@ void
 FE_HomeHeader::compile_managed_component (
   UTL_ScopedName *mc_name)
 {
-  if (mc_name == 0)
+  if (mc_name == nullptr)
     {
       return;
     }
@@ -97,7 +97,7 @@ FE_HomeHeader::compile_managed_component (
   AST_Decl *d = s->lookup_by_name (mc_name,
                                    true);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       idl_global->err ()->lookup_error (mc_name);
 
@@ -113,7 +113,7 @@ FE_HomeHeader::compile_managed_component (
 
   this->managed_component_ = dynamic_cast<AST_Component*> (d);
 
-  if (this->managed_component_ == 0)
+  if (this->managed_component_ == nullptr)
     {
       idl_global->err ()->error1 (UTL_Error::EIDL_ILLEGAL_USE,
                                   d);
@@ -123,7 +123,7 @@ FE_HomeHeader::compile_managed_component (
 void
 FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
 {
-  if (primary_key == 0)
+  if (primary_key == nullptr)
     {
       return;
     }
@@ -132,7 +132,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
   AST_Decl *d = s->lookup_by_name (primary_key,
                                    true);
 
-  if (d == 0)
+  if (d == nullptr)
     {
       idl_global->err ()->lookup_error (primary_key);
 
@@ -150,7 +150,7 @@ FE_HomeHeader::compile_primary_key (UTL_ScopedName *primary_key)
 
   this->primary_key_ = dynamic_cast<AST_Type*> (d);
 
-  if (this->primary_key_ == 0)
+  if (this->primary_key_ == nullptr)
     {
       idl_global->err ()->valuetype_expected (d);
     }

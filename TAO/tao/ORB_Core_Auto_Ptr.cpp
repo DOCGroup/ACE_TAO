@@ -8,9 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
+TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr ()
 {
-  if (this->get () != 0)
+  if (this->get () != nullptr)
     {
       this->get ()->_decr_refcnt ();
     }
@@ -19,7 +19,7 @@ TAO_ORB_Core_Auto_Ptr::~TAO_ORB_Core_Auto_Ptr (void)
 void
 TAO_ORB_Core_Auto_Ptr::reset (TAO_ORB_Core *p)
 {
-  if (this->get () != p && this->get () != 0)
+  if (this->get () != p && this->get () != nullptr)
     {
       this->get ()->_decr_refcnt ();
     }

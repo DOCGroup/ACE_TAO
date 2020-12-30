@@ -100,7 +100,7 @@ AST_Exception::AST_Exception (UTL_ScopedName *n,
 {
 }
 
-AST_Exception::~AST_Exception (void)
+AST_Exception::~AST_Exception ()
 {
 }
 
@@ -139,7 +139,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
         {
           AST_Field *field = dynamic_cast<AST_Field*> (i.item ());
 
-          if (field == 0)
+          if (field == nullptr)
             // This will be an enum value or other legitimate non-field
             // member - in any case, no recursion.
             {
@@ -154,7 +154,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
               type = td->primitive_base_type ();
             }
 
-          if (type == 0)
+          if (type == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("(%N:%l) AST_Exception::")
@@ -176,7 +176,7 @@ AST_Exception::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   // Not in recursion.
   if (self_test)
     this->in_recursion_ = 0;
-  return 0; //this->in_recursion_;
+  return false; //this->in_recursion_;
 }
 
 // Dump this AST_Exception node to the ostream o.
@@ -198,7 +198,7 @@ AST_Exception::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Exception::destroy (void)
+AST_Exception::destroy ()
 {
   this->AST_Structure::destroy ();
 }

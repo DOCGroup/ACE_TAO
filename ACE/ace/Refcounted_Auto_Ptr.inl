@@ -5,19 +5,19 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class X, class ACE_LOCK> inline long
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count (void) const
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::count () const
 {
   return this->ref_count_.value();
 }
 
 template <class X, class ACE_LOCK> inline long
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::count (void) const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::count () const
 {
   return this->rep_->count ();
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null (void) const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::null () const
 {
   return (this->rep_ == 0 || this->rep_->get () == 0);
 }
@@ -75,12 +75,12 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr_Rep (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr_Rep (void)
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr_Rep ()
 {
 }
 
 template <class X, class ACE_LOCK> inline X *
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::get (void) const
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::get () const
 {
   return this->ptr_.get ();
 }
@@ -110,7 +110,7 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator!= (const ACE_Refcounted_Auto_Ptr<
 }
 
 template <class X, class ACE_LOCK> inline X *
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator-> (void) const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator-> () const
 {
     return this->rep_->get();
 }
@@ -128,20 +128,20 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator !() const
 }
 
 template<class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator bool () const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::operator unspecified_bool_type () const
 {
-  return this->rep_->get () != 0;
+  return this->rep_->get () != 0 ? unspecified_bool : 0;
 }
 
 template <class X, class ACE_LOCK> inline X*
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::get (void) const
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::get () const
 {
   // We return the ACE_Future_rep.
   return this->rep_->get ();
 }
 
 template<class X, class ACE_LOCK> inline X *
-ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::release (void)
+ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::release ()
 {
   X *p = this->get ();
   AUTO_REFCOUNTED_PTR_REP::detach (this->rep_);

@@ -14,7 +14,7 @@ ACE_Recyclable::ACE_Recyclable (ACE_Recyclable_State initial_state)
 {
 }
 
-ACE_Recyclable::~ACE_Recyclable (void)
+ACE_Recyclable::~ACE_Recyclable ()
 {
 }
 

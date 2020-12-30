@@ -8,14 +8,14 @@ ACE_Condition_Attributes::ACE_Condition_Attributes (int type)
 }
 
 ACE_INLINE
-ACE_Condition_Attributes::~ACE_Condition_Attributes (void)
+ACE_Condition_Attributes::~ACE_Condition_Attributes ()
 {
   ACE_OS::condattr_destroy (this->attributes_);
 }
 
 ACE_INLINE
 const ACE_condattr_t&
-ACE_Condition_Attributes::attributes (void) const
+ACE_Condition_Attributes::attributes () const
 {
   return this->attributes_;
 }
@@ -30,7 +30,7 @@ ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::ACE_Condition_Attributes_
 }
 
 ACE_INLINE
-ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::~ACE_Condition_Attributes_T (void)
+ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy>::~ACE_Condition_Attributes_T ()
 {
 }
 

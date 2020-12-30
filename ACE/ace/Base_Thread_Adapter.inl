@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE long
-ACE_OS_Thread_Descriptor::flags (void) const
+ACE_OS_Thread_Descriptor::flags () const
 {
   return flags_;
 }
@@ -29,7 +29,7 @@ ACE_Base_Thread_Adapter::set_log_msg_hooks (
 }
 
 ACE_INLINE ACE_THR_C_FUNC
-ACE_Base_Thread_Adapter::entry_point (void)
+ACE_Base_Thread_Adapter::entry_point ()
 {
   return this->entry_point_;
 }

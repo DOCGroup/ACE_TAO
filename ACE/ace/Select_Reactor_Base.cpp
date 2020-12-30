@@ -116,7 +116,7 @@ ACE_Select_Reactor_Handler_Repository::ACE_Select_Reactor_Handler_Repository (AC
 }
 
 int
-ACE_Select_Reactor_Handler_Repository::unbind_all (void)
+ACE_Select_Reactor_Handler_Repository::unbind_all ()
 {
   // Unbind all of the <handle, ACE_Event_Handler>s.
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
@@ -157,7 +157,7 @@ ACE_Select_Reactor_Handler_Repository::unbind_all (void)
 }
 
 int
-ACE_Select_Reactor_Handler_Repository::close (void)
+ACE_Select_Reactor_Handler_Repository::close ()
 {
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::close");
 
@@ -441,7 +441,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::next (
 // Move forward by one element in the set.
 
 bool
-ACE_Select_Reactor_Handler_Repository_Iterator::advance (void)
+ACE_Select_Reactor_Handler_Repository_Iterator::advance ()
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   // No need to explicitly limit search to "current" to
@@ -471,7 +471,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::advance (void)
 // Dump the state of an object.
 
 void
-ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
+ACE_Select_Reactor_Handler_Repository_Iterator::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository_Iterator::dump");
@@ -489,7 +489,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::dump (void) const
 }
 
 void
-ACE_Select_Reactor_Handler_Repository::dump (void) const
+ACE_Select_Reactor_Handler_Repository::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_Handler_Repository::dump");
@@ -528,13 +528,13 @@ ACE_Select_Reactor_Handler_Repository::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify (void)
+ACE_Select_Reactor_Notify::ACE_Select_Reactor_Notify ()
   : select_reactor_ (0)
   , max_notify_iterations_ (-1)
 {
 }
 
-ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify (void)
+ACE_Select_Reactor_Notify::~ACE_Select_Reactor_Notify ()
 {
 }
 
@@ -549,7 +549,7 @@ ACE_Select_Reactor_Notify::max_notify_iterations (int iterations)
 }
 
 int
-ACE_Select_Reactor_Notify::max_notify_iterations (void)
+ACE_Select_Reactor_Notify::max_notify_iterations ()
 {
   return this->max_notify_iterations_;
 }
@@ -578,7 +578,7 @@ ACE_Select_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 }
 
 void
-ACE_Select_Reactor_Notify::dump (void) const
+ACE_Select_Reactor_Notify::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_Notify::dump");
@@ -654,7 +654,7 @@ ACE_Select_Reactor_Notify::open (ACE_Reactor_Impl *r,
 }
 
 int
-ACE_Select_Reactor_Notify::close (void)
+ACE_Select_Reactor_Notify::close ()
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::close");
 
@@ -763,7 +763,7 @@ ACE_Select_Reactor_Notify::dispatch_notifications (int &number_of_active_handles
 
 
 ACE_HANDLE
-ACE_Select_Reactor_Notify::notify_handle (void)
+ACE_Select_Reactor_Notify::notify_handle ()
 {
   ACE_TRACE ("ACE_Select_Reactor_Notify::notify_handle");
 
@@ -1133,7 +1133,7 @@ ACE_Select_Reactor_Impl::clear_dispatch_mask (ACE_HANDLE handle,
 
 
 int
-ACE_Select_Reactor_Impl::resumable_handler (void)
+ACE_Select_Reactor_Impl::resumable_handler ()
 {
   // The select reactor has no handlers that can be resumed by the
   // application. So return 0;

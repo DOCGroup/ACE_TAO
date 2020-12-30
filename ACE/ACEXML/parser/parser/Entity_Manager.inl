@@ -47,7 +47,7 @@ ACEXML_Entity_Manager::resolve_entity (const ACEXML_Char* ref,
 }
 
 ACEXML_INLINE int
-ACEXML_Entity_Manager::reset (void)
+ACEXML_Entity_Manager::reset ()
 {
   delete this->entities_;
   this->entities_ = 0;
@@ -56,7 +56,7 @@ ACEXML_Entity_Manager::reset (void)
 
 
 ACEXML_INLINE size_t
-ACEXML_Entity_Manager::size (void) const
+ACEXML_Entity_Manager::size () const
 {
   if (!this->entities_)
     return 0;

@@ -34,7 +34,6 @@ public:
   virtual void activate (
      RtecEventChannelAdmin::ProxyPushConsumer_ptr &proxy);
 
-
     // = The RtecEventChannelAdmin::ProxyPushConsumer methods...
   virtual void connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,

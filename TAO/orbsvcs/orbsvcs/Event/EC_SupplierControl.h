@@ -47,15 +47,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_SupplierControl
 {
 public:
   /// Constructor.
-  TAO_EC_SupplierControl (void);
+  TAO_EC_SupplierControl ();
 
   /// Destructor.
-  virtual ~TAO_EC_SupplierControl (void);
+  virtual ~TAO_EC_SupplierControl ();
 
   /// Activate any internal threads or timers used to poll the state of
   /// the suppliers
-  virtual int activate (void);
-  virtual int shutdown (void);
+  virtual int activate ();
+  virtual int shutdown ();
 
   /**
    * Invoked by helper classes when they detect that a supplier does

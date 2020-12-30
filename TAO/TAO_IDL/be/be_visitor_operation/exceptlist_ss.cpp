@@ -23,7 +23,7 @@ be_visitor_operation_exceptlist_ss::be_visitor_operation_exceptlist_ss (
 {
 }
 
-be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss (void)
+be_visitor_operation_exceptlist_ss::~be_visitor_operation_exceptlist_ss ()
 {
 }
 

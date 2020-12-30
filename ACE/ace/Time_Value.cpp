@@ -54,7 +54,7 @@ ACE_Time_Value::operator ++ (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator ++ (void)
+ACE_Time_Value::operator ++ ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator ++ (void)");
   this->usec (this->usec () + 1);
@@ -74,7 +74,7 @@ ACE_Time_Value::operator -- (int)
 }
 
 ACE_Time_Value &
-ACE_Time_Value::operator -- (void)
+ACE_Time_Value::operator -- ()
 {
   // ACE_OS_TRACE ("ACE_Time_Value::operator -- (void)");
   this->usec (this->usec () - 1);
@@ -166,7 +166,7 @@ ACE_Time_Value::duplicate () const
 }
 
 void
-ACE_Time_Value::dump (void) const
+ACE_Time_Value::dump () const
 {
 }
 
@@ -232,9 +232,7 @@ ACE_Time_Value::operator *= (double d)
   // Since this is a costly operation, we try to detect as soon as
   // possible if we are having a saturation in order to abort the rest
   // of the computation.
-  typedef ACE::If_Then_Else<(sizeof (double) > sizeof (time_t)),
-    double,
-    long double>::result_type float_type;
+  using float_type = ACE::If_Then_Else<(sizeof(double) > sizeof(time_t)), double, long double>::result_type;
 
   float_type sec_total = static_cast<float_type> (this->sec());
   sec_total *= d;

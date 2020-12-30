@@ -7,7 +7,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Name_Binding::ACE_Name_Binding (void)
+ACE_Name_Binding::ACE_Name_Binding ()
   : name_ (),
     value_ (),
     type_ (ACE_OS::strdup (""))
@@ -16,7 +16,7 @@ ACE_Name_Binding::ACE_Name_Binding (void)
 }
 
 
-ACE_Name_Binding::~ACE_Name_Binding (void)
+ACE_Name_Binding::~ACE_Name_Binding ()
 {
   ACE_TRACE ("ACE_Name_Binding::~ACE_Name_Binding");
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -73,7 +73,7 @@ ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
     && ACE_OS::strcmp (this->type_, s.type_) == 0;
 }
 
-ACE_Name_Space::~ACE_Name_Space (void)
+ACE_Name_Space::~ACE_Name_Space ()
 {
   ACE_TRACE ("ACE_Name_Space::~ACE_Name_Space");
 }

@@ -66,13 +66,13 @@ namespace CORBA
     typedef Any_var _var_type;
     typedef Any_out _out_type;
 
-    Any (void);
+    Any ();
     Any (const Any &);
 
-    ~Any (void);
+    ~Any ();
 
     Any &operator= (const Any &);
-    TAO::Any_Impl *impl (void) const;
+    TAO::Any_Impl *impl () const;
 
     /// Used in our destruction if we ourselves are stored in an Any.
     static void _tao_any_destructor (void *);
@@ -146,19 +146,19 @@ namespace CORBA
     void replace (TAO::Any_Impl *);
 
     /// Return TypeCode of the element stored in the Any.
-    TypeCode_ptr type (void) const;
+    TypeCode_ptr type () const;
 
     /// For use along with <<= of a value of aliased type when the alias must
     /// be preserved.
     void type (TypeCode_ptr);
 
     /// TAO extension, does not return a duplicate.
-    CORBA::TypeCode_ptr _tao_get_typecode (void) const;
+    CORBA::TypeCode_ptr _tao_get_typecode () const;
 
     /// TAO extension.
     void _tao_set_typecode (const CORBA::TypeCode_ptr);
 
-    int _tao_byte_order (void) const;
+    int _tao_byte_order () const;
 
   private:
     CORBA::Boolean checked_to_object (CORBA::Object_ptr &) const;
@@ -184,10 +184,10 @@ namespace CORBA
   class TAO_AnyTypeCode_Export Any_var
   {
   public:
-    Any_var (void);
+    Any_var ();
     Any_var (Any *a);
     Any_var (const Any_var &);
-    ~Any_var (void);
+    ~Any_var ();
 
     Any_var &operator= (Any *);
 
@@ -200,7 +200,7 @@ namespace CORBA
     Any_var &operator= (const Any_var &);
 
     /// Arrow operator (smart pointer).
-    Any *operator-> (void);
+    Any *operator-> ();
 
     /// Cast.
     operator const Any *() const;
@@ -209,19 +209,19 @@ namespace CORBA
     operator Any *&();
 
     /// For in Any parameter.
-    const Any &in (void) const;
+    const Any &in () const;
 
     /// For inout Any parameter.
-    Any &inout (void);
+    Any &inout ();
 
     /// For out Any parameter.
-    Any *&out (void);
+    Any *&out ();
 
     /// For Any return type.
-    Any *_retn (void);
+    Any *_retn ();
 
     /// TAO specific extension
-    Any *ptr (void) const;
+    Any *ptr () const;
   private:
     /// Holds the Any.
     Any *ptr_;
@@ -252,9 +252,9 @@ namespace CORBA
     operator Any *&();
 
     /// Return underlying instance.
-    Any *& ptr (void);
+    Any *& ptr ();
 
-    Any *operator-> (void);
+    Any *operator-> ();
 
   private:
     /// Assignment from _var disallowed.

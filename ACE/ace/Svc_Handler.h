@@ -83,7 +83,7 @@ public:
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Destructor.
-  virtual ~ACE_Svc_Handler (void);
+  virtual ~ACE_Svc_Handler ();
 
   /// Activate the client handler.  This is typically called by the
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
@@ -115,7 +115,7 @@ public:
    * will have no effect (and the accessor will return
    * ACE_RECYCLABLE_UNKNOWN).
    */
-  virtual ACE_Recyclable_State recycle_state (void) const;
+  virtual ACE_Recyclable_State recycle_state () const;
   virtual int recycle_state (ACE_Recyclable_State new_state);
 
   /**
@@ -132,7 +132,7 @@ public:
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
@@ -155,14 +155,14 @@ public:
                               const void *);
 
   /// Get the underlying handle associated with the <peer_>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Set the underlying handle associated with the <peer_>.
   virtual void set_handle (ACE_HANDLE);
 
   /// Returns the underlying PEER_STREAM.  Used by
   /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
-  PEER_STREAM &peer (void) const;
+  PEER_STREAM &peer () const;
 
   /// Overloaded new operator.  This method unobtrusively records if a
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
@@ -191,7 +191,7 @@ public:
    * whether or not the object was allocated dynamically, and can act
    * accordingly (i.e., deleting it if it was allocated dynamically).
    */
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /**
    * This really should be private so that users are forced to call
@@ -212,10 +212,10 @@ public:
 #endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   /// Close down the descriptor and unregister from the Reactor
-  void shutdown (void);
+  void shutdown ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 public:
 
@@ -232,10 +232,10 @@ public:
                          const void *recycling_act);
 
   /// Get the recycler.
-  virtual ACE_Connection_Recycling_Strategy *recycler (void) const;
+  virtual ACE_Connection_Recycling_Strategy *recycler () const;
 
   /// Get the recycling act.
-  virtual const void *recycling_act (void) const;
+  virtual const void *recycling_act () const;
 
   /**
    * Upcall made by the recycler when it is about to recycle the
@@ -295,7 +295,7 @@ public:
                             ACE_Time_Value *relative_timeout = 0);
 
   /// Destructor, which calls <flush>.
-  virtual ~ACE_Buffered_Svc_Handler (void);
+  virtual ~ACE_Buffered_Svc_Handler ();
 
   /**
    * Insert the ACE_Message_Block chain rooted at @a message_block
@@ -309,7 +309,7 @@ public:
 
   /// Flush the ACE_Message_Queue, which writes all the queued
   /// ACE_Message_Blocks to the <PEER_STREAM>.
-  virtual int flush (void);
+  virtual int flush ();
 
   /// This method is not currently implemented -- this is where the
   /// integration with the <Reactor> would occur.
@@ -317,13 +317,13 @@ public:
                               const void *);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Implement the flush operation on the ACE_Message_Queue, which
   /// writes all the queued ACE_Message_Blocks to the <PEER_STREAM>.
   /// Assumes that the caller holds the lock.
-  virtual int flush_i (void);
+  virtual int flush_i ();
 
   /// Maximum size the <Message_Queue> can be before we have to flush
   /// the buffer.
