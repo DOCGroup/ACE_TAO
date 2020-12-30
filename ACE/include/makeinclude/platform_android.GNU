@@ -47,12 +47,15 @@ ifndef ANDROID_ABI
   endif
 endif
 
+# Make sure android_abi or ANDROID_ABI are defined and they are the same.
 ifndef android_abi
   ifdef ANDROID_ABI
     android_abi := $(ANDROID_ABI)
   else
     $(error android_abi or ANDROID_ABI must be defined)
   endif
+else
+  ANDROID_ABI := $(android_abi)
 endif
 
 # Alias neon
@@ -105,8 +108,8 @@ ifdef android_ndk
   endif
 
   # We don't want this being used again except to signal that this is a
-  # cross-compile build. If it is then the resulting command (probably) wont
-  # exist.
+  # cross-compile build. If it is then the resulting command probably won't
+  # exist and cause an error.
   CROSS_COMPILE := THIS_VALUE_SHOULD_NOT_BE_USED
 
   # Ignore value of CROSS_COMPILE because ar doesn't match clang like in
