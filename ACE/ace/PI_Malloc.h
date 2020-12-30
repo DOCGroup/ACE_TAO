@@ -78,7 +78,7 @@ public:
     char padding_[(ACE_PI_MALLOC_PADDING_SIZE) ? ACE_PI_MALLOC_PADDING_SIZE : ACE_MALLOC_ALIGN];
 
     /// Dump the state of the object.
-    void dump (void) const;
+    void dump () const;
 
   private:
     // Disallow copy construction and assignment.
@@ -138,7 +138,7 @@ public:
     NAME_NODE_PTR prev_;
 
     /// Dump the state of the object.
-    void dump (void) const;
+    void dump () const;
 
   private:
     // Disallow assignment.
@@ -186,7 +186,7 @@ public:
   ACE_Malloc_Header base_;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // Disallow assignment.

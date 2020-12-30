@@ -23,13 +23,13 @@ TAO_EC_Masked_Type_Filter::~TAO_EC_Masked_Type_Filter ()
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Masked_Type_Filter::begin () const
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Masked_Type_Filter::end () const
 {
-  return 0;
+  return nullptr;
 }
 
 int
@@ -49,7 +49,7 @@ TAO_EC_Masked_Type_Filter::filter (const RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) != this->source_value_)
     return 0;
 
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }
@@ -67,7 +67,7 @@ TAO_EC_Masked_Type_Filter::filter_nocopy (RtecEventComm::EventSet& event,
       || (event[0].header.source & this->source_mask_) != this->source_value_)
     return 0;
 
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push_nocopy (event, qos_info);
     }

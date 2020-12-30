@@ -72,7 +72,7 @@ TAO_ECG_UDP_EH::shutdown ()
     ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to close receiving dgram on shutdown.\n"));
 
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   return result;
 }

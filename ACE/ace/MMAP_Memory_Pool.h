@@ -214,7 +214,7 @@ public:
   virtual void *base_addr (void) const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
   ACE_Mem_Map const & mmap (void) const;

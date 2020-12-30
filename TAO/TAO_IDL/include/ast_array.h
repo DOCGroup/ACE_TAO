@@ -77,7 +77,6 @@ class ast_visitor;
 
 // Representation of array declaration:
 // An array is a combination of a list of dimensions and a base type.
-
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:

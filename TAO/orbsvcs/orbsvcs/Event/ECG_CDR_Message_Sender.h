@@ -94,7 +94,7 @@ public:
   void init (TAO_ECG_Refcounted_Endpoint endpoint_rptr);
 
   // Shutdown this component.  Frees up the endpoint.
-  void shutdown (void);
+  void shutdown ();
   //@}
 
   /// Setters/getters.
@@ -109,7 +109,7 @@ public:
    * header + 8 bytes must fit).
    */
   int mtu (CORBA::ULong mtu);
-  CORBA::ULong mtu (void) const;
+  CORBA::ULong mtu () const;
   //@}
 
   /// The main method - send a CDR message.
@@ -131,7 +131,7 @@ public:
 
 private:
   /// Return the datagram...
-  ACE_SOCK_Dgram& dgram (void);
+  ACE_SOCK_Dgram& dgram ();
 
   /**
    * Send one fragment, the first entry in the iovec is used to send

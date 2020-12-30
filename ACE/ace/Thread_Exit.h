@@ -99,7 +99,6 @@ public:
   ACE_Thread_Exit * instance () const;
 
 private:
-
   /// Holds the underlying instance.
   ACE_Thread_Exit *instance_;
 

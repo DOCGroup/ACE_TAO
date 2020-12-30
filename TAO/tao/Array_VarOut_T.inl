@@ -189,8 +189,7 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (T_var & p)
 template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (
-    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
-  )
+    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p)
   : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
 {}
 
@@ -198,8 +197,7 @@ template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG> &
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (
-    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p
-  )
+    const TAO_Array_Out_T<T,T_var,T_slice,TAG> & p)
 {
   this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
   return *this;
@@ -250,8 +248,7 @@ template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
     T_slice * p,
-    CORBA::Boolean nocopy
-  )
+    CORBA::Boolean nocopy)
   : ptr_ (p),
     nocopy_ (nocopy)
 {}
@@ -259,8 +256,7 @@ TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Forany_T<T,T_slice,TAG>::TAO_Array_Forany_T (
-    const TAO_Array_Forany_T<T,T_slice,TAG> & p
-  )
+    const TAO_Array_Forany_T<T,T_slice,TAG> & p)
   : ptr_ (p.ptr_),
     nocopy_ (p.nocopy_)
 {

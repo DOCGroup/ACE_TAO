@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Kokyu_Dispatching::TAO_EC_Kokyu_Dispatching (TAO_EC_Event_Channel_Base *ec, int sched_policy, int sched_scope)
   :allocator_ (0),
-   dispatcher_ (0),
+   dispatcher_ (nullptr),
    lanes_setup_ (0),
    disp_sched_policy_ (sched_policy),
    disp_sched_scope_ (sched_scope)
@@ -89,7 +89,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes ()
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
-  this->dispatcher_ = tmp;
+  this->dispatcher_ = std::move(tmp);
   this->lanes_setup_ = 1;
 
   //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));

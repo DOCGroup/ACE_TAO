@@ -134,12 +134,12 @@ namespace Kokyu
 
       int can_be_deleted () const;
 
-      void destroy (void);
+      void destroy ();
     protected:
       /// Destructor
       // only inheritance is possible and object should be on heap,
       // since object could be handed over to a different thread.
-      virtual ~Dispatch_Command (void);
+      virtual ~Dispatch_Command ();
 
     private:
       int dont_delete_;
