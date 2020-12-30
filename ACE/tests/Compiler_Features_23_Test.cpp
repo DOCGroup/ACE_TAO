@@ -38,6 +38,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Compiler Feature 23 Test does compile and run.\n")));
 
+  ACE_UNUSED_ARG(x);
+
   ACE_END_TEST;
 
   return 0;

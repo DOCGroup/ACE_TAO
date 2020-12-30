@@ -32,10 +32,10 @@ class ACE_Export ACE_Event_Handler_Handle_Timeout_Upcall
 {
 public:
   /// Constructor.
-  ACE_Event_Handler_Handle_Timeout_Upcall (void);
+  ACE_Event_Handler_Handle_Timeout_Upcall ();
 
   /// Destructor.
-  ~ACE_Event_Handler_Handle_Timeout_Upcall (void);
+  ~ACE_Event_Handler_Handle_Timeout_Upcall ();
 
   /// This method is called when a timer is registered.
   int registration (ACE_Timer_Queue &timer_queue,

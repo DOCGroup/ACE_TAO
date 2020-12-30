@@ -1717,7 +1717,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
   ACE_Auto_Ptr<ACE_Time_Value> local_timeout;
   // Check to see if we're using absolute time or not.
-  if (use_absolute_time == false && timeout != 0)
+  if (!use_absolute_time && timeout != 0)
     {
       // create time value duplicate (preserves time policy)
       local_timeout.reset (timeout->duplicate ());

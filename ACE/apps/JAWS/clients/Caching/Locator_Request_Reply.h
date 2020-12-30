@@ -89,7 +89,7 @@ public:
   const char *buffer (void) const;
 
   /// Print out this object.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// Return the size of the buffer required to encode

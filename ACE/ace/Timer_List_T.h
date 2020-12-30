@@ -156,7 +156,7 @@ public:
   virtual ACE_Timer_Node_T<TYPE>* remove_first (void);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Reschedule an "interval" ACE_Timer_Node_T.  This should be private
   /// but for now it needs to be public for <ACE_Timer_Hash_T>

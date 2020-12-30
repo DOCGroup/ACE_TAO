@@ -93,7 +93,7 @@ public:
   ACE_TOKEN_CONST::MUTEX &mutex (void);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Turn debug mode on/off.
   void debug (bool d);

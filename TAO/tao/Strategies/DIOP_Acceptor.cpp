@@ -25,6 +25,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_DIOP_Acceptor::TAO_DIOP_Acceptor (void)
   : TAO_Acceptor (TAO_TAG_DIOP_PROFILE),
     addrs_ (0),
+    port_span_ (1),
     hosts_ (0),
     endpoint_count_ (0),
     version_ (TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR),
@@ -393,27 +394,56 @@ int
 TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
                            ACE_Reactor *reactor)
 {
-  ACE_NEW_RETURN (this->connection_handler_,
-                  TAO_DIOP_Connection_Handler (this->orb_core_),
-                  -1);
+  unsigned short const requested_port = addr.get_port_number ();
+  ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                        ACE_MAX_DEFAULT_PORT);
 
-  this->connection_handler_->local_addr (addr);
-  int result = this->connection_handler_->open_server ();
-  if (result == -1)
+  ACE_INET_Addr a(addr);
+  bool found_a_port = false;
+  for (ACE_UINT32 p = requested_port; p <= last_port; p++)
     {
-      delete this->connection_handler_;
-      return result;
+      ACE_NEW_RETURN (this->connection_handler_,
+                      TAO_DIOP_Connection_Handler (this->orb_core_),
+                      -1);
+
+      if (TAO_debug_level > 5)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("trying to listen on port %d\n"), p));
+      // Now try to actually open on that port
+      a.set_port_number ((u_short)p);
+      this->connection_handler_->local_addr (a);
+      int result = this->connection_handler_->open_server ();
+      if (result == -1)
+        {
+          delete this->connection_handler_;
+          continue;
+        }
+
+      // Register only with a valid handle
+      result =
+        reactor->register_handler (this->connection_handler_,
+                                   ACE_Event_Handler::READ_MASK);
+      if (result == -1)
+        {
+          // Close the handler (this will also delete connection_handler_).
+          this->connection_handler_->close ();
+          continue;
+        }
+
+      found_a_port = true;
+      break;
     }
 
-  // Register only with a valid handle
-  result =
-    reactor->register_handler (this->connection_handler_,
-                               ACE_Event_Handler::READ_MASK);
-  if (result == -1)
+  if (! found_a_port)
     {
-      // Close the handler (this will also delete connection_handler_).
-      this->connection_handler_->close ();
-      return result;
+      if (TAO_debug_level > 0)
+        TAOLIB_DEBUG ((LM_DEBUG,
+                    ACE_TEXT ("TAO (%P|%t) - DIOP_Acceptor::open_i, ")
+                    ACE_TEXT ("cannot open acceptor in port range (%d,%d)")
+                    ACE_TEXT ("- %p\n"),
+                    requested_port, last_port, ACE_TEXT("")));
+      return -1;
     }
 
   // Connection handler ownership now belongs to the Reactor.
@@ -1037,6 +1067,20 @@ TAO_DIOP_Acceptor::parse_options (const char *str)
                                  ACE_TEXT ("TAO (%P|%t) - Invalid DIOP endpoint format: ")
                                  ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
+            }
+          else if (name == "portspan")
+            {
+              int const range = ACE_OS::atoi (value.c_str ());
+              // @@ What's the lower bound on the range?  zero, or one?
+              if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
+                TAOLIB_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("TAO (%P|%t) Invalid DIOP endpoint ")
+                                   ACE_TEXT ("portspan: <%C>\n")
+                                   ACE_TEXT ("Valid range 1 -- %d\n"),
+                                   value.c_str (), ACE_MAX_DEFAULT_PORT),
+                                  -1);
+
+              this->port_span_ = static_cast <u_short> (range);
             }
           else
             {

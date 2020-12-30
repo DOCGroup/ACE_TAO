@@ -23,7 +23,7 @@ TAO_EC_ProxyPushSupplier::TAO_EC_ProxyPushSupplier (TAO_EC_Event_Channel_Base* e
   : event_channel_ (ec),
     refcount_ (1),
     suspended_ (false),
-    child_ (0),
+    child_ (nullptr),
     consumer_validate_connection_(validate_connection)
 {
   this->lock_ =
@@ -124,7 +124,7 @@ TAO_EC_ProxyPushSupplier::cleanup_i ()
   // @@ Why don't we have a destroy() method in the
   // filter_builder?
   delete this->child_;
-  this->child_ = 0;
+  this->child_ = nullptr;
 }
 
 void
@@ -259,7 +259,7 @@ TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
                                                 qos_info);
   }
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     this->child_->clear ();
 }
 
@@ -308,7 +308,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
                                                        qos_info);
   }
 
-  if (this->child_ != 0)
+  if (this->child_ != nullptr)
     this->child_->clear ();
 }
 

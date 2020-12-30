@@ -154,7 +154,7 @@ public:
     ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Method called by ACE_Dev_Poll_Reactor to obtain one notification.
   /// THIS METHOD MUST BE CALLED WITH THE REACTOR TOKEN HELD!
@@ -380,7 +380,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     size_t max_size (void) const;
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
 
     /// Declare the dynamic allocation hooks.
     ACE_ALLOC_HOOK_DECLARE;
@@ -907,7 +907,7 @@ public:
   //@}
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

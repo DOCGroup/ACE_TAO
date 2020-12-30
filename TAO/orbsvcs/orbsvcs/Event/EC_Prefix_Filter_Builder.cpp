@@ -38,7 +38,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
 {
   CORBA::ULong l = qos.dependencies.length ();
   if (pos == l)
-    return 0;
+    return nullptr;
 
   const RtecEventComm::Event& e = qos.dependencies[pos].event;
   if (e.header.type == ACE_ES_CONJUNCTION_DESIGNATOR)
@@ -47,7 +47,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       CORBA::ULong n = e.header.source;
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -61,7 +61,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       CORBA::ULong n = e.header.source;
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -76,7 +76,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       CORBA::ULong n = e.header.source;
 
       TAO_EC_Filter** children;
-      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], 0);
+      ACE_NEW_RETURN (children, TAO_EC_Filter*[n], nullptr);
       CORBA::ULong i = 0;
       for (; i != n; ++i)
         {
@@ -98,7 +98,7 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       pos++; // COnsumer the designator
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       pos++;
@@ -114,13 +114,13 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       pos++; // Consume the designator
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
       pos++;
 
       if (pos == qos.dependencies.length ())
-        return 0;
+        return nullptr;
       CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
       CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
       pos++;

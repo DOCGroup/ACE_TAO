@@ -26,12 +26,11 @@
 class Magazine
 {
 public:
-
   /// No-op virtual destructor.
-  virtual ~Magazine (void) {};
+  virtual ~Magazine () {};
 
   /// This method gives the title of the magazine.
-  virtual void title (void) = 0;
+  virtual void title () = 0;
 };
 
 #endif /* MAGAZINE_H */

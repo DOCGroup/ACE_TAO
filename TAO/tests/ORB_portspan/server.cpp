@@ -5,7 +5,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-
       CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
       CORBA::Object_var obj = orb->resolve_initial_references("RootPOA");
@@ -22,10 +21,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run();
     }
-
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
-      ex._tao_print_exception ("Exception in main():");
+      ACE_DEBUG ((LM_DEBUG, "server failed to start\n"));
       return 1;
     }
 

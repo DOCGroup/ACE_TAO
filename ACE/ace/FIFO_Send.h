@@ -61,7 +61,7 @@ public:
   ssize_t send_n (const void *buf, size_t len);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -125,7 +125,7 @@ class TAO_ESF_Proxy_Collection
 {
 public:
   /// destructor
-  virtual ~TAO_ESF_Proxy_Collection (void);
+  virtual ~TAO_ESF_Proxy_Collection ();
 
   /**
    * Iterate over the collection and invoke worker->work() for each
@@ -151,7 +151,7 @@ public:
   virtual void disconnected (PROXY *proxy) = 0;
 
   /// The EC is shutting down, must release all the elements.
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 };
 
 // ****************************************************************

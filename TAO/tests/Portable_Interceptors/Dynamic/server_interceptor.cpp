@@ -49,7 +49,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   catched_exception = false;
   try
     {
-      CORBA::Boolean tmdi = ri->target_is_a ("FOO");
+      CORBA::Boolean const tmdi = ri->target_is_a ("FOO");
+      ACE_UNUSED_ARG(tmdi);
     }
   catch (const ::CORBA::BAD_INV_ORDER& ex)
     {
@@ -67,7 +68,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   catched_exception = false;
   try
     {
-      PortableInterceptor::ReplyStatus tmdi = ri->reply_status ();
+      PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
+      ACE_UNUSED_ARG(tmdi);
     }
   catch (const ::CORBA::BAD_INV_ORDER& ex)
     {
@@ -189,7 +191,8 @@ Echo_Server_Request_Interceptor::receive_request (
   catched_exception = false;
   try
     {
-      PortableInterceptor::ReplyStatus tmdi = ri->reply_status ();
+      PortableInterceptor::ReplyStatus const tmdi = ri->reply_status ();
+      ACE_UNUSED_ARG(tmdi);
     }
   catch (const ::CORBA::BAD_INV_ORDER& ex)
     {

@@ -47,7 +47,6 @@ template<class SVC_HANDLER>
 class ACE_Recycling_Strategy
 {
 public:
-
   // Useful STL-style traits.
   typedef typename SVC_HANDLER::addr_type    addr_type;
   typedef SVC_HANDLER                        handler_type;

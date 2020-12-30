@@ -67,7 +67,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter
 {
 public:
   /// Destructor
-  virtual ~TAO_EC_Supplier_Filter (void);
+  virtual ~TAO_EC_Supplier_Filter ();
 
   /**
    * Whenever a ProxyPushConsumer is initialized it calls this method
@@ -96,7 +96,7 @@ public:
   virtual void disconnected (TAO_EC_ProxyPushSupplier *supplier) = 0;
 
   /// The event channel is shutting down.
-  virtual void shutdown (void) = 0;
+  virtual void shutdown () = 0;
 
   /// The ProxyPushConsumer delegates on this class to actually send
   /// the event.
@@ -110,8 +110,8 @@ public:
 
   /// Increment and decrement the reference count, locking must be
   /// provided by the user.
-  virtual CORBA::ULong _incr_refcnt (void) = 0;
-  virtual CORBA::ULong _decr_refcnt (void) = 0;
+  virtual CORBA::ULong _incr_refcnt () = 0;
+  virtual CORBA::ULong _decr_refcnt () = 0;
 };
 
 // ****************************************************************

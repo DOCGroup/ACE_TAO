@@ -10,6 +10,7 @@
 #include "ace/Task_T.h"
 #include "tao/TAO_Export.h"
 #include "ace/TP_Reactor.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -514,7 +515,7 @@ void Test_1 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                              lf_strategy,
                                              0));
@@ -535,12 +536,12 @@ void Test_2 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 2, 0, true);
@@ -563,7 +564,7 @@ void Test_3 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
@@ -571,7 +572,7 @@ void Test_3 (TAO_ORB_Core* orb_core)
   leader_follower.set_upcall_thread ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);

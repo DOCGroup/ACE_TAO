@@ -27,8 +27,7 @@ namespace FTRTEC {
   }
 
   int
-  Fault_Detector_Loader::init (int argc,
-    ACE_TCHAR* argv[])
+  Fault_Detector_Loader::init (int argc, ACE_TCHAR* argv[])
   {
     static int initialized = 0;
 
@@ -54,7 +53,7 @@ namespace FTRTEC {
     }
     else {
       ACE_NEW_RETURN(detector, TCP_Fault_Detector, -1);
-      ACE_auto_ptr_reset(detector_, detector);
+      detector_.reset (detector);
     }
     return detector_->init(argc, argv);
   }

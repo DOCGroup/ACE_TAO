@@ -50,13 +50,13 @@ public:
   int disable (int value) const;
 
   /// Get the underlying handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set the underlying handle.
   void set_handle (ACE_HANDLE handle);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -64,7 +64,7 @@ public:
 protected:
   // = Ensure that ACE_IPC_SAP is an abstract base class.
   /// Default constructor.
-  ACE_IPC_SAP (void);
+  ACE_IPC_SAP ();
 
   /// Protected destructor.
   /**
@@ -72,7 +72,7 @@ protected:
    * operator delete() from being called through a base class
    * ACE_IPC_SAP pointer/reference.
    */
-  ~ACE_IPC_SAP (void);
+  ~ACE_IPC_SAP ();
 
 private:
   /// Underlying I/O handle.

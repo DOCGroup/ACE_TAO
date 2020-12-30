@@ -188,7 +188,7 @@ typedef ACE_Atomic_Op<ACE_PROCESS_MUTEX, int> ACE_INT;
 struct ACE_Export ACE_Malloc_Stats
 {
   ACE_Malloc_Stats (void);
-  void dump (void) const;
+  void dump () const;
 
   /// Coarse-grained unit of allocation.
   ACE_INT nchunks_;

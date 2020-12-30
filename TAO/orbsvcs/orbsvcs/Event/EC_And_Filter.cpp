@@ -24,10 +24,10 @@ TAO_EC_And_Filter::~TAO_EC_And_Filter ()
        ++i)
     {
       delete *i;
-      *i = 0;
+      *i = nullptr;
     }
   delete[] this->children_;
-  this->children_ = 0;
+  this->children_ = nullptr;
   this->n_ = 0;
 }
 
@@ -62,7 +62,7 @@ TAO_EC_And_Filter::filter (const RtecEventComm::EventSet& event,
     }
 
   // All children accepted the event, push up...
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }
@@ -83,7 +83,7 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
     }
 
   // All children accepted the event, push up...
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->parent ()->push (event, qos_info);
     }

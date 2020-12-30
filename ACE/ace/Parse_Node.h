@@ -60,7 +60,7 @@ public:
   void print (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -92,7 +92,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -120,7 +120,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -148,7 +148,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -179,7 +179,7 @@ public:
   ACE_TCHAR *parameters (void) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -216,7 +216,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -248,7 +248,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -280,7 +280,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -323,7 +323,7 @@ public:
                         ACE_Service_Object_Exterminator * = 0) = 0;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -371,7 +371,7 @@ public:
   virtual ~ACE_Object_Node (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -404,7 +404,7 @@ public:
   virtual ~ACE_Function_Node (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -461,7 +461,7 @@ public:
   virtual ~ACE_Static_Function_Node (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

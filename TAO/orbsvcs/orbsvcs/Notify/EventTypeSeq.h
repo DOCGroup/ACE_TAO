@@ -64,7 +64,7 @@ public:
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 
   /// Print the contents.
-  void dump (void) const;
+  void dump () const;
 
   // TAO_Notify::Topology_Object
 

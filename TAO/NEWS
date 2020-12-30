@@ -4,6 +4,11 @@ USER VISIBLE CHANGES BETWEEN TAO-2.5.12 and TAO-3.0.0
 . C++11 is now a mandatory compiler feature which is
   required for TAO
 
+. Fixed some CORBA spec mismatches for the CORBA server
+  portable interceptors
+
+. Add portspan support to DIOP
+
 . TAO IDL:
 
   . IDL 4 is now the default IDL version. Note that IDL 4 support is still

@@ -68,7 +68,7 @@ public:
                     CORBA::ULong buf_sz = 0);
 
   /// Destructor.
-  virtual ~TAO_ECG_Mcast_EH (void);
+  virtual ~TAO_ECG_Mcast_EH ();
 
   /**
    * Register for changes in the EC subscription list.
@@ -89,7 +89,7 @@ public:
    * multicast groups, close the sockets and deregister from the
    * reactor.
    */
-  virtual int shutdown (void);
+  virtual int shutdown ();
   //@}
 
   /// Reactor callback.  Notify receiver_ that a dgram corresponding
@@ -115,7 +115,7 @@ private:
 
     /// Shut down the observer: disconnect from EC and deactivate from
     /// POA.
-    void shutdown (void);
+    void shutdown ();
 
     /// Event Channel Observer methods
     //@{
@@ -201,14 +201,14 @@ private:
   class TAO_RTEvent_Serv_Export Observer_Disconnect_Command
   {
   public:
-    Observer_Disconnect_Command (void);
+    Observer_Disconnect_Command ();
     Observer_Disconnect_Command (RtecEventChannelAdmin::Observer_Handle handle,
                                  RtecEventChannelAdmin::EventChannel_ptr ec);
 
     Observer_Disconnect_Command (const Observer_Disconnect_Command &rhs);
     Observer_Disconnect_Command & operator= (const Observer_Disconnect_Command & rhs);
 
-    void execute (void);
+    void execute ();
 
   private:
 

@@ -32,14 +32,14 @@ TAO_EC_Conjunction_Filter::~TAO_EC_Conjunction_Filter ()
        ++i)
     {
       delete *i;
-      *i = 0;
+      *i = nullptr;
     }
   delete[] this->children_;
-  this->children_ = 0;
+  this->children_ = nullptr;
   this->n_ = 0;
 
   delete[] this->bitvec_;
-  this->bitvec_ = 0;
+  this->bitvec_ = nullptr;
 }
 
 int
@@ -123,7 +123,7 @@ TAO_EC_Conjunction_Filter::push (const RtecEventComm::EventSet& event,
     {
       this->event_[l + i] = event[i];
     }
-  if (this->all_received () && this->parent () != 0)
+  if (this->all_received () && this->parent () != nullptr)
     this->parent ()->push_nocopy (this->event_, qos_info);
 }
 

@@ -470,11 +470,8 @@ TAO_IIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
       ACE_INET_Addr a(addr);
 
       bool found_a_port = false;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                            ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {

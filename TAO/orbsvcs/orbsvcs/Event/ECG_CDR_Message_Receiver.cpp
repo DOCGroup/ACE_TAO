@@ -145,7 +145,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::init (size_t size,
 
   for (size_t i = 0; i < size; ++i)
     {
-      this->fragmented_requests_[i] = 0;
+      this->fragmented_requests_[i] = nullptr;
     }
 
   return 0;
@@ -164,7 +164,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::~Requests ()
 
   delete [] this->fragmented_requests_;
 
-  this->fragmented_requests_ = 0;
+  this->fragmented_requests_ = nullptr;
   this->size_ = 0;
   this->id_range_low_ = 0;
   this->id_range_high_ = 0;
@@ -176,7 +176,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
   if (request_id < this->id_range_low_)
     // <request_id> is below the current range.
     {
-      return 0;
+      return nullptr;
     }
 
   if (request_id > this->id_range_high_)
@@ -223,14 +223,14 @@ TAO_ECG_CDR_Message_Receiver::Requests::purge_requests (
         {
           delete this->fragmented_requests_[index];
         }
-      this->fragmented_requests_[index] = 0;
+      this->fragmented_requests_[index] = nullptr;
     }
 }
 
 // ****************************************************************
 
 TAO_ECG_UDP_Request_Entry
-TAO_ECG_CDR_Message_Receiver::Request_Completed_ (0, 0, 0, 0);
+TAO_ECG_CDR_Message_Receiver::Request_Completed_ (false, 0, 0, 0);
 
 int
 TAO_ECG_CDR_Message_Receiver::handle_input (
@@ -290,7 +290,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
       crc = ACE::crc32 (iov, 2);
     }
   // Check whether the message is a loopback message.
-  if (this->ignore_from_.get () != 0
+  if (this->ignore_from_.get () != nullptr
       && this->ignore_from_->is_loopback (from))
     {
       return 0;
@@ -368,7 +368,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
   TAO_ECG_UDP_Request_Entry ** request =
     entry->int_id_->get_request (request_id);
 
-  if (request == 0)
+  if (request == nullptr)
     {
       ORBSVCS_DEBUG ((LM_WARNING, "Received mcast request with sequence"
                               "below currently expected range.\n"));
@@ -380,7 +380,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
                            "(Request already complete).\n"));
       return 0;
     }
-  if (*request != 0)
+  if (*request != nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Inconsistent fragments for "
                                    "mcast request.\n"),
@@ -407,7 +407,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
   TAO_ECG_UDP_Request_Entry ** request =
     source_entry->int_id_->get_request (header.request_id);
 
-  if (request == 0)
+  if (request == nullptr)
     {
       ORBSVCS_DEBUG ((LM_WARNING, "Received mcast request with sequence "
                               "below currently expected range.\n"));
@@ -419,7 +419,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
                            "(Request already complete).\n"));
       return 0;
     }
-  if (*request == 0)
+  if (*request == nullptr)
     // Entry for this request has not yet been allocated.
     {
       ACE_NEW_RETURN (*request,
@@ -479,15 +479,15 @@ TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
 TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
 {
   // Get the entry for <from> from the <request_map_>.
-  Request_Map::ENTRY * entry = 0;
+  Request_Map::ENTRY * entry = nullptr;
 
   if (this->request_map_.find (from, entry) == -1)
     {
       // Create an entry if one doesn't exist.
-      Requests *requests = 0;
+      Requests *requests = nullptr;
       ACE_NEW_RETURN (requests,
                       Requests,
-                      0);
+                      nullptr);
       std::unique_ptr<Requests> requests_aptr (requests);
 
       if (requests->init (this->max_requests_, this->min_purge_count_) == -1
