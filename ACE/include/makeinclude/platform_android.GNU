@@ -145,9 +145,6 @@ ifeq ($(ssl),1)
   PLATFORM_SSL_LDFLAGS += --exclude-libs libcrypto.a,libssl.a
 endif
 
-# Link To Android Logging Library for Log_Msg_Android_Logcat
-LIBS += -llog
-
 # link step to avoid 'command line too long' error on Windows
 ifeq ($(OS), Windows_NT)
   SHOBJS_FILE = $(VSHDIR)$(MAKEFILE)_object_list.tmp
