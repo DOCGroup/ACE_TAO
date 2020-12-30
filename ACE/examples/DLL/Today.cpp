@@ -7,9 +7,8 @@
 
 // Implementation of the abstract class method which describes the
 // magazine.
-
 void
-Today::title (void)
+Today::title ()
 {
   ACE_DEBUG ((LM_DEBUG,
               "Today: XML Special Apr 02\n"));

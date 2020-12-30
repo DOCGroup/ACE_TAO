@@ -34,10 +34,9 @@
 class Today : public Magazine
 {
 public:
-
   // The virtual abstract class method which returns the title of the
   // magazine.
-  void title (void);
+  void title () override;
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the
