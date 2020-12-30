@@ -107,7 +107,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
       load = ((system_ll - idle_ll) * 100 / system_ll)  / sys_info.dwNumberOfProcessors;
     }
 
-#elif defined (linux) || defined (sun)
+#elif defined (ACE_LINUX) || defined (sun)
 
   // Only bother getting the load average over the last minute.
   //
@@ -115,7 +115,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
   //       last 5 and 15 minutes can be used instead.
   double loadavg[1];
 
-# if defined (linux) \
+# if defined (ACE_LINUX) \
      && ((defined (__GLIBC__) && defined (__GLIBC_MINOR__) \
           && __GLIBC__ == 2 && __GLIBC_MINOR__ < 2) \
          || (!defined (_BSD_SOURCE) && !defined (_GNU_SOURCE)))
@@ -217,8 +217,7 @@ TAO_LB_CPU_Load_Average_Monitor::loads ()
 
 #endif
 
-#if defined (linux) || defined (sun) || defined (__hpux) || defined(__NetBSD__) || defined (__APPLE__)
-
+#if defined (ACE_LINUX) || defined (sun) || defined (__hpux) || defined(__NetBSD__) || defined (__APPLE__)
   CosLoadBalancing::LoadList * tmp = 0;
   ACE_NEW_THROW_EX (tmp,
                     CosLoadBalancing::LoadList (1),
