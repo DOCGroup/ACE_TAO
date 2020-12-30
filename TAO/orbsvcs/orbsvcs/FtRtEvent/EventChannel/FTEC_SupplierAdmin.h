@@ -43,7 +43,6 @@ class TAO_FTEC_SupplierAdmin
              FtRtecEventChannelAdmin::SupplierAdminState>
 {
 public:
-
   static const FtRtecEventChannelAdmin::OperationType OBTAIN_ID;
 
   typedef FT_ProxyAdmin<TAO_FTEC_SupplierAdmin,

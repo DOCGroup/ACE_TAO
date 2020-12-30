@@ -19,7 +19,7 @@
 
 #include "ace/Service_Object.h"
 #include "ace/Service_Config.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -34,16 +34,16 @@ namespace FTRTEC {
   {
   public:
     /// Constructor.
-    Fault_Detector_Loader (void);
+    Fault_Detector_Loader ();
 
     /// Destructor.
-    virtual ~Fault_Detector_Loader (void);
+    virtual ~Fault_Detector_Loader ();
 
     virtual int init (int argc,
       ACE_TCHAR* []);
     Fault_Detector* detector();
   private:
-    auto_ptr<Fault_Detector> detector_;
+    std::unique_ptr<Fault_Detector> detector_;
   };
 }
 
