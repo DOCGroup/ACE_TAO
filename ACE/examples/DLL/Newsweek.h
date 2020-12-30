@@ -34,9 +34,8 @@
 class Newsweek : public Magazine
 {
 public:
-
   // This is the abstract class method which describes the magazine.
-  void title (void);
+  void title () override;
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the
