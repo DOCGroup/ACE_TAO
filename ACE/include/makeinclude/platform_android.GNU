@@ -104,17 +104,31 @@ ifdef android_ndk
     android_ndk_tool_prefix := $(CROSS_COMPILE)$(android_api)-
   endif
 
-  # We dont want this being used again except to signal that this is a
-  # cross-compile build. If it is this command (probably) wont exist.
+  # We don't want this being used again except to signal that this is a
+  # cross-compile build. If it is then the resulting command (probably) wont
+  # exist.
   CROSS_COMPILE := THIS_VALUE_SHOULD_NOT_BE_USED
 
+  # Ignore value of CROSS_COMPILE because ar doesn't match clang like in
+  # platform_clang_common.GNU.
   override_cross_compile = 1
   CC = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang
   CXX = $(android_ndk_tools)/$(android_ndk_tool_prefix)clang++
   AR = $(android_ndk_tools)/llvm-ar
 
-else
+else # Standalone Toolchain
   CROSS_COMPILE := $(CROSS_COMPILE)-
+
+  ifeq ($(android_abi),armeabi-v7a)
+    # According to Google the armv7a-linux-androideabi- prefix should be
+    # preferred because it produces more efficient code. However if it doesn't
+    # exist since we're using an older NDK we have to fallback to
+    # arm-linux-androideabi-. This isn't a problem when directly using the NDK
+    # because the NDKs we support for that have armv7a-* clangs.
+    ifeq (,$(shell command -v $(CROSS_COMPILE)clang $(ACE_NUL_STDERR)))
+      CROSS_COMPILE := arm-linux-androideabi-
+    endif
+  endif
 
   # Export so child processes can use tools from the same toolchain.
   export CROSS_COMPILE

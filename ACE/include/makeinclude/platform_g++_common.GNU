@@ -26,7 +26,7 @@ else
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
       TAO_IDL3_TO_XMI = $(HOST_ROOT)/bin/tao_idl3_to_xmi
       TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
-      # make sure to use the target compiler, not the cross-compiler
+      # make sure to use the host compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools
       TAO_IDL_PREPROCESSOR = gcc
     endif
