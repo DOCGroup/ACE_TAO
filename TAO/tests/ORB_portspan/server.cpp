@@ -21,9 +21,9 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->run();
     }
-  catch (const CORBA::Exception& ex)
+  catch (const CORBA::Exception&)
     {
-      ex._tao_print_exception ("Exception in main():");
+      ACE_DEBUG ((LM_DEBUG, "server failed to start\n"));
       return 1;
     }
 
