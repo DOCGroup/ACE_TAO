@@ -26,7 +26,6 @@ class ECMcastTests_Export EC_Wrapper:
   public TAO_EC_Deactivated_Object
 {
 public:
-
   /// Create a new EC_Wrapper object.
   /// (Constructor access is restricted to insure that all
   /// EC_Wrapper objects are heap-allocated.)
@@ -56,13 +55,11 @@ public:
   //@}
 
 protected:
-
   /// Constructor (protected).  Clients can create new
   /// EC_Wrapper objects using the static create() method.
   EC_Wrapper (void);
 
 private:
-
   /// Helper - destroys Event Channel and deactivate from POA, if
   /// necessary.
   void destroy_ec (void);
