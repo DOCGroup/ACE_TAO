@@ -14,7 +14,7 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Sched/Reconfig_Scheduler_T.h"
 #include "orbsvcs/Time_Utilities.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -200,7 +200,7 @@ init (int config_count,
   // (Re)initialize using the new settings.
 
   // Add the passed config infos to the scheduler
-  auto_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
+  std::unique_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
   for (i = 0; i < config_count; ++i)
     {
       RtecScheduler::Config_Info* new_config_info;
@@ -209,7 +209,7 @@ init (int config_count,
                         CORBA::NO_MEMORY ());
 
       // Make sure the new config info is cleaned up if we exit abruptly.
-      ACE_auto_ptr_reset (new_config_info_ptr, new_config_info);
+      new_config_info_ptr.reset (new_config_info);
 
       result = config_info_map_.bind (config_info [i].preemption_priority,
                                       new_config_info);
@@ -241,7 +241,7 @@ init (int config_count,
             new_config_info->preemption_priority;
         }
 
-      // Release the auto_ptr so it does not clean
+      // Release the unique_ptr so it does not clean
       // up the successfully bound config info.
       new_config_info_ptr.release ();
 
@@ -1529,7 +1529,7 @@ create_i (const char *entry_point,
                     CORBA::NO_MEMORY ());
 
   // Make sure the new scheduling entry is cleaned up if we exit abruptly.
-  auto_ptr<TAO_RT_Info_Ex> new_rt_info_ptr (new_rt_info);
+  std::unique_ptr<TAO_RT_Info_Ex> new_rt_info_ptr (new_rt_info);
 
   // Set some reasonable default values, and store the passed ones.
   new_rt_info->entry_point = CORBA::string_dup (entry_point);
@@ -1584,7 +1584,7 @@ create_i (const char *entry_point,
                     CORBA::NO_MEMORY ());
 
   // Make sure the new scheduling entry is cleaned up if we exit abruptly.
-  auto_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
+  std::unique_ptr<TAO_Reconfig_Scheduler_Entry> new_sched_entry_ptr (new_sched_entry);
 
   // Maintain the size of the entry pointer array.
   maintain_scheduling_array (entry_ptr_array_, entry_ptr_array_size_,
@@ -1685,7 +1685,7 @@ set_i (TAO_RT_Info_Ex *rt_info,
 
 
           // Make sure the new tuple is cleaned up if we exit abruptly.
-          auto_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
+          std::unique_ptr<TAO_RT_Info_Tuple> tuple_auto_ptr (tuple_ptr);
 
 //          ORBSVCS_DEBUG((LM_DEBUG, "Tuple not found.  Inserting new tuple for RT_Info: %d, entry_ptr: 0x%x, tuple_ptr: 0x%x\n",
 //                     rt_info->handle,
@@ -1708,13 +1708,11 @@ set_i (TAO_RT_Info_Ex *rt_info,
 
           ++this->rt_info_tuple_count_;
 
-          // All is well: release the auto pointer's hold on the tuple.
+          // All is well: release the unique pointer's hold on the tuple.
           tuple_auto_ptr.release ();
         }
     }
 }
-
-
 
 // Internal method to lookup a handle for an RT_Info, and return its
 // handle, or an error value if it's not present.
@@ -2504,7 +2502,7 @@ assign_priorities_i (void)
   // strategy to decide when a new priority or subpriority is reached.
   TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>
     prio_visitor (this->rt_info_count_, this->entry_ptr_array_);
-  auto_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
+  std::unique_ptr<RtecScheduler::Config_Info> new_config_info_ptr;
   for (i = 0; i <= this->rt_info_count_; ++i)
     {
       int result;
@@ -2527,13 +2525,13 @@ assign_priorities_i (void)
         }
       else if (result == 1)
         {
-          RtecScheduler::Config_Info* new_config_info;
+          RtecScheduler::Config_Info* new_config_info {};
           ACE_NEW_THROW_EX (new_config_info,
                             RtecScheduler::Config_Info,
                             CORBA::NO_MEMORY ());
 
           // Make sure the new config info is cleaned up if we exit abruptly.
-          ACE_auto_ptr_reset (new_config_info_ptr, new_config_info);
+          new_config_info_ptr.reset (new_config_info);
 
           // Have the strategy fill in the new config info for that
           // priority level, using the representative scheduling entry.
@@ -2567,7 +2565,7 @@ assign_priorities_i (void)
                 break;
             }
 
-          // Release the auto_ptr so it does not clean
+          // Release the unique_ptr so it does not clean
           // up the successfully bound config info.
           new_config_info_ptr.release ();
         }
