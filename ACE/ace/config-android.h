@@ -17,7 +17,7 @@
 #define ACE_ANDROID
 #define ACE_PLATFORM_CONFIG config-android.h
 
-#include "config-linux-common.h"
+#include "ace/config-linux-common.h"
 
 /*
  * Android NDK Revision Macros
