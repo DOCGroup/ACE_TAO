@@ -1631,7 +1631,8 @@ symbols are necessary when you want to debug your code.</p>
 <h2><a name="android">Building and Installing ACE on Android</a></h2>
 
 <ul>
-  <li><a href="#android-toolchain">Generating a Toolchain</a></li>
+  <li><a href="#android-target">Choosing the Target</a></li>
+  <li><a href="#android-toolchain">Generating a Toolchain (Optional)</a></li>
   <li><a href="#android-oldndks">Using Older NDKs</a></li>
   <li><a href="#android-building">Building</a></li>
   <li><a href="#android-install">Installing ACE on Android</a></li>
@@ -1642,11 +1643,12 @@ symbols are necessary when you want to debug your code.</p>
 <p>ACE can be built for Android by using the <a
 href="https://developer.android.com/ndk/">Android Native Development Kit
 (NDK)</a>. This is different than the standard way of writing Android
-applications in Java which run the on Android Runtime or the older Dalvik
-Virtual Machine. Applications built using the NDK are native Linux applications
-written in C or C++ specifically compiled to run on Android systems. In
-addition, applications built using the NDK have access to Android-specific APIs
-much like the ones available to Java-based Android applications.
+applications in Java which run the on the Android Runtime or the older Dalvik
+Virtual Machine. Applications and libraries built using the NDK are native
+Linux applications written in C or C++ specifically compiled to run on Android
+systems and libraries can be included in normal Android apps. In addition,
+applications and libraries built using the NDK have access to Android-specific
+APIs much like the ones available to Java-based Android applications.
 </p>
 
 <div class="boxed">
@@ -1663,11 +1665,18 @@ addition to the Windows version of the Android NDK, you will also need
 <a href="https://www.msys2.org">MSYS2 for Unix utilities that ACE needs</a>.
 </div>
 
-<h3><a name="android-toolchain">Generating a Toolchain</a></h3>
+After downloading the NDK, you will have to decide on what target you want to
+build for, which is covered in the next section, then decide if you want to
+build directly using the NDK or using
+<a href="#android-toolchain">a generated standalone toolchain</a>. Generating a
+toolchain is optional and only really makes sense if you're building for just
+one architecture/API level pair and don't need to keep the entire NDK around.
+Using the NDK directly requires Android NDK r19 or later.
 
-<p>To build ACE for Android you need to download the NDK and generate a
-toolchain for the specific Android target you want. The specific target is
-defined by two things:</p>
+<h3><a name="android-toolchain">Choosing the Target</a></h3>
+
+<p>To build ACE for Android you need to know the specific Android target you
+want. The specific target is defined by two things:</p>
 
 <dl class="indent">
   <dt>- The minimal API level to target.</dt>
@@ -1682,10 +1691,10 @@ defined by two things:</p>
     although support for MIPS has been dropped from the NDK. <a
     href="https://developer.android.com/ndk/guides/abis">This is the official
     documentation on the ABIs</a>. These are the ABIs that ACE supports at the
-    time of writing and must be passed to ACE as <code>ANDROID_ABI</code>:
+    time of writing and must be passed to ACE as <code>android_abi</code>:
     <!-- Check to see if any architectures have been added or removed. If so
       update this list and the table below as well-->
-    <dl>
+    <dl id="android_abis">
       <dt><code>armeabi-v7a</code></dt>
         <dd>32-bit ARM, The default ABI for both the NDK and ACE.</dd>
       <dt><code>armeabi-v7a-with-neon</code></dt>
@@ -1700,15 +1709,16 @@ defined by two things:</p>
     <p><b>
       It should be noted that starting in August 2019, the Google Play
       Store will require new apps to have 64-bit libraries if they have native
-      libraries. 32-bit native libraries will still be supported but they must also
-      have 64-bit libraries. Look up any restrictions that may affect
-      apps you want to publish on the Play Store, including minimum API
-      level.
+      libraries. 32-bit native libraries will still be supported but apps must
+      also have 64-bit libraries. Look up any restrictions that may affect apps
+      you want to publish on the Play Store, including targeted API level
+      requirements.
     </b></p>
     </dd>
   </li>
 </dl>
 
+<h3><a name="android-toolchain">Generating a Toolchain (Optional)</a></h3>
 
 <p>To generate a toolchain, one use must use
 <code>build/tools/make_standalone_toolchain.py</code> in the NDK. A destination must be
@@ -1720,10 +1730,11 @@ toolchain targeting 32-bit ARM Android 7.0 "Nougat" (API Level 24) and later: </
 <p><code>$TOOLCHAIN/bin</code> must be in your <code>$PATH</code> when building ACE and
 applications using ACE.</p>
 
-<p>This table shows how the <code>ANDROID_ABI</code> variable and the <code>--arch</code> argument correlate:</p>
-<table class="indent">
+<p>This table shows how the <code>android_abi</code> variable and the
+<code>--arch</code> argument correlate:</p>
+<table class="indent" id="android_abi_toolchain_table">
   <tr>
-    <th><code>ANDROID_ABI</code></th>
+    <th><code>android_abi</code></th>
     <th><code>--arch</code></th>
   </tr>
   <tr>
@@ -1821,6 +1832,9 @@ have caveats:
     <code>platform_android.GNU</code>. <b>This should be set for NDKs before r15.</b>
   </li>
   <li>
+    ACE does not support using the NDK directly before r18.
+  </li>
+  <li>
     There are probably unknown conflicts, especially in the minor revisions
     before the last minor revision of a NDK revision.
   </li>
@@ -1846,10 +1860,15 @@ have caveats:
     <li>Create <code>include/makeinclude/platform_macros.GNU</code>:
       <ul>
         <li>
-          Set <code>ANDROID_ABI</code> to one of the options above. This
-          must match the toolchain <code>--arch</code> argument used according
-          to the table above.
+          Set <code>android_abi</code> to one of
+          <a href="#android_abis">the options above</a>.
+          If using a standalone toolchain this must match the
+          <code>--arch</code> argument used according
+          to <a href="#android_abi_toolchain_table">the table above</a>.
         </li>
+        <li>If using the NDK directly, set <code>android_ndk</code> to the
+          location of the extracted NDK and <code>android_api</code> to the API
+          level desired.</li>
         <li>Set options for debug and optimization options as desired.</li>
           <li>If you want to compile static, add <code>static_libs_only:=1</code></li>
           <li>Must include <code>include $(ACE_ROOT)/include/makeinclude/platform_android.GNU</code>.</li>
@@ -1862,10 +1881,11 @@ have caveats:
     </li>
     </li>
     <li>Generate makefiles (if necessary).</li>
-    <li>Build with GNU make. Make sure you have <code>$TOOLCHAIN/bin</code> in
-      your <code>$PATH</code>.
+    <li>Build with GNU make. If using a standalone toolchain, make sure you
+      have <code>$TOOLCHAIN/bin</code> in your <code>$PATH</code>.
       <div class="boxed indent"><p>
-        <b>Windows Users:</b> Make sure you have <code>%TOOLCHAIN%\bin</code>
+        <b>Windows Users:</b> If using a standalone toolchain,
+        Make sure you have <code>%TOOLCHAIN%\bin</code>
         and MSYS2's <code>bin</code> in your <code>%PATH%</code> when building.
         If you are cross compiling TAO you will also need a preprocessor for
         <code>tao_idl</code> available (See Windows note above).</p>

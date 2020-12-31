@@ -6,9 +6,12 @@ CCFLAGS += -fdelayed-template-parsing
 ifneq ($(CROSS_COMPILE),)
   CROSS-COMPILE = 1
   # Build using the cross-tools
-  CC  = ${CROSS_COMPILE}clang${CROSS_COMPILE_SUFFIX}
-  CXX = ${CROSS_COMPILE}clang++${CROSS_COMPILE_SUFFIX}
-  AR  = ${CROSS_COMPILE}ar${CROSS_COMPILE_SUFFIX}
+  override_cross_compile ?= 0
+  ifeq ($(override_cross_compile),0)
+    CC  = ${CROSS_COMPILE}clang${CROSS_COMPILE_SUFFIX}
+    CXX = ${CROSS_COMPILE}clang++${CROSS_COMPILE_SUFFIX}
+    AR  = ${CROSS_COMPILE}ar${CROSS_COMPILE_SUFFIX}
+  endif
   # Cross-linker requires this for linked in shared libs that depend
   # themselves on other shared libs (not directly linked in)
   LDFLAGS += -Wl,-rpath-link,$(ACE_ROOT)/lib
@@ -20,7 +23,7 @@ ifneq ($(CROSS_COMPILE),)
     TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
     TAO_IDL3_TO_XMI = $(HOST_ROOT)/bin/tao_idl3_to_xmi
     TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
-    # make sure to use the target compiler, not the cross-compiler
+    # make sure to use the host compiler, not the cross-compiler
     # as preprocessor for the cross-compiled idl tools
     TAO_IDL_PREPROCESSOR = clang
   endif
@@ -50,7 +53,7 @@ templates ?= automatic
 # If the platform file didn't already set versioned_so, default to 1.
 versioned_so ?= 1
 with_ld ?=
-ifeq ($(versioned_so),1)
+ifneq ($(versioned_so),0)
   ifeq ($(with_ld),hpux)
     SOFLAGS += -Wl,+h -Wl,$(SONAME)
   else
@@ -141,3 +144,6 @@ else
 endif # shared_libs
 
 FLAGS_C_CC += -W -Wall
+
+# Disable "warning: creating *.a" Message
+ARFLAGS += -c
