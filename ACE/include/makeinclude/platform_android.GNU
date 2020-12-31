@@ -35,24 +35,22 @@ android_force_clang ?= 1
 # This section deals with selecting the architecture/compiler
 # As of writing information on ABIs can be found at https://developer.android.com/ndk/guides/abis
 
-ifndef ANDROID_ABI
-  ifdef ANDROID_ARCH # Handle possibility of ANDROID_ARCH being passed
-    ifeq ($(ANDROID_ARCH),arm)
-      ANDROID_ABI := armeabi-v7a
-    else
-      ANDROID_ABI := $(ANDROID_ARCH)
-    endif
-  else # Else default to ARMv7
-    ANDROID_ABI := armeabi-v7a
-  endif
-endif
-
 # Make sure android_abi or ANDROID_ABI are defined and they are the same.
+# ANDROID_ABI and ANDROID_ARCH are acceptable for compatibility reasons.
 ifndef android_abi
   ifdef ANDROID_ABI
     android_abi := $(ANDROID_ABI)
   else
-    $(error android_abi or ANDROID_ABI must be defined)
+    ifdef ANDROID_ARCH
+      ifeq ($(ANDROID_ARCH),arm)
+        android_abi := armeabi-v7a
+      else
+        android_abi := $(ANDROID_ARCH)
+      endif
+    else # Default to ARMv7 if nothing is set
+      android_abi := armeabi-v7a
+    endif
+    ANDROID_ABI := $(android_abi)
   endif
 else
   ANDROID_ABI := $(android_abi)
@@ -63,7 +61,7 @@ ifeq ($(android_abi), neon)
   android_abi := armeabi-v7a-with-neon
 endif
 
-android_neon ?= 1
+android_neon ?= 0
 ifeq ($(android_abi),armeabi-v7a-with-neon)
   android_abi := armeabi-v7a
   android_neon := 1
