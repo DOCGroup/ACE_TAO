@@ -791,7 +791,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       ACE_NEW_RETURN (buf, char[bufLen], -1);
       DWORD dwRetVal = 0;
       ULONG iterations = 0;
-      const ULONG maxTries = 3;
+      ULONG const maxTries = 3;
       PIP_ADAPTER_ADDRESSES pAddrs;
       do
         {
