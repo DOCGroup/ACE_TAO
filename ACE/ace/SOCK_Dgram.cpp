@@ -787,8 +787,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
         (if_ix = ACE_OS::atoi (net_if)) > 0;
 
       ULONG bufLen = 15000; // Initial size as per Microsoft
-      char* buf = 0;
-      ACE_NEW_RETURN(buf, char[bufLen], -1);
+      char *buf = 0;
+      ACE_NEW_RETURN (buf, char[bufLen], -1);
       DWORD dwRetVal = 0;
       ULONG iterations = 0;
       const ULONG maxTries = 3;
@@ -796,18 +796,18 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
       do
         {
           pAddrs = reinterpret_cast<PIP_ADAPTER_ADDRESSES> (buf);
-          dwRetVal = ::GetAdaptersAddresses(AF_INET6, 0, 0, pAddrs, &bufLen);
+          dwRetVal = ::GetAdaptersAddresses (AF_INET6, 0, 0, pAddrs, &bufLen);
           if (dwRetVal == ERROR_BUFFER_OVERFLOW)
             {
               delete[] buf;
-              ACE_NEW_RETURN(buf, char[bufLen], -1);
-              iterations++;
+              ACE_NEW_RETURN (buf, char[bufLen], -1);
+              ++iterations;
             }
           else
             {
               break;
             }
-        } while ((dwRetVal == ERROR_BUFFER_OVERFLOW) && (iterations < maxTries));
+        } while (dwRetVal == ERROR_BUFFER_OVERFLOW && iterations < maxTries);
 
       if (dwRetVal != NO_ERROR)
         {
@@ -834,7 +834,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
 
 #else /* ACE_WIN32 */
 #ifndef ACE_LACKS_IF_NAMETOINDEX
-      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex(ACE_TEXT_ALWAYS_CHAR(net_if));
+      lmreq.ipv6mr_interface = ACE_OS::if_nametoindex (ACE_TEXT_ALWAYS_CHAR (net_if));
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 #endif /* ACE_WIN32 */
       if (lmreq.ipv6mr_interface == 0)
