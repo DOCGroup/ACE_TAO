@@ -140,12 +140,6 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         undefined and that the
                                         geteuid() system call exists.
 ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
-ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-                                        Non-C++ Compliant compilers that automatically
-                                        provide storage for class static const int
-                                        when their declaration is seen. I.e. they object
-                                        to explicit definitions being seen in the .cpp
-                                        file.
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.
@@ -221,19 +215,12 @@ ACE_HAS_ALLOCA                          Compiler/platform supports
                                         alloca()
 ACE_HAS_ALLOCA_H                        Compiler/platform has
                                         <alloca.h>
-ACE_HAS_ALPHA_TIMER                     CPU is an Alpha, with the rpcc
-                                        instruction to read the tick timer.
-                                        Limited to 32 bits, so not recommended.
 ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
                                         calls init()/fini() for shared
                                         libraries
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
                                         u_long fdmask (e.g., Linux and
                                         SCO).
-ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-                                        Compiler handles explicit calling of
-                                        template destructor correctly. See
-                                        "ace/OS.h" for details.
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).
@@ -550,9 +537,6 @@ ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
                                         Standard C++ Library
-ACE_HAS_STDCPP_STL_INCLUDES             Standard C++ headers can be
-                                        included in the standard way.
-                                        e.g. #include <vector>
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
@@ -883,7 +867,6 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
-ACE_LACKS_NUMERIC_LIMITS    Platform lacks std::numeric_limits<>.
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -1064,14 +1047,6 @@ ACE_LACKS_WRITEV                        Platform doesn't define
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
-ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
-                                        for a "hidden" function, e.g.,
-                                        a private, unimplemented copy
-                                        constructor or assignment
-                                        operator.  The SGI C++
-                                        compiler needs this, in
-                                        template classes, with
-                                        ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
 ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
                                         small default stacks.
 ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the

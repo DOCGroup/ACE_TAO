@@ -41,8 +41,6 @@
 #endif
 
 #define ACE_HAS_ITOA
-#define ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 #define ACE_ITOA_EQUIVALENT ::_itoa
 #define ACE_STRCASECMP_EQUIVALENT ::_stricmp
@@ -127,10 +125,6 @@
 
 // A template can not be exported. Only an instantiation may be exported.
 #define ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT
-
-// At least for ACE_UNIMPLEMENTED_FUNC in class templates, this is needed to
-// explicitly instantiate a template that has ACE_UNIMPLEMENTED_FUNC.
-# define ACE_NEEDS_FUNC_DEFINITIONS
 
 // Windows Vista and Windows Server 2008 and newer do have native condition
 // variables, but this is commented out because the support in ACE hasn't

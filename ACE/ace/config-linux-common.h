@@ -60,7 +60,6 @@
 #  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
-#  define ACE_HAS_STDCPP_STL_INCLUDES
 #  define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #  define ACE_LACKS_SWAB
@@ -183,7 +182,7 @@
 #  define ACE_HAS_STRBUF_T
 #endif
 
-#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
+#if defined (__ia64) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 #  define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"

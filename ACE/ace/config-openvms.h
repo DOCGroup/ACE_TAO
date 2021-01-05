@@ -50,8 +50,6 @@
 
 #define ACE_MAX_UDP_PACKET_SIZE 65535
 
-#define ACE_HAS_STDCPP_STL_INCLUDES 1
-
 /* missing system headers */
 #define ACE_LACKS_STDINT_H  1
 #define ACE_LACKS_SYS_IPC_H 1

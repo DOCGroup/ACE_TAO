@@ -57,10 +57,6 @@
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-# if !defined (ACE_ENDLESS_LOOP)
-#  define ACE_ENDLESS_LOOP
-# endif /* ! ACE_ENDLESS_LOOP */
-
 #if !defined (ACE_HAS_CPP11)
 # error ACE/TAO require C++11 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
 #endif /* !ACE_HAS_CPP11 */
@@ -235,7 +231,6 @@
       } \
    while (0)
 
-# if defined (ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR)
 #   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
      do { \
           if (POINTER) \
@@ -370,95 +365,6 @@
             } \
         } \
      while (0)
-# else /* ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
-#   define ACE_DES_NOFREE_TEMPLATE(POINTER,T_CLASS,T_PARAMETER) \
-     do { \
-          if (POINTER) \
-            { \
-              (POINTER)->T_CLASS T_PARAMETER::~T_CLASS (); \
-            } \
-        } \
-     while (0)
-#   define ACE_DES_ARRAY_NOFREE_TEMPLATE(POINTER,SIZE,T_CLASS,T_PARAMETER) \
-     do { \
-          if (POINTER) \
-            { \
-              for (size_t i = 0; \
-                   i < SIZE; \
-                   ++i) \
-              { \
-                (POINTER)[i].T_CLASS T_PARAMETER::~T_CLASS (); \
-              } \
-            } \
-        } \
-     while (0)
-#     define ACE_DES_FREE_TEMPLATE(POINTER,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS T_PARAMETER::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_ARRAY_FREE_TEMPLATE(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAMETER) \
-       do { \
-            if (POINTER) \
-              { \
-                for (size_t i = 0; \
-                     i < SIZE; \
-                     ++i) \
-                { \
-                  POINTER[i].T_CLASS T_PARAMETER::~T_CLASS (); \
-                } \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE2(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE3(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_FREE_TEMPLATE4(POINTER,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2,T_PARAM3,T_PARAM4) \
-       do { \
-            if (POINTER) \
-              { \
-                POINTER->T_CLASS <T_PARAM1, T_PARAM2, T_PARAM3, T_PARAM4>::~T_CLASS (); \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-#     define ACE_DES_ARRAY_FREE_TEMPLATE2(POINTER,SIZE,DEALLOCATOR,T_CLASS,T_PARAM1,T_PARAM2) \
-       do { \
-            if (POINTER) \
-              { \
-                for (size_t i = 0; \
-                     i < SIZE; \
-                     ++i) \
-                { \
-                  POINTER[i].T_CLASS <T_PARAM1, T_PARAM2>::~T_CLASS (); \
-                } \
-                DEALLOCATOR (POINTER); \
-              } \
-          } \
-       while (0)
-# endif /* defined ! ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR */
-
-
 /*******************************************************************/
 
 /// Service Objects, i.e., objects dynamically loaded via the service
