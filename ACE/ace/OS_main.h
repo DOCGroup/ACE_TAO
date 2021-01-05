@@ -302,7 +302,7 @@ int WINAPI WinMain (HINSTANCE hInstance, HINSTANCE hPrevInstance, LPWSTR lpCmdLi
 } \
 int ace_main_i
 
-#   endif   /* ACE_PSOSIM */
+#   endif
 # endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER && !ACE_HAS_WINCE && !ACE_DOESNT_INSTANTIATE_NONSTATIC_OBJECT_MANAGER */
 
 #  ifdef ACE_MQX

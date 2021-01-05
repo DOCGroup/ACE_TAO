@@ -173,9 +173,9 @@ inline ACE_Test_Output::ACE_Test_Output (void)
 
 inline ACE_Test_Output::~ACE_Test_Output (void)
 {
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
