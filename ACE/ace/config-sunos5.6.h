@@ -49,9 +49,6 @@
 #ifndef ACE_HAS_SIG_C_FUNC
 #define ACE_HAS_SIG_C_FUNC                      1
 #endif /* ACE_HAS_SIG_C_FUNC */
-#ifndef ACE_HAS_STDCPP_STL_INCLUDES
-#define ACE_HAS_STDCPP_STL_INCLUDES             1
-#endif /* ACE_HAS_STDCPP_STL_INCLUDES */
 #ifndef ACE_HAS_STRING_CLASS
 #define ACE_HAS_STRING_CLASS                    1
 #endif /* ACE_HAS_STRING_CLASS */
