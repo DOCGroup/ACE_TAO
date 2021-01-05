@@ -25,8 +25,6 @@
 
 #define ACE_ISCTYPE_EQUIVALENT __isctype
 
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
 #if !defined (__i386__)

@@ -230,10 +230,6 @@ ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
                                         u_long fdmask (e.g., Linux and
                                         SCO).
-ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-                                        Compiler handles explicit calling of
-                                        template destructor correctly. See
-                                        "ace/OS.h" for details.
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).

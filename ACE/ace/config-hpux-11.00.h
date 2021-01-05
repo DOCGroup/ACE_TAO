@@ -47,8 +47,6 @@
 #      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
 
-#    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
