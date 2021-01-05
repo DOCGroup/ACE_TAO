@@ -226,7 +226,7 @@ ACE_High_Res_Timer::global_scale_factor ()
 #          else
           ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #          endif /* ACE_LACKS_SSCANF */
-#         endif /* ! ACE_WIN32 && ! (ACE_LINUX && __alpha__) */
+#         endif /* !ACE_WIN32 && !ACE_LINUX */
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
