@@ -31,9 +31,6 @@
 #define _REENTRANT
 #define ACE_MT_SAFE 1
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 #define ACE_HAS_SHM_OPEN
 
 /***** Operating System Defines *****/

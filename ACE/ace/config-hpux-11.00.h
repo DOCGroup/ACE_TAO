@@ -157,9 +157,6 @@
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
 

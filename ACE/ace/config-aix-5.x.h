@@ -141,9 +141,6 @@
 
 #define ACE_HAS_AIX_HI_RES_TIMER
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
 
