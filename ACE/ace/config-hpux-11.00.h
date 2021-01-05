@@ -47,12 +47,6 @@
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
-// Lack of (and broken) support for placement operator delete is a known
-// bug by HP, up until aC++ A.03.55.02.
-#    if (__HP_aCC < 35502)
-#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-#    endif /* __HP_aCC < 35502 */
-
 // Compiler's 'new' throws exceptions on failure, regardless of whether or
 // not exception handling is enabled in the compiler options. Fortunately,
 // new(nothrow_t) is offered.
