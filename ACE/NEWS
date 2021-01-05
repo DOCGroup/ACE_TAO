@@ -23,6 +23,33 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
 . New Latest_ACE7TAO3_ branches which can be used to always checkout the
   latest ACE7/TAO3 micro/minor release
 
+. Android Support:
+
+  . `gnuace` no longer supports Android NDKs before r18. This means only clang
+    is now supported when building for Android.
+
+  . Support for building with the Android NDK r19 or later directly instead of
+    having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
+    details. Using a standalone toolchain is still supported.
+
+  . Made it easier to use `gnuace`-built libraries in as imported libraries in
+    CMake-based Android Studio native projects.
+
+  . Removed support for old `ANDROID_ARCH` make variable. Replaced
+    `ANDROID_ABI` with `android_abi`, but kept the former as an alias of the
+    later for compatibility. Also will no longer default to 32-bit ARM, so
+    `android_abi` or `ANDROID_ABI` must be defined.
+
+  . As recommend by Google, building with neon support is now the default when
+    `android_abi` is `armeabi-v7a`. If support for these processors without
+    NEON extensions is needed, put `androind_neon := 0` in
+    `platform_macros.GNU`.
+
+  . As recommend by Google, `gnuace` will start using LLD, the LLVM linker,
+    instead of the default GNU linkers. If the NDK being used doesn't default
+    to LLD and you want to use the GNU linkers, put `androind_set_lld := 0` in
+    `platform_macros.GNU`.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
 

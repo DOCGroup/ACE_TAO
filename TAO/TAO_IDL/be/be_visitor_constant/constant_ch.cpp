@@ -109,7 +109,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
     }
 
   // If this is true, can't generate inline constants.
-  bool forbidden_in_class = (snt != AST_Decl::NT_root
+  bool const forbidden_in_class = (snt != AST_Decl::NT_root
                              && snt != AST_Decl::NT_module
                              && (etype == AST_Expression::EV_string
                                  || etype == AST_Expression::EV_wstring
