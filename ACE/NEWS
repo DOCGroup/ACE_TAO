@@ -50,6 +50,8 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
     to LLD and you want to use the GNU linkers, put `androind_set_lld := 0` in
     `platform_macros.GNU`.
 
+. Removed support for the Alpha CPU
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
 
