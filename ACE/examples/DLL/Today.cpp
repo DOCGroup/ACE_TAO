@@ -25,13 +25,11 @@ Today::operator new (size_t bytes, const ACE_nothrow_t&)
 {
   return ::new (ACE_nothrow) char[bytes];
 }
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 Today::operator delete (void *p, const ACE_nothrow_t&) throw ()
 {
   delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 void
 Today::operator delete (void *ptr)

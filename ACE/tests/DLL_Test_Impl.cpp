@@ -61,14 +61,12 @@ Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
   return ::new (nt) char[bytes];
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 Hello_Impl::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   ::delete [] static_cast<char *> (ptr);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 

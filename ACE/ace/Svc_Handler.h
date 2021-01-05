@@ -176,9 +176,7 @@ public:
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
   void *operator new (size_t n, const ACE_nothrow_t&) throw();
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 
   /// This operator permits "placement new" on a per-object basis.
@@ -202,14 +200,12 @@ public:
    */
   void operator delete (void *);
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   /**
    * This operator is necessary to complement the class-specific
    * operator new above.  Unfortunately, it's not portable to all C++
    * compilers...
    */
   void operator delete (void *, void *);
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   /// Close down the descriptor and unregister from the Reactor
   void shutdown ();

@@ -10,7 +10,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Object_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
-
 #include "ace/Dynamic.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,14 +21,12 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t, void *p)
   return p;
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *, void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (NOOP, 2 parameters)");
   return;
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
@@ -85,7 +82,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
     }
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
                                          const ACE_nothrow_t&) throw()
@@ -93,7 +89,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
   ACE_TRACE("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 
