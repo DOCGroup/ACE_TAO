@@ -86,7 +86,7 @@
 
 // Take advantage of g++ visibility attributes to generate
 // improved shared library binaries.
-#if !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
+#if !defined (__MINGW32__)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -130,7 +130,7 @@
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* !__MINGW32__ && !ACE_HAS_CEGCC */
+#endif  /* !__MINGW32__ */
 
 #if defined (ACE_HAS_THREADS)
 # if defined (__powerpc__)
