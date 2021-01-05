@@ -15,7 +15,7 @@ Callback_i::shutdown (CORBA::Boolean is_clean)
 
 // OpenVMS seems to hang and not abort and dump core when abort() is called
 // here. This needs further investigation.
-#if defined (DEC_CXX) || defined (ACE_OPENVMS)
+#if defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();
@@ -51,7 +51,7 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
   if (is_clean == 0)
     {
       ACE_DEBUG ((LM_DEBUG, "Performing catastrophic shutdown\n"));
-#if defined (DEC_CXX) || defined (ACE_OPENVMS)
+#if defined (ACE_OPENVMS)
       ACE_OS::_exit();
 #else
       ACE_OS::abort();
