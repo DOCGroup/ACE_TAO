@@ -1061,14 +1061,6 @@ ACE_LACKS_WRITEV                        Platform doesn't define
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
-ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
-                                        for a "hidden" function, e.g.,
-                                        a private, unimplemented copy
-                                        constructor or assignment
-                                        operator.  The SGI C++
-                                        compiler needs this, in
-                                        template classes, with
-                                        ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
 ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
                                         small default stacks.
 ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the

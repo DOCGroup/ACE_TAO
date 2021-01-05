@@ -156,7 +156,6 @@
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
 #define ACE_MT_SAFE 1
-#define ACE_NEEDS_FUNC_DEFINITIONS
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
 #define ACE_THR_PRI_FIFO_DEF 10
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
