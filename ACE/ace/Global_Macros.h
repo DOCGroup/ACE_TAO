@@ -57,10 +57,6 @@
 # define ACE_SET_BITS(WORD, BITS) (WORD |= (BITS))
 # define ACE_CLR_BITS(WORD, BITS) (WORD &= ~(BITS))
 
-# if !defined (ACE_ENDLESS_LOOP)
-#  define ACE_ENDLESS_LOOP
-# endif /* ! ACE_ENDLESS_LOOP */
-
 #if !defined (ACE_HAS_CPP11)
 # error ACE/TAO require C++11 compliance, please upgrade your compiler and/or fix the platform configuration for your environment
 #endif /* !ACE_HAS_CPP11 */
