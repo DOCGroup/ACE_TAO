@@ -124,8 +124,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Guard<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Guard (const ACE_Guard<ACE_LOCK> &))
+  void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
+  ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
 };
 
 /**
@@ -284,8 +284,8 @@ private:
   typedef ACE_Guard<ACE_LOCK> Guard_Type;
   // FUZZ: enable check_for_ACE_Guard
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Guard<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &))
+  void operator= (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
+  ACE_TSS_Guard (const ACE_TSS_Guard<ACE_LOCK> &) = delete;
 };
 
 /**

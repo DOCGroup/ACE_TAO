@@ -51,8 +51,8 @@ public:
   TYPE &object ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cleanup_Adapter<TYPE> &))
+  ACE_Cleanup_Adapter (const ACE_Cleanup_Adapter<TYPE> &) = delete;
+  void operator= (const ACE_Cleanup_Adapter<TYPE> &) = delete;
 
   /// Contained object.
   TYPE object_;
@@ -138,11 +138,11 @@ public:
 
 protected:
   // Disallow instantiation of this class.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (void))
+  ACE_Managed_Object (void) = delete;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Managed_Object (const ACE_Managed_Object<TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Managed_Object<TYPE> &))
+  ACE_Managed_Object (const ACE_Managed_Object<TYPE> &) = delete;
+  void operator= (const ACE_Managed_Object<TYPE> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

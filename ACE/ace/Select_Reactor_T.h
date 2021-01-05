@@ -687,8 +687,8 @@ protected:
 
 private:
   /// Deny access since member-wise won't work...
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) )
+  ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
+  ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

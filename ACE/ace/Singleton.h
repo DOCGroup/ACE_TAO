@@ -197,8 +197,8 @@ protected:
   /// Contained instance.
   ACE_TSS_TYPE (TYPE) instance_;
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &))
+  void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
+  ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
 
 #if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.

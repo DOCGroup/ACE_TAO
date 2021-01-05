@@ -115,8 +115,8 @@ protected:
 
 private:
   // = Prevent assignment and initialization.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Condition<MUTEX> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Condition (const ACE_Condition<MUTEX> &))
+  void operator= (const ACE_Condition<MUTEX> &) = delete;
+  ACE_Condition (const ACE_Condition<MUTEX> &) = delete;
 };
 
 /**

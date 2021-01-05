@@ -878,7 +878,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Type_Factory)
 ACE_Service_Type_Factory::ACE_Service_Type_Factory (ACE_TCHAR const *name,
                                                     int type,
                                                     ACE_Location_Node *location,
-                                                    int active)
+                                                    bool active)
   : name_ (name)
   , type_ (type)
   , location_ (location)
