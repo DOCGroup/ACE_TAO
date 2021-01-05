@@ -163,9 +163,6 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
 

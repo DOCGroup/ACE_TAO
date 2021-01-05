@@ -60,7 +60,6 @@
 #  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
-#  define ACE_HAS_CPLUSPLUS_HEADERS
 #  define ACE_HAS_STDCPP_STL_INCLUDES
 #  define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1

@@ -280,9 +280,6 @@ ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES    Prototypes for both signal()
                                         and struct sigaction are
                                         consistent.
-ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has
-                                        correctly prototyped header
-                                        files
 ACE_HAS_DIRENT                          Compiler/platform has Dirent
                                         iterator functions
 ACE_HAS_DLL                             Build ACE using the frigging
@@ -1204,20 +1201,6 @@ ACE_HAS_AUTOMATIC_INIT_FINI:
      Means Service Configurator won't be available.
      TBA.
 
-
-ACE_HAS_CPLUSPLUS_HEADERS:
---------------------------
-
-  Used In:
-     ace/OS.h
-
-  HPUX:
-     set it.
-
-  Notes:
-     If this is not defined, libc.h and osfcn.h get included.
-     Only needed for older compiler/OS platforms that don't
-     provide standard C++ header files in /usr/include.
 
 ACE_HAS_HI_RES_TIMER:
 ---------------------
