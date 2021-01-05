@@ -63,8 +63,8 @@ private:
   ACE_LOCK lock_;
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &))
+  ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
+  ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

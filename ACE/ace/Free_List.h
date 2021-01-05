@@ -131,8 +131,8 @@ protected:
 
 private:
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &))
+  ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
+  void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

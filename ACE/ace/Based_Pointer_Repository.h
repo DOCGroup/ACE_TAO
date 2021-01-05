@@ -68,8 +68,8 @@ private:
   ACE_Based_Pointer_Repository_Rep *rep_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Based_Pointer_Repository &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &))
+  void operator= (const ACE_Based_Pointer_Repository &) = delete;
+  ACE_Based_Pointer_Repository (const ACE_Based_Pointer_Repository &) = delete;
 };
 
 // ----------------------------------

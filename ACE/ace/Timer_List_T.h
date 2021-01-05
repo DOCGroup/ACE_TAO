@@ -213,8 +213,8 @@ private:
   long id_counter_;
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &))
+  ACE_Timer_List_T (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &) = delete;
+  void operator= (const ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK> &) = delete;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -184,8 +184,8 @@ protected:
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Active_Map_Manager<T> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &))
+  void operator= (const ACE_Active_Map_Manager<T> &) = delete;
+  ACE_Active_Map_Manager (const ACE_Active_Map_Manager<T> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -406,8 +406,8 @@ public:
     ACE_Asynch_Read_Stream_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_Stream (const ACE_Asynch_Read_Stream &))
+  void operator= (const ACE_Asynch_Read_Stream &) = delete;
+  ACE_Asynch_Read_Stream (const ACE_Asynch_Read_Stream &) = delete;
 };
 
 // Forward declarations
@@ -560,8 +560,8 @@ public:
     ACE_Asynch_Write_Stream_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_Stream (const ACE_Asynch_Write_Stream &))
+  void operator= (const ACE_Asynch_Write_Stream &) = delete;
+  ACE_Asynch_Write_Stream (const ACE_Asynch_Write_Stream &) = delete;
 };
 
 // Forward declarations
@@ -709,8 +709,8 @@ public:
     void operator= (Result &) {}
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_File (const ACE_Asynch_Read_File &))
+  void operator= (const ACE_Asynch_Read_File &) = delete;
+  ACE_Asynch_Read_File (const ACE_Asynch_Read_File &) = delete;
 };
 
 // Forward declarations
@@ -843,8 +843,8 @@ public:
     void operator= (Result &) {};
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_File (const ACE_Asynch_Write_File &))
+  void operator= (const ACE_Asynch_Write_File &) = delete;
+  ACE_Asynch_Write_File (const ACE_Asynch_Write_File &) = delete;
 };
 
 // Forward declarations
@@ -981,8 +981,8 @@ public:
     ACE_Asynch_Accept_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Accept &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Accept (const ACE_Asynch_Accept &))
+  void operator= (const ACE_Asynch_Accept &) = delete;
+  ACE_Asynch_Accept (const ACE_Asynch_Accept &) = delete;
 };
 // Forward declarations
 class ACE_Asynch_Connect_Result_Impl;
@@ -1076,8 +1076,8 @@ public:
     ACE_Asynch_Connect_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Connect &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Connect (const ACE_Asynch_Connect &))
+  void operator= (const ACE_Asynch_Connect &) = delete;
+  ACE_Asynch_Connect (const ACE_Asynch_Connect &) = delete;
 };
 
 // Forward declarations
@@ -1287,8 +1287,8 @@ public:
     ACE_TRANSMIT_FILE_BUFFERS transmit_buffers_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Transmit_File &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Transmit_File (const ACE_Asynch_Transmit_File &))
+  void operator= (const ACE_Asynch_Transmit_File &) = delete;
+  ACE_Asynch_Transmit_File (const ACE_Asynch_Transmit_File &) = delete;
 };
 
 
@@ -1422,8 +1422,8 @@ public:
     ACE_Asynch_Read_Dgram_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Read_Dgram &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Read_Dgram (const ACE_Asynch_Read_Dgram &))
+  void operator= (const ACE_Asynch_Read_Dgram &) = delete;
+  ACE_Asynch_Read_Dgram (const ACE_Asynch_Read_Dgram &) = delete;
 };
 
 // Forward declarations
@@ -1552,8 +1552,8 @@ public:
     ACE_Asynch_Write_Dgram_Result_Impl *implementation_;
   };
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Asynch_Write_Dgram &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &))
+  void operator= (const ACE_Asynch_Write_Dgram &) = delete;
+  ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &) = delete;
 };
 
 
@@ -1673,8 +1673,8 @@ protected:
   ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> proxy_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (ACE_Handler (const ACE_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Handler operator= (const ACE_Handler &))
+  ACE_Handler (const ACE_Handler &) = delete;
+  ACE_Handler operator= (const ACE_Handler &) = delete;
 };
 
 // Forward declarations

@@ -168,10 +168,9 @@ public: // Should be protected:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &))
+  void operator= (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
+  ACE_Task (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

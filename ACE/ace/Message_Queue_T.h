@@ -630,10 +630,9 @@ protected:
 #endif
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &))
+  void operator= (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
+  ACE_Message_Queue (const ACE_Message_Queue<ACE_SYNCH_USE> &) = delete;
 };
 
 // This typedef is used to get around a compiler bug in g++/vxworks.
@@ -904,8 +903,8 @@ protected:
 private:
   // = Disallow public access to these operations.
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &))
+  void operator= (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
+  ACE_Dynamic_Message_Queue (const ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
 
   // provide definitions for these (just call base class method),
   // but make them private so they're not accessible outside the class
@@ -913,7 +912,6 @@ private:
   /// Private method to hide public base class method: just calls base class method
   virtual int peek_dequeue_head (ACE_Message_Block *&first_item,
                                  ACE_Time_Value *timeout = 0);
-
 };
 
 /**

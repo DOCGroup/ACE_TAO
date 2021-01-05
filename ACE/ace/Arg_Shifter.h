@@ -187,10 +187,10 @@ public:
 
 private:
   /// Copy Constructor should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Assignment '=' operator should not be used.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &))
+  ACE_Arg_Shifter_T operator= (const ACE_Arg_Shifter_T<CHAR_TYPE> &) = delete;
 
   /// Refactor the constructor logic.
   void init ();
