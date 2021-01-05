@@ -140,12 +140,6 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         undefined and that the
                                         geteuid() system call exists.
 ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
-ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-                                        Non-C++ Compliant compilers that automatically
-                                        provide storage for class static const int
-                                        when their declaration is seen. I.e. they object
-                                        to explicit definitions being seen in the .cpp
-                                        file.
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.
