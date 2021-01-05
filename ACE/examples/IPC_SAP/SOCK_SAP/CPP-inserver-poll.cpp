@@ -181,8 +181,6 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   for (size_t n_handles = 1;;)
     {
-      ACE_ENDLESS_LOOP
-
       // Wait for client I/O events (handle interrupts).
       while (ACE_OS::poll (poll_array, n_handles) == -1
              && errno == EINTR)
