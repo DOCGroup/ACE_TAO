@@ -81,7 +81,7 @@
 # endif /* ACE_HAS_VALGRIND */
 
 // =========================================================================
-// Perfect Multicast filting refers to RFC 3376, where a socket is only
+// Perfect Multicast filtering refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
 // address.  We turn this option off by default, although most OS's
 // except for Windows and Solaris probably lack perfect filtering.
