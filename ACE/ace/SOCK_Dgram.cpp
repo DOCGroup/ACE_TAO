@@ -668,7 +668,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
   ip_mreq  lmreq;       // Scratch copy.
   if (net_if != 0)
     {
-#if defined (ACE_WIN32) || defined(__INTERIX)
+#if defined (ACE_WIN32)
       // This port number is not necessary, just convenient
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
@@ -748,7 +748,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
             reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
           lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
         }
-#endif /* ACE_WIN32 || __INTERIX */
+#endif /* ACE_WIN32 */
     }
   else
     lmreq.imr_interface.s_addr = INADDR_ANY;
