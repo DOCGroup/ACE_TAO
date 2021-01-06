@@ -173,7 +173,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_UNUSED_ARG (host_addr);
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
-#elif !defined(ACE_WIN32) && !defined(__INTERIX)
+#elif !defined(ACE_WIN32)
   ACE_HANDLE s = handle;
 
   if (s == ACE_INVALID_HANDLE)
@@ -332,7 +332,7 @@ ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
   ACE_UNUSED_ARG (host_name);
   bcast_addr = (ACE_UINT32 (INADDR_BROADCAST));
   return 0;
-#endif /* !ACE_WIN32 && !__INTERIX */
+#endif /* !ACE_WIN32 */
 }
 
 int
