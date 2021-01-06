@@ -203,7 +203,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir {};
 
 #if !defined (ACE_HAS_WINCE)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
