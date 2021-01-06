@@ -38,18 +38,16 @@
 #  include /**/ <time.h>
 #endif /* !ACE_LACKS_TIME_H */
 
-# if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
-             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
+#if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
+            (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)
 using std::tm;
-# if !defined (ACE_HAS_DINKUM_STL)
-#  if defined (ACE_WIN32)
+# if defined (ACE_WIN32)
 using std::_timezone;
-#  else
+# else
 using std::timezone;
-#  endif
-# endif
+# endif /* ACE_WIN32 */
 using std::difftime;
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
+#endif /* ACE_USES_STD_NAMESPACE_FOR_STDC_LIB */
 
 # if !defined (ACE_HAS_POSIX_TIME)
 // Definition per POSIX.
