@@ -273,8 +273,6 @@ ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EBCDIC                          Compile in the ACE code set classes
                                         that support EBCDIC.
-ACE_HAS_EXCEPTIONS                      Compiler supports C++
-                                        exception handling
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be
