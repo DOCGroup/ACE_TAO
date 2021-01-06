@@ -92,10 +92,6 @@ extern "C"
 #  endif
 #endif /* ACE_HAS_PTHREADS */
 
-#if defined (ACE_LACKS_STRPTIME_PROTOTYPE) && !defined (_XOPEN_SOURCE)
-   extern char *strptime (const char *s, const char *fmt, struct tm *tp);
-#endif  /* ACE_LACKS_STRPTIME_PROTOTYPE */
-
 #if defined (ACE_LACKS_CONST_TIMESPEC_PTR)
 typedef struct timespec * ACE_TIMESPEC_PTR;
 #else
