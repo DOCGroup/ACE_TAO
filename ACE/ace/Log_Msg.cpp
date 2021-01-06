@@ -217,15 +217,6 @@ ACE_Log_Msg_Manager::get_lock ()
 void
 ACE_Log_Msg_Manager::close ()
 {
-#if defined (ACE_HAS_STHREADS) && ! defined (ACE_HAS_TSS_EMULATION) && ! defined (ACE_HAS_EXCEPTIONS)
-  // Delete the (main thread's) Log_Msg instance.  I think that this
-  // is only "necessary" if exception handling is not enabled.
-  // Without exception handling, main thread TSS destructors don't
-  // seem to be called.  It's not really necessary anyways, because
-  // this one leak is harmless on Solaris.
-  delete ACE_Log_Msg::instance ();
-#endif /* ACE_HAS_STHREADS && ! TSS_EMULATION && ! ACE_HAS_EXCEPTIONS */
-
   // Ugly, ugly, but don't know a better way.
   delete ACE_Log_Msg_Manager::lock_;
   ACE_Log_Msg_Manager::lock_ = 0;

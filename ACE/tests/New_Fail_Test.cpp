@@ -16,16 +16,10 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
-
-
-
-#if (!defined (__SUNPRO_CC) && !defined (__GNUG__)) || \
-  defined (ACE_HAS_EXCEPTIONS)
 
 #include "ace/Numeric_Limits.h"
 
@@ -67,7 +61,6 @@ try_ace_new_noreturn ()
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
-#endif /* (!__SUNPRO_CC && !__GNUG__) || ACE_HAS_EXCEPTIONS */
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -75,26 +68,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
   int status = 0;
 
-  // Some platforms are known to throw an exception on a failed 'new',
-  // but are customarily built without exception support to improve
-  // performance.  These platforms are noted, and the test passes.
-  // For new ports, it is wise to let this test run.  Depending on
-  // intended conditions, exceptions can be disabled when the port is
-  // complete.
-#if (defined (__SUNPRO_CC) || defined (__GNUG__)) && \
-  !defined (ACE_HAS_EXCEPTIONS)
-    ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Out-of-memory will throw an unhandled exception\n")));
-  ACE_DEBUG ((LM_NOTICE, ACE_TEXT ("Rebuild with exceptions=1 to prevent this, but it may impair performance.\n")));
-
-#else
-
   char *blocks[MAX_ALLOCS_IN_TEST];
   int i;
 
-#  if defined (ACE_HAS_EXCEPTIONS)
   try
     {
-#  endif /* ACE_HAS_EXCEPTIONS */
       // First part: test ACE_NEW
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
@@ -194,10 +172,7 @@ run_main (int, ACE_TCHAR *[])
         }
       while (i >= 0)
         delete [] blocks[i--];
-
-#  if defined (ACE_HAS_EXCEPTIONS)
     }
-
   catch (...)
     {
       ACE_ERROR ((LM_ERROR,
@@ -209,8 +184,6 @@ run_main (int, ACE_TCHAR *[])
       // Mark test failure
       status = 1;
     }
-#  endif /* ACE_HAS_EXCEPTIONS */
-#endif /* __SUNPRO_CC && !ACE_HAS_EXCEPTIONS */
 
   ACE_END_TEST;
   return status;

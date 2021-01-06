@@ -57,9 +57,6 @@
    etc. */
 #define ACE_HAS_DIRENT 1
 
-/* Compiler supports C++ exception handling. */
-#define ACE_HAS_EXCEPTIONS 1
-
 /* Define to 1 if platform has getifaddrs(). */
 #define ACE_HAS_GETIFADDRS 1
 
