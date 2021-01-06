@@ -16,8 +16,7 @@
 #include "test_config.h"
 #include "ace/ACE.h"
 #include "ace/Time_Value.h"
-
-#include "ace/Numeric_Limits.h"
+#include <limits>
 
 #ifdef ACE_HAS_CPP98_IOSTREAMS
 #include <sstream>
@@ -142,23 +141,23 @@ run_main (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (ACE_Time_Value::max_time.usec () != -1);
 
   // Test performance of normalize()
-  ACE_Time_Value v1(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
-  ACE_Time_Value v2(ACE_Numeric_Limits<time_t>::min(),
-                   ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v3(ACE_Numeric_Limits<time_t>::max(),
-                    ACE_Numeric_Limits<suseconds_t>::min());
-  ACE_Time_Value v4(ACE_Numeric_Limits<time_t>::min(),
-                    ACE_Numeric_Limits<suseconds_t>::max());
+  ACE_Time_Value v1(std::numeric_limits<time_t>::max(),
+                    std::numeric_limits<suseconds_t>::max());
+  ACE_Time_Value v2(std::numeric_limits<time_t>::min(),
+                   std::numeric_limits<suseconds_t>::min());
+  ACE_Time_Value v3(std::numeric_limits<time_t>::max(),
+                    std::numeric_limits<suseconds_t>::min());
+  ACE_Time_Value v4(std::numeric_limits<time_t>::min(),
+                    std::numeric_limits<suseconds_t>::max());
 
-  v1.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::max());
-  v2.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v3.set(ACE_Numeric_Limits<time_t>::max(),
-         ACE_Numeric_Limits<suseconds_t>::min());
-  v4.set(ACE_Numeric_Limits<time_t>::min(),
-         ACE_Numeric_Limits<suseconds_t>::max());
+  v1.set(std::numeric_limits<time_t>::max(),
+         std::numeric_limits<suseconds_t>::max());
+  v2.set(std::numeric_limits<time_t>::min(),
+         std::numeric_limits<suseconds_t>::min());
+  v3.set(std::numeric_limits<time_t>::max(),
+         std::numeric_limits<suseconds_t>::min());
+  v4.set(std::numeric_limits<time_t>::min(),
+         std::numeric_limits<suseconds_t>::max());
 
   v1.set(DBL_MAX);
 

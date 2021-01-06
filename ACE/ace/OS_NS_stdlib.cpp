@@ -23,7 +23,7 @@
 # include "ace/OS_NS_ctype.h"
 # include "ace/OS_NS_sys_time.h"
 # include "ace/OS_NS_Thread.h"
-# include "ace/Numeric_Limits.h"
+# include <limits>
 #endif  /* ACE_LACKS_MKSTEMP */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -1160,7 +1160,7 @@ ACE_OS::mkstemp_emulation (ACE_TCHAR * s)
   // meaning multiple threads could potentially initialize this value
   // in parallel.
   float const MAX_VAL =
-    static_cast<float> (ACE_Numeric_Limits<char>::max ());
+    static_cast<float> (std::numeric_limits<char>::max ());
 
   // Use high-order bits rather than low-order ones (e.g. rand() %
   // MAX_VAL).  See Numerical Recipes in C: The Art of Scientific

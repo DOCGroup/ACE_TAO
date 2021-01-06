@@ -2,7 +2,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Numeric_Limits.h"
+#include <limits>
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 // FUZZ: disable check_for_streams_include
@@ -160,7 +160,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
 // *****************************************************************
 
 ACE_SString::size_type const ACE_SString::npos =
-  ACE_Numeric_Limits<ACE_SString::size_type>::max ();
+  std::numeric_limits<ACE_SString::size_type>::max ();
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SString)
 

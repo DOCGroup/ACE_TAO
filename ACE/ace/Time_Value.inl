@@ -70,14 +70,14 @@ ACE_INLINE void
 ACE_Time_Value::set (double d)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::set");
-  if (d < ACE_Numeric_Limits<time_t>::min())
+  if (d < std::numeric_limits<time_t>::min())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::min();
+      this->tv_.tv_sec = std::numeric_limits<time_t>::min();
       this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
     }
-  else if (d > ACE_Numeric_Limits<time_t>::max())
+  else if (d > std::numeric_limits<time_t>::max())
     {
-      this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::max();
+      this->tv_.tv_sec = std::numeric_limits<time_t>::max();
       this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
     }
   else

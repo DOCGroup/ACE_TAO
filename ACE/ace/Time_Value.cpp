@@ -8,7 +8,7 @@
 #include "ace/Time_Value.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Numeric_Limits.h"
+#include <limits>
 #include "ace/If_Then_Else.h"
 #include "ace/OS_NS_math.h"
 #include "ace/Time_Policy.h"
@@ -34,7 +34,7 @@ const ACE_Time_Value ACE_Time_Value::zero;
 /// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
 /// Note: this object requires static construction.
 const ACE_Time_Value ACE_Time_Value::max_time (
-  ACE_Numeric_Limits<time_t>::max (),
+  std::numeric_limits<time_t>::max (),
   ACE_ONE_SECOND_IN_USECS - 1);
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
@@ -181,15 +181,15 @@ ACE_Time_Value::normalize (bool saturate)
       suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
-          ACE_Numeric_Limits<time_t>::max() - this->tv_.tv_sec < sec)
+          std::numeric_limits<time_t>::max() - this->tv_.tv_sec < sec)
         {
-          this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::max();
+          this->tv_.tv_sec = std::numeric_limits<time_t>::max();
           this->tv_.tv_usec = ACE_ONE_SECOND_IN_USECS - 1;
         }
       else if (saturate && this->tv_.tv_sec < 0 && sec < 0 &&
-               ACE_Numeric_Limits<time_t>::min() - this->tv_.tv_sec > sec)
+               std::numeric_limits<time_t>::min() - this->tv_.tv_sec > sec)
         {
-          this->tv_.tv_sec = ACE_Numeric_Limits<time_t>::min();
+          this->tv_.tv_sec = std::numeric_limits<time_t>::min();
           this->tv_.tv_usec = -ACE_ONE_SECOND_IN_USECS + 1;
         }
       else
@@ -239,17 +239,17 @@ ACE_Time_Value::operator *= (double d)
 
   // shall we saturate the result?
   static const float_type max_int =
-    ACE_Numeric_Limits<time_t>::max() + 0.999999;
+    std::numeric_limits<time_t>::max() + 0.999999;
   static const float_type min_int =
-    ACE_Numeric_Limits<time_t>::min() - 0.999999;
+    std::numeric_limits<time_t>::min() - 0.999999;
 
   if (sec_total > max_int)
     {
-      this->set(ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
+      this->set(std::numeric_limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS-1);
     }
   else if (sec_total < min_int)
     {
-      this->set(ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS+1);
+      this->set(std::numeric_limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS+1);
     }
   else
     {
@@ -282,11 +282,11 @@ ACE_Time_Value::operator *= (double d)
       // recheck for saturation
       if (sec_total > max_int)
         {
-          this->set (ACE_Numeric_Limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
+          this->set (std::numeric_limits<time_t>::max(), ACE_ONE_SECOND_IN_USECS - 1);
         }
       else if (sec_total < min_int)
         {
-          this->set (ACE_Numeric_Limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
+          this->set (std::numeric_limits<time_t>::min(), -ACE_ONE_SECOND_IN_USECS + 1);
         }
       else
         {

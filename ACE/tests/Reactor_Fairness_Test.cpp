@@ -23,10 +23,10 @@
 #include "ace/Select_Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/Numeric_Limits.h"
 #include "ace/Signal.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Thread_Mutex.h"
+#include <limits>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -73,7 +73,7 @@ namespace {
                   ACE_TEXT ("Results (%d entries):\n"),
                   reports.size()));
       unsigned int max_chunks = 0;
-      unsigned int min_chunks = ACE_Numeric_Limits<unsigned int>::max();
+      unsigned int min_chunks = std::numeric_limits<unsigned int>::max();
       for (report_map::iterator iter = reports.begin();
            iter != reports.end ();
            ++iter)

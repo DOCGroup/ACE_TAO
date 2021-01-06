@@ -23,7 +23,7 @@
 
 #include "ace/Global_Macros.h"
 #include "ace/If_Then_Else.h"
-#include "ace/Numeric_Limits.h"
+#include <limits>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -393,8 +393,8 @@ namespace ACE_Utils
     TO operator() (FROM val)
     {
       return
-        (comparator::greater_than (val, ACE_Numeric_Limits<TO>::max ())
-         ? ACE_Numeric_Limits<TO>::max ()
+        (comparator::greater_than (val, std::numeric_limits<TO>::max ())
+         ? std::numeric_limits<TO>::max ()
          : static_cast<TO> (val));
     }
 
