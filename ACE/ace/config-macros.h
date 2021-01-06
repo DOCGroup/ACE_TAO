@@ -261,10 +261,6 @@
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-# elif defined (__DMC__)
-   #define ACE_UNUSED_ID(identifier)
-   template <class T>
-   inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
 # else /* ghs ..... */
 #  define ACE_UNUSED_ARG(a) (a)
 # endif /* ghs ..... */
