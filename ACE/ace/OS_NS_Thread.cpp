@@ -3340,7 +3340,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.

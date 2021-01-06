@@ -166,7 +166,6 @@ public:
   virtual ACE_Timer_Node_T<TYPE>* get_first (void);
 
 private:
-
   /**
    * Schedule @a type that will expire at @a future_time, which is
    * specified in absolute time.  If it expires then @a act is passed
@@ -198,7 +197,6 @@ private:
   ACE_Timer_Node_T<TYPE>* get_first_i(void) const;
 
 private:
-
   /// Pointer to linked list of <ACE_Timer_Handles>.
   ACE_Timer_Node_T<TYPE>* head_;
 
