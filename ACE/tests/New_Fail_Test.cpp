@@ -67,15 +67,15 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
   int status {};
 
-  char *blocks[MAX_ALLOCS_IN_TEST];
-  int i = 0;
-
   try
     {
+      char *blocks[MAX_ALLOCS_IN_TEST];
+      int i = 0;
+
       // First part: test ACE_NEW
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
-          try_ace_new (&blocks[i]);
+          try_ace_new (std::addressof(blocks[i]));
           if (blocks[i] == nullptr)
             break;
         }
