@@ -1767,6 +1767,7 @@ namespace ACE_OS {
    * For older Linux (pre 2.4.11) and other systems that don't have gettid(),
    * this uses ACE_NOTSUP_RETURN (-1).
    */
+  ACE_Export
   pid_t thr_gettid ();
 
   /**
