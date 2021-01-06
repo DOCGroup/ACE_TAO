@@ -34,30 +34,29 @@
 
 // Most we can do, by half. Using max alone gets "invalid allocation size"
 // messages on stdout on Windows.
-static const size_t BIG_BLOCK = std::numeric_limits<size_t>::max () / 2;
+static const size_t BIG_BLOCK = std::numeric_limits<size_t>::max () / 3;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 4;
+static const int MAX_ALLOCS_IN_TEST = 6;
 
 static void
 try_ace_new (char **p)
 {
   ACE_NEW (*p, char[BIG_BLOCK]);
-  return;
 }
 
 static char *
 try_ace_new_return ()
 {
-  char *p = 0;
-  ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
+  char *p {};
+  ACE_NEW_RETURN (p, char[BIG_BLOCK], nullptr);
   return p;
 }
 
 static char *
 try_ace_new_noreturn ()
 {
-  char *p = 0;
+  char *p {};
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
@@ -66,10 +65,10 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
-  int status = 0;
+  int status {};
 
   char *blocks[MAX_ALLOCS_IN_TEST];
-  int i;
+  int i = 0;
 
   try
     {
@@ -77,7 +76,7 @@ run_main (int, ACE_TCHAR *[])
       for (i = 0; i < MAX_ALLOCS_IN_TEST; i++)
         {
           try_ace_new (&blocks[i]);
-          if (blocks[i] == 0)
+          if (blocks[i] == nullptr)
             break;
         }
       if (i == MAX_ALLOCS_IN_TEST)
