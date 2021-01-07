@@ -4839,16 +4839,6 @@ ACE_OS::unique_name (const void *object,
 }
 #endif
 
-pid_t
-ACE_OS::thr_gettid ()
-{
-#ifdef ACE_HAS_GETTID
-  return syscall (SYS_gettid);
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
-
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_VXWORKS) && !defined (__RTP__)

@@ -3179,6 +3179,16 @@ ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
     static_cast<int> (ACE_OS::thr_gettid ()));
 }
 
+ACE_INLINE pid_t
+ACE_OS::thr_gettid ()
+{
+#ifdef ACE_HAS_GETTID
+  return syscall (SYS_gettid);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
 ACE_INLINE ACE_thread_t
 ACE_OS::thr_self ()
 {
