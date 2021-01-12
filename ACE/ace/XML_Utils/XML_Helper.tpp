@@ -9,10 +9,7 @@
 #include "xercesc/framework/LocalFileFormatTarget.hpp"
 #include "xercesc/dom/DOM.hpp"
 #include "XercesString.h"
-
-#if XERCES_VERSION_MAJOR == 3
 #include "xercesc/dom/DOMLSSerializer.hpp"
-#endif
 
 namespace XML
 {
@@ -292,7 +289,6 @@ namespace XML
     try
       {
         bool retn;
-#if XERCES_VERSION_MAJOR == 3
         XERCES_CPP_NAMESPACE::DOMLSSerializer *serializer (impl_->createLSSerializer ());
         XERCES_CPP_NAMESPACE::DOMConfiguration *ser_config (serializer->getDomConfig ());
         XERCES_CPP_NAMESPACE::DOMLSOutput *output (impl_->createLSOutput ());
@@ -309,18 +305,6 @@ namespace XML
         output->release ();
         serializer->release ();
         return retn;
-#else
-        std::auto_ptr <XERCES_CPP_NAMESPACE::DOMWriter> writer (impl_->createDOMWriter());
-
-        if (writer->canSetFeature (XMLUni::fgDOMWRTFormatPrettyPrint,
-                                    true))
-          writer->setFeature (XMLUni::fgDOMWRTFormatPrettyPrint, true);
-
-        std::auto_ptr <xercesc::XMLFormatTarget> ft (new xercesc::LocalFileFormatTarget(ACE_TEXT_ALWAYS_CHAR (file)));
-        retn = writer->writeNode(ft.get (), *doc);
-
-        return retn;
-#endif
       }
     catch (const xercesc::XMLException &e)
       {
