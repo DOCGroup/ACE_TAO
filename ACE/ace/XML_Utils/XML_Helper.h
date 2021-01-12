@@ -47,7 +47,7 @@ namespace XML
     //      XML_Helper (void);
     XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
-    ~XML_Helper ()
+    ~XML_Helper ();
 
     /// Create a DOM tree
     XERCES_CPP_NAMESPACE::DOMDocument *
