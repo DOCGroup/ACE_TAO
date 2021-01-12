@@ -54,7 +54,7 @@ namespace XML
   bool
   XML_Helper<Resolver, Error>::is_initialized () const
   {
-    return this->initialized_ == true;
+    return this->initialized_;
   }
 
   template <typename Resolver, typename Error>
