@@ -29,7 +29,7 @@ namespace XML
   using xercesc::XercesDOMParser;
 /*
   template <typename Resolver, typename Error>
-  XML_Helper<Resolver, Error>::XML_Helper (void)
+  XML_Helper<Resolver, Error>::XML_Helper ()
     : initialized_ (false)
   {
     this->init_parser ();
@@ -48,21 +48,21 @@ namespace XML
   }
 
   template <typename Resolver, typename Error>
-  XML_Helper<Resolver, Error>::~XML_Helper (void)
+  XML_Helper<Resolver, Error>::~XML_Helper ()
   {
     this->terminate_parser ();
   }
 
   template <typename Resolver, typename Error>
   bool
-  XML_Helper<Resolver, Error>::is_initialized (void) const
+  XML_Helper<Resolver, Error>::is_initialized () const
   {
     return this->initialized_ == true;
   }
 
   template <typename Resolver, typename Error>
   void
-  XML_Helper<Resolver, Error>::init_parser (void)
+  XML_Helper<Resolver, Error>::init_parser ()
   {
     if (this->initialized_)
       return;

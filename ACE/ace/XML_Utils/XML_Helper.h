@@ -45,9 +45,9 @@ namespace XML
   {
   public:
     //      XML_Helper (void);
-    XML_Helper (Resolver *resolver = 0, Error_Handler *eh = 0);
+    XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
-    ~XML_Helper (void);
+    ~XML_Helper ()
 
     /// Create a DOM tree
     XERCES_CPP_NAMESPACE::DOMDocument *
@@ -67,18 +67,18 @@ namespace XML
     bool write_DOM (XERCES_CPP_NAMESPACE::DOMDocument *doc,
                     const ACE_TCHAR *file) const;
 
-    bool is_initialized (void) const;
+    bool is_initialized () const;
 
     /// Terminate the parser
-    void terminate_parser (void);
+    void terminate_parser ();
 
-    Resolver &get_resolver (void);
+    Resolver &get_resolver ();
 
-    Error_Handler &get_error_handler (void);
+    Error_Handler &get_error_handler ();
 
   protected:
-    /// Intialize the parser
-    void init_parser (void);
+    /// Initialize the parser
+    void init_parser ();
 
   private:
     bool initialized_;
