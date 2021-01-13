@@ -124,7 +124,7 @@ def ex (command, allow_fail=False):
 
 def vprint (*args, take_action=False, **kwargs):
     """Prints the supplied message if verbose is enabled or this is a dry-run
-    print statenment. Return a bool of the latter case, so the caller can
+    print statement. Return a bool of the latter case, so the caller can
     act differently.
     """
 
@@ -227,14 +227,13 @@ def update_version_files (component):
 """ % (component, comp_versions[component + "_major"],
        component, comp_versions[component + "_minor"],
        component, comp_versions[component + "_micro"],
-       component, comp_versions[component + "_micro"],
        component, comp_versions[component + "_version"],
        component, comp_versions[component + "_code"],
        component)
 
     path = get_path(component, component.lower (), "Version.h")
     if opts.take_action:
-        with open (path, 'r+') as version_h:
+        with open (path, 'w+') as version_h:
             version_h.write (version_header)
     else:
         print ("New Version.h for " + component)
