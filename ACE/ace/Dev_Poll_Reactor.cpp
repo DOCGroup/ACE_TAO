@@ -1178,7 +1178,9 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
       ACE_Reactor_Mask disp_mask = 0;
       ACE_Event_Handler *eh = 0;
       int (ACE_Event_Handler::*callback)(ACE_HANDLE) = 0;
+#ifndef ACE_HAS_DEV_POLL
       bool reactor_resumes_eh = false;
+#endif /* !ACE_HAS_DEV_POLL */
       {
         ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1);
         info = this->handler_rep_.find (handle);
