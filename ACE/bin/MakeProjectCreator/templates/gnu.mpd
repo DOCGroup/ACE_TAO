@@ -560,7 +560,7 @@ export PATH              := $(PATH):<%custom_type->libpath%>$(if $(ARCH),:<%cust
 <%endif%>
 <%foreach(custom_type->input_files)%>
 <%if(custom_type->input_file->output_files)%>
-GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%custom_type->input_file->output_file%><%endfor%>
+GENERATED_DIRTY +=<%foreach(custom_type->input_file->output_files)%> <%if(flag_overrides(custom_type->input_file, gendir))%><%if(!compares(flag_overrides(custom_type->input_file, gendir),.))%><%flag_overrides(custom_type->input_file, gendir)%>/<%endif%><%basename(custom_type->input_file->output_file)%><%else%><%custom_type->input_file->output_file%><%endif%><%endfor%>
 <%if(precious_files)%>
 PRECIOUS_FILES +=<%foreach(precious_files)%><%foreach(custom_type->input_file->output_files)%><%if(contains(custom_type->input_file->output_file, precious_file))%> <%custom_type->input_file->output_file%><%endif%><%endfor%><%endfor%>
 <%endif%>
