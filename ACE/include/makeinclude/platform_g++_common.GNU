@@ -138,6 +138,13 @@ endif
 
 static_libs_only ?=
 
+ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
+  # gcc 4 has a problem that it warnings about missing initializers
+  # for an std::array containing std::string even when {{}} is used
+  # as it should
+  FLAGS_C_CC += -Wno-missing-field-initializers
+endif
+
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
 gcc_template_instantiation_visibility ?= 0
 
