@@ -138,7 +138,7 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  if (str && ACE_OS::strchr (str, ' '))
+  if (str && ACE_OS::strchr (str, ' ') && !ACE_OS::strchr (str, '"'))
     {
       ACE_TCHAR *buf = 0;
       ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
