@@ -138,7 +138,7 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  if (str && ACE_OS::strchr (str, ' '))
+  if (str && ACE_OS::strchr (str, ' ') && !ACE_OS::strchr (str, '"'))
     {
       ACE_TCHAR *buf = nullptr;
       ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
@@ -962,7 +962,7 @@ DRV_copy_input (FILE *fin,
   if (f == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: cannot open temp file \"%C\" for copying from \"%C\": %p\n",
+                  "%C: cannot open temp file \"%C\" for copying from \"%C\": %m\n",
                   idl_global->prog_name (),
                   fn,
                   orig_filename));
@@ -1095,7 +1095,7 @@ DRV_pre_proc (const char *myfile)
   if (ti_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: Unable to create temporary file \"%C\": %p\n",
+                  "%C: Unable to create temporary file \"%C\": %m\n",
                   idl_global->prog_name (),
                   tmp_ifile));
 
@@ -1107,7 +1107,7 @@ DRV_pre_proc (const char *myfile)
   if (tf_fd == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: Unable to create temporary file \"%C\": %p\n",
+                  "%C: Unable to create temporary file \"%C\": %m\n",
                   idl_global->prog_name (),
                   tmp_file));
 
@@ -1137,7 +1137,7 @@ DRV_pre_proc (const char *myfile)
   if (file == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: ERROR: Unable to open file : %p\n",
+                  "%C: ERROR: Unable to open file : %m\n",
                   idl_global->prog_name (),
                   myfile));
 
@@ -1236,7 +1236,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to rename temporary "
-                  "file \"%C\" to \"%C\": %p\n",
+                  "file \"%C\" to \"%C\": %m\n",
                   idl_global->prog_name (),
                   tmp_file,
                   t_file));
@@ -1251,7 +1251,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Unable to rename temporary "
-                  "file \"%C\" to \"%C\": %p\n",
+                  "file \"%C\" to \"%C\": %m\n",
                   idl_global->prog_name (),
                   tmp_ifile,
                   t_ifile));
@@ -1287,7 +1287,7 @@ DRV_pre_proc (const char *myfile)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: cannot open temp file"
-                      " \"%C\" for writing: %p\n",
+                      " \"%C\" for writing: %m\n",
                       idl_global->prog_name (),
                       t_file));
 
@@ -1298,7 +1298,7 @@ DRV_pre_proc (const char *myfile)
 
       if (cpp_options.set_handles (ACE_INVALID_HANDLE, fd) == -1)
         {
-          ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %p\n",
+          ACE_ERROR ((LM_ERROR, "%C: cannot set stdout for child process: %m\n",
                       idl_global->prog_name ()));
 
           throw Bailout ();
@@ -1331,7 +1331,7 @@ DRV_pre_proc (const char *myfile)
       if (ACE_OS::close (fd) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-            "%C: cannot close temp file \"%C\" on parent: %p\n",
+            "%C: cannot close temp file \"%C\" on parent: %m\n",
                       idl_global->prog_name (),
                       t_file));
 
@@ -1410,7 +1410,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not open cpp "
-                  "output file \"%C\": %p\n",
+                  "output file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_file));
 
@@ -1431,7 +1431,7 @@ DRV_pre_proc (const char *myfile)
         {
           ACE_ERROR ((LM_ERROR,
                       "%C: Could not open cpp "
-                      "output file \"$C\": %p\n",
+                      "output file \"%C\": %m\n",
                       idl_global->prog_name (),
                       t_file));
 
@@ -1467,7 +1467,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not remove cpp "
-                  "input file \"%C\": %p\n",
+                  "input file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_ifile));
 
@@ -1478,7 +1478,7 @@ DRV_pre_proc (const char *myfile)
     {
       ACE_ERROR ((LM_ERROR,
                   "%C: Could not remove cpp "
-                  "output file \"%C\": %p\n",
+                  "output file \"%C\": %m\n",
                   idl_global->prog_name (),
                   t_file));
 
