@@ -338,7 +338,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version (),
-              ACE::beta_version ()));
+              ACE::micro_version ()));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("f:rw"));
   int opt;

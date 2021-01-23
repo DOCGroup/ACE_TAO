@@ -88,7 +88,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ACE Base64 - normal stream\n\n")));

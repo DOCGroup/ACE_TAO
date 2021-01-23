@@ -105,7 +105,7 @@ ACE::minor_version ()
 u_int
 ACE::beta_version ()
 {
-  return ACE_BETA_VERSION;
+  return ACE_MICRO_VERSION;
 }
 
 u_int
