@@ -10,12 +10,11 @@ jobs:
   build:
     strategy:
       matrix:
-        cxxstd: ["11"]
         os: [macos-10.15, macos-11.0]
         include:
           - platform_file: include $(ACE_ROOT)/include/makeinclude/platform_macosx.GNU
     runs-on: ${{ matrix.os }}
-    name: "${{ matrix.os }}-C++${{ matrix.cxxstd }}"
+    name: "${{ matrix.os }}-C++"
     env:
       ACE_ROOT: ${{ github.workspace }}/ACE
       TAO_ROOT: ${{ github.workspace }}/TAO
@@ -32,13 +31,9 @@ jobs:
       run: |
         '#include "ace/config-macosx.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
-    - name: Add c++${{ matrix.cxxstd }} platform_macros.GNU
-      run: |
-        'c++${{ matrix.cxxstd }}=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-      shell: pwsh
     - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
-        '${{ matrix.platform_file }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        '${{ matrix.platform_file }}' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
