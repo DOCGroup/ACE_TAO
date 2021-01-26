@@ -353,8 +353,8 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
 #if defined (SSL_OP_NO_TLSv1_3)
   pos = vlist.find("tlsv1.3");
   match = pos != ACE_CString::npos &&
-      (pos == vlist.length() - 7 ||
-          seplist.find(vlist[pos + 7]) != ACE_CString::npos);
+    (pos == vlist.length() - 7 ||
+      seplist.find(vlist[pos + 7]) != ACE_CString::npos);
   if (!match)
     {
       ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_3);
