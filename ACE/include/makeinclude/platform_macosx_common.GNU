@@ -27,15 +27,15 @@ CC              ?= gcc
 CXX             ?= g++
 DCCFLAGS        += -g
 DCFLAGS         += -g
-DLD		= $(CXX)
-LD		= $(CXX)
+DLD              = $(CXX)
+LD               = $(CXX)
 #LIBS += -lstdc++.6 -lSystem -lSystemStubs
 
-OCFLAGS		   += -O2
-RANLIB          = ranlib
-SOEXT			= dylib
-SOFLAGS		   += -dynamiclib
-SOBUILD			= -o $(VSHDIR)$*.dylib $<
+OCFLAGS  += -O2
+RANLIB    = ranlib
+SOEXT     = dylib
+SOFLAGS  += -dynamiclib
+SOBUILD   = -o $(VSHDIR)$*.dylib $<
 
 # Test for template instantiation, add to SOFLAGS if versioned_so set,
 # add -E to LDFLAGS if using GNU ld
@@ -43,6 +43,15 @@ ifeq ($(findstring g++,$(CXX)),)#
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 else
   include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
+endif
+
+ifneq ($(findstring g++,$(CXX)),)
+  CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
+  # clang5 has C++03 as default C++ version, enable this to be C++11
+  # the older clang versions all return 4.2.1 as part of dumpversion
+  ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
+    c++11 ?= 1
+  endif
 endif
 
 LDFLAGS         += -flat_namespace
