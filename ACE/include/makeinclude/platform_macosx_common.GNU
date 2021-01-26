@@ -42,16 +42,8 @@ SOBUILD   = -o $(VSHDIR)$*.dylib $<
 ifeq ($(findstring g++,$(CXX)),)#
   include $(ACE_ROOT)/include/makeinclude/platform_g++_common.GNU
 else
+  c++11 ?= 1
   include $(ACE_ROOT)/include/makeinclude/platform_clang_common.GNU
-endif
-
-ifneq ($(findstring g++,$(CXX)),)
-  CXX_MAJOR_VERSION := $(shell $(CXX) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/\..*$$//')
-  # clang5 has C++03 as default C++ version, enable this to be C++11
-  # the older clang versions all return 4.2.1 as part of dumpversion
-  ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
-    c++11 ?= 1
-  endif
 endif
 
 LDFLAGS         += -flat_namespace
