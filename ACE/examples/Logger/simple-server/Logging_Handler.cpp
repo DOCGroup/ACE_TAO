@@ -3,7 +3,7 @@
 #include "ace/Log_Record.h"
 #include "ace/OS_NS_string.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "Logging_Handler.h"
 #include "Reactor_Singleton.h"
@@ -62,7 +62,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
                   ACE_Message_Block (ACE_DEFAULT_CDR_BUFSIZE),
                   -1);
 
-  auto_ptr <ACE_Message_Block> header (header_p);
+  std::unique_ptr <ACE_Message_Block> header (header_p);
 
   // Align the Message Block for a CDR stream
   ACE_CDR::mb_align (header.get ());
@@ -109,7 +109,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
   ACE_NEW_RETURN (payload_p,
                   ACE_Message_Block (length),
                   -1);
-  auto_ptr <ACE_Message_Block> payload (payload_p);
+  std::unique_ptr <ACE_Message_Block> payload (payload_p);
 
   // Ensure there's sufficient room for log record payload.
   ACE_CDR::grow (payload.get (), 8 + ACE_CDR::MAX_ALIGNMENT + length);

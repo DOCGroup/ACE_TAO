@@ -37,7 +37,7 @@ class ACE_Locked_Data_Block : public ACE_Data_Block
 {
 public:
   /// Default "do-nothing" constructor.
-  ACE_Locked_Data_Block (void);
+  ACE_Locked_Data_Block ();
 
   /// Initialize.
   ACE_Locked_Data_Block (size_t size,
@@ -48,7 +48,7 @@ public:
                          ACE_Allocator *data_block_allocator);
 
   /// Delete all the resources held in the message.
-  virtual ~ACE_Locked_Data_Block (void);
+  virtual ~ACE_Locked_Data_Block ();
 
   /**
    * Return an exact "deep copy" of the message, the dynamic type is
@@ -63,8 +63,8 @@ private:
   ACE_LOCK lock_;
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &))
+  ACE_Locked_Data_Block<ACE_LOCK> &operator= (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
+  ACE_Locked_Data_Block (const ACE_Locked_Data_Block<ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

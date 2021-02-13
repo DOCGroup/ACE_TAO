@@ -79,7 +79,7 @@ public:
   int disable (int signum) const ;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Temporary store of duplex pipe handle.

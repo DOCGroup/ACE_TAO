@@ -49,7 +49,7 @@ public:
 
   /// Default constructor (creates an invalid object, but needs to be here
   /// so timer queues using this functor can be constructed)
-  ACE_Timer_Hash_Upcall (void);
+  ACE_Timer_Hash_Upcall ();
 
   /// Constructor that specifies a Timer_Hash to call up to
   ACE_Timer_Hash_Upcall (ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK> *timer_hash);
@@ -125,16 +125,16 @@ public:
   virtual ~ACE_Timer_Hash_Iterator_T ();
 
   /// Positions the iterator at the earliest node in the Timer Queue
-  virtual void first (void);
+  virtual void first ();
 
   /// Positions the iterator at the next node in the Timer Queue
-  virtual void next (void);
+  virtual void next ();
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone (void) const;
+  virtual bool isdone () const;
 
   /// Returns the node at the current position in the sequence
-  virtual ACE_Timer_Node_T<TYPE> *item (void);
+  virtual ACE_Timer_Node_T<TYPE> *item ();
 
 protected:
   /// Pointer to the ACE_Timer_Hash that we are iterating over.
@@ -196,14 +196,14 @@ public:
                     TIME_POLICY const & time_policy = TIME_POLICY());
 
   /// Destructor
-  virtual ~ACE_Timer_Hash_T (void);
+  virtual ~ACE_Timer_Hash_T ();
 
   /// True if queue is empty, else false.
-  virtual bool is_empty (void) const;
+  virtual bool is_empty () const;
 
   /// Returns the time of the earlier node in the <ACE_Timer_Hash>.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value &earliest_time (void) const;
+  virtual const ACE_Time_Value &earliest_time () const;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -243,14 +243,14 @@ public:
   /**
    * Destroy timer queue. Cancels all timers.
    */
-  virtual int close (void);
+  virtual int close ();
 
   /**
    * Run the <functor> for all timers whose values are <=
    * gettimeofday.  Also accounts for <timer_skew>.  Returns
    * the number of timers canceled.
    */
-  virtual int expire (void);
+  virtual int expire ();
 
   /**
    * Run the <functor> for all timers whose values are <= @a current_time.
@@ -260,16 +260,16 @@ public:
   virtual int expire (const ACE_Time_Value &current_time);
 
   /// Returns a pointer to this ACE_Timer_Queue's iterator.
-  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter (void);
+  virtual ACE_Timer_Queue_Iterator_T<TYPE> &iter ();
 
   /// Removes the earliest node from the queue and returns it
-  virtual ACE_Timer_Node_T<TYPE> *remove_first (void);
+  virtual ACE_Timer_Node_T<TYPE> *remove_first ();
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Reads the earliest node from the queue and returns it.
-  virtual ACE_Timer_Node_T<TYPE> *get_first (void);
+  virtual ACE_Timer_Node_T<TYPE> *get_first ();
 
 protected:
   /// Factory method that frees a previously allocated node.
@@ -301,7 +301,7 @@ private:
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);
 
   /// Finds the earliest node
-  void find_new_earliest (void);
+  void find_new_earliest ();
 
   /// Keeps track of the size of the queue
   size_t size_;
@@ -332,8 +332,8 @@ private:
   ACE_Locked_Free_List<Hash_Token<TYPE>, ACE_Null_Mutex> token_list_;
 
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &))
+  ACE_Timer_Hash_T (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &) = delete;
+  void operator= (const ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

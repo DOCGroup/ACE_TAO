@@ -31,7 +31,7 @@ public:
   be_visitor_array_cs (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_array_cs (void);
+  virtual ~be_visitor_array_cs ();
 
   /// visit the array node
   virtual int visit_array (be_array *node);

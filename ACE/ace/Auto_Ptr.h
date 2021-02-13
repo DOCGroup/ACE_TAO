@@ -48,16 +48,16 @@ public:
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> & rhs);
-  ~ACE_Auto_Basic_Ptr (void);
+  ~ACE_Auto_Basic_Ptr ();
 
   // = Accessor methods.
   X &operator *() const;
-  X *get (void) const;
-  X *release (void);
+  X *get () const;
+  X *release ();
   void reset (X * p = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -67,14 +67,6 @@ protected:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (ACE_HAS_CPP17)
-// C++17 has removed std::auto_ptr but this is heavily used
-// in ACE and TAO tests so for the moment we are providing
-// our own auto_ptr implementation
-# define ACE_LACKS_AUTO_PTR
-# include <memory>
-#endif /* ACE_HAS_CPP17 */
 
 #if !defined (ACE_LACKS_AUTO_PTR) && \
      defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
@@ -140,17 +132,17 @@ public:
 
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> & ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> & rhs);
-  ~ACE_Auto_Basic_Array_Ptr (void);
+  ~ACE_Auto_Basic_Array_Ptr ();
 
   // = Accessor methods.
   X & operator* () const;
   X & operator[] (int i) const;
-  X * get (void) const;
-  X * release (void);
+  X * get () const;
+  X * release ();
   void reset (X * p = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

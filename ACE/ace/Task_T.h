@@ -54,17 +54,17 @@ public:
             ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq = 0);
 
   /// Destructor.
-  virtual ~ACE_Task (void);
+  virtual ~ACE_Task ();
 
   /// Gets the message queue associated with this task.
-  ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *msg_queue (void);
+  ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *msg_queue ();
 
   /// Sets the message queue associated with this task.
   void msg_queue (ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *);
 
   /// Get the current time of day according to the queue's TIME_POLICY.
   /// Allows users to initialize timeout values using correct time policy.
-  ACE_Time_Value_T<TIME_POLICY> gettimeofday (void) const;
+  ACE_Time_Value_T<TIME_POLICY> gettimeofday () const;
 
   /// Allows applications to control how the timer queue gets the time
   /// of day.
@@ -120,21 +120,21 @@ public: // Should be protected:
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns 0.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
 
   /// Return the Task's sibling if there's one associated with the
   /// Task's Module, else returns 0.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling (void);
+  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling ();
 
   /// Return the Task's Module if there is one, else returns 0.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module (void) const;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued
@@ -162,16 +162,15 @@ public: // Should be protected:
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Task (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &))
+  void operator= (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
+  ACE_Task (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
 };
 
 #if defined ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT

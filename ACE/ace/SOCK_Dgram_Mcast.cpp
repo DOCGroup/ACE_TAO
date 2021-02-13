@@ -70,7 +70,7 @@ public:
 ACE_ALLOC_HOOK_DEFINE (ACE_SOCK_Dgram_Mcast)
 
 void
-ACE_SOCK_Dgram_Mcast::dump (void) const
+ACE_SOCK_Dgram_Mcast::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::dump");
@@ -143,7 +143,7 @@ ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
 }
 
 // Destructor.
-ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast (void)
+ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast");
 
@@ -915,7 +915,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::clear_subs_list (void)
+ACE_SOCK_Dgram_Mcast::clear_subs_list ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::clear_subs_list");
   int result = 0;

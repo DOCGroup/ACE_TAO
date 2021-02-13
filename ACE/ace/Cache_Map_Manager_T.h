@@ -196,7 +196,7 @@ public:
   size_t total_size (void) const;
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
@@ -227,8 +227,8 @@ protected:
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
+  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
 };
 
 /**
@@ -295,7 +295,7 @@ public:
   IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -368,7 +368,7 @@ public:
   REVERSE_IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_OS::last_error (void)
+ACE_OS::last_error ()
 {
   // ACE_OS_TRACE ("ACE_OS::last_error");
 
@@ -33,7 +33,7 @@ ACE_OS::last_error (int error)
 }
 
 ACE_INLINE int
-ACE_OS::set_errno_to_last_error (void)
+ACE_OS::set_errno_to_last_error ()
 {
 # if defined (ACE_WIN32)
   return errno = ::GetLastError ();
@@ -43,7 +43,7 @@ ACE_OS::set_errno_to_last_error (void)
 }
 
 ACE_INLINE int
-ACE_OS::set_errno_to_wsa_last_error (void)
+ACE_OS::set_errno_to_wsa_last_error ()
 {
 # if defined (ACE_WIN32)
   return errno = ::WSAGetLastError ();

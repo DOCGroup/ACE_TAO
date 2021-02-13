@@ -28,7 +28,6 @@ class TAO_LoadBalancing_Export TAO_LB_LoadAlert
   : public virtual POA_CosLoadBalancing::LoadAlert
 {
 public:
-
   /// Constructor.
   TAO_LB_LoadAlert (void);
 
@@ -62,14 +61,12 @@ public:
   virtual ~TAO_LB_LoadAlert (void);
 
 private:
-
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager?
   CORBA::Boolean alerted_;
 
   /// Lock used to synchronized access to the LoadAlert state.
   mutable TAO_SYNCH_MUTEX lock_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

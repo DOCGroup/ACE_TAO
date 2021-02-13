@@ -52,9 +52,7 @@ class CCustomEventHandlerUpcall
 {
     public:
 
-        typedef ACE_Timer_Queue_T<ICustomEventHandler*,
-                                  CCustomEventHandlerUpcall,
-                                  ACE_Null_Mutex> TTimerQueue;
+        using TTimerQueue = ACE_Timer_Queue_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
 
         /// Default constructor
         CCustomEventHandlerUpcall()
@@ -130,7 +128,7 @@ class CTestEventHandler : public ICustomEventHandler
         /// Default destructor.
         ///
         /// @return
-        virtual ~CTestEventHandler()
+        ~CTestEventHandler() override
         {
             ACE_DEBUG((LM_DEBUG, ACE_TEXT("%I(%t) Destroying test event handler.\n")));
         }
@@ -139,7 +137,7 @@ class CTestEventHandler : public ICustomEventHandler
         ///
         /// @return int
         /// @param p_vParameter
-        virtual int operator() (void* p_vParameter)
+        int operator() (void* p_vParameter) override
         {
             long iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
@@ -162,14 +160,9 @@ class CTestEventHandler : public ICustomEventHandler
 };
 
 // Used for the actual timer queue thread adapter
-typedef ACE_Timer_Wheel_T <ICustomEventHandler*,
-                           CCustomEventHandlerUpcall,
-                           ACE_Null_Mutex> TTimerWheel;
-typedef ACE_Timer_Wheel_Iterator_T <ICustomEventHandler*,
-                                    CCustomEventHandlerUpcall,
-                                    ACE_Null_Mutex> TTimerWheelIterator;
-typedef ACE_Thread_Timer_Queue_Adapter<TTimerWheel,
-                                       ICustomEventHandler*> TTimerWheelThreadAdapter;
+using TTimerWheel = ACE_Timer_Wheel_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
+using TTimerWheelIterator = ACE_Timer_Wheel_Iterator_T<ICustomEventHandler *, CCustomEventHandlerUpcall, ACE_Null_Mutex>;
+using TTimerWheelThreadAdapter = ACE_Thread_Timer_Queue_Adapter<TTimerWheel, ICustomEventHandler *>;
 
 #endif /* ACE_HAS_THREADS */
 

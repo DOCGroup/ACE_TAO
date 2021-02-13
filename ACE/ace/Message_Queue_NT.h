@@ -173,7 +173,7 @@ public:
   // = Notification hook.
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Get the handle to the underlying completion port.
   virtual ACE_HANDLE completion_port (void);
@@ -182,10 +182,10 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
-  // Disallow copying and assignment.
-  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &);
-  void operator= (const ACE_Message_Queue_NT &);
+  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &) = delete;
+  void operator= (const ACE_Message_Queue_NT &) = delete;
+  ACE_Message_Queue_NT (ACE_Message_Queue_NT &&) = delete;
+  void operator= (ACE_Message_Queue_NT &&) = delete;
 
 private:
   // = Internal states.

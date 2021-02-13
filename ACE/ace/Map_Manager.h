@@ -38,11 +38,11 @@ class ACE_Map_Entry
 {
 public:
   /// Initialize member variables.
-  ACE_Map_Entry (void);
+  ACE_Map_Entry ();
 
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_Map_Entry (void);
+  ~ACE_Map_Entry ();
 
   /// Key used to look up an entry.
   EXT_ID ext_id_;
@@ -51,7 +51,7 @@ public:
   INT_ID int_id_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -60,13 +60,13 @@ public:
   // are not portable.
 
   /// Get next entry.
-  ACE_UINT32 next (void) const;
+  ACE_UINT32 next () const;
 
   /// Set next entry.
   void next (ACE_UINT32 n);
 
   /// Get prev entry.
-  ACE_UINT32 prev (void) const;
+  ACE_UINT32 prev () const;
 
   /// Set prev entry.
   void prev (ACE_UINT32 p);
@@ -157,11 +157,11 @@ public:
 
   /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.
-  int close (void);
+  int close ();
 
   /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.
-  ~ACE_Map_Manager (void);
+  ~ACE_Map_Manager ();
 
   /**
    * Associate @a ext_id with @a int_id.  If @a ext_id is already in the
@@ -248,13 +248,13 @@ public:
   /**
    * Unbind all entires.
    */
-  void unbind_all (void);
+  void unbind_all ();
 
   /// Return the current size of the map.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Return the total size of the map.
-  size_t total_size (void) const;
+  size_t total_size () const;
 
   /**
    * Returns a reference to the underlying ACE_LOCK.  This makes it
@@ -264,20 +264,20 @@ public:
    * guard the state of an iterator.
    * @note The right name would be lock, but HP/C++ will choke on that!
    */
-  ACE_LOCK &mutex (void);
+  ACE_LOCK &mutex ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
   /// Return forward iterator.
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> begin (void);
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> end (void);
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> begin ();
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> end ();
 
   /// Return reverse iterator.
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rbegin (void);
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rend (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rbegin ();
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> rend ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -353,7 +353,7 @@ protected:
   int resize_i (ACE_UINT32 size);
 
   /// Close down a <Map_Manager>.  Must be called with locks held.
-  int close_i (void);
+  int close_i ();
 
   /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
@@ -361,17 +361,17 @@ protected:
 
   /// This function returns the new size of the Map Manager.  This
   /// function is called when we run out of room and need to resize.
-  ACE_UINT32 new_size (void);
+  ACE_UINT32 new_size ();
 
   /// Explicitly call the destructors and free up the
   /// <search_structure_>.
-  void free_search_structure (void);
+  void free_search_structure ();
 
   /// Id of the free list sentinel.
-  ACE_UINT32 free_list_id (void) const;
+  ACE_UINT32 free_list_id () const;
 
   /// Id of the occupied list sentinel.
-  ACE_UINT32 occupied_list_id (void) const;
+  ACE_UINT32 occupied_list_id () const;
 
   /// Finds the next free slot.
   int next_free (ACE_UINT32 &slot);
@@ -433,8 +433,8 @@ protected:
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &))
+  void operator= (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
+  ACE_Map_Manager (const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &) = delete;
 };
 
 /**
@@ -460,14 +460,14 @@ public:
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element @c this is pointing to.
-  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns reference the Map_Manager that is being iterated
   /// over.
-  ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void);
+  ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Map_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
@@ -479,14 +479,14 @@ public:
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
   /// no more item in the set after the current items, else 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move backware by one element in the set.  Returns 0 when there's
   /// no more item in the set before the current item, else 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
@@ -518,14 +518,14 @@ public:
   int next (ACE_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element @c this is pointing to.
-  ACE_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns reference the Map_Manager that is being iterated
   /// over.
-  const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map (void) const;
+  const ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>& map () const;
 
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK> &) const;
@@ -537,14 +537,14 @@ public:
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
   /// no more item in the set after the current items, else 1.
-  int forward_i (void);
+  int forward_i ();
 
   /// Move backware by one element in the set.  Returns 0 when there's
   /// no more item in the set before the current item, else 1.
-  int reverse_i (void);
+  int reverse_i ();
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
@@ -576,21 +576,21 @@ public:
 
   /// Move forward by one element in the set.   Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ (void);
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
 
   /// Postfix advance.
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
+  ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- ();
 
   /// Postfix reverse.
   ACE_Map_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
@@ -622,21 +622,21 @@ public:
 
   /// Move forward by one element in the set.   Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix advance.
-  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ (void);
+  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
 
   /// Postfix advance.
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (int);
 
   /// Prefix reverse.
-  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
+  ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- ();
 
   /// Postfix reverse.
   ACE_Map_Const_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);
@@ -668,21 +668,21 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
   /// Prefix reverse.
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator++ ();
 
   /// Postfix reverse.
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator++ (int);
 
   /// Prefix advance.
-  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- (void);
+  ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> &operator-- ();
 
   /// Postfix advance.
   ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> operator-- (int);

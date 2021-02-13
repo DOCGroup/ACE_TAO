@@ -64,7 +64,7 @@ TAO_Object_Ref_Table::bind_i (const char *id, CORBA::Object_ptr obj)
 {
   // Make sure that the supplied Object reference is valid,
   // i.e. not nil.
-  if (id == 0
+  if (id == nullptr
       || ACE_OS::strlen (id) == 0
       || ::CORBA::is_nil (obj))
     {

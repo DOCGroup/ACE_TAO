@@ -6134,7 +6134,7 @@ Mon May  7 14:54:48 2001  Carlos O'Ryan  <coryan@uci.edu>
         * tao/Stub.h:
         * tao/Stub.i:
         * tao/Stub.cpp:
-          Bug 542 (http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=542)
+          Bug 542 (http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=542)
           has reared its ugly head once again.
           However, I think I finally nailed it: the ORB_Core was reference
           counted by each object reference (via TAO_Stub), but the
@@ -7071,7 +7071,7 @@ Tue Apr 24 22:58:00 2001  Carlos O'Ryan  <coryan@uci.edu>
           side it actually break things.
           After this change the IDL_Cubit regression test works, but there
           are some scenarios that may not, more detailed documentation in
-          http://ace.cs.wustl.edu/bugzilla/show_bug.cgi?id=884
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=884
 
 Tue Apr 24 19:42:14 2001  Jeff Parsons <parsons@cs.wustl.edu>
 

@@ -19,7 +19,7 @@ be_visitor_exception_cdr_op_ch::be_visitor_exception_cdr_op_ch (
 {
 }
 
-be_visitor_exception_cdr_op_ch::~be_visitor_exception_cdr_op_ch (void)
+be_visitor_exception_cdr_op_ch::~be_visitor_exception_cdr_op_ch ()
 {
 }
 
@@ -67,6 +67,6 @@ be_visitor_exception_cdr_op_ch::visit_exception (be_exception *node)
                         -1);
     }
 
-  node->cli_hdr_cdr_op_gen (1);
+  node->cli_hdr_cdr_op_gen (true);
   return 0;
 }

@@ -36,17 +36,16 @@ class TAO_Pluggable_Reply_Params;
  */
 class TAO_Export TAO_Transport_Mux_Strategy
 {
-
 public:
   /// Base class constructor.
   TAO_Transport_Mux_Strategy (TAO_Transport *transport);
 
   /// Base class destructor.
-  virtual ~TAO_Transport_Mux_Strategy (void);
+  virtual ~TAO_Transport_Mux_Strategy ();
 
   /// Generate and return an unique request id for the current
   /// invocation.
-  virtual CORBA::ULong request_id (void) = 0;
+  virtual CORBA::ULong request_id () = 0;
 
   /// Bind the dispatcher with the request id. Commonalities in the
   /// derived class implementations is kept here.
@@ -74,19 +73,19 @@ public:
   /// Request has been just sent, but the reply is not received. Idle
   /// the transport now. The return value indicates whether idling was
   /// successful or not.
-  virtual bool idle_after_send (void) = 0;
+  virtual bool idle_after_send () = 0;
 
   /// Request is sent and the reply is received. Idle the transport
   /// now. The return value indicates whether idling was successful or
   /// not.
-  virtual bool idle_after_reply (void) = 0;
+  virtual bool idle_after_reply () = 0;
 
   /// The transport object has closed the connection, inform all Reply
   /// dispatchers and waiting strategies.
-  virtual void connection_closed (void) = 0;
+  virtual void connection_closed () = 0;
 
   /// Do we have a request pending
-  virtual bool has_request (void) = 0;
+  virtual bool has_request () = 0;
 
 protected:
   /// Cache the transport reference.

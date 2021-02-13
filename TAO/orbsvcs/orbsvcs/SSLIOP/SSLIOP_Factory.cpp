@@ -230,7 +230,7 @@ TAO::SSLIOP::Protocol_Factory::pem_passwd_cb (char *buf, int size, int , void *t
   return len;
 }
 
-TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
   :  TAO_Protocol_Factory (IOP::TAG_INTERNET_IOP),
      qop_ (::Security::SecQOPIntegrityAndConfidentiality),
      timeout_ (TAO::SSLIOP::ACCEPT_TIMEOUT),
@@ -238,7 +238,7 @@ TAO::SSLIOP::Protocol_Factory::Protocol_Factory (void)
 {
 }
 
-TAO::SSLIOP::Protocol_Factory::~Protocol_Factory (void)
+TAO::SSLIOP::Protocol_Factory::~Protocol_Factory ()
 {
 }
 
@@ -251,7 +251,7 @@ TAO::SSLIOP::Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO::SSLIOP::Protocol_Factory::prefix (void) const
+TAO::SSLIOP::Protocol_Factory::prefix () const
 {
    // Note: This method doesn't seem to be used anywhere. Moreover,
    // keeping it may make things more confusing - a Factory can
@@ -261,13 +261,13 @@ TAO::SSLIOP::Protocol_Factory::prefix (void) const
 }
 
 char
-TAO::SSLIOP::Protocol_Factory::options_delimiter (void) const
+TAO::SSLIOP::Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
 
 TAO_Acceptor *
-TAO::SSLIOP::Protocol_Factory::make_acceptor (void)
+TAO::SSLIOP::Protocol_Factory::make_acceptor ()
 {
   TAO_Acceptor *acceptor = 0;
 
@@ -844,7 +844,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::register_orb_initializer (void)
+TAO::SSLIOP::Protocol_Factory::register_orb_initializer ()
 {
   try
     {
@@ -900,7 +900,7 @@ TAO::SSLIOP::Protocol_Factory::register_orb_initializer (void)
 
 
 TAO_Connector *
-TAO::SSLIOP::Protocol_Factory::make_connector (void)
+TAO::SSLIOP::Protocol_Factory::make_connector ()
 {
   TAO::SSLIOP::Connector *connector = 0;
 
@@ -911,7 +911,7 @@ TAO::SSLIOP::Protocol_Factory::make_connector (void)
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint (void) const
+TAO::SSLIOP::Protocol_Factory::requires_explicit_endpoint () const
 {
   return 0;
 }

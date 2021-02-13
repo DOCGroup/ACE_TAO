@@ -144,7 +144,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     ACE_NEW_RETURN (handler,
                     ACEXML_SAXPrint_Handler (name),
                     -1);
-  auto_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
+
+  std::unique_ptr<ACEXML_DefaultHandler> cleanup_handler (handler);
 
   ACEXML_Parser parser;
   ACEXML_InputSource input (stm);

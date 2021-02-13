@@ -90,7 +90,7 @@ public:
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
-  virtual ~AST_Type (void);
+  virtual ~AST_Type ();
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Determine if we are involved in some kind of limited recursion.
@@ -101,21 +101,21 @@ public:
   virtual void size_type (SIZE_TYPE);
   // Set the size type.
 
-  virtual SIZE_TYPE size_type (void);
+  virtual SIZE_TYPE size_type ();
   // Return our size type.
 
   // Accessors/mutators for the private members.
 
-  bool has_constructor (void);
+  bool has_constructor ();
   // Accessor for protected member.
 
   void has_constructor (bool value);
   // Mutator for protected member.
 
-  bool ifr_added (void);
+  bool ifr_added ();
   void ifr_added (bool val);
 
-  bool ifr_fwd_added (void);
+  bool ifr_fwd_added ();
   void ifr_fwd_added (bool val);
 
   const char *nested_type_name (AST_Decl *d,
@@ -123,26 +123,22 @@ public:
                                 const char *prefix = 0);
   // Type name of a node used when generating declarations.
 
-  AST_Type *unaliased_type (void);
+  AST_Type *unaliased_type ();
   // Utility function to make sure we are using the unaliased type.
 
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Type);
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
 protected:
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Determine our size type and set it if it is unknown.
 
   const char *nested_name (const char *local_name,

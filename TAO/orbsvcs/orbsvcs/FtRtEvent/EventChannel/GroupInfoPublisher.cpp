@@ -144,7 +144,7 @@ GroupInfoPublisherBase::update_info(GroupInfoPublisherBase::Info_ptr& info)
       }
     }
   }
-  info_ = info;
+  info_ = std::move(info);
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

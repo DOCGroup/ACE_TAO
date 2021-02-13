@@ -30,7 +30,7 @@ public:
   be_visitor_valuebox_any_op_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuebox_any_op_ch (void);
+  ~be_visitor_valuebox_any_op_ch ();
 
   /// visit valuebox
   virtual int visit_valuebox (be_valuebox *node);

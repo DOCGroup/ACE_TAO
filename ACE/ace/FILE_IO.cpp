@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_FILE_IO)
 
 void
-ACE_FILE_IO::dump (void) const
+ACE_FILE_IO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FILE_IO::dump");
@@ -32,7 +32,7 @@ ACE_FILE_IO::dump (void) const
 
 // Simple-minded do nothing constructor.
 
-ACE_FILE_IO::ACE_FILE_IO (void)
+ACE_FILE_IO::ACE_FILE_IO ()
 {
   ACE_TRACE ("ACE_FILE_IO::ACE_FILE_IO");
 }

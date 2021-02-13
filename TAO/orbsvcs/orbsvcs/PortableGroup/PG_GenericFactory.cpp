@@ -24,7 +24,7 @@ TAO_PG_GenericFactory::TAO_PG_GenericFactory (
   this->object_group_manager_.generic_factory (this);
 }
 
-TAO_PG_GenericFactory::~TAO_PG_GenericFactory (void)
+TAO_PG_GenericFactory::~TAO_PG_GenericFactory ()
 {
 
   TAO_PG_Factory_Map::iterator end = this->factory_map_.end ();

@@ -19,7 +19,7 @@ be_visitor_context_ex_idl::be_visitor_context_ex_idl (
 }
 
 be_visitor_context_ex_idl::~be_visitor_context_ex_idl (
-  void)
+  )
 {
 }
 
@@ -36,7 +36,7 @@ be_visitor_context_ex_idl::visit_component (be_component *node)
 
   AST_Component *base = node->base_component ();
 
-  if (base == 0)
+  if (base == nullptr)
     {
       os_ << "::Components::"
           << be_global->ciao_container_type () << "Context";

@@ -74,7 +74,7 @@ TAO::IIOP_SSL_Connection_Handler::IIOP_SSL_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler (void)
+TAO::IIOP_SSL_Connection_Handler::~IIOP_SSL_Connection_Handler ()
 {
 }
 

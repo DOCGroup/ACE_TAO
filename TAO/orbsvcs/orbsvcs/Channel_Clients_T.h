@@ -41,7 +41,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events);
 
   /// Forwards to target_.
-  virtual void disconnect_push_consumer (void);
+  virtual void disconnect_push_consumer ();
 
 private:
   TARGET *target_;
@@ -64,7 +64,7 @@ public:
   ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
 private:
   TARGET *target_;

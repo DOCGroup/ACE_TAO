@@ -71,7 +71,7 @@ class TAO_ECG_UDP_Out_Endpoint;
 class TAO_RTEvent_Serv_Export TAO_ECG_UDP_Receiver_Disconnect_Command
 {
 public:
-  TAO_ECG_UDP_Receiver_Disconnect_Command (void);
+  TAO_ECG_UDP_Receiver_Disconnect_Command ();
   TAO_ECG_UDP_Receiver_Disconnect_Command (
               RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy);
 
@@ -81,7 +81,7 @@ public:
   TAO_ECG_UDP_Receiver_Disconnect_Command &
    operator= (const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs);
 
-  void execute (void);
+  void execute ();
 
 private:
 
@@ -113,7 +113,7 @@ public:
   /// TAO_ECG_UDP_Receiver objects are heap-allocated.)
   static PortableServer::Servant_var<TAO_ECG_UDP_Receiver> create (CORBA::Boolean perform_crc = 0);
 
-  ~TAO_ECG_UDP_Receiver (void);
+  ~TAO_ECG_UDP_Receiver ();
 
   /**
    * @param lcl_ec Event Channel to which we will act as a supplier of events.
@@ -157,7 +157,7 @@ public:
    * result in decrementing of the reference count (due to
    * deactivation) and deletion of the object.
    */
-  void shutdown (void);
+  void shutdown ();
   //@}
 
   /// Accessor.
@@ -174,7 +174,7 @@ public:
   /// The PushSupplier idl method.
   /// Invokes shutdown (), which may result in the object being deleted, if
   /// refcounting is used to manage its lifetime.
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
 
   /// TAO_ECG_Dgram_Handler method.
   /**

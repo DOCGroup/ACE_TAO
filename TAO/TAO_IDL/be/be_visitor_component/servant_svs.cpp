@@ -13,11 +13,11 @@
 
 be_visitor_servant_svs::be_visitor_servant_svs (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx),
-    op_scope_ (0)
+    op_scope_ (nullptr)
 {
 }
 
-be_visitor_servant_svs::~be_visitor_servant_svs (void)
+be_visitor_servant_svs::~be_visitor_servant_svs ()
 {
 }
 
@@ -110,7 +110,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
 
   os_ << be_nl_2
       << lname << "_Servant::~"
-      << lname << "_Servant (void)" << be_nl
+      << lname << "_Servant ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -285,7 +285,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
       os_ << be_nl_2
           << "::" << obj_name << "_ptr" << be_nl
           << node_->local_name () << "_Servant::provide_"
-          << port_name << " (void)" << be_nl
+          << port_name << " ()" << be_nl
           << "{" << be_idt_nl;
 
       os_ << "return" << be_idt_nl
@@ -297,7 +297,7 @@ be_visitor_servant_svs::visit_provides (be_provides *node)
   os_ << be_nl_2
         << "void" << be_nl
         << node_->local_name () << "_Servant::setup_"
-        << port_name << "_i (void)" << be_nl
+        << port_name << "_i ()" << be_nl
         << "{" << be_idt_nl
         << "ACE_CString obj_id (this->ins_name_);" << be_nl
         << "obj_id += \"_" << port_name << "\";" << be_nl_2
@@ -416,7 +416,7 @@ be_visitor_servant_svs::visit_uses (be_uses *node)
   os_ << be_nl
       << node_->local_name () << "_Servant::get_connection"
       << (is_multiple ? "s" : "") << "_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->context_->get_connection"
       << (is_multiple ? "s" : "") << "_"
@@ -486,7 +486,7 @@ be_visitor_servant_svs::visit_emits (be_emits *node)
   os_ << be_nl_2
       << "::" << obj_name << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Servant::disconnect_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "return this->context_->disconnect_"
       << port_name << " ();" << be_uidt_nl
@@ -529,14 +529,14 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   os_ << be_nl_2
       << comp_lname << "_Servant::" << lname << "Consumer_"
       << port_name << "_Servant::~" << lname << "Consumer_"
-      << port_name << "_Servant (void)" << be_nl
+      << port_name << "_Servant ()" << be_nl
       << "{" << be_nl
       << "}";
 
   os_ << be_nl_2
       << "::CORBA::Object_ptr" << be_nl
       << comp_lname << "_Servant::" << lname << "Consumer_"
-      << port_name << "_Servant::_get_component (void)" << be_nl
+      << port_name << "_Servant::_get_component ()" << be_nl
       << "{" << be_idt_nl;
 
   if (ACE_OS::strcmp (be_global->ciao_container_type (), "Session") == 0)
@@ -585,7 +585,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
       os_ << be_nl_2
           << "::" << fname << "Consumer_ptr" << be_nl
           << node_->local_name () << "_Servant::get_consumer_"
-          << port_name << " (void)" << be_nl
+          << port_name << " ()" << be_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
           << "::" << fname << "Consumer::_duplicate (" << be_idt_nl
@@ -597,7 +597,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
   os_ << be_nl_2
       << "void" << be_nl
       << node_->local_name () << "_Servant::setup_consumer_"
-      << port_name << "_i (void)" << be_nl
+      << port_name << "_i ()" << be_nl
       << "{" << be_idt_nl
       << "ACE_CString obj_id (this->ins_name_);" << be_nl
       << "obj_id += \"_" << port_name << "\";" << be_nl_2
@@ -648,7 +648,7 @@ be_visitor_servant_svs::visit_consumes (be_consumes *node)
 }
 
 void
-be_visitor_servant_svs::gen_provides_top (void)
+be_visitor_servant_svs::gen_provides_top ()
 {
   if (this->node_->n_provides () == 0UL)
     {
@@ -702,7 +702,7 @@ be_visitor_servant_svs::gen_provides_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_publishes_top (void)
+be_visitor_servant_svs::gen_publishes_top ()
 {
   ACE_CDR::ULong npubs = this->node_->n_publishes ();
 
@@ -773,9 +773,9 @@ be_visitor_servant_svs::gen_publishes_top (void)
       os_ << be_nl_2
           << "::Components::PublisherDescriptions *" << be_nl
           << node_->local_name ()
-          << "_Servant::get_all_publishers (void)" << be_nl
+          << "_Servant::get_all_publishers ()" << be_nl
           << "{" << be_idt_nl
-          << "::Components::PublisherDescriptions *retval = 0;"
+          << "::Components::PublisherDescriptions *retval {};"
           << be_nl
           << "ACE_NEW_THROW_EX (retval," << be_nl
           << "                  ::Components::PublisherDescriptions,"
@@ -809,7 +809,7 @@ be_visitor_servant_svs::gen_publishes_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_uses_top (void)
+be_visitor_servant_svs::gen_uses_top ()
 {
   ACE_CDR::ULong nuses = this->node_->n_uses ();
 
@@ -880,9 +880,9 @@ be_visitor_servant_svs::gen_uses_top (void)
       os_ << be_nl_2
           << "::Components::ReceptacleDescriptions *" << be_nl
           << node_->local_name ()
-          << "_Servant::get_all_receptacles (void)" << be_nl
+          << "_Servant::get_all_receptacles ()" << be_nl
           << "{" << be_idt_nl
-          << "::Components::ReceptacleDescriptions * retval = 0;"
+          << "::Components::ReceptacleDescriptions * retval {};"
           << be_nl
           << "ACE_NEW_THROW_EX (retval," << be_nl
           << "                  ::Components::ReceptacleDescriptions,"
@@ -916,7 +916,7 @@ be_visitor_servant_svs::gen_uses_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_emits_top (void)
+be_visitor_servant_svs::gen_emits_top ()
 {
   /// Generated whether the component has emits ports
   /// or not, except if we are generating a LwCCM
@@ -991,7 +991,7 @@ be_visitor_servant_svs::gen_emits_top (void)
 }
 
 void
-be_visitor_servant_svs::gen_get_all_emitters (void)
+be_visitor_servant_svs::gen_get_all_emitters ()
 {
   if (be_global->gen_lwccm () || be_global->gen_noeventccm () || this->node_->n_emits () == 0UL)
     {
@@ -1001,9 +1001,9 @@ be_visitor_servant_svs::gen_get_all_emitters (void)
   os_ << be_nl_2
       << "::Components::EmitterDescriptions *" << be_nl
       << node_->local_name ()
-      << "_Servant::get_all_emitters (void)" << be_nl
+      << "_Servant::get_all_emitters ()" << be_nl
       << "{" << be_idt_nl
-      << "::Components::EmitterDescriptions *retval = 0;"
+      << "::Components::EmitterDescriptions *retval {};"
       << be_nl
       << "ACE_NEW_THROW_EX (retval," << be_nl
       << "                  ::Components::EmitterDescriptions,"
@@ -1039,7 +1039,7 @@ be_visitor_obv_factory_reg::be_visitor_obv_factory_reg (
 {
 }
 
-be_visitor_obv_factory_reg::~be_visitor_obv_factory_reg (void)
+be_visitor_obv_factory_reg::~be_visitor_obv_factory_reg ()
 {
 }
 
@@ -1087,7 +1087,7 @@ be_visitor_attr_set::be_visitor_attr_set (be_visitor_context *ctx)
 {
 }
 
-be_visitor_attr_set::~be_visitor_attr_set (void)
+be_visitor_attr_set::~be_visitor_attr_set ()
 {
 }
 
@@ -1112,7 +1112,7 @@ be_visitor_attr_set::visit_attribute (be_attribute *node)
 int
 be_visitor_attr_set::visit_component_scope (be_component *node)
 {
-  if (node == 0)
+  if (node == nullptr)
     {
       return 0;
     }
@@ -1168,7 +1168,7 @@ be_visitor_facet_executor_block::be_visitor_facet_executor_block (
 }
 
 be_visitor_facet_executor_block::~be_visitor_facet_executor_block (
-  void)
+  )
 {
 }
 
@@ -1199,7 +1199,7 @@ be_visitor_connect_block::be_visitor_connect_block (
 {
 }
 
-be_visitor_connect_block::~be_visitor_connect_block (void)
+be_visitor_connect_block::~be_visitor_connect_block ()
 {
 }
 
@@ -1247,7 +1247,7 @@ be_visitor_disconnect_block::be_visitor_disconnect_block (
 }
 
 be_visitor_disconnect_block::~be_visitor_disconnect_block (
-  void)
+  )
 {
 }
 
@@ -1295,7 +1295,7 @@ be_visitor_receptacle_desc::be_visitor_receptacle_desc (
 }
 
 be_visitor_receptacle_desc::~be_visitor_receptacle_desc (
-  void)
+  )
 {
 }
 
@@ -1364,7 +1364,7 @@ be_visitor_subscribe_block::be_visitor_subscribe_block (
 }
 
 be_visitor_subscribe_block::~be_visitor_subscribe_block (
-  void)
+  )
 {
 }
 
@@ -1400,7 +1400,7 @@ be_visitor_unsubscribe_block::be_visitor_unsubscribe_block (
 }
 
 be_visitor_unsubscribe_block::~be_visitor_unsubscribe_block (
-  void)
+  )
 {
 }
 
@@ -1432,7 +1432,7 @@ be_visitor_event_source_desc::be_visitor_event_source_desc (
 }
 
 be_visitor_event_source_desc::~be_visitor_event_source_desc (
-  void)
+  )
 {
 }
 
@@ -1478,7 +1478,7 @@ be_visitor_connect_consumer_block::be_visitor_connect_consumer_block (
 {
 }
 
-be_visitor_connect_consumer_block::~be_visitor_connect_consumer_block (void)
+be_visitor_connect_consumer_block::~be_visitor_connect_consumer_block ()
 {
 }
 
@@ -1516,7 +1516,7 @@ be_visitor_disconnect_consumer_block::be_visitor_disconnect_consumer_block (
 }
 
 be_visitor_disconnect_consumer_block::~be_visitor_disconnect_consumer_block (
-  void)
+  )
 {
 }
 
@@ -1548,7 +1548,7 @@ be_visitor_emitter_desc::be_visitor_emitter_desc (
 }
 
 be_visitor_emitter_desc::~be_visitor_emitter_desc (
-  void)
+  )
 {
 }
 
@@ -1583,7 +1583,7 @@ be_visitor_populate_port_tables::be_visitor_populate_port_tables (
 }
 
 be_visitor_populate_port_tables::~be_visitor_populate_port_tables (
-  void)
+  )
 {
 }
 

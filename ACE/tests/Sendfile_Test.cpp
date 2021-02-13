@@ -38,8 +38,6 @@ static int Test_Result = 0;
 // multiple smaller ones that add up to the large size.
 const size_t Test3_Send_Size = 4*1024;
 const size_t Test3_Loops = 10;
-const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
-
 
 static void *
 client (void *arg)
@@ -264,7 +262,7 @@ server (void *arg)
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;

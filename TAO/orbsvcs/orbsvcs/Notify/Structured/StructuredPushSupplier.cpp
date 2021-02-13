@@ -22,14 +22,14 @@ TAO_Notify_StructuredPushSupplier::init (CosNotifyComm::StructuredPushSupplier_p
 }
 
 void
-TAO_Notify_StructuredPushSupplier::release (void)
+TAO_Notify_StructuredPushSupplier::release ()
 {
   delete this;
   //@@ inform factory
 }
 
 ACE_CString
-TAO_Notify_StructuredPushSupplier::get_ior (void) const
+TAO_Notify_StructuredPushSupplier::get_ior () const
 {
   ACE_CString result;
   CORBA::ORB_var orb = TAO_Notify_PROPERTIES::instance()->orb();
@@ -46,7 +46,7 @@ TAO_Notify_StructuredPushSupplier::get_ior (void) const
 }
 
 CORBA::Object_ptr
-TAO_Notify_StructuredPushSupplier::get_supplier (void)
+TAO_Notify_StructuredPushSupplier::get_supplier ()
 {
   return CosNotifyComm::StructuredPushSupplier::_duplicate (this->push_supplier_.in ());
 }

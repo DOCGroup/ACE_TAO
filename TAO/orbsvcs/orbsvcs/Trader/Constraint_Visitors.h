@@ -344,12 +344,12 @@ private:
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
 
-  /// Disallow copying.
-  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&);
-  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&);
+  TAO_Constraint_Evaluator (const TAO_Constraint_Evaluator&) = delete;
+  TAO_Constraint_Evaluator& operator= (const TAO_Constraint_Evaluator&) = delete;
+  TAO_Constraint_Evaluator (TAO_Constraint_Evaluator&&) = delete;
+  TAO_Constraint_Evaluator& operator= (TAO_Constraint_Evaluator&&) = delete;
 
 protected:
-
   /// The map of property names to their values for a property.
   TAO_Lookup_Table props_;
 

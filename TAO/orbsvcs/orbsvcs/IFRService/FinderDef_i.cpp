@@ -10,12 +10,12 @@ TAO_FinderDef_i::TAO_FinderDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_FinderDef_i::~TAO_FinderDef_i (void)
+TAO_FinderDef_i::~TAO_FinderDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_FinderDef_i::def_kind (void)
+TAO_FinderDef_i::def_kind ()
 {
   return CORBA::dk_Finder;
 }

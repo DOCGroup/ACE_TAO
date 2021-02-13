@@ -10,7 +10,6 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Object_Manager.h"
 #include "ace/Connection_Recycling_Strategy.h"
-
 #include "ace/Dynamic.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -22,14 +21,12 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t, void *p)
   return p;
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *, void *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (NOOP, 2 parameters)");
   return;
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
@@ -85,7 +82,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
     }
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
                                          const ACE_nothrow_t&) throw()
@@ -93,12 +89,11 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
   ACE_TRACE("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy (void)
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy");
 
@@ -191,7 +186,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::open (void *)
 // Perform termination activities.
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::shutdown (void)
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::shutdown ()
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::shutdown");
 
@@ -228,7 +223,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::cleanup_hint (void **act_holder)
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump");
@@ -250,7 +245,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump (void) const
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> PEER_STREAM &
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer");
   return (PEER_STREAM &) this->peer_;
@@ -259,7 +254,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::peer (void) const
 // Extract the underlying I/O descriptor.
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> ACE_HANDLE
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::get_handle (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::get_handle () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::get_handle");
   return this->peer_.get_handle ();
@@ -275,7 +270,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::set_handle (ACE_HANDLE h)
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS>
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Svc_Handler (void)
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Svc_Handler ()
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Svc_Handler");
 
@@ -329,7 +324,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::init (int /* argc */,
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::fini (void)
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::fini ()
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::fini");
   return -1;
@@ -362,7 +357,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state (ACE_Recyclable_State 
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> ACE_Recyclable_State
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state () const
 {
   if (this->recycler ())
     return this->recycler ()->recycle_state (this->recycling_act_);
@@ -380,14 +375,14 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler (ACE_Connection_Recycling_S
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> ACE_Connection_Recycling_Strategy *
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler");
   return this->recycler_;
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> const void *
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycling_act (void) const
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycling_act () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycling_act");
   return this->recycling_act_;
@@ -402,7 +397,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle (void *)
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS>
-ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Buffered_Svc_Handler (void)
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::~ACE_Buffered_Svc_Handler ()
 {
   this->flush ();
 }
@@ -455,7 +450,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::put (ACE_Message_Block *mb,
 // Flush the buffer.
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
-ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush (void)
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush ()
 {
   ACE_GUARD_RETURN (typename SYNCH_TRAITS::MUTEX, m, this->msg_queue ()->lock (), -1);
 
@@ -463,7 +458,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush (void)
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
-ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i (void)
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
 {
   ACE_Message_Queue_Iterator<SYNCH_TRAITS> iterator (*this->msg_queue ());
   ACE_Message_Block *mblk = 0;
@@ -488,7 +483,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i (void)
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
-ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump (void) const
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump");

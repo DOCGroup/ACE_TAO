@@ -34,7 +34,7 @@
 
 static
 ACE_Malloc<ACE_SHARED_MEMORY_POOL, ACE_SV_Semaphore_Simple> &
-myallocator (void)
+myallocator ()
 {
   static ACE_Malloc<ACE_SHARED_MEMORY_POOL,
                     ACE_SV_Semaphore_Simple> myallocator;

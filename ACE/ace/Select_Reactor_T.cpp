@@ -21,11 +21,6 @@
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
 
-/*
- * ACE Reactor specialization hook.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */

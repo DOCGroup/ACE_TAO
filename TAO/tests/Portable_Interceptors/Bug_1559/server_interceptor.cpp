@@ -66,7 +66,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   // locally on the server side as a side effect of another call,
   // meaning that the client hasn't added the service context yet.
   // Same goes for the shutdown call
-  if (ACE_OS_String::strcmp ("shutdown", operation.in ()) == 0)
+  if (ACE_OS::strcmp ("shutdown", operation.in ()) == 0)
     return;
 
   IOP::ServiceId id = ::service_id;

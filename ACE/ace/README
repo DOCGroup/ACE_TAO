@@ -81,7 +81,6 @@ ACE_HAS_TRACE                           Defined when ACE_NTRACE=0 to
 ACE_PAGE_SIZE                           Defines the page size of the
                                         system (not used on Win32 or
                                         with ACE_HAS_GETPAGESIZE).
-ACE_REDEFINES_XTI_FUNCTIONS             Platform redefines the t_... names (UnixWare)
 ACE_TEMPLATES_REQUIRE_PRAGMA            Compiler's template mechanism
                                         must use a pragma This is used
                                         for AIX's C++ compiler.
@@ -140,13 +139,6 @@ ACE_HAS_ALT_CUSERID                     Use ACE's alternate cuserid()
                                         ACE_LACKS_PWD_FUNCTIONS to be
                                         undefined and that the
                                         geteuid() system call exists.
-ACE_HAS_DINKUM_STL                      Using the Dinkum STL library
-ACE_HAS_HEADER_ALLOCATED_CLASS_STATIC_CONST_INT_STOREAGE
-                                        Non-C++ Complient compilers that automatically
-                                        provide storeage for class static const int
-                                        when their declaration is seen. I.e. they object
-                                        to explicit definitions being seen in the .cpp
-                                        file.
 ACE_DEFAULT_THREAD_KEYS                 Number of TSS keys, with
                                         ACE_HAS_TSS_EMULATION _only_.
                                         Defaults to 64.
@@ -222,19 +214,12 @@ ACE_HAS_ALLOCA                          Compiler/platform supports
                                         alloca()
 ACE_HAS_ALLOCA_H                        Compiler/platform has
                                         <alloca.h>
-ACE_HAS_ALPHA_TIMER                     CPU is an Alpha, with the rpcc
-                                        instruction to read the tick timer.
-                                        Limited to 32 bits, so not recommended.
 ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
                                         calls init()/fini() for shared
                                         libraries
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
                                         u_long fdmask (e.g., Linux and
                                         SCO).
-ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-                                        Compiler handles explicit calling of
-                                        template destructor correctly. See
-                                        "ace/OS.h" for details.
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).
@@ -258,9 +243,6 @@ ACE_HAS_BROKEN_T_ERROR                  Compiler/platform has the wrong
                                         prototype for t_error(), i.e.,
                                         t_error(char *) rather than
                                         t_error(const char *).
-ACE_HAS_BSTRING                         Platform has <bstring.h>
-                                        (which contains bzero()
-                                        prototype)
 ACE_HAS_BYTESEX_H                       Platform has <bytesex.h>.
 ACE_HAS_CANCEL_IO                       Platform supports the Win32
                                         CancelIO() function (WinNT 4.0
@@ -284,17 +266,12 @@ ACE_HAS_CONFLICTING_XTI_MACROS          OS's XTI header file defines some
 ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES    Prototypes for both signal()
                                         and struct sigaction are
                                         consistent.
-ACE_HAS_CPLUSPLUS_HEADERS               Compiler/platform has
-                                        correctly prototyped header
-                                        files
 ACE_HAS_DIRENT                          Compiler/platform has Dirent
                                         iterator functions
 ACE_HAS_DLL                             Build ACE using the frigging
                                         PC DLL nonsense...
 ACE_HAS_EBCDIC                          Compile in the ACE code set classes
                                         that support EBCDIC.
-ACE_HAS_EXCEPTIONS                      Compiler supports C++
-                                        exception handling
 ACE_HAS_EXPLICIT_TEMPLATE_INSTANTIATION_EXPORT  When a base-class is a
                                         specialization of a class template
                                         then this class template must be
@@ -557,9 +534,6 @@ ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
 ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
                                         Standard C++ Library
-ACE_HAS_STDCPP_STL_INCLUDES             Standard C++ headers can be
-                                        included in the standard way.
-                                        e.g. #include <vector>
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
@@ -695,48 +669,6 @@ ACE_LACKS_INTMAX_T                      Platform lacks the intmax_t type
 ACE_LACKS_UINTMAX_T                     Platform lacks the uintmax_t type.
 ACE_LACKS_INTPTR_T                      Platform lacks the intptr_t type
 ACE_LACKS_UINTPTR_T                     Platform lacks the uintptr_t type.
-
-ACE_HAS_INT8_T                          Platform provides the int8_t type.
-ACE_HAS_INT16_T                         Platform provides the int16_t type.
-ACE_HAS_INT32_T                         Platform provides the int32_t type.
-ACE_HAS_INT64_T                         Platform provides the int64_t type.
-ACE_HAS_UINT8_T                         Platform provides the uint8_t type.
-ACE_HAS_UINT16_T                        Platform provides the uint16_t type.
-ACE_HAS_UINT32_T                        Platform provides the uint32_t type.
-ACE_HAS_UINT64_T                        Platform provides the uint64_t type.
-
-ACE_INT8_TYPE                           Specific type to use for ACE_INT8.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT8_T has been defined
-ACE_INT16_TYPE                          Specific type to use for ACE_INT16.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT16_T has been defined
-ACE_INT32_TYPE                          Specific type to use for ACE_INT32.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT32_T has been defined
-ACE_INT64_TYPE                          Specific type to use for ACE_INT64.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_INT64_T has been defined
-ACE_UINT8_TYPE                          Specific type to use for ACE_UINT8.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT8_T has been defined
-ACE_UINT16_TYPE                         Specific type to use for ACE_UINT16.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT16_T has been defined
-ACE_UINT32_TYPE                         Specific type to use for ACE_UINT32.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT32_T has been defined
-ACE_UINT64_TYPE                         Specific type to use for ACE_UINT64.
-                                        If not defined, ACE will attempt to
-                                        determine the correct type
-                                        unless ACE_HAS_UINT64_T has been defined
 
 ACE_INT8_FORMAT_SPECIFIER               String literal containing *printf
                                         format specifier (including the '%')
@@ -932,7 +864,6 @@ ACE_LACKS_NEW_H                         OS doesn't have, or we don't want to
                                         use, new.h.
 ACE_LACKS_NULL_PTHREAD_STATUS           OS requires non-null status pointer
                                         for ::pthread_join ().
-ACE_LACKS_NUMERIC_LIMITS    Platform lacks std::numeric_limits<>.
 ACE_LACKS_PERFECT_MULTICAST_FILTERING   Platform lacks IGMPv3 "perfect" filtering
                                         of multicast dgrams at the socket level.
                                         If == 1, ACE_SOCK_Dgram_Mcast will bind
@@ -1009,7 +940,6 @@ ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
 ACE_LACKS_WCSCHR                        Platform/compiler lacks wcschr()
 ACE_LACKS_STRDUP                        Platform/compiler lacks strdup()
 ACE_LACKS_WCSDUP                        Platform/compiler lacks wcsdup()
-ACE_LACKS_STRRCHR                       Platform/compiler lacks strrchr()
 ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr()
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
@@ -1111,22 +1041,9 @@ ACE_LACKS_WIN32_SECURITY_DESCRIPTORS    The Windows platform doesn't have
 ACE_LACKS_WRITEV                        Platform doesn't define
                                         writev, so use our own
 
-ACE_LEGACY_MODE                         When defined, it will enable
-                                        some code that is used to
-                                        provide some support for
-                                        backwards compatibility.
-
 ACE_NEEDS_DEV_IO_CONVERSION             Necessary with some compilers
                                         to pass ACE_TTY_IO as
                                         parameter to DEV_Connector.
-ACE_NEEDS_FUNC_DEFINITIONS              Compiler requires a definition
-                                        for a "hidden" function, e.g.,
-                                        a private, unimplemented copy
-                                        constructor or assignment
-                                        operator.  The SGI C++
-                                        compiler needs this, in
-                                        template classes, with
-                                        ACE_HAS_TEMPLATE_INSTANTIATION_PRAGMA.
 ACE_NEEDS_HUGE_THREAD_STACKSIZE         Required by platforms with
                                         small default stacks.
 ACE_NEEDS_LWP_PRIO_SET                  OS has LWPs, and when the
@@ -1143,14 +1060,6 @@ ACE_NO_WIN32_LEAN_AND_MEAN              If this is set, then ACE does not
                                         including <windows.h>. Needed for
                                         code that uses non-lean Win32
                                         facilities such as COM.
-
-ACE_ONLY_LATEST_AND_GREATEST            A macro that indicates that
-                                        the "latest and greatest"
-                                        features of ACE/TAO should be
-                                        turned on.  It has been
-                                        replaced by ACE_LEGACY_MODE,
-                                        which has the opposite meaning
-                                        but serves the same purpose.
 
 ACE_SHM_OPEN_REQUIRES_ONE_SLASH         The path specified on shm_open() must
                                         have a leading, single slash and not
@@ -1175,14 +1084,6 @@ ACE_HAS_BROKEN_PREALLOCATED_OBJECTS_AFTER_FORK
                                         them at all.
                                         Both QNX/RTP and LynxOS suffer from
                                         this problem.
-
-ACE_LACKS_MEMBER_TEMPLATES              Compiler does not support
-                                        member template feature.
-
-ACE_LACKS_DEPRECATED_MACROS             When this define is set, macros which
-                                        are deprecated are not defined. Usefull
-                                        to check whether deprecated macros are
-                                        not used anymore.
 
 ACE_DONT_INIT_WINSOCK                   This definition defines whether or not
                                         to explicitly initialize Winsock during
@@ -1272,20 +1173,6 @@ ACE_HAS_AUTOMATIC_INIT_FINI:
      Means Service Configurator won't be available.
      TBA.
 
-
-ACE_HAS_CPLUSPLUS_HEADERS:
---------------------------
-
-  Used In:
-     ace/OS.h
-
-  HPUX:
-     set it.
-
-  Notes:
-     If this is not defined, libc.h and osfcn.h get included.
-     Only needed for older compiler/OS platforms that don't
-     provide standard C++ header files in /usr/include.
 
 ACE_HAS_HI_RES_TIMER:
 ---------------------

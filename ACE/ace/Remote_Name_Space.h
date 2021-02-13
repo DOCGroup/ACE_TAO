@@ -130,7 +130,7 @@ public:
                                  const ACE_NS_WString &pattern);
 
   /// Dump the state of the object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   ACE_ALLOC_HOOK_DECLARE;
 

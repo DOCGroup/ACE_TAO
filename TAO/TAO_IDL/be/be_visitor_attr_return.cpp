@@ -22,7 +22,7 @@ be_visitor_attr_return::be_visitor_attr_return  (
 {
 }
 
-be_visitor_attr_return::~be_visitor_attr_return (void)
+be_visitor_attr_return::~be_visitor_attr_return ()
 {
 }
 
@@ -114,7 +114,7 @@ be_visitor_attr_return::visit_predefined_type (
             << this->attr_name_string_.c_str () << ".in ());";
         break;
       case AST_PredefinedType::PT_any:
-        os_ << "::CORBA::Any * retval = 0;" << be_nl
+        os_ << "::CORBA::Any * retval {};" << be_nl
             << "ACE_NEW_RETURN (" << be_idt_nl
             << "retval," << be_nl
             << "::CORBA::Any ("
@@ -146,7 +146,7 @@ be_visitor_attr_return::visit_sequence (be_sequence *)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       /// Support anonymous types?
       return -1;
@@ -222,7 +222,7 @@ be_visitor_attr_return::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

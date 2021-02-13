@@ -1237,7 +1237,7 @@ ACE_DynScheduler::propagate_dispatches (
 
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::calculate_utilization_params (void)
+ACE_DynScheduler::calculate_utilization_params ()
 {
   critical_set_frame_size_ = 0;
   utilization_ = 0.0;
@@ -1307,7 +1307,7 @@ ACE_DynScheduler::update_priority_level_params ()
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::setup_task_entries (void)
+ACE_DynScheduler::setup_task_entries ()
 {
   // store number of tasks, based on registrations
   tasks (static_cast<u_int> (rt_info_entries_.size ()));
@@ -1384,7 +1384,7 @@ ACE_DynScheduler::setup_task_entries (void)
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::relate_task_entries (void)
+ACE_DynScheduler::relate_task_entries ()
 {
   status_t status = SUCCEEDED;
 
@@ -1584,7 +1584,7 @@ ACE_DynScheduler::identify_threads (ACE_CString & unresolved_locals,
 }
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::check_dependency_cycles (void)
+ACE_DynScheduler::check_dependency_cycles ()
 {
   status_t return_status = SUCCEEDED;
 
@@ -1748,7 +1748,7 @@ ACE_DynScheduler::schedule_dispatches (ACE_Unbounded_Set<RtecScheduler::Scheduli
   // calls internal dispatch scheduling method.
 
 ACE_DynScheduler::status_t
-ACE_DynScheduler::store_assigned_info (void)
+ACE_DynScheduler::store_assigned_info ()
 {
   for  (u_int i = 0; i < dispatch_entry_count_; ++i)
     {

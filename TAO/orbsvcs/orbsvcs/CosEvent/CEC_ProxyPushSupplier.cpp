@@ -71,7 +71,7 @@ TAO_CEC_ProxyPushSupplier (TAO_CEC_TypedEventChannel* ec,
 }
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
-TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier (void)
+TAO_CEC_ProxyPushSupplier::~TAO_CEC_ProxyPushSupplier ()
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
@@ -107,7 +107,7 @@ TAO_CEC_ProxyPushSupplier::activate (
 }
 
 void
-TAO_CEC_ProxyPushSupplier::deactivate (void)
+TAO_CEC_ProxyPushSupplier::deactivate ()
 {
   try
     {
@@ -127,7 +127,7 @@ TAO_CEC_ProxyPushSupplier::deactivate (void)
 }
 
 void
-TAO_CEC_ProxyPushSupplier::shutdown (void)
+TAO_CEC_ProxyPushSupplier::shutdown ()
 {
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
   if (this->is_typed_ec () )
@@ -277,7 +277,7 @@ TAO_CEC_ProxyPushSupplier::push_nocopy (CORBA::Any &event)
 }
 
 void
-TAO_CEC_ProxyPushSupplier::cleanup_i (void)
+TAO_CEC_ProxyPushSupplier::cleanup_i ()
 {
   this->consumer_ =
     CosEventComm::PushConsumer::_nil ();
@@ -288,14 +288,14 @@ TAO_CEC_ProxyPushSupplier::cleanup_i (void)
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushSupplier::_incr_refcnt (void)
+TAO_CEC_ProxyPushSupplier::_incr_refcnt ()
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
   return this->refcount_++;
 }
 
 CORBA::ULong
-TAO_CEC_ProxyPushSupplier::_decr_refcnt (void)
+TAO_CEC_ProxyPushSupplier::_decr_refcnt ()
 {
   {
     ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
@@ -876,19 +876,19 @@ TAO_CEC_ProxyPushSupplier::consumer_non_existent (
 }
 
 PortableServer::POA_ptr
-TAO_CEC_ProxyPushSupplier::_default_POA (void)
+TAO_CEC_ProxyPushSupplier::_default_POA ()
 {
   return PortableServer::POA::_duplicate (this->default_POA_.in ());
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_add_ref (void)
+TAO_CEC_ProxyPushSupplier::_add_ref ()
 {
   this->_incr_refcnt ();
 }
 
 void
-TAO_CEC_ProxyPushSupplier::_remove_ref (void)
+TAO_CEC_ProxyPushSupplier::_remove_ref ()
 {
   this->_decr_refcnt ();
 }

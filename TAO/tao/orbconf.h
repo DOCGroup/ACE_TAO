@@ -853,10 +853,6 @@ enum TAO_Policy_Scope
 # endif
 #endif
 
-#if !defined (TAO_HAS_SEQUENCE_ITERATORS)
-#  define TAO_HAS_SEQUENCE_ITERATORS 0
-#endif
-
 #if !defined (TAO_DEFAULT_COLLOCATION_STRATEGY)
 # define TAO_DEFAULT_COLLOCATION_STRATEGY TAO_COLLOCATION_THRU_POA
 #endif

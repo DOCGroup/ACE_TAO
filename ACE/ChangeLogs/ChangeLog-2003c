@@ -642,7 +642,7 @@ Wed Jan  7 18:37:13 UTC 2004  Johnny Willemsen  <jwillemsen@remedy.nl>
         * ace/Makefile.bor:
           Added special rule to install the os_include directory and its
           subdirectories. Thanks to Chris Kohlhoff for coming up with the
-          solution and to Cyrille Chépélov <cyrille@softek.fr> for reporting
+          solution and to Cyrille Chï¿½pï¿½lov <cyrille@softek.fr> for reporting
           this. This fixes [BUGID 1669].
 
 Wed Jan  7 12:13:12 2004  Chad Elliott  <elliott_c@ociweb.com>
@@ -2277,7 +2277,7 @@ Fri Dec 19 22:34:42 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for [BUGID 1688]. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1688
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1688
 
           for more details. Thanks to Gary Maxey <gary.maxey@hp.com> for
           the patch.
@@ -8467,7 +8467,7 @@ Sun Oct 12 17:20:40 2003  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
         * ace/Select_Reactor_Base.cpp: Fix for [BUG 1268]. Please refer to
           bugzilla database at
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1268
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1268
 
           for more details on the source of the problem and the solution
           for the same. Thanks to Carlos O'Ryan for providing patches.
@@ -8542,7 +8542,7 @@ Sat Oct 11 17:39:09 2003  Venkita Subramonian  <venkita@cs.wustl.edu>
           <sbetterm@erggroup.com> for reporting the problem and suggesting
           a solution.  Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1605
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1605
 
           for a description of the problem.
 
@@ -11887,7 +11887,7 @@ Fri Jul 18 17:58:12 UTC 2003  Johnny Willemsen  <jwillemsen@remedy.nl>
 
 Fri Jul 18 10:36:51 2003  Krishnakumar B  <kitty@nospam.invalid.domain>
 
-        * THANKS: Added Dieter Knüppel <dknueppel@datus.com> to the
+        * THANKS: Added Dieter Knï¿½ppel <dknueppel@datus.com> to the
           contributors list.
 
 Thu Jul 17 15:02:56 UTC 2003  Don Hinton  <dhinton@dresystems.com>

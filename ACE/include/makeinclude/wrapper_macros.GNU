@@ -82,6 +82,8 @@
 #                   the version will be appended to the name but *before* the
 #                   $(SOEXT) - it should have a lead '-' - else it defaults to
 #                   -ACE_MAJOR.ACE_MINOR.ACE_MICRO.
+#                   If versioned_so is 3, then set the SONAME, but without a
+#                   version.
 #  wfmo             Build with wfmo support (Win32 only)
 #  winregistry      Build with windows registry support (Win32 only)
 #  winnt            Build WinNT-specific projects (Win32 only)
@@ -315,7 +317,7 @@ endif # ! COMPSPEC
 
 ifdef COMSPEC
   #### Assume we're on a WIN32 host.
-  ACE_NUL = nul
+  ACE_NUL = $(if $(findstring /bin/sh,$(SHELL)),/dev/null,nul)
 else  # ! WIN32
   ACE_NUL = /dev/null
 endif # ! WIN32
@@ -703,6 +705,12 @@ zlib ?= 1
 valgrind ?=
 ifeq ($(valgrind),1)
   CPPFLAGS += -DACE_HAS_VALGRIND
+  # Does the valgrind version support --keep-debug-info, if not
+  # we disable dlclose in ACE to get complete callstacks
+  valgrind_keep_debuginfo ?=
+  ifeq ($(valgrind_keep_debuginfo),0)
+    CPPFLAGS += -DACE_LACKS_DLCLOSE
+  endif
 endif
 
 profile ?=

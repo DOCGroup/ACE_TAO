@@ -38,7 +38,7 @@ class ACE_Obstack_T
 public:
   ACE_Obstack_T (size_t size = (4096 * sizeof (ACE_CHAR_T)) - sizeof (ACE_Obchunk),
                  ACE_Allocator *allocator_strategy = 0);
-  ~ACE_Obstack_T (void);
+  ~ACE_Obstack_T ();
 
   /// Request Obstack to prepare a block at least @a len long for building
   /// a new string.  Return -1 if fail, 0 if success.
@@ -59,7 +59,7 @@ public:
   /// Freeze the current building block by null terminating it.
   /// Return the starting address of the current building block, 0
   /// if error occurs.
-  ACE_CHAR_T *freeze (void);
+  ACE_CHAR_T *freeze ();
 
   /// Copy the data into the current Obchunk and freeze the current
   /// block.  Return the starting address of the current building
@@ -69,28 +69,28 @@ public:
               size_t len);
 
   /// Return the maximum @a size
-  size_t size (void) const;
+  size_t size () const;
 
   /// "Unwind" the stack. If @a obj is a null pointer, everything allocated
   /// in the stack is released. Otherwise, @a obj must be an address of an
   /// object allocated in the stack. In this case, @a obj is released along
-  /// with everthing allocated in the Obstack since @a obj.
+  /// with everything allocated in the Obstack since @a obj.
   void unwind (void *obj);
 
   /// "Release" the entire stack of Obchunks, putting it back on the free
   /// list.
-  void release (void);
+  void release ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  class ACE_Obchunk *new_chunk (void);
+  class ACE_Obchunk *new_chunk ();
 
-  /// Search through the list of Obchunks and release them. Helper funtion
+  /// Search through the list of Obchunks and release them. Helper function
   /// used by unwind.
   void unwind_i (void *obj);
 

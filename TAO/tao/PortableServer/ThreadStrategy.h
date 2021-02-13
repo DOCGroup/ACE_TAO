@@ -37,7 +37,7 @@ namespace TAO
 
       virtual void strategy_init (TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
       virtual ::PortableServer::ThreadPolicyValue type() const = 0;
     };

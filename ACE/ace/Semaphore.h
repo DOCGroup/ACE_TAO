@@ -42,18 +42,18 @@ public:
                  int max = 0x7fffffff);
 
   /// Implicitly destroy the semaphore.
-  ~ACE_Semaphore (void);
+  ~ACE_Semaphore ();
 
   /**
    * Explicitly destroy the semaphore.  Note that only one thread
    * should call this method since it doesn't protect against race
    * conditions.
    */
-  int remove (void);
+  int remove ();
 
   /// Block the thread until the semaphore count becomes
   /// greater than 0, then decrement it.
-  int acquire (void);
+  int acquire ();
 
   /**
    * Block the thread until the semaphore count becomes greater than 0
@@ -95,11 +95,11 @@ public:
    * because someone else already had the lock, @c errno is set to
    * @c EBUSY.
    */
-  int tryacquire (void);
+  int tryacquire ();
 
   /// Increment the semaphore by 1, potentially unblocking a waiting
   /// thread.
-  int release (void);
+  int release ();
 
   /// Increment the semaphore by @a release_count, potentially
   /// unblocking waiting threads.
@@ -110,14 +110,14 @@ public:
    * here to make the ACE_Semaphore interface consistent with the
    * other synchronization APIs.
    */
-  int acquire_read (void);
+  int acquire_read ();
 
   /**
    * Acquire semaphore ownership.  This calls <acquire> and is only
    * here to make the ACE_Semaphore interface consistent with the
    * other synchronization APIs.
    */
-  int acquire_write (void);
+  int acquire_write ();
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
@@ -126,7 +126,7 @@ public:
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
    */
-  int tryacquire_read (void);
+  int tryacquire_read ();
 
   /**
    * Conditionally acquire semaphore (i.e., won't block).  This calls
@@ -135,7 +135,7 @@ public:
    * Returns -1 on failure.  If we "failed" because someone else
    * already had the lock, @c errno is set to @c EBUSY.
    */
-  int tryacquire_write (void);
+  int tryacquire_write ();
 
   /**
    * This is only here to make the ACE_Semaphore
@@ -143,16 +143,16 @@ public:
    * Assumes the caller has already acquired the semaphore using one of
    * the above calls, and returns 0 (success) always.
    */
-  int tryacquire_write_upgrade (void);
+  int tryacquire_write_upgrade ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Return the underlying lock.
-  const ACE_sema_t &lock (void) const;
+  const ACE_sema_t &lock () const;
 
 protected:
   ACE_sema_t semaphore_;

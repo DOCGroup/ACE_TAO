@@ -48,7 +48,7 @@ public:
   TAO_Policy_Set (const TAO_Policy_Set &rhs);
 
   /// Destructor
-  ~TAO_Policy_Set (void);
+  ~TAO_Policy_Set ();
 
   /// Copy the state from @a source, it uses the copy() operator to
   /// obtain independent copies of all the policies.
@@ -93,14 +93,14 @@ public:
   /// @c CORBA::Policy::_nil () is returned if the policy doesn't
   /// exist.
   CORBA::Policy *get_policy_by_index (CORBA::ULong index) const;
-  CORBA::ULong num_policies (void) const;
+  CORBA::ULong num_policies () const;
 
 private:
   TAO_Policy_Set & operator= (const TAO_Policy_Set&);
 
   /// Remove and destroy all the policy objects owned by this policy
   /// manager.
-  void cleanup_i (void);
+  void cleanup_i ();
 
   /// Utility method to determine if a policy's scope is compatible with ours.
   CORBA::Boolean compatible_scope (TAO_Policy_Scope policy_scope) const;

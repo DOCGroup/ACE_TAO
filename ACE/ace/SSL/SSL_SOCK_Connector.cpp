@@ -28,6 +28,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                      const ACE_Time_Value *timeout)
 {
   SSL *ssl = new_stream.ssl ();
+  if (ssl == 0)
+    return -1;
 
   if (SSL_is_init_finished (ssl))
     return 0;

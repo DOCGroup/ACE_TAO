@@ -28,7 +28,7 @@ public:
   be_visitor_enum_cs (be_visitor_context *ctx);
 
   /// deenumor
-  ~be_visitor_enum_cs (void);
+  ~be_visitor_enum_cs ();
 
   /// visit enum and generate the typecode
   virtual int visit_enum (be_enum *node);

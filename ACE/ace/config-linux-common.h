@@ -45,6 +45,10 @@
 #  define ACE_HAS_GLIBC_2_2_3
 #endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 3) */
 
+#if (__GLIBC__  > 2)  || (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 30)
+#  define ACE_LACKS_SYS_SYSCTL_H
+#endif /* __GLIBC__ > 2 || __GLIBC__ === 2 && __GLIBC_MINOR__ >= 30) */
+
 #if defined (__INTEL_COMPILER)
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
@@ -56,8 +60,6 @@
 #  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
-#  define ACE_HAS_CPLUSPLUS_HEADERS
-#  define ACE_HAS_STDCPP_STL_INCLUDES
 #  define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #  define ACE_LACKS_SWAB
@@ -96,8 +98,6 @@
 #define ACE_LACKS_ISWASCII
 
 #define ACE_HAS_3_PARAM_WCSTOK
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #define ACE_HAS_ALLOCA
 
@@ -182,7 +182,7 @@
 #  define ACE_HAS_STRBUF_T
 #endif
 
-#if defined (__ia64) || defined(__alpha) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
+#if defined (__ia64) || defined (__x86_64__) || defined(__powerpc64__) || (defined(__mips__) && defined(__LP64__)) || defined (__aarch64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.
 #  define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%lu"
@@ -252,4 +252,4 @@
 #  define ACE_HAS_GETTID // See ACE_OS::thr_gettid()
 #endif
 
-#endif
+#endif /* ACE_CONFIG_LINUX_COMMON_H */

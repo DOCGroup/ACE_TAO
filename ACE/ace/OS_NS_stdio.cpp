@@ -53,7 +53,7 @@ namespace ACE_OS
 {
 
 void
-ace_flock_t::dump (void) const
+ace_flock_t::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_OS_TRACE ("ACE_OS::ace_flock_t::dump");

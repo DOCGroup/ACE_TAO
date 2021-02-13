@@ -40,10 +40,10 @@ class TAO_Export TAO_Cleanup_Func_Registry
 
 public:
   /// Constructor.
-  TAO_Cleanup_Func_Registry (void);
+  TAO_Cleanup_Func_Registry ();
 
   /// Return the number of registered cleanup functions.
-  size_t size (void) const;
+  size_t size () const;
 
 protected:
   /// Register a cleanup function.  The number of slot the cleanup

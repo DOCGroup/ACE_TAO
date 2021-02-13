@@ -41,20 +41,6 @@ static const ACE_UINT32 ACE_U_ONE_SECOND_IN_MSECS = 1000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_USECS = 1000000U;
 static const ACE_UINT32 ACE_U_ONE_SECOND_IN_NSECS = 1000000000U;
 
-#if defined (ACE_LACKS_STRUCT_TM)
-struct tm {
-  int tm_sec;
-  int tm_min;
-  int tm_hour;
-  int tm_mday;      // Day of the month
-  int tm_mon;
-  int tm_year;
-  int tm_wday;      // Day of the week
-  int tm_yday;      // Day in the year
-  int tm_isdst;     // >0 if dst in effet; 0 if not; <0 if unknown
-};
-#endif /* ACE_LACKS_STRUCT_TM */
-
 /// Helper for the ACE_OS::timezone() function
 /**
  * We put all the timezone stuff that used to be in ACE_OS::timezone()
@@ -307,11 +293,11 @@ namespace ACE_OS
   time_t time (time_t *tloc = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  long timezone (void);
+  long timezone ();
 
   // wrapper for time zone information.
   ACE_NAMESPACE_INLINE_FUNCTION
-  void tzset (void);
+  void tzset ();
 
   //@}
 } /* namespace ACE_OS */

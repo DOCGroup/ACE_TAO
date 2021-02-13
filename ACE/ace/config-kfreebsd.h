@@ -11,9 +11,6 @@
 /* Uses ctime_r & asctime_r with only two parameters vs. three. */
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R 1
 
-/* Define to 1 if platform has 3 parameter readdir_r() */
-#define ACE_HAS_3_PARAM_READDIR_R 1
-
 /* Define to 1 if platform has 3 parameter wcstok() */
 #define ACE_HAS_3_PARAM_WCSTOK 1
 
@@ -60,9 +57,6 @@
    etc. */
 #define ACE_HAS_DIRENT 1
 
-/* Compiler supports C++ exception handling. */
-#define ACE_HAS_EXCEPTIONS 1
-
 /* Define to 1 if platform has getifaddrs(). */
 #define ACE_HAS_GETIFADDRS 1
 
@@ -90,17 +84,6 @@
 #define ACE_HAS_ICMP_SUPPORT 1
 
 /* Define to 1 if the system has the type `int16_t'. */
-#define ACE_HAS_INT16_T 1
-
-/* Define to 1 if the system has the type `int32_t'. */
-#define ACE_HAS_INT32_T 1
-
-/* Define to 1 if the system has the type `int64_t'. */
-#define ACE_HAS_INT64_T 1
-
-/* Define to 1 if the system has the type `int8_t'. */
-#define ACE_HAS_INT8_T 1
-
 /* Platform supports IPv6 */
 #define ACE_HAS_IPV6 1
 
@@ -116,10 +99,6 @@
 
 /* Define to 1 if platform has memchr(). */
 #define ACE_HAS_MEMCHR 1
-
-/* Define to 1 if unrolled ACE_OS::fast_memcpy() is faster than system
-   memcpy() */
-#define ACE_HAS_MEMCPY_LOOP_UNROLL 1
 
 /* Define to 1 if platform has mkdir(). */
 #define ACE_HAS_MKDIR 1
@@ -332,18 +311,6 @@
 /* Define to 1 if the system has the type `ucontext_t'. */
 #define ACE_HAS_UCONTEXT_T 1
 
-/* Define to 1 if the system has the type `uint16_t'. */
-#define ACE_HAS_UINT16_T 1
-
-/* Define to 1 if the system has the type `uint32_t'. */
-#define ACE_HAS_UINT32_T 1
-
-/* Define to 1 if the system has the type `uint64_t'. */
-#define ACE_HAS_UINT64_T 1
-
-/* Define to 1 if the system has the type `uint8_t'. */
-#define ACE_HAS_UINT8_T 1
-
 /* Define to 1 if platform has vasprintf(). */
 #define ACE_HAS_VASPRINTF 1
 
@@ -371,9 +338,6 @@
 
 /* Platform has Xt Intrinsics Toolkit */
 #define ACE_HAS_XT 1
-
-/* Define to signed 64 bit integer type */
-#define ACE_INT64_TYPE signed long long
 
 /* Define to the type of arg 2 for `ioctl'. */
 #define ACE_IOCTL_TYPE_ARG2 int
@@ -436,162 +400,12 @@
 /* Compile using multi-thread libraries */
 #define ACE_MT_SAFE 1
 
-/* Size of the native "double" type */
-#define ACE_SIZEOF_DOUBLE 8
-
-/* Size of the native "float" type */
-#define ACE_SIZEOF_FLOAT 4
-
-/* Size of the native "int" type */
-#define ACE_SIZEOF_INT 4
-
-/* Size of the native "long" type */
-#define ACE_SIZEOF_LONG 4
-
-/* Size of the native "long double" type */
-#define ACE_SIZEOF_LONG_DOUBLE 12
-
-/* Size of the native "long long" type */
-#define ACE_SIZEOF_LONG_LONG 8
-
-/* Size of the native "short" type */
-#define ACE_SIZEOF_SHORT 2
-
-/* Size of the native "pointer to void" type */
-#define ACE_SIZEOF_VOID_P 4
-
-/* Size of the native "wchar_t" type */
-#define ACE_SIZEOF_WCHAR 4
-
-/* Define to unsigned 64 bit integer type */
-#define ACE_UINT64_TYPE unsigned long long
-
 /* Enable IPv6 support on platforms that don't have IPv6 turned on by default
    */
 #define ACE_USES_IPV4_IPV6_MIGRATION 1
 
 /* Platform has its standard C++ library in the namespace std. */
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-
-/* Define to 1 if you have the <dirent.h> header file, and it defines `DIR'.
-   */
-#define HAVE_DIRENT_H 1
-
-/* Define to 1 if you have the <dlfcn.h> header file. */
-#define HAVE_DLFCN_H 1
-
-/* Define to 1 if you have the <fstream> header file. */
-#define HAVE_FSTREAM 1
-
-/* Define to 1 if you have the <inttypes.h> header file. */
-#define HAVE_INTTYPES_H 1
-
-/* Define to 1 if you have the <iomanip> header file. */
-#define HAVE_IOMANIP 1
-
-/* Define to 1 if you have the <ios> header file. */
-#define HAVE_IOS 1
-
-/* Define to 1 if you have the <iostream> header file. */
-#define HAVE_IOSTREAM 1
-
-/* Define to 1 if you have the <iostream.h> header file. */
-/* #undef HAVE_IOSTREAM_H */
-
-/* Define to 1 if you have the <istream> header file. */
-#define HAVE_ISTREAM 1
-
-/* Define to 1 if you have the <memory.h> header file. */
-#define HAVE_MEMORY_H 1
-
-/* Define to 1 if you have the <ostream> header file. */
-#define HAVE_OSTREAM 1
-
-/* Define to 1 if you have the <stdint.h> header file. */
-#define HAVE_STDINT_H 1
-
-/* Define to 1 if you have the <stdlib.h> header file. */
-#define HAVE_STDLIB_H 1
-
-/* Define to 1 if you have the <streambuf> header file. */
-#define HAVE_STREAMBUF 1
-
-/* Define to 1 if you have the `strftime' function. */
-#define HAVE_STRFTIME 1
-
-/* Define to 1 if you have the <strings.h> header file. */
-#define HAVE_STRINGS_H 1
-
-/* Define to 1 if you have the <string.h> header file. */
-#define HAVE_STRING_H 1
-
-/* Define to 1 if you have the <sys/stat.h> header file. */
-#define HAVE_SYS_STAT_H 1
-
-/* Define to 1 if you have the <sys/types.h> header file. */
-#define HAVE_SYS_TYPES_H 1
-
-/* Define to 1 if you have <sys/wait.h> that is POSIX.1 compatible. */
-#define HAVE_SYS_WAIT_H 1
-
-/* Define to 1 if you have the <unistd.h> header file. */
-#define HAVE_UNISTD_H 1
-
-/* Define to the sub-directory in which libtool stores uninstalled libraries.
-   */
-#define LT_OBJDIR ".libs/"
-
-/* Define to the address where bug reports for this package should be sent. */
-#define PACKAGE_BUGREPORT "ace-bugs@list.isis.vanderbilt.edu"
-
-/* Define to the full name of this package. */
-#define PACKAGE_NAME "ACE"
-
-/* Define to the full name and version of this package. */
-#define PACKAGE_STRING "ACE 5.6.3"
-
-/* Define to the one symbol short name of this package. */
-#define PACKAGE_TARNAME "ace"
-
-/* Define to the home page for this package. */
-#define PACKAGE_URL ""
-
-/* Define to the version of this package. */
-#define PACKAGE_VERSION "5.6.3"
-
-/* The size of `double', as computed by sizeof. */
-#define SIZEOF_DOUBLE 8
-
-/* The size of `float', as computed by sizeof. */
-#define SIZEOF_FLOAT 4
-
-/* The size of `int', as computed by sizeof. */
-#define SIZEOF_INT 4
-
-/* The size of `long', as computed by sizeof. */
-#define SIZEOF_LONG 4
-
-/* The size of `long double', as computed by sizeof. */
-#define SIZEOF_LONG_DOUBLE 12
-
-/* The size of `long long', as computed by sizeof. */
-#define SIZEOF_LONG_LONG 8
-
-/* The size of `short', as computed by sizeof. */
-#define SIZEOF_SHORT 2
-
-/* The size of `signed char', as computed by sizeof. */
-#define SIZEOF_SIGNED_CHAR 1
-
-/* The size of `void *', as computed by sizeof. */
-#define SIZEOF_VOID_P 4
-
-/* The size of `wchar_t', as computed by sizeof. */
-#define SIZEOF_WCHAR_T 4
-
-/* Define to 1 if you have the ANSI C header files. */
-#define STDC_HEADERS 1
-
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

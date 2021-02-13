@@ -22,11 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
-#if defined (ACE_HAS_CPP11)
-# include <atomic>
-#else
-# include "ace/Atomic_Op.h"
-#endif /* ACE_HAS_CPP11 */
+#include <atomic>
 
 class LiveCheck;
 class LiveEntry;
@@ -96,11 +92,7 @@ class Locator_Export LiveListener
   ACE_CString server_;
 
  private:
-#if defined (ACE_HAS_CPP11)
   std::atomic<int> refcount_;
-#else
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX, int> refcount_;
-#endif /* ACE_HAS_CPP11 */
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<LiveListener> LiveListener_ptr;

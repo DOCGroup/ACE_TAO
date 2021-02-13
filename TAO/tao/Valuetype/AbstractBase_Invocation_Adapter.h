@@ -58,11 +58,10 @@ namespace TAO
     // Don't allow default initializations
     AbstractBase_Invocation_Adapter (void);
 
-    // Disallow copying and assignment.
-    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &);
-    AbstractBase_Invocation_Adapter & operator= (
-        const AbstractBase_Invocation_Adapter &);
-
+    AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
+    AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;
+    AbstractBase_Invocation_Adapter & operator= (AbstractBase_Invocation_Adapter &&) = delete;
   };
 } // End namespace TAO
 

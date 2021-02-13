@@ -56,7 +56,7 @@ TAO_UIPMC_Mcast_Connection_Handler::TAO_UIPMC_Mcast_Connection_Handler (
   this->transport (specific_transport);
 }
 
-TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler (void)
+TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler ()
 {
   delete this->transport ();
   int const result =
@@ -72,7 +72,7 @@ TAO_UIPMC_Mcast_Connection_Handler::~TAO_UIPMC_Mcast_Connection_Handler (void)
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Mcast_Connection_Handler::addr (void) const
+TAO_UIPMC_Mcast_Connection_Handler::addr () const
 {
   return this->addr_;
 }
@@ -84,7 +84,7 @@ TAO_UIPMC_Mcast_Connection_Handler::addr (const ACE_INET_Addr &addr)
 }
 
 const ACE_INET_Addr &
-TAO_UIPMC_Mcast_Connection_Handler::local_addr (void) const
+TAO_UIPMC_Mcast_Connection_Handler::local_addr () const
 {
   return this->local_addr_;
 }
@@ -239,13 +239,13 @@ TAO_UIPMC_Mcast_Connection_Handler::open (void *)
 }
 
 int
-TAO_UIPMC_Mcast_Connection_Handler::resume_handler (void)
+TAO_UIPMC_Mcast_Connection_Handler::resume_handler ()
 {
   return ACE_Event_Handler::ACE_APPLICATION_RESUMES_HANDLER;
 }
 
 int
-TAO_UIPMC_Mcast_Connection_Handler::close_connection (void)
+TAO_UIPMC_Mcast_Connection_Handler::close_connection ()
 {
   return this->close_connection_eh (this);
 }
@@ -314,13 +314,13 @@ TAO_UIPMC_Mcast_Connection_Handler::close (u_long flags)
 }
 
 int
-TAO_UIPMC_Mcast_Connection_Handler::release_os_resources (void)
+TAO_UIPMC_Mcast_Connection_Handler::release_os_resources ()
 {
   return this->peer ().close ();
 }
 
 int
-TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache (void)
+TAO_UIPMC_Mcast_Connection_Handler::add_transport_to_cache ()
 {
   ACE_INET_Addr addr;
 

@@ -41,7 +41,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Supplier_Filter_Builder
 {
 public:
   /// Destructor...
-  virtual ~TAO_EC_Supplier_Filter_Builder (void);
+  virtual ~TAO_EC_Supplier_Filter_Builder ();
 
   /**
    * Create the filter. The consumer is bound to the returned

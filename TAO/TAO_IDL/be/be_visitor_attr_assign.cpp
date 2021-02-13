@@ -18,12 +18,12 @@
 be_visitor_attr_assign::be_visitor_attr_assign  (
       be_visitor_context *ctx)
   : be_visitor_decl (ctx),
-    attr_name_ (0),
+    attr_name_ (nullptr),
     attr_name_string_ ("this->")
 {
 }
 
-be_visitor_attr_assign::~be_visitor_attr_assign (void)
+be_visitor_attr_assign::~be_visitor_attr_assign ()
 {
 }
 
@@ -110,7 +110,7 @@ be_visitor_attr_assign::visit_sequence (be_sequence *)
 {
   be_type *bt = this->ctx_->alias ();
 
-  if (bt == 0)
+  if (bt == nullptr)
     {
       /// Support anonymous types?
       return -1;
@@ -167,7 +167,7 @@ be_visitor_attr_assign::visit_typedef (be_typedef *node)
                         -1);
     }
 
-  this->ctx_->alias (0);
+  this->ctx_->alias (nullptr);
   return 0;
 }
 

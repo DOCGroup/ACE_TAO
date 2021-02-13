@@ -46,53 +46,53 @@ public:
 
   /// Constructor. Since no lock is provided by the user, one will be
   /// created internally.
-  ACE_Lock_Adapter (void);
+  ACE_Lock_Adapter ();
 
   /// Destructor. If @c lock_ was not passed in by the user, it will be
   /// deleted.
-  virtual ~ACE_Lock_Adapter (void);
+  virtual ~ACE_Lock_Adapter ();
 
   // = Lock accessors.
   /// Block the thread until the lock is acquired.
-  virtual int acquire (void);
+  virtual int acquire ();
 
   /// Conditionally acquire the lock (i.e., won't block).
-  virtual int tryacquire (void);
+  virtual int tryacquire ();
 
   /// Release the lock.
-  virtual int release (void);
+  virtual int release ();
 
   /**
    * Block until the thread acquires a read lock.  If the locking
    * mechanism doesn't support read locks then this just calls
    * acquire().
    */
-  virtual int acquire_read (void);
+  virtual int acquire_read ();
 
   /**
    * Block until the thread acquires a write lock.  If the locking
    * mechanism doesn't support read locks then this just calls
    * acquire().
    */
-  virtual int acquire_write (void);
+  virtual int acquire_write ();
 
   /// Conditionally acquire a read lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
-  virtual int tryacquire_read (void);
+  virtual int tryacquire_read ();
 
   /// Conditionally acquire a write lock.  If the locking mechanism
   /// doesn't support read locks then this just calls acquire().
-  virtual int tryacquire_write (void);
+  virtual int tryacquire_write ();
 
   /**
    * Conditionally try to upgrade a lock held for read to a write lock.
    * If the locking mechanism doesn't support read locks then this just
    * calls acquire(). Returns 0 on success, -1 on failure.
    */
-  virtual int tryacquire_write_upgrade (void);
+  virtual int tryacquire_write_upgrade ();
 
   /// Explicitly destroy the lock.
-  virtual int remove (void);
+  virtual int remove ();
 
 private:
   /// The concrete locking mechanism that all the methods delegate to.

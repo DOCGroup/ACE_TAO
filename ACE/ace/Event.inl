@@ -3,7 +3,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TIME_POLICY>
 ACE_Time_Value_T<TIME_POLICY>
-ACE_Event_T<TIME_POLICY>::gettimeofday (void) const
+ACE_Event_T<TIME_POLICY>::gettimeofday () const
 {
   return this->time_policy_ ();
 }

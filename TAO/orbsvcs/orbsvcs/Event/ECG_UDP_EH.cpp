@@ -17,7 +17,7 @@ TAO_ECG_UDP_EH::TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv)
   ACE_ASSERT (this->receiver_);
 }
 
-TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH (void)
+TAO_ECG_UDP_EH::~TAO_ECG_UDP_EH ()
 {
 }
 
@@ -50,7 +50,7 @@ TAO_ECG_UDP_EH::open (const ACE_INET_Addr& ipaddr,
 }
 
 int
-TAO_ECG_UDP_EH::shutdown (void)
+TAO_ECG_UDP_EH::shutdown ()
 {
   // Already shut down.
   if (!this->receiver_)
@@ -72,7 +72,7 @@ TAO_ECG_UDP_EH::shutdown (void)
     ORBSVCS_ERROR ((LM_ERROR,
                 "Unable to close receiving dgram on shutdown.\n"));
 
-  this->receiver_ = 0;
+  this->receiver_ = nullptr;
 
   return result;
 }

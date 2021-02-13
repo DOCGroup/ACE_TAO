@@ -20,7 +20,7 @@ be_visitor_valuetype_sh::be_visitor_valuetype_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_sh::~be_visitor_valuetype_sh (void)
+be_visitor_valuetype_sh::~be_visitor_valuetype_sh ()
 {
 }
 
@@ -36,7 +36,7 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
 
   // We generate a skeleton class only if the valuetype supports a
   // non-abstract interface.
-  if (concrete == 0)
+  if (concrete == nullptr)
     {
       return 0;
     }
@@ -90,10 +90,10 @@ be_visitor_valuetype_sh::visit_valuetype (be_valuetype *node)
   *os << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "protected:" << be_idt_nl
-      << class_name.c_str () << " (void);" << be_uidt_nl << be_nl
+      << class_name.c_str () << " ();" << be_uidt_nl << be_nl
       << "public:" << be_idt_nl;
 
-  *os << "virtual ~" << class_name.c_str () << " (void);" << be_nl << be_uidt_nl;
+  *os << "virtual ~" << class_name.c_str () << " ();" << be_nl << be_uidt_nl;
 
   // No copy constructor for locality constraint interface.
   *os << "private:" << be_idt_nl

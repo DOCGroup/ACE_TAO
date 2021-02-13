@@ -20,7 +20,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RequestInterceptor_Adapter_Impl::~TAO_RequestInterceptor_Adapter_Impl (void)
+TAO_RequestInterceptor_Adapter_Impl::~TAO_RequestInterceptor_Adapter_Impl ()
 {
 }
 

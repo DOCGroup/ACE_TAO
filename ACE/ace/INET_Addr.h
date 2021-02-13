@@ -37,7 +37,7 @@ class ACE_Export ACE_INET_Addr : public ACE_Addr
 {
 public:
   /// Default constructor.
-  ACE_INET_Addr (void);
+  ACE_INET_Addr ();
 
   /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
@@ -109,7 +109,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  ~ACE_INET_Addr (void);
+  ~ACE_INET_Addr ();
 
   // = Direct initialization methods.
 
@@ -210,8 +210,8 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr (void) const;
-  int get_addr_size(void) const;
+  virtual void *get_addr () const;
+  int get_addr_size() const;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len);
@@ -284,7 +284,7 @@ public:
 #endif /* (ACE_LINUX || ACE_WIN32) && ACE_HAS_IPV6 */
 
   /// Return the port number, converting it into host byte-order.
-  u_short get_port_number (void) const;
+  u_short get_port_number () const;
 
   /**
    * Return the character representation of the name of the host,
@@ -309,7 +309,7 @@ public:
    * (2) use the "reentrant" version of get_host_name() described
    * above.
    */
-  const char *get_host_name (void) const;
+  const char *get_host_name () const;
 
   /**
    * Return the "dotted decimal" Internet address representation of
@@ -326,20 +326,20 @@ public:
    * using strdup() or (2) use the "reentrant" version of
    * get_host_addr() described above.
    */
-  const char *get_host_addr (void) const;
+  const char *get_host_addr () const;
 
   /// Return the 4-byte IP address, converting it into host byte
   /// order.
-  ACE_UINT32 get_ip_address (void) const;
+  ACE_UINT32 get_ip_address () const;
 
   /// Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
-  bool is_any (void) const;
+  bool is_any () const;
 
   /// Return @c true if the IP address is IPv4/IPv6 loopback address.
-  bool is_loopback (void) const;
+  bool is_loopback () const;
 
   /// Return @c true if the IP address is IPv4/IPv6 multicast address.
-  bool is_multicast (void) const;
+  bool is_multicast () const;
 
 #if defined (ACE_HAS_IPV6)
   /// Return @c true if the IP address is IPv6 linklocal address.
@@ -375,17 +375,17 @@ public:
   bool is_ip_equal (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// If there is another address to examine, move to it and return true;
   /// else return false.
-  bool next (void);
+  bool next ();
 
   /// Reset the set of address so they can be scanned again using next().
-  void reset (void);
+  void reset ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -396,12 +396,12 @@ private:
 
   // Methods to gain access to the actual address of
   // the underlying internet address structure.
-  void *ip_addr_pointer (void) const;
-  int ip_addr_size (void) const;
-  int determine_type (void) const;
+  void *ip_addr_pointer () const;
+  int ip_addr_size () const;
+  int determine_type () const;
 
   /// Initialize underlying inet_addr_ to default values
-  void reset_i (void);
+  void reset_i ();
 
   /// Underlying representation.
   /// This union uses the knowledge that the two structures share the

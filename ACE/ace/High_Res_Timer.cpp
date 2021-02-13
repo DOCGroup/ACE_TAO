@@ -30,7 +30,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // ACE_OS::gethrtime.  We'll still set this to one to prevent division
 // by zero errors.
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
-     defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
+     defined (ACE_HAS_PENTIUM)) && \
     !defined (ACE_HAS_HI_RES_TIMER)
 
 # include "ace/Guard_T.h"
@@ -48,7 +48,7 @@ ACE_High_Res_Timer::global_scale_factor_type ACE_High_Res_Timer::global_scale_fa
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #else  /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-             ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
+             ACE_HAS_PENTIUM) ||
           ACE_HAS_HI_RES_TIMER */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -60,7 +60,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ! (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-             ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER)  ||
+             ACE_HAS_PENTIUM)  ||
           ACE_HAS_HI_RES_TIMER */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -73,7 +73,7 @@ int ACE_High_Res_Timer::global_scale_factor_status_ = 0;
 #if defined (ACE_LINUX) && !defined (ACE_LACKS_SSCANF)
 // Determine the apparent CPU clock speed from /proc/cpuinfo
 ACE_UINT32
-ACE_High_Res_Timer::get_cpuinfo (void)
+ACE_High_Res_Timer::get_cpuinfo ()
 {
   ACE_UINT32 scale_factor = 1u;
 
@@ -82,9 +82,7 @@ ACE_High_Res_Timer::get_cpuinfo (void)
   // the BogoMips, as described in the BogoMips mini-HOWTO.  Note that
   // this code assumes an order to the /proc/cpuinfo contents.  The
   // BogoMips rating had better come after CPU type and model info.
-#if !defined (__alpha__)
   bool supported = false;
-#endif /* __alpha__ */
 
   FILE *cpuinfo = ACE_OS::fopen (ACE_TEXT ("/proc/cpuinfo"),
                                  ACE_TEXT ("r"));
@@ -97,22 +95,6 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 
       while (ACE_OS::fgets (buf, sizeof buf, cpuinfo))
         {
-#if defined (__alpha__)
-          ACE_UINT32 whole;
-          ACE_UINT32 fractional;
-          if (::sscanf (buf,
-                        "BogoMIPS : %d.%d\n",
-                        &whole,
-                        &fractional) == 2
-              || ::sscanf (buf,
-                           "bogomips : %d.%d\n",
-                           &whole,
-                           &fractional) == 2)
-            {
-              scale_factor = whole;
-              break;
-            }
-#else
           double mhertz = 1;
           double bmips = 1;
           char arg[128];
@@ -173,7 +155,6 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 #endif /* 0 */
               break;
             }
-#endif /* __alpha__ */
         }
 
       // ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT (" (done)\n")));
@@ -186,10 +167,10 @@ ACE_High_Res_Timer::get_cpuinfo (void)
 #endif /* ACE_LINUX && !ACE_LACKS_SSCANF*/
 
 ACE_High_Res_Timer::global_scale_factor_type
-ACE_High_Res_Timer::global_scale_factor (void)
+ACE_High_Res_Timer::global_scale_factor ()
 {
 #if (defined (ACE_WIN32) || defined (ACE_HAS_POWERPC_TIMER) || \
-     defined (ACE_HAS_PENTIUM) || defined (ACE_HAS_ALPHA_TIMER)) && \
+     defined (ACE_HAS_PENTIUM)) && \
     !defined (ACE_HAS_HI_RES_TIMER) && \
     (defined (ACE_WIN32) || \
      defined (ghs) || defined (__GNUG__) || \
@@ -226,7 +207,7 @@ ACE_High_Res_Timer::global_scale_factor (void)
 #          else
           ACE_High_Res_Timer::global_scale_factor (ACE_High_Res_Timer::get_cpuinfo ());
 #          endif /* ACE_LACKS_SSCANF */
-#         endif /* ! ACE_WIN32 && ! (ACE_LINUX && __alpha__) */
+#         endif /* !ACE_WIN32 && !ACE_LINUX */
 
 #         if !defined (ACE_WIN32)
           if (ACE_High_Res_Timer::global_scale_factor_ <= 1u)
@@ -244,14 +225,14 @@ ACE_High_Res_Timer::global_scale_factor (void)
     }
 
 #endif /* (ACE_WIN32 || ACE_HAS_POWERPC_TIMER || \
-           ACE_HAS_PENTIUM || ACE_HAS_ALPHA_TIMER) && \
+           ACE_HAS_PENTIUM) && \
           ! ACE_HAS_HI_RES_TIMER &&
           ((WIN32 && ! WINCE) || ghs || __GNUG__) */
 
   return ACE_High_Res_Timer::global_scale_factor_;
 }
 
-ACE_High_Res_Timer::ACE_High_Res_Timer (void)
+ACE_High_Res_Timer::ACE_High_Res_Timer ()
 {
   ACE_TRACE ("ACE_High_Res_Timer::ACE_High_Res_Timer");
 
@@ -304,7 +285,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
 }
 
 void
-ACE_High_Res_Timer::dump (void) const
+ACE_High_Res_Timer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_High_Res_Timer::dump");
@@ -330,7 +311,7 @@ ACE_High_Res_Timer::dump (void) const
 }
 
 void
-ACE_High_Res_Timer::reset (void)
+ACE_High_Res_Timer::reset ()
 {
   ACE_TRACE ("ACE_High_Res_Timer::reset");
 

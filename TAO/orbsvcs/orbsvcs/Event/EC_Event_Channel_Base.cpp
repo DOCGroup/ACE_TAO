@@ -22,63 +22,63 @@ TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
     consumer_poa_ (PortableServer::POA::_duplicate (attr.consumer_poa)),
     factory_ (factory),
     own_factory_ (own_factory),
-    dispatching_ (0),
-    filter_builder_ (0),
-    supplier_filter_builder_ (0),
-    consumer_admin_ (0),
-    supplier_admin_ (0),
-    timeout_generator_ (0),
-    observer_strategy_ (0),
-    scheduling_strategy_(0),
+    dispatching_ (nullptr),
+    filter_builder_ (nullptr),
+    supplier_filter_builder_ (nullptr),
+    consumer_admin_ (nullptr),
+    supplier_admin_ (nullptr),
+    timeout_generator_ (nullptr),
+    observer_strategy_ (nullptr),
+    scheduling_strategy_(nullptr),
     consumer_reconnect_ (attr.consumer_reconnect),
     supplier_reconnect_ (attr.supplier_reconnect),
     disconnect_callbacks_ (attr.disconnect_callbacks),
-    consumer_control_ (0),
-    supplier_control_ (0),
+    consumer_control_ (nullptr),
+    supplier_control_ (nullptr),
     status_ (EC_S_IDLE)
 {
   this->scheduler_ =
     CORBA::Object::_duplicate (attr.scheduler);
 }
 
-TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base (void)
+TAO_EC_Event_Channel_Base::~TAO_EC_Event_Channel_Base ()
 {
   // Destroy Strategies in the reverse order of creation, they
   // reference to each other during destruction and thus need to be
   // cleaned up properly.
   this->factory_->destroy_supplier_control (this->supplier_control_);
-  this->supplier_control_ = 0;
+  this->supplier_control_ = nullptr;
   this->factory_->destroy_consumer_control (this->consumer_control_);
-  this->consumer_control_ = 0;
+  this->consumer_control_ = nullptr;
 
   this->factory_->destroy_scheduling_strategy (this->scheduling_strategy_);
-  this->scheduling_strategy_ = 0;
+  this->scheduling_strategy_ = nullptr;
 
   this->factory_->destroy_observer_strategy (this->observer_strategy_);
-  this->observer_strategy_ = 0;
+  this->observer_strategy_ = nullptr;
 
   this->factory_->destroy_timeout_generator (this->timeout_generator_);
-  this->timeout_generator_ = 0;
+  this->timeout_generator_ = nullptr;
 
   this->factory_->destroy_supplier_admin (this->supplier_admin_);
-  this->supplier_admin_ = 0;
+  this->supplier_admin_ = nullptr;
   this->factory_->destroy_consumer_admin (this->consumer_admin_);
-  this->consumer_admin_ = 0;
+  this->consumer_admin_ = nullptr;
 
   this->factory_->destroy_supplier_filter_builder (this->supplier_filter_builder_);
-  this->supplier_filter_builder_ = 0;
+  this->supplier_filter_builder_ = nullptr;
 
   this->factory_->destroy_filter_builder (this->filter_builder_);
-  this->filter_builder_ = 0;
+  this->filter_builder_ = nullptr;
 
   this->factory_->destroy_dispatching (this->dispatching_);
-  this->dispatching_ = 0;
+  this->dispatching_ = nullptr;
 
-  this->factory (0, this->own_factory_);
+  this->factory (nullptr, this->own_factory_);
 }
 
 void
-TAO_EC_Event_Channel_Base::create_strategies (void)
+TAO_EC_Event_Channel_Base::create_strategies ()
 {
   this->dispatching_ =
     this->factory_->create_dispatching (this);
@@ -105,7 +105,7 @@ TAO_EC_Event_Channel_Base::create_strategies (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::activate (void)
+TAO_EC_Event_Channel_Base::activate ()
 {
   {
     // First check if the EC is idle, if it is not then we need to
@@ -129,7 +129,7 @@ TAO_EC_Event_Channel_Base::activate (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::shutdown (void)
+TAO_EC_Event_Channel_Base::shutdown ()
 {
   {
     // First check if the EC is already active, if it is not then we
@@ -161,7 +161,7 @@ TAO_EC_Event_Channel_Base::shutdown (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_supplier_admin ()
 {
   try
     {
@@ -178,7 +178,7 @@ TAO_EC_Event_Channel_Base::deactivate_supplier_admin (void)
 }
 
 void
-TAO_EC_Event_Channel_Base::deactivate_consumer_admin (void)
+TAO_EC_Event_Channel_Base::deactivate_consumer_admin ()
 {
   try
     {
@@ -243,19 +243,19 @@ TAO_EC_Event_Channel_Base::disconnected (TAO_EC_ProxyPushSupplier* supplier)
 }
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_EC_Event_Channel_Base::for_consumers (void)
+TAO_EC_Event_Channel_Base::for_consumers ()
 {
   return this->consumer_admin_->_this ();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_EC_Event_Channel_Base::for_suppliers (void)
+TAO_EC_Event_Channel_Base::for_suppliers ()
 {
   return this->supplier_admin_->_this ();
 }
 
 void
-TAO_EC_Event_Channel_Base::destroy (void)
+TAO_EC_Event_Channel_Base::destroy ()
 {
   this->shutdown ();
 }

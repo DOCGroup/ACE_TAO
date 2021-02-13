@@ -1,3 +1,100 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.0 and ACE-7.0.1
+====================================================
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-7.0.0
+=====================================================
+
+. C++11 is now a mandatory compiler feature which is
+  required for ACE. Cleaned up part of the support for compilers
+  that lack C++11 support
+
+. When valgrind is enabled we don't disable dlclose anymore,
+  this reduces the amount of leaks reported related to dlclose.
+  When you unload your shared libraries before the end of your program
+  you can use `--keep-debuginfo=yes` as valgrind options as alternative
+  or you can disable dlclose yourself by adding
+  `#define ACE_LACKS_DLCLOSE` to your ace/config.h file
+
+. Removed `ACE_OS::readdir_r`. `readdir_r` was marked as depracated in glibc
+  and FreeBSD libc. Also removed `ACE_Dirent::read (ACE_DIRENT *, ACE_DIRENT **)`
+  which used it. `ACE_LACKS_READDIR_R` will now always be defined.
+
+. Modernized part of the code using clang-type, added override, use nullptr,
+  use unique_ptr, remove redundant void, use bool, simplify boolean expressions,
+  make use of std::atomic, use using
+
+. New Latest_ACE7TAO3_ branches which can be used to always checkout the
+  latest ACE7/TAO3 micro/minor release
+
+. Android Support:
+
+  . `gnuace` no longer supports Android NDKs before r18. This means only clang
+    is now supported when building for Android.
+
+  . Support for building with the Android NDK r19 or later directly instead of
+    having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
+    details. Using a standalone toolchain is still supported.
+
+  . Made it easier to use `gnuace`-built libraries in as imported libraries in
+    CMake-based Android Studio native projects.
+
+  . Removed support for old `ANDROID_ARCH` make variable. Replaced
+    `ANDROID_ABI` with `android_abi`, but kept the former as an alias of the
+    later for compatibility. Also will no longer default to 32-bit ARM, so
+    `android_abi` or `ANDROID_ABI` must be defined.
+
+  . As recommend by Google, building with neon support is now the default when
+    `android_abi` is `armeabi-v7a`. If support for these processors without
+    NEON extensions is needed, put `androind_neon := 0` in
+    `platform_macros.GNU`.
+
+  . As recommend by Google, `gnuace` will start using LLD, the LLVM linker,
+    instead of the default GNU linkers. If the NDK being used doesn't default
+    to LLD and you want to use the GNU linkers, put `androind_set_lld := 0` in
+    `platform_macros.GNU`.
+
+. Removed support for the Alpha CPU
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
+======================================================
+
+. Fixed some C++11 warnings
+
+. Fixed compile problem on AIX
+
+. Removed c++0x and c++1y as GNU make variables, use c++11 and c++14 as
+  alternatives
+
+. Moved all CI builds to github actions
+
+. Added ACE_GCC_NO_RETURN to fix fall through warnings
+
+. Fix ACE_Thread_Manager::join memory leak and potential deadlock
+
+USER VISIBLE CHANGES BETWEEN ACE-6.5.10 and ACE-6.5.11
+======================================================
+
+. Latest_{Major,Minor,Micro,Beta} tags have been replaced with
+  branches because tags are not intended to move where branches are
+
+. Removed emulated operations in ACE_OS which are not used anymore
+
+. Resolved some compile warnings when using C++11 or newer
+
+. Integrated debian packaging changes
+
+. Visual Studio 2015 solutions are not part of the release
+  packaging anymore. When you require these you need to generate
+  them locally using MPC
+
+. Improve multicast join by interface name on Windows
+
+. Fixed ACE_INT64_FORMAT_SPECIFIER (and similar) preprocessor macros
+  on macOS (Apple-clang) with -std=c++11 or higher
+
+. On Windows, use unnamed kernel objects (Events and Semaphores)
+  for thread-scoped reader-write mutexes in ACE_OS::rwlock_init
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.9 and ACE-6.5.10
 =====================================================
 

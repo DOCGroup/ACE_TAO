@@ -66,10 +66,10 @@ namespace TAO
   public:
 
     /// No-op reference increment.
-    void add_ref (void)  { }
+    void add_ref ()  { }
 
     /// No-op reference decrement.
-    void remove_ref (void) { }
+    void remove_ref () { }
 
   };
 

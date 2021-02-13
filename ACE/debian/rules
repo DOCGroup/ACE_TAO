@@ -46,7 +46,6 @@ ACE_VERSION = ${ACE_MAJOR_VERSION}.${ACE_MINOR_VERSION}.${ACE_MICRO_VERSION}
 
 # Implement our own configure machinery; it will copy Debian specific
 # configuration before launching MPC to generate ACE+TAO GNUmakefile
-#		fname1=echo $$fname; \
 .PHONY: configure
 configure: configure-stamp
 configure-stamp:
@@ -60,7 +59,7 @@ configure-stamp:
 		sed 's/@ACE_VERSION@/${ACE_VERSION}/g' \
                 $$flname > $${flname%.in}; done
 	cp debian/platform_macros.GNU $(ACE_ROOT)/include/makeinclude
-	cp debian/config*.h $(ACE_ROOT)/ace/
+	cp debian/config.h $(ACE_ROOT)/ace/
 	cp debian/default.features $(ACE_ROOT)/bin/MakeProjectCreator/config
 	cp debian/ACE-DPKG.mwc $(ACE_ROOT)
 	cd $(ACE_ROOT) && $(ACE_ROOT)/bin/mwc.pl $(MWCFLAGS) ACE-DPKG.mwc
@@ -71,7 +70,7 @@ override_dh_auto_build-arch: configure-stamp
 
 override_dh_auto_build-indep: configure-stamp
 	$(MAKE) -C $(ACE_ROOT) $(DSO_MAKE_FLAG)
-	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_tao -exclude_ciao -exclude_dance
+	cd $(ACE_ROOT) && bin/generate_doxygen.pl -is_release -exclude_tao
 	find $(ACE_ROOT)/html $(DOXYGEN_FILES_TO_REMOVE) | xargs -r rm -f
 
 override_dh_auto_install: manpages-stamp
@@ -90,7 +89,7 @@ override_dh_auto_clean:
 	find $(ACE_ROOT) -name 'GNUmakefile*' -o -name '.depend.*' | xargs -r rm
 	rm -f $(ACE_ROOT)/include/makeinclude/platform_macros.GNU
 	rm -f $(ACE_ROOT)/bin/MakeProjectCreator/config/default.features
-	rm -f $(ACE_ROOT)/ace/config.h $(ACE_ROOT)/ace/config-hurd.h
+	rm -f $(ACE_ROOT)/ace/config.h
 	rm -f $(ACE_ROOT)/ACE-DPKG.mwc
 	rm -f debian/*.1 debian/mpc-ace.sgml
 	rm -f *-stamp

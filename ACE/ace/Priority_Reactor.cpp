@@ -5,10 +5,10 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-typedef ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple> QUEUE_ITERATOR;
+using QUEUE_ITERATOR = ACE_Unbounded_Queue_Iterator<ACE_Event_Tuple>;
 // Its iterator.
 
-typedef ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_SYNCH_NULL_MUTEX> TUPLE_ALLOCATOR;
+using TUPLE_ALLOCATOR = ACE_Cached_Allocator<ACE_Node<ACE_Event_Tuple>, ACE_MT_SYNCH::NULL_MUTEX>;
 // Defines the memory allocator used, no need for locking because it
 // is only used in one thread of control.
 
@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Priority_Reactor)
         ACE_Event_Handler::HI_PRIORITY-ACE_Event_Handler::LO_PRIORITY+1
 
 void
-ACE_Priority_Reactor::init_bucket (void)
+ACE_Priority_Reactor::init_bucket ()
 {
   // Allocate enough space for all the handles.
   // TODO: This can be wrong, maybe we should use other kind of
@@ -65,7 +65,7 @@ ACE_Priority_Reactor::ACE_Priority_Reactor (size_t size,
   this->init_bucket ();
 }
 
-ACE_Priority_Reactor::~ACE_Priority_Reactor (void)
+ACE_Priority_Reactor::~ACE_Priority_Reactor ()
 {
   ACE_TRACE ("ACE_Priority_Reactor::~ACE_Priority_Reactor");
 
@@ -158,11 +158,11 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
                                ready_mask,
                                et.event_handler_,
                                callback);
-          number_dispatched++;
+          ++number_dispatched;
 
           // clear the bit from that dispatch mask,
           // so when we need to restart the iteration (rebuilding the iterator...)
-          // we will not dispatch the already dipatched handlers
+          // we will not dispatch the already dispatched handlers
           this->clear_dispatch_mask (et.handle_,
                                      mask);
 
@@ -179,7 +179,7 @@ ACE_Priority_Reactor::dispatch_io_set (int number_of_active_handles,
 }
 
 void
-ACE_Priority_Reactor::dump (void) const
+ACE_Priority_Reactor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Priority_Reactor::dump");

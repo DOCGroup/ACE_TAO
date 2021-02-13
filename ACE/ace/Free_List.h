@@ -36,7 +36,7 @@ class ACE_Free_List
 {
 public:
   /// Destructor - removes all the elements from the free_list.
-  virtual ~ACE_Free_List (void);
+  virtual ~ACE_Free_List ();
 
   /// Inserts an element onto the free list (if it isn't past the high
   /// water mark).
@@ -44,10 +44,10 @@ public:
 
   /// Takes a element off the freelist and returns it.  It creates
   /// <inc> new elements if the size is at or below the low water mark.
-  virtual T *remove (void) = 0;
+  virtual T *remove () = 0;
 
   /// Returns the current size of the free list.
-  virtual size_t size (void) = 0;
+  virtual size_t size () = 0;
 
   /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize) = 0;
@@ -82,7 +82,7 @@ public:
                         size_t inc = ACE_DEFAULT_FREE_LIST_INC);
 
   /// Destructor - removes all the elements from the free_list.
-  virtual ~ACE_Locked_Free_List (void);
+  virtual ~ACE_Locked_Free_List ();
 
   /// Inserts an element onto the free list (if it isn't past the high
   /// water mark).
@@ -90,10 +90,10 @@ public:
 
   /// Takes a element off the freelist and returns it.  It creates
   /// <inc> new elements if the size is at or below the low water mark.
-  virtual T *remove (void);
+  virtual T *remove ();
 
   /// Returns the current size of the free list.
-  virtual size_t size (void);
+  virtual size_t size ();
 
   /// Resizes the free list to @a newsize.
   virtual void resize (size_t newsize);
@@ -131,8 +131,8 @@ protected:
 
 private:
   // = Don't allow these operations for now.
-  ACE_UNIMPLEMENTED_FUNC (ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &))
+  ACE_Locked_Free_List (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
+  void operator= (const ACE_Locked_Free_List<T, ACE_LOCK> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

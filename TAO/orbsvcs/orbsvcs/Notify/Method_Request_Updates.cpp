@@ -15,7 +15,7 @@ TAO_Notify_Method_Request_Updates::~TAO_Notify_Method_Request_Updates ()
 }
 
 int
-TAO_Notify_Method_Request_Updates::execute (void)
+TAO_Notify_Method_Request_Updates::execute ()
 {
   return this->execute_i ();
 }
@@ -33,7 +33,7 @@ TAO_Notify_Method_Request_Updates_No_Copy::~TAO_Notify_Method_Request_Updates_No
 }
 
 TAO_Notify_Method_Request_Queueable*
-TAO_Notify_Method_Request_Updates_No_Copy::copy (void)
+TAO_Notify_Method_Request_Updates_No_Copy::copy ()
 {
   TAO_Notify_Method_Request_Queueable* request = 0;
 
@@ -45,7 +45,7 @@ TAO_Notify_Method_Request_Updates_No_Copy::copy (void)
 }
 
 int
-TAO_Notify_Method_Request_Updates_No_Copy::execute (void)
+TAO_Notify_Method_Request_Updates_No_Copy::execute ()
 {
   return this->execute_i ();
 }

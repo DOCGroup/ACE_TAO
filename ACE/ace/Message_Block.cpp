@@ -121,7 +121,7 @@ ACE_Message_Block::copy (const char *buf)
 }
 
 int
-ACE_Message_Block::crunch (void)
+ACE_Message_Block::crunch ()
 {
   if (this->rd_ptr_ != 0)
     {
@@ -139,7 +139,7 @@ ACE_Message_Block::crunch (void)
 }
 
 void
-ACE_Data_Block::dump (void) const
+ACE_Data_Block::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Data_Block::dump");
@@ -167,7 +167,7 @@ ACE_Data_Block::dump (void) const
 }
 
 void
-ACE_Message_Block::dump (void) const
+ACE_Message_Block::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Block::dump");
@@ -193,7 +193,7 @@ ACE_Message_Block::dump (void) const
 }
 
 int
-ACE_Data_Block::reference_count (void) const
+ACE_Data_Block::reference_count () const
 {
   if (this->locking_strategy_)
     {
@@ -266,7 +266,7 @@ ACE_Message_Block::total_size_and_length (size_t &mb_size,
 }
 
 size_t
-ACE_Message_Block::total_size (void) const
+ACE_Message_Block::total_size () const
 {
   ACE_TRACE ("ACE_Message_Block::total_size");
 
@@ -280,7 +280,7 @@ ACE_Message_Block::total_size (void) const
 }
 
 size_t
-ACE_Message_Block::total_length (void) const
+ACE_Message_Block::total_length () const
 {
   ACE_TRACE ("ACE_Message_Block::total_length");
 
@@ -294,7 +294,7 @@ ACE_Message_Block::total_length (void) const
 }
 
 size_t
-ACE_Message_Block::total_capacity (void) const
+ACE_Message_Block::total_capacity () const
 {
   ACE_TRACE ("ACE_Message_Block::total_capacity");
 
@@ -308,7 +308,7 @@ ACE_Message_Block::total_capacity (void) const
   return size;
 }
 
-ACE_Data_Block::ACE_Data_Block (void)
+ACE_Data_Block::ACE_Data_Block ()
   : type_ (ACE_Message_Block::MB_DATA),
     cur_size_ (0),
     max_size_ (0),
@@ -751,7 +751,7 @@ ACE_Message_Block::init_i (size_t size,
   return 0;
 }
 
-ACE_Data_Block::~ACE_Data_Block (void)
+ACE_Data_Block::~ACE_Data_Block ()
 {
   // Sanity check...
   ACE_ASSERT (this->reference_count_ <= 1);
@@ -768,7 +768,7 @@ ACE_Data_Block::~ACE_Data_Block (void)
 }
 
 ACE_Data_Block *
-ACE_Data_Block::release_i (void)
+ACE_Data_Block::release_i ()
 {
   ACE_TRACE ("ACE_Data_Block::release_i");
 
@@ -851,7 +851,7 @@ ACE_Data_Block::release (ACE_Lock *lock)
 }
 
 ACE_Message_Block *
-ACE_Message_Block::release (void)
+ACE_Message_Block::release ()
 {
   ACE_TRACE ("ACE_Message_Block::release");
 
@@ -967,7 +967,7 @@ ACE_Message_Block::release (ACE_Message_Block *mb)
     return 0;
 }
 
-ACE_Message_Block::~ACE_Message_Block (void)
+ACE_Message_Block::~ACE_Message_Block ()
 {
   ACE_TRACE ("ACE_Message_Block::~ACE_Message_Block");
 
@@ -982,7 +982,7 @@ ACE_Message_Block::~ACE_Message_Block (void)
 }
 
 ACE_Data_Block *
-ACE_Data_Block::duplicate (void)
+ACE_Data_Block::duplicate ()
 {
   ACE_TRACE ("ACE_Data_Block::duplicate");
 
@@ -1009,7 +1009,7 @@ ACE_Data_Block::duplicate (void)
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 
 ACE_Message_Block *
-ACE_Message_Block::duplicate (void) const
+ACE_Message_Block::duplicate () const
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
 

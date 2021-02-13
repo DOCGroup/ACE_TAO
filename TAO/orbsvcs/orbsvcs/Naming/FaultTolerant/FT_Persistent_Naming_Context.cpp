@@ -31,7 +31,7 @@ TAO_FT_Persistent_Naming_Context::TAO_FT_Persistent_Naming_Context (
 }
 
 
-TAO_FT_Persistent_Naming_Context::~TAO_FT_Persistent_Naming_Context (void)
+TAO_FT_Persistent_Naming_Context::~TAO_FT_Persistent_Naming_Context ()
 {
   // Perform appropriate cleanup based on the destruction level specified.
 }

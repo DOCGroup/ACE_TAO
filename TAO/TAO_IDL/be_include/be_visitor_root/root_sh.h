@@ -27,13 +27,13 @@ class be_visitor_root_sh : public be_visitor_root
 public:
   be_visitor_root_sh (be_visitor_context *ctx);
 
-  ~be_visitor_root_sh (void);
+  ~be_visitor_root_sh ();
 
   virtual int visit_root (be_root *node);
 
 private:
   /// Open file and initialize stream.
-  int init (void);
+  int init ();
 
   /// Generate arg template trait specializations in
   /// the skeleton header file, done before the main

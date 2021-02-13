@@ -52,19 +52,17 @@ public:
                         ACE_CDR::ULong pending_length);
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &);
-  void operator= (TAO_On_Demand_Fragmentation_Strategy const &);
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy const &) = delete;
+  TAO_On_Demand_Fragmentation_Strategy (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
+  void operator= (TAO_On_Demand_Fragmentation_Strategy &&) = delete;
 
 private:
-
   /// Pointer to the underlying transport object.
   TAO_Transport * const transport_;
 
   /// Size of GIOP message at which fragmentation will occur.
   ACE_CDR::ULong const max_message_size_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

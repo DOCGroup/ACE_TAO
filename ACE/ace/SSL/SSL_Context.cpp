@@ -349,6 +349,17 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
       ::SSL_CTX_set_options (this->context_, SSL_OP_NO_TLSv1_2);
     }
 #endif /* SSL_OP_NO_TLSv1_2 */
+
+#if defined (SSL_OP_NO_TLSv1_3)
+  pos = vlist.find("tlsv1.3");
+  match = pos != ACE_CString::npos &&
+    (pos == vlist.length() - 7 ||
+      seplist.find(vlist[pos + 7]) != ACE_CString::npos);
+  if (!match)
+    {
+      ::SSL_CTX_set_options(this->context_, SSL_OP_NO_TLSv1_3);
+    }
+#endif /* SSL_OP_NO_TLSv1_3 */
   return 0;
 }
 
@@ -366,7 +377,12 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
       return false;
     }
 
-  X509* cert = ::SSL_get_peer_certificate (peerssl);
+#if (OPENSSL_VERSION_NUMBER >= 0x30000000L)
+  X509* cert = ::SSL_get1_peer_certificate(peerssl);
+#else
+  X509* cert = ::SSL_get_peer_certificate(peerssl);
+#endif
+
   if (cert == 0)
     {
       return false;

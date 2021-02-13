@@ -131,14 +131,14 @@ public:
             bool close_handle_on_destruction = true);
 
   /// Call to close the DLL object.
-  int close (void);
+  int close ();
 
   /**
    * Called when the DLL object is destroyed -- invokes close() if the
    * @a close_handle_on_destruction flag was set to non-zero in the
    * constructor or open() method.
    */
-  ~ACE_DLL (void);
+  ~ACE_DLL ();
 
   /**
    * Look up a named symbol in the DLL. DLL must be successfully opened
@@ -155,7 +155,7 @@ public:
   /// Returns a pointer to a string explaining that an error occurred.  You
   /// will need to consult the error log for the actual error string
   /// returned by the OS.
-  ACE_TCHAR *error (void) const;
+  ACE_TCHAR *error () const;
 
   /**
    * Return the handle to the caller.  If @a become_owner is true then

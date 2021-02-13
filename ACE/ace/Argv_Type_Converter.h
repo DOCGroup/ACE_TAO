@@ -43,16 +43,16 @@ public:
   ACE_Argv_Type_Converter (int &argc, wchar_t** argv);
 #endif  // ACE_USES_WCHAR
 
-  ~ACE_Argv_Type_Converter (void);
+  ~ACE_Argv_Type_Converter ();
 
   /// Returns the pointer of converted command line.
-  ACE_TCHAR** get_TCHAR_argv (void);
+  ACE_TCHAR** get_TCHAR_argv ();
 
   /// Returns the pointer of ASCII (char) command line.
-  char** get_ASCII_argv (void);
+  char** get_ASCII_argv ();
 
   /// Returns the number of sub parameters (argc).
-  int& get_argc (void);
+  int& get_argc ();
 
 private:
   /// Copy Constructor should not be used.

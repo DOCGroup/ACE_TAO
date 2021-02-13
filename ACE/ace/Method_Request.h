@@ -79,10 +79,10 @@ public:
   virtual int call (void) = 0;
 
 private:
-
-  /// Disallow copying and assignment.
-  ACE_Method_Request (const ACE_Method_Request &);
-  void operator= (const ACE_Method_Request &);
+  ACE_Method_Request (const ACE_Method_Request &) = delete;
+  void operator= (const ACE_Method_Request &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  void operator= (ACE_Method_Request &&) = delete;
 
 protected:
   /// The priority of the request.

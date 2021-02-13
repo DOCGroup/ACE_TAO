@@ -53,7 +53,7 @@ TAO::PICurrent_Guard::PICurrent_Guard (TAO_ServerRequest &server_request,
     }
 }
 
-TAO::PICurrent_Guard::~PICurrent_Guard (void)
+TAO::PICurrent_Guard::~PICurrent_Guard ()
 {
   if (this->src_ != 0 && this->dest_ != 0
       && this->src_ != this->dest_)

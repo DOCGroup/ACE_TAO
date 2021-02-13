@@ -39,7 +39,7 @@ public:
   TAO_EC_Default_ProxyPushSupplier (TAO_EC_Event_Channel_Base* event_channel, int validate_connection);
 
   /// Destructor...
-  virtual ~TAO_EC_Default_ProxyPushSupplier (void);
+  virtual ~TAO_EC_Default_ProxyPushSupplier ();
 
   void activate (
      RtecEventChannelAdmin::ProxyPushSupplier_ptr &proxy);
@@ -48,19 +48,19 @@ public:
   virtual void connect_push_consumer (
                 RtecEventComm::PushConsumer_ptr push_consumer,
                 const RtecEventChannelAdmin::ConsumerQOS &qos);
-  virtual void disconnect_push_supplier (void);
-  virtual void suspend_connection (void);
-  virtual void resume_connection (void);
+  virtual void disconnect_push_supplier ();
+  virtual void suspend_connection ();
+  virtual void resume_connection ();
 
   // = The Servant methods
-  virtual PortableServer::POA_ptr _default_POA (void);
-  virtual void _add_ref (void);
-  virtual void _remove_ref (void);
+  virtual PortableServer::POA_ptr _default_POA ();
+  virtual void _add_ref ();
+  virtual void _remove_ref ();
 
 private:
 
   virtual PortableServer::ObjectId
-            object_id (void);
+            object_id ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

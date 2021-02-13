@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> TAO_RTScheduler_Current::guid_counter;
+std::atomic<long> TAO_RTScheduler_Current::guid_counter;
 
 u_long
 TAO_DTId_Hash::operator () (const IdType &id) const
@@ -88,16 +88,14 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
 
   impl->begin_scheduling_segment (name,
                                   sched_param,
-                                  implicit_sched_param
-                                 );
+                                  implicit_sched_param);
 }
 
 
 void
 TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
                                                     CORBA::Policy_ptr sched_param,
-                                                    CORBA::Policy_ptr implicit_sched_param
-                                                    )
+                                                    CORBA::Policy_ptr implicit_sched_param)
 {
   TAO_RTScheduler_Current_i *impl = this->implementation ();
 
@@ -106,8 +104,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 
   impl->update_scheduling_segment (name,
                                    sched_param,
-                                   implicit_sched_param
-                                  );
+                                   implicit_sched_param);
 }
 
 void
@@ -123,8 +120,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
       return;
     }
 
-  impl->end_scheduling_segment (name
-                               );
+  impl->end_scheduling_segment (name);
 }
 
 RTScheduling::DistributableThread_ptr
@@ -162,8 +158,7 @@ TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
                       sched_param,
                       implicit_sched_param,
                       stack_size,
-                      base_priority
-                     );
+                      base_priority);
 }
 
 RTScheduling::Current::IdType *
@@ -301,8 +296,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
     orb->object_ref_table ().resolve_initial_reference (
       "RTScheduler");
 
-  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ()
-                                                      );
+  this->scheduler_ = RTScheduling::Scheduler::_narrow (scheduler_obj.in ());
 }
 
 TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i (void)
@@ -335,8 +329,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
       this->scheduler_->begin_new_scheduling_segment (this->guid_,
                                                       name,
                                                       sched_param,
-                                                      implicit_sched_param
-                                                     );
+                                                      implicit_sched_param);
 
       if (CORBA::is_nil (this->dt_.in ()))
         //Create new DT.
@@ -371,8 +364,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
         (this->guid_,
          name,
          sched_param,
-         implicit_sched_param
-        );
+         implicit_sched_param);
 
       TAO_TSS_Resources *tss =
         TAO_TSS_Resources::instance ();
@@ -413,8 +405,7 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
   this->scheduler_->update_scheduling_segment (this->guid_,
                                                name,
                                                sched_param,
-                                               implicit_sched_param
-                                              );
+                                               implicit_sched_param);
 
   // Remember the new values.
   this->name_ = CORBA::string_dup (name);
@@ -435,9 +426,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
     {
       // Let the scheduler know that the DT is
       // terminating.
-      this->scheduler_->end_scheduling_segment(this->guid_,
-                                               name
-                                              );
+      this->scheduler_->end_scheduling_segment(this->guid_, name);
 
       // Cleanup DT.
       this->cleanup_DT ();
@@ -452,8 +441,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
       // scheduling segment.
       this->scheduler_->end_nested_scheduling_segment (this->guid_,
                                                        name,
-                                                       this->previous_current_->sched_param_.in ()
-                                                      );
+                                                       this->previous_current_->sched_param_.in ());
 
       // Cleanup current.
       this->cleanup_current ();
@@ -540,8 +528,7 @@ DTTask::activate_task (RTCORBA::Priority base_priority,
     TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
   RTCORBA::PriorityMappingManager_var mapping_manager =
-    RTCORBA::PriorityMappingManager::_narrow (object.in ()
-                                             );
+    RTCORBA::PriorityMappingManager::_narrow (object.in ());
 
   RTCORBA::PriorityMapping *pm =
     mapping_manager->mapping ();
@@ -608,15 +595,12 @@ DTTask::svc (void)
 
       this->current_->begin_scheduling_segment (this->name_.in (),
                                                 this->sched_param_.in (),
-                                                this->implicit_sched_param_.in ()
-                                               );
+                                                this->implicit_sched_param_.in ());
 
       // Invoke entry point into new DT.
-      this->start_->_cxx_do (this->data_
-                            );
+      this->start_->_cxx_do (this->data_);
 
-      this->current_->end_scheduling_segment (this->name_.in ()
-                                            );
+      this->current_->end_scheduling_segment (this->name_.in ());
     }
   catch (const ::CORBA::Exception& ex)
     {
@@ -692,8 +676,7 @@ TAO_RTScheduler_Current_i::cancel_thread (void)
 
   // Let the scheduler know that the thread has
   // been cancelled.
-  this->scheduler_->cancel (this->guid_
-                           );
+  this->scheduler_->cancel (this->guid_);
 
   this->cleanup_DT ();
 

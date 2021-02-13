@@ -772,7 +772,7 @@ Tue Dec  7 17:48:21 2004  Steve Huston  <shuston@riverace.com>
           Steven Patrick <spo@ngls.net> for reporting this problem.
 
           Fixes Bugzilla #2002
-          (http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=2002)
+          (http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=2002)
 
 Tue Dec  7 13:10:08 2004  Douglas C. Schmidt  <schmidt@cs.wustl.edu>
 
@@ -4670,7 +4670,7 @@ Sun Sep 19 20:36:43 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for BUG 1924. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1924
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1924
 
           for details. Thanks to Paul <paul at reeder dot cs> for the
           patch.
@@ -6669,7 +6669,7 @@ Fri Aug 20 15:20:31 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
         Fixes for Bug 1890. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1890
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1890
 
         for details of this bug. What follows are the individual changes.
 
@@ -7881,7 +7881,7 @@ Wed Aug  4 16:33:14 2004  Balachandran Natarajan  <bala@dre.vanderbilt.edu>
 
           Fix for Bug 1893. Please see
 
-          http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1893
+          http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1893
 
           for details. Thanks to Alan L Batongbacal <alanlb at vt dot edu>
           for the patch.

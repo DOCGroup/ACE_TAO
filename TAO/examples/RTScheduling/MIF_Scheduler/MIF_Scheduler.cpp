@@ -1,9 +1,9 @@
 #include "MIF_Scheduler.h"
-#include "ace/Atomic_Op.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
+#include <atomic>
 
-ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> server_guid_counter;
+std::atomic<long> server_guid_counter;
 
 DT::DT (TAO_SYNCH_MUTEX &lock,
         int guid)

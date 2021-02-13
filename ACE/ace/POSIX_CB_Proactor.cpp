@@ -21,13 +21,13 @@ ACE_POSIX_CB_Proactor::ACE_POSIX_CB_Proactor (size_t max_aio_operations)
 }
 
 // Destructor.
-ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor (void)
+ACE_POSIX_CB_Proactor::~ACE_POSIX_CB_Proactor ()
 {
   this->close ();
 }
 
 ACE_POSIX_Proactor::Proactor_Type
-ACE_POSIX_CB_Proactor::get_impl_type (void)
+ACE_POSIX_CB_Proactor::get_impl_type ()
 {
   return PROACTOR_CB;
 }
@@ -56,7 +56,7 @@ ACE_POSIX_CB_Proactor::handle_events (ACE_Time_Value &wait_time)
 }
 
 int
-ACE_POSIX_CB_Proactor::handle_events (void)
+ACE_POSIX_CB_Proactor::handle_events ()
 {
   return this->handle_events_i (ACE_INFINITE);
 }

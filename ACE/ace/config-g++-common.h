@@ -14,22 +14,12 @@
 #define ACE_CC_MINOR_VERSION __GNUC_MINOR__
 #define ACE_CC_BETA_VERSION (0)
 
-#define ACE_HAS_CPLUSPLUS_HEADERS
-#define ACE_HAS_STDCPP_STL_INCLUDES
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 #define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#if (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 4))
-# define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
-#endif /* __GNUC__ >= 3.4 */
-
+#define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 #define ACE_NEW_THROWS_EXCEPTIONS
-#if (__GNUC__ >= 4 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
-// Versions of g++ prior to 3.3 had a buggy operator // new(nothrow)[]().
-#  define ACE_HAS_NEW_NOTHROW
-#endif /* __GNUC__ >= 3.3 */
+#define ACE_HAS_NEW_NOTHROW
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
@@ -94,15 +84,9 @@
    __attribute__ ((format (TYPE, STR_INDEX, FIRST_INDEX)))
 #endif
 
-// GNU g++ >= 4.x implements "#pragma once".
-#if (__GNUC__ < 4) && !defined (ACE_LACKS_PRAGMA_ONCE)
-// We define it with a -D with make depend.
-# define ACE_LACKS_PRAGMA_ONCE
-#endif /* ! ACE_LACKS_PRAGMA_ONCE */
-
-// Take advantage of G++ (>= 4.x) visibility attributes to generate
+// Take advantage of g++ visibility attributes to generate
 // improved shared library binaries.
-#if (__GNUC__ >= 4) && !defined (__MINGW32__) && !defined (ACE_HAS_CEGCC)
+#if !defined (__MINGW32__)
 
 # if defined (ACE_HAS_CUSTOM_EXPORT_MACROS) && ACE_HAS_CUSTOM_EXPORT_MACROS == 0
 #  undef ACE_HAS_CUSTOM_EXPORT_MACROS
@@ -121,18 +105,8 @@
 #    define ACE_Proper_Import_Flag __attribute__ ((visibility("default")))
 #  endif /* !ACE_Proper_Import_Flag */
 
-#  if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
-// Sadly, G++ 4.x silently ignores visibility attributes on
-// template instantiations, which breaks singletons.
-// As a workaround, we use the GCC visibility pragmas.
-// And to make them fit in a macro, we use C99's _Pragma()
-// http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470
-// This has been fixed in GCC 4.1.1 with FC6 but not with SuSE 10.2
-// that gets shipped with GCC 4.1.2 so we assume that with GCC 4.2
-// this will be fixed on the head. With FC6 just set this define yourself
-#   ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
-#     define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
-#   endif
+#  ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
+#    define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
 #  endif
 
 #  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
@@ -156,20 +130,12 @@
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 
 # endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-#endif  /* __GNU__ >= 4 */
+#endif  /* !__MINGW32__ */
 
-// GCC >= 4.1 provides __sync_XXXX builtins for use in atomic operations
-// although the builtins are provided globally they are not supported on all platforms
 #if defined (ACE_HAS_THREADS)
-#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 1))
 # if defined (__powerpc__)
 // The builtins seem to be provided for all powerpc platforms
 #   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
-# if ((__GNUC__ == 4) && (__GNUC_MINOR__ == 1) && (__GNUC_PATCHLEVEL__ == 1))
-// PPU GCC 4.1.1 doesn't have builtin atomic ops for size 1/2
-#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_2
-#  define ACE_LACKS_GCC_ATOMIC_BUILTINS_1
-# endif
 # endif
 # if defined (__ia64)
 // The builtins seem to be provided for the IA64 platforms
@@ -179,8 +145,9 @@
 // The builtin's are provided also for 64bit linux
 #   define ACE_HAS_GCC_ATOMIC_BUILTINS 1
 # endif
-#endif
 #endif /* ACE_HAS_THREADS */
+
+#define ACE_GCC_NO_RETURN __attribute__ ((__noreturn__))
 
 #include /**/ "ace/post.h"
 #endif /* ACE_GNUG_COMMON_H */

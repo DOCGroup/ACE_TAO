@@ -12,7 +12,7 @@ TAO_POA_Default_Policy_Validator::TAO_POA_Default_Policy_Validator (
 {
 }
 
-TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator (void)
+TAO_POA_Default_Policy_Validator::~TAO_POA_Default_Policy_Validator ()
 {
 }
 

@@ -127,7 +127,7 @@ public:
   int is_full (void) const;
 
   /// Dump the state of an request.
-  void dump (void) const;
+  void dump () const;
 
   /// Get a pointer to the underlying queue.
   ACE_Message_Queue<ACE_SYNCH> *queue (void) const;
@@ -153,8 +153,10 @@ private:
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
+  void operator= (const ACE_Activation_Queue &) = delete;
+  ACE_Activation_Queue (const ACE_Activation_Queue &) = delete;
+  void operator= (ACE_Activation_Queue &&) = delete;
+  ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

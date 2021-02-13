@@ -42,24 +42,17 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef CString ACE_IOStream_String;
 ACE_END_VERSIONED_NAMESPACE_DECL
 #    else
-#      if !defined (ACE_HAS_STDCPP_STL_INCLUDES)
-#include /**/ <String.h>
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef String ACE_IOStream_String;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#      else
-#        include /**/ <string>
+#      include /**/ <string>
 
-#        if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#      if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef std::string ACE_IOStream_String;
 ACE_END_VERSIONED_NAMESPACE_DECL
-#        else
+#      else
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef string ACE_IOStream_String;
 ACE_END_VERSIONED_NAMESPACE_DECL
-#        endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#      endif /* ! ACE_HAS_STDCPP_STL_INCLUDES */
+#      endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

@@ -19,36 +19,36 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Section_Key_Internal::ACE_Section_Key_Internal (void)
+ACE_Section_Key_Internal::ACE_Section_Key_Internal ()
   : ref_count_ (0)
 {
 }
 
-ACE_Section_Key_Internal::~ACE_Section_Key_Internal (void)
+ACE_Section_Key_Internal::~ACE_Section_Key_Internal ()
 {
 }
 
 int
-ACE_Section_Key_Internal::add_ref (void)
+ACE_Section_Key_Internal::add_ref ()
 {
   ++ref_count_;
   return 0;
 }
 
 int
-ACE_Section_Key_Internal::dec_ref (void)
+ACE_Section_Key_Internal::dec_ref ()
 {
   if (!--ref_count_)
     delete this;
   return 0;
 }
 
-ACE_Configuration_Section_Key::ACE_Configuration_Section_Key (void)
+ACE_Configuration_Section_Key::ACE_Configuration_Section_Key ()
   : key_ (0)
 {
 }
 
-ACE_Configuration_Section_Key::~ACE_Configuration_Section_Key (void)
+ACE_Configuration_Section_Key::~ACE_Configuration_Section_Key ()
 {
   if (key_)
     key_->dec_ref ();
@@ -88,12 +88,12 @@ ACE_Configuration_Section_Key::operator= (const ACE_Configuration_Section_Key& r
 
 ACE_TCHAR ACE_Configuration::NULL_String_ = '\0';
 
-ACE_Configuration::ACE_Configuration (void)
+ACE_Configuration::ACE_Configuration ()
   : root_ ()
 {
 }
 
-ACE_Configuration::~ACE_Configuration (void)
+ACE_Configuration::~ACE_Configuration ()
 {
 }
 
@@ -178,7 +178,7 @@ ACE_Configuration::validate_value_name (const ACE_TCHAR* name)
 }
 
 const ACE_Configuration_Section_Key&
-ACE_Configuration::root_section (void) const
+ACE_Configuration::root_section () const
 {
   return root_;
 }
@@ -1056,7 +1056,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 
 ///////////////////////////////////////////////////////////////
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void)
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId ()
   : type_ (ACE_Configuration::INVALID),
     length_ (0)
 {
@@ -1091,7 +1091,7 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configur
 {
 }
 
-ACE_Configuration_Value_IntId::~ACE_Configuration_Value_IntId (void)
+ACE_Configuration_Value_IntId::~ACE_Configuration_Value_IntId ()
 {
 }
 
@@ -1115,7 +1115,7 @@ ACE_Configuration_Value_IntId::free (ACE_Allocator *alloc)
   // Do nothing in other cases...
 }
 
-ACE_Configuration_ExtId::ACE_Configuration_ExtId (void)
+ACE_Configuration_ExtId::ACE_Configuration_ExtId ()
   : name_ (0)
 {
 }
@@ -1130,7 +1130,7 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId&
 {
 }
 
-ACE_Configuration_ExtId::~ACE_Configuration_ExtId (void)
+ACE_Configuration_ExtId::~ACE_Configuration_ExtId ()
 {
 }
 
@@ -1155,7 +1155,7 @@ ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
 }
 
 u_long
-ACE_Configuration_ExtId::hash (void) const
+ACE_Configuration_ExtId::hash () const
 {
   ACE_TString temp (name_, 0, false);
   return temp.hash ();
@@ -1169,7 +1169,7 @@ ACE_Configuration_ExtId::free (ACE_Allocator *alloc)
 
 ///////////////////////////////////////////////////////////////////////
 
-ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (void)
+ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId ()
   : value_hash_map_ (0),
     section_hash_map_ (0)
 {
@@ -1233,7 +1233,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Configuration_Section_Key_Heap)
 
 //////////////////////////////////////////////////////////////////////////////
 
-ACE_Configuration_Heap::ACE_Configuration_Heap (void)
+ACE_Configuration_Heap::ACE_Configuration_Heap ()
   : allocator_ (0),
     index_ (0),
     default_map_size_ (0)
@@ -1244,7 +1244,7 @@ ACE_Configuration_Heap::ACE_Configuration_Heap (void)
   root_ = ACE_Configuration_Section_Key (temp);
 }
 
-ACE_Configuration_Heap::~ACE_Configuration_Heap (void)
+ACE_Configuration_Heap::~ACE_Configuration_Heap ()
 {
   if (allocator_)
     allocator_->sync ();
@@ -1314,7 +1314,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 }
 
 int
-ACE_Configuration_Heap::create_index (void)
+ACE_Configuration_Heap::create_index ()
 {
   void *section_index = 0;
 

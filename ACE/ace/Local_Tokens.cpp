@@ -1135,7 +1135,7 @@ ACE_Token_Proxy::name (void) const
   return this->token_->name ();
 }
 
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #endif
@@ -1156,7 +1156,7 @@ ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
 }
-#if defined (ACE_WIN32_VC8)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif
 

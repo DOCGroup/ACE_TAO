@@ -91,7 +91,7 @@ ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
 // the close_handle_on_destruction value specified which is stored in
 // close_handle_on_destruction_.
 
-ACE_DLL::~ACE_DLL (void)
+ACE_DLL::~ACE_DLL ()
 {
   ACE_TRACE ("ACE_DLL::~ACE_DLL");
 
@@ -211,7 +211,7 @@ ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
 // shared object is now disassociated form the current process.
 
 int
-ACE_DLL::close (void)
+ACE_DLL::close ()
 {
   ACE_TRACE ("ACE_DLL::close");
 
@@ -239,7 +239,7 @@ ACE_DLL::close (void)
 // This method is used return the last error of a library operation.
 
 ACE_TCHAR *
-ACE_DLL::error (void) const
+ACE_DLL::error () const
 {
   ACE_TRACE ("ACE_DLL::error");
   if (this->error_)

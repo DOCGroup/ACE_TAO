@@ -42,10 +42,10 @@ public:
   TAO_Seq_Out_T &operator= (T *);
 
   operator T *& ();
-  T * operator-> (void);
+  T * operator-> ();
 
   T_elem operator[] (CORBA::ULong index);
-  T *& ptr (void);
+  T *& ptr ();
 
 private:
   T *& ptr_;

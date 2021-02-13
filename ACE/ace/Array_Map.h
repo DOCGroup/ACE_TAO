@@ -125,7 +125,7 @@ public:
   ACE_Array_Map & operator= (ACE_Array_Map const & map);
 
   /// Destructor.
-  ~ACE_Array_Map (void);
+  ~ACE_Array_Map ();
 
   /**
    * @name Forward Iterator Accessors
@@ -133,10 +133,10 @@ public:
    * Forward iterator accessors.
    */
   //@{
-  iterator begin (void);
-  iterator end   (void);
-  const_iterator begin (void) const;
-  const_iterator end   (void) const;
+  iterator begin ();
+  iterator end   ();
+  const_iterator begin () const;
+  const_iterator end   () const;
   //@}
 
   /**
@@ -145,30 +145,30 @@ public:
    * Reverse iterator accessors.
    */
   //@{
-  reverse_iterator rbegin (void);
-  reverse_iterator rend   (void);
-  const_reverse_iterator rbegin (void) const;
-  const_reverse_iterator rend   (void) const;
+  reverse_iterator rbegin ();
+  reverse_iterator rend   ();
+  const_reverse_iterator rbegin () const;
+  const_reverse_iterator rend   () const;
   //@}
 
   /// Return current size of map.
   /**
    * @return The number of elements in the map.
    */
-  size_type size (void) const;
+  size_type size () const;
 
   /// Maximum number of elements the map can hold.
-  size_type max_size (void) const;
+  size_type max_size () const;
 
   /// Return @c true if the map is empty, else @c false.
-  bool is_empty (void) const;  // ACE style
+  bool is_empty () const;  // ACE style
 
   /**
    * Return @c true if the map is empty, else @c false.  We recommend
    * using @c is_empty() instead since it's more consistent with the
    * ACE container naming conventions.
    */
-  bool empty (void) const;  // STL style
+  bool empty () const;  // STL style
 
   /// Swap the contents of this map with the given @a map in an
   /// exception-safe manner.
@@ -208,7 +208,7 @@ public:
   /**
    * @note This a constant time (O(1)) operation.
    */
-  void clear (void);
+  void clear ();
 
   /**
    * @name Search Operations

@@ -88,7 +88,7 @@ ACE_OS::free (void *ptr)
 #endif /* ACE_WIN32 && UNICODE !ACE_USES_TCHAR */
 
 ACE_TCHAR *
-ACE_OS::getenvstrings (void)
+ACE_OS::getenvstrings ()
 {
 #if defined (ACE_LACKS_GETENVSTRINGS)
   ACE_NOTSUP_RETURN (0);

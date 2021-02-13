@@ -46,7 +46,7 @@ sig_atomic_t ACE_Sig_Handler::sig_pending_ = 0;
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handler)
 
-ACE_Sig_Handler::~ACE_Sig_Handler (void)
+ACE_Sig_Handler::~ACE_Sig_Handler ()
 {
   for (int s = 1; s < ACE_NSIG; ++s)
     if (ACE_Sig_Handler::signal_handlers_[s])
@@ -54,7 +54,7 @@ ACE_Sig_Handler::~ACE_Sig_Handler (void)
 }
 
 void
-ACE_Sig_Handler::dump (void) const
+ACE_Sig_Handler::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handler::dump");
@@ -62,7 +62,7 @@ ACE_Sig_Handler::dump (void) const
 }
 
 int
-ACE_Sig_Handler::sig_pending (void)
+ACE_Sig_Handler::sig_pending ()
 {
   ACE_TRACE ("ACE_Sig_Handler::sig_pending");
   ACE_MT (ACE_Recursive_Thread_Mutex *lock =
@@ -289,8 +289,8 @@ int ACE_Sig_Handlers::sigkey_ = 0;
 bool ACE_Sig_Handlers::third_party_sig_handler_ = false;
 
 // Make life easier by defining typedefs...
-typedef ACE_Fixed_Set <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_SET;
-typedef ACE_Fixed_Set_Iterator <ACE_Event_Handler *, ACE_MAX_SIGNAL_HANDLERS> ACE_SIG_HANDLERS_ITERATOR;
+using ACE_SIG_HANDLERS_SET = ACE_Fixed_Set<ACE_Event_Handler *, ((size_t)20)>;
+using ACE_SIG_HANDLERS_ITERATOR = ACE_Fixed_Set_Iterator<ACE_Event_Handler *, ((size_t)20)>;
 
 class ACE_Sig_Handlers_Set
 {
@@ -319,12 +319,12 @@ ACE_Sig_Handlers_Set::instance (int signum)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Handlers)
 
-ACE_Sig_Handlers::ACE_Sig_Handlers (void)
+ACE_Sig_Handlers::ACE_Sig_Handlers ()
 {
 }
 
 void
-ACE_Sig_Handlers::dump (void) const
+ACE_Sig_Handlers::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Sig_Handlers::dump");

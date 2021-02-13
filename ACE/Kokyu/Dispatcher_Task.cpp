@@ -66,7 +66,7 @@ Dispatcher_Task::initialize ()
 }
 
 int
-Dispatcher_Task::svc (void)
+Dispatcher_Task::svc ()
 {
   int done = 0;
 

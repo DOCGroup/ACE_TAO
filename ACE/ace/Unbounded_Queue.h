@@ -46,17 +46,17 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the queue have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Move to the first element in the queue.  Returns 0 if the
   /// queue is empty, else 1.
-  int first (void);
+  int first ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -88,17 +88,17 @@ public:
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the queue have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Move to the first element in the queue.  Returns 0 if the
   /// queue is empty, else 1.
-  int first (void);
+  int first ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -175,7 +175,7 @@ public:
   /**
    * Clean up the memory for the queue.
    */
-  ~ACE_Unbounded_Queue (void);
+  ~ACE_Unbounded_Queue ();
 
   // = Check boundary conditions.
 
@@ -183,13 +183,13 @@ public:
   /**
    * Constant time check to see if the queue is empty.
    */
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /// Returns 0.
   /**
    * The queue cannot be full, so it always returns 0.
    */
-  bool is_full (void) const;
+  bool is_full () const;
 
   // = Classic queue operations.
 
@@ -221,7 +221,7 @@ public:
   /**
    * Delete the queue nodes.
    */
-  void reset (void);
+  void reset ();
 
   /// Get the @a slot th element in the set.  Returns -1 if the element
   /// isn't in the range {0..#cur_size_ - 1}, else 0.
@@ -244,21 +244,21 @@ public:
   /**
    * Return the size of the queue.
    */
-  size_t size (void) const;
+  size_t size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL-styled unidirectional iterator factory.
-  ACE_Unbounded_Queue_Iterator<T> begin (void);
-  ACE_Unbounded_Queue_Iterator<T> end (void);
+  ACE_Unbounded_Queue_Iterator<T> begin ();
+  ACE_Unbounded_Queue_Iterator<T> end ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
   /// Delete all the nodes in the queue.
-  void delete_nodes (void);
+  void delete_nodes ();
 
   /// Copy nodes into this queue.
   void copy_nodes (const ACE_Unbounded_Queue<T> &);

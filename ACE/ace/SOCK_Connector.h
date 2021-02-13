@@ -42,7 +42,7 @@ class ACE_Export ACE_SOCK_Connector
 {
 public:
   /// Default constructor.
-  ACE_SOCK_Connector (void);
+  ACE_SOCK_Connector ();
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SOCK_Stream
@@ -247,7 +247,7 @@ public:
 #endif  // ACE_HAS_WINCE
 
   /// Default destructor.
-  ~ACE_SOCK_Connector (void);
+  ~ACE_SOCK_Connector ();
 
   // = Completion routine.
   /**
@@ -274,7 +274,7 @@ public:
   typedef ACE_SOCK_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

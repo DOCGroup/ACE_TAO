@@ -84,25 +84,25 @@ public:
   UTL_StrList (UTL_String *s,
                UTL_StrList *cdr);
 
-  virtual ~UTL_StrList (void);
+  virtual ~UTL_StrList ();
 
   // AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Copy a list of strings
-  virtual UTL_List *copy (void);
+  virtual UTL_List *copy ();
 
   // Cleanup method.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Get list element
-  UTL_String *head (void);
+  UTL_String *head ();
 
   // Set the list element
   void set_head (UTL_String *);
 
   // Get last element in this list
-  UTL_String *last_component (void);
+  UTL_String *last_component ();
 
 private:
   // The list item
@@ -117,7 +117,7 @@ public:
   UTL_StrlistActiveIterator(UTL_StrList *s);
 
   // Get current item.
-  UTL_String *item (void);
+  UTL_String *item ();
 };
 
 #endif           // _UTL_STRLIST_UTL_STRLIST_HH

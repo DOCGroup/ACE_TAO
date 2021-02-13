@@ -30,14 +30,14 @@ class TAO_RTEvent_Serv_Export TAO_EC_TPC_Factory : public TAO_EC_Default_Factory
 {
 public:
   /// Constructor
-  TAO_EC_TPC_Factory (void);
+  TAO_EC_TPC_Factory ();
 
   /// destructor...
-  virtual ~TAO_EC_TPC_Factory (void);
+  virtual ~TAO_EC_TPC_Factory ();
 
   /// Helper function to register the default factory into the service
   /// configurator.
-  static int init_svcs (void);
+  static int init_svcs ();
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);

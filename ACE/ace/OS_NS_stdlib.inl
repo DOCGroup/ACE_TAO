@@ -28,17 +28,16 @@ ACE_OS::_exit (int status)
 #elif defined (ACE_HAS_WINCE)
   ::TerminateProcess (::GetCurrentProcess (), status);
 #elif defined (ACE_MQX)
-   _mqx_exit (status);
+  _mqx_exit (status);
 #elif !defined (ACE_LACKS__EXIT)
-   ::_exit (status);
+  ::_exit (status);
 #else
   ACE_UNUSED_ARG (status);
-
 #endif /* ACE_VXWORKS */
 }
 
 ACE_INLINE void
-ACE_OS::abort (void)
+ACE_OS::abort ()
 {
 #if defined (ACE_ANDROID) && (__ANDROID_API__ < 19)
   ACE_OS::_exit (128 + SIGABRT);
@@ -408,7 +407,7 @@ ACE_OS::qsort (void *base,
 }
 
 ACE_INLINE int
-ACE_OS::rand (void)
+ACE_OS::rand ()
 {
   ACE_OS_TRACE ("ACE_OS::rand");
 #if !defined (ACE_LACKS_RAND)

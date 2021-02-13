@@ -19,12 +19,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-# include "ace/os_include/os_time.h"
-
-#if defined (ACE_HAS_CPP11)
-# include <chrono>
-# include "ace/Truncate.h"
-#endif /* ACE_HAS_CPP11 */
+#include "ace/os_include/os_time.h"
+#include <chrono>
+#include "ace/Truncate.h"
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -67,7 +64,7 @@ public:
   static const ACE_Time_Value max_time;
 
   /// Default Constructor.
-  ACE_Time_Value (void);
+  ACE_Time_Value ();
 
   /// Constructor.
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
@@ -80,7 +77,6 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
 
-#if defined (ACE_HAS_CPP11)
   ACE_Time_Value (const ACE_Time_Value&) = default;
   ACE_Time_Value (ACE_Time_Value&&) = default;
 
@@ -90,7 +86,6 @@ public:
   {
     this->set (duration);
   }
-#endif /* ACE_HAS_CPP11 */
 
   /// Destructor
   virtual ~ACE_Time_Value ();
@@ -121,7 +116,6 @@ public:
   void set (const FILETIME &ft);
 # endif /* ACE_WIN32 */
 
-#if defined (ACE_HAS_CPP11)
   /// Initializes the ACE_Time_Value object from a std::duration.
   template< class Rep, class Period >
   void set (const std::chrono::duration<Rep, Period>& duration)
@@ -134,7 +128,6 @@ public:
         duration % std::chrono::seconds (1))};
     this->set (s.count (), ACE_Utils::truncate_cast<suseconds_t>(usec.count ()));
   }
-#endif /* ACE_HAS_CPP11 */
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
@@ -147,7 +140,7 @@ public:
    *       usec() methods.  There is no analogous "millisecond"
    *       component in an ACE_Time_Value.
    */
-  unsigned long msec (void) const;
+  unsigned long msec () const;
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
@@ -233,7 +226,7 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  time_t sec (void) const;
+  time_t sec () const;
 
   /// Set seconds.
   void sec (time_t sec);
@@ -245,7 +238,7 @@ public:
    * @note The semantics of this method differs from the msec()
    *       method.
    */
-  suseconds_t usec (void) const;
+  suseconds_t usec () const;
 
   /// Set microseconds.
   void usec (suseconds_t usec);
@@ -264,11 +257,9 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value &operator += (time_t tv);
 
-#if defined (ACE_HAS_CPP11)
   /// Assign @a tv to this
   ACE_Time_Value &operator = (const ACE_Time_Value &) = default;
   ACE_Time_Value &operator = (ACE_Time_Value &&)  = default;
-#endif /* ACE_HAS_CPP11 */
 
   /// Assign @a tv to this
   ACE_Time_Value &operator = (time_t tv);
@@ -279,7 +270,6 @@ public:
   /// Subtract @a tv to this.
   ACE_Time_Value &operator -= (time_t tv);
 
-#if defined (ACE_HAS_CPP11)
   /// Add @a std::duration to this.
   template< class Rep, class Period >
   ACE_Time_Value &operator += (const std::chrono::duration<Rep, Period>& duration)
@@ -309,8 +299,6 @@ public:
     this->normalize ();
     return *this;
   }
-#endif /* ACE_HAS_CPP11 */
-
 
   /**
     \brief Multiply the time value by the @a d factor.
@@ -332,7 +320,7 @@ public:
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */
-  ACE_Time_Value &operator++ (void);
+  ACE_Time_Value &operator++ ();
 
   /// Decrement microseconds as postfix.
   /**
@@ -346,7 +334,7 @@ public:
    * @note The only reason this is here is to allow the use of ACE_Atomic_Op
    * with ACE_Time_Value.
    */
-  ACE_Time_Value &operator-- (void);
+  ACE_Time_Value &operator-- ();
 
   /// Adds two ACE_Time_Value objects together, returns the sum.
   friend ACE_Export ACE_Time_Value operator + (const ACE_Time_Value &tv1,
@@ -441,7 +429,7 @@ public:
    * violates layering restrictions in ACE because this class is part
    * of the OS layer and @c ACE_Log_Msg is at a higher level.
    */
-  void dump (void) const;
+  void dump () const;
 
 # if defined (ACE_WIN32)
   /// Const time difference between FILETIME and POSIX time.
@@ -478,10 +466,7 @@ extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_CPP11)
-
 // Additional chrono operators.
-
 namespace std
 {
   namespace chrono
@@ -535,8 +520,6 @@ namespace std
     //@}
   }
 }
-
-#endif /* ACE_HAS_CPP11 */
 
 #if defined (__ACE_INLINE__)
 #include "ace/Time_Value.inl"

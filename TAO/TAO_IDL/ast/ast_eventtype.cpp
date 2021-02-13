@@ -49,12 +49,12 @@ AST_EventType::AST_EventType (UTL_ScopedName *n,
 {
 }
 
-AST_EventType::~AST_EventType (void)
+AST_EventType::~AST_EventType ()
 {
 }
 
 void
-AST_EventType::destroy (void)
+AST_EventType::destroy ()
 {
   this->AST_ValueType::destroy ();
 }
@@ -121,9 +121,3 @@ AST_EventType::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_eventtype (this);
 }
-
-  // Narrowing.
-
-IMPL_NARROW_FROM_DECL(AST_EventType)
-IMPL_NARROW_FROM_SCOPE(AST_EventType)
-

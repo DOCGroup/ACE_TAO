@@ -47,7 +47,7 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char **argv)
 }
 #endif  // ACE_USES_WCHAR
 
-ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter (void)
+ACE_Argv_Type_Converter::~ACE_Argv_Type_Converter ()
 {
 #if defined (ACE_USES_WCHAR)
   // selectively delete the 'copy' of argv
