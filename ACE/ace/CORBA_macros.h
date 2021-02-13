@@ -41,7 +41,6 @@
 #  define ACE_del_bad_alloc
 #endif
 
-// ACE_HAS_EXCEPTIONS is not the same as ACE_NEW_THROWS_EXCEPTIONS.
 #if defined(ACE_NEW_THROWS_EXCEPTIONS)
 
 # if defined (ACE_HAS_NEW_NOTHROW)

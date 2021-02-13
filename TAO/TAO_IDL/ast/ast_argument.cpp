@@ -87,7 +87,7 @@ direction_to_string (AST_Argument::Direction d)
       return "inout";
     }
 
-  return 0;
+  return nullptr;
 }
 
 AST_Decl::NodeType const
@@ -103,7 +103,7 @@ AST_Argument::AST_Argument (Direction d,
 {
 }
 
-AST_Argument::~AST_Argument (void)
+AST_Argument::~AST_Argument ()
 {
 }
 
@@ -123,15 +123,13 @@ AST_Argument::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Argument::destroy (void)
+AST_Argument::destroy ()
 {
   this->AST_Field::destroy ();
 }
 
 AST_Argument::Direction
-AST_Argument::direction (void)
+AST_Argument::direction ()
 {
   return this->pd_direction;
 }
-
-IMPL_NARROW_FROM_DECL(AST_Argument)

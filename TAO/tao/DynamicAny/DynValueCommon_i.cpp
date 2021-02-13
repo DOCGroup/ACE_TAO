@@ -11,18 +11,18 @@ TAO_DynValueCommon_i::TAO_DynValueCommon_i (CORBA::Boolean allow_truncation)
 {
 }
 
-TAO_DynValueCommon_i::~TAO_DynValueCommon_i (void)
+TAO_DynValueCommon_i::~TAO_DynValueCommon_i ()
 {
 }
 
 CORBA::Boolean
-TAO_DynValueCommon_i::is_null (void)
+TAO_DynValueCommon_i::is_null ()
 {
   return this->is_null_;
 }
 
 void
-TAO_DynValueCommon_i::set_to_null (void)
+TAO_DynValueCommon_i::set_to_null ()
 {
   this->is_null_        = true;
   this->component_count_  = 0u;
@@ -30,7 +30,7 @@ TAO_DynValueCommon_i::set_to_null (void)
 }
 
 void
-TAO_DynValueCommon_i::init_common (void)
+TAO_DynValueCommon_i::init_common ()
 {
   this->ref_to_component_ = false;
   this->container_is_destroying_ = false;

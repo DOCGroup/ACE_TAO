@@ -91,7 +91,7 @@ static ACE_HANDLE handle_vector[] =
 #endif /* ACE_WIN64 */
 
 static void
-test_boundaries (void)
+test_boundaries ()
 {
   ACE_Handle_Set handle_set;
   ACE_Unbounded_Set<ACE_HANDLE> set;

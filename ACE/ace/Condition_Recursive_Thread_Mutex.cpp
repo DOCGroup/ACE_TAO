@@ -17,13 +17,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::remove (void)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::remove ()
 {
   return ACE_OS::cond_destroy (&this->cond_);
 }
 
 void
-ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
+ACE_Condition<ACE_Recursive_Thread_Mutex>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
 // ACE_TRACE ("ACE_Condition<MUTEX>::dump");
@@ -37,7 +37,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition (void)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition ()
 {
   this->remove ();
 }
@@ -109,19 +109,19 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
 }
 
 int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::signal (void)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::signal ()
 {
   return ACE_OS::cond_signal (&this->cond_);
 }
 
 int
-ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast (void)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast ()
 {
   return ACE_OS::cond_broadcast (&this->cond_);
 }
 
 ACE_Recursive_Thread_Mutex &
-ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex (void)
+ACE_Condition<ACE_Recursive_Thread_Mutex>::mutex ()
 {
   return this->mutex_;
 }

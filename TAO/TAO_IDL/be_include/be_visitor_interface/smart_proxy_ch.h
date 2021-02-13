@@ -28,7 +28,7 @@ public:
   be_visitor_interface_smart_proxy_ch (be_visitor_context *ctx);
 
   /// destructor
-  virtual ~be_visitor_interface_smart_proxy_ch (void);
+  virtual ~be_visitor_interface_smart_proxy_ch ();
 
   /// visit an interface
   virtual int visit_interface (be_interface *node);

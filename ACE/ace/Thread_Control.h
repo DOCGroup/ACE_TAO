@@ -47,7 +47,7 @@ public:
 
   /// Remove the thread from its associated Thread_Manager and exit
   /// the thread if <do_thr_exit> is enabled.
-  ~ACE_Thread_Control (void);
+  ~ACE_Thread_Control ();
 
   /// Remove this thread from its associated ACE_Thread_Manager and exit
   /// the thread if @a do_thr_exit is enabled.
@@ -59,7 +59,7 @@ public:
   int insert (ACE_Thread_Manager *tm, bool insert = false);
 
   /// Returns the current Thread_Manager.
-  ACE_Thread_Manager *thr_mgr (void);
+  ACE_Thread_Manager *thr_mgr ();
 
   /// Atomically set a new Thread_Manager and return the old
   /// Thread_Manager.
@@ -69,10 +69,10 @@ public:
   ACE_THR_FUNC_RETURN status (ACE_THR_FUNC_RETURN status);
 
   /// Get the current exit status.
-  ACE_THR_FUNC_RETURN status (void);
+  ACE_THR_FUNC_RETURN status ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

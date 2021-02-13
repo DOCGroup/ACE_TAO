@@ -9,12 +9,12 @@ TAO_PublishesDef_i::TAO_PublishesDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_PublishesDef_i::~TAO_PublishesDef_i (void)
+TAO_PublishesDef_i::~TAO_PublishesDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_PublishesDef_i::def_kind (void)
+TAO_PublishesDef_i::def_kind ()
 {
   return CORBA::dk_Publishes;
 }

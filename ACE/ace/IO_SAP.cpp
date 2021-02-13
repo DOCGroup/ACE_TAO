@@ -20,14 +20,14 @@ ACE_ALLOC_HOOK_DEFINE(ACE_IO_SAP)
 // This is the do-nothing constructor.  It does not perform a
 // ACE_OS::open system call.
 
-ACE_IO_SAP::ACE_IO_SAP (void)
+ACE_IO_SAP::ACE_IO_SAP ()
   : handle_ (ACE_INVALID_HANDLE)
 {
   ACE_TRACE ("ACE_IO_SAP::ACE_IO_SAP");
 }
 
 void
-ACE_IO_SAP::dump (void) const
+ACE_IO_SAP::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_IO_SAP::dump");

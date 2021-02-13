@@ -1127,12 +1127,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
       defined (ACE_HAS_VSWPRINTF) || \
-      (defined (ACE_WIN32_VC10) && !defined (ACE_HAS_WINCE)) || \
-      (defined (ACE_WIN32_VC9) && !defined (ACE_HAS_WINCE)) || \
-      (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
-      _MSC_FULL_VER > 140050000)
+      (defined (_MSC_VER) && !defined (ACE_HAS_WINCE))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -1159,7 +1155,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   ACE_UNUSED_ARG (argptr);
   ACE_NOTSUP_RETURN (-1);
 
-# endif /* XPG5 || ACE_HAS_DINKUM_STL */
+# endif /* XPG5 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1211,7 +1207,6 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
       defined (ACE_HAS_VSWPRINTF) || \
       defined (ACE_WIN32)
 

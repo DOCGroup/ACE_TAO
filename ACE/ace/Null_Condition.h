@@ -49,10 +49,10 @@ public:
                  void * = 0)
   : mutex_ ((ACE_Null_Mutex &) m) {}
 
-  ~ACE_Condition (void) {}
+  ~ACE_Condition () {}
 
   /// Returns 0.
-  int remove (void) {return 0;}
+  int remove () {return 0;}
 
   /// Returns -1 with @c errno == @c ETIME.
   int wait (const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
@@ -62,14 +62,14 @@ public:
             const ACE_Time_Value * = 0) {errno = ETIME; return -1;}
 
   /// Returns 0.
-  int signal (void) {return 0;}
+  int signal () {return 0;}
 
   /// Returns 0.
-  int broadcast (void) {return 0;}
-  ACE_Null_Mutex &mutex (void) {return this->mutex_;};
+  int broadcast () {return 0;}
+  ACE_Null_Mutex &mutex () {return this->mutex_;};
 
   /// Dump the state of an object.
-  void dump (void) const {}
+  void dump () const {}
 
   // ACE_ALLOC_HOOK_DECLARE;
   // Declare the dynamic allocation hooks.

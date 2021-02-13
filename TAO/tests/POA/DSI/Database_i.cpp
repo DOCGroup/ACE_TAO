@@ -359,13 +359,11 @@ DatabaseImpl::Employee::operator new (size_t size, const ACE_nothrow_t &)
   return DATABASE::instance ()->malloc (size);
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 DatabaseImpl::Employee::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
 {
   DATABASE::instance ()->free (ptr);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 

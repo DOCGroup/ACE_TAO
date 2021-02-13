@@ -42,7 +42,7 @@ class ACE_Export ACE_OS_Log_Msg_Attributes
 {
 public:
   /// Constructor
-  ACE_OS_Log_Msg_Attributes (void);
+  ACE_OS_Log_Msg_Attributes ();
 
 protected:
   friend class ACE_Log_Msg;
@@ -71,8 +71,8 @@ protected:
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_OS_Log_Msg_Attributes &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &))
+  void operator= (const ACE_OS_Log_Msg_Attributes &) = delete;
+  ACE_OS_Log_Msg_Attributes (const ACE_OS_Log_Msg_Attributes &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

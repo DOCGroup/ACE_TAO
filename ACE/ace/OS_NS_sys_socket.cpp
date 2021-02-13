@@ -128,7 +128,7 @@ ACE_OS::socket_init (int version_high, int version_low)
 }
 
 int
-ACE_OS::socket_fini (void)
+ACE_OS::socket_fini ()
 {
 # if defined (ACE_WIN32)
   if (ACE_OS::socket_initialized_ != 0)

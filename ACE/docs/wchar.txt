@@ -115,9 +115,6 @@ The way I'd recommend doing this is to add the typdefs to config.h.
 @subsection wchar_legacy Legacy Support
 
 Most of the old macros (ACE_HAS_UNICODE, ACE_HAS_MOSTLY_UNICODE_APIS) are
-ignored by default by ACE, since the new macros replaced them.  If
-ACE_LEGACY_MODE is defined, there is an attempt to map them to the new scheme
-by just ACE_HAS_UNICODE == ACE_HAS_WCHAR and ACE_HAS_MOSTLY_UNICODE_APIS ==
-ACE_USES_WCHAR.
+ignored by default by ACE, since the new macros replaced them.
 
 */

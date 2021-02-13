@@ -964,8 +964,7 @@ public:
    */
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * address,
-                                          const char * use_flow_protocol)
-    = 0;
+                                          const char * use_flow_protocol) = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
@@ -981,8 +980,7 @@ public:
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol)
-    = 0;
+                               char *& flowProtocol) = 0;
 
   /// listen request from the peer.
   virtual char * go_to_listen_i (TAO_FlowSpec_Entry::Role role,

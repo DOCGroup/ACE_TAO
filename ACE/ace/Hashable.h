@@ -29,27 +29,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Hashable
 {
 public:
-
   /// Destructor.
-  virtual ~ACE_Hashable (void);
+  virtual ~ACE_Hashable ();
 
   /// Computes and returns hash value.  This "caches" the hash value to
   /// improve performance.
-  virtual unsigned long hash (void) const;
+  virtual unsigned long hash () const;
 
 protected:
   /// Protected constructor.
-  ACE_Hashable (void);
+  ACE_Hashable ();
 
   /// This is the method that actually performs the non-cached hash
   /// computation.
-  virtual unsigned long hash_i (void) const = 0;
+  virtual unsigned long hash_i () const = 0;
 
 protected:
-
   /// Pre-computed hash-value.
   mutable unsigned long hash_value_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

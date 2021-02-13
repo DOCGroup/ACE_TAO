@@ -16,7 +16,7 @@ be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ci::~be_visitor_array_ci (void)
+be_visitor_array_ci::~be_visitor_array_ci ()
 {
 }
 
@@ -31,7 +31,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   this->ctx_->node (node); // save the array node
 
   // If we contain an anonymous sequence, generate code for it here.
-  be_type *bt = be_type::narrow_from_decl (node->base_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->base_type ());
 
   if (!bt)
     {
@@ -61,7 +61,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   // If the array is an anonymous member and if its element type
   // is a declaration (not a reference), we must generate code for
   // the declaration.
-  if (this->ctx_->alias () == 0 // Not a typedef.
+  if (this->ctx_->alias () == nullptr // Not a typedef.
       && bt->is_child (this->ctx_->scope ()->decl ()))
     {
       int status = 0;
@@ -121,7 +121,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       if (node->is_nested ())
         {
           be_decl *parent =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
           ACE_OS::sprintf (fname,
                            "%s::_%s",
                            parent->full_name (),
@@ -153,7 +153,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   if (nt == AST_Decl::NT_typedef)
     {
-      be_typedef *td = be_typedef::narrow_from_decl (bt);
+      be_typedef *td = dynamic_cast<be_typedef*> (bt);
       unique = td->primitive_base_type ()->flat_name ();
     }
   else
@@ -220,7 +220,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       << "{" << be_idt_nl;
 
   ACE_CDR::ULong ndims = node->n_dims ();
-  be_array *primitive_type = 0;
+  be_array *primitive_type = nullptr;
 
   if (bt->node_type () == AST_Decl::NT_typedef)
     {
@@ -234,11 +234,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
       while (tmp->node_type () == AST_Decl::NT_typedef)
         {
-          be_typedef *tdef = be_typedef::narrow_from_decl (tmp);
-          tmp = be_type::narrow_from_decl (tdef->base_type ());
+          be_typedef *tdef = dynamic_cast<be_typedef*> (tmp);
+          tmp = dynamic_cast<be_type*> (tdef->base_type ());
         }
 
-      primitive_type = be_array::narrow_from_decl (tmp);
+      primitive_type = dynamic_cast<be_array*> (tmp);
     }
 
   *os << "// Zero each individual element." << be_nl;
@@ -249,7 +249,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i];
 
-      if ((expr == 0) || ((expr != 0) && (expr->ev () == 0)))
+      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                               "(%N:%l) be_visitor_array_cs::"
@@ -341,7 +341,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
   *os << be_nl_2
       << "ACE_INLINE" << be_nl
       << fname << "_slice *" << be_nl
-     << "TAO::Array_Traits<" << fname << "_forany>::alloc (void)"
+     << "TAO::Array_Traits<" << fname << "_forany>::alloc ()"
       << be_idt << be_uidt_nl
       << "{" << be_idt_nl
       << "return " << fname << "_alloc ();" << be_uidt_nl

@@ -67,9 +67,6 @@ public:
   virtual char object_key_delimiter (void) const;
 
 public:
-
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
           TAO_IIOP_CONNECT_CONCURRENCY_STRATEGY;
 
@@ -83,7 +80,6 @@ public:
   typedef ACE_Strategy_Connector<TAO_IIOP_Connection_Handler,
                                  ACE_SOCK_CONNECTOR>
           TAO_IIOP_BASE_CONNECTOR;
-  //@@ TAO_CONNECTOR_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
 protected:
   /// A flag indicating the actual connector supports parallel
@@ -113,12 +109,6 @@ protected:
   /// Cancel the passed cvs handler from the connector
   virtual int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
-/*
- * Hook to copy over the protected and private data from this class to
- * base Connector class.
- */
-//@@ TAO_CONNECTOR_SPL_COPY_HOOK_START
-
 private:
   /// This is the first half of making a connection. Both make_connection
   /// and make_parallel_connection will start out using begin_connection.
@@ -146,15 +136,11 @@ private:
   TAO_IIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 
 private:
-
   /// Our connect strategy
   TAO_IIOP_CONNECT_STRATEGY connect_strategy_;
 
   /// The connector initiating connection requests for IIOP.
   TAO_IIOP_BASE_CONNECTOR base_connector_;
-
-//@@ TAO_CONNECTOR_SPL_COPY_HOOK_END
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

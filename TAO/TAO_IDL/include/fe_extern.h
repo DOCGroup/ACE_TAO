@@ -71,15 +71,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 // Declares all global functions for the FE
 
-TAO_IDL_FE_Export void FE_init (void);
-TAO_IDL_FE_Export void FE_populate (void);
+TAO_IDL_FE_Export void FE_init ();
+TAO_IDL_FE_Export void FE_populate ();
 TAO_IDL_FE_Export void FE_extract_env_include_paths (ACE_Unbounded_Queue<ACE_CString> &list);
-TAO_IDL_FE_Export void FE_store_env_include_paths (void);
-TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env (void);
-TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env (void);
+TAO_IDL_FE_Export void FE_store_env_include_paths ();
+TAO_IDL_FE_Export const char *FE_get_cpp_loc_from_env ();
+TAO_IDL_FE_Export const char *FE_get_cpp_args_from_env ();
 
 TAO_IDL_FE_Export int
-FE_yyparse (void);
+FE_yyparse ();
 
 TAO_IDL_FE_Export void
 FE_yydebug (bool);
@@ -97,10 +97,10 @@ class UTL_Error;
 class UTL_Indenter;
 
 TAO_IDL_FE_Export UTL_Error *
-FE_new_UTL_Error (void);
+FE_new_UTL_Error ();
 
 TAO_IDL_FE_Export UTL_Indenter *
-FE_new_UTL_Indenter (void);
+FE_new_UTL_Indenter ();
 
 /**
  * Exception thrown when exiting prematurely in the front end.

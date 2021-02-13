@@ -32,7 +32,7 @@ class TAO_AnyTypeCode_Export TAO_AnyTypeCode_Adapter_Impl
 {
 public:
     // Used to force the initialization of the code.
-    static int Initializer (void);
+    static int Initializer ();
 
 #define ANYTYPECODE__EXCEPTION_LIST \
     TAO_SYSTEM_EXCEPTION (UNKNOWN) \

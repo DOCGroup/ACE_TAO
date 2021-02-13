@@ -46,11 +46,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   // get the profile lists, start by initialize the composite reference
   // by using the first Object.  Then for each subsequent Object verify
   // they are the same type and they do not have duplicate profiles.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles (iors[0]->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
   if (Merged_Profiles.add_profiles (tmp_pfiles.get ())< 0)
     throw TAO_IOP::Invalid_IOR ();
   CORBA::String_var id =
@@ -75,12 +71,10 @@ TAO_IOR_Manipulation_impl::merge_iors (
       // append profiles
       if (Merged_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
         throw TAO_IOP::Invalid_IOR ();
-
     }
 
   // MS C++ knows nothing about reset!
   // tmp_pfiles.reset (0); // get rid of last MProfile
-
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
@@ -97,7 +91,6 @@ TAO_IOR_Manipulation_impl::merge_iors (
                     CORBA::NO_MEMORY ());
 
   CORBA::Object_var new_obj = temp_obj;
-
 
   // Clean up in case of errors.
   if (CORBA::is_nil (new_obj.in ()))
@@ -117,7 +110,6 @@ TAO_IOR_Manipulation_impl::add_profiles (
     CORBA::Object_ptr ior1,
     CORBA::Object_ptr ior2)
 {
-
   // Get an estimate of the number of profiles
   CORBA::Object_ptr buffer [2];
   buffer [0] = ior1;
@@ -129,8 +121,7 @@ TAO_IOR_Manipulation_impl::add_profiles (
 CORBA::Object_ptr
 TAO_IOR_Manipulation_impl::remove_profiles (
     CORBA::Object_ptr group,
-    CORBA::Object_ptr ior2
-    )
+    CORBA::Object_ptr ior2)
 {
   // First verify they are the same type!
   CORBA::String_var id =
@@ -150,11 +141,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   // initialize with estimated pfile count.
   TAO_MProfile Diff_Profiles (count);
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles (group->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
   if (Diff_Profiles.add_profiles (tmp_pfiles.get ()) < 0)
     throw TAO_IOP::Invalid_IOR ();
 
@@ -170,8 +157,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
   TAO_ORB_Core *orb_core = TAO_ORB_Core_instance ();
 
   TAO_Stub *stub = orb_core->create_stub (id.in (), // give the id string
-                                          Diff_Profiles
-                                         );
+                                          Diff_Profiles);
 
   // Make the stub memory allocation exception safe for the duration
   // of this method.
@@ -283,13 +269,8 @@ TAO_IOR_Manipulation_impl::is_in_ior (
   CORBA::ULong count = 0;
   TAO_Profile *pfile1 = 0;
   TAO_Profile *pfile2 = 0;
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
   std::unique_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
-#else
-  auto_ptr<TAO_MProfile> tmp_pfiles1 (ior1->_stubobj ()->make_profiles ());
-  auto_ptr<TAO_MProfile> tmp_pfiles2 (ior2->_stubobj ()->make_profiles ());
-#endif /* ACE_HAS_CPP11 */
 
   tmp_pfiles1->rewind ();
   while ((pfile1 = tmp_pfiles1->get_next ()) != 0)

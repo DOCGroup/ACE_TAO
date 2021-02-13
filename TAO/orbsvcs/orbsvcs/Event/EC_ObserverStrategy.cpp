@@ -11,11 +11,9 @@
 #include "orbsvcs/Event/EC_ObserverStrategy.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy (void)
+TAO_EC_ObserverStrategy::~TAO_EC_ObserverStrategy ()
 {
 }
 
@@ -57,10 +55,10 @@ TAO_EC_Null_ObserverStrategy::disconnected (TAO_EC_ProxyPushSupplier*)
 
 // ****************************************************************
 
-TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy (void)
+TAO_EC_Basic_ObserverStrategy::~TAO_EC_Basic_ObserverStrategy ()
 {
   delete this->lock_;
-  this->lock_ = 0;
+  this->lock_ = nullptr;
 }
 
 RtecEventChannelAdmin::Observer_Handle
@@ -111,7 +109,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
   int size = static_cast<int> (this->observers_.current_size ());
-  RtecEventChannelAdmin::Observer_var *tmp = 0;
+  RtecEventChannelAdmin::Observer_var *tmp = nullptr;
   ACE_NEW_RETURN (tmp,
                   RtecEventChannelAdmin::Observer_var[size],
                   0);
@@ -156,7 +154,7 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
   RtecEventChannelAdmin::SupplierQOS s_qos;
   this->fill_qos (s_qos);
 
-  RtecEventChannelAdmin::Observer_var *tmp = 0;
+  RtecEventChannelAdmin::Observer_var *tmp = nullptr;
   int size = this->create_observer_list (tmp);
   ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
@@ -198,7 +196,7 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
   RtecEventChannelAdmin::ConsumerQOS c_qos;
   this->fill_qos (c_qos);
 
-  RtecEventChannelAdmin::Observer_var *tmp = 0;
+  RtecEventChannelAdmin::Observer_var *tmp = nullptr;
   int size = this->create_observer_list (tmp);
   ACE_Auto_Basic_Array_Ptr<RtecEventChannelAdmin::Observer_var> copy (tmp);
 
@@ -262,7 +260,7 @@ TAO_EC_Basic_ObserverStrategy::fill_qos (
 
 // ****************************************************************
 
-TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy (void)
+TAO_EC_Reactive_ObserverStrategy::~TAO_EC_Reactive_ObserverStrategy ()
 {
 }
 

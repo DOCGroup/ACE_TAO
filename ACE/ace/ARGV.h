@@ -35,7 +35,7 @@ class ACE_ARGV_Queue_Entry_T
 {
 public:
   /// Initialize a ACE_ARGV_Queue_Entry_T.
-  ACE_ARGV_Queue_Entry_T (void);
+  ACE_ARGV_Queue_Entry_T ();
 
   /**
    * Initialize a ACE_ARGV_Queue_Entry_T.
@@ -55,12 +55,16 @@ public:
    */
   ACE_ARGV_Queue_Entry_T (const ACE_ARGV_Queue_Entry_T<CHAR_TYPE> &entry);
 
+  ACE_ARGV_Queue_Entry_T (ACE_ARGV_Queue_Entry_T&&) = default;
+  ACE_ARGV_Queue_Entry_T &operator = (const ACE_ARGV_Queue_Entry_T &) = default;
+  ACE_ARGV_Queue_Entry_T &operator = (ACE_ARGV_Queue_Entry_T &&)  = default;
+
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_ARGV_Queue_Entry_T (void);
+  ~ACE_ARGV_Queue_Entry_T ();
 
   /// Dump the state of this object.
-  void dump (void) const;
+  void dump () const;
 
   // Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -190,7 +194,7 @@ public:
   explicit ACE_ARGV_T (bool substitute_env_args = true);
 
   /// Destructor.
-  ~ACE_ARGV_T (void);
+  ~ACE_ARGV_T ();
 
   /** @name Accessor methods
    *
@@ -212,22 +216,22 @@ public:
    * maintained internally to this class. Do not change or delete either the
    * pointers or the memory to which they refer.
    */
-  CHAR_TYPE **argv (void);
+  CHAR_TYPE **argv ();
 
   /// Returns the current number of arguments.
-  int argc (void) const;
+  int argc () const;
 
   /**
    * Returns a single string form of the current arguments. The returned
    * pointer refers to memory maintained internally to this class. Do not
    * change or delete it.
    */
-  const CHAR_TYPE *buf (void);
+  const CHAR_TYPE *buf ();
 
   //@}
 
   /// Dump the state of this object.
-  void dump (void) const;
+  void dump () const;
 
   // Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -272,17 +276,16 @@ public:
   int add (CHAR_TYPE *argv[], bool quote_args = false);
 
 private:
-  /// Copy constructor not implemented.
-  ACE_UNIMPLEMENTED_FUNC (ACE_ARGV_T (const ACE_ARGV_T<CHAR_TYPE>&))
-
-  /// Assignment operator not implemented.
-  ACE_UNIMPLEMENTED_FUNC (ACE_ARGV_T operator= (const ACE_ARGV_T<CHAR_TYPE>&))
+  ACE_ARGV_T (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
+  ACE_ARGV_T operator= (const ACE_ARGV_T<CHAR_TYPE>&) = delete;
+  ACE_ARGV_T (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
+  ACE_ARGV_T operator= (ACE_ARGV_T<CHAR_TYPE>&&) = delete;
 
   /// Creates buf_ from the queue of added args, deletes previous buf_.
-  int create_buf_from_queue (void);
+  int create_buf_from_queue ();
 
   /// Converts buf_ into the CHAR_TYPE *argv[] format.
-  int string_to_argv (void);
+  int string_to_argv ();
 
   /// Replace args with environment variable values?
   bool substitute_env_args_;

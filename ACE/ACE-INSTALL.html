@@ -185,7 +185,7 @@ document</a>.</p><p>
         Windows CE, MinGW, Microsoft Visual C++, GCC,
         Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS on IA64,
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
-        Tru64, SuSE Linux on Alpha/IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
+        Tru64, SuSE Linux on IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
         HPUX on IA64, and Android.
         The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
@@ -211,7 +211,7 @@ document</a>.</p><p>
         Linux on PPC; OpenMVS;
         Tandem; SCO; FreeBSD; NetBSD; OpenBSD;
         Macintosh OS X; OS/9; PharLap ETS 13;
-        QNX RTP and Neutrino 2.0; Interix (Windows Services for Unix)
+        QNX RTP and Neutrino 2.0
     </td>
   </tr><tr>
     <th>Not maintained</th>
@@ -285,7 +285,6 @@ The following sections explain how to build ACE on:
 <li><a href="#win32">Windows (including MinGW and Cygwin)</a></li>
 <li><a href="#vxworks">VxWorks</a></li>
 <li><a href="#android">Android</a></li>
-<li><a href="#interix">Interix</a></li>
 <li><a href="#rtems">RTEMS</a></li>
 </ul>
 
@@ -466,7 +465,7 @@ State Perl</a> or <a href="http://strawberryperl.com">Strawberry Perl</a></p>
 Microsoft Visual Studio</a></h3>
 
 <p>ACE contains project files for
-Visual Studio 2015 (vc14), Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
+Visual Studio 2017 (vc141), and Visual Studio 2019 (vc142).
 Visual Studio 2015/2017/2019 use different file formats but the same file
 suffixes (<code>.sln</code> and <code>.vcproj</code>). To support both
 environments, ACE supplies files with different names for the different
@@ -482,11 +481,6 @@ a <code>.vcproj</code> suffix.</p>
     <th>File Name</th>
   </tr>
 </thead><tbody>
-  <tr>
-    <th>Visual Studio 2015</th>
-    <td><i>name</i><code>_vc14</code>
-    </td>
-  </tr>
   <tr>
     <th>Visual Studio 2017</th>
     <td><i>name</i><code>_vs2017</code>
@@ -1030,42 +1024,6 @@ of the various tests on Cygwin and the different Windows flavors.
 </p>
 
 <p></P>
-<hr align=left width="50%">
-
-<p>
-<H2><a name="interix">Building and Installing ACE on Win32 with Interix</H2>
-<P>Interix comes with a BSD style make; you need GNU make.
-Make builds easily under Interix or there is a prebuilt
-package at: </P>
-<P><A
-href="http://www.interopsystems.com/tools/warehouse.htm">http://www.interopsystems.com/tools/warehouse.htm</A> </P>
-<P>If you are building for a machine without a network
-card, you may want to check <A href="#win32nonic" ><FONT color=#0000ff>here</FONT></A> first. </P>
-<P>This port was built and tested under Interix 3.5. a.k.a.
-<A href="http://www.microsoft.com/windows/sfu/">Windows
-Services for UNIX 3.5.</A></P>
-<P>To build follow the <A href="#unix_traditional" >Traditional ACE/GNU Make
-Configuration</A> instructions replacing the following include directives:</P>
-<P><TT>#include
-"ace/config-win32-interix.h"</TT> </P>
-<P>for the config.h header </P>
-<P>and: </P>
-<P><TT>include
-$(ACE_ROOT)/include/makeinclude/platform_win32_interix.GNU</TT></P>
-<P>for your platform_macros.GNU file.</P>
-<P>ACE should build fine with just '<TT>make</TT>', the only other option tried thus far is
-'<TT>make static_libs_only=1</TT>' which also works. Any
-other options may not work.</P>
-<P><b>ACE TESTS</B> </P>
-<p>The tests are located in <TT>$ACE_ROOT/tests</TT>. After building the library, you can
-change to that directory and run make: </P>
-<P><TT>% cd $ACE_ROOT/tests </TT><BR><TT>% make </TT>
-<p>Once you build all the tests, you can run <code>run_test.pl</CODE> in the <code>tests</CODE> directory to try all the tests: </P>
-<P><TT>% run_test.pl </TT></P>
-<p>If you are using ACE as a shared library, you will need
-to modify your LD_LIBRARY_PATH as explained in<A href="#unix_traditional" ><FONT color=#800080>Traditional ACE/GNU Make Configuration</FONT></A>. </P>
-<p></P>
-
 <p></p><hr align="left" width="50%"><p>
 </p><h2><a name="vxworks">Building and Installing ACE on VxWorks</a></h2>
 For the most part, you should be able to follow the instructions above
@@ -1631,8 +1589,8 @@ symbols are necessary when you want to debug your code.</p>
 <h2><a name="android">Building and Installing ACE on Android</a></h2>
 
 <ul>
-  <li><a href="#android-toolchain">Generating a Toolchain</a></li>
-  <li><a href="#android-oldndks">Using Older NDKs</a></li>
+  <li><a href="#android-target">Choosing the Target</a></li>
+  <li><a href="#android-toolchain">Generating a Toolchain (Optional)</a></li>
   <li><a href="#android-building">Building</a></li>
   <li><a href="#android-install">Installing ACE on Android</a></li>
   <li><a href="#android-logging">Logging</a></li>
@@ -1642,12 +1600,15 @@ symbols are necessary when you want to debug your code.</p>
 <p>ACE can be built for Android by using the <a
 href="https://developer.android.com/ndk/">Android Native Development Kit
 (NDK)</a>. This is different than the standard way of writing Android
-applications in Java which run the on Android Runtime or the older Dalvik
-Virtual Machine. Applications built using the NDK are native Linux applications
-written in C or C++ specifically compiled to run on Android systems. In
-addition, applications built using the NDK have access to Android-specific APIs
-much like the ones available to Java-based Android applications.
+applications in Java which run the on the Android Runtime or the older Dalvik
+Virtual Machine. Applications and libraries built using the NDK are native
+Linux applications written in C or C++ specifically compiled to run on Android
+systems and libraries can be included in normal Android apps. In addition,
+applications and libraries built using the NDK have access to Android-specific
+APIs much like the ones available to Java-based Android applications.
 </p>
+
+<p><b>NOTE: ACE requires NDK r18 or later. Building with the NDK directly requires NDK r19 or later.</b></p>
 
 <div class="boxed">
 <p><b>Windows Users:</b> These instructions are written for a Unix based
@@ -1663,11 +1624,17 @@ addition to the Windows version of the Android NDK, you will also need
 <a href="https://www.msys2.org">MSYS2 for Unix utilities that ACE needs</a>.
 </div>
 
-<h3><a name="android-toolchain">Generating a Toolchain</a></h3>
+After downloading the NDK, you will have to decide on what target you want to
+build for, which is covered in the next section, then decide if you want to
+build directly using the NDK or using
+<a href="#android-toolchain">a generated standalone toolchain</a>. Generating a
+toolchain is optional and only really makes sense if you're building for just
+one architecture/API level pair and don't need to keep the entire NDK around.
 
-<p>To build ACE for Android you need to download the NDK and generate a
-toolchain for the specific Android target you want. The specific target is
-defined by two things:</p>
+<h3><a name="android-toolchain">Choosing the Target</a></h3>
+
+<p>To build ACE for Android you need to know the specific Android target you
+want. The specific target is defined by two things:</p>
 
 <dl class="indent">
   <dt>- The minimal API level to target.</dt>
@@ -1682,14 +1649,14 @@ defined by two things:</p>
     although support for MIPS has been dropped from the NDK. <a
     href="https://developer.android.com/ndk/guides/abis">This is the official
     documentation on the ABIs</a>. These are the ABIs that ACE supports at the
-    time of writing and must be passed to ACE as <code>ANDROID_ABI</code>:
+    time of writing and must be passed to ACE as <code>android_abi</code>:
     <!-- Check to see if any architectures have been added or removed. If so
       update this list and the table below as well-->
-    <dl>
+    <dl id="android_abis">
       <dt><code>armeabi-v7a</code></dt>
-        <dd>32-bit ARM, The default ABI for both the NDK and ACE.</dd>
-      <dt><code>armeabi-v7a-with-neon</code></dt>
-        <dd><code>armeabi-v7a</code> with NEON extensions enabled.</dd>
+        <dd>32-bit ARM. Builds with NEON extensions enabled by default. Include
+        <code>android_neon := 0</code> in your <code>platform_macros.GNU</code>
+        if you want to support processors without NEON support.</dd>
       <dt><code>arm64-v8a</code></dt>
         <dd>64-bit ARM, Sometimes referred to as <code>aarch64</code>.</dd>
       <dt><code>x86</code></dt>
@@ -1700,15 +1667,16 @@ defined by two things:</p>
     <p><b>
       It should be noted that starting in August 2019, the Google Play
       Store will require new apps to have 64-bit libraries if they have native
-      libraries. 32-bit native libraries will still be supported but they must also
-      have 64-bit libraries. Look up any restrictions that may affect
-      apps you want to publish on the Play Store, including minimum API
-      level.
+      libraries. 32-bit native libraries will still be supported but apps must
+      also have 64-bit libraries. Look up any restrictions that may affect apps
+      you want to publish on the Play Store, including targeted API level
+      requirements.
     </b></p>
     </dd>
   </li>
 </dl>
 
+<h3><a name="android-toolchain">Generating a Toolchain (Optional)</a></h3>
 
 <p>To generate a toolchain, one use must use
 <code>build/tools/make_standalone_toolchain.py</code> in the NDK. A destination must be
@@ -1720,18 +1688,15 @@ toolchain targeting 32-bit ARM Android 7.0 "Nougat" (API Level 24) and later: </
 <p><code>$TOOLCHAIN/bin</code> must be in your <code>$PATH</code> when building ACE and
 applications using ACE.</p>
 
-<p>This table shows how the <code>ANDROID_ABI</code> variable and the <code>--arch</code> argument correlate:</p>
-<table class="indent">
+<p>This table shows how the <code>android_abi</code> variable and the
+<code>--arch</code> argument correlate:</p>
+<table class="indent" id="android_abi_toolchain_table">
   <tr>
-    <th><code>ANDROID_ABI</code></th>
+    <th><code>android_abi</code></th>
     <th><code>--arch</code></th>
   </tr>
   <tr>
     <td><code>armeabi-v7a</code></td>
-    <td><code>arm</code></td>
-  </tr>
-  <tr>
-    <td><code>armeabi-v7a-with-neon</code></td>
     <td><code>arm</code></td>
   </tr>
   <tr>
@@ -1768,64 +1733,6 @@ utilities must be in <code>%PATH%</code> when cross compiling ACE. The default
 location for these would be <code>C:\msys64\usr\bin</code>.
 </div>
 
-<!-- Remove this section if these NDKs can be considered not supported anymore -->
-<h3><a name="android-oldndks">Using Older NDKs</a></h3>
-
-<p><b>Skip this section if using NDK r18 or later.</b></p>
-
-<p>
-It is <b>highly recommended</b> to use the latest NDK available assuming
-that it works with ACE. It is possible to use NDKs older than r18, but these
-have caveats:
-</p>
-<ul>
-  <li>
-    In NDK r16, a file called <code>ndk-version.h</code> was added that
-    contains the version of the NDK. If using an earlier NDK, you <b>must</b>
-    define the macros <code>__NDK_MAJOR__</code> and <code>__NDK_MINOR__</code>
-    in <code>ace/config.h</code> before
-    <code>#include "ace/config-android.h"</code>.
-    The scheme works like this:
-    <table class="indent" style="margin-top: .5em; margin-bottom: .5em;">
-      <tr>
-        <th>Revision</th>
-        <th><code>__NDK_MAJOR__</code></th>
-        <th><code>__NDK_MINOR__</code></th>
-      </tr>
-      <tr>
-        <td>r16</td>
-        <td>16</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td>r16a</td>
-        <td>16</td>
-        <td>1</td>
-      </tr>
-      <tr>
-        <td>r16b</td>
-        <td>16</td>
-        <td>2</td>
-      </tr>
-    </table>
-  </li>
-  <li>
-    As of NDK r18, the only compiler that comes with the NDK is clang and by
-    default the build system assumes that clang is available and will use it.
-    However there was a transitional period between r12 and r17 where GCC and
-    clang both exist in the NDK. In some cases GCC should be used if linking
-    errors occur with these NDKs (For example missing references to
-    <code>stderr</code>). To let the build system decide between them, set
-    <code>android_force_clang:=0</code> in
-    <code>include/makeinclude/platform_macros.GNU</code> before including
-    <code>platform_android.GNU</code>. <b>This should be set for NDKs before r15.</b>
-  </li>
-  <li>
-    There are probably unknown conflicts, especially in the minor revisions
-    before the last minor revision of a NDK revision.
-  </li>
-</ul>
-
 <h3><a name="android-building">Building</a></h3>
 
 <ul>
@@ -1846,10 +1753,15 @@ have caveats:
     <li>Create <code>include/makeinclude/platform_macros.GNU</code>:
       <ul>
         <li>
-          Set <code>ANDROID_ABI</code> to one of the options above. This
-          must match the toolchain <code>--arch</code> argument used according
-          to the table above.
+          Set <code>android_abi</code> to one of
+          <a href="#android_abis">the options above</a>.
+          If using a standalone toolchain this must match the
+          <code>--arch</code> argument used according
+          to <a href="#android_abi_toolchain_table">the table above</a>.
         </li>
+        <li>If using the NDK directly, set <code>android_ndk</code> to the
+          location of the extracted NDK and <code>android_api</code> to the API
+          level desired.</li>
         <li>Set options for debug and optimization options as desired.</li>
           <li>If you want to compile static, add <code>static_libs_only:=1</code></li>
           <li>Must include <code>include $(ACE_ROOT)/include/makeinclude/platform_android.GNU</code>.</li>
@@ -1862,10 +1774,11 @@ have caveats:
     </li>
     </li>
     <li>Generate makefiles (if necessary).</li>
-    <li>Build with GNU make. Make sure you have <code>$TOOLCHAIN/bin</code> in
-      your <code>$PATH</code>.
+    <li>Build with GNU make. If using a standalone toolchain, make sure you
+      have <code>$TOOLCHAIN/bin</code> in your <code>$PATH</code>.
       <div class="boxed indent"><p>
-        <b>Windows Users:</b> Make sure you have <code>%TOOLCHAIN%\bin</code>
+        <b>Windows Users:</b> If using a standalone toolchain,
+        Make sure you have <code>%TOOLCHAIN%\bin</code>
         and MSYS2's <code>bin</code> in your <code>%PATH%</code> when building.
         If you are cross compiling TAO you will also need a preprocessor for
         <code>tao_idl</code> available (See Windows note above).</p>
@@ -2237,10 +2150,10 @@ libraries.
   </p></li><li><b><a name="Linux">Linux</a></b><p>
 
       ACE has been ported to Linux on
-      Intel, Alpha, and PowerPC platforms.  If you use a RedHat 5.x
+      Intel, PowerPC platforms.  If you use a RedHat 5.x
       distribution, it's best to use RedHat 5.1 or later.  ACE works
       without any modifications on RedHat 5.1 and later, and on
-      Debian 2.1 on both Intel and Alpha.  Use the
+      Debian 2.1 on Intel.  Use the
       <code>platform_linux.GNU</code> and <code>ace/config-linux.h</code>
       in your <code>platform_macros.GNU</code> and
       <code>config.h</code> files, respectively.  The same
@@ -2697,7 +2610,7 @@ perl bin/mwc.pl  -type vc71 -relative ACE_ROOT=C:/ace/ACE_wrappers -relative TAO
 If you use the GNU GCC g++ compiler please note the following:
 
 <ul>
-  </p></li><li>ACE/TAO needs g++ 2.95.x or better. Older versions are not usable anymore<p>
+  </p></li><li>ACE/TAO needs g++ 4.8 or better. Older versions are not usable anymore<p>
 
   </p></li><li>Make sure to update your gcc <code>config.status</code>
       file.  This file is produced when installing gcc; it specifies
@@ -2830,11 +2743,11 @@ core ACE and TAO libraries and executables is the following:
 
 <pre><code>
 C:> cd %TAO_ROOT%
-C:> %ACE_ROOT%\bin\mwc.pl -type vc71 TAO_ACE.mwc
+C:> %ACE_ROOT%\bin\mwc.pl -type vs2019 TAO_ACE.mwc
 </pre></code>
 
 <p>
-Replace vc71 with whatever project type you want to use.  On Linux and
+Replace vs2019 with whatever project type you want to use.  On Linux and
 other UNIX platform use the gnuace type:
 </p>
 

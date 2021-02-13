@@ -237,7 +237,7 @@ ACE_Active_Map_Manager<T>::ACE_Active_Map_Manager (size_t size,
 }
 
 template <class T> ACE_INLINE
-ACE_Active_Map_Manager<T>::~ACE_Active_Map_Manager (void)
+ACE_Active_Map_Manager<T>::~ACE_Active_Map_Manager ()
 {
 }
 
@@ -249,32 +249,32 @@ ACE_Active_Map_Manager<T>::open (size_t length,
 }
 
 template <class T> ACE_INLINE int
-ACE_Active_Map_Manager<T>::close (void)
+ACE_Active_Map_Manager<T>::close ()
 {
   return ACE_AMM_BASE::close ();
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Active_Map_Manager<T>::current_size (void) const
+ACE_Active_Map_Manager<T>::current_size () const
 {
   return ACE_AMM_BASE::current_size ();
 }
 
 template <class T> ACE_INLINE size_t
-ACE_Active_Map_Manager<T>::total_size (void) const
+ACE_Active_Map_Manager<T>::total_size () const
 {
   return ACE_AMM_BASE::total_size ();
 }
 
 /* static */
 template <class T> ACE_INLINE const ACE_Active_Map_Manager_Key
-ACE_Active_Map_Manager<T>::npos (void)
+ACE_Active_Map_Manager<T>::npos ()
 {
   return ACE_Active_Map_Manager_Key (~0, ~0);
 }
 
 template <class T> ACE_INLINE void
-ACE_Active_Map_Manager<T>::dump (void) const
+ACE_Active_Map_Manager<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_AMM_BASE::dump ();
@@ -282,25 +282,25 @@ ACE_Active_Map_Manager<T>::dump (void) const
 }
 
 template <class T> ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
-ACE_Active_Map_Manager<T>::begin (void)
+ACE_Active_Map_Manager<T>::begin ()
 {
   return ACE_AMM_BASE::begin ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
-ACE_Active_Map_Manager<T>::end (void)
+ACE_Active_Map_Manager<T>::end ()
 {
   return ACE_AMM_BASE::end ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
-ACE_Active_Map_Manager<T>::rbegin (void)
+ACE_Active_Map_Manager<T>::rbegin ()
 {
   return ACE_AMM_BASE::rbegin ();
 }
 
 template <class T> ACE_INLINE ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, T, ACE_Null_Mutex>
-ACE_Active_Map_Manager<T>::rend (void)
+ACE_Active_Map_Manager<T>::rend ()
 {
   return ACE_AMM_BASE::rend ();
 }

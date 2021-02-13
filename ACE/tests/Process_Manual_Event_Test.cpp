@@ -35,7 +35,7 @@ static const ACE_TCHAR *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-i #iterations] [-c (child process)]\n")));
@@ -66,7 +66,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static void
-acquire_release (void)
+acquire_release ()
 {
   ACE_Manual_Event event_ping (0, USYNC_PROCESS, event_ping_name);
   ACE_Manual_Event event_pong (0, USYNC_PROCESS, event_pong_name);

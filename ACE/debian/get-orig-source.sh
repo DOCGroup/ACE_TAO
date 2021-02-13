@@ -27,6 +27,10 @@ rm bin/LabVIEW_RT/*.exe
 rm -rf examples/C++NPv2
 rm -rf examples/C++NPv1
 rm -rf examples/APG
+rm -rf contrib
+rm -rf apps/JAWS/clients/WebSTONE
+rm -f MPC/MPC.ico
+rm -f apps/gperf/tests/test-*.exp
 
 GZIP=-9 tar --remove-files -czf ${ORIG_TARBALL_DFSG} ${ORIG_TARBALL_DIR} || exit 1
 

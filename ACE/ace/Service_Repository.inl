@@ -10,7 +10,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE size_t
-ACE_Service_Repository::current_size (void) const
+ACE_Service_Repository::current_size () const
 {
   ACE_TRACE ("ACE_Service_Repository::current_size");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
@@ -20,13 +20,13 @@ ACE_Service_Repository::current_size (void) const
 }
 
 ACE_INLINE ACE_SYNCH_RECURSIVE_MUTEX&
-ACE_Service_Repository::lock (void) const
+ACE_Service_Repository::lock () const
 {
   return this->lock_;
 }
 
 ACE_INLINE int
-ACE_Service_Repository_Iterator::done (void) const
+ACE_Service_Repository_Iterator::done () const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::done");
 
@@ -34,7 +34,7 @@ ACE_Service_Repository_Iterator::done (void) const
 }
 
 ACE_INLINE
-ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator (void)
+ACE_Service_Repository_Iterator::~ACE_Service_Repository_Iterator ()
 {
 }
 

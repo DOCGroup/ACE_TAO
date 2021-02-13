@@ -104,7 +104,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
 
     // Remember the Svc_Handler.
     sh = this->svc_handler_;
-    ACE_HANDLE h = sh->get_handle ();
+    ACE_HANDLE const h = sh->get_handle ();
     this->svc_handler_ = 0;
 
     // Remove this handle from the set of non-blocking handles
@@ -338,8 +338,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::open (ACE_Reactor *r, int flags)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR>
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector (ACE_Reactor *r,
-                                                                 int flags)
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector (ACE_Reactor *r, int flags)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector");
   (void) this->open (r, flags);
@@ -565,7 +564,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, this->reactor ()->lock (), -1);
 
   // Register handle with the reactor for connection events.
-  ACE_Reactor_Mask mask = ACE_Event_Handler::CONNECT_MASK;
+  ACE_Reactor_Mask const mask = ACE_Event_Handler::CONNECT_MASK;
   if (this->reactor ()->register_handler (handle,
                                           nbch,
                                           mask) == -1)
@@ -627,7 +626,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::initialize_svc_handler
 {
   // Try to find out if the reactor uses event associations for the
   // handles it waits on. If so we need to reset it.
-  bool reset_new_handle =
+  bool const reset_new_handle =
     this->reactor ()->uses_event_associations ();
 
   if (reset_new_handle)

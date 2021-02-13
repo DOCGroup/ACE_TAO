@@ -46,7 +46,7 @@
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
 #include "Thread_Pool_Reactor_Test.h"
-typedef ACE_Strategy_Acceptor <Request_Handler, ACE_SOCK_ACCEPTOR> ACCEPTOR;
+using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_Acceptor>;
 
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address

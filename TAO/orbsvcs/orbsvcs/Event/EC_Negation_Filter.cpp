@@ -10,25 +10,25 @@ TAO_EC_Negation_Filter::TAO_EC_Negation_Filter (TAO_EC_Filter* child)
   this->adopt_child (this->child_);
 }
 
-TAO_EC_Negation_Filter::~TAO_EC_Negation_Filter (void)
+TAO_EC_Negation_Filter::~TAO_EC_Negation_Filter ()
 {
   delete this->child_;
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Negation_Filter::begin (void) const
+TAO_EC_Negation_Filter::begin () const
 {
   return const_cast<TAO_EC_Filter**> (&this->child_);
 }
 
 TAO_EC_Filter::ChildrenIterator
-TAO_EC_Negation_Filter::end (void) const
+TAO_EC_Negation_Filter::end () const
 {
   return const_cast<TAO_EC_Filter**> (&this->child_) + 1;
 }
 
 int
-TAO_EC_Negation_Filter::size (void) const
+TAO_EC_Negation_Filter::size () const
 {
   return 1;
 }
@@ -39,7 +39,7 @@ TAO_EC_Negation_Filter::filter (const RtecEventComm::EventSet& event,
 {
   int n =
     this->child_->filter (event, qos_info);
-  if (this->parent () != 0 && n == 0)
+  if (this->parent () != nullptr && n == 0)
     {
       this->parent ()->push (event, qos_info);
       return 1;
@@ -53,7 +53,7 @@ TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
 {
   int n =
     this->child_->filter_nocopy (event, qos_info);
-  if (this->parent () != 0 && n == 0)
+  if (this->parent () != nullptr && n == 0)
     {
       this->parent ()->push_nocopy (event, qos_info);
       return 1;
@@ -74,13 +74,13 @@ TAO_EC_Negation_Filter::push_nocopy (RtecEventComm::EventSet&,
 }
 
 void
-TAO_EC_Negation_Filter::clear (void)
+TAO_EC_Negation_Filter::clear ()
 {
   this->child_->clear ();
 }
 
 CORBA::ULong
-TAO_EC_Negation_Filter::max_event_size (void) const
+TAO_EC_Negation_Filter::max_event_size () const
 {
   return this->child_->max_event_size ();
 }

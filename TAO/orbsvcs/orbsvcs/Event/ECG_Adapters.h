@@ -42,8 +42,8 @@ public:
 
   // Define virtual destructor to make sure we can delete derived
   // objects through a pointer to TAO_ECG_Handler_Shutdown.
-  virtual ~TAO_ECG_Handler_Shutdown (void);
-  virtual int shutdown (void) = 0;
+  virtual ~TAO_ECG_Handler_Shutdown ();
+  virtual int shutdown () = 0;
 };
 
 /**
@@ -58,7 +58,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Dgram_Handler
 {
 public:
 
-  virtual ~TAO_ECG_Dgram_Handler (void);
+  virtual ~TAO_ECG_Dgram_Handler ();
 
   virtual int handle_input (ACE_SOCK_Dgram& dgram) = 0;
 

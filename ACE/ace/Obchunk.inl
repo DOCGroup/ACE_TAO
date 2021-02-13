@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Obchunk::~ACE_Obchunk (void)
+ACE_Obchunk::~ACE_Obchunk ()
 {
 }
 

@@ -17,7 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::PolicyFactory_Registry_Adapter*
-TAO_PolicyFactory_Loader::create (void)
+TAO_PolicyFactory_Loader::create ()
 {
   TAO::PolicyFactory_Registry_Adapter* obj = 0;
   ACE_NEW_RETURN (obj,
@@ -27,7 +27,7 @@ TAO_PolicyFactory_Loader::create (void)
 }
 
 int
-TAO_PolicyFactory_Loader::Initializer (void)
+TAO_PolicyFactory_Loader::Initializer ()
 {
   return ACE_Service_Config::process_directive (ace_svc_desc_TAO_PolicyFactory_Loader);
 }

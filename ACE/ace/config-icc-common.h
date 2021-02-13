@@ -3,10 +3,7 @@
 #define ACE_LINUX_ICC_COMMON_H
 #include /**/ "ace/pre.h"
 
-# define ACE_HAS_CPLUSPLUS_HEADERS
-# define ACE_HAS_STDCPP_STL_INCLUDES
 # define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 # define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 # define ACE_HAS_STRING_CLASS
 
@@ -23,18 +20,8 @@
 #  define ACE_Proper_Export_Flag __attribute__ ((visibility("default")))
 #  define ACE_Proper_Import_Flag __attribute__ ((visibility("default")))
 
-#  if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 2))
-// Sadly, G++ 4.x silently ignores visibility attributes on
-// template instantiations, which breaks singletons.
-// As a workaround, we use the GCC visibility pragmas.
-// And to make them fit in a macro, we use C99's _Pragma()
-// http://gcc.gnu.org/bugzilla/show_bug.cgi?id=17470
-// This has been fixed in GCC 4.1.1 with FC6 but not with SuSE 10.2
-// that gets shipped with GCC 4.1.2 so we assume that with GCC 4.2
-// this will be fixed on the head. With FC6 just set this define yourself
-#   ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
-#     define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
-#   endif
+#  ifndef ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS
+#    define ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS 1
 #  endif
 
 #  if defined (ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS) && ACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS == 1
@@ -92,17 +79,7 @@
 // We assume that Intel C++ 15 and higher do have correct C++11 support when
 // it runs with GCC 4.7 or higher emulation mode
 #if (__INTEL_COMPILER > 1400) && defined (__INTEL_CXX11_MODE__)
-# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
 #  define ACE_HAS_CPP11
-# endif
-#endif
-
-// Intel C++ 14 Update 2 has correct C++11 support when it runs with GCC 4.7
-// or higher emulation mode
-#if (__INTEL_COMPILER == 1400) && (__INTEL_COMPILER_UPDATE >= 2) && defined (__INTEL_CXX11_MODE__)
-# if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
-#  define ACE_HAS_CPP11
-# endif
 #endif
 
 #include /**/ "ace/post.h"

@@ -1,6 +1,6 @@
 #include "EC_Wrapper.h"
 #include "orbsvcs/Event/EC_Event_Channel.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 EC_Wrapper::EC_Wrapper (void)
   : ec_impl_ (0),
@@ -53,7 +53,7 @@ EC_Wrapper::init (CORBA::ORB_ptr orb,
   ACE_NEW_RETURN (impl,
                   TAO_EC_Event_Channel (attr),
                   -1);
-  auto_ptr<TAO_EC_Event_Channel> impl_release (impl);
+  std::unique_ptr<TAO_EC_Event_Channel> impl_release (impl);
 
   try
     {
@@ -91,7 +91,7 @@ EC_Wrapper::for_suppliers (void)
 void
 EC_Wrapper::destroy_ec (void)
 {
-  auto_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
+  std::unique_ptr<TAO_EC_Event_Channel> ec_impl_aptr (this->ec_impl_);
   this->ec_impl_ = 0;
 
   if (ec_impl_aptr.get ())

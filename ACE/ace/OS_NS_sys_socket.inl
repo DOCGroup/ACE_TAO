@@ -1046,7 +1046,7 @@ ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
 }
 
 ACE_INLINE struct if_nameindex *
-ACE_OS::if_nameindex (void)
+ACE_OS::if_nameindex ()
 {
   ACE_OS_TRACE ("ACE_OS::if_nameindex");
 #ifdef ACE_LACKS_IF_NAMEINDEX

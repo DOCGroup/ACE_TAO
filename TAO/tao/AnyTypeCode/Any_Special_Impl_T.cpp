@@ -129,11 +129,7 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::extract (const CORBA::Any & any,
                                                 bound),
                       false);
 
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<TAO::Any_Special_Impl_T<T, from_T, to_T> > replacement_safety (replacement);
-#else
-      auto_ptr<TAO::Any_Special_Impl_T<T, from_T, to_T> > replacement_safety (replacement);
-#endif /* ACE_HAS_CPP11 */
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =

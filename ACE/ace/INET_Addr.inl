@@ -7,7 +7,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_INET_Addr::reset_i (void)
+ACE_INET_Addr::reset_i ()
 {
   ACE_OS::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
   if (this->get_type() == AF_INET)
@@ -32,7 +32,7 @@ ACE_INET_Addr::reset_i (void)
 }
 
 ACE_INLINE int
-ACE_INET_Addr::determine_type (void) const
+ACE_INET_Addr::determine_type () const
 {
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
@@ -46,7 +46,7 @@ ACE_INET_Addr::determine_type (void) const
 }
 
 ACE_INLINE void *
-ACE_INET_Addr::ip_addr_pointer (void) const
+ACE_INET_Addr::ip_addr_pointer () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET)
@@ -59,7 +59,7 @@ ACE_INET_Addr::ip_addr_pointer (void) const
 }
 
 ACE_INLINE int
-ACE_INET_Addr::ip_addr_size (void) const
+ACE_INET_Addr::ip_addr_size () const
 {
   // Since this size value is used to pass to other host db-type
   // functions (gethostbyaddr, etc.) the length is of int type.
@@ -78,7 +78,7 @@ ACE_INET_Addr::ip_addr_size (void) const
 // Return the port number, converting it into host byte order...
 
 ACE_INLINE u_short
-ACE_INET_Addr::get_port_number (void) const
+ACE_INET_Addr::get_port_number () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_port_number");
 #if defined (ACE_HAS_IPV6)
@@ -96,7 +96,7 @@ ACE_INET_Addr::get_port_number (void) const
 }
 
 ACE_INLINE int
-ACE_INET_Addr::get_addr_size (void) const
+ACE_INET_Addr::get_addr_size () const
 {
   ACE_TRACE ("ACE_INET_Addr::get_addr_size");
 #if defined (ACE_HAS_IPV6)
@@ -181,7 +181,7 @@ ACE_INET_Addr::set (const wchar_t addr[], int address_family)
 
 // Return @c true if the IP address is INADDR_ANY or IN6ADDR_ANY.
 ACE_INLINE bool
-ACE_INET_Addr::is_any (void) const
+ACE_INET_Addr::is_any () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -193,7 +193,7 @@ ACE_INET_Addr::is_any (void) const
 
 // Return @c true if the IP address is IPv4/IPv6 loopback address.
 ACE_INLINE bool
-ACE_INET_Addr::is_loopback (void) const
+ACE_INET_Addr::is_loopback () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
@@ -206,7 +206,7 @@ ACE_INET_Addr::is_loopback (void) const
 
 // Return @c true if the IP address is IPv4/IPv6 multicast address.
 ACE_INLINE bool
-ACE_INET_Addr::is_multicast (void) const
+ACE_INET_Addr::is_multicast () const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type() == AF_INET6)

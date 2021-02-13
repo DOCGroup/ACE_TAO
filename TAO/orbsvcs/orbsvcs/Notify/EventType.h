@@ -67,7 +67,7 @@ public:
   const CosNotification::EventType& native (void) const;
 
   /// Helper to print contents.
-  void dump (void) const;
+  void dump () const;
 
   /// Initialize from an NVPList, return false on failure
   bool init(const TAO_Notify::NVPList& attrs);

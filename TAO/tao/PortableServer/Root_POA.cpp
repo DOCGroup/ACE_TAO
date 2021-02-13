@@ -318,13 +318,13 @@ TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
   aps_cleanup_guard._retn ();
 }
 
-TAO_Root_POA::~TAO_Root_POA (void)
+TAO_Root_POA::~TAO_Root_POA ()
 {
   this->poa_manager_._remove_ref();
 }
 
 void
-TAO_Root_POA::complete_destruction_i (void)
+TAO_Root_POA::complete_destruction_i ()
 {
   bool doing_complete_destruction =
     this->waiting_destruction_ != false;
@@ -739,7 +739,7 @@ TAO_Root_POA::servant_to_reference (PortableServer::Servant servant)
 }
 
 PortableServer::POAList *
-TAO_Root_POA::the_children (void)
+TAO_Root_POA::the_children ()
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
@@ -793,7 +793,7 @@ TAO_Root_POA::destroy (CORBA::Boolean etherealize_objects,
 }
 
 void
-TAO_Root_POA::remove_from_parent_i (void)
+TAO_Root_POA::remove_from_parent_i ()
 {
   // The root poa has no parent, so this is a noop
 }
@@ -976,7 +976,7 @@ TAO_Root_POA::delete_child (const TAO_Root_POA::String &child)
 }
 
 PortableServer::POAList *
-TAO_Root_POA::the_children_i (void)
+TAO_Root_POA::the_children_i ()
 {
   PortableServer::POAList_var children;
   CORBA::ULong child_current = static_cast <CORBA::ULong>
@@ -1000,7 +1000,7 @@ TAO_Root_POA::the_children_i (void)
 }
 
 PortableInterceptor::AdapterName *
-TAO_Root_POA::adapter_name_i (void)
+TAO_Root_POA::adapter_name_i ()
 {
   // The adapter name is the sequence of names starting from the
   // RootPOA to the one whose name is requested.  The name of the
@@ -1278,7 +1278,7 @@ TAO_Root_POA::deactivate_object_i (const PortableServer::ObjectId &id)
 }
 
 CORBA::Boolean
-TAO_Root_POA::is_persistent (void) const
+TAO_Root_POA::is_persistent () const
 {
   return active_policy_strategies_.lifespan_strategy()->is_persistent ();
 }
@@ -1539,7 +1539,7 @@ TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id,
 }
 
 CORBA::OctetSeq *
-TAO_Root_POA::id (void)
+TAO_Root_POA::id ()
 {
   CORBA::OctetSeq *id = 0;
   ACE_NEW_THROW_EX (id,
@@ -1905,13 +1905,13 @@ TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
 }
 
 TAO_Object_Adapter &
-TAO_Root_POA::object_adapter (void)
+TAO_Root_POA::object_adapter ()
 {
   return *this->object_adapter_;
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::invoke_key_to_object (void)
+TAO_Root_POA::invoke_key_to_object ()
 {
   PortableServer::ObjectId_var &system_id =
     *this->key_to_object_params_.system_id_;
@@ -2027,11 +2027,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
     }
 
   // Give ownership to the auto pointer.
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr<TAO_Acceptor_Filter> new_filter (filter);
-#else
-  auto_ptr<TAO_Acceptor_Filter> new_filter (filter);
-#endif /* ACE_HAS_CPP11 */
 
   TAO_Stub *data =
     this->create_stub_object (
@@ -2045,7 +2041,7 @@ TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
 }
 
 void
-TAO_Root_POA::establish_components (void)
+TAO_Root_POA::establish_components ()
 {
   TAO_IORInterceptor_Adapter *ior_adapter =
     this->orb_core_.ior_interceptor_adapter ();
@@ -2233,7 +2229,7 @@ TAO_Root_POA::find_servant_priority (
 }
 
 TAO::ORT_Adapter *
-TAO_Root_POA::ORT_adapter_i (void)
+TAO_Root_POA::ORT_adapter_i ()
 {
   if ((this->ort_adapter_factory_) && (this->ort_adapter_ == 0))
     {
@@ -2272,7 +2268,7 @@ TAO_Root_POA::ORT_adapter_i (void)
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::AdapterActivator_ptr
-TAO_Root_POA::the_activator (void)
+TAO_Root_POA::the_activator ()
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (PortableServer::AdapterActivator::_nil ());
@@ -2294,7 +2290,7 @@ TAO_Root_POA::the_activator (PortableServer::AdapterActivator_ptr adapter_activa
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 
 PortableServer::ServantManager_ptr
-TAO_Root_POA::get_servant_manager (void)
+TAO_Root_POA::get_servant_manager ()
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (PortableServer::ServantManager::_nil ());
@@ -2314,14 +2310,14 @@ TAO_Root_POA::set_servant_manager (PortableServer::ServantManager_ptr imgr)
 }
 
 PortableServer::Servant
-TAO_Root_POA::get_servant_i (void)
+TAO_Root_POA::get_servant_i ()
 {
   return this->active_policy_strategies_.request_processing_strategy()->
     get_servant ();
 }
 
 PortableServer::Servant
-TAO_Root_POA::get_servant (void)
+TAO_Root_POA::get_servant ()
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (0);
@@ -2374,7 +2370,7 @@ TAO_Root_POA::is_servant_activation_allowed (PortableServer::Servant servant,
 }
 
 bool
-TAO_Root_POA::has_system_id (void) const
+TAO_Root_POA::has_system_id () const
 {
   return this->active_policy_strategies_.id_assignment_strategy ()->
     has_system_id ();
@@ -2402,14 +2398,14 @@ TAO_Root_POA::servant_has_remaining_activations (PortableServer::Servant servant
 }
 
 bool
-TAO_Root_POA::allow_implicit_activation (void) const
+TAO_Root_POA::allow_implicit_activation () const
 {
   return this->active_policy_strategies_.implicit_activation_strategy ()->
     allow_implicit_activation ();
 }
 
 bool
-TAO_Root_POA::allow_multiple_activations (void) const
+TAO_Root_POA::allow_multiple_activations () const
 {
   return this->active_policy_strategies_.id_uniqueness_strategy ()->
     allow_multiple_activations ();
@@ -2425,7 +2421,7 @@ TAO_Root_POA::post_invoke_servant_cleanup(
 }
 
 CORBA::Short
-TAO_Root_POA::server_priority (void) const
+TAO_Root_POA::server_priority () const
 {
   return this->cached_policies_.server_priority ();
 }
@@ -2440,19 +2436,19 @@ TAO_Root_POA::is_servant_active (
 }
 
 TAO::Portable_Server::Cached_Policies&
-TAO_Root_POA::cached_policies (void)
+TAO_Root_POA::cached_policies ()
 {
   return this->cached_policies_;
 }
 
 TAO_Network_Priority_Hook*
-TAO_Root_POA::network_priority_hook (void)
+TAO_Root_POA::network_priority_hook ()
 {
   return this->network_priority_hook_;
 }
 
 TAO::Portable_Server::Cached_Policies::PriorityModel
-TAO_Root_POA::priority_model (void) const
+TAO_Root_POA::priority_model () const
 {
   return cached_policies_.priority_model ();
 }
@@ -2483,13 +2479,13 @@ TAO_Root_POA::validate_lifespan (
 }
 
 CORBA::Boolean
-TAO_Root_POA::root (void) const
+TAO_Root_POA::root () const
 {
   return true;
 }
 
 TAO::ORT_Adapter *
-TAO_Root_POA::ORT_adapter (void)
+TAO_Root_POA::ORT_adapter ()
 {
   if (this->ort_adapter_ != 0)
     return this->ort_adapter_;
@@ -2507,7 +2503,7 @@ TAO_Root_POA::ORT_adapter (void)
 }
 
 CORBA::Policy *
-TAO_Root_POA::server_protocol (void)
+TAO_Root_POA::server_protocol ()
 {
   return 0;
 }
@@ -2529,7 +2525,7 @@ TAO_Root_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id
 }
 
 CORBA::ULong
-TAO_Root_POA::waiting_servant_deactivation (void) const
+TAO_Root_POA::waiting_servant_deactivation () const
 {
   return this->active_policy_strategies_.servant_retention_strategy ()->
           waiting_servant_deactivation ();
@@ -2549,13 +2545,13 @@ TAO_Root_POA::get_policy (CORBA::PolicyType policy)
 }
 
 void
-TAO_Root_POA::check_state (void)
+TAO_Root_POA::check_state ()
 {
   this->active_policy_strategies_.lifespan_strategy ()->check_state ();
 }
 
 const char *
-TAO_Root_POA::ort_adapter_factory_name (void)
+TAO_Root_POA::ort_adapter_factory_name ()
 {
   return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
 }
@@ -2567,27 +2563,27 @@ TAO_Root_POA::imr_client_adapter_name (const char *name)
 }
 
 const char *
-TAO_Root_POA::imr_client_adapter_name (void)
+TAO_Root_POA::imr_client_adapter_name ()
 {
   return TAO_POA_Static_Resources::instance ()->imr_client_adapter_name_.c_str();
 }
 
 PortableServer::POAManager_ptr
-TAO_Root_POA::the_POAManager (void)
+TAO_Root_POA::the_POAManager ()
 {
   return PortableServer::POAManager::_duplicate (&this->poa_manager_);
 }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
 PortableServer::POAManagerFactory_ptr
-TAO_Root_POA::the_POAManagerFactory (void)
+TAO_Root_POA::the_POAManagerFactory ()
 {
   return PortableServer::POAManagerFactory::_duplicate (&this->poa_manager_factory_);
 }
 #endif
 
 CORBA::ORB_ptr
-TAO_Root_POA::_get_orb (void)
+TAO_Root_POA::_get_orb ()
 {
   return CORBA::ORB::_duplicate (this->orb_core_.orb ());
 }
@@ -2604,14 +2600,14 @@ TAO_POA_Static_Resources* TAO_POA_Static_Resources::initialization_reference_ =
   TAO_POA_Static_Resources::instance ();
 
 void
-TAO_POA_Static_Resources::fini (void)
+TAO_POA_Static_Resources::fini ()
 {
   delete TAO_POA_Static_Resources::instance_;
   TAO_POA_Static_Resources::instance_ = 0;
 }
 
 TAO_POA_Static_Resources*
-TAO_POA_Static_Resources::instance (void)
+TAO_POA_Static_Resources::instance ()
 {
   if (TAO_POA_Static_Resources::instance_ == 0)
     {
@@ -2628,7 +2624,7 @@ TAO_POA_Static_Resources::instance (void)
   return TAO_POA_Static_Resources::instance_;
 }
 
-TAO_POA_Static_Resources::TAO_POA_Static_Resources (void)
+TAO_POA_Static_Resources::TAO_POA_Static_Resources ()
   : ort_adapter_factory_name_ ("ORT_Adapter_Factory"),
     imr_client_adapter_name_ ("ImR_Client_Adapter")
 {

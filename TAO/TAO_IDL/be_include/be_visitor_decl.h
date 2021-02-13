@@ -29,9 +29,9 @@ class be_visitor_decl : public be_visitor
 public:
   be_visitor_decl (be_visitor_context *ctx);
 
-  ~be_visitor_decl (void);
+  ~be_visitor_decl ();
 
-  be_visitor_context *ctx (void);
+  be_visitor_context *ctx ();
 
 protected:
   /// Any context information required by the visitor.

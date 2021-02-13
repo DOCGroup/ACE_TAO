@@ -112,8 +112,7 @@ bool
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
                       TypeCodeType>::equal_label (CORBA::ULong index,
-                                                  CORBA::TypeCode_ptr tc
-                                                  ) const
+                                                  CORBA::TypeCode_ptr tc) const
 {
   CORBA::Any_var const any = tc->member_label (index);
 

@@ -64,22 +64,22 @@ namespace TAO
     Transport_Selection_Guard (TAO_Transport* t);
 
     /// Dtor
-    ~Transport_Selection_Guard (void);
+    ~Transport_Selection_Guard ();
 
     /// getter
-    TAO_Transport* operator-> (void) const
+    TAO_Transport* operator-> () const
     {
       return this->get ();
     };
 
     /// getter
-    TAO_Transport& operator* (void) const
+    TAO_Transport& operator* () const
     {
       return *this->get ();
     };
 
     /// Getter
-    TAO_Transport* get (void) const
+    TAO_Transport* get () const
     {
       return this->curr_;
     };

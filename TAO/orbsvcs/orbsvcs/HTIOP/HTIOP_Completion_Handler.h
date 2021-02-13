@@ -45,7 +45,6 @@ namespace TAO
      * are known so the stream may be handed off to either an existing
      * session, or to a newly created one.
      */
-
     typedef TAO_Creation_Strategy<Connection_Handler> CREATION_STRATEGY2;
     typedef TAO_Concurrency_Strategy<Connection_Handler> CONCURRENCY_STRATEGY2;
 

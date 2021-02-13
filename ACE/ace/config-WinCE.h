@@ -25,15 +25,6 @@
 # define ACE_HAS_WINCE 1
 #endif
 
-#if defined (_MSC_VER) && (_MSC_VER < 1400)
-// WinCE prior to Visual Studio 2005 integration doesn't have most of
-// the standard C library time functions. It also doesn't define struct tm.
-// SYSTEMTIME has pretty much the same info though, so we can map it when
-// needed. Define struct tm here and use it when needed. This is taken
-// from the standard C library.
-# define ACE_LACKS_STRUCT_TM
-#endif
-
 // We need these libraries to build:
 #if defined (_MSC_VER)
 #  pragma comment(lib,"corelibc.lib")
@@ -102,10 +93,10 @@
 #endif // ! defined(ACE_DEFAULT_THREAD_KEYS)
 
 // FILE stuff isn't always defined in CE
-#if (_MSC_VER < 1400) && !defined (_FILE_DEFINED)
+#if !defined (_FILE_DEFINED)
   typedef void FILE;
 # define _FILE_DEFINED
-#endif  /* _MSC_VER < 1400 && !_FILE_DEFINED */
+#endif  /* !_FILE_DEFINED */
 
 // This was defined in previous versions of CE, but not 2.11
 #define EXCEPTION_ACCESS_VIOLATION STATUS_ACCESS_VIOLATION

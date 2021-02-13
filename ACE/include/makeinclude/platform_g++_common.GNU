@@ -1,10 +1,5 @@
 # -*- Makefile -*-
 
-ifeq ($(openmp),1)
-FLAGS_C_CC += -fopenmp
-LDFLAGS += -fopenmp
-endif
-
 ifeq ($(insure),1)
   CC  = insure
   CXX = insure
@@ -26,7 +21,7 @@ else
       TAO_IDL3_TO_IDL2_DEP = $(TAO_IDL3_TO_IDL2)
       TAO_IDL3_TO_XMI = $(HOST_ROOT)/bin/tao_idl3_to_xmi
       TAO_IDL3_TO_XMI_DEP = $(TAO_IDL3_TO_XMI)
-      # make sure to use the target compiler, not the cross-compiler
+      # make sure to use the host compiler, not the cross-compiler
       # as preprocessor for the cross-compiled idl tools
       TAO_IDL_PREPROCESSOR = gcc
     endif
@@ -51,36 +46,6 @@ ifeq ($(gprof),1)
   FLAGS_C_CC += -pg
   LDFLAGS += -pg
 endif
-
-ifeq ($(c++17),1)
-  CCFLAGS += -std=c++17
-  # This is needed due to the use of the deprecated auto_ptr class
-  no_deprecated ?= 1
-else
-  ifeq ($(c++14),1)
-    CCFLAGS += -std=c++14
-    # This is needed due to the use of the deprecated auto_ptr class
-    no_deprecated ?= 1
-  else
-    ifeq ($(c++1y),1)
-      CCFLAGS += -std=c++1y
-      # This is needed due to the use of the deprecated auto_ptr class
-      no_deprecated ?= 1
-    else
-      ifeq ($(c++11),1)
-        CCFLAGS += -std=c++11
-        # This is needed due to the use of the deprecated auto_ptr class
-        no_deprecated ?= 1
-      else
-        ifeq ($(c++0x),1)
-          CCFLAGS += -std=c++0x
-          # This is needed due to the use of the deprecated auto_ptr class
-          no_deprecated ?= 1
-        endif # c++0x
-      endif # c++11
-    endif # c++1y
-  endif # c++14
-endif #c++17
 
 ifeq ($(no_deprecated),1)
   CCFLAGS += -Wno-deprecated
@@ -110,42 +75,17 @@ CXX_MINOR_VERSION := $(word 2,$(subst ., ,$(CXX_VERSION)))
 else
 CXX_MINOR_VERSION := $(shell $(CXX_FOR_VERSION_TEST) -dumpversion | sed -e 's/[^0-9\.]//g' | sed -e 's/^[0-9]*\.//' | sed -e 's/\..*$$//')
 endif
-ifeq ($(findstring $(CXX_MAJOR_VERSION),1 2 3),$(CXX_MAJOR_VERSION))
-GXX_4_OR_BETTER := 0
-else
-GXX_4_OR_BETTER := 1
+
+# gcc 4 has C++03 as default C++ version, enable this to be C++11
+ifeq ($(findstring $(CXX_MAJOR_VERSION),4),$(CXX_MAJOR_VERSION))
+  c++11 ?= 1
+  # gcc 4 has a problem that it warnings about missing initializers
+  # for an std::array containing std::string even when {{}} is used
+  # as it should
+  FLAGS_C_CC += -Wno-missing-field-initializers
 endif
-
-# If no option has been specified, set templates to automatic
-# version of the compiler.
-#
-templates ?= automatic
-
-# The correct flags to pass to the linker for ELF dynamic shared library
-# versioning.
-# If the platform file didn't already set versioned_so, default to 1.
-versioned_so ?= 1
-with_ld ?=
-ifneq ($(versioned_so),0)
-  ifeq ($(with_ld),hpux)
-    SOFLAGS += -Wl,+h -Wl,$(SONAME)
-  else
-    ifeq ($(with_ld),aix)
-    # What to do here???
-    else
-      SOFLAGS += -Wl,-h -Wl,$(SONAME)
-    endif
-  endif
-endif
-
-ifeq ($(versioned_so),2)
-  FLAGS_C_CC += -DACE_VERSIONED_SO=2
-endif
-
-static_libs_only ?=
 
 CXX_FULL_VERSION := $(shell $(CXX_FOR_VERSION_TEST) --version)
-gcc_template_instantiation_visibility ?= 0
 
 # Only modify LDFLAGS if DLD has been set.
 ifneq ($(DLD),)
@@ -162,10 +102,6 @@ ifneq ($(DLD),)
   endif # mingw32
 endif # DLD
 
-ifeq ($(GNU_LD),1)
-  STATIC_LINK_FLAG ?= -static
-endif # GNU_LD
-
 ifeq ($(no-optimize-sibling-calls), 1)
   FLAGS_C_CC += -fno-optimize-sibling-calls
 endif
@@ -178,65 +114,11 @@ else
     # for GCC >= 4.2; these checks and the resulting warnings are very controversial and
     # popular opinion on the web seems to be that it brings little practical value and a
     # lot of pain to attempt to solve code issues and the best way to deal is to suppress
-    ifeq ($(GXX_4_OR_BETTER), 1)
-      ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
-        FLAGS_C_CC += -fno-strict-aliasing
-      endif
+    ifneq ($(findstring $(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION),4.1),$(CXX_MAJOR_VERSION).$(CXX_MINOR_VERSION))
+      FLAGS_C_CC += -fno-strict-aliasing
     endif
   endif
 endif
-
-ifeq ($(shared_libs), 1)
-  ifneq ($(static_libs_only), 1)
-    # Add all symbols to the dynamic symbol table.  Needed to enable
-    # dynamic_cast<> for shared libraries. (see
-    # http://gcc.gnu.org/faq.html#dso)
-
-    ifeq ($(GNU_LD),1)
-      # Make sure this version of ld supports the -E option.
-      ifneq ($(mingw32),1)
-        LD_EXPORT_DEFINED := $(shell sh -c '$(LD_FOR_VERSION_TEST) -E 2>&1 | egrep -i "(option|flag)" /dev/null; echo $$?')
-      else
-        LD_EXPORT_DEFINED := $(shell $(LD_FOR_VERSION_TEST) -E 2>&1 | grep -c -i -e '(option|flag)')
-        ifeq ($(LD_EXPORT_DEFINED),0)
-          LD_EXPORT_DEFINED:=1
-        else
-          LD_EXPORT_DEFINED:=0
-        endif
-      endif # mingw32
-      ifeq ($(LD_EXPORT_DEFINED),1)
-        LDFLAGS += -Wl,-E
-      endif # LD_EXPORT_DEFINED = 1
-    endif # GNU ld
-
-    # Take advantage of G++ (>= 4.x) visibility attributes to generate
-    # improved shared library binaries.
-    ifeq ($(GXX_4_OR_BETTER), 1)
-      ifneq ($(no_hidden_visibility),1)
-        CCFLAGS += -fvisibility=hidden -fvisibility-inlines-hidden
-        ifeq ($(gcc_template_instantiation_visibility),1)
-          CCFLAGS += -DACE_GCC_HAS_TEMPLATE_INSTANTIATION_VISIBILITY_ATTRS=1
-        endif # gcc_template_instantiation_visibility
-      else
-        CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
-      endif # no_hidden_visibility
-    endif # GXX_4_OR_BETTER == 1
-  else
-    # Explicitly disable G++ (>= 4.x) visibility attributes since
-    # they are only meant for use when building shared libraries.
-    ifeq ($(GXX_4_OR_BETTER), 1)
-      no_hidden_visibility = 1
-      CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
-    endif # GXX_4_OR_BETTER == 1
-  endif # static_libs_only
-else
-  # Explicitly disable G++ (>= 4.x) visibility attributes since
-  # they are only meant for use when building shared libraries.
-  ifeq ($(GXX_4_OR_BETTER), 1)
-    no_hidden_visibility = 1
-    CPPFLAGS += -DACE_HAS_CUSTOM_EXPORT_MACROS=0
-  endif # GXX_4_OR_BETTER == 1
-endif # shared_libs
 
 minimaltoc ?= 0
 ifeq ($(minimaltoc),1)
@@ -257,5 +139,5 @@ endif
 
 pipes ?= 1
 
-FLAGS_C_CC += -Wall -W -Wpointer-arith
-CCFLAGS += -Wnon-virtual-dtor
+# Things GCC has in common with Clang
+include $(ACE_ROOT)/include/makeinclude/platform_gcc_clang_common.GNU

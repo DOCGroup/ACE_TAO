@@ -33,13 +33,13 @@ class be_scope : public virtual UTL_Scope
 {
 public:
   /// Default constructor.
-  be_scope (void);
+  be_scope ();
 
   /// Constructor that sets the node type.
   be_scope (AST_Decl::NodeType nt);
 
   /// Destructor.
-  virtual ~be_scope (void);
+  virtual ~be_scope ();
 
   /// To access the protected base class method fe_add_field.
   AST_Field *be_add_field (AST_Field *f);
@@ -51,19 +51,16 @@ public:
   virtual void comma (unsigned short set);
 
   /// Get the comma producing state.
-  int comma (void) const;
+  int comma () const;
 
   /// Return the be_decl node corresponding to this scope node.
-  virtual be_decl *decl (void);
+  virtual be_decl *decl ();
 
   /// Recursively clean up scope members.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   /// Visiting.
   virtual int accept (be_visitor *visitor);
-
-  // Narrowing.
-  DEF_NARROW_FROM_SCOPE (be_scope);
 
 private:
   /// If set, generate a comma after every element is handled.

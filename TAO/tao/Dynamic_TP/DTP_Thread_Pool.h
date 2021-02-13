@@ -48,7 +48,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-
   /// Constructor.
   TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
@@ -57,7 +56,6 @@ public:
   bool no_leaders_available (void);
 
 private:
-
   /// Pool associated with this leader generator.
   TAO_DTP_Thread_Pool &pool_;
 };
@@ -243,7 +241,6 @@ public:
   // @}
 
 private:
-
   /// @name Helpers
   // @{
 
@@ -255,7 +252,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

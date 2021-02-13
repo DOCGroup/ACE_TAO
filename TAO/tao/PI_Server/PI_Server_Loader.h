@@ -27,10 +27,10 @@ class TAO_PI_Server_Export TAO_PI_Server_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_PI_Server_Loader (void);
+  TAO_PI_Server_Loader ();
 
   /// Destructor.
-  virtual ~TAO_PI_Server_Loader (void);
+  virtual ~TAO_PI_Server_Loader ();
 
   /// Initialize the PI_Server loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);
@@ -39,7 +39,6 @@ private:
   /// Set to true after init is called.
   bool initialized_;
 };
-
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO_PI_Server, TAO_PI_Server_Loader)
 ACE_FACTORY_DECLARE (TAO_PI_Server, TAO_PI_Server_Loader)

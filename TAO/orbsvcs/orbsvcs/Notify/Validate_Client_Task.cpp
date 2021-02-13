@@ -27,13 +27,13 @@ TAO_Notify_validate_client_Task::
 }
 
 
-TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task (void)
+TAO_Notify_validate_client_Task::~TAO_Notify_validate_client_Task ()
 {
 }
 
 
 int
-TAO_Notify_validate_client_Task::svc (void)
+TAO_Notify_validate_client_Task::svc ()
 {
   ACE_Time_Value due = ACE_OS::gettimeofday () + this->delay_;
   while (! this->shutdown_)
@@ -74,7 +74,7 @@ TAO_Notify_validate_client_Task::svc (void)
 
 
 void
-TAO_Notify_validate_client_Task::shutdown (void)
+TAO_Notify_validate_client_Task::shutdown ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, *(this->condition_.mutex()));

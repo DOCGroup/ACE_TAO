@@ -12,7 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_Resume_Handle::resume_handle (void)
+TAO_Resume_Handle::resume_handle ()
 {
   // If we have a complete message, just resume the handler
   // Resume the handler.

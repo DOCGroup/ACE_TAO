@@ -130,11 +130,11 @@ public:
             ACE_Reactor *r = 0);
 
   /// Release all resources.  Do not wait for processes to exit.
-  int close (void);
+  int close ();
 
   /// Destructor releases all resources and does not wait for processes
   /// to exit.
-  virtual ~ACE_Process_Manager (void);
+  virtual ~ACE_Process_Manager ();
 
   //@}
 
@@ -143,14 +143,14 @@ public:
    */
   //@{
   /// Get pointer to a process-wide ACE_Process_Manager.
-  static ACE_Process_Manager *instance (void);
+  static ACE_Process_Manager *instance ();
 
   /// Set pointer to a process-wide ACE_Process_Manager and return
   /// existing pointer.
   static ACE_Process_Manager *instance (ACE_Process_Manager *);
 
   /// Delete the dynamically allocated singleton.
-  static void close_singleton (void);
+  static void close_singleton ();
 
   /// Cleanup method, used by the ACE_Object_Manager to destroy the
   /// singleton.
@@ -243,7 +243,7 @@ public:
    * @retval 0 on success; -1 on failure.
    */
   int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
-#if defined (ACE_HAS_CPP11)
+
   /// @sa wait
   template< class Rep, class Period >
   int wait (const std::chrono::duration<Rep, Period>& timeout)
@@ -251,7 +251,6 @@ public:
     ACE_Time_Value const tv (timeout);
     return this->wait (tv);
   }
-#endif
 
   /**
    * Wait up to @a timeout for a single specified process to terminate.
@@ -269,7 +268,7 @@ public:
   pid_t wait (pid_t pid,
               const ACE_Time_Value &timeout,
               ACE_exitcode *status = 0);
-#if defined (ACE_HAS_CPP11)
+
   /// @sa wait
   template< class Rep, class Period >
   pid_t wait (pid_t pid,
@@ -279,7 +278,6 @@ public:
     ACE_Time_Value const tv (timeout);
     return this->wait (pid, tv, status);
   }
-#endif
 
   /**
    * Wait indefinitely for a single, specified process to terminate.
@@ -320,7 +318,7 @@ public:
   int remove (pid_t pid);
 
   /// Return the number of managed processes.
-  size_t managed (void) const;
+  size_t managed () const;
 
   /**
    * Sets the scheduling parameters for process identified by @a pid by
@@ -341,7 +339,7 @@ public:
   int set_scheduler_all (const ACE_Sched_Params &params);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -408,8 +406,8 @@ private:
   struct Process_Descriptor
   {
     /// Default ctor/dtor.
-    Process_Descriptor (void);
-    ~Process_Descriptor (void);
+    Process_Descriptor ();
+    ~Process_Descriptor ();
 
     /// Describes the process itself.
     ACE_Process *process_;
@@ -418,7 +416,7 @@ private:
     ACE_Event_Handler *exit_notify_;
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
 
     ACE_ALLOC_HOOK_DECLARE;
   };

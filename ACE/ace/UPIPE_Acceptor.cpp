@@ -15,7 +15,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_UPIPE_Acceptor)
 
 void
-ACE_UPIPE_Acceptor::dump (void) const
+ACE_UPIPE_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_UPIPE_Acceptor::dump");
@@ -24,13 +24,13 @@ ACE_UPIPE_Acceptor::dump (void) const
 
 /* Do nothing routine for constructor. */
 
-ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor (void)
+ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor ()
   : mb_ (sizeof (ACE_UPIPE_Stream *))
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor");
 }
 
-ACE_UPIPE_Acceptor::~ACE_UPIPE_Acceptor (void)
+ACE_UPIPE_Acceptor::~ACE_UPIPE_Acceptor ()
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::~ACE_UPIPE_Acceptor");
 }
@@ -46,7 +46,7 @@ ACE_UPIPE_Acceptor::open (const ACE_UPIPE_Addr &local_addr,
 }
 
 int
-ACE_UPIPE_Acceptor::close (void)
+ACE_UPIPE_Acceptor::close ()
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::close");
   return this->ACE_SPIPE_Acceptor::close ();

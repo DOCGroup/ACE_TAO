@@ -27,7 +27,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class SVC_HANDLER>
-ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy (void)
+ACE_Recycling_Strategy<SVC_HANDLER>::~ACE_Recycling_Strategy ()
 {
 }
 
@@ -47,7 +47,7 @@ ACE_Recycling_Strategy<SVC_HANDLER>::prepare_for_recycling (SVC_HANDLER *svc_han
 }
 
 template <class SVC_HANDLER>
-ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy (void)
+ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy ()
 {
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::~ACE_Singleton_Strategy");
   if (this->delete_svc_handler_)
@@ -505,7 +505,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::ACE_Cache
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX>
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy (void)
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::~ACE_Cached_Connect_Strategy ()
 {
   if (this->delete_lock_)
     delete this->lock_;
@@ -1180,19 +1180,19 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::cleanup_h
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Creation_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::creation_strategy (void) const
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::creation_strategy () const
 {
   return this->creation_strategy_;
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Recycling_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycling_strategy (void) const
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::recycling_strategy () const
 {
   return this->recycling_strategy_;
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class MUTEX> ACE_Concurrency_Strategy<SVC_HANDLER> *
-ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy (void) const
+ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::concurrency_strategy () const
 {
   return this->concurrency_strategy_;
 }
@@ -1237,7 +1237,7 @@ ACE_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, MUTEX>::find (
 }
 
 template <class SVC_HANDLER> void
-ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
+ACE_DLL_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_DLL_Strategy<SVC_HANDLER>::dump");
@@ -1245,14 +1245,14 @@ ACE_DLL_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy (void)
+ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy ()
 {
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::~ACE_Concurrency_Strategy");
 }
 
 
 template <class SVC_HANDLER> void
-ACE_Concurrency_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Concurrency_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Concurrency_Strategy<SVC_HANDLER>::dump");
@@ -1260,14 +1260,14 @@ ACE_Concurrency_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy (void)
+ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy ()
 {
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::~ACE_Reactive_Strategy");
 }
 
 
 template <class SVC_HANDLER> void
-ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Reactive_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Reactive_Strategy<SVC_HANDLER>::dump");
@@ -1275,13 +1275,13 @@ ACE_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy (void)
+ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy ()
 {
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::~ACE_Thread_Strategy");
 }
 
 template <class SVC_HANDLER> void
-ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Thread_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Thread_Strategy<SVC_HANDLER>::dump");
@@ -1289,7 +1289,7 @@ ACE_Thread_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1>
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (void)
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy ()
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy");
 
@@ -1298,21 +1298,21 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::~ACE_Accept_Strategy (voi
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_HANDLE
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle (void) const
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle () const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::get_handle");
   return this->peer_acceptor_.get_handle ();
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> ACE_PEER_ACCEPTOR &
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor (void) const
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor () const
 {
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::acceptor");
   return (ACE_PEER_ACCEPTOR &) this->peer_acceptor_;
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> void
-ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
+ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump");
@@ -1320,20 +1320,20 @@ ACE_Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::dump (void) const
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1>
-ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connect_Strategy (void)
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connect_Strategy ()
 {
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::~ACE_Connect_Strategy");
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> ACE_PEER_CONNECTOR &
-ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector (void) const
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector () const
 {
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::connector");
   return (ACE_PEER_CONNECTOR &) this->connector_;
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1> void
-ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
+ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump");
@@ -1341,13 +1341,13 @@ ACE_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Process_Strategy<SVC_HANDLER>::~ACE_Process_Strategy (void)
+ACE_Process_Strategy<SVC_HANDLER>::~ACE_Process_Strategy ()
 {
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::~ACE_Process_Strategy");
 }
 
 template <class SVC_HANDLER> void
-ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Process_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Strategy<SVC_HANDLER>::dump");
@@ -1355,27 +1355,27 @@ ACE_Process_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Scheduling_Strategy<SVC_HANDLER>::~ACE_Scheduling_Strategy (void)
+ACE_Scheduling_Strategy<SVC_HANDLER>::~ACE_Scheduling_Strategy ()
 {
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::~ACE_Scheduling_Strategy");
 }
 
 template <class SVC_HANDLER> int
-ACE_Scheduling_Strategy<SVC_HANDLER>::suspend (void)
+ACE_Scheduling_Strategy<SVC_HANDLER>::suspend ()
 {
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::suspend");
   return -1;
 }
 
 template <class SVC_HANDLER> int
-ACE_Scheduling_Strategy<SVC_HANDLER>::resume (void)
+ACE_Scheduling_Strategy<SVC_HANDLER>::resume ()
 {
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::resume");
   return -1;
 }
 
 template <class SVC_HANDLER> void
-ACE_Scheduling_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Scheduling_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Scheduling_Strategy<SVC_HANDLER>::dump");
@@ -1386,21 +1386,21 @@ ACE_Scheduling_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER> int
-ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::suspend (void)
+ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::suspend ()
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::suspend");
   return this->reactor_->suspend_handlers ();
 }
 
 template <class SVC_HANDLER> int
-ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume (void)
+ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume ()
 {
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::resume");
   return this->reactor_->resume_handlers ();
 }
 
 template <class SVC_HANDLER> void
-ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump");
@@ -1410,21 +1410,21 @@ ACE_Schedule_All_Reactive_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER> int
-ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::suspend (void)
+ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::suspend ()
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::suspend");
   return this->thr_mgr_->suspend_all ();
 }
 
 template <class SVC_HANDLER> int
-ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume (void)
+ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume ()
 {
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::resume");
   return this->thr_mgr_->resume_all ();
 }
 
 template <class SVC_HANDLER> void
-ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump");
@@ -1434,12 +1434,12 @@ ACE_Schedule_All_Threaded_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class T>
-ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable (void)
+ACE_Refcounted_Hash_Recyclable<T>::~ACE_Refcounted_Hash_Recyclable ()
 {
 }
 
 template <class SVC_HANDLER> void
-ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Singleton_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Singleton_Strategy<SVC_HANDLER>::dump");
@@ -1447,7 +1447,7 @@ ACE_Singleton_Strategy<SVC_HANDLER>::dump (void) const
 }
 
 template <class SVC_HANDLER>
-ACE_Creation_Strategy<SVC_HANDLER>::~ACE_Creation_Strategy (void)
+ACE_Creation_Strategy<SVC_HANDLER>::~ACE_Creation_Strategy ()
 {
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::~ACE_Creation_Strategy");
 }
@@ -1467,7 +1467,7 @@ ACE_Creation_Strategy<SVC_HANDLER>::make_svc_handler (SVC_HANDLER *&sh)
 }
 
 template <class SVC_HANDLER> void
-ACE_Creation_Strategy<SVC_HANDLER>::dump (void) const
+ACE_Creation_Strategy<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Creation_Strategy<SVC_HANDLER>::dump");

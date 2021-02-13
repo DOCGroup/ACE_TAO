@@ -180,8 +180,7 @@ namespace TAO
                     0,
                     EINVAL
                   ),
-                CORBA::COMPLETED_NO
-            );
+                CORBA::COMPLETED_NO);
       }
   }
 

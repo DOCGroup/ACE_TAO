@@ -23,7 +23,7 @@ be_visitor_structure_any_op_cs::be_visitor_structure_any_op_cs (
 {
 }
 
-be_visitor_structure_any_op_cs::~be_visitor_structure_any_op_cs (void)
+be_visitor_structure_any_op_cs::~be_visitor_structure_any_op_cs ()
 {
 }
 
@@ -77,7 +77,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
     }
 
 
-  be_module *module = 0;
+  be_module *module = nullptr;
   if (node->is_nested ())
     {
       AST_Decl *d = node;
@@ -87,7 +87,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
         {
           if (nt == AST_Decl::NT_module)
             {
-              module = be_module::narrow_from_decl (d);
+              module = dynamic_cast<be_module*> (d);
               break;
             }
           else
@@ -97,7 +97,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
             }
         }
 
-      if (module != 0)
+      if (module != nullptr)
         {
           // Some compilers handle "any" operators in a namespace corresponding
           // to their module, others do not.
@@ -213,7 +213,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }
@@ -227,7 +227,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 
@@ -235,7 +235,7 @@ int
 be_visitor_structure_any_op_cs::visit_field (be_field *node)
 {
   // First generate the type information.
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

@@ -72,7 +72,7 @@ namespace TAO
      * points are invoked, and after the starting and intermediate (if
      * any) interception points are invoked.
      */
-    ~PICurrent_Guard (void);
+    ~PICurrent_Guard ();
 
   private:
 

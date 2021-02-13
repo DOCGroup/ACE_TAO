@@ -13,16 +13,16 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_CapEntry::~ACE_CapEntry (void)
+ACE_CapEntry::~ACE_CapEntry ()
 {
 }
 
-ACE_Capabilities::ACE_Capabilities (void)
+ACE_Capabilities::ACE_Capabilities ()
   : caps_ ()
 {
 }
 
-ACE_Capabilities::~ACE_Capabilities (void)
+ACE_Capabilities::~ACE_Capabilities ()
 {
   this->resetcaps ();
 }
@@ -96,7 +96,7 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
 }
 
 void
-ACE_Capabilities::resetcaps (void)
+ACE_Capabilities::resetcaps ()
 {
   for (CAPABILITIES_MAP::ITERATOR iter (this->caps_);
        !iter.done ();

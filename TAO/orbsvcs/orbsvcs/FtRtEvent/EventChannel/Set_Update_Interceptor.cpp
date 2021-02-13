@@ -12,18 +12,18 @@ TAO_Set_Update_Interceptor::TAO_Set_Update_Interceptor ()
 {
 }
 
-TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor (void)
+TAO_Set_Update_Interceptor::~TAO_Set_Update_Interceptor ()
 {
 }
 
 char *
-TAO_Set_Update_Interceptor::name (void)
+TAO_Set_Update_Interceptor::name ()
 {
   return CORBA::string_dup (this->myname_);
 }
 
 void
-TAO_Set_Update_Interceptor::destroy (void)
+TAO_Set_Update_Interceptor::destroy ()
 {
 }
 

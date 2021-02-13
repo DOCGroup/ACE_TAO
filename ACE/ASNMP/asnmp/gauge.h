@@ -47,7 +47,7 @@ class ASNMP_Export Gauge32: public SnmpUInt32
 {
 public:
   /// constructor with a value
-  Gauge32( const unsigned long i = 0);
+  explicit Gauge32( const unsigned long i = 0);
 
   /// copy constructor
   Gauge32 ( const Gauge32 &g);

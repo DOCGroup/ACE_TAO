@@ -67,12 +67,12 @@ ForwardCtrlServerInterceptor::~ForwardCtrlServerInterceptor()
 {
 }
 
-char * ForwardCtrlServerInterceptor::name (void)
+char * ForwardCtrlServerInterceptor::name ()
 {
   return CORBA::string_dup("ForwardCtrlServerInterceptor");
 }
 
-void ForwardCtrlServerInterceptor::destroy (void)
+void ForwardCtrlServerInterceptor::destroy ()
 {
 }
 

@@ -143,7 +143,7 @@ namespace TAO
       {
       public:
         Reset (CORBA::ULong & flag) : flag_ (flag) { }
-        ~Reset (void) { this->flag_ = 0; }
+        ~Reset () { this->flag_ = 0; }
       private:
         CORBA::ULong & flag_;
       };

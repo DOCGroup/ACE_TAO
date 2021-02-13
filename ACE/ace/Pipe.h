@@ -82,7 +82,7 @@ public:
   ACE_HANDLE write_handle (void) const;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;

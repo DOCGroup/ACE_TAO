@@ -159,7 +159,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #   if defined (ACE_USES_WCHAR)
   ACE_Ascii_To_Wide wide_buf (bufp);
-  ACE_OS_String::strcpy (buf, wide_buf.wchar_rep ());
+  ACE_OS::strcpy (buf, wide_buf.wchar_rep ());
   return buf;
 #   else
   return bufp;
@@ -292,22 +292,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   // The A constraint signifies a 64-bit int.
   asm volatile ("rdtsc" : "=A" (now) : : "memory");
 # endif
-
-  return now;
-#elif defined (ACE_LINUX) && defined (ACE_HAS_ALPHA_TIMER)
-  // NOTE:  alphas only have a 32 bit tick (cycle) counter.  The rpcc
-  // instruction actually reads 64 bits, but the high 32 bits are
-  // implementation-specific.  Linux and Digital Unix, for example,
-  // use them for virtual tick counts, i.e., taking into account only
-  // the time that the process was running.  This information is from
-  // David Mosberger's article, see comment below.
-  ACE_UINT32 now;
-
-  // The following statement is based on code published by:
-  // Mosberger, David, "How to Make Your Applications Fly, Part 1",
-  // Linux Journal Issue 42, October 1997, page 50.  It reads the
-  // high-res tick counter directly into the memory variable.
-  asm volatile ("rpcc %0" : "=r" (now) : : "memory");
 
   return now;
 #elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
@@ -470,7 +454,7 @@ ACE_OS::time (time_t *tloc)
 #if defined (__GNUG__)
 namespace ACE_OS {
   ACE_INLINE long
-  timezone (void)
+  timezone ()
   {
     return ::ace_timezone ();
   }
@@ -484,7 +468,7 @@ ACE_OS::timezone (void)
 #endif /* ACE_LINUX */
 
 ACE_INLINE void
-ACE_OS::tzset (void)
+ACE_OS::tzset ()
 {
 #if defined (ACE_LACKS_TZSET)
   errno = ENOTSUP;

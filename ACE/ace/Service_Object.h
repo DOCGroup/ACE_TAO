@@ -48,13 +48,13 @@ public:
   ACE_Service_Object (ACE_Reactor * = 0);
 
   /// Destructor.
-  virtual ~ACE_Service_Object (void);
+  virtual ~ACE_Service_Object ();
 
   /// Temporarily disable a service without removing it completely.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Re-enable a previously suspended service.
-  virtual int resume (void);
+  virtual int resume ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -99,33 +99,33 @@ public:
                     ACE_Service_Type_Impl *o,
                     ACE_SHLIB_HANDLE handle,
                     bool active);
-  ~ACE_Service_Type (void);
+  ~ACE_Service_Type ();
 
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
   void name (const ACE_TCHAR *);
 
-  const ACE_Service_Type_Impl *type (void) const;
+  const ACE_Service_Type_Impl *type () const;
   void type (const ACE_Service_Type_Impl *, bool active = true);
 
   /// Is this just a stub for the real thing?
-  bool is_forward_declaration (void) const;
+  bool is_forward_declaration () const;
 
-  int suspend (void) const;
-  int resume (void) const;
-  bool active (void) const;
+  int suspend () const;
+  int resume () const;
+  bool active () const;
   void active (bool turnon);
 
   /// Calls @c fini on @c type_
-  int fini (void);
+  int fini ();
 
   /// Check if the service has been fini'ed.
-  bool fini_called (void) const;
+  bool fini_called () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Get to the DLL's implentation
-  const ACE_DLL & dll (void) const;
+  const ACE_DLL & dll () const;
 
   /// Sets the DLL
   void dll (const ACE_DLL&);
@@ -170,7 +170,7 @@ public:
   ACE_Service_Object_Ptr (ACE_Service_Object *so);
 
   /// Release the held ACE_Service_Object by calling its fini() hook.
-  ~ACE_Service_Object_Ptr (void);
+  ~ACE_Service_Object_Ptr ();
 
   /// Smart pointer to access the underlying ACE_Service_Object.
   ACE_Service_Object *operator-> ();

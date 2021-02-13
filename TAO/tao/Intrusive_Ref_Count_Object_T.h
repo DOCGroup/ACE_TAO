@@ -38,13 +38,13 @@ class TAO_Intrusive_Ref_Count_Object : public TAO_Intrusive_Ref_Count_Base <ACE_
 public:
   /// take ownership of obj.
   TAO_Intrusive_Ref_Count_Object (OBJ* obj);
-  virtual ~TAO_Intrusive_Ref_Count_Object (void);
+  virtual ~TAO_Intrusive_Ref_Count_Object ();
 
   OBJ* get () const;
 
 private:
   // Prevent default constructor used.
-  TAO_Intrusive_Ref_Count_Object (void);
+  TAO_Intrusive_Ref_Count_Object ();
 
   // Prevent copying/assignment.
   TAO_Intrusive_Ref_Count_Object (const TAO_Intrusive_Ref_Count_Object&);

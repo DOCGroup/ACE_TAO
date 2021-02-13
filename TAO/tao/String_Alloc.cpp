@@ -22,7 +22,7 @@ CORBA::string_dup (const char *str)
   if (!str)
     {
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
@@ -47,10 +47,10 @@ char *
 CORBA::string_alloc (CORBA::ULong len)
 {
   // Allocate 1 + strlen to accomodate the null terminating character.
-  char *s = 0;
+  char *s = nullptr;
   ACE_NEW_RETURN (s,
                   char[size_t (len + 1)],
-                  0);
+                  nullptr);
   s[0]= '\0';
 
   return s;
@@ -73,7 +73,7 @@ CORBA::wstring_dup (const WChar *const str)
   if (!str)
     {
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
@@ -83,10 +83,10 @@ CORBA::wstring_dup (const WChar *const str)
 
   CORBA::WChar* retval =
     CORBA::wstring_alloc (static_cast <CORBA::ULong> (ACE_OS::strlen (str)));
-  if (retval == 0)
+  if (retval == nullptr)
     {
       // The wscpy() below assumes that the destination is a valid buffer.
-      return 0;
+      return nullptr;
     }
 
   return ACE_OS::wscpy (retval, str);
@@ -95,10 +95,10 @@ CORBA::wstring_dup (const WChar *const str)
 CORBA::WChar*
 CORBA::wstring_alloc (CORBA::ULong len)
 {
-  CORBA::WChar *s = 0;
+  CORBA::WChar *s = nullptr;
   ACE_NEW_RETURN (s,
                   CORBA::WChar [(size_t) (len + 1)],
-                  0);
+                  nullptr);
   return s;
 }
 

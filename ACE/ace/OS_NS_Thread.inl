@@ -2821,7 +2821,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE int
-ACE_OS::thr_getconcurrency (void)
+ACE_OS::thr_getconcurrency ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_getconcurrency");
 #if defined (ACE_HAS_THREADS)
@@ -3108,7 +3108,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 }
 
 ACE_INLINE size_t
-ACE_OS::thr_min_stack (void)
+ACE_OS::thr_min_stack ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_min_stack");
 #if defined (ACE_HAS_THREADS)
@@ -3179,8 +3179,18 @@ ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
     static_cast<int> (ACE_OS::thr_gettid ()));
 }
 
+ACE_INLINE pid_t
+ACE_OS::thr_gettid ()
+{
+#ifdef ACE_HAS_GETTID
+  return syscall (SYS_gettid);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
 ACE_INLINE ACE_thread_t
-ACE_OS::thr_self (void)
+ACE_OS::thr_self ()
 {
   // ACE_OS_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
@@ -3200,7 +3210,7 @@ ACE_OS::thr_self (void)
 }
 
 ACE_INLINE const char*
-ACE_OS::thr_name (void)
+ACE_OS::thr_name ()
 {
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_VXTHREADS)
@@ -3555,7 +3565,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE void
-ACE_OS::thr_testcancel (void)
+ACE_OS::thr_testcancel ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
@@ -3572,7 +3582,7 @@ ACE_OS::thr_testcancel (void)
 }
 
 ACE_INLINE void
-ACE_OS::thr_yield (void)
+ACE_OS::thr_yield ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_yield");
 #if defined (ACE_HAS_THREADS)
@@ -3800,14 +3810,14 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::thread_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::release (void)
+ACE_OS_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3836,14 +3846,14 @@ ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3903,7 +3913,7 @@ ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 }
 
 ACE_INLINE
-ACE_Thread_ID::ACE_Thread_ID (void)
+ACE_Thread_ID::ACE_Thread_ID ()
   : thread_id_ (ACE_OS::thr_self ())
 {
   ACE_OS::thr_self (thread_handle_);
@@ -3911,7 +3921,7 @@ ACE_Thread_ID::ACE_Thread_ID (void)
 
 ACE_INLINE
 ACE_thread_t
-ACE_Thread_ID::id (void) const
+ACE_Thread_ID::id () const
 {
   return this->thread_id_;
 }
@@ -3923,7 +3933,7 @@ ACE_Thread_ID::id (ACE_thread_t thread_id)
 }
 
 ACE_INLINE ACE_hthread_t
-ACE_Thread_ID::handle (void) const
+ACE_Thread_ID::handle () const
 {
   return this->thread_handle_;
 }
@@ -3951,7 +3961,7 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 #if !defined (ACE_WIN32)
 
 ACE_INLINE
-ACE_event_t::ACE_event_t (void) :
+ACE_event_t::ACE_event_t () :
   name_ (0),
   eventdata_ (0)
 {

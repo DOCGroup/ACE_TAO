@@ -43,7 +43,7 @@ public:
   TAO_DynAny_i (CORBA::Boolean allow_truncation=true);
 
   /// Destructor.
-  ~TAO_DynAny_i (void);
+  ~TAO_DynAny_i ();
 
   /// Initialize using just a TypeCode
   void init (CORBA::TypeCode_ptr tc);
@@ -58,13 +58,13 @@ public:
 
   virtual void from_any (const CORBA::Any & value);
 
-  virtual CORBA::Any * to_any (void);
+  virtual CORBA::Any * to_any ();
 
   virtual CORBA::Boolean equal (DynamicAny::DynAny_ptr dyn_any);
 
-  virtual void destroy (void);
+  virtual void destroy ();
 
-  virtual DynamicAny::DynAny_ptr current_component (void);
+  virtual DynamicAny::DynAny_ptr current_component ();
 
 private:
   /// Check if the typecode is acceptable.
@@ -74,7 +74,7 @@ private:
   void set_to_default_value (CORBA::TypeCode_ptr tc);
 
   /// Called by both versions of init().
-  void init_common (void);
+  void init_common ();
 
   // Use copy() or assign() instead of these.
   TAO_DynAny_i (const TAO_DynAny_i &src);

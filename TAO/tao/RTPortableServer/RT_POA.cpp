@@ -285,8 +285,7 @@ TAO_RT_POA::key_to_stub_i (const TAO::ObjectKey &object_key,
                                                       type_id,
                                                       client_exposed_policies._retn (),
                                                       &filter,
-                                                      lanes[i]->resources ().acceptor_registry ()
-                                                     );
+                                                      lanes[i]->resources ().acceptor_registry ());
         }
 
       ACE_ASSERT (0);

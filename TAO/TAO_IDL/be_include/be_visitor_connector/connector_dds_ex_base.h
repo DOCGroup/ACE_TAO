@@ -31,7 +31,7 @@ class be_visitor_connector_dds_ex_base
 public:
   be_visitor_connector_dds_ex_base (be_visitor_context *ctx);
 
-  ~be_visitor_connector_dds_ex_base (void);
+  ~be_visitor_connector_dds_ex_base ();
 
 protected:
   bool begin (be_connector *node);
@@ -53,7 +53,7 @@ protected:
 
 private:
   void process_template_args (AST_Connector *node);
-  void match_template_args (void);
+  void match_template_args ();
 };
 
 #endif /* _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_ */

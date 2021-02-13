@@ -51,9 +51,6 @@
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
 
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
-
 // Compiler/platform supports SunOS high resolution timers.
 #define ACE_HAS_HI_RES_TIMER
 

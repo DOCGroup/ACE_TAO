@@ -42,7 +42,6 @@ struct TAO_LB_LoadAlertInfo
   /// True if the LoadAlert object has been alerted about a given load
   /// condition.  False otherwise.
   CORBA::Boolean alerted;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

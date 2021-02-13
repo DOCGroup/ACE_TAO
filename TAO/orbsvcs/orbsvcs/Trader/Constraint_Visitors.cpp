@@ -9,12 +9,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue (void)
+TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue ()
 {
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_left_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_left_operand ()
 {
   TAO_Literal_Constraint* left_operand = 0;
   this->get (left_operand, 1);
@@ -22,7 +22,7 @@ TAO_Constraint_Evaluator::Operand_Queue::get_left_operand (void)
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_right_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_right_operand ()
 {
   TAO_Literal_Constraint* right_operand = 0;
   this->get (right_operand);
@@ -30,7 +30,7 @@ TAO_Constraint_Evaluator::Operand_Queue::get_right_operand (void)
 }
 
 TAO_Literal_Constraint&
-TAO_Constraint_Evaluator::Operand_Queue::get_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::get_operand ()
 {
   TAO_Literal_Constraint* operand = 0;
   this->get (operand);
@@ -38,13 +38,13 @@ TAO_Constraint_Evaluator::Operand_Queue::get_operand (void)
 }
 
 void
-TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand (void)
+TAO_Constraint_Evaluator::Operand_Queue::dequeue_operand ()
 {
   TAO_Literal_Constraint operand;
   this->dequeue_head (operand);
 }
 
-TAO_Constraint_Evaluator::TAO_Constraint_Evaluator (void)
+TAO_Constraint_Evaluator::TAO_Constraint_Evaluator ()
 {
   // No-Op.
 }
@@ -759,12 +759,12 @@ operator () (TAO_DynSequence_i& dyn_any,
 }
 
 TAO_Constraint_Validator::
-TAO_Constraint_Validator (void)
+TAO_Constraint_Validator ()
 {
   // No-Op.
 }
 
-TAO_Constraint_Validator::~TAO_Constraint_Validator (void)
+TAO_Constraint_Validator::~TAO_Constraint_Validator ()
 {
   for (TAO_Typecode_Table::iterator type_iter (this->type_map_);
        ! type_iter.done ();

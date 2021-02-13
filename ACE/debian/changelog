@@ -1,3 +1,95 @@
+ace (6.5.12+dfsg-3) unstable; urgency=medium
+
+  * Team upload.
+  * Mark build dependency on libfltk1.3-dev. (Closes: #974633)
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sat, 05 Dec 2020 20:27:14 +0000
+
+ace (6.5.12+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sat, 07 Nov 2020 09:28:59 +0000
+
+ace (6.5.12+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v6.5.12
+    - Sync debian/* with upstream.
+    - Revert upstream shebang portability changes.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 30 Oct 2020 22:35:54 +0000
+
+ace (6.5.10+dfsg-3) unstable; urgency=medium
+
+  * Team upload.
+  * Fix build on hurd-i386.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Mon, 26 Oct 2020 21:45:06 +0000
+
+ace (6.5.10+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sat, 01 Aug 2020 16:19:16 +0100
+
+ace (6.5.10+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v6.5.10
+    - Use debian/* from upstream.
+  * Use https in d/watch file.
+  * Remove unused lintian override.
+    - For short description.
+    - For embedded-javascript-library.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Thu, 09 Jul 2020 19:05:26 +0100
+
+ace (6.5.8+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 21 Jun 2020 21:32:44 +0100
+
+ace (6.5.8+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v6.5.8
+    - Remove old patches applied upstream.
+    - Use debian/* from upstream.
+    - Update get-orig-source.sh and repack source.
+    - Remove WebSTONE from copyright.
+  * Update Standards-Version to 4.5.0
+  * Use debhelper-compat.
+    - Update compat level to 12.
+  * Update debian/rules.
+    - Remove --list-missing.
+    - Add -g for debug symbols.
+    - Stop modifying flags directly.
+    - Install shared library in multiarch location.
+    - Remove LD_LIBRARY_PATH.
+  * Update doc-base location.
+  * Remove lintian overrides.
+    - for symbols.
+    - for debhelper.
+  * Update maintainer to valid team email. (Closes: #899440)
+  * Update Vcs link to salsa.
+  * Update copyright year.
+  * Drop transitional package gperf-ace. (Closes: #878198)
+  * Fix whitespace in changelog.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 12 Jun 2020 10:17:59 +0100
+
+ace (6.4.5+dfsg-1.1) unstable; urgency=medium
+
+  * Non-maintainer upload.
+  * Fix build failure. (Closes: #946853)
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Tue, 07 Apr 2020 11:55:27 +0100
+
 ace (6.4.5+dfsg-1) unstable; urgency=medium
 
   [ Johnny Willemsen ]
@@ -1321,4 +1413,3 @@ ace (4.6.3-1) unstable; urgency=low
   * Initial Release.
 
  -- Ossama Othman <othman@astrosun.tn.cornell.edu>  Thu, 12 Nov 1998 13:13:59 -0500
-

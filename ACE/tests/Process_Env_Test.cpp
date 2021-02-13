@@ -14,8 +14,7 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
-                            void *ctx);
+using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 #if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 

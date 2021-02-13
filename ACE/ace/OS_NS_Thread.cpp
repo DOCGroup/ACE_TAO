@@ -2404,7 +2404,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 
 #ifndef ACE_WIN32
 
-int ACE_event_t::lock (void)
+int ACE_event_t::lock ()
 {
 # if !ACE_EVENT_USE_MUTEX_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -2413,7 +2413,7 @@ int ACE_event_t::lock (void)
   return ACE_OS::mutex_lock (&this->eventdata_->lock_);
 }
 
-int ACE_event_t::unlock (void)
+int ACE_event_t::unlock ()
 {
 # if !ACE_EVENT_USE_MUTEX_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -2422,7 +2422,7 @@ int ACE_event_t::unlock (void)
   return ACE_OS::mutex_unlock (&this->eventdata_->lock_);
 }
 
-int ACE_event_t::wake_one (void)
+int ACE_event_t::wake_one ()
 {
 # if !ACE_EVENT_USE_COND_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -3134,14 +3134,36 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 #if defined ACE_HAS_THREADS && defined ACE_LACKS_RWLOCK_T
 namespace {
 struct UniqueName {
-  explicit UniqueName (const void *addr)
+  UniqueName (int type, const void *addr)
   {
+#ifdef ACE_WIN32
+    if (type == USYNC_THREAD)
+      {
+        this->named_ = false;
+        return;
+      }
+    this->named_ = true;
+#else
+    ACE_UNUSED_ARG (type);
+#endif
     ACE_OS::unique_name (addr, &this->buffer_[0], ACE_UNIQUE_NAME_LEN);
   }
 
-  operator const ACE_TCHAR * () const { return &this->buffer_[0]; }
+  operator const ACE_TCHAR * () const
+  {
+#ifdef ACE_WIN32
+    if (!this->named_)
+      {
+        return 0;
+      }
+#endif
+    return &this->buffer_[0];
+  }
 
   ACE_TCHAR buffer_[ACE_UNIQUE_NAME_LEN];
+#ifdef ACE_WIN32
+  bool named_;
+#endif
 };
 
 enum RWLockCleanup {RWLC_CondAttr, RWLC_Lock, RWLC_CondReaders, RWLC_CondWriters};
@@ -3196,23 +3218,24 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 
   RWLockCleaner cleanup (attributes, rw);
 
-  if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (&rw->lock_),
+  if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (type, &rw->lock_),
                           (ACE_mutexattr_t *) arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_Lock;
   if (ACE_OS::cond_init (&rw->waiting_readers_, attributes,
-                         UniqueName (&rw->waiting_readers_), arg) != 0)
+                         UniqueName (type, &rw->waiting_readers_), arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondReaders;
   if (ACE_OS::cond_init (&rw->waiting_writers_, attributes,
-                         UniqueName (&rw->waiting_writers_), arg) != 0)
+                         UniqueName (type, &rw->waiting_writers_), arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondWriters;
   if (ACE_OS::cond_init (&rw->waiting_important_writer_, attributes,
-                         UniqueName (&rw->waiting_important_writer_), arg) != 0)
+                         UniqueName (type, &rw->waiting_important_writer_),
+                         arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondAttr;
@@ -3317,7 +3340,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.
@@ -3577,11 +3599,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   else
     thread_args = thread_adapter;
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
-#else
-  auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
-#endif /* ACE_HAS_CPP11 */
 
   if (thread_adapter == 0)
     ACE_auto_ptr_reset (auto_thread_args,
@@ -4820,16 +4838,6 @@ ACE_OS::unique_name (const void *object,
                     static_cast<int> (ACE_OS::getpid ()));
 }
 #endif
-
-pid_t
-ACE_OS::thr_gettid ()
-{
-#ifdef ACE_HAS_GETTID
-  return syscall (SYS_gettid);
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

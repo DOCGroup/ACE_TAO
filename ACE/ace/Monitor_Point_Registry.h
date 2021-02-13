@@ -48,7 +48,7 @@ namespace ACE
 
       /// Used to help ensure that there is only a single instance
       /// per process of Monitor_Point_Registry.
-      static Monitor_Point_Registry* instance (void);
+      static Monitor_Point_Registry* instance ();
 
       /// Adds a monitor to the registry.
       bool add (Monitor_Base* type);
@@ -57,22 +57,22 @@ namespace ACE
       bool remove (const char* name);
 
       /// Returns a list of names stored in the registry
-      Monitor_Control_Types::NameList names (void);
+      Monitor_Control_Types::NameList names ();
 
       /// Increments the refcount, so the caller is responsible for
       /// decrementing it when finished.
       Monitor_Base* get (const ACE_CString& name) const;
 
       /// Returns a unique id for a constraint when it is created.
-      long constraint_id (void);
+      long constraint_id ();
 
       /// Decrements the reference count on all remaining entries,
       /// called right before we go out of scope (i.e., process exits).
-      void cleanup (void);
+      void cleanup ();
 
     private:
       /// Prevent that users can make an instance.
-      Monitor_Point_Registry (void);
+      Monitor_Point_Registry ();
 
       /// Underlying container for the registry.
       typedef ACE_Hash_Map_Manager<ACE_CString,

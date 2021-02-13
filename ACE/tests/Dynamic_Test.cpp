@@ -26,18 +26,14 @@ public:
 
 #if defined (ACE_HAS_NEW_NOTHROW)
   void *operator new (size_t n, const ACE_nothrow_t&) throw();
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 #endif
 
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *, void *);
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   /// Have we been dynamically created?
   bool dynamic_;
@@ -92,13 +88,11 @@ A::operator new (size_t n, const ACE_nothrow_t&) throw()
     }
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
 A::operator delete (void *p, const ACE_nothrow_t&) throw()
 {
   ::delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
 #endif /* ACE_HAS_NEW_NOTHROW */
 

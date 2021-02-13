@@ -29,16 +29,16 @@ class ACE_Refcountable_T
 {
 public:
   /// Destructor.
-  virtual ~ACE_Refcountable_T (void);
+  virtual ~ACE_Refcountable_T ();
 
   /// Increment refcount
-  long increment (void);
+  long increment ();
 
   /// Decrement refcount
-  long decrement (void);
+  long decrement ();
 
   /// Returns the current refcount.
-  long refcount (void) const;
+  long refcount () const;
 
 protected:
   /// Protected constructor.

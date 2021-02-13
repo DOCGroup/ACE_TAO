@@ -35,13 +35,13 @@ namespace TAO
     public:
       explicit Creation_Time (const ACE_Time_Value &creation_time);
 
-      Creation_Time (void);
+      Creation_Time ();
 
       void creation_time (const void *creation_time);
 
-      const void *creation_time (void) const;
+      const void *creation_time () const;
 
-      static CORBA::ULong creation_time_length (void);
+      static CORBA::ULong creation_time_length ();
 
       bool operator== (const Creation_Time &rhs) const;
 
@@ -76,7 +76,7 @@ namespace TAO
     {
     public:
 
-      Temporary_Creation_Time (void);
+      Temporary_Creation_Time ();
 
       void creation_time (const void *creation_time);
 

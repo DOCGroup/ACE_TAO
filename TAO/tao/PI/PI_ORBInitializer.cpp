@@ -16,7 +16,6 @@ TAO_PI_ORBInitializer::pre_init (PortableInterceptor::ORBInitInfo_ptr)
 {
 }
 
-
 void
 TAO_PI_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 {
@@ -38,7 +37,6 @@ TAO_PI_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
 
   this->register_policy_factories (info);
 }
-
 
 void
 TAO_PI_ORBInitializer::register_policy_factories (

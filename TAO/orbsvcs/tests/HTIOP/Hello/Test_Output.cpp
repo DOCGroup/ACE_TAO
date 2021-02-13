@@ -75,7 +75,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir {};
 
 #if !defined (ACE_HAS_WINCE)
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
@@ -99,11 +99,11 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
   // This could be done with ACE_OS::sprintf() but it requires different
   // format strings for wide-char POSIX vs. narrow-char POSIX and Windows.
   // Easier to keep straight like this.
-  ACE_OS_String::strcpy (temp, test_dir);
-  ACE_OS_String::strcat (temp, ACE_LOG_DIRECTORY);
-  ACE_OS_String::strcat
+  ACE_OS::strcpy (temp, test_dir);
+  ACE_OS::strcat (temp, ACE_LOG_DIRECTORY);
+  ACE_OS::strcat
     (temp, ACE::basename (filename, ACE_DIRECTORY_SEPARATOR_CHAR));
-  ACE_OS_String::strcat (temp, ACE_LOG_FILE_EXT_NAME);
+  ACE_OS::strcat (temp, ACE_LOG_FILE_EXT_NAME);
 
 #if defined (VXWORKS)
   // This is the only way I could figure out to avoid a console

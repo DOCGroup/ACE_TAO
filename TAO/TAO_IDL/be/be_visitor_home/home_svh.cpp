@@ -13,8 +13,8 @@
 
 be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
   : be_visitor_scope (ctx),
-    node_ (0),
-    comp_ (0),
+    node_ (nullptr),
+    comp_ (nullptr),
     os_ (*ctx->stream ()),
     export_macro_ (be_global->svnt_export_macro ())
 {
@@ -28,7 +28,7 @@ be_visitor_home_svh::be_visitor_home_svh (be_visitor_context *ctx)
     }
 }
 
-be_visitor_home_svh::~be_visitor_home_svh (void)
+be_visitor_home_svh::~be_visitor_home_svh ()
 {
 }
 
@@ -44,8 +44,7 @@ be_visitor_home_svh::visit_home (be_home *node)
   node_ = node;
   comp_ = node_->managed_component ();
 
-  /// CIDL-generated namespace used 'CIDL_' + composition name.
-  /// Now we use 'CIAO_' + component's flat name.
+  /// Use 'CIAO_' + component's flat name.
   os_ << be_nl_2
       << "namespace CIAO_" << comp_->flat_name () << "_Impl" << be_nl
       << "{" << be_idt;
@@ -87,7 +86,7 @@ be_visitor_home_svh::visit_factory (be_factory *node)
   // An inherited factory/finder needs to return the managed
   // component of the home where it is defined.
   be_home *h =
-    be_home::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_home*> (node->defined_in ());
 
   AST_Component *c = h->managed_component ();
 
@@ -120,7 +119,7 @@ be_visitor_home_svh::visit_finder (be_finder *node)
 }
 
 int
-be_visitor_home_svh::gen_servant_class (void)
+be_visitor_home_svh::gen_servant_class ()
 {
   AST_Decl *scope = ScopeAsDecl (node_->defined_in ());
   ACE_CString sname_str (scope->full_name ());
@@ -154,7 +153,7 @@ be_visitor_home_svh::gen_servant_class (void)
       << "_Container_ptr c);" << be_uidt;
 
   os_ << be_nl_2
-      << "virtual ~" << lname << "_Servant (void);";
+      << "virtual ~" << lname << "_Servant ();";
 
   if (this->node_->has_rw_attributes ())
     {
@@ -166,7 +165,7 @@ be_visitor_home_svh::gen_servant_class (void)
 
 AST_Type *pk = node_->primary_key ();
 
-  if (pk != 0)
+  if (pk != nullptr)
     {
       os_ << be_nl_2
           << "// Implicit home primary key operations - not supported.";
@@ -200,7 +199,7 @@ AST_Type *pk = node_->primary_key ();
 
   be_home *h = node_;
 
-  while (h != 0)
+  while (h != nullptr)
     {
       if (this->visit_scope (h) != 0)
         {
@@ -216,7 +215,7 @@ AST_Type *pk = node_->primary_key ();
           // A closure of all the supported interfaces is stored
           // in the base class 'pd_inherits_flat' member.
           be_interface *bi =
-            be_interface::narrow_from_decl (h->inherits ()[i]);
+            dynamic_cast<be_interface*> (h->inherits ()[i]);
 
           int status =
             bi->traverse_inheritance_graph (
@@ -235,7 +234,7 @@ AST_Type *pk = node_->primary_key ();
             }
         }
 
-      h = be_home::narrow_from_decl (h->base_home ());
+      h = dynamic_cast<be_home*> (h->base_home ());
     }
 
   os_ << be_uidt_nl
@@ -245,7 +244,7 @@ AST_Type *pk = node_->primary_key ();
 }
 
 void
-be_visitor_home_svh::gen_entrypoint (void)
+be_visitor_home_svh::gen_entrypoint ()
 {
   os_ << be_nl_2
       << "extern \"C\" " << export_macro_.c_str ()

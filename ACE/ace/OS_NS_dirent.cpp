@@ -181,7 +181,6 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
   int nfiles = 0;
   int fail = 0;
 
-  // @@ This code shoulduse readdir_r() rather than readdir().
   for (dp = ACE_OS::readdir (dirp);
        dp != 0;
        dp = ACE_OS::readdir (dirp))

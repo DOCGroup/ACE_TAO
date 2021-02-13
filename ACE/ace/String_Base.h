@@ -164,7 +164,7 @@ public:
   /**
    *  Deletes the memory...
    */
-  ~ACE_String_Base (void);
+  ~ACE_String_Base ();
 
   /**
    * Return the <slot'th> character in the string (doesn't perform
@@ -278,7 +278,7 @@ public:
    *   and the next append() or +=() will cause a new buffer to be
    *   allocated internally.
    */
-  void fast_clear (void);
+  void fast_clear ();
 
   /**
    * Return a substring given an offset and length.
@@ -344,14 +344,14 @@ public:
    *
    *  @return Hash value of string
    */
-  u_long hash (void) const;
+  u_long hash () const;
 
   /**
    *  Return the length of the string.
    *
    *  @return Length of stored string
    */
-  size_type length (void) const;
+  size_type length () const;
 
   /**
    *  Return the number of allocated CHARs in the string object.
@@ -360,19 +360,19 @@ public:
    *  @return Maximum number of ACE_CHAR_T units that can be stored, including
    *          any terminating nul that may be needed.
    */
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /**
    * Return @c true if the length of the string is zero, else @c false.
    */
-  bool is_empty (void) const;
+  bool is_empty () const;
 
   /**
    * Return @c true if the length of the string is zero, else @c
    * false.  We recommend using @c is_empty() instead since it's more
    * consistent with the ACE container naming conventions.
    */
-  bool empty (void) const;
+  bool empty () const;
 
   /**
    * Get a copy of the underlying representation.
@@ -384,7 +384,7 @@ public:
    * @return Pointer reference to the string data. Returned string is
    *    zero terminated.
    */
-  ACE_CHAR_T *rep (void) const;
+  ACE_CHAR_T *rep () const;
 
   /**
    * Get at the underlying representation directly!
@@ -395,12 +395,12 @@ public:
    *    that the string is zero terminated.
    *
    */
-  const ACE_CHAR_T *fast_rep (void) const;
+  const ACE_CHAR_T *fast_rep () const;
 
   /**
    *  Same as STL String's c_str() and fast_rep().
    */
-  const ACE_CHAR_T *c_str (void) const;
+  const ACE_CHAR_T *c_str () const;
 
   /**
    *  Comparison operator that will match substrings.  Returns the
@@ -516,7 +516,7 @@ public:
   /**
    *  Dump the state of an object.
    */
-  void dump (void) const;
+  void dump () const;
 
   /**
    * This method is designed for high-performance. Please use with
@@ -546,11 +546,11 @@ public:
    */
   void swap (ACE_String_Base<ACE_CHAR_T> & str);
 
-  iterator begin (void);
-  const_iterator begin (void) const;
+  iterator begin ();
+  const_iterator begin () const;
 
-  iterator end (void);
-  const_iterator end (void) const;
+  iterator end ();
+  const_iterator end () const;
 
   /**
    *  Declare the dynamic allocation hooks.
@@ -627,7 +627,7 @@ public:
   ACE_String_Base_Iterator (const ACE_String_Base_Iterator <ACE_CHAR_T> & iter);
 
   /// Destructor.
-  ~ACE_String_Base_Iterator (void);
+  ~ACE_String_Base_Iterator ();
 
   /**
    * Test if the iterator has seen all characters.
@@ -635,7 +635,7 @@ public:
    * @retval          0         Characters still remain.
    * @retval          1         All characters have been seen.
    */
-  int done (void) const;
+  int done () const;
 
   /**
    * Get the current character.
@@ -652,7 +652,7 @@ public:
    * @retval         0          All characters have been seen.
    * @retval         1          Items still remain to be seen.
    */
-  int advance (void);
+  int advance ();
 
   /**
    * Assignment operator
@@ -667,12 +667,12 @@ public:
    *
    * @return          Reference to current character seen by iterator.
    */
-  ACE_CHAR_T & operator * (void);
+  ACE_CHAR_T & operator * ();
 
   /**
    * Prefix operator
    */
-  ACE_String_Base_Iterator <ACE_CHAR_T> & operator ++ (void);
+  ACE_String_Base_Iterator <ACE_CHAR_T> & operator ++ ();
 
   /**
    * Postfix operator
@@ -682,7 +682,7 @@ public:
   /**
    * Prefix operator
    */
-  ACE_String_Base_Iterator <ACE_CHAR_T> & operator -- (void);
+  ACE_String_Base_Iterator <ACE_CHAR_T> & operator -- ();
 
   /**
    * Postfix operator
@@ -754,7 +754,7 @@ public:
   ACE_String_Base_Const_Iterator (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & iter);
 
   /// Destructor.
-  ~ACE_String_Base_Const_Iterator (void);
+  ~ACE_String_Base_Const_Iterator ();
 
   /**
    * Test if the iterator has seen all characters.
@@ -762,7 +762,7 @@ public:
    * @retval          0         Characters still remain.
    * @retval          1         All characters have been seen.
    */
-  int done (void) const;
+  int done () const;
 
   /**
    * Get the current character.
@@ -779,7 +779,7 @@ public:
    * @retval         0          All characters have been seen.
    * @retval         1          Items still remain to be seen.
    */
-  int advance (void);
+  int advance ();
 
   /**
    * Assignment operator
@@ -794,12 +794,12 @@ public:
    *
    * @return          Reference to current character seen by iterator.
    */
-  const ACE_CHAR_T & operator * (void);
+  const ACE_CHAR_T & operator * ();
 
   /**
    * Prefix operator
    */
-  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator ++ (void);
+  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator ++ ();
 
   /**
    * Postfix operator
@@ -809,7 +809,7 @@ public:
   /**
    * Prefix operator
    */
-  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator -- (void);
+  ACE_String_Base_Const_Iterator <ACE_CHAR_T> & operator -- ();
 
   /**
    * Postfix operator

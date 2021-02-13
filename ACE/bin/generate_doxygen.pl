@@ -300,7 +300,7 @@ sub run_doxy {
 sub get_versions () {
   my $KIT = shift;
   my $VERSION_FILE = shift;
-  my ($major_version, $minor_version, $beta_version);
+  my ($major_version, $minor_version, $micro_version);
 
   open (VERSION, '<'.$VERSION_FILE)  ||
     die "$0: unable to open $VERSION_FILE\n";
@@ -309,23 +309,23 @@ sub get_versions () {
     if (/$KIT version (\d+)\.(\d+)\.(\d+)/) {
       $major_version = $1;
       $minor_version = $2;
-      $beta_version = $3;
+      $micro_version = $3;
       last;
     } elsif (/$KIT version (\d+)\.(\d+)[^\.]/) {
       #### Previous release was a minor.
       $major_version = $1;
       $minor_version = $2;
-      $beta_version  = '0';
+      $micro_version  = '0';
       last;
     } elsif (/$KIT version (\d+)[^\.]/) {
       #### Previous release was a major.
       $major_version = $1;
       $minor_version = '0';
-      $beta_version  = '0';
+      $micro_version  = '0';
       last;
     }
   }
   close VERSION;
 
-  return ($major_version, $minor_version, $beta_version);
+  return ($major_version, $minor_version, $micro_version);
 }

@@ -10,13 +10,10 @@ public:
   AST_ValueBox (UTL_ScopedName *n,
                 AST_Type       *boxed_type);
 
-  virtual ~AST_ValueBox (void);
+  virtual ~AST_ValueBox ();
 
   // Data Accessors.
-  AST_Type            *boxed_type (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_ValueBox);
+  AST_Type            *boxed_type () const;
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
@@ -25,7 +22,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   static AST_Decl::NodeType const NT;
 

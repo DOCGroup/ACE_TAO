@@ -69,8 +69,7 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len
-                                     );
+  virtual TAO_Profile *corbaloc_scan (const char *str, size_t &len);
 
   virtual char object_key_delimiter (void) const;
 

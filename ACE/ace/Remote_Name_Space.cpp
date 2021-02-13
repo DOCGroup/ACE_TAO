@@ -23,7 +23,7 @@ ACE_Remote_Name_Space::open (const ACE_TCHAR *servername, u_short port)
   return 0;
 }
 
-ACE_Remote_Name_Space::ACE_Remote_Name_Space (void)
+ACE_Remote_Name_Space::ACE_Remote_Name_Space ()
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
 }
@@ -362,7 +362,7 @@ ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
   return 0;
 }
 
-ACE_Remote_Name_Space::~ACE_Remote_Name_Space (void)
+ACE_Remote_Name_Space::~ACE_Remote_Name_Space ()
 {
   ACE_TRACE ("ACE_Remote_Name_Space::~ACE_Remote_Name_Space");
 }
@@ -370,7 +370,7 @@ ACE_Remote_Name_Space::~ACE_Remote_Name_Space (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Remote_Name_Space)
 
 void
-ACE_Remote_Name_Space::dump (void) const
+ACE_Remote_Name_Space::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Name_Space::dump");

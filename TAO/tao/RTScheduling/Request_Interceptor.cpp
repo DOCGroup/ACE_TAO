@@ -53,7 +53,7 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
             TAOLIB_DEBUG ((LM_DEBUG,
                         "The Guid is %d %d\n",
                         id,
-                        TAO_RTScheduler_Current::guid_counter.value_i ()));
+                        TAO_RTScheduler_Current::guid_counter.load ()));
 
           // Create new DT.
           RTScheduling::DistributableThread_var dt =
@@ -253,8 +253,7 @@ Server_Interceptor::receive_request_service_contexts (
 }
 
 void
-Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri
-                                     )
+Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri)
 {
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,

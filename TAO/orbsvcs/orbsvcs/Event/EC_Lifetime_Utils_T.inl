@@ -5,7 +5,7 @@ template <class T>
 ACE_INLINE
 TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (void)
   : command_ ()
-  , allow_command_ (0)
+  , allow_command_ (false)
 {
 }
 
@@ -13,7 +13,7 @@ template <class T>
 ACE_INLINE
 TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (const T & command)
   : command_ (command)
-  , allow_command_ (1)
+  , allow_command_ (true)
 {
 }
 
@@ -29,7 +29,7 @@ ACE_INLINE void
 TAO_EC_Auto_Command<T>::set_command (const T & command)
 {
   this->command_ = command;
-  this->allow_command_ = 1;
+  this->allow_command_ = true;
 }
 
 template <class T>
@@ -50,7 +50,7 @@ TAO_EC_Auto_Command<T>::execute (void)
 {
   if (this->allow_command_)
     {
-      this->allow_command_ = 0;
+      this->allow_command_ = false;
 
       try
         {
@@ -67,14 +67,14 @@ template <class T>
 ACE_INLINE void
 TAO_EC_Auto_Command<T>::allow_command (void)
 {
-  this->allow_command_ = 1;
+  this->allow_command_ = true;
 }
 
 template <class T>
 ACE_INLINE void
 TAO_EC_Auto_Command<T>::disallow_command (void)
 {
-  this->allow_command_ = 0;
+  this->allow_command_ = false;
 }
 
 

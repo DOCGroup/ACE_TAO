@@ -117,8 +117,8 @@ void *ACE_Object_Manager::preallocated_array[
 class ACE_Object_Manager_Preallocations
 {
 public:
-  ACE_Object_Manager_Preallocations (void);
-  ~ACE_Object_Manager_Preallocations (void);
+  ACE_Object_Manager_Preallocations ();
+  ~ACE_Object_Manager_Preallocations ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -126,7 +126,7 @@ private:
   ACE_Static_Svc_Descriptor ace_svc_desc_ACE_Service_Manager;
 };
 
-ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
+ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations ()
 {
   ACE_STATIC_SVC_DEFINE (ACE_Service_Manager_initializer,
                          ACE_TEXT ("ACE_Service_Manager"),
@@ -146,7 +146,7 @@ ACE_Object_Manager_Preallocations::ACE_Object_Manager_Preallocations (void)
     insert (&ace_svc_desc_ACE_Service_Manager);
 }
 
-ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations (void)
+ACE_Object_Manager_Preallocations::~ACE_Object_Manager_Preallocations ()
 {
 }
 
@@ -155,13 +155,13 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager_Preallocations)
 #endif /* ! ACE_LACKS_ACE_SVCCONF */
 
 int
-ACE_Object_Manager::starting_up (void)
+ACE_Object_Manager::starting_up ()
 {
   return ACE_Object_Manager::instance_  ?  instance_->starting_up_i ()  :  1;
 }
 
 int
-ACE_Object_Manager::shutting_down (void)
+ACE_Object_Manager::shutting_down ()
 {
   return ACE_Object_Manager::instance_  ?  instance_->shutting_down_i ()  :  1;
 }
@@ -187,7 +187,7 @@ LONG WINAPI ACE_UnhandledExceptionFilter (PEXCEPTION_POINTERS pExceptionInfo)
 // objects, but only The Instance sets up the static preallocated objects and
 // the (static) ACE_Service_Config signal handler.
 int
-ACE_Object_Manager::init (void)
+ACE_Object_Manager::init ()
 {
   if (starting_up_i ())
     {
@@ -271,10 +271,11 @@ ACE_Object_Manager::init (void)
           // And this will catch all unhandled exceptions.
           SetUnhandledExceptionFilter (&ACE_UnhandledExceptionFilter);
 
-#  if (_MSC_VER >= 1400) // VC++ 8.0 and above
+#if !defined (__MINGW32__)
           // And this will stop the abort system call from being treated as a crash
           _set_abort_behavior( 0,  _CALL_REPORTFAULT);
-#  endif
+#endif /* !__MINGW32__ */
+
   // Note the following fix was derived from that proposed by Jochen Kalmbach
   // http://blog.kalmbachnet.de/?postid=75
   // See also:
@@ -289,10 +290,10 @@ ACE_Object_Manager::init (void)
   // from calling SetUnhandledExceptionFilter() after we have done so above.
   // NOTE this only works for intel based windows builds.
 
-#  if (_MSC_VER >= 1400) \
+#  if (_MSC_VER) \
       || (__MINGW32_MAJOR_VERSION > 3)  || \
           ((__MINGW32_MAJOR_VERSION == 3) && \
-           (__MINGW32_MINOR_VERSION >= 15)) // VC++ 8.0 and above || MingW32 >= 3.15
+           (__MINGW32_MINOR_VERSION >= 15)) // VC++ || MingW32 >= 3.15
 #    ifdef _M_IX86
           HMODULE hKernel32 = ACE_TEXT_LoadLibrary (ACE_TEXT ("kernel32.dll"));
           if (hKernel32)
@@ -320,7 +321,7 @@ ACE_Object_Manager::init (void)
                 }
             }
 #    endif // _M_IX86
-#  endif // (_MSC_VER >= 1400) // VC++ 8.0 and above.
+#  endif // (_MSC_VER)
 #endif /* ACE_DISABLE_WIN32_ERROR_WINDOWS */
 
 #     if !defined (ACE_LACKS_ACE_SVCCONF)
@@ -374,7 +375,7 @@ ACE_Object_Manager::init_tss_i (void)
 
 #endif
 
-ACE_Object_Manager::ACE_Object_Manager (void)
+ACE_Object_Manager::ACE_Object_Manager ()
   // With ACE_HAS_TSS_EMULATION, ts_storage_ is initialized by the call to
   // ACE_OS::tss_open () in the function body.
   : exit_info_ ()
@@ -410,7 +411,7 @@ ACE_Object_Manager::ACE_Object_Manager (void)
   init ();
 }
 
-ACE_Object_Manager::~ACE_Object_Manager (void)
+ACE_Object_Manager::~ACE_Object_Manager ()
 {
   dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
@@ -419,7 +420,7 @@ ACE_Object_Manager::~ACE_Object_Manager (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Object_Manager)
 
 ACE_Object_Manager *
-ACE_Object_Manager::instance (void)
+ACE_Object_Manager::instance ()
 {
   // This function should be called during construction of static
   // instances, or before any other threads have been created in
@@ -708,7 +709,7 @@ ACE_Object_Manager::get_singleton_lock (ACE_RW_Thread_Mutex *&lock)
 // Only The Instance cleans up the static preallocated objects.  All objects
 // clean up their per-object information and managed objects.
 int
-ACE_Object_Manager::fini (void)
+ACE_Object_Manager::fini ()
 {
   if (shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
@@ -857,15 +858,15 @@ ACE_Object_Manager::fini (void)
 class ACE_Export ACE_Object_Manager_Manager
 {
 public:
-  ACE_Object_Manager_Manager (void);
-  ~ACE_Object_Manager_Manager (void);
+  ACE_Object_Manager_Manager ();
+  ~ACE_Object_Manager_Manager ();
 
 private:
   /// Save the main thread ID, so that destruction can be suppressed.
   ACE_thread_t saved_main_thread_id_;
 };
 
-ACE_Object_Manager_Manager::ACE_Object_Manager_Manager (void)
+ACE_Object_Manager_Manager::ACE_Object_Manager_Manager ()
   : saved_main_thread_id_ (ACE_OS::thr_self ())
 {
   // Ensure that the Object_Manager gets initialized before any
@@ -875,7 +876,7 @@ ACE_Object_Manager_Manager::ACE_Object_Manager_Manager (void)
   (void) ACE_Object_Manager::instance ();
 }
 
-ACE_Object_Manager_Manager::~ACE_Object_Manager_Manager (void)
+ACE_Object_Manager_Manager::~ACE_Object_Manager_Manager ()
 {
   if (ACE_OS::thr_equal (ACE_OS::thr_self (),
                          saved_main_thread_id_))
@@ -895,7 +896,7 @@ static ACE_Object_Manager_Manager ACE_Object_Manager_Manager_instance;
 
 // This is global so that it doesn't have to be declared in the header
 // file.  That would cause nasty circular include problems.
-typedef ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex> ACE_Static_Object_Lock_Type;
+using ACE_Static_Object_Lock_Type = ACE_Cleanup_Adapter<ACE_Recursive_Thread_Mutex>;
 static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 
 // ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK isn't (currently) used by ACE.
@@ -904,7 +905,7 @@ static ACE_Static_Object_Lock_Type *ACE_Static_Object_Lock_lock = 0;
 // <jody@atdesk.com> for contributing it.
 
 ACE_Recursive_Thread_Mutex *
-ACE_Static_Object_Lock::instance (void)
+ACE_Static_Object_Lock::instance ()
 {
   if (ACE_Object_Manager::starting_up ()  ||
       ACE_Object_Manager::shutting_down ())
@@ -951,7 +952,7 @@ ACE_Static_Object_Lock::instance (void)
 }
 
 void
-ACE_Static_Object_Lock::cleanup_lock (void)
+ACE_Static_Object_Lock::cleanup_lock ()
 {
 # if defined(ACE_SHOULD_MALLOC_STATIC_OBJECT_LOCK)
     // It was malloc'd, so we need to explicitly call the dtor

@@ -130,7 +130,7 @@ public:
   int decode (void);
 
   /// Print out the values of the message for debugging purposes.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // = The 5 fields in the <Transfer> struct are transmitted to the server.
@@ -233,7 +233,7 @@ public:
   int decode (void);
 
   /// Print out the values of the message for debugging purposes.
-  void dump (void) const;
+  void dump () const;
 
 private:
   // = The 3 fields in the <Transfer> struct are transmitted to the server.

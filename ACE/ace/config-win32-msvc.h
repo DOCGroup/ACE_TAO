@@ -44,18 +44,6 @@
 # include "ace/config-win32-msvc-141.h"
 #elif (_MSC_VER >= 1900)
 # include "ace/config-win32-msvc-14.h"
-#elif (_MSC_VER >= 1800)
-# include "ace/config-win32-msvc-12.h"
-#elif (_MSC_VER >= 1700)
-# include "ace/config-win32-msvc-11.h"
-#elif (_MSC_VER >= 1600)
-# include "ace/config-win32-msvc-10.h"
-#elif (_MSC_VER >= 1500)
-# include "ace/config-win32-msvc-9.h"
-#elif (_MSC_VER >= 1400)
-# include "ace/config-win32-msvc-8.h"
-#elif (_MSC_VER >= 1310)
-# include "ace/config-win32-msvc-7.h"
 #else
 # error This version of Microsoft Visual C++ is not supported.
 #endif
@@ -103,9 +91,6 @@
 #define ACE_LACKS_NETDB_H
 #define ACE_LACKS_NET_IF_H
 #define ACE_LACKS_NETINET_IN_H
-#if !defined (ACE_WIN32_VC14)
-# define ACE_LACKS_STDINT_H
-#endif
 #define ACE_LACKS_STROPTS_H
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_SYS_IPC_H
