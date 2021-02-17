@@ -73,7 +73,7 @@ extern "C"
     };
 # endif /* ACE_LACKS_LINGER */
 
-#if defined (ACE_WIN32)
+#if defined (ACE_LACKS_MSGHDR)
    struct msghdr
    {
      /// Optional address
@@ -99,7 +99,7 @@ extern "C"
    };
 
    typedef WSACMSGHDR cmsghdr;
-#endif /* ACE_WIN32 */
+#endif /* ACE_LACKS_MSGHDR */
 
    // Using msghdr::msg_control and msghdr::msg_controllen portably:
    // For a parameter of size n, reserve space for ACE_CMSG_SPACE(n) bytes.
