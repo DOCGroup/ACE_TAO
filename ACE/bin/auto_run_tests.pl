@@ -17,7 +17,7 @@ use PerlACE::Run_Test;
 use Getopt::Long;
 use Cwd;
 
-use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT DANCE_ROOT DDS_ROOT);
+use Env qw(ACE_ROOT PATH TAO_ROOT CIAO_ROOT DANCE_ROOT);
 
 if (!defined $TAO_ROOT && -d "$ACE_ROOT/TAO") {
     $TAO_ROOT = "$ACE_ROOT/TAO";
@@ -27,9 +27,6 @@ if (!defined $CIAO_ROOT && -d "$ACE_ROOT/TAO/CIAO") {
 }
 if (!defined $DANCE_ROOT && -d "$ACE_ROOT/TAO/DAnCE") {
     $DANCE_ROOT = "$ACE_ROOT/TAO/DAnCE";
-}
-if (!defined $DDS_ROOT && -d "$ACE_ROOT/TAO/DDS") {
-    $DDS_ROOT = "$ACE_ROOT/TAO/DDS";
 }
 
 sub run_command {
@@ -81,7 +78,6 @@ sub print_help {
     "    --orb | -o               Include the TAO ORB tests\n" .
     "    --tao | -t               Include the TAO non-ORB tests\n" .
     "    --ciao-dance | -C        Include the CIAO and DAnCE tests\n" .
-    "    --opendds | -d           Include the OpenDDS tests\n" .
 
     "    -l <list_file>           Include the tests from <list_file>\n" .
 
@@ -106,7 +102,6 @@ my $ace_tests = 0;
 my $tao_orb_tests = 0;
 my $tao_tests = 0;
 my $ciao_dance_tests = 0;
-my $opendds_tests = 0;
 my @l_options = ();
 my $sandbox = '';
 my $dry_run = 0;
@@ -119,7 +114,6 @@ my $invalid_arguments = !GetOptions(
   'orb|o' => \$tao_orb_tests,
   'tao|t' => \$tao_tests,
   'ciao-dance|C' => \$ciao_dance_tests,
-  'opendds|d' => \$opendds_tests,
   'l=s' => \@l_options,
   'sandbox|s=s' => \$sandbox,
   'dry-run|z' => \$dry_run,
@@ -138,7 +132,6 @@ my @main_test_lists = (
   [\$tao_tests, $TAO_ROOT, "bin/tao_other_tests.lst", "TAO non-ORB"],
   [\$ciao_dance_tests, $CIAO_ROOT, "bin/ciao_tests.lst", "CIAO"],
   [\$ciao_dance_tests, $DANCE_ROOT, "bin/dance_tests.lst", "DANCE"],
-  [\$opendds_tests, $DDS_ROOT, "bin/dcps_tests.lst", "OpenDDS"],
 );
 my @file_list = ();
 my $list_error = 0;
@@ -247,16 +240,12 @@ foreach my $test_lst (@file_list) {
         if ($directory =~ m:^DAnCE/(.*):) {
           $directory = $1;
         }
-        if ($directory =~ m:^DDS/(.*):) {
-          $directory = $1;
-        }
 
         my $status;
         my @dirlist = ($ACE_ROOT."/$directory",
                        $TAO_ROOT."/$directory",
                        $CIAO_ROOT."/$directory",
-                       $DANCE_ROOT."/$directory",
-                       $DDS_ROOT."/$directory");
+                       $DANCE_ROOT."/$directory");
         # make sure to *first* check the explicitly specified directory and
         # only when nothing found there check the default dirs
         if ($explicit_startdir) {
