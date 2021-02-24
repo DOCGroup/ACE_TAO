@@ -172,7 +172,6 @@
 #define ACE_LACKS_SIGINFO_H
 #define ACE_HAS_UCONTEXT_T
 #define ACE_HAS_GETIFADDRS
-#define ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES
 #define ACE_LACKS_UNNAMED_SEMAPHORE
 
 // dlcompat package (not part of base Darwin) is needed for dlopen().
