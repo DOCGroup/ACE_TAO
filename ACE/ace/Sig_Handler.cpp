@@ -157,9 +157,7 @@ ACE_Sig_Handler::register_handler_i (int signum,
         new_disp = &sa;
 
       new_disp->handler (ace_signal_handler_dispatcher);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
       new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
       return new_disp->register_action (signum, old_disp);
     }
   else
@@ -430,9 +428,7 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Default is to restart signal handlers.
           new_disp->flags (new_disp->flags () | SA_RESTART);
-#if !defined (ACE_HAS_LYNXOS4_SIGNALS)
           new_disp->flags (new_disp->flags () | SA_SIGINFO);
-#endif /* ACE_HAS_LYNXOS4_SIGNALS */
 
           // Finally install (possibly reinstall) the ACE signal
           // handler disposition with the SA_RESTART mode enabled.
