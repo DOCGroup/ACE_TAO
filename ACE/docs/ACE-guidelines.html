@@ -114,12 +114,6 @@ bgcolor="#ffffff">
         <code>main</code> must also return 0 on successful
         termination, and non-zero otherwise.<p>
 
-    <li>Avoid use of floating point types (<code>float</code> and
-            <code>double</code>) and operations
-        unless absolutely necessary.  Not all ACE platforms support them.
-        Therefore, wherever they are used, <code>ACE_LACKS_FLOATING_POINT</code>
-        conditional code must be also be used.<p>
-
     <li>Avoid including the string "<code>Error</code>" in a source
             code filename. GNU Make's error messages start with
             "<code>Error</code>".  So, it's much easier to search for
