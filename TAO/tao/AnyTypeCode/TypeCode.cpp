@@ -91,22 +91,44 @@ CORBA::TypeCode::equivalent (TypeCode_ptr tc) const
   if (tc_kind != this_kind)
     return false;
 
-  try
+    switch (this_kind)
     {
-      char const * const this_id = unaliased_this->id ();
-      char const * const tc_id = unaliased_tc->id ();
+    case tk_objref:
+    case tk_struct:
+    case tk_union:
+    case tk_enum:
+    case tk_alias:
+    case tk_value:
+    case tk_value_box:
+    case tk_native:
+    case tk_abstract_interface:
+    case tk_local_interface:
+    case tk_except:
+    case tk_component:
+    case tk_home:
+    case tk_event:
+    {
+            try
+            {
+                char const * const this_id = unaliased_this->id ();
+                char const * const tc_id = unaliased_tc->id ();
 
-      if (ACE_OS::strlen (this_id) != 0
-          && ACE_OS::strlen (tc_id) != 0)
-        {
-          return ACE_OS::strcmp (this_id, tc_id) == 0;
-        }
+                if (ACE_OS::strlen (this_id) != 0
+                        && ACE_OS::strlen (tc_id) != 0)
+                {
+                    return ACE_OS::strcmp (this_id, tc_id) == 0;
+                }
+            }
+            catch (const ::CORBA::TypeCode::BadKind&)
+            {
+                // Some TypeCodes do not support the id() operation.  Ignore the
+                // failure, and continue equivalence verification using TypeCode
+                // subclass-specific techniques.
+            }
+    break;
     }
-  catch (const ::CORBA::TypeCode::BadKind&)
-    {
-      // Some TypeCodes do not support the id() operation.  Ignore the
-      // failure, and continue equivalence verification using TypeCode
-      // subclass-specific techniques.
+    default:
+         ; // Do nothing
     }
 
   return unaliased_this->equivalent_i (unaliased_tc.in ());
