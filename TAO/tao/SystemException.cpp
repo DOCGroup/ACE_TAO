@@ -937,9 +937,8 @@ CORBA::name ::_tao_type (void) const \
 { \
   TAO_AnyTypeCode_Adapter *adapter = \
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
-        "AnyTypeCode_Adapter" \
-      ); \
-  if (adapter != 0) \
+        "AnyTypeCode_Adapter"); \
+  if (adapter != nullptr) \
     return adapter->_tao_type_ ## name (); \
   else \
     { \

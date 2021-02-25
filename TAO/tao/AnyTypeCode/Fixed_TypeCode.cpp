@@ -64,7 +64,7 @@ TAO::TypeCode::Fixed<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) cons
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i () const
 {
   // Already compact since tk_fixed TypeCodes have no name or member
   // names, meaning that we can simply call _duplicate() on this
@@ -84,14 +84,14 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i (void) const
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_digits_i () const
 {
   return this->digits_;
 }
 
 template <class RefCountPolicy>
 CORBA::UShort
-TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i (void) const
+TAO::TypeCode::Fixed<RefCountPolicy>::fixed_scale_i () const
 {
   return this->scale_;
 }

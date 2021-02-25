@@ -33,7 +33,7 @@ TAO::In_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 
 template<typename S,
          template <typename> class Insert_Policy>
-TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argument_T (void)
+TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argument_T ()
 {
   if (this->is_clone_)
     {
@@ -45,7 +45,7 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::~In_Vector_Clonable_Argumen
 template<typename S,
          template <typename> class Insert_Policy>
 TAO::Argument*
-TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone (void)
+TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone ()
 {
   S* clone_x = new S (this->x_);
   In_Vector_Clonable_Argument_T<S,Insert_Policy>* clone_arg
@@ -60,8 +60,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::marshal (
-    TAO_OutputCDR &cdr
-  )
+    TAO_OutputCDR &cdr)
 {
   return cdr << this->x_;
 }
@@ -70,8 +69,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
@@ -82,8 +80,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, this->x_);
 }
@@ -96,8 +93,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
@@ -108,8 +104,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, this->x_);
 }
@@ -122,8 +117,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::demarshal (
-    TAO_InputCDR & cdr
-  )
+    TAO_InputCDR & cdr)
 {
   return cdr >> this->x_;
 }
@@ -134,8 +128,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Ret_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, this->x_);
 }

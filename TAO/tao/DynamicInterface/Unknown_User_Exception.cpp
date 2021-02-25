@@ -69,12 +69,11 @@ CORBA::UnknownUserException::_raise (void) const
 CORBA::Exception *
 CORBA::UnknownUserException::_tao_duplicate (void) const
 {
-  CORBA::Exception *result;
+  CORBA::Exception *result = nullptr;
   ACE_NEW_RETURN (
       result,
       CORBA::UnknownUserException (*this),
-      0
-    );
+      nullptr);
   return result;
 }
 

@@ -218,8 +218,7 @@ protected:
                                 const char *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
-                                TAO_PriorityBandedConnectionPolicy *priority_bands
-                               );
+                                TAO_PriorityBandedConnectionPolicy *priority_bands);
 
   int lane_required (TAO_Thread_Lane *lane,
                      TAO_PriorityBandedConnectionPolicy *priority_bands);

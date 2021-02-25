@@ -145,14 +145,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
   static TAO_RTScheduler_Current_ptr _duplicate (TAO_RTScheduler_Current_ptr obj);
 
-  static TAO_RTScheduler_Current_ptr _narrow (
-      CORBA::Object_ptr obj
-      );
+  static TAO_RTScheduler_Current_ptr _narrow (CORBA::Object_ptr obj);
 
-
-  static TAO_RTScheduler_Current_ptr _nil (void)
+  static TAO_RTScheduler_Current_ptr _nil ()
     {
-      return (TAO_RTScheduler_Current_ptr)0;
+      return nullptr;
     }
 
   virtual const char* _interface_repository_id (void) const;
@@ -197,11 +194,8 @@ public:
   // for non-defined forward declared interfaces.
   static TAO_RTScheduler_Current_ptr duplicate (TAO_RTScheduler_Current_ptr);
   static void release (TAO_RTScheduler_Current_ptr);
-  static TAO_RTScheduler_Current_ptr nil (void);
-  static TAO_RTScheduler_Current_ptr narrow (
-      CORBA::Object *
-
-    );
+  static TAO_RTScheduler_Current_ptr nil ();
+  static TAO_RTScheduler_Current_ptr narrow (CORBA::Object *);
   static CORBA::Object * upcast (void *);
 
 private:

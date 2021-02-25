@@ -14,15 +14,13 @@ namespace TAO
 
     void
     IdUniquenessStrategyUnique::strategy_init (
-      TAO_Root_POA *poa
-      )
+      TAO_Root_POA *poa)
     {
       poa_ = poa;
     }
 
     void
-    IdUniquenessStrategyUnique::strategy_cleanup (
-      )
+    IdUniquenessStrategyUnique::strategy_cleanup ()
     {
       poa_ = 0;
     }

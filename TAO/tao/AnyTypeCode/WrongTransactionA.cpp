@@ -65,8 +65,7 @@ namespace TAO
   template<>
   CORBA::Boolean
   Any_Dual_Impl_T<CORBA::WrongTransaction>::demarshal_value (
-      TAO_InputCDR & cdr
-    )
+      TAO_InputCDR & cdr)
   {
     CORBA::String_var id;
 
@@ -96,15 +95,13 @@ namespace CORBA
 // Copying insertion.
 void operator<<= (
     CORBA::Any &_tao_any,
-    const CORBA::WrongTransaction &_tao_elem
-  )
+    const CORBA::WrongTransaction &_tao_elem)
 {
   TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::insert_copy (
       _tao_any,
       CORBA::WrongTransaction::_tao_any_destructor,
       CORBA::_tc_WrongTransaction,
-      _tao_elem
-    );
+      _tao_elem);
 }
 
 // Non-copying insertion.
@@ -117,15 +114,13 @@ void operator<<= (
       _tao_any,
       CORBA::WrongTransaction::_tao_any_destructor,
       CORBA::_tc_WrongTransaction,
-      _tao_elem
-    );
+      _tao_elem);
 }
 
 // Extraction to non-const pointer (deprecated).
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    CORBA::WrongTransaction *&_tao_elem
-  )
+    CORBA::WrongTransaction *&_tao_elem)
 {
   return _tao_any >>= const_cast<
       const CORBA::WrongTransaction *&> (
@@ -136,16 +131,14 @@ CORBA::Boolean operator>>= (
 // Extraction to const pointer.
 CORBA::Boolean operator>>= (
     const CORBA::Any &_tao_any,
-    const CORBA::WrongTransaction *&_tao_elem
-  )
+    const CORBA::WrongTransaction *&_tao_elem)
 {
   return
     TAO::Any_Dual_Impl_T<CORBA::WrongTransaction>::extract (
         _tao_any,
         CORBA::WrongTransaction::_tao_any_destructor,
         CORBA::_tc_WrongTransaction,
-        _tao_elem
-      );
+        _tao_elem);
 }
 
 #ifdef ACE_ANY_OPS_USE_NAMESPACE

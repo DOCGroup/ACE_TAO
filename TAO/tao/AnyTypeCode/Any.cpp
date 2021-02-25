@@ -429,8 +429,7 @@ operator<<= (CORBA::Any &any, const CORBA::Any &a)
       any,
       CORBA::Any::_tao_any_destructor,
       CORBA::_tc_any,
-      a
-    );
+      a);
 }
 
 // Insertion of Any - non-copying.
@@ -697,8 +696,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
       any,
       CORBA::Any::_tao_any_destructor,
       CORBA::_tc_any,
-      a
-    );
+      a);
 }
 
 CORBA::Boolean

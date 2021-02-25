@@ -1440,8 +1440,7 @@ operator<< (TAO_OutputCDR &strm,
   return CORBA::ValueBase::_tao_marshal (
              strm,
              _tao_valuetype,
-             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast)
-           );
+             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast));
 }
 
 CORBA::Boolean

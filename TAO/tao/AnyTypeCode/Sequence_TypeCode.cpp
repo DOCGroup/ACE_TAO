@@ -78,8 +78,7 @@ TAO::TypeCode::Sequence<TypeCodeType,
 
   return
     Traits<TypeCodeType>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 template <typename TypeCodeType, class RefCountPolicy>

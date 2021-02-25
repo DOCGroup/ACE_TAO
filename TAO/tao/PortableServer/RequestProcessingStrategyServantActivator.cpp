@@ -233,8 +233,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      )
+      const PortableServer::ObjectId &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the

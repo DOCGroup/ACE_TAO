@@ -76,8 +76,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::Boolean
@@ -98,8 +97,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equivalent (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::TypeCode_ptr

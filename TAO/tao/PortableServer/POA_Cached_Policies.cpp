@@ -40,8 +40,7 @@ namespace TAO
     }
 
     void
-    Cached_Policies::update (TAO_POA_Policy_Set &policy_set
-                                     )
+    Cached_Policies::update (TAO_POA_Policy_Set &policy_set)
     {
       for (CORBA::ULong i = 0; i < policy_set.num_policies (); i++)
         {
@@ -52,8 +51,7 @@ namespace TAO
     }
 
     void
-    Cached_Policies::update_policy (const CORBA::Policy_ptr policy
-                                    )
+    Cached_Policies::update_policy (const CORBA::Policy_ptr policy)
     {
 
     #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)

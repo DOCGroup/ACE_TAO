@@ -184,8 +184,7 @@ TAO_Transport::~TAO_Transport ()
   if (TAO_debug_level > 9)
     {
       TAOLIB_DEBUG ((LM_DEBUG, ACE_TEXT ("TAO (%P|%t) - Transport[%d]::~Transport\n"),
-                  this->id_
-                  ));
+                  this->id_));
     }
 
   delete this->messaging_object_;

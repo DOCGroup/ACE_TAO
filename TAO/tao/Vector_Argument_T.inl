@@ -13,7 +13,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S const &
-TAO::In_Vector_Argument_T<S,Insert_Policy>::arg (void) const
+TAO::In_Vector_Argument_T<S,Insert_Policy>::arg () const
 {
   return this->x_;
 }
@@ -40,7 +40,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg (void)
+TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
@@ -51,8 +51,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 TAO::Out_Vector_Argument_T<S,Insert_Policy>::Out_Vector_Argument_T (
-    S & x
-  )
+    S & x)
   : x_ (x)
 {}
 
@@ -60,7 +59,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S &
-TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg (void)
+TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
