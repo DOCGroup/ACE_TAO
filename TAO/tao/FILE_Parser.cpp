@@ -15,11 +15,6 @@ static const char file_prefix[] = "file:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_FILE_Parser::~TAO_FILE_Parser ()
-{
-}
-
-
 bool
 TAO_FILE_Parser::match_prefix (const char *ior_string) const
 {

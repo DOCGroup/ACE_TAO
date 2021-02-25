@@ -31,10 +31,6 @@ static const char iiop_token_len = sizeof iiop_token - 1;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CORBALOC_Parser::~TAO_CORBALOC_Parser ()
-{
-}
-
 bool
 TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
 {
@@ -343,8 +339,6 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
   canonical_endpoint += raw_port;
 }
-
-
 
 ACE_STATIC_SVC_DEFINE (TAO_CORBALOC_Parser,
                        ACE_TEXT ("CORBALOC_Parser"),

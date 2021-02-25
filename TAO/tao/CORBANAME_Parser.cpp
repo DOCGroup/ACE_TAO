@@ -18,10 +18,6 @@ static const char corbaname_prefix[] = "corbaname:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser ()
-{
-}
-
 bool
 TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
 {

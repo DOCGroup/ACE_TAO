@@ -7,10 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Endpoint::~TAO_Endpoint ()
-{
-}
-
 TAO_Endpoint *
 TAO_Endpoint::next_filtered (TAO_ORB_Core *, TAO_Endpoint *root)
 {

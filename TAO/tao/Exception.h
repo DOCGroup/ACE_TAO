@@ -110,7 +110,7 @@ namespace CORBA
     Exception (const Exception &src);
 
     /// Destructor.
-    virtual ~Exception ();
+    virtual ~Exception () = default;
 
     // = To throw the exception (when using the standard mapping).
     virtual void _raise () const = 0;
@@ -181,7 +181,7 @@ namespace CORBA
 
   protected:
     /// Default constructor.
-    Exception ();
+    Exception () = default;
 
     /// Assignment operator.
     Exception & operator = (const Exception & src);

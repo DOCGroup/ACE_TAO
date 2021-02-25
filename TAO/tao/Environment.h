@@ -74,13 +74,13 @@ namespace CORBA
   public:
     /// The default constructor.  The environment will hold no
     /// exceptions.
-    Environment ();
+    Environment () = default;
 
     /// Copy constructor.
-    Environment (const Environment &ACE_TRY_ENV);
+    Environment (const Environment &rhs);
 
     /// Assingment.
-    Environment &operator=(const Environment &ACE_TRY_ENV);
+    Environment &operator=(const Environment &rhs);
 
     /// Destructor, release the exception.
     ~Environment ();
@@ -135,17 +135,16 @@ namespace CORBA
     typedef CORBA::Environment_out _out_type;
 
   private:
-
     /// Initialize using a well known ORB Core; this is intended for
     /// the bootstrapping of the ORB_Core, not for general
     /// consumption.
     Environment (TAO_ORB_Core *orb_core);
 
     /// Pointer to the exception object contained in the environment.
-    CORBA::Exception *exception_;
+    CORBA::Exception *exception_ {};
 
     /// The previous environment on the "default environment stack".
-    Environment *previous_;
+    Environment *previous_ {};
   };
 
   template<>

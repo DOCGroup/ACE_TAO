@@ -8,10 +8,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Default_Stub_Factory::~TAO_Default_Stub_Factory ()
-{
-}
-
 TAO_Stub *
 TAO_Default_Stub_Factory::create_stub (const char *repository_id,
                                        const TAO_MProfile &profiles,

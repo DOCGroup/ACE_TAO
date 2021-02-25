@@ -45,16 +45,6 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 // responsible for releasing any storage owned by the exception.  It
 // can do this because it's got the local name and the id.
 
-CORBA::Exception::Exception ()
-  : id_ (),
-    name_ ()
-{
-}
-
-CORBA::Exception::~Exception ()
-{
-}
-
 CORBA::Exception &
 CORBA::Exception::operator= (const CORBA::Exception &src)
 {

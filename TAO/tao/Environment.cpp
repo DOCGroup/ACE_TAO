@@ -11,12 +11,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Environment::Environment ()
-  : exception_ (nullptr)
-  , previous_ (nullptr)
-{
-}
-
 CORBA::Environment::Environment (const CORBA::Environment& rhs)
   : exception_ (nullptr)
   , previous_ (nullptr)

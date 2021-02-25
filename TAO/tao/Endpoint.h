@@ -50,7 +50,7 @@ public:
                 CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
-  virtual ~TAO_Endpoint (void);
+  virtual ~TAO_Endpoint () = default;
 
   /// IOP protocol tag accessor.
   CORBA::ULong tag (void) const;
@@ -108,10 +108,10 @@ public:
 
   /// This method returns a deep copy of the corresponding endpoints by
   /// allocating memory.
-  virtual TAO_Endpoint *duplicate (void) = 0;
+  virtual TAO_Endpoint *duplicate () = 0;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void)  = 0;
+  virtual CORBA::ULong hash ()  = 0;
 
 protected:
   /// Lock for the address lookup.
@@ -139,8 +139,8 @@ protected:
 
 private:
   /// Endpoints should not be copied.
-  TAO_Endpoint (const TAO_Endpoint&);
-  void operator= (const TAO_Endpoint&);
+  TAO_Endpoint (const TAO_Endpoint&) = delete;
+  void operator= (const TAO_Endpoint&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
