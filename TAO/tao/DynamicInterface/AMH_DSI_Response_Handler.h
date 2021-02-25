@@ -244,13 +244,13 @@ public:
   /// CORBA Object related methods
   static TAO_AMH_DSI_Response_Handler* _duplicate (
              TAO_AMH_DSI_Response_Handler_ptr);
-  static TAO_AMH_DSI_Response_Handler* _nil (void);
+  static TAO_AMH_DSI_Response_Handler* _nil ();
   static TAO_AMH_DSI_Response_Handler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_DSI_Response_Handler* _unchecked_narrow (CORBA::Object_ptr);
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);

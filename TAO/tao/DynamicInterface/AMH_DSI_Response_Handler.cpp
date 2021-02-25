@@ -306,9 +306,9 @@ TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 
 // The pseudo-object _nil method.
 TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler::_nil (void)
+TAO_AMH_DSI_Response_Handler::_nil ()
 {
-  return (TAO_AMH_DSI_Response_Handler_ptr) 0;
+  return nullptr;
 }
 
 

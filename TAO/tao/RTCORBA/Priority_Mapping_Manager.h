@@ -61,26 +61,23 @@ public:
   static TAO_Priority_Mapping_Manager_ptr _duplicate (TAO_Priority_Mapping_Manager_ptr obj);
   static TAO_Priority_Mapping_Manager_ptr _narrow (CORBA::Object_ptr obj);
 
-  static TAO_Priority_Mapping_Manager_ptr _nil (void)
+  static TAO_Priority_Mapping_Manager_ptr _nil ()
     {
-      return (TAO_Priority_Mapping_Manager_ptr)0;
+      return nullptr;
     }
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_Priority_Mapping_Manager (void);
+  ~TAO_Priority_Mapping_Manager ();
 
 private:
-
   TAO_Priority_Mapping_Manager (const TAO_Priority_Mapping_Manager &);
   void operator= (const TAO_Priority_Mapping_Manager &);
 
 private:
-
   TAO_Priority_Mapping *mapping_;
 };
 

@@ -75,18 +75,18 @@ namespace CORBA
 
     // = Pseudo-object methods
     static Context *_duplicate (Context*);
-    static Context *_nil (void);
+    static Context *_nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     // = All the spec-required functions below will just throw a
     //   CORBA::NO_IMPLEMENT exception and do nothing else.
 
-    const char *context_name (void) const;
+    const char *context_name () const;
 
-    CORBA::Context_ptr parent (void) const;
+    CORBA::Context_ptr parent () const;
 
     void create_child (const char *child_ctx_name,
                        CORBA::Context_out child_ctx);
@@ -160,8 +160,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcount (void);
-    void  _decr_refcount (void);
+    void _incr_refcount ();
+    void  _decr_refcount ();
 
     // Useful for template programming.
     typedef CORBA::ContextList_ptr _ptr_type;

@@ -29,9 +29,9 @@ CORBA::TypeCode::_duplicate (CORBA::TypeCode_ptr tc)
 }
 
 ACE_INLINE CORBA::TypeCode_ptr
-CORBA::TypeCode::_nil (void)
+CORBA::TypeCode::_nil (nullptr)
 {
-  return static_cast<CORBA::TypeCode_ptr> (0);
+  return nullptr;
 }
 
 ACE_INLINE CORBA::TCKind

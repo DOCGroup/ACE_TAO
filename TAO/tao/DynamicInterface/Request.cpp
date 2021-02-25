@@ -26,13 +26,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // Reference counting for DII Request object.
 
 CORBA::ULong
-CORBA::Request::_incr_refcount (void)
+CORBA::Request::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::Request::_decr_refcount (void)
+CORBA::Request::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 

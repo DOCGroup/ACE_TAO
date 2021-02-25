@@ -34,7 +34,7 @@ ACE_INLINE
 CORBA::NamedValue *
 CORBA::NamedValue::_duplicate (CORBA::NamedValue * x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }
@@ -73,7 +73,7 @@ ACE_INLINE
 CORBA::NVList *
 CORBA::NVList::_duplicate (CORBA::NVList * x)
 {
-  if (x != 0)
+  if (x)
     {
       x->_incr_refcount ();
     }
@@ -83,9 +83,9 @@ CORBA::NVList::_duplicate (CORBA::NVList * x)
 
 ACE_INLINE
 CORBA::NVList *
-CORBA::NVList::_nil (void)
+CORBA::NVList::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

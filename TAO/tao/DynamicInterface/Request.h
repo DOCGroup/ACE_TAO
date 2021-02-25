@@ -162,17 +162,17 @@ namespace CORBA
 
     /// Pseudo object methods.
     static CORBA::Request* _duplicate (CORBA::Request*);
-    static CORBA::Request* _nil (void);
+    static CORBA::Request* _nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order member.
-    int _tao_byte_order (void) const;
+    int _tao_byte_order () const;
 
     /// Set the byte order member.
     void _tao_byte_order (int byte_order);

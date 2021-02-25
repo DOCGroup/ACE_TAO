@@ -89,7 +89,7 @@ public:
 
   /// CORBA Object related methods
   static TAO_DII_Reply_Handler* _duplicate (TAO_DII_Reply_Handler_ptr);
-  static TAO_DII_Reply_Handler* _nil (void);
+  static TAO_DII_Reply_Handler* _nil ();
   static TAO_DII_Reply_Handler* _narrow (CORBA::Object_ptr);
   static TAO_DII_Reply_Handler* _unchecked_narrow (CORBA::Object_ptr);
 

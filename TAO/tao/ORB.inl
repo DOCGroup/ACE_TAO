@@ -18,29 +18,28 @@ CORBA::ORB::set_timeout (ACE_Time_Value *timeout)
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_incr_refcount (void)
+CORBA::ORB::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_refcount (void) const
+CORBA::ORB::_refcount () const
 {
   return this->refcount_;
 }
 
 ACE_INLINE unsigned long
-CORBA::ORB::_decr_refcount (void)
+CORBA::ORB::_decr_refcount ()
 {
   unsigned long const count = --this->refcount_;
 
-  if (count != 0)
+  if (count == 0)
     {
-      return count;
+      delete this;
     }
 
-  delete this;
-  return 0;
+  return count;
 }
 
 ACE_INLINE CORBA::ORB_ptr
@@ -57,9 +56,9 @@ CORBA::ORB::_duplicate (CORBA::ORB_ptr obj)
 // Null pointers represent nil objects.
 
 ACE_INLINE CORBA::ORB_ptr
-CORBA::ORB::_nil (void)
+CORBA::ORB::_nil ()
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE void

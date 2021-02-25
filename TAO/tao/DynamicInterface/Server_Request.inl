@@ -13,13 +13,13 @@ CORBA::ServerRequest::_duplicate (CORBA::ServerRequest_ptr x)
 }
 
 ACE_INLINE CORBA::ServerRequest_ptr
-CORBA::ServerRequest::_nil (void)
+CORBA::ServerRequest::_nil ()
 {
-  return static_cast <CORBA::ServerRequest_ptr>(0);
+  return nullptr;
 }
 
 ACE_INLINE CORBA::Context_ptr
-CORBA::ServerRequest::ctx (void) const
+CORBA::ServerRequest::ctx () const
 {
   return this->ctx_;
 }
