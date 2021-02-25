@@ -172,33 +172,33 @@ TAO::Any_Special_Impl_T<T, from_T, to_T>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T, typename from_T, typename to_T>
 const void *
-TAO::Any_Special_Impl_T<T, from_T, to_T>::value (void) const
+TAO::Any_Special_Impl_T<T, from_T, to_T>::value () const
 {
   return this->value_;
 }
 
 template<typename T, typename from_T, typename to_T>
 void
-TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value (void)
+TAO::Any_Special_Impl_T<T, from_T, to_T>::free_value ()
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_destructor_ = 0;
+      this->value_destructor_ = nullptr;
     }
 
   ::CORBA::release (this->type_);
-  this->value_ = 0;
+  this->value_ = nullptr;
 }
 
 template<typename T, typename from_T, typename to_T>
 void
 TAO::Any_Special_Impl_T<T, from_T, to_T>::_tao_decode (TAO_InputCDR &cdr)
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_ = 0;
+      this->value_ = nullptr;
     }
 
   if (! this->demarshal_value (cdr))

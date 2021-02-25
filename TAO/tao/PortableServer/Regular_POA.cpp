@@ -15,8 +15,7 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,
                   TAO_ORB_Core &orb_core,
-                  TAO_Object_Adapter *object_adapter
-                  )
+                  TAO_Object_Adapter *object_adapter)
   : TAO_Root_POA (name,
                   poa_manager,
                   policies,
@@ -24,8 +23,7 @@ TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
                   lock,
                   thread_lock,
                   orb_core,
-                  object_adapter
-                 ),
+                  object_adapter),
      parent_ (parent)
 {
 }

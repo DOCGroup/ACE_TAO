@@ -905,9 +905,7 @@ operator>>(TAO_InputCDR& cdr, TAO_opaque& x)
      && (cdr.orb_core() == nullptr
          || 1 == cdr.orb_core()->
          resource_factory()->
-         input_cdr_allocator_type_locked()
-         )
-     )
+         input_cdr_allocator_type_locked()))
     {
       x.replace (length, cdr.start ());
       x.mb ()->wr_ptr (x.mb ()->rd_ptr () + length);

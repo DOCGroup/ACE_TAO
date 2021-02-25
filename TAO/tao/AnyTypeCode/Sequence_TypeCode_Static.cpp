@@ -76,8 +76,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::Boolean
@@ -98,8 +97,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
   return
     Traits<CORBA::TypeCode_ptr const *>::get_typecode (this->content_type_)->equivalent (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 CORBA::TypeCode_ptr
@@ -115,7 +113,6 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
     TAO::Null_RefCount_Policy> *> (this);

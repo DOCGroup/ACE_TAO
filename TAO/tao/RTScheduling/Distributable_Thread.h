@@ -13,23 +13,22 @@ class TAO_RTScheduler_Export TAO_DistributableThread:
   public ::CORBA::LocalObject
 {
  public:
-  TAO_DistributableThread (void);
+  TAO_DistributableThread () = default;
 
-  ~TAO_DistributableThread (void);
+  ~TAO_DistributableThread () = default;
 
-  virtual void cancel (void);
+  void cancel () override;
 
-  virtual RTScheduling::DistributableThread::DT_State state (void);
+  RTScheduling::DistributableThread::DT_State state () override;
 
  private:
-  RTScheduling::DistributableThread::DT_State state_;
+  RTScheduling::DistributableThread::DT_State state_ {RTScheduling::DistributableThread::ACTIVE};
 };
-
 
 class TAO_DistributableThread_Factory
 {
 public:
-  static RTScheduling::DistributableThread_ptr create_DT (void);
+  static RTScheduling::DistributableThread_ptr create_DT ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

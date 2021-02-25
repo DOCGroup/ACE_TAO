@@ -114,13 +114,13 @@ public:
   /// CORBA Object related methods
   static TAO_AMH_Locate_ResponseHandler* _duplicate (
              TAO_AMH_Locate_ResponseHandler_ptr);
-  static TAO_AMH_Locate_ResponseHandler* _nil (void);
+  static TAO_AMH_Locate_ResponseHandler* _nil ();
   static TAO_AMH_Locate_ResponseHandler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_Locate_ResponseHandler* _unchecked_narrow (CORBA::Object_ptr);
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);

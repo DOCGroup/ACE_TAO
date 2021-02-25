@@ -508,8 +508,7 @@ TAO_Unique_Id_Strategy::bind_using_user_id (
                   "TAO (%P|%t) - TAO_Unique_Id_Strategy::"
                   "bind_using_user_id: type=%C, id=%C\n",
                   repository_id.in (),
-                  hex_idstr.c_str()
-                  ));
+                  hex_idstr.c_str()));
     }
 #endif
 
@@ -534,8 +533,7 @@ TAO_Unique_Id_Strategy::unbind_using_user_id (
 
           TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Unique_Id_Strategy::unbind_using_user_id: id=%C\n",
-                      hex_idstr.c_str()
-                      ));
+                      hex_idstr.c_str()));
         }
 
       if (entry->servant_ != 0)
@@ -731,8 +729,7 @@ TAO_Multiple_Id_Strategy::unbind_using_user_id (
 
           TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Multiple_Id_Strategy::unbind_using_user_id: id=%C\n",
-                      hex_idstr.c_str()
-                      ));
+                      hex_idstr.c_str()));
         }
 
       result = this->active_object_map_->id_hint_strategy_->unbind (*entry);

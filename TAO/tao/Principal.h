@@ -61,13 +61,13 @@ namespace CORBA
 
     // The pseudo object operations.
     static Principal * _duplicate (Principal *);
-    static Principal * _nil (void);
+    static Principal * _nil ();
 
     // = Stuff required for memory management.
-    unsigned long _incr_refcount (void);
-    unsigned long _decr_refcount (void);
+    unsigned long _incr_refcount ();
+    unsigned long _decr_refcount ();
 
-    Principal (void);
+    Principal ();
 
     // Useful for template programming.
     typedef Principal_ptr _ptr_type;

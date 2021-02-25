@@ -156,7 +156,7 @@ TAO::Any_Impl_T<T>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T>
 const void *
-TAO::Any_Impl_T<T>::value (void) const
+TAO::Any_Impl_T<T>::value () const
 {
   return this->value_;
 }

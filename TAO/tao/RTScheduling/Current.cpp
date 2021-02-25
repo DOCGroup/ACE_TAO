@@ -392,8 +392,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
 void
 TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
                                                       CORBA::Policy_ptr sched_param,
-                                                      CORBA::Policy_ptr implicit_sched_param
-                                                      )
+                                                      CORBA::Policy_ptr implicit_sched_param)
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -459,8 +458,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                                   CORBA::Policy_ptr sched_param,
                                   CORBA::Policy_ptr implicit_sched_param,
                                   CORBA::ULong stack_size,
-                                  RTCORBA::Priority base_priority
-                                  )
+                                  RTCORBA::Priority base_priority)
 {
   // Check if DT has been cancelled.
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -513,8 +511,7 @@ TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
 
 int
 DTTask::activate_task (RTCORBA::Priority base_priority,
-                       CORBA::ULong stack_size
-                       )
+                       CORBA::ULong stack_size)
 {
   // Activate thread.
   long default_flags = THR_NEW_LWP | THR_JOINABLE;
@@ -767,12 +764,12 @@ TAO_RTScheduler_Current_i::implicit_scheduling_parameter (CORBA::Policy_ptr impl
 // Operations for class TAO_RTScheduler_Current_var
 // *************************************************************
 
-TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (void) // default constructor
+TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var () // default constructor
   : ptr_ (TAO_RTScheduler_Current::_nil ())
 {}
 
 ::TAO_RTScheduler_Current_ptr
-TAO_RTScheduler_Current_var::ptr (void) const
+TAO_RTScheduler_Current_var::ptr () const
 {
   return this->ptr_;
 }
@@ -782,7 +779,7 @@ TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (const ::TAO_RTSchedule
     ptr_ (TAO_RTScheduler_Current::_duplicate (p.ptr ()))
 {}
 
-TAO_RTScheduler_Current_var::~TAO_RTScheduler_Current_var (void) // destructor
+TAO_RTScheduler_Current_var::~TAO_RTScheduler_Current_var () // destructor
 {
   ::CORBA::release (this->ptr_);
 }
@@ -870,10 +867,7 @@ TAO_RTScheduler_Current_var::nil (void)
 }
 
 TAO_RTScheduler_Current_ptr
-TAO_RTScheduler_Current_var::narrow (
-    CORBA::Object *p
-
-  )
+TAO_RTScheduler_Current_var::narrow (CORBA::Object *p)
 {
   return ::TAO_RTScheduler_Current::_narrow (p);
 }
@@ -887,14 +881,11 @@ TAO_RTScheduler_Current_var::upcast (void *src)
 }
 
 TAO_RTScheduler_Current_ptr TAO_RTScheduler_Current::_narrow (
-    CORBA::Object_ptr obj
-
-  )
+    CORBA::Object_ptr obj)
 {
   return
     TAO_RTScheduler_Current::_duplicate (
-        dynamic_cast<TAO_RTScheduler_Current *> (obj)
-      );
+        dynamic_cast<TAO_RTScheduler_Current *> (obj));
 }
 
 TAO_RTScheduler_Current_ptr

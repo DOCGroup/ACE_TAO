@@ -180,8 +180,8 @@ protected:
   //@}
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler (const TAO_Connection_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Connection_Handler &operator= (const TAO_Connection_Handler &))
+  TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;
+  TAO_Connection_Handler &operator= (const TAO_Connection_Handler &) = delete;
 
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;

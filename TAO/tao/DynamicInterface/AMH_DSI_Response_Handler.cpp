@@ -120,8 +120,7 @@ TAO_AMH_DSI_Exception_Holder_var::operator= (
   return *this;
 }
 
-TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* (
-    ) const // cast
+TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* () const // cast
 {
   return this->ptr_;
 }
@@ -275,8 +274,7 @@ TAO_AMH_DSI_Exception_Holder::_tao_unmarshal (
         base,
         TAO_AMH_DSI_Exception_Holder::_tao_obv_static_repository_id (),
         is_null_object,
-        is_indirected
-      );
+        is_indirected);
 
   ::CORBA::ValueBase_var owner (base);
 
@@ -308,9 +306,9 @@ TAO_AMH_DSI_Exception_Holder::raise_invoke ()
 
 // The pseudo-object _nil method.
 TAO_AMH_DSI_Response_Handler_ptr
-TAO_AMH_DSI_Response_Handler::_nil (void)
+TAO_AMH_DSI_Response_Handler::_nil ()
 {
-  return (TAO_AMH_DSI_Response_Handler_ptr) 0;
+  return nullptr;
 }
 
 

@@ -99,11 +99,11 @@ namespace CORBA
      * <<=.
      */
     //@{
-    CORBA::Any &add_in_arg (void);
+    CORBA::Any &add_in_arg ();
     CORBA::Any &add_in_arg (const char* name);
-    CORBA::Any &add_inout_arg (void);
+    CORBA::Any &add_inout_arg ();
     CORBA::Any &add_inout_arg (const char* name);
-    CORBA::Any &add_out_arg (void);
+    CORBA::Any &add_out_arg ();
     CORBA::Any &add_out_arg (const char* name);
     //@}
 
@@ -111,7 +111,7 @@ namespace CORBA
     void set_return_type (CORBA::TypeCode_ptr tc);
 
     /// Returns reference to Any for extraction using >>=.
-    CORBA::Any &return_value (void);
+    CORBA::Any &return_value ();
 
     /// Perform method resolution and invoke an appropriate method.
     /**
@@ -125,7 +125,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void invoke (void);
+    void invoke ();
 
     /// Send a oneway request.
     /**
@@ -133,7 +133,7 @@ namespace CORBA
      *       recommended as the user may not be able to propagate the
      *       exceptions.
      */
-    void send_oneway (void);
+    void send_oneway ();
 
     /**
      * @name The 'deferred synchronous' methods.
@@ -141,8 +141,8 @@ namespace CORBA
      * The 'deferred synchronous' methods.
      */
     //@{
-    void send_deferred (void);
-    void get_response (void);
+    void send_deferred ();
+    void get_response ();
     CORBA::Boolean poll_response (void);
     //@}
 
@@ -162,17 +162,17 @@ namespace CORBA
 
     /// Pseudo object methods.
     static CORBA::Request* _duplicate (CORBA::Request*);
-    static CORBA::Request* _nil (void);
+    static CORBA::Request* _nil ();
 
     // = Reference counting.
-    CORBA::ULong _incr_refcount (void);
-    CORBA::ULong _decr_refcount (void);
+    CORBA::ULong _incr_refcount ();
+    CORBA::ULong _decr_refcount ();
 
     /// Set the lazy evaluation flag.
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order member.
-    int _tao_byte_order (void) const;
+    int _tao_byte_order () const;
 
     /// Set the byte order member.
     void _tao_byte_order (int byte_order);

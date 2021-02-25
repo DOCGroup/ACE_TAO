@@ -318,8 +318,7 @@ TAO::TypeCode::Value<StringType,
       this->type_modifier_,
       Traits<StringType>::get_typecode (this->concrete_base_),
       tc_fields,
-      this->nfields_
-     );
+      this->nfields_);
 }
 
 template <typename StringType,

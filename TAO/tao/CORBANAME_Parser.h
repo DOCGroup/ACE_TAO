@@ -40,7 +40,7 @@ class TAO_CORBANAME_Parser : public TAO_IOR_Parser
 {
 public:
   /// The destructor
-  virtual ~TAO_CORBANAME_Parser (void);
+  virtual ~TAO_CORBANAME_Parser ();
 
   // = The IOR_Parser methods, please read the documentation in
   //   IOR_Parser.h

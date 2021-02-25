@@ -83,8 +83,7 @@ namespace TAO
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyDefaultServant::locate_servant (
       const PortableServer::ObjectId & system_id,
-      PortableServer::Servant & servant
-      )
+      PortableServer::Servant & servant)
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 

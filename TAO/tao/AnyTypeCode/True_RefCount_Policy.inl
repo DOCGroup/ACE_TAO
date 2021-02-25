@@ -2,19 +2,19 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO::True_RefCount_Policy::True_RefCount_Policy (void)
+TAO::True_RefCount_Policy::True_RefCount_Policy ()
   : refcount_ (1)
 {
 }
 
 ACE_INLINE void
-TAO::True_RefCount_Policy::add_ref (void)
+TAO::True_RefCount_Policy::add_ref ()
 {
   ++this->refcount_;
 }
 
 ACE_INLINE void
-TAO::True_RefCount_Policy::remove_ref (void)
+TAO::True_RefCount_Policy::remove_ref ()
 {
   const unsigned long new_count = --this->refcount_;
 

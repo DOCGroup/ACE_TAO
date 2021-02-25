@@ -89,7 +89,7 @@ public:
 
   /// CORBA Object related methods
   static TAO_DII_Reply_Handler* _duplicate (TAO_DII_Reply_Handler_ptr);
-  static TAO_DII_Reply_Handler* _nil (void);
+  static TAO_DII_Reply_Handler* _nil ();
   static TAO_DII_Reply_Handler* _narrow (CORBA::Object_ptr);
   static TAO_DII_Reply_Handler* _unchecked_narrow (CORBA::Object_ptr);
 
@@ -98,11 +98,8 @@ public:
   typedef TAO_DII_Reply_Handler_ptr _ptr_type;
   typedef TAO_DII_Reply_Handler_var _var_type;
 
-#if defined (ACE_WIN32_VC14)
-  // Workaround for connect issue 1577211
-  ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &))
-#endif
+  TAO_DII_Reply_Handler (const TAO_DII_Reply_Handler &) = delete;
+  TAO_DII_Reply_Handler &operator = (const TAO_DII_Reply_Handler &) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

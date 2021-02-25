@@ -73,7 +73,7 @@ namespace CORBA
 
     void _destroy (void);
 
-    static ExceptionList_ptr _nil (void);
+    static ExceptionList_ptr _nil ();
 
     /// Add a TypeCode to the list.
     void add (CORBA::TypeCode_ptr tc);
@@ -88,8 +88,8 @@ namespace CORBA
     void remove (CORBA::ULong slot);
 
     /// Increment and decrement ref counts.
-    void _incr_refcount (void);
-    void _decr_refcount (void);
+    void _incr_refcount ();
+    void _decr_refcount ();
 
     /// Useful for template programming.
     typedef CORBA::ExceptionList_ptr _ptr_type;

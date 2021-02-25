@@ -204,7 +204,7 @@ public:
 
   static TAO_ORBInitInfo_ptr _nil ()
     {
-      return (TAO_ORBInitInfo_ptr)0;
+      return nullptr;
     }
   //@}
 

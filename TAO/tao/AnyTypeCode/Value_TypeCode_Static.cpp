@@ -266,8 +266,7 @@ TAO::TypeCode::Value<char const *,
       this->type_modifier_,
       Traits<char const *>::get_typecode (this->concrete_base_),
       tc_fields,
-      this->nfields_
-     );
+      this->nfields_);
 }
 
 char const *

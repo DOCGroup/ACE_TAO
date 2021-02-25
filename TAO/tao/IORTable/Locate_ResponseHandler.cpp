@@ -25,11 +25,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // The pseudo-object _nil method.
 TAO_AMH_Locate_ResponseHandler_ptr
-TAO_AMH_Locate_ResponseHandler::_nil (void)
+TAO_AMH_Locate_ResponseHandler::_nil ()
 {
-  return (TAO_AMH_Locate_ResponseHandler_ptr) 0;
+  return nullptr;
 }
-
 
 TAO_AMH_Locate_ResponseHandler::TAO_AMH_Locate_ResponseHandler (
     TAO_ServerRequest & sr)

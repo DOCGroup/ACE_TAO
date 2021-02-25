@@ -337,8 +337,7 @@ TAO_ServerRequest::send_no_exception_reply ()
           TAOLIB_ERROR ((
                       LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - ServerRequest::send_no_exception_reply, ")
-                      ACE_TEXT ("cannot send NO_EXCEPTION reply\n")
-                      ));
+                      ACE_TEXT ("cannot send NO_EXCEPTION reply\n")));
         }
     }
 }

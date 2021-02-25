@@ -516,8 +516,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                             static_threads,
                             dynamic_threads,
                             lifespan,
-                            dynamic_thread_time
-                           ));
+                            dynamic_thread_time));
 }
 
 TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
@@ -561,8 +560,7 @@ TAO_Thread_Pool::TAO_Thread_Pool (TAO_Thread_Pool_Manager &manager,
                               lanes[i].static_threads,
                               lanes[i].dynamic_threads,
                               lifespan,
-                              dynamic_thread_time
-                             ));
+                              dynamic_thread_time));
 }
 
 void

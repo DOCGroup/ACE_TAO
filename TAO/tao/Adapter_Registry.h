@@ -91,8 +91,8 @@ public:
   TAO_Adapter *find_adapter (const char *name) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry (const TAO_Adapter_Registry &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &))
+  TAO_Adapter_Registry (const TAO_Adapter_Registry &) = delete;
+  TAO_Adapter_Registry &operator= (const TAO_Adapter_Registry &) = delete;
 
   /**
    * @name A simple array of adapters.

@@ -62,15 +62,13 @@ public:
 
   // the static operations
   static TAO_Network_Priority_Mapping_Manager_ptr _duplicate (
-      TAO_Network_Priority_Mapping_Manager_ptr obj
-    );
+      TAO_Network_Priority_Mapping_Manager_ptr obj);
   static TAO_Network_Priority_Mapping_Manager_ptr _narrow (
-      CORBA::Object_ptr obj
-      );
+      CORBA::Object_ptr obj);
 
-  static TAO_Network_Priority_Mapping_Manager_ptr _nil (void)
+  static TAO_Network_Priority_Mapping_Manager_ptr _nil ()
     {
-      return (TAO_Network_Priority_Mapping_Manager_ptr)0;
+      return nullptr;
     }
 
   virtual const char* _interface_repository_id (void) const;

@@ -78,8 +78,7 @@ TAO::TypeCode::Sequence<TypeCodeType,
 
   return
     Traits<TypeCodeType>::get_typecode (this->content_type_)->equal (
-      rhs_content_type.in ()
-     );
+      rhs_content_type.in ());
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
@@ -114,7 +113,6 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (v
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy> *> (this);
 

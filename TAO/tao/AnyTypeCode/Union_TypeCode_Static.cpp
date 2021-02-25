@@ -241,9 +241,7 @@ TAO::TypeCode::Union<char const *,
 //       this->ncases_,
 //       this->default_index_,
 //       "",
-//       Traits<char const *>::get_typecode (this->default_case_.type)
-//      );
-
+//       Traits<char const *>::get_typecode (this->default_case_.type));
   throw ::CORBA::NO_IMPLEMENT ();
 }
 
@@ -252,8 +250,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::id_i (
-  ) const
+                     TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

@@ -68,8 +68,7 @@ TAO::Inout_Var_Array_SArgument_T<S_forany,
   typedef typename S_forany::_slice_type slice_type;
   Insert_Policy<S_forany>::any_insert (
       any,
-      S_forany (const_cast <slice_type *>(this->x_))
-    );
+      S_forany (const_cast <slice_type *>(this->x_)));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */

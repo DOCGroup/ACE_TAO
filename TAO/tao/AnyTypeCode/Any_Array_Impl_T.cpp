@@ -136,22 +136,22 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::marshal_value (TAO_OutputCDR &cdr)
 
 template<typename T_slice, typename T_forany>
 const void *
-TAO::Any_Array_Impl_T<T_slice, T_forany>::value (void) const
+TAO::Any_Array_Impl_T<T_slice, T_forany>::value () const
 {
   return this->value_;
 }
 
 template<typename T_slice, typename T_forany>
 void
-TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value (void)
+TAO::Any_Array_Impl_T<T_slice, T_forany>::free_value ()
 {
-  if (this->value_destructor_ != 0)
+  if (this->value_destructor_)
     {
       (*this->value_destructor_) (this->value_);
-      this->value_destructor_ = 0;
+      this->value_destructor_ = nullptr;
     }
 
-  this->value_ = 0;
+  this->value_ = nullptr;
   ::CORBA::release (this->type_);
 }
 

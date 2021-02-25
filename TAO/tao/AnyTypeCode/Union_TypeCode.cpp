@@ -277,9 +277,7 @@ TAO::TypeCode::Union<StringType,
 //       this->ncases_,
 //       this->default_index_,
 //       "",
-//       Traits<StringType>::get_typecode (this->default_case_.type)
-//      );
-
+//       Traits<StringType>::get_typecode (this->default_case_.type));
   throw ::CORBA::NO_IMPLEMENT ();
 }
 

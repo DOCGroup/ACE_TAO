@@ -258,8 +258,7 @@ TAO_ORBInitInfo::add_server_request_interceptor_with_policy (
 void
 TAO_ORBInitInfo::add_ior_interceptor_with_policy (
     PortableInterceptor::IORInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies
-    )
+    const CORBA::PolicyList& policies)
 {
   this->check_validity ();
 
@@ -297,8 +296,7 @@ TAO_ORBInitInfo::allocate_slot_id ()
 void
 TAO_ORBInitInfo::register_policy_factory (
     CORBA::PolicyType type,
-    PortableInterceptor::PolicyFactory_ptr policy_factory
-    )
+    PortableInterceptor::PolicyFactory_ptr policy_factory)
 {
   this->check_validity ();
 

@@ -155,8 +155,7 @@ interceptor_value (CORBA::Any *any) const
   typedef typename S_var::s_traits::from_type from_type;
   Insert_Policy<from_type>::any_insert (
       any,
-      from_type (this->x_.in (), BOUND)
-    );
+      from_type (this->x_.in (), BOUND));
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
