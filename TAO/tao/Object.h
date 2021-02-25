@@ -342,9 +342,8 @@ namespace CORBA
     std::atomic<uint32_t> refcount_;
 
   private:
-    // = Unimplemented methods
-    ACE_UNIMPLEMENTED_FUNC (Object (const Object &))
-    ACE_UNIMPLEMENTED_FUNC (Object &operator = (const Object &))
+    Object (const Object &) = delete;
+    Object &operator = (const Object &) = delete;
 
   private:
     /// Specify whether this is a local object or not.

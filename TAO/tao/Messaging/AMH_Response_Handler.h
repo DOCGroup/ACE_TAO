@@ -65,7 +65,6 @@ class TAO_Messaging_Export TAO_AMH_Response_Handler
   : public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor
   TAO_AMH_Response_Handler ();
 
@@ -117,10 +116,8 @@ protected:
   GIOP::ReplyStatusType reply_status_;
 
 private:
-
-  // Private and undefined, standard C++ idiom to prohibit copying.
-  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&);
-  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&);
+  TAO_AMH_Response_Handler (const TAO_AMH_Response_Handler&) = delete;
+  TAO_AMH_Response_Handler& operator= (const TAO_AMH_Response_Handler&) = delete;
 
   /// Pointer to the original message-base
   TAO_GIOP_Message_Base *mesg_base_;
@@ -203,7 +200,6 @@ namespace TAO
   public:
     void operator() (TAO_AMH_Response_Handler *arh) throw ();
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

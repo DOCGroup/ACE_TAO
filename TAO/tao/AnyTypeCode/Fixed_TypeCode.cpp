@@ -70,12 +70,10 @@ TAO::TypeCode::Fixed<RefCountPolicy>::get_compact_typecode_i () const
   // names, meaning that we can simply call _duplicate() on this
   // TypeCode.
 
-
   // @@ There is a potential problem here if this TypeCode is a static
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Fixed<RefCountPolicy> *> (this);
 

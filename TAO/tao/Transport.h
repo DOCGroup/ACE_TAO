@@ -138,8 +138,8 @@ namespace TAO
     }
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints (const Drain_Constraints &))
-    ACE_UNIMPLEMENTED_FUNC (Drain_Constraints &operator= (const Drain_Constraints &))
+    Drain_Constraints (const Drain_Constraints &) = delete;
+    Drain_Constraints &operator= (const Drain_Constraints &) = delete;
 
     ACE_Time_Value * timeout_;
     bool block_on_io_;
@@ -1036,8 +1036,8 @@ protected:
   int notify_reactor_now ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport (const TAO_Transport &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Transport &operator= (const TAO_Transport &))
+  TAO_Transport (const TAO_Transport &) = delete;
+  TAO_Transport &operator= (const TAO_Transport &) = delete;
 
   /// Assume the lock is held
   void send_connection_closed_notifications_i ();

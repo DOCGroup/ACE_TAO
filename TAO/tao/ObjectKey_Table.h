@@ -116,8 +116,8 @@ namespace TAO
     int unbind_i (Refcounted_ObjectKey *&key);
 
   private:
-    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table (const ObjectKey_Table &))
-    ACE_UNIMPLEMENTED_FUNC (ObjectKey_Table &operator= (const ObjectKey_Table &))
+    ObjectKey_Table (const ObjectKey_Table &) = delete;
+    ObjectKey_Table &operator= (const ObjectKey_Table &) = delete;
 
     /// Some useful typedefs.
     typedef ACE_RB_Tree<TAO::ObjectKey,

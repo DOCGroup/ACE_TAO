@@ -113,7 +113,6 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
   //    and const since it may have been placed in read-only memory by
   //    the compiler.  A const_cast<> can return undefined results in
   //    that case.
-
   CORBA::TypeCode_ptr mutable_tc =
     const_cast<TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
     TAO::Null_RefCount_Policy> *> (this);

@@ -38,7 +38,6 @@ namespace TAO
               class FieldArrayType,
               class RefCountPolicy> class Struct;
 
-
     /**
      * @class Struct
      *
@@ -58,7 +57,6 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-
       /// Constructor.
       Struct (CORBA::TCKind kind,
               char const * id,

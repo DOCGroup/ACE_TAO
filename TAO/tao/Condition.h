@@ -41,7 +41,6 @@ template <class MUTEX>
 class TAO_Condition
 {
 public:
-
   /// Useful typedef
   typedef MUTEX LOCK;
 
@@ -92,8 +91,8 @@ public:
   MUTEX *mutex ();
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition (const TAO_Condition<MUTEX> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Condition &operator= (const TAO_Condition<MUTEX> &))
+  TAO_Condition (const TAO_Condition<MUTEX> &) = delete;
+  TAO_Condition &operator= (const TAO_Condition<MUTEX> &) = delete;
 
   /// Reference to mutex lock.
   MUTEX *mutex_;

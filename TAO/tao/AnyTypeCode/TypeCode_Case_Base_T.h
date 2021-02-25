@@ -49,7 +49,6 @@ namespace TAO
     class Case
     {
     public:
-
       /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.

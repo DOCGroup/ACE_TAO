@@ -47,7 +47,6 @@ namespace TAO
       : public TypeCodeBase
     {
     public:
-
       /// Recursive @c struct constructor.
       Recursive_Type (CORBA::TCKind kind,
                       char const * id,
@@ -110,7 +109,6 @@ namespace TAO
       //@}
 
     public:
-
       /// Set @c struct @c TypeCode parameters.
       bool struct_parameters (char const * name,
                               MemberArrayType const & fields,
