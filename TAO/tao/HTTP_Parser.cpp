@@ -18,11 +18,6 @@ static const ACE_TCHAR file_prefix[] = ACE_TEXT ("http:");
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_HTTP_Parser::~TAO_HTTP_Parser ()
-{
-}
-
-
 bool
 TAO_HTTP_Parser::match_prefix (const char *nior_string) const
 {
