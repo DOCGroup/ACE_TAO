@@ -25,12 +25,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Acceptor_Registry::TAO_Acceptor_Registry ()
-  : acceptors_ (nullptr),
-    size_ (0)
-{
-}
-
 TAO_Acceptor_Registry::~TAO_Acceptor_Registry ()
 {
   this->close_all ();
