@@ -39,7 +39,8 @@ class TAO_Export TAO_GIOP_Message_State
 {
 public:
   /// Constructor
-  TAO_GIOP_Message_State ();
+  TAO_GIOP_Message_State () = default;
+  ~TAO_GIOP_Message_State () = default;
 
   /// Parse the message header.
   ///
@@ -99,36 +100,36 @@ private:
 
 private:
   /// GIOP version information..
-  TAO_GIOP_Message_Version giop_version_;
+  TAO_GIOP_Message_Version giop_version_ {TAO_DEF_GIOP_MAJOR, TAO_DEF_GIOP_MINOR};
 
   /// 0 = big, 1 = little
-  CORBA::Octet byte_order_;
+  CORBA::Octet byte_order_ {0};
 
   /// MsgType above
-  GIOP::MsgType message_type_;
+  GIOP::MsgType message_type_ {GIOP::Request};
 
   /// In byte_order!
-  CORBA::ULong payload_size_;
+  CORBA::ULong payload_size_ {0};
 
   /// (Requests and Replys)
   /// A value of zero indicates that this message does not have any
   /// fragments.  A value of non-zero indicates that it does have
   /// fragments.
-  CORBA::Boolean more_fragments_;
+  CORBA::Boolean more_fragments_ {false};
 
   /// Compressed
-  CORBA::Boolean compressed_;
+  CORBA::Boolean compressed_ {false};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-static const size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
-static const size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
-static const size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
-static const size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
-static const size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
-static const size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
-static const size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
+constexpr size_t TAO_GIOP_MESSAGE_HEADER_LEN = 12;
+constexpr size_t TAO_GIOP_MESSAGE_SIZE_OFFSET = 8;
+constexpr size_t TAO_GIOP_MESSAGE_FLAGS_OFFSET = 6;
+constexpr size_t TAO_GIOP_MESSAGE_TYPE_OFFSET  = 7;
+constexpr size_t TAO_GIOP_VERSION_MINOR_OFFSET = 5;
+constexpr size_t TAO_GIOP_VERSION_MAJOR_OFFSET = 4;
+constexpr size_t TAO_GIOP_MESSAGE_FRAGMENT_HEADER = 4;
 
 #if defined (__ACE_INLINE__)
 # include "tao/GIOP_Message_State.inl"
