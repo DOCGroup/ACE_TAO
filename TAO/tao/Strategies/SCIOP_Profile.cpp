@@ -137,7 +137,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {

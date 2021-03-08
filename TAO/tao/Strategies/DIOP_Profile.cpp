@@ -469,7 +469,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   const char* host;
   const char* pos;
   if (this->endpoint_.is_ipv6_decimal_ &&
-      (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
+      (pos = std::strchr (host = this->endpoint_.host (), '%')) != 0)
     {
       ACE_CString tmp;
       size_t len = pos - host;
