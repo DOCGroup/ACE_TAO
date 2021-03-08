@@ -68,7 +68,7 @@ TAO_ServerRequest::operation (const char *operation,
   if (this->release_operation_)
     CORBA::string_free (const_cast <char*> (this->operation_));
 
-  this->operation_len_ = (length == 0 ? ACE_OS::strlen (operation) : length);
+  this->operation_len_ = (length == 0 ? std::strlen (operation) : length);
   this->release_operation_ = release;
   this->operation_ = operation;
 }

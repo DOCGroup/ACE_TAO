@@ -32,11 +32,11 @@ public:
 
   static TAO_Notify_Tracker& get_instance();
 
-  void add( TAO_Notify_Refcountable* p );
+  void add( TAO_Notify_Refcountable* p);
 
-  void remove( const TAO_Notify_Refcountable* p );
+  void remove( const TAO_Notify_Refcountable* p);
 
-  Entry find( const TAO_Notify_Refcountable* p ) const;
+  Entry find( const TAO_Notify_Refcountable* p) const;
 
   void dump( const char* title = 0 );
 
@@ -227,7 +227,7 @@ TAO_Notify_Tracker::remove( const TAO_Notify_Refcountable* p )
 
 
 TAO_Notify_Tracker::Entry
-TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p ) const
+TAO_Notify_Tracker::find( const TAO_Notify_Refcountable* p) const
 {
   Entry e = { 0, "" };
   if ( p == 0 ) return e;

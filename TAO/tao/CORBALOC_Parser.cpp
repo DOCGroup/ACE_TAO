@@ -22,6 +22,8 @@
 #include "tao/CORBALOC_Parser.inl"
 #endif /* __ACE_INLINE__ */
 
+#include <cstring>
+
 static const char prefix[] = "corbaloc:";
 static const size_t prefix_len = sizeof prefix - 1;
 static const char rir_token[] = "rir:";
@@ -106,7 +108,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 
   // Skip the prefix.  We know it is there because this method is only
   // called if match_prefix() returns 1.
-  ior += ACE_OS::strlen(prefix);
+  ior += std::strlen(prefix);
 
   //  First check for rir
   if (ACE_OS::strncmp (ior,rir_token,rir_token_len) == 0)
@@ -116,9 +118,9 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   // most likely commas will separate endpoints, although they could be
   // part of an endpoint address for some protocols.
   size_t max_endpoint_count = 1;
-  for (const char *comma = ACE_OS::strchr (ior,',');
+  for (const char *comma = std::strchr (ior,',');
        comma;
-       comma = ACE_OS::strchr (comma+1,','))
+       comma = std::strchr (comma+1,','))
     ++max_endpoint_count;
 
   ACE_Array<parsed_endpoint> endpoints(max_endpoint_count);
@@ -234,7 +236,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
                                      size_t prot_addr_len,
                                      ACE_CString &canonical_endpoint)
 {
-  const char *separator = ACE_OS::strchr (ior, ':');
+  const char *separator = std::strchr (ior, ':');
 
   // A special case for handling iiop
   if (ior[0] != ':' && ACE_OS::strncmp (ior,iiop_token,iiop_token_len) != 0)
@@ -247,7 +249,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
   const char *addr_base = separator+1;
   const char *addr_tail = ior + prot_addr_len;
   // skip past version, if any
-  separator = ACE_OS::strchr (addr_base,'@');
+  separator = std::strchr (addr_base,'@');
   if (separator != nullptr && separator < addr_tail)
     {
       canonical_endpoint.set (addr_base,(separator - addr_base)+1,1);
@@ -258,7 +260,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
 
   ACE_CString raw_host;
   ACE_CString raw_port;
-  separator = ACE_OS::strchr (addr_base,':');
+  separator = std::strchr (addr_base,':');
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
 
@@ -267,7 +269,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos = ACE_OS::strchr(addr_base, ']');
+      const char *cp_pos = std::strchr(addr_base, ']');
       if (cp_pos == 0 || cp_pos >= addr_tail)
         {
           // No valid IPv6 address specified but that will come out later.

@@ -15,6 +15,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -168,7 +169,7 @@ TAO_DIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != 0)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 

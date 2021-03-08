@@ -16,7 +16,7 @@
 #include "tao/PI/ORBInitInfo.inl"
 #endif /* defined INLINE */
 
-#include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -142,7 +142,7 @@ TAO_ORBInitInfo::register_initial_reference (
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id == 0 || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   if (CORBA::is_nil (obj))
@@ -159,7 +159,7 @@ TAO_ORBInitInfo::resolve_initial_references (const char * id)
 {
   this->check_validity ();
 
-  if (id == 0 || ACE_OS::strlen (id) == 0)
+  if (id == 0 || std::strlen (id) == 0)
     throw PortableInterceptor::ORBInitInfo::InvalidName ();
 
   // The ORB is practically fully initialized by the time this point

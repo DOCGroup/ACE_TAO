@@ -395,8 +395,7 @@ RedGreen_Test_StructuredPushConsumer::~RedGreen_Test_StructuredPushConsumer (
 
 void
 RedGreen_Test_StructuredPushConsumer::accumulate_into (
-    ACE_Throughput_Stats &throughput
-  ) const
+    ACE_Throughput_Stats &throughput) const
 {
   throughput.accumulate (this->throughput_);
 }

@@ -10,6 +10,7 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/SCIOP_Acceptor.inl"
@@ -237,7 +238,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_Multihomed_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   ACE_Auto_Basic_Array_Ptr<char> tmp_host_auto;
 
   if (port_separator_loc == address)
@@ -304,7 +305,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     // in open_i.
 
     // Set the length of the hostname
-    hostname_length = ACE_OS::strlen(address);
+    hostname_length = std::strlen(address);
   }
 
   ACE_NEW_RETURN(tmp_host, char[hostname_length + 1], -1);
@@ -803,7 +804,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 {
 
   // Make a copy of hostnames string
-  int const hostnames_string_length = ACE_OS::strlen(hostnames) + 1;
+  int const hostnames_string_length = std::strlen(hostnames) + 1;
   char* hostnames_copy = 0;
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],

@@ -10,6 +10,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "tao/Strategies/COIOP_Profile.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -108,10 +109,10 @@ TAO_COIOP_Connector::check_prefix (const char *endpoint)
 
   const char *protocol[] = { "COIOP", "COIOPloc" };
 
-  size_t const slot = ACE_OS::strchr (endpoint, ':') - endpoint;
+  size_t const slot = std::strchr (endpoint, ':') - endpoint;
 
-  size_t const len0 = ACE_OS::strlen (protocol[0]);
-  size_t const len1 = ACE_OS::strlen (protocol[1]);
+  size_t const len0 = std::strlen (protocol[0]);
+  size_t const len1 = std::strlen (protocol[1]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.

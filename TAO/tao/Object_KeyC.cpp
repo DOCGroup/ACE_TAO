@@ -34,6 +34,7 @@
 #include "ace/Truncate.h"
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_ctype.h"
+#include <cstring>
 
 // TAO_IDL - Generated from
 // be\be_visitor_arg_traits.cpp:70
@@ -149,7 +150,7 @@ TAO::ObjectKey::decode_string_to_sequence (
       return;
     }
 
-  size_t const str_len = ACE_OS::strlen (str);
+  size_t const str_len = std::strlen (str);
 
   // Ensure sequence length value does not exceed maximum value for
   // sequence index type (CORBA::ULong).  This is mostly an issue for

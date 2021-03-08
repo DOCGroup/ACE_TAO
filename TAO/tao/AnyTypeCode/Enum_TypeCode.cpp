@@ -8,6 +8,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"
@@ -98,7 +99,7 @@ TAO::TypeCode::Enum<StringType,
         Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
     }
 

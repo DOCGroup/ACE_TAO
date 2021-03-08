@@ -119,8 +119,7 @@ void CORBA::WrongTransaction::_raise () const
 }
 
 void CORBA::WrongTransaction::_tao_encode (
-    TAO_OutputCDR &cdr
-  ) const
+    TAO_OutputCDR &cdr) const
 {
   if (cdr << *this)
     {

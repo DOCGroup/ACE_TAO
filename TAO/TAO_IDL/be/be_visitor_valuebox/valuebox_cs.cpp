@@ -125,7 +125,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
   // simply return true.
   *os << "::CORBA::Boolean" << be_nl
       << node->name ()
-      << "::_tao_match_formal_type (ptrdiff_t ) const" << be_nl
+      << "::_tao_match_formal_type (ptrdiff_t) const" << be_nl
       << "{" << be_idt_nl
       << "return true;" << be_uidt_nl
       << "}" << be_nl_2;

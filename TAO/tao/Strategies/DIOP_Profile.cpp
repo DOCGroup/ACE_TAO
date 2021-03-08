@@ -13,6 +13,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/os_include/os_netdb.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 static const char the_prefix[] = "diop";
 
@@ -117,7 +118,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  const char *okd = ACE_OS::strchr (ior, this->object_key_delimiter_);
+  const char *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -132,7 +133,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host = false;
@@ -145,7 +146,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos_a = ACE_OS::strchr (ior, ']');
+      const char *cp_pos_a = std::strchr (ior, ']');
       if (cp_pos_a == 0)
         {
           // No valid IPv6 address specified.
@@ -469,7 +470,7 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   const char* host;
   const char* pos;
   if (this->endpoint_.is_ipv6_decimal_ &&
-      (pos = ACE_OS::strchr (host = this->endpoint_.host (), '%')) != 0)
+      (pos = std::strchr (host = this->endpoint_.host (), '%')) != 0)
     {
       ACE_CString tmp;
       size_t len = pos - host;

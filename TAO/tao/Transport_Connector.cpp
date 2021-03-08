@@ -17,6 +17,7 @@
 #include "tao/Base_Transport_Property.h"
 
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Transport_Connector.inl"
@@ -81,11 +82,11 @@ TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     return nullptr;
-  const char *comma_pos = ACE_OS::strchr (str,',');
-  const char *slash_pos = ACE_OS::strchr (str,'/');
+  const char *comma_pos = std::strchr (str,',');
+  const char *slash_pos = std::strchr (str,'/');
   if (comma_pos == nullptr && slash_pos == nullptr)
     {
-      len = ACE_OS::strlen (str);
+      len = std::strlen (str);
     }
   else if (comma_pos == nullptr || comma_pos > slash_pos)
     len = (slash_pos - str);
@@ -135,7 +136,7 @@ TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
 
   ACE_CString ior;
 
-  ior.set (string, ACE_OS::strlen (string), 1);
+  ior.set (string, std::strlen (string), 1);
 
   // Find out where the protocol ends
   ACE_CString::size_type ior_index = ior.find ("://");

@@ -268,7 +268,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
       *os << "virtual ::CORBA::Boolean "
           << "_tao_unmarshal_v (TAO_InputCDR &);" << be_nl;
       *os << "virtual ::CORBA::Boolean "
-          << "_tao_match_formal_type (ptrdiff_t ) const;" << be_nl;
+          << "_tao_match_formal_type (ptrdiff_t) const;" << be_nl;
     }
 
   if (be_global->gen_ostream_operators ())

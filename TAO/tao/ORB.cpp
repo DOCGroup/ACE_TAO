@@ -38,6 +38,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/CORBA_macros.h"
+#include <cstring>
 
 static const char ior_prefix[] = "IOR:";
 
@@ -950,7 +951,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
   CORBA::String_var ior_env_var_name =
     CORBA::string_alloc (
-      static_cast<CORBA::ULong> (ACE_OS::strlen (name) + sizeof (ior_string)));
+      static_cast<CORBA::ULong> (std::strlen (name) + sizeof (ior_string)));
 
   ACE_OS::strcpy (ior_env_var_name.inout (), name);
 
@@ -1005,7 +1006,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 void
 CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
 {
-  if (id == nullptr || ACE_OS::strlen (id) == 0)
+  if (id == nullptr || std::strlen (id) == 0)
     throw ::CORBA::ORB::InvalidName ();
 
   if (CORBA::is_nil (obj))
@@ -1020,7 +1021,7 @@ CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
 CORBA::Object_ptr
 CORBA::ORB::unregister_initial_reference (const char * id)
 {
-  if (id == nullptr || ACE_OS::strlen (id) == 0)
+  if (id == nullptr || std::strlen (id) == 0)
     throw ::CORBA::ORB::InvalidName ();
 
   TAO_Object_Ref_Table &table = this->orb_core_->object_ref_table ();
@@ -1616,7 +1617,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
-  ACE_Message_Block mb (ACE_OS::strlen (str) / 2 + 1
+  ACE_Message_Block mb (std::strlen (str) / 2 + 1
                         + ACE_CDR::MAX_ALIGNMENT + 1);
 
   ACE_CDR::mb_align (&mb);

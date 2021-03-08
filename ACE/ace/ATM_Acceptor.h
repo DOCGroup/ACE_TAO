@@ -90,7 +90,7 @@ public:
               ACE_ATM_QoS qos = ACE_ATM_QoS());
 
   /// Get the local address currently listening on
-  int get_local_addr( ACE_ATM_Addr &local_addr );
+  int get_local_addr(ACE_ATM_Addr &local_addr);
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;

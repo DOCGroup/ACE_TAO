@@ -97,8 +97,7 @@ TAO::TypeCode::Union<char const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
                      TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // These calls shouldn't throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -197,8 +196,7 @@ TAO::TypeCode::Union<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Case<char const *,
                                          CORBA::TypeCode_ptr const *> const * const *,
-                     TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ) const
+                     TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;

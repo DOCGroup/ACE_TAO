@@ -9,6 +9,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 #include "ace/CORBA_macros.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -171,7 +172,7 @@ TAO_Adapter_Registry::find_adapter (const char *name) const
   for (TAO_Adapter **i = this->adapters_;
        i != this->adapters_ + this->adapters_count_;
        ++i)
-    if (ACE_OS::strcmp ((*i)->name (), name) == 0)
+    if (std::strcmp ((*i)->name (), name) == 0)
       return *i;
 
   return nullptr;

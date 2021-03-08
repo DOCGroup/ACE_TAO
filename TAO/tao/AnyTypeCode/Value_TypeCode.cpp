@@ -145,8 +145,7 @@ TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
                      RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // None of these calls should throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
@@ -188,7 +187,7 @@ TAO::TypeCode::Value<StringType,
         Traits<StringType>::get_string (lhs_field.name);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
 
       CORBA::TypeCode_ptr const lhs_tc =

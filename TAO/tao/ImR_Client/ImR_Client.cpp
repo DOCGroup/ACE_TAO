@@ -10,6 +10,7 @@
 #include "tao/ImR_Client/ServerObject_i.h"
 #include "tao/ImR_Client/ImplRepoC.h"
 #include "tao/IORManipulation/IORManip_Loader.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,9 +22,8 @@ namespace
     // should be protocol neutral.
     const char corbaloc[] = "corbaloc:";
     char *pos = ACE_OS::strstr (ior, corbaloc);
-    pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-    pos = ACE_OS::strchr (pos + 1, delimiter);
+    pos = std::strchr (pos + sizeof (corbaloc), ':');
+    pos = std::strchr (pos + 1, delimiter);
 
     return pos;
   }

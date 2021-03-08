@@ -84,7 +84,7 @@ namespace TAO
 
   private:
     // Disallow default construction.
-    Collocated_Invocation (void);
+    Collocated_Invocation () = delete;
   };
 }
 
