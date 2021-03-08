@@ -24,7 +24,7 @@ TAO::TypeCode::Case<StringType, TypeCodeType>::equal (CORBA::ULong index,
   char const * const lhs_name = this->name ();
   char const * const rhs_name = tc->member_name (index);
 
-  if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+  if (std::strcmp (lhs_name, rhs_name) != 0)
     return false;
 
   // Check case TypeCodes.

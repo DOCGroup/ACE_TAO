@@ -135,7 +135,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *cp = std::strchr (start, this->object_key_delimiter_);
 
   if (cp == 0)
     {

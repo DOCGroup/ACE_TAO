@@ -130,7 +130,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, ':');  // Look for a port
+  char *cp = std::strchr (start, ':');  // Look for a port
 
   if (cp == 0)
     {
@@ -142,7 +142,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
                    CORBA::COMPLETED_NO);
     }
 
-  char *okd = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *okd = std::strchr (start, this->object_key_delimiter_);
 
   if (okd == 0)
     {

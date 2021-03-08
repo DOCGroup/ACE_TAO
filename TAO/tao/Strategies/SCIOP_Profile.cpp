@@ -152,7 +152,7 @@ TAO_SCIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host = 0;
 
-  const char *cp_pos = ACE_OS::strchr (ior, ':');  // Look for a port
+  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {

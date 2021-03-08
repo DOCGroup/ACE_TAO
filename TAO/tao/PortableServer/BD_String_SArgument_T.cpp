@@ -133,8 +133,7 @@ template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
 TAO::Ret_BD_String_SArgument_T<S_var,BOUND,Insert_Policy>::marshal (
-    TAO_OutputCDR & cdr
-  )
+    TAO_OutputCDR & cdr)
 {
   if (this->x_.in () != 0 && ACE_OS::strlen (this->x_.in ()) > BOUND)
     {

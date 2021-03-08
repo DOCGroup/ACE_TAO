@@ -3,6 +3,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 #ifndef TAO_NO_SHARED_NULL_CORBA_STRING
   static char null_char[]= "";
@@ -30,7 +31,7 @@ CORBA::string_dup (const char *str)
     return null_char;
 #endif /* TAO_NO_SHARED_NULL_CORBA_STRING */
 
-  size_t const len = ACE_OS::strlen (str);
+  size_t const len = std::strlen (str);
 
   // This allocates an extra byte for the '\0';
   char * copy = CORBA::string_alloc (static_cast<CORBA::ULong> (len));

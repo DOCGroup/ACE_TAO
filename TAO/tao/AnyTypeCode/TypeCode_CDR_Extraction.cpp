@@ -160,7 +160,7 @@ namespace
       {
         TAO::TypeCodeFactory::TC_Info & info = infos[i];
 
-        if (ACE_OS::strcmp (info.id, id) == 0)
+        if (std::strcmp (info.id, id) == 0)
           {
             // We have a matching id, so store the TypeCode in the out
             // array and then compare the others.
@@ -396,7 +396,7 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
       break;
     }
 
-  if (ACE_OS::strcmp (id.in (),  // len >= 0!!!
+  if (std::strcmp (id.in (),  // len >= 0!!!
                       tc_constant_id) == 0)
     {
       if (!cdr.skip_string ())  // No need to demarshal the name.

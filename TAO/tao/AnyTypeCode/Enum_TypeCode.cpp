@@ -98,7 +98,7 @@ TAO::TypeCode::Enum<StringType,
         Traits<StringType>::get_string (lhs_enumerator);
       char const * const rhs_name = tc->member_name (i);
 
-      if (ACE_OS::strcmp (lhs_name, rhs_name) != 0)
+      if (std::strcmp (lhs_name, rhs_name) != 0)
         return false;
     }
 

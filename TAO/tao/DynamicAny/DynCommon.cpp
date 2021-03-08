@@ -158,7 +158,7 @@ TAO_DynCommon::insert_string (const char * value)
       CORBA::ULong const bound =
         unaliased_tc->length ();
 
-      if (bound > 0 && bound < ACE_OS::strlen (value))
+      if (bound > 0 && bound < std::strlen (value))
         {
           throw DynamicAny::DynAny::InvalidValue ();
         }

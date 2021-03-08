@@ -65,6 +65,7 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 #include "ace/Message_Block.h"
+#include <cstring>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ClientRequestInterceptor_Adapter.h"
@@ -72,7 +73,6 @@
 # include "tao/ServerRequestInterceptor_Adapter.h"
 # include "tao/ServerRequestInterceptor_Adapter_Factory.h"
 #endif  /* TAO_HAS_INTERCEPTORS == 1  */
-
 
 #if !defined (__ACE_INLINE__)
 # include "tao/ORB_Core.inl"
@@ -2870,7 +2870,7 @@ TAO_ORB_Core::resolve_rir (const char *name)
     this->orb_params ()->default_init_ref ();
 
   // Check if a DefaultInitRef was specified.
-  if (ACE_OS::strlen (default_init_ref.in ()) != 0)
+  if (std::strlen (default_init_ref.in ()) != 0)
     {
       static const char corbaloc_prefix[] = "corbaloc:";
       static const char mcast_prefix[] = "mcast:";

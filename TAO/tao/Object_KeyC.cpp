@@ -149,7 +149,7 @@ TAO::ObjectKey::decode_string_to_sequence (
       return;
     }
 
-  size_t const str_len = ACE_OS::strlen (str);
+  size_t const str_len = std::strlen (str);
 
   // Ensure sequence length value does not exceed maximum value for
   // sequence index type (CORBA::ULong).  This is mostly an issue for

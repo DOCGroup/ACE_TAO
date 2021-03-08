@@ -546,7 +546,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
@@ -563,7 +563,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      char const * const cp_pos = ACE_OS::strchr (address, ']');
+      char const * const cp_pos = std::strchr (address, ']');
       if (cp_pos == 0)
         {
           // No valid IPv6 address specified.

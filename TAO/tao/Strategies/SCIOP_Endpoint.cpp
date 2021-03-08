@@ -13,6 +13,7 @@
 #include "ace/Synch.h"
 #include "ace/OS_NS_stdio.h"
 #include "tao/ORB_Core.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Strategies/SCIOP_Endpoint.inl"
@@ -131,7 +132,7 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   size_t actual_len =
     ACE_OS::strlen (this->host_.in ()) // chars in host name
     + sizeof (':')                     // delimiter
-    + ACE_OS::strlen ("65536")         // max port
+    + std::strlen ("65536")         // max port
     + sizeof ('\0');
 
   if (length < actual_len)

@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
@@ -325,7 +326,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_string s)
 {
-  if (s.bound_ > 0 && s.val_ != 0 && ACE_OS::strlen (s.val_) > s.bound_)
+  if (s.bound_ > 0 && s.val_ != 0 && std::strlen (s.val_) > s.bound_)
     {
       return;
     }

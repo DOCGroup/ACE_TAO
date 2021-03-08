@@ -10,6 +10,7 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 #include "tao/SystemException.h"
+#include <cstring>
 
 #if TAO_HAS_INTERCEPTORS == 1
 #include "tao/PortableInterceptorC.h"
@@ -94,7 +95,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
                                       int &parse_error)
   : mesg_base_ (mesg_base),
     operation_ (CORBA::string_dup (operation)),
-    operation_len_ (operation == nullptr ? 0 : ACE_OS::strlen (operation)),
+    operation_len_ (operation == nullptr ? 0 : std::strlen (operation)),
     release_operation_ (true),
     is_forwarded_ (false),
     incoming_ (nullptr),

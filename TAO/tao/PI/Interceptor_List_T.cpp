@@ -3,8 +3,8 @@
 #include "tao/debug.h"
 
 #include "ace/os_include/os_stddef.h"
-#include "ace/OS_NS_string.h"
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -55,7 +55,7 @@ namespace TAO
             /// Interceptor with the same isn't already registered.
             CORBA::String_var name = interceptor->name ();
 
-            if (ACE_OS::strlen (name.in ()) != 0)
+            if (std::strlen (name.in ()) != 0)
               {
                 // @@ This simple search algorithm isn't the greatest
                 //    thing in the world, but since we only register
@@ -123,10 +123,9 @@ namespace TAO
           {
             /// If the Interceptor is not anonymous, make sure an
             /// Interceptor with the same isn't already registered.
-            CORBA::String_var name =
-              interceptor->name ();
+            CORBA::String_var name = interceptor->name ();
 
-            if (ACE_OS::strlen (name.in ()) != 0)
+            if (std::strlen (name.in ()) != 0)
               {
                 // @@ This simple search algorithm isn't the greatest
                 //    thing in the world, but since we only register

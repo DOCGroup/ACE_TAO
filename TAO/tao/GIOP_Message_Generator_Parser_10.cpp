@@ -11,6 +11,7 @@
 #include "tao/SystemException.h"
 
 #include "ace/Log_Msg.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -81,7 +82,7 @@ TAO_GIOP_Message_Generator_Parser_10::write_request_header (
   if (result != 0)
     {
       const CORBA::ULong username_size =
-        static_cast<CORBA::ULong> (ACE_OS::strlen (username));
+        static_cast<CORBA::ULong> (std::strlen (username));
 
       CORBA::Octet *buffer =
         CORBA::OctetSeq::allocbuf (username_size + 1);

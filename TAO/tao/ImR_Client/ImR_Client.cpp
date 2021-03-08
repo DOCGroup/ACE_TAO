@@ -21,9 +21,8 @@ namespace
     // should be protocol neutral.
     const char corbaloc[] = "corbaloc:";
     char *pos = ACE_OS::strstr (ior, corbaloc);
-    pos = ACE_OS::strchr (pos + sizeof (corbaloc), ':');
-
-    pos = ACE_OS::strchr (pos + 1, delimiter);
+    pos = std::strchr (pos + sizeof (corbaloc), ':');
+    pos = std::strchr (pos + 1, delimiter);
 
     return pos;
   }
