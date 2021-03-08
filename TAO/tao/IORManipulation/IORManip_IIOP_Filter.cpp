@@ -6,6 +6,7 @@
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/CDR.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

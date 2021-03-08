@@ -13,6 +13,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -180,8 +181,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ) const
+                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
@@ -228,8 +228,7 @@ TAO::TypeCode::Struct<char const *,
                       CORBA::TypeCode_ptr const *,
                       TAO::TypeCode::Struct_Field<char const *,
                                                   CORBA::TypeCode_ptr const *> const *,
-                      TAO::Null_RefCount_Policy>::id_i (
-  ) const
+                      TAO::Null_RefCount_Policy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

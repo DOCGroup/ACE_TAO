@@ -24,8 +24,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::In_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, *this->x_);
 }
@@ -83,8 +82,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Inout_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, *this->x_);
 }
@@ -114,8 +112,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, *this->x_);
 }
@@ -145,8 +142,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 void
 TAO::Ret_Var_Size_Argument_T<S,Insert_Policy>::interceptor_value (
-    CORBA::Any *any
-  ) const
+    CORBA::Any *any) const
 {
   Insert_Policy<S>::any_insert (any, this->x_.in ());
 }

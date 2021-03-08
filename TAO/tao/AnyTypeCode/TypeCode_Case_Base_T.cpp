@@ -3,6 +3,7 @@
 
 #include "tao/AnyTypeCode/TypeCode_Case_Base_T.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/TypeCode_Case_Base_T.inl"

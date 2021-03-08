@@ -61,8 +61,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 CORBA::Boolean
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -82,8 +81,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 CORBA::Boolean
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
                         TAO::Null_RefCount_Policy>::equivalent_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // The following calls won't throw since CORBA::TypeCode::equal()
   // has already established the kind of tc is the same as our kind.
@@ -102,8 +100,7 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ) const
+                        TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -122,16 +119,14 @@ TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
 
 CORBA::ULong
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::length_i (
-  ) const
+                        TAO::Null_RefCount_Policy>::length_i () const
 {
   return this->length_;
 }
 
 CORBA::TypeCode_ptr
 TAO::TypeCode::Sequence<CORBA::TypeCode_ptr const *,
-                        TAO::Null_RefCount_Policy>::content_type_i (
-  ) const
+                        TAO::Null_RefCount_Policy>::content_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

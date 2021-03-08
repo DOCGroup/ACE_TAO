@@ -19,6 +19,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

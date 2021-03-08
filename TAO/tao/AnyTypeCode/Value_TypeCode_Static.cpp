@@ -9,6 +9,7 @@
 
 #include "ace/Dynamic_Service.h"
 #include "ace/Truncate.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Value_TypeCode_Static.inl"
@@ -223,8 +224,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::get_compact_typecode_i (
-  ) const
+                     TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
@@ -364,8 +364,7 @@ TAO::TypeCode::Value<char const *,
                      CORBA::TypeCode_ptr const *,
                      TAO::TypeCode::Value_Field<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
-                     TAO::Null_RefCount_Policy>::concrete_base_type_i (
-  ) const
+                     TAO::Null_RefCount_Policy>::concrete_base_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

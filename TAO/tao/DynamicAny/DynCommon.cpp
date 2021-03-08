@@ -20,6 +20,7 @@
 
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

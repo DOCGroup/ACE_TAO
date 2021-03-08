@@ -27,6 +27,7 @@
 
 #include "ace/Array_Base.h"
 #include "ace/Value_Ptr.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -81,12 +81,10 @@ namespace CORBA
     virtual void _raise () const;
 
     virtual void _tao_encode (
-        TAO_OutputCDR &
-      ) const;
+        TAO_OutputCDR &) const;
 
     virtual void _tao_decode (
-        TAO_InputCDR &
-      );
+        TAO_InputCDR &);
 
     // TAO_IDL - Generated from
     // be\be_visitor_exception/exception_ch.cpp:129

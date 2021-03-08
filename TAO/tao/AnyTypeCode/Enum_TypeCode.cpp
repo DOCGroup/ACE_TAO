@@ -8,6 +8,7 @@
 #include "tao/CDR.h"
 
 #include "ace/Dynamic_Service.h"
+#include <cstring>
 
 #ifndef __ACE_INLINE__
 # include "tao/AnyTypeCode/Enum_TypeCode.inl"

@@ -145,8 +145,7 @@ TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
                      RefCountPolicy>::equal_i (
-  CORBA::TypeCode_ptr tc
-  ) const
+  CORBA::TypeCode_ptr tc) const
 {
   // None of these calls should throw since CORBA::TypeCode::equal()
   // verified that the TCKind is the same as our's prior to invoking
