@@ -68,7 +68,7 @@ namespace
       CORBA::Any_var data;
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(TSC) -> is ", location));
-      data= pi_current->get_slot( slot_id );
+      data= pi_current->get_slot(slot_id);
       CORBA::TypeCode_var
         tc= data->type();
       if (tc->kind() == CORBA::tk_null)
@@ -98,7 +98,7 @@ namespace
       }
 
       ACE_DEBUG ((LM_DEBUG, "SERVER %C -> get_slot(RSC) -> is ", location));
-      data= ri->get_slot( slot_id );
+      data= ri->get_slot(slot_id);
 
       tc= data->type();
       if (tc->kind() == CORBA::tk_null)

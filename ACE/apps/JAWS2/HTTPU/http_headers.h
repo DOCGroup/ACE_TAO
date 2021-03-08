@@ -144,17 +144,16 @@ protected:
 class HTTPU_Export HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
 {
 public:
-  const char *header( int name ) const;
-  const char *value( int name );
-  const char *value_next( int name );
-  void value_reset ( void );
+  const char *header(int name) const;
+  const char *value(int name);
+  const char *value_next(int name);
+  void value_reset ();
 
 public:
   HTTP_Headers (void);
 
   const char *header_token (int name) const;
   const char *header_strings (int name) const;
-
 };
 
 

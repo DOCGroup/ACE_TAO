@@ -273,7 +273,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       // The virtual _tao_match_formal_type method.
       *os << "::CORBA::Boolean" << be_nl
           << node->name ()
-          << "::_tao_match_formal_type (ptrdiff_t ) const"
+          << "::_tao_match_formal_type (ptrdiff_t) const"
           << be_nl
           << "{" << be_idt_nl
           << "return false;"<< be_uidt_nl
