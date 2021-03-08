@@ -67,7 +67,7 @@ ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
   int result = ACE_OS::connect( s,
                                 ( struct sockaddr *)saddr,
                                 sizeof( struct sockaddr_atm ),
-                                qos_params );
+                                qos_params);
 
   if ( result != 0 )
     ACE_OS::printf( "ATM_Connector(connect): connection failed, %d\n",
