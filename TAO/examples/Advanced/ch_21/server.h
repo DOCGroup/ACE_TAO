@@ -140,8 +140,7 @@ private:
             const char *                        str
         ) : m_sc(sc), m_str(str) {}
         bool operator()(
-            CCS::AssetType anum
-        ) const
+            CCS::AssetType anum) const
         {
             char buf[32];
             switch (m_sc) {
