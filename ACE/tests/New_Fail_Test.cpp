@@ -20,7 +20,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
-#include <stdint.h>
+#include "ace/Numeric_Limits.h"
 
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
@@ -31,11 +31,12 @@
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
 
-// Most we can do, by a quarter
-static const size_t BIG_BLOCK = SIZE_MAX / 4;
+// Most we can do, by half. Using max alone gets "invalid allocation size"
+// messages on stdout on Windows.
+static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static constexpr int MAX_ALLOCS_IN_TEST = 20;
+static const int MAX_ALLOCS_IN_TEST = 2;
 
 static void
 try_ace_new (char **p)
