@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Parser_Registry.h
@@ -8,7 +6,6 @@
  *  @author  Carlos O'Ryan <coryan@uci.edu>
  */
 //=============================================================================
-
 
 #ifndef TAO_PARSER_REGISTRY_H
 #define TAO_PARSER_REGISTRY_H
@@ -24,7 +21,6 @@
 #include /**/ "tao/Versioned_Namespace.h"
 
 #include "ace/os_include/os_stddef.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

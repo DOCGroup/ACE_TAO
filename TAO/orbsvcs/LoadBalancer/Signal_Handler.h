@@ -47,7 +47,7 @@ public:
                          PortableServer::POA_ptr poa);
 
   /// Run by a daemon thread to handle signals synchronously.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Active object activation method.
   /**

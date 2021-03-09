@@ -28,7 +28,7 @@ public:
                  ACE_Barrier *barrier);
   // Constructor.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Do work.
 
 private:

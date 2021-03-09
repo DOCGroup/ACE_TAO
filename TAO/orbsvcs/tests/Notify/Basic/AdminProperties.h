@@ -58,7 +58,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv []);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Supplier

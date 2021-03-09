@@ -36,7 +36,7 @@ public:
   Client_Worker (Simple_Server_ptr server, int niterations);
 
   /// thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Validate the connection

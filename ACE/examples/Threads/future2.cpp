@@ -69,7 +69,7 @@ private:
   virtual int close (u_long flags = 0);
 
   /// Here the actual servicing of all requests is happening..
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Implementation methods.
   u_long work_i (u_long, int);

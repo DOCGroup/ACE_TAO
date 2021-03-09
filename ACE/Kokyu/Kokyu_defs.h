@@ -121,32 +121,32 @@ namespace Kokyu
   enum Block_Flag_t {BLOCK, UNBLOCK};
 
   class Kokyu_Export Dispatch_Command
-    {
-    public:
-      Dispatch_Command(int dont_delete = 0,
-                       ACE_Allocator *allocator = 0);
-      //dont_delete indicates whether this object needs to be deleted once processed.
-      //allocator indicates the ACE_Allocator, if any, from which this object was created.
-      //This same allocator has to be used for the deletion also
+  {
+  public:
+    Dispatch_Command(int dont_delete = 0,
+                      ACE_Allocator *allocator = 0);
+    //dont_delete indicates whether this object needs to be deleted once processed.
+    //allocator indicates the ACE_Allocator, if any, from which this object was created.
+    //This same allocator has to be used for the deletion also
 
-      /// Command callback
-      virtual int execute () = 0;
+    /// Command callback
+    virtual int execute () = 0;
 
-      int can_be_deleted () const;
+    int can_be_deleted () const;
 
-      void destroy ();
-    protected:
-      /// Destructor
-      // only inheritance is possible and object should be on heap,
-      // since object could be handed over to a different thread.
-      virtual ~Dispatch_Command ();
+    void destroy ();
+  protected:
+    /// Destructor
+    // only inheritance is possible and object should be on heap,
+    // since object could be handed over to a different thread.
+    virtual ~Dispatch_Command ();
 
-    private:
-      int dont_delete_;
-      ACE_Allocator *allocator_;
-      //if this object has to be deleted, then delete it using the allocator
-      //if one is present.
-    };
+  private:
+    int dont_delete_;
+    ACE_Allocator *allocator_;
+    //if this object has to be deleted, then delete it using the allocator
+    //if one is present.
+  };
 
   enum DSRT_Sched_Type_t
     {

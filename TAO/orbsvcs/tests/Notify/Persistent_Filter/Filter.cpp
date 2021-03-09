@@ -18,7 +18,7 @@ int EVENTS_EXPECTED_TO_RECEIVE = 9*4;  // 2 consumers get the same events from 2
 #define DOMAIN_NAME "*"
 #define TYPE_NAME "*"
 
-  ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
+ACE_Atomic_Op <TAO_SYNCH_MUTEX, int> g_result_count = 0;
 
 FilterClient::FilterClient (void)
   :consumer_1 (0),

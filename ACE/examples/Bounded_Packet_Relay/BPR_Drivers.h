@@ -207,7 +207,7 @@ public:
   int request_stop (void);
 
   /// This method runs the input device loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Provides an abstract interface to allow modifying device
   /// settings.

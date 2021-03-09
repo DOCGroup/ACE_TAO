@@ -49,7 +49,7 @@ public:
     ACE_TRACE ("LF_ThreadPool::TP");
   }
 
-  virtual int svc (void);
+  virtual int svc ();
 
   void shut_down (void)
   {

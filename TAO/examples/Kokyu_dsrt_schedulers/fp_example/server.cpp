@@ -64,7 +64,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:

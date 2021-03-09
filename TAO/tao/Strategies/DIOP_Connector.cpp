@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/DIOP_Connector.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)

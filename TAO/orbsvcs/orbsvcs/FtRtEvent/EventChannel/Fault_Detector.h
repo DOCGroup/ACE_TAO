@@ -48,7 +48,7 @@ protected:
   public:
     // ctor
     ReactorTask();
-    virtual int svc (void);
+    virtual int svc ();
     ACE_Reactor reactor_;
   };
 

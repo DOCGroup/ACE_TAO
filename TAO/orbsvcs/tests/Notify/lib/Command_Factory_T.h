@@ -41,7 +41,7 @@ public:
 
   /// = Service_Object virtual method overloads.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Create the <COMMAND> command.
   TAO_Notify_Tests_Command* create (void);

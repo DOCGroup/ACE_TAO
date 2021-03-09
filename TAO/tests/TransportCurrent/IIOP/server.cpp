@@ -54,7 +54,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (CORBA::ORB_ptr);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // The ORB

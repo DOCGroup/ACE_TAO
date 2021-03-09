@@ -52,7 +52,7 @@ public:
   // The actual implementation of the test
 
   // = The Task_Base methods
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

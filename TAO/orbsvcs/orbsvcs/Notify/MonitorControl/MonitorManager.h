@@ -25,7 +25,7 @@ public:
   TAO_MonitorManager (void);
 
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Start the ORB task which includes initializtion of the ORB,
   /// creation of the monitor servant and activation.
@@ -44,7 +44,7 @@ private:
   {
   public:
     ORBTask (void);
-    virtual int svc (void);
+    virtual int svc ();
 
     TAO_SYNCH_MUTEX mutex_;
     ACE_ARGV_T<ACE_TCHAR> argv_;

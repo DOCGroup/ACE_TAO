@@ -30,7 +30,7 @@ public:
 
   // Dynamic linking hooks (not used).
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   virtual int info (ACE_TCHAR **info_string,
                     size_t length) const;
 private:

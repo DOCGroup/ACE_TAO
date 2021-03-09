@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef BE_TEMPLATE_MODULE_REF_H
 #define BE_TEMPLATE_MODULE_REF_H
 

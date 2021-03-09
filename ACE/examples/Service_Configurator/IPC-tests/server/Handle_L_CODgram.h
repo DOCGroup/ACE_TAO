@@ -24,7 +24,7 @@ public:
   Handle_L_CODgram (void);
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 public:
   int open (const ACE_UNIX_Addr &suad, int async = 0);

@@ -61,7 +61,7 @@ public:
   virtual int open (void *args = 0);
   virtual int close (u_long flags = 0);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   ACE_Future<u_long> work (u_long param, int count = 1);
   ACE_Future<const char*> name (void);

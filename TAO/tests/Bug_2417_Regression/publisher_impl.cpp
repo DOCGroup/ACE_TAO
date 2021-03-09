@@ -20,7 +20,7 @@ public:
   Worker(Publisher_impl * _owner);
   ~Worker();
   void addSubscriber(Subscriber_ptr subscriber);
-  virtual int svc (void);
+  virtual int svc ();
   void terminate();
 private:
   bool terminated;

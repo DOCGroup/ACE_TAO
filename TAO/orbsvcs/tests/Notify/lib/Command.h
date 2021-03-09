@@ -63,7 +63,7 @@ protected:
 
 private:
   /// Execute the command.
-  void execute (void);
+  void execute ();
 
   /// Save the next command to exec.
   void next (TAO_Notify_Tests_Command* command);

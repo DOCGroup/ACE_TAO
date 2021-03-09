@@ -27,7 +27,7 @@ public:
   virtual int open (void *);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  virtual int svc ();
 
   // Use two handles here..
   ACE_sema_t sema_handles_[2];

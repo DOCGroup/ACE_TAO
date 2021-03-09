@@ -9,8 +9,8 @@ class ACE_Svc_Export SYSVSema_Test : public Benchmark_Performance
 {
 public:
   virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini (void);
-  virtual int svc (void);
+  virtual int fini ();
+  virtual int svc ();
 
 private:
   static ACE_SV_Semaphore_Simple *sema;

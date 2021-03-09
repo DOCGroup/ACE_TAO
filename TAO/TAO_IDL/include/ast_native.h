@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_NATIVE_H_
 #define _AST_NATIVE_H_
 

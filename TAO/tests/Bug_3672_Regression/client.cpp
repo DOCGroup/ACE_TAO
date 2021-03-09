@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr handler);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Set all members to nil
   void clear ();

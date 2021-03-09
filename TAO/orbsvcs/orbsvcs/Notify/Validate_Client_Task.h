@@ -55,7 +55,7 @@ public:
   /// destructor...
   virtual ~TAO_Notify_validate_client_Task (void);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   void shutdown (void);
 

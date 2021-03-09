@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file   OC_Endpoint_Selector_Factory.h
@@ -11,11 +9,9 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OC_ENDPOINT_SELECTOR_FACTORY_H
 #define TAO_OC_ENDPOINT_SELECTOR_FACTORY_H
 #include /**/ "ace/pre.h"
-
 
 #include "tao/Strategies/strategies_export.h"
 

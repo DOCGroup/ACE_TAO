@@ -198,7 +198,7 @@ protected:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Called when service is unlinked.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Called to determine info about the service.
   virtual int info (ACE_TCHAR **strp, size_t length) const;

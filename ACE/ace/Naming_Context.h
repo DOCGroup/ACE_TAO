@@ -102,7 +102,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Close down the test when dynamically unlinked.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Returns information about this context.
   virtual int info (ACE_TCHAR **strp, size_t length) const;

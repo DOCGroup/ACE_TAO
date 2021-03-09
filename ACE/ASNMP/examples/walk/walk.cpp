@@ -34,13 +34,13 @@
 // SNMPv1 Walk Mib Application
 //
 class walkapp {
-  public:
+public:
   walkapp(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private:
+private:
   walkapp(const walkapp&);
 
   UdpAddress address_;
@@ -141,7 +141,7 @@ void walkapp::usage()
 // simple mib iterator class
 //
 class MibIter {
-  public:
+public:
    // Pdu must contain initial oid to begin with
    MibIter(Snmp *snmp, Pdu& pdu, UdpTarget* target);
    int next(Vb& vb, char *&err_reason);   // return next oid in mib

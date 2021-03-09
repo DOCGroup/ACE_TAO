@@ -489,20 +489,20 @@ public:
       };
 
     class ACE_Export Context_Iteration : public Iteration_State
-      {
-      public:
-        /// Next @a how_many entries
-        int next_n (u_long how_many,
-                    Binding_List &list);
-      };
+    {
+    public:
+      /// Next @a how_many entries
+      int next_n (u_long how_many,
+                  Binding_List &list);
+    };
 
     class ACE_Export Iteration_Complete : public Iteration_State
-      {
-      public:
-        /// Next @a how_many entries
-        int next_n (u_long how_many,
-                    Binding_List &list);
-      };
+    {
+    public:
+      /// Next @a how_many entries
+      int next_n (u_long how_many,
+                  Binding_List &list);
+    };
 
     /// Friend states
     friend class Iteration_State;

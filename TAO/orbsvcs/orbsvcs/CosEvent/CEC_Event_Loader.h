@@ -48,7 +48,7 @@ public:
    * @name Derived from ACE_Service_Object
    */
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
   //@}
 
   //@{

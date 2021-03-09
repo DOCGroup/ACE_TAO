@@ -50,7 +50,7 @@ protected:
   // = Methods invoked via "pointer to method" table entry.
 
   /// Handle the THREAD case.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Operations corresponding to requests from the client.
   /// Execute the read operation on the file.

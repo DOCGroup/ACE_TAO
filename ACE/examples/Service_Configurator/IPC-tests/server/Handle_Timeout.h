@@ -21,7 +21,7 @@ public:
   Handle_Timeout (void);
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   virtual ACE_HANDLE get_handle (void) const;

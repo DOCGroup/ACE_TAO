@@ -58,7 +58,7 @@ public:
   int init (int register_with_object_manager);
 
   /// Explicitly destroy.
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Returns 1 before the TAO_Singleton_Manager has been constructed.

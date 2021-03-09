@@ -103,7 +103,7 @@ class Quoter_Task : public ACE_Task<ACE_SYNCH>
 public:
   Quoter_Task (int argc, ACE_TCHAR **argv);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Quoter_Client quoter_client;

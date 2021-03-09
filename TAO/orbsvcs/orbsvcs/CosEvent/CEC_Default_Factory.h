@@ -54,7 +54,7 @@ public:
 
   // = The Service_Object entry points
   virtual int init (int argc, ACE_TCHAR* argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // = The CEC_Factory methods
   virtual TAO_CEC_Dispatching*

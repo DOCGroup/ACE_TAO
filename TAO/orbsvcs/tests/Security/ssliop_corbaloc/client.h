@@ -73,7 +73,7 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
   /// This code is executed by each thread.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Number of threads to spawn.  By default is set to 10.

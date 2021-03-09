@@ -35,7 +35,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Do cleanup of SSL library.
-  virtual int fini (void);
+  virtual int fini ();
 };
 
 static int ACE_Force_ACE_SSL_Initializer = ACE_SSL_Initializer::static_init ();

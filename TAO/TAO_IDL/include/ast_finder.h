@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef TAO_IDL_AST_FINDER_H
 #define TAO_IDL_AST_FINDER_H
 
@@ -9,7 +8,6 @@
 class TAO_IDL_FE_Export AST_Finder : public virtual AST_Factory
 {
 public:
-
   AST_Finder (UTL_ScopedName *n);
 
   virtual ~AST_Finder ();

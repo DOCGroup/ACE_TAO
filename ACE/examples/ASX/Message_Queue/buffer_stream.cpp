@@ -47,7 +47,7 @@ public:
   Producer (void) {}
 
   // Read data from stdin and pass to consumer.
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 class Consumer : public Common_Task
@@ -62,7 +62,7 @@ public:
   // Enqueue the message on the ACE_Message_Queue for subsequent
   // handling in the svc() method.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Receive message from producer and print to stdout.
 
 private:

@@ -152,7 +152,7 @@ public:
   int cancel (long timer_id, const void **act = 0);
 
   /// Runs the dispatching thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Inform the dispatching thread that it should terminate.
   virtual void deactivate (void);

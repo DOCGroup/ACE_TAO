@@ -56,7 +56,7 @@ public:
   virtual int notify (ACE_Time_Value *tv = 0);
   // Perform notifications.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Handle I/O events in a separate threads.
 
 private:

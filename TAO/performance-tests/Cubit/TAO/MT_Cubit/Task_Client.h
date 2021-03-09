@@ -252,7 +252,7 @@ public:
   ~Client (void);
 
   /// The thread function.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Returns the latency of the high priority thread in usecs.
   ACE_timer_t get_high_priority_latency (void);

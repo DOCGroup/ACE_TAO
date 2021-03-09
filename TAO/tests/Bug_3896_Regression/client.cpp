@@ -42,7 +42,7 @@ class Client : public ACE_Task_Base
 public:
   Client (CORBA::ORB_ptr server);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

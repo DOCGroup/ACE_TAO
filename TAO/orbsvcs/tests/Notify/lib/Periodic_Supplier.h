@@ -48,7 +48,7 @@ public:
   virtual int activate_task (ACE_Barrier* barrier);
 
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Dump stats.
   void dump_stats (ACE_TCHAR* msg, int dump_samples);

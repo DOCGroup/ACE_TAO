@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file   Optimized_Connection_Endpoint_Selector.h
@@ -10,7 +8,6 @@
  *  @author Phil Mesnier <mesnier_p@ociweb.com>
  */
 //=============================================================================
-
 
 #ifndef TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H
 #define TAO_OPTIMIZED_CONNECTION_ENDPOINT_SELECTOR_H
@@ -27,7 +24,6 @@
 
 #include "tao/Invocation_Endpoint_Selectors.h"
 #include "ace/Time_Value.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

@@ -15,7 +15,7 @@ class Thread_Task : public ACE_Task <ACE_SYNCH>
 
  protected:
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
  private:
   CORBA::ORB_var orb_;
   RTScheduling::Current_var current_;

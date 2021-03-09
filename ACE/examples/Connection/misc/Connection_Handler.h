@@ -15,7 +15,7 @@ public:
   virtual int close (u_long);
   // Terminate the <Connection_Handler>.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the <Connection_Handler>'s main event loop.
 
 protected:

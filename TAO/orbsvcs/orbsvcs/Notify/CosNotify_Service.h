@@ -44,7 +44,7 @@ public:
   /// Init the service from driver
   virtual void init_service (CORBA::ORB_ptr orb);
 
-  virtual int fini (void);
+  virtual int fini ();
 
   /// separate dispatching orb init
   virtual void init_service2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_orb);

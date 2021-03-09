@@ -64,7 +64,7 @@ public:
               Thread_Timer_Queue_Custom_Handler_Test &timer_queue_driver);
 
   /// This method runs the event loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Some helper methods.
 

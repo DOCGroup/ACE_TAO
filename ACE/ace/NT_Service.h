@@ -126,7 +126,7 @@ public:
    * ACE_Shared_Object. Default implementation sets the service status
    * to SERVICE_STOPPED.
    */
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * The actual service implementation.  This function need not be overridden
@@ -134,7 +134,7 @@ public:
    * by subclasses when actually running the service.  It is expected that
    * this function will set the status to RUNNING.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * This function is called in response to a request from the Service
@@ -147,7 +147,7 @@ public:
    *    SERVICE_CONTROL_INTERROGATE: reports current status
    *    SERVICE_CONTROL_SHUTDOWN: same as SERVICE_CONTROL_STOP.
    */
-  virtual void  handle_control (DWORD control_code);
+  virtual void handle_control (DWORD control_code);
 
   /// Set the svc_handle_ member.  This is only a public function because
   /// the macro-generated service function calls it.

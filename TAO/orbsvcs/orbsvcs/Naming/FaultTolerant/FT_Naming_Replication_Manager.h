@@ -72,7 +72,7 @@ public:
 
   virtual ~TAO_FT_Naming_Replication_Manager(void);
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int handle_exception (ACE_HANDLE );
 
   void stop (void);

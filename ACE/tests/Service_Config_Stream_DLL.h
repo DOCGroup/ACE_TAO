@@ -26,7 +26,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   virtual int init (int, ACE_TCHAR *[]);
-  virtual int fini (void);
+  virtual int fini ();
 };
 
 // Task to verify the order and operation of the stream assembly

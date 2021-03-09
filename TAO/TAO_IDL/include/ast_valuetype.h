@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_INTERFACE_AST_VALUETYPE_HH
 #define _AST_INTERFACE_AST_VALUETYPE_HH
 

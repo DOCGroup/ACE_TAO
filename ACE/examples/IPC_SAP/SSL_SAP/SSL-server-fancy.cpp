@@ -87,7 +87,7 @@ protected:
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Template method entry point into the handler task.
 
   virtual void print_results (void);

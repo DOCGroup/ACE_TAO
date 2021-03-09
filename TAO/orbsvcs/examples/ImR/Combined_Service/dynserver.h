@@ -33,7 +33,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   // Allows the service configurator to shutdown the orb
-  virtual int fini (void);
+  virtual int fini ();
 
   // Not supported
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
