@@ -1,4 +1,4 @@
-name: Cancel Duplicate Workflow Runs
+name: cancel
 
 on:
   workflow_run:
