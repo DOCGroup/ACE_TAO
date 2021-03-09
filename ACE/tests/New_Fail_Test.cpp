@@ -31,7 +31,7 @@
 // somewhere else in the test.
 
 // Most we can do on Windows, else we get a C2148 compile error
-static constexpr size_t BIG_BLOCK = 0x7ffffffff - 1;
+static constexpr size_t BIG_BLOCK = 0x7fffffff - 1;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
 static constexpr int MAX_ALLOCS_IN_TEST = 20;
