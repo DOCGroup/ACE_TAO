@@ -462,7 +462,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
-//static const char * extract_string(char*);
 
 #define YY_LEX_DEBUG
 
