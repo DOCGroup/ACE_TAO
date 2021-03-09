@@ -9,9 +9,7 @@
 
 #include <algorithm>
 
-
-
-  ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default constructor. Also, by default, the object will be closed
 // before it is destroyed.

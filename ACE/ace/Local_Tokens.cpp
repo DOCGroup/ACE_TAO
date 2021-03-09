@@ -10,7 +10,6 @@
 #include "ace/Local_Tokens.inl"
 #endif /* __ACE_INLINE__ */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
@@ -34,10 +33,6 @@ ACE_Tokens::ACE_Tokens (void)
     reference_count_ (0)
 {
   ACE_TRACE ("ACE_Tokens::ACE_Tokens");
-}
-
-ACE_Tokens::~ACE_Tokens (void)
-{
 }
 
 void

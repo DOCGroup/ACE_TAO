@@ -4,8 +4,6 @@
 /**
  *  @file    Manual_Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -85,7 +83,7 @@ public:
 #endif /* ACE_HAS_WCHAR */
 
   /// Default dtor.
-  virtual ~ACE_Manual_Event () {}
+  ~ACE_Manual_Event () override = default;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

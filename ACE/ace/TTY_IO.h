@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_TTY_IO : public ACE_DEV_IO
 {
 public:
-  ACE_TTY_IO (void);
+  ACE_TTY_IO ();
 
   enum Control_Mode
   {
@@ -44,7 +44,7 @@ public:
 
   struct ACE_Export Serial_Params
   {
-    Serial_Params (void);
+    Serial_Params ();
 
     /** Specifies the baudrate at which the communication port operates. */
     int baudrate;

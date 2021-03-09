@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Notify_Performance_Test.cpp
@@ -12,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include <utility>
 
 #include "test_config.h"
@@ -25,8 +23,6 @@
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 

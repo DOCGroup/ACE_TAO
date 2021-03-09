@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ACTIVE_MAP_MANAGER_T_H
 #define ACE_ACTIVE_MAP_MANAGER_T_H
 #include /**/ "ace/pre.h"
@@ -50,11 +49,11 @@ public:
   typedef REVERSE_ITERATOR reverse_iterator;
 
   /// Initialize a Active_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Active_Map_Manager (ACE_Allocator *alloc = 0);
+  ACE_Active_Map_Manager (ACE_Allocator *alloc = nullptr);
 
   /// Initialize a Active_Map_Manager with @a size entries.
   ACE_Active_Map_Manager (size_t size,
-                          ACE_Allocator *alloc = 0);
+                          ACE_Allocator *alloc = nullptr);
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.
@@ -62,7 +61,7 @@ public:
 
   /// Initialize a Active_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a Active_Map_Manager and release dynamically
   /// allocated resources.

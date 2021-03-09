@@ -213,7 +213,6 @@ protected:
   int metrics_enabled_;
 
 private:
-
   /// Allocation strategy object.
   ALLOCATOR* allocator_;
 

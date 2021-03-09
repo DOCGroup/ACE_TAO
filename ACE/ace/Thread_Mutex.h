@@ -4,8 +4,6 @@
 /**
  *  @file    Thread_Mutex.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -156,9 +154,8 @@ protected:
   bool removed_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Thread_Mutex &);
-  ACE_Thread_Mutex (const ACE_Thread_Mutex &);
+  void operator= (const ACE_Thread_Mutex &) = delete;
+  ACE_Thread_Mutex (const ACE_Thread_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

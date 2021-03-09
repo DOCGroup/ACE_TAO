@@ -1,7 +1,5 @@
 #include "ace/UPIPE_Acceptor.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_unistd.h"
@@ -36,7 +34,6 @@ ACE_UPIPE_Acceptor::~ACE_UPIPE_Acceptor ()
 }
 
 // General purpose routine for performing server ACE_UPIPE.
-
 int
 ACE_UPIPE_Acceptor::open (const ACE_UPIPE_Addr &local_addr,
                           int reuse_addr)
@@ -53,7 +50,6 @@ ACE_UPIPE_Acceptor::close ()
 }
 
 // General purpose routine for accepting new connections.
-
 ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_addr,
                                         int reuse_addr)
   : mb_ (sizeof (ACE_UPIPE_Stream *))

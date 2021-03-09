@@ -168,7 +168,6 @@ public: // Should be protected:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  // = Disallow these operations.
   void operator= (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
   ACE_Task (const ACE_Task<ACE_SYNCH_USE, TIME_POLICY> &) = delete;
 };

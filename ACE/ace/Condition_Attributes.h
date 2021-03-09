@@ -4,8 +4,6 @@
 /**
  *  @file    Condition_Attributes.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -41,9 +39,8 @@ protected:
   ACE_condattr_t attributes_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Attributes &);
-  ACE_Condition_Attributes (const ACE_Condition_Attributes &);
+  void operator= (const ACE_Condition_Attributes &) = delete;
+  ACE_Condition_Attributes (const ACE_Condition_Attributes &) = delete;
 };
 
 template <class TIME_POLICY>
@@ -56,12 +53,11 @@ public:
   {}
 
   /// Destructor
-  ~ACE_Condition_Attributes_T () {}
+  ~ACE_Condition_Attributes_T () = default;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Attributes_T<TIME_POLICY> &);
-  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<TIME_POLICY> &);
+  void operator= (const ACE_Condition_Attributes_T<TIME_POLICY> &) = delete;
+  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<TIME_POLICY> &) = delete;
 };
 
 class ACE_Monotonic_Time_Policy;
@@ -78,9 +74,8 @@ public:
   ~ACE_Condition_Attributes_T ();
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &);
-  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &);
+  void operator= (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &) = delete;
+  ACE_Condition_Attributes_T (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

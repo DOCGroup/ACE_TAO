@@ -39,7 +39,6 @@ ACE_HEAP_LCHILD (size_t X)
 }
 
 // Constructor that takes in an <ACE_Timer_Heap_T> to iterate over.
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_Iterator_T (
   Heap & heap)
@@ -49,13 +48,7 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_
   this->first ();
 }
 
-template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
-ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::~ACE_Timer_Heap_Iterator_T ()
-{
-}
-
 // Positions the iterator at the first node in the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
@@ -64,7 +57,6 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::first ()
 }
 
 // Positions the iterator at the next node in the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 void
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next ()
@@ -74,7 +66,6 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next ()
 }
 
 // Returns true the <position_> is at the end of the heap array
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 {
@@ -82,7 +73,6 @@ ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 }
 
 // Returns the node at the current position in the heap or 0 if at the end
-
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
 ACE_Timer_Heap_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::item ()
 {

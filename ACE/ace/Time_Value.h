@@ -88,7 +88,7 @@ public:
   }
 
   /// Destructor
-  virtual ~ACE_Time_Value ();
+  virtual ~ACE_Time_Value () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

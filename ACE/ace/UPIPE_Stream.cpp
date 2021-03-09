@@ -1,7 +1,5 @@
 #include "ace/UPIPE_Stream.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/OS_NS_string.h"

@@ -4,8 +4,6 @@
 /**
  *  @file    Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -63,14 +61,12 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;
 
 private:
-  // = Prevent copying.
-  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event);
-  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs);
+  ACE_Event_T (const ACE_Event_T<TIME_POLICY>& event) = delete;
+  const ACE_Event_T &operator= (const ACE_Event_T<TIME_POLICY> &rhs) = delete;
 };
 
 typedef ACE_Event_T<ACE_System_Time_Policy> ACE_Event;

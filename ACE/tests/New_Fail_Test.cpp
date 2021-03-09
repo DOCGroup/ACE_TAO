@@ -34,7 +34,7 @@
 
 // Most we can do, by half. Using max alone gets "invalid allocation size"
 // messages on stdout on Windows.
-static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
+static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 3;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
 static const int MAX_ALLOCS_IN_TEST = 4;
@@ -49,15 +49,15 @@ try_ace_new (char **p)
 static char *
 try_ace_new_return ()
 {
-  char *p = 0;
-  ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
+  char *p = nullptr;
+  ACE_NEW_RETURN (p, char[BIG_BLOCK], nullptr);
   return p;
 }
 
 static char *
 try_ace_new_noreturn ()
 {
-  char *p = 0;
+  char *p = nullptr;
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }

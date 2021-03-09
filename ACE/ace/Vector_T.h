@@ -88,7 +88,7 @@ public:
   /**
    * Destructor.
    */
-  ~ACE_Vector ();
+  ~ACE_Vector () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

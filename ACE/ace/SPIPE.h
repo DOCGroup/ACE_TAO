@@ -98,7 +98,7 @@ private:
 
 protected:
   /// Ensure that this class is an abstract base class
-  ACE_SPIPE (void);
+  ACE_SPIPE ();
 
   /// Our local address.
   ACE_SPIPE_Addr local_addr_;

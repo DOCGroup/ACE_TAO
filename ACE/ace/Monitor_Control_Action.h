@@ -48,8 +48,8 @@ namespace ACE
       void remove_ref (void);
 
     protected:
-      Control_Action (void);
-      virtual ~Control_Action (void);
+      Control_Action ();
+      ~Control_Action () override = default;
     };
   }
 }

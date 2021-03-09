@@ -4,8 +4,6 @@
 /**
  *  @file    Lock_Adapter_T.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================

@@ -41,14 +41,14 @@ namespace ACE
     public:
       Size_Monitor ();
       Size_Monitor (const char* name);
-      virtual ~Size_Monitor ();
+      ~Size_Monitor () override = default;
 
       /// Implemented by the most-derived class. Does the actual
       /// work of fetching the monitored value.
-      virtual void update ();
+      void update () override;
 
       /// Reset function.
-      virtual void clear ();
+      void clear () override;
     };
   }
 }

@@ -367,10 +367,8 @@ protected:
   //@}
 
 private:
-
-  // Preventing copying through construction or assignment.
-  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &);
-  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &);
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &) = delete;
 
 protected:
   /// Stream Type ST_CLIENT/ST_SERVER

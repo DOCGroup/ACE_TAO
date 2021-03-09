@@ -4,8 +4,6 @@
 /**
  *  @file    Recursive_Thread_Mutex.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and
  *          Abdullah Sowayan <abdullah.sowayan@lmco.com>
  */
@@ -175,9 +173,8 @@ protected:
   bool removed_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Recursive_Thread_Mutex &);
-  ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &);
+  void operator= (const ACE_Recursive_Thread_Mutex &) = delete;
+  ACE_Recursive_Thread_Mutex (const ACE_Recursive_Thread_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

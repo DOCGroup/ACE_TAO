@@ -262,16 +262,16 @@ private:
 class ACE_ETCL_Export ETCL_Special : public ETCL_Constraint
 {
 public:
-  ETCL_Special ();
+  ETCL_Special () = default;
   ETCL_Special (int type);
-  virtual ~ETCL_Special ();
+  ~ETCL_Special () override = default;
 
   int type () const;
 
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
 private:
-  int type_;
+  int type_ {};
 };
 
 class ACE_ETCL_Export ETCL_Component : public ETCL_Constraint
@@ -387,7 +387,7 @@ private:
 class ACE_ETCL_Export ETCL_Preference : public ETCL_Constraint
 {
 public:
-  ETCL_Preference ();
+  ETCL_Preference () = default;
   ETCL_Preference (int type,
                    ETCL_Constraint *subexpr = 0);
   virtual ~ETCL_Preference ();
@@ -398,8 +398,8 @@ public:
   virtual int accept (ETCL_Constraint_Visitor *visitor);
 
 private:
-  int type_;
-  ETCL_Constraint *subexpr_;
+  int type_ {};
+  ETCL_Constraint *subexpr_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

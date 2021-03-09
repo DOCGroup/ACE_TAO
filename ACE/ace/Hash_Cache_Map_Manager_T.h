@@ -75,7 +75,7 @@ class ACE_Hash_Cache_Map_Manager : public ACE_CACHE_MAP_MANAGER
   /// Initialize a <Hash_Cache_Map_Manager> with @a size entries.
   ACE_Hash_Cache_Map_Manager (CACHING_STRATEGY &caching_s,
                               size_t size = ACE_DEFAULT_MAP_SIZE,
-                              ACE_Allocator *alloc = 0);
+                              ACE_Allocator *alloc = nullptr);
 
   /// Close down a <Cache_Map_Manager> and release dynamically allocated
   /// resources.

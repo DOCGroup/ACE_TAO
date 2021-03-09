@@ -147,8 +147,6 @@ static ACE_Module_Type *
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-
-
 /* Enabling traces.  */
 #ifndef YYDEBUG
 # define YYDEBUG 0

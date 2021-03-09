@@ -266,7 +266,7 @@ public:
   ACE_TPQ_Iterator (ACE_Token_Proxy_Queue &q);
 
   /// Destructor.
-  ~ACE_TPQ_Iterator (void);
+  ~ACE_TPQ_Iterator () = default;
 
   /// Pass back the @a next_item.
   int next (ACE_TPQ_Entry *&next_item);
@@ -308,7 +308,7 @@ public:
   ACE_Token_Proxy_Queue (void);
 
   /// Destructor.
-  ~ACE_Token_Proxy_Queue (void);
+  ~ACE_Token_Proxy_Queue () = default;
 
   /**
    * Enqueue a proxy, nesting level, client_id, and a magic cookie at
@@ -369,12 +369,11 @@ protected:
 class ACE_Export ACE_Tokens
 {
 public:
-
   /// Null constructor.
-  ACE_Tokens (void);
+  ACE_Tokens ();
 
   /// Destructor
-  virtual ~ACE_Tokens (void);
+  virtual ~ACE_Tokens () = default;
 
   /// No implementation.
   virtual int acquire (ACE_TPQ_Entry *caller,
@@ -461,7 +460,6 @@ public:
   ACE_TPQ_Entry *owner (void);
 
 protected:
-
   /// For the deadlock detection algorithm.
   int visited_;
 
@@ -1088,16 +1086,16 @@ public:
                    int debug = 0);
 
   /// Destructor
-  ~ACE_Local_WLock (void);
+  ~ACE_Local_WLock ();
 
   /// Dump the state of the class.
   void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK.
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Return a new ACE_Local_Mutex.

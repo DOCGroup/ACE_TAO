@@ -39,9 +39,6 @@ const ACE_Time_Value ACE_Time_Value::max_time (
 
 ACE_ALLOC_HOOK_DEFINE (ACE_Time_Value)
 
-ACE_Time_Value::~ACE_Time_Value()
-{}
-
 /// Increment microseconds (the only reason this is here is to allow
 /// the use of ACE_Atomic_Op with ACE_Time_Value).
 ACE_Time_Value

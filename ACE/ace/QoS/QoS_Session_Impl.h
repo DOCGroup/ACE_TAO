@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if defined (ACE_HAS_RAPI)
 #include "rapi_lib.h"
 
@@ -37,9 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
-
 public:
-
   /// Default destructor.
   ~ACE_RAPI_Session (void);
 
@@ -125,7 +122,6 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-
   /// Default constuctor. Constructor is defined private so that only
   /// the friend factory can instantiate this class.
   ACE_RAPI_Session (void);
@@ -162,7 +158,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
-
 public:
 
   /// Default destructor.
@@ -246,11 +241,9 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-
   /// Default constructor. Constructor is defined private so that only
   /// the friend factory can instantiate this class.
-  ACE_GQoS_Session (void);
-
+  ACE_GQoS_Session ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -85,7 +85,6 @@ public:
   static ACE_Time_Value const time_default_;
 
 private:
-
   int receive_echo_reply (ACE_Time_Value const * timeout);
 
   /// Do not allow this function to percolate up to this interface.

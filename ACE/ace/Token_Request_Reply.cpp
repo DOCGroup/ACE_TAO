@@ -6,12 +6,9 @@
 #include "ace/Token_Request_Reply.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Default "do nothing" constructor.
-
 ACE_Token_Request::ACE_Token_Request (void)
   : token_name_ (0),
     client_id_ (0)

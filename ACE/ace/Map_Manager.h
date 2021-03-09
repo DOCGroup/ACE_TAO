@@ -145,15 +145,15 @@ public:
   typedef ACE_Map_Reverse_Iterator<EXT_ID, INT_ID, ACE_LOCK> reverse_iterator;
 
   /// Initialize a ACE_Map_Manager with the ACE_DEFAULT_MAP_SIZE.
-  ACE_Map_Manager (ACE_Allocator *alloc = 0);
+  ACE_Map_Manager (ACE_Allocator *alloc = nullptr);
 
   /// Initialize a ACE_Map_Manager with @a size entries.
   ACE_Map_Manager (size_t size,
-                   ACE_Allocator *alloc = 0);
+                   ACE_Allocator *alloc = nullptr);
 
   /// Initialize a ACE_Map_Manager with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a ACE_Map_Manager and release dynamically allocated
   /// resources.

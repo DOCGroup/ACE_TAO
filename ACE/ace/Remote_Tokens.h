@@ -301,9 +301,8 @@ protected:
   static ACE_INET_Addr server_address_;
 
 private:
-  /// Private: should not be used
-  ACE_TSS_Connection (const ACE_TSS_Connection &);
-  void operator= (const ACE_TSS_Connection &);
+  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
+  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

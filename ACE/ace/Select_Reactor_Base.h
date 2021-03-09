@@ -584,9 +584,8 @@ private:
   /// the notification message.
   bool supress_renew_;
 
-  /// Deny access since member-wise won't work...
-  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &);
-  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &);
+  ACE_Select_Reactor_Impl (const ACE_Select_Reactor_Impl &) = delete;
+  ACE_Select_Reactor_Impl &operator = (const ACE_Select_Reactor_Impl &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

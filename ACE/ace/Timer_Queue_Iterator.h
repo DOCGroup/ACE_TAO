@@ -163,7 +163,7 @@ class ACE_Timer_Queue_Iterator_T
 {
 public:
   /// Constructor.
-  ACE_Timer_Queue_Iterator_T ();
+  ACE_Timer_Queue_Iterator_T () = default;
 
   /// Destructor.
   virtual ~ACE_Timer_Queue_Iterator_T ();

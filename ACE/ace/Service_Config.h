@@ -718,9 +718,8 @@ public:
   ~ACE_Service_Config_Guard ();
 
 private:
-  // Private AND not implemented to disable copying
-  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&);
-  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&);
+  ACE_Service_Config_Guard(const ACE_Service_Config_Guard&) = delete;
+  ACE_Service_Config_Guard& operator= (const ACE_Service_Config_Guard&) = delete;
 
 private:
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> saved_;

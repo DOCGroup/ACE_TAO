@@ -14,8 +14,6 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Addr)
 void
 ACE_SPIPE_Addr::dump () const
 {
-#if defined (ACE_HAS_DUMP)
-#endif /* ACE_HAS_DUMP */
 }
 
 // Set a pointer to the address.

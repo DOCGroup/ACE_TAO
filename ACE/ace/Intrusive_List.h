@@ -57,10 +57,10 @@ class ACE_Intrusive_List
 public:
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  ACE_Intrusive_List ();
+  ACE_Intrusive_List () = default;
 
   /// Destructor.
-  ~ACE_Intrusive_List ();
+  ~ACE_Intrusive_List () = default;
 
   // = Check boundary conditions.
 
@@ -112,10 +112,10 @@ private:
 
 private:
   /// Head of the list
-  T *head_;
+  T *head_ {};
 
   /// Tail of the list
-  T *tail_;
+  T *tail_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

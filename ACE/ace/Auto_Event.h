@@ -4,8 +4,6 @@
 /**
  *  @file    Auto_Event.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================

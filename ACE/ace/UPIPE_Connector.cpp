@@ -1,7 +1,5 @@
 #include "ace/UPIPE_Connector.h"
 
-
-
 #if defined (ACE_HAS_THREADS)
 
 #include "ace/Handle_Ops.h"

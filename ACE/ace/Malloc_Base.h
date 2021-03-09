@@ -178,7 +178,7 @@ public:
   typedef std::ptrdiff_t difference_type;
   template <typename U> struct rebind { typedef ACE_Allocator_Std_Adapter<U> other; };
 
-  ACE_Allocator_Std_Adapter() {}
+  ACE_Allocator_Std_Adapter() = default;
 
   template <typename U>
   ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}

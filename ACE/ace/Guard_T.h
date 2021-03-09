@@ -4,8 +4,6 @@
 /**
  *  @file    Guard_T.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -123,7 +121,6 @@ protected:
   int owner_;
 
 private:
-  // = Prevent assignment and initialization.
   void operator= (const ACE_Guard<ACE_LOCK> &) = delete;
   ACE_Guard (const ACE_Guard<ACE_LOCK> &) = delete;
 };

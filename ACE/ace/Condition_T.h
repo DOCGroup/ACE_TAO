@@ -4,8 +4,6 @@
 /**
  *  @file    Condition_T.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -114,7 +112,6 @@ protected:
   MUTEX &mutex_;
 
 private:
-  // = Prevent assignment and initialization.
   void operator= (const ACE_Condition<MUTEX> &) = delete;
   ACE_Condition (const ACE_Condition<MUTEX> &) = delete;
 };

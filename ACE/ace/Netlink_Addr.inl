@@ -3,8 +3,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE ACE_Netlink_Addr::~ACE_Netlink_Addr (void){}
-
 ACE_INLINE ACE_Netlink_Addr::ACE_Netlink_Addr (void):
 ACE_Addr (this->determine_type(), sizeof (sockaddr_nl))
 {

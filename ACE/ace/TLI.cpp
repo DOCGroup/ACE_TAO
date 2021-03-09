@@ -1,6 +1,5 @@
 // Defines the member functions for the base class of the ACE_TLI
 // abstraction.
-
 #include "ace/TLI.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_Memory.h"
@@ -8,8 +7,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 #include "ace/Auto_Ptr.h"
-
-
 
 #if defined (ACE_HAS_TLI)
 

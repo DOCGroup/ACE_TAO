@@ -4,7 +4,7 @@
 /**
  *  @file   OS_Errno.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  */
 //=============================================================================
 
@@ -70,9 +70,8 @@ public:
   bool operator!= (int error);
 
 private:
-  // Prevent copying
-  ACE_Errno_Guard (const ACE_Errno_Guard &);
-  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &);
+  ACE_Errno_Guard (const ACE_Errno_Guard &) = delete;
+  ACE_Errno_Guard &operator= (const ACE_Errno_Guard &) = delete;
 
 #if defined (ACE_MT_SAFE)
   ACE_ERRNO_TYPE *errno_ptr_;

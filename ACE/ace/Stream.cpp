@@ -1,9 +1,6 @@
-// Stream.cpp
 #ifndef ACE_STREAM_CPP
 #define ACE_STREAM_CPP
 
-
-//#include "ace/Module.h"
 #include "ace/Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

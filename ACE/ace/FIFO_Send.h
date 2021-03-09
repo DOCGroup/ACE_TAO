@@ -39,7 +39,7 @@ public:
   /// To use non-blocking behavior include ACE_NONBLOCK in @a flags.
   //@{
   /// Default constructor.
-  ACE_FIFO_Send (void);
+  ACE_FIFO_Send ();
 
   /// Open up a bytestream named pipe for writing.
   ACE_FIFO_Send (const ACE_TCHAR *rendezvous,

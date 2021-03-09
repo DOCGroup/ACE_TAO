@@ -41,29 +41,29 @@ class ACE_Export ACE_Mutex_Invariants
 {
 public:
   /// Default construction.
-  ACE_Mutex_Invariants (void);
+  ACE_Mutex_Invariants () = default;
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int acquired (void);
+  int acquired ();
 
   /// Updates internal database.
-  void releasing (void);
+  void releasing ();
 
   // = Map_Manager operations.
 
   /// Copy construction.
-  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs);
+  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_Mutex_Invariants &rhs);
+  void operator= (const ACE_Mutex_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
 
 private:
   /// Number of owners.  This had better be 0 >= owners_ <= 1;
-  int owners_;
+  int owners_ {};
 };
 
 /**
@@ -79,36 +79,36 @@ class ACE_Export ACE_RWLock_Invariants
 {
 public:
   /// Default construction.
-  ACE_RWLock_Invariants (void);
+  ACE_RWLock_Invariants () = default;
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int writer_acquired (void);
+  int writer_acquired ();
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int reader_acquired (void);
+  int reader_acquired ();
 
   /// Updates internal database.
-  void releasing (void);
+  void releasing ();
 
   // = Map_Manager operations.
 
   /// Copy construction.
-  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs);
+  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Copy.
-  void operator= (const ACE_RWLock_Invariants &rhs);
+  void operator= (const ACE_RWLock_Invariants &rhs) = default;
 
   /// Dump the state of the class.
   void dump () const;
 
 private:
   /// Number of owning writers.
-  int writers_;
+  int writers_ {};
 
   /// Number of owning readers.
-  int readers_;
+  int readers_ {};
 };
 
 /**
