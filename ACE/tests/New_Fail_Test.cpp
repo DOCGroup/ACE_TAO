@@ -31,8 +31,8 @@
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
 
-// Most we can do on Windows, else we get a C2148 compile error
-static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max ()/4;
+// Most we can do, by a quarter
+static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 4;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
 static constexpr int MAX_ALLOCS_IN_TEST = 20;
