@@ -46,7 +46,7 @@ public:
   ACE_Netlink_Addr (const sockaddr_nl *, int len);
 
   /// Dtor
-  ~ACE_Netlink_Addr (void);
+  ~ACE_Netlink_Addr () = default;
 
   /**
    * @param naddr sets the nl_ member @see nl_

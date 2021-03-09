@@ -190,9 +190,8 @@ public:
   bool removed_;
 
 private:
-  // Prevent assignment and initialization.
-  ACE_Mutex &operator= (const ACE_Mutex &);
-  ACE_Mutex (const ACE_Mutex &);
+  ACE_Mutex &operator= (const ACE_Mutex &) = delete;
+  ACE_Mutex (const ACE_Mutex &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

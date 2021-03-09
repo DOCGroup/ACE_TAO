@@ -4,8 +4,6 @@
 #include "ace/Lock.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Lock::~ACE_Lock ()

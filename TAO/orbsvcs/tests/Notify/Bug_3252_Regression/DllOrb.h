@@ -20,9 +20,9 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   auto_ptr < ACE_Thread_Barrier > ma_barrier_;

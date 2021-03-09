@@ -38,12 +38,6 @@ ACE_NS_WString::ACE_NS_WString (size_type len, ACE_Allocator *alloc)
 }
 
 ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (const ACE_NS_WString &s)
-  : ACE_WString (s)
-{
-}
-
-ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
   : ACE_WString (c, alloc)
 {

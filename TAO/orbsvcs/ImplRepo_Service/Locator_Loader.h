@@ -21,7 +21,7 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
   virtual CORBA::Object_ptr create_object (CORBA::ORB_ptr orb,
                                            int argc,

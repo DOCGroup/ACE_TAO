@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -66,7 +64,7 @@ namespace ACE_OS {
 class ACE_Export ACE_CE_Errno
 {
 public:
-  ACE_CE_Errno () {}
+  ACE_CE_Errno () = default;
   static void init ();
   static void fini ();
   static ACE_CE_Errno *instance ();

@@ -687,14 +687,12 @@ private:
 class ACE_Export ACE_Managed_Process : public ACE_Process
 {
 public:
-
   /// Cleanup by deleting @c this.
   virtual void unmanage ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Make sure that we're allocated dynamically!
   virtual ~ACE_Managed_Process ();
 };

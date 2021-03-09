@@ -48,7 +48,7 @@ public:
   PortableServer::POA_ptr poa() { return poa_.in(); }
   CORBA::ORB_ptr orb() { return orb_.in();}
 private:
-  virtual int svc (void);
+  virtual int svc ();
   CORBA::ORB_var orb_;
   PortableServer::POA_var root_poa_;
   PortableServer::POA_var poa_;

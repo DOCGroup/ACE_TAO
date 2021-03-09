@@ -38,7 +38,7 @@ public:
   // Output the accumulated statistics.
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_ptr orb_;

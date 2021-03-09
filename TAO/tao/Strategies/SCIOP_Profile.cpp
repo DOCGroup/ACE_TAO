@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/SCIOP_Profile.h"
 
 #if TAO_HAS_SCIOP == 1

@@ -4,8 +4,6 @@
 /**
  *  @file    Barrier.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -38,9 +36,9 @@ class ACE_Export ACE_Barrier
 {
 public:
   ACE_Barrier (unsigned int, const ACE_TCHAR * = 0, void * = 0) {}
-  ~ACE_Barrier (void) {}
-  int wait (void) { ACE_NOTSUP_RETURN (-1); }
-  void dump (void) const {}
+  ~ACE_Barrier () = default;
+  int wait () { ACE_NOTSUP_RETURN (-1); }
+  void dump () const {}
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
@@ -149,9 +147,8 @@ protected:
   ACE_Sub_Barrier *sub_barrier_[2];
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Barrier &);
-  ACE_Barrier (const ACE_Barrier &);
+  void operator= (const ACE_Barrier &) = delete;
+  ACE_Barrier (const ACE_Barrier &) = delete;
 };
 
 /**

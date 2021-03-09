@@ -35,7 +35,7 @@ public:
   virtual int close (u_long flags = 0);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Thread_Mutex lock_;

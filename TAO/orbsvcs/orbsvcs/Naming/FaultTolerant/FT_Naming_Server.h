@@ -127,7 +127,7 @@ public:
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
   /// @c init_replication_manager_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
   virtual ~TAO_FT_Naming_Server (void);

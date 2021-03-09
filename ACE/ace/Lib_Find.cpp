@@ -53,7 +53,6 @@ extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
 class ACE_LD_Symbol_Registry
 {
 public:
-
   typedef ACE_RB_Tree<const ACE_TCHAR*,
                       void*,
                       ACE_Less_Than<const ACE_TCHAR*>,
@@ -64,9 +63,9 @@ public:
 
   void* find_symbol (const ACE_TCHAR* symname);
 
-  ACE_LD_Symbol_Registry () {}
-private:
+  ACE_LD_Symbol_Registry () = default;
 
+private:
   TREE symbol_registry_;
 };
 

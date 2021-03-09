@@ -125,7 +125,7 @@ public:
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Destroy the child POA created in @c init_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
   virtual ~TAO_Naming_Server (void);

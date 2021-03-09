@@ -302,9 +302,8 @@ private:
   int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
 
 private:
-  /// Deny access since member-wise won't work...
-  ACE_TP_Reactor (const ACE_TP_Reactor &);
-  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &);
+  ACE_TP_Reactor (const ACE_TP_Reactor &) = delete;
+  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

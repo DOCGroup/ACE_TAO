@@ -268,7 +268,7 @@ public:
   // Called back within the context of the <ACE_Reactor> Singleton to
   // dequeue and process the message on the <ACE_Message_Queue>.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the "event-loop" periodically putting messages to our
   // internal <Message_Queue> that we inherit from <ACE_Task>.
 

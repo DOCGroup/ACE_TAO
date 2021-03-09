@@ -1,5 +1,4 @@
 #include "ace/Signal.h"
-// #include "ace/Log_Category.h"
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -8,9 +7,6 @@
 #if !defined (__ACE_INLINE__)
 #include "ace/Signal.inl"
 #endif /* __ACE_INLINE__ */
-
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

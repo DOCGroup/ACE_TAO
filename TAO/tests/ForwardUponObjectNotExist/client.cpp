@@ -60,7 +60,7 @@ public:
   /// The actual implementation of the test
   virtual void run_test (void);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Caught OBJECT_NOT_EXIST exception ?
   bool got_object_not_exist () const;

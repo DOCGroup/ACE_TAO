@@ -73,7 +73,7 @@ protected:
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **info_string, size_t length) const;
-  virtual int fini (void);
+  virtual int fini ();
 
   // = Scheduling hooks.
   virtual int suspend (void);

@@ -119,7 +119,6 @@ public:
   void dump (void) const {}
 
 protected:
-
   /**
    * Map portions or the entire pool into the local virtual address
    * space.  To do this, we compute the new @c file_offset of the
@@ -131,7 +130,6 @@ protected:
   int unmap (void);
 
 private:
-
   /**
    * @class Control_Block
    *

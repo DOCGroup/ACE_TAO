@@ -313,7 +313,7 @@ public:
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);
 
-  virtual int svc (void);
+  virtual int svc ();
 
  private:
   TAO_ORB_Core* orb_;

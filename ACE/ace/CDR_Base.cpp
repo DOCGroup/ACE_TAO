@@ -22,14 +22,11 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (NONNATIVE_LONGDOUBLE)
-static const ACE_INT16 max_eleven_bit = 0x3ff;
-static const ACE_INT16 max_fifteen_bit = 0x3fff;
+static constexpr ACE_INT16 max_eleven_bit = 0x3ff;
+static constexpr ACE_INT16 max_fifteen_bit = 0x3fff;
 #endif /* NONNATIVE_LONGDOUBLE */
 
-//
 // See comments in CDR_Base.inl about optimization cases for swap_XX_array.
-//
-
 void
 ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 {

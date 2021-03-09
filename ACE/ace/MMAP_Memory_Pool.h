@@ -120,9 +120,8 @@ public:
   bool install_signal_handler_;
 
 private:
-  // Prevent copying
-  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &);
-  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &);
+  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &) = delete;
+  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &) = delete;
 };
 
 /**

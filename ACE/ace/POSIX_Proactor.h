@@ -617,7 +617,6 @@ protected:
  */
 class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 {
-
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;
@@ -635,13 +634,13 @@ protected:
                           int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Timer (void) {}
+  ~ACE_POSIX_Asynch_Timer (void) override = default;
 
   /// This method calls the handler's handle_timeout method.
-  virtual void complete (size_t bytes_transferred,
-                         int success,
-                         const void *completion_key,
-                         u_long error = 0);
+  void complete (size_t bytes_transferred,
+                 int success,
+                 const void *completion_key,
+                 u_long error = 0) override;
 
   /// Time value requested by caller
   ACE_Time_Value time_;

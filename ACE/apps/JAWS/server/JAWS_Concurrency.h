@@ -24,7 +24,7 @@ class JAWS_Concurrency_Base : public ACE_Task<ACE_SYNCH>
 public:
   JAWS_Concurrency_Base (void);
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 class JAWS_Dispatch_Policy

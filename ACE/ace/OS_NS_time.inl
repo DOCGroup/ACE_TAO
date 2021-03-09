@@ -84,7 +84,7 @@ ACE_OS::clock_settime (clockid_t clockid, const struct timespec *ts)
 }
 
 // Magic number declaration and definition for ctime and ctime_r ()
-static const int ctime_buf_size = 26;
+static constexpr int ctime_buf_size = 26;
 
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)

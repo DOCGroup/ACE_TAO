@@ -45,7 +45,7 @@ public:
                 size_t n_tasks,
                 size_t n_threads,
                 size_t n_iterations);
-  virtual int svc (void);
+  virtual int svc ();
   // creats <n_tasks> and wait for them to finish
 
 private:
@@ -63,7 +63,7 @@ public:
   Worker_Task (ACE_Thread_Manager *thr_mgr,
                size_t n_threads,
                size_t n_iterations);
-  virtual int svc (void);
+  virtual int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   // Does a small work...

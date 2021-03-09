@@ -367,11 +367,8 @@ private:
   void ssl_library_init ();
   void ssl_library_fini ();
 
-  // = Prevent assignment and copy initialization.
-  //@{
-  ACE_SSL_Context (const ACE_SSL_Context &);
-  ACE_SSL_Context & operator= (const ACE_SSL_Context &);
-  //@}
+  ACE_SSL_Context (const ACE_SSL_Context &) = delete;
+  ACE_SSL_Context & operator= (const ACE_SSL_Context &) = delete;
 
 private:
   /// The SSL_CTX structure

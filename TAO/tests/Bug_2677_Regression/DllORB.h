@@ -16,7 +16,7 @@ public:
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   unsigned int                   failPrePostInit_;

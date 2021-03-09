@@ -48,7 +48,7 @@ public:
   int suspend_io_handler (ACE_HANDLE handle);
 
 protected:
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Should be initialized before reactor_
   ACE_Select_Reactor select_reactor_;

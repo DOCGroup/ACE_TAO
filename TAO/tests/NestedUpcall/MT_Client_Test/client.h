@@ -92,7 +92,7 @@ class MT_Client_Task : public ACE_Task<ACE_SYNCH>
 public:
   MT_Client_Task (int argc, ACE_TCHAR **argv, int client_number);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   MT_Client mT_Client_;

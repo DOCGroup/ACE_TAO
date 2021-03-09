@@ -153,9 +153,8 @@ protected:
   bool const unlink_in_destructor_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_File_Lock &);
-  ACE_File_Lock (const ACE_File_Lock &);
+  void operator= (const ACE_File_Lock &) = delete;
+  ACE_File_Lock (const ACE_File_Lock &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

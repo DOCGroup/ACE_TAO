@@ -159,11 +159,6 @@ ETCL_Component_Array::component () const
 // ****************************************************************
 
 ACE_INLINE
-ETCL_Special::ETCL_Special ()
-  : type_ (0)
-{}
-
-ACE_INLINE
 ETCL_Special::ETCL_Special (int type)
   : type_ (type)
 {}
@@ -304,12 +299,6 @@ ETCL_Binary_Expr::lhs () const
 }
 
 // ****************************************************************
-
-ACE_INLINE
-ETCL_Preference::ETCL_Preference ()
-  : type_ (0),
-    subexpr_ (0)
-{}
 
 ACE_INLINE
 ETCL_Preference::ETCL_Preference (int type,

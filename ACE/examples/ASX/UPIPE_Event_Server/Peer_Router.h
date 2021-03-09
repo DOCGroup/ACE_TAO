@@ -60,7 +60,7 @@ protected:
 
 private:
   // Don't need this method here...
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 // This abstract base class provides mechanisms for routing messages
@@ -96,7 +96,7 @@ protected:
 
   // Dynamic linking initialization hooks inherited from ACE_Task.
   virtual int init (int argc, ACE_TCHAR *argv[]);
-  virtual int fini (void);
+  virtual int fini ();
 
   // Factory for accepting new PEER_HANDLERs.
   Acceptor_Factory<PEER_HANDLER, PEER_KEY> *acceptor_;

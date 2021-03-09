@@ -48,7 +48,7 @@ public:
   // ctor
   Client (test_ptr server);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   // The server.
   test_var server_;

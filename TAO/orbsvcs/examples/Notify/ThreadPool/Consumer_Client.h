@@ -41,7 +41,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Dump stats.
   void dump_stats (void);

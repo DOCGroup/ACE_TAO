@@ -58,10 +58,10 @@ public:
 
   /// Close down the underlying I/O completion port.  You need to
   /// re-open the MQ after this function is executed.
-  virtual int close (void);
+  virtual int close ();
 
   /// Close down the message queue and release all resources.
-  virtual ~ACE_Message_Queue_NT (void);
+  virtual ~ACE_Message_Queue_NT ();
 
   // = Enqueue and dequeue methods.
 
@@ -90,30 +90,30 @@ public:
    * Always return false.
    */
 
-  virtual bool is_full (void);
+  virtual bool is_full ();
   /**
    * True if queue is empty, else false.  Notice the return value is
    * only transient.
    */
-  virtual bool is_empty (void);
+  virtual bool is_empty ();
 
   // = Queue statistic methods (transient.)
   /**
    * Number of total bytes on the queue, i.e., sum of the message
    * block sizes.
    */
-  virtual size_t message_bytes (void);
+  virtual size_t message_bytes ();
 
   /**
    * Number of total length on the queue, i.e., sum of the message
    * block lengths.
    */
-  virtual size_t message_length (void);
+  virtual size_t message_length ();
 
   /**
    * Number of total messages on the queue.
    */
-  virtual size_t message_count (void);
+  virtual size_t message_count ();
 
   // = Manual changes to these stats (used when queued message blocks
   // change size or lengths).
@@ -130,7 +130,7 @@ public:
   virtual void message_length (size_t new_length);
 
   /// Get the max concurrent thread number.
-  virtual DWORD max_threads (void);
+  virtual DWORD max_threads ();
 
   // = Activation control methods.
 
@@ -143,13 +143,13 @@ public:
    *
    * @retval  The queue's state before this call.
    */
-  virtual int deactivate (void);
+  virtual int deactivate ();
 
   /**
    * Reactivate the queue so that threads can enqueue and dequeue
    * messages again.  Returns the state of the queue before the call.
    */
-  virtual int activate (void);
+  virtual int activate ();
 
   /**
    * Pulse the queue to wake up any waiting threads.  Changes the
@@ -158,11 +158,11 @@ public:
    *
    * @retval  The queue's state before this call.
    */
-  virtual int pulse (void);
+  virtual int pulse ();
 
   /// Returns true if the state of the queue is <DEACTIVATED>,
   /// but false if the queue's is <ACTIVATED> or <PULSED>.
-  virtual int deactivated (void);
+  virtual int deactivated ();
 
   // = Not currently implemented...
   int peek_dequeue_head (ACE_Message_Block *&first_item,
@@ -176,7 +176,7 @@ public:
   virtual void dump () const;
 
   /// Get the handle to the underlying completion port.
-  virtual ACE_HANDLE completion_port (void);
+  virtual ACE_HANDLE completion_port ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

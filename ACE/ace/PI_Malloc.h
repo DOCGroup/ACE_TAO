@@ -189,8 +189,7 @@ public:
   void dump () const;
 
 private:
-  // Disallow assignment.
-  void operator= (const ACE_Control_Block &);
+  void operator= (const ACE_Control_Block &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

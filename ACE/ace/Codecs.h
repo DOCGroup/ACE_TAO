@@ -81,12 +81,11 @@ public:
 
 protected:
   // Prevent default construction.
-  ACE_Base64 (void) {}
+  ACE_Base64 () = default;
 
 private:
-  // Preventing copying and assignment.
-  ACE_Base64 (ACE_Base64 const &);
-  ACE_Base64 & operator= (ACE_Base64 const &);
+  ACE_Base64 (ACE_Base64 const &) = delete;
+  ACE_Base64 & operator= (ACE_Base64 const &) = delete;
 
   /// Initialize the tables for encoding/decoding.
   static void init (void);

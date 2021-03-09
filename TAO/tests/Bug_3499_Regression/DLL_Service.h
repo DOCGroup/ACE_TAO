@@ -12,7 +12,7 @@ public:
 
   virtual int init (int , ACE_TCHAR * []);
 
-  virtual int fini (void);
+  virtual int fini ();
 
   /// This is only here for destruction purposes
   virtual void destroy (void);

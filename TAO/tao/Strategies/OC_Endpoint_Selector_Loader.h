@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file   OC_Endpoint_Selector_Loader.h
@@ -11,7 +9,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_OC_ENDPOINT_LOADER_H
 #define TAO_OC_ENDPOINT_LOADER_H
 #include /**/ "ace/pre.h"
@@ -22,7 +19,6 @@
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

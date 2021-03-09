@@ -63,7 +63,7 @@ public:
   // Service Configurator hook methods.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int fini ();
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 /******************************************************/

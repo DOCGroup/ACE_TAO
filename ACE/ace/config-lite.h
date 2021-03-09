@@ -4,7 +4,7 @@
 /**
  *  @file   config-lite.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *

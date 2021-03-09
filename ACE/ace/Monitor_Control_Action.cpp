@@ -14,9 +14,6 @@ namespace ACE
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
     {}
 
-    Control_Action::~Control_Action ()
-    {}
-
     void
     Control_Action::add_ref ()
     {

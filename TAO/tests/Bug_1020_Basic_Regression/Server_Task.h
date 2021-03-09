@@ -23,7 +23,7 @@ public:
                size_t sz);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Reference to the test interface

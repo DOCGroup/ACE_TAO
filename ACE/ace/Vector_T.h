@@ -25,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /*
  * Default size for an ACE_Vector.
  */
-static const size_t ACE_VECTOR_DEFAULT_SIZE = 32;
+static constexpr size_t ACE_VECTOR_DEFAULT_SIZE = 32;
 
 // Forward declaration.
 template <class T, size_t DEFAULT_SIZE> class ACE_Vector_Iterator;
@@ -88,7 +88,7 @@ public:
   /**
    * Destructor.
    */
-  ~ACE_Vector ();
+  ~ACE_Vector () = default;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

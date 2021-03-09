@@ -16,7 +16,6 @@
 #define IMR_MULTIADDR imr_multiaddr
 #endif /* ! defined (IMR_MULTIADDR) */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_Dgram_Mcast_QoS)

@@ -228,7 +228,6 @@ public:
    */
   class ACE_Export Policy
   {
-
   public:
 
     /// Virtual destructor.

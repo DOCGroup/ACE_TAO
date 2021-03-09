@@ -96,7 +96,7 @@ typedef ACE_Singleton<Client_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
 class Client_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
@@ -125,7 +125,7 @@ typedef ACE_Singleton<Server_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
 class Server_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>

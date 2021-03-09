@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // private:
   /// Var for the AMI_Test object.

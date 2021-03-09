@@ -12,7 +12,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // ctor
-
 ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static_bit_field_mask,
                                                             unsigned long static_bit_field_shift,
                                                             unsigned long dynamic_priority_max,

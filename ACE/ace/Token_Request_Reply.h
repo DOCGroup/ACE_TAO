@@ -58,7 +58,7 @@ public:
   };
 
   /// Default constructor.
-  ACE_Token_Request (void);
+  ACE_Token_Request ();
 
   /**
    * @param token_type MUTEX, RWLOCK
@@ -76,45 +76,45 @@ public:
                      const ACE_Synch_Options &options);
 
   /// Get the length of the encoded/decoded message.
-  ACE_UINT32 length (void) const;
+  ACE_UINT32 length () const;
 
   /// Set the length of the encoded/decoded message.
   void length (ACE_UINT32);
 
   /// Get the type of proxy
-  int proxy_type (void) const;
+  int proxy_type () const;
 
   /// Set the type of proxy
   void proxy_type (int proxy_type);
 
   /// Get the type of token
-  int token_type (void) const;
+  int token_type () const;
 
   /// Set the type of token
   void token_type (int token_type);
 
   /// Get the type of the operation.
-  ACE_UINT32 operation_type (void) const;
+  ACE_UINT32 operation_type () const;
 
   /// Set the type of the operation.
   void operation_type (ACE_UINT32);
 
   /// Get the requeue position.  These should be used when renew
   /// is the operation type.
-  ACE_UINT32 requeue_position (void) const;
+  ACE_UINT32 requeue_position () const;
 
   /// Set the requeue position.  These should be used when renew
   /// is the operation type.
   void requeue_position (ACE_UINT32);
 
   /// Get notify.  These should be used when acquire is the operation type.
-  ACE_UINT32 notify (void) const;
+  ACE_UINT32 notify () const;
 
   /// Set notify.  These should be used when acquire is the operation type.
   void notify (ACE_UINT32);
 
   /// Get the timeout.
-  ACE_Synch_Options &options (void) const;
+  ACE_Synch_Options &options () const;
 
   /// Set the timeout.
   void options (const ACE_Synch_Options &options);
@@ -122,8 +122,8 @@ public:
   // = Set/get the name of the token and the client id.  The set
   // method is combined to make it easier on us.  We're copying the
   // names as a contiguous buffer.
-  ACE_TCHAR *token_name (void) const;
-  ACE_TCHAR *client_id (void) const;
+  ACE_TCHAR *token_name () const;
+  ACE_TCHAR *client_id () const;
   void token_name (const ACE_TCHAR *token_name, const ACE_TCHAR *client_id);
 
   /// Encode the message before transmission.
@@ -131,7 +131,7 @@ public:
 
   /// Decode message after reception.  This must be called to set the
   /// internal options.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;
@@ -204,22 +204,22 @@ class ACE_Export ACE_Token_Reply
 {
 public:
   /// Default constructor.
-  ACE_Token_Reply (void);
+  ACE_Token_Reply ();
 
   /// Get the length of the encoded/decoded message.
-  ACE_UINT32 length (void) const;
+  ACE_UINT32 length () const;
 
   /// Set the length of the encoded/decoded message.
   void length (ACE_UINT32);
 
   /// Get the errno of a reply.
-  ACE_UINT32 errnum (void) const;
+  ACE_UINT32 errnum () const;
 
   /// Set the errno of a reply.
   void errnum (ACE_UINT32);
 
   /// Get the arg of a reply.
-  ACE_UINT32 arg (void) const;
+  ACE_UINT32 arg () const;
 
   /// Set the arg of a reply.
   void arg (ACE_UINT32);
@@ -228,14 +228,13 @@ public:
   int encode (void *&);
 
   /// Decode a message after reception.
-  int decode (void);
+  int decode ();
 
   /// Print out the values of the message for debugging purposes.
   void dump () const;
 
 private:
-  // = The 2 fields in the <Transfer> struct are transmitted to the server.
-
+  /// The 2 fields in the <Transfer> struct are transmitted to the server.
   struct Transfer
   {
     /// Length of entire reply.
@@ -251,7 +250,6 @@ private:
 
     /// magic cookie
     ACE_UINT32 arg_;
-
   } transfer_;
 };
 

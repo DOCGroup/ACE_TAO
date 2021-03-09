@@ -79,7 +79,7 @@ public:
 
   virtual ~Replicator(void);
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int handle_exception (ACE_HANDLE );
 
   void stop (void);

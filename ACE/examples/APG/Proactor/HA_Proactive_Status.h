@@ -79,7 +79,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   // Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 };
 
 #endif /* __HA_PROACTIVE_STATUS_H */

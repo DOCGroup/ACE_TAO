@@ -234,13 +234,13 @@ public:
    * Initialize an empty set using the allocation strategy of the user if
    * provided.
    */
-  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize an empty set using the allocation strategy of the user if
    * provided, and a given comparator functor.
    */
-  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = 0);
+  ACE_Unbounded_Set_Ex (const C &comparator, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
   /**

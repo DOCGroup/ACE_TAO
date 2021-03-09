@@ -73,7 +73,7 @@ public:
    *                  Defaults to ACE_Allocator::instance().
    */
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
-                        ACE_Allocator *alloc = 0,
+                        ACE_Allocator *alloc = nullptr,
                         ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
@@ -139,7 +139,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 

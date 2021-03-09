@@ -928,13 +928,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 # define ACE_TSS_CLEANUP_NAME ACE_TSS_cleanup
 #endif  /* ACE_HAS_VERSIONED_NAMESPACE == 1 */
 
-
 LOCAL_EXTERN_PREFIX
 void
 ACE_TSS_CLEANUP_NAME (void *ptr);
 # endif /* ACE_HAS_THREAD_SPECIFIC_STORAGE || ACE_HAS_TSS_EMULATION */
 #endif /* ACE_MT_SAFE */
-
 
 #if defined (__ACE_INLINE__)
 #include "ace/Log_Msg.inl"

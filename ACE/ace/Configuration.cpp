@@ -423,7 +423,7 @@ ACE_Configuration::operator!= (const ACE_Configuration& rhs) const
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 
-static const int ACE_DEFAULT_BUFSIZE = 256;
+static constexpr int ACE_DEFAULT_BUFSIZE = 256;
 
 static const ACE_TCHAR *temp_name (const ACE_TCHAR *name)
 {

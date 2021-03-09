@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TLI_CONNECTOR_H
 #define ACE_TLI_CONNECTOR_H
 #include /**/ "ace/pre.h"

@@ -30,17 +30,17 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-static const ACE_UINT32 halfShift = 10;
-static const ACE_UINT32 halfBase  = 0x00010000;
-static const ACE_UINT32 halfMask  = 0x000003FF;
+static constexpr ACE_UINT32 halfShift = 10;
+static constexpr ACE_UINT32 halfBase  = 0x00010000;
+static constexpr ACE_UINT32 halfMask  = 0x000003FF;
 
-static const ACE_UINT32 UNI_SUR_HIGH_START   = 0x0000D800;
-static const ACE_UINT32 UNI_SUR_HIGH_END     = 0x0000DBFF;
-static const ACE_UINT32 UNI_SUR_LOW_START    = 0x0000DC00;
-static const ACE_UINT32 UNI_SUR_LOW_END      = 0x0000DFFF;
-static const ACE_UINT32 UNI_REPLACEMENT_CHAR = 0x0000FFFD;
-static const ACE_UINT32 UNI_MAX_BMP          = 0x0000FFFF;
-static const ACE_UINT32 UNI_MAX_UTF16        = 0x0010FFFF;
+static constexpr ACE_UINT32 UNI_SUR_HIGH_START   = 0x0000D800;
+static constexpr ACE_UINT32 UNI_SUR_HIGH_END     = 0x0000DBFF;
+static constexpr ACE_UINT32 UNI_SUR_LOW_START    = 0x0000DC00;
+static constexpr ACE_UINT32 UNI_SUR_LOW_END      = 0x0000DFFF;
+static constexpr ACE_UINT32 UNI_REPLACEMENT_CHAR = 0x0000FFFD;
+static constexpr ACE_UINT32 UNI_MAX_BMP          = 0x0000FFFF;
+static constexpr ACE_UINT32 UNI_MAX_UTF16        = 0x0010FFFF;
 
 // Once the bits are split out into bytes of UTF-8, this is a mask OR-ed
 // into the first byte, depending on how many bytes follow.  There are

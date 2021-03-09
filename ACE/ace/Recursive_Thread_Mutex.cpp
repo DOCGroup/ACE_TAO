@@ -1,8 +1,6 @@
 /**
  * @file Recursive_Thread_Mutex.cpp
  *
- * Originally in Synch.cpp
- *
  * @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 

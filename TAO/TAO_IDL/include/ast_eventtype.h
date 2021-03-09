@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_VALUETYPE_AST_EVENTTYPE_HH
 #define _AST_VALUETYPE_AST_EVENTTYPE_HH
 

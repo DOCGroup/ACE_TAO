@@ -67,7 +67,7 @@ public:
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // = These are the <Scheduler> implementation details.

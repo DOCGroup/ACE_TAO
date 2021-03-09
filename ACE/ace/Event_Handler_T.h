@@ -110,28 +110,28 @@ public:
 
   // = Get/set the target pointer-to-method used for dispatching.
 
-  GET_HANDLE handle_get (void);
+  GET_HANDLE handle_get ();
   void handle_get (GET_HANDLE);
 
-  SET_HANDLE handle_set (void);
+  SET_HANDLE handle_set ();
   void handle_set (SET_HANDLE);
 
-  IO_HANDLER input_handler (void);
+  IO_HANDLER input_handler ();
   void input_handler (IO_HANDLER);
 
-  IO_HANDLER output_handler (void);
+  IO_HANDLER output_handler ();
   void output_handler (IO_HANDLER);
 
-  IO_HANDLER except_handler (void);
+  IO_HANDLER except_handler ();
   void except_handler (IO_HANDLER);
 
-  TO_HANDLER to_handler (void);
+  TO_HANDLER to_handler ();
   void to_handler (TO_HANDLER);
 
-  CL_HANDLER cl_handler (void);
+  CL_HANDLER cl_handler ();
   void cl_handler (CL_HANDLER);
 
-  SIG_HANDLER sig_handler (void);
+  SIG_HANDLER sig_handler ();
   void sig_handler (SIG_HANDLER);
 
   /// Dump the state of an object.

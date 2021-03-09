@@ -47,7 +47,7 @@ public:
   Tester (void) {}
   ~Tester (void) {}
 
-  virtual int svc (void);
+  virtual int svc ();
 
   //FUZZ: disable check_for_lack_ACE_OS
   /// Activate the thread.

@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Any_Impl_T.h
@@ -7,7 +5,6 @@
  *  @authors  Carlos O'Ryan and Jeff Parsons
  */
 //=============================================================================
-
 
 #ifndef TAO_ANY_IMPL_T_H
 #define TAO_ANY_IMPL_T_H

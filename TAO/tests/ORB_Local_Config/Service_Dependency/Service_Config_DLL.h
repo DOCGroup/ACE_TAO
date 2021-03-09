@@ -41,14 +41,14 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run by a daemon thread.
   /**
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
 

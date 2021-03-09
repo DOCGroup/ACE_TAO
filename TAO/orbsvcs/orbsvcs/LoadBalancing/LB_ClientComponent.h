@@ -44,7 +44,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
 protected:
   /// Register the LB_ClientComponent's ORBInitializer.

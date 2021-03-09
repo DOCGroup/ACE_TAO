@@ -20,7 +20,6 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
-
 #include "ace/Numeric_Limits.h"
 
 // This test allocates all of the heap memory, forcing 'new' to fail
@@ -37,7 +36,7 @@
 static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 2;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 4;
+static const int MAX_ALLOCS_IN_TEST = 2;
 
 static void
 try_ace_new (char **p)
@@ -49,15 +48,15 @@ try_ace_new (char **p)
 static char *
 try_ace_new_return ()
 {
-  char *p = 0;
-  ACE_NEW_RETURN (p, char[BIG_BLOCK], 0);
+  char *p {};
+  ACE_NEW_RETURN (p, char[BIG_BLOCK], nullptr);
   return p;
 }
 
 static char *
 try_ace_new_noreturn ()
 {
-  char *p = 0;
+  char *p {};
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
@@ -66,10 +65,10 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
-  int status = 0;
+  int status {};
 
   char *blocks[MAX_ALLOCS_IN_TEST];
-  int i;
+  int i {};
 
   try
     {

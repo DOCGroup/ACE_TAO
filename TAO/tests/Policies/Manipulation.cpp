@@ -54,7 +54,7 @@ public:
                 int niterations);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   void perform_iteration (unsigned int *seed,

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Profile.h"

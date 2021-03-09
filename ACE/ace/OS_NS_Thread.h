@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -2030,9 +2028,8 @@ protected:
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
 
-  // = Prevent assignment and initialization.
-  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &);
-  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &);
+  ACE_OS_Thread_Mutex_Guard &operator= (const ACE_OS_Thread_Mutex_Guard &) = delete;
+  ACE_OS_Thread_Mutex_Guard (const ACE_OS_Thread_Mutex_Guard &) = delete;
 };
 
 /**
@@ -2075,11 +2072,8 @@ protected:
   /// Keeps track of whether we acquired the lock or failed.
   int owner_;
 
-  // = Prevent assignment and initialization.
-  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
-  ACE_OS_Recursive_Thread_Mutex_Guard (
-    const ACE_OS_Recursive_Thread_Mutex_Guard &);
+  ACE_OS_Recursive_Thread_Mutex_Guard &operator= (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
+  ACE_OS_Recursive_Thread_Mutex_Guard (const ACE_OS_Recursive_Thread_Mutex_Guard &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

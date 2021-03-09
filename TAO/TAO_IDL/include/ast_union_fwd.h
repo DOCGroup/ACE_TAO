@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef _AST_UNION_FWD_AST_UNION_FWD_HH
 #define _AST_UNION_FWD_AST_UNION_FWD_HH
 
@@ -7,7 +6,6 @@
 class AST_Union;
 
 // Representation of a forward union declaration.
-
 class TAO_IDL_FE_Export AST_UnionFwd : public virtual AST_StructureFwd
 {
 public:

@@ -91,7 +91,7 @@ public:
    * Each thread will invoke the Service Configurator via this
    * method unless the object is the "FINAL" object.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   signed char is_server_;

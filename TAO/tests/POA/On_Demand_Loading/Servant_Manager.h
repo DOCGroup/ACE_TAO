@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file     Servant_Manager.h
@@ -9,7 +7,6 @@
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef SERVANT_MANAGER_H
 #define SERVANT_MANAGER_H

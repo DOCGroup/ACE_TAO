@@ -76,7 +76,7 @@ public:
     : shutdown_ (false)
   {}
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int close (u_long = 0);
   virtual int put (ACE_Message_Block * mblk, ACE_Time_Value * tv = 0);
   int process_cmd (void);

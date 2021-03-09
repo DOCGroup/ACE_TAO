@@ -4,8 +4,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,7 +21,7 @@ struct ACE_TLI_Request
 class ACE_TLI_Request_Queue
 {
 public:
-  ACE_TLI_Request_Queue (void);
+  ACE_TLI_Request_Queue ();
 
   ACE_HANDLE open (ACE_HANDLE fd, int size);
   int close (void);
@@ -32,10 +30,10 @@ public:
   int dequeue (ACE_TLI_Request *&ptr);
   int remove (int sequence_number);
 
-  int is_empty (void) const;
-  int is_full (void) const;
+  int is_empty () const;
+  int is_full () const;
 
-  ACE_TLI_Request *alloc (void);
+  ACE_TLI_Request *alloc ();
   void    free (ACE_TLI_Request *node);
 
   void dump () const;

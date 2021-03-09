@@ -177,7 +177,7 @@ public:
   virtual ~User_Input_Task (void);
 
   /// This method runs the event loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Some helper methods.
 

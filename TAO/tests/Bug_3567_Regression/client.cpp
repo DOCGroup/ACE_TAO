@@ -71,7 +71,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:
@@ -96,7 +96,7 @@ public:
   ~Client () ;
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // private:
   /// Var for the AMI_Test object.

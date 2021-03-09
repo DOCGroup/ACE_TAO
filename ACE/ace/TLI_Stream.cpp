@@ -5,8 +5,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)

@@ -24,7 +24,6 @@
 # include "ace/Dev_Poll_Reactor.inl"
 #endif /* __ACE_INLINE__ */
 
-
 #include "ace/Handle_Set.h"
 #include "ace/Reactor.h"
 #include "ace/Timer_Heap.h"

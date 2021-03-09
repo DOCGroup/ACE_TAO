@@ -94,7 +94,7 @@ public:
   /// @a size entries.
   ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
                          size_t size = ACE_DEFAULT_MAP_SIZE,
-                         ACE_Allocator *alloc = 0);
+                         ACE_Allocator *alloc = nullptr);
 
   /// Close down a <Cache_Map_Manager> and release dynamically allocated
   /// resources.
@@ -102,7 +102,7 @@ public:
 
   /// Initialize a cache with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a cache and release dynamically allocated resources.
   int close (void);

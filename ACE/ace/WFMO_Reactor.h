@@ -188,10 +188,10 @@ public:
     bool suspend_entry_;
 
     /// Default constructor
-    Current_Info (void);
+    Current_Info ();
 
     /// Reset the state of the structure
-    void reset (void);
+    void reset ();
 
     /// Set the structure to these new values
     void set (bool io_entry,
@@ -227,10 +227,10 @@ public:
     bool suspend_entry_;
 
     /// Default constructor
-    To_Be_Added_Info (void);
+    To_Be_Added_Info ();
 
     /// Reset the state of the structure
-    void reset (void);
+    void reset ();
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
@@ -268,10 +268,10 @@ public:
     bool resume_entry_;
 
     /// Constructor used for initializing the structure
-    Suspended_Info (void);
+    Suspended_Info ();
 
     /// Reset the state of the structure
-    void reset (void);
+    void reset ();
 
     /// Set the structure to these new values
     void set (ACE_HANDLE event_handle,
@@ -1343,9 +1343,8 @@ protected:
   sig_atomic_t deactivated_;
 
 private:
-  /// Deny access since member-wise won't work...
-  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &);
-  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &);
+  ACE_WFMO_Reactor (const ACE_WFMO_Reactor &) = delete;
+  ACE_WFMO_Reactor &operator = (const ACE_WFMO_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

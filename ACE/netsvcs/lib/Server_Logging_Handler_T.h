@@ -200,7 +200,7 @@ public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
   virtual int open (void * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

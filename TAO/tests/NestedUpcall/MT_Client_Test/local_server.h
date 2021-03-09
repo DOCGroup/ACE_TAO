@@ -107,7 +107,7 @@ public:
                   ACE_TCHAR **argv,
                   TAO_ORB_Manager* orb_manager_ptr);
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   MT_Server mT_Server_;

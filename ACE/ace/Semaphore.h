@@ -4,8 +4,6 @@
 /**
  *  @file    Semaphore.h
  *
- *   Moved from Synch.h.
- *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */
 //==========================================================================
@@ -165,9 +163,8 @@ protected:
   bool removed_;
 
 private:
-  // = Prevent assignment and initialization.
-  void operator= (const ACE_Semaphore &);
-  ACE_Semaphore (const ACE_Semaphore &);
+  void operator= (const ACE_Semaphore &) = delete;
+  ACE_Semaphore (const ACE_Semaphore &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

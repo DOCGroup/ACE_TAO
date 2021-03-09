@@ -56,12 +56,12 @@ protected:
    * The constructor is protected, because only derived classes should
    * be instantiated.
    */
-  ACE_Intrusive_List_Node ();
+  ACE_Intrusive_List_Node () = default;
 
 private:
   /// Head and tail of the list
-  T *prev_;
-  T *next_;
+  T *prev_ {};
+  T *next_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

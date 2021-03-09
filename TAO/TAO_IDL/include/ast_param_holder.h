@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #ifndef AST_PARAM_HOLDER_H
 #define AST_PARAM_HOLDER_H
 
