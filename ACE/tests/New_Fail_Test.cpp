@@ -21,8 +21,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/CORBA_macros.h"
 
-#include "ace/Numeric_Limits.h"
-
 // This test allocates all of the heap memory, forcing 'new' to fail
 // because of a lack of memory.  The ACE_NEW macros should prevent an
 // exception from being thrown past the ACE_NEW.  If this test doesn't
@@ -32,12 +30,11 @@
 // wrong.  The allocated memory is always freed to avoid masking a leak
 // somewhere else in the test.
 
-// Most we can do, by half. Using max alone gets "invalid allocation size"
-// messages on stdout on Windows.
-static const size_t BIG_BLOCK = ACE_Numeric_Limits<size_t>::max () / 10;
+// Most we can do on Windows, else we get a C2148 compile error
+static constexpr size_t BIG_BLOCK = 0x7ffffffff - 1;
 
 // Shouldn't take many "as much as possible" tries to get a failure.
-static const int MAX_ALLOCS_IN_TEST = 20;
+static constexpr int MAX_ALLOCS_IN_TEST = 20;
 
 static void
 try_ace_new (char **p)
@@ -49,7 +46,7 @@ try_ace_new (char **p)
 static char *
 try_ace_new_return ()
 {
-  char *p = nullptr;
+  char *p {};
   ACE_NEW_RETURN (p, char[BIG_BLOCK], nullptr);
   return p;
 }
@@ -57,7 +54,7 @@ try_ace_new_return ()
 static char *
 try_ace_new_noreturn ()
 {
-  char *p = nullptr;
+  char *p {};
   ACE_NEW_NORETURN (p, char[BIG_BLOCK]);
   return p;
 }
@@ -66,10 +63,10 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("New_Fail_Test"));
-  int status = 0;
+  int status {};
 
   char *blocks[MAX_ALLOCS_IN_TEST];
-  int i;
+  int i {};
 
   try
     {
