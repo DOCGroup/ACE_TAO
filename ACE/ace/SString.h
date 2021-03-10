@@ -88,7 +88,7 @@ public:
   ACE_NS_WString (size_type len, ACE_Allocator *alloc = nullptr);
 
   /// Copy constructor.
-  ACE_NS_WString (const ACE_NS_WString &s) = default;
+  ACE_NS_WString (const ACE_NS_WString &) = default;
   ACE_NS_WString &operator= (const ACE_NS_WString&) = default;
 
   /// Constructor that copies @a c into dynamically allocated memory.
