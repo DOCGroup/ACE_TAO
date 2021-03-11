@@ -101,12 +101,8 @@ namespace TAO
     virtual ~PICurrent () = default;
 
   private:
-    /// Prevent copying through the copy constructor and the assignment
-    /// operator.
-    //@{
     PICurrent (const PICurrent &) = delete;
     void operator= (const PICurrent &) = delete;
-    //@}
 
   private:
     /// Reference to the orb core.
