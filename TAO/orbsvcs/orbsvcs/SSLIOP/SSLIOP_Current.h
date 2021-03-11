@@ -130,12 +130,8 @@ namespace TAO
       Current_Impl *implementation (void);
 
     private:
-      /// Prevent copying through the copy constructor and the assignment
-      /// operator.
-      //@{
-      Current (const Current &);
-      void operator= (const Current &);
-      //@}
+      Current (const Current &) = delete;
+      void operator= (const Current &) = delete;
 
     private:
       /// TSS slot assigned to this object.

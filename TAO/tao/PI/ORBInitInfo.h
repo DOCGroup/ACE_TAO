@@ -211,7 +211,6 @@ public:
   virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Destructor is protected to enforce proper memory management
   /// through the reference counting mechanism.
   ~TAO_ORBInitInfo ();
@@ -222,14 +221,10 @@ protected:
   void check_validity ();
 
 private:
-
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_ORBInitInfo (const TAO_ORBInitInfo &);
-  void operator= (const TAO_ORBInitInfo &);
+  TAO_ORBInitInfo (const TAO_ORBInitInfo &) = delete;
+  void operator= (const TAO_ORBInitInfo &) = delete;
 
 private:
-
   /// Reference to the ORB Core.
   TAO_ORB_Core *orb_core_;
 
