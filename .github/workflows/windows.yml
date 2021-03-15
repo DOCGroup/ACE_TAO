@@ -27,7 +27,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
           - name: VS2017Release64
             vmimage: windows-2016
             mpctype: vs2017
@@ -35,7 +35,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
           - name: VS2019WChar
             vmimage: windows-2019
             mpctype: vs2019
@@ -52,7 +52,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
           - name: VS2019Release64
             vmimage: windows-2019
             mpctype: vs2019
@@ -60,7 +60,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
           - name: VS2019Debug32
             vmimage: windows-2019
             mpctype: vs2019
@@ -68,7 +68,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
           - name: VS2019Release32
             vmimage: windows-2019
             mpctype: vs2019
@@ -76,7 +76,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x86-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
+            vcpkgpackages: openssl xerces-c zlib
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:
@@ -88,6 +88,8 @@ jobs:
       XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       SSL_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       SSL_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
+      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
@@ -99,7 +101,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v7
       with:
-        vcpkgGitCommitId: 0bf3923f9fab4001c00f0f429682a0853b5749e0
+        vcpkgGitCommitId: 75522bb1f2e7d863078bcd06322348f053a9e33f
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
@@ -114,6 +116,7 @@ jobs:
         echo "ssl=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "openssl11=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         echo "versioned_namespace=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
+        echo "zlib=1" | out-file -append -encoding ASCII ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
     - name: Add optional features ${{ matrix.OptionalFeatures }}
       run: |
