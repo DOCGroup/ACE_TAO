@@ -18,7 +18,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
             OptionalFeatures: uses_wchar=1
           - name: VS2017Debug64
             vmimage: windows-2016
@@ -43,7 +43,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
+            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
             vmimage: windows-2019
