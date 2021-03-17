@@ -201,7 +201,7 @@ public:
   Test_Resource_Factory ()
   {}
 
-  virtual ACE_Reactor_Impl* allocate_reactor_impl (void) const
+  virtual ACE_Reactor_Impl* allocate_reactor_impl () const
   {
     ACE_Reactor_Impl *impl = 0;
     ACE_NEW_RETURN (impl,
@@ -248,12 +248,12 @@ public:
   }
 
 protected:
-  virtual bool successful_i (void) const
+  virtual bool successful_i () const
   {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
   }
 
-  virtual bool error_detected_i (void) const
+  virtual bool error_detected_i () const
   {
     return (this->state_ == TAO_LF_Event::LFS_FAILURE
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
@@ -264,7 +264,7 @@ protected:
     this->state_ = new_state;
   }
 
-  virtual bool is_state_final (void) const
+  virtual bool is_state_final () const
   {
     if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
         this->state_ == TAO_LF_Event::LFS_FAILURE)

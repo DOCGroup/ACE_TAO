@@ -197,7 +197,7 @@ private:
   static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
 
   /// Is result available?
-  int ready (void) const;
+  int ready () const;
 
   /// Pointer to the result.
   T *value_;
@@ -313,7 +313,7 @@ public:
   operator T ();
 
   /// Check if the result is available.
-  int ready (void) const;
+  int ready () const;
 
   /**
    * Attaches the specified observer to a subject (this ACE_Future).

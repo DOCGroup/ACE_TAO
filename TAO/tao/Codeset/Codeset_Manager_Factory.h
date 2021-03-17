@@ -41,7 +41,7 @@ class TAO_Codeset_Export TAO_Codeset_Manager_Factory :
 public:
   virtual ~TAO_Codeset_Manager_Factory ();
   virtual TAO_Codeset_Manager *create(void);
-  virtual bool is_default(void) const;
+  virtual bool is_default() const;
 
 };
 

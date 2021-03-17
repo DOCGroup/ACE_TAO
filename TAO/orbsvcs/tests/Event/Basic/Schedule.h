@@ -46,7 +46,7 @@ public:
   /// add some command line args to change the scheduling service to
   /// use.
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args (void) const;
+  virtual void print_args () const;
   virtual void print_usage (void);
 
   /// Set the scheduling service attribute

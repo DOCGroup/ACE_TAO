@@ -8,7 +8,7 @@ TAO::Refcounted_ObjectKey::incr_refcount (void)
 }
 
 ACE_INLINE const TAO::ObjectKey &
-TAO::Refcounted_ObjectKey::object_key (void) const
+TAO::Refcounted_ObjectKey::object_key () const
 {
   return this->object_key_;
 }

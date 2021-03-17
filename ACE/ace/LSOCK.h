@@ -61,7 +61,7 @@ protected:
   ACE_LSOCK (ACE_HANDLE handle);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set handle.
   void set_handle (ACE_HANDLE handle);

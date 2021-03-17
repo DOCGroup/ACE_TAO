@@ -30,13 +30,13 @@ TAO_DIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_DIOP_Protocol_Factory::prefix (void) const
+TAO_DIOP_Protocol_Factory::prefix () const
 {
   return ::the_prefix;
 }
 
 char
-TAO_DIOP_Protocol_Factory::options_delimiter (void) const
+TAO_DIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
@@ -71,7 +71,7 @@ TAO_DIOP_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_DIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_DIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   // This switch is actually meant to distinguish between pluggable
   // protocols which are able to clean up their endpoints and such

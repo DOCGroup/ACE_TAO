@@ -140,19 +140,19 @@ public:
     void data (void *data);
 
     /// Get data
-    void *data (void) const;
+    void *data () const;
 
     /// Set size
     void size (u_long size);
 
     /// Get size
-    u_long size (void) const;
+    u_long size () const;
 
     /// Set type
     void type (u_long type);
 
     /// Get type
-    u_long type (void) const;
+    u_long type () const;
 
   private:
     /// Pointer to data

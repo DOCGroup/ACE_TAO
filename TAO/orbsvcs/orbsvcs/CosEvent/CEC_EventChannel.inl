@@ -14,31 +14,31 @@ TAO_CEC_EventChannel_Attributes (PortableServer::POA_ptr s_poa,
 }
 
 ACE_INLINE TAO_CEC_Dispatching*
-TAO_CEC_EventChannel::dispatching (void) const
+TAO_CEC_EventChannel::dispatching () const
 {
   return this->dispatching_;
 }
 
 ACE_INLINE TAO_CEC_ConsumerAdmin*
-TAO_CEC_EventChannel::consumer_admin (void) const
+TAO_CEC_EventChannel::consumer_admin () const
 {
   return this->consumer_admin_;
 }
 
 ACE_INLINE TAO_CEC_SupplierAdmin*
-TAO_CEC_EventChannel::supplier_admin (void) const
+TAO_CEC_EventChannel::supplier_admin () const
 {
   return this->supplier_admin_;
 }
 
 ACE_INLINE TAO_CEC_ConsumerControl*
-TAO_CEC_EventChannel::consumer_control (void) const
+TAO_CEC_EventChannel::consumer_control () const
 {
   return this->consumer_control_;
 }
 
 ACE_INLINE TAO_CEC_SupplierControl*
-TAO_CEC_EventChannel::supplier_control (void) const
+TAO_CEC_EventChannel::supplier_control () const
 {
   return this->supplier_control_;
 }
@@ -176,19 +176,19 @@ TAO_CEC_EventChannel::destroy_supplier_lock (ACE_Lock* x)
 }
 
 ACE_INLINE int
-TAO_CEC_EventChannel::consumer_reconnect (void) const
+TAO_CEC_EventChannel::consumer_reconnect () const
 {
   return this->consumer_reconnect_;
 }
 
 ACE_INLINE int
-TAO_CEC_EventChannel::supplier_reconnect (void) const
+TAO_CEC_EventChannel::supplier_reconnect () const
 {
   return this->supplier_reconnect_;
 }
 
 ACE_INLINE int
-TAO_CEC_EventChannel::disconnect_callbacks (void) const
+TAO_CEC_EventChannel::disconnect_callbacks () const
 {
   return this->disconnect_callbacks_;
 }

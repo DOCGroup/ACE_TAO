@@ -46,10 +46,10 @@ public:
   ACE_MEM_SAP_Node (size_t cap);
 
   /// Get the size of the data we hold.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Get the capacity of this block of data.
-  size_t capacity (void) const;
+  size_t capacity () const;
 
   /// Get the pointer to the block of data we hold.
   void *data (void);

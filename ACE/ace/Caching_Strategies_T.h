@@ -85,7 +85,7 @@ public:
   virtual CACHING_UTILITY &caching_utility (void) = 0;
 
   /// Dumps the state of the object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////

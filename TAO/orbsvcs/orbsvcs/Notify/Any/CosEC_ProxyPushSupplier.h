@@ -48,7 +48,7 @@ public:
   /// Destructor
   virtual ~TAO_Notify_CosEC_ProxyPushSupplier ();
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   // = Interface methods
   virtual void connect_push_consumer (

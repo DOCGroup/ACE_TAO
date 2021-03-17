@@ -61,9 +61,9 @@ public:
       PortableInterceptor::ClientRequestInfo_ptr ri);
   //@}
 
-  CORBA::ULong request_count (void) const;
+  CORBA::ULong request_count () const;
 
-  CORBA::ULong receive_exception_count (void) const;
+  CORBA::ULong receive_exception_count () const;
 
 private:
   /// The number of requests intercepted by this interceptor.

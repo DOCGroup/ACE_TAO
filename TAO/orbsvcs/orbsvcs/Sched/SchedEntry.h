@@ -586,9 +586,9 @@ public:
   Time deadline () const;
 
   // accessor and mutator for next and prev slices for this dispatch
-  TimeLine_Entry *next (void) const;
+  TimeLine_Entry *next () const;
   void next (TimeLine_Entry *);
-  TimeLine_Entry *prev (void) const;
+  TimeLine_Entry *prev () const;
   void prev (TimeLine_Entry *);
 
   bool operator < (const TimeLine_Entry&) const;

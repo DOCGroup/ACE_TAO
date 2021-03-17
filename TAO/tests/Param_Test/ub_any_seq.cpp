@@ -37,7 +37,7 @@ Test_AnySeq::~Test_AnySeq (void)
 }
 
 const char *
-Test_AnySeq::opname (void) const
+Test_AnySeq::opname () const
 {
   return this->opname_;
 }

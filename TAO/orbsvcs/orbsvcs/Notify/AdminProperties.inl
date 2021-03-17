@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const TAO_Notify_Property_Long&
-TAO_Notify_AdminProperties::max_global_queue_length (void) const
+TAO_Notify_AdminProperties::max_global_queue_length () const
 {
   return this->max_global_queue_length_;
 }
@@ -14,7 +14,7 @@ TAO_Notify_AdminProperties::max_global_queue_length (void)
 }
 
 ACE_INLINE const TAO_Notify_Property_Long&
-TAO_Notify_AdminProperties::max_consumers (void) const
+TAO_Notify_AdminProperties::max_consumers () const
 {
   return this->max_consumers_;
 }
@@ -26,7 +26,7 @@ TAO_Notify_AdminProperties::max_consumers (void)
 }
 
 ACE_INLINE const TAO_Notify_Property_Long&
-TAO_Notify_AdminProperties::max_suppliers (void) const
+TAO_Notify_AdminProperties::max_suppliers () const
 {
   return this->max_suppliers_;
 }
@@ -38,7 +38,7 @@ TAO_Notify_AdminProperties::max_suppliers (void)
 }
 
 ACE_INLINE const TAO_Notify_Property_Boolean&
-TAO_Notify_AdminProperties::reject_new_events (void) const
+TAO_Notify_AdminProperties::reject_new_events () const
 {
   return this->reject_new_events_;
 }

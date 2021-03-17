@@ -54,7 +54,7 @@ private:
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Request_Queue)
 
 void
-ACE_TLI_Request_Queue::dump (void) const
+ACE_TLI_Request_Queue::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Request_Queue::dump");
@@ -62,14 +62,14 @@ ACE_TLI_Request_Queue::dump (void) const
 }
 
 int
-ACE_TLI_Request_Queue::is_empty (void) const
+ACE_TLI_Request_Queue::is_empty () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_empty");
   return this->current_count_ == 0;
 }
 
 int
-ACE_TLI_Request_Queue::is_full (void) const
+ACE_TLI_Request_Queue::is_full () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_full");
   return this->current_count_ + 1 == this->size_; // Add 1 for the dummy.
@@ -99,7 +99,7 @@ ACE_TLI_Request_Queue::alloc (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Acceptor)
 
 void
-ACE_TLI_Acceptor::dump (void) const
+ACE_TLI_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Acceptor::dump");

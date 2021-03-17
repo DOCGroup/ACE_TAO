@@ -87,7 +87,7 @@ public:
 
 protected:
   void save_attrs (TAO_Notify::NVPList& attrs);
-  virtual const char * get_admin_type_name (void) const = 0;
+  virtual const char * get_admin_type_name () const = 0;
 
   typedef TAO_Notify_Container_T<TAO_Notify_Proxy> TAO_Notify_Proxy_Container;
 

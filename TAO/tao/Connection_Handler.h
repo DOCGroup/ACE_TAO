@@ -61,16 +61,16 @@ public:
   void transport (TAO_Transport* transport);
 
   /// Is the handler closed or timed out?
-  bool is_closed (void) const;
+  bool is_closed () const;
 
   /// Is the handler open?
-  bool is_open (void) const;
+  bool is_open () const;
 
   /// Closed due to timeout?
-  bool is_timeout (void) const;
+  bool is_timeout () const;
 
   /// Is the handler in the process of being connected?
-  bool is_connecting (void) const;
+  bool is_connecting () const;
 
   /// Close the underlying connection.
   /**

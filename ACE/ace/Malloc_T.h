@@ -342,7 +342,7 @@ public:
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
-  virtual void print_stats (void) const;
+  virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.
@@ -414,7 +414,7 @@ class ACE_Malloc_FIFO_Iterator_T;
  * The MEMORY_POOL class must provide the following methods:
  *   - constructor (const ACE_TCHAR *pool_name)
  *   - constructor (const ACE_TCHAR *pool_name, const MEMORY_POOL_OPTIONS *options)
- *   - void dump (void) const (needed if ACE is built with ACE_HAS_DUMP defined)
+ *   - void dump () const (needed if ACE is built with ACE_HAS_DUMP defined)
  *   - void *init_acquire (size_t nbytes, size_t &rounded_bytes, int &first_time);
  *   - int release (void)
  *   - void *acquire (size_t nbytes, size_t &rounded_bytes)
@@ -597,7 +597,7 @@ public:
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
-  void print_stats (void) const;
+  void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Returns a pointer to the lock used to provide mutual exclusion to

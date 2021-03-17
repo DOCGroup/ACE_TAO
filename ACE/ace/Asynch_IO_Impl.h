@@ -49,30 +49,30 @@ public:
   virtual ~ACE_Asynch_Result_Impl (void);
 
   /// Number of bytes transferred by the operation.
-  virtual size_t bytes_transferred (void) const = 0;
+  virtual size_t bytes_transferred () const = 0;
 
   /// ACT associated with the operation.
-  virtual const void *act (void) const = 0;
+  virtual const void *act () const = 0;
 
   /// Did the operation succeed?
-  virtual int success (void) const = 0;
+  virtual int success () const = 0;
 
   /// This ACT is not the same as the ACT associated with the
   /// asynchronous operation.
-  virtual const void *completion_key (void) const = 0;
+  virtual const void *completion_key () const = 0;
 
   /// Error value if the operation fail.
-  virtual u_long error (void) const = 0;
+  virtual u_long error () const = 0;
 
   /// Event associated with the OVERLAPPED structure.
-  virtual ACE_HANDLE event (void) const = 0;
+  virtual ACE_HANDLE event () const = 0;
 
   /// This really make sense only when doing file I/O.
-  virtual u_long offset (void) const = 0;
-  virtual u_long offset_high (void) const = 0;
+  virtual u_long offset () const = 0;
+  virtual u_long offset_high () const = 0;
 
   /// Priority of the operation.
-  virtual int priority (void) const = 0;
+  virtual int priority () const = 0;
 
   /**
    * POSIX4 real-time signal number to be used for the
@@ -80,7 +80,7 @@ public:
    * default, SIGRTMIN is used to issue <aio_> calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
-  virtual int signal_number (void) const = 0;
+  virtual int signal_number () const = 0;
 
   // protected:
   //
@@ -133,7 +133,7 @@ public:
   // = Access methods.
 
   /// Return the underlying proactor.
-  virtual ACE_Proactor* proactor (void) const = 0;
+  virtual ACE_Proactor* proactor () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -191,13 +191,13 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  virtual size_t bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read () const = 0;
 
   /// Message block which contains the read data.
-  virtual ACE_Message_Block &message_block (void) const = 0;
+  virtual ACE_Message_Block &message_block () const = 0;
 
   /// I/O handle used for reading.
-  virtual ACE_HANDLE handle (void) const = 0;
+  virtual ACE_HANDLE handle () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -255,13 +255,13 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  virtual size_t bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write () const = 0;
 
   /// Message block that contains the data to be written.
-  virtual ACE_Message_Block &message_block (void) const = 0;
+  virtual ACE_Message_Block &message_block () const = 0;
 
   /// I/O handle used for writing.
-  virtual ACE_HANDLE handle (void) const = 0;
+  virtual ACE_HANDLE handle () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -484,16 +484,16 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous accept.
-  virtual size_t bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read () const = 0;
 
   /// Message block which contains the read data.
-  virtual ACE_Message_Block &message_block (void) const = 0;
+  virtual ACE_Message_Block &message_block () const = 0;
 
   /// I/O handle used for accepting new connections.
-  virtual ACE_HANDLE listen_handle (void) const = 0;
+  virtual ACE_HANDLE listen_handle () const = 0;
 
   /// I/O handle for the new connection.
-  virtual ACE_HANDLE accept_handle (void) const = 0;
+  virtual ACE_HANDLE accept_handle () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -542,7 +542,7 @@ public:
   virtual ~ACE_Asynch_Connect_Result_Impl (void);
 
   /// I/O handle for the connection.
-  virtual ACE_HANDLE connect_handle (void) const = 0;
+  virtual ACE_HANDLE connect_handle () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -592,24 +592,24 @@ public:
   virtual ~ACE_Asynch_Transmit_File_Result_Impl (void);
 
   /// Socket used for transmitting the file.
-  virtual ACE_HANDLE socket (void) const = 0;
+  virtual ACE_HANDLE socket () const = 0;
 
   /// File from which the data is read.
-  virtual ACE_HANDLE file (void) const = 0;
+  virtual ACE_HANDLE file () const = 0;
 
   /// Header and trailer data associated with this transmit file.
-  virtual ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer (void) const = 0;
+  virtual ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer () const = 0;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous transmit file.
-  virtual size_t bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write () const = 0;
 
   /// Number of bytes per send requested at the start of the transmit
   /// file.
-  virtual size_t bytes_per_send (void) const = 0;
+  virtual size_t bytes_per_send () const = 0;
 
   /// Flags which were passed into transmit file.
-  virtual u_long flags (void) const = 0;
+  virtual u_long flags () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -681,20 +681,20 @@ public:
   virtual ~ACE_Asynch_Read_Dgram_Result_Impl (void);
 
   /// Message block which contains the read data
-  virtual ACE_Message_Block *message_block (void) const = 0;
+  virtual ACE_Message_Block *message_block () const = 0;
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous read.
-  virtual size_t bytes_to_read (void) const = 0;
+  virtual size_t bytes_to_read () const = 0;
 
   /// The address of where the packet came from
   virtual int remote_address (ACE_Addr& addr) const = 0;
 
   /// The flags used in the read
-  virtual int flags (void) const = 0;
+  virtual int flags () const = 0;
 
   /// I/O handle used for reading.
-  virtual ACE_HANDLE handle (void) const = 0;
+  virtual ACE_HANDLE handle () const = 0;
 
 protected:
   /// Do-nothing constructor.
@@ -766,16 +766,16 @@ public:
 
   /// The number of bytes which were requested at the start of the
   /// asynchronous write.
-  virtual size_t bytes_to_write (void) const = 0;
+  virtual size_t bytes_to_write () const = 0;
 
   /// Message block which contains the sent data
-  virtual ACE_Message_Block *message_block (void) const = 0;
+  virtual ACE_Message_Block *message_block () const = 0;
 
   /// The flags using in the write
-  virtual int flags (void) const = 0;
+  virtual int flags () const = 0;
 
   /// I/O handle used for writing.
-  virtual ACE_HANDLE handle (void) const = 0;
+  virtual ACE_HANDLE handle () const = 0;
 
 protected:
   /// Do-nothing constructor.

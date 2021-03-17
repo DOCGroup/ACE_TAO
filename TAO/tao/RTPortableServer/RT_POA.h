@@ -186,7 +186,7 @@ public:
 
   virtual ~TAO_RT_POA (void);
 
-  void *thread_pool (void) const;
+  void *thread_pool () const;
 
 protected:
 

@@ -53,13 +53,13 @@ public:
   virtual ~TAO_Endpoint () = default;
 
   /// IOP protocol tag accessor.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// @c priority_ attribute setter.
   void priority (CORBA::Short priority);
 
   /// @c priority_ attribute getter.
-  CORBA::Short priority (void) const;
+  CORBA::Short priority () const;
 
   /**
    * @name TAO_Endpoint Template Methods

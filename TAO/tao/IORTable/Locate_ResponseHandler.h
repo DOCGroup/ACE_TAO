@@ -58,16 +58,16 @@ public:
       TAO_AMH_Locate_ResponseHandler_ptr);
   TAO_AMH_Locate_ResponseHandler_var &operator= (
       const TAO_AMH_Locate_ResponseHandler_var &);
-  TAO_AMH_Locate_ResponseHandler_ptr operator-> (void) const;
+  TAO_AMH_Locate_ResponseHandler_ptr operator-> () const;
 
   operator const TAO_AMH_Locate_ResponseHandler_ptr &() const;
   operator TAO_AMH_Locate_ResponseHandler_ptr &();
 
-  TAO_AMH_Locate_ResponseHandler_ptr in (void) const;
+  TAO_AMH_Locate_ResponseHandler_ptr in () const;
   TAO_AMH_Locate_ResponseHandler_ptr &inout (void);
   TAO_AMH_Locate_ResponseHandler_ptr &out (void);
   TAO_AMH_Locate_ResponseHandler_ptr _retn (void);
-  TAO_AMH_Locate_ResponseHandler_ptr ptr (void) const;
+  TAO_AMH_Locate_ResponseHandler_ptr ptr () const;
 
 private:
   TAO_AMH_Locate_ResponseHandler_ptr ptr_;

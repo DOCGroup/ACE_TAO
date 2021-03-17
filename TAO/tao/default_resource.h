@@ -194,12 +194,12 @@ protected:
   TAO_Time_Policy_Manager* time_policy_manager () const;
 #endif
 
-  ACE_Timer_Queue * create_timer_queue (void) const;
+  ACE_Timer_Queue * create_timer_queue () const;
 
   void destroy_timer_queue (ACE_Timer_Queue *tmq) const;
 
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);

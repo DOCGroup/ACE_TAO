@@ -135,7 +135,7 @@ public:
    * the return of <eof> and check it instead of calling <eof>
    * successively.
    */
-  int eof (void) const;
+  int eof () const;
 
 #  if defined (ACE_HAS_STRING_CLASS)
   /**

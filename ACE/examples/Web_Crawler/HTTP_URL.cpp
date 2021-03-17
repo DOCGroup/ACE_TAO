@@ -8,7 +8,7 @@
 
 
 const ACE_URL_Addr &
-HTTP_URL::url_addr (void) const
+HTTP_URL::url_addr () const
 {
   return this->url_addr_;
 }

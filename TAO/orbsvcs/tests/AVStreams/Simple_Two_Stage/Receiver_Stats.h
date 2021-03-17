@@ -36,7 +36,7 @@ public:
   Receiver_Stats (void);
 
   /// The number of samples received so far
-  ACE_UINT32 samples_count (void) const;
+  ACE_UINT32 samples_count () const;
 
   /// Record one sample.
   void sample (ACE_UINT64 value);

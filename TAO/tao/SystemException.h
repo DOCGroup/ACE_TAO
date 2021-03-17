@@ -189,10 +189,10 @@ namespace CORBA
             CORBA::CompletionStatus completed); \
       static name * _downcast (CORBA::Exception* exception); \
       static name const * _downcast (CORBA::Exception const * exception); \
-      virtual void _raise (void) const; \
-      virtual CORBA::TypeCode_ptr _tao_type (void) const; \
+      virtual void _raise () const; \
+      virtual CORBA::TypeCode_ptr _tao_type () const; \
       static void _tao_any_destructor (void*); \
-      virtual CORBA::Exception *_tao_duplicate (void) const; \
+      virtual CORBA::Exception *_tao_duplicate () const; \
       static CORBA::SystemException *_tao_create (void); \
     }; \
 

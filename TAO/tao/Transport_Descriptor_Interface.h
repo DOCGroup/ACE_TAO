@@ -57,7 +57,7 @@ public:
       const TAO_Transport_Descriptor_Interface *other_prop) = 0;
 
   /// Generate hash value for our class
-  virtual u_long hash (void) const = 0;
+  virtual u_long hash () const = 0;
 
   /// Return the underlying endpoint object
   TAO_Endpoint *endpoint (void);

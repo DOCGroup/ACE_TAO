@@ -368,7 +368,7 @@ Distributer::init (int argc,
 }
 
 bool
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }

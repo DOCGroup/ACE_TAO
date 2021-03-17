@@ -89,7 +89,7 @@ public:
   virtual int visit_param_holder (AST_Param_Holder *node);
 
   /// Accessor for our lock.
-  ACE_Lock &lock (void) const;
+  ACE_Lock &lock () const;
 
 protected:
   // Not abstract but we want to force subclassing anyway.

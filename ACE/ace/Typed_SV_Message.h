@@ -42,19 +42,19 @@ public:
   ~ACE_Typed_SV_Message (void);
 
   /// Get the type of the message.
-  long type (void) const;
+  long type () const;
 
   /// Set the type of the message.
   void type (long type);
 
   /// Get the length of the message.
-  int length (void) const;
+  int length () const;
 
   /// Set the length of the message.
   void length (int l);
 
   /// Get the maximum size of the message.
-  int max_size (void) const;
+  int max_size () const;
 
   /// Set the maximum size of the message.
   void max_size (int m);

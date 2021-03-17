@@ -274,7 +274,7 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_DIOP_Connector::object_key_delimiter (void) const
+TAO_DIOP_Connector::object_key_delimiter () const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
 }

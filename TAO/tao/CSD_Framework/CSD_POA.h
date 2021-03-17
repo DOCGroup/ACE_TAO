@@ -79,7 +79,7 @@ public:
 
   /// Servant Dispatching Strategy proxy accessor.
   TAO::CSD::Strategy_Proxy&
-    servant_dispatching_strategy_proxy (void) const;
+    servant_dispatching_strategy_proxy () const;
 
 private:
   TAO::CSD::Strategy_Proxy* sds_proxy_;

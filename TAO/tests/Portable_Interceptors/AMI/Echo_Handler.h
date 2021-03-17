@@ -20,7 +20,7 @@ public:
   virtual void shutdown(void);
   virtual void shutdown_excep(::Messaging::ExceptionHolder * h);
 
-  CORBA::ULong replies (void) const;
+  CORBA::ULong replies () const;
 
 private:
   CORBA::ULong replies_;

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE size_t
-TAO_Security_Current::tss_slot (void) const
+TAO_Security_Current::tss_slot () const
 {
   return this->tss_slot_;
 }

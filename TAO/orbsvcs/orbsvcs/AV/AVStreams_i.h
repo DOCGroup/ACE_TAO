@@ -175,7 +175,7 @@ public:
                           const MMDevice_Map_Hash_Key &right);
 
   /// hash function for this mmdevice.
-  u_long hash (void) const;
+  u_long hash () const;
 
   static const int hash_maximum_;
 protected:

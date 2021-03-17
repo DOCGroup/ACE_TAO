@@ -21,17 +21,17 @@ ACE_INLINE void ACE_Netlink_Addr::reset (void)
   this->nl_.nl_family = AF_NETLINK;
 }
 
-ACE_INLINE int ACE_Netlink_Addr::determine_type (void) const
+ACE_INLINE int ACE_Netlink_Addr::determine_type () const
 {
   return AF_NETLINK;
 }
 
-ACE_INLINE void *ACE_Netlink_Addr::get_addr (void) const
+ACE_INLINE void *ACE_Netlink_Addr::get_addr () const
 {
   return (void*)&(this->nl_);
 }
 
-ACE_INLINE int ACE_Netlink_Addr::get_addr_size (void) const
+ACE_INLINE int ACE_Netlink_Addr::get_addr_size () const
 {
   return sizeof(this->nl_);
 }

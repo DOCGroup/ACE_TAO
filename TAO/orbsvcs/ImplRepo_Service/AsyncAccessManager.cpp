@@ -51,14 +51,14 @@ AsyncAccessManager::started_running (void)
 }
 
 bool
-AsyncAccessManager::is_terminating (void) const
+AsyncAccessManager::is_terminating () const
 {
   return this->status_ == ImplementationRepository::AAM_ACTIVE_TERMINATE ||
     remove_on_death_rh_ != 0;
 }
 
 bool
-AsyncAccessManager::is_running (void) const
+AsyncAccessManager::is_running () const
 {
   if (this->info_->is_mode (ImplementationRepository::PER_CLIENT))
     {
@@ -392,7 +392,7 @@ AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
 }
 
 ImplementationRepository::AAM_Status
-AsyncAccessManager::status (void) const
+AsyncAccessManager::status () const
 {
   return this->status_;
 }

@@ -48,10 +48,10 @@ public:
   virtual int register_handler (void);
 
   /*! @copydoc TAO_Wait_Strategy::non_blocking() */
-  virtual bool non_blocking (void) const;
+  virtual bool non_blocking () const;
 
   /*! @copydoc TAO_Wait_Strategy::can_process_upcalls() */
-  virtual bool can_process_upcalls (void) const;
+  virtual bool can_process_upcalls () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

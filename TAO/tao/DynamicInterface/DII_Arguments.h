@@ -51,7 +51,7 @@ namespace TAO
 
     virtual void interceptor_value (CORBA::Any *any) const;
 
-    int byte_order (void) const;
+    int byte_order () const;
 
   private:
     CORBA::NamedValue_ptr x_;

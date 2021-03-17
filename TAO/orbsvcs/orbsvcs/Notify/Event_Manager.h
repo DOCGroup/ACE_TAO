@@ -91,10 +91,10 @@ public:
   void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
   /// What are the types being offered.
-  const TAO_Notify_EventTypeSeq& offered_types (void) const;
+  const TAO_Notify_EventTypeSeq& offered_types () const;
 
   /// What are the types being subscribed.
-  const TAO_Notify_EventTypeSeq& subscription_types (void) const;
+  const TAO_Notify_EventTypeSeq& subscription_types () const;
 
 protected:
   /// Subscribe <proxy_supplier> to the event type sequence list <seq>.

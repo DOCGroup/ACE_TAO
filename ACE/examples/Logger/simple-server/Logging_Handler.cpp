@@ -141,7 +141,7 @@ Logging_Handler::handle_input (ACE_HANDLE)
 // Extract underlying device descriptor.
 
 ACE_HANDLE
-Logging_Handler::get_handle (void) const
+Logging_Handler::get_handle () const
 {
   return this->cli_stream_.get_handle ();
 }

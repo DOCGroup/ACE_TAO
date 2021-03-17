@@ -115,7 +115,7 @@ public:
                     int number_of_initial_accepts = -1);
 
   /// Get the underlying handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /**
    * Set the underlying listen handle. It is the user's responsibility
@@ -183,28 +183,28 @@ public:
 
   /// Get flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
-  virtual bool pass_addresses (void) const;
+  virtual bool pass_addresses () const;
 
   /// Set flag that indicates if parsing and passing of addresses to
   /// the service_handler is necessary.
   virtual void pass_addresses (bool new_value);
 
   /// Get flag that indicates if address validation is required.
-  virtual bool validate_new_connection (void) const;
+  virtual bool validate_new_connection () const;
 
   /// Set flag that indicates if address validation is required.
   virtual void validate_new_connection (bool new_value);
 
   /// Get flag that indicates if a new accept should be reissued when a accept
   /// completes.
-  virtual int reissue_accept (void) const;
+  virtual int reissue_accept () const;
 
   /// Set flag that indicates if a new accept should be reissued when a accept
   /// completes.
   virtual void reissue_accept (int new_value);
 
   /// Get bytes to be read with the <accept> call.
-  virtual size_t bytes_to_read (void) const;
+  virtual size_t bytes_to_read () const;
 
   /// Set bytes to be read with the <accept> call.
   virtual void bytes_to_read (size_t new_value);
@@ -215,7 +215,7 @@ protected:
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
   /// Return the listen handle.
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   /// Set the listen handle.
   void handle (ACE_HANDLE h);
 

@@ -38,7 +38,7 @@ namespace ACE
 
       void unregister (void);
 
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
     private:
       Channel *channel_;

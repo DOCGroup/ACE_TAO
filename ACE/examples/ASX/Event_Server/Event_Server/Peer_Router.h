@@ -136,7 +136,7 @@ protected:
   virtual int control (ACE_Message_Block *);
   // Handle control messages arriving from adjacent Modules.
 
-  Peer_Router_Context *context (void) const;
+  Peer_Router_Context *context () const;
   // Returns the routing context.
 
   typedef ACE_Task<ACE_SYNCH> inherited;

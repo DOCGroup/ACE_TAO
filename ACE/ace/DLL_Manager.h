@@ -117,7 +117,7 @@ public:
   int close (int unload = 0);
 
   /// Return the current refcount.
-  sig_atomic_t refcount (void) const;
+  sig_atomic_t refcount () const;
 
   /// If @a symbol_name is in the symbol table of the DLL a pointer to
   /// the @a symbol_name is returned.  Otherwise, returns 0.  Set the
@@ -257,7 +257,7 @@ public:
   int close_dll (const ACE_TCHAR *dll_name);
 
   /// Returns the current per-process UNLOAD_POLICY.
-  u_long unload_policy (void) const;
+  u_long unload_policy () const;
 
   /// Set the per-process UNLOAD_POLICY.  If the policy is changed from
   /// LAZY to EAGER, then it will also unload any dlls with zero

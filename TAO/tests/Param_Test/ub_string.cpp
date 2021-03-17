@@ -41,7 +41,7 @@ Test_Unbounded_String::~Test_Unbounded_String (void)
 }
 
 const char *
-Test_Unbounded_String::opname (void) const
+Test_Unbounded_String::opname () const
 {
   return this->opname_;
 }

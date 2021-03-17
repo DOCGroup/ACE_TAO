@@ -38,7 +38,7 @@ Test_i::trigger (void)
 }
 
 int
-Test_i::exit_code (void) const
+Test_i::exit_code () const
 {
   return exit_code_;
 }

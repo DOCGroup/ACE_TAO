@@ -21,7 +21,7 @@ public:
                server_ptr s);
   int svc (void);
 
-  bool exception (void) const;
+  bool exception () const;
 
 private:
   client_var client_;

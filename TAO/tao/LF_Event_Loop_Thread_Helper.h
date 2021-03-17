@@ -40,7 +40,7 @@ public:
   ~TAO_LF_Event_Loop_Thread_Helper (void);
 
   /// Calls @c set_event_loop_thread on the leader/followers object.
-  int event_loop_return (void) const;
+  int event_loop_return () const;
 
 private:
   /// Reference to leader/followers object.

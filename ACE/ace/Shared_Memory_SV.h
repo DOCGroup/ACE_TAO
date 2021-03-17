@@ -70,11 +70,11 @@ public:
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.
-  virtual size_t get_segment_size (void) const;
+  virtual size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., a System V
   /// shared memory internal id).
-  virtual ACE_HANDLE get_id (void) const;
+  virtual ACE_HANDLE get_id () const;
 
   /// Dump the state of an object.
   void dump () const;

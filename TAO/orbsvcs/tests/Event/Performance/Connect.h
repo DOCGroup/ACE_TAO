@@ -43,7 +43,7 @@ public:
   // = The EC_Driver methods
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
   virtual void print_usage (void);
-  virtual void print_args (void) const;
+  virtual void print_args () const;
 
   /// Don't run the suppliers, just test connect and disconnect calls.
   void execute_test (void);

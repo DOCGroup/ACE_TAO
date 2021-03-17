@@ -384,7 +384,7 @@ TAO_Thread_Lane::is_collocated (const TAO_MProfile &mprofile)
 }
 
 CORBA::ULong
-TAO_Thread_Lane::current_threads (void) const
+TAO_Thread_Lane::current_threads () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -943,7 +943,7 @@ TAO_Thread_Pool_Manager::get_threadpool (RTCORBA::ThreadpoolId thread_pool_id )
 }
 
 TAO_ORB_Core &
-TAO_Thread_Pool_Manager::orb_core (void) const
+TAO_Thread_Pool_Manager::orb_core () const
 {
   return this->orb_core_;
 }

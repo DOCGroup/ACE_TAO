@@ -52,7 +52,7 @@ int AcceptHandler::open(void) {
     return 0;
 }
 
-ACE_HANDLE AcceptHandler::get_handle(void) const {
+ACE_HANDLE AcceptHandler::get_handle() const {
     ACE_TRACE("AcceptHandler::get_handle(void)");
     return mAcceptor.get_handle();
 }

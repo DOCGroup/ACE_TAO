@@ -37,7 +37,7 @@ public:
   ~ACE_SV_Message (void);
 
   /// Get the message type.
-  long type (void) const;
+  long type () const;
 
   /// Set the message type.
   void type (long);

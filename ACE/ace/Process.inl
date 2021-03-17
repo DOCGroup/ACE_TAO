@@ -178,7 +178,7 @@ ACE_Process_Options::startup_info (void)
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::get_process_attributes (void) const
+ACE_Process_Options::get_process_attributes () const
 {
 #if !defined (ACE_HAS_WINCE)
   return process_attributes_;
@@ -199,7 +199,7 @@ ACE_Process_Options::set_process_attributes (void)
 }
 
 ACE_INLINE LPSECURITY_ATTRIBUTES
-ACE_Process_Options::get_thread_attributes (void) const
+ACE_Process_Options::get_thread_attributes () const
 {
 #if !defined (ACE_HAS_WINCE)
   return thread_attributes_;
@@ -219,7 +219,7 @@ ACE_Process_Options::set_thread_attributes (void)
 #endif /* !ACE_HAS_WINCE */
 }
 
-ACE_INLINE HANDLE ACE_Process_Options::get_user_token (void) const
+ACE_INLINE HANDLE ACE_Process_Options::get_user_token () const
 {
   return user_token_;
 }

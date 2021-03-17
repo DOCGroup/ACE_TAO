@@ -152,47 +152,47 @@ public:
       CORBA::DefinitionKind def_kind) const;
 
   /// Accessor for the POA that is dispatching the current call.
-  PortableServer::Current_ptr poa_current (void) const;
+  PortableServer::Current_ptr poa_current () const;
 
   /// Accessor for the ACE_Configuration database.
-  ACE_Configuration *config (void) const;
+  ACE_Configuration *config () const;
 
   /// Accessor for the Typecode factory.
-  CORBA::TypeCodeFactory_ptr tc_factory (void) const;
+  CORBA::TypeCodeFactory_ptr tc_factory () const;
 
   /// Accessor/mutator for our object reference.
-  CORBA::Repository_ptr repo_objref (void) const;
+  CORBA::Repository_ptr repo_objref () const;
   void repo_objref (CORBA::Repository_ptr objref);
 
   /// Accessor for the root key for all IR objects.
-  ACE_Configuration_Section_Key root_key (void) const;
+  ACE_Configuration_Section_Key root_key () const;
 
   /// Accessor for the repository ids root key.
-  ACE_Configuration_Section_Key repo_ids_key (void) const;
+  ACE_Configuration_Section_Key repo_ids_key () const;
 
   /// Accessor for the primitive kinds section.
-  ACE_Configuration_Section_Key pkinds_key (void) const;
+  ACE_Configuration_Section_Key pkinds_key () const;
 
   /// Accessor for the bounded strings section.
-  ACE_Configuration_Section_Key strings_key (void) const;
+  ACE_Configuration_Section_Key strings_key () const;
 
   /// Accessor for the bounded wstrings section.
-  ACE_Configuration_Section_Key wstrings_key (void) const;
+  ACE_Configuration_Section_Key wstrings_key () const;
 
   /// Accessor for the fixed types section.
-  ACE_Configuration_Section_Key fixeds_key (void) const;
+  ACE_Configuration_Section_Key fixeds_key () const;
 
   /// Accessor for the anonymous arrays section.
-  ACE_Configuration_Section_Key arrays_key (void) const;
+  ACE_Configuration_Section_Key arrays_key () const;
 
   /// Accessor for the anonymous sequences section.
-  ACE_Configuration_Section_Key sequences_key (void) const;
+  ACE_Configuration_Section_Key sequences_key () const;
 
   /// Accessor for the name extension string.
-  const char *extension (void) const;
+  const char *extension () const;
 
   /// Repo lock.
-  ACE_Lock &lock (void) const;
+  ACE_Lock &lock () const;
 
   /**
    * Used ONLY with Purify, for memory leak checking.
@@ -305,7 +305,7 @@ private:
   const char *pkind_to_string (CORBA::PrimitiveKind pkind) const;
 
   /// Return the number of entries in the CORBA::PrimitiveKind enum.
-  u_int num_pkinds (void) const;
+  u_int num_pkinds () const;
 
 };
 

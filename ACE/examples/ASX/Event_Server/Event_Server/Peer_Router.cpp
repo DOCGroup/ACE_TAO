@@ -342,7 +342,7 @@ Peer_Router::Peer_Router (Peer_Router_Context *prc)
 }
 
 Peer_Router_Context *
-Peer_Router::context (void) const
+Peer_Router::context () const
 {
   return this->peer_router_context_;
 }

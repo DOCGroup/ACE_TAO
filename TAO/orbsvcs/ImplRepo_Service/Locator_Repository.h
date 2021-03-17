@@ -114,13 +114,13 @@ public:
 
   /// Returns the internal hash map containing the server information.
   SIMap& servers(void);
-  const SIMap& servers(void) const;
+  const SIMap& servers() const;
   /// Returns the internal hash map containing the activator information.
   AIMap& activators(void);
-  const AIMap& activators(void) const;
+  const AIMap& activators() const;
 
   /// Indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode(void) const = 0;
+  virtual const ACE_TCHAR* repo_mode() const = 0;
 
   /// Convert to lower case
   static ACE_CString lcase (const ACE_CString& s);

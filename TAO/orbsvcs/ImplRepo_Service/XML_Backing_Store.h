@@ -47,7 +47,7 @@ public:
   virtual ~XML_Backing_Store (void);
 
   /// indicate the XML filename as the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode (void) const;
+  virtual const ACE_TCHAR* repo_mode () const;
 
   /// create the Server_Info server object
   /// @param info the source Server_Info data

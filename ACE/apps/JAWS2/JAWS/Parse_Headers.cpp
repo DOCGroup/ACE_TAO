@@ -3,7 +3,7 @@
 #include "ace/Log_Msg.h"
 
 #define ACCESSOR(T,C,x) \
-T C :: x (void) const { return this-> x##_; }\
+T C :: x () const { return this-> x##_; }\
 void C :: x (T t) { this-> x##_ = t; }
 
 int
@@ -418,13 +418,13 @@ JAWS_Header_Info::header_buf (void)
 }
 
 const char *
-JAWS_Header_Info::last_header_name (void) const
+JAWS_Header_Info::last_header_name () const
 {
   return this->last_header_data_ ? this->last_header_data_->header_name () : 0;
 }
 
 const JAWS_Header_Data *
-JAWS_Header_Info::last_header_data (void) const
+JAWS_Header_Info::last_header_data () const
 {
   return this->last_header_data_;
 }

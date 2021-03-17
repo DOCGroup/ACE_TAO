@@ -52,7 +52,7 @@ public:
   void consumer_done (TAO_Notify_Tests_Peer*);
 
   /// Access the done boolean.
-  bool is_done (void) const;
+  bool is_done () const;
 
   /// Access the ORB.  This class retains ownership.
   CORBA::ORB_ptr orb (void);

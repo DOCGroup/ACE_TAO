@@ -13,7 +13,7 @@ public:
   SOCK (void) { ACE_REGISTER_OBJECT (SOCK); }
   ~SOCK (void) { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK = %@\n", this));
   }
 
@@ -26,7 +26,7 @@ public:
   SOCK_Acceptor (void) { ACE_REGISTER_OBJECT (SOCK_Acceptor); }
   ~SOCK_Acceptor (void) { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Acceptor = %@\n", this));
   }
 
@@ -39,7 +39,7 @@ public:
   SOCK_Stream (void) { ACE_REGISTER_OBJECT (SOCK_Stream); }
   ~SOCK_Stream (void) { ACE_REMOVE_OBJECT; }
 
-  void dump (void) const {
+  void dump () const {
     ACE_DEBUG ((LM_DEBUG, "hello from SOCK_Stream = %@\n", this));
   }
 

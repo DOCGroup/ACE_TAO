@@ -45,8 +45,8 @@ public:
   virtual int remove (void) = 0;
   virtual void *malloc (size_t = 0) = 0;
   virtual int free (void *p) = 0;
-  virtual size_t get_segment_size (void) const = 0;
-  virtual ACE_HANDLE get_id (void) const = 0;
+  virtual size_t get_segment_size () const = 0;
+  virtual ACE_HANDLE get_id () const = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

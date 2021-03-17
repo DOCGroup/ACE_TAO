@@ -82,7 +82,7 @@ ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor* visitor)
 }
 
 Literal_Type
-ETCL_Literal_Constraint::expr_type (void) const
+ETCL_Literal_Constraint::expr_type () const
 {
   return this->type_;
 }
@@ -93,12 +93,12 @@ ETCL_Literal_Constraint::operator= (const ETCL_Literal_Constraint& co)
   this->copy (co);
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::Boolean (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::Boolean () const
 {
   return (this->type_ == ACE_ETCL_BOOLEAN) ? this->op_.bool_ : false;
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::ULong (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
 {
   switch (this->type_)
   {

@@ -113,12 +113,12 @@ public:
 
   /// Set and get flag that indicates if parsing and passing of
   /// addresses to the service_handler is necessary.
-  virtual bool pass_addresses (void) const;
+  virtual bool pass_addresses () const;
   virtual void pass_addresses (bool new_value);
 
   /// Set and get flag that indicates if address validation is
   /// required.
-  virtual bool validate_new_connection (void) const;
+  virtual bool validate_new_connection () const;
   virtual void validate_new_connection (bool new_value);
 
 protected:

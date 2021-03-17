@@ -69,7 +69,7 @@ public:
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Returns true if connected
-  bool is_connected (void) const;
+  bool is_connected () const;
 
   /// Access the Consumer
   TAO_Notify_Consumer* consumer (void);

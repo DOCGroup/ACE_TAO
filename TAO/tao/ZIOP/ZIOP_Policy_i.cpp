@@ -46,7 +46,7 @@ CompressorIdLevelListPolicy::policy_type (void)
 
 
 CompressorIdLevelListPolicy *
-CompressorIdLevelListPolicy::clone (void) const
+CompressorIdLevelListPolicy::clone () const
 {
   CompressorIdLevelListPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -78,13 +78,13 @@ CompressorIdLevelListPolicy::compressor_ids (void)
 }
 
 TAO_Cached_Policy_Type
-CompressorIdLevelListPolicy::_tao_cached_type (void) const
+CompressorIdLevelListPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY;
 }
 
 TAO_Policy_Scope
-CompressorIdLevelListPolicy::_tao_scope (void) const
+CompressorIdLevelListPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                                         TAO_POLICY_CLIENT_EXPOSED);
@@ -140,7 +140,7 @@ CompressionEnablingPolicy::policy_type (void)
 
 
 CompressionEnablingPolicy *
-CompressionEnablingPolicy::clone (void) const
+CompressionEnablingPolicy::clone () const
 {
   CompressionEnablingPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -176,13 +176,13 @@ CompressionEnablingPolicy::compression_enabled (void)
 
 
 TAO_Cached_Policy_Type
-CompressionEnablingPolicy::_tao_cached_type (void) const
+CompressionEnablingPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_COMPRESSION_ENABLING_POLICY;
 }
 
 TAO_Policy_Scope
-CompressionEnablingPolicy::_tao_scope (void) const
+CompressionEnablingPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                           TAO_POLICY_CLIENT_EXPOSED);
@@ -229,7 +229,7 @@ CompressionLowValuePolicy::policy_type (void)
 
 
 CompressionLowValuePolicy *
-CompressionLowValuePolicy::clone (void) const
+CompressionLowValuePolicy::clone () const
 {
   CompressionLowValuePolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -265,7 +265,7 @@ CompressionLowValuePolicy::low_value (void)
 
 
 TAO_Cached_Policy_Type
-CompressionLowValuePolicy::_tao_cached_type (void) const
+CompressionLowValuePolicy::_tao_cached_type () const
 {
   return TAO_CACHED_COMPRESSION_LOW_VALUE_POLICY;
 }
@@ -299,7 +299,7 @@ CompressionMinRatioPolicy::policy_type (void)
 
 
 CompressionMinRatioPolicy *
-CompressionMinRatioPolicy::clone (void) const
+CompressionMinRatioPolicy::clone () const
 {
   CompressionMinRatioPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -335,7 +335,7 @@ CompressionMinRatioPolicy::ratio (void)
 
 
 TAO_Cached_Policy_Type
-CompressionMinRatioPolicy::_tao_cached_type (void) const
+CompressionMinRatioPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_MIN_COMPRESSION_RATIO_POLICY;
 }

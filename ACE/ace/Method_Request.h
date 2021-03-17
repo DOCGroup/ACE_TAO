@@ -51,7 +51,7 @@ public:
 
   // = Accessors.
   /// Get priority.
-  unsigned long priority (void) const;
+  unsigned long priority () const;
 
   /// Set priority.
   /**

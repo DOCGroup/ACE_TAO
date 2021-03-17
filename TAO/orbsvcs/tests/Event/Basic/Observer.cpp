@@ -193,7 +193,7 @@ EC_Master::parse_args (int &argc, ACE_TCHAR *argv [])
 }
 
 int
-EC_Master::channel_count (void) const
+EC_Master::channel_count () const
 {
   return this->n_channels_;
 }
@@ -238,7 +238,7 @@ EC_Observer::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Observer::print_args (void) const
+EC_Observer::print_args () const
 {
   this->EC_Driver::print_args ();
 }

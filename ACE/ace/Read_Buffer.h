@@ -76,14 +76,14 @@ public:
               int replace = '\0');
 
   /// Returns the number of characters replaced during a @c read.
-  size_t replaced (void) const;
+  size_t replaced () const;
 
   /// Returns the size of the allocated buffer obtained during a
   /// @c read, not including the null terminator.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Returns a pointer to its allocator.
-  ACE_Allocator *alloc (void) const;
+  ACE_Allocator *alloc () const;
 
   /// Dump the state of the object.
   void dump () const;

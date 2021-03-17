@@ -79,10 +79,10 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -135,10 +135,10 @@ public:
   void destroy (void);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -185,10 +185,10 @@ public:
   void destroy (void);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -248,10 +248,10 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -311,10 +311,10 @@ public:
   void destroy (void);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.
@@ -377,10 +377,10 @@ public:
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// Helper method for the implementation of
   /// CORBA::ORB::create_policy.

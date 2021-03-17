@@ -71,7 +71,7 @@ public:
 
   // = SPIPE-specific address operations
   /// Pathname of rendezvous point in file system.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Get user id.
   uid_t user_id () const;

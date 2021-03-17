@@ -71,7 +71,7 @@ private:
   int via_naming_service(void);
 
   /// returns the TAO instance of the singleton Reactor.
-   ACE_Reactor *reactor_used (void) const;
+   ACE_Reactor *reactor_used () const;
 
   /// This method used for getting stock information from a file.
   int read_file (ACE_TCHAR *filename);

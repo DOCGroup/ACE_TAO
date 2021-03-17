@@ -254,7 +254,7 @@ ACE_Token_Collection::~ACE_Token_Collection (void)
 
 // This method doesn't mean anything for a collection.
 ACE_Token_Proxy *
-ACE_Token_Collection::clone (void) const
+ACE_Token_Collection::clone () const
 {
   ACE_TRACE ("ACE_Token_Collection::clone");
   return (ACE_Token_Proxy *) 0;
@@ -269,7 +269,7 @@ ACE_Token_Collection::create_token (const ACE_TCHAR *)
 }
 
 void
-ACE_Token_Collection::dump (void) const
+ACE_Token_Collection::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Collection::dump");

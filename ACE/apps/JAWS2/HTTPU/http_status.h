@@ -18,8 +18,8 @@ class HTTPU_Export HTTP_SCode_Node
   friend class HTTP_SCode_Base;
 
 public:
-  operator int (void) const;
-  operator const char * (void) const;
+  operator int () const;
+  operator const char * () const;
 
 private:
   HTTP_SCode_Node (int code, const char *code_str);

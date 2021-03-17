@@ -44,16 +44,16 @@ public:
 
   TAO_DII_Reply_Handler_var &operator= (TAO_DII_Reply_Handler_ptr);
   TAO_DII_Reply_Handler_var &operator= (const TAO_DII_Reply_Handler_var &);
-  TAO_DII_Reply_Handler_ptr operator-> (void) const;
+  TAO_DII_Reply_Handler_ptr operator-> () const;
 
   operator const TAO_DII_Reply_Handler_ptr &() const;
   operator TAO_DII_Reply_Handler_ptr &();
 
-  TAO_DII_Reply_Handler_ptr in (void) const;
+  TAO_DII_Reply_Handler_ptr in () const;
   TAO_DII_Reply_Handler_ptr &inout (void);
   TAO_DII_Reply_Handler_ptr &out (void);
   TAO_DII_Reply_Handler_ptr _retn (void);
-  TAO_DII_Reply_Handler_ptr ptr (void) const;
+  TAO_DII_Reply_Handler_ptr ptr () const;
 
 private:
   TAO_DII_Reply_Handler_ptr ptr_;

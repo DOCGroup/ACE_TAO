@@ -35,13 +35,13 @@ TAO_SHMIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 }
 
 const char *
-TAO_SHMIOP_Protocol_Factory::prefix (void) const
+TAO_SHMIOP_Protocol_Factory::prefix () const
 {
   return ::prefix_;
 }
 
 char
-TAO_SHMIOP_Protocol_Factory::options_delimiter (void) const
+TAO_SHMIOP_Protocol_Factory::options_delimiter () const
 {
   return '/';
 }
@@ -105,7 +105,7 @@ TAO_SHMIOP_Protocol_Factory::make_connector (void)
 }
 
 int
-TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint (void) const
+TAO_SHMIOP_Protocol_Factory::requires_explicit_endpoint () const
 {
   return 1;
 }

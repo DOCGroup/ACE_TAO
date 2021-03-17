@@ -32,7 +32,7 @@ namespace TAO
 
   template <typename InterceptorType, typename DetailsType>
   size_t
-  Interceptor_List<InterceptorType,DetailsType>::size (void) const
+  Interceptor_List<InterceptorType,DetailsType>::size () const
   {
     return this->interceptors_.size ();
   }

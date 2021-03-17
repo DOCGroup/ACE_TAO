@@ -63,7 +63,7 @@ TAO_RT_Mutex::try_lock (TimeBase::TimeT wait_time)
 }
 
 const char *
-TAO_RT_Mutex::name (void) const
+TAO_RT_Mutex::name () const
 {
   return 0;
 }
@@ -76,7 +76,7 @@ TAO_Named_RT_Mutex::TAO_Named_RT_Mutex (const char *name)
 }
 
 const char *
-TAO_Named_RT_Mutex::name (void) const
+TAO_Named_RT_Mutex::name () const
 {
   return this->name_.c_str ();
 }

@@ -43,7 +43,7 @@ private:
   // = Demuxing hooks.
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// By making this private we ensure that the <Logging_Acceptor> is
   /// allocated dynamically.

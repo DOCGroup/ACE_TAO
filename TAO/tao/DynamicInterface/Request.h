@@ -67,10 +67,10 @@ namespace CORBA
   {
   public:
     /// Return the target of this request.
-    CORBA::Object_ptr target (void) const;
+    CORBA::Object_ptr target () const;
 
     /// Return the operation name for the request.
-    const CORBA::Char *operation (void) const;
+    const CORBA::Char *operation () const;
 
     /// Return the arguments for the request.
     CORBA::NVList_ptr arguments (void);
@@ -82,7 +82,7 @@ namespace CORBA
     CORBA::ExceptionList_ptr exceptions (void);
 
     /// Accessor for the Context member.
-    CORBA::Context_ptr ctx (void) const;
+    CORBA::Context_ptr ctx () const;
 
     /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);

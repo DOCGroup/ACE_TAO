@@ -8,7 +8,7 @@ TAO_EC_Filter::TAO_EC_Filter (void)
 }
 
 ACE_INLINE TAO_EC_Filter*
-TAO_EC_Filter::parent (void) const
+TAO_EC_Filter::parent () const
 {
   return this->parent_;
 }

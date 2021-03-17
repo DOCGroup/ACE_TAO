@@ -59,7 +59,7 @@ public:
    * ACE_Future_Set via the ACE_Future_Set::next_readable() method,
    * or when the ACE_Future_Set has not been assigned any subjects.
    */
-  int is_empty (void) const;
+  int is_empty () const;
 
   /**
    * Enqueus the given ACE_Future into this objects queue when it is

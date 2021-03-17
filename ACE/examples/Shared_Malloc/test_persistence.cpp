@@ -38,7 +38,7 @@ public:
 
   ~Employee (void) { shmem_allocator->free (this->name_); }
 
-  const char *name (void) const { return this->name_; }
+  const char *name () const { return this->name_; }
 
   void name (const char *name)
   {
@@ -50,7 +50,7 @@ public:
     ACE_OS::strcpy (this->name_, name);
   }
 
-  u_long id (void) const { return id_; }
+  u_long id () const { return id_; }
 
   void id (u_long id) { id_ = id; }
 

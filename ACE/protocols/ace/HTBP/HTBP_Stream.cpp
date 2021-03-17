@@ -34,7 +34,7 @@ ACE::HTBP::Stream::~Stream (void)
 
   /// Dump the state of an object.
 void
-ACE::HTBP::Stream::dump (void) const
+ACE::HTBP::Stream::dump () const
 {
 }
 
@@ -329,7 +329,7 @@ ACE::HTBP::Stream::get_remote_addr (ACE::HTBP::Addr &peer_addr) const
 }
 
 ACE::HTBP::Session *
-ACE::HTBP::Stream::session (void) const
+ACE::HTBP::Stream::session () const
 {
   return this->session_;
 }
@@ -344,7 +344,7 @@ ACE::HTBP::Stream::session (ACE::HTBP::Session *s)
 
 
 ACE_HANDLE
-ACE::HTBP::Stream::get_handle (void) const
+ACE::HTBP::Stream::get_handle () const
 {
   return ACE_INVALID_HANDLE;
 }

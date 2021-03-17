@@ -113,7 +113,7 @@ const FieldArrayType&
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::fields (void) const
+                      RefCountPolicy>::fields () const
 {
   return fields_;
 }
@@ -210,7 +210,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::get_compact_typecode_i (void) const
+                      RefCountPolicy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Struct_Field<CORBA::String_var,
                               CORBA::TypeCode_var> >
@@ -260,7 +260,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::id_i (void) const
+                      RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -275,7 +275,7 @@ char const *
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::name_i (void) const
+                      RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -290,7 +290,7 @@ CORBA::ULong
 TAO::TypeCode::Struct<StringType,
                       TypeCodeType,
                       FieldArrayType,
-                      RefCountPolicy>::member_count_i (void) const
+                      RefCountPolicy>::member_count_i () const
 {
   return this->nfields_;
 }

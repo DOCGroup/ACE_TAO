@@ -27,7 +27,7 @@ Smart_Test_Proxy::Smart_Test_Proxy (Test_ptr proxy)
 }
 
 bool
-Smart_Test_Proxy::can_convert_to_ior (void) const
+Smart_Test_Proxy::can_convert_to_ior () const
 {
   // Even though a smart proxy is local, this one can be stringified
   return true;

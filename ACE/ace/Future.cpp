@@ -48,7 +48,7 @@ ACE_Future_Observer<T>::~ACE_Future_Observer (void)
 // Dump the state of an object.
 
 template <class T> void
-ACE_Future_Rep<T>::dump (void) const
+ACE_Future_Rep<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -160,7 +160,7 @@ ACE_Future_Rep<T>::~ACE_Future_Rep (void)
 }
 
 template <class T> int
-ACE_Future_Rep<T>::ready (void) const
+ACE_Future_Rep<T>::ready () const
 {
   return this->value_ != 0;
 }
@@ -353,7 +353,7 @@ ACE_Future<T>::set (const T &r)
 }
 
 template <class T> int
-ACE_Future<T>::ready (void) const
+ACE_Future<T>::ready () const
 {
   // We're ready if the ACE_Future_rep is ready...
   return this->future_rep_->ready ();
@@ -411,7 +411,7 @@ ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
 }
 
 template <class T> void
-ACE_Future<T>::dump (void) const
+ACE_Future<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG,

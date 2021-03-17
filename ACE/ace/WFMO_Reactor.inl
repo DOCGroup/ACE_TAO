@@ -73,7 +73,7 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::set (Common_Info &common_info)
 }
 
 ACE_INLINE void
-ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump (void) const
+ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump");
@@ -229,7 +229,7 @@ ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::reset (void)
 }
 
 ACE_INLINE void
-ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump (void) const
+ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::To_Be_Added_Info::dump");
@@ -300,7 +300,7 @@ ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::set (ACE_HANDLE event_handl
 }
 
 ACE_INLINE void
-ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump (void) const
+ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Handler_Repository::Suspended_Info::dump");
@@ -333,7 +333,7 @@ ACE_WFMO_Reactor_Handler_Repository::close (void)
 }
 
 ACE_INLINE ACE_HANDLE *
-ACE_WFMO_Reactor_Handler_Repository::handles (void) const
+ACE_WFMO_Reactor_Handler_Repository::handles () const
 {
   // This code is probably too subtle to be useful in the long run...
   // The basic idea is that all threads wait on all user handles plus
@@ -348,7 +348,7 @@ ACE_WFMO_Reactor_Handler_Repository::handles (void) const
 }
 
 ACE_INLINE ACE_WFMO_Reactor_Handler_Repository::Current_Info *
-ACE_WFMO_Reactor_Handler_Repository::current_info (void) const
+ACE_WFMO_Reactor_Handler_Repository::current_info () const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
     return this->current_info_;
@@ -357,7 +357,7 @@ ACE_WFMO_Reactor_Handler_Repository::current_info (void) const
 }
 
 ACE_INLINE DWORD
-ACE_WFMO_Reactor_Handler_Repository::max_handlep1 (void) const
+ACE_WFMO_Reactor_Handler_Repository::max_handlep1 () const
 {
   if (ACE_Thread::self () == this->wfmo_reactor_.owner_i ())
     return this->max_handlep1_;
@@ -1171,7 +1171,7 @@ ACE_WFMO_Reactor::lock (void)
 }
 
 ACE_INLINE size_t
-ACE_WFMO_Reactor::size (void) const
+ACE_WFMO_Reactor::size () const
 {
   // Size of repository minus the 2 used for internal purposes
   return this->handler_rep_.max_size_ - 2;

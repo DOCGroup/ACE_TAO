@@ -59,13 +59,13 @@ public:
   void assign (const TYPE& value);
 
   /// Return the value.
-  const TYPE& value (void) const;
+  const TYPE& value () const;
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
   /// Invalidate this property's value.
   void invalidate (void);
@@ -128,13 +128,13 @@ public:
   int set (const TAO_Notify_PropertySeq& property_seq);
 
   /// Return the name
-  const char * name (void) const;
+  const char * name () const;
 
   /// Return the value.
-  const TYPE& value (void) const;
+  const TYPE& value () const;
 
   /// Is the current value valid
-  CORBA::Boolean is_valid (void) const;
+  CORBA::Boolean is_valid () const;
 
 protected:
   /// The Property name.

@@ -41,7 +41,7 @@ ACE_Pagefile_Memory_Pool::protect (void *, size_t, int)
 }
 
 ACE_INLINE void *
-ACE_Pagefile_Memory_Pool::base_addr (void) const
+ACE_Pagefile_Memory_Pool::base_addr () const
 {
   return 0;
 }

@@ -20,7 +20,7 @@ template <typename StringType,
           typename TypeCodeType>
 TAO::TypeCode::Case<StringType, TypeCodeType> *
 TAO::TypeCode::Case_Enum_T<StringType,
-                           TypeCodeType>::clone (void) const
+                           TypeCodeType>::clone () const
 {
   Case<StringType, TypeCodeType> * p = 0;
 
@@ -74,7 +74,7 @@ template <typename StringType,
           typename TypeCodeType>
 CORBA::Any *
 TAO::TypeCode::Case_Enum_T<StringType,
-                           TypeCodeType>::label (void) const
+                           TypeCodeType>::label () const
 {
     TAO_OutputCDR out_cdr;
 

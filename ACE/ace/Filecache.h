@@ -107,16 +107,16 @@ public:
   ~ACE_Filecache_Handle (void);
 
   /// Base address of memory mapped file.
-  void *address (void) const;
+  void *address () const;
 
   /// A handle (e.g., UNIX file descriptor, or NT file handle).
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
 
   /// Any associated error in handle creation and acquisition.
-  int error (void) const;
+  int error () const;
 
   /// The size of the file.
-  ACE_OFF_T size (void) const;
+  ACE_OFF_T size () const;
 
 protected:
   /// Default do nothing constructor.  Prevent it from being called.
@@ -264,24 +264,24 @@ public:
   int release (void);
 
   // = error_ accessors
-  int error (void) const;
+  int error () const;
   int error (int error_value,
              const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
 
   /// filename_ accessor
-  const ACE_TCHAR *filename (void) const;
+  const ACE_TCHAR *filename () const;
 
   /// handle_ accessor.
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
 
   /// Base memory address for memory mapped file.
-  void *address (void) const;
+  void *address () const;
 
   /// size_ accessor.
-  ACE_OFF_T size (void) const;
+  ACE_OFF_T size () const;
 
   /// True if file on disk is newer than cached file.
-  int update (void) const;
+  int update () const;
 
   ACE_ALLOC_HOOK_DECLARE;
 

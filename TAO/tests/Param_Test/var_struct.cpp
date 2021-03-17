@@ -34,7 +34,7 @@ Test_Var_Struct::~Test_Var_Struct (void)
 }
 
 const char *
-Test_Var_Struct::opname (void) const
+Test_Var_Struct::opname () const
 {
   return this->opname_;
 }

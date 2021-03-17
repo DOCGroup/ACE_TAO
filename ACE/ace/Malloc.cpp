@@ -154,7 +154,7 @@ ACE_Malloc_Stats::ACE_Malloc_Stats (void)
 }
 
 void
-ACE_Malloc_Stats::dump (void) const
+ACE_Malloc_Stats::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_Stats::dump");

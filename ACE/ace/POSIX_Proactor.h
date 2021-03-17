@@ -148,11 +148,11 @@ public:
   int close_dispatch_threads (int wait);
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  size_t number_of_threads (void) const;
+  size_t number_of_threads () const;
   void number_of_threads (size_t threads);
 
   /// This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   // Methods used to create Asynch IO factory and result objects. We
   // create the right objects here in these methods.
@@ -575,7 +575,7 @@ protected:
   int setup_signal_handler (int signal_number) const;
 
   /// Insures that RT_completion_signals_ are blocked in the calling thread.
-  int block_signals (void) const;
+  int block_signals () const;
 
   /**
    * Dispatch a single set of events.  @a timeout is a pointer to a

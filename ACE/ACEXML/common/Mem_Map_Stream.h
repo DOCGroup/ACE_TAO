@@ -93,18 +93,18 @@ public:
    *  Returns a pointer to array of characters starting at the <recv>
    *  position.
    */
-  virtual const char *recv (void) const;
+  virtual const char *recv () const;
 
   /**
    *  Returns the length in bytes between the <get> position and the <recv>
    *  position.
    */
-  virtual size_t recv_len (void) const;
+  virtual size_t recv_len () const;
 
   /**
    *  Returns the no. of bytes available in the stream.
    */
-  virtual size_t available (void) const;
+  virtual size_t available () const;
 
   /**
    *  Resets the <get> and <recv> positions to the beginning of the stream.
@@ -145,7 +145,7 @@ public:
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 
   /// Returns 1 if we're at the end of the HTTP stream, else 0.
-  virtual int eof (void) const;
+  virtual int eof () const;
 
   /// Returns the underlying service handler.
   Svc_Handler *svc_handler (void);

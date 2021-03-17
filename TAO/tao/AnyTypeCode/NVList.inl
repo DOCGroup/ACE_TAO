@@ -62,7 +62,7 @@ CORBA::NVList::NVList (void)
 
 ACE_INLINE
 CORBA::ULong
-CORBA::NVList::count (void) const
+CORBA::NVList::count () const
 {
   (const_cast<CORBA::NVList *> (this))->evaluate ();
 

@@ -30,7 +30,7 @@ public:
 
 private:
   int open (const ACE_UNIX_Addr &suap, int async = 0);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 

@@ -195,7 +195,7 @@ public:
 
 #if !defined (_ACE_USE_SV_SEM)
   /// Return the underlying mutex.
-  const ACE_mutex_t &lock (void) const;
+  const ACE_mutex_t &lock () const;
 #endif /* !_ACE_USE_SV_SEM */
 
   /// Get the name used for the lock, or null if no name is used.

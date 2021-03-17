@@ -49,7 +49,7 @@ public:
   virtual void next (void);
 
   /// Returns true when there are no more nodes in the sequence
-  virtual bool isdone (void) const;
+  virtual bool isdone () const;
 
   /// Returns the node at the current position in the sequence
   virtual ACE_Timer_Node_T<TYPE> *item (void);
@@ -107,11 +107,11 @@ public:
   virtual ~ACE_Timer_List_T (void);
 
   /// True if queue is empty, else false.
-  virtual bool is_empty (void) const;
+  virtual bool is_empty () const;
 
   /// Returns the time of the earlier node in the ACE_Timer_List.
   /// Must be called on a non-empty queue.
-  virtual const ACE_Time_Value& earliest_time (void) const;
+  virtual const ACE_Time_Value& earliest_time () const;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -194,7 +194,7 @@ private:
 
   void unlink (ACE_Timer_Node_T<TYPE>* n);
 
-  ACE_Timer_Node_T<TYPE>* get_first_i(void) const;
+  ACE_Timer_Node_T<TYPE>* get_first_i() const;
 
 private:
   /// Pointer to linked list of <ACE_Timer_Handles>.

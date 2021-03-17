@@ -66,7 +66,7 @@ ACE_URL_Property::name_rep (void)
 }
 
 ACE_INLINE const ACE_WString &
-ACE_URL_Property::name (void) const
+ACE_URL_Property::name () const
 {
   return this->name_;
 }
@@ -90,7 +90,7 @@ ACE_URL_Property::value_rep (void)
 }
 
 ACE_INLINE const ACE_WString &
-ACE_URL_Property::value (void) const
+ACE_URL_Property::value () const
 {
   return this->value_;
 }
@@ -109,7 +109,7 @@ ACE_URL_Property::value (const ACE_UINT16 *v)
 
 
 ACE_INLINE size_t
-ACE_URL_Property::size (void) const
+ACE_URL_Property::size () const
 {
   size_t len = 2;
     len += this->name_.length () + this->value_.length ();
@@ -170,7 +170,7 @@ ACE_URL_Offer::url_rep (void)
 }
 
 ACE_INLINE const ACE_WString &
-ACE_URL_Offer::url (void) const
+ACE_URL_Offer::url () const
 {
   return this->url_;
 }

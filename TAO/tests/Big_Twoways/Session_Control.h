@@ -20,7 +20,7 @@ public:
   virtual ~Session_Control (void);
 
   /// Return 1 when all sessions have finished
-  int all_sessions_finished (void) const;
+  int all_sessions_finished () const;
 
   // = The skeleton methods
   virtual void session_finished (CORBA::Boolean success);

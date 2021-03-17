@@ -66,7 +66,7 @@ public:
   const Server_Info_Ptr& edit(bool active = true);
 
   /// Indicate it Server_Info_Ptr is null
-  bool null(void) const;
+  bool null() const;
 
 private:
   const UpdateableServerInfo& operator=(const UpdateableServerInfo& );

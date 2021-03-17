@@ -345,7 +345,7 @@ ACE_Allocator_Adapter<MALLOC>::~ACE_Allocator_Adapter ()
 
 #if defined (ACE_HAS_MALLOC_STATS)
 template <class MALLOC> void
-ACE_Allocator_Adapter<MALLOC>::print_stats (void) const
+ACE_Allocator_Adapter<MALLOC>::print_stats () const
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::print_stats");
   this->allocator_.print_stats ();
@@ -384,7 +384,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 #if defined (ACE_HAS_MALLOC_STATS)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats (void) const
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats () const
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::print_stats");
   ACE_GUARD (ACE_LOCK, ace_mon, *this->lock_);

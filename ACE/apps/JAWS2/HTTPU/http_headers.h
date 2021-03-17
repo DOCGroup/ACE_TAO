@@ -29,9 +29,9 @@ class HTTPU_Export HTTP_Hdr_Node
   friend class HTTP_HCodes;
 
 public:
-  operator int (void) const;
-  operator const char * (void) const;
-  const char * format (void) const;
+  operator int () const;
+  operator const char * () const;
+  const char * format () const;
 
 private:
   HTTP_Hdr_Node (const char *token, const char *format);

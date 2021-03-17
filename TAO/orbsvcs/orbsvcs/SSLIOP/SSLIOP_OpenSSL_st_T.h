@@ -96,17 +96,17 @@ namespace TAO
       OpenSSL_st_var<T> & operator= (T const & st);
       //@}
 
-      T const * operator-> (void) const;
+      T const * operator-> () const;
       T* operator-> (void);
 
       operator const T& () const;
       operator T& ();
 
-      T*  in (void) const;
+      T*  in () const;
       T*& inout (void);
       T*& out (void);
       T*  _retn (void);
-      T*  ptr (void) const;
+      T*  ptr () const;
 
     private:
 

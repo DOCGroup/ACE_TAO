@@ -74,7 +74,7 @@ public:
   virtual int close (void) = 0;
 
   /// Returns the QoS in the current session.
-  virtual ACE_QoS qos (void) const = 0;
+  virtual ACE_QoS qos () const = 0;
 
   /// Set QoS for the current session. The qos manager is used to
   /// confirm if this QoS session was subscribed to by the socket.
@@ -102,11 +102,11 @@ public:
   virtual int update_qos (void) = 0;
 
   /// Get/Set methods for the flags_.
-  virtual ACE_End_Point_Type flags (void) const = 0;
+  virtual ACE_End_Point_Type flags () const = 0;
   virtual void flags (const ACE_End_Point_Type flags) = 0;
 
   /// Get the session id.
-  virtual int session_id (void) const = 0;
+  virtual int session_id () const = 0;
 
   /// Set the session id.
   virtual void session_id (const int session_id) = 0;
@@ -122,19 +122,19 @@ public:
 
 
   /// Get the destination address for this session.
-  virtual ACE_INET_Addr dest_addr (void) const = 0;
+  virtual ACE_INET_Addr dest_addr () const = 0;
 
   /// Set the destination address for this session.
   virtual void dest_addr (const ACE_INET_Addr &dest_addr) = 0;
 
   /// Get the source port for this session.
-  virtual u_short source_port (void) const = 0;
+  virtual u_short source_port () const = 0;
 
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port) = 0;
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr (void) const = 0;
+  virtual ACE_INET_Addr* source_addr () const = 0;
 
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr) = 0;

@@ -48,7 +48,7 @@ public:
             int protocol = 0);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set handle.
   void set_handle (ACE_HANDLE);

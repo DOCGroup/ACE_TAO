@@ -18,7 +18,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->acceptor_.get_handle (); }
 
   // Called when a connection is ready to accept.
@@ -49,7 +49,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->sock_.get_handle (); }
 
   // Called when input is available from the client.

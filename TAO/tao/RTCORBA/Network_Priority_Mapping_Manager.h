@@ -71,7 +71,7 @@ public:
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id () const;
 
 protected:
 
@@ -100,16 +100,16 @@ public:
 
   TAO_Network_Priority_Mapping_Manager_var &operator= (TAO_Network_Priority_Mapping_Manager_ptr);
   TAO_Network_Priority_Mapping_Manager_var &operator= (const TAO_Network_Priority_Mapping_Manager_var &);
-  TAO_Network_Priority_Mapping_Manager_ptr operator-> (void) const;
+  TAO_Network_Priority_Mapping_Manager_ptr operator-> () const;
 
   /// in, inout, out, _retn
   operator const TAO_Network_Priority_Mapping_Manager_ptr &() const;
   operator TAO_Network_Priority_Mapping_Manager_ptr &();
-  TAO_Network_Priority_Mapping_Manager_ptr in (void) const;
+  TAO_Network_Priority_Mapping_Manager_ptr in () const;
   TAO_Network_Priority_Mapping_Manager_ptr &inout (void);
   TAO_Network_Priority_Mapping_Manager_ptr &out (void);
   TAO_Network_Priority_Mapping_Manager_ptr _retn (void);
-  TAO_Network_Priority_Mapping_Manager_ptr ptr (void) const;
+  TAO_Network_Priority_Mapping_Manager_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.

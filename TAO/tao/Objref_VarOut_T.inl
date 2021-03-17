@@ -18,7 +18,7 @@ TAO_Objref_Var_T<T>::~TAO_Objref_Var_T (void)
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::operator-> (void) const
+TAO_Objref_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -40,7 +40,7 @@ TAO_Objref_Var_T<T>::operator T *& ()
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::in (void) const
+TAO_Objref_Var_T<T>::in () const
 {
   return this->ptr_;
 }
@@ -76,7 +76,7 @@ TAO_Objref_Var_T<T>::_retn (void)
 template <typename T>
 ACE_INLINE
 T *
-TAO_Objref_Var_T<T>::ptr (void) const
+TAO_Objref_Var_T<T>::ptr () const
 {
   return this->ptr_;
 }

@@ -208,7 +208,7 @@ TAO_SHMIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SHMIOP_Endpoint::object_addr (void) const
+TAO_SHMIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:

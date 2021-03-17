@@ -39,7 +39,7 @@ Test_Complex_Any::~Test_Complex_Any (void)
 }
 
 const char *
-Test_Complex_Any::opname (void) const
+Test_Complex_Any::opname () const
 {
   return this->opname_;
 }

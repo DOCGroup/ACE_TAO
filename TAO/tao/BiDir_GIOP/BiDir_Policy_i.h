@@ -49,7 +49,7 @@ public:
   TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs);
 
   /// Returns a copy of <this>.
-  virtual TAO_BidirectionalPolicy *clone (void) const;
+  virtual TAO_BidirectionalPolicy *clone () const;
 
   /// = The BiDir::BidirectionalPolicy methods
   virtual BiDirPolicy::BidirectionalPolicyValue value (void);
@@ -60,7 +60,7 @@ public:
 
   virtual void destroy (void);
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
   /// The attribute

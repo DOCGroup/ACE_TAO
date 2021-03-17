@@ -225,13 +225,13 @@ public:
 
 #if defined (ACE_HAS_IPV6)
   void prefer_ipv6_interfaces (bool p);
-  bool prefer_ipv6_interfaces (void) const;
+  bool prefer_ipv6_interfaces () const;
 
   void connect_ipv6_only (bool p);
-  bool connect_ipv6_only (void) const;
+  bool connect_ipv6_only () const;
 
   void use_ipv6_link_local (bool p);
-  bool use_ipv6_link_local (void) const;
+  bool use_ipv6_link_local () const;
 #endif /* ACE_HAS_IPV6 */
 
   void negotiate_codesets (bool c);

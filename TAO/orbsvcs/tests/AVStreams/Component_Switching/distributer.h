@@ -188,7 +188,7 @@ public:
                   ACE_TCHAR **argv);
 
   /// Flag to know when we are done.
-  bool done (void) const;
+  bool done () const;
   void done (bool);
 
   //// Accessor to connection manager.

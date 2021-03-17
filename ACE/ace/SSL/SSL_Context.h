@@ -289,8 +289,8 @@ public:
   /// of files and paths etc.
   /// Query the location of trusted certification authority
   /// certificates.
-  // const char* ca_file_name(void) const;
-  // const char* ca_dir_name(void) const;
+  // const char* ca_file_name() const;
+  // const char* ca_dir_name() const;
 
   /**
    * Set and query the default verify mode for this context, it is

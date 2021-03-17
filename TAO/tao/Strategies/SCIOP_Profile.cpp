@@ -18,7 +18,7 @@ const char TAO_SCIOP_Profile::object_key_delimiter_ = '/';
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char
-TAO_SCIOP_Profile::object_key_delimiter (void) const
+TAO_SCIOP_Profile::object_key_delimiter () const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }
@@ -290,7 +290,7 @@ TAO_SCIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_SCIOP_Profile::endpoint_count (void) const
+TAO_SCIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -305,7 +305,7 @@ TAO_SCIOP_Profile::add_endpoint (TAO_SCIOP_Endpoint *endp)
 }
 
 char *
-TAO_SCIOP_Profile::to_string (void) const
+TAO_SCIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

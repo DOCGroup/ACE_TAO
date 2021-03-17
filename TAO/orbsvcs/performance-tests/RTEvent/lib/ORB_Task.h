@@ -30,7 +30,7 @@ public:
   int svc (void);
 
   /// Smart-pointer operator
-  CORBA::ORB_ptr operator-> (void) const;
+  CORBA::ORB_ptr operator-> () const;
 
 private:
   CORBA::ORB_var orb_;

@@ -10,7 +10,7 @@ TAO_OutputCDR::~TAO_OutputCDR (void)
 }
 
 ACE_INLINE bool
-TAO_OutputCDR::more_fragments (void) const
+TAO_OutputCDR::more_fragments () const
 {
   return this->more_fragments_;
 }
@@ -34,25 +34,25 @@ TAO_OutputCDR::message_attributes (CORBA::ULong request_id,
 }
 
 ACE_INLINE CORBA::ULong
-TAO_OutputCDR::request_id (void) const
+TAO_OutputCDR::request_id () const
 {
   return this->request_id_;
 }
 
 ACE_INLINE TAO_Stub *
-TAO_OutputCDR::stub (void) const
+TAO_OutputCDR::stub () const
 {
   return this->stub_;
 }
 
 ACE_INLINE TAO_Message_Semantics
-TAO_OutputCDR::message_semantics (void) const
+TAO_OutputCDR::message_semantics () const
 {
   return this->message_semantics_;
 }
 
 ACE_INLINE ACE_Time_Value *
-TAO_OutputCDR::timeout (void) const
+TAO_OutputCDR::timeout () const
 {
   return this->timeout_;
 }
@@ -267,7 +267,7 @@ TAO_InputCDR::~TAO_InputCDR (void)
 }
 
 ACE_INLINE TAO_ORB_Core*
-TAO_InputCDR::orb_core (void) const
+TAO_InputCDR::orb_core () const
 {
   return this->orb_core_;
 }

@@ -27,7 +27,7 @@ ACE_SPIPE_Addr::get_path_name () const
 }
 
 ACE_INLINE uid_t
-ACE_SPIPE_Addr::user_id (void) const
+ACE_SPIPE_Addr::user_id () const
 {
   return this->SPIPE_addr_.uid_;
 }

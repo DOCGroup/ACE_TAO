@@ -12,7 +12,7 @@ public:
   DllORB (void);
   virtual ~DllORB (void);
 
-  CORBA::ORB_ptr orb (void) const;
+  CORBA::ORB_ptr orb () const;
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 

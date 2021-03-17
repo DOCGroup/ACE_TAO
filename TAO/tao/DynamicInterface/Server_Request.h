@@ -92,13 +92,13 @@ namespace CORBA
     void dsi_marshal (void);
 
     /// Accessor for the Context member.
-    CORBA::Context_ptr ctx (void) const;
+    CORBA::Context_ptr ctx () const;
 
     /// Mutator for the Context member.
     void ctx (CORBA::Context_ptr);
 
     /// Get the operation name.
-    const char *operation (void) const;
+    const char *operation () const;
 
     // Pseudo object methods.
     static ServerRequest_ptr _duplicate (ServerRequest_ptr);
@@ -112,7 +112,7 @@ namespace CORBA
     void _tao_lazy_evaluation (bool lazy_evaluation);
 
     /// Get the byte order of the incoming CDR stream.
-    int _tao_incoming_byte_order (void) const;
+    int _tao_incoming_byte_order () const;
 
     /// Set the byte order of the outgoing CDR stream.
     void _tao_reply_byte_order (int byte_order);

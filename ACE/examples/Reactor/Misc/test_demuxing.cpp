@@ -29,7 +29,7 @@ class Sig_Handler : public ACE_Event_Handler
   //   handler functions or global signal handler data.
 public:
   Sig_Handler (void);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -87,7 +87,7 @@ Sig_Handler::Sig_Handler (void)
 // Called by the ACE_Reactor to extract the handle.
 
 ACE_HANDLE
-Sig_Handler::get_handle (void) const
+Sig_Handler::get_handle () const
 {
   return this->handle_;
 }

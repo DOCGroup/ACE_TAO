@@ -37,25 +37,25 @@ TAO_ServerRequest::TAO_ServerRequest (void)
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_ServerRequest::orb_core (void) const
+TAO_ServerRequest::orb_core () const
 {
   return this->orb_core_;
 }
 
 ACE_INLINE TAO_InputCDR *
-TAO_ServerRequest::incoming (void) const
+TAO_ServerRequest::incoming () const
 {
   return this->incoming_;
 }
 
 ACE_INLINE TAO_OutputCDR *
-TAO_ServerRequest::outgoing (void) const
+TAO_ServerRequest::outgoing () const
 {
   return this->outgoing_;
 }
 
 ACE_INLINE const char *
-TAO_ServerRequest::operation (void) const
+TAO_ServerRequest::operation () const
 {
   return (this->operation_ == 0 ? "" : this->operation_);
 }
@@ -74,19 +74,19 @@ TAO_ServerRequest::operation (const char *operation,
 }
 
 ACE_INLINE size_t
-TAO_ServerRequest::operation_length (void) const
+TAO_ServerRequest::operation_length () const
 {
   return this->operation_len_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::response_expected (void) const
+TAO_ServerRequest::response_expected () const
 {
   return this->response_expected_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::deferred_reply (void) const
+TAO_ServerRequest::deferred_reply () const
 {
   return this->deferred_reply_;
 }
@@ -120,7 +120,7 @@ TAO_ServerRequest::sync_after_dispatch (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::sync_with_server (void) const
+TAO_ServerRequest::sync_with_server () const
 {
   return this->sync_with_server_;
 }
@@ -132,7 +132,7 @@ TAO_ServerRequest::sync_with_server (CORBA::Boolean sync_flag)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ServerRequest::is_queued (void) const
+TAO_ServerRequest::is_queued () const
 {
   return this->is_queued_;
 }
@@ -212,7 +212,7 @@ TAO_ServerRequest::forward_location (void)
 }
 
 ACE_INLINE bool
-TAO_ServerRequest::is_forwarded (void) const
+TAO_ServerRequest::is_forwarded () const
 {
   return this->is_forwarded_;
 }
@@ -236,7 +236,7 @@ TAO_ServerRequest::is_dsi (void)
 }
 
 ACE_INLINE TAO_Operation_Details const *
-TAO_ServerRequest::operation_details (void) const
+TAO_ServerRequest::operation_details () const
 {
   return this->operation_details_;
 }
@@ -260,7 +260,7 @@ TAO_ServerRequest::argument_flag (CORBA::Boolean flag)
 }
 
 ACE_INLINE bool
-TAO_ServerRequest::collocated (void) const
+TAO_ServerRequest::collocated () const
 {
   return this->transport_.get () == 0;
 }

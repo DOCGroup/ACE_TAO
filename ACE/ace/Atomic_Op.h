@@ -126,7 +126,7 @@ public:
   long exchange (long newval);
 
   /// Explicitly return @c value_.
-  long value (void) const;
+  long value () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -224,7 +224,7 @@ public:
   unsigned long exchange (unsigned long newval);
 
   /// Explicitly return @c value_.
-  unsigned long value (void) const;
+  unsigned long value () const;
 
   /// Dump the state of an object.
   void dump () const;

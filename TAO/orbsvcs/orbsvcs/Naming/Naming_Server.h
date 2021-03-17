@@ -134,7 +134,7 @@ public:
   char * naming_service_ior (void);
 
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr operator-> (void) const;
+  CosNaming::NamingContext_ptr operator-> () const;
 
 protected:
   struct IOR_Bundle {

@@ -29,9 +29,9 @@ public:
   JAWS_Header_Data (const char *name, int type, const char *value = 0);
   ~JAWS_Header_Data (void);
 
-  const char * header_name (void) const;
-  const char * header_value (void) const;
-  int header_type (void) const;
+  const char * header_name () const;
+  const char * header_value () const;
+  int header_type () const;
 
   void header_name (const char *name);
   void header_value (const char *value);

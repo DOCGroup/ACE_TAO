@@ -1426,7 +1426,7 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value (void) const
+CORBA::DefaultValueRefCountBase::_tao_refcount_value () const
 {
   return this->refcount_;
 }

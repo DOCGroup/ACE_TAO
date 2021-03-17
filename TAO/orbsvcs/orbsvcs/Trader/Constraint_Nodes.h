@@ -60,7 +60,7 @@ public:
   virtual int accept (TAO_Constraint_Visitor* visitor) = 0;
 
   /// Return the expression type represented by this node.
-  virtual TAO_Expression_Type expr_type (void) const = 0;
+  virtual TAO_Expression_Type expr_type () const = 0;
 
   virtual ~TAO_Constraint (void) {}
 };
@@ -78,7 +78,7 @@ public:
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type (void) const
+  virtual TAO_Expression_Type expr_type () const
     { return this->type_; }
 
 private:
@@ -102,14 +102,14 @@ public:
 
   virtual ~TAO_Binary_Constraint (void);
 
-  virtual TAO_Expression_Type expr_type (void) const
+  virtual TAO_Expression_Type expr_type () const
     { return this->op_; }
 
   /// Return the left operand of the binary expression
-  TAO_Constraint* left_operand (void) const;
+  TAO_Constraint* left_operand () const;
 
   /// Return the right operand of the binary expression
-  TAO_Constraint* right_operand (void) const;
+  TAO_Constraint* right_operand () const;
 
   // Allow double dispatching without creating an inundation of
   // classes by using a dispatch table of static method pointers to
@@ -158,7 +158,7 @@ public:
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type (void) const
+  virtual TAO_Expression_Type expr_type () const
     { return this->op_; }
 
   TAO_Constraint* operand (void);
@@ -189,10 +189,10 @@ public:
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type (void) const;
+  virtual TAO_Expression_Type expr_type () const;
 
   /// Returns the name of the property.
-  const char* name (void) const;
+  const char* name () const;
 
 private:
   TAO_Property_Constraint (const TAO_Property_Constraint&);
@@ -231,19 +231,19 @@ public:
   /// Visitor accept methods.
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual TAO_Expression_Type expr_type (void) const
+  virtual TAO_Expression_Type expr_type () const
     { return type_; }
 
   /// Assignment operator.
   void operator= (const TAO_Literal_Constraint& co);
 
   // Conversion routines.
-  operator CORBA::Boolean (void) const;
-  operator CORBA::ULongLong (void) const;
-  operator CORBA::LongLong (void) const;
-  operator CORBA::Double (void) const;
-  operator const char* (void) const;
-  operator const CORBA::Any* (void) const;
+  operator CORBA::Boolean () const;
+  operator CORBA::ULongLong () const;
+  operator CORBA::LongLong () const;
+  operator CORBA::Double () const;
+  operator const char* () const;
+  operator const CORBA::Any* () const;
 
   // Return the type represented by this MysteryOperand.
 

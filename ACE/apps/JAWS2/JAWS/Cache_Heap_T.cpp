@@ -54,25 +54,25 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::~JAWS_Cache_Heap (void)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_empty (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_empty () const
 {
   return (this->size_ == 0);
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_full (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::is_full () const
 {
   return (this->size_ == this->maxsize_);
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> size_t
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::size (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::size () const
 {
   return this->size_;
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> size_t
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize (void) const
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::maxsize () const
 {
   return this->maxsize_;
 }

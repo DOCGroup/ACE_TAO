@@ -41,7 +41,7 @@ public:
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  virtual ACE_HANDLE  get_handle (void) const;
+  virtual ACE_HANDLE  get_handle () const;
 
   ACE_SOCK_Stream stream_;
 
@@ -57,7 +57,7 @@ Network_Handler::Network_Handler (ACE_SOCK_Stream &s)
 }
 
 ACE_HANDLE
-Network_Handler::get_handle (void) const
+Network_Handler::get_handle () const
 {
   return this->stream_.get_handle ();
 }
@@ -118,7 +118,7 @@ public:
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   ACE_INET_Addr local_address_;
   ACE_SOCK_Acceptor acceptor_;
@@ -139,7 +139,7 @@ Network_Listener::~Network_Listener (void)
 }
 
 ACE_HANDLE
-Network_Listener::get_handle (void) const
+Network_Listener::get_handle () const
 {
   return this->acceptor_.get_handle ();
 }

@@ -180,16 +180,16 @@ namespace ACE
       ACE_ALLOC_HOOK_DECLARE;
 
     public:
-      Session *session (void) const;
+      Session *session () const;
       void session (Session *);
 
       Notifier *notifier (void);
 
       void register_notifier (ACE_Reactor *r);
 
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
-      const ACE_SOCK_Stream &ace_stream (void) const;
+      const ACE_SOCK_Stream &ace_stream () const;
       ACE_SOCK_Stream &ace_stream (void);
 
       ///@notes Added the following methods to continue with
@@ -215,18 +215,18 @@ namespace ACE
 
       // buffer related methods.
       ACE_Message_Block &leftovers (void);
-      size_t data_len (void) const;
+      size_t data_len () const;
       void data_len (size_t n);
-      size_t data_consumed (void) const;
+      size_t data_consumed () const;
       void data_consumed (size_t n);
       int load_buffer (void);
       int flush_buffer (void);
       int recv_ack (void);
       int send_ack (void);
       unsigned long request_count();
-      Filter *filter (void) const;
+      Filter *filter () const;
       void filter (Filter *);
-      State state (void) const;
+      State state () const;
       void state (Channel::State s);
       int pre_recv(void);
       int consume_error (void);

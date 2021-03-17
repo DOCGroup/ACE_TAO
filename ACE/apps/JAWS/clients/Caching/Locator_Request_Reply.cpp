@@ -227,7 +227,7 @@ ACE_URL_Locator_Request::size (void)
 }
 
 void
-ACE_URL_Locator_Request::dump (void) const
+ACE_URL_Locator_Request::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Request::dump");
 
@@ -421,7 +421,7 @@ ACE_URL_Locator_Reply::size (void)
 }
 
 void
-ACE_URL_Locator_Reply::dump (void) const
+ACE_URL_Locator_Reply::dump () const
 {
   //ACE_TRACE ("ACE_URL_Locator_Reply::dump");
 

@@ -34,7 +34,7 @@ Test_Nested_Struct::~Test_Nested_Struct (void)
 }
 
 const char *
-Test_Nested_Struct::opname (void) const
+Test_Nested_Struct::opname () const
 {
   return this->opname_;
 }

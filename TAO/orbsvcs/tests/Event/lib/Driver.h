@@ -57,7 +57,7 @@ public:
   virtual ~EC_Driver (void);
 
   /// Flag to indicate in the test should be verbose.
-  int verbose (void) const;
+  int verbose () const;
 
   /// Execute the test.
   virtual int run (int argc, ACE_TCHAR* argv[]);
@@ -78,7 +78,7 @@ public:
   virtual void print_usage (void);
 
   /// Print out the arguments
-  virtual void print_args (void) const;
+  virtual void print_args () const;
 
   /// Run the test in the real-time class, return -1 on error.
   virtual int move_to_rt_class (void);

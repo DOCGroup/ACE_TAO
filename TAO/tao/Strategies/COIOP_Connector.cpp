@@ -128,7 +128,7 @@ TAO_COIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_COIOP_Connector::object_key_delimiter (void) const
+TAO_COIOP_Connector::object_key_delimiter () const
 {
   return TAO_COIOP_Profile::object_key_delimiter_;
 }

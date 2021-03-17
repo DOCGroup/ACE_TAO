@@ -56,13 +56,13 @@ public:
   int close (void);
 
   /// Get the underlying handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Get the underlying stream.
   ATM_Stream& get_stream (void);
 
   /// Get the name of the connected host.
-  char* get_peer_name (void) const;
+  char* get_peer_name () const;
 
   /// Get the VPI and VCI of the stream.
   int get_vpi_vci (ACE_UINT16 &vpi,

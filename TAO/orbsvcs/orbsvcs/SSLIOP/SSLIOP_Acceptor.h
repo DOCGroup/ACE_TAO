@@ -84,7 +84,7 @@ namespace TAO
 
       /// Retrieve the CSIv1 SSLIOP::SSL component associated with the
       /// endpoints set up by this acceptor.
-      const ::SSLIOP::SSL &ssl_component (void) const;
+      const ::SSLIOP::SSL &ssl_component () const;
 
     private:
       /// Implement the common part of the open*() methods.

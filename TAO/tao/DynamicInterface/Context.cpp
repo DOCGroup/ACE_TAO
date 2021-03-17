@@ -37,13 +37,13 @@ CORBA::Context::_decr_refcount ()
 }
 
 const char *
-CORBA::Context::context_name (void) const
+CORBA::Context::context_name () const
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }
 
 CORBA::Context_ptr
-CORBA::Context::parent (void) const
+CORBA::Context::parent () const
 {
   throw ::CORBA::NO_IMPLEMENT (TAO::VMCID, CORBA::COMPLETED_NO);
 }

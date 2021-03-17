@@ -58,7 +58,7 @@ public:
      const TAO_Client_Network_Priority_Policy &rhs);
 
   /// Returns a copy of <this>.
-  TAO_Client_Network_Priority_Policy *clone (void) const;
+  TAO_Client_Network_Priority_Policy *clone () const;
 
   TAO::DiffservCodepoint request_diffserv_codepoint (void);
 
@@ -81,10 +81,10 @@ public:
   void destroy (void);
 
   // Return the cached policy type for this policy.
-  TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
 private:
   /// The attribute

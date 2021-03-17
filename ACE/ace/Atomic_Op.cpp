@@ -258,7 +258,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::init_functions (void)
 }
 
 void
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump (void) const
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -291,7 +291,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::init_functions (void)
 }
 
 void
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::dump (void) const
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));

@@ -17,7 +17,7 @@ server_i::start (client_ptr c,
 }
 
 bool
-server_i::exception (void) const
+server_i::exception () const
 {
   return this->exception_;
 }

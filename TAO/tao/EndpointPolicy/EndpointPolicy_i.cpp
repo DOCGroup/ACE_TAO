@@ -29,7 +29,7 @@ TAO_EndpointPolicy_i::policy_type (void)
 }
 
 TAO_EndpointPolicy_i *
-TAO_EndpointPolicy_i::clone (void) const
+TAO_EndpointPolicy_i::clone () const
 {
   TAO_EndpointPolicy_i *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -67,7 +67,7 @@ TAO_EndpointPolicy_i::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_EndpointPolicy_i::_tao_cached_type (void) const
+TAO_EndpointPolicy_i::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_ENDPOINT;
 }

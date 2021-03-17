@@ -50,7 +50,7 @@ public:
   ACE_DEV_Addr &operator= (const ACE_DEV_Addr &);
 
   /// Return a pointer to the address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR *addr, size_t) const;
@@ -62,7 +62,7 @@ public:
   bool operator != (const ACE_DEV_Addr &SAP) const;
 
   /// Return the path name used for the rendezvous point.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Dump the state of an object.
   void dump () const;

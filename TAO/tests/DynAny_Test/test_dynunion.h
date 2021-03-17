@@ -20,7 +20,7 @@ public:
   Test_DynUnion (CORBA::ORB_var orb, int debug);
   ~Test_DynUnion (void);
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
   int run_test (void);
 

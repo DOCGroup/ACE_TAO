@@ -30,7 +30,7 @@ Test_DynUnion::~Test_DynUnion (void)
 }
 
 const char*
-Test_DynUnion::test_name (void) const
+Test_DynUnion::test_name () const
 {
   return this->test_name_;
 }

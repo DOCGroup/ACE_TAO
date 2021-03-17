@@ -177,7 +177,7 @@ protected:
 
 private:
   // The following are documented in the .cpp file.
-  ACE_Timer_Node_T<TYPE>* get_first_i (void) const;
+  ACE_Timer_Node_T<TYPE>* get_first_i () const;
   ACE_Timer_Node_T<TYPE>* remove_first_expired (const ACE_Time_Value& now);
   void open_i (size_t prealloc, u_int spokes, u_int res);
   virtual void reschedule (ACE_Timer_Node_T<TYPE> *);

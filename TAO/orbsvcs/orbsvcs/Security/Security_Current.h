@@ -80,7 +80,7 @@ public:
    * The concrete TSS SecurityCurrent implementations will each use
    * this slot ID.
    */
-  size_t tss_slot (void) const;
+  size_t tss_slot () const;
 
 protected:
   /// Destructor

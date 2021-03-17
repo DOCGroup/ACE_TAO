@@ -14,7 +14,7 @@ TAO_Service_Context::service_info (void)
 }
 
 ACE_INLINE const IOP::ServiceContextList &
-TAO_Service_Context::service_info (void) const
+TAO_Service_Context::service_info () const
 {
   return this->service_context_;
 }

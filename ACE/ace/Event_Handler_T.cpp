@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Handler_T)
 
 template <class T> void
-ACE_Event_Handler_T<T>::dump (void) const
+ACE_Event_Handler_T<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Event_Handler_T<T>::dump");
@@ -57,7 +57,7 @@ ACE_Event_Handler_T<T>::ACE_Event_Handler_T (T *op_handler, int delete_handler,
 }
 
 template<class T> ACE_HANDLE
-ACE_Event_Handler_T<T>::get_handle (void) const
+ACE_Event_Handler_T<T>::get_handle () const
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::get_handle");
   return this->get_handle_ == 0 ? ACE_INVALID_HANDLE : (this->op_handler_->*get_handle_) ();

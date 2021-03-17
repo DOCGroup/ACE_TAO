@@ -37,7 +37,7 @@ namespace TAO
     /// if, there was no "current" transport selected on the current
     /// thread.
     const TAO_Transport*
-    Current_Impl::transport (void) const
+    Current_Impl::transport () const
     {
       Transport_Selection_Guard* topguard =
         Transport_Selection_Guard::current (this->core_, this->tss_slot_id_);
@@ -52,7 +52,7 @@ namespace TAO
 
     /// Obtains the current transport's stats
     const TAO::Transport::Stats*
-    Current_Impl::transport_stats (void) const
+    Current_Impl::transport_stats () const
     {
       static const TAO::Transport::Stats dummy;
 

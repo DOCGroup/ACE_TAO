@@ -5,7 +5,7 @@
  */
 
 ACE_INLINE int
-RTClient_Setup::use_rt_corba (void) const
+RTClient_Setup::use_rt_corba () const
 {
   return this->use_rt_corba_;
 }

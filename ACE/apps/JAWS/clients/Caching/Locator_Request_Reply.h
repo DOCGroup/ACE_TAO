@@ -77,16 +77,16 @@ public:
   size_t decode (void *buffer);
 
   /// A bunch of methods to access internal data.
-  const int how (void) const;
-  const int how_many (void) const;
-  const u_int opcode (void) const;
-  const ACE_URL_Property_Seq *seq (void) const;
-  const ACE_URL_Property_Seq *del (void) const;
-  const ACE_URL_Property_Seq *modify (void) const;
-  const ACE_URL_Offer *offer (void) const;
-  const ACE_WString &id (void) const;
-  const ACE_WString &url (void) const;
-  const char *buffer (void) const;
+  const int how () const;
+  const int how_many () const;
+  const u_int opcode () const;
+  const ACE_URL_Property_Seq *seq () const;
+  const ACE_URL_Property_Seq *del () const;
+  const ACE_URL_Property_Seq *modify () const;
+  const ACE_URL_Offer *offer () const;
+  const ACE_WString &id () const;
+  const ACE_WString &url () const;
+  const char *buffer () const;
 
   /// Print out this object.
   void dump () const;
@@ -176,15 +176,15 @@ public:
   size_t decode (void *buffer);
 
   // Accessor function.
-  const size_t num_offers (void) const;
-  const ACE_URL_Offer *offer (void) const;
-  const ACE_URL_Offer_Seq *offers (void) const;
-  const u_int opcode (void) const;
-  const u_int status (void) const;
-  const char *buffer (void) const ;
+  const size_t num_offers () const;
+  const ACE_URL_Offer *offer () const;
+  const ACE_URL_Offer_Seq *offers () const;
+  const u_int opcode () const;
+  const u_int status () const;
+  const char *buffer () const ;
 
   /// Print out this object.
-  void dump (void) const ;
+  void dump () const ;
 
 protected:
   /// Return the size of the buffer required to encode

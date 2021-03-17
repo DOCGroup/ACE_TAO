@@ -22,19 +22,19 @@ Client_Task::Client_Task (CORBA::ORB_ptr orb,
 }
 
 int
-Client_Task::successful_calls (void) const
+Client_Task::successful_calls () const
 {
   return this->successful_calls_;
 }
 
 int
-Client_Task::timed_out_calls (void) const
+Client_Task::timed_out_calls () const
 {
   return this->timed_out_calls_;
 }
 
 int
-Client_Task::too_big_difference_calls (void) const
+Client_Task::too_big_difference_calls () const
 {
   return this->too_big_difference_;
 }

@@ -66,7 +66,7 @@ protected:
   virtual void disconnect_structured_push_consumer (
   );
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
 
 private:

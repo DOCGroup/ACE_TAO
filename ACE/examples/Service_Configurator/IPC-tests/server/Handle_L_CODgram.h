@@ -28,7 +28,7 @@ public:
 
 public:
   int open (const ACE_UNIX_Addr &suad, int async = 0);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);
 

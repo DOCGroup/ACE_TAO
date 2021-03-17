@@ -43,7 +43,7 @@ public:
   virtual ~TAO_Notify_EventType ();
 
   /// hash value
-  u_long hash (void) const;
+  u_long hash () const;
 
   /// Assignment from CosNotification::EventType
   TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
@@ -61,10 +61,10 @@ public:
   static TAO_Notify_EventType special (void);
 
   /// Is this the special event (accept everything).
-  CORBA::Boolean is_special (void) const;
+  CORBA::Boolean is_special () const;
 
   /// Get the type underneath us.
-  const CosNotification::EventType& native (void) const;
+  const CosNotification::EventType& native () const;
 
   /// Helper to print contents.
   void dump () const;

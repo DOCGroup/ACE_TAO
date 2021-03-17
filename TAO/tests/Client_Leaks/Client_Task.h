@@ -19,7 +19,7 @@ public:
                int iterations);
 
   /// Return the total number of successful calls
-  int successful_calls (void) const;
+  int successful_calls () const;
 
   /// Thread entry point
   int svc (void);

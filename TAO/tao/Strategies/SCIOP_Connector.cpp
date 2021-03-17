@@ -380,7 +380,7 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_SCIOP_Connector::object_key_delimiter (void) const
+TAO_SCIOP_Connector::object_key_delimiter () const
 {
   return TAO_SCIOP_Profile::object_key_delimiter_;
 }

@@ -53,7 +53,7 @@ public:
   int release (void) { return 0; }
   int locked (void) { return 1; }
   int remove (void) { return 0; }
-  void dump (void) const {}
+  void dump () const {}
 
 private:
   ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;

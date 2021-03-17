@@ -63,19 +63,19 @@ public:
   /**
    * @return pid
    */
-  int get_pid (void) const;
+  int get_pid () const;
   /**
    * @return the group id @see nl_
    */
-  int get_gid (void) const;
+  int get_gid () const;
   /**
    * @return addr pointer @see nl_
    */
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
   /**
    * @return nl_ member  @see nl_  size
    */
-  int get_addr_size (void) const;
+  int get_addr_size () const;
   /**
    * Set a pointer to the address
    */
@@ -89,7 +89,7 @@ private:
    * @return family type  AF_NETLINK
    *
    * */
-  int determine_type (void) const;
+  int determine_type () const;
   /**
    * set nl_  @see nl_ to zero and sets address family to default value
    */

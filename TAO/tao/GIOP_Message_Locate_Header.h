@@ -40,10 +40,10 @@ public:
   void request_id (CORBA::ULong id);
 
   /// Get the request id
-  CORBA::ULong request_id (void) const;
+  CORBA::ULong request_id () const;
 
   /// Get the object_key in read mode..
-  const TAO::ObjectKey &object_key (void) const;
+  const TAO::ObjectKey &object_key () const;
 
   /// Get the object_key in read/write mode..
   TAO::ObjectKey &object_key (void);

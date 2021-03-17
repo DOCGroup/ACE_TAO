@@ -120,7 +120,7 @@ public:
                           void *base_addr);
 
     /// Return a pointer to the name of this node.
-    const char *name (void) const;
+    const char *name () const;
 
     /// Assign a name;
     void name (const char *);

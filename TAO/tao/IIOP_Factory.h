@@ -44,16 +44,16 @@ public:
   virtual int match_prefix (const ACE_CString &prefix);
 
   /// Returns the prefix used by the protocol.
-  virtual const char *prefix (void) const;
+  virtual const char *prefix () const;
 
   /// Return the character used to mark where an endpoint ends and
   /// where its options begin.
-  virtual char options_delimiter (void) const;
+  virtual char options_delimiter () const;
 
   // = Check Protocol_Factory.h for a description of these methods.
   virtual TAO_Acceptor  *make_acceptor (void);
   virtual TAO_Connector *make_connector  (void);
-  virtual int requires_explicit_endpoint (void) const;
+  virtual int requires_explicit_endpoint () const;
 };
 
 ACE_STATIC_SVC_DECLARE_EXPORT (TAO, TAO_IIOP_Protocol_Factory)

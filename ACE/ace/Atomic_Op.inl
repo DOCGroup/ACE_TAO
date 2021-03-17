@@ -203,7 +203,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::exchange (long newval)
 }
 
 ACE_INLINE long
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::value (void) const
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::value () const
 {
   return this->value_;
 }
@@ -403,7 +403,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::exchange (unsigned long newval)
 }
 
 ACE_INLINE unsigned long
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value (void) const
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::value () const
 {
   return this->value_;
 }

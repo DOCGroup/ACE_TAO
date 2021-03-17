@@ -68,7 +68,7 @@ class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
   ACE_IntCapEntry (int val);
-  int getval (void) const;
+  int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
@@ -87,7 +87,7 @@ class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
   ACE_StringCapEntry (const ACE_TString &val);
-  ACE_TString getval (void) const;
+  ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
@@ -106,7 +106,7 @@ class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
   ACE_BoolCapEntry (int val);
-  int getval (void) const;
+  int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:

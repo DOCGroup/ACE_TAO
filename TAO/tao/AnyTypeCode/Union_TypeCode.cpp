@@ -109,7 +109,7 @@ const CaseArrayType &
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::cases (void) const
+                     RefCountPolicy>::cases () const
 {
   return cases_;
 }
@@ -234,7 +234,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (void) const
+                     RefCountPolicy>::get_compact_typecode_i () const
 {
 //   typedef ACE::Value_Ptr<TAO::TypeCode::Case<CORBA::String_var,
 //                                              CORBA::TypeCode_var> > elem_type;
@@ -289,7 +289,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::id_i (void) const
+                     RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -304,7 +304,7 @@ char const *
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::name_i (void) const
+                     RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -319,7 +319,7 @@ CORBA::ULong
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                       CaseArrayType,
-                      RefCountPolicy>::member_count_i (void) const
+                      RefCountPolicy>::member_count_i () const
 {
   return this->ncases_;
 }
@@ -403,7 +403,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::discriminator_type_i (void) const
+                     RefCountPolicy>::discriminator_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (
@@ -418,7 +418,7 @@ CORBA::Long
 TAO::TypeCode::Union<StringType,
                      TypeCodeType,
                      CaseArrayType,
-                     RefCountPolicy>::default_index_i (void) const
+                     RefCountPolicy>::default_index_i () const
 {
   return this->default_index_;
 }

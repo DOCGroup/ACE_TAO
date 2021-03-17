@@ -51,7 +51,7 @@ class TAO_PortableGroup_Export TAO_UIPMC_Profile : public TAO_Profile
 public:
   /// The object key delimiter that UIPMC uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
   static const char *prefix (void);
@@ -80,17 +80,17 @@ public:
   /// a useable decode_endpoints
   virtual int decode (TAO_InputCDR &cdr);
   virtual void parse_string (const char *string);
-  virtual char * to_string (void) const;
+  virtual char * to_string () const;
   virtual int encode_endpoints (void);
   virtual void encodeAddressInfo (TAO_OutputCDR &stream) const;
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count () const;
   virtual CORBA::ULong hash (CORBA::ULong max);
   virtual IOP::TaggedProfile &create_tagged_profile (void);
   virtual void request_target_specifier (
     TAO_Target_Specification &target_spec,
     TAO_Target_Specification::TAO_Target_Address r);
-  virtual int supports_multicast (void) const;
+  virtual int supports_multicast () const;
   virtual void addressing_mode (CORBA::Short addr_mode);
   static int extract_group_component (const IOP::TaggedProfile &profile,
                                       PortableGroup::TagGroupTaggedComponent &group);

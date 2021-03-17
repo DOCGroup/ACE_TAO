@@ -45,8 +45,8 @@ public:
   virtual int wait (ACE_Time_Value *max_wait_time,
                     TAO_Synch_Reply_Dispatcher &rd);
   virtual int register_handler (void);
-  virtual bool non_blocking (void) const;
-  virtual bool can_process_upcalls (void) const;
+  virtual bool non_blocking () const;
+  virtual bool can_process_upcalls () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -145,7 +145,7 @@ public:
 
 #if defined (ACE_HAS_MALLOC_STATS)
   /// Dump statistics of how malloc is behaving.
-  virtual void print_stats (void) const = 0;
+  virtual void print_stats () const = 0;
 #endif /* ACE_HAS_MALLOC_STATS */
 
   /// Dump the state of the object.

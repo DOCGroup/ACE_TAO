@@ -64,8 +64,8 @@ public:
    * @name Implement the Template Methods from TAO_Queued_Message
    */
   //@{
-  virtual size_t message_length (void) const;
-  virtual int all_data_sent (void) const;
+  virtual size_t message_length () const;
+  virtual int all_data_sent () const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
   virtual void bytes_transferred (size_t &byte_count);
   /// @note No reason to believe why this would be called. But have

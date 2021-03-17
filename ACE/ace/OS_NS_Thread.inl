@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
 ACE_INLINE long
-ACE_cond_t::waiters (void) const
+ACE_cond_t::waiters () const
 {
   return this->waiters_;
 }

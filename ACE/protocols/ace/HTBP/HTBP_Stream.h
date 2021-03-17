@@ -238,9 +238,9 @@ namespace ACE
       /// future. - Priyanka
       /// {@
       void set_handle (ACE_HANDLE h);
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
-      Session *session (void) const;
+      Session *session () const;
       void session (Session *s);
 
       /**

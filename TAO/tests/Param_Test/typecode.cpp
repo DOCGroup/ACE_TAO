@@ -29,7 +29,7 @@ Test_TypeCode::~Test_TypeCode (void)
 }
 
 const char *
-Test_TypeCode::opname (void) const
+Test_TypeCode::opname () const
 {
   return this->opname_;
 }

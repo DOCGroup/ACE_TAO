@@ -274,7 +274,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Profile_Timer::dump (void) const
+ACE_Profile_Timer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");
@@ -386,7 +386,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Profile_Timer::dump (void) const
+ACE_Profile_Timer::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Profile_Timer::dump");

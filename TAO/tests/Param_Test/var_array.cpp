@@ -31,7 +31,7 @@ Test_Var_Array::~Test_Var_Array (void)
 }
 
 const char *
-Test_Var_Array::opname (void) const
+Test_Var_Array::opname () const
 {
   return this->opname_;
 }

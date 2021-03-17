@@ -37,7 +37,7 @@ TAO_BidirectionalPolicy::policy_type (void)
 
 
 TAO_BidirectionalPolicy *
-TAO_BidirectionalPolicy::clone (void) const
+TAO_BidirectionalPolicy::clone () const
 {
   TAO_BidirectionalPolicy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -72,7 +72,7 @@ TAO_BidirectionalPolicy::value (void)
 
 
 TAO_Cached_Policy_Type
-TAO_BidirectionalPolicy::_tao_cached_type (void) const
+TAO_BidirectionalPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_BIDIRECTIONAL_GIOP;
 }

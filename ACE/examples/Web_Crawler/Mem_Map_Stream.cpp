@@ -19,7 +19,7 @@ Mem_Map_Stream::send_n (const void *buf, size_t size, ACE_Time_Value *tv)
 }
 
 int
-Mem_Map_Stream::eof (void) const
+Mem_Map_Stream::eof () const
 {
   return this->get_pos_ >= this->end_of_mapping_plus1_;
 }
@@ -56,7 +56,7 @@ Mem_Map_Stream::peek_char (size_t offset)
 }
 
 const char *
-Mem_Map_Stream::recv (void) const
+Mem_Map_Stream::recv () const
 {
   return this->recv_pos_;
 }
@@ -76,7 +76,7 @@ Mem_Map_Stream::recv (size_t &len)
 }
 
 size_t
-Mem_Map_Stream::recv_len (void) const
+Mem_Map_Stream::recv_len () const
 {
   return this->get_pos_ - this->recv_pos_;
 }

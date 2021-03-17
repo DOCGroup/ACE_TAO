@@ -310,7 +310,7 @@ DatabaseImpl::Employee::~Employee (void)
 }
 
 const char *
-DatabaseImpl::Employee::name (void) const
+DatabaseImpl::Employee::name () const
 {
   return this->name_;
 }
@@ -328,7 +328,7 @@ DatabaseImpl::Employee::name (const char* name)
 }
 
 CORBA::Long
-DatabaseImpl::Employee::id (void) const
+DatabaseImpl::Employee::id () const
 {
   return this->id_;
 }

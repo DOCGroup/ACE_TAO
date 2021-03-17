@@ -239,7 +239,7 @@ ACE_Asynch_Connector<HANDLER>::make_handler (void)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::pass_addresses (void) const
+ACE_Asynch_Connector<HANDLER>::pass_addresses () const
 {
   return this->pass_addresses_;
 }
@@ -251,7 +251,7 @@ ACE_Asynch_Connector<HANDLER>::pass_addresses (bool new_value)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::validate_new_connection (void) const
+ACE_Asynch_Connector<HANDLER>::validate_new_connection () const
 {
   return this->validate_new_connection_;
 }

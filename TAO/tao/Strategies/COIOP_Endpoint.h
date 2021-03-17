@@ -76,7 +76,7 @@ public:
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const ACE_Utils::UUID& uuid (void) const;
+  const ACE_Utils::UUID& uuid () const;
 
 private:
   /// UUID uniquely identifying this COIOP endpoint

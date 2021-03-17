@@ -127,7 +127,7 @@ public: // Should be protected:
   // = ACE_Task utility routines to identify names et al.
   /// Return the name of the enclosing Module if there's one associated
   /// with the Task, else returns 0.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
@@ -140,7 +140,7 @@ public: // Should be protected:
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *sibling (void);
 
   /// Return the Task's Module if there is one, else returns 0.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module (void) const;
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *module () const;
 
   /**
    * Flush the task's queue, i.e., free all of the enqueued

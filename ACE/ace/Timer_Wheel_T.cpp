@@ -262,7 +262,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::find_node (long timer_i
 * @return True if empty
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty () const
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::is_empty");
   return timer_count_ == 0;
@@ -273,7 +273,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
 * @return First (earliest) node in the wheel_'s earliest_spoke_ list
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> const ACE_Time_Value &
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time (void) const
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 {
   ACE_TRACE ("ACE_Timer_Wheel_T::earliest_time");
   ACE_Timer_Node_T<TYPE>* n = this->get_first_i ();
@@ -672,7 +672,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::recalc_earliest
 * of the wheel.
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump (void) const
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_Wheel_T::dump");
@@ -753,7 +753,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first (void)
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Node_T<TYPE>*
-ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i (void) const
+ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
 {
   ACE_Timer_Node_T<TYPE>* root = this->spokes_[this->earliest_spoke_];
   ACE_Timer_Node_T<TYPE>* first = root->get_next ();
@@ -922,7 +922,7 @@ ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::goto_next (u_i
 * @return True when we there aren't any more items (when current_node_ == 0)
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
-ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone (void) const
+ACE_Timer_Wheel_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 {
   return this->current_node_ == 0;
 }

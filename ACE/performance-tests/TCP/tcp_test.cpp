@@ -97,7 +97,7 @@ public:
   virtual ~Client (void);
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -154,7 +154,7 @@ Client::~Client (void)
 }
 
 ACE_HANDLE
-Client::get_handle (void) const
+Client::get_handle () const
 {
   return this->endpoint_.get_handle ();
 }
@@ -295,7 +295,7 @@ public:
   virtual ~Server (void);
 
   // = Override <ACE_Event_Handler> methods.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
@@ -371,7 +371,7 @@ Server::~Server (void)
 }
 
 ACE_HANDLE
-Server::get_handle (void) const
+Server::get_handle () const
 {
   return this->endpoint_.get_handle ();
 }

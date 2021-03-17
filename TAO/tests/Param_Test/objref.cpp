@@ -29,7 +29,7 @@ Test_ObjRef::~Test_ObjRef (void)
 }
 
 const char *
-Test_ObjRef::opname (void) const
+Test_ObjRef::opname () const
 {
   return this->opname_;
 }

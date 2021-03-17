@@ -194,7 +194,7 @@ Options::read_ior (ACE_TCHAR *filename)
 }
 
 char const *
-Options::param_test_ior (void) const
+Options::param_test_ior () const
 {
   return this->ior_.in ();
 }
@@ -218,13 +218,13 @@ Options::loop_count (void)
 }
 
 CORBA::Boolean
-Options::debug (void) const
+Options::debug () const
 {
   return this->debug_;
 }
 
 CORBA::Boolean
-Options::shutdown (void) const
+Options::shutdown () const
 {
   return this->shutdown_;
 }

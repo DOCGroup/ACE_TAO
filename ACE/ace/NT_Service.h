@@ -163,16 +163,16 @@ public:
   void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = 0);
 
   /// Get the service name.
-  const ACE_TCHAR *name (void) const;
+  const ACE_TCHAR *name () const;
 
   /// Get the service description.
-  const ACE_TCHAR *desc (void) const;
+  const ACE_TCHAR *desc () const;
 
   /// Sets the host machine
   void host (const ACE_TCHAR *host);
 
   /// Get the host machine.
-  const ACE_TCHAR *host (void) const;
+  const ACE_TCHAR *host () const;
 
   /**
    * Insert (create) the service in the NT Service Control Manager,

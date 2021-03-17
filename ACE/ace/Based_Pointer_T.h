@@ -98,7 +98,7 @@ public:
   void operator = (const ACE_Based_Pointer_Basic<CONCRETE> &);
 
   /// Dereference operator.
-  CONCRETE operator * (void) const;
+  CONCRETE operator * () const;
 
   /// Less than operator.
   bool operator < (const ACE_Based_Pointer_Basic<CONCRETE> &) const;
@@ -128,7 +128,7 @@ public:
   operator CONCRETE *() const;
 
   /// Returns the underlying memory address of the smart pointer.
-  CONCRETE *addr (void) const;
+  CONCRETE *addr () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

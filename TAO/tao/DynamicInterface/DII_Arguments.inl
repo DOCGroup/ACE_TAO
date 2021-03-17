@@ -11,7 +11,7 @@ namespace TAO
   }
 
   ACE_INLINE int
-  NamedValue_Argument::byte_order (void) const
+  NamedValue_Argument::byte_order () const
   {
     return this->byte_order_;
   }

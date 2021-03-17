@@ -218,7 +218,7 @@ TAO_SCIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_SCIOP_Endpoint::object_addr (void) const
+TAO_SCIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -244,7 +244,7 @@ TAO_SCIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_SCIOP_Endpoint::object_addr_i (void) const
+TAO_SCIOP_Endpoint::object_addr_i () const
 {
   if (this->object_addr_.set (this->port_, this->host_.in ()) == -1)
     {
@@ -349,13 +349,13 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
 }
 
 bool
-TAO_SCIOP_Endpoint::is_preferred_network (void) const
+TAO_SCIOP_Endpoint::is_preferred_network () const
 {
   return (this->preferred_path_.host.in () != 0);
 }
 
 const char *
-TAO_SCIOP_Endpoint::preferred_network (void) const
+TAO_SCIOP_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();
 }

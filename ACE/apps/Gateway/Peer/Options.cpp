@@ -48,7 +48,7 @@ Options::instance (void)
 }
 
 long
-Options::timeout (void) const
+Options::timeout () const
 {
   return this->timeout_;
 }
@@ -60,37 +60,37 @@ Options::connection_id (void)
 }
 
 long
-Options::max_queue_size (void) const
+Options::max_queue_size () const
 {
   return this->max_queue_size_;
 }
 
 u_short
-Options::consumer_acceptor_port (void) const
+Options::consumer_acceptor_port () const
 {
   return this->consumer_acceptor_port_;
 }
 
 u_short
-Options::supplier_acceptor_port (void) const
+Options::supplier_acceptor_port () const
 {
   return this->supplier_acceptor_port_;
 }
 
 u_short
-Options::consumer_connector_port (void) const
+Options::consumer_connector_port () const
 {
   return this->consumer_connector_port_;
 }
 
 u_short
-Options::supplier_connector_port (void) const
+Options::supplier_connector_port () const
 {
   return this->supplier_connector_port_;
 }
 
 const ACE_TCHAR *
-Options::connector_host (void) const
+Options::connector_host () const
 {
   return this->connector_host_;
 }

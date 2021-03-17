@@ -477,7 +477,7 @@ Test_Supplier::disconnect_push_supplier (void)
     RtecEventChannelAdmin::ProxyPushConsumer::_nil ();
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }

@@ -67,12 +67,12 @@ public:
    * Accessors and mutators for object references.
    */
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr my_root_context (void) const;
-  CosNaming::NamingContext_ptr ft_root_context (void) const;
+  CosNaming::NamingContext_ptr my_root_context () const;
+  CosNaming::NamingContext_ptr ft_root_context () const;
 
   /// Returns the reference for this servers local naming manager servant.
-  ::FT_Naming::NamingManager_ptr my_naming_manager (void) const;
-  ::FT_Naming::NamingManager_ptr ft_naming_manager (void) const;
+  ::FT_Naming::NamingManager_ptr my_naming_manager () const;
+  ::FT_Naming::NamingManager_ptr ft_naming_manager () const;
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int , ACE_TCHAR * [], CORBA::ORB_ptr orb);

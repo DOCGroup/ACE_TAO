@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
-ACE_Select_Reactor_Handler_Repository::size (void) const
+ACE_Select_Reactor_Handler_Repository::size () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.total_size ();
@@ -14,7 +14,7 @@ ACE_Select_Reactor_Handler_Repository::size (void) const
 }
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
-ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
+ACE_Select_Reactor_Handler_Repository::max_handlep1 () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.current_size ();
@@ -70,7 +70,7 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 // ------------------------------------------------------------------
 
 ACE_INLINE bool
-ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
+ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 {
 #ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->current_ == this->rep_->event_handlers_.end ();

@@ -97,7 +97,7 @@ public:
   virtual int open (void * = 0);
 
   /// Return the handle of the message_fifo_;
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Called when object is removed from the ACE_Reactor
   virtual int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,

@@ -205,7 +205,7 @@ Distributer::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }

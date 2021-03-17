@@ -72,7 +72,7 @@ public:
   int set (const ACE_TCHAR port_name[]);
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int len);
@@ -91,7 +91,7 @@ public:
                         int encode = 1);
 
   /// Return the port number, converting it into host byte order.
-  u_short get_port_number (void) const;
+  u_short get_port_number () const;
 
   /// Return the character representation of the hostname.
   int get_host_name (ACE_TCHAR hostname[],
@@ -102,7 +102,7 @@ public:
    * is non-reentrant since it returns a pointer to a static data
    * area).
    */
-  const char *get_host_name (void) const;
+  const char *get_host_name () const;
 
   /**
    * Return the "dotted decimal" external Internet address representation of
@@ -119,14 +119,14 @@ public:
    * using strdup() or (2) use the "reentrant" version of
    * get_host_addr() described above.
    */
-  const char *get_host_addr (void) const;
+  const char *get_host_addr () const;
 
   /// Return the 4-byte external IP address, converting it into host byte
   /// order.
-  ACE_UINT32 get_ip_address (void) const;
+  ACE_UINT32 get_ip_address () const;
 
-  const ACE_INET_Addr &get_remote_addr (void) const;
-  const ACE_INET_Addr &get_local_addr (void) const;
+  const ACE_INET_Addr &get_remote_addr () const;
+  const ACE_INET_Addr &get_local_addr () const;
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
@@ -138,7 +138,7 @@ public:
   bool operator != (const ACE_INET_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Dump the state of an object.
   void dump () const;

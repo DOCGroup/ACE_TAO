@@ -354,7 +354,7 @@ ImR_Locator_i::shutdown (bool wait_for_completion)
 }
 
 const Options *
-ImR_Locator_i::opts (void) const
+ImR_Locator_i::opts () const
 {
   return this->opts_;
 }

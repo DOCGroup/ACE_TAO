@@ -9,7 +9,7 @@ TAO_ORB_Core_Auto_Ptr::TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p)
 }
 
 ACE_INLINE TAO_ORB_Core *
-TAO_ORB_Core_Auto_Ptr::get (void) const
+TAO_ORB_Core_Auto_Ptr::get () const
 {
   return this->p_;
 }

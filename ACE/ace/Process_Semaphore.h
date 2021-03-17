@@ -110,7 +110,7 @@ public:
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
   /// Return the underlying lock.
-  const ACE_sema_t &lock (void) const;
+  const ACE_sema_t &lock () const;
 #endif /* ACE_WIN32 || ACE_HAS_POSIX_SEM */
 
   /// Dump the state of an object.

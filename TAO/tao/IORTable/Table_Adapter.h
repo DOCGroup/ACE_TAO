@@ -44,12 +44,12 @@ public:
   virtual void open (void);
   virtual void close (int wait_for_completion);
   virtual void check_close (int wait_for_completion);
-  virtual int priority (void) const;
+  virtual int priority () const;
   virtual int dispatch (TAO::ObjectKey &key,
                         TAO_ServerRequest &request,
                         CORBA::Object_out foward_to);
 
-  virtual const char *name (void) const;
+  virtual const char *name () const;
   virtual CORBA::Object_ptr root (void);
   virtual CORBA::Object_ptr create_collocated_object (TAO_Stub *,
                                                       const TAO_MProfile &);

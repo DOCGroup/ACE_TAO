@@ -533,7 +533,7 @@ ACE_WIN32_Proactor::handle_close (ACE_HANDLE handle,
 }
 
 ACE_HANDLE
-ACE_WIN32_Proactor::get_handle (void) const
+ACE_WIN32_Proactor::get_handle () const
 {
   if (this->used_with_reactor_event_loop_)
     return this->event_.handle ();
@@ -734,7 +734,7 @@ ACE_WIN32_Proactor::close_dispatch_threads (int)
 }
 
 size_t
-ACE_WIN32_Proactor::number_of_threads (void) const
+ACE_WIN32_Proactor::number_of_threads () const
 {
   return static_cast<size_t> (this->number_of_threads_);
 }

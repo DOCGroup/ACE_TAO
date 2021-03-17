@@ -41,7 +41,7 @@ ACE_EH_Dispatch_Info::set (ACE_HANDLE handle,
 }
 
 ACE_INLINE bool
-ACE_EH_Dispatch_Info::dispatch (void) const
+ACE_EH_Dispatch_Info::dispatch () const
 {
   return this->dispatch_;
 }

@@ -26,7 +26,7 @@ ACEXML_Mem_Map_Stream::send_n (const void *buf, size_t size,
 }
 
 int
-ACEXML_Mem_Map_Stream::eof (void) const
+ACEXML_Mem_Map_Stream::eof () const
 {
   return this->get_pos_ >= this->end_of_mapping_plus1_;
 }
@@ -59,7 +59,7 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
 }
 
 const char *
-ACEXML_Mem_Map_Stream::recv (void) const
+ACEXML_Mem_Map_Stream::recv () const
 {
   return this->recv_pos_;
 }
@@ -79,7 +79,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
 }
 
 size_t
-ACEXML_Mem_Map_Stream::recv_len (void) const
+ACEXML_Mem_Map_Stream::recv_len () const
 {
   return this->get_pos_ - this->recv_pos_;
 }
@@ -137,7 +137,7 @@ ACEXML_Mem_Map_Stream::svc_handler (void)
 }
 
 size_t
-ACEXML_Mem_Map_Stream::available (void) const
+ACEXML_Mem_Map_Stream::available () const
 {
   return this->end_of_mapping_plus1_ - this->get_pos_;
 }

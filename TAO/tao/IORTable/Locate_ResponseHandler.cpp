@@ -79,7 +79,7 @@ TAO_AMH_Locate_ResponseHandler::_unchecked_narrow (CORBA::Object_ptr obj)
 }
 
 const char*
-TAO_AMH_Locate_ResponseHandler::_interface_repository_id (void) const
+TAO_AMH_Locate_ResponseHandler::_interface_repository_id () const
 {
   return 0;
 }

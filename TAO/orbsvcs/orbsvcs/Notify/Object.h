@@ -52,7 +52,7 @@ public:
   virtual ~TAO_Notify_Object (void);
 
   /// This Object's ID
-  ID id (void) const;
+  ID id () const;
 
   /// Activate
   virtual CORBA::Object_ptr activate (PortableServer::Servant servant);

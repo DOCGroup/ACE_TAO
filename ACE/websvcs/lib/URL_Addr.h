@@ -46,7 +46,7 @@ public:
   virtual ~ACE_URL_Addr (void);
 
   /// Get the original URL
-  const ACE_TCHAR *get_url (void) const;
+  const ACE_TCHAR *get_url () const;
 
   /// Essentially the copy constructor.
   int set (const ACE_URL_Addr& address);
@@ -79,7 +79,7 @@ public:
   static int known_scheme (const ACE_TCHAR *url);
 
   /// Hash function
-  u_long hash (void) const;
+  u_long hash () const;
 
 protected:
   /// Allows the derived classes to store the compact representation of
@@ -191,19 +191,19 @@ public:
    * URL can be can be refering to an hostname that cannot be
    * validated at this point.
    */
-  ACE_INET_Addr get_inet_address (void) const;
+  ACE_INET_Addr get_inet_address () const;
 
   /// Get the name of the host.
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the port number.
-  u_short get_port_number (void) const;
+  u_short get_port_number () const;
 
   /// Get the path component in the URL
-  const ACE_TCHAR *get_path (void) const;
+  const ACE_TCHAR *get_path () const;
 
   /// Get the query component in the URL
-  const ACE_TCHAR *get_query (void) const;
+  const ACE_TCHAR *get_query () const;
 
   /**
    * Create an address from a (possibly) relative URL, such as
@@ -290,20 +290,20 @@ public:
   virtual ~ACE_FTP_Addr (void);
 
   /// Get the host name component in the URL
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the username component in the URL
-  const ACE_TCHAR *get_user (void) const;
+  const ACE_TCHAR *get_user () const;
 
   /// Get the password component in the URL
-  const ACE_TCHAR *get_passwd (void) const;
+  const ACE_TCHAR *get_passwd () const;
 
   /// Get the path component in the URL
-  const ACE_TCHAR *get_path (void) const;
+  const ACE_TCHAR *get_path () const;
 
   /// Obtain the INET_Address implicit in the URL, can be used to
   /// obtain the host and the port.
-  ACE_INET_Addr get_inet_address (void) const;
+  ACE_INET_Addr get_inet_address () const;
 
   // = The ACE_Addr methods, see the documentation above.
   virtual int string_to_addr (const ACE_TCHAR *address);
@@ -370,13 +370,13 @@ public:
   virtual ~ACE_Mailto_Addr (void);
 
   /// Get the username component in the URL
-  const ACE_TCHAR *get_user (void) const;
+  const ACE_TCHAR *get_user () const;
 
   /// Get the hostname component in the URL
-  const ACE_TCHAR *get_hostname (void) const;
+  const ACE_TCHAR *get_hostname () const;
 
   /// Get the headers as a single string
-  const ACE_TCHAR *get_headers (void) const;
+  const ACE_TCHAR *get_headers () const;
 
   // @@ TODO A mailto: URL can contain multiple headers, an iterator
   // over them would be a good idea. Similarly a method to *add*

@@ -71,7 +71,7 @@ namespace TAO
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
-      const ACE::HTBP::Addr& address (void) const;
+      const ACE::HTBP::Addr& address () const;
 
       /// Returns the array of endpoints in this acceptor
       const ACE::HTBP::Addr *endpoints (void);

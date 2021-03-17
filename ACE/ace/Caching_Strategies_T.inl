@@ -102,7 +102,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::cachi
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE void
-ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::dump (void) const
+ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Caching_Strategy_Adapter::dump");
@@ -191,7 +191,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LRU_Caching_Strategy::dump");
@@ -268,7 +268,7 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
-ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
+ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_LFU_Caching_Strategy::dump");
@@ -356,7 +356,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
-ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_FIFO_Caching_Strategy::dump");
@@ -439,7 +439,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::caching_utility (void)
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE void
-ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump (void) const
+ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Null_Caching_Strategy::dump");
