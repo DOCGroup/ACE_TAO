@@ -89,7 +89,7 @@ public:
 };
 
 
-int MyTask::svc (void )
+int MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) MyTask started\n"));
 

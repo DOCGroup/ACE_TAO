@@ -103,7 +103,7 @@ CORBA::Request::set_return_type (CORBA::TypeCode_ptr tc)
 }
 
 ACE_INLINE CORBA::Any &
-CORBA::Request::return_value (void )
+CORBA::Request::return_value ()
 {
   return this->result_->any_;
 }

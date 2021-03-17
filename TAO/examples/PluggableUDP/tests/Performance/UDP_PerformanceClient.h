@@ -41,7 +41,7 @@ public:
 
 private:
   // Runs in a separate thread.
-  virtual int svc (void );
+  virtual int svc ();
 
 private:
   CORBA::ORB_var orb_;

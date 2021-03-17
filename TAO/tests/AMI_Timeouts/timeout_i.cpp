@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    timeout_i.cpp
@@ -9,17 +8,12 @@
  */
 //=============================================================================
 
-
 #include "timeout_i.h"
 #include "ace/OS_NS_unistd.h"
 
 Timeout_i::Timeout_i (CORBA::ORB_ptr orb)
 {
   orb_ = CORBA::ORB::_duplicate (orb);
-}
-
-Timeout_i::~Timeout_i ()
-{
 }
 
 void
@@ -56,10 +50,6 @@ TimeoutHandler_i::TimeoutHandler_i ()
   timer_.reset ();
   timer_.start ();
   timer_.stop ();
-}
-
-TimeoutHandler_i::~TimeoutHandler_i ()
-{
 }
 
 void

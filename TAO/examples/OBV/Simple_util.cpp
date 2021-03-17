@@ -281,7 +281,7 @@ Client<InterfaceObj, Var>::obtain_initial_references (void)
 }
 
 template <class InterfaceObj, class Var> int
-Client<InterfaceObj, Var>::shutdown (void )
+Client<InterfaceObj, Var>::shutdown ()
 {
   // Returns the shutdwon flag
   return shutdown_;

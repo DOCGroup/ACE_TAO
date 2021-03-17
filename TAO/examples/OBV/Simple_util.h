@@ -106,7 +106,7 @@ public:
   InterfaceObj *operator-> () { return server_.in ();};
 
   /// Returns the shutdown flag.
-  int shutdown (void );
+  int shutdown ();
 
   /// Fills in the shutdwon flag.
   void shutdown (int);
