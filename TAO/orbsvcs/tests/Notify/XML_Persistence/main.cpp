@@ -316,7 +316,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       ecf->destroy();
     }
 
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
     poa = PortableServer::POA::_nil ();
     orb = CORBA::ORB::_nil ();

@@ -198,7 +198,7 @@ server_main (int argc,
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Server (%P|%t) ERROR: Interceptor self_test failed\n")));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       server->shutdown ();
 

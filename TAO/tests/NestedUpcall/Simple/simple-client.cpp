@@ -159,8 +159,7 @@ ACT_TMAIN (int argc, ACE_TCHAR **argv)
           server->shutdown ();
         }
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
     }
   catch (const CORBA::Exception& ex)
     {

@@ -220,7 +220,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       //
       orb->run ();
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
       orb->destroy ();
 
       ACE_DEBUG ((LM_DEBUG, "Event loop finished.\n"));

@@ -300,8 +300,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       first_task.wait ();
       second_task.wait ();
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
 
       orb->destroy ();
 

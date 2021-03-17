@@ -393,8 +393,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       child_poa_testing (root_poa.in ());
 
       // Destroy RootPOA.
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
 
       // Cleanup
       delete[] object_ids;

@@ -235,7 +235,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                            "\n (%P|%t) No single call got through to the server\n"),
                            3);
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

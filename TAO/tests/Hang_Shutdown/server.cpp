@@ -95,7 +95,7 @@ namespace Test
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) server - event loop finished\n"));
 
-        root_poa->destroy (1, 1);
+        root_poa->destroy (true, true);
 
         orb->destroy ();
       }

@@ -131,8 +131,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       worker.thr_mgr ()->wait ();
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0); // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false); // wait for completion
 
       orb->destroy ();
 

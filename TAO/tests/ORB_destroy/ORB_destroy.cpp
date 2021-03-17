@@ -41,7 +41,7 @@ test_with_regular_poa_manager (int argc,
 
       if (destroy_poa)
         {
-          root_poa->destroy (1, 1);
+          root_poa->destroy (true, true);
         }
 
       if (destroy_orb)
@@ -87,7 +87,7 @@ test_with_funky_poa_manager (int argc,
 
       if (destroy_poa)
         {
-          root_poa->destroy (1, 1);
+          root_poa->destroy (true, true);
         }
 
       if (destroy_orb)

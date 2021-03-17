@@ -142,9 +142,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_DEBUG((LM_INFO,
                      "Unable to reset OS time. Insufficient privileges or not supported.\n"));
 
-          root_poa->destroy (1,  // ethernalize objects
-                             0  // wait for completion
-                            );
+          root_poa->destroy (true,  // ethernalize objects
+                             false);  // wait for completion
 
           orb->destroy ();
 
@@ -156,9 +155,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           ACE_Time_Value timeout (4, 0);
           orb->run (timeout);
 
-          root_poa->destroy (1,  // ethernalize objects
-                             0  // wait for completion
-                            );
+          root_poa->destroy (true,  // ethernalize objects
+                             false);  // wait for completion
 
           orb->destroy ();
 

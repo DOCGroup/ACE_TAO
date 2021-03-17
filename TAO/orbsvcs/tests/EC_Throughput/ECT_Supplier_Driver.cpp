@@ -189,7 +189,7 @@ ECT_Supplier_Driver::run (int argc, ACE_TCHAR* argv[])
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
 

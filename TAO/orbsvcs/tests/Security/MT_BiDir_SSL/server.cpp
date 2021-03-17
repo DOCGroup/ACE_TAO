@@ -163,8 +163,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (1, 1);
     }
   catch (const CORBA::Exception& ex)
     {
