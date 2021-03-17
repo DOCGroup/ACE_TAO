@@ -1044,7 +1044,7 @@ TAO_Repository_i::num_pkinds () const
 void
 TAO_Repository_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

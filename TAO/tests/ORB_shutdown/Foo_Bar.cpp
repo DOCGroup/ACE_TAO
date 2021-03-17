@@ -12,7 +12,7 @@ Foo_Bar::~Foo_Bar (void)
 
   try
     {
-      this->orb_->shutdown (1);
+      this->orb_->shutdown (true);
     }
   catch (...)
     {

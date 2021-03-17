@@ -44,7 +44,7 @@ Service::run_test (Test::Callback_ptr callback)
     }
 
   // shutdown ourselves
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

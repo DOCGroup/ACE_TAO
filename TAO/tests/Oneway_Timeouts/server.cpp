@@ -127,7 +127,7 @@ public:
 
   int handle_timeout (const ACE_Time_Value &, const void *)
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
     return 0;
   }
 

@@ -11,7 +11,7 @@ LCD_Display_imp::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "The ORB has been shutdown, Close the windows to exit\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
   this->orb_->destroy ();
 }
 

@@ -742,7 +742,7 @@ Server::test (void)
 void
 Server::shutdown (void)
 {
-  this->orb_->shutdown (1);
+  this->orb_->shutdown (true);
 
   this->orb_->destroy ();
 }

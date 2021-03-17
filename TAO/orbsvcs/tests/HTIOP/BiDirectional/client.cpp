@@ -139,7 +139,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     }
 
   if (!CORBA::is_nil(root_poa.in()))
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
   delete servant;
 
   return 0;

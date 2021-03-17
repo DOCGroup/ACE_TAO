@@ -58,5 +58,5 @@ Messenger_i::call_message (const char * user_name)
 void
 Messenger_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

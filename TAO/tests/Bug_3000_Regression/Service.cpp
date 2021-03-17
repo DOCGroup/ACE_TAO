@@ -16,5 +16,5 @@ Service::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Shuting down self (server)\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

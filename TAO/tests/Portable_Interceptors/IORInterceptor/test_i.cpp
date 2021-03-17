@@ -11,5 +11,5 @@ test_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\"test_i\" is shutting down.\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -179,7 +179,7 @@ void Dispatcher_run(int id)
   if (id == 0)
   {
     ACE_DEBUG ((LM_DEBUG, "Shutting down ORB\n"));
-    orb->shutdown (1);
+    orb->shutdown (true);
   }
 }
 

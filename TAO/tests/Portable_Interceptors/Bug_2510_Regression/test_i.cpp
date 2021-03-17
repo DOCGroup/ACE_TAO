@@ -51,5 +51,5 @@ Visual_i::normal (CORBA::Long arg)
 void
 Visual_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

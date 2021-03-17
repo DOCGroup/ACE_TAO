@@ -66,7 +66,7 @@ Simple_C::op4(Baz::AMH_CResponseHandler_ptr _tao_rh)
 void
 Simple_C::shutdown (Baz::AMH_CResponseHandler_ptr)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************

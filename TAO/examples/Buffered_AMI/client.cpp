@@ -310,7 +310,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           test_object->shutdown ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any

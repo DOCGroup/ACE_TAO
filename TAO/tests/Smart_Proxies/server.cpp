@@ -51,7 +51,7 @@ Test_i :: method (CORBA::Short boo)
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 static const ACE_TCHAR *ior_output_file = 0;
@@ -141,7 +141,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

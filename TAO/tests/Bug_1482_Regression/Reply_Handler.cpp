@@ -29,7 +29,7 @@ Reply_Handler::next_prime_excep (
       ACE_Time_Value tv (10, 0);
       this->orb_->run (tv);
 
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

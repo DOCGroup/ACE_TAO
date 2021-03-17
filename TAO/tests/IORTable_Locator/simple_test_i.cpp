@@ -9,5 +9,5 @@ Simple_Test_i::Simple_Test_i (CORBA::ORB_ptr orb)
 void
 Simple_Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

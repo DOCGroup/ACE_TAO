@@ -87,7 +87,7 @@ public:
   //FUZZ: disable check_for_lack_ACE_OS
   void shutdown (void)
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   };
   //FUZZ: enable check_for_lack_ACE_OS
 

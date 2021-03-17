@@ -118,5 +118,5 @@ void
 Simple_Server_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "shutdown request from client\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

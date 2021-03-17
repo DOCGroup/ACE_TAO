@@ -43,7 +43,7 @@ public:
 
     virtual void shutdown ()
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
 private:
     CORBA::ORB_var orb_;

@@ -38,5 +38,5 @@ TX_Object_i::recv (DataSeq_out data)
 void
 TX_Object_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

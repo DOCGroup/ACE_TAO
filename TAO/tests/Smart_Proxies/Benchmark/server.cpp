@@ -54,7 +54,7 @@ Test_i::tickets (CORBA::Short number)
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 static const ACE_TCHAR *ior_output_file = 0;

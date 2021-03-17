@@ -52,5 +52,5 @@ Oneway_Buffering_Admin::flush (void)
 void
 Oneway_Buffering_Admin::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

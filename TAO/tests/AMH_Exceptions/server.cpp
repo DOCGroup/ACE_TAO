@@ -56,7 +56,7 @@ ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
 void
 ST_AMH_Servant::shutdown (Test::AMH_RoundtripResponseHandler_ptr /*_tao_rh*/)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 /*** Server Declaration ***/

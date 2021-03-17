@@ -21,7 +21,7 @@ Session_Factory::create_new_session (Test::Callback_ptr cb)
 void
 Session_Factory::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr

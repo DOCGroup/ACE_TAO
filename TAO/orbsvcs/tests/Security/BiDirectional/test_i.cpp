@@ -15,7 +15,7 @@ void
 Callback_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Performing clean shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
@@ -89,5 +89,5 @@ Simple_Server_i::call_client (void)
 void
 Simple_Server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

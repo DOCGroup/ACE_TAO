@@ -81,7 +81,7 @@ FileImpl::System::open (const char *file_name,
 void
 FileImpl::System::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // IDL File::Descriptor constructor

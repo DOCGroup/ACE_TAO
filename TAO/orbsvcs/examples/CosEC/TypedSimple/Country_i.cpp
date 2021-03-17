@@ -60,5 +60,5 @@ Country_i::disconnect_push_consumer (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Country_i::disconnect_push_consumer, ")
               ACE_TEXT ("calling ORB shutdown...\n")));
-  orb_->shutdown (0);
+  orb_->shutdown (false);
 }

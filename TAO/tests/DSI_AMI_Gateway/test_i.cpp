@@ -47,7 +47,7 @@ Simple_Server_i::raise_system_exception (void)
 void
 Simple_Server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Long

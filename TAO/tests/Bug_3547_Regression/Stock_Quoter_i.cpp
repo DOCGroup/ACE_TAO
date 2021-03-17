@@ -13,7 +13,7 @@ Stock_Quoter_i::~Stock_Quoter_i ()
 void
 Stock_Quoter_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Float Stock_Quoter_i::get_quote (const char* stock_id)

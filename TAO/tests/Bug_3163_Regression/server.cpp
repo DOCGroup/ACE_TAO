@@ -53,7 +53,7 @@ public:
   }
   void shutdown (void)
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
 
 private:

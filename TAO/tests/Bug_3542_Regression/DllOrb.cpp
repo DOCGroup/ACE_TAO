@@ -96,7 +96,7 @@ DllOrb::fini (void)
     // attempt to protect against sporadic BAD_INV_ORDER exceptions
     ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-    mv_orb_->shutdown (1);
+    mv_orb_->shutdown (true);
 
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() ...\n")));
     // wait for our threads to finish

@@ -115,7 +115,7 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
       // During normal test execution the ORB would have been destroyed
       // by a request from the client.
 
-      //  orb->shutdown (0);
+      //  orb->shutdown (false);
 
       orb->destroy ();
     }

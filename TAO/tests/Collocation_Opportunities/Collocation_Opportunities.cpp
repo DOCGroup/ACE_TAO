@@ -252,7 +252,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       base_test->method ();
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       result = task.wait ();
       ACE_ASSERT (result != -1);

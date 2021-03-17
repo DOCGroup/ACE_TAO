@@ -546,7 +546,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                  forth_poa.in (),
                  perform_deactivation_test);
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

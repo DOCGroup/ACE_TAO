@@ -130,7 +130,7 @@ RedGreen_Test::run (void)
     }
 
     this->destroy_ec ();
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
   catch (const CORBA::Exception& ex)
   {

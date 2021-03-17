@@ -45,7 +45,7 @@ passer_i::passer_i (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa)
 void
 passer_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void

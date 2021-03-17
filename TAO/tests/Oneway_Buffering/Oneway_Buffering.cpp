@@ -27,5 +27,5 @@ Oneway_Buffering::sync (void)
 void
 Oneway_Buffering::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

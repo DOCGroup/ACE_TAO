@@ -65,7 +65,7 @@ TAO_Notify_ThreadPool_Supplier::run (void)
   this->deactivate ();
 
   // we're done. shutdown the ORB to exit the process.
-  this->orb_objects_.orb_->shutdown (1);
+  this->orb_objects_.orb_->shutdown (true);
 }
 
 void

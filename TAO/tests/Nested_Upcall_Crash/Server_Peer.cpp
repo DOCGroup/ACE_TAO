@@ -39,7 +39,7 @@ Server_Peer::callme(Test::Peer_ptr callback,
     {
     }
 
-    // orb_->shutdown (0);
+    // orb_->shutdown (false);
   }
   else if (max_depth > 0)
   {

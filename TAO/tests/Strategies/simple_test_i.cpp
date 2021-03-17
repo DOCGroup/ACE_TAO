@@ -17,5 +17,5 @@ Simple_Server_i::print_status (void)
 void
 Simple_Server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

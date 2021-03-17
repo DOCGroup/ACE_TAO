@@ -160,7 +160,7 @@ Stock_StockBrokerHome_i::handle_signal (int,
 
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   return 0;
 }
