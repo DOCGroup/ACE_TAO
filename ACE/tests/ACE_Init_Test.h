@@ -6,7 +6,7 @@
  *
  * Main header file for the ACE_INIT_TEST application.
  *
- *  @author Steve Huston <shuston@cs.wustl.edu>
+ *  @author Steve Huston <shuston@riverace.com>
  */
 //=============================================================================
 
