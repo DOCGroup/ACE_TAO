@@ -330,7 +330,7 @@ Hello::shutdown (void)
   // call to this method before shutting down the ORB.  We sleep
   // to avoid BAD_INV_ORDER exceptions on fast dual processor machines.
   ACE_OS::sleep (1);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::ULong Hello::error_count () const

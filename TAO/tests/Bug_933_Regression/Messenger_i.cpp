@@ -54,5 +54,5 @@ Messenger_i::send_message (const CORBA::OctetSeq & user_name)
 void
 Messenger_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

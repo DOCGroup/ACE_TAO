@@ -81,7 +81,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[])
           }
           servant.fini ();
 
-          orb->shutdown (1);
+          orb->shutdown (true);
 
           TAOLIB_ERROR ((LM_INFO,
                       "%T %C (%P|%t) Terminated normally. %C\n",

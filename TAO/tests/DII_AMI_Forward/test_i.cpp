@@ -19,5 +19,5 @@ void
 Forward_Test_i::shutdown ()
 {
   ACE_OS::sleep( 2 );
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

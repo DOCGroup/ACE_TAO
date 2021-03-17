@@ -67,7 +67,7 @@ test_with_bidir_poa (int argc,
       poa_manager->activate ();
 
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       if (destroy_orb)
         {

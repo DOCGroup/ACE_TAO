@@ -43,5 +43,5 @@ test_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) About to invoke shudown... "));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

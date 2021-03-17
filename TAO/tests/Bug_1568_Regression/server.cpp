@@ -66,7 +66,7 @@ Simple_C::op4(Baz::AMH_CResponseHandler_ptr _tao_rh)
 void
 Simple_C::shutdown (Baz::AMH_CResponseHandler_ptr)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -154,7 +154,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

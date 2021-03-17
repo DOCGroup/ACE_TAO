@@ -150,7 +150,7 @@ ACE_High_Res_Timer::get_cpuinfo ()
                   ACELIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("\nThe BogoMIPS metric is not supported on this platform"
                                          "\n\tReport the results of the clock calibration and"
-                                         "\n\tthe contents of /proc/cpuinfo to the ace-users mailing list")));
+                                         "\n\tthe contents of /proc/cpuinfo to the ACE github project")));
                 }
 #endif /* 0 */
               break;

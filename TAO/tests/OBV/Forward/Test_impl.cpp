@@ -39,5 +39,5 @@ Test_impl::reflect (TreeController * tc)
 void
 Test_impl::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

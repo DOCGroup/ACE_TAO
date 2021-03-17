@@ -23,7 +23,7 @@ void
 Demo_HelloWorld_i::shutdown()
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)Demo_HelloWorld_i::shutdown \n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

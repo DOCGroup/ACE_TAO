@@ -90,7 +90,7 @@ namespace
 
     virtual int handle_timeout (const ACE_Time_Value&, const void*)
     {
-      orb_->shutdown (1);
+      orb_->shutdown (true);
       return 0;
     }
 

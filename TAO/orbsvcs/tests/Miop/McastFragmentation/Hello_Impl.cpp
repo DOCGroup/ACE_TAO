@@ -110,7 +110,7 @@ Hello_Impl::shutdown (void)
 {
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

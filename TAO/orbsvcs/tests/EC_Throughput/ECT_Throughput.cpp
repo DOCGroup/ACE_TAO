@@ -304,7 +304,7 @@ ECT_Throughput::shutdown_consumer (void*)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%t) shutting down the ORB\n"));
-      // Not needed: this->orb_->shutdown (0);
+      // Not needed: this->orb_->shutdown (false);
     }
 }
 

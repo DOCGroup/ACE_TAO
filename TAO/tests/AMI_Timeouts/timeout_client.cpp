@@ -60,7 +60,7 @@ TimeoutClient::svc ()
       ACE_OS::sleep (tv);
 
       // shut down local ORB
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

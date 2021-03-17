@@ -14,5 +14,5 @@ Memory_Growth::ping (void)
 void
 Memory_Growth::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

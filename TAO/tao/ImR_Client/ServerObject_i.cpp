@@ -22,7 +22,7 @@ ServerObject_i::shutdown (void)
   // Note : We want our child POAs to be able to unregister themselves from
   // the ImR, so we must destroy them before shutting down the orb.
   poa_->destroy(1, 0);
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr

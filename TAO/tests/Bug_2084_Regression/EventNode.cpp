@@ -54,5 +54,5 @@ void EventNode::registerHello ( ::Test::Hello_ptr h )
 void
 EventNode::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -137,7 +137,7 @@ void Messenger_i::shutdown (
     std::cout << std::endl;
 #endif
 
-    orb_->shutdown (0);
+    orb_->shutdown (false);
   }
   else
   {

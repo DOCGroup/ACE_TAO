@@ -51,7 +51,7 @@ Peer_Base::shutdown (void)
       RtecEventChannelAdmin::EventChannel::_nil ();
   }
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Object_ptr

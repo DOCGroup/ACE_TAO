@@ -42,7 +42,7 @@ Bottom_Impl::bottom_quote ( )
 void
 Bottom_Impl::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 ///////////////////////////////////////////////////////////
@@ -110,5 +110,5 @@ Delegated_Bottom_Impl::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Delegating Shut-Down.\n")));
   this->delegate_->shutdown ();
-  //this->orb_->shutdown (0);
+  //this->orb_->shutdown (false);
 }

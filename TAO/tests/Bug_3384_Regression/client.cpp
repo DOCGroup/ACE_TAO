@@ -174,7 +174,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       test_server->shutdown ();
 
       // shutdown worker
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       worker.thr_mgr ()->wait ();
 

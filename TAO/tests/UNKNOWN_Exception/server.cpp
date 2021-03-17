@@ -153,7 +153,7 @@ test_factory_i::shutdown (void)
               "factory_i::shutdown() called\n"));
 
   done = 1;
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int

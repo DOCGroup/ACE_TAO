@@ -145,6 +145,6 @@ void
 Publisher_impl::shutdown (
                           )
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
   worker->terminate();
 }

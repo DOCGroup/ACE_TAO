@@ -154,7 +154,7 @@ ACE_TMAIN (int argc,
           server->shutdown ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

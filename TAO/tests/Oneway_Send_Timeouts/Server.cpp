@@ -184,7 +184,7 @@ Server::shutdown ()
 
   try {
     if (!CORBA::is_nil (management_orb_.in())) {
-    management_orb_->shutdown (1);
+    management_orb_->shutdown (true);
       ACE_OS::sleep (1); // Let management thread clear out
     }
     ACE_auto_ptr_reset (test_i_, (Test_i*)0);

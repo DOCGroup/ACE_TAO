@@ -93,7 +93,7 @@ Peer_i::start (const PeerSet &the_peers,
 void
 Peer_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************

@@ -86,7 +86,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     // Accept requests
     orb->run();
 
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
 
     orb->destroy();
   }

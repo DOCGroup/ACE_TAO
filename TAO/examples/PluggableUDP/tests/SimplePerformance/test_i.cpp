@@ -36,7 +36,7 @@ Simple_Server_i::shutdown (void)
               "Simple_Server_i::shutdown\n"));
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

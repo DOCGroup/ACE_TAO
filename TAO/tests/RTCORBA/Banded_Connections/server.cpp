@@ -106,7 +106,7 @@ Test_i::test_method (CORBA::Boolean client_propagated,
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************

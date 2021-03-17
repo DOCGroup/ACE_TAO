@@ -65,7 +65,7 @@ Test_i::test_method (CORBA::Short priority)
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************

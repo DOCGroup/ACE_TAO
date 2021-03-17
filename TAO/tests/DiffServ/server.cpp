@@ -86,7 +86,7 @@ Test_i::test_method (void)
 void
 Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 static const ACE_TCHAR *simple_servant_ior_file = ACE_TEXT("simple_servant.ior");
@@ -204,7 +204,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "Server ORB event loop finished\n\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

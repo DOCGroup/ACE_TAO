@@ -28,5 +28,5 @@ Foo_i::baz (void)
 void
 Foo_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

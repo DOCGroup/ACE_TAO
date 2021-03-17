@@ -50,5 +50,5 @@ Roundtrip::test_short_method (const Test::short_load &,
 void
 Roundtrip::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

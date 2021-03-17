@@ -79,7 +79,7 @@ Test_i::dummy_two_way ()
 void
 Test_i::shutdown ()
 {
-  orb_->shutdown (0);
+  orb_->shutdown (false);
   shutdown_ = true;
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Test_i::shutdown>\n"));
 }

@@ -18,7 +18,7 @@ GoodDay::get_string (void)
 void
 GoodDay::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

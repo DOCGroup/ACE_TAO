@@ -39,5 +39,5 @@ void
 test_i::shutdown (void)
 {
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
 }

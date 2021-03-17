@@ -173,7 +173,7 @@ Thread_Pool::svc (void)
   --nt_;
   if (nt_ == 0)
     {
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
 
   // Note that the <ACE_Task::svc_run> method automatically removes us

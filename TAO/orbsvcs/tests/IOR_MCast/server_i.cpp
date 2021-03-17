@@ -94,7 +94,7 @@ Server_i::init (int &argc,
       this->orb_->run ();
 
       //Destroy the POA, waiting until the destruction terminates.
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
       this->orb_->destroy ();
     }
   catch (const CORBA::Exception& ex)

@@ -152,7 +152,7 @@ UDP_PerformanceClient::svc ()
 
       // Shut down local ORB, trigger the end of the ORB event loop
       // in the main thread.
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

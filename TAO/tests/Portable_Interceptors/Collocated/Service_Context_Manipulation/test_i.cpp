@@ -36,5 +36,5 @@ Visual_i::shutdown (void)
 {
   //  this->_remove_ref ();
   ACE_DEBUG ((LM_DEBUG,"(%P|%t) visual_i::shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

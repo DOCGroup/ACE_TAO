@@ -49,5 +49,5 @@ void
 Second_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) about to shutdown the orb\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

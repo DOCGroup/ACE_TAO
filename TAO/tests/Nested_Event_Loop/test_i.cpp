@@ -98,7 +98,7 @@ server_i::no_op (client_ptr remote_partner,
 void
 server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 client_i::client_i (server_ptr remote_partner)

@@ -257,5 +257,5 @@ Policy_Tester::create_objects (void)
 void
 Policy_Tester::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

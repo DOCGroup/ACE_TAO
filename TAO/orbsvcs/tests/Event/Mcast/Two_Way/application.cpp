@@ -515,7 +515,7 @@ Heartbeat_Application::shutdown (void)
   // Shutdown the ORB.
   try
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

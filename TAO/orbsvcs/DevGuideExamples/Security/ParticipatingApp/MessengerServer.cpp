@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     std::cout << "IOR written to file " << ACE_TEXT_ALWAYS_CHAR(ior_output_file) << std::endl;
 
     orb->run();
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
 
     std::cout << "Messenger Server is shut down!"

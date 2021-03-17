@@ -94,7 +94,7 @@ Server_Task::svc (void)
       ACE_DEBUG ((LM_DEBUG,
                    "Event loop finished for the thread server.\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       sorb_->destroy ();
     }

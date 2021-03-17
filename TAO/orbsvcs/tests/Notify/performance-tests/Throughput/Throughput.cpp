@@ -199,7 +199,7 @@ Notify_Throughput::Notify_Throughput (void)
 
 Notify_Throughput::~Notify_Throughput ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   delete[] payload_;
 }

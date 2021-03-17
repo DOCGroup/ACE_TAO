@@ -40,7 +40,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     stock_consumer_i.disconnect ();
 
-    poa->destroy (1, 1);
+    poa->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception &) {

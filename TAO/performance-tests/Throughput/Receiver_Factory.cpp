@@ -32,5 +32,5 @@ Receiver_Factory::create_receiver (void)
 void
 Receiver_Factory::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

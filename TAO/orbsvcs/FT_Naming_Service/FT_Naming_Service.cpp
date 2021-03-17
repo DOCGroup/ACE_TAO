@@ -174,7 +174,7 @@ TAO_FT_Naming_Service::shutdown (void)
 {
   if (!CORBA::is_nil (orb_.in ()))
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
 }
 

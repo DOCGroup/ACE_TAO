@@ -17,6 +17,6 @@ Hello::get_string (void)
 void
 Hello::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
   ACE_DEBUG ((LM_DEBUG,"in shutdown\n"));
 }

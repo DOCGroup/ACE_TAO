@@ -53,7 +53,7 @@ public:
   }
   void shutdown (void)
   {
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
   }
 
 private:
@@ -114,7 +114,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->run();
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

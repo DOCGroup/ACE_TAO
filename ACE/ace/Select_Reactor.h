@@ -22,10 +22,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 typedef ACE_Reactor_Token_T<ACE_SELECT_TOKEN> ACE_Select_Reactor_Token;
-
-#if defined (_MSC_VER) && (_MSC_VER >= 1600)
 template class ACE_Export ACE_Select_Reactor_T<ACE_Select_Reactor_Token>;
-#endif /* _MSC_VER */
 
 typedef ACE_Select_Reactor_T<ACE_Select_Reactor_Token> ACE_Select_Reactor;
 

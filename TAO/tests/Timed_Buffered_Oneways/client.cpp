@@ -240,7 +240,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           test_object_no_policy->shutdown (now);
         }
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       // Destroy the ORB.  On some platforms, e.g., Win32, the socket
       // library is closed at the end of main().  This means that any

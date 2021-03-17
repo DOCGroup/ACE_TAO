@@ -24,5 +24,5 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               "Server is shutting down via object %d.\n",
               this->number_));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

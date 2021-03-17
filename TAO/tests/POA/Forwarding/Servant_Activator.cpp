@@ -12,7 +12,7 @@ PortableServer::Servant
 ServantActivator::incarnate (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   // Throw forward exception
   throw PortableServer::ForwardRequest (this->forward_to_.in ());

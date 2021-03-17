@@ -20,7 +20,7 @@ Test_i::shutdown (void)
               "Server is shutting down.\n"));
 
   if (!CORBA::is_nil (this->orb_.in ()))
-    this->orb_->shutdown (0);
+    this->orb_->shutdown (false);
 }
 
 void

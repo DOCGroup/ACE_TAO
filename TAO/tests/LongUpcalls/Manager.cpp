@@ -45,7 +45,7 @@ Manager::start_workers (CORBA::Short worker_count,
 void
 Manager::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

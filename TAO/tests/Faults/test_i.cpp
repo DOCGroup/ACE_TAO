@@ -22,7 +22,7 @@ Callback_i::shutdown (CORBA::Boolean is_clean)
 #endif
       return;
     }
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   ACE_DEBUG ((LM_DEBUG, "Shutdown: Performed clean shutdown\n"));
 }
@@ -60,13 +60,13 @@ Simple_Server_i::shutdown_now (CORBA::Boolean is_clean)
     }
 
   ACE_DEBUG ((LM_DEBUG, "shutdown_now:Performing clean shutdown\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void
 Simple_Server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************
@@ -116,5 +116,5 @@ Middle_i::shutdown (void)
       // ignore them
     }
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

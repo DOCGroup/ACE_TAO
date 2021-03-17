@@ -319,7 +319,7 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               "test_i::shutdown\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int
