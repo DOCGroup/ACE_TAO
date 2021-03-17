@@ -1,8 +1,6 @@
 This is ACE version 7.0.1, released Mon Mar 15 09:03:24 CET 2021
 
-If you have any problems with or questions about ACE, please send
-e-mail to the ACE mailing list (ace-bugs@list.isis.vanderbilt.edu),
-using the form found in the file PROBLEM-REPORT-FORM. In order
-to post to the list you must subscribe to it.
-
-See http://www.dre.vanderbilt.edu/~schmidt/ACE-mail.html
+If you have any problems with or questions about ACE, please open
+a issue or discussion on the ACE_TAO github project at
+https://github.com/DOCGroup/ACE_TAO using the form found in the
+file PROBLEM-REPORT-FORM.
