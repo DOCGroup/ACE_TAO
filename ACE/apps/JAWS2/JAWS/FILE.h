@@ -33,7 +33,7 @@ public:
                         ACE_OFF_T offset = 0,
                         LPSECURITY_ATTRIBUTES sa = 0) const;
 
-  ACE_Mem_Map *map (void) const;
+  ACE_Mem_Map *map () const;
 
 private:
 

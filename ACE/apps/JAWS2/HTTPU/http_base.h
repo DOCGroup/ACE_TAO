@@ -28,8 +28,8 @@ public:
   const char * payload (void);
   unsigned long payload_size (void);
 
-  int status (void) const;
-  const char *line (void) const;
+  int status () const;
+  const char *line () const;
   HTTP_Headers *http_headers (void);
   JAWS_Headers *headers (void);
 

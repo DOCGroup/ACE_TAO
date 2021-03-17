@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE TAO_IIOP_Endpoint *
-TAO_SSLIOP_Endpoint::iiop_endpoint (void) const
+TAO_SSLIOP_Endpoint::iiop_endpoint () const
 {
   return this->iiop_endpoint_;
 }

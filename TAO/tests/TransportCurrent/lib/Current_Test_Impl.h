@@ -51,7 +51,7 @@ public:
 public:
   /// Reports if unexpected errors have been encountered for the
   /// lifetime of the instance
-  bool is_successful (void) const;
+  bool is_successful () const;
 
 private:
   void test_transport_current (void);

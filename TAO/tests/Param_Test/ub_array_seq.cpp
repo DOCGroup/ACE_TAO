@@ -34,7 +34,7 @@ Test_Array_Sequence::~Test_Array_Sequence (void)
 }
 
 const char *
-Test_Array_Sequence::opname (void) const
+Test_Array_Sequence::opname () const
 {
   return this->opname_;
 }

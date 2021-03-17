@@ -219,7 +219,7 @@ public:
   int next (const ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.

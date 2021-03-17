@@ -152,7 +152,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id (void) const;
+  virtual const char* _interface_repository_id () const;
   //@}
 
  private:
@@ -179,16 +179,16 @@ public:
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
   TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
-  TAO_RTScheduler_Current_ptr operator-> (void) const;
+  TAO_RTScheduler_Current_ptr operator-> () const;
 
   operator const TAO_RTScheduler_Current_ptr &() const;
   operator TAO_RTScheduler_Current_ptr &();
   // in, inout, out, _retn
-  TAO_RTScheduler_Current_ptr in (void) const;
+  TAO_RTScheduler_Current_ptr in () const;
   TAO_RTScheduler_Current_ptr &inout (void);
   TAO_RTScheduler_Current_ptr &out (void);
   TAO_RTScheduler_Current_ptr _retn (void);
-  TAO_RTScheduler_Current_ptr ptr (void) const;
+  TAO_RTScheduler_Current_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
   // for non-defined forward declared interfaces.

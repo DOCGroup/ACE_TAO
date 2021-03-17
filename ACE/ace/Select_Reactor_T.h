@@ -120,7 +120,7 @@ public:
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
   /// Return the current ACE_Timer_Queue.
-  virtual ACE_Timer_Queue *timer_queue (void) const;
+  virtual ACE_Timer_Queue *timer_queue () const;
 
   /// Close down the select_reactor and release all of its resources.
   virtual int close (void);
@@ -518,7 +518,7 @@ public:
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
-  virtual size_t size (void) const;
+  virtual size_t size () const;
 
   /**
    * Returns a reference to the ACE_Reactor_Token that is

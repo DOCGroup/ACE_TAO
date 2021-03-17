@@ -30,13 +30,13 @@ TAO_GIOP_Message_Version::operator!= (const TAO_GIOP_Message_Version &src) const
 }
 
 ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_Version::major_version (void) const
+TAO_GIOP_Message_Version::major_version () const
 {
   return this->major;
 }
 
 ACE_INLINE CORBA::Octet
-TAO_GIOP_Message_Version::minor_version (void) const
+TAO_GIOP_Message_Version::minor_version () const
 {
   return this->minor;
 }

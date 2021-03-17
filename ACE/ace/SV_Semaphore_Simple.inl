@@ -120,7 +120,7 @@ ACE_SV_Semaphore_Simple::release (u_short n, short flags) const
 }
 
 ACE_INLINE int
-ACE_SV_Semaphore_Simple::get_id (void) const
+ACE_SV_Semaphore_Simple::get_id () const
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::get_id");
   return this->internal_id_;

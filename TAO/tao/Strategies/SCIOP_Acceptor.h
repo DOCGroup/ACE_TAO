@@ -53,7 +53,7 @@ public:
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);

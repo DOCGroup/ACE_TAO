@@ -177,7 +177,7 @@ TAO_DTP_Thread_Pool::above_minimum (void)
 }
 
 CORBA::ULong
-TAO_DTP_Thread_Pool::current_threads (void) const
+TAO_DTP_Thread_Pool::current_threads () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     mon,
@@ -564,7 +564,7 @@ TAO_DTP_Thread_Pool_Manager::create_threadpool_helper (TAO_DTP_Thread_Pool *thre
 }
 
 TAO_ORB_Core &
-TAO_DTP_Thread_Pool_Manager::orb_core (void) const
+TAO_DTP_Thread_Pool_Manager::orb_core () const
 {
   return this->orb_core_;
 }

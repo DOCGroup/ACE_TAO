@@ -48,7 +48,7 @@ public:
   CompressorIdLevelListPolicy (const CompressorIdLevelListPolicy &rhs);
 
   /// Returns a copy of this CompressorIdLevelListPolicy.
-  virtual CompressorIdLevelListPolicy *clone (void) const;
+  virtual CompressorIdLevelListPolicy *clone () const;
 
   virtual ::Compression::CompressorIdLevelList * compressor_ids ();
 
@@ -58,10 +58,10 @@ public:
 
   virtual void destroy (void);
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -93,7 +93,7 @@ public:
   CompressionEnablingPolicy (const CompressionEnablingPolicy &rhs);
 
   /// Returns a copy of this CompressionEnablingPolicy.
-  virtual CompressionEnablingPolicy *clone (void) const;
+  virtual CompressionEnablingPolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
   virtual ::CORBA::Boolean compression_enabled (void);
@@ -104,10 +104,10 @@ public:
 
   virtual void destroy (void);
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
   // Returns the scope at which this policy can be applied. See orbconf.h.
-  TAO_Policy_Scope _tao_scope (void) const;
+  TAO_Policy_Scope _tao_scope () const;
 
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr);
@@ -139,7 +139,7 @@ public:
   CompressionLowValuePolicy (const CompressionLowValuePolicy &rhs);
 
   /// Returns a copy of this CompressionLowValuePolicy.
-  virtual CompressionLowValuePolicy *clone (void) const;
+  virtual CompressionLowValuePolicy *clone () const;
 
   /// = The ZIOP::BidirectionalPolicy methods
   virtual ::CORBA::ULong low_value (void);
@@ -150,7 +150,7 @@ public:
 
   virtual void destroy (void);
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
 
@@ -176,7 +176,7 @@ public:
   CompressionMinRatioPolicy (const CompressionMinRatioPolicy &rhs);
 
   /// Returns a copy of this CompressionMinRatioPolicy.
-  virtual CompressionMinRatioPolicy *clone (void) const;
+  virtual CompressionMinRatioPolicy *clone () const;
 
   virtual ::Compression::CompressionRatio ratio (void);
 
@@ -186,7 +186,7 @@ public:
 
   virtual void destroy (void);
 
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
 private:
 

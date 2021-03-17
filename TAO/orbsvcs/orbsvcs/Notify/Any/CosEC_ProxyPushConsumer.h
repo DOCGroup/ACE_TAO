@@ -44,7 +44,7 @@ public:
   virtual ~TAO_Notify_CosEC_ProxyPushConsumer ();
 
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
   virtual void validate ();
   virtual void configure(TAO_Notify_SupplierAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 

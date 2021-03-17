@@ -19,14 +19,14 @@ ACE_Compressor::~ACE_Compressor ()
 }
 
 ACE_UINT64
-ACE_Compressor::compressed_bytes(void) const
+ACE_Compressor::compressed_bytes() const
 {
     ACE_GUARD_RETURN( ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0 );
     return this->compressed_bytes_;
 }
 
 ACE_UINT64
-ACE_Compressor::uncompressed_bytes(void) const
+ACE_Compressor::uncompressed_bytes() const
 {
     ACE_GUARD_RETURN( ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0 );
     return this->uncompressed_bytes_;
@@ -49,7 +49,7 @@ ACE_Compressor::update_stats(ACE_UINT64 uncompressed_bytes, ACE_UINT64 compresse
 }
 
 float
-ACE_Compressor::compression_ratio(void) const
+ACE_Compressor::compression_ratio() const
 {
     ACE_GUARD_RETURN( ACE_SYNCH_MUTEX, ace_mon, this->mutex_, 0.0f );
     if (this->uncompressed_bytes_ > 0) {

@@ -112,10 +112,10 @@ public:
   virtual Role role (void) = 0;
   void role (Role role);
   /// accessor to string version of direction .
-  const char * direction_str (void) const;
+  const char * direction_str () const;
 
   /// accessor to the flow protocol string.
-  const char *flow_protocol_str (void) const;
+  const char *flow_protocol_str () const;
 
   /// set the flow protocol string.
   void flow_protocol_str (const char *flow_protocol_str);
@@ -128,20 +128,20 @@ public:
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
-  const char *address_str (void) const;
-  //  const char * peer_address_str (void) const;
+  const char *address_str () const;
+  //  const char * peer_address_str () const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
   TAO_AV_Core::Protocol carrier_protocol (void);
 
   /// accessor to string version of carrier protocol.
-  const char * carrier_protocol_str (void) const;
+  const char * carrier_protocol_str () const;
 
   /// accessor to format to be used for this flow.
-  const char *format (void) const;
+  const char *format () const;
 
   /// accessor to name of this flow.
-  const char *flowname (void) const;
+  const char *flowname () const;
 
   /// converts the entry to a string.
   virtual const char *entry_to_string (void) = 0;

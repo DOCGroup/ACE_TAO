@@ -45,7 +45,7 @@ public:
   Test_Window (int x, int y, int w, int h,
                const char * l = 0);
 
-  int sides (void) const;
+  int sides () const;
   void sides (int s);
   void incr_sides (void);
 
@@ -65,7 +65,7 @@ Test_Window::Test_Window (int x, int y,
 }
 
 int
-Test_Window::sides (void) const
+Test_Window::sides () const
 {
   return this->sides_;
 }

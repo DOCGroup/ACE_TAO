@@ -74,7 +74,7 @@ namespace ACE
                           int address_facmily = AF_UNSPEC);
 
       int set_htid(const char *htid);
-      const char *get_htid (void) const;
+      const char *get_htid () const;
 
     private:
       /// HTID - web-obtained unique-identifier

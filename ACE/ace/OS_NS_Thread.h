@@ -342,7 +342,7 @@ class ACE_Export ACE_cond_t
 public:
 
   /// Returns the number of waiters.
-  long waiters (void) const;
+  long waiters () const;
 
 //protected:
   /// Number of waiting threads.
@@ -963,7 +963,7 @@ public:
   ACE_TSS_Info (void);
 
   /// Returns 1 if the key is in use, 0 if not.
-  int key_in_use (void) const { return thread_count_ != -1; }
+  int key_in_use () const { return thread_count_ != -1; }
 
   /// Mark the key as being in use if the flag is non-zero, or
   /// not in use if the flag is 0.

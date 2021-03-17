@@ -69,7 +69,7 @@ public:
    * profile0} {tag1, profile1} ...}.  The IOP module defines the
    * ProfileId typedef to be a CORBA::ULong.
    */
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.  Verify that ior is in the correct format.
@@ -113,13 +113,13 @@ public:
   virtual int check_prefix (const char *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
-  virtual char object_key_delimiter (void) const = 0;
+  virtual char object_key_delimiter () const = 0;
 
 protected:
   /// A flag indicating the actual connector supports parallel connection
   /// attempts. The base implementation always returns 0. Override to return
   /// non-zero if parallel connection attempts may be tried.
-  virtual int supports_parallel_connects (void) const;
+  virtual int supports_parallel_connects () const;
 
   /// Create a profile with a given endpoint.
   virtual TAO_Profile *make_profile (void) = 0;

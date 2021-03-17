@@ -31,7 +31,7 @@ Test_DynAny::~Test_DynAny (void)
 }
 
 const char*
-Test_DynAny::test_name (void) const
+Test_DynAny::test_name () const
 {
   return this->test_name_;
 }

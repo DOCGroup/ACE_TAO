@@ -20,7 +20,7 @@ public:
   Test_DynStruct (CORBA::ORB_var orb, int debug);
   ~Test_DynStruct (void);
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
   int run_test (void);
 

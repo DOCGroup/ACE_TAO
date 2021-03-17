@@ -17,26 +17,26 @@ TAO_Connection_Handler::transport (void)
 }
 
 ACE_INLINE bool
-TAO_Connection_Handler::is_closed (void) const
+TAO_Connection_Handler::is_closed () const
 {
   return (this->state_ == TAO_LF_Event::LFS_CONNECTION_CLOSED ||
           this->state_ == TAO_LF_Event::LFS_TIMEOUT || this->is_closed_);
 }
 
 ACE_INLINE bool
-TAO_Connection_Handler::is_timeout (void) const
+TAO_Connection_Handler::is_timeout () const
 {
   return (this->state_ == TAO_LF_Event::LFS_TIMEOUT);
 }
 
 ACE_INLINE bool
-TAO_Connection_Handler::is_open (void) const
+TAO_Connection_Handler::is_open () const
 {
   return this->state_ == TAO_LF_Event::LFS_SUCCESS;
 }
 
 ACE_INLINE bool
-TAO_Connection_Handler::is_connecting (void) const
+TAO_Connection_Handler::is_connecting () const
 {
   return this->state_ == TAO_LF_Event::LFS_CONNECTION_WAIT;
 }

@@ -69,7 +69,7 @@ ACE_SV_Shared_Memory::control (int cmd, void *buf)
 // The overall size of the segment.
 
 ACE_INLINE size_t
-ACE_SV_Shared_Memory::get_segment_size (void) const
+ACE_SV_Shared_Memory::get_segment_size () const
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::get_segment_size");
   return this->size_;
@@ -99,14 +99,14 @@ ACE_SV_Shared_Memory::detach (void)
 }
 
 ACE_INLINE void *
-ACE_SV_Shared_Memory::get_segment_ptr (void) const
+ACE_SV_Shared_Memory::get_segment_ptr () const
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::get_segment_ptr");
   return this->segment_ptr_;
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_SV_Shared_Memory::get_id (void) const
+ACE_SV_Shared_Memory::get_id () const
 {
   ACE_TRACE ("ACE_SV_Shared_Memory::get_id");
   return this->internal_id_;

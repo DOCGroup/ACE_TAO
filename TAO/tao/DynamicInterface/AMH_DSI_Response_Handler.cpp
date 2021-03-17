@@ -80,7 +80,7 @@ TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var (
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::ptr (void) const
+TAO_AMH_DSI_Exception_Holder_var::ptr () const
 {
   return this->ptr_;
 }
@@ -131,13 +131,13 @@ TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder*& ()
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::operator-> (void) const
+TAO_AMH_DSI_Exception_Holder_var::operator-> () const
 {
   return this->ptr_;
 }
 
 TAO_AMH_DSI_Exception_Holder *
-TAO_AMH_DSI_Exception_Holder_var::in (void) const
+TAO_AMH_DSI_Exception_Holder_var::in () const
 {
   return this->ptr_;
 }
@@ -247,7 +247,7 @@ TAO_AMH_DSI_Exception_Holder::_downcast (CORBA::ValueBase * v)
 }
 
 const char *
-TAO_AMH_DSI_Exception_Holder::_tao_obv_repository_id (void) const
+TAO_AMH_DSI_Exception_Holder::_tao_obv_repository_id () const
 {
   return this->_tao_obv_static_repository_id ();
 }
@@ -482,13 +482,13 @@ TAO_AMH_DSI_Response_Handler::_unchecked_narrow (CORBA::Object_ptr obj)
 }
 
 const char*
-TAO_AMH_DSI_Response_Handler::_interface_repository_id (void) const
+TAO_AMH_DSI_Response_Handler::_interface_repository_id () const
 {
   return 0;
 }
 
 CORBA::TypeCode_ptr
-TAO_AMH_DSI_Exception_Holder::_tao_type (void) const
+TAO_AMH_DSI_Exception_Holder::_tao_type () const
 {
   return 0;
 }

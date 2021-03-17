@@ -52,13 +52,13 @@ public:
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
 
   /// Returns address for default endpoint
-  const ACE_INET_Addr& default_address (void) const;
+  const ACE_INET_Addr& default_address () const;
 
   /// Set address for default endpoint
   void set_default_address (const ACE_INET_Addr& addr);

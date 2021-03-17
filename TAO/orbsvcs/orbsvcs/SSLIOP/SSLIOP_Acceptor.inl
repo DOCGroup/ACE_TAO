@@ -3,7 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const SSLIOP::SSL &
-TAO::SSLIOP::Acceptor::ssl_component (void) const
+TAO::SSLIOP::Acceptor::ssl_component () const
 {
   return this->ssl_component_;
 }

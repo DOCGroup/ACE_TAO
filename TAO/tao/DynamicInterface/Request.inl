@@ -109,7 +109,7 @@ CORBA::Request::return_value (void )
 }
 
 ACE_INLINE CORBA::Context_ptr
-CORBA::Request::ctx (void) const
+CORBA::Request::ctx () const
 {
   return this->ctx_;
 }
@@ -127,7 +127,7 @@ CORBA::Request::_tao_lazy_evaluation (bool lazy_evaluation)
 }
 
 ACE_INLINE int
-CORBA::Request::_tao_byte_order (void) const
+CORBA::Request::_tao_byte_order () const
 {
   return this->byte_order_;
 }

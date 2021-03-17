@@ -267,19 +267,19 @@ GIOP_Buffer::add_octets (const char *text, size_t offset)
 }
 
 bool
-GIOP_Buffer::sending (void) const
+GIOP_Buffer::sending () const
 {
   return this->sending_;
 }
 
 bool
-GIOP_Buffer::is_full (void) const
+GIOP_Buffer::is_full () const
 {
   return this->buffer_size_ > 0 && this->cur_size() == this->buffer_size_;
 }
 
 char
-GIOP_Buffer::type (void) const
+GIOP_Buffer::type () const
 {
   if (this->octets_ == 0)
     return 127;
@@ -287,25 +287,25 @@ GIOP_Buffer::type (void) const
 }
 
 char
-GIOP_Buffer::expected_type (void) const
+GIOP_Buffer::expected_type () const
 {
   return this->expected_type_;
 }
 
 char
-GIOP_Buffer::minor_version (void) const
+GIOP_Buffer::minor_version () const
 {
   return this->ver_minor_;
 }
 
 size_t
-GIOP_Buffer::reply_status (void) const
+GIOP_Buffer::reply_status () const
 {
   return this->reply_status_;
 }
 
 size_t
-GIOP_Buffer::num_contexts (void) const
+GIOP_Buffer::num_contexts () const
 {
   return this->num_contexts_;
 }
@@ -325,7 +325,7 @@ GIOP_Buffer::is_oneway (void)
 }
 
 size_t
-GIOP_Buffer::log_posn (void) const
+GIOP_Buffer::log_posn () const
 {
   return this->log_offset_;
 }
@@ -337,7 +337,7 @@ GIOP_Buffer::thread (void)
 }
 
 const ACE_Time_Value &
-GIOP_Buffer::time (void) const
+GIOP_Buffer::time () const
 {
   return this->time_;
 }
@@ -349,13 +349,13 @@ GIOP_Buffer::time (const ACE_Time_Value &t)
 }
 
 const ACE_CString &
-GIOP_Buffer::preamble (void) const
+GIOP_Buffer::preamble () const
 {
   return this->preamble_;
 }
 
 size_t
-GIOP_Buffer::expected_size (void) const
+GIOP_Buffer::expected_size () const
 {
   return this->expected_size_;
 }
@@ -371,7 +371,7 @@ GIOP_Buffer::msg_size (void)
 }
 
 size_t
-GIOP_Buffer::expected_req_id (void) const
+GIOP_Buffer::expected_req_id () const
 {
   return this->expected_req_id_;
 }
@@ -389,7 +389,7 @@ GIOP_Buffer::actual_req_id (void)
 }
 
 size_t
-GIOP_Buffer::cur_size (void) const
+GIOP_Buffer::cur_size () const
 {
   return this->wr_pos_ - this->octets_;
 }
@@ -554,7 +554,7 @@ GIOP_Buffer::payload (void)
 }
 
 bool
-GIOP_Buffer::has_octets (void) const
+GIOP_Buffer::has_octets () const
 {
   return (octets_ != 0);
 }

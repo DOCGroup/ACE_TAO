@@ -51,7 +51,7 @@ public:
       TAO_InputCDR &,
       CORBA::AbstractBase_ptr &);
 
-  virtual CORBA::Long type_info_single (void) const;
+  virtual CORBA::Long type_info_single () const;
 
   virtual CORBA::Boolean is_type_info_implied (CORBA::Long) const;
   virtual CORBA::Boolean is_type_info_single (CORBA::Long) const;

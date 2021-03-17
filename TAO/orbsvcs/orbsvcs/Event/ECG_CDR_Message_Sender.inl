@@ -35,7 +35,7 @@ TAO_ECG_CDR_Message_Sender::get_local_addr (ACE_INET_Addr& addr)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ECG_CDR_Message_Sender::mtu (void) const
+TAO_ECG_CDR_Message_Sender::mtu () const
 {
   return this->mtu_;
 }

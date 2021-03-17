@@ -31,7 +31,7 @@ Test_DynEnum::~Test_DynEnum (void)
 }
 
 const char*
-Test_DynEnum::test_name (void) const
+Test_DynEnum::test_name () const
 {
   return this->test_name_;
 }

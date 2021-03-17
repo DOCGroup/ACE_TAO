@@ -43,7 +43,7 @@ Logging_Acceptor::~Logging_Acceptor (void)
 // Returns underlying device descriptor.
 
 ACE_HANDLE
-Logging_Acceptor::get_handle (void) const
+Logging_Acceptor::get_handle () const
 {
   return this->peer_acceptor_.get_handle ();
 }

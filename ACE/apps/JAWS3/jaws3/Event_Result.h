@@ -77,14 +77,14 @@ public:
       this->error_number_ = errno;
   }
 
-  size_t bytes (void) const { return this->bytes_; }
+  size_t bytes () const { return this->bytes_; }
 
-  int status (void) const { return this->status_; }
-  int reason (void) const { return this->reason_; }
+  int status () const { return this->status_; }
+  int reason () const { return this->reason_; }
 
-  int error_number (void) const { return (errno = this->error_number_); }
+  int error_number () const { return (errno = this->error_number_); }
 
-  void * data (void) const { return this->data_; }
+  void * data () const { return this->data_; }
 
 private:
 

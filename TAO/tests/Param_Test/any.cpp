@@ -34,7 +34,7 @@ Test_Any::~Test_Any (void)
 }
 
 const char *
-Test_Any::opname (void) const
+Test_Any::opname () const
 {
   return this->opname_;
 }

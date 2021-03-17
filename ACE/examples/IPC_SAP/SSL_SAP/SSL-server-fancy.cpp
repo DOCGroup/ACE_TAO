@@ -138,19 +138,19 @@ private:
 };
 
 u_short
-Options::port (void) const
+Options::port () const
 {
   return this->port_;
 }
 
 int
-Options::verbose (void) const
+Options::verbose () const
 {
   return this->verbose_;
 }
 
 int
-Options::reply_message_len (void) const
+Options::reply_message_len () const
 {
   return ACE_Utils::truncate_cast<int> (this->reply_message_len_);
 }

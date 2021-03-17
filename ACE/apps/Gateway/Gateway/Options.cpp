@@ -76,7 +76,7 @@ Options::~Options (void)
 }
 
 ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *
-Options::locking_strategy (void) const
+Options::locking_strategy () const
 {
   return this->locking_strategy_;
 }
@@ -88,7 +88,7 @@ Options::locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *ls)
 }
 
 long
-Options::performance_window (void) const
+Options::performance_window () const
 {
   return this->performance_window_;
 }
@@ -100,67 +100,67 @@ Options::connection_id (void)
 }
 
 long
-Options::max_timeout (void) const
+Options::max_timeout () const
 {
   return this->max_timeout_;
 }
 
 int
-Options::blocking_semantics (void) const
+Options::blocking_semantics () const
 {
   return this->blocking_semantics_;
 }
 
 int
-Options::socket_queue_size (void) const
+Options::socket_queue_size () const
 {
   return this->socket_queue_size_;
 }
 
 u_long
-Options::threading_strategy (void) const
+Options::threading_strategy () const
 {
   return this->threading_strategy_;
 }
 
 const ACE_TCHAR *
-Options::connection_config_file (void) const
+Options::connection_config_file () const
 {
   return this->connection_config_file_;
 }
 
 const ACE_TCHAR *
-Options::consumer_config_file (void) const
+Options::consumer_config_file () const
 {
   return this->consumer_config_file_;
 }
 
 u_short
-Options::consumer_acceptor_port (void) const
+Options::consumer_acceptor_port () const
 {
   return this->consumer_acceptor_port_;
 }
 
 u_short
-Options::supplier_acceptor_port (void) const
+Options::supplier_acceptor_port () const
 {
   return this->supplier_acceptor_port_;
 }
 
 u_short
-Options::consumer_connector_port (void) const
+Options::consumer_connector_port () const
 {
   return this->consumer_connector_port_;
 }
 
 long
-Options::max_queue_size (void) const
+Options::max_queue_size () const
 {
   return this->max_queue_size_;
 }
 
 u_short
-Options::supplier_connector_port (void) const
+Options::supplier_connector_port () const
 {
   return this->supplier_connector_port_;
 }

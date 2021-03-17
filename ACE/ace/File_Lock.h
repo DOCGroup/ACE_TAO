@@ -119,7 +119,7 @@ public:
   int tryacquire_read (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /// Get underlying ACE_HANDLE for the file.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /**
    * Set underlying ACE_HANDLE.  Note that this method assumes

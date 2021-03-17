@@ -61,7 +61,7 @@ TAO::TypeCode::String<RefCountPolicy>::equivalent_i (CORBA::TypeCode_ptr tc) con
 
 template <class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (void) const
+TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i () const
 {
   // Already compact since tk_string and tk_wstring TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -75,7 +75,7 @@ TAO::TypeCode::String<RefCountPolicy>::get_compact_typecode_i (void) const
 
 template <class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::String<RefCountPolicy>::length_i (void) const
+TAO::TypeCode::String<RefCountPolicy>::length_i () const
 {
   return this->length_;
 }

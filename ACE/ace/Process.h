@@ -311,7 +311,7 @@ public:
 
   /// Get the process_attributes.  Returns NULL if
   /// set_process_attributes has not been set.
-  LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_process_attributes () const;
 
   /// If this is called, a non-null process attributes is sent to
   /// CreateProcess.
@@ -319,14 +319,14 @@ public:
 
   /// Get the thread_attributes.  Returns NULL if set_thread_attributes
   /// has not been set.
-  LPSECURITY_ATTRIBUTES get_thread_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_thread_attributes () const;
 
   /// If this is called, a non-null thread attributes is sent to
   /// CreateProcess.
   LPSECURITY_ATTRIBUTES set_thread_attributes (void);
 
   /// Get user token. Return ACE_INVALID_HANDLE if it has not been set.
-  HANDLE get_user_token (void) const;
+  HANDLE get_user_token () const;
 
   /// Set user token for creating process as user.
   /// @param token the user token is passed to \c ::CreateProcessAsUser.

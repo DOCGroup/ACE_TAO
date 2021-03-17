@@ -69,7 +69,7 @@ ACE_Typed_SV_Message_Queue<T>::control (int option,
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::get_id (void) const
+ACE_Typed_SV_Message_Queue<T>::get_id () const
 {
   return this->message_queue_.get_id ();
 }

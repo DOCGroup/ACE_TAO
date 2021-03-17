@@ -558,7 +558,7 @@ ACE_TS_Mutex::token_acquired (ACE_TPQ_Entry *e)
 }
 
 ACE_Token_Proxy *
-ACE_TS_Mutex::clone (void) const
+ACE_TS_Mutex::clone () const
 {
   ACE_TRACE ("ACE_TS_Mutex::clone");
   ACE_Token_Proxy *temp;
@@ -602,7 +602,7 @@ ACE_TS_RLock::token_acquired (ACE_TPQ_Entry *e)
 }
 
 ACE_Token_Proxy *
-ACE_TS_RLock::clone (void) const
+ACE_TS_RLock::clone () const
 {
   ACE_TRACE ("ACE_TS_RLock::clone");
   ACE_Token_Proxy *temp;
@@ -647,7 +647,7 @@ ACE_TS_WLock::token_acquired (ACE_TPQ_Entry *e)
 }
 
 ACE_Token_Proxy *
-ACE_TS_WLock::clone (void) const
+ACE_TS_WLock::clone () const
 {
   ACE_TRACE ("ACE_TS_WLock::clone");
   ACE_Token_Proxy *temp;

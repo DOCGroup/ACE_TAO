@@ -49,7 +49,7 @@ public:
   int parse_args (int argc, ACE_TCHAR **argv);
 
   /// return the IOR for the servant
-  char const * param_test_ior (void) const;
+  char const * param_test_ior () const;
 
   /// what test to run
   TEST_TYPE test_type (void);
@@ -61,10 +61,10 @@ public:
   CORBA::ULong loop_count (void);
 
   /// whether debug option is on or not
-  CORBA::Boolean debug (void) const;
+  CORBA::Boolean debug () const;
 
   /// If we should request the server to shutdown.
-  CORBA::Boolean shutdown (void) const;
+  CORBA::Boolean shutdown () const;
 
 private:
   /// Function to read the servant IOR from a file.

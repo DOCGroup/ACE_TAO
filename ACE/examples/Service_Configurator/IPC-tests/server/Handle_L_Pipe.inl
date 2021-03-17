@@ -80,7 +80,7 @@ Handle_L_Pipe::fini (void)
 }
 
 ACE_INLINE int
-Handle_L_Pipe::get_handle (void) const
+Handle_L_Pipe::get_handle () const
 {
   return ACE_LSOCK_Acceptor::get_handle ();
 }

@@ -118,10 +118,10 @@ public:
   int close (void);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  const ACE_SOCK_Dgram *get_socket (void) const;
+  const ACE_SOCK_Dgram *get_socket () const;
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);

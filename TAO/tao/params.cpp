@@ -316,7 +316,7 @@ TAO_ORB_Parameters::prefer_ipv6_interfaces (bool p)
 }
 
 bool
-TAO_ORB_Parameters::prefer_ipv6_interfaces (void) const
+TAO_ORB_Parameters::prefer_ipv6_interfaces () const
 {
   return this->prefer_ipv6_interfaces_;
 }
@@ -328,7 +328,7 @@ TAO_ORB_Parameters::connect_ipv6_only (bool p)
 }
 
 bool
-TAO_ORB_Parameters::connect_ipv6_only (void) const
+TAO_ORB_Parameters::connect_ipv6_only () const
 {
   return this->connect_ipv6_only_;
 }
@@ -340,7 +340,7 @@ TAO_ORB_Parameters::use_ipv6_link_local (bool p)
 }
 
 bool
-TAO_ORB_Parameters::use_ipv6_link_local (void) const
+TAO_ORB_Parameters::use_ipv6_link_local () const
 {
   return this->use_ipv6_link_local_;
 }

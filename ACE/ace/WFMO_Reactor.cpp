@@ -980,7 +980,7 @@ ACE_WFMO_Reactor_Handler_Repository::make_changes_in_to_be_added_infos (void)
 }
 
 void
-ACE_WFMO_Reactor_Handler_Repository::dump (void) const
+ACE_WFMO_Reactor_Handler_Repository::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   size_t i = 0;
@@ -1273,7 +1273,7 @@ ACE_WFMO_Reactor::set_sig_handler (ACE_Sig_Handler *signal_handler)
 }
 
 ACE_Timer_Queue *
-ACE_WFMO_Reactor::timer_queue (void) const
+ACE_WFMO_Reactor::timer_queue () const
 {
   return this->timer_queue_;
 }
@@ -2332,7 +2332,7 @@ ACE_WFMO_Reactor::update_state (void)
 }
 
 void
-ACE_WFMO_Reactor::dump (void) const
+ACE_WFMO_Reactor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor::dump");
@@ -2412,7 +2412,7 @@ ACE_WFMO_Reactor_Notify::open (ACE_Reactor_Impl *wfmo_reactor,
 }
 
 ACE_HANDLE
-ACE_WFMO_Reactor_Notify::get_handle (void) const
+ACE_WFMO_Reactor_Notify::get_handle () const
 {
   return this->wakeup_one_thread_.handle ();
 }
@@ -2683,7 +2683,7 @@ ACE_WFMO_Reactor_Notify::purge_pending_notifications (ACE_Event_Handler *eh,
 }
 
 void
-ACE_WFMO_Reactor_Notify::dump (void) const
+ACE_WFMO_Reactor_Notify::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_WFMO_Reactor_Notify::dump");

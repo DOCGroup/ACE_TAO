@@ -31,7 +31,7 @@ Test_Big_Union::~Test_Big_Union (void)
 }
 
 const char *
-Test_Big_Union::opname (void) const
+Test_Big_Union::opname () const
 {
   return this->opname_;
 }

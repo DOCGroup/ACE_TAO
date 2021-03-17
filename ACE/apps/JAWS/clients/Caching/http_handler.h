@@ -40,7 +40,7 @@ public:
   virtual int svc ();
 
   /// Accessor to the file being fetched.
-  const char *filename (void) const;
+  const char *filename () const;
 
 private:
   char request_[BUFSIZ];

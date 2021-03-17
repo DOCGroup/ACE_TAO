@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Service_Gestalt*
-TAO_ORB_Core::configuration (void) const
+TAO_ORB_Core::configuration () const
 {
   return this->config_.get ();
 }
@@ -17,7 +17,7 @@ TAO_ORB_Core::_incr_refcnt (void)
 }
 
 ACE_INLINE unsigned long
-TAO_ORB_Core::_refcnt (void) const
+TAO_ORB_Core::_refcnt () const
 {
   return this->refcount_;
 }
@@ -204,7 +204,7 @@ TAO_ORB_Core::optimize_collocation_objects (CORBA::Boolean opt)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::optimize_collocation_objects (void) const
+TAO_ORB_Core::optimize_collocation_objects () const
 {
   return this->opt_for_collocation_;
 }
@@ -216,13 +216,13 @@ TAO_ORB_Core::use_global_collocation (CORBA::Boolean opt)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::use_global_collocation (void) const
+TAO_ORB_Core::use_global_collocation () const
 {
   return this->use_global_collocation_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_ORB_Core::get_collocation_strategy (void) const
+TAO_ORB_Core::get_collocation_strategy () const
 {
   return this->collocation_strategy_;
 }
@@ -328,7 +328,7 @@ TAO_ORB_Core::tss_cleanup (ACE_Array_Base<void *> &ts_objects)
 }
 
 ACE_INLINE bool
-TAO_ORB_Core::has_shutdown (void) const
+TAO_ORB_Core::has_shutdown () const
 {
   return this->has_shutdown_;
 }
@@ -341,7 +341,7 @@ TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
 }
 
 ACE_INLINE const char *
-TAO_ORB_Core::orbid (void) const
+TAO_ORB_Core::orbid () const
 {
   return this->orbid_;
 }
@@ -417,7 +417,7 @@ TAO_ORB_Core::resolve_compression_manager (void)
 }
 
 ACE_INLINE const char *
-TAO_ORB_Core::server_id (void) const
+TAO_ORB_Core::server_id () const
 {
   return this->server_id_.c_str();
 }

@@ -37,7 +37,7 @@ TAO_Network_Priority_Mapping_Manager::_duplicate (
 }
 
 const char*
-TAO_Network_Priority_Mapping_Manager::_interface_repository_id (void) const
+TAO_Network_Priority_Mapping_Manager::_interface_repository_id () const
 {
   return "IDL:Network_Priority_Mapping_Manager:1.0";
 }

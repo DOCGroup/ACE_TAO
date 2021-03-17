@@ -15,7 +15,7 @@ public:
 
 
   /// Check if all the peers have registered already
-  int has_all_peers (void) const;
+  int has_all_peers () const;
 
   /// Check a session on each peer
   void create_session_list (Test::Session_Control_ptr session_control,

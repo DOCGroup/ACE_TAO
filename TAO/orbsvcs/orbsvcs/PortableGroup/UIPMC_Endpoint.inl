@@ -2,14 +2,14 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr &
-TAO_UIPMC_Endpoint::object_addr (void) const
+TAO_UIPMC_Endpoint::object_addr () const
 {
   return this->object_addr_;
 }
 
 
 ACE_INLINE CORBA::UShort
-TAO_UIPMC_Endpoint::port (void) const
+TAO_UIPMC_Endpoint::port () const
 {
   return this->port_;
 }
@@ -22,7 +22,7 @@ TAO_UIPMC_Endpoint::port (CORBA::UShort p)
 
 
 ACE_INLINE ACE_UINT32
-TAO_UIPMC_Endpoint::uint_ip_addr (void) const
+TAO_UIPMC_Endpoint::uint_ip_addr () const
 {
   return (((ACE_UINT32)this->class_d_address_[0] << 24) |
           ((ACE_UINT32)this->class_d_address_[1] << 16) |

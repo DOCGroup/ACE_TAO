@@ -72,7 +72,7 @@ ACE_Client_Logging_Handler::open (void *)
 }
 
 /* VIRTUAL */ ACE_HANDLE
-ACE_Client_Logging_Handler::get_handle (void) const
+ACE_Client_Logging_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_Client_Logging_Handler::get_handle");
 

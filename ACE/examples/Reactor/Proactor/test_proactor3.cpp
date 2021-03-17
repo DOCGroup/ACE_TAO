@@ -430,7 +430,7 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close (void);
 
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   virtual void handle (ACE_HANDLE);
 
 protected:
@@ -482,7 +482,7 @@ void Sender::close (void)
   this->stream_.close ();
 }
 
-ACE_HANDLE Sender::handle (void) const
+ACE_HANDLE Sender::handle () const
 {
   return this->stream_.get_handle ();
 }

@@ -58,7 +58,7 @@ ORBInitializer::load_alert (void)
 }
 
 ServerRequestInterceptor *
-ORBInitializer::interceptor (void) const
+ORBInitializer::interceptor () const
 {
   return this->interceptor_;
 }

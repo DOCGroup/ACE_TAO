@@ -35,7 +35,7 @@ ACE_Typed_SV_Message<T>::~ACE_Typed_SV_Message (void)
 }
 
 template <class T> ACE_INLINE long
-ACE_Typed_SV_Message<T>::type (void) const
+ACE_Typed_SV_Message<T>::type () const
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::type");
   return this->type_;
@@ -49,7 +49,7 @@ ACE_Typed_SV_Message<T>::type (long t)
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message<T>::length (void) const
+ACE_Typed_SV_Message<T>::length () const
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::length");
   return this->length_;
@@ -63,7 +63,7 @@ ACE_Typed_SV_Message<T>::length (int len)
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message<T>::max_size (void) const
+ACE_Typed_SV_Message<T>::max_size () const
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::max_size");
   return this->max_;

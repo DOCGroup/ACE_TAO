@@ -183,7 +183,7 @@ public:
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
    * passed to <open>.
    */
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   /// Set the ACE_HANDLE value for this Handler.
   void handle (ACE_HANDLE);
@@ -395,7 +395,7 @@ Peer_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 
 // This is so the Proactor can get our handle.
 ACE_HANDLE
-Peer_Handler::handle (void) const
+Peer_Handler::handle () const
 {
   return this->stream_.get_handle ();
 }

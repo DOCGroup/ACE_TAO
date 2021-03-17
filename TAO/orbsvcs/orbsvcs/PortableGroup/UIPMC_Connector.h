@@ -53,7 +53,7 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 protected:
   /// = More TAO_Connector methods, please check the documentation on

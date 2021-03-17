@@ -64,7 +64,7 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 public:
   typedef TAO_Connect_Concurrency_Strategy<TAO_IIOP_Connection_Handler>
@@ -86,7 +86,7 @@ protected:
   /// connection attempts. The base implementation always returns
   /// 0. Override to return non-zero if parallel connection attempts
   /// may be tried.
-  virtual int supports_parallel_connects (void) const;
+  virtual int supports_parallel_connects () const;
 
   // = The TAO_Connector methods, please check the documentation on
   // Transport_Connector.h

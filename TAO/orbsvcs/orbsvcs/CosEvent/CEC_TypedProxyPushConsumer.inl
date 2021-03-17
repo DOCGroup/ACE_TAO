@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_CEC_TypedProxyPushConsumer::is_connected_i (void) const
+TAO_CEC_TypedProxyPushConsumer::is_connected_i () const
 {
   return this->connected_;
 }
@@ -10,7 +10,7 @@ TAO_CEC_TypedProxyPushConsumer::is_connected_i (void) const
 // ****************************************************************
 
 ACE_INLINE int
-TAO_CEC_TypedProxyPushConsumer_Guard::locked (void) const
+TAO_CEC_TypedProxyPushConsumer_Guard::locked () const
 {
   return this->locked_;
 }

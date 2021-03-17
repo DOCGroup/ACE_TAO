@@ -86,10 +86,10 @@ public:
   virtual void add_generic_endpoint (TAO_Endpoint *ep);
 
   /// The object key delimiter that IIOP uses or expects.
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Template methods. Please see Profile.h for documentation.
-  virtual char * to_string (void) const;
+  virtual char * to_string () const;
 
   /// Encode endpoints for RT profiles, using a single TAO_TAG_ENDPOINT
   /// component.
@@ -106,7 +106,7 @@ public:
   /// regardless of the final type of the profile.
   virtual TAO_Endpoint *base_endpoint (void);
 
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count () const;
   virtual CORBA::ULong hash (CORBA::ULong max);
 
 protected:

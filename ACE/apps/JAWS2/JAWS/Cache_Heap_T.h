@@ -29,11 +29,11 @@ public:
 
   ~JAWS_Cache_Heap (void);
 
-  int is_empty (void) const;
-  int is_full (void) const;
+  int is_empty () const;
+  int is_full () const;
 
-  size_t size (void) const;
-  size_t maxsize (void) const;
+  size_t size () const;
+  size_t maxsize () const;
 
   int maxsize (Cache_Manager *cm, size_t new_maxsize);
   // attempt to grow (or shrink) the heap.  Return 0 on success, -1 on

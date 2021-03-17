@@ -105,7 +105,7 @@ Server_Info::active_info (void)
 }
 
 const Server_Info *
-Server_Info::active_info (void) const
+Server_Info::active_info () const
 {
   return this->alt_info_.null() ? this : this->alt_info_.get();
 }
@@ -123,7 +123,7 @@ Server_Info::is_mode (ImplementationRepository::ActivationMode m) const
 }
 
 ImplementationRepository::ActivationMode
-Server_Info::mode (void) const
+Server_Info::mode () const
 {
   return this->active_info ()->activation_mode_;
 }
@@ -146,7 +146,7 @@ Server_Info::is_server (const char *name) const
 }
 
 bool
-Server_Info::is_running (void) const
+Server_Info::is_running () const
 {
   return !CORBA::is_nil (this->server.in()) || this->ior.length () > 0;
 }
@@ -265,7 +265,7 @@ Server_Info::setImRInfo (ImplementationRepository::ServerInformation* info) cons
 }
 
 ImplementationRepository::ServerInformation*
-Server_Info::createImRServerInfo (void) const
+Server_Info::createImRServerInfo () const
 {
   ImplementationRepository::ServerInformation* info;
   ACE_NEW_THROW_EX (info,
@@ -325,7 +325,7 @@ Server_Info::update_options (const ImplementationRepository::StartupOptions &opt
 }
 
 const char *
-Server_Info::ping_id (void) const
+Server_Info::ping_id () const
 {
   return this->active_info ()->key_name_.c_str();
 }

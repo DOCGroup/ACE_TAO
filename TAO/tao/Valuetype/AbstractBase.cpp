@@ -137,13 +137,13 @@ CORBA::AbstractBase::_is_a (const char *type_id)
 }
 
 const char *
-CORBA::AbstractBase::_interface_repository_id (void) const
+CORBA::AbstractBase::_interface_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }
 
 const char *
-CORBA::AbstractBase::_tao_obv_repository_id (void) const
+CORBA::AbstractBase::_tao_obv_repository_id () const
 {
   return "IDL:omg.org/CORBA/AbstractBase:1.0";
 }

@@ -97,7 +97,7 @@ ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name, void *value)
 }
 
 ACEXML_XMLReader *
-ACEXML_XMLFilterImpl::getParent (void) const
+ACEXML_XMLFilterImpl::getParent () const
 {
   return this->parent_;
 }
@@ -261,25 +261,25 @@ ACEXML_XMLFilterImpl::warning (ACEXML_SAXParseException &exception)
 }
 
 ACEXML_DTDHandler *
-ACEXML_XMLFilterImpl::getDTDHandler (void) const
+ACEXML_XMLFilterImpl::getDTDHandler () const
 {
   return this->dtdHandler_;
 }
 
 ACEXML_ContentHandler *
-ACEXML_XMLFilterImpl::getContentHandler (void) const
+ACEXML_XMLFilterImpl::getContentHandler () const
 {
   return this->contentHandler_;
 }
 
 ACEXML_EntityResolver *
-ACEXML_XMLFilterImpl::getEntityResolver (void) const
+ACEXML_XMLFilterImpl::getEntityResolver () const
 {
   return this->entityResolver_;
 }
 
 ACEXML_ErrorHandler *
-ACEXML_XMLFilterImpl::getErrorHandler (void) const
+ACEXML_XMLFilterImpl::getErrorHandler () const
 {
   return this->errorHandler_;
 }

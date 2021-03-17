@@ -49,7 +49,7 @@ public:
 
   /// Has this LoadAlert servant been alerted of a high load condition
   /// by the LoadManager.
-  CORBA::Boolean alerted (void) const;
+  CORBA::Boolean alerted () const;
 
 // protected:
 

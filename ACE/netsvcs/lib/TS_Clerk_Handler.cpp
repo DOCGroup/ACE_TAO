@@ -127,7 +127,7 @@ ACE_TS_Clerk_Handler::open (void *)
 }
 
 ACE_HANDLE
-ACE_TS_Clerk_Handler::get_handle (void) const
+ACE_TS_Clerk_Handler::get_handle () const
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::get_handle");
   return this->peer().get_handle ();

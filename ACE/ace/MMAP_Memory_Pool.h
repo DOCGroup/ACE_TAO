@@ -210,13 +210,13 @@ public:
   virtual int remap (void *addr);
 
   /// Return the base address of this memory pool.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
   virtual void dump () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
-  ACE_Mem_Map const & mmap (void) const;
+  ACE_Mem_Map const & mmap () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
   ACE_Mem_Map & mmap (void);

@@ -13,7 +13,7 @@ Server_Worker::Server_Worker ()
 
 //
 const ACE_TCHAR *
-Server_Worker::kind (void) const
+Server_Worker::kind () const
 {
   return ACE_TEXT ("Server");
 }

@@ -103,13 +103,13 @@ class ACE_Export ACE_Asynch_Result
 {
 public:
   /// Number of bytes transferred by the operation.
-  size_t bytes_transferred (void) const;
+  size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act (void) const;
+  const void *act () const;
 
   /// Did the operation succeed?
-  int success (void) const;
+  int success () const;
 
   /**
    * This is the ACT associated with the handle on which the
@@ -120,10 +120,10 @@ public:
    *
    * @@ This is not implemented for POSIX4 platforms. Returns 0.
    */
-  const void *completion_key (void) const;
+  const void *completion_key () const;
 
   /// Error value if the operation fails.
-  unsigned long error (void) const;
+  unsigned long error () const;
 
   /**
    * On WIN32, this returns the event associated with the OVERLAPPED
@@ -131,7 +131,7 @@ public:
    *
    * This returns ACE_INVALID_HANDLE on POSIX4-Unix platforms.
    */
-  ACE_HANDLE event (void) const;
+  ACE_HANDLE event () const;
 
   /**
    * This really makes sense only when doing file I/O.
@@ -141,8 +141,8 @@ public:
    * @@ On POSIX4-Unix, offset_high should be supported using
    *    aiocb64.
    */
-  unsigned long offset (void) const;
-  unsigned long offset_high (void) const;
+  unsigned long offset () const;
+  unsigned long offset_high () const;
 
   /**
    * Priority of the operation.
@@ -154,7 +154,7 @@ public:
    *
    * On Win32, this is a no-op.
    */
-  int priority (void) const;
+  int priority () const;
 
   /**
    * POSIX4 real-time signal number to be used for the
@@ -162,7 +162,7 @@ public:
    * default, ACE_SIGRTMIN is used to issue {aio_} calls. This is a no-op
    * on non-POSIX4 systems and returns 0.
    */
-  int signal_number (void) const;
+  int signal_number () const;
 
 
   /// Destructor.
@@ -174,7 +174,7 @@ protected:
   ACE_Asynch_Result (ACE_Asynch_Result_Impl *implementation);
 
   /// Get the implementation class.
-  ACE_Asynch_Result_Impl *implementation (void) const;
+  ACE_Asynch_Result_Impl *implementation () const;
 
   /// Implementation class.
   ACE_Asynch_Result_Impl *implementation_;
@@ -250,7 +250,7 @@ public:
   // = Access methods.
 
   /// Return the underlying proactor.
-  ACE_Proactor* proactor (void) const;
+  ACE_Proactor* proactor () const;
 
   /// Destructor.
   virtual ~ACE_Asynch_Operation (void);
@@ -260,7 +260,7 @@ protected:
   ACE_Asynch_Operation (void);
 
   /// Return the underlying implementation class.
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const = 0;
+  virtual ACE_Asynch_Operation_Impl *implementation () const = 0;
 
   /// Get a proactor for/from the user
   ACE_Proactor *get_proactor (ACE_Proactor *user_proactor,
@@ -356,7 +356,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -384,16 +384,16 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for reading.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Read_Stream_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_Stream_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
@@ -510,7 +510,7 @@ public:
 
   /// Return the underlying implementation class.
   /// @todo (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -538,16 +538,16 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Message block that contains the data to be written.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for writing.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Write_Stream_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_Stream_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
@@ -657,7 +657,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -691,7 +691,7 @@ public:
 
   public:
     /// Get the implementation class.
-    ACE_Asynch_Read_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. This implementation will not be deleted.
@@ -792,7 +792,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation object.
@@ -825,7 +825,7 @@ public:
 
   public:
     ///  Get the implementation class.
-    ACE_Asynch_Write_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. This implementation will not be deleted.
@@ -928,7 +928,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -956,19 +956,19 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous accept.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data.
-    ACE_Message_Block &message_block (void) const;
+    ACE_Message_Block &message_block () const;
 
     /// I/O handle used for accepting new connections.
-    ACE_HANDLE listen_handle (void) const;
+    ACE_HANDLE listen_handle () const;
 
     /// I/O handle for the new connection.
-    ACE_HANDLE accept_handle (void) const;
+    ACE_HANDLE accept_handle () const;
 
     /// Get the implementation.
-    ACE_Asynch_Accept_Result_Impl *implementation (void) const;
+    ACE_Asynch_Accept_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. Implementation will not be deleted.
@@ -1032,7 +1032,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -1060,10 +1060,10 @@ public:
   public:
 
     /// I/O handle for the  connection.
-    ACE_HANDLE connect_handle (void) const;
+    ACE_HANDLE connect_handle () const;
 
     /// Get the implementation.
-    ACE_Asynch_Connect_Result_Impl *implementation (void) const;
+    ACE_Asynch_Connect_Result_Impl *implementation () const;
 
   protected:
     /// Constructor. Implementation will not be deleted.
@@ -1157,7 +1157,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// The implementation class.
@@ -1183,27 +1183,27 @@ public:
 
   public:
     /// Socket used for transmitting the file.
-    ACE_HANDLE socket (void) const;
+    ACE_HANDLE socket () const;
 
     /// File from which the data is read.
-    ACE_HANDLE file (void) const;
+    ACE_HANDLE file () const;
 
     /// Header and trailer data associated with this transmit file.
-    Header_And_Trailer *header_and_trailer (void) const;
+    Header_And_Trailer *header_and_trailer () const;
 
     /// The number of bytes which were requested at the start of the
     /// asynchronous transmit file.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Number of bytes per send requested at the start of the transmit
     /// file.
-    size_t bytes_per_send (void) const;
+    size_t bytes_per_send () const;
 
     /// Flags which were passed into transmit file.
-    unsigned long flags (void) const;
+    unsigned long flags () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Transmit_File_Result_Impl *implementation (void) const;
+    ACE_Asynch_Transmit_File_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
@@ -1244,25 +1244,25 @@ public:
                              size_t trailer_bytes = 0);
 
     /// Get header which goes before the file data.
-    ACE_Message_Block *header (void) const;
+    ACE_Message_Block *header () const;
 
     /// Set header which goes before the file data.
     void header (ACE_Message_Block *message_block);
 
     /// Get size of the header data.
-    size_t header_bytes (void) const;
+    size_t header_bytes () const;
 
     /// Set size of the header data.
     void header_bytes (size_t bytes);
 
     /// Get trailer which goes after the file data.
-    ACE_Message_Block *trailer (void) const;
+    ACE_Message_Block *trailer () const;
 
     /// Set trailer which goes after the file data.
     void trailer (ACE_Message_Block *message_block);
 
     /// Get size of the trailer data.
-    size_t trailer_bytes (void) const;
+    size_t trailer_bytes () const;
 
     /// Set size of the trailer data.
     void trailer_bytes (size_t bytes);
@@ -1366,7 +1366,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1394,22 +1394,22 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous read.
-    size_t bytes_to_read (void) const;
+    size_t bytes_to_read () const;
 
     /// Message block which contains the read data
-    ACE_Message_Block *message_block (void) const;
+    ACE_Message_Block *message_block () const;
 
     /// The flags used in the read
-    int flags (void) const;
+    int flags () const;
 
     /// The address of where the packet came from
     int remote_address (ACE_Addr& addr) const;
 
     /// I/O handle used for reading.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Read_Dgram_Result_Impl *implementation (void) const;
+    ACE_Asynch_Read_Dgram_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
@@ -1499,7 +1499,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1527,19 +1527,19 @@ public:
   public:
     /// The number of bytes which were requested at the start of the
     /// asynchronous write.
-    size_t bytes_to_write (void) const;
+    size_t bytes_to_write () const;
 
     /// Message block which contains the sent data
-    ACE_Message_Block *message_block (void) const;
+    ACE_Message_Block *message_block () const;
 
     /// The flags using in the write
-    int flags (void) const;
+    int flags () const;
 
     /// I/O handle used for writing.
-    ACE_HANDLE handle (void) const;
+    ACE_HANDLE handle () const;
 
     /// Get the implementation class.
-    ACE_Asynch_Write_Dgram_Result_Impl *implementation (void) const;
+    ACE_Asynch_Write_Dgram_Result_Impl *implementation () const;
 
   protected:
     /// Constructor.
@@ -1634,7 +1634,7 @@ public:
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
    * passed to {open}.
    */
-  virtual ACE_HANDLE handle (void) const;
+  virtual ACE_HANDLE handle () const;
 
   /// Set the ACE_HANDLE value for this Handler.
   virtual void handle (ACE_HANDLE);

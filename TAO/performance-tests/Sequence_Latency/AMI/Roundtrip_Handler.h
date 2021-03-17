@@ -15,7 +15,7 @@ public:
   Roundtrip_Handler (int expected_callbacks);
 
   /// Return the number of pending callbacks
-  int pending_callbacks (void) const;
+  int pending_callbacks () const;
 
   /// Dump the results
   void dump_results (ACE_High_Res_Timer::global_scale_factor_type gsf);

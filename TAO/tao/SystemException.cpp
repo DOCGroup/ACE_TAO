@@ -933,7 +933,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::TypeCode_ptr \
-CORBA::name ::_tao_type (void) const \
+CORBA::name ::_tao_type () const \
 { \
   TAO_AnyTypeCode_Adapter *adapter = \
     ACE_Dynamic_Service<TAO_AnyTypeCode_Adapter>::instance ( \
@@ -967,7 +967,7 @@ TAO::create_system_exception (const char *id)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::name ::_raise (void) const \
+CORBA::name ::_raise () const \
 { \
   throw *this; \
 }
@@ -977,7 +977,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Exception * \
-CORBA::name ::_tao_duplicate (void) const \
+CORBA::name ::_tao_duplicate () const \
 { \
   CORBA::Exception * result = 0; \
   ACE_NEW_RETURN (result, CORBA::name (*this), 0); \

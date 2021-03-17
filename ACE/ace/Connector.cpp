@@ -72,7 +72,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::timer_id (long id)
 }
 
 template <typename SVC_HANDLER> void
-ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump (void) const
+ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::dump");
@@ -219,7 +219,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::resume_handler (void)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> void
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::dump (void) const
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::dump");
@@ -279,7 +279,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_HANDLER *s
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> PEER_CONNECTOR &
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connector (void) const
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connector () const
 {
   return const_cast<PEER_CONNECTOR &> (this->connector_);
 }
@@ -663,7 +663,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::reactor (ACE_Reactor *reactor)
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> ACE_Reactor *
-ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::reactor (void) const
+ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::reactor () const
 {
   return this->reactor_;
 }
@@ -978,19 +978,19 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_H
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> ACE_Creation_Strategy<SVC_HANDLER> *
-ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::creation_strategy (void) const
+ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::creation_strategy () const
 {
   return this->creation_strategy_;
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *
-ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_strategy (void) const
+ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_strategy () const
 {
   return this->connect_strategy_;
 }
 
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> ACE_Concurrency_Strategy<SVC_HANDLER> *
-ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::concurrency_strategy (void) const
+ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::concurrency_strategy () const
 {
   return this->concurrency_strategy_;
 }

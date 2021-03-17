@@ -62,11 +62,11 @@ public:
   virtual void deactivate (void);
 
   /// Return 0 if no supplier is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /// Return the consumer object reference. It returns nil() if it has
   /// not connected yet.
-  CosEventComm::PullSupplier_ptr supplier (void) const;
+  CosEventComm::PullSupplier_ptr supplier () const;
 
   /// Pulls from the supplier, verifies that it is connected.
   CORBA::Any* try_pull_from_supplier (CORBA::Boolean_out has_event);
@@ -103,7 +103,7 @@ protected:
   void supplier_i (CosEventComm::PullSupplier_ptr supplier);
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
   void cleanup_i (void);

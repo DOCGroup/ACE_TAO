@@ -311,18 +311,18 @@ protected:
   virtual ACE_HANDLE get_handle (void);
 
 #  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) && !defined (ACE_USES_OLD_IOSTREAMS)
-  char *base (void) const
+  char *base () const
     {
       return cur_mode_ == get_mode_ ? eback_saved_
         : cur_mode_ == put_mode_ ? pbase_saved_
         : 0;
     }
-  char *ebuf (void) const
+  char *ebuf () const
     {
       return cur_mode_ == 0 ? 0 : base () + streambuf_size_;
     }
 
-  int blen (void) const
+  int blen () const
     {
       return streambuf_size_;
     }

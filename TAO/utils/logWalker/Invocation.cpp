@@ -60,7 +60,7 @@ Invocation::add_notify_incident (const ACE_CString &text, size_t /* offset */)
 }
 
 bool
-Invocation::is_oneway(void) const
+Invocation::is_oneway() const
 {
   return this->req_octets_ == 0 ? false : this->req_octets_->is_oneway();
 }
@@ -135,7 +135,7 @@ Invocation::set_octets (bool request, GIOP_Buffer *octets)
 }
 
 bool
-Invocation::sent_request (void) const
+Invocation::sent_request () const
 {
   if (this->req_octets_)
     return this->req_octets_->sending();
@@ -145,13 +145,13 @@ Invocation::sent_request (void) const
 }
 
 size_t
-Invocation::request_id (void) const
+Invocation::request_id () const
 {
   return this->req_octets_ == 0 ? this->req_id_ : this->req_octets_->expected_req_id();
 }
 
 size_t
-Invocation::expected_size (void) const
+Invocation::expected_size () const
 {
   if (repl_octets_ != 0)
     return repl_octets_->expected_size();
@@ -159,19 +159,19 @@ Invocation::expected_size (void) const
 }
 
 size_t
-Invocation::request_bytes (void) const
+Invocation::request_bytes () const
 {
   return req_octets_ != 0 ? req_octets_->expected_size() : 0;
 }
 
 Thread *
-Invocation::waiter (void) const
+Invocation::waiter () const
 {
   return this->waiter_;
 }
 
 long
-Invocation::handle (void) const
+Invocation::handle () const
 {
   return this->handle_;
 }

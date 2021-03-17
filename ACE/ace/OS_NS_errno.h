@@ -69,7 +69,7 @@ public:
   static void fini ();
   static ACE_CE_Errno *instance ();
 
-  operator int (void) const;
+  operator int () const;
   int operator= (int);
 
 private:

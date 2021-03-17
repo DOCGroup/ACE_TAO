@@ -134,7 +134,7 @@ ACE_Token_Invariant_Manager::rwlock_releasing (const ACE_TCHAR *token_name)
 }
 
 void
-ACE_Token_Invariant_Manager::dump (void) const
+ACE_Token_Invariant_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Token_Invariant_Manager::dump");
@@ -245,7 +245,7 @@ ACE_Mutex_Invariants::releasing ()
 }
 
 void
-ACE_Mutex_Invariants::dump (void) const
+ACE_Mutex_Invariants::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Mutex_Invariants::dump");
@@ -299,7 +299,7 @@ ACE_RWLock_Invariants::releasing (void)
 }
 
 void
-ACE_RWLock_Invariants::dump (void) const
+ACE_RWLock_Invariants::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_RWLock_Invariants::dump");

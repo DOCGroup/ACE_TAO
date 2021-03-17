@@ -89,13 +89,13 @@ public:
   ~ECM_Federation (void);
   // Dtor
 
-  const char* name (void) const;
+  const char* name () const;
   // The name of the federation....
 
-  CORBA::UShort mcast_port (void) const;
+  CORBA::UShort mcast_port () const;
   // The port used by this federation to receive mcast messages.
 
-  int supplier_types (void) const;
+  int supplier_types () const;
   // The number of different event types published by this federation.
 
   const char* supplier_name (CORBA::ULong i) const;
@@ -104,7 +104,7 @@ public:
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
   // The ipaddr (in host byte order) of the event type <i>
 
-  int consumer_types (void) const;
+  int consumer_types () const;
   // The number of different event types consumed by this federation.
 
   const char* consumer_name (CORBA::ULong i) const;
@@ -176,7 +176,7 @@ public:
                  RtecEventComm::Time interval);
   // Connect as a consumer to start receiving events.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
   void push (const RtecEventComm::EventSet& events);
@@ -276,7 +276,7 @@ public:
                       const RtecEventComm::EventSet& event);
   // The consumer just received an event.
 
-  const ECM_Federation *federation (void) const;
+  const ECM_Federation *federation () const;
   // The federation description.
 
   void open_receiver (RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -286,7 +286,7 @@ public:
   void close_receiver (void);
   // Close the UDP receiver, disconnect from the EC
 
-  void dump_results (void) const;
+  void dump_results () const;
   // Report the results back to the user...
 
   void subscribed_bit (int i, CORBA::Boolean x);
@@ -295,12 +295,12 @@ public:
   // that we actually publish.
 
   // = Delegate on the federation description
-  const char* name (void) const;
-  CORBA::UShort mcast_port (void) const;
-  int supplier_types (void) const;
+  const char* name () const;
+  CORBA::UShort mcast_port () const;
+  int supplier_types () const;
   const char* supplier_name (CORBA::ULong i) const;
   CORBA::ULong supplier_ipaddr (CORBA::ULong i) const;
-  int consumer_types (void) const;
+  int consumer_types () const;
   const char* consumer_name (CORBA::ULong i) const;
   CORBA::ULong consumer_ipaddr (CORBA::ULong i) const;
 

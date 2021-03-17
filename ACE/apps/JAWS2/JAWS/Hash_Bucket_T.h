@@ -64,7 +64,7 @@ public:
   JAWS_Hash_Bucket_DLCStack (ACE_Allocator *alloc = 0);
   ~JAWS_Hash_Bucket_DLCStack (void);
 
-  int is_empty (void) const;
+  int is_empty () const;
   // Returns 1 if the container is empty, otherwise returns 0.
 
   JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (const EXT_ID &ext_id,
@@ -131,7 +131,7 @@ public:
   // Pass back the previous item.  Returns 0 if done is true, 1
   // otherwise.
 
-  int done (void) const;
+  int done () const;
   // Returns 1 if done_ flag is set, 0 otherwise.  done_ flag is set
   // if next takes us to first element or prev takes us to last
   // element.

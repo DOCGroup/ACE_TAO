@@ -74,7 +74,7 @@ CORBA::ORB::_use_omg_ior_format (void)
 }
 
 ACE_INLINE TAO_ORB_Core *
-CORBA::ORB::orb_core (void) const
+CORBA::ORB::orb_core () const
 {
   return this->orb_core_;
 }

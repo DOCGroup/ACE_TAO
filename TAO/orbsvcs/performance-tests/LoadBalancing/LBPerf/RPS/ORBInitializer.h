@@ -64,7 +64,7 @@ public:
   /// Return a reference to the LoadAlert object.
   TAO_LB_LoadAlert & load_alert (void);
 
-  ServerRequestInterceptor * interceptor (void) const;
+  ServerRequestInterceptor * interceptor () const;
 
 private:
 

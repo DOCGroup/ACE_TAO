@@ -109,7 +109,7 @@ public:
    * regardless of whether other processes may be using it or not.
    * Most other processes should use close() below.
    */
-  int remove (void) const;
+  int remove () const;
 
   // = Semaphore acquire and release methods.
   /**
@@ -151,7 +151,7 @@ public:
   int control (int cmd, int value = 0, u_short n = 0) const;
 
   /// Get underlying internal id.
-  int get_id (void) const;
+  int get_id () const;
 
   /// Dump the state of an object.
   void dump () const;

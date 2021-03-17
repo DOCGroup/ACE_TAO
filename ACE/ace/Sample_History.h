@@ -55,10 +55,10 @@ public:
   int sample (ACE_UINT64 value);
 
   /// Returns the maximum number of samples
-  size_t max_samples (void) const;
+  size_t max_samples () const;
 
   /// Returns the current number of samples
-  size_t sample_count (void) const;
+  size_t sample_count () const;
 
   /// Dump all the samples
   /**

@@ -27,13 +27,13 @@ HTTP_Base::~HTTP_Base (void)
 }
 
 ACE_INLINE int
-HTTP_Base::status (void) const
+HTTP_Base::status () const
 {
   return this->status_;
 }
 
 ACE_INLINE const char *
-HTTP_Base::line (void) const
+HTTP_Base::line () const
 {
   return this->line_;
 }

@@ -33,7 +33,7 @@ public:
   virtual ~Abstract_Worker (void);
   virtual int test_main (int argc,
                     ACE_TCHAR *argv[]) = 0;
-  virtual const ACE_TCHAR * kind (void) const = 0;
+  virtual const ACE_TCHAR * kind () const = 0;
 protected:
   ACE_TString ior_file_;
 };
@@ -47,7 +47,7 @@ public:
   Server_Worker ();
   ~Server_Worker (void);
   int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind (void) const;
+  const ACE_TCHAR * kind () const;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
@@ -62,7 +62,7 @@ public:
   Client_Worker ();
   ~Client_Worker (void);
   int test_main (int argc, ACE_TCHAR *argv[]);
-  const ACE_TCHAR * kind (void) const;
+  const ACE_TCHAR * kind () const;
 
 private:
   int parse_args (int argc, ACE_TCHAR *argv[]);

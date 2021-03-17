@@ -68,7 +68,7 @@ public:
   void set_upcall_thread (void);
 
   /// Is there any thread running as a leader?
-  bool leader_available (void) const;
+  bool leader_available () const;
 
   /// A server thread is making a request.
   void set_client_thread (void);
@@ -107,7 +107,7 @@ public:
   void set_client_leader_thread (ACE_thread_t thread_ID);
 
   /// Checks if we are a leader thread
-  bool is_client_leader_thread (void) const;
+  bool is_client_leader_thread () const;
 
   /// Sets the client leader avoidance flag true. This is used with the
   /// noupcall wait strategy to allow the creation of dynamic threads
@@ -163,7 +163,7 @@ public:
   /**
    * @return true if there follower set is not empty
    */
-  bool follower_available (void) const;
+  bool follower_available () const;
 
   //@}
 
@@ -180,7 +180,7 @@ public:
   ACE_Reverse_Lock<TAO_SYNCH_MUTEX> &reverse_lock (void);
 
   /// Check if there are any client threads running
-  bool has_clients (void) const;
+  bool has_clients () const;
 
   /// Accessor to the reactor
   ACE_Reactor *reactor (void);
@@ -198,7 +198,7 @@ public:
 
 private:
   /// Shortcut to obtain the TSS resources of the orb core.
-  TAO_ORB_Core_TSS_Resources *get_tss_resources (void) const;
+  TAO_ORB_Core_TSS_Resources *get_tss_resources () const;
 
   /// Wait for the client leader to complete.
   int wait_for_client_leader_to_complete (ACE_Time_Value *max_wait_time);

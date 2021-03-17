@@ -341,7 +341,7 @@ Consumer_Handler::run (void)
 }
 
 ACE_Reactor *
-Consumer_Handler::reactor_used (void) const
+Consumer_Handler::reactor_used () const
 {
   return this->orb_->orb_core ()->reactor ();
 }

@@ -177,73 +177,73 @@ HTTP_Request::init (char *const buffer,
 }
 
 const char *
-HTTP_Request::method (void) const
+HTTP_Request::method () const
 {
   return this->method_;
 }
 
 const char *
-HTTP_Request::uri (void) const
+HTTP_Request::uri () const
 {
   return this->uri_;
 }
 
 const char *
-HTTP_Request::version (void) const
+HTTP_Request::version () const
 {
   return this->version_;
 }
 
 const char *
-HTTP_Request::path (void) const
+HTTP_Request::path () const
 {
   return this->path_;
 }
 
 int
-HTTP_Request::cgi (void) const
+HTTP_Request::cgi () const
 {
   return this->cgi_;
 }
 
 const char **
-HTTP_Request::cgi_env (void) const
+HTTP_Request::cgi_env () const
 {
   return (const char **)this->cgi_env_;
 }
 
 const char *
-HTTP_Request::cgi_args (void) const
+HTTP_Request::cgi_args () const
 {
   return this->cgi_args_;
 }
 
 const char *
-HTTP_Request::query_string (void) const
+HTTP_Request::query_string () const
 {
   return this->query_string_;
 }
 
 const char *
-HTTP_Request::path_info (void) const
+HTTP_Request::path_info () const
 {
   return this->path_info_;
 }
 
 int
-HTTP_Request::got_request_line (void) const
+HTTP_Request::got_request_line () const
 {
   return this->got_request_line_;
 }
 
 int
-HTTP_Request::type (void) const
+HTTP_Request::type () const
 {
   return type_;
 }
 
 const Headers &
-HTTP_Request::headers (void) const
+HTTP_Request::headers () const
 {
   return this->headers_;
 }

@@ -95,10 +95,10 @@ public:
   bool operator != (const ACE_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACE_TCHAR *get_path_name (void) const;
+  const ACE_TCHAR *get_path_name () const;
 
   /// Commit suicide.
   int destroy (void);

@@ -78,7 +78,7 @@ public:
   int svc (void);
 
   /// Accessor to the pool to which this thread belongs to.
-  TAO_DTP_Thread_Pool &pool (void) const;
+  TAO_DTP_Thread_Pool &pool () const;
 
 protected:
   /// Do the real work
@@ -161,12 +161,12 @@ public:
   /// @name Accessors
   // @{
 
-  bool use_timeouts (void) const;
-  const ACE_Time_Value& dynamic_thread_time (void) const;
+  bool use_timeouts () const;
+  const ACE_Time_Value& dynamic_thread_time () const;
 
-  TAO_DTP_Thread_Pool_Manager &manager (void) const;
-  CORBA::ULong id (void) const;
-  CORBA::ULong current_threads (void) const;
+  TAO_DTP_Thread_Pool_Manager &manager () const;
+  CORBA::ULong id () const;
+  CORBA::ULong current_threads () const;
   void add_active (void);
   bool remove_active (bool force);
 
@@ -237,7 +237,7 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
   // @}
 
 private:

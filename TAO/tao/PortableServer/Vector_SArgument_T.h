@@ -38,7 +38,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
-    S const & arg (void) const;
+    S const & arg () const;
 
   private:
     S x_;

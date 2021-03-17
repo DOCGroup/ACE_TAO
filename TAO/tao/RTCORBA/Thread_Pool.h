@@ -78,7 +78,7 @@ public:
   int svc (void);
 
   /// Accessor to the lane to which this thread belongs to.
-  TAO_Thread_Lane &lane (void) const;
+  TAO_Thread_Lane &lane () const;
 
   /// Set TSS resources for the current thread.
   static void set_tss_resources (TAO_ORB_Core &orb_core,
@@ -173,22 +173,22 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_Thread_Pool &pool (void) const;
-  CORBA::ULong id (void) const;
+  TAO_Thread_Pool &pool () const;
+  CORBA::ULong id () const;
 
-  CORBA::Short lane_priority (void) const;
-  CORBA::ULong static_threads (void) const;
-  CORBA::ULong dynamic_threads (void) const;
+  CORBA::Short lane_priority () const;
+  CORBA::ULong static_threads () const;
+  CORBA::ULong dynamic_threads () const;
 
-  CORBA::ULong current_threads (void) const;
+  CORBA::ULong current_threads () const;
 
-  CORBA::Short native_priority (void) const;
+  CORBA::Short native_priority () const;
 
   TAO_Thread_Lane_Resources &resources (void);
 
-  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan (void) const;
+  TAO_RT_ORBInitializer::TAO_RTCORBA_DT_LifeSpan lifespan () const;
 
-  ACE_Time_Value const &dynamic_thread_time (void) const;
+  ACE_Time_Value const &dynamic_thread_time () const;
   // @}
 
 private:
@@ -307,22 +307,22 @@ public:
   int create_static_threads (void);
 
   /// Check if this thread pool has (explicit) lanes.
-  bool with_lanes (void) const;
+  bool with_lanes () const;
 
   /// @name Accessors
   // @{
 
-  TAO_Thread_Pool_Manager &manager (void) const;
-  CORBA::ULong id (void) const;
+  TAO_Thread_Pool_Manager &manager () const;
+  CORBA::ULong id () const;
 
-  CORBA::ULong stack_size (void) const;
-  CORBA::Boolean allow_borrowing (void) const;
-  CORBA::Boolean allow_request_buffering (void) const;
-  CORBA::ULong max_buffered_requests (void) const;
-  CORBA::ULong max_request_buffer_size (void) const;
+  CORBA::ULong stack_size () const;
+  CORBA::Boolean allow_borrowing () const;
+  CORBA::Boolean allow_request_buffering () const;
+  CORBA::ULong max_buffered_requests () const;
+  CORBA::ULong max_request_buffer_size () const;
 
   TAO_Thread_Lane **lanes (void);
-  CORBA::ULong number_of_lanes (void) const;
+  CORBA::ULong number_of_lanes () const;
   // @}
 
 private:
@@ -407,7 +407,7 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
   // @}
 
 private:

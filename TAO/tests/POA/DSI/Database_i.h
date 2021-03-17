@@ -106,10 +106,10 @@ public:
 
     ~Employee (void);
 
-    const char *name (void) const;
+    const char *name () const;
     void name (const char* name);
 
-    CORBA::Long id (void) const;
+    CORBA::Long id () const;
     void id (CORBA::Long id);
 
 #if defined (ACE_HAS_NEW_NOTHROW)

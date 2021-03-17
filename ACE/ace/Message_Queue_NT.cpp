@@ -190,7 +190,7 @@ ACE_Message_Queue_NT::pulse (void)
 }
 
 void
-ACE_Message_Queue_NT::dump (void) const
+ACE_Message_Queue_NT::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue_NT::dump");

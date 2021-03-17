@@ -469,9 +469,9 @@ public:
   virtual int close (void);
 
   // = Strategies accessors
-  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy (void) const;
-  virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy (void) const;
-  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy (void) const;
+  virtual ACE_Creation_Strategy<SVC_HANDLER> *creation_strategy () const;
+  virtual ACE_Connect_Strategy<SVC_HANDLER, PEER_CONNECTOR> *connect_strategy () const;
+  virtual ACE_Concurrency_Strategy<SVC_HANDLER> *concurrency_strategy () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

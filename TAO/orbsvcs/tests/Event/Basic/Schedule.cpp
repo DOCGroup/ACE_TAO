@@ -35,7 +35,7 @@ EC_Schedule::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Schedule::print_args (void) const
+EC_Schedule::print_args () const
 {
   this->EC_Driver::print_args ();
 }

@@ -55,7 +55,7 @@ public:
         CORBA::SetOverrideType set_add);
 
   // = Set and get the implementation.
-  TAO_Policy_Current_Impl &implementation (void) const;
+  TAO_Policy_Current_Impl &implementation () const;
   TAO_Policy_Current_Impl &implementation (TAO_Policy_Current_Impl &);
 };
 

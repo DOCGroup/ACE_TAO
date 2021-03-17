@@ -118,7 +118,7 @@ const TypeCodeType&
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base (void) const
+                     RefCountPolicy>::concrete_base () const
 {
   return concrete_base_;
 }
@@ -131,7 +131,7 @@ const FieldArrayType&
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::fields (void) const
+                     RefCountPolicy>::fields () const
 {
   return fields_;
 }
@@ -275,7 +275,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::get_compact_typecode_i (void) const
+                     RefCountPolicy>::get_compact_typecode_i () const
 {
   ACE_Array_Base<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
     tc_fields (this->nfields_);
@@ -328,7 +328,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::id_i (void) const
+                     RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -343,7 +343,7 @@ char const *
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::name_i (void) const
+                     RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -358,7 +358,7 @@ CORBA::ULong
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::member_count_i (void) const
+                     RefCountPolicy>::member_count_i () const
 {
   return this->nfields_;
 }
@@ -423,7 +423,7 @@ CORBA::ValueModifier
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::type_modifier_i (void) const
+                     RefCountPolicy>::type_modifier_i () const
 {
   return this->type_modifier_;
 }
@@ -436,7 +436,7 @@ CORBA::TypeCode_ptr
 TAO::TypeCode::Value<StringType,
                      TypeCodeType,
                      FieldArrayType,
-                     RefCountPolicy>::concrete_base_type_i (void) const
+                     RefCountPolicy>::concrete_base_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

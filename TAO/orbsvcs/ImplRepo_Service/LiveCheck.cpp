@@ -21,7 +21,7 @@ LiveListener::~LiveListener (void)
 }
 
 const char *
-LiveListener::server (void) const
+LiveListener::server () const
 {
   return this->server_.c_str ();
 }
@@ -96,7 +96,7 @@ LiveEntry::set_reping_limit (int max)
 }
 
 bool
-LiveEntry::reping_available (void) const
+LiveEntry::reping_available () const
 {
   return this->repings_ < this->max_retry_;
 }
@@ -218,7 +218,7 @@ LiveEntry::reset_status (void)
 }
 
 LiveStatus
-LiveEntry::status (void) const
+LiveEntry::status () const
 {
   if (!this->may_ping_)
     {
@@ -308,13 +308,13 @@ LiveEntry::status (LiveStatus l)
 }
 
 const ACE_Time_Value &
-LiveEntry::next_check (void) const
+LiveEntry::next_check () const
 {
   return this->next_check_;
 }
 
 const char *
-LiveEntry::server_name (void) const
+LiveEntry::server_name () const
 {
   return this->server_.c_str();
 }
@@ -326,13 +326,13 @@ LiveEntry::set_pid (int pid)
 }
 
 int
-LiveEntry::pid (void) const
+LiveEntry::pid () const
 {
   return this->pid_;
 }
 
 bool
-LiveEntry::may_ping (void) const
+LiveEntry::may_ping () const
 {
   return this->may_ping_;
 }
@@ -685,7 +685,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
     }
 }
 
-bool LC_TimeoutGuard::blocked (void) const
+bool LC_TimeoutGuard::blocked () const
 {
   return this->blocked_;
 }
@@ -757,7 +757,7 @@ LiveCheck::shutdown (void)
 }
 
 const ACE_Time_Value &
-LiveCheck::ping_interval (void) const
+LiveCheck::ping_interval () const
 {
   return this->ping_interval_;
 }

@@ -374,10 +374,10 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     //@}
 
     /// Returns the current table size.
-    size_t size (void) const;
+    size_t size () const;
 
     /// Returns the maximum table size.
-    size_t max_size (void) const;
+    size_t max_size () const;
 
     /// Dump the state of an object.
     void dump () const;
@@ -463,7 +463,7 @@ public:
 
   /// Get the timer queue
   /// @return The current @c ACE_Timer_Queue.
-  virtual ACE_Timer_Queue *timer_queue (void) const;
+  virtual ACE_Timer_Queue *timer_queue () const;
 
   /// Close down and release all resources.
   virtual int close (void);
@@ -804,7 +804,7 @@ public:
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
-  virtual size_t size (void) const;
+  virtual size_t size () const;
 
   /// Returns a reference to the Reactor's internal repository lock.
   virtual ACE_Lock &lock (void);

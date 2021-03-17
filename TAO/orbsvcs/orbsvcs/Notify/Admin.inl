@@ -36,7 +36,7 @@ TAO_Notify_Admin::set_default (bool is_default)
 
 ACE_INLINE
 bool
-TAO_Notify_Admin::is_default (void) const
+TAO_Notify_Admin::is_default () const
 {
   return this->is_default_;
 }

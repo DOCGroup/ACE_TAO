@@ -75,7 +75,7 @@ namespace TAO
       //@}
 
       /// Return the unique tag that identifies the concrete subclass.
-      virtual CORBA::ULong tag (void) const = 0;
+      virtual CORBA::ULong tag () const = 0;
 
     };
 

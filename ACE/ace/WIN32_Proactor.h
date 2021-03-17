@@ -106,7 +106,7 @@ public:
   void number_of_threads (size_t threads);
 
   /// Get the event handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   virtual ACE_Asynch_Read_Stream_Impl *create_asynch_read_stream ();
   virtual ACE_Asynch_Write_Stream_Impl *create_asynch_write_stream ();

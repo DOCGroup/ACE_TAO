@@ -33,7 +33,7 @@ Test_Bounded_String_Sequence::~Test_Bounded_String_Sequence (void)
 }
 
 const char *
-Test_Bounded_String_Sequence::opname (void) const
+Test_Bounded_String_Sequence::opname () const
 {
   return this->opname_;
 }

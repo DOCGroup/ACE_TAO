@@ -71,7 +71,7 @@ public:
   ~Handler (void) {};
 
   /// Get the reply count
-  long reply_count (void) const
+  long reply_count () const
   {
     return reply_count_.value ();
   }

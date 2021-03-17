@@ -84,7 +84,7 @@ public:
   //@}
 
   /// Get underlying handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set underlying handle.
   void set_handle (ACE_HANDLE);

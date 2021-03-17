@@ -343,16 +343,16 @@ public:
 
 #if defined (ACE_HAS_IPV6)
   /// Return @c true if the IP address is IPv6 linklocal address.
-  bool is_linklocal (void) const;
+  bool is_linklocal () const;
 
   /// Return @c true if the IP address is IPv6 sitelocal address.
-  bool is_sitelocal (void) const;
+  bool is_sitelocal () const;
 
   /// Return @c true if the IP address is IPv4-mapped IPv6 address.
-  bool is_ipv4_mapped_ipv6 (void) const;
+  bool is_ipv4_mapped_ipv6 () const;
 
   /// Return @c true if the IP address is IPv4-compatible IPv6 address.
-  bool is_ipv4_compat_ipv6 (void) const;
+  bool is_ipv4_compat_ipv6 () const;
 #endif /* ACE_HAS_IPV6 */
 
   /**

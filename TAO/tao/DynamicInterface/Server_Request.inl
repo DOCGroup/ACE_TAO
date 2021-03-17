@@ -31,7 +31,7 @@ CORBA::ServerRequest::ctx (CORBA::Context_ptr ctx)
 }
 
 ACE_INLINE const char *
-CORBA::ServerRequest::operation (void) const
+CORBA::ServerRequest::operation () const
 {
   return this->orb_server_request_.operation ();
 }
@@ -43,7 +43,7 @@ CORBA::ServerRequest::_tao_lazy_evaluation (bool lazy_evaluation)
 }
 
 ACE_INLINE int
-CORBA::ServerRequest::_tao_incoming_byte_order (void) const
+CORBA::ServerRequest::_tao_incoming_byte_order () const
 {
   return this->orb_server_request_.incoming ()->byte_order ();
 }

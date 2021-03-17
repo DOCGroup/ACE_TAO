@@ -14,7 +14,7 @@ template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
 typename S_forany::_slice_type const *
-TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg (void) const
+TAO::In_Var_Array_Argument_T<S_forany,Insert_Policy>::arg () const
 {
   return this->x_.in ();
 }

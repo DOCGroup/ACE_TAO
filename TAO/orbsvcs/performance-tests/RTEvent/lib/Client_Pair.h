@@ -80,9 +80,9 @@ public:
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
+  Supplier *supplier () const;
 
-  Consumer *consumer (void) const;
+  Consumer *consumer () const;
   //@}
 
 private:

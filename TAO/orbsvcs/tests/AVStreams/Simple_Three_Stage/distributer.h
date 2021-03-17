@@ -133,7 +133,7 @@ public:
   TAO_AV_Protocol_Object *sender_protocol_object (void);
 
   // Flag to know when we are done.
-  int done (void) const;
+  int done () const;
   void done (int);
 
 protected:

@@ -2,7 +2,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE const ACE_INET_Addr&
-TAO_DIOP_Acceptor::address (void) const
+TAO_DIOP_Acceptor::address () const
 {
   ACE_ASSERT (this->addrs_ != 0);
 
@@ -23,7 +23,7 @@ TAO_DIOP_Acceptor::endpoints (void)
 }
 
 ACE_INLINE const ACE_INET_Addr&
-TAO_DIOP_Acceptor::default_address (void) const
+TAO_DIOP_Acceptor::default_address () const
 {
   return this->default_address_;
 }

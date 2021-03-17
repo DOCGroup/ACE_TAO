@@ -151,7 +151,7 @@ public:
    * @return Reference to the configuration's root section. Note that
    *         it is a const reference.
    */
-  virtual const ACE_Configuration_Section_Key& root_section (void) const;
+  virtual const ACE_Configuration_Section_Key& root_section () const;
 
   /**
    * Opens a named section in an existing section.
@@ -585,7 +585,7 @@ public:
 
   /// hash function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash  (void) const;
+  u_long hash  () const;
 
   // = Data members.
 

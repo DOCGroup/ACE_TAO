@@ -62,7 +62,7 @@ ACE_CE_Errno::instance ()
 }
 
 ACE_INLINE
-ACE_CE_Errno::operator int (void) const
+ACE_CE_Errno::operator int () const
 {
   return (int) TlsGetValue (ACE_CE_Errno::errno_key_);
 }

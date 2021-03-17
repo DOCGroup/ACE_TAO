@@ -34,7 +34,7 @@ Test_WString_Sequence::~Test_WString_Sequence (void)
 }
 
 const char *
-Test_WString_Sequence::opname (void) const
+Test_WString_Sequence::opname () const
 {
   return this->opname_;
 }

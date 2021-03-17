@@ -48,7 +48,7 @@ public:
   ~TAO_MonitorEventChannel (void);
 
   /// Return the name of this event channel.
-  const ACE_CString& name (void) const;
+  const ACE_CString& name () const;
 
   /// Register a single statistic with the EC and statistic registry.
   bool register_statistic (const ACE_CString& name,

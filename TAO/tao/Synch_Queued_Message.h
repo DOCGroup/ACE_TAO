@@ -59,13 +59,13 @@ public:
   /// Destructor
   virtual ~TAO_Synch_Queued_Message (void);
 
-  const ACE_Message_Block *current_block (void) const;
+  const ACE_Message_Block *current_block () const;
 
   /** @name Implement the Template Methods from TAO_Queued_Message
    */
   //@{
-  virtual size_t message_length (void) const;
-  virtual int all_data_sent (void) const;
+  virtual size_t message_length () const;
+  virtual int all_data_sent () const;
   virtual void fill_iov (int iovcnt_max, int &iovcnt, iovec iov[]) const;
   virtual void bytes_transferred (size_t &byte_count);
   virtual TAO_Queued_Message *clone (ACE_Allocator *alloc);

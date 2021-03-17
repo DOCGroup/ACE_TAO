@@ -64,31 +64,31 @@ public:
                      const ACEXML_Char *value);
 
   /// Get \a uri_.
-  const ACEXML_Char *uri (void) const;
+  const ACEXML_Char *uri () const;
 
   /// Set \a uri_.
   void uri (const ACEXML_Char *uri);
 
   /// Get \a localName_.
-  const ACEXML_Char *localName (void) const;
+  const ACEXML_Char *localName () const;
 
   /// Set \a localName_.
   void localName (const ACEXML_Char *localName);
 
   /// Get \a qName_.
-  const ACEXML_Char *qName (void) const;
+  const ACEXML_Char *qName () const;
 
   /// Set \a qName_.
   void qName (const ACEXML_Char *qName);
 
   /// Get \a type_.
-  const ACEXML_Char *type (void) const;
+  const ACEXML_Char *type () const;
 
   /// Set \a type_.
   void type (const ACEXML_Char *type);
 
   /// Get \a value_.
-  const ACEXML_Char *value (void) const;
+  const ACEXML_Char *value () const;
 
   /// Set \a value_.
   void value (const ACEXML_Char *value);

@@ -31,7 +31,7 @@ public:
 
   int handle_exception (ACE_HANDLE);
 
-  ACE_HANDLE get_handle (void) const { return this->handle_; }
+  ACE_HANDLE get_handle () const { return this->handle_; }
 
   void set_handle (ACE_HANDLE handle) { this->handle_ = handle; }
 

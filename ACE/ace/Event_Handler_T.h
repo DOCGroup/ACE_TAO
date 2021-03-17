@@ -63,7 +63,7 @@ public:
   // = Typedefs to simplify pointer-to-member-function registration.
 
   // Get/set the underlying handle.
-  typedef ACE_HANDLE (T::*GET_HANDLE) (void) const;
+  typedef ACE_HANDLE (T::*GET_HANDLE) () const;
   typedef void (T::*SET_HANDLE) (ACE_HANDLE);
 
   /// Handle I/O events.
@@ -95,7 +95,7 @@ public:
   // = Override all the ACE_Event_Handler methods.
 
   // These methods all delegate down to the <T> operations handler.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual void set_handle (ACE_HANDLE);
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);

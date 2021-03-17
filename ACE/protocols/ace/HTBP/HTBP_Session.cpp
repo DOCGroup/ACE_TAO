@@ -155,7 +155,7 @@ ACE::HTBP::Session::close (void)
 
 
 ACE::HTBP::Channel *
-ACE::HTBP::Session::outbound (void) const
+ACE::HTBP::Session::outbound () const
 {
   if (!this->closed_ && this->proxy_addr_)
     this->reconnect();
@@ -269,13 +269,13 @@ ACE::HTBP::Session::flush_outbound_queue (void)
 }
 
 int
-ACE::HTBP::Session::close_inbound (void) const
+ACE::HTBP::Session::close_inbound () const
 {
   return this->inbound_ ? this->inbound_->close() : 0;
 }
 
 int
-ACE::HTBP::Session::close_outbound (void) const
+ACE::HTBP::Session::close_outbound () const
 {
   return this->outbound_ ? this->outbound_->close() : 0;
 }

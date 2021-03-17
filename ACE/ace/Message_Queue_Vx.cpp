@@ -17,7 +17,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE (ACE_Message_Queue_Vx);
 
 void
-ACE_Message_Queue_Vx::dump (void) const
+ACE_Message_Queue_Vx::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Message_Queue_Vx::dump");

@@ -62,12 +62,12 @@ public:
   void operator= (const TAO_ETCL_Literal_Constraint& co);
 
   // Conversion routines.
-  operator ACE_CDR::Boolean (void) const;
-  operator ACE_CDR::ULong (void) const;
-  operator ACE_CDR::Long (void) const;
-  operator ACE_CDR::Double (void) const;
-  operator const char* (void) const;
-  operator TAO::Any_Impl* (void) const;
+  operator ACE_CDR::Boolean () const;
+  operator ACE_CDR::ULong () const;
+  operator ACE_CDR::Long () const;
+  operator ACE_CDR::Double () const;
+  operator const char* () const;
+  operator TAO::Any_Impl* () const;
 
   // Return the type represented by this MysteryOperand.
 

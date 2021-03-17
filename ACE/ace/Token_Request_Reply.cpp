@@ -86,7 +86,7 @@ ACE_Token_Request::decode (void)
 // Print out the current values of the ACE_Token_Request.
 
 void
-ACE_Token_Request::dump (void) const
+ACE_Token_Request::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
@@ -167,7 +167,7 @@ ACE_Token_Reply::decode (void)
 // Print out current values of the ACE_Token_Reply object.
 
 void
-ACE_Token_Reply::dump (void) const
+ACE_Token_Reply::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("*******\nlength = %d\nerrnum = %d"),

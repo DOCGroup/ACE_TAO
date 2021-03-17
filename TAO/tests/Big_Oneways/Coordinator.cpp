@@ -14,7 +14,7 @@ Coordinator::~Coordinator (void)
 }
 
 int
-Coordinator::has_all_peers (void) const
+Coordinator::has_all_peers () const
 {
   return this->peer_count_ == this->peer_max_;
 }

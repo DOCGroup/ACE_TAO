@@ -353,7 +353,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
 }
 
 char
-TAO_UIOP_Connector::object_key_delimiter (void) const
+TAO_UIOP_Connector::object_key_delimiter () const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
 }

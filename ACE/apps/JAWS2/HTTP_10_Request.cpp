@@ -18,31 +18,31 @@ JAWS_HTTP_10_Request::~JAWS_HTTP_10_Request (void)
 }
 
 const char *
-JAWS_HTTP_10_Request::method (void) const
+JAWS_HTTP_10_Request::method () const
 {
   return this->request_line ()->method_str ();
 }
 
 const char *
-JAWS_HTTP_10_Request::uri (void) const
+JAWS_HTTP_10_Request::uri () const
 {
   return this->request_line ()->url ();
 }
 
 const char *
-JAWS_HTTP_10_Request::version (void) const
+JAWS_HTTP_10_Request::version () const
 {
   return this->request_line ()->version ();
 }
 
 int
-JAWS_HTTP_10_Request::type (void) const
+JAWS_HTTP_10_Request::type () const
 {
   return this->request_line ()->method ();
 }
 
 const char *
-JAWS_HTTP_10_Request::path (void) const
+JAWS_HTTP_10_Request::path () const
 {
   if (this->path_ == 0)
     {

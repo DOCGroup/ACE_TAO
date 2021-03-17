@@ -203,7 +203,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
 }
 
 ACE_INLINE const ACE_TCHAR*
-ACE_Token_Name::name (void) const
+ACE_Token_Name::name () const
 {
   ACE_TRACE ("ACE_Token_Name::name");
   return this->token_name_;

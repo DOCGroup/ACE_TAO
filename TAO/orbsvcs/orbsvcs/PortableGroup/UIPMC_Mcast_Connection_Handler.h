@@ -87,11 +87,11 @@ public:
   int add_transport_to_cache (void);
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr (void) const;
+  const ACE_INET_Addr &addr () const;
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void) const;
+  const ACE_INET_Addr &local_addr () const;
 
   void local_addr (const ACE_INET_Addr &addr);
 

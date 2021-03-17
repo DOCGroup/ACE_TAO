@@ -82,7 +82,7 @@ public:
   bool test (const char* str,
              T expected);
   void constraint (TAO_Literal_Constraint& constraint);
-  const TAO_Literal_Constraint& constraint (void) const;
+  const TAO_Literal_Constraint& constraint () const;
 
 private:
   bool compare (T expected) const;
@@ -137,7 +137,7 @@ Literal_Interpreter<T>::constraint (TAO_Literal_Constraint& constraint)
 }
 
 template<class T> const TAO_Literal_Constraint&
-Literal_Interpreter<T>::constraint (void) const
+Literal_Interpreter<T>::constraint () const
 {
   return this->constraint_;
 }

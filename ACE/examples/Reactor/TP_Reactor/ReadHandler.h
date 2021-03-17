@@ -71,7 +71,7 @@ class ReadHandler : public ACE_Event_Handler {
         /**
          * Provides the handle of mStream;
          */
-        virtual ACE_HANDLE get_handle(void) const;
+        virtual ACE_HANDLE get_handle() const;
 
         /**
          * Handles the data excahnge between client and server. On the first

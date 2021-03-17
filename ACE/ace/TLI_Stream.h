@@ -121,7 +121,7 @@ private:
   int rwflag_;
 
   /// Get rwflag
-  int get_rwflag (void) const;
+  int get_rwflag () const;
 
   /// Set rwflag
   void set_rwflag (int value);

@@ -178,7 +178,7 @@ ACE_XtReactor::XtWaitForMultipleEvents (int width,
 }
 
 XtAppContext
-ACE_XtReactor::context (void) const
+ACE_XtReactor::context () const
 {
   return this->context_;
 }

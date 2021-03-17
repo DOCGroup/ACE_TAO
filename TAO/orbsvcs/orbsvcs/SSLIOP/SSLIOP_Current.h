@@ -116,7 +116,7 @@ namespace TAO
         return (Current_ptr)0;
       }
 
-      virtual const char* _interface_repository_id (void) const;
+      virtual const char* _interface_repository_id () const;
       //@}
 
     protected:

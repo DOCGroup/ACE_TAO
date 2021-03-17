@@ -54,7 +54,7 @@ public:
             ACE_Reactor_Mask mask,
             ACE_EH_PTMF callback);
 
-  bool dispatch (void) const;
+  bool dispatch () const;
 
   ACE_HANDLE handle_;
   ACE_Event_Handler *event_handler_;

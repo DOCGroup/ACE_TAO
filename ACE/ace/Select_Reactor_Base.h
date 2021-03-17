@@ -363,10 +363,10 @@ public:
 
   // = Accessors.
   /// Returns the current table size.
-  size_type size (void) const;
+  size_type size () const;
 
   /// Maximum ACE_HANDLE value, plus 1.
-  max_handlep1_type max_handlep1 (void) const;
+  max_handlep1_type max_handlep1 () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -424,7 +424,7 @@ public:
   bool next (ACE_Event_Handler* & next_item);
 
   /// Returns @c true when all items have been seen, else @c false.
-  bool done (void) const;
+  bool done () const;
 
   /// Move forward by one element in the set.  Returns @c false when
   /// all the items in the set have been seen, else @c true.

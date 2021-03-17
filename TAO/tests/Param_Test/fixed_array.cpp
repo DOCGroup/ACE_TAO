@@ -30,7 +30,7 @@ Test_Fixed_Array::~Test_Fixed_Array (void)
 }
 
 const char *
-Test_Fixed_Array::opname (void) const
+Test_Fixed_Array::opname () const
 {
   return this->opname_;
 }

@@ -20,7 +20,7 @@ TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (
 {}
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr
-TAO_RTScheduler_Manager_var::ptr (void) const
+TAO_RTScheduler_Manager_var::ptr () const
 {
   return this->ptr_;
 }
@@ -71,13 +71,13 @@ TAO_RTScheduler_Manager_var::operator ::TAO_RTScheduler_Manager_ptr &() // cast
 }
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr
-TAO_RTScheduler_Manager_var::operator-> (void) const
+TAO_RTScheduler_Manager_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE ::TAO_RTScheduler_Manager_ptr
-TAO_RTScheduler_Manager_var::in (void) const
+TAO_RTScheduler_Manager_var::in () const
 {
   return this->ptr_;
 }

@@ -45,13 +45,13 @@ public:
                ACE_CDR::Octet minor_version = ACE_CDR_GIOP_MINOR_VERSION);
 
   /// Returns @c false if an error has occurred.
-  bool good_bit (void) const;
+  bool good_bit () const;
 
   /// Reset current size.
   void reset (void);
 
   /// Return current size.
-  size_t total_length (void) const;
+  size_t total_length () const;
 
   // Return 0 on failure and 1 on success.
   //@{ @name Size-calculating pseudo-write operations

@@ -68,7 +68,7 @@ public:
   virtual void disconnect_push_supplier (void);
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
 private:

@@ -61,7 +61,7 @@ public:
                  ACE_Sig_Handler * = 0);
   virtual ~ACE_XtReactor (void);
 
-  XtAppContext context (void) const;
+  XtAppContext context () const;
   void context (XtAppContext);
 
   // = Timer operations.

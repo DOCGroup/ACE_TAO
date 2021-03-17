@@ -29,7 +29,7 @@ public:
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);
 
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   ACE_Time_Value *wait_time (void);
 
@@ -61,7 +61,7 @@ static const int UDP_PORT = ACE_DEFAULT_MULTICAST_PORT;
 static const int DURATION = 5;
 
 ACE_HANDLE
-Server_Events::get_handle (void) const
+Server_Events::get_handle () const
 {
   return this->mcast_dgram_.get_handle ();
 }

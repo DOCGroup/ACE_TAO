@@ -165,7 +165,7 @@ namespace CORBA
      * class SomeException : public // Derives from CORBA::Exception
      * {
      * public:
-     *   virtual CORBA::Exception *_tao_duplicate (void) const
+     *   virtual CORBA::Exception *_tao_duplicate () const
      *   {
      *     CORBA::Exception *result = 0;
      *     ACE_NEW_RETURN (

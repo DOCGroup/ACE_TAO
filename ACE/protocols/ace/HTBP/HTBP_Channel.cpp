@@ -103,7 +103,7 @@ ACE::HTBP::Channel::~Channel (void)
 
   /// Dump the state of an object.
 void
-ACE::HTBP::Channel::dump (void) const
+ACE::HTBP::Channel::dump () const
 {
 }
 
@@ -141,7 +141,7 @@ ACE::HTBP::Channel::notifier (void)
 }
 
 ACE_HANDLE
-ACE::HTBP::Channel::get_handle (void) const
+ACE::HTBP::Channel::get_handle () const
 {
   return this->ace_stream_.get_handle ();
 }

@@ -76,7 +76,7 @@ template <typename DiscriminatorType,
 TAO::TypeCode::Case<StringType, TypeCodeType> *
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
-                      TypeCodeType>::clone (void) const
+                      TypeCodeType>::clone () const
 {
   Case<StringType, TypeCodeType> * p = 0;
 
@@ -138,7 +138,7 @@ template <typename DiscriminatorType,
 CORBA::Any *
 TAO::TypeCode::Case_T<DiscriminatorType,
                       StringType,
-                      TypeCodeType>::label (void) const
+                      TypeCodeType>::label () const
 {
   CORBA::Any * value = 0;
 

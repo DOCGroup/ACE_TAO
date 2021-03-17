@@ -50,14 +50,14 @@ public:
   explicit ACE_Parse_Node (const ACE_TCHAR *name);
   virtual ~ACE_Parse_Node (void);
 
-  ACE_Parse_Node *link (void) const;
+  ACE_Parse_Node *link () const;
   void link (ACE_Parse_Node *);
 
   /// Will update the yyereno member and/or the corresponding configuration
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno) = 0;
 
-  const ACE_TCHAR *name (void) const;
-  void print (void) const;
+  const ACE_TCHAR *name () const;
+  void print () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -176,7 +176,7 @@ public:
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
   virtual const ACE_Service_Type *record (const ACE_Service_Gestalt *g) const;
 
-  ACE_TCHAR *parameters (void) const;
+  ACE_TCHAR *parameters () const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -212,7 +212,7 @@ public:
 
   virtual ~ACE_Dynamic_Node (void);
 
-  //  virtual const ACE_Service_Type *record (void) const;
+  //  virtual const ACE_Service_Type *record () const;
   virtual void apply (ACE_Service_Gestalt *cfg, int &yyerrno);
 
   /// Dump the state of an object.
@@ -309,9 +309,9 @@ class ACE_Location_Node
 public:
   ACE_Location_Node (void);
   const ACE_DLL &dll (void);
-  const ACE_TCHAR *pathname (void) const;
+  const ACE_TCHAR *pathname () const;
   void pathname (const ACE_TCHAR *h);
-  int dispose (void) const;
+  int dispose () const;
 
   virtual ~ACE_Location_Node (void);
   virtual void set_symbol (void *h);
@@ -490,7 +490,7 @@ public:
 
   ACE_Service_Type *make_service_type (ACE_Service_Gestalt *pcfg) const;
 
-  ACE_TCHAR const* name (void) const;
+  ACE_TCHAR const* name () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

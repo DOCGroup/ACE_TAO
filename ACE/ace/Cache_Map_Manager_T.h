@@ -190,10 +190,10 @@ public:
   int purge (void);
 
   /// Return the current size of the cache.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Return the total size of the cache.
-  size_t total_size (void) const;
+  size_t total_size () const;
 
   /// Dumps the state of the object.
   void dump () const;
@@ -274,7 +274,7 @@ public:
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.
-  ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
+  ACE_Reference_Pair<KEY, VALUE> operator* () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -347,7 +347,7 @@ public:
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.
-  ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
+  ACE_Reference_Pair<KEY, VALUE> operator* () const;
 
   // = STL styled iteration, compare, and reference functions.
 

@@ -52,7 +52,7 @@ Thread::pop_new_connection (void)
 }
 
 PeerProcess *
-Thread::peek_new_connection (void) const
+Thread::peek_new_connection () const
 {
   PeerProcess *pp = 0;
   this->new_connection_.top (pp);
@@ -66,7 +66,7 @@ Thread::pending_local_addr (const ACE_CString &addr)
 }
 
 const ACE_CString &
-Thread::pending_local_addr (void) const
+Thread::pending_local_addr () const
 {
   return this->pending_local_addr_;
 }
@@ -116,19 +116,19 @@ Thread::exit_wait (PeerProcess *pp, size_t linenum)
 }
 
 long
-Thread::max_depth (void) const
+Thread::max_depth () const
 {
   return static_cast<long> (this->max_depth_);
 }
 
 long
-Thread::id (void) const
+Thread::id () const
 {
   return this->id_;
 }
 
 const ACE_CString &
-Thread::alias (void) const
+Thread::alias () const
 {
   return this->alias_;
 }
@@ -151,7 +151,7 @@ Thread::incoming_from (PeerProcess  *pp)
 }
 
 PeerProcess *
-Thread::incoming (void) const
+Thread::incoming () const
 {
   return this->incoming_;
 }
@@ -163,7 +163,7 @@ Thread::active_handle (long handle)
 }
 
 long
-Thread::active_handle (void) const
+Thread::active_handle () const
 {
   return this->active_handle_;
 }
@@ -245,7 +245,7 @@ Thread::pop_invocation (void)
 }
 
 Invocation *
-Thread::current_invocation (void) const
+Thread::current_invocation () const
 {
   Invocation *inv = 0;
   if (this->current_invocation_.size() > 0)

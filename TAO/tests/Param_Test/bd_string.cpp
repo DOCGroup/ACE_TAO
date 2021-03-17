@@ -41,7 +41,7 @@ Test_Bounded_String::~Test_Bounded_String (void)
 }
 
 const char *
-Test_Bounded_String::opname (void) const
+Test_Bounded_String::opname () const
 {
   return this->opname_;
 }

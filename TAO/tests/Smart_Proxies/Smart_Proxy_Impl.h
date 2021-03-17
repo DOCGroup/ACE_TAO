@@ -15,7 +15,7 @@ class Smart_Test_Proxy : public virtual TAO_Test_Smart_Proxy_Base
 public:
   Smart_Test_Proxy (Test_ptr proxy);
 
-  virtual bool can_convert_to_ior (void) const;
+  virtual bool can_convert_to_ior () const;
 
   virtual char* convert_to_ior (bool use_omg_ior_format,
                                 const char* ior_prefix) const;

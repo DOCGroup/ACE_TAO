@@ -21,20 +21,20 @@ public:
   Thread (long tid, const char *alias, size_t offset);
   void add_time (const ACE_CString &time);
 
-  long max_depth (void) const;
-  long client_encounters (void) const;
-  long server_encounters (void) const;
-  long id (void) const;
-  const ACE_CString &alias (void) const;
+  long max_depth () const;
+  long client_encounters () const;
+  long server_encounters () const;
+  long id () const;
+  const ACE_CString &alias () const;
   void split_filename (char *buff, size_t len) const;
 
   void incoming_from (PeerProcess *);
   void add_invocation (Invocation *);
   void push_invocation (Invocation *);
   void pop_invocation (void);
-  Invocation *current_invocation (void) const;
+  Invocation *current_invocation () const;
 
-  PeerProcess *incoming (void) const;
+  PeerProcess *incoming () const;
   void handle_request (void);
   void enter_wait (PeerProcess *);
   void exit_wait (PeerProcess *, size_t linenum);
@@ -48,12 +48,12 @@ public:
 
   void push_new_connection (PeerProcess *pp);
   PeerProcess *pop_new_connection (void);
-  PeerProcess *peek_new_connection (void) const;
+  PeerProcess *peek_new_connection () const;
 
   void pending_local_addr (const ACE_CString &addr);
-  const ACE_CString& pending_local_addr (void) const;
+  const ACE_CString& pending_local_addr () const;
   void active_handle (long handle);
-  long active_handle (void) const;
+  long active_handle () const;
   void set_dup (Thread *other, bool set_other);
   void clear_dup (void);
   void swap_target (void);

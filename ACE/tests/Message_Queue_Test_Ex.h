@@ -33,7 +33,7 @@ public:
 
   ~User_Class (void) { delete [] this->message_; }
 
-  const char *message (void) const
+  const char *message () const
   {
     return this->message_;
   }

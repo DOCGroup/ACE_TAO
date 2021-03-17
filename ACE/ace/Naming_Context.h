@@ -326,7 +326,7 @@ public:
   char *base_address (void);
 
   /// Get use of registry in naming
-  bool use_registry (void) const;
+  bool use_registry () const;
 
   /// Set use of registry in naming
   void use_registry (bool x);

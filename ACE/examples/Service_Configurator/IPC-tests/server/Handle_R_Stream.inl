@@ -97,7 +97,7 @@ Handle_R_Stream::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_R_Stream::get_handle (void) const
+Handle_R_Stream::get_handle () const
 {
   return ACE_SOCK_Acceptor::get_handle ();
 }

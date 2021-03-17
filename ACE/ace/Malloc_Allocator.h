@@ -71,7 +71,7 @@ public:
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 #if defined (ACE_HAS_MALLOC_STATS)
-  virtual void print_stats (void) const;
+  virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
   virtual void dump () const;
 
@@ -115,7 +115,7 @@ public:
   virtual int protect (ssize_t len = -1, int prot = PROT_RDWR);
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 #if defined (ACE_HAS_MALLOC_STATS)
-  virtual void print_stats (void) const;
+  virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
   virtual void dump () const;
 

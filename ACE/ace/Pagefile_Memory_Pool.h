@@ -114,9 +114,9 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
-  void dump (void) const {}
+  void dump () const {}
 
 protected:
   /**

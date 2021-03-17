@@ -232,7 +232,7 @@ TAO_DIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_DIOP_Endpoint::object_addr (void) const
+TAO_DIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -257,7 +257,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_DIOP_Endpoint::object_addr_i (void) const
+TAO_DIOP_Endpoint::object_addr_i () const
 {
   // We should have already held the lock
 

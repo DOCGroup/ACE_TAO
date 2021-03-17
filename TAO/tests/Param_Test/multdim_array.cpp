@@ -34,7 +34,7 @@ Test_Multdim_Array::~Test_Multdim_Array (void)
 }
 
 const char *
-Test_Multdim_Array::opname (void) const
+Test_Multdim_Array::opname () const
 {
   return this->opname_;
 }

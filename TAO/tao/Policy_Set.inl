@@ -16,7 +16,7 @@ TAO_Policy_Set::get_policy_by_index (CORBA::ULong index) const
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Policy_Set::num_policies (void) const
+TAO_Policy_Set::num_policies () const
 {
   return this->policy_list_.length();
 }

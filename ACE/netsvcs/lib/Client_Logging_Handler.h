@@ -61,7 +61,7 @@ public:
   virtual int open (void * = 0);
 
   /// Return the handle of the IPC endpoint.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Called when object is removed from the ACE_Reactor.
   virtual int close (u_long);

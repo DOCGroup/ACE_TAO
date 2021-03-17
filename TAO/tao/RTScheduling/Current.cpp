@@ -814,13 +814,13 @@ TAO_RTScheduler_Current_var::operator ::TAO_RTScheduler_Current_ptr &()
 }
 
 TAO_RTScheduler_Current_ptr
-TAO_RTScheduler_Current_var::operator-> (void) const
+TAO_RTScheduler_Current_var::operator-> () const
 {
   return this->ptr_;
 }
 
 TAO_RTScheduler_Current_ptr
-TAO_RTScheduler_Current_var::in (void) const
+TAO_RTScheduler_Current_var::in () const
 {
   return this->ptr_;
 }
@@ -896,7 +896,7 @@ TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
   return obj;
 }
 
-const char* TAO_RTScheduler_Current::_interface_repository_id (void) const
+const char* TAO_RTScheduler_Current::_interface_repository_id () const
 {
   return "IDL:TAO_RTScheduler_Current:1.0";
 }

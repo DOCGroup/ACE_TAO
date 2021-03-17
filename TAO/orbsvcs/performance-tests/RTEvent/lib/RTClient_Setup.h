@@ -34,7 +34,7 @@ public:
                   int nthreads);
 
   /// Return non-zero if RTCORBA is enabled
-  int use_rt_corba (void) const;
+  int use_rt_corba () const;
 
   /// Return the underlying RTCORBA_Setup pointer
   RTCORBA_Setup *rtcorba_setup (void);

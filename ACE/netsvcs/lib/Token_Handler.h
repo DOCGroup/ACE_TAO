@@ -176,7 +176,7 @@ protected:
   ACE_TS_Mutex (const ACE_TS_Mutex &);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// The Token Handler associated with this proxy.  Set at
@@ -211,7 +211,7 @@ protected:
   ACE_TS_RLock (const ACE_TS_RLock&);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// the Token Handler associated with this proxy.  Set at
@@ -246,7 +246,7 @@ protected:
   ACE_TS_WLock (const ACE_TS_WLock&);
 
   /// Return a deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 private:
   /// the Token Handler associated with this proxy.  Set at

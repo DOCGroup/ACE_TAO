@@ -133,7 +133,7 @@ public:
                int perms = 0);
 
   /// Get the preferred signaling strategy.
-  ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
+  ACE_MEM_IO::Signal_Strategy preferred_strategy () const;
 
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);

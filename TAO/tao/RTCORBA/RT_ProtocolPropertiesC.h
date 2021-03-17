@@ -109,7 +109,7 @@ namespace RTCORBA
     // be\be_visitor_interface/interface_ch.cpp:216
 
     virtual ::CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
     // CDR Encoder/Decoder methods. (handcrafted)

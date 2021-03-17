@@ -54,7 +54,7 @@ public:
   ~ACE_QoS_Decorator_Base (void);
 
   /// Forwards the request to its event_handler_ component.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Forwards the request to its event_handler_ component.
   virtual int handle_input (ACE_HANDLE fd);
@@ -86,7 +86,7 @@ class ACE_QoS_Export ACE_QoS_Event_Handler : public ACE_Event_Handler
   ~ACE_QoS_Event_Handler (void);
 
   /// Returns the RAPI file descriptor for receiving QoS events.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Calls the base class handle_input ().
   virtual int handle_input (ACE_HANDLE fd);
@@ -140,7 +140,7 @@ public:
   ~ACE_QoS_Decorator (void);
 
   /// Calls the base class get_handle ().
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Calls the base class handle_input ().
   virtual int handle_input (ACE_HANDLE fd);

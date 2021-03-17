@@ -414,7 +414,7 @@ TAO_Advanced_Resource_Factory::get_protocol_factories (void)
 }
 
 ACE_Reactor_Impl *
-TAO_Advanced_Resource_Factory::allocate_reactor_impl (void) const
+TAO_Advanced_Resource_Factory::allocate_reactor_impl () const
 {
   ACE_Reactor_Impl *impl = 0;
 

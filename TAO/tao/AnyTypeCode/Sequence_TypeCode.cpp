@@ -103,7 +103,7 @@ TAO::TypeCode::Sequence<TypeCodeType,
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i () const
 {
   // Already compact since tk_sequence and tk_array TypeCodes have no
   // name or member names, meaning that we can simply call
@@ -121,14 +121,14 @@ TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::get_compact_typecode_i (v
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::ULong
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i (void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::length_i () const
 {
   return this->length_;
 }
 
 template <typename TypeCodeType, class RefCountPolicy>
 CORBA::TypeCode_ptr
-TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i (void) const
+TAO::TypeCode::Sequence<TypeCodeType, RefCountPolicy>::content_type_i () const
 {
   return
     CORBA::TypeCode::_duplicate (

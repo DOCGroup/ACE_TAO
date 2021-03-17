@@ -44,7 +44,7 @@ public:
   virtual void push (const RtecEventComm::EventSet& events);
   virtual void disconnect_push_consumer (void);
 
-  CORBA::ULong event_count (void) const;
+  CORBA::ULong event_count () const;
 private:
   /// Keep track of the number of events received.
   CORBA::ULong event_count_;

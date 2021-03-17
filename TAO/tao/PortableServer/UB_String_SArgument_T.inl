@@ -8,7 +8,7 @@ TAO::In_UB_String_SArgument_T<S,S_var>::In_UB_String_SArgument_T (void)
 
 template<typename S, typename S_var>
 const S *
-TAO::In_UB_String_SArgument_T<S,S_var>::arg (void) const
+TAO::In_UB_String_SArgument_T<S,S_var>::arg () const
 {
   return this->x_.in ();
 }

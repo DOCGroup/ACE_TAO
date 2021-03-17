@@ -124,7 +124,7 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   // Flag to know when we are done.
-  int done (void) const;
+  int done () const;
   void done (int);
 
   /// Accessor to connection manager.

@@ -87,7 +87,7 @@ public:
 
   // = Query property name.
   ACE_WString &name_rep (void);
-  const ACE_WString &name (void) const;
+  const ACE_WString &name () const;
 
   // = Set property name.
   void name (const ACE_UINT16 *n);
@@ -95,7 +95,7 @@ public:
 
   // = Query property value.
   ACE_WString &value_rep (void);
-  const ACE_WString &value (void) const;
+  const ACE_WString &value () const;
 
   // = Set property value.
   void value (const ACE_UINT16 *v);
@@ -103,7 +103,7 @@ public:
 
   // = Helper functions for encoding and decoding.
   /// Returns memory size (in bytes) required to encode this object.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Encodes this object into buf for network transmission.
   size_t encode (void *buf) const;
@@ -159,7 +159,7 @@ public:
 
   // = Get URL string.
   ACE_WString &url_rep (void);
-  const ACE_WString &url (void) const;
+  const ACE_WString &url () const;
 
   // = Set URL.
   void url (const char *url);
@@ -174,7 +174,7 @@ public:
 
   // = Helper functions for encoding and decoding.
   /// Returns memory size (in bytes) required to encode this object.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Encodes this object into buf for network transmission.
   size_t encode (void *buf) const;

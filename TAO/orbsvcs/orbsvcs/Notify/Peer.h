@@ -63,7 +63,7 @@ public:
   void handle_dispatch_exception (void);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const = 0;
+  virtual ACE_CString get_ior () const = 0;
 
 protected:
   /// Implementation of Peer specific dispatch_updates

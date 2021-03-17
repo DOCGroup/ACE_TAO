@@ -55,7 +55,7 @@ class AcceptHandler : public ACE_Event_Handler {
         /**
          * Provides the handle of mAcceptor.
          */
-        virtual ACE_HANDLE get_handle(void) const;
+        virtual ACE_HANDLE get_handle() const;
 
         /**
          * Create a read handler for the new connection and register that

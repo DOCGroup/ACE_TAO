@@ -110,7 +110,7 @@ public:
     TAO_SYSTEM_EXCEPTION (InvalidPolicies)
 
 #define TAO_SYSTEM_EXCEPTION(name) \
-  virtual CORBA::TypeCode_ptr _tao_type_ ## name (void) const = 0;
+  virtual CORBA::TypeCode_ptr _tao_type_ ## name () const = 0;
 
 ANYTYPECODE__EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION

@@ -36,7 +36,7 @@ TAO_Valuetype_Adapter_Impl::stream_to_abstract_base (
 }
 
 CORBA::Long
-TAO_Valuetype_Adapter_Impl::type_info_single (void) const
+TAO_Valuetype_Adapter_Impl::type_info_single () const
 {
   return TAO_OBV_GIOP_Flags::Type_info_single;
 }

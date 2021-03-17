@@ -17,17 +17,17 @@ public:
 
   void init (const char *response);
 
-  int code (void) const;
-  const char *code_str (void) const;
+  int code () const;
+  const char *code_str () const;
 
-  int major_version (void) const;
-  int minor_version (void) const;
+  int major_version () const;
+  int minor_version () const;
 
-  const char *version (void) const;
+  const char *version () const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 
-  int error (void) const;
+  int error () const;
   // 0 -> ok
 
 private:

@@ -46,7 +46,7 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.

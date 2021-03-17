@@ -30,7 +30,7 @@ Test_DynArray::~Test_DynArray (void)
 }
 
 const char*
-Test_DynArray::test_name (void) const
+Test_DynArray::test_name () const
 {
   return this->test_name_;
 }

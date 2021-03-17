@@ -140,16 +140,16 @@ public:
    * is non-reentrant since it returns a pointer to a static data
    * area.)
    */
-  const ACE_TCHAR *addr_to_string (void) const;
+  const ACE_TCHAR *addr_to_string () const;
 
   /// Return a pointer to the underlying network address.
-  virtual void *get_addr (void) const;
+  virtual void *get_addr () const;
 
   /// Set a pointer to the address.
   virtual void set_addr (const void *, int);
 
   /// Return the selector for network address.
-  u_char get_selector (void) const;
+  u_char get_selector () const;
 
   /// Set the selector for the network address.
   void set_selector (u_char selector);

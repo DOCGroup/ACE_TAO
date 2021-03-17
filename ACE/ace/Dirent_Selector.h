@@ -41,7 +41,7 @@ public:
   virtual ~ACE_Dirent_Selector (void);
 
   /// Return the length of the list of matching directory entries.
-  int length (void) const;
+  int length () const;
 
   /// Return the entry at @a index.
   ACE_DIRENT *operator[] (const int index) const;

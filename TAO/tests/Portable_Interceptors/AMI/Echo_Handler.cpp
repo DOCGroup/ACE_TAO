@@ -32,7 +32,7 @@ Echo_Handler::shutdown_excep (::Messaging::ExceptionHolder *)
 }
 
 CORBA::ULong
-Echo_Handler::replies (void) const
+Echo_Handler::replies () const
 {
   return this->replies_;
 }

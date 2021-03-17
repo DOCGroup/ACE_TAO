@@ -270,7 +270,7 @@ public:
 
   ~TAO_Policies (void);
 
-  CORBA::ULong search_card (void) const;
+  CORBA::ULong search_card () const;
 
   // BEGIN SPEC
   // The "search_card" policy indicates to the trader the maximum
@@ -281,7 +281,7 @@ public:
   // trader's def_search_card attribute is used.
   // END SPEC
 
-  CORBA::ULong match_card (void) const;
+  CORBA::ULong match_card () const;
 
   // BEGIN SPEC
   // The "match_card" policy indicates to the trader the maximum
@@ -292,7 +292,7 @@ public:
   // attribute is used.
   // END SPEC
 
-  CORBA::ULong return_card (void) const;
+  CORBA::ULong return_card () const;
 
   // BEGIN SPEC
   // The "return_card" policy indicates to the trader the maximum
@@ -305,7 +305,7 @@ public:
 
   // = Offer consideration policies
 
-  CORBA::Boolean use_modifiable_properties (void) const;
+  CORBA::Boolean use_modifiable_properties () const;
 
   // BEGIN SPEC
   // The "use_modifiable_properties" policy indicates whether the
@@ -317,7 +317,7 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_dynamic_properties (void) const;
+  CORBA::Boolean use_dynamic_properties () const;
 
   // BEGIN SPEC
   // The "use_dynamic_properties" policy indicates whether the trader
@@ -329,7 +329,7 @@ public:
   // included.
   // END SPEC
 
-  CORBA::Boolean use_proxy_offers (void) const;
+  CORBA::Boolean use_proxy_offers () const;
 
   // BEGIN SPEC
   // The "use_proxy_offers" policy indicates whether the trader should
@@ -340,7 +340,7 @@ public:
   // specified, such offers will be included.
   // END SPEC
 
-  CORBA::Boolean exact_type_match (void) const;
+  CORBA::Boolean exact_type_match () const;
 
   // BEGIN SPEC
   // The "exact_type_match" policy indicates to the trader whether the
@@ -368,10 +368,10 @@ public:
    * "starting_trader" policy with the first component removed.
    * END SPEC
    */
-  const CosTrading::TraderName* starting_trader (void) const;
+  const CosTrading::TraderName* starting_trader () const;
 
   /// Determine the link follow policy for this query overall.
-  CosTrading::FollowOption link_follow_rule (void) const;
+  CosTrading::FollowOption link_follow_rule () const;
 
   // BEGIN SPEC
   //The "link_follow_rule" policy indicates how the client wishes
@@ -392,7 +392,7 @@ public:
    */
   CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const;
 
-  CORBA::ULong hop_count (void) const;
+  CORBA::ULong hop_count () const;
 
   // BEGIN SPEC
   // The "hop_count" policy indicates to the trader the maximum number
@@ -408,7 +408,7 @@ public:
 
   /// Return the request_id passed to the query method across a link to
   /// another trader.
-  const CosTrading::Admin::OctetSeq* request_id (void) const;
+  const CosTrading::Admin::OctetSeq* request_id () const;
 
   /// Policies to forward to the next trader in a federated query.
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
@@ -506,11 +506,11 @@ public:
   void exact_type_match (CORBA::Boolean exact_type);
 
   /// Return the constructed policy sequence.
-  operator const CosTrading::PolicySeq& (void) const;
+  operator const CosTrading::PolicySeq& () const;
 
   /// Return a PolicySeq suitable for passing to the query method of
   /// the Lookup interface.
-  const CosTrading::PolicySeq& policy_seq (void) const;
+  const CosTrading::PolicySeq& policy_seq () const;
 
 private:
 
@@ -659,8 +659,8 @@ public:
   CosTrading::PolicyNameSeq* limits_applied (void);
 
   /// Accessors to retrieve the adjusted cardinalities.
-  CORBA::ULong search_card_remaining (void) const;
-  CORBA::ULong match_card_remaining (void) const;
+  CORBA::ULong search_card_remaining () const;
+  CORBA::ULong match_card_remaining () const;
 
 private:
 

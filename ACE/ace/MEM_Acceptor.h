@@ -98,7 +98,7 @@ public:
    * within the same host can located the mmap file.  Example:
    * /tmp/mmapfile.
    */
-  const ACE_TCHAR *mmap_prefix (void) const;
+  const ACE_TCHAR *mmap_prefix () const;
   void mmap_prefix (const ACE_TCHAR *prefix);
 
   /**
@@ -108,7 +108,7 @@ public:
   void init_buffer_size (ACE_OFF_T bytes);
 
   /// Get the preferred signaling strategy.
-  ACE_MEM_IO::Signal_Strategy preferred_strategy (void) const;
+  ACE_MEM_IO::Signal_Strategy preferred_strategy () const;
 
   /// Set the preferred signaling strategy.
   void preferred_strategy (ACE_MEM_IO::Signal_Strategy strategy);

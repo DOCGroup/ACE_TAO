@@ -49,7 +49,7 @@ public:
   int close (void);
 
   /// Return the underlying I/O handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   // = Send/recv ACE Message_Blocks.
   /// Send a message through the message queue.  Returns -1 on error,

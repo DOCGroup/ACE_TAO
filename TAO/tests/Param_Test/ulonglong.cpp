@@ -25,7 +25,7 @@ Test_ULongLong::~Test_ULongLong (void)
 }
 
 const char *
-Test_ULongLong::opname (void) const
+Test_ULongLong::opname () const
 {
   return this->opname_;
 }

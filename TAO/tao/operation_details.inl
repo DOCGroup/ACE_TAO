@@ -31,32 +31,32 @@ TAO_Operation_Details::TAO_Operation_Details (const char *name,
 }
 
 ACE_INLINE const char*
-TAO_Operation_Details::opname (void) const
+TAO_Operation_Details::opname () const
 {
   return this->opname_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Operation_Details::opname_len (void) const
+TAO_Operation_Details::opname_len () const
 {
   return this->opname_len_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Operation_Details::argument_flag (void) const
+TAO_Operation_Details::argument_flag () const
 {
   return (this->num_args_ > 1);
 }
 
 #if 1
 ACE_INLINE CORBA::Boolean
-TAO_Operation_Details::in_argument_flag (void) const
+TAO_Operation_Details::in_argument_flag () const
 {
   return this->has_in_args_  && this->num_args_ > 1;
 }
 #else
 ACE_INLINE CORBA::Boolean
-TAO_Operation_Details::in_argument_flag (void) const
+TAO_Operation_Details::in_argument_flag () const
 {
   for (CORBA::ULong i = 1; i < this->num_args_ && !this->has_in_args_; i++)
     {
@@ -77,7 +77,7 @@ TAO_Operation_Details::request_service_context (void)
 }
 
 ACE_INLINE const TAO_Service_Context &
-TAO_Operation_Details::request_service_context (void) const
+TAO_Operation_Details::request_service_context () const
 {
   return this->request_service_info_;
 }
@@ -89,7 +89,7 @@ TAO_Operation_Details::request_service_info (void)
 }
 
 ACE_INLINE const IOP::ServiceContextList &
-TAO_Operation_Details::request_service_info (void) const
+TAO_Operation_Details::request_service_info () const
 {
   return this->request_service_context ().service_info ();
 }
@@ -101,7 +101,7 @@ TAO_Operation_Details::reply_service_context (void)
 }
 
 ACE_INLINE const TAO_Service_Context &
-TAO_Operation_Details::reply_service_context (void) const
+TAO_Operation_Details::reply_service_context () const
 {
   return this->reply_service_info_;
 }
@@ -113,7 +113,7 @@ TAO_Operation_Details::reply_service_info (void)
 }
 
 ACE_INLINE const IOP::ServiceContextList &
-TAO_Operation_Details::reply_service_info (void) const
+TAO_Operation_Details::reply_service_info () const
 {
   return this->reply_service_context ().service_info ();
 }
@@ -136,7 +136,7 @@ TAO_Operation_Details::request_id (CORBA::ULong id)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Operation_Details::request_id (void) const
+TAO_Operation_Details::request_id () const
 {
   return this->request_id_;
 }
@@ -148,25 +148,25 @@ TAO_Operation_Details::response_flags (CORBA::Octet flags)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Operation_Details::ex_count (void) const
+TAO_Operation_Details::ex_count () const
 {
   return this->ex_count_;
 }
 
 ACE_INLINE TAO::Exception_Data const *
-TAO_Operation_Details::ex_data (void) const
+TAO_Operation_Details::ex_data () const
 {
   return this->ex_data_;
 }
 
 ACE_INLINE CORBA::Octet
-TAO_Operation_Details::response_flags (void) const
+TAO_Operation_Details::response_flags () const
 {
   return this->response_flags_;
 }
 
 ACE_INLINE TAO_Target_Specification::TAO_Target_Address
-TAO_Operation_Details::addressing_mode (void) const
+TAO_Operation_Details::addressing_mode () const
 {
   return this->addressing_mode_;
 }
@@ -183,19 +183,19 @@ TAO_Operation_Details::addressing_mode (CORBA::Short mode)
 }
 
 ACE_INLINE TAO::Argument **
-TAO_Operation_Details::args (void) const
+TAO_Operation_Details::args () const
 {
   return this->args_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_Operation_Details::args_num (void) const
+TAO_Operation_Details::args_num () const
 {
   return this->num_args_;
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Operation_Details::use_stub_args (void) const
+TAO_Operation_Details::use_stub_args () const
 {
   return this->use_stub_args_;
 }
@@ -214,7 +214,7 @@ TAO_Operation_Details::ft_expiration_time (TimeBase::TimeT time)
 }
 
 ACE_INLINE TimeBase::TimeT
-TAO_Operation_Details::ft_expiration_time (void) const
+TAO_Operation_Details::ft_expiration_time () const
 {
   return this->ft_expiration_time_;
 }
@@ -226,14 +226,14 @@ TAO_Operation_Details::ft_retention_id (CORBA::Long request_id)
 }
 
 ACE_INLINE CORBA::Long
-TAO_Operation_Details::ft_retention_id (void) const
+TAO_Operation_Details::ft_retention_id () const
 {
   return this->ft_retention_id_;
 }
 #endif /*TAO_HAS_INTERCEPTORS == 1*/
 
 ACE_INLINE TAO::Collocated_Arguments_Converter *
-TAO_Operation_Details::cac (void) const
+TAO_Operation_Details::cac () const
 {
   return this->cac_;
 }
@@ -245,7 +245,7 @@ TAO_Operation_Details::cac (TAO::Collocated_Arguments_Converter *cac)
 }
 
 ACE_INLINE TAO_Reply_Dispatcher *
-TAO_Operation_Details::reply_dispatcher (void) const
+TAO_Operation_Details::reply_dispatcher () const
 {
   return this->reply_dispatcher_;
 }

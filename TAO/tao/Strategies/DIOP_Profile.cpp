@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_DIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_DIOP_Profile::object_key_delimiter (void) const
+TAO_DIOP_Profile::object_key_delimiter () const
 {
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
@@ -348,7 +348,7 @@ TAO_DIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_DIOP_Profile::endpoint_count (void) const
+TAO_DIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -363,7 +363,7 @@ TAO_DIOP_Profile::add_endpoint (TAO_DIOP_Endpoint *endp)
 }
 
 char *
-TAO_DIOP_Profile::to_string (void) const
+TAO_DIOP_Profile::to_string () const
 {
   // corbaloc:diop:1.2@host:port,diop:1.2@host:port,.../key
 
