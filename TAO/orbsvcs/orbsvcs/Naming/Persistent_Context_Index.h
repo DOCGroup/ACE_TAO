@@ -127,13 +127,12 @@ public:
   CosNaming::NamingContext_ptr root_context (void);
 
 private:
-
   /// Helper for the <init> method.  Iterates over <index_>, and
   /// creates a servant for each entry.
-  int recreate_all (void);
+  int recreate_all ();
 
   /// Helper for the <open> method.
-  int create_index (void);
+  int create_index ();
 
   /// Helper for <create_index> method: places hash table into an
   /// allocated space.
