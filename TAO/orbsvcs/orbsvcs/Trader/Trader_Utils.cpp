@@ -1,8 +1,6 @@
 #include "orbsvcs/Trader/Trader_Utils.h"
 #include "ace/OS_NS_string.h"
 
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
@@ -1379,22 +1377,6 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
             throw CosTrading::IllegalPropertyName (pname);
         }
     }
-}
-
-TAO_Property_Filter::
-TAO_Property_Filter (const TAO_Property_Filter& prop_filter)
-  : props_ (prop_filter.props_),
-    policy_ (prop_filter.policy_)
-{
-}
-
-TAO_Property_Filter&
-TAO_Property_Filter::operator= (const TAO_Property_Filter& other)
-{
-  this->props_ = other.props_;
-  this->policy_ = other.policy_;
-
-  return *this;
 }
 
 void
