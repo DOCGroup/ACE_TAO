@@ -263,7 +263,6 @@ protected:
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
