@@ -625,7 +625,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -665,7 +665,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -743,7 +743,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -783,7 +783,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -859,7 +859,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -898,7 +898,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1051,7 +1051,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1083,7 +1083,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1404,7 +1404,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1443,7 +1443,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1525,7 +1525,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1565,7 +1565,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1642,7 +1642,7 @@ ACE::send_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   ssize_t n;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1681,7 +1681,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }
@@ -1841,7 +1841,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == 0 ? temp : *bt;
   bytes_transferred = 0;
   ssize_t result = 0;
-  int error = 0;
+  bool error = false;
 
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
@@ -1879,7 +1879,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
           // Wait in select() timed out or other data transfer or
           // select() failures.
-          error = 1;
+          error = true;
           result = n;
           break;
         }

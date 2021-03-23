@@ -251,18 +251,18 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler (SVC_HANDLER *s
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::activate_svc_handler");
   // No errors initially
-  int error = 0;
+  bool error = false;
 
   // See if we should enable non-blocking I/O on the <svc_handler>'s
   // peer.
   if (ACE_BIT_ENABLED (this->flags_, ACE_NONBLOCK) != 0)
     {
       if (svc_handler->peer ().enable (ACE_NONBLOCK) == -1)
-        error = 1;
+        error = true;
     }
   // Otherwise, make sure it's disabled by default.
   else if (svc_handler->peer ().disable (ACE_NONBLOCK) == -1)
-    error = 1;
+    error = true;
 
   // We are connected now, so try to open things up.
   if (error || svc_handler->open ((void *) this) == -1)
