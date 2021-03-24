@@ -239,12 +239,12 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
   ACE_TRACE ("ACE_Asynch_Acceptor<>::handle_accept");
 
   // Variable for error tracking
-  int error = 0;
+  bool error = false;
 
   // If the asynchronous accept fails.
   if (!result.success () || result.accept_handle () == ACE_INVALID_HANDLE)
     {
-      error = 1;
+      error = true;
     }
 
 #if defined (ACE_WIN32)
@@ -260,7 +260,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
                           (char *) &this->listen_handle_,
                           sizeof (this->listen_handle_)) == -1)
     {
-      error = 1;
+      error = true;
     }
 #endif /* ACE_WIN32 */
 
@@ -279,7 +279,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       this->validate_new_connection_ &&
       (this->validate_connection (result, remote_address, local_address) == -1))
     {
-      error = 1;
+      error = true;
     }
 
   HANDLER *new_handler = 0;
@@ -289,7 +289,7 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
       new_handler = this->make_handler ();
       if (new_handler == 0)
         {
-          error = 1;
+          error = true;
         }
     }
 
