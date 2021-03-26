@@ -9,16 +9,13 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Initialize the bitmask to all 0s and reset the associated fields.
-
 ACE_INLINE void
 ACE_Handle_Set::reset ()
 {
   ACE_TRACE ("ACE_Handle_Set::reset");
-  this->max_handle_ =
-    ACE_INVALID_HANDLE;
+  this->max_handle_ = ACE_INVALID_HANDLE;
 #if defined (ACE_HAS_BIG_FD_SET)
-  this->min_handle_ =
-    NUM_WORDS * WORDSIZE;
+  this->min_handle_ = NUM_WORDS * WORDSIZE;
 #endif /* ACE_HAS_BIG_FD_SET */
   this->size_ = 0;
   // #if !defined (ACE_HAS_BIG_FD_SET)      Why is this here?  -Steve Huston
@@ -34,19 +31,35 @@ ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 
   if (rhs.size_ > 0)
     {
-      this->size_ =
-        rhs.size_;
-      this->max_handle_ =
-        rhs.max_handle_;
-      this->min_handle_ =
-        rhs.min_handle_;
-      this->mask_ =
-        rhs.mask_;
+      this->size_ = rhs.size_;
+      this->max_handle_ = rhs.max_handle_;
+      this->min_handle_ = rhs.min_handle_;
+      this->mask_ = rhs.mask_;
     }
   else
-    this->reset ();
+    {
+      this->reset ();
+    }
 
   return *this;
+}
+
+ACE_INLINE
+ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &rhs)
+{
+  ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
+
+  if (rhs.size_ > 0)
+    {
+      this->size_ = rhs.size_;
+      this->max_handle_ = rhs.max_handle_;
+      this->min_handle_ = rhs.min_handle_;
+      this->mask_ = rhs.mask_;
+    }
+  else
+    {
+      this->reset ();
+    }
 }
 #endif /* ACE_HAS_BIG_FD_SET */
 
@@ -143,8 +156,7 @@ ACE_Handle_Set::num_set () const
 #endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 }
 
-// Returns a pointer to the underlying fd_set.
-
+/// Returns a pointer to the underlying fd_set.
 ACE_INLINE
 ACE_Handle_Set::operator fd_set *()
 {
@@ -156,8 +168,7 @@ ACE_Handle_Set::operator fd_set *()
     return (fd_set *) 0;
 }
 
-// Returns a pointer to the underlying fd_set.
-
+/// Returns a pointer to the underlying fd_set.
 ACE_INLINE fd_set *
 ACE_Handle_Set::fdset ()
 {
@@ -167,11 +178,6 @@ ACE_Handle_Set::fdset ()
     return (fd_set *) &this->mask_;
   else
     return (fd_set *) 0;
-}
-
-ACE_INLINE
-ACE_Handle_Set_Iterator::~ACE_Handle_Set_Iterator ()
-{
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
