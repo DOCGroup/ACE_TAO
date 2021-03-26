@@ -17,9 +17,9 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ACEXML/common/XML_Types.h"
 #include "ACEXML/common/SAXExceptions.h"
+#include <memory>
 
 /**
  * @class ACEXML_Element_Def_Builder
@@ -33,8 +33,7 @@
 class ACEXML_Export ACEXML_Element_Def_Builder
 {
 public:
-
-  typedef auto_ptr<ACEXML_Element_Def_Builder> VAR;
+  typedef std::unique_ptr<ACEXML_Element_Def_Builder> VAR;
 
   typedef enum {
     EMPTY,
@@ -118,7 +117,7 @@ public:
   /**
    * Dump the content of the attribute definition.
    */
-  virtual void dump (void) = 0;
+  virtual void dump () = 0;
 };
 
 

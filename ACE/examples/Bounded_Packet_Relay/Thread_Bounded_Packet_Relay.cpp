@@ -375,7 +375,7 @@ User_Input_Task::end_transmission (void *)
             ACE_DEBUG ((LM_DEBUG,
                         "\nEnd transmission: "
                         "no transmission in progress\n"));
-            /* Fall through to next case */
+            /* Fallthrough */
           case 0:
             // Cancel any remaining timers.
             this->clear_all_timers ();
@@ -524,7 +524,7 @@ Send_Handler::handle_timeout (const ACE_Time_Value &,
       case 0:
         // Decrement count of packets to relay.
         --send_count_;
-        /* Fall through to next case. */
+        /* Fallthrough */
       case 1:
         if (send_count_ > 0)
           {
