@@ -5,7 +5,6 @@
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/TP_Reactor.h"
 #include "ace/Thread_Manager.h"
@@ -13,11 +12,12 @@
 #if defined (ACE_WIN32) && (!defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
                             (ACE_HAS_STANDARD_CPP_LIBRARY == 0) || \
                             defined (ACE_USES_OLD_IOSTREAMS))
-#  include <stdio.h>
+# include <stdio.h>
 #else
-#  include <string>
+# include <string>
 #endif
 
+#include <memory>
 #include "Reactor_Logging_Server_T.h"
 #include "Logging_Acceptor_Ex.h"
 
@@ -95,7 +95,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   const size_t N_THREADS = 4;
   ACE_TP_Reactor tp_reactor;
   ACE_Reactor reactor (&tp_reactor);
-  auto_ptr<ACE_Reactor> delete_instance
+  std::unique_ptr<ACE_Reactor> delete_instance
     (ACE_Reactor::instance (&reactor));
 
   Server_Logging_Daemon *server;
