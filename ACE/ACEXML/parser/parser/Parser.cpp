@@ -181,6 +181,7 @@ ACEXML_Parser::parse (ACEXML_InputSource *input)
             break;
           case 0:
             this->fatal_error (ACE_TEXT ("Unexpected end-of-file"));
+            break;
           default:                // Root element begins
             prolog_done = 1;
             break;
@@ -541,6 +542,7 @@ ACEXML_Parser::parse_includesect (void)
         case 0: // [VC: Proper Conditional Section/PE Nesting]
           this->fatal_error (ACE_TEXT ("Invalid Conditional Section/PE ")
                              ACE_TEXT ("Nesting "));
+          break;
         case ']':
           if (this->peek() == ']')
             {
@@ -551,6 +553,7 @@ ACEXML_Parser::parse_includesect (void)
                   return 0;
                 }
             }
+          // Fallthrough
         default:
           this->fatal_error (ACE_TEXT ("Invalid includeSect"));
       }
@@ -596,6 +599,7 @@ ACEXML_Parser::parse_markup_decl (void)
         break;
       case 0: //  [VC: Proper Declaration/PE Nesting]
         this->fatal_error (ACE_TEXT ("Unexpected end-of-file"));
+        break;
       default:
         this->fatal_error (ACE_TEXT ("Invalid markupDecl"));
     }
@@ -1368,6 +1372,7 @@ ACEXML_Parser::parse_tokenized_type (void)
         // Admittedly, this error message is not precise enough
         this->fatal_error(ACE_TEXT ("Expecting keyword `ID', `IDREF', or")
                           ACE_TEXT ("`IDREFS'"));
+        break;
       case 'E':               // ENTITY or ENTITIES
         if (this->parse_token (ACE_TEXT ("NTIT")) == 0)
           {
@@ -1393,6 +1398,7 @@ ACEXML_Parser::parse_tokenized_type (void)
         // Admittedly, this error message is not precise enough
         this->fatal_error(ACE_TEXT ("Expecting keyword `ENTITY', or")
                           ACE_TEXT ("`ENTITIES'"));
+        break;
       case 'M':
         if (this->parse_token (ACE_TEXT ("TOKEN")) == 0)
           {
