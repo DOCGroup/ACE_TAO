@@ -57,7 +57,6 @@
 
 #include "Proactor_Test.h"
 
-
 // Proactor Type (UNIX only, Win32 ignored)
 using ProactorType = enum { DEFAULT = 0, AIOCB, SIG, SUN, CB };
 static ProactorType proactor_type = DEFAULT;
@@ -104,12 +103,11 @@ static char complete_message[] =
 class LogLocker
 {
 public:
-
   LogLocker () { ACE_LOG_MSG->acquire (); }
   virtual ~LogLocker () { ACE_LOG_MSG->release (); }
 };
 
-
+#if defined (ACE_HAS_IPV6)
 
 // Function to remove signals from the signal mask.
 static int
@@ -144,7 +142,6 @@ disable_signal (int sigmin, int sigmax)
 
   return 0;
 }
-
 
 // *************************************************************
 //  MyTask is ACE_Task resposible for :
@@ -191,7 +188,6 @@ private:
   ACE_SYNCH_RECURSIVE_MUTEX lock_;
   ACE_Thread_Semaphore sem_;
   ACE_Proactor * proactor_;
-
 };
 
 int
@@ -357,7 +353,7 @@ MyTask::svc ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) MyTask finished\n")));
   return 0;
 }
-
+#endif /* ACE_HAS_IPV6 */
 
 // TestData collects and reports on test-related transfer and connection
 // statistics.
@@ -616,7 +612,6 @@ TestData::report ()
     ACE_ERROR ((LM_ERROR, ACE_TEXT ("It appears that this test didn't ")
                 ACE_TEXT ("really do anything. Something is very wrong.\n")));
 }
-
 
 class Acceptor : public ACE_Asynch_Acceptor<Server>
 {
