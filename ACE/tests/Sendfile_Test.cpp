@@ -287,10 +287,10 @@ spawn ()
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("fork failed"),
                       1));
-          /* NOTREACHED */
+          ACE_OS::abort ();
         case 0:
           client (&server_addr);
           ACE_OS::exit (0);
