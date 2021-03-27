@@ -690,8 +690,8 @@ public:
   /// Verify that the specified properties are correct.
   TAO_Property_Filter (const SPECIFIED_PROPS& desired_props);
 
-  TAO_Property_Filter (const TAO_Property_Filter& prop_filter) = default;
-  TAO_Property_Filter& operator= (const TAO_Property_Filter& prop_filter) = default;
+  TAO_Property_Filter (const TAO_Property_Filter&) = default;
+  TAO_Property_Filter& operator= (const TAO_Property_Filter&) = default;
 
   /// Copy the desired properties from the source offer to the
   /// destination offer.
