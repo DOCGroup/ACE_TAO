@@ -3,8 +3,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"   // abort
 #include "ace/OS_NS_sys_time.h" // gettimeofday
-
 #include "Acknowledge.h"
+#include <memory>
 
 namespace ACE_RMCast
 {
@@ -176,7 +176,7 @@ namespace ACE_RMCast
     //
     while (i != e)
     {
-      auto_ptr<NAK> nak (new NAK (addr));
+      std::unique_ptr<NAK> nak (new NAK (addr));
 
       // Inner loop that fills NAK profile with up to max_elem elements.
       //
@@ -350,7 +350,7 @@ namespace ACE_RMCast
   {
     // Prepare NRTM.
     //
-    auto_ptr<NRTM> nrtm (new NRTM ());
+    std::unique_ptr<NRTM> nrtm (new NRTM ());
 
     // Gather the information.
     //
