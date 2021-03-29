@@ -945,6 +945,7 @@ YY_RULE_SETUP
 //#line 122 "ETCL/ETCL.ll"
 ETCL_ECHO;
   YY_BREAK
+// Fallthrough
 case YY_STATE_EOF(INITIAL):
   yyterminate();
 
