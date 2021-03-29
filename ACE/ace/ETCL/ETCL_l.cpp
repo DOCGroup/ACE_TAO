@@ -552,7 +552,7 @@ YY_MALLOC_DECL
 /* This used to be an fputs(), but since the string might contain NUL's,
  * we now use fwrite().
  */
-#define ETCL_ECHO { size_t __dum_ret = fwrite( yytext, yyleng, 1, yyout ); (void) __dum_ret; }
+#define ETCL_ECHO { size_t __dum_ret = fwrite( yytext, yyleng, 1, yyout ); (void) __dum_ret; } break;
 #endif
  //FUZZ: enable check_for_lack_ACE_OS
 
