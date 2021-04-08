@@ -200,6 +200,7 @@ VSHDIR = <%targetoutdir%>.shobj/
 include $(ACE_ROOT)/include/makeinclude/wrapper_macros.GNU
 
 <%marker(extension)%>
+<%marker(deferred-extension)%>
 
 <%if(version)%>
 GNUACE_PROJECT_VERSION = <%version%>
