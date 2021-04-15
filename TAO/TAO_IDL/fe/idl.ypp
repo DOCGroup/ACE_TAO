@@ -4133,8 +4133,14 @@ wstring_type_spec
           /*
            * Create a node representing a string.
            */
-          if ($4 == 0
-              || $4->coerce (AST_Expression::EV_ulong) == 0)
+          AST_Expression::AST_ExprValue *ev = 0;
+
+          if ($4 != 0)
+            {
+              ev = $4->coerce (AST_Expression::EV_ulong);
+            }
+
+          if (0 == $4 || 0 == ev)
             {
               idl_global->err ()->coercion_error ($4,
                                                   AST_Expression::EV_ulong);
@@ -4155,6 +4161,9 @@ wstring_type_spec
 
               $$ = string;
             }
+
+          delete ev;
+          ev = 0;
         }
         | wstring_head
         {
