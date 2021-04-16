@@ -149,7 +149,7 @@ public:
 
   /// Set the message data of the record. If @a data is longer than the
   /// current msg_data_ buffer, a new msg_data_ buffer is allocated to
-  /// fit. If such a reallocation faisl, this method returns -1, else 0.
+  /// fit. If such a reallocation fails, this method returns -1, else 0.
   int msg_data (const ACE_TCHAR *data);
 
   /// Get the size of the message data of the Log_Record, including
@@ -170,7 +170,7 @@ private:
    * Total length of the logging record in bytes.  This field *must*
    * come first in order for various IPC framing mechanisms to work
    * correctly.  In addition, the field must be an ACE_INT32 in order
-   * to be passed portably across platforms.
+   * to be passed portable across platforms.
    */
   ACE_INT32 length_;
 
