@@ -203,6 +203,6 @@ typedef union YYSTYPE YYSTYPE;
 
 extern YYSTYPE tao_yylval;
 
-int tao_yyparse ();
+int tao_yyparse (void);
 
 #endif /* !YY_TAO_YY_FE_IDL_TAB_HPP_INCLUDED  */
