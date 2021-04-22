@@ -6,7 +6,6 @@ MACOS_MAJOR_VERSION = $(word 1,${MACOS_REL_WORDS})
 MACOS_MINOR_VERSION = $(word 2,${MACOS_REL_WORDS})
 MACOS_BUILD_VERSION = $(word 3,${MACOS_REL_WORDS})
 
-
 MACOS_CODENAME_VER_10_2   :=
 MACOS_CODENAME_VER_10_3   := panther
 MACOS_CODENAME_VER_10_4   := tiger
@@ -22,6 +21,8 @@ MACOS_CODENAME_VER_10_13  := highsierra
 MACOS_CODENAME_VER_10_14  := mojave
 MACOS_CODENAME_VER_10_latest := mojave
 MACOS_CODENAME_VER_11_0   := bigsur
+MACOS_CODENAME_VER_11_1   := bigsur
+MACOS_CODENAME_VER_11_2   := bigsur
 MACOS_CODENAME_VER_11_latest := bigsur
 
 MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSION))
@@ -36,7 +37,7 @@ ifeq ($(MACOS_MAJOR_VERSION),10)
     $(error Unsupported MacOS version $(MACOS_RELEASE_VERSION))
   endif
 else ifeq ($(MACOS_MAJOR_VERSION),11)
-  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 0; echo $$?),0)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 2; echo $$?),0)
     ## if the detected version is greater than the latest know version,
     ## just use the latest known version
     MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
