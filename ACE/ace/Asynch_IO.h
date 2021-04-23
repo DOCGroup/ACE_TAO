@@ -1657,8 +1657,7 @@ public:
   private:
     ACE_Handler *handler_;
   };
-  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX>
-    Proxy_Ptr;
+  typedef ACE_Refcounted_Auto_Ptr<Proxy, ACE_SYNCH_MUTEX> Proxy_Ptr;
 
   Proxy_Ptr &proxy (void);
 

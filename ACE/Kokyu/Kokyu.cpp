@@ -30,11 +30,6 @@ void Dispatcher::implementation (Dispatcher_Impl* impl)
 {
   std::unique_ptr<Dispatcher_Impl> tmp_impl (impl);
   dispatcher_impl_ = std::move(tmp_impl);
-
-  //I couldn't use reset because MSVC++ auto_ptr does not have reset method.
-  //So in configurations where the auto_ptr maps to the std::auto_ptr instead
-  //of ACE auto_ptr, this would be a problem.
-  //dispatcher_impl_.reset (impl);
 }
 
 Dispatcher*

@@ -129,7 +129,6 @@ private:
   ACE_OFF_T data_offset_;
 
   ACEXML_Char* encoding_;
-
 };
 
 

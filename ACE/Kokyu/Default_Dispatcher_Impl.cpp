@@ -31,7 +31,7 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
 
   this->ntasks_ = size;
 
-  Dispatcher_Task_Auto_Ptr * tasks_array=0;
+  Dispatcher_Task_Auto_Ptr * tasks_array = 0;
   ACE_NEW_RETURN (tasks_array, Dispatcher_Task_Auto_Ptr[ntasks_], -1);
 
   //ACE_DEBUG ((LM_DEBUG, "after new on task array\n" ));
@@ -55,10 +55,6 @@ Default_Dispatcher_Impl::init_i (const Dispatcher_Attributes& attrs)
                       -1);
       std::unique_ptr<Dispatcher_Task> tmp_task_auto_ptr (task);
       tasks_[i++] = std::move(tmp_task_auto_ptr);
-      //I couldn't use reset because MSVC6 auto_ptr does not have reset method.
-      //So in configurations where the auto_ptr maps to the std::auto_ptr instead
-      //of ACE auto_ptr, this would be a problem.
-      //tasks_[i++].reset (task);
     }
 
   this->thr_creation_flags_ = attrs.thread_creation_flags ();

@@ -1707,7 +1707,6 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 }
 
 // Wait for all the threads to exit.
-
 int
 ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
                           bool abandon_detached_threads,
