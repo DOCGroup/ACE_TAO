@@ -440,7 +440,7 @@ TAO_Stub_Auto_Ptr::release (void)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::release");
   TAO_Stub *old = this->p_;
-  this->p_ = 0;
+  this->p_ = nullptr;
   return old;
 }
 
@@ -448,7 +448,7 @@ ACE_INLINE void
 TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
-  if (this->get () != p && this->get () != 0)
+  if (this->get () != p && this->get () != nullptr)
     this->get ()->_decr_refcnt ();
   this->p_ = p;
 }
@@ -482,12 +482,11 @@ ACE_INLINE
 TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
-  if (this->get() != 0)
+  if (this->get() != nullptr)
     this->get ()->_decr_refcnt ();
 }
 
 // Accessor methods to the underlying Stub Object
-
 ACE_INLINE TAO_Stub &
 TAO_Stub_Auto_Ptr::operator *() const
 {
@@ -495,6 +494,5 @@ TAO_Stub_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

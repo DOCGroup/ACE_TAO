@@ -4,7 +4,6 @@
 
 // This only works on Win32 platforms and on Unix platforms with aio
 // calls.
-
 #include "ace/Auto_Ptr.h"
 #include "ace/Proactor_Impl.h"
 #include "ace/Object_Manager.h"
@@ -13,7 +12,6 @@
 #if !defined (ACE_HAS_WINCE) && !defined (ACE_LACKS_ACE_SVCCONF)
 #    include "ace/Service_Config.h"
 #endif /* !ACE_HAS_WINCE && !ACE_LACKS_ACE_SVCCONF */
-
 
 #include "ace/Task_T.h"
 #include "ace/Log_Category.h"

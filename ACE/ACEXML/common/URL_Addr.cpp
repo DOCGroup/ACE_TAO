@@ -1,7 +1,5 @@
 #include "ACEXML/common/URL_Addr.h"
 
-
-
 #if !defined (__ACEXML_INLINE__)
 #include "ACEXML/common/URL_Addr.inl"
 #endif /* __ACEXML_INLINE__ */

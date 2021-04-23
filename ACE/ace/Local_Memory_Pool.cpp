@@ -1,10 +1,7 @@
-// Local_Memory_Pool.cpp
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/Log_Category.h"
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
