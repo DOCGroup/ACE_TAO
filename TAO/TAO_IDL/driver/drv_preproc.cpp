@@ -277,8 +277,6 @@ DRV_cpp_init (void)
   DRV_cpp_putarg (version_option);
   DRV_cpp_putarg ("-I.");
 
-  DRV_cpp_putarg ("-D__TAO_IDL_DCPS_DATA_SEQUENCE_TYPE_SUPPORTS_CXX_KEYWORDS");
-
   const char *platform_cpp_args =
     FE_get_cpp_args_from_env ();
 
