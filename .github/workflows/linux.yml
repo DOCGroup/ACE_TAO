@@ -42,6 +42,11 @@ jobs:
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-18.04
+          - CC: gcc-11
+            CXX: g++-11
+            PackageDeps: g++-11
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-18.04
           - CC: clang-5.0
             CXX: clang++-5.0
             PackageDeps: clang-5.0
