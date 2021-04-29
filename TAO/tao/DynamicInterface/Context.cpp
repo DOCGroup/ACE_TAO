@@ -10,15 +10,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Context::Context ()
-  : refcount_ (1)
-{
-}
-
-CORBA::Context::~Context ()
-{
-}
-
 CORBA::ULong
 CORBA::Context::_incr_refcount ()
 {

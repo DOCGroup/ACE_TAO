@@ -53,7 +53,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ExceptionList (void);
+    ExceptionList ();
 
     /// Constructor - initialize given a length and an array of
     /// TypeCodes.

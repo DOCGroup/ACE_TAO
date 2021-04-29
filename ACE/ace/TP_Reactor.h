@@ -115,9 +115,7 @@ public:
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
 
 private:
-  // Disallow default construction.
-  ACE_TP_Token_Guard (void);
-
+  ACE_TP_Token_Guard () = delete;
   ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
   ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
   ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;

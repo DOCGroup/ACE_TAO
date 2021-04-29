@@ -69,9 +69,8 @@ namespace CORBA
   class TAO_DynamicInterface_Export Context
   {
   public:
-    Context (void);
-
-    ~Context (void);
+    Context () = default;
+    ~Context () = default;
 
     // = Pseudo-object methods
     static Context *_duplicate (Context*);
@@ -109,7 +108,7 @@ namespace CORBA
 
   private:
     /// Reference counter.
-    std::atomic<uint32_t> refcount_;
+    std::atomic<uint32_t> refcount_ { 1 };
   };
 
   /**
@@ -123,7 +122,7 @@ namespace CORBA
   {
   public:
     /// Constructor.
-    ContextList (void);
+    ContextList () = default;
 
     /// Constructor - initialize given a length and an array of
     /// strings.
@@ -169,9 +168,8 @@ namespace CORBA
     typedef CORBA::ContextList_out _out_type;
 
   private:
-    // Not allowed.
-    ContextList (const ContextList &);
-    ContextList &operator= (const ContextList &);
+    ContextList (const ContextList &) = delete;
+    ContextList &operator= (const ContextList &) = delete;
 
     /// Reference counter.
     std::atomic<uint32_t> refcount_;

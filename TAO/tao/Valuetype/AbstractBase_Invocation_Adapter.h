@@ -55,9 +55,7 @@ namespace TAO
         bool has_in_args = false);
 
   private:
-    // Don't allow default initializations
-    AbstractBase_Invocation_Adapter (void);
-
+    AbstractBase_Invocation_Adapter () = delete;
     AbstractBase_Invocation_Adapter (const AbstractBase_Invocation_Adapter &) = delete;
     AbstractBase_Invocation_Adapter & operator= (const AbstractBase_Invocation_Adapter &) = delete;
     AbstractBase_Invocation_Adapter (AbstractBase_Invocation_Adapter &&) = delete;

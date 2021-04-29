@@ -123,9 +123,8 @@ be_visitor_interface_tie_sh::visit_interface (be_interface *node)
       << "T *ptr_;" << be_nl
       << "PortableServer::POA_var poa_;" << be_nl
       << "::CORBA::Boolean rel_;" << be_nl_2
-      << "// copy and assignment are not allowed" << be_nl
-      << tiename << " (const " << tiename << " &);" << be_nl
-      << "void operator= (const " << tiename << " &);" << be_uidt_nl
+      << tiename << " (const " << tiename << " &) = delete;" << be_nl
+      << "void operator= (const " << tiename << " &) = delete;" << be_uidt_nl
       << "};";
 
   return 0;

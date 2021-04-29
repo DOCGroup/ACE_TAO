@@ -16,11 +16,6 @@ TAO_DII_Deferred_Reply_Dispatcher::TAO_DII_Deferred_Reply_Dispatcher (
 {
 }
 
-// Destructor.
-TAO_DII_Deferred_Reply_Dispatcher::~TAO_DII_Deferred_Reply_Dispatcher (void)
-{
-}
-
 // Dispatch the reply.
 int
 TAO_DII_Deferred_Reply_Dispatcher::dispatch_reply (
