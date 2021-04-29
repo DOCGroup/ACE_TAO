@@ -90,8 +90,6 @@ class TAO_AV_UDP_MCast_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  /// Ctor
-  /// Dtor
   TAO_AV_UDP_MCast_Flow_Handler (void);
   virtual ~TAO_AV_UDP_MCast_Flow_Handler (void);
   virtual ACE_HANDLE get_handle () const;

@@ -1088,17 +1088,17 @@ class TAO_AV_Export TAO_FlowConsumer :
 {
 public:
   /// default constructor.
-  TAO_FlowConsumer (void);
+  TAO_FlowConsumer ();
 
   TAO_FlowConsumer (const char *flowname,
                     AVStreams::protocolSpec protocols,
                     const char *format);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (void);
+  virtual void stop ();
 
   /// start this flow, to be overridden by the application.
-  virtual void start (void);
+  virtual void start ();
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
@@ -1119,30 +1119,22 @@ public:
 class TAO_AV_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl
 {
-
 public:
   /// default constructor
-  TAO_MediaControl (void);
+  TAO_MediaControl ();
 
   virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
-                                                  AVStreams::PositionKey a_key)
-    =0;
+                                                  AVStreams::PositionKey a_key) = 0;
 
-  virtual void set_media_position (const AVStreams::Position & a_position)
-    =0;
+  virtual void set_media_position (const AVStreams::Position & a_position) = 0;
 
-  virtual void start (const AVStreams::Position & a_position)
-    =0;
+  virtual void start (const AVStreams::Position & a_position) = 0;
 
-  virtual void pause (const AVStreams::Position & a_position)
-    =0;
+  virtual void pause (const AVStreams::Position & a_position) = 0;
 
-  virtual void resume (const AVStreams::Position & a_position)
-    =0;
+  virtual void resume (const AVStreams::Position & a_position) = 0;
 
-  virtual void stop (const AVStreams::Position & a_position)
-    =0;
-
+  virtual void stop (const AVStreams::Position & a_position) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

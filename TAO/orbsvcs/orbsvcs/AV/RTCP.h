@@ -42,7 +42,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_AV_RTCP_H
 #define TAO_AV_RTCP_H
 #include /**/ "ace/pre.h"
@@ -107,8 +106,6 @@ public:
                                int initial);
 };
 
-
-
 /**
  * @class TAO_AV_RTCP_Flow_Factory
  * @brief
@@ -128,7 +125,6 @@ public:
 };
 
 class TAO_AV_Callback;
-
 
 /**
  * @class TAO_AV_RTCP_Callback
@@ -189,7 +185,6 @@ protected:
 
 class RTP_Packet;
 
-
 /**
  * @class TAO_AV_RTCP_Object
  * @brief TAO_AV_Protocol_Object for RTCP protocol
@@ -237,7 +232,6 @@ public:
   ACE_UINT32 ssrc (void) { return this->ssrc_; }
 
   void ts_offset (ACE_UINT32 ts_offset);
-
 
 private:
   TAO_AV_Callback *client_cb_;

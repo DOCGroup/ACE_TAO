@@ -66,7 +66,6 @@ TAO_AV_UDP_Flow_Handler::set_remote_address (ACE_Addr *address)
   return transport->set_remote_address (*inet_addr);
 }
 
-
 ACE_HANDLE
 TAO_AV_UDP_Flow_Handler::get_handle () const
 {

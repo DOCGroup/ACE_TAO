@@ -25,15 +25,14 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy
 : public TAO_AV_Endpoint_Strategy
 {
-
 protected:
   // Constructor
 
   /// Constructor
-  TAO_AV_Endpoint_Reactive_Strategy (void);
+  TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy ();
 
   /// creates and activates the streamendpoint, vdev, and mediacontrol
   virtual int activate (void);
@@ -86,9 +85,7 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy_A
   : public TAO_AV_Endpoint_Reactive_Strategy<T_StreamEndpoint, T_VDev , T_MediaCtrl>
 {
-
 public:
-
   TAO_AV_Endpoint_Reactive_Strategy_A (void);
 
   /// Constructor
@@ -104,7 +101,6 @@ public:
   /// Called by the MMDevice, when it needs to create an A type endpoint
   virtual int create_A (AVStreams::StreamEndPoint_A_ptr &stream_endpoint,
                         AVStreams::VDev_ptr &vdev);
-
 };
 
 // ----------------------------------------------------------------------
@@ -116,20 +112,18 @@ template <class T_StreamEndpoint, class T_Vdev , class T_MediaCtrl>
 class TAO_AV_Endpoint_Reactive_Strategy_B
   : public TAO_AV_Endpoint_Reactive_Strategy <T_StreamEndpoint, T_Vdev, T_MediaCtrl>
 {
-
 public:
-
   /// Constructor
-  TAO_AV_Endpoint_Reactive_Strategy_B (void);
+  TAO_AV_Endpoint_Reactive_Strategy_B ();
 
   /// Destructor.
-  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B (void);
+  virtual ~TAO_AV_Endpoint_Reactive_Strategy_B ();
 
   int init (CORBA::ORB_ptr orb, PortableServer::POA_ptr poa);
 
   /// Overrides the base class stream_endpoint activator, to activate
   /// a "B" type endpoint
-  virtual int activate_stream_endpoint (void);
+  virtual int activate_stream_endpoint ();
 
   /// Called by the MMDevice, when it needs to create a B type endpoint
   virtual int create_B (AVStreams::StreamEndPoint_B_ptr &stream_endpoint,
@@ -147,7 +141,6 @@ public:
 template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process
 {
-
 public:
   /// Constructor
   TAO_AV_Child_Process ();
@@ -246,7 +239,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process_A
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
-
 public:
   /// Constructor.
   TAO_AV_Child_Process_A (void);
@@ -265,7 +257,6 @@ template <class T_StreamEndpoint, class T_VDev , class T_MediaCtrl>
 class TAO_AV_Child_Process_B
   : public TAO_AV_Child_Process <T_StreamEndpoint, T_VDev, T_MediaCtrl>
 {
-
 public:
   /// Constructor.
   TAO_AV_Child_Process_B (void);

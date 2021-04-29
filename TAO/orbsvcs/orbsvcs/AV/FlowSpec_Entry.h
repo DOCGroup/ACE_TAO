@@ -18,7 +18,6 @@
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -32,16 +31,16 @@ public:
   TAO_Tokenizer (const char *string,char delimiter);
 
   /// destructor.
-  ~TAO_Tokenizer (void);
+  ~TAO_Tokenizer ();
 
   /// parses the string and tokenizes it.
   int parse (const char *string,char delimiter);
 
   /// Returns the next token.
-  char *token (void);
+  char *token ();
 
   /// Number of tokens.
-  int num_tokens (void);
+  int num_tokens ();
 
   const char *operator [] (size_t index) const;
 
@@ -65,7 +64,6 @@ class TAO_AV_Protocol_Object;
 class TAO_AV_Export TAO_FlowSpec_Entry
 {
 public:
-
   enum Direction
   {
     TAO_AV_INVALID   = -1,
@@ -189,7 +187,6 @@ public:
   int is_multicast (void);
 
 protected:
-
   /// parses the flow protocol string with tokens separated by :
   int parse_flow_protocol_string (const char *flow_options_string);
 
@@ -255,7 +252,6 @@ protected:
   TAO_AV_Protocol_Object *control_protocol_object_;
   Role role_;
 };
-
 
 /**
  * @class TAO_Forward_FlowSpec_Entry
