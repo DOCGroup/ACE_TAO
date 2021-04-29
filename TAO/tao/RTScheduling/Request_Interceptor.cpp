@@ -232,7 +232,7 @@ Client_Interceptor::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri
 }
 
 char*
-Client_Interceptor::name (
+Client_Interceptor::name ()
 {
   return CORBA::string_dup ("RTSchdeuler_Client_Interceptor");
 }
