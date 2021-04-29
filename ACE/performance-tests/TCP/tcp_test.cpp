@@ -304,9 +304,9 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Stream endpoint_;
 
-  ACE_UNIMPLEMENTED_FUNC (Server (void))
-  ACE_UNIMPLEMENTED_FUNC (Server (const Server &))
-  ACE_UNIMPLEMENTED_FUNC (Server &operator= (const Server &))
+  Server (void) = delete;
+  Server (const Server &) = delete;
+  Server &operator= (const Server &) = delete;
 };
 
 Server::Server (const ACE_INET_Addr &addr)
