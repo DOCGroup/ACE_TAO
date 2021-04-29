@@ -93,11 +93,9 @@ namespace TAO
                             ARDB_Refcount_Functor> safe_rd_;
 
   private:
-    /// Don't allow default initializations
-    Asynch_Invocation_Adapter ();
-
-    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &);
-    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &);
+    Asynch_Invocation_Adapter () = delete;
+    Asynch_Invocation_Adapter (const Asynch_Invocation_Adapter &) = delete;
+    Asynch_Invocation_Adapter & operator= (const Asynch_Invocation_Adapter &) = delete;
 
   };
 } // End namespace TAO

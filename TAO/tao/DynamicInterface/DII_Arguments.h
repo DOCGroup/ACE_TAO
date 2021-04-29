@@ -57,7 +57,7 @@ namespace TAO
     CORBA::NamedValue_ptr x_;
 
     /// Byte order that the Request class will use
-    int byte_order_;
+    int byte_order_ {};
   };
 
   /**

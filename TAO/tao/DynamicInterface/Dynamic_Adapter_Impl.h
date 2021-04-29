@@ -39,8 +39,8 @@ class TAO_DynamicInterface_Export TAO_Dynamic_Adapter_Impl
   : public TAO_Dynamic_Adapter
 {
 public:
-  TAO_Dynamic_Adapter_Impl (void);
-  virtual ~TAO_Dynamic_Adapter_Impl (void);
+  TAO_Dynamic_Adapter_Impl ();
+  virtual ~TAO_Dynamic_Adapter_Impl ();
 
   // CORBA::Object::_create_request and CORBA::Object::_request.
 

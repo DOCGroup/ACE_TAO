@@ -37,10 +37,10 @@ typedef TAO_DII_Reply_Handler* TAO_DII_Reply_Handler_ptr;
 class TAO_DynamicInterface_Export TAO_DII_Reply_Handler_var
 {
 public:
-  TAO_DII_Reply_Handler_var (void);
+  TAO_DII_Reply_Handler_var ();
   TAO_DII_Reply_Handler_var (TAO_DII_Reply_Handler_ptr);
   TAO_DII_Reply_Handler_var (const TAO_DII_Reply_Handler_var &);
-  ~TAO_DII_Reply_Handler_var (void);
+  ~TAO_DII_Reply_Handler_var ();
 
   TAO_DII_Reply_Handler_var &operator= (TAO_DII_Reply_Handler_ptr);
   TAO_DII_Reply_Handler_var &operator= (const TAO_DII_Reply_Handler_var &);
@@ -50,9 +50,9 @@ public:
   operator TAO_DII_Reply_Handler_ptr &();
 
   TAO_DII_Reply_Handler_ptr in () const;
-  TAO_DII_Reply_Handler_ptr &inout (void);
-  TAO_DII_Reply_Handler_ptr &out (void);
-  TAO_DII_Reply_Handler_ptr _retn (void);
+  TAO_DII_Reply_Handler_ptr &inout ();
+  TAO_DII_Reply_Handler_ptr &out ();
+  TAO_DII_Reply_Handler_ptr _retn ();
   TAO_DII_Reply_Handler_ptr ptr () const;
 
 private:
@@ -71,8 +71,8 @@ class TAO_DynamicInterface_Export TAO_DII_Reply_Handler
   : public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_DII_Reply_Handler ();
-  virtual ~TAO_DII_Reply_Handler (void);
+  TAO_DII_Reply_Handler () = default;
+  virtual ~TAO_DII_Reply_Handler ();
 
   /// Callback method for asynchronous requests.
   virtual void handle_response (TAO_InputCDR &incoming) = 0;
