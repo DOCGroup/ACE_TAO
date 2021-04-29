@@ -103,10 +103,9 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
-  /// Unimplemented - prevents widening assignment.
   TAO_RTScheduler_Manager_ptr ptr_;
-  TAO_RTScheduler_Manager_var (const TAO_Base_var &rhs);
-  TAO_RTScheduler_Manager_var &operator= (const TAO_Base_var &rhs);
+  TAO_RTScheduler_Manager_var (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
 };
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Manager_out

@@ -53,7 +53,7 @@ public:
                          CORBA::Boolean supports_dp = 1);
 
   /// Clean up dynamic properties.
-  virtual ~TAO_Property_Evaluator (void);
+  virtual ~TAO_Property_Evaluator ();
 
   /// Returns 1 if the property at index @a index is dynamic. Returns a
   /// 0 when the index is out of bounds.

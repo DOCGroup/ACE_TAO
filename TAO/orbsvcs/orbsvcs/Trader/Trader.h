@@ -51,7 +51,6 @@ class TAO_Trader_Base;
 class TAO_Trading_Serv_Export TAO_Trader_Factory
 {
 public:
-
   typedef TAO_Trader_Base TAO_TRADER;
 
   /**
@@ -77,11 +76,9 @@ public:
   static TAO_TRADER* create_trader (int& argc, ACE_TCHAR** argv);
 
 protected:
-
   TAO_Trader_Factory (int& argc, ACE_TCHAR** argv);
 
 private:
-
   enum Conformance { TAO_TRADER_QUERY,
                      TAO_TRADER_SIMPLE,
                      TAO_TRADER_STANDALONE,
@@ -125,9 +122,9 @@ private:
 class TAO_Trading_Serv_Export TAO_Lockable
 {
 public:
-  virtual ~TAO_Lockable (void);
+  virtual ~TAO_Lockable ();
 
-  virtual ACE_Lock& lock (void) = 0;
+  virtual ACE_Lock& lock () = 0;
 };
 
 
@@ -162,7 +159,6 @@ public:
   CosTradingRepos::ServiceTypeRepository_ptr service_type_repos () const;
 
 private:
-
   /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
 
@@ -203,7 +199,6 @@ public:
   void  max_link_follow_policy (CosTrading::FollowOption);
 
 private:
-
   /// A reference to the trader (needed for obtaining the lock.)
   TAO_Lockable &locker_;
 
@@ -224,7 +219,7 @@ class TAO_Trading_Serv_Export TAO_Import_Attributes_i
 {
 public:
   TAO_Import_Attributes_i (TAO_Lockable &locker);
-  ~TAO_Import_Attributes_i (void);
+  ~TAO_Import_Attributes_i ();
 
   // = Accessor methods.
 
@@ -262,7 +257,6 @@ public:
   void max_follow_policy (CosTrading::FollowOption);
 
 private:
-
   TAO_Lockable &locker_;
 
   /// Upper bound of offers to be searched if <search_card>
@@ -319,7 +313,7 @@ class TAO_Trading_Serv_Export TAO_Trading_Components_i
 {
 public:
   TAO_Trading_Components_i (TAO_Lockable &locker);
-  ~TAO_Trading_Components_i (void);
+  ~TAO_Trading_Components_i ();
 
   /// Returns an object reference to the Lookup interface of the trader.
   /// Returns nil if the trader does not support Lookup interface.
@@ -357,7 +351,6 @@ public:
   void admin_if (CosTrading::Admin_ptr);
 
 private:
-
   TAO_Lockable &locker_;
 
   CosTrading::Lookup_var lookup_;
@@ -388,7 +381,6 @@ private:
 class TAO_Trading_Serv_Export TAO_Trader_Base : public TAO_Lockable
 {
 public:
-
   enum Trader_Components
   {
     LOOKUP = 0x001,
@@ -398,23 +390,23 @@ public:
     ADMIN = 0x010
   };
 
-  virtual ~TAO_Trader_Base (void);
+  virtual ~TAO_Trader_Base ();
 
   // = Accessors for objects that manage trader's configuration.
 
-  TAO_Trading_Components_i &trading_components (void);
+  TAO_Trading_Components_i &trading_components ();
 
   const TAO_Trading_Components_i &trading_components () const;
 
-  TAO_Import_Attributes_i &import_attributes (void);
+  TAO_Import_Attributes_i &import_attributes ();
 
   const TAO_Import_Attributes_i &import_attributes () const;
 
-  TAO_Support_Attributes_i &support_attributes (void);
+  TAO_Support_Attributes_i &support_attributes ();
 
   const TAO_Support_Attributes_i &support_attributes () const;
 
-  TAO_Link_Attributes_i &link_attributes (void);
+  TAO_Link_Attributes_i &link_attributes ();
 
   const TAO_Link_Attributes_i &link_attributes () const;
 
@@ -461,15 +453,12 @@ protected:
   TAO_Link_Attributes_i link_attributes_;
 
  protected:
-
   /// Implemented.
-  TAO_Trader_Base (void);
+  TAO_Trader_Base ();
 
  private:
-
-  /// Unimplemented.
-  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base);
-  TAO_Trader_Base& operator= (const TAO_Trader_Base&);
+  TAO_Trader_Base (const TAO_Trader_Base& TAO_Trader_Base) = delete;
+  TAO_Trader_Base& operator= (const TAO_Trader_Base&) = delete;
 };
 
 

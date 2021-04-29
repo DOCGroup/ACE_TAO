@@ -59,7 +59,7 @@ class TAO_Lookup :
 public:
   TAO_Lookup (TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader);
 
-  ~TAO_Lookup (void);
+  ~TAO_Lookup ();
 
   virtual void
     query (const char *type,
@@ -237,9 +237,8 @@ private:
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   const CosTrading::Admin::OctetSeq*& seq);
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Lookup (const TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   const unsigned int IDS_SAVED;
 
@@ -470,17 +469,14 @@ public:
   // END SPEC
 
  protected:
-
   void validate_properties (const char* type,
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
 
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Register (const TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
  private:
-
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 };
 
@@ -597,10 +593,8 @@ public:
                              CosTrading::OfferIdIterator_out);
 
 private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Admin (const TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
 
@@ -751,10 +745,8 @@ public:
   // END SPEC
 
 private:
-
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Link (const TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   typedef ACE_Hash_Map_Manager_Ex
   <
@@ -806,9 +798,8 @@ public:
                              CosTrading::OfferIdIterator_ptr &);
 
 private:
-  // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
+  TAO_Proxy (const TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &) = delete;
 
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>& trader_;
 };

@@ -125,9 +125,9 @@ private:
   /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
 
-  ACE_UNIMPLEMENTED_FUNC (Client (void))
-  ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
-  ACE_UNIMPLEMENTED_FUNC (Client &operator= (const Client &))
+  Client () = delete;
+  Client (const Client &) = delete;
+  Client &operator= (const Client &) = delete;
 };
 
 Client::Client (const ACE_INET_Addr &remote_addr)
