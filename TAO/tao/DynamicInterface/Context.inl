@@ -25,11 +25,6 @@ CORBA::Context::_nil ()
 // *************************************************************
 
 ACE_INLINE
-CORBA::ContextList::ContextList ()
-{
-}
-
-ACE_INLINE
 CORBA::ULong
 CORBA::ContextList::count ()
 {

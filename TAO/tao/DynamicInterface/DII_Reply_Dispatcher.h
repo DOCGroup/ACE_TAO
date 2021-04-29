@@ -58,7 +58,7 @@ public:
 
 protected:
   /// Destructor.
-  ~TAO_DII_Deferred_Reply_Dispatcher (void);
+  ~TAO_DII_Deferred_Reply_Dispatcher () = default;
 
 private:
   /// Where the reply needs to go.

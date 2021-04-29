@@ -244,12 +244,9 @@ namespace TAO
                              TAO_Operation_Details &details);
 
   private:
-    /// Don't allow default initializations
-    Invocation_Adapter ();
-
-    // Prevent copying
-    Invocation_Adapter (Invocation_Adapter const &);
-    Invocation_Adapter & operator= (const Invocation_Adapter &);
+    Invocation_Adapter () = delete;
+    Invocation_Adapter (Invocation_Adapter const &) = delete;
+    Invocation_Adapter & operator= (const Invocation_Adapter &) = delete;
 
     /**
     * This method returns the right collocation strategy, if any,
