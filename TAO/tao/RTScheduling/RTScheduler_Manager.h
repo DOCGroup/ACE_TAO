@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RTSCHEDULER_MANAGER_H
 #define TAO_RTSCHEDULER_MANAGER_H
 
@@ -21,7 +20,6 @@ class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
 typedef TAO_RTScheduler_Manager *TAO_RTScheduler_Manager_ptr;
 
-
 /**
  * @class TAO_RTScheduler_Manager
  *
@@ -33,14 +31,14 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager :
   public virtual ::CORBA::LocalObject
 {
 public:
-  TAO_RTScheduler_Manager (void);
+  TAO_RTScheduler_Manager () = default;
 
   /// Constructor.
   TAO_RTScheduler_Manager (TAO_ORB_Core* orb);
 
   void rtscheduler (RTScheduling::Scheduler_ptr rtscheduler);
 
-  RTScheduling::Scheduler_ptr rtscheduler (void);
+  RTScheduling::Scheduler_ptr rtscheduler ();
 
 public:
   typedef TAO_RTScheduler_Manager_ptr _ptr_type;
@@ -57,16 +55,14 @@ public:
   virtual const char* _interface_repository_id () const;
 
 protected:
-
   /// Protected destructor to enforce proper memory management of this
   /// reference counted object.
-  ~TAO_RTScheduler_Manager (void);
+  ~TAO_RTScheduler_Manager () = default;
 
 private:
-
-  TAO_RTScheduler_Manager (const TAO_RTScheduler_Manager &);
-  void operator= (const TAO_RTScheduler_Manager &);
-  TAO_ORB_Core* orb_;
+  TAO_RTScheduler_Manager (const TAO_RTScheduler_Manager &) = delete;
+  void operator= (const TAO_RTScheduler_Manager &) = delete;
+  TAO_ORB_Core* orb_ {};
 
 private:
   RTScheduling::Scheduler_var rtscheduler_;
@@ -103,10 +99,9 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
-  /// Unimplemented - prevents widening assignment.
   TAO_RTScheduler_Manager_ptr ptr_;
-  TAO_RTScheduler_Manager_var (const TAO_Base_var &rhs);
-  TAO_RTScheduler_Manager_var &operator= (const TAO_Base_var &rhs);
+  TAO_RTScheduler_Manager_var (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
 };
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Manager_out
@@ -119,8 +114,8 @@ public:
   TAO_RTScheduler_Manager_out &operator= (const TAO_RTScheduler_Manager_var &);
   TAO_RTScheduler_Manager_out &operator= (TAO_RTScheduler_Manager_ptr);
   operator TAO_RTScheduler_Manager_ptr &();
-  TAO_RTScheduler_Manager_ptr &ptr (void);
-  TAO_RTScheduler_Manager_ptr operator-> (void);
+  TAO_RTScheduler_Manager_ptr &ptr ();
+  TAO_RTScheduler_Manager_ptr operator-> ();
 
 private:
   TAO_RTScheduler_Manager_ptr &ptr_;
