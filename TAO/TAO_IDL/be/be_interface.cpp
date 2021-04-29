@@ -1946,7 +1946,7 @@ be_interface::gen_perfect_hash_class_definition (const char *flat_name)
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "const TAO_operation_db_entry * lookup "
-      << "(const char *str, unsigned int len);"
+      << "(const char *str, unsigned int len) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1964,7 +1964,7 @@ be_interface::gen_binary_search_class_definition (const char *flat_name)
       << ": public TAO_Binary_Search_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "const TAO_operation_db_entry * lookup (const char *str);"
+      << "const TAO_operation_db_entry * lookup (const char *str) override;"
       << be_uidt_nl
       << "};\n\n";
 }
@@ -1982,7 +1982,7 @@ be_interface::gen_linear_search_class_definition (const char *flat_name)
       << ": public TAO_Linear_Search_OpTable" << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << "const TAO_operation_db_entry * lookup (const char *str);"
+      << "const TAO_operation_db_entry * lookup (const char *str) override;"
       << be_uidt_nl
       << "};\n\n";
 }
