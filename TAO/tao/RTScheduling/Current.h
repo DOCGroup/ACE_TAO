@@ -3,11 +3,8 @@
 //=============================================================================
 /**
  *  @file   Current.h
- *
- *  @author
  */
 //=============================================================================
-
 
 #ifndef TAO_RTSCHEDULER_CURRENT_H
 #define TAO_RTSCHEDULER_CURRENT_H
@@ -44,11 +41,9 @@ typedef TAO::unbounded_value_sequence<CORBA::Octet> IdType;
 class TAO_RTScheduler_Export TAO_DTId_Hash
 {
 public:
-
   /// Returns hash value.
   u_long operator () (const IdType &id) const;
 };
-
 
 typedef ACE_Hash_Map_Manager_Ex<IdType,
                                 RTScheduling::DistributableThread_var,
@@ -80,12 +75,12 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
  public:
   static std::atomic<long> guid_counter;
 
-  TAO_RTScheduler_Current (void);
-  virtual ~TAO_RTScheduler_Current (void);
+  TAO_RTScheduler_Current () = default;
+  virtual ~TAO_RTScheduler_Current ();
 
   void init (TAO_ORB_Core* orb);
 
-  virtual RTCORBA::Priority the_priority (void);
+  virtual RTCORBA::Priority the_priority ();
 
   virtual void the_priority (RTCORBA::Priority the_priority);
 
@@ -155,14 +150,11 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   virtual const char* _interface_repository_id () const;
   //@}
 
- private:
+private:
   RTCORBA::Current_var rt_current_;
-  TAO_ORB_Core* orb_;
+  TAO_ORB_Core* orb_ {};
   DT_Hash_Map dt_hash_;
-
 };
-
-
 
 /**
  * @class TAO_RTScheduler_Current_var
@@ -199,19 +191,14 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
-
   TAO_RTScheduler_Current_ptr ptr_;
-  // Unimplemented - prevents widening assignment.
-  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs);
-  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs);
-
+  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs) = delete;
 };
-
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
 {
- public:
-
+public:
   TAO_RTScheduler_Current_i (TAO_ORB_Core* orb,
                              DT_Hash_Map* dt_hash);
 
@@ -224,7 +211,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
                              RTScheduling::DistributableThread_ptr dt,
                              TAO_RTScheduler_Current_i* prev_current);
 
-  virtual ~TAO_RTScheduler_Current_i (void);
+  virtual ~TAO_RTScheduler_Current_i ();
 
   virtual RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
@@ -283,7 +270,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_i
   RTScheduling::DistributableThread_ptr DT (void);
   void DT (RTScheduling::DistributableThread_ptr);
 
- private:
+private:
   RTScheduling::Scheduler_var scheduler_;
   TAO_ORB_Core* orb_;
   RTScheduling::Current::IdType guid_;
@@ -308,14 +295,14 @@ public:
           CORBA::Policy_ptr sched_param,
           CORBA::Policy_ptr implicit_sched_param);
 
-  virtual ~DTTask (void);
+  virtual ~DTTask ();
 
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);
 
   virtual int svc ();
 
- private:
+private:
   TAO_ORB_Core* orb_;
   // DT_Hash_Map* dt_hash_;
   TAO_RTScheduler_Current_i* current_;

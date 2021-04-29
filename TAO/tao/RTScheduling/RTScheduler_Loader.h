@@ -31,10 +31,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Loader : public ACE_Service_Object
 {
 public:
   /// Constructor.
-  TAO_RTScheduler_Loader (void);
+  TAO_RTScheduler_Loader ();
 
   /// Destructor.
-  virtual ~TAO_RTScheduler_Loader (void);
+  virtual ~TAO_RTScheduler_Loader ();
 
   /// Initialize the RTScheduler loader hooks.
   virtual int init (int argc, ACE_TCHAR* []);

@@ -7,15 +7,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_RTScheduler_Manager::TAO_RTScheduler_Manager () :
-  orb_ (nullptr)
-{
-}
-
-TAO_RTScheduler_Manager::~TAO_RTScheduler_Manager ()
-{
-}
-
 TAO_RTScheduler_Manager_ptr
 TAO_RTScheduler_Manager::_narrow (CORBA::Object_ptr obj)
 {

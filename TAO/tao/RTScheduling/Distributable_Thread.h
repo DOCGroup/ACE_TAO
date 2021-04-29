@@ -12,16 +12,15 @@ class TAO_RTScheduler_Export TAO_DistributableThread:
   public RTScheduling::DistributableThread,
   public ::CORBA::LocalObject
 {
- public:
+public:
   TAO_DistributableThread () = default;
-
   ~TAO_DistributableThread () = default;
 
   void cancel () override;
 
   RTScheduling::DistributableThread::DT_State state () override;
 
- private:
+private:
   RTScheduling::DistributableThread::DT_State state_ {RTScheduling::DistributableThread::ACTIVE};
 };
 
