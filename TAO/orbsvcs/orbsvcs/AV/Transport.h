@@ -27,7 +27,6 @@
 #include "ace/Addr.h"
 #include "ace/SOCK_Dgram.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Forward declarations.
@@ -66,9 +65,6 @@ private:
   TAO_AV_Transport_Factory *factory_;
 };
 
-
-
-
 class TAO_AV_Flow_Protocol_Factory;
 
 /**
@@ -99,7 +95,6 @@ private:
   /// pointer to factory object.
   TAO_AV_Flow_Protocol_Factory *factory_;
 };
-
 
 /**
  * @class TAO_AV_Flow_Handler
@@ -200,7 +195,6 @@ public:
   virtual ssize_t recv (iovec *iov,
                         int iovcnt,
                         ACE_Time_Value *s = 0) = 0;
-
 };
 
 class TAO_Base_StreamEndPoint;
@@ -259,7 +253,6 @@ public:
 protected:
   ACE_CString flowname_;
 };
-
 
 typedef ACE_Unbounded_Set<TAO_AV_Connector*> TAO_AV_ConnectorSet;
 typedef ACE_Unbounded_Set_Iterator<TAO_AV_Connector*> TAO_AV_ConnectorSetItor;

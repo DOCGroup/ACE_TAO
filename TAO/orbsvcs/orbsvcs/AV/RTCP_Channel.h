@@ -31,7 +31,7 @@ public:
                   const ACE_Addr *addr);
 
   /// Destructor
-  ~RTCP_Channel_In(void);
+  ~RTCP_Channel_In();
 
   /// This operation takes the incoming ACE_Message_Block, converts it to an
   /// RTP_Packet and calls updateStatistics.  It also uses compares the peer_addr

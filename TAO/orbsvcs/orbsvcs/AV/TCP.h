@@ -47,21 +47,20 @@ class TAO_AV_TCP_Flow_Handler;
 class TAO_AV_TCP_Transport
   : public TAO_AV_Transport
 {
-
 public:
-  TAO_AV_TCP_Transport (void);
+  TAO_AV_TCP_Transport ();
 
   TAO_AV_TCP_Transport (TAO_AV_TCP_Flow_Handler *handler);
 
-  virtual ~TAO_AV_TCP_Transport (void);
+  virtual ~TAO_AV_TCP_Transport ();
 
   virtual int open (ACE_Addr *address);
 
-  virtual int close (void);
+  virtual int close ();
 
-  virtual int mtu (void);
+  virtual int mtu ();
 
-  virtual ACE_Addr *get_peer_addr (void);
+  virtual ACE_Addr *get_peer_addr ();
 
   /// Write the complete Message_Block chain to the connection.
   virtual ssize_t send (const ACE_Message_Block *mblk,
