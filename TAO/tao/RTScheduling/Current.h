@@ -80,56 +80,55 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
 
   void init (TAO_ORB_Core* orb);
 
-  virtual RTCORBA::Priority the_priority ();
+  RTCORBA::Priority the_priority () override;
 
-  virtual void the_priority (RTCORBA::Priority the_priority);
+  void the_priority (RTCORBA::Priority the_priority) override;
 
   void rt_current (RTCORBA::Current_ptr rt_current);
 
-  virtual void begin_scheduling_segment
+  void begin_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param);
+     CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void update_scheduling_segment
+  void update_scheduling_segment
     (const char * name,
      CORBA::Policy_ptr sched_param,
-     CORBA::Policy_ptr implicit_sched_param);
+     CORBA::Policy_ptr implicit_sched_param) override;
 
-  virtual void end_scheduling_segment (const char * name);
+  void end_scheduling_segment (const char * name) override;
 
-  virtual RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id);
+  RTScheduling::DistributableThread_ptr
+    lookup(const RTScheduling::Current::IdType & id) override;
 
   // returns a null reference if
   // the distributable thread is
   // not known to the local scheduler
-
-  virtual RTScheduling::DistributableThread_ptr
+  RTScheduling::DistributableThread_ptr
     spawn (RTScheduling::ThreadAction_ptr start,
            CORBA::VoidData data,
            const char* name,
            CORBA::Policy_ptr sched_param,
            CORBA::Policy_ptr implicit_sched_param,
            CORBA::ULong stack_size,
-           RTCORBA::Priority base_priority);
+           RTCORBA::Priority base_priority) override;
 
-  virtual ::RTScheduling::Current::IdType *id (void);
+  ::RTScheduling::Current::IdType *id () override;
 
-  virtual ::CORBA::Policy_ptr scheduling_parameter (void);
+  ::CORBA::Policy_ptr scheduling_parameter () override;
 
-  virtual ::CORBA::Policy_ptr implicit_scheduling_parameter (void);
+  ::CORBA::Policy_ptr implicit_scheduling_parameter ()  override;
 
-  virtual ::RTScheduling::Current::NameList *
-    current_scheduling_segment_names (void);
+  ::RTScheduling::Current::NameList *
+    current_scheduling_segment_names () override;
 
-  TAO_RTScheduler_Current_i* implementation (void);
+  TAO_RTScheduler_Current_i* implementation ();
 
   TAO_RTScheduler_Current_i* implementation (TAO_RTScheduler_Current_i*);
 
-  TAO_ORB_Core* orb (void);
+  TAO_ORB_Core* orb ();
 
-  DT_Hash_Map* dt_hash (void);
+  DT_Hash_Map* dt_hash ();
 
   /**
    * @name Reference Related Methods
@@ -163,11 +162,10 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
   : private TAO_Base_var
 {
 public:
-
-  TAO_RTScheduler_Current_var (void); // default constructor
+  TAO_RTScheduler_Current_var (); // default constructor
   TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
   TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &); // copy constructor
-  ~TAO_RTScheduler_Current_var (void); // destructor
+  ~TAO_RTScheduler_Current_var (); // destructor
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
   TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
@@ -177,9 +175,9 @@ public:
   operator TAO_RTScheduler_Current_ptr &();
   // in, inout, out, _retn
   TAO_RTScheduler_Current_ptr in () const;
-  TAO_RTScheduler_Current_ptr &inout (void);
-  TAO_RTScheduler_Current_ptr &out (void);
-  TAO_RTScheduler_Current_ptr _retn (void);
+  TAO_RTScheduler_Current_ptr &inout ();
+  TAO_RTScheduler_Current_ptr &out ();
+  TAO_RTScheduler_Current_ptr _retn ();
   TAO_RTScheduler_Current_ptr ptr () const;
 
   // Hooks used by template sequence and object manager classes
@@ -234,40 +232,40 @@ public:
 
   virtual void end_scheduling_segment (const char * name);
 
-  virtual RTScheduling::Current::IdType *id (void);
+  virtual RTScheduling::Current::IdType *id ();
 
 
   void id (RTScheduling::Current::IdType guid);
 
-  virtual CORBA::Policy_ptr scheduling_parameter (void);
+  virtual CORBA::Policy_ptr scheduling_parameter ();
 
-  virtual CORBA::Policy_ptr implicit_scheduling_parameter (void);
+  virtual CORBA::Policy_ptr implicit_scheduling_parameter ();
 
   void scheduling_parameter (CORBA::Policy_ptr);
 
   void implicit_scheduling_parameter (CORBA::Policy_ptr);
 
   virtual RTScheduling::Current::NameList *
-    current_scheduling_segment_names (void);
+    current_scheduling_segment_names ();
 
-  void cancel_thread (void);
+  void cancel_thread ();
 
-  void cleanup_DT (void);
+  void cleanup_DT ();
 
-  void cleanup_current (void);
+  void cleanup_current ();
 
-  void delete_all_currents (void);
+  void delete_all_currents ();
 
   const char* name (void);
   void name (const char *);
 
-  TAO_ORB_Core* orb (void);
+  TAO_ORB_Core* orb ();
 
-  RTScheduling::Scheduler_ptr scheduler (void);
+  RTScheduling::Scheduler_ptr scheduler ();
 
-  DT_Hash_Map* dt_hash (void);
+  DT_Hash_Map* dt_hash ();
 
-  RTScheduling::DistributableThread_ptr DT (void);
+  RTScheduling::DistributableThread_ptr DT ();
   void DT (RTScheduling::DistributableThread_ptr);
 
 private:
@@ -300,11 +298,10 @@ public:
   int activate_task (RTCORBA::Priority base_priority,
                      CORBA::ULong stack_size);
 
-  virtual int svc ();
+  int svc () override;
 
 private:
   TAO_ORB_Core* orb_;
-  // DT_Hash_Map* dt_hash_;
   TAO_RTScheduler_Current_i* current_;
   RTScheduling::ThreadAction_var start_;
   CORBA::VoidData data_;

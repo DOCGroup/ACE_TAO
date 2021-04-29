@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_RTSCHEDULER_MANAGER_H
 #define TAO_RTSCHEDULER_MANAGER_H
 
@@ -20,7 +19,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_RTScheduler_Manager;
 class TAO_RTScheduler_Manager_var;
 typedef TAO_RTScheduler_Manager *TAO_RTScheduler_Manager_ptr;
-
 
 /**
  * @class TAO_RTScheduler_Manager

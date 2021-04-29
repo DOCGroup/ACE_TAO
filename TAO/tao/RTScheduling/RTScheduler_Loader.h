@@ -37,7 +37,7 @@ public:
   virtual ~TAO_RTScheduler_Loader ();
 
   /// Initialize the RTScheduler loader hooks.
-  virtual int init (int argc, ACE_TCHAR* []);
+  int init (int argc, ACE_TCHAR* []) override;
 
 private:
   /// Set to true after init is called.
