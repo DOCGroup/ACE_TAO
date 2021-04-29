@@ -88,7 +88,7 @@ public:
   int send_peers (ACE_Message_Block *mb);
 
 protected:
-// Handle control messages arriving from adjacent Modules.
+  // Handle control messages arriving from adjacent Modules.
   virtual int control (ACE_Message_Block *);
 
   // Map used to keep track of active peers.
@@ -102,9 +102,8 @@ protected:
   Acceptor_Factory<PEER_HANDLER, PEER_KEY> *acceptor_;
 
 private:
-// Prevent copies and pass-by-value.
-  ACE_UNIMPLEMENTED_FUNC (Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &))
+  Peer_Router (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
+  void operator= (const Peer_Router<PEER_HANDLER, PEER_KEY> &) = delete;
 };
 
 #if defined (__ACE_INLINE__)

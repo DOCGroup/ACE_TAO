@@ -28,8 +28,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
-
-
 TAO_Trading_Loader::TAO_Trading_Loader ()
   : federate_ (0),
     ior_output_file_ (0),
@@ -72,11 +70,6 @@ TAO_Trading_Loader::TAO_Trading_Loader ()
 
       this->name_ = trader_name;
     }
-}
-
-TAO_Trading_Loader::~TAO_Trading_Loader ()
-{
-  // Destructor
 }
 
 int

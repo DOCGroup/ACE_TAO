@@ -112,10 +112,9 @@ public:
   static CORBA::Object * upcast (void *);
 
 private:
-  /// Unimplemented - prevents widening assignment.
   TAO_Priority_Mapping_Manager_ptr ptr_;
-  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs);
-  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs);
+  TAO_Priority_Mapping_Manager_var (const TAO_Base_var &rhs) = delete;
+  TAO_Priority_Mapping_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
 };
 
 class TAO_RTCORBA_Export TAO_Priority_Mapping_Manager_out

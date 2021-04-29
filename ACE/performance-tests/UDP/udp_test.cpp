@@ -117,9 +117,9 @@ private:
   /// The address to send messages to.
   ACE_INET_Addr remote_addr_;
 
-  ACE_UNIMPLEMENTED_FUNC (Client (void))
-  ACE_UNIMPLEMENTED_FUNC (Client (const Client &))
-  ACE_UNIMPLEMENTED_FUNC (Client &operator= (const Client &))
+  Client (void) = delete;
+  Client (const Client &) = delete;
+  Client &operator= (const Client &) = delete;
 };
 
 Client::Client (const ACE_INET_Addr &addr,
@@ -481,9 +481,9 @@ private:
   /// Receives datagrams.
   ACE_SOCK_Dgram endpoint_;
 
-  ACE_UNIMPLEMENTED_FUNC (Server (void))
-  ACE_UNIMPLEMENTED_FUNC (Server (const Server &))
-  ACE_UNIMPLEMENTED_FUNC (Server &operator= (const Server &))
+  Server (void) = delete;
+  Server (const Server &) = delete;
+  Server &operator= (const Server &) = delete;
 };
 
 Server::Server (const ACE_INET_Addr &addr)

@@ -26,7 +26,7 @@ class DynServer_ORB_Runner;
 class DynServer_Export DynServer_Loader : public TAO_Object_Loader
 {
 public:
-  DynServer_Loader(void);
+  DynServer_Loader();
 
   // spawns a thread to run an internal orb which has activated
   // a single DynServer servant.
@@ -47,8 +47,8 @@ private:
   ACE_Auto_Ptr<DynServer_ORB_Runner> runner_;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (DynServer_Loader (const DynServer_Loader &))
-  ACE_UNIMPLEMENTED_FUNC (DynServer_Loader &operator = (const DynServer_Loader &))
+  DynServer_Loader (const DynServer_Loader &) = delete;
+  DynServer_Loader &operator = (const DynServer_Loader &) = delete;
 };
 
 ACE_FACTORY_DECLARE (DynServer, DynServer_Loader)

@@ -1020,8 +1020,8 @@ protected:
 
 #if defined (ACE_WIN32_VC14)
   // Workaround for connect issue 1577211
-  ACE_UNIMPLEMENTED_FUNC (TAO_FlowEndPoint (const TAO_FlowEndPoint &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &))
+  TAO_FlowEndPoint (const TAO_FlowEndPoint &) = delete;
+  TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &) = delete;
 #endif
 };
 

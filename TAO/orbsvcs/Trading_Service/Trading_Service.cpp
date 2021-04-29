@@ -30,12 +30,7 @@ Trading_Shutdown::handle_signal (int,
   return 0;
 }
 
-Trading_Service::Trading_Service (void)
-{
-  // constructor
-}
-
-Trading_Service::~Trading_Service (void)
+Trading_Service::~Trading_Service ()
 {
   this->shutdown ();
 }
@@ -52,7 +47,7 @@ Trading_Service::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Trading_Service::run (void)
+Trading_Service::run ()
 {
   Trading_Shutdown trading_shutdown (*this);
 
@@ -60,7 +55,7 @@ Trading_Service::run (void)
 }
 
 int
-Trading_Service::shutdown (void)
+Trading_Service::shutdown ()
 {
   // Invoke TAO_Trading_Loader::fini ()
   int const shutdown_result = this->trading_loader_.fini ();

@@ -70,8 +70,7 @@ TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
 
 TAO_Preference_Interpreter::TAO_Preference_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* preference
-  )
+    const char* preference)
     : TAO_Interpreter ()
 {
   TAO_Trader_Constraint_Validator type_checker (ts);

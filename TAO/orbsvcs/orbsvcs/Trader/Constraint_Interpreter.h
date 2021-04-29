@@ -56,7 +56,7 @@ public:
                               const char* constraints);
 
   /// Destructor
-  ~TAO_Constraint_Interpreter (void);
+  ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
 

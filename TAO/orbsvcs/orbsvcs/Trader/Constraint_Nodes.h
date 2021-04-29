@@ -62,7 +62,7 @@ public:
   /// Return the expression type represented by this node.
   virtual TAO_Expression_Type expr_type () const = 0;
 
-  virtual ~TAO_Constraint (void) {}
+  virtual ~TAO_Constraint () {}
 };
 
 /**
@@ -100,7 +100,7 @@ public:
 
   virtual int accept (TAO_Constraint_Visitor* visitor);
 
-  virtual ~TAO_Binary_Constraint (void);
+  virtual ~TAO_Binary_Constraint ();
 
   virtual TAO_Expression_Type expr_type () const
     { return this->op_; }
@@ -248,7 +248,6 @@ public:
   // Return the type represented by this MysteryOperand.
 
   // = Comparison operators.
-
   friend TAO_Trading_Serv_Export bool
     operator< (const TAO_Literal_Constraint& left,
                const TAO_Literal_Constraint& right);
@@ -312,7 +311,6 @@ public:
     comparable_type (CORBA::TypeCode_ptr type);
 
  private:
-
   /// Private copy method.
   void copy (const TAO_Literal_Constraint& co);
 
