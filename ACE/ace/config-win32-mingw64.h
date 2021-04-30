@@ -120,7 +120,6 @@
 #define ACE_LACKS_SYS_IOCTL_H
 #define ACE_LACKS_PDH_H
 #define ACE_LACKS_PDHMSG_H
-#define ACE_LACKS_STRTOK_R
 #define ACE_LACKS_LOCALTIME_R
 #define ACE_LACKS_GMTIME_R
 #define ACE_LACKS_ASCTIME_R
@@ -135,6 +134,10 @@
 #define ACE_ENDTHREADEX(STATUS)  ::_endthreadex ((DWORD) (STATUS))
 
 #define ACE_DLL_PREFIX ACE_TEXT ("lib")
+
+#if (__MINGW64_VERSION_MAJOR < 3)
+# define ACE_LACKS_STRTOK_R
+#endif /* __MINGW64_VERSION_MAJOR < 3 */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MINGW64_H */
