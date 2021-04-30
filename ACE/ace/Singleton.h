@@ -100,10 +100,8 @@ protected:
   /// Contained instance.
   TYPE instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
   static ACE_Singleton<TYPE, ACE_LOCK> *&instance_i ();
@@ -146,10 +144,8 @@ protected:
   /// Default constructor.
   ACE_Unmanaged_Singleton ();
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
   static ACE_Unmanaged_Singleton<TYPE, ACE_LOCK> *&instance_i ();
@@ -200,10 +196,8 @@ protected:
   void operator= (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
   ACE_TSS_Singleton (const ACE_TSS_Singleton<TYPE,ACE_LOCK> &) = delete;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the TSS Singleton instance.
   static ACE_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i ();
@@ -242,10 +236,8 @@ protected:
   /// Default constructor.
   ACE_Unmanaged_TSS_Singleton ();
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton (ACE_Cleanup) instance.
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the Singleton instance.
   static ACE_Unmanaged_TSS_Singleton<TYPE, ACE_LOCK> *&instance_i ();
@@ -309,10 +301,8 @@ protected:
   /// Contained instance.
   TYPE instance_;
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Pointer to the Singleton instance.
   static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *singleton_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
   /// Get pointer to the singleton instance.
   static ACE_DLL_Singleton_T<TYPE, ACE_LOCK> *&instance_i ();
