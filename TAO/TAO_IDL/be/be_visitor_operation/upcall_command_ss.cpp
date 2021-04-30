@@ -134,7 +134,7 @@ be_visitor_operation_upcall_command_ss::visit (
      << "}" << be_nl_2;
 
   // Generate execute() method.
-  os << "virtual void execute ()" << be_nl
+  os << "void execute () override" << be_nl
      << "{" << be_idt_nl;
 
   if (!node->void_return_type ())
