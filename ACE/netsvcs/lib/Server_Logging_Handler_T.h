@@ -61,10 +61,8 @@ protected:
   /// called from derived classes open method.
   int open_common (void);
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Count the number of logging records that arrive.
   static COUNTER request_count_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 #if !defined (__GNUG__)
   /**

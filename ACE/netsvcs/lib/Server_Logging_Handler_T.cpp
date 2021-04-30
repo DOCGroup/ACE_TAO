@@ -9,11 +9,9 @@
 #include "Server_Logging_Handler_T.h"
 #include "ace/Signal.h"
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
 // Track number of requests.
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
 COUNTER ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::request_count_ = (COUNTER) 0;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR>
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ACE_Server_Logging_Handler_T
@@ -195,7 +193,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
         // Use ACE_NTOHL to get around bug in egcs 2.91.6x.
         length = ACE_NTOHL (length);
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
         ++this->request_count_;
 
         u_long count = this->request_count_;
@@ -203,8 +200,6 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
                     ACE_TEXT ("request count = %d, length = %d\n"),
                     count,
                     length));
-
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
         // Perform the actual <recv> this time.
         ssize_t n = this->peer ().recv_n ((void *) &lp,
