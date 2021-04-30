@@ -1942,7 +1942,7 @@ be_interface::gen_perfect_hash_class_definition (const char *flat_name)
       << ": public TAO_Perfect_Hash_OpTable" << be_uidt_nl
       << "{" << be_nl
       << "private:" << be_idt_nl
-      << "unsigned int hash (const char *str, unsigned int len);"
+      << "unsigned int hash (const char *str, unsigned int len) override;"
       << be_uidt_nl << be_nl
       << "public:" << be_idt_nl
       << "const TAO_operation_db_entry * lookup "

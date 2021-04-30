@@ -59,7 +59,6 @@ public:
 private:
   // = Methods that should defined by the subclasses. GPERF program
   //   will generate these routines.
-
   virtual unsigned int hash (const char *str, unsigned int len) = 0;
 
   virtual const TAO_operation_db_entry* lookup (const char *str,
