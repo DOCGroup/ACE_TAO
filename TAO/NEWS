@@ -1,6 +1,12 @@
 USER VISIBLE CHANGES BETWEEN TAO-3.0.1 and TAO-3.0.2
 ====================================================
 
+. Fix wstring coerce leak in tao_idl
+
+. Support C++ Keywords in `DCPS_DATA_SEQUENCE_TYPE`
+
+. Minor cleanup
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.0 and TAO-3.0.1
 ====================================================
 
