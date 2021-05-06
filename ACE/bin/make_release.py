@@ -51,7 +51,6 @@ bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vc
 version_restr = r'(\d+)(?:\.(\d+)(?:\.(\d+))?)?'
 version_re = re.compile(version_restr)
 
-update_latest_branches = True
 default_branch = "ace6tao2"
 
 ##################################################
@@ -484,8 +483,6 @@ def push_latest_branch (product, which):
 
 
 def latest_branch_helper (fn, release_type):
-    if not update_latest_branches:
-        return
     release_types = tuple(ReleaseType.__members__.values())
     do = release_types[release_types.index(release_type):]
     if ReleaseType.micro in do:
@@ -869,7 +866,6 @@ def main ():
 
 if __name__ == "__main__":
     opts = parse_args ()
-    update_latest_branches = opts.branch == "master"
 
     doc_root = os.getenv ("DOC_ROOT")
     if doc_root is None:
