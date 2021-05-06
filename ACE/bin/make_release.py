@@ -51,6 +51,9 @@ bin_regex = re.compile ("\.(mak|mdp|ide|exe|ico|gz|zip|xls|sxd|gif|vcp|vcproj|vc
 version_restr = r'(\d+)(?:\.(\d+)(?:\.(\d+))?)?'
 version_re = re.compile(version_restr)
 
+update_latest_branches = True
+default_branch = "master"
+
 ##################################################
 #### Utility Methods
 ##################################################
@@ -74,37 +77,40 @@ def parse_args ():
         dest="action", default=None, action="store_const", const="kit",
         help="Create kits.")
 
-    parser.add_argument ("--tag", dest="tag", action="store_true",
+    parser.add_argument ("--tag", action="store_true",
         help="Update tags and branches of the repositories", default=False)
-    parser.add_argument ("--update", dest="update", action="store_true",
+    parser.add_argument ("--update", action="store_true",
         help="Update the version numbers", default=False)
-    parser.add_argument ("--push", dest="push", action="store_true",
+    parser.add_argument ("--push", action="store_true",
         help="Push all changes to remote", default=False)
 
-    parser.add_argument ("--dest", dest="package_dir", action="store",
+    parser.add_argument ("--dest", dest="package_dir",
         help="Specify destination for the created packages.", default=None)
 
-    parser.add_argument ("--root", dest="repo_root", action="store",
+    parser.add_argument ("--root", dest="repo_root",
         help="Specify an alternate repository root",
         default="https://github.com/DOCGroup/ACE_TAO.git")
 
-    parser.add_argument ("--mpc_root", dest="mpc_root", action="store",
+    parser.add_argument ("--branch",
+        help="Git branch to work off", default=default_branch)
+
+    parser.add_argument ("--mpc_root",
         help="Specify an alternate MPC repository root",
         default="https://github.com/DOCGroup/MPC.git")
 
     parser.add_argument ("-n", dest="take_action", action="store_false",
         help="Take no action", default=True)
-    parser.add_argument ("--verbose", dest="verbose", action="store_true",
+    parser.add_argument ("--verbose", action="store_true",
         help="Print out actions as they are being performed",
         default=False)
 
     options = parser.parse_args ()
 
     if options.tag:
-        if options.update is False:
+        if not options.update:
             print ("Warning: You are tagging a release, but not requesting a version increment")
 
-        if options.push is False:
+        if not options.push:
             print ("Warning: You are tagging a release, but not requesting a push to remote")
 
     return options
@@ -459,8 +465,8 @@ def update_latest_branch (product, which):
 
     name = "Latest_ACE7TAO3_" + which
 
-    vprint ('Fast-forwarding', name, 'to master')
-    ex ("cd $DOC_ROOT/" + product + " && git fetch . master:" + name)
+    vprint ('Fast-forwarding', name, 'to', opts.branch)
+    ex ("cd $DOC_ROOT/" + product + " && git fetch . " + opts.branch +  ":" + name)
 
 
 def push_latest_branch (product, which):
@@ -476,6 +482,8 @@ def push_latest_branch (product, which):
 
 
 def latest_branch_helper (fn, release_type):
+    if not update_latest_branches:
+        return
     release_types = tuple(ReleaseType.__members__.values())
     do = release_types[release_types.index(release_type):]
     if ReleaseType.micro in do:
@@ -522,8 +530,8 @@ def push ():
 
     if opts.push:
         if opts.take_action:
-            vprint ("Pushing ACE_TAO master to origin")
-            ex ("cd $DOC_ROOT/ACE_TAO && git push origin master")
+            vprint ("Pushing ACE_TAO", opts.branch, "to origin")
+            ex ("cd $DOC_ROOT/ACE_TAO && git push origin " + opts.branch)
 
             vprint ("Pushing tag %s on ACE_TAO" % (tagname))
             ex ("cd $DOC_ROOT/ACE_TAO && git push origin tag " + tagname)
@@ -858,6 +866,7 @@ def main ():
 
 if __name__ == "__main__":
     opts = parse_args ()
+    update_latest_branches = opts.branch == "master"
 
     doc_root = os.getenv ("DOC_ROOT")
     if doc_root is None:
