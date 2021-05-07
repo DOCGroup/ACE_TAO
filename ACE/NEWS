@@ -13,7 +13,7 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-6.5.13
     having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
     details. Using a standalone toolchain is still supported.
 
-  . Made it easier to use `gnuace`-built libraries in as imported libraries in
+  . Made it easier to use `gnuace`-built libraries as imported libraries in
     CMake-based Android Studio native projects.
 
   . Replaced `ANDROID_ABI` with `android_abi`, but kept the former as an alias
