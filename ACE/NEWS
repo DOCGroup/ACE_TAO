@@ -1,3 +1,27 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-6.5.13
+======================================================
+
+. Fixes for IPv6 multicast and `inet_ntop`/`inet_pton` on Windows
+
+. Fix missing export attribute on `ACE_OS::thr_gettid`
+
+. Fix spurious warning from gcc about missing initializers on `std::array`
+
+. Android Support:
+
+  . Support for building with the Android NDK r19 or later directly instead of
+    having to use a generated standalone toolchain. See `ACE-INSTALL.html` for
+    details. Using a standalone toolchain is still supported.
+
+  . Made it easier to use `gnuace`-built libraries as imported libraries in
+    CMake-based Android Studio native projects.
+
+  . Replaced `ANDROID_ABI` with `android_abi`, but kept the former as an alias
+    of the later for compatibility.
+
+  . Remove need to pass a macro to compiler about `android/ndk-version.h`
+    unless the NDK is old.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.11 and ACE-6.5.12
 ======================================================
 
