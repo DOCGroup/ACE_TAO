@@ -88,7 +88,7 @@ def parse_args ():
         help="Specify an alternate repository root",
         default="https://github.com/DOCGroup/ACE_TAO.git")
     parser.add_argument ("--ace-tao-branch",
-        help="ACE/TAO branch to update", default="ace6tao2")
+        help="ACE/TAO branch to update", default="master")
 
     parser.add_argument ("--mpc_root",
         help="Specify an alternate MPC repository root",
