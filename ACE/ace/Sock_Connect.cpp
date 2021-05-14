@@ -1473,7 +1473,7 @@ ip_check (int &ipvn_enabled, int pf)
     {
 
 #if defined (ACE_WIN32)
-      static int recursing = 0;
+      static bool recursing = false;
       if (recursing) return 1;
 
       // as of the release of Windows 2008, even hosts that have IPv6 interfaces disabled
@@ -1484,9 +1484,9 @@ ip_check (int &ipvn_enabled, int pf)
       size_t if_cnt = 0;
 
       // assume enabled to avoid recursion during interface lookup.
-      recursing = 1;
+      recursing = true;
       ACE::get_ip_interfaces (if_cnt, if_addrs);
-      recursing = 0;
+      recursing = false;
 
       bool found = false;
       for (size_t i = 0; !found && i < if_cnt; i++)
