@@ -1,0 +1,181 @@
+commit fb1c569bc48ecf8d8adc79af59fed680aa12d3dc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed May 12 15:14:57 2021 -0500
+
+    Fix Branch Issue with Release Script
+    
+    Also do some cleanup, and change the `*_VERSION_CODE` macros to be
+    formatted using hexadecimal.
+
+commit b8cefe674cb26661cc1035115304fdfdb16c57f0
+Merge: 3f6995a6947 de11aebcd63
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri May 7 08:14:52 2021 -0500
+
+    Merge pull request #1503 from iguessthislldo/igtd/6-5-13-news
+    
+    6.5.13 News
+
+commit de11aebcd633592e09d7d4ab39fd991c7b12c373
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu May 6 22:34:49 2021 -0500
+
+    Apply suggestions from code review
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit f0d00737acf3cb588ecd6b8bf62034450e87a6a1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu May 6 18:09:40 2021 -0500
+
+    6.5.13 News
+
+commit a9d7e7b9a82447e4f20c22f57b78a697ab5ba809
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu May 6 11:30:18 2021 -0500
+
+    Remove Latest Branch Skip in Release Script
+
+commit 87a939ae150be86cb4b2a1e2dedc6083b23e7e48
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed May 5 23:43:56 2021 -0500
+
+    Branch Option for Release Script
+
+commit e83a4ee8cb2285c002edaa38c7895c17d651bdfc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 19 11:28:42 2021 -0600
+
+    platform_g++_common.GNU: Remove ARFLAGS += -c
+    
+    Older GNU ar may not have this option and this just supresses an extra
+    log output, so we can remove it.
+
+commit 5f014185220ac20655f4f3cbcf53c885c86c2449
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 18 19:05:05 2021 +0100
+
+    Manually apply fix of #1414 for ace6tao2
+    
+        * ACE/include/makeinclude/platform_g++_common.GNU:
+
+commit 83c488f991ead833aefaf297e2fbe50151e70910
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 5 23:52:10 2021 -0600
+
+    Add Missing Export to ACE_OS::thr_gettid
+
+commit a43b786edefd6ec11df656d918d16777da08f782
+Merge: f1733f33df4 eb4963c4747
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 5 08:51:46 2021 -0600
+
+    Merge pull request #1352 from kuznetsovmoci/IPv6_fixes
+    
+    [ACE6] Fixes for IPv6 multicast and inet_ntop/inet_pton on Windows
+
+commit eb4963c474759e86e6c621a5b240e708ec7af690
+Author: Mike Kuznetsov <kuznetsovm@objectcomputing.com>
+Date:   Mon Jan 4 15:11:53 2021 -0600
+
+    Fixes as per PR#1352 review
+
+commit 96c0e79c13f98142c0e04c88f4e2ec4bc22396d5
+Author: Mike Kuznetsov <kuznetsovm@objectcomputing.com>
+Date:   Mon Jan 4 11:53:44 2021 -0600
+
+    Fixes as per PR#1352 review
+
+commit 5a32d3b4aae39dec23a3dcd65fc7e1d47a269187
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 30 18:07:41 2020 -0600
+
+    Fix Logic for ANDROID_ABI and ANDROID_ARCH
+    
+    Also fix where I accidentally enabled NEON to be default that got
+    carried over from ACE7. NEON should remain disabled by default in ACE6
+    since that's how it currently is.
+
+commit 51170e43e87ebac98e8de4a504f134edaf22159a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 30 17:41:01 2020 -0600
+
+    Always Define ANDROID_ABI for Compatibility
+
+commit eb5d5e01a17054a5b568c4eae9c1c09cd2ab4178
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 30 17:49:02 2020 -0600
+
+    Move -llog from platform_android.GNU to acedefaults
+
+commit 1d5ef81d1eb0b38cad6628e9efca36778945b2ab
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 29 22:01:50 2020 -0600
+
+    Fix Older NDKs Not Having armv7a-* Prefixed Tools
+    
+    Will have to check for them or fallback to the arm-* prefix.
+
+commit b7088652c6b5621f975dcd6b1699fc41fa3d8cc5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Dec 29 22:01:18 2020 -0600
+
+    Revert to Current Include Style
+
+commit f5c406b5cf67fd86deacd54a76d98bdc552ff5ec
+Author: Mike Kuznetsov <kuznetsovm@objectcomputing.com>
+Date:   Wed Dec 23 09:36:42 2020 -0600
+
+    Removed trailing whitespace
+
+commit 43471263f8defb73609ada4b6d5c2925688b87dd
+Author: Mike Kuznetsov <kuznetsovm@objectcomputing.com>
+Date:   Wed Dec 23 09:25:18 2020 -0600
+
+    Fixes for IPv6 on Windows
+
+commit f6770cf33569bf04bedfa8be87179e826cd79f70
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Dec 12 20:24:18 2020 -0600
+
+    Changes from #1321
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/1321
+
+commit 66cd36af76472454c9575c92057e638893bb54d3
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Dec 12 20:23:47 2020 -0600
+
+    config-android.h: Minor Tweaks
+
+commit 155a2b72c27bd2cc056914e4e68e779c2f1f2c63
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sun Dec 6 15:46:16 2020 -0600
+
+    Android NDK >=r19 for Direct Build
+
+commit be6fe94f998d2f9bccc9e1d62b989157cd5352da
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Oct 28 15:17:53 2020 +0100
+
+    Upgrade xcode check to include 12.0
+    
+        * ACE/tests/Compiler_Features_32_Test.cpp:
+
+commit 1d7c9f996e4b62c050e5a46e92e37c198b9c490c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Sat Dec 5 16:04:50 2020 -0600
+
+    Support Building with Android NDK Directly
+    
+    Changes in https://github.com/DOCGroup/ACE_TAO/pull/1318 modified for
+    capability's sake for ACE6.
+    
+    - Made it easier to use `gnuace`-built libraries in as imported
+      libraries in CMake-based Android Studio native projects.
+    
+    - Replaced `ANDROID_ABI` with `android_abi`, but kept the former as an
+      alias of the later for compatibility.
+    
+    - Remove need to pass a macro to compiler about `android/ndk-version.h`
+      unless the NDK is old

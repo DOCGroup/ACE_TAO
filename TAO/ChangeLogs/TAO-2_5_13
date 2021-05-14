@@ -1,0 +1,51 @@
+commit de11aebcd633592e09d7d4ab39fd991c7b12c373
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Thu May 6 22:34:49 2021 -0500
+
+    Apply suggestions from code review
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit f0d00737acf3cb588ecd6b8bf62034450e87a6a1
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu May 6 18:09:40 2021 -0500
+
+    6.5.13 News
+
+commit 71d98de755a05fc66c19bf79f8a8ad87b949c88a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Apr 27 12:45:22 2021 -0500
+
+    Remove Support Macro
+
+commit 263e285c83a4b21691121e7697daf71792fcba3d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Mon Apr 26 21:57:47 2021 -0500
+
+    Support C++ Keywords in DCPS_DATA_SEQUENCE_TYPE
+    
+    Made for https://github.com/objectcomputing/OpenDDS/pull/2608
+
+commit 144e34c2aa485f48dbe5e4acc1e2eb30f322e128
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Mon Apr 12 12:29:17 2021 -0500
+
+    fix wstring coerce leak in tao_idl
+
+commit bca5a4aa34ca2e9a9597f145c8f2ec60e678c9b2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 21 10:21:26 2021 -0600
+
+    MPC updates for building TAO in a path with spaces
+
+commit faab6830cf4ecf67b452183dba712caae7996be4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 21 08:33:01 2021 -0600
+
+    tao_idl: ACE logging with %p requires an additional varargs argument, %m doesn't
+
+commit 447b84385531427c1ec1a7aa8298e9bb5a846c0d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 21 08:32:19 2021 -0600
+
+    tao_idl: when invoking preproc don't add quotes to args that already have them
