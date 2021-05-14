@@ -106,7 +106,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v7
       with:
-        vcpkgGitCommitId: 44d94c2edbd44f0c01d66c2ad95eb6982a9a61bc
+        vcpkgGitCommitId: 5568f110b509a9fd90711978a7cb76bae75bb092
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
