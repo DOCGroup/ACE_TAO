@@ -141,6 +141,11 @@
           Change directories to <tt>$DOC_ROOT</tt>
         </li>
         <li>
+          Checkout the correct branch you want to release on, the default is <code>master</code>
+          but you can also check out an different branch <code>ace6tao2</code> for the ACE 6.x/TAO 2.x
+          releases.
+        </li>
+        <li>
           Tag the release by executing<br>
           <code>ACE/bin/make_release.py --micro --update --tag --push</code><br>
           This will only take a couple minutes to complete and once done successfully,
@@ -200,6 +205,7 @@
         git clone https://github.com/DOCGroup/ACE_TAO.git ACE_TAO<br>
         git clone https://github.com/DOCGroup/MPC.git MPC<br>
         cd ACE_TAO<br>
+        git checkout master</br>
         ACE/bin/make_release.py --micro --update --verbose<br>
         ACE/bin/make_release.py --micro --tag --verbose<br>
         ACE/bin/make_release.py --micro --push --verbose<br>
@@ -217,6 +223,12 @@
       <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*
         bczar@download.dre.vanderbilt.edu:/export/www/download.dre/ACE+TAO-distribution<br>
       </code>
+      When releasing from a branch of master the resulting packages shouldn't be uploaded to
+      <code>ACE+TAO-distribution</code> but <b>only</b> the versioned packages should be
+      uploaded to <code>bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
+      using
+      <code>scp $DOC_ROOT/package-&lt;PID&gt;/ACE*6*
+        bczar@download.dre.vanderbilt.edu:/export/www/download.dre/previous_versions</code>
       <li>
         After the repository is tagged you can also start generating the doxygen
         documentation in parallel with the kit generation above.<br>
@@ -274,7 +286,7 @@
         rm -rf doxygen<br>
         mkdir doxygen<br>
         cd doxygen<br>
-        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_1 ACE_TAO<br>
+        git clone https://github.com/DOCGroup/ACE_TAO.git --depth 1 --branch ACE+TAO-7_0_2 ACE_TAO<br>
         cd ACE_TAO<br>
         export ACE_ROOT=$PWD/ACE<br>
         export TAO_ROOT=$PWD/TAO<br>
