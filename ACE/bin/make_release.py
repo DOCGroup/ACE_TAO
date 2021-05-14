@@ -474,13 +474,13 @@ def latest_branch_helper (fn, release_type):
     do = release_types[release_types.index(release_type):]
     if ReleaseType.micro in do:
         fn ("ACE_TAO", "Micro", opts.ace_tao_branch)
-        fn ("MPC", "ACETAO_Micro", opts.mpc_branch)
+        fn ("MPC", "Micro", opts.mpc_branch)
     if ReleaseType.minor in do:
         fn ("ACE_TAO", "Minor", opts.ace_tao_branch)
-        fn ("MPC", "ACETAO_Minor", opts.mpc_branch)
+        fn ("MPC", "Minor", opts.mpc_branch)
     if ReleaseType.major in do:
         fn ("ACE_TAO", "Major", opts.ace_tao_branch)
-        fn ("MPC", "ACETAO_Major", opts.mpc_branch)
+        fn ("MPC", "Major", opts.mpc_branch)
 
 
 def tag ():
