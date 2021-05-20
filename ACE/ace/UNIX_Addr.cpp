@@ -6,6 +6,8 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#include "ace/OS_NS_string.h"
+
 #if !defined (__ACE_INLINE__)
 #include "ace/UNIX_Addr.inl"
 #endif /* __ACE_INLINE__ */
@@ -14,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_UNIX_Addr)
 
-// Set a pointer to the address.
+/// Set a pointer to the address.
 void
 ACE_UNIX_Addr::set_addr (const void *addr, int len)
 {
@@ -24,21 +26,19 @@ ACE_UNIX_Addr::set_addr (const void *addr, int len)
   ACE_OS::memcpy (&this->unix_addr_, addr, len);
 }
 
-// Return a pointer to the underlying address.
-
+/// Return a pointer to the underlying address.
 void *
 ACE_UNIX_Addr::get_addr () const
 {
   return (void *) &this->unix_addr_;
 }
 
-// Transform the string into the current addressing format.
-
+/// Transform the string into the current addressing format.
 int
 ACE_UNIX_Addr::string_to_addr (const char addr[])
 {
-  ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
-                    sizeof this->unix_addr_.sun_path);
+  std::strsncpy (this->unix_addr_.sun_path, addr,
+                 sizeof this->unix_addr_.sun_path);
 
   this->set_size (sizeof this->unix_addr_ -
                   sizeof (this->unix_addr_.sun_path) +
@@ -46,8 +46,7 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
   return 0;
 }
 
-// Transform the current address into string format.
-
+/// Transform the current address into string format.
 int
 ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 {
