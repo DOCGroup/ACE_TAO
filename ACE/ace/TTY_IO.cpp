@@ -301,6 +301,8 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       if (arg->databits < 8)
         devpar.c_iflag |= ISTRIP;
+      else
+        devpar.c_iflag &= ~ISTRIP;
 
 #if defined (IGNBRK)
       // If device is not a modem set to ignore break points
@@ -345,6 +347,21 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       // Disable SIGINTR, SIGSUSP, SIGDSUSP and SIGQUIT signals
       devpar.c_lflag &= ~ISIG;
 #endif /* ISIG */
+
+#if defined (IGNCR)
+      // Do not discard CR characters
+      devpar.c_iflag &= ~IGNCR;
+#endif /* IGNCR */
+
+#if defined (ICRNL)
+      // Disable CR to NL conversion
+      devpar.c_iflag &= ~ICRNL;
+#endif /* ICRNL */
+
+#if defined (INLCR)
+      // Disable NL to CR conversion
+      devpar.c_iflag &= ~INLCR;
+#endif /* INLCR */
 
 #if defined (OPOST)
       // Disable post-processing of output data
