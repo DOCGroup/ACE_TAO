@@ -36,6 +36,7 @@ ACE_TTY_IO::Serial_Params::Serial_Params ()
   readmincharacters = 0;
   readtimeoutmsec = 10000;
   paritymode = ACE_TTY_IO_NONE;
+  inpckenb = true;
   ctsenb = false;
   rtsenb = 0;
   xinenb = false;
@@ -243,14 +244,20 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag |=  PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              devpar.c_iflag |=  INPCK | PARMRK;
+              if(arg->inpckenb)
+                devpar.c_iflag |= INPCK | PARMRK;
+              else
+                devpar.c_iflag &= ~(INPCK | PARMRK);
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             {
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag &= ~PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              devpar.c_iflag |=  INPCK | PARMRK;
+              if(arg->inpckenb)
+                devpar.c_iflag |= INPCK | PARMRK;
+              else
+                devpar.c_iflag &= ~(INPCK | PARMRK);
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
             {
