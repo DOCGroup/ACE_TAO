@@ -1,3 +1,32 @@
+ace (7.0.2+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update get-orig-source script.
+  * Update to upstream v7.0.2
+    - Sync debian/* with upstream.
+    - Exclude files in d/copyright.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 23 May 2021 00:20:02 +0100
+
+ace (7.0.1+dfsg-2) experimental; urgency=medium
+
+  * Team upload.
+  * Update Standards-Version to 4.5.1
+  * Update copyright to dep5 format.
+  * Update debhelper-compat to 13.
+    - Mention correct path of installed files.
+    - List files not installed.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 16 May 2021 22:27:52 +0100
+
+ace (7.0.1+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.1
+    - Sync debian/* with upstream.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 28 Mar 2021 02:03:03 +0100
+
 ace (6.5.12+dfsg-3) unstable; urgency=medium
 
   * Team upload.
