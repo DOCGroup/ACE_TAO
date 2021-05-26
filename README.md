@@ -17,3 +17,5 @@ See [Douglas C. Schmidt website](https://www.dre.vanderbilt.edu/~schmidt)  for m
 networked applications, [TAO](https://www.dre.vanderbilt.edu/~schmidt/TAO.html) is a C++
 implementation of the OMG's [CORBA](https://www.omg.org/spec/CORBA/) standard. The main home page
 is [here](https://www.dre.vanderbilt.edu/~schmidt/).
+
+All support on github is **best effort**, when you require a guaranteed response consider hiring one of the [commercial companies](https://www.dre.vanderbilt.edu/~schmidt/commercial-support.html) who provide support and services for ACE/TAO.
