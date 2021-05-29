@@ -119,24 +119,6 @@ TAO_IDL_DEP = <%tao_idl_dep%>$(EXEEXT)
 <%if(tao_idlflags)%>
 TAO_IDLFLAGS = <%tao_idlflags%><%if(!compares(vms_old_make, 1))%>$(if $(ARCH), -g $(call ADD_QUOTE,$(call ADD_ARCH,$(ACE_ROOT)/bin/ace_gperf)))<%endif%>
 <%endif%>
-<%if(tao_idl3_to_idl2)%>
-TAO_IDL3_TO_IDL2 = <%tao_idl3_to_idl2%>
-<%endif%>
-<%if(tao_idl3_to_idl2_dep)%>
-TAO_IDL3_TO_IDL2_DEP = <%tao_idl3_to_idl2_dep%>$(EXEEXT)
-<%endif%>
-<%if(tao_idl3toidl2flags)%>
-TAO_IDL3_TO_IDL2_FLAGS = <%tao_idl3toidl2flags%>
-<%endif%>
-<%if(tao_idl3_to_xmi)%>
-TAO_IDL3_TO_XMI = <%tao_idl3_to_xmi%>
-<%endif%>
-<%if(tao_idl3_to_xmi_dep)%>
-TAO_IDL3_TO_XMI_DEP = <%tao_idl3_to_xmi_dep%>$(EXEEXT)
-<%endif%>
-<%if(tao_idl3toxmiflags)%>
-TAO_IDL3_TO_XMI_FLAGS = <%tao_idl3toxmiflags%>
-<%endif%>
 
 <%if(exename)%>
 PRJ_TYPE = rtp
