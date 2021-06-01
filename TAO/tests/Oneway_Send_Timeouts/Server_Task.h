@@ -11,7 +11,6 @@
 class Server_Task : public ACE_Task_Base
 {
  public:
-
   Server_Task (const std::string& args)
     : args_ (args)
   { }
