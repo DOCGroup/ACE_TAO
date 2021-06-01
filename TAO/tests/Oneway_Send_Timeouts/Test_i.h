@@ -5,7 +5,7 @@
 
 class Test_i : public virtual POA_Test
 {
- public:
+public:
   Test_i (CORBA::ORB_ptr orb);
   virtual ~Test_i ();
 
@@ -19,10 +19,10 @@ class Test_i : public virtual POA_Test
 
   virtual void shutdown ();
 
- private:
-  volatile bool sleep_;
-  volatile bool unsleep_;
-  volatile bool shutdown_;
+private:
+  volatile bool  sleep_;
+  volatile bool  unsleep_;
+  volatile bool  shutdown_;
   CORBA::ORB_var orb_;
 };
 

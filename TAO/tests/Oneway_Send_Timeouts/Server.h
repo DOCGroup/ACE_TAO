@@ -13,7 +13,7 @@
 
 class Server
 {
- public:
+public:
   Server (int argc, ACE_TCHAR* argv[]);
   ~Server ();
 
@@ -22,13 +22,13 @@ class Server
 
   bool init_;
 
- private:
+private:
   bool parse_args (int argc, ACE_TCHAR* argv[]);
 
-  CORBA::ORB_var orb_;
-  CORBA::ORB_var management_orb_;
-  bool shutdown_;
-  TAO_SYNCH_MUTEX mutex_;
+  CORBA::ORB_var          orb_;
+  CORBA::ORB_var          management_orb_;
+  bool                    shutdown_;
+  TAO_SYNCH_MUTEX         mutex_;
   std::unique_ptr<Test_i> test_i_;
 };
 

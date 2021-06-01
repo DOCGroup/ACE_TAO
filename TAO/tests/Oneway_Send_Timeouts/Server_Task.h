@@ -3,34 +3,32 @@
 
 #include "Server.h"
 
-#include "ace/Task.h"
 #include "ace/ARGV.h"
+#include "ace/Task.h"
 
 #include <string>
 
 class Server_Task : public ACE_Task_Base
 {
- public:
+public:
   Server_Task (const std::string& args)
     : args_ (args)
-  { }
-  ~Server_Task ()
-    {
-      this->force_shutdown ();
-    }
+  {}
+  ~Server_Task () { this->force_shutdown (); }
 
   virtual int svc ()
   {
     bool initializer = false;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-      if (server_.get() == 0) {
-  ACE_ARGV my_args (args_.c_str());
+      if (server_.get () == 0) {
+        ACE_ARGV my_args (args_.c_str ());
 
-  // Initialize Server ORB in new thread
-  server_ = std::make_unique<Server>(my_args.argc(), my_args.argv());
-  ACE_ASSERT (server_.get() != 0);
-  initializer = true;
+        // Initialize Server ORB in new thread
+        // server_ = std::make_unique<Server>(my_args.argc(), my_args.argv());
+        server_.reset (new Server(my_args.argc (), my_args.argv ());
+        ACE_ASSERT (server_.get () != 0);
+        initializer = true;
       }
     }
 
@@ -47,7 +45,7 @@ class Server_Task : public ACE_Task_Base
 
   bool ready ()
   {
-    if (server_.get() != 0) {
+    if (server_.get () != 0) {
       return server_->init_;
     }
 
@@ -56,15 +54,15 @@ class Server_Task : public ACE_Task_Base
 
   void force_shutdown ()
   {
-    if (server_.get() != 0) {
+    if (server_.get () != 0) {
       server_->shutdown ();
     }
   }
 
- private:
-  std::string args_;
+private:
+  std::string             args_;
   std::unique_ptr<Server> server_;
-  TAO_SYNCH_MUTEX mutex_;
+  TAO_SYNCH_MUTEX         mutex_;
 };
 
 #endif //_SERVER_TASK_

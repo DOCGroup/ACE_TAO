@@ -1,0 +1,38 @@
+---
+# This configuration requires clang-format version 12.0 or newer.
+BasedOnStyle: Mozilla
+AlignOperands: false
+AlignConsecutiveDeclarations: Consecutive
+AllowAllParametersOfDeclarationOnNextLine: false
+AllowShortBlocksOnASingleLine: true
+AllowShortFunctionsOnASingleLine: InlineOnly
+BinPackArguments: false
+BinPackParameters: false
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterCaseLabel:  true
+  AfterClass:      true
+  AfterControlStatement: Never
+  AfterEnum:       true
+  AfterFunction:   true
+  AfterNamespace:  true
+  AfterObjCDeclaration: true
+  AfterStruct:     true
+  AfterUnion:      true
+  AfterExternBlock: true
+  BeforeCatch:     true
+  BeforeElse:      true
+  BeforeLambdaBody: false
+  BeforeWhile:     true
+  IndentBraces:    false
+  SplitEmptyFunction: false
+  SplitEmptyRecord: true
+  SplitEmptyNamespace: true
+# based on BreakBeforeBraces: GNU
+ColumnLimit: 79
+#XXX IndentAccessModifiers: true
+IndentPPDirectives: AfterHash
+SortUsingDeclarations: false
+SpaceAfterTemplateKeyword: true
+SpaceBeforeParens: Always
+...
