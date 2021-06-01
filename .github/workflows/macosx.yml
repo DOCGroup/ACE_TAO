@@ -55,7 +55,7 @@ jobs:
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
       shell: pwsh
     - name: Build TAO_ACE project
       run: |
