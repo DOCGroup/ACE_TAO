@@ -9,7 +9,7 @@
 #include "tao/PortableServer/POAC.h"
 #include "tao/PortableServer/POAManagerC.h"
 
-#include <string>
+#include <memory>
 
 class Server
 {
@@ -29,7 +29,7 @@ class Server
   CORBA::ORB_var management_orb_;
   bool shutdown_;
   TAO_SYNCH_MUTEX mutex_;
-  std::auto_ptr<Test_i> test_i_;
+  std::unique_ptr<Test_i> test_i_;
 };
 
 #endif //_SERVER_

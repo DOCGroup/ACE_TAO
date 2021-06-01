@@ -5,7 +5,8 @@
 
 #include "ace/Task.h"
 #include "ace/ARGV.h"
-#include "ace/Auto_Ptr.h"
+
+#include <string>
 
 class Server_Task : public ACE_Task_Base
 {
@@ -28,7 +29,7 @@ class Server_Task : public ACE_Task_Base
   ACE_ARGV my_args (args_.c_str());
 
   // Initialize Server ORB in new thread
-  ACE_auto_ptr_reset (server_, new Server (my_args.argc(), my_args.argv()));
+  server_ = std::make_unique<Server>(my_args.argc(), my_args.argv());
   ACE_ASSERT (server_.get() != 0);
   initializer = true;
       }
@@ -63,7 +64,7 @@ class Server_Task : public ACE_Task_Base
 
  private:
   std::string args_;
-  std::auto_ptr<Server> server_;
+  std::unique_ptr<Server> server_;
   TAO_SYNCH_MUTEX mutex_;
 };
 

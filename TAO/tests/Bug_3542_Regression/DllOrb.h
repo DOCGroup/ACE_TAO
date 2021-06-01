@@ -1,7 +1,6 @@
 #ifndef bug_3542_DllORB_h
 #define bug_3542_DllORB_h
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Barrier.h"
 #include "ace/Task.h"
 #include "tao/ORB.h"
@@ -9,6 +8,7 @@
 #include "tao/PortableServer/PortableServer.h"
 #include "bug_3542_export.h"
 
+#include <memory>
 
 class bug_3542_Export DllOrb: public ACE_Task_Base
 {
@@ -25,7 +25,7 @@ public:
   virtual int svc ();
 
 private:
-  auto_ptr < ACE_Thread_Barrier >      ma_barrier_;
+  std::unique_ptr < ACE_Thread_Barrier >    ma_barrier_;
   CORBA::ORB_var                       mv_orb_;
   PortableServer::POA_var              mv_rootPOA_;
   PortableServer::POAManager_var       mv_poaManager_;
