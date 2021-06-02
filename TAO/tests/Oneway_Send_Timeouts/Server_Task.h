@@ -21,22 +21,30 @@ public:
     bool initializer = false;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-      if (server_.get () == 0) {
+      if (server_.get () == 0)
+      {
         ACE_ARGV my_args (args_.c_str ());
 
         // Initialize Server ORB in new thread
-        // server_ = std::make_unique<Server>(my_args.argc(), my_args.argv());
+
+#ifdef ACE_HAS_CPP14
+        server_ = std::make_unique<Server> (my_args.argc (), my_args.argv ());
+#else
         server_.reset (new Server(my_args.argc (), my_args.argv ());
-        ACE_ASSERT (server_.get () != 0);
+#endif
+
+        ACE_ASSERT (server_);
         initializer = true;
       }
     }
 
-    if (initializer) {
+    if (initializer)
+    {
       server_->run (false);
       this->force_shutdown (); // servant thread is responsible for shutdown
     }
-    else {
+    else
+    {
       server_->run (true);
     }
 
@@ -45,7 +53,8 @@ public:
 
   bool ready ()
   {
-    if (server_.get () != 0) {
+    if (server_.get () != 0)
+    {
       return server_->init_;
     }
 
@@ -54,7 +63,8 @@ public:
 
   void force_shutdown ()
   {
-    if (server_.get () != 0) {
+    if (server_.get () != 0)
+    {
       server_->shutdown ();
     }
   }

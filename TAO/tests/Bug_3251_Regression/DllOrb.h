@@ -16,10 +16,7 @@ public:
   DllOrb (void);
   virtual ~DllOrb (void);
 
-  CORBA::ORB_ptr orb () const
-  {
-    return CORBA::ORB::_duplicate (mv_orb_.in ());
-  }
+  CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate (mv_orb_.in ()); }
 
   virtual int init (int argc, ACE_TCHAR* argv[]);
 

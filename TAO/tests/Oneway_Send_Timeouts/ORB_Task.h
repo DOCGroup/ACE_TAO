@@ -14,14 +14,16 @@ public:
   ORB_Task (CORBA::ORB_ptr orb)
     : orb_ (CORBA::ORB::_duplicate (orb))
   {
-    if (CORBA::is_nil (orb_.in ()) == 1) {
+    if (CORBA::is_nil (orb_.in ()) == 1)
+    {
       ACE_ERROR ((LM_ERROR, "ORB_Task> Ctr> Orb is NULL\n"));
     }
   };
 
   virtual int svc ()
   {
-    if (CORBA::is_nil (orb_.in ()) == 0) {
+    if (CORBA::is_nil (orb_.in ()) == 0)
+    {
       orb_->run ();
     }
 

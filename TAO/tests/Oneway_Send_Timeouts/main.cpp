@@ -28,30 +28,33 @@ private:
   bool shutdown_;
 };
 
-void
-MyMain::print_usage ()
+void MyMain::print_usage ()
 {}
 
-bool
-MyMain::init_server (const ACE_TCHAR* args)
+bool MyMain::init_server (const ACE_TCHAR* args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   // main thread and extra thread for backdoor operations
   int thread_pool = 2;
 
-  // TODO: server_ = std::make_unique<Server> (my_args);
+#ifdef ACE_HAS_CPP14
+  server_ = std::make_unique<Server> (my_args);
+#else
   server_.reset (new Server (my_args);
-  ACE_ASSERT (server_task_.get () != 0);
+#endif
 
-  server_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                          thread_pool);
+  ACE_ASSERT (server_task_);
+
+  server_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_pool);
 
   int            duration = 4; // wait 3 seconds for initialization
   ACE_Time_Value current = ACE_High_Res_Timer::gettimeofday_hr ();
   ACE_Time_Value timeout = current + ACE_Time_Value (duration);
 
-  while (current < timeout) {
-    if (server_task_->ready ()) {
+  while (current < timeout)
+  {
+    if (server_task_->ready ())
+    {
       break;
     }
     ACE_Time_Value sleep_time;
@@ -60,7 +63,8 @@ MyMain::init_server (const ACE_TCHAR* args)
     current += sleep_time;
   }
 
-  if (!server_task_->ready ()) {
+  if (! server_task_->ready ())
+  {
     server_task_->force_shutdown ();
     server_task_->wait ();
     server_task_.reset ();
@@ -70,18 +74,20 @@ MyMain::init_server (const ACE_TCHAR* args)
   return true;
 }
 
-bool
-MyMain::init_client (const ACE_TCHAR* args)
+bool MyMain::init_client (const ACE_TCHAR* args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   int         thread_pool = 1;
 
-  // TODO: client_task_ = std::make_unique<Client_Task> (my_args);
+#ifdef ACE_HAS_CPP14
+  client_task_ = std::make_unique<Client_Task> (my_args);
+#else
   client_task_.reset (new Client_Task (my_args);
-  ACE_ASSERT (client_task_.get () != 0);
+#endif
 
-  client_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED,
-                          thread_pool);
+  ACE_ASSERT (client_task_);
+
+  client_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_pool);
 
   return true;
 }
@@ -91,20 +97,25 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
   , shutdown_ (false)
 {
   argc--;
-  for (int p = 1; p <= argc; p++) {
-    if (ACE_OS::strcmp (argv[p], ACE_TEXT ("-?")) == 0) {
+  for (int p = 1; p <= argc; p++)
+  {
+    if (ACE_OS::strcmp (argv[p], ACE_TEXT ("-?")) == 0)
+    {
       print_usage ();
       return;
     }
 
-    if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-s")) == 0) {
+    if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-s")) == 0)
+    {
       const ACE_TCHAR* s_args = (((p + 1) <= argc) ? argv[p + 1] : 0);
       s_init_ = this->init_server (s_args);
       p++;
     }
-    else if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-c")) == 0) {
+    else if (ACE_OS::strcasecmp (argv[p], ACE_TEXT ("-c")) == 0)
+    {
       const ACE_TCHAR* s_args = (((p + 1) <= argc) ? argv[p + 1] : 0);
-      if (s_init_) {
+      if (s_init_)
+      {
         this->init_client (s_args);
       }
       p++;
@@ -112,14 +123,15 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
   }
 }
 
-void
-MyMain::run ()
+void MyMain::run ()
 {
-  if (server_task_.get () != 0) {
+  if (server_task_.get () != 0)
+  {
     server_task_->wait ();
   }
 
-  if (client_task_.get () != 0) {
+  if (client_task_.get () != 0)
+  {
     client_task_->wait ();
   }
 
@@ -128,13 +140,13 @@ MyMain::run ()
 
 MyMain::~MyMain ()
 {
-  if (!shutdown_) {
+  if (! shutdown_)
+  {
     this->run ();
   }
 }
 
-int
-ACE_TMAIN (int argc, ACE_TCHAR* argv[])
+int ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 {
   MyMain my_main (argc, argv);
 
