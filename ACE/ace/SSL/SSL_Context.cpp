@@ -769,7 +769,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
                             int type)
 {
   ACE_TRACE ("ACE_SSL_Context::dh_params");
-  
+
   if (this->dh_params_.type () != -1)
     return 0;
 
