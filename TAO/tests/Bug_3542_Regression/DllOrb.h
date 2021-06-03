@@ -26,9 +26,9 @@ public:
 
 private:
   std::unique_ptr<ACE_Thread_Barrier> ma_barrier_;
-  CORBA::ORB_var                      mv_orb_;
-  PortableServer::POA_var             mv_rootPOA_;
-  PortableServer::POAManager_var      mv_poaManager_;
+  CORBA::ORB_var mv_orb_;
+  PortableServer::POA_var mv_rootPOA_;
+  PortableServer::POAManager_var mv_poaManager_;
 };
 
 ACE_FACTORY_DECLARE (bug_3542, DllOrb)

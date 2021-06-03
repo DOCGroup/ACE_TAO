@@ -2,7 +2,7 @@
 # This configuration requires clang-format version v12.0 or newer.
 BasedOnStyle: Mozilla
 #
-AlignConsecutiveDeclarations: Consecutive
+AlignConsecutiveDeclarations: None
 AlignEscapedNewlines: Left
 AlignOperands: false
 AllowAllParametersOfDeclarationOnNextLine: false
@@ -43,7 +43,7 @@ ColumnLimit: 123 # MAYBE up to 160
 IndentPPDirectives: AfterHash
 SortUsingDeclarations: false
 SpaceAfterTemplateKeyword: true
-SpaceAfterLogicalNot: true
+SpaceAfterLogicalNot: false
 SpaceBeforeParens: Always
 SpaceInEmptyBlock: false
 ...

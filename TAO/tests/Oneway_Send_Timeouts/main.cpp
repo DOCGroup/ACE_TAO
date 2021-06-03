@@ -47,7 +47,7 @@ bool MyMain::init_server (const ACE_TCHAR* args)
 
   server_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_pool);
 
-  int            duration = 4; // wait 3 seconds for initialization
+  int duration = 4; // wait 3 seconds for initialization
   ACE_Time_Value current = ACE_High_Res_Timer::gettimeofday_hr ();
   ACE_Time_Value timeout = current + ACE_Time_Value (duration);
 
@@ -63,7 +63,7 @@ bool MyMain::init_server (const ACE_TCHAR* args)
     current += sleep_time;
   }
 
-  if (! server_task_->ready ())
+  if (!server_task_->ready ())
   {
     server_task_->force_shutdown ();
     server_task_->wait ();
@@ -77,7 +77,7 @@ bool MyMain::init_server (const ACE_TCHAR* args)
 bool MyMain::init_client (const ACE_TCHAR* args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
-  int         thread_pool = 1;
+  int thread_pool = 1;
 
 #ifdef ACE_HAS_CPP14
   client_task_ = std::make_unique<Client_Task> (my_args);
@@ -125,12 +125,12 @@ MyMain::MyMain (int argc, ACE_TCHAR* argv[])
 
 void MyMain::run ()
 {
-  if (server_task_.get () != 0)
+  if (server_task_)
   {
     server_task_->wait ();
   }
 
-  if (client_task_.get () != 0)
+  if (client_task_)
   {
     client_task_->wait ();
   }
@@ -140,7 +140,7 @@ void MyMain::run ()
 
 MyMain::~MyMain ()
 {
-  if (! shutdown_)
+  if (!shutdown_)
   {
     this->run ();
   }

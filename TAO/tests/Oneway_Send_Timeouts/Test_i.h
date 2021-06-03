@@ -20,9 +20,9 @@ public:
   virtual void shutdown ();
 
 private:
-  volatile bool  sleep_;
-  volatile bool  unsleep_;
-  volatile bool  shutdown_;
+  volatile bool sleep_;
+  volatile bool unsleep_;
+  volatile bool shutdown_;
   CORBA::ORB_var orb_;
 };
 

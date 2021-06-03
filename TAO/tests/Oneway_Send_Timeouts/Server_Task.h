@@ -21,7 +21,7 @@ public:
     bool initializer = false;
     {
       ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->mutex_, -1);
-      if (server_.get () == 0)
+      if (!server_)
       {
         ACE_ARGV my_args (args_.c_str ());
 
@@ -53,7 +53,7 @@ public:
 
   bool ready ()
   {
-    if (server_.get () != 0)
+    if (server_)
     {
       return server_->init_;
     }
@@ -63,16 +63,16 @@ public:
 
   void force_shutdown ()
   {
-    if (server_.get () != 0)
+    if (server_)
     {
       server_->shutdown ();
     }
   }
 
 private:
-  std::string             args_;
+  std::string args_;
   std::unique_ptr<Server> server_;
-  TAO_SYNCH_MUTEX         mutex_;
+  TAO_SYNCH_MUTEX mutex_;
 };
 
 #endif //_SERVER_TASK_
