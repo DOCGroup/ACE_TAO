@@ -54,7 +54,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
     }
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
                                                           const ACE_nothrow_t&) throw()
@@ -89,8 +88,6 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
   ACE_TRACE("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
 }
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()

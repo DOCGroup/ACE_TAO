@@ -47,10 +47,6 @@
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
-// Compiler's 'new' throws exceptions on failure, regardless of whether or
-// not exception handling is enabled in the compiler options. Fortunately,
-// new(nothrow_t) is offered.
-#    define ACE_HAS_NEW_NOTHROW
 #    define ACE_HAS_NEW_NO_H 1
 
 // Compiler's template mechanism must see source code (i.e., .C files).

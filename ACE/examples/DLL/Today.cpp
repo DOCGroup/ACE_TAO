@@ -19,7 +19,6 @@ Today::operator new (size_t bytes)
 {
   return ::new char[bytes];
 }
-#if defined (ACE_HAS_NEW_NOTHROW)
 void *
 Today::operator new (size_t bytes, const ACE_nothrow_t&)
 {
@@ -30,7 +29,6 @@ Today::operator delete (void *p, const ACE_nothrow_t&) throw ()
 {
   delete [] static_cast <char *> (p);
 }
-#endif
 void
 Today::operator delete (void *ptr)
 {

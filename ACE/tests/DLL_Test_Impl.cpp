@@ -52,8 +52,7 @@ Hello_Impl::operator new (size_t bytes)
   return ::new char[bytes];
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
-  /// Overloaded new operator, nothrow_t variant.
+/// Overloaded new operator, nothrow_t variant.
 void *
 Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
 {
@@ -67,8 +66,6 @@ Hello_Impl::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   ::delete [] static_cast<char *> (ptr);
 }
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 void
 Hello_Impl::operator delete (void *ptr)

@@ -46,7 +46,6 @@
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#   define ACE_HAS_NEW_NOTHROW
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 

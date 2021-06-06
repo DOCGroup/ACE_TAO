@@ -88,6 +88,12 @@
 # define ACE_NEW_THROWS_EXCEPTIONS
 #endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
+// Define ACE_HAS_NEW_NOTHROW for all compilers, we
+// except all compilers to support this
+#if !defined (ACE_HAS_NEW_NOTHROW)
+# define ACE_HAS_NEW_NOTHROW
+#endif /* ACE_HAS_NEW_NOTHROW */
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"

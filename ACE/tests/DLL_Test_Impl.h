@@ -50,14 +50,11 @@ public:
   // DLL/SO.
   void *operator new (size_t bytes);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant.
   void *operator new (size_t bytes, const ACE_nothrow_t &nt);
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_HAS_NEW_NOTHROW */
 
   void operator delete (void *ptr);
-
 };
 
 #endif /* ACE_TESTS_DLL_TEST_IMPL_H */

@@ -41,21 +41,10 @@
 #  define ACE_del_bad_alloc
 #endif
 
-#if defined (ACE_HAS_NEW_NOTHROW)
-
-#    define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION)     \
-  do { POINTER = new (ACE_nothrow) CONSTRUCTOR;                 \
-    if (POINTER == 0) { throw EXCEPTION; }                      \
+#define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
+  do { POINTER = new (ACE_nothrow) CONSTRUCTOR;         \
+    if (POINTER == 0) { throw EXCEPTION; }              \
   } while (0)
-
-#  else
-
-#   define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION)          \
-  do { try { POINTER = new CONSTRUCTOR; }                           \
-    catch (ACE_bad_alloc) { ACE_del_bad_alloc throw EXCEPTION; }    \
-  } while (0)
-
-# endif /* ACE_HAS_NEW_NOTHROW */
 
 // FUZZ: disable check_for_ACE_Guard
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \

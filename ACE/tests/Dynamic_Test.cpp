@@ -24,11 +24,8 @@ public:
 
   void *operator new (size_t n);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   void *operator new (size_t n, const ACE_nothrow_t&) throw();
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif
-
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
@@ -63,7 +60,6 @@ A::operator new (size_t n)
     }
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
 void*
 A::operator new (size_t n, const ACE_nothrow_t&) throw()
 {
@@ -93,8 +89,6 @@ A::operator delete (void *p, const ACE_nothrow_t&) throw()
 {
   ::delete [] static_cast <char *> (p);
 }
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 void
 A::operator delete (void *obj)

@@ -42,11 +42,9 @@ public:
   // created/deleted using the memory allocator associated with the
   // DLL/SO.
   void *operator new (size_t bytes);
-#if defined (ACE_HAS_NEW_NOTHROW)
   // Overloaded new operator, nothrow_t variant.
   void *operator new (size_t bytes, const ACE_nothrow_t&);
   void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif
   void operator delete (void *ptr);
 };
 
