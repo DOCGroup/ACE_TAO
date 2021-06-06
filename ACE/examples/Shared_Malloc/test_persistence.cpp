@@ -59,11 +59,11 @@ public:
     return shmem_allocator->malloc (sizeof (Employee));
   }
 
-  void *operator new (size_t, const ACE_nothrow_t&)
+  void *operator new (size_t, const std::nothrow_t&)
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
-  void operator delete (void *p, const ACE_nothrow_t&) throw ()
+  void operator delete (void *p, const std::nothrow_t&) throw ()
   {
     shmem_allocator->free (p);
   }

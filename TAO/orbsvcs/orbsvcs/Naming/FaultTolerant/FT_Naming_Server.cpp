@@ -689,13 +689,13 @@ TAO_FT_Naming_Server::fini ()
 TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-  return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
+  return new (std::nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
 }
 
 TAO_Persistent_Naming_Context_Factory *
 TAO_FT_Naming_Server::persistent_naming_context_factory ()
 {
-  return new (ACE_nothrow) TAO_FT_Persistent_Naming_Context_Factory;
+  return new (std::nothrow) TAO_FT_Persistent_Naming_Context_Factory;
 }
 
 /// Return the IOR for the registered replication manager

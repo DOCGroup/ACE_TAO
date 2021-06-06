@@ -754,13 +754,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 TAO_Storable_Naming_Context_Factory *
 TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-  return new (ACE_nothrow) TAO_Storable_Naming_Context_Factory (context_size);
+  return new (std::nothrow) TAO_Storable_Naming_Context_Factory (context_size);
 }
 
 TAO_Persistent_Naming_Context_Factory *
 TAO_Naming_Server::persistent_naming_context_factory ()
 {
-  return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
+  return new (std::nothrow) TAO_Persistent_Naming_Context_Factory;
 }
 
 int

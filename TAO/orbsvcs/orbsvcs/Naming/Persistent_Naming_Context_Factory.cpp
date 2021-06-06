@@ -27,7 +27,7 @@ TAO_Persistent_Naming_Context_Factory::create_naming_context_impl (
 {
   // Construct the naming context, forwarding the map and counter even if they
   // are defaulted
-  return new (ACE_nothrow) TAO_Persistent_Naming_Context (poa,
+  return new (std::nothrow) TAO_Persistent_Naming_Context (poa,
                                                           poa_id,
                                                           context_index,
                                                           map,

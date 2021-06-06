@@ -42,8 +42,8 @@
 #endif
 
 #define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
-  do { POINTER = new (ACE_nothrow) CONSTRUCTOR;         \
-    if (POINTER == 0) { throw EXCEPTION; }              \
+  do { POINTER = new (std::nothrow) CONSTRUCTOR;         \
+    if (!POINTER) { throw EXCEPTION; }              \
   } while (0)
 
 // FUZZ: disable check_for_ACE_Guard

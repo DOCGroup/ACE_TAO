@@ -51,8 +51,8 @@ public:
   void *operator new (size_t bytes);
 
   /// Overloaded new operator, nothrow_t variant.
-  void *operator new (size_t bytes, const ACE_nothrow_t &nt);
-  void operator delete (void *p, const ACE_nothrow_t&) throw ();
+  void *operator new (size_t bytes, const std::nothrow_t &nt);
+  void operator delete (void *p, const std::nothrow_t&) throw ();
 
   void operator delete (void *ptr);
 };

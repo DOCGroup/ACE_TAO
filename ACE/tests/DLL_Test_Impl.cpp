@@ -54,14 +54,14 @@ Hello_Impl::operator new (size_t bytes)
 
 /// Overloaded new operator, nothrow_t variant.
 void *
-Hello_Impl::operator new (size_t bytes, const ACE_nothrow_t &nt)
+Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt)
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
   return ::new (nt) char[bytes];
 }
 
 void
-Hello_Impl::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
+Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) throw ()
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   ::delete [] static_cast<char *> (ptr);

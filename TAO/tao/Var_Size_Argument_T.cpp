@@ -98,7 +98,7 @@ TAO::Out_Var_Size_Argument_T<S,Insert_Policy>::demarshal (
     TAO_InputCDR & cdr
   )
 {
-  this->x_ = new (ACE_nothrow) S;
+  this->x_ = new (std::nothrow) S;
   return cdr >> *this->x_;
 }
 
