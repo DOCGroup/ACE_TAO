@@ -69,13 +69,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // being used).
 // ============================================================================
 
-// If new(std::nothrow) is defined then, by definition, new throws exceptions.
-#if defined (ACE_HAS_NEW_NOTHROW)
-#  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif
-#endif
-
 // The Windows MFC exception mechanism requires that a caught CException
 // (including the CMemoryException in use here) be freed using its Delete()
 // method. Thus, when MFC is in use and we're catching exceptions as a result
@@ -89,8 +82,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_del_bad_alloc
 #endif
 
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-
 // Since new() throws exceptions, we need a way to avoid passing
 // exceptions past the call to new because ACE counts on having a 0
 // return value for a failed allocation. Some compilers offer the
@@ -98,7 +89,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // do not. For those that do not, this sets up what exception is thrown,
 // and then below we'll do a try/catch around the new to catch it and
 // return a 0 pointer instead.
-
 #  if defined (__HP_aCC)
       // I know this works for HP aC++... if <stdexcept> is used, it
       // introduces other stuff that breaks things, like <memory>, which
@@ -209,33 +199,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
      catch (ACE_bad_alloc) { ACE_del_bad_alloc errno = ENOMEM; POINTER = 0; } \
    } while (0)
 #  endif /* ACE_HAS_NEW_NOTHROW */
-
-#else /* ACE_NEW_THROWS_EXCEPTIONS */
-
-# define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
-   } while (0)
-# define ACE_NEW(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
-   } while (0)
-# define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
-   do { POINTER = new CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
-   } while (0)
-
-# if !defined (ACE_bad_alloc)
-    class ACE_bad_alloc_class {};
-#   define ACE_bad_alloc  ACE_bad_alloc_class
-# endif
-# if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#   define ACE_throw_bad_alloc  AfxThrowMemoryException ()
-# else
-#   define ACE_throw_bad_alloc  return 0
-# endif
-
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //@{

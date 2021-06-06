@@ -64,8 +64,6 @@ ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
                                         a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
-ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
-                                        failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
