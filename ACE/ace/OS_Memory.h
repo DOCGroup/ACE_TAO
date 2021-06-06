@@ -75,32 +75,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_nothrow   std::nothrow
 #define ACE_nothrow_t std::nothrow_t
 #define ACE_del_bad_alloc
-
-// Since new() throws exceptions, we need a way to avoid passing
-// exceptions past the call to new because ACE counts on having a 0
-// return value for a failed allocation. Some compilers offer the
-// new (nothrow) version, which does exactly what we want. Others
-// do not. For those that do not, this sets up what exception is thrown,
-// and then below we'll do a try/catch around the new to catch it and
-// return a 0 pointer instead.
-#  if defined (__HP_aCC)
-#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#  elif defined (__SUNPRO_CC)
-#    define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#  elif defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
-#    else
-#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#    endif
-#  else
-     // MFC changes the behavior of operator new at all MSVC versions from 6 up.
-#    if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#      define ACE_throw_bad_alloc AfxThrowMemoryException ()
-#    else
-#      define ACE_throw_bad_alloc throw ACE_bad_alloc ()
-#    endif
-#  endif /* __HP_aCC */
+#define ACE_throw_bad_alloc throw std::bad_alloc ()
 
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new (std::nothrow) CONSTRUCTOR; \

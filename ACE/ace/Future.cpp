@@ -86,8 +86,8 @@ ACE_Future_Rep<T>::create (void)
 {
   // Yes set ref count to zero.
   ACE_Future_Rep<T> *temp = internal_create ();
-  if (temp == 0)
-    ACE_throw_bad_alloc;
+  if (!temp)
+    throw std::bad_alloc ();
    return temp;
  }
 

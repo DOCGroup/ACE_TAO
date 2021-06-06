@@ -35,14 +35,14 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
 
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
-  if (dynamic_instance == 0)
+  if (!dynamic_instance)
     {
       // If this ACE_ASSERT fails, it may be due to running of out TSS
       // keys.  Try using ACE_HAS_TSS_EMULATION, or increasing
       // ACE_DEFAULT_THREAD_KEYS if already using TSS emulation.
       ACE_ASSERT (dynamic_instance != 0);
 
-      ACE_throw_bad_alloc;
+      throw std::bad_alloc ();
     }
   else
     {

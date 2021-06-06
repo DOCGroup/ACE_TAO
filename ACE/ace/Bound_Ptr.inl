@@ -18,8 +18,8 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong ()
 {
   // Set initial object reference count to 1.
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (1);
-  if (temp == 0)
-    ACE_throw_bad_alloc;
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
 
@@ -73,8 +73,8 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak ()
   // Set initial object reference count to 0.
 
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (0);
-  if (temp == 0)
-    ACE_throw_bad_alloc;
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
 
