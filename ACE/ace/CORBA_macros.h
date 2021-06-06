@@ -28,19 +28,6 @@
 #   pragma once
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// The Windows MFC exception mechanism requires that a caught CException
-// (including the CMemoryException in use here) be freed using its Delete()
-// method. Thus, when MFC is in use and we're catching exceptions as a result
-// of new(), the exception's Delete() method has to be called. No other
-// platform imposes this sort of restriction/requirement. The Windows
-// config stuff (at least for MSVC/MFC) defines a ACE_del_bad_alloc macro
-// that works with its ACE_bad_alloc macro to implement this cleanup
-// requirement. Since no other platform requires this, define it as
-// empty here.
-#if !defined (ACE_del_bad_alloc)
-#  define ACE_del_bad_alloc
-#endif
-
 #define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
   do { POINTER = new (std::nothrow) CONSTRUCTOR;         \
     if (!POINTER) { throw EXCEPTION; }              \

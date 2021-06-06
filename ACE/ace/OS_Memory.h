@@ -69,24 +69,12 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // being used).
 // ============================================================================
 
-// The Windows MFC exception mechanism requires that a caught CException
-// (including the CMemoryException in use here) be freed using its Delete()
-// method. Thus, when MFC is in use and we're catching exceptions as a result
-// of new(), the exception's Delete() method has to be called. No other
-// platform imposes this sort of restriction/requirement. The Windows
-// config stuff (at least for MSVC/MFC) defines a ACE_del_bad_alloc macro
-// that works with its ACE_bad_alloc macro to implement this cleanup
-// requirement. Since no other platform requires this, define it as
-// empty here.
-#if !defined (ACE_del_bad_alloc)
-#  define ACE_del_bad_alloc
-#endif
-
 // For backwards compatibility, we except all compilers to support these
 #include /**/ <new>
 #define ACE_bad_alloc std::bad_alloc
 #define ACE_nothrow   std::nothrow
 #define ACE_nothrow_t std::nothrow_t
+#define ACE_del_bad_alloc
 
 // Since new() throws exceptions, we need a way to avoid passing
 // exceptions past the call to new because ACE counts on having a 0
@@ -116,7 +104,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new (std::nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     if (!POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
