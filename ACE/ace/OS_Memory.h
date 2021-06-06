@@ -79,7 +79,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new (std::nothrow) CONSTRUCTOR; \
-     if (!POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
