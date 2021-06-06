@@ -54,9 +54,6 @@
 // (see ace/OS_Memory.h). This MFC exception object needs to be cleaned up
 // by calling its Delete() method.
 #if defined (ACE_HAS_MFC) && (ACE_HAS_MFC == 1)
-#  if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#  endif
 #  if defined (ACE_bad_alloc)
 #    undef ACE_bad_alloc
 #  endif

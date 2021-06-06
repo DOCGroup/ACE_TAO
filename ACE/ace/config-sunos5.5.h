@@ -57,10 +57,6 @@
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
 
-// If exceptions are enabled and we are using Sun/CC then
-// <operator new> throws an exception instead of returning 0.
-#define ACE_NEW_THROWS_EXCEPTIONS
-
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
 
