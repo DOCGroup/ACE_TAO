@@ -82,6 +82,18 @@
 # define ACE_HAS_MONITOR_POINTS 0
 #endif
 
+// Define ACE_NEW_THROWS_EXCEPTIONS for all compilers, we
+// expect all compilers to do so
+#if !defined (ACE_NEW_THROWS_EXCEPTIONS)
+# define ACE_NEW_THROWS_EXCEPTIONS
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+
+// Define ACE_HAS_NEW_NOTHROW for all compilers, we
+// except all compilers to support this
+#if !defined (ACE_HAS_NEW_NOTHROW)
+# define ACE_HAS_NEW_NOTHROW
+#endif /* ACE_HAS_NEW_NOTHROW */
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"

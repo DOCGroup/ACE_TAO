@@ -44,8 +44,6 @@
 # define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 #endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12
 #endif /* i386 */

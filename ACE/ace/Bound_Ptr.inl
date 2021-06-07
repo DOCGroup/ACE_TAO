@@ -1,8 +1,5 @@
 /* -*- C++ -*- */
 #include "ace/Guard_T.h"
-#if !defined (ACE_NEW_THROWS_EXCEPTIONS)
-#  include "ace/Log_Category.h"
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,16 +18,10 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_strong ()
 {
   // Set initial object reference count to 1.
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (1);
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-  if (temp == 0)
-    ACE_throw_bad_alloc;
-#else
-  ACE_ASSERT (temp != 0);
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
-
-
 
 template <class ACE_LOCK> inline long
 ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>* counter)
@@ -41,7 +32,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::attach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK>*
   if (counter->obj_ref_count_ == -1)
     return -1;
 
-  long new_obj_ref_count = ++counter->obj_ref_count_;
+  long const new_obj_ref_count = ++counter->obj_ref_count_;
   ++counter->self_ref_count_;
 
   return new_obj_ref_count;
@@ -82,12 +73,8 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::create_weak ()
   // Set initial object reference count to 0.
 
   ACE_Bound_Ptr_Counter<ACE_LOCK> *temp = internal_create (0);
-#if defined (ACE_NEW_THROWS_EXCEPTIONS)
-  if (temp == 0)
-    ACE_throw_bad_alloc;
-#else
-  ACE_ASSERT (temp != 0);
-#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+  if (!temp)
+    throw std::bad_alloc ();
   return temp;
 }
 

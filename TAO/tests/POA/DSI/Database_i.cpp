@@ -351,20 +351,17 @@ DatabaseImpl::Employee::operator delete (void *pointer)
   DATABASE::instance ()->free (pointer);
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant.
 void *
-DatabaseImpl::Employee::operator new (size_t size, const ACE_nothrow_t &)
+DatabaseImpl::Employee::operator new (size_t size, const std::nothrow_t &)
 {
   return DATABASE::instance ()->malloc (size);
 }
 
 void
-DatabaseImpl::Employee::operator delete (void *ptr, const ACE_nothrow_t&) throw ()
+DatabaseImpl::Employee::operator delete (void *ptr, const std::nothrow_t&) throw ()
 {
   DATABASE::instance ()->free (ptr);
 }
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, DatabaseImpl::Simpler_Database_Malloc,  ACE_Null_Mutex);
