@@ -29,9 +29,9 @@ class HTTPU_Export HTTP_Hdr_Node
   friend class HTTP_HCodes;
 
 public:
-  operator int (void) const;
-  operator const char * (void) const;
-  const char * format (void) const;
+  operator int () const;
+  operator const char * () const;
+  const char * format () const;
 
 private:
   HTTP_Hdr_Node (const char *token, const char *format);
@@ -144,17 +144,16 @@ protected:
 class HTTPU_Export HTTP_Headers : public JAWS_Header_Info, public HTTP_HCodes
 {
 public:
-  const char *header( int name ) const;
-  const char *value( int name );
-  const char *value_next( int name );
-  void value_reset ( void );
+  const char *header(int name) const;
+  const char *value(int name);
+  const char *value_next(int name);
+  void value_reset ();
 
 public:
   HTTP_Headers (void);
 
   const char *header_token (int name) const;
   const char *header_strings (int name) const;
-
 };
 
 

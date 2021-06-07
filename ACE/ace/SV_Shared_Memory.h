@@ -39,7 +39,6 @@ public:
     ACE_OPEN   = 0
   };
 
-  // = Initialization and termination methods.
   ACE_SV_Shared_Memory (void);
   ACE_SV_Shared_Memory (key_t external_id,
                         size_t size,
@@ -76,14 +75,14 @@ public:
   int  control (int cmd, void *buf);
 
   // = Segment-related info.
-  void *get_segment_ptr (void) const;
-  size_t get_segment_size (void) const;
+  void *get_segment_ptr () const;
+  size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
-  ACE_HANDLE get_id (void) const;
+  ACE_HANDLE get_id () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

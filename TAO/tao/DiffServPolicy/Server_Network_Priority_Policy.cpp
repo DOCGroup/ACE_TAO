@@ -65,7 +65,7 @@ TAO_Server_Network_Priority_Policy::policy_type (void)
 }
 
 TAO_Server_Network_Priority_Policy *
-TAO_Server_Network_Priority_Policy::clone (void) const
+TAO_Server_Network_Priority_Policy::clone () const
 {
   TAO_Server_Network_Priority_Policy *copy = 0;
   ACE_NEW_RETURN (copy,
@@ -130,13 +130,13 @@ TAO_Server_Network_Priority_Policy::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_Server_Network_Priority_Policy::_tao_cached_type (void) const
+TAO_Server_Network_Priority_Policy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_NETWORK_PRIORITY;
 }
 
 TAO_Policy_Scope
-TAO_Server_Network_Priority_Policy::_tao_scope (void) const
+TAO_Server_Network_Priority_Policy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                   TAO_POLICY_CLIENT_EXPOSED);

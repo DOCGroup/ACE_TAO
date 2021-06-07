@@ -4,23 +4,23 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::size_type
-ACE_Select_Reactor_Handler_Repository::size (void) const
+ACE_Select_Reactor_Handler_Repository::size () const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.total_size ();
 #else
   return this->event_handlers_.size ();
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 ACE_INLINE ACE_Select_Reactor_Handler_Repository::max_handlep1_type
-ACE_Select_Reactor_Handler_Repository::max_handlep1 (void) const
+ACE_Select_Reactor_Handler_Repository::max_handlep1 () const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->event_handlers_.current_size ();
 #else
   return this->max_handlep1_;
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 ACE_INLINE int
@@ -50,11 +50,11 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 
       if (pos != this->event_handlers_.end ())
         {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
           eh = (*pos).item ();
 #else
           eh = *pos;
-#endif  /* ACE_WIN32 */
+#endif  /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
         }
     }
   // Don't bother setting errno.  It isn't used in the select()-based
@@ -70,14 +70,14 @@ ACE_Select_Reactor_Handler_Repository::find (ACE_HANDLE handle)
 // ------------------------------------------------------------------
 
 ACE_INLINE bool
-ACE_Select_Reactor_Handler_Repository_Iterator::done (void) const
+ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 {
-#ifdef ACE_WIN32
+#ifdef ACE_SELECT_REACTOR_BASE_USES_HASH_MAP
   return this->current_ == this->rep_->event_handlers_.end ();
 #else
   return this->current_ == (this->rep_->event_handlers_.begin ()
                             + this->rep_->max_handlep1 ());
-#endif /* ACE_WIN32 */
+#endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
 }
 
 // ------------------------------------------------------------------
@@ -109,7 +109,7 @@ ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
   return !(*this == rhs);
 }
 
-#if defined (ACE_WIN32_VC8) || defined (ACE_WIN32_VC9)
+#if defined (_MSC_VER)
 #  pragma warning (push)
 #  pragma warning (disable:4355)  /* Use of 'this' in initializer list */
 #endif
@@ -123,25 +123,26 @@ ACE_Select_Reactor_Impl::ACE_Select_Reactor_Impl (bool ms)
   , delete_signal_handler_ (false)
   , delete_notify_handler_ (false)
   , initialized_ (false)
-  , restart_ (0)
+  , restart_ (false)
   , requeue_position_ (-1) // Requeue at end of waiters by default.
-  , state_changed_ (0)
+  , owner_ (ACE_OS::NULL_thread)
+  , state_changed_ (false)
   , mask_signals_ (ms)
   , supress_renew_ (0)
 {
 }
-#if defined (ACE_WIN32_VC8) || defined (ACE_WIN32_VC9)
+#if defined (_MSC_VER)
 #  pragma warning (pop)
 #endif
 
-ACE_INLINE int
+ACE_INLINE bool
 ACE_Select_Reactor_Impl::supress_notify_renew (void)
 {
   return this->supress_renew_;
 }
 
 ACE_INLINE void
-ACE_Select_Reactor_Impl::supress_notify_renew (int sr)
+ACE_Select_Reactor_Impl::supress_notify_renew (bool sr)
 {
   this->supress_renew_ = sr;
 }

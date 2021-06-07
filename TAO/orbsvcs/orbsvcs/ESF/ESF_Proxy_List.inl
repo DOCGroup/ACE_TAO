@@ -14,7 +14,7 @@ TAO_ESF_Proxy_List<PROXY>::end (void)
 }
 
 template<class PROXY> ACE_INLINE size_t
-TAO_ESF_Proxy_List<PROXY>::size (void) const
+TAO_ESF_Proxy_List<PROXY>::size () const
 {
   return this->impl_.size ();
 }

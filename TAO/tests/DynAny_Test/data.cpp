@@ -89,11 +89,8 @@ Data::Data (CORBA::ORB_var orb)
       this->m_objref2 =
         root_poa->create_reference ("foo");
 
-
       // Clean up after the POA
-      root_poa->destroy (1,
-                         1);
-
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

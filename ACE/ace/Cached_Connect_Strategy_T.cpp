@@ -155,12 +155,12 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
     sh = entry->int_id_.first;
 
     // Is the connection clean?
-    int state_result =
+    int const state_result =
       ACE::handle_ready (sh->peer ().get_handle (),
                          &ACE_Time_Value::zero,
-                         1, // read ready
-                         0, // write ready
-                         1);// exception ready
+                         true, // read ready
+                         false, // write ready
+                         true);// exception ready
 
     if (state_result == 1)
     {
@@ -607,9 +607,9 @@ ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_S
       // Is the connection clean?
       int state_result= ACE::handle_ready (sh->peer ().get_handle (),
                                            &ACE_Time_Value::zero,
-                                           1, // read ready
-                                           0, // write ready
-                                           1);// exception ready
+                                           true, // read ready
+                                           false, // write ready
+                                           true);// exception ready
 
       if (state_result == 1)
         {

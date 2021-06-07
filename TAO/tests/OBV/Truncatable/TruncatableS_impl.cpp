@@ -177,5 +177,5 @@ Test_impl::op5 (const CORBA::Any& val,
 void
 Test_impl::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -3,8 +3,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 ACE_INLINE
-TAO_Var_Base_T<T>::TAO_Var_Base_T (void)
-  : ptr_ (0)
+TAO_Var_Base_T<T>::TAO_Var_Base_T ()
+  : ptr_ (nullptr)
 {}
 
 template<typename T>
@@ -15,7 +15,7 @@ TAO_Var_Base_T<T>::TAO_Var_Base_T (T * p)
 
 template<typename T>
 ACE_INLINE
-TAO_Var_Base_T<T>::~TAO_Var_Base_T (void)
+TAO_Var_Base_T<T>::~TAO_Var_Base_T ()
 {
   delete this->ptr_;
 }
@@ -23,7 +23,7 @@ TAO_Var_Base_T<T>::~TAO_Var_Base_T (void)
 template<typename T>
 ACE_INLINE
 const T *
-TAO_Var_Base_T<T>::operator-> (void) const
+TAO_Var_Base_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -31,7 +31,7 @@ TAO_Var_Base_T<T>::operator-> (void) const
 template<typename T>
 ACE_INLINE
 T *
-TAO_Var_Base_T<T>::operator-> (void)
+TAO_Var_Base_T<T>::operator-> ()
 {
   return this->ptr_;
 }
@@ -39,7 +39,7 @@ TAO_Var_Base_T<T>::operator-> (void)
 template<typename T>
 ACE_INLINE
 const T &
-TAO_Var_Base_T<T>::in (void) const
+TAO_Var_Base_T<T>::in () const
 {
   return *this->ptr_;
 }
@@ -47,7 +47,7 @@ TAO_Var_Base_T<T>::in (void) const
 template<typename T>
 ACE_INLINE
 T &
-TAO_Var_Base_T<T>::inout (void)
+TAO_Var_Base_T<T>::inout ()
 {
   return *this->ptr_;
 }
@@ -55,7 +55,7 @@ TAO_Var_Base_T<T>::inout (void)
 template<typename T>
 ACE_INLINE
 T *
-TAO_Var_Base_T<T>::ptr (void) const
+TAO_Var_Base_T<T>::ptr () const
 {
   return this->ptr_;
 }
@@ -71,7 +71,7 @@ TAO_Var_Base_T<T>::operator T *& ()
 
 template<typename T>
 ACE_INLINE
-TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T (void)
+TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T ()
 {}
 
 template<typename T>
@@ -119,8 +119,10 @@ TAO_Fixed_Var_T<T>::operator T & ()
   // Use plain new, using the ACE_NEW macros will mean we dereference a
   // nil pointer and crash which is more bad then plain new which could
   // lead to a bad_alloc exception
-  if (this->ptr_ == 0)
+  if (!this->ptr_)
+  {
     this->ptr_ = new T;
+  }
 
   return *this->ptr_;
 }
@@ -136,13 +138,15 @@ TAO_Fixed_Var_T<T>::operator T & () const
 template<typename T>
 ACE_INLINE
 T &
-TAO_Fixed_Var_T<T>::out (void)
+TAO_Fixed_Var_T<T>::out ()
 {
   // Use plain new, using the ACE_NEW macros will mean we dereference a
   // nil pointer and crash which is more bad then plain new which could
   // lead to a bad_alloc exception
-  if (this->ptr_ == 0)
+  if (!this->ptr_)
+  {
     this->ptr_ = new T;
+  }
 
   return *this->ptr_;
 }
@@ -150,7 +154,7 @@ TAO_Fixed_Var_T<T>::out (void)
 template<typename T>
 ACE_INLINE
 T
-TAO_Fixed_Var_T<T>::_retn (void)
+TAO_Fixed_Var_T<T>::_retn ()
 {
   return *this->ptr_;
 }
@@ -159,7 +163,7 @@ TAO_Fixed_Var_T<T>::_retn (void)
 
 template<typename T>
 ACE_INLINE
-TAO_Var_Var_T<T>::TAO_Var_Var_T (void)
+TAO_Var_Var_T<T>::TAO_Var_Var_T ()
 {}
 
 template<typename T>
@@ -209,20 +213,20 @@ TAO_Var_Var_T<T>::operator T & () const
 template<typename T>
 ACE_INLINE
 T *&
-TAO_Var_Var_T<T>::out (void)
+TAO_Var_Var_T<T>::out ()
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return this->ptr_;
 }
 
 template<typename T>
 ACE_INLINE
 T *
-TAO_Var_Var_T<T>::_retn (void)
+TAO_Var_Var_T<T>::_retn ()
 {
   T * tmp = this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
   return tmp;
 }
 
@@ -233,7 +237,7 @@ ACE_INLINE
 TAO_Out_T<T>::TAO_Out_T (T *& p)
   : ptr_ (p)
 {
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template<typename T>
@@ -242,7 +246,7 @@ TAO_Out_T<T>::TAO_Out_T (T_var & p)
   : ptr_ (p.out ())
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 }
 
 template<typename T>
@@ -279,7 +283,7 @@ TAO_Out_T<T>::operator T *& ()
 template<typename T>
 ACE_INLINE
 T *&
-TAO_Out_T<T>::ptr (void)
+TAO_Out_T<T>::ptr ()
 {
   return this->ptr_;
 }
@@ -287,7 +291,7 @@ TAO_Out_T<T>::ptr (void)
 template<typename T>
 ACE_INLINE
 T *
-TAO_Out_T<T>::operator-> (void)
+TAO_Out_T<T>::operator-> ()
 {
   return this->ptr_;
 }

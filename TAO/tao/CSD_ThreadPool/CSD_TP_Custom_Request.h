@@ -45,13 +45,10 @@ namespace TAO
     class TAO_CSD_TP_Export TP_Custom_Request : public TP_Request
     {
     public:
-
       /// Virtual Destructor.
       virtual ~TP_Custom_Request();
 
-
     protected:
-
       /// Constructor.
       TP_Custom_Request(TP_Custom_Request_Operation* op,
                         TP_Servant_State*            servant_state);
@@ -59,9 +56,7 @@ namespace TAO
       void execute_op();
       void cancel_op();
 
-
     private:
-
       TP_Custom_Request_Operation_Handle op_;
     };
 

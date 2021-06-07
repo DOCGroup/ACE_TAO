@@ -63,7 +63,6 @@ public:
       NET_LOCAL
     };
 
-  // = Initialization and termination methods.
   /// "Do-nothing" constructor.
   ACE_Naming_Context (void);
 
@@ -103,7 +102,7 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Close down the test when dynamically unlinked.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Returns information about this context.
   virtual int info (ACE_TCHAR **strp, size_t length) const;
@@ -277,7 +276,6 @@ private:
 class ACE_Export ACE_Name_Options
 {
 public:
-  // = Initialization and termination methods.
   ACE_Name_Options (void);
   ~ACE_Name_Options (void);
 
@@ -328,7 +326,7 @@ public:
   char *base_address (void);
 
   /// Get use of registry in naming
-  bool use_registry (void) const;
+  bool use_registry () const;
 
   /// Set use of registry in naming
   void use_registry (bool x);

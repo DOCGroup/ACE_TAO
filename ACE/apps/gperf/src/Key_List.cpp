@@ -601,7 +601,7 @@ Key_List::output_switch (int use_keyword_table)
     }
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  ACE_OS::printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
+  ACE_OS::printf ("      unsigned int const key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
 
@@ -664,7 +664,7 @@ Key_List::output_switch (int use_keyword_table)
                 }
               else
                 {
-                  List_Node *links;
+                  List_Node *links = 0;
 
                   for (links = temp; links; links = links->link)
                     {
@@ -1254,8 +1254,8 @@ Key_List::output_hash_function (void)
                     ACE_OS::printf ("      case %d:\n", count);
 
                   ACE_OS::printf (option[STRCASECMP]
-                          ? "      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n"
-                          : "      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n",
+                          ? "      case %d:\n        hval += asso_values[static_cast<int>(charmap[static_cast<int>(str[%d])])];\n        // Fallthrough\n"
+                          : "      case %d:\n        hval += asso_values[static_cast<int>(str[%d])];\n        // Fallthrough \n",
                           key_pos, key_pos - 1);
                 }
               while ((key_pos = option.get ()) != EOS && key_pos != WORD_END);
@@ -1494,7 +1494,7 @@ Key_List::output_lookup_function (void)
 {
   if (!option[OPTIMIZE])
     ACE_OS::printf ("  if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)\n    {\n");
-  ACE_OS::printf ("      unsigned int key = %s (str, len);\n\n", option.hash_name ());
+  ACE_OS::printf ("      unsigned int const key = %s (str, len);\n\n", option.hash_name ());
   if (!option[OPTIMIZE])
     ACE_OS::printf ("      if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)\n");
   ACE_OS::printf ("        {\n");

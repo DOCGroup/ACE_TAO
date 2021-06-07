@@ -94,15 +94,15 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
   // UIPMC Additions - Begin
-  const ACE_INET_Addr &addr (void) const;
+  const ACE_INET_Addr &addr () const;
 
   void addr (const ACE_INET_Addr &addr);
 
-  const ACE_INET_Addr &local_addr (void) const;
+  const ACE_INET_Addr &local_addr () const;
 
   void local_addr (const ACE_INET_Addr &addr);
 
-  u_long send_hi_water_mark (void) const;
+  u_long send_hi_water_mark () const;
   // UIPMC Additions - End
 
 protected:

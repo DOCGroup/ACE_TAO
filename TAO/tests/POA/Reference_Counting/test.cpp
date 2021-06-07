@@ -111,7 +111,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       h->_remove_ref ();
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       orb->destroy ();
     }

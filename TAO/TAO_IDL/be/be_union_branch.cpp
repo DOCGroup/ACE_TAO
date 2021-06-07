@@ -54,17 +54,17 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
 
   // If the enum is not in the global scope we have to prefix it.
   be_union *u =
-    be_union::narrow_from_scope (this->defined_in ());
+    dynamic_cast<be_union*> (this->defined_in ());
 
-  if (u == 0)
+  if (u == nullptr)
     {
       return -1;
     }
 
   be_type* dt =
-    be_type::narrow_from_decl (u->disc_type ());
+    dynamic_cast<be_type*> (u->disc_type ());
 
-  if (dt == 0)
+  if (dt == nullptr)
     {
       return -1;
     }
@@ -83,9 +83,9 @@ be_union_branch::gen_label_value (TAO_OutStream *os, unsigned long index)
   // Find where was the enum defined, if it was defined in the globa
   // scope, then it is easy to generate the enum values....
   be_scope* scope =
-    be_scope::narrow_from_scope (dt->defined_in ());
+    dynamic_cast<be_scope*> (dt->defined_in ());
 
-  if (scope == 0)
+  if (scope == nullptr)
     {
       *os << e->n ();
       return 0;
@@ -144,7 +144,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
         // discriminant, so we must generate the string name.
         {
           AST_ConcreteType *act = bu->disc_type ();
-          be_enum *be = be_enum::narrow_from_decl (act);
+          be_enum *be = dynamic_cast<be_enum*> (act);
 
           UTL_ScopedName *sn = be->value_to_name (dv.u.enum_val);
           if (sn)
@@ -186,12 +186,8 @@ be_union_branch::accept (be_visitor *visitor)
 }
 
 void
-be_union_branch::destroy (void)
+be_union_branch::destroy ()
 {
   this->be_decl::destroy ();
   this->AST_UnionBranch::destroy ();
 }
-
-
-
-IMPL_NARROW_FROM_DECL (be_union_branch)

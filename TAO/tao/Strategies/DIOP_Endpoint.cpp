@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 #include "tao/Strategies/DIOP_Endpoint.h"
 
 #if defined (TAO_HAS_DIOP) && (TAO_HAS_DIOP != 0)
@@ -15,6 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -168,7 +168,7 @@ TAO_DIOP_Endpoint::host (const char *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)
-  if (ACE_OS::strchr (h, ':') != 0)
+  if (std::strchr (h, ':') != 0)
     this->is_ipv6_decimal_ = true;
 #endif /* ACE_HAS_IPV6 */
 
@@ -232,7 +232,7 @@ TAO_DIOP_Endpoint::hash (void)
 }
 
 const ACE_INET_Addr &
-TAO_DIOP_Endpoint::object_addr (void) const
+TAO_DIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode
   // time for several reasons:
@@ -257,7 +257,7 @@ TAO_DIOP_Endpoint::object_addr (void) const
 }
 
 void
-TAO_DIOP_Endpoint::object_addr_i (void) const
+TAO_DIOP_Endpoint::object_addr_i () const
 {
   // We should have already held the lock
 

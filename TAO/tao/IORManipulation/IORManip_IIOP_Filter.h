@@ -59,14 +59,12 @@ public:
                          const TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);
 
 protected:
-
   /// This is the bulk of the filtering code.
   virtual void filter_and_add (TAO_Profile* profile,
                                TAO_MProfile& profiles,
                                TAO_Profile* guideline = 0);
 
 private:
-
   /// Fill in the Profile_Info with information from the profile.
   int fill_profile_info (TAO_Profile* profile,
                          TAO_IORManip_IIOP_Filter::Profile_Info& pinfo);

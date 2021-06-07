@@ -32,7 +32,7 @@ ACE_Dumpable_Adapter<Concrete>::operator->() const
 }
 
 template <class Concrete> void
-ACE_Dumpable_Adapter<Concrete>::dump (void) const
+ACE_Dumpable_Adapter<Concrete>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Dumpable_Adapter<Concrete>::dump");

@@ -32,7 +32,7 @@ public:
     //          int sleep_time);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:

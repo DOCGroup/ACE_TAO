@@ -33,7 +33,7 @@ Test_Recursive_Union::~Test_Recursive_Union (void)
 }
 
 const char *
-Test_Recursive_Union::opname (void) const
+Test_Recursive_Union::opname () const
 {
   return this->opname_;
 }

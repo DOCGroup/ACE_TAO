@@ -56,7 +56,6 @@ class IPC_Client : public ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>
   // = TITLE
   //   This class illustrates how the <ACE_Connector> works.
 public:
-  // = Initialization and termination methods.
   IPC_Client (void);
   // Constructor.
 
@@ -67,10 +66,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the IPC client.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Destroy the IPC client.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the svc.
 
 private:

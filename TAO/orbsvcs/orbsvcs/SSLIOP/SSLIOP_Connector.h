@@ -53,7 +53,6 @@ namespace TAO
     class Connector : public TAO::IIOP_SSL_Connector
     {
     public:
-
       /// Constructor.
       Connector (::Security::QOP qop, bool check_host);
 
@@ -75,7 +74,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name @c TAO_Connector Methods
        *
@@ -114,7 +112,6 @@ namespace TAO
                                                           SSL *ssl);
 
     public:
-
       typedef TAO_Connect_Concurrency_Strategy<Connection_Handler>
           CONNECT_CONCURRENCY_STRATEGY;
 
@@ -130,7 +127,6 @@ namespace TAO
           BASE_CONNECTOR;
 
     private:
-
       /// If zero, connect to IIOP over SSL port by default.
       /// Otherwise, connect to the insecure IIOP port.
       ::Security::QOP qop_;
@@ -144,9 +140,7 @@ namespace TAO
 
       /// The connector initiating connection requests for IIOP.
       BASE_CONNECTOR base_connector_;
-
     };
-
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

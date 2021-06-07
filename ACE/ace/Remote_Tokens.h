@@ -137,7 +137,7 @@ public:
   static void set_server_address (const ACE_INET_Addr &server_address);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 protected:
 
@@ -175,10 +175,10 @@ public:
                     int debug = 0);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Make the correct type of ACE_Tokens.
@@ -211,13 +211,13 @@ public:
   ACE_Remote_RLock (const ACE_Remote_RLock &mutex);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns ACE_RW_Token::RLOCK;
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
@@ -249,13 +249,13 @@ public:
   ACE_Remote_WLock (const ACE_Remote_WLock &mutex);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
   /// Returns ACE_RW_Token::WLOCK;
-  virtual int type (void) const;
+  virtual int type () const;
 
   /// Return deep copy.
-  virtual ACE_Token_Proxy *clone (void) const;
+  virtual ACE_Token_Proxy *clone () const;
 
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
@@ -283,7 +283,7 @@ public:
   ACE_SOCK_Stream *get_connection (void);
 
   /// Factory Method that creates a new SOCK Stream.
-  virtual ACE_SOCK_Stream *make_TSS_TYPE (void) const;
+  virtual ACE_SOCK_Stream *make_TSS_TYPE () const;
 
   /// Inheritance and operator overloading don't mix.  Redefine this
   /// from ACE_TSS so that we can use it.
@@ -293,7 +293,7 @@ public:
   static void set_server_address (const ACE_INET_Addr &server_address);
 
   /// Dump the state of the class.
-  void dump (void) const;
+  void dump () const;
 
 protected:
   /// The address of the Token Server used by all instances of
@@ -301,9 +301,8 @@ protected:
   static ACE_INET_Addr server_address_;
 
 private:
-  /// Private: should not be used
-  ACE_TSS_Connection (const ACE_TSS_Connection &);
-  void operator= (const ACE_TSS_Connection &);
+  ACE_TSS_Connection (const ACE_TSS_Connection &) = delete;
+  void operator= (const ACE_TSS_Connection &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

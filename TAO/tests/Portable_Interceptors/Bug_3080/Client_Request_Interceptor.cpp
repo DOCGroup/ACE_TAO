@@ -10,13 +10,13 @@ Client_Request_Interceptor::Client_Request_Interceptor (void)
 }
 
 CORBA::ULong
-Client_Request_Interceptor::receive_exception_count (void) const
+Client_Request_Interceptor::receive_exception_count () const
 {
   return this->receive_exception_count_;
 }
 
 CORBA::ULong
-Client_Request_Interceptor::request_count (void) const
+Client_Request_Interceptor::request_count () const
 {
   return this->request_count_;
 }

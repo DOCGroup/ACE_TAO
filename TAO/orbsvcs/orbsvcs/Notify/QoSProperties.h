@@ -51,20 +51,20 @@ public:
   int transfer (TAO_Notify_QoSProperties& qos_properties);
 
   ///= Accessors
-  const TAO_Notify_Property_ThreadPool& thread_pool (void) const;
-  const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane (void) const;
+  const TAO_Notify_Property_ThreadPool& thread_pool () const;
+  const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane () const;
 
-  const TAO_Notify_Property_Short& event_reliability (void) const;
-  const TAO_Notify_Property_Short& connection_reliability (void) const;
-  const TAO_Notify_Property_Short& priority (void) const;
-  const TAO_Notify_Property_Time& timeout (void) const;
-  const TAO_Notify_Property_Boolean& stop_time_supported (void) const;
-  const TAO_Notify_Property_Long& maximum_batch_size (void) const;
-  const TAO_Notify_Property_Time& pacing_interval (void) const;
-  const TAO_Notify_Property_Long& max_events_per_consumer (void) const;
-  const TAO_Notify_Property_Short& discard_policy(void) const;
-  const TAO_Notify_Property_Short& order_policy(void) const;
-  const TAO_Notify_Property_Time& blocking_policy(void) const;
+  const TAO_Notify_Property_Short& event_reliability () const;
+  const TAO_Notify_Property_Short& connection_reliability () const;
+  const TAO_Notify_Property_Short& priority () const;
+  const TAO_Notify_Property_Time& timeout () const;
+  const TAO_Notify_Property_Boolean& stop_time_supported () const;
+  const TAO_Notify_Property_Long& maximum_batch_size () const;
+  const TAO_Notify_Property_Time& pacing_interval () const;
+  const TAO_Notify_Property_Long& max_events_per_consumer () const;
+  const TAO_Notify_Property_Short& discard_policy() const;
+  const TAO_Notify_Property_Short& order_policy() const;
+  const TAO_Notify_Property_Time& blocking_policy() const;
 
   // The non-const accessors are used during topology load
   TAO_Notify_Property_Short& event_reliability (void);

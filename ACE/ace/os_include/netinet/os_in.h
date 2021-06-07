@@ -43,7 +43,7 @@ extern "C"
 
 # if defined (ACE_HAS_PHARLAP_RT)
 #   define ACE_IPPROTO_TCP SOL_SOCKET
-# else
+# elif !defined (ACE_IPPROTO_TCP)
 #   define ACE_IPPROTO_TCP IPPROTO_TCP
 # endif /* ACE_HAS_PHARLAP_RT */
 

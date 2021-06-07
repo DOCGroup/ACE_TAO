@@ -29,7 +29,6 @@
 class test_i : public virtual POA_PICurrentTest::test
 {
 public:
-
   /// Constructor.
   test_i (PortableInterceptor::Current_ptr current,
           PortableInterceptor::SlotId id,
@@ -53,7 +52,6 @@ public:
   virtual void shutdown (void);
 
 private:
-
   /// Reference to the PICurrent object.
   PortableInterceptor::Current_var current_;
 
@@ -62,7 +60,6 @@ private:
 
   /// Pseudo-reference to the ORB.
   CORBA::ORB_var orb_;
-
 };
 
 #endif  /* TEST_I_H */

@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<class TQ, class TYPE> ACE_INLINE TQ *
-ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue (void) const
+ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue () const
 {
   return this->timer_queue_;
 }
@@ -20,7 +20,7 @@ ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::timer_queue (TQ *tq)
 }
 
 template<class TQ, class TYPE> ACE_INLINE ACE_thread_t
-ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::thr_id (void) const
+ACE_Thread_Timer_Queue_Adapter<TQ, TYPE>::thr_id () const
 {
   return this->thr_id_;
 }

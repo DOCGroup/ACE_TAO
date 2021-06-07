@@ -346,7 +346,7 @@ ifr_visitor::visit_fixed (AST_Fixed *node)
 }
 
 ACE_Lock &
-ifr_visitor::lock (void) const
+ifr_visitor::lock () const
 {
   return *this->lock_;
 }

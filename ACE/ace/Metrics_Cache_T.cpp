@@ -1,8 +1,6 @@
 #ifndef ACE_METRICS_CACHE_CPP
 #define ACE_METRICS_CACHE_CPP
 
-//#define ACE_BUILD_DLL
-
 #include "ace/Metrics_Cache_T.h"
 
 #if defined (ACE_COMPILE_TIMEPROBES)

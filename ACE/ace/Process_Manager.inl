@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE size_t
-ACE_Process_Manager::managed (void) const
+ACE_Process_Manager::managed () const
 {
   return current_count_;
 }

@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -40,7 +38,7 @@ namespace ACE_OS {
   int dlclose (ACE_SHLIB_HANDLE handle);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_TCHAR *dlerror (void);
+  ACE_TCHAR *dlerror ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,

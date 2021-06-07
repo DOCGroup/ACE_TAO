@@ -22,14 +22,11 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (NONNATIVE_LONGDOUBLE)
-static const ACE_INT16 max_eleven_bit = 0x3ff;
-static const ACE_INT16 max_fifteen_bit = 0x3fff;
+static constexpr ACE_INT16 max_eleven_bit = 0x3ff;
+static constexpr ACE_INT16 max_fifteen_bit = 0x3fff;
 #endif /* NONNATIVE_LONGDOUBLE */
 
-//
 // See comments in CDR_Base.inl about optimization cases for swap_XX_array.
-//
-
 void
 ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 {
@@ -584,21 +581,6 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
   return 0;
 }
 
-#if defined (NONNATIVE_LONGLONG)
-bool
-ACE_CDR::LongLong::operator== (const ACE_CDR::LongLong &rhs) const
-{
-  return this->h == rhs.h && this->l == rhs.l;
-}
-
-bool
-ACE_CDR::LongLong::operator!= (const ACE_CDR::LongLong &rhs) const
-{
-  return this->l != rhs.l || this->h != rhs.h;
-}
-
-#endif /* NONNATIVE_LONGLONG */
-
 #if defined (NONNATIVE_LONGDOUBLE)
 ACE_CDR::LongDouble&
 ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
@@ -834,7 +816,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
 #elif defined NONNATIVE_LONGDOUBLE
   typedef LongDouble::NativeImpl BigFloat;
 #else
-  typedef LongDouble BigFloat;
+  using BigFloat = LongDouble;
 #endif
 
   Fixed f;

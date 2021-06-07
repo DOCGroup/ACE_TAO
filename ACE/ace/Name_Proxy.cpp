@@ -7,7 +7,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Name_Proxy::dump (void) const
+ACE_Name_Proxy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Proxy::dump");
@@ -22,7 +22,7 @@ ACE_Name_Proxy::dump (void) const
 
 // Default constructor.
 
-ACE_Name_Proxy::ACE_Name_Proxy (void)
+ACE_Name_Proxy::ACE_Name_Proxy ()
   : reactor_ (0)
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");
@@ -64,7 +64,7 @@ ACE_Name_Proxy::ACE_Name_Proxy (
 // Obtain underlying handle.
 
 /* VIRTUAL */ ACE_HANDLE
-ACE_Name_Proxy::get_handle (void) const
+ACE_Name_Proxy::get_handle () const
 {
   ACE_TRACE ("ACE_Name_Proxy::get_handle");
   return this->peer_.get_handle ();
@@ -198,7 +198,7 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
 
 // Close down the connection to the server.
 
-ACE_Name_Proxy::~ACE_Name_Proxy (void)
+ACE_Name_Proxy::~ACE_Name_Proxy ()
 {
   ACE_TRACE ("ACE_Name_Proxy::~ACE_Name_Proxy");
   this->peer_.close ();

@@ -14,8 +14,7 @@
 #include "ace/Process.h"
 #include "ace/SString.h"
 
-typedef void (*setenvfn_t) (const ACE_TCHAR *name, const ACE_TCHAR *value,
-                            void *ctx);
+using setenvfn_t = void (*)(const ACE_TCHAR *, const ACE_TCHAR *, void *);
 
 #if defined (ACE_WIN32) && !defined (ACE_USES_WCHAR) && !defined (ACE_HAS_WINCE)
 
@@ -35,13 +34,11 @@ void create_large_env (setenvfn_t setenv, void *ctx)
     }
 }
 
-
 void apo_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *ctx)
 {
   ACE_Process_Options *apo = static_cast<ACE_Process_Options *> (ctx);
   apo->setenv (name, value);
 }
-
 
 void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
 {
@@ -50,7 +47,6 @@ void thisproc_setenv (const ACE_TCHAR *name, const ACE_TCHAR *value, void *)
   putstr += value;
   ACE_OS::putenv (putstr.c_str ());
 }
-
 #endif
 
 int
@@ -71,10 +67,23 @@ run_main (int, ACE_TCHAR*[])
   ACE_Process process;
   if (process.spawn (options) != -1)
     {
-      ACE_ERROR ((LM_ERROR,
-                  "ERROR: This should have failed due to the large "
-                  "environment buffer\n"));
-      test_status = 1;
+      /*
+       * In Windows versions < Vista the ENTIRE environment block could be a
+       * maximum of 32,767 bytes long
+       *
+       * In Windows versions > Vista it's 32,767 bytes per environment variable
+       */
+#if (_WIN32_WINNT < 0x0600)
+        ACE_ERROR ((LM_ERROR,
+                    "ERROR: This should have failed due to the large "
+                    "environment buffer\n"));
+
+        test_status = 1;
+#else
+        ACE_DEBUG ((LM_DEBUG,
+                    "Using large environment buffer works as expected "
+                    "on Windows vista or newer\n"));
+#endif /* _WIN32_WINNT < 0x0600 */
     }
 
   options.enable_unicode_environment ();

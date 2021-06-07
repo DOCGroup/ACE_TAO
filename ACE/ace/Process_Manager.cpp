@@ -26,6 +26,9 @@ ACE_Process_Manager_cleanup (void *instance, void *arg)
 {
   ACE_Process_Manager::cleanup (instance, arg);
 }
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager_cleanup
+#else
+#define ACE_PROCESS_MANAGER_CLEANUP_FUNCTION ACE_Process_Manager::cleanup
 #endif
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -57,14 +60,14 @@ ACE_Process_Manager *ACE_Process_Manager::instance_ = 0;
 // (we can only delete it safely if we created it!)
 bool ACE_Process_Manager::delete_instance_ = false;
 
-ACE_Process_Manager::Process_Descriptor::~Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::~Process_Descriptor ()
 {
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Process_Manager::Process_Descriptor)
 
 void
-ACE_Process_Manager::Process_Descriptor::dump (void) const
+ACE_Process_Manager::Process_Descriptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::Process_Descriptor::dump");
@@ -79,7 +82,7 @@ ACE_Process_Manager::Process_Descriptor::dump (void) const
 }
 
 void
-ACE_Process_Manager::dump (void) const
+ACE_Process_Manager::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Process_Manager::dump");
@@ -96,7 +99,7 @@ ACE_Process_Manager::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
+ACE_Process_Manager::Process_Descriptor::Process_Descriptor ()
   : process_ (0),
     exit_notify_ (0)
 {
@@ -104,7 +107,7 @@ ACE_Process_Manager::Process_Descriptor::Process_Descriptor (void)
 }
 
 ACE_Process_Manager *
-ACE_Process_Manager::instance (void)
+ACE_Process_Manager::instance ()
 {
   ACE_TRACE ("ACE_Process_Manager::instance");
 
@@ -124,19 +127,10 @@ ACE_Process_Manager::instance (void)
           // Register with the Object_Manager so that the wrapper to
           // delete the proactor will be called when Object_Manager is
           // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
           ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager_cleanup,
+                                       ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
                                        0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#else
-          ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                       ACE_Process_Manager::cleanup,
-                                       0,
-                                       typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
-
+                                       typeid (ACE_Process_Manager).name ());
         }
     }
 
@@ -157,25 +151,17 @@ ACE_Process_Manager::instance (ACE_Process_Manager *tm)
   // Register with the Object_Manager so that the wrapper to
   // delete the proactor will be called when Object_Manager is
   // being terminated.
-
-#if defined ACE_HAS_SIG_C_FUNC
   ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager_cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#else
-  ACE_Object_Manager::at_exit (ACE_Process_Manager::instance_,
-                                ACE_Process_Manager::cleanup,
-                                0,
-                                typeid (*ACE_Process_Manager::instance_).name ());
-#endif /* ACE_HAS_SIG_C_FUNC */
+                               ACE_PROCESS_MANAGER_CLEANUP_FUNCTION,
+                               0,
+                               typeid (*t).name ());
 
   ACE_Process_Manager::instance_ = tm;
   return t;
 }
 
 void
-ACE_Process_Manager::close_singleton( void )
+ACE_Process_Manager::close_singleton( )
 {
   ACE_TRACE ("ACE_Process_Manager::close_singleton");
 
@@ -265,7 +251,7 @@ ACE_Process_Manager::ACE_Process_Manager (size_t size,
 
 // Close up and release all resources.
 int
-ACE_Process_Manager::close (void)
+ACE_Process_Manager::close ()
 {
   ACE_TRACE ("ACE_Process_Manager::close");
 
@@ -297,7 +283,7 @@ ACE_Process_Manager::close (void)
   return 0;
 }
 
-ACE_Process_Manager::~ACE_Process_Manager (void)
+ACE_Process_Manager::~ACE_Process_Manager ()
 {
   ACE_TRACE ("ACE_Process_Manager::~ACE_Process_Manager");
   this->close ();
@@ -385,7 +371,7 @@ ACE_Process_Manager::handle_signal (int,
     {
       // <GetExitCodeProcess> failed.
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("GetExitCodeProcess failed")),
+                         ACE_TEXT ("GetExitCodeProcess failed\n")),
                         -1); // return -1: unregister
     }
 #else /* !ACE_WIN32 */

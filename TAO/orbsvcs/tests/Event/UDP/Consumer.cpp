@@ -11,7 +11,7 @@ Consumer::Consumer (bool valuetype)
 }
 
 CORBA::ULong
-Consumer::event_count (void) const
+Consumer::event_count () const
 {
   return this->event_count_;
 }

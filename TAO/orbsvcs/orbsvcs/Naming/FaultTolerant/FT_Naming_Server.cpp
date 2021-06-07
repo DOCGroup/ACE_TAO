@@ -74,7 +74,7 @@ TAO_FTNS_Notifier::handle_exception (ACE_HANDLE )
 }
 
 /// Default Constructor.
-TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
+TAO_FT_Naming_Server::TAO_FT_Naming_Server ()
   : TAO_Naming_Server (IOR_ARRAY_SIZE),
     naming_manager_ (),
     replicator_ (0),
@@ -94,7 +94,7 @@ TAO_FT_Naming_Server::TAO_FT_Naming_Server (void)
 }
 
 void
-TAO_FT_Naming_Server::update_info_i (void)
+TAO_FT_Naming_Server::update_info_i ()
 {
   while (true)
     {
@@ -140,7 +140,7 @@ TAO_FT_Naming_Server::update_info (FT_Naming::UpdateInfoSeq &infos)
 }
 
 void
-TAO_FT_Naming_Server::update_iors_i (void)
+TAO_FT_Naming_Server::update_iors_i ()
 {
   while (true)
     {
@@ -344,7 +344,7 @@ TAO_FT_Naming_Server::init_naming_manager_with_orb (int, ACE_TCHAR *[], CORBA::O
 }
 
 int
-TAO_FT_Naming_Server::init_replicator (void)
+TAO_FT_Naming_Server::init_replicator ()
 {
   if (this->server_role_ == STANDALONE )
     return 0;
@@ -393,7 +393,7 @@ TAO_FT_Naming_Server::replica_ior_filename (bool peer_ior_file) const
 }
 
 void
-TAO_FT_Naming_Server::init_replication_pairing (void)
+TAO_FT_Naming_Server::init_replication_pairing ()
 {
   if (this->server_role_ == STANDALONE)
     {
@@ -620,7 +620,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
 }
 
 int
-TAO_FT_Naming_Server::fini (void)
+TAO_FT_Naming_Server::fini ()
 {
   if (this->replicator_ != 0)
     {
@@ -689,33 +689,25 @@ TAO_FT_Naming_Server::fini (void)
 TAO_Storable_Naming_Context_Factory *
 TAO_FT_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
-#else
-  return new TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_FT_Storable_Naming_Context_Factory (context_size, this->replicator_);
 }
 
 TAO_Persistent_Naming_Context_Factory *
-TAO_FT_Naming_Server::persistent_naming_context_factory (void)
+TAO_FT_Naming_Server::persistent_naming_context_factory ()
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_FT_Persistent_Naming_Context_Factory;
-#else
-  return new TAO_FT_Persistent_Naming_Context_Factory;
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_FT_Persistent_Naming_Context_Factory;
 }
 
 /// Return the IOR for the registered replication manager
 char*
-TAO_FT_Naming_Server::replicator_ior (void)
+TAO_FT_Naming_Server::replicator_ior ()
 {
   return CORBA::string_dup (this->iors_[REPLICATOR].ior_.c_str());
 }
 
 /// Return the IOR for the registered object group manager
 char*
-TAO_FT_Naming_Server::naming_manager_ior (void)
+TAO_FT_Naming_Server::naming_manager_ior ()
 {
   return CORBA::string_dup (this->iors_[GROUP].ior_.c_str());
 }
@@ -812,14 +804,14 @@ TAO_FT_Naming_Server::update_naming_context (
 }
 
 /// Destructor.
-TAO_FT_Naming_Server::~TAO_FT_Naming_Server (void)
+TAO_FT_Naming_Server::~TAO_FT_Naming_Server ()
 {
   // Clear out the static naming manager from the persistent naming context
   TAO_FT_Persistent_Naming_Context::set_naming_manager_impl (0);
 }
 
 CosNaming::NamingContext_ptr
-TAO_FT_Naming_Server::my_root_context (void) const
+TAO_FT_Naming_Server::my_root_context () const
 {
   if (CORBA::is_nil (this->iors_[ROOT].ref_.in()))
     {
@@ -834,7 +826,7 @@ TAO_FT_Naming_Server::my_root_context (void) const
 }
 
 FT_Naming::NamingManager_ptr
-TAO_FT_Naming_Server::my_naming_manager (void) const
+TAO_FT_Naming_Server::my_naming_manager () const
 {
   if (CORBA::is_nil (this->iors_[GROUP].ref_))
     {
@@ -850,7 +842,7 @@ TAO_FT_Naming_Server::my_naming_manager (void) const
 }
 
 CosNaming::NamingContext_ptr
-TAO_FT_Naming_Server::ft_root_context (void) const
+TAO_FT_Naming_Server::ft_root_context () const
 {
   if (CORBA::is_nil (this->iors_[FT_ROOT].ref_))
     {
@@ -865,7 +857,7 @@ TAO_FT_Naming_Server::ft_root_context (void) const
 }
 
 FT_Naming::NamingManager_ptr
-TAO_FT_Naming_Server::ft_naming_manager (void) const
+TAO_FT_Naming_Server::ft_naming_manager () const
 {
   if (CORBA::is_nil (this->iors_[FT_GROUP].ref_))
     {
@@ -881,13 +873,13 @@ TAO_FT_Naming_Server::ft_naming_manager (void) const
 }
 
 const ACE_CString &
-TAO_FT_Naming_Server::ft_endpoint (void)
+TAO_FT_Naming_Server::ft_endpoint ()
 {
   return this->ft_endpoint_;
 }
 
 const ACE_Time_Value &
-TAO_FT_Naming_Server::ft_update_delay (void)
+TAO_FT_Naming_Server::ft_update_delay ()
 {
   return this->ft_update_delay_;
 }
@@ -955,7 +947,7 @@ TAO_FT_Naming_Server::combine_iors (FT_Naming::EntityKind kind, CORBA::Object_pt
 }
 
 int
-TAO_FT_Naming_Server::recover_iors (void)
+TAO_FT_Naming_Server::recover_iors ()
 {
   if (this->registered_)
     {

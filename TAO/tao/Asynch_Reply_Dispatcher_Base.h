@@ -70,12 +70,11 @@ public:
    * Why are we clumping everything in one method. Answer is we need
    * atomicity?
    */
-  bool try_dispatch_reply (void);
+  bool try_dispatch_reply ();
 
 protected:
-
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher_Base (void);
+  virtual ~TAO_Asynch_Reply_Dispatcher_Base ();
 
 private:
   void operator= (const TAO_Asynch_Reply_Dispatcher_Base &);

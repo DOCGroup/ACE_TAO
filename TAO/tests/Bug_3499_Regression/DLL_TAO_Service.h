@@ -14,7 +14,7 @@ public:
 
   virtual int init (int argc, ACE_TCHAR * argv []);
 
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   CORBA::ORB_var orb_;

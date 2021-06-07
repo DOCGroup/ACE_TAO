@@ -47,7 +47,7 @@ public:
   TAO_LB_LoadManager (int ping_timeout,
                       int ping_interval);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   /**
    * @name CosLoadBalancing::LoadManager Methods

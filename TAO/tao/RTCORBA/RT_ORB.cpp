@@ -426,13 +426,13 @@ TAO_RT_ORB::create_client_protocol_policy (const RTCORBA::ProtocolList & protoco
 }
 
 TAO_Thread_Pool_Manager &
-TAO_RT_ORB::tp_manager (void) const
+TAO_RT_ORB::tp_manager () const
 {
   return *this->tp_manager_;
 }
 
 TAO_ORB_Core *
-TAO_RT_ORB::orb_core (void) const
+TAO_RT_ORB::orb_core () const
 {
   return this->orb_core_;
 }

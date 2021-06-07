@@ -32,8 +32,7 @@ public:
 
   // = SequencePushConsumer methods
   virtual void push_structured_events (
-        const CosNotification::EventBatch & notifications
-      );
+        const CosNotification::EventBatch & notifications);
 
 protected:
   Sequence* test_client_;

@@ -40,18 +40,18 @@ static const char copyright[] =
 " *       Vanderbilt University\n"
 " *       Nashville, TN\n"
 " *       USA\n"
-" *       http://www.isis.vanderbilt.edu/\n"
+" *       https://www.isis.vanderbilt.edu/\n"
 " *\n"
 " * Information about TAO is available at:\n"
-" *     http://www.dre.vanderbilt.edu/~schmidt/TAO.html\n"
+" *     https://www.dre.vanderbilt.edu/~schmidt/TAO.html\n"
 " **/";
 
-TAO_NL::TAO_NL (void)
+TAO_NL::TAO_NL ()
 {
   ACE_UNUSED_ARG (copyright);
 }
 
-TAO_NL_2::TAO_NL_2 (void)
+TAO_NL_2::TAO_NL_2 ()
 {
   ACE_UNUSED_ARG (copyright);
 }
@@ -75,8 +75,8 @@ const TAO_UNINDENT be_uidt_nl (1);
 
 // Methods of the TAO_OutStream class.
 
-TAO_OutStream::TAO_OutStream (void)
-  : fp_ (0),
+TAO_OutStream::TAO_OutStream ()
+  : fp_ (nullptr),
     st_ (TAO_CLI_HDR),
     indent_level_ (0)
 {
@@ -86,13 +86,13 @@ TAO_OutStream::TAO_OutStream (void)
     }
 }
 
-TAO_OutStream::~TAO_OutStream (void)
+TAO_OutStream::~TAO_OutStream ()
 {
   // Close the underlying I/O handle only if it exists.
-  if (this->fp_ != 0)
+  if (this->fp_ != nullptr)
     {
       ACE_OS::fclose (this->fp_);
-      this->fp_ = 0;
+      this->fp_ = nullptr;
     }
 
   indent_level_ = 0;
@@ -102,12 +102,12 @@ int
 TAO_OutStream::open (const char *fname,
                      TAO_OutStream::STREAM_TYPE st)
 {
-  if (fname != 0)
+  if (fname != nullptr)
     {
       // File name exists, open an I/O file handle.
       this->fp_ = ACE_OS::fopen (fname, "w");
 
-      if (this->fp_ != 0)
+      if (this->fp_ != nullptr)
         {
           this->st_ = st;
           // Put the copyright notice.  Not for the gperf's temp input
@@ -140,7 +140,7 @@ TAO_OutStream::stream_type (TAO_OutStream::STREAM_TYPE st)
 }
 
 TAO_OutStream::STREAM_TYPE
-TAO_OutStream::stream_type (void)
+TAO_OutStream::stream_type ()
 {
   return this->st_;
 }
@@ -148,7 +148,7 @@ TAO_OutStream::stream_type (void)
 // Return the underlying lowlevel file pointer.
 // indentation.
 FILE *&
-TAO_OutStream::file (void)
+TAO_OutStream::file ()
 {
   return this->fp_;
 }
@@ -192,7 +192,7 @@ TAO_OutStream::decr_indent (unsigned short flag)
 }
 
 int
-TAO_OutStream::reset (void)
+TAO_OutStream::reset ()
 {
   this->indent_level_ = 0;
   return 0;
@@ -200,7 +200,7 @@ TAO_OutStream::reset (void)
 
 // Indented print.
 int
-TAO_OutStream::indent (void)
+TAO_OutStream::indent ()
 {
   // Based on the current indentation level, leave appropriate number of blank
   // spaces in the output.
@@ -216,7 +216,7 @@ TAO_OutStream::indent (void)
 }
 
 int
-TAO_OutStream::nl (void)
+TAO_OutStream::nl ()
 {
   ACE_OS::fprintf (this->fp_, "\n");
   this->indent ();
@@ -239,7 +239,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
                    "_%s_",
                    tao_cg->upcase (flat_name));
 
-  if (suffix != 0)
+  if (suffix != nullptr)
     {
       ACE_OS::strcat (macro, "_");
       ACE_OS::strcat (macro, tao_cg->upcase (suffix));
@@ -287,7 +287,7 @@ TAO_OutStream::gen_ifdef_macro (const char *flat_name,
 }
 
 int
-TAO_OutStream::gen_endif (void)
+TAO_OutStream::gen_endif ()
 {
   *this << "\n\n#endif /* end #if !defined */";
 
@@ -370,7 +370,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::ULongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_TEXT_ALWAYS_CHAR (ACE_UINT64_FORMAT_SPECIFIER),
+                   ACE_UINT64_FORMAT_SPECIFIER_ASCII,
                    num);
 
   return *this;
@@ -380,7 +380,7 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 {
   ACE_OS::fprintf (this->fp_,
-                   ACE_TEXT_ALWAYS_CHAR (ACE_INT64_FORMAT_SPECIFIER),
+                   ACE_INT64_FORMAT_SPECIFIER_ASCII,
                    num);
 
   return *this;
@@ -464,7 +464,7 @@ TAO_OutStream::print (UTL_IdList *idl)
 {
   bool first = true;
   bool second = false;
-  Identifier *id = 0;
+  Identifier *id = nullptr;
 
   for (UTL_IdListActiveIterator i (idl); !i.is_done (); i.next ())
     {
@@ -505,7 +505,7 @@ TAO_OutStream::print (AST_Expression *expr)
   AST_Expression::AST_ExprValue *ev = expr->ev ();
 
   /// Never happens as far as I know, but just in case...
-  if (ev == 0)
+  if (ev == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO_OutStream::print() - ")

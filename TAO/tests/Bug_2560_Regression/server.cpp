@@ -96,7 +96,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     orb->run (timeout);
 
     // Destroy the POA, waiting until the destruction terminates
-    root_poa->destroy (1, 1);
+    root_poa->destroy (true, true);
     orb->destroy ();
   }
   catch (const CORBA::Exception & e) {

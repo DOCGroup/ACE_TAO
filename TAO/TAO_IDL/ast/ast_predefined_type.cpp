@@ -91,8 +91,8 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                       n),
     pd_pt (t)
 {
-  UTL_ScopedName *new_name = 0;
-  Identifier *id = 0;
+  UTL_ScopedName *new_name = nullptr;
+  Identifier *id = nullptr;
 
   // Generate a new Scoped Name for us such that we belong to the CORBA
   // namespace.
@@ -103,7 +103,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
     }
   else
     {
@@ -112,9 +112,9 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       ACE_NEW (new_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
 
-      UTL_ScopedName *conc_name = 0;
+      UTL_ScopedName *conc_name = nullptr;
 
       switch (this->pt ())
         {
@@ -197,7 +197,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
 
       ACE_NEW (conc_name,
                UTL_ScopedName (id,
-                               0));
+                               nullptr));
 
       new_name->nconc (conc_name);
     }
@@ -221,7 +221,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
   this->set_name (new_name);
 }
 
-AST_PredefinedType::~AST_PredefinedType (void)
+AST_PredefinedType::~AST_PredefinedType ()
 {
 }
 
@@ -236,7 +236,7 @@ AST_PredefinedType::dump (ACE_OSTREAM_TYPE &o)
 
 // Compute the size type of the node in question.
 int
-AST_PredefinedType::compute_size_type (void)
+AST_PredefinedType::compute_size_type ()
 {
   switch (this->pd_pt)
   {
@@ -260,7 +260,7 @@ AST_PredefinedType::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_PredefinedType::destroy (void)
+AST_PredefinedType::destroy ()
 {
   this->AST_ConcreteType::destroy ();
 }
@@ -268,11 +268,7 @@ AST_PredefinedType::destroy (void)
 // Data accessors.
 
 AST_PredefinedType::PredefinedType
-AST_PredefinedType::pt (void)
+AST_PredefinedType::pt ()
 {
   return this->pd_pt;
 }
-
-
-
-IMPL_NARROW_FROM_DECL(AST_PredefinedType)

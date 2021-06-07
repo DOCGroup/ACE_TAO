@@ -61,7 +61,7 @@ Test_DynSequence::~Test_DynSequence (void)
 }
 
 const char*
-Test_DynSequence::test_name (void) const
+Test_DynSequence::test_name () const
 {
   return this->test_name_;
 }

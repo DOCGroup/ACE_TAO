@@ -57,9 +57,7 @@ class ACE_Time_Value;
  */
 class ACE_Export ACE_ATM_Acceptor
 {
-
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_ATM_Acceptor (void);
 
@@ -92,14 +90,14 @@ public:
               ACE_ATM_QoS qos = ACE_ATM_QoS());
 
   /// Get the local address currently listening on
-  int get_local_addr( ACE_ATM_Addr &local_addr );
+  int get_local_addr(ACE_ATM_Addr &local_addr);
 
   // = Meta-type info
   typedef ACE_ATM_Addr PEER_ADDR;
   typedef ACE_ATM_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file     default_server.h
@@ -7,7 +5,6 @@
  *  @author  Chris Cleeland
  */
 //=============================================================================
-
 
 #ifndef TAO_DEFAULT_SERVER_FACTORY_H
 #define TAO_DEFAULT_SERVER_FACTORY_H
@@ -36,7 +33,6 @@ class TAO_Export TAO_Default_Server_Strategy_Factory
   : public TAO_Server_Strategy_Factory
 {
 public:
-  // = Initialization and termination methods.
   TAO_Default_Server_Strategy_Factory (void);
   virtual ~TAO_Default_Server_Strategy_Factory (void);
 

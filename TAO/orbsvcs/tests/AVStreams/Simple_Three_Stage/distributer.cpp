@@ -269,7 +269,7 @@ Distributer::receiver_streamctrl (void)
 }
 
 int
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }

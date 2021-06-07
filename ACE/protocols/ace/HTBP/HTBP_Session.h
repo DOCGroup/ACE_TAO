@@ -99,14 +99,14 @@ namespace ACE
       static int find_session (const Session_Id_t&,
                                Session *&out);
 
-      Stream *stream (void) const;
+      Stream *stream () const;
       void stream (Stream *);
 
       int enqueue (ACE_Message_Block *msg);
       int flush_outbound_queue (void);
 
-      int close_inbound (void) const;
-      int close_outbound (void) const;
+      int close_inbound () const;
+      int close_outbound () const;
 
       /// get references to the actual streams based on the direction
       /// of data flow if this session is on the inside of the proxy
@@ -117,22 +117,22 @@ namespace ACE
       /// request or reply data, it uses the outbound stream, and it
       /// should associate an event handler with the inbound stream
       /// for receiving data.
-      Channel *inbound (void) const;
-      Channel *outbound (void) const;
+      Channel *inbound () const;
+      Channel *outbound () const;
       void inbound (Channel *);
       void outbound (Channel *);
 
       int enable (int value);
       int disable (int value);
 
-      const Session_Id_t& session_id(void) const;
+      const Session_Id_t& session_id() const;
       void session_id (ACE_UINT32 );
 
-      const ACE_INET_Addr *proxy_addr (void) const;
+      const ACE_INET_Addr *proxy_addr () const;
       void proxy_addr (ACE_INET_Addr *, int destroy = 0);
 
-      const Addr &peer_addr (void) const;
-      const Addr &local_addr (void) const;
+      const Addr &peer_addr () const;
+      const Addr &local_addr () const;
 
       void peer_addr (const Addr &);
       void local_addr (const Addr &);
@@ -145,7 +145,7 @@ namespace ACE
       void reactor (ACE_Reactor *);
       void detach (Channel *);
 
-      int sock_flags(void) const;
+      int sock_flags() const;
 
     private:
       /// Connected Stream ensures that the particular stream is

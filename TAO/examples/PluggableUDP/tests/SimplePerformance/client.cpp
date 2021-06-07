@@ -71,7 +71,7 @@ public:
   virtual ~Client (void) {};
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The server.

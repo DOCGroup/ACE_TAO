@@ -37,7 +37,7 @@ public:
   ACE_Test_and_Set (TYPE initial_value = 0);
 
   /// Returns true if we are set, else false.
-  TYPE is_set (void) const;
+  TYPE is_set () const;
 
   /// Sets the <is_set_> status, returning the original value of
   /// <is_set_>.

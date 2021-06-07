@@ -14,7 +14,6 @@ class Event_Transceiver : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH
   //     This class is both a consumer and supplier of events, i.e.,
   //     it's a ``transceiver.''
 public:
-  // = Initialization method.
   Event_Transceiver (int argc, ACE_TCHAR *argv[]);
   // Performs the actual initialization.
 

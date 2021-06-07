@@ -43,7 +43,7 @@ public:
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   /// This function call initializes the Concurrency Service given a
   /// reference to the ORB and the command line parameters.
@@ -56,11 +56,10 @@ public:
   TAO_Concurrency_Server concurrency_server_;
 
 private:
-
-  // Disallow copying and assignment.
-  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &);
-  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &);
-
+  TAO_Concurrency_Loader (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader &operator = (const TAO_Concurrency_Loader &) = delete;
+  TAO_Concurrency_Loader (TAO_Concurrency_Loader &&) = delete;
+  TAO_Concurrency_Loader &operator = (TAO_Concurrency_Loader &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

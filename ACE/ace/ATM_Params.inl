@@ -2,7 +2,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_ATM_Params::dump (void) const
+ACE_ATM_Params::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Params::dump");
@@ -47,7 +47,7 @@ ACE_ATM_Params::~ACE_ATM_Params (void)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_protocol_family (void) const
+ACE_ATM_Params::get_protocol_family () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_protocol_family");
   return protocol_family_;
@@ -63,7 +63,7 @@ ACE_ATM_Params::set_protocol_family (int family)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_protocol (void) const
+ACE_ATM_Params::get_protocol () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_protocol");
   return protocol_;
@@ -79,7 +79,7 @@ ACE_ATM_Params::set_protocol (int protocol)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_type (void) const
+ACE_ATM_Params::get_type () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_type");
   return type_;
@@ -143,7 +143,7 @@ ACE_ATM_Params::set_flags( u_long flags)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_reuse_addr (void) const
+ACE_ATM_Params::get_reuse_addr () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_reuse_addr");
   return reuse_addr_;
@@ -159,7 +159,7 @@ ACE_ATM_Params::set_reuse_addr (int reuse_addr)
 
 ACE_INLINE
 const char*
-ACE_ATM_Params::get_device (void) const
+ACE_ATM_Params::get_device () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_device");
   return device_;
@@ -167,7 +167,7 @@ ACE_ATM_Params::get_device (void) const
 
 ACE_INLINE
 Param_Info*
-ACE_ATM_Params::get_info (void) const
+ACE_ATM_Params::get_info () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_info");
   return info_;
@@ -183,7 +183,7 @@ ACE_ATM_Params::set_info (Param_Info* info)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_rw_flag (void) const
+ACE_ATM_Params::get_rw_flag () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_rw_flag");
   return rw_flag_;
@@ -199,7 +199,7 @@ ACE_ATM_Params::set_rw_flag (int rw_flag)
 
 ACE_INLINE
 Param_Udata*
-ACE_ATM_Params::get_user_data (void) const
+ACE_ATM_Params::get_user_data () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_user_data");
   return udata_;
@@ -215,7 +215,7 @@ ACE_ATM_Params::set_user_data (Param_Udata *udata)
 
 ACE_INLINE
 int
-ACE_ATM_Params::get_oflag (void) const
+ACE_ATM_Params::get_oflag () const
 {
   ACE_TRACE ("ACE_ATM_Params::get_oflag");
   return oflag_;

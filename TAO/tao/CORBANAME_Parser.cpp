@@ -18,10 +18,6 @@ static const char corbaname_prefix[] = "corbaname:";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_CORBANAME_Parser::~TAO_CORBANAME_Parser (void)
-{
-}
-
 bool
 TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
 {
@@ -51,7 +47,7 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
                                     11,
                                     TAO::TAO_CO_NONE | TAO::TAO_CO_THRU_POA_STRATEGY);
 
-  tao_call.invoke (0, 0);
+  tao_call.invoke (nullptr, 0);
 
   return _tao_retval.retn ();
 }
@@ -73,7 +69,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // string
       ACE_CString::size_type pos_seperator = 0;
 
-      ACE_CString corbaname_str (corbaname, 0, 1);
+      ACE_CString corbaname_str (corbaname, nullptr, 1);
 
       pos_seperator = corbaname_str.find ("#", 0);
 
@@ -90,13 +86,12 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
       // CORBALOC assumes "NameService" for the object key if none
       // is provided, so just pass everything between "corbaname:"
       // and "#" as the address
-      ACE_CString corbaloc_addr ("corbaloc:", 0, 1);
+      ACE_CString corbaloc_addr ("corbaloc:", nullptr, 1);
       corbaloc_addr += corbaname_str.substring (0, pos_seperator);
 
       // Obtain a reference to the naming context
       CORBA::Object_var name_context =
-        orb->string_to_object (corbaloc_addr.c_str ()
-                               );
+        orb->string_to_object (corbaloc_addr.c_str ());
 
       // Check if the Object reference is nil.
       if (CORBA::is_nil (name_context.in ()))

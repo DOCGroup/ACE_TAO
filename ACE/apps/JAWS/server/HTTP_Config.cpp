@@ -38,31 +38,31 @@ HTTP_Config_Info::~HTTP_Config_Info (void)
 }
 
 const char *
-HTTP_Config_Info::document_root (void) const
+HTTP_Config_Info::document_root () const
 {
   return this->document_root_;
 }
 
 const char *
-HTTP_Config_Info::cgi_path (void) const
+HTTP_Config_Info::cgi_path () const
 {
   return this->cgi_path_;
 }
 
 const char *
-HTTP_Config_Info::user_dir (void) const
+HTTP_Config_Info::user_dir () const
 {
   return this->user_dir_;
 }
 
 const char *
-HTTP_Config_Info::dir_index (void) const
+HTTP_Config_Info::dir_index () const
 {
   return this->dir_index_;
 }
 
 int
-HTTP_Config_Info::proxy_flag (void) const
+HTTP_Config_Info::proxy_flag () const
 {
   return this->proxy_flag_;
 }

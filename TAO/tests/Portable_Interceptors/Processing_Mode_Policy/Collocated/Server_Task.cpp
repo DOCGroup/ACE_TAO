@@ -74,7 +74,7 @@ Server_Task::svc (void)
 
       ACE_DEBUG ((LM_DEBUG, "event loop finished\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
    }
  catch (const CORBA::Exception& ex)
    {

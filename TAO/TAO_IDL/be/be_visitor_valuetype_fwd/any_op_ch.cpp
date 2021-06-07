@@ -23,7 +23,7 @@ be_visitor_valuetype_fwd_any_op_ch::be_visitor_valuetype_fwd_any_op_ch (
 {
 }
 
-be_visitor_valuetype_fwd_any_op_ch::~be_visitor_valuetype_fwd_any_op_ch (void)
+be_visitor_valuetype_fwd_any_op_ch::~be_visitor_valuetype_fwd_any_op_ch ()
 {
 }
 
@@ -54,12 +54,12 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   if (node->is_nested () &&
       node->defined_in ()->scope_node_type () == AST_Decl::NT_module)
     {
-      module = be_module::narrow_from_scope (node->defined_in ());
+      module = dynamic_cast<be_module*> (node->defined_in ());
 
       if (!module)
         {
@@ -110,12 +110,12 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       << node->name () << " *&);";
 
   *os << be_global->core_versioning_end () << be_nl;
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }
 

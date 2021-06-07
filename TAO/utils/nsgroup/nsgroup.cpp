@@ -95,11 +95,11 @@ public:
   /// Display command line interface usage
   int show_usage( void );
 
-  const ACE_TCHAR * group_arg(void) const { return group_arg_; }
-  const ACE_TCHAR * policy_arg(void) const { return policy_arg_; }
-  const ACE_TCHAR * location_arg(void) const { return location_arg_; }
-  const ACE_TCHAR * ior_arg(void) const { return ior_arg_; }
-  const ACE_TCHAR * namepath_arg(void) const { return namepath_arg_; }
+  const ACE_TCHAR * group_arg() const { return group_arg_; }
+  const ACE_TCHAR * policy_arg() const { return policy_arg_; }
+  const ACE_TCHAR * location_arg() const { return location_arg_; }
+  const ACE_TCHAR * ior_arg() const { return ior_arg_; }
+  const ACE_TCHAR * namepath_arg() const { return namepath_arg_; }
 
 private:
 

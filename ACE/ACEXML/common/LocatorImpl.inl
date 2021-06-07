@@ -15,13 +15,13 @@ ACEXML_LocatorImpl::setLineNumber (int ln)
 }
 
 ACEXML_INLINE int
-ACEXML_LocatorImpl::getColumnNumber (void) const
+ACEXML_LocatorImpl::getColumnNumber () const
 {
   return this->columnNumber_;
 }
 
 ACEXML_INLINE int
-ACEXML_LocatorImpl::getLineNumber (void) const
+ACEXML_LocatorImpl::getLineNumber () const
 {
   return this->lineNumber_;
 }
@@ -41,13 +41,13 @@ ACEXML_LocatorImpl::setSystemId (const ACEXML_Char *id)
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_LocatorImpl::getPublicId (void) const
+ACEXML_LocatorImpl::getPublicId () const
 {
   return this->publicId_;
 }
 
 ACEXML_INLINE const ACEXML_Char *
-ACEXML_LocatorImpl::getSystemId (void) const
+ACEXML_LocatorImpl::getSystemId () const
 {
   return this->systemId_;
 }

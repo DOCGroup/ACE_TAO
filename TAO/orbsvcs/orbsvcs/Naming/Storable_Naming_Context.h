@@ -36,7 +36,6 @@ class TAO_Storable_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Storable_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Storable_IntId (void);
 
@@ -65,8 +64,6 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_Storable_ExtId (void);
 
@@ -93,7 +90,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -126,13 +123,10 @@ public:
 class TAO_Naming_Serv_Export TAO_Storable_Bindings_Map : public TAO_Bindings_Map
 {
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef ACE_Hash_Map_Manager<TAO_Storable_ExtId,
                                TAO_Storable_IntId,
                                ACE_Null_Mutex> HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Storable_Bindings_Map (size_t hash_table_size, CORBA::ORB_ptr orb);
@@ -224,13 +218,9 @@ private:
  */
 class TAO_Naming_Serv_Export TAO_Storable_Naming_Context : public TAO_Hash_Naming_Context
 {
-
 public:
-
   /// Underlying data structure - typedef for ease of use.
   typedef TAO_Storable_Bindings_Map::HASH_MAP HASH_MAP;
-
-  // = Initialization and termination methods.
 
   /// Constructor.
   TAO_Storable_Naming_Context (CORBA::ORB_ptr orb,

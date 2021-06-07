@@ -114,13 +114,13 @@ TAO_PriorityModelPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 }
 
 TAO_Cached_Policy_Type
-TAO_PriorityModelPolicy::_tao_cached_type (void) const
+TAO_PriorityModelPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_PRIORITY_MODEL;
 }
 
 TAO_Policy_Scope
-TAO_PriorityModelPolicy::_tao_scope (void) const
+TAO_PriorityModelPolicy::_tao_scope () const
 {
   // Note that this policy is propagated to the client even though
   // it is not specified here.  The reason for this is that the
@@ -201,13 +201,13 @@ TAO_ThreadpoolPolicy::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_ThreadpoolPolicy::_tao_cached_type (void) const
+TAO_ThreadpoolPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_THREADPOOL;
 }
 
 TAO_Policy_Scope
-TAO_ThreadpoolPolicy::_tao_scope (void) const
+TAO_ThreadpoolPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_ORB_SCOPE |
                           TAO_POLICY_POA_SCOPE);
@@ -271,13 +271,13 @@ TAO_PrivateConnectionPolicy::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_PrivateConnectionPolicy::_tao_cached_type (void) const
+TAO_PrivateConnectionPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_RT_PRIVATE_CONNECTION;
 }
 
 TAO_Policy_Scope
-TAO_PrivateConnectionPolicy::_tao_scope (void) const
+TAO_PrivateConnectionPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_OBJECT_SCOPE |
                           TAO_POLICY_THREAD_SCOPE |
@@ -376,13 +376,13 @@ TAO_PriorityBandedConnectionPolicy::_tao_decode (TAO_InputCDR &in_cdr)
 }
 
 TAO_Cached_Policy_Type
-TAO_PriorityBandedConnectionPolicy::_tao_cached_type (void) const
+TAO_PriorityBandedConnectionPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_RT_PRIORITY_BANDED_CONNECTION;
 }
 
 TAO_Policy_Scope
-TAO_PriorityBandedConnectionPolicy::_tao_scope (void) const
+TAO_PriorityBandedConnectionPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                           TAO_POLICY_CLIENT_EXPOSED);
@@ -470,13 +470,13 @@ TAO_ServerProtocolPolicy::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_ServerProtocolPolicy::_tao_cached_type (void) const
+TAO_ServerProtocolPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_RT_SERVER_PROTOCOL;
 }
 
 TAO_Policy_Scope
-TAO_ServerProtocolPolicy::_tao_scope (void) const
+TAO_ServerProtocolPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_ORB_SCOPE |
                           TAO_POLICY_POA_SCOPE);
@@ -569,13 +569,13 @@ TAO_ClientProtocolPolicy::destroy (void)
 }
 
 TAO_Cached_Policy_Type
-TAO_ClientProtocolPolicy::_tao_cached_type (void) const
+TAO_ClientProtocolPolicy::_tao_cached_type () const
 {
   return TAO_CACHED_POLICY_RT_CLIENT_PROTOCOL;
 }
 
 TAO_Policy_Scope
-TAO_ClientProtocolPolicy::_tao_scope (void) const
+TAO_ClientProtocolPolicy::_tao_scope () const
 {
   return static_cast<TAO_Policy_Scope> (TAO_POLICY_DEFAULT_SCOPE |
                           TAO_POLICY_CLIENT_EXPOSED);

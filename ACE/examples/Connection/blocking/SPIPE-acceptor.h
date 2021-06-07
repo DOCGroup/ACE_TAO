@@ -48,10 +48,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the network server.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Close down the server.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the interative service.
 
 private:

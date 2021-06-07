@@ -247,8 +247,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for the Object_Activator thread to exit.
       thread_manager.wait ();
 
-      root_poa->destroy (1,
-                         1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

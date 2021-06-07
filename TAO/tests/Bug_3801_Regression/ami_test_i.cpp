@@ -29,7 +29,7 @@ AMI_Test_i::inout_arg_test (char *&)
 void
 AMI_Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 CORBA::Long

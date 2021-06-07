@@ -114,7 +114,7 @@ UDP_i::shutdown (void)
   try
     {
       // Instruct the ORB to shutdown.
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
   catch (const CORBA::Exception& ex)
     {

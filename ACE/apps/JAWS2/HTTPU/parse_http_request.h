@@ -17,19 +17,19 @@ public:
 
   void init (const char *request);
 
-  int method (void) const;
-  const char *method_str (void) const;
+  int method () const;
+  const char *method_str () const;
 
-  int major_version (void) const;
-  int minor_version (void) const;
+  int major_version () const;
+  int minor_version () const;
 
-  const char *version (void) const;
+  const char *version () const;
 
-  const char *url (void) const;
+  const char *url () const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_REQUEST, NOT_IMPLEMENTED };
 
-  int error (void) const;
+  int error () const;
   // 0 -> ok
 
   void dump (void);

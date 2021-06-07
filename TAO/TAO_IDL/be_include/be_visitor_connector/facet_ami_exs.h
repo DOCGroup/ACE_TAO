@@ -28,7 +28,7 @@ class be_visitor_facet_ami_exs
 public:
   be_visitor_facet_ami_exs (be_visitor_context *ctx);
 
-  ~be_visitor_facet_ami_exs (void);
+  ~be_visitor_facet_ami_exs ();
 
   virtual int visit_component (be_component *node);
   virtual int visit_provides (be_provides *node);
@@ -39,9 +39,9 @@ public:
   virtual int post_process (be_decl *node);
 
 private:
-  void init (void);
-  int gen_reply_handler_class (void);
-  int gen_facet_executor_class (void);
+  void init ();
+  int gen_reply_handler_class ();
+  int gen_facet_executor_class ();
   int gen_reply_hander_op (be_operation *node);
   int gen_facet_executor_op (be_operation *node);
   int gen_facet_executor_sync_op (be_operation *node);

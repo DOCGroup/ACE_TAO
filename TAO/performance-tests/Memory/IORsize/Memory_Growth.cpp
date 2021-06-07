@@ -25,5 +25,5 @@ Memory_Growth::send_objref (const Test::PayLoad & /*p*/
 void
 Memory_Growth::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -64,15 +64,14 @@ namespace TAO
       //@{
       virtual bool tao_marshal_kind (TAO_OutputCDR & cdr) const;
       virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
       /// Setter for recursive reference.
       void set_recursive_tc (CORBA::TypeCode_ptr);
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -84,10 +83,10 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual char const * id_i (void) const;
-      virtual char const * name_i (void) const;
-      virtual CORBA::ULong member_count_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual char const * id_i () const;
+      virtual char const * name_i () const;
+      virtual CORBA::ULong member_count_i () const;
       virtual char const * member_name_i (CORBA::ULong index) const;
       virtual CORBA::TypeCode_ptr member_type_i (CORBA::ULong index) const;
       //@}
@@ -102,8 +101,8 @@ namespace TAO
        */
       //@{
       virtual CORBA::Any * member_label_i (CORBA::ULong index) const;
-      virtual CORBA::TypeCode_ptr discriminator_type_i (void) const;
-      virtual CORBA::Long default_index_i (void) const;
+      virtual CORBA::TypeCode_ptr discriminator_type_i () const;
+      virtual CORBA::Long default_index_i () const;
       //@}
 
       /**
@@ -116,12 +115,11 @@ namespace TAO
        */
       //@{
       virtual CORBA::Visibility member_visibility_i (CORBA::ULong index) const;
-      virtual CORBA::ValueModifier type_modifier_i (void) const;
-      virtual CORBA::TypeCode_ptr concrete_base_type_i (void) const;
+      virtual CORBA::ValueModifier type_modifier_i () const;
+      virtual CORBA::TypeCode_ptr concrete_base_type_i () const;
       //@}
 
     private:
-
       //@{
 
       /// Typecode id
@@ -137,9 +135,7 @@ namespace TAO
       unsigned long refcount_;
 
       //@}
-
     };
-
   }  // End namespace TypeCode
 }  // End namespace TAO
 

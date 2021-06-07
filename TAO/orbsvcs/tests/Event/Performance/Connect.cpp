@@ -81,7 +81,7 @@ EC_Connect::print_usage (void)
 }
 
 void
-EC_Connect::print_args (void) const
+EC_Connect::print_args () const
 {
   this->EC_Driver::print_args ();
 

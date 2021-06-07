@@ -77,13 +77,13 @@ public:
   //@{
   /** @name Accessors
    */
-  Supplier *supplier (void) const;
+  Supplier *supplier () const;
 
-  Consumer *consumer (void) const;
+  Consumer *consumer () const;
 
-  Loopback_Supplier *loopback_supplier (void) const;
+  Loopback_Supplier *loopback_supplier () const;
 
-  Loopback_Consumer *loopback_consumer (void) const;
+  Loopback_Consumer *loopback_consumer () const;
   //@}
 
 private:

@@ -41,10 +41,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Terminates object when dynamic unlinking occurs.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual ~Test_Server_Module (void);
 

@@ -39,8 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Endpoint : public TAO_Endpoint
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor.
   TAO_UIPMC_Endpoint (void);
 
@@ -75,17 +73,17 @@ public:
   // = UIPMC_Endpoint-specific methods.
 
   /// Return a reference to the  object_addr .
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Set the IP multicast address and port.
   void object_addr (const ACE_INET_Addr &addr);
 
   /// Return a pointer to the stringified host address (not including the
   /// port).  This class retains ownership of the address memory.
-  const char *host (void) const;
+  const char *host () const;
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p); //@@ Frank - deprecate this.
@@ -93,10 +91,10 @@ public:
   //TAO_UIPMC_Connection_Handler *&hint (void);
   // Access to our <hint_>.
   /// Do we have a preferred local network interface set for this target?
-  bool is_preferred_network (void) const;
+  bool is_preferred_network () const;
 
   /// Return the preferred network interface if any.
-  const char *preferred_network (void) const;
+  const char *preferred_network () const;
 
   /// Transform this endpoint into (potentially) a chain of endpoints
   /// in preferrence order of specific local interface bind address (if
@@ -104,12 +102,12 @@ public:
   CORBA::ULong preferred_interfaces (TAO_ORB_Core *oc);
 
   /// Acessor for the preferred network interface name if set
-  const char *preferred_if (void) const;
+  const char *preferred_if () const;
 
 private:
 
   /// Helper methods for getting and setting the IP address.  @@ Vadym - deprecate these.
-  ACE_UINT32 uint_ip_addr (void) const;
+  ACE_UINT32 uint_ip_addr () const;
   void uint_ip_addr (ACE_UINT32 ip_addr);
 
   /// Helper method to update the cached object address.  @@ Vadym - deprecate this.

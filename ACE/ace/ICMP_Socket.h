@@ -37,8 +37,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ICMP_Socket : public ACE_SOCK
 {
 public:
-  // = Initialization methods.
-
   /**
    * @name Data transfer routines.
    *
@@ -74,7 +72,7 @@ public:
             int reuse_addr = 0);
 
   /// Dump the state of object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

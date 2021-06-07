@@ -66,7 +66,7 @@ extern "C"
 #endif /* !HOST_NAME_MAX */
 
 // Note that we are using PATH_MAX instead of _POSIX_PATH_MAX, since
-// _POSIX_PATH_MAX is the *minimun* maximum value for PATH_MAX and is
+// _POSIX_PATH_MAX is the *minimum* maximum value for PATH_MAX and is
 // defined by POSIX as 256.
 #if !defined (PATH_MAX)
 #  if defined (_MAX_PATH)
@@ -107,7 +107,7 @@ extern "C"
 
 #if defined (ACE_HAS_POSIX_REALTIME_SIGNALS)
   // = Giving unique ACE scoped names for some important
-  // RTSignal-Related constants. Becuase sometimes, different
+  // RTSignal-Related constants. Because sometimes, different
   // platforms use different names for these constants.
 
   // Number of realtime signals provided in the system.
@@ -116,7 +116,7 @@ extern "C"
 #  if defined (_POSIX_RTSIG_MAX)
 #    define ACE_RTSIG_MAX _POSIX_RTSIG_MAX
 #  else /* not _POSIX_RTSIG_MAX */
-  // POSIX-4 compilant system has to provide atleast 8 RT signals.
+  // POSIX-4 compliant system has to provide at least 8 RT signals.
   // @@ Make sure the platform does *not* define this constant with
   // some other name. If yes, use that instead of 8.
 #     define ACE_RTSIG_MAX 8

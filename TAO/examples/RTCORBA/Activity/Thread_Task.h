@@ -36,7 +36,7 @@ class Thread_Task : public Periodic_Task
  protected:
 
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #endif /* THREAD_TASK_H */

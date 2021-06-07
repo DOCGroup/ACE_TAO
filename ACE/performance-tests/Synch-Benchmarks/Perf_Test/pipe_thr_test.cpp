@@ -11,7 +11,7 @@ class ACE_Svc_Export Pipe_Thr_Test : public Benchmark_Performance
 {
 public:
   virtual int init (int, ACE_TCHAR **);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_HANDLE pipe_handles[2];

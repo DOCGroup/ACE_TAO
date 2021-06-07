@@ -10,6 +10,7 @@
 #include "ace/Arg_Shifter.h"
 #include "orbsvcs/Log_Macros.h"
 #include "ace/OS_NS_strings.h"
+#include "ace/OS_NS_time.h"
 
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
@@ -366,7 +367,7 @@ Options::init_from_registry (void)
 
 
 void
-Options::print_usage (void) const
+Options::print_usage () const
 {
   ORBSVCS_ERROR ((LM_ERROR,
     ACE_TEXT ("Usage:\n")
@@ -388,14 +389,16 @@ Options::print_usage (void) const
     ACE_TEXT ("  --backup        Replicate the ImplRepo as the backup ImR\n")
     ACE_TEXT ("  -r              Use the registry for storing/loading settings\n")
     ACE_TEXT ("  -s              Run as a service\n")
-    ACE_TEXT ("  -t secs         Server startup timeout.(Default = 60s)\n")
-    ACE_TEXT ("  -v msecs        Server verification interval.(Default = 10000ms)\n")
-    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = 1000ms)\n")
+    ACE_TEXT ("  -t secs         Server startup timeout.(Default = %ds)\n")
+    ACE_TEXT ("  -v msecs        Server verification interval.(Default = %dms)\n")
+    ACE_TEXT ("  -n msecs        Ping request timeout.(Default = %dms)\n")
     ACE_TEXT ("  -i              Ping servers started without activators too.\n")
     ACE_TEXT ("  --lockout       Prevent excessive restart attempts until manual reset.\n")
     ACE_TEXT ("  --UnregisterIfAddressReused,\n")
-    ACE_TEXT ("  -u              Unregister server if its endpoint is used by another\n")
-              ));
+    ACE_TEXT ("  -u              Unregister server if its endpoint is used by another\n"),
+    DEFAULT_START_TIMEOUT,
+    DEFAULT_PING_INTERVAL * ACE_U_ONE_SECOND_IN_MSECS,
+    DEFAULT_PING_TIMEOUT * ACE_U_ONE_SECOND_IN_MSECS));
 }
 
 int
@@ -663,71 +666,71 @@ Options::load_registry_options ()
 }
 
 bool
-Options::service (void) const
+Options::service () const
 {
   return this->service_;
 }
 
 unsigned int
-Options::debug (void) const
+Options::debug () const
 {
   return this->debug_;
 }
 
 const ACE_TString&
-Options::ior_filename (void) const
+Options::ior_filename () const
 {
   return this->ior_output_file_;
 }
 
 bool
-Options::multicast (void) const
+Options::multicast () const
 {
   return this->multicast_;
 }
 
 Options::SERVICE_COMMAND
-Options::service_command(void) const
+Options::service_command() const
 {
   return this->service_command_;
 }
 
 const char*
-Options::cmdline(void) const {
+Options::cmdline() const {
   return this->cmdline_.c_str ();
 }
 
 const ACE_TString&
-Options::persist_file_name(void) const {
+Options::persist_file_name() const {
   return this->persist_file_name_;
 }
 
 ACE_Time_Value
-Options::startup_timeout (void) const
+Options::startup_timeout () const
 {
   return this->startup_timeout_;
 }
 
 bool
-Options::ping_external (void) const
+Options::ping_external () const
 {
   return this->ping_external_;
 }
 
 ACE_Time_Value
-Options::ping_interval (void) const
+Options::ping_interval () const
 {
   return this->ping_interval_;
 }
 
 ACE_Time_Value
-Options::ping_timeout (void) const
+Options::ping_timeout () const
 {
   return this->ping_timeout_;
 }
 
 LiveCheck *
-Options::pinger (void) const
+Options::pinger () const
 {
   return this->pinger_;
 }
@@ -739,55 +742,55 @@ Options::pinger (LiveCheck *p)
 }
 
 Options::RepoMode
-Options::repository_mode (void) const
+Options::repository_mode () const
 {
   return this->repo_mode_;
 }
 
 bool
-Options::repository_erase (void) const
+Options::repository_erase () const
 {
   return this->erase_repo_;
 }
 
 bool
-Options::readonly (void) const
+Options::readonly () const
 {
   return this->readonly_;
 }
 
 bool
-Options::unregister_if_address_reused (void) const
+Options::unregister_if_address_reused () const
 {
   return this->unregister_if_address_reused_;
 }
 
 bool
-Options::lockout (void) const
+Options::lockout () const
 {
   return this->lockout_;
 }
 
 bool
-Options::throw_shutdown_exceptions (void) const
+Options::throw_shutdown_exceptions () const
 {
   return this->throw_shutdown_exceptions_;
 }
 
 Options::ImrType
-Options::imr_type (void) const
+Options::imr_type () const
 {
   return this->imr_type_;
 }
 
 const ACE_CString &
-Options::ft_endpoint (void) const
+Options::ft_endpoint () const
 {
   return this->ft_endpoint_;
 }
 
 ACE_Time_Value
-Options::ft_update_delay (void) const
+Options::ft_update_delay () const
 {
   return this->ft_update_delay_;
 }

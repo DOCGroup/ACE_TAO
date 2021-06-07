@@ -56,7 +56,7 @@ public:
       const TAO_Transport_Descriptor_Interface *other_prop);
 
   /// Generate hash value for our class
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
 private:
   /// Stack of properties.

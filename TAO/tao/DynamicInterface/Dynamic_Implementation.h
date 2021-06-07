@@ -71,9 +71,8 @@ public:
   virtual CORBA::InterfaceDef_ptr _get_interface (void);
 
 protected:
-
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);

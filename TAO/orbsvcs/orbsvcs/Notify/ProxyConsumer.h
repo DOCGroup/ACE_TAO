@@ -60,7 +60,7 @@ public:
   virtual void destroy (void);
 
   /// Return true if connected
-  bool is_connected (void) const;
+  bool is_connected () const;
 
   /// The SA parent.
   TAO_Notify_SupplierAdmin& supplier_admin (void);

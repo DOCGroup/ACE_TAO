@@ -60,7 +60,7 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
 
 template <class EXT_ID, class INT_ID> int
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
-is_empty (void) const
+is_empty () const
 {
   return this->head_ == 0 && this->tail_ == 0;
 }
@@ -288,7 +288,7 @@ prev (JAWS_HASH_BUCKET_ITEM *&item) const
 }
 
 template <class EXT_ID, class INT_ID> int
-JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done (void) const
+JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::done () const
 {
   return this->done_;
 }

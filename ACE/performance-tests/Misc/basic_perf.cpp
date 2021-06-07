@@ -147,7 +147,7 @@ public:
 
   virtual void run (void);
 
-  ACE_hrtime_t empty_iteration_time (void) const
+  ACE_hrtime_t empty_iteration_time () const
     {
       return elapsed_time_;
     }

@@ -39,7 +39,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableGroup_Export TAO_UIPMC_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_UIPMC_Connector (void);
 
@@ -54,7 +53,7 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
 protected:
   /// = More TAO_Connector methods, please check the documentation on

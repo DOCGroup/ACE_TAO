@@ -71,7 +71,7 @@ Handle_R_Dgram::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_R_Dgram::get_handle (void) const
+Handle_R_Dgram::get_handle () const
 {
   return ACE_SOCK_Dgram::get_handle ();
 }

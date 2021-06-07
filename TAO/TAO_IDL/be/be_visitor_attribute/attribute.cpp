@@ -40,12 +40,12 @@
 be_visitor_attribute::be_visitor_attribute (be_visitor_context *ctx)
   : be_visitor_decl (ctx),
     for_facets_ (false),
-    op_scope_ (0),
+    op_scope_ (nullptr),
     exec_class_extension_ ("_exec_i")
 {
 }
 
-be_visitor_attribute::~be_visitor_attribute (void)
+be_visitor_attribute::~be_visitor_attribute ()
 {
 }
 
@@ -59,14 +59,14 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   AST_Decl *d = ScopeAsDecl (s);
   ACE_CString op_name (this->ctx_->port_prefix ());
   op_name += node->local_name ()->get_string ();
-  Identifier *op_id = 0;
+  Identifier *op_id = nullptr;
   ACE_NEW_RETURN (op_id,
                   Identifier (op_name.c_str ()),
                   -1);
 
-  UTL_ScopedName *op_ln = 0;
+  UTL_ScopedName *op_ln = nullptr;
   ACE_NEW_RETURN (op_ln,
-                  UTL_ScopedName (op_id, 0),
+                  UTL_ScopedName (op_id, nullptr),
                   -1);
 
   UTL_ScopedName *op_sn =
@@ -76,7 +76,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // first the "get" operation
   be_operation get_op (node->field_type (),
                        AST_Operation::OP_noflags,
-                       0,
+                       nullptr,
                        node->is_local (),
                        node->is_abstract ());
 
@@ -84,7 +84,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   get_op.set_name (op_sn);
   UTL_ExceptList *get_exceptions = node->get_get_exceptions ();
 
-  if (0 != get_exceptions)
+  if (nullptr != get_exceptions)
     {
       get_op.be_add_exceptions (get_exceptions->copy ());
     }
@@ -229,7 +229,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Create the set method.
   Identifier id ("void");
   UTL_ScopedName sn (&id,
-                     0);
+                     nullptr);
 
   // The return type  is "void".
   be_predefined_type rt (AST_PredefinedType::PT_void,
@@ -246,7 +246,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
   // Create the operation.
   be_operation set_op (&rt,
                        AST_Operation::OP_noflags,
-                       0,
+                       nullptr,
                        node->is_local (),
                        node->is_abstract ());
   set_op.set_defined_in (node->defined_in ());
@@ -255,7 +255,7 @@ be_visitor_attribute::visit_attribute (be_attribute *node)
 
   UTL_ExceptList *set_exceptions = node->get_set_exceptions ();
 
-  if (0 != set_exceptions)
+  if (nullptr != set_exceptions)
     {
       set_op.be_add_exceptions (set_exceptions->copy ());
     }

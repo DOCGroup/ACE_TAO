@@ -49,8 +49,6 @@ namespace TAO
       friend class Profile;
       friend class TAO_SSLIOP_Profile;
 
-      // = Initialization and termination methods.
-
       /// Default constructor.
       Endpoint (void);
 
@@ -95,25 +93,25 @@ namespace TAO
       // = HTIOP_Endpoint-specific methods.
 
       /// Return a reference to the <object_addr>.
-      const ACE::HTBP::Addr &object_addr (void) const;
+      const ACE::HTBP::Addr &object_addr () const;
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *host (void) const;
+      const char *host () const;
 
       /// Copy the string @a h into <host_> and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *host (const char *h);
 
       /// Return the port number.
-      CORBA::UShort port (void) const;
+      CORBA::UShort port () const;
 
       /// Set the port number.
       CORBA::UShort port (CORBA::UShort p);
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *htid (void) const;
+      const char *htid () const;
 
       /// Copy the string @a h into <host_> and return the resulting pointer.
       /// This object maintains ownership of this string.

@@ -8,7 +8,6 @@
 class Consumer_Entry
 {
 public:
-  // = Initialization and termination methods.
   Consumer_Entry (Event_Comm::Consumer *consumer,
                   const char *filtering_criteria);
   // Constructor.

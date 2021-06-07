@@ -27,7 +27,7 @@ if (!defined $DANCE_ROOT) {
 
 $is_release = 0;
 $exclude_ace = 0;
-$exclude_tao = !-r "$TAO_ROOT/VERSION";
+$exclude_tao = !-r "$TAO_ROOT/VERSION.txt";
 $exclude_ciao = !-r "$CIAO_ROOT/VERSION";
 $exclude_dance = !-r "$DANCE_ROOT/VERSION";
 $verbose = 0;
@@ -36,7 +36,7 @@ $html_output_dir = '.';
 $footer = '';
 
 $dds = 0;
-if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION") {
+if (defined $DDS_ROOT && -r "$DDS_ROOT/VERSION.txt") {
     $dds_path = Cwd::abs_path($DDS_ROOT);
     $cwd_path = Cwd::abs_path(getcwd());
     if ($dds_path eq $cwd_path) {
@@ -96,11 +96,11 @@ if (!-r "$ACE_ROOT/ace/config.h") {
     $wrote_configh = 1;
 }
 
-&generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION", @ACE_DOCS) if (!$exclude_ace);
-&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION", @TAO_DOCS) if (!$exclude_tao);
+&generate_doxy_files ('ACE',  " $ACE_ROOT", " $ACE_ROOT/VERSION.txt", @ACE_DOCS) if (!$exclude_ace);
+&generate_doxy_files ('TAO',  " $TAO_ROOT", " $TAO_ROOT/VERSION.txt", @TAO_DOCS) if (!$exclude_tao);
 &generate_doxy_files ('CIAO', " $CIAO_ROOT", " $CIAO_ROOT/VERSION", @CIAO_DOCS) if (!$exclude_ciao);
 &generate_doxy_files ('DANCE'," $DANCE_ROOT", " $DANCE_ROOT/VERSION", @DANCE_DOCS) if (!$exclude_dance);
-&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION", @DDS_DOCS) if $dds;
+&generate_doxy_files ('DDS',   "$DDS_ROOT", " $DDS_ROOT/VERSION.txt", @DDS_DOCS) if $dds;
 
 unlink "$ACE_ROOT/ace/config.h" if $wrote_configh;
 
@@ -300,7 +300,7 @@ sub run_doxy {
 sub get_versions () {
   my $KIT = shift;
   my $VERSION_FILE = shift;
-  my ($major_version, $minor_version, $beta_version);
+  my ($major_version, $minor_version, $micro_version);
 
   open (VERSION, '<'.$VERSION_FILE)  ||
     die "$0: unable to open $VERSION_FILE\n";
@@ -309,23 +309,23 @@ sub get_versions () {
     if (/$KIT version (\d+)\.(\d+)\.(\d+)/) {
       $major_version = $1;
       $minor_version = $2;
-      $beta_version = $3;
+      $micro_version = $3;
       last;
     } elsif (/$KIT version (\d+)\.(\d+)[^\.]/) {
       #### Previous release was a minor.
       $major_version = $1;
       $minor_version = $2;
-      $beta_version  = '0';
+      $micro_version  = '0';
       last;
     } elsif (/$KIT version (\d+)[^\.]/) {
       #### Previous release was a major.
       $major_version = $1;
       $minor_version = '0';
-      $beta_version  = '0';
+      $micro_version  = '0';
       last;
     }
   }
   close VERSION;
 
-  return ($major_version, $minor_version, $beta_version);
+  return ($major_version, $minor_version, $micro_version);
 }

@@ -78,14 +78,14 @@ TAO_Value_Var_T<T>::operator T *& ()
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::operator-> (void) const
+TAO_Value_Var_T<T>::operator-> () const
 {
   return this->ptr_;
 }
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::in (void) const
+TAO_Value_Var_T<T>::in () const
 {
   return this->ptr_;
 }
@@ -117,7 +117,7 @@ TAO_Value_Var_T<T>::_retn (void)
 
 template <typename T>
 T *
-TAO_Value_Var_T<T>::ptr (void) const
+TAO_Value_Var_T<T>::ptr () const
 {
   return this->ptr_;
 }

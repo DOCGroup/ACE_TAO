@@ -37,7 +37,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_AV_Export TAO_AV_Endpoint_Strategy
 {
-
 public:
   /// Constructor
   TAO_AV_Endpoint_Strategy (void);
@@ -62,7 +61,6 @@ protected:
 
   /// The vdev
   AVStreams::VDev_var vdev_;
-
 };
 
 // ----------------------------------------------------------------------
@@ -74,7 +72,6 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy
   : public TAO_AV_Endpoint_Strategy
 {
-
 public:
   /// Constructor. The process_options contain the name and arguments
   /// for the process to be created
@@ -125,7 +122,6 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_A
   : public TAO_AV_Endpoint_Process_Strategy
 {
-
 public:
   /// Constructor
   TAO_AV_Endpoint_Process_Strategy_A (ACE_Process_Options *process_options);
@@ -140,7 +136,6 @@ protected:
 
   /// Gets the "A" type stream endpoint from the child process
   virtual int get_stream_endpoint (void);
-
 };
 
 // ----------------------------------------------------------------------
@@ -152,7 +147,6 @@ protected:
 class TAO_AV_Export TAO_AV_Endpoint_Process_Strategy_B
   : public TAO_AV_Endpoint_Process_Strategy
 {
-
 public:
   /// Constructor
   TAO_AV_Endpoint_Process_Strategy_B (ACE_Process_Options *process_options);
@@ -167,8 +161,7 @@ protected:
 
 
   /// Gets the object reference of the "B" type streamendpoint.
-  virtual int get_stream_endpoint (void);
-
+  virtual int get_stream_endpoint ();
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

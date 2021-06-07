@@ -1,6 +1,7 @@
 // -*- C++ -*-
 #include "tao/PortableServer/PortableServer_Functions.h"
 #include "ace/OS_NS_string.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -22,7 +23,7 @@ namespace PortableServer
     // artifact of the way strings are stored in C.
     //
     CORBA::ULong buffer_size = static_cast <CORBA::ULong>
-                                           (ACE_OS::strlen (string));
+                                           (std::strlen (string));
 
     // Create the buffer for the Id
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);

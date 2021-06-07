@@ -19,7 +19,7 @@ public:
 
   virtual ssize_t log (ACE_Log_Record &log_record);
 
-  bool ok (void) const;
+  bool ok () const;
 
 private:
   bool ok_;
@@ -52,7 +52,7 @@ Backend::log (ACE_Log_Record &)
 }
 
 bool
-Backend::ok (void) const
+Backend::ok () const
 {
   return this->ok_;
 }

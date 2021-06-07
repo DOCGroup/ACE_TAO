@@ -59,7 +59,7 @@ public:
   void shutdown (bool wait_for_completion);
 
   /// Access the options
-  const Options *opts (void) const;
+  const Options *opts () const;
 
   static int debug (void);
   // Note : See the IDL for descriptions of the operations.

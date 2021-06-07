@@ -7,13 +7,13 @@ namespace ACE
   {
 
     ACE_INLINE
-    Context::operator bool (void) const
+    Context::operator bool () const
       {
         return this->ssl_ctx_ != 0;
       }
 
     ACE_INLINE
-    bool Context::operator ! (void) const
+    bool Context::operator ! () const
       {
         return this->ssl_ctx_ == 0;
       }
@@ -25,7 +25,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_SSL_Context& Context::ssl_context (void) const
+    const ACE_SSL_Context& Context::ssl_context () const
       {
         return *this->ssl_ctx_;
       }

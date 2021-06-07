@@ -64,5 +64,5 @@ Test_i::try_and_create_POA (void)
 void
 Test_i::shutdown (void)
 {
-   orb_->shutdown (0);
+   orb_->shutdown (false);
 }

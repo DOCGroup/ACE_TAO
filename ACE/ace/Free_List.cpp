@@ -15,7 +15,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class T>
-ACE_Free_List<T>::~ACE_Free_List (void)
+ACE_Free_List<T>::~ACE_Free_List ()
 {
 }
 
@@ -42,7 +42,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::ACE_Locked_Free_List (int mode,
 // Destructor - removes all the elements from the free_list
 
 template <class T, class ACE_LOCK>
-ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List (void)
+ACE_Locked_Free_List<T, ACE_LOCK>::~ACE_Locked_Free_List ()
 {
   if (this->mode_ != ACE_PURE_FREE_LIST)
     while (this->free_list_ != 0)
@@ -79,7 +79,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 // water mark.
 
 template <class T, class ACE_LOCK> T *
-ACE_Locked_Free_List<T, ACE_LOCK>::remove (void)
+ACE_Locked_Free_List<T, ACE_LOCK>::remove ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->mutex_, 0));
 
@@ -103,7 +103,7 @@ ACE_Locked_Free_List<T, ACE_LOCK>::remove (void)
 // Returns the current size of the free list
 
 template <class T, class ACE_LOCK> size_t
-ACE_Locked_Free_List<T, ACE_LOCK>::size (void)
+ACE_Locked_Free_List<T, ACE_LOCK>::size ()
 {
   return this->size_;
 }

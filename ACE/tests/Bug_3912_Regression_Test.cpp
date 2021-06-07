@@ -22,8 +22,8 @@
 #include "ace/Task.h"
 #include "ace/Module.h"
 
-typedef ACE_Task<ACE_SYNCH> MT_Task;
-typedef ACE_Module<ACE_SYNCH> MT_Module;
+using MT_Task = ACE_Task<ACE_MT_SYNCH>;
+using MT_Module = ACE_Module<ACE_MT_SYNCH>;
 
 /**
  * We use this Task to track if close was called.
@@ -37,7 +37,7 @@ public:
   {
   }
 
-  virtual int close(u_long );
+  int close(u_long ) override;
 
 private:
   bool* close_called_;

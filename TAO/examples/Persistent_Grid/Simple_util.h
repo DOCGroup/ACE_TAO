@@ -32,8 +32,6 @@ template <class Servant>
 class Server
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   Server (void);
 
@@ -97,8 +95,6 @@ template <class InterfaceObj, class Var>
 class Client
 {
 public:
-
-  // = Initialization and termination methods.
   /// Constructor.
   Client (void);
 
@@ -112,7 +108,7 @@ public:
   InterfaceObj *operator-> () { return server_.in ();};
 
   /// Returns the shutdown flag.
-  int shutdown (void );
+  int shutdown ();
 
   /// Fills in the shutdwon flag.
   void shutdown (int);

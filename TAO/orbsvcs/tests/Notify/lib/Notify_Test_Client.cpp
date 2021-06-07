@@ -150,7 +150,7 @@ Notify_Test_Client::consumer_done (TAO_Notify_Tests_Peer*)
 }
 
 bool
-Notify_Test_Client::is_done (void) const
+Notify_Test_Client::is_done () const
 {
   return this->done_;
 }

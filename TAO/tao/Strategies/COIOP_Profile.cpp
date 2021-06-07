@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_COIOP_Profile::object_key_delimiter_ = '/';
 
 char
-TAO_COIOP_Profile::object_key_delimiter (void) const
+TAO_COIOP_Profile::object_key_delimiter () const
 {
   return TAO_COIOP_Profile::object_key_delimiter_;
 }
@@ -98,7 +98,7 @@ TAO_COIOP_Profile::parse_string_i (const char *ior)
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
   const char *okd =
-    ACE_OS::strchr (ior, this->object_key_delimiter_);
+    std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == 0 || okd == ior)
     {
@@ -186,7 +186,7 @@ TAO_COIOP_Profile::endpoint (void)
 }
 
 CORBA::ULong
-TAO_COIOP_Profile::endpoint_count (void) const
+TAO_COIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -201,7 +201,7 @@ TAO_COIOP_Profile::add_endpoint (TAO_COIOP_Endpoint *endp)
 }
 
 char *
-TAO_COIOP_Profile::to_string (void) const
+TAO_COIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

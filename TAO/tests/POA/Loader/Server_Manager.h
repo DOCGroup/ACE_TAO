@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file     Server_Manager.h
@@ -32,7 +30,6 @@
 class Server_i
 {
 public:
-  // = Initialization and termination methods.
   /// Initialisation.
   Server_i (void);
 

@@ -19,6 +19,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include <atomic>
 #include "LiveCheck.h"
 
 class Locator_Repository;
@@ -73,8 +74,7 @@ class AsyncListManager
   CORBA::ULong first_;
   CORBA::ULong how_many_;
   CORBA::ULong waiters_;
-  int refcount_;
-  TAO_SYNCH_MUTEX lock_;
+  std::atomic<int> refcount_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<AsyncListManager> AsyncListManager_ptr;

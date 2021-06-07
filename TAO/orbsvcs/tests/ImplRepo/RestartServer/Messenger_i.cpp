@@ -49,5 +49,5 @@ Messenger_i::abort (CORBA::Short delay_secs)
 void
 Messenger_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

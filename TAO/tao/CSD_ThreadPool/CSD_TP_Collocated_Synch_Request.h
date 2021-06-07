@@ -68,9 +68,7 @@ namespace TAO
       /// false if the request has been cancelled.
       bool wait(void);
 
-
     protected:
-
       /// Note that we do not override our base class implementation of
       /// prepare_for_queue_i() (which does nothing), because we don't
       /// need to clone the Server Request object.
@@ -81,9 +79,7 @@ namespace TAO
       /// Cancel the request.
       virtual void cancel_i();
 
-
     private:
-
       /// Helper used to block and unblock the thread that invokes our
       /// wait() method.
       TP_Synch_Helper synch_helper_;

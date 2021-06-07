@@ -12,7 +12,7 @@ Hello::Hello (CORBA::ORB_ptr orb, Test::Hello_ptr, CORBA::ULong)
 void
 Hello::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void

@@ -26,7 +26,7 @@ public:
   virtual int close (u_long flags = 0);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_close (ACE_HANDLE fd,

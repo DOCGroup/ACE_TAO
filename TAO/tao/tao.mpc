@@ -492,7 +492,6 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Messaging_PolicyValueS.h
     Messaging_SyncScopeC.h
     Messaging_SyncScopeS.h
-    MM_Sequence_Iterator_T.h
     MMAP_Allocator.h
     MProfile.h
     Muxed_TMS.h
@@ -706,7 +705,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     gendir = .
     ../rules.tao.GNU
     ../README*
-    ../VERSION
+    ../VERSION.txt
     ../PROBLEM-REPORT-FORM
     ../NEWS
     ../COPYING*

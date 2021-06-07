@@ -69,7 +69,7 @@ class Worker : public ACE_Task_Base
 {
 public:
   Worker (Test::Transport::CurrentTest_ptr server, int niterations, int use_dii_too);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // The server.

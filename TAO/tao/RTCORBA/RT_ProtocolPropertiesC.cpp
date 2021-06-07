@@ -167,7 +167,7 @@ RTCORBA::ProtocolProperties::_is_a (const char *value)
     }
 }
 
-const char* RTCORBA::ProtocolProperties::_interface_repository_id (void) const
+const char* RTCORBA::ProtocolProperties::_interface_repository_id () const
 {
   return "IDL:omg.org/RTCORBA/ProtocolProperties:1.0";
 }

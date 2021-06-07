@@ -28,7 +28,7 @@ public:
   be_visitor_operation_direct_proxy_impl_ss (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_operation_direct_proxy_impl_ss (void);
+  ~be_visitor_operation_direct_proxy_impl_ss ();
 
   /// visit operation node.
   virtual int visit_operation (be_operation *node);

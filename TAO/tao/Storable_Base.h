@@ -27,11 +27,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   class TAO_Export Storable_Base
   {
   public:
-
     Storable_Base (bool use_backup, bool retry_ebadf);
 
     virtual ~Storable_Base ();
@@ -42,8 +40,8 @@ namespace TAO
     /// The initial value for the default is false.
     static bool use_backup_default;
 
-    /// The process-wide default policy for retring certain flock operations
-    /// if an ebadf is returned. This can happen spurously on nfs mounted
+    /// The process-wide default policy for retiring certain flock operations
+    /// if an ebadf is returned. This can happen spuriously on nfs mounted
     /// file.
     static bool retry_on_ebadf_default;
 
@@ -81,15 +79,15 @@ namespace TAO
 
     void setstate (Storable_State state);
 
-    Storable_State rdstate (void) const;
+    Storable_State rdstate () const;
 
-    bool good (void) const;
+    bool good () const;
 
-    bool bad (void) const;
+    bool bad () const;
 
-    bool eof (void) const;
+    bool eof () const;
 
-    bool fail (void) const;
+    bool fail () const;
 
     static ACE_CString state_as_string (Storable_State state);
 
@@ -121,7 +119,6 @@ namespace TAO
     virtual int restore_backup () = 0;
 
   protected:
-
     virtual void do_remove () = 0;
 
     /// If a backup file exists, remove it.
@@ -132,7 +129,6 @@ namespace TAO
 
   private:
     Storable_State state_;
-
   };
 
   /// Base class for exceptions thrown when encountering
@@ -177,7 +173,6 @@ namespace TAO
   private:
     TAO::Storable_Base::Storable_State storable_state_;
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

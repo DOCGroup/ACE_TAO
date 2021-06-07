@@ -178,7 +178,7 @@ EC_Driver::initialize_orb_and_poa (int &argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Driver::print_args (void) const
+EC_Driver::print_args () const
 {
   ACE_DEBUG ((LM_DEBUG,
               "Execution parameters:\n"

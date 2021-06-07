@@ -177,7 +177,7 @@ ECT_Consumer_Driver::run (int argc, ACE_TCHAR* argv[])
           channel->destroy ();
         }
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       this->orb_->destroy ();
     }

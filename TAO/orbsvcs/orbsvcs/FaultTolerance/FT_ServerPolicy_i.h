@@ -47,7 +47,7 @@ public:
   // CORBA::ORB::create_policy.
 
   /// Returns a copy of <this>.
-  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone (void) const;
+  virtual TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
   // = The FT::HeartBeatPolicy methods
   virtual CORBA::Boolean heartbeat_enabled_policy_value ();

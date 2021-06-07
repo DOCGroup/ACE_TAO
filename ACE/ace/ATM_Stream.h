@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_ATM_STREAM_H
 #define ACE_ATM_STREAM_H
 #include /**/ "ace/pre.h"
@@ -46,7 +45,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_ATM_Stream
 {
 public:
-  // = Initialization and termination methods.
   /// Default constructor.
   ACE_ATM_Stream (void);
 
@@ -58,13 +56,13 @@ public:
   int close (void);
 
   /// Get the underlying handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Get the underlying stream.
   ATM_Stream& get_stream (void);
 
   /// Get the name of the connected host.
-  char* get_peer_name (void) const;
+  char* get_peer_name () const;
 
   /// Get the VPI and VCI of the stream.
   int get_vpi_vci (ACE_UINT16 &vpi,
@@ -84,7 +82,7 @@ public:
   typedef ACE_ATM_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

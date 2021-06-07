@@ -20,7 +20,7 @@ Sender::dump_results (void)
 }
 
 bool
-Sender::is_done (void) const
+Sender::is_done () const
 {
   return this->is_done_;
 }

@@ -14,7 +14,7 @@ URL_Status::URL_Status (const URL_Status &s)
 }
 
 URL_Status::STATUS_CODE
-URL_Status::status (void) const
+URL_Status::status () const
 {
   return this->status_;
 }

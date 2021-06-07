@@ -34,7 +34,7 @@ Test_Objref_Struct::~Test_Objref_Struct (void)
 }
 
 const char *
-Test_Objref_Struct::opname (void) const
+Test_Objref_Struct::opname () const
 {
   return this->opname_;
 }

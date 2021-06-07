@@ -38,10 +38,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_UIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   friend class TAO_UIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_UIOP_Endpoint (void);
@@ -74,11 +71,11 @@ public:
   // = UIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_UNIX_Addr &object_addr (void) const;
+  const ACE_UNIX_Addr &object_addr () const;
 
   /// Return a pointer to the rendezvous point string.
   /// This object maintains ownership of the returned string.
-  const char *rendezvous_point (void) const;
+  const char *rendezvous_point () const;
 
 private:
 

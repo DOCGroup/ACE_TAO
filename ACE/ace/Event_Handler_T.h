@@ -63,7 +63,7 @@ public:
   // = Typedefs to simplify pointer-to-member-function registration.
 
   // Get/set the underlying handle.
-  typedef ACE_HANDLE (T::*GET_HANDLE) (void) const;
+  typedef ACE_HANDLE (T::*GET_HANDLE) () const;
   typedef void (T::*SET_HANDLE) (ACE_HANDLE);
 
   /// Handle I/O events.
@@ -75,7 +75,6 @@ public:
   /// Handle close events.
   typedef int (T::*CL_HANDLER) (ACE_HANDLE, ACE_Reactor_Mask);
 
-  /// = Initialization and termination methods.
   typedef int (T::*SIG_HANDLER) (int, siginfo_t*, ucontext_t*);
 
   /// Initialize the op_handler.
@@ -96,7 +95,7 @@ public:
   // = Override all the ACE_Event_Handler methods.
 
   // These methods all delegate down to the <T> operations handler.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual void set_handle (ACE_HANDLE);
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
   virtual int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -111,32 +110,32 @@ public:
 
   // = Get/set the target pointer-to-method used for dispatching.
 
-  GET_HANDLE handle_get (void);
+  GET_HANDLE handle_get ();
   void handle_get (GET_HANDLE);
 
-  SET_HANDLE handle_set (void);
+  SET_HANDLE handle_set ();
   void handle_set (SET_HANDLE);
 
-  IO_HANDLER input_handler (void);
+  IO_HANDLER input_handler ();
   void input_handler (IO_HANDLER);
 
-  IO_HANDLER output_handler (void);
+  IO_HANDLER output_handler ();
   void output_handler (IO_HANDLER);
 
-  IO_HANDLER except_handler (void);
+  IO_HANDLER except_handler ();
   void except_handler (IO_HANDLER);
 
-  TO_HANDLER to_handler (void);
+  TO_HANDLER to_handler ();
   void to_handler (TO_HANDLER);
 
-  CL_HANDLER cl_handler (void);
+  CL_HANDLER cl_handler ();
   void cl_handler (CL_HANDLER);
 
-  SIG_HANDLER sig_handler (void);
+  SIG_HANDLER sig_handler ();
   void sig_handler (SIG_HANDLER);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

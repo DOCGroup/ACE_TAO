@@ -150,10 +150,10 @@ public:
   ACE_Wide_To_Ascii (const wchar_t *s);
 
   /// Destructor will free up the memory.
-  ~ACE_Wide_To_Ascii (void);
+  ~ACE_Wide_To_Ascii ();
 
   /// Return the internal char* representation.
-  char *char_rep (void);
+  char *char_rep ();
 
   /// Converts an wchar_t string to ascii and returns a new string.
   static char *convert (const wchar_t *wstr);
@@ -167,7 +167,7 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Wide_To_Ascii (void);
+  ACE_Wide_To_Ascii ();
   ACE_Wide_To_Ascii (ACE_Wide_To_Ascii &);
   ACE_Wide_To_Ascii& operator= (ACE_Wide_To_Ascii &);
 };
@@ -188,10 +188,10 @@ public:
   ACE_Ascii_To_Wide (const char *s);
 
   /// Destructor will free up the memory.
-  ~ACE_Ascii_To_Wide (void);
+  ~ACE_Ascii_To_Wide ();
 
   /// Return the internal wchar* representation.
-  wchar_t *wchar_rep (void);
+  wchar_t *wchar_rep ();
 
   /// Converts an char string to unicode/wide and returns a new string.
   static wchar_t *convert (const char *str);
@@ -205,7 +205,7 @@ private:
 #endif /* ACE_HAS_ICONV */
 
   /// Disallow these operation.
-  ACE_Ascii_To_Wide (void);
+  ACE_Ascii_To_Wide ();
   ACE_Ascii_To_Wide (ACE_Ascii_To_Wide &);
   ACE_Ascii_To_Wide operator= (ACE_Ascii_To_Wide &);
 };

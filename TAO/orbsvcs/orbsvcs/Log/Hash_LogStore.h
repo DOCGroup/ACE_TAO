@@ -40,8 +40,6 @@ class TAO_Log_Serv_Export TAO_Hash_LogStore
   : public TAO_LogStore
 {
 public:
-  // = Initialization and Termination Methods
-
   /// Constructor.
   TAO_Hash_LogStore (TAO_LogMgr_i* mgr);
 

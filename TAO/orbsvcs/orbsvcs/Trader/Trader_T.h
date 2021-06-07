@@ -55,7 +55,6 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 class TAO_Trader : public TAO_Trader_Base
 {
 public:
-
   // The desired combination of interfaces to be passed to the
   // TAO_Trader constructor.
 
@@ -80,7 +79,6 @@ public:
   ACE_Lock &lock (void);
 
 protected:
-
   typedef TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> TRADER_SELF;
 
   Offer_Database offer_database_;
@@ -93,9 +91,8 @@ protected:
   PortableServer::ServantBase* ifs_[5];
 
 private:
-
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &))
+  void operator= (const TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE> &) = delete;
 };
 
   // *************************************************************
@@ -107,7 +104,6 @@ class TAO_Trader_Components :
   public virtual IF
 {
 public:
-
   TAO_Trader_Components (const TAO_Trading_Components_i& comps);
 
   // = CosTrading::TraderComponents methods.
@@ -132,7 +128,6 @@ public:
   virtual CosTrading::Admin_ptr admin_if (void);
 
 private:
-
   const TAO_Trading_Components_i& comps_;
 };
 
@@ -140,7 +135,6 @@ template <class IF>
 class TAO_Support_Attributes : public virtual IF
 {
 public:
-
   TAO_Support_Attributes (const TAO_Support_Attributes_i& attrs);
 
   // = CosTrading::SupportAttributes methods.
@@ -154,7 +148,6 @@ public:
   virtual CosTrading::TypeRepository_ptr type_repos (void);
 
 private:
-
   const TAO_Support_Attributes_i& attrs_;
 };
 
@@ -162,7 +155,6 @@ template <class IF>
 class TAO_Import_Attributes : public virtual IF
 {
 public:
-
   TAO_Import_Attributes (const TAO_Import_Attributes_i& attrs);
 
   // = CosTrading::ImportAttributes methods.
@@ -199,9 +191,7 @@ public:
 
   virtual CosTrading::FollowOption max_follow_policy (void);
 
-
 private:
-
   const TAO_Import_Attributes_i& attrs_;
 };
 
@@ -209,14 +199,12 @@ template <class IF>
 class TAO_Link_Attributes : public virtual IF
 {
 public:
-
   TAO_Link_Attributes (const TAO_Link_Attributes_i& attrs);
 
   // = CosTrading::LinkAttributes methods
   virtual CosTrading::FollowOption max_link_follow_policy (void);
 
 private:
-
   const TAO_Link_Attributes_i& attrs_;
 };
 

@@ -84,7 +84,7 @@ public:
   virtual int close (int flags = M_DELETE);
 
   /// Close down the stream and release all the resources.
-  virtual ~ACE_Stream (void);
+  virtual ~ACE_Stream ();
 
   // = ACE_Stream plumbing operations
 
@@ -117,10 +117,10 @@ public:
                       int flags = M_DELETE);
 
   /// Return current stream head.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head (void);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *head ();
 
   /// Return current stream tail.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail (void);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *tail ();
 
   /// Find a particular ACE_Module.
   virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *find (const ACE_TCHAR *mod);
@@ -129,7 +129,7 @@ public:
   virtual int link (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
 
   /// Remove a pipe formed between two Streams.
-  virtual int unlink (void);
+  virtual int unlink ();
 
   // = Blocking data transfer operations
   /**
@@ -157,7 +157,7 @@ public:
   virtual int wait (void);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -210,7 +210,6 @@ template <ACE_SYNCH_DECL, class TIME_POLICY = ACE_System_Time_Policy>
 class ACE_Stream_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Stream_Iterator (const ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &sr);
 
   // = Iteration methods.
@@ -220,7 +219,7 @@ public:
   int next (const ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *&next_item);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.

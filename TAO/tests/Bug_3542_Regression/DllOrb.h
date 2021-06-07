@@ -16,13 +16,13 @@ public:
   DllOrb (void);
   virtual ~DllOrb (void);
 
-  CORBA::ORB_ptr orb (void) const { return CORBA::ORB::_duplicate(mv_orb_.in()); }
+  CORBA::ORB_ptr orb () const { return CORBA::ORB::_duplicate(mv_orb_.in()); }
 
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
-  virtual int fini (void);
+  virtual int fini ();
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   auto_ptr < ACE_Thread_Barrier >      ma_barrier_;

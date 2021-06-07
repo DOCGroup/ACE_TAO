@@ -30,9 +30,9 @@ namespace TAO
     public:
       virtual void strategy_init(TAO_Root_POA *poa);
 
-      virtual void strategy_cleanup(void);
+      virtual void strategy_cleanup();
 
-      virtual bool allow_implicit_activation (void) const = 0;
+      virtual bool allow_implicit_activation () const = 0;
     };
   }
 }

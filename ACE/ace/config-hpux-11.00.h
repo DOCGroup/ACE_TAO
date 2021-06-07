@@ -42,27 +42,11 @@
 #      endif /* RWSTD_NO_NAMESPACE */
 #    else
 #      define ACE_USES_OLD_IOSTREAMS
-       // There's no support in ACE's use of numeric_limits for those that
-       // aren't in std::
-#      define ACE_LACKS_NUMERIC_LIMITS
 #    endif /* _HP_NAMESPACE_STD */
-
-#    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
 
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
-// Lack of (and broken) support for placement operator delete is a known
-// bug by HP, up until aC++ A.03.55.02.
-#    if (__HP_aCC < 35502)
-#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-#    endif /* __HP_aCC < 35502 */
-
-// Compiler's 'new' throws exceptions on failure, regardless of whether or
-// not exception handling is enabled in the compiler options. Fortunately,
-// new(nothrow_t) is offered.
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#    define ACE_HAS_NEW_NOTHROW
 #    define ACE_HAS_NEW_NO_H 1
 
 // Compiler's template mechanism must see source code (i.e., .C files).
@@ -162,15 +146,11 @@
 #define ACE_HAS_CLOCK_SETTIME
 
 #define ACE_LACKS_CLOCK_MONOTONIC
-#define ACE_LACKS_MONOTONIC_TIME
 
 #define ACE_LACKS_PTHREAD_SCOPE_PROCESS
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
@@ -340,8 +320,6 @@
 #if defined (_INCLUDE__STDC_A1_SOURCE)
 #  define ACE_HAS_3_PARAM_WCSTOK
 #endif
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #define ACE_LACKS_STRUCT_LIFNUM
 

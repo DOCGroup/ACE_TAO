@@ -50,7 +50,7 @@ public:
   virtual ssize_t send_request (void);
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr (void) const;
+  virtual const ACE_URL_Addr &url_addr () const;
 
   /// Commit suicide
   int destroy (void);

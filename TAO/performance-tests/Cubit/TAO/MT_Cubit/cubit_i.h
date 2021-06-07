@@ -24,7 +24,6 @@
 class Cubit_i : public POA_Cubit
 {
 public:
-  // = Initialization and termination methods.
   Cubit_i (CORBA::ORB_ptr orb,
            PortableServer::POA_ptr poa);
   ~Cubit_i (void);

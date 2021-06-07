@@ -17,6 +17,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Process.h"
 #include "ace/Env_Value_T.h"
+#include "ace/SString.h"
 
 #define TEST_THIS(type, varname, defval, expval) \
 do { \
@@ -61,13 +62,25 @@ run_main (int, ACE_TCHAR* [])
       TEST_THIS (short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10);
       TEST_THIS (unsigned short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned short) -10);
 
-      const ACE_TCHAR *defstr = ACE_TEXT ("Sarah Cleeland is Two!");
-      ACE_Env_Value<const ACE_TCHAR *> sval (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
-                                  defstr);
-      if (ACE_OS::strcmp (sval, defstr) != 0)
+      const ACE_TCHAR* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
+
+      ACE_Env_Value<ACE_TString> sval1 (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
+                                        defstr);
+      if (ACE_OS::strcmp (static_cast<ACE_TString>(sval1).c_str(), defstr) != 0) {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("Mismatch: %s should be %s\n"),
-                    (const ACE_TCHAR *)sval, defstr));
+                    static_cast<ACE_TString>(sval1).c_str(), defstr));
+      }
+
+      const ACE_TString strval(ACE_TEXT("-10.2"));
+
+      ACE_Env_Value<ACE_TString> sval2 (ACE_TEXT ("TEST_VALUE_NEGATIVE"),
+                                        defstr);
+      if (ACE_OS::strcmp (static_cast<ACE_TString>(sval2).c_str(), strval.c_str()) != 0) {
+        ACE_ERROR ((LM_ERROR,
+                    ACE_TEXT ("Mismatch: %s should be %s\n"),
+                    static_cast<ACE_TString>(sval2).c_str(), strval.c_str()));
+      }
       ACE_END_TEST;
     }
 #endif // ACE_LACKS_PUTENV

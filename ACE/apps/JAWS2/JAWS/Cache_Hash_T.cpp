@@ -224,7 +224,7 @@ JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::unbind (const EXT_ID &ext_id,
 
 
 template <class EXT_ID, class HASH_FUNC, class EQ_FUNC> size_t
-JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size (void) const
+JAWS_Cache_Hash<EXT_ID,HASH_FUNC,EQ_FUNC>::size () const
 {
   return this->size_;
 }

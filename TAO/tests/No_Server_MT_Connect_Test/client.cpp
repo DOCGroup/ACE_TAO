@@ -57,7 +57,7 @@ public:
 
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Simple_Server_var server_;

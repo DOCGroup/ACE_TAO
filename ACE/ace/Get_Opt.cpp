@@ -156,7 +156,7 @@ ACE_Get_Opt::ACE_Get_Opt (int argc,
     }
 }
 
-ACE_Get_Opt::~ACE_Get_Opt (void)
+ACE_Get_Opt::~ACE_Get_Opt ()
 {
   ACE_TRACE ("ACE_Get_Opt::~ACE_Get_Opt");
 
@@ -183,7 +183,7 @@ ACE_Get_Opt::~ACE_Get_Opt (void)
 }
 
 int
-ACE_Get_Opt::nextchar_i (void)
+ACE_Get_Opt::nextchar_i ()
 {
   ACE_TRACE ("ACE_Get_Opt::nextchar_i");
 
@@ -231,7 +231,7 @@ ACE_Get_Opt::nextchar_i (void)
 }
 
 int
-ACE_Get_Opt::long_option_i (void)
+ACE_Get_Opt::long_option_i ()
 {
   ACE_TRACE ("ACE_Get_Opt::long_option_i");
 
@@ -359,7 +359,7 @@ ACE_Get_Opt::long_option_i (void)
 }
 
 int
-ACE_Get_Opt::short_option_i (void)
+ACE_Get_Opt::short_option_i ()
 {
   ACE_TRACE ("ACE_Get_Opt::short_option_i");
 
@@ -436,7 +436,7 @@ ACE_Get_Opt::short_option_i (void)
 }
 
 int
-ACE_Get_Opt::operator () (void)
+ACE_Get_Opt::operator () ()
 {
   ACE_TRACE ("ACE_Get_Opt_Long::operator");
 
@@ -569,7 +569,7 @@ ACE_Get_Opt::long_option (const ACE_TCHAR *name,
 }
 
 const ACE_TCHAR*
-ACE_Get_Opt::long_option (void) const
+ACE_Get_Opt::long_option () const
 {
   ACE_TRACE ("ACE_Get_Opt::long_option (void)");
   if (this->long_option_)
@@ -578,7 +578,7 @@ ACE_Get_Opt::long_option (void) const
 }
 
 const ACE_TCHAR*
-ACE_Get_Opt::last_option (void) const
+ACE_Get_Opt::last_option () const
 {
   return this->last_option_->c_str ();
 }
@@ -590,7 +590,7 @@ ACE_Get_Opt::last_option (const ACE_TString &last_option)
 }
 
 void
-ACE_Get_Opt::dump (void) const
+ACE_Get_Opt::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Get_Opt::dump");
@@ -629,7 +629,7 @@ ACE_Get_Opt::dump (void) const
 }
 
 void
-ACE_Get_Opt::permute_args (void)
+ACE_Get_Opt::permute_args ()
 {
   ACE_TRACE ("ACE_Get_Opt::permute_args");
 
@@ -665,7 +665,7 @@ ACE_Get_Opt::permute_args (void)
 }
 
 int
-ACE_Get_Opt::permute (void)
+ACE_Get_Opt::permute ()
 {
   ACE_TRACE ("ACE_Get_Opt::permute");
 
@@ -706,7 +706,7 @@ ACE_Get_Opt::permute (void)
 }
 
 const ACE_TCHAR *
-ACE_Get_Opt::optstring (void) const
+ACE_Get_Opt::optstring () const
 {
   return this->optstring_->c_str ();
 }
@@ -720,7 +720,7 @@ ACE_Get_Opt::ACE_Get_Opt_Long_Option::ACE_Get_Opt_Long_Option (
      val_ (val)
 {}
 
-ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option (void)
+ACE_Get_Opt::ACE_Get_Opt_Long_Option::~ACE_Get_Opt_Long_Option ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(const_cast<ACE_TCHAR*>(this->name_));

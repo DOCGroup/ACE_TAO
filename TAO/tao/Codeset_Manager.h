@@ -66,7 +66,7 @@ public:
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values for
   /// Char/Wchar in to the Object Reference.
-  virtual void set_codeset (TAO_Tagged_Components& ) const = 0;
+  virtual void set_codeset (TAO_Tagged_Components&) const = 0;
 
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport

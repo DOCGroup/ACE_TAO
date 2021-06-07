@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_COND_T) && defined (ACE_HAS_THREADS)
 ACE_INLINE long
-ACE_cond_t::waiters (void) const
+ACE_cond_t::waiters () const
 {
   return this->waiters_;
 }
@@ -143,24 +143,24 @@ ACE_OS::condattr_init (ACE_condattr_t &attributes, int type)
 #   if defined (ACE_HAS_PTHREADS)
   int result = -1;
 
-#   if !defined (ACE_LACKS_CONDATTR)
-#     if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
+#     if !defined (ACE_LACKS_CONDATTR)
+#       if defined (ACE_PTHREAD_CONDATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
     * require zeroing of mutex/condition objects to function correctly
     * but also of the attribute objects.
     */
   ACE_OS::memset (&attributes, 0, sizeof (attributes));
-#     endif
+#       endif
   if (
       ACE_ADAPT_RETVAL (pthread_condattr_init (&attributes), result) == 0
-#     if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
+#       if defined (_POSIX_THREAD_PROCESS_SHARED) && !defined (ACE_LACKS_CONDATTR_PSHARED)
       && ACE_ADAPT_RETVAL (pthread_condattr_setpshared (&attributes, type),
                            result) == 0
-#     endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
+#       endif /* _POSIX_THREAD_PROCESS_SHARED && ! ACE_LACKS_CONDATTR_PSHARED */
       )
-#   else
+#     else
   if (type == USYNC_THREAD)
-#   endif /* !ACE_LACKS_CONDATTR */
+#     endif /* !ACE_LACKS_CONDATTR */
      result = 0;
   else
     {
@@ -218,31 +218,18 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
-# if defined (ACE_HAS_THREADS)
-#   if defined (ACE_HAS_PTHREADS) && !defined (ACE_LACKS_CONDATTR)
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK) && \
+  !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   int result = -1;
-
-#   if defined (_POSIX_CLOCK_SELECTION) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id),
                                        result),
                      int, -1);
-#   else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-#   endif /* _POSIX_CLOCK_SELECTION) && !ACE_LACKS_CONDATTR_SETCLOCK */
-
   return result;
-#   else
+#else
   ACE_UNUSED_ARG (clock_id);
   ACE_UNUSED_ARG (attributes);
   ACE_NOTSUP_RETURN (-1);
-#   endif /* ACE_HAS_PTHREADS && !ACE_LACKS_CONDATTR */
-
-# else
-  ACE_UNUSED_ARG (clock_id);
-  ACE_UNUSED_ARG (attributes);
-  ACE_NOTSUP_RETURN (-1);
-# endif /* ACE_HAS_THREADS */
+#endif
 }
 
 #if !defined (ACE_LACKS_COND_T)
@@ -1679,6 +1666,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
 #   if defined (ACE_LACKS_NAMED_POSIX_SEM)
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
+      ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
       ACE_OSCALL_RETURN (::sem_init (s->sema_,
                                      type != USYNC_THREAD,
                                      count), int, -1);
@@ -2833,7 +2821,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE int
-ACE_OS::thr_getconcurrency (void)
+ACE_OS::thr_getconcurrency ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_getconcurrency");
 #if defined (ACE_HAS_THREADS)
@@ -3120,7 +3108,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
 }
 
 ACE_INLINE size_t
-ACE_OS::thr_min_stack (void)
+ACE_OS::thr_min_stack ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_min_stack");
 #if defined (ACE_HAS_THREADS)
@@ -3184,8 +3172,25 @@ ACE_OS::thr_id (char buffer[], size_t buffer_length)
 #endif /* WIN32 */
 }
 
+ACE_INLINE ssize_t
+ACE_OS::thr_gettid (char buffer[], size_t buffer_length)
+{
+  return ACE_OS::snprintf (buffer, buffer_length, "%d",
+    static_cast<int> (ACE_OS::thr_gettid ()));
+}
+
+ACE_INLINE pid_t
+ACE_OS::thr_gettid ()
+{
+#ifdef ACE_HAS_GETTID
+  return syscall (SYS_gettid);
+#else
+  ACE_NOTSUP_RETURN (-1);
+#endif
+}
+
 ACE_INLINE ACE_thread_t
-ACE_OS::thr_self (void)
+ACE_OS::thr_self ()
 {
   // ACE_OS_TRACE ("ACE_OS::thr_self");
 #if defined (ACE_HAS_THREADS)
@@ -3205,7 +3210,7 @@ ACE_OS::thr_self (void)
 }
 
 ACE_INLINE const char*
-ACE_OS::thr_name (void)
+ACE_OS::thr_name ()
 {
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_VXTHREADS)
@@ -3560,7 +3565,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
 }
 
 ACE_INLINE void
-ACE_OS::thr_testcancel (void)
+ACE_OS::thr_testcancel ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_testcancel");
 #if defined (ACE_HAS_THREADS)
@@ -3577,7 +3582,7 @@ ACE_OS::thr_testcancel (void)
 }
 
 ACE_INLINE void
-ACE_OS::thr_yield (void)
+ACE_OS::thr_yield ()
 {
   ACE_OS_TRACE ("ACE_OS::thr_yield");
 #if defined (ACE_HAS_THREADS)
@@ -3805,14 +3810,14 @@ ACE_OS::thread_mutex_unlock (ACE_thread_mutex_t *m)
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::thread_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Thread_Mutex_Guard::release (void)
+ACE_OS_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3841,14 +3846,14 @@ ACE_OS_Thread_Mutex_Guard::~ACE_OS_Thread_Mutex_Guard ()
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::acquire (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::acquire ()
 {
   return owner_ = ACE_OS::recursive_mutex_lock (&lock_);
 }
 
 ACE_INLINE
 int
-ACE_OS_Recursive_Thread_Mutex_Guard::release (void)
+ACE_OS_Recursive_Thread_Mutex_Guard::release ()
 {
   if (owner_ == -1)
     return 0;
@@ -3908,7 +3913,7 @@ ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
 }
 
 ACE_INLINE
-ACE_Thread_ID::ACE_Thread_ID (void)
+ACE_Thread_ID::ACE_Thread_ID ()
   : thread_id_ (ACE_OS::thr_self ())
 {
   ACE_OS::thr_self (thread_handle_);
@@ -3916,7 +3921,7 @@ ACE_Thread_ID::ACE_Thread_ID (void)
 
 ACE_INLINE
 ACE_thread_t
-ACE_Thread_ID::id (void) const
+ACE_Thread_ID::id () const
 {
   return this->thread_id_;
 }
@@ -3928,7 +3933,7 @@ ACE_Thread_ID::id (ACE_thread_t thread_id)
 }
 
 ACE_INLINE ACE_hthread_t
-ACE_Thread_ID::handle (void) const
+ACE_Thread_ID::handle () const
 {
   return this->thread_handle_;
 }
@@ -3956,7 +3961,7 @@ ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
 #if !defined (ACE_WIN32)
 
 ACE_INLINE
-ACE_event_t::ACE_event_t (void) :
+ACE_event_t::ACE_event_t () :
   name_ (0),
   eventdata_ (0)
 {

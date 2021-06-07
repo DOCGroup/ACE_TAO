@@ -101,8 +101,7 @@ Throughput_StructuredPushSupplier::~Throughput_StructuredPushSupplier ()
 
 void
 Throughput_StructuredPushSupplier::accumulate_into (
-    ACE_Throughput_Stats &throughput
-  ) const
+    ACE_Throughput_Stats &throughput) const
 {
   throughput.accumulate (this->throughput_);
 }
@@ -200,7 +199,7 @@ Notify_Throughput::Notify_Throughput (void)
 
 Notify_Throughput::~Notify_Throughput ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 
   delete[] payload_;
 }

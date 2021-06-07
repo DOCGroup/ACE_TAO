@@ -119,8 +119,7 @@ TAO_RTScheduler_ORB_Initializer::post_init (PortableInterceptor::ORBInitInfo_ptr
   //    counting.
   // Narrow to a TAO_ORBInitInfo object to get access to the
   // orb_core() TAO extension.
-  //TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info
-  //                                                          );
+  //TAO_ORBInitInfo_var tao_info = TAO_ORBInitInfo::_narrow (info);
 
   if (TAO_debug_level > 0)
     TAOLIB_DEBUG ((LM_DEBUG,

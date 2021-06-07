@@ -13,6 +13,7 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_ctype.h"
+#include <cstring>
 
 static const char prefix_[] = "uiop";
 
@@ -21,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 const char TAO_UIOP_Profile::object_key_delimiter_ = '|';
 
 char
-TAO_UIOP_Profile::object_key_delimiter (void) const
+TAO_UIOP_Profile::object_key_delimiter () const
 {
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
@@ -79,13 +80,13 @@ TAO_UIOP_Profile::~TAO_UIOP_Profile (void)
 }
 
 TAO_Endpoint*
-TAO_UIOP_Profile::endpoint (void)
+TAO_UIOP_Profile::endpoint ()
 {
   return &this->endpoint_;
 }
 
 CORBA::ULong
-TAO_UIOP_Profile::endpoint_count (void) const
+TAO_UIOP_Profile::endpoint_count () const
 {
   return this->count_;
 }
@@ -135,7 +136,7 @@ TAO_UIOP_Profile::parse_string_i (const char *string)
   CORBA::String_var copy (string);
 
   char *start = copy.inout ();
-  char *cp = ACE_OS::strchr (start, this->object_key_delimiter_);
+  char *cp = std::strchr (start, this->object_key_delimiter_);
 
   if (cp == 0)
     {
@@ -237,7 +238,7 @@ TAO_UIOP_Profile::add_endpoint (TAO_UIOP_Endpoint *endp)
 
 
 char *
-TAO_UIOP_Profile::to_string (void) const
+TAO_UIOP_Profile::to_string () const
 {
   CORBA::String_var key;
   TAO::ObjectKey::encode_sequence_to_string (key.inout(),

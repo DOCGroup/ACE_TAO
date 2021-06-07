@@ -47,7 +47,6 @@ namespace TAO
       : public TypeCodeBase
     {
     public:
-
       /// Recursive @c struct constructor.
       Recursive_Type (CORBA::TCKind kind,
                       char const * id,
@@ -96,7 +95,6 @@ namespace TAO
       //@}
 
     protected:
-
       /**
        * @name TAO @c CORBA::TypeCode Template Methods
        *
@@ -111,7 +109,6 @@ namespace TAO
       //@}
 
     public:
-
       /// Set @c struct @c TypeCode parameters.
       bool struct_parameters (char const * name,
                               MemberArrayType const & fields,
@@ -133,7 +130,6 @@ namespace TAO
                                  CORBA::ULong nfields);
 
     private:
-
       /**
        * @class Reset
        *
@@ -145,13 +141,12 @@ namespace TAO
       {
       public:
         Reset (CORBA::ULong & flag) : flag_ (flag) { }
-        ~Reset (void) { this->flag_ = 0; }
+        ~Reset () { this->flag_ = 0; }
       private:
         CORBA::ULong & flag_;
       };
 
     private:
-
       /// Internal state thread synchronization mutex.
       mutable TAO_SYNCH_RECURSIVE_MUTEX lock_;
 

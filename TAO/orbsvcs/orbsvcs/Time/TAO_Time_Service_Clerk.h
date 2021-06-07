@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_TIME_SERVICE_CLERK_H
 #define TAO_TIME_SERVICE_CLERK_H
 #include /**/ "ace/pre.h"
@@ -20,7 +19,6 @@
 #include "orbsvcs/TimeServiceS.h"
 #include "orbsvcs/Time/Timer_Helper.h"
 #include "orbsvcs/Time/time_serv_export.h"
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,14 +37,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Time_Serv_Export TAO_Time_Service_Clerk : public POA_CosTime::TimeService
 {
 public:
-
   /// Helper class to help in the updation of time.
   friend class Timer_Helper;
 
   /// Unbounded set of IORs.
   typedef ACE_Array_Base<CosTime::TimeService_var> IORS;
 
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Time_Service_Clerk (int timer_value,
                           int timer_value_usecs,
@@ -98,7 +94,6 @@ public:
   CORBA::ULongLong time_;
 
 private:
-
   /// Time displacement factor in minutes.
   CORBA::Short time_displacement_factor_;
 

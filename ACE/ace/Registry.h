@@ -140,19 +140,19 @@ public:
     void data (void *data);
 
     /// Get data
-    void *data (void) const;
+    void *data () const;
 
     /// Set size
     void size (u_long size);
 
     /// Get size
-    u_long size (void) const;
+    u_long size () const;
 
     /// Set type
     void type (u_long type);
 
     /// Get type
-    u_long type (void) const;
+    u_long type () const;
 
   private:
     /// Pointer to data
@@ -489,20 +489,20 @@ public:
       };
 
     class ACE_Export Context_Iteration : public Iteration_State
-      {
-      public:
-        /// Next @a how_many entries
-        int next_n (u_long how_many,
-                    Binding_List &list);
-      };
+    {
+    public:
+      /// Next @a how_many entries
+      int next_n (u_long how_many,
+                  Binding_List &list);
+    };
 
     class ACE_Export Iteration_Complete : public Iteration_State
-      {
-      public:
-        /// Next @a how_many entries
-        int next_n (u_long how_many,
-                    Binding_List &list);
-      };
+    {
+    public:
+      /// Next @a how_many entries
+      int next_n (u_long how_many,
+                  Binding_List &list);
+    };
 
     /// Friend states
     friend class Iteration_State;

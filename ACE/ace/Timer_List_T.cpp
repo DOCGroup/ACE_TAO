@@ -48,7 +48,7 @@ ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::next (void)
 // Returns true when we are at <head_>
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
-ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone (void) const
+ACE_Timer_List_Iterator_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::isdone () const
 {
   return this->current_node_ == 0;
 }
@@ -97,7 +97,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_List_T (FUNCTO
 // Checks if list is empty.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> bool
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty () const
 {
   ACE_TRACE ("ACE_Timer_List_T::is_empty");
   return this->get_first_i() == 0;
@@ -107,7 +107,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::is_empty (void) const
 // Returns earliest time in a non-empty list.
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> const ACE_Time_Value &
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time (void) const
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::earliest_time () const
 {
   ACE_TRACE ("ACE_Timer_List_T::earliest_time");
   ACE_Timer_Node_T<TYPE>* first = this->get_first_i();
@@ -164,7 +164,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::close (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> void
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump (void) const
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Timer_List_T::dump");
@@ -404,7 +404,7 @@ ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first (void)
 }
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY> ACE_Timer_Node_T<TYPE> *
-ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i (void) const
+ACE_Timer_List_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::get_first_i () const
 {
   ACE_TRACE ("ACE_Timer_List_T::get_first_i");
   ACE_Timer_Node_T<TYPE>* first = this->head_->get_next();

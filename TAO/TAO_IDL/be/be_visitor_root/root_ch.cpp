@@ -17,11 +17,11 @@
 
 be_visitor_root_ch::be_visitor_root_ch (be_visitor_context *ctx)
   : be_visitor_root (ctx),
-    o_ (0)
+    o_ (nullptr)
 {
 }
 
-be_visitor_root_ch::~be_visitor_root_ch (void)
+be_visitor_root_ch::~be_visitor_root_ch ()
 {
 }
 
@@ -116,7 +116,7 @@ be_visitor_root_ch::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_ch::init (void)
+be_visitor_root_ch::init ()
 {
   /// First open the client-side file for writing
   int status =
@@ -148,7 +148,7 @@ be_visitor_root_ch::gen_arg_traits (be_root *node)
 }
 
 void
-be_visitor_root_ch::gen_fwd_decls (void)
+be_visitor_root_ch::gen_fwd_decls ()
 {
   if (idl_global->non_local_iface_seen_)
     {
@@ -175,7 +175,7 @@ be_visitor_root_ch::gen_fwd_decls (void)
 }
 
 void
-be_visitor_root_ch::gen_ref_counting_overrides (void)
+be_visitor_root_ch::gen_ref_counting_overrides ()
 {
   size_t size = be_global->non_defined_interfaces.size ();
 
@@ -185,7 +185,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
     }
 
   size_t index = 0;
-  be_interface_fwd *ifwd = 0;
+  be_interface_fwd *ifwd = nullptr;
 
   *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl
@@ -221,7 +221,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
 }
 
 void
-be_visitor_root_ch::gen_static_corba_overrides (void)
+be_visitor_root_ch::gen_static_corba_overrides ()
 {
   size_t size = idl_global->mixed_parentage_interfaces ().size ();
 
@@ -231,7 +231,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
     }
 
   size_t index = 0;
-  AST_Interface *i = 0;
+  AST_Interface *i = nullptr;
 
   *o_ << be_nl_2
       << "// TAO_IDL - Generated from" << be_nl

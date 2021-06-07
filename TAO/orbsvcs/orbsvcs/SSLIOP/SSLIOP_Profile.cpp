@@ -56,7 +56,7 @@ TAO_SSLIOP_Profile::TAO_SSLIOP_Profile (TAO_ORB_Core * orb_core, int ssl_only)
   this->ssl_endpoint_.iiop_endpoint (&this->endpoint_, true);
 }
 
-TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile (void)
+TAO_SSLIOP_Profile::~TAO_SSLIOP_Profile ()
 {
   // Clean up the list of endpoints since we own it.
   // Skip the head, since it is not dynamically allocated.
@@ -190,7 +190,7 @@ TAO_SSLIOP_Profile::do_is_equivalent (const TAO_Profile * other_profile)
 }
 
 TAO_Endpoint*
-TAO_SSLIOP_Profile::endpoint (void)
+TAO_SSLIOP_Profile::endpoint ()
 {
   return &this->ssl_endpoint_;
 }
@@ -209,7 +209,7 @@ TAO_SSLIOP_Profile::add_endpoint (TAO_SSLIOP_Endpoint * endp)
 }
 
 int
-TAO_SSLIOP_Profile::encode_endpoints (void)
+TAO_SSLIOP_Profile::encode_endpoints ()
 {
   // If we have more than one endpoint, we encode info about others
   // into a tagged component for wire transfer.
@@ -266,7 +266,7 @@ TAO_SSLIOP_Profile::encode_endpoints (void)
 }
 
 int
-TAO_SSLIOP_Profile::decode_tagged_endpoints (void)
+TAO_SSLIOP_Profile::decode_tagged_endpoints ()
 {
   IOP::TaggedComponent tagged_component;
   tagged_component.tag = TAO::TAG_SSL_ENDPOINTS;

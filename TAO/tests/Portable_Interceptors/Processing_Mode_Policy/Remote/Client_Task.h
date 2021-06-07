@@ -27,7 +27,7 @@ public:
   void run_test (Test_Interceptors::Visual_ptr server);
 
   /// The status of the svc loop
-  int status (void) const;
+  int status () const;
 
 private:
   const ACE_TCHAR *input_;

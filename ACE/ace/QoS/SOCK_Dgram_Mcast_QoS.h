@@ -30,9 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
-
 public:
-  // = Initialization routines.
   /// Ctor, has same defaults as ACE_SOCK_Dgram_Mcast
   ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
 
@@ -115,7 +113,6 @@ public:
 private:
   // = Disable public <open> method to ensure class used properly.
 
-
   /// Subscribe to the multicast interface using QoS-enabled semantics.
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                      const ACE_QoS_Params &qos_params,
@@ -127,7 +124,6 @@ private:
 
   /// Manages the QoS sessions that this socket subscribes to.
   ACE_QoS_Manager qos_manager_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

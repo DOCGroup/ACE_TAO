@@ -121,7 +121,7 @@ TAO_MProfile::get_current_handle (void)
 }
 
 ACE_INLINE TAO_PHandle
-TAO_MProfile::get_current_handle (void) const
+TAO_MProfile::get_current_handle () const
 {
   if (current_ > 0)
     return current_ - 1;
@@ -164,13 +164,13 @@ TAO_MProfile::forward_from (void)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::profile_count (void) const
+TAO_MProfile::profile_count () const
 {
   return this->last_;
 }
 
 ACE_INLINE CORBA::ULong
-TAO_MProfile::size (void) const
+TAO_MProfile::size () const
 {
   return this->size_;
 }
@@ -184,7 +184,7 @@ TAO_MProfile::get_profile (CORBA::ULong slot) const
 }
 
 ACE_INLINE TAO_Profile **
-TAO_MProfile::pfiles (void) const
+TAO_MProfile::pfiles () const
 {
   return this->pfiles_;
 }

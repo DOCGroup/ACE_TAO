@@ -4,7 +4,7 @@
 /**
  *  @file    Dirent_Selector.h
  *
- *  Define a portable C++ interface to the <ACE_OS_Dirent::scandir> method.
+ *  Define a portable C++ interface to the <ACE_OS::scandir> method.
  *
  *  @author Rich Newman <RNewman@directv.com>
  */
@@ -41,7 +41,7 @@ public:
   virtual ~ACE_Dirent_Selector (void);
 
   /// Return the length of the list of matching directory entries.
-  int length (void) const;
+  int length () const;
 
   /// Return the entry at @a index.
   ACE_DIRENT *operator[] (const int index) const;

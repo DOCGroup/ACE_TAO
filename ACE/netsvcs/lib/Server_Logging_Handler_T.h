@@ -61,10 +61,8 @@ protected:
   /// called from derived classes open method.
   int open_common (void);
 
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   /// Count the number of logging records that arrive.
   static COUNTER request_count_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
 
 #if !defined (__GNUG__)
   /**
@@ -200,7 +198,7 @@ public:
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
                                   const LOG_MESSAGE_RECEIVER &receiver);
   virtual int open (void * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

@@ -34,9 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class TAO_Time_Serv_Export TAO_Time_Service_Server : public POA_CosTime::TimeService
 {
-
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Time_Service_Server (void);
 
@@ -65,7 +63,6 @@ public:
   /// This creates a new TIO with the given parameters.
   virtual CosTime::TIO_ptr new_interval (TimeBase::TimeT lower,
                                          TimeBase::TimeT upper);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

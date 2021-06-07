@@ -42,7 +42,7 @@ Test_Unbounded_WString::~Test_Unbounded_WString (void)
 }
 
 const char *
-Test_Unbounded_WString::opname (void) const
+Test_Unbounded_WString::opname () const
 {
   return this->opname_;
 }

@@ -264,37 +264,37 @@ HTTP_Parse_URL::set_port_from_scheme (void)
 }
 
 const char *
-HTTP_Parse_URL::scheme (void) const
+HTTP_Parse_URL::scheme () const
 {
   return this->scheme_;
 }
 
 const char *
-HTTP_Parse_URL::user (void) const
+HTTP_Parse_URL::user () const
 {
   return this->user_;
 }
 
 const char *
-HTTP_Parse_URL::passwd (void) const
+HTTP_Parse_URL::passwd () const
 {
   return this->passwd_;
 }
 
 const char *
-HTTP_Parse_URL::host (void) const
+HTTP_Parse_URL::host () const
 {
   return this->host_;
 }
 
 int
-HTTP_Parse_URL::port (void) const
+HTTP_Parse_URL::port () const
 {
   return this->port_;
 }
 
 const char *
-HTTP_Parse_URL::url_path (void) const
+HTTP_Parse_URL::url_path () const
 {
   return this->url_path_ ? this->url_path_ : "";
 }
@@ -314,7 +314,7 @@ HTTP_Parse_URL::is_cgi (const char *path)
 }
 
 int
-HTTP_Parse_URL::is_cgi (void) const
+HTTP_Parse_URL::is_cgi () const
 {
   return this->is_cgi_;
 }

@@ -45,14 +45,14 @@ ACE_Sig_Set::ACE_Sig_Set (ACE_Sig_Set *ss)
 }
 
 ACE_INLINE int
-ACE_Sig_Set::empty_set (void)
+ACE_Sig_Set::empty_set ()
 {
   ACE_TRACE ("ACE_Sig_Set::empty_set");
   return ACE_OS::sigemptyset (&this->sigset_);
 }
 
 ACE_INLINE int
-ACE_Sig_Set::fill_set (void)
+ACE_Sig_Set::fill_set ()
 {
   ACE_TRACE ("ACE_Sig_Set::fill_set");
   return ACE_OS::sigfillset (&this->sigset_);
@@ -80,21 +80,21 @@ ACE_Sig_Set::is_member (int signo) const
 }
 
 ACE_INLINE
-ACE_Sig_Set::operator sigset_t *(void)
+ACE_Sig_Set::operator sigset_t *()
 {
   ACE_TRACE ("ACE_Sig_Set::operator sigset_t *");
   return &this->sigset_;
 }
 
 ACE_INLINE sigset_t
-ACE_Sig_Set::sigset (void) const
+ACE_Sig_Set::sigset () const
 {
   ACE_TRACE ("ACE_Sig_Set::sigset");
   return this->sigset_;
 }
 
 ACE_INLINE int
-ACE_Sig_Action::flags (void)
+ACE_Sig_Action::flags ()
 {
   ACE_TRACE ("ACE_Sig_Action::flags");
   return this->sa_.sa_flags;
@@ -108,7 +108,7 @@ ACE_Sig_Action::flags (int flags)
 }
 
 ACE_INLINE sigset_t *
-ACE_Sig_Action::mask (void)
+ACE_Sig_Action::mask ()
 {
   ACE_TRACE ("ACE_Sig_Action::mask");
   return &this->sa_.sa_mask;
@@ -130,7 +130,7 @@ ACE_Sig_Action::mask (ACE_Sig_Set &ss)
 }
 
 ACE_INLINE ACE_SignalHandler
-ACE_Sig_Action::handler (void)
+ACE_Sig_Action::handler ()
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
   return ACE_SignalHandler (this->sa_.sa_handler);
@@ -140,11 +140,7 @@ ACE_INLINE void
 ACE_Sig_Action::handler (ACE_SignalHandler handler)
 {
   ACE_TRACE ("ACE_Sig_Action::handler");
-#if !defined(ACE_HAS_TANDEM_SIGNALS)
   this->sa_.sa_handler = ACE_SignalHandlerV (handler);
-#else
-  this->sa_.sa_handler = (void (*)()) ACE_SignalHandlerV (handler);
-#endif /* !ACE_HAS_TANDEM_SIGNALS */
 }
 
 ACE_INLINE void
@@ -155,7 +151,7 @@ ACE_Sig_Action::set (struct sigaction *sa)
 }
 
 ACE_INLINE struct sigaction *
-ACE_Sig_Action::get (void)
+ACE_Sig_Action::get ()
 {
   ACE_TRACE ("ACE_Sig_Action::get");
   return &this->sa_;

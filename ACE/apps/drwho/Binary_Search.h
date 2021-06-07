@@ -24,7 +24,6 @@
 class Binary_Search : public Search_Struct
 {
 public:
-  // = Initialization and termination method.
   /// Initialize the values for the iterators...
   Binary_Search (void);
 

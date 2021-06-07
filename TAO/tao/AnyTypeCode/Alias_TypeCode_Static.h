@@ -69,12 +69,11 @@ namespace TAO
        */
       //@{
       virtual bool tao_marshal (TAO_OutputCDR & cdr, CORBA::ULong offset) const;
-      virtual void tao_duplicate (void);
-      virtual void tao_release (void);
+      virtual void tao_duplicate ();
+      virtual void tao_release ();
       //@}
 
     protected:
-
       /**
        * @name @c TAO CORBA::TypeCode Template Methods
        *
@@ -86,13 +85,12 @@ namespace TAO
       //@{
       virtual CORBA::Boolean equal_i (CORBA::TypeCode_ptr tc) const;
       virtual CORBA::Boolean equivalent_i (CORBA::TypeCode_ptr tc) const;
-      virtual CORBA::TypeCode_ptr get_compact_typecode_i (void) const;
-      virtual char const * id_i (void) const;
-      virtual char const * name_i (void) const;
-      virtual CORBA::TypeCode_ptr content_type_i (void) const;
+      virtual CORBA::TypeCode_ptr get_compact_typecode_i () const;
+      virtual char const * id_i () const;
+      virtual char const * name_i () const;
+      virtual CORBA::TypeCode_ptr content_type_i () const;
 
     private:
-
       /// Base attributes for this @c TypeCode containing the
       /// repository ID and name of the @c typedef.
       Base_Attributes<char const *> attributes_;

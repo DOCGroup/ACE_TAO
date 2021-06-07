@@ -18,7 +18,7 @@ be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
 {
 }
 
-be_visitor_array_any_op_ch::~be_visitor_array_any_op_ch (void)
+be_visitor_array_any_op_ch::~be_visitor_array_any_op_ch ()
 {
 }
 
@@ -45,6 +45,6 @@ be_visitor_array_any_op_ch::visit_array (be_array *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  node->cli_hdr_any_op_gen (1);
+  node->cli_hdr_any_op_gen (true);
   return 0;
 }

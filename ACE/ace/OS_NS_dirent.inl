@@ -14,7 +14,7 @@ ACE_INLINE void
 closedir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-# if defined (ACE_WIN32) && defined (ACE_LACKS_CLOSEDIR)
+# if (defined (ACE_WIN32) || defined (ACE_MQX)) && defined (ACE_LACKS_CLOSEDIR)
   ACE_OS::closedir_emulation (d);
   delete [] d->directory_name_;
   delete d;
@@ -33,7 +33,7 @@ ACE_INLINE ACE_DIR *
 opendir (const ACE_TCHAR *filename)
 {
 #if defined (ACE_HAS_DIRENT)
-#    if defined (ACE_WIN32) && defined (ACE_LACKS_OPENDIR)
+#    if (defined (ACE_WIN32) || defined(ACE_MQX)) && defined (ACE_LACKS_OPENDIR)
   return ::ACE_OS::opendir_emulation (filename);
 #  elif defined (ACE_HAS_WOPENDIR) && defined (ACE_USES_WCHAR)
   return ::wopendir (filename);
@@ -52,7 +52,7 @@ ACE_INLINE struct ACE_DIRENT *
 readdir (ACE_DIR *d)
 {
 #if defined (ACE_HAS_DIRENT)
-#  if defined (ACE_WIN32) && defined (ACE_LACKS_READDIR)
+#  if (defined (ACE_WIN32) || defined (ACE_MQX)) && defined (ACE_LACKS_READDIR)
      return ACE_OS::readdir_emulation (d);
 #  elif defined (ACE_HAS_WREADDIR) && defined (ACE_USES_WCHAR)
      return ::wreaddir (d);
@@ -63,36 +63,6 @@ readdir (ACE_DIR *d)
   ACE_UNUSED_ARG (d);
   ACE_NOTSUP_RETURN (0);
 #endif /* ACE_HAS_DIRENT */
-}
-
-ACE_INLINE int
-readdir_r (ACE_DIR *dirp,
-           struct ACE_DIRENT *entry,
-           struct ACE_DIRENT **result)
-{
-#if !defined (ACE_HAS_REENTRANT_FUNCTIONS)
-  ACE_UNUSED_ARG (entry);
-  // <result> has better not be 0!
-  *result = ACE_OS::readdir (dirp);
-  if (*result)
-    return 0; // Keep iterating
-  else
-    return 1; // Oops, some type of error!
-#elif defined (ACE_HAS_DIRENT) && !defined (ACE_LACKS_READDIR_R)
-#  if defined (ACE_HAS_3_PARAM_READDIR_R)
-       return ::readdir_r (dirp, entry, result);
-#  else
-       // <result> had better not be 0!
-       *result = ::readdir_r (dirp, entry);
-       return 0;
-#  endif /* sun */
-#else  /* ! ACE_HAS_DIRENT  ||  ACE_LACKS_READDIR_R */
-  ACE_UNUSED_ARG (dirp);
-  ACE_UNUSED_ARG (entry);
-  ACE_UNUSED_ARG (result);
-  ACE_NOTSUP_RETURN (0);
-
-#endif /* ACE_HAS_REENTRANT_FUNCTIONS */
 }
 
 ACE_INLINE void

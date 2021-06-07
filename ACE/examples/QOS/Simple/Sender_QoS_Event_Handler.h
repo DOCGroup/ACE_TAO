@@ -24,7 +24,6 @@
 class Sender_QoS_Event_Handler : public ACE_Event_Handler
 {
 public:
-  // = Initialization and Termination methods.
   /// Constructor.
   Sender_QoS_Event_Handler (void);
 
@@ -37,7 +36,7 @@ public:
 
   /// Override this to return the handle of the Dgram_Mcast
   /// that we are using.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Handles a QoS event. Right now, just
   /// prints a message.

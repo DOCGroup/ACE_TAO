@@ -54,7 +54,7 @@ TAO::FT_PG_Group_Factory::set_object_group_stale (
                             ACE_TEXT ("TAO (%P|%t) - FT_PG_Group_Factory: ")
                             ACE_TEXT ("Setting list store as stale "),
                             ACE_TEXT ("because of group with ID %lld "),
-                            ACE_TEXT ("was %s\n"),
+                            ACE_TEXT ("was %C\n"),
                             group_id, change_type_str.c_str ()
                             ));
             }

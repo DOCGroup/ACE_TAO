@@ -30,7 +30,6 @@
 #  pragma warning(disable: 4284)
 #endif /* _MSC_VER */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -45,21 +44,20 @@ class ACE_Auto_Basic_Ptr
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit ACE_Auto_Basic_Ptr (X * p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Ptr (ACE_Auto_Basic_Ptr<X> & ap);
   ACE_Auto_Basic_Ptr<X> &operator= (ACE_Auto_Basic_Ptr<X> & rhs);
-  ~ACE_Auto_Basic_Ptr (void);
+  ~ACE_Auto_Basic_Ptr ();
 
   // = Accessor methods.
   X &operator *() const;
-  X *get (void) const;
-  X *release (void);
+  X *get () const;
+  X *release ();
   void reset (X * p = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -76,9 +74,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include <memory>
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
-#if !defined (ACE_HAS_CPP17)
 using std::auto_ptr;
-#endif /* !ACE_HAS_CPP17 */
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
@@ -93,7 +89,6 @@ class auto_ptr : public ACE_Auto_Basic_Ptr<X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit auto_ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
   auto_ptr (auto_ptr<X> & ap) : ACE_Auto_Basic_Ptr<X> (ap.release ()) {}
 
@@ -114,7 +109,6 @@ class ACE_Auto_Ptr : public ACE_Auto_Basic_Ptr <X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods
   explicit ACE_Auto_Ptr (X * p = 0) : ACE_Auto_Basic_Ptr<X> (p) {}
 
   X *operator-> () const;
@@ -134,22 +128,21 @@ class ACE_Auto_Basic_Array_Ptr
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods.
   explicit ACE_Auto_Basic_Array_Ptr (X * p = 0) : p_ (p) {}
 
   ACE_Auto_Basic_Array_Ptr (ACE_Auto_Basic_Array_Ptr<X> & ap);
   ACE_Auto_Basic_Array_Ptr<X> &operator= (ACE_Auto_Basic_Array_Ptr<X> & rhs);
-  ~ACE_Auto_Basic_Array_Ptr (void);
+  ~ACE_Auto_Basic_Array_Ptr ();
 
   // = Accessor methods.
   X & operator* () const;
   X & operator[] (int i) const;
-  X * get (void) const;
-  X * release (void);
+  X * get () const;
+  X * release ();
   void reset (X * p = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -170,7 +163,6 @@ class ACE_Auto_Array_Ptr : public ACE_Auto_Basic_Array_Ptr<X>
 public:
   typedef X element_type;
 
-  // = Initialization and termination methods.
   explicit ACE_Auto_Array_Ptr (X *p = 0)
     : ACE_Auto_Basic_Array_Ptr<X> (p) {}
 

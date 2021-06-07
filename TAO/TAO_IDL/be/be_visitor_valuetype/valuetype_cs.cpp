@@ -20,7 +20,7 @@ be_visitor_valuetype_cs::be_visitor_valuetype_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_valuetype_cs::~be_visitor_valuetype_cs (void)
+be_visitor_valuetype_cs::~be_visitor_valuetype_cs ()
 {
 }
 
@@ -97,7 +97,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // The _tao_obv_repository_id method.
   *os << "const char *" << be_nl
       << node->name ()
-      << "::_tao_obv_repository_id (void) const" << be_nl
+      << "::_tao_obv_repository_id () const" << be_nl
       << "{" << be_idt_nl
       << "return this->_tao_obv_static_repository_id ();"
       << be_uidt_nl
@@ -146,7 +146,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       *os << "// TAO extension - the virtual _type method." << be_nl;
       *os << "::CORBA::TypeCode_ptr " << node->name ()
-          << "::_tao_type (void) const" << be_nl;
+          << "::_tao_type () const" << be_nl;
       *os << "{" << be_idt_nl;
       *os << "return ::" << node->tc_name () << ";" << be_uidt_nl;
       *os << "}" << be_nl_2;
@@ -161,7 +161,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   //    virtual functions, including virtual destructors, wreaks havoc
   //    with g++ >= 4.0 RTTI support when the
   //    "-fvisibility-inlines-hidden" command line option is used.
-  *os << node->name () << "::~" << node->local_name () << " (void)"
+  *os << node->name () << "::~" << node->local_name () << " ()"
       << be_nl
       << "{}" << be_nl_2;
 
@@ -183,7 +183,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       if (node->opt_accessor ())
         {
           be_decl *scope =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
           *os << scope->name () << "::"
               << node->local_name ()
@@ -210,7 +210,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       if (node->opt_accessor ())
         {
           be_decl *scope =
-            be_scope::narrow_from_scope (node->defined_in ())->decl ();
+            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
 
           *os << scope->name () << "::"
               << node->local_name ()
@@ -243,7 +243,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
       // The virtual _copy_value method.
       *os << "::CORBA::ValueBase *" << be_nl
-          << node->name () << "::_copy_value (void)" << be_nl
+          << node->name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::ValueBase *ret_val = 0;" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
@@ -273,7 +273,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       // The virtual _tao_match_formal_type method.
       *os << "::CORBA::Boolean" << be_nl
           << node->name ()
-          << "::_tao_match_formal_type (ptrdiff_t ) const"
+          << "::_tao_match_formal_type (ptrdiff_t) const"
           << be_nl
           << "{" << be_idt_nl
           << "return false;"<< be_uidt_nl
@@ -323,7 +323,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       << node->local_name () << " *&new_object" << be_uidt_nl
       << ")" << be_uidt_nl
       << "{" << be_idt_nl
-      << "::CORBA::ValueBase *base = 0;" << be_nl
+      << "::CORBA::ValueBase *base {};" << be_nl
       << "::CORBA::Boolean is_indirected = false;" << be_nl
       << "::CORBA::Boolean is_null_object = false;" << be_nl
       << "::CORBA::Boolean const retval =" << be_idt_nl
@@ -360,7 +360,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     {
       *os << be_nl_2
           << "::CORBA::ValueBase *" << be_nl
-          << node->name () << "::_tao_to_value (void)" << be_nl
+          << node->name () << "::_tao_to_value ()" << be_nl
           << "{" << be_idt_nl
           << "return this;" << be_uidt_nl
           << "}";
@@ -407,9 +407,9 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
     }
 
   be_valuetype *parent =
-    be_valuetype::narrow_from_scope (node->defined_in ());
+    dynamic_cast<be_valuetype*> (node->defined_in ());
 
-  if (parent == 0 || ! this->is_amh_exception_holder (parent))
+  if (parent == nullptr || ! this->is_amh_exception_holder (parent))
     {
       return 0;
     }
@@ -421,7 +421,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
   // STEP I: Generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {
@@ -472,12 +472,8 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   // explicitly take care of both cases (platforms with
   // and without native exception support).
   *os << be_nl
-      << "{"
-      << "\n#if defined (ACE_HAS_CPP11)" << be_idt_nl
-      << "std::unique_ptr< ::CORBA::Exception> safety (this->exception);"
-      << "\n#else" << be_nl
-      << "auto_ptr< ::CORBA::Exception> safety (this->exception);"
-      << "\n#endif /* ACE_HAS_CPP11 */" << be_nl
+      << "{" << be_idt_nl
+      << "std::unique_ptr< ::CORBA::Exception> safety (this->exception);" << be_nl
       << "this->exception->_raise ();" << be_uidt_nl
       << "}"
       << be_nl;
@@ -493,9 +489,9 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
   AST_Type *parent = node->inherits_concrete ();
 
   // Recurse up the parent chain.
-  if (parent != 0)
+  if (parent != nullptr)
     {
-      this->gen_ostream_operator_r (be_valuetype::narrow_from_decl (parent),
+      this->gen_ostream_operator_r (dynamic_cast<be_valuetype*> (parent),
                                     index);
     }
 
@@ -504,14 +500,14 @@ be_visitor_valuetype_cs::gen_ostream_operator_r (be_valuetype *node,
        !i.is_done ();
        i.next ())
     {
-      be_field *f = be_field::narrow_from_decl (i.item ());
+      be_field *f = dynamic_cast<be_field*> (i.item ());
       be_attribute *attr =
-        be_attribute::narrow_from_decl (i.item ());
+        dynamic_cast<be_attribute*> (i.item ());
 
       // No way to access the private members from generated code.
-      if (f == 0
+      if (f == nullptr
           || f->visibility () != AST_Field::vis_PUBLIC
-          || attr != 0)
+          || attr != nullptr)
         {
           continue;
         }

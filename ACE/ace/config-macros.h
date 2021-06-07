@@ -4,7 +4,7 @@
 /**
  *  @file   config-macros.h
  *
- *  @author (Originally in OS.h)Doug Schmidt <d.schmidt@vanderbilt.edu>
+ *  @author Doug Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
  *
@@ -78,11 +78,10 @@
 
 # if defined (ACE_HAS_VALGRIND)
 #   define ACE_INITIALIZE_MEMORY_BEFORE_USE
-#   define ACE_LACKS_DLCLOSE
 # endif /* ACE_HAS_VALGRIND */
 
 // =========================================================================
-// Perfect Multicast filting refers to RFC 3376, where a socket is only
+// Perfect Multicast filtering refers to RFC 3376, where a socket is only
 // delivered dgrams for groups joined even if it didn't bind the group
 // address.  We turn this option off by default, although most OS's
 // except for Windows and Solaris probably lack perfect filtering.
@@ -254,24 +253,20 @@
 // ============================================================================
 
 #if !defined (ACE_UNUSED_ARG)
-# if defined (__GNUC__) && ((__GNUC__ > 4 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 2))) || (defined (__BORLANDC__) && defined (__clang__))
+# if defined (__GNUC__) || (defined (__BORLANDC__) && defined (__clang__))
 #   define ACE_UNUSED_ARG(a) (void) (a)
-# elif defined (__GNUC__) || defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM)
+# elif defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
 // This eliminates the warnings, and no code is generated for the null
 // conditional statement.  @note that may only be true if -O is enabled,
 // such as with GreenHills (ghs) 1.8.8.
 #  define ACE_UNUSED_ARG(a) do {/* null */} while (&a == 0)
-# elif defined (__DMC__)
-   #define ACE_UNUSED_ID(identifier)
-   template <class T>
-   inline void ACE_UNUSED_ARG(const T& ACE_UNUSED_ID(t)) { }
-# else /* ghs || __GNUC__ || ..... */
+# else /* ghs ..... */
 #  define ACE_UNUSED_ARG(a) (a)
-# endif /* ghs || __GNUC__ || ..... */
+# endif /* ghs ..... */
 #endif /* !ACE_UNUSED_ARG */
 
-#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || defined (__TANDEM) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500))
+#if defined (_MSC_VER) || defined (ghs) || defined (__DECCXX) || defined(__BORLANDC__) || defined (ACE_RM544) || defined (__USLC__) || defined (__DCC__) || defined (__PGI) || (defined (__HP_aCC) && (__HP_aCC < 39000 || __HP_aCC >= 60500)) || defined (__IAR_SYSTEMS_ICC__)
 # define ACE_NOTREACHED(a)
 #else  /* ghs || ..... */
 # define ACE_NOTREACHED(a) a
@@ -698,6 +693,33 @@ extern "C" u_long CLS##_Export _get_dll_unload_policy (void) \
 // process-shared condition variable (which always requires a mutex too).
 #if defined ACE_LACKS_MUTEXATTR_PSHARED && !defined ACE_LACKS_CONDATTR_PSHARED
 # define ACE_LACKS_CONDATTR_PSHARED
+#endif
+
+#ifdef ACE_LACKS_CONDATTR_SETCLOCK
+#  ifdef ACE_HAS_CONDATTR_SETCLOCK
+#    undef ACE_HAS_CONDATTR_SETCLOCK
+#  endif
+#  ifdef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_POSIX_MONOTONIC_CONDITIONS
+#  endif
+#  ifdef ACE_HAS_MONOTONIC_CONDITIONS
+#    undef ACE_HAS_MONOTONIC_CONDITIONS
+#  endif
+#endif
+
+#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC) && !defined (ACE_LACKS_CLOCK_MONOTONIC)
+#  ifndef ACE_HAS_MONOTONIC_TIME_POLICY
+#    define ACE_HAS_MONOTONIC_TIME_POLICY
+#  endif
+#endif
+
+#ifndef ACE_GCC_NO_RETURN
+#  define ACE_GCC_NO_RETURN
+#endif
+
+// ACE_OS::readdir_r was removed in ACE7
+#ifndef ACE_LACKS_READDIR_R
+#  define ACE_LACKS_READDIR_R
 #endif
 
 #endif /* ACE_CONFIG_MACROS_H */

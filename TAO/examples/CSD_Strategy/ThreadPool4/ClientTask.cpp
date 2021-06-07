@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ClientTask.cpp
@@ -18,11 +16,9 @@ ClientTask::ClientTask(Foo_ptr foo,
 {
 }
 
-
 ClientTask::~ClientTask()
 {
 }
-
 
 int
 ClientTask::open(void*)

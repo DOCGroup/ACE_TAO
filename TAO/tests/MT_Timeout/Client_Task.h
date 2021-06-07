@@ -38,14 +38,14 @@ public:
                CORBA::ULong timeout);
 
   /// Return the total number of successful calls
-  int successful_calls (void) const;
+  int successful_calls () const;
 
   /// Return the total number of timed out calls
-  int timed_out_calls (void) const;
+  int timed_out_calls () const;
 
   /// Return the number of calls with a too huge difference in
   /// timeout versus actual response arrival.
-  int too_big_difference_calls (void) const;
+  int too_big_difference_calls () const;
 
   /// Thread entry point
   int svc (void);

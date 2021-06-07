@@ -96,11 +96,11 @@ public:
 
     /// Access the consumer admin implementation, useful for controlling
   /// the activation...
-  TAO_FTEC_ConsumerAdmin* consumer_admin (void) const;
+  TAO_FTEC_ConsumerAdmin* consumer_admin () const;
 
   /// Access the supplier admin implementation, useful for controlling
   /// the activation...
-  TAO_FTEC_SupplierAdmin* supplier_admin (void) const;
+  TAO_FTEC_SupplierAdmin* supplier_admin () const;
 
   TAO_FTEC_ProxyPushSupplier* find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id);
   TAO_FTEC_ProxyPushConsumer* find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id);

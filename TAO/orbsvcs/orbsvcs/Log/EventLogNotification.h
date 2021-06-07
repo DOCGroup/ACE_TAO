@@ -45,9 +45,6 @@ class TAO_EventLog_Serv_Export TAO_EventLogNotification :
   public POA_CosEventComm::PushSupplier
 {
 public:
-
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_EventLogNotification (CosEventChannelAdmin::EventChannel_ptr);
 
@@ -58,8 +55,6 @@ public:
   virtual void disconnect_push_supplier (void);
 
 protected:
-  // = Helper methods
-
   /// Used to connect this PushSupplier to the EventChannel
   /// that will log these events.
   void obtain_proxy_consumer ();

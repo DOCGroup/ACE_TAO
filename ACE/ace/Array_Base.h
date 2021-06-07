@@ -41,7 +41,6 @@ template<class T>
 class ACE_Array_Base
 {
 public:
-
   // Old/ACE-style traits.
   typedef T TYPE;
   typedef ACE_Array_Iterator<T> ITERATOR;
@@ -58,8 +57,6 @@ public:
   typedef ACE_Allocator::size_type       size_type;
 
   ACE_DECLARE_STL_REVERSE_ITERATORS
-
-  // = Initialization and termination methods.
 
   /// Dynamically create an uninitialized array.
   ACE_Array_Base (size_type size = 0,
@@ -88,7 +85,7 @@ public:
   void operator= (ACE_Array_Base<T> const & s);
 
   /// Clean up the array (e.g., delete dynamically allocated memory).
-  ~ACE_Array_Base (void);
+  ~ACE_Array_Base ();
 
   // = Set/get methods.
 
@@ -113,7 +110,7 @@ public:
   int get (T & item, size_type slot) const;
 
   /// Returns the <cur_size_> of the array.
-  size_type size (void) const;
+  size_type size () const;
 
   /**
    * Changes the size of the array to match @a new_size.
@@ -123,7 +120,7 @@ public:
   int size (size_type new_size);
 
   /// Returns the <max_size_> of the array.
-  size_type max_size (void) const;
+  size_type max_size () const;
 
   /**
    * Changes the size of the array to match @a new_size.
@@ -139,10 +136,10 @@ public:
    * Forward iterator accessors.
    */
   //@{
-  iterator begin (void);
-  iterator end   (void);
-  const_iterator begin (void) const;
-  const_iterator end   (void) const;
+  iterator begin ();
+  iterator end   ();
+  const_iterator begin () const;
+  const_iterator end   () const;
   //@}
 
   /**
@@ -151,10 +148,10 @@ public:
    * Reverse iterator accessors.
    */
   //@{
-  reverse_iterator rbegin (void);
-  reverse_iterator rend   (void);
-  const_reverse_iterator rbegin (void) const;
-  const_reverse_iterator rend   (void) const;
+  reverse_iterator rbegin ();
+  reverse_iterator rend   ();
+  const_reverse_iterator rbegin () const;
+  const_reverse_iterator rend   () const;
   //@}
 
   /// Swap the contents of this array with the given @a array in
@@ -205,7 +202,6 @@ template <class T>
 class ACE_Array_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Array_Iterator (ACE_Array_Base<T> &);
 
   // = Iteration methods.
@@ -216,13 +212,13 @@ public:
 
   /// Move forward by one element in the Array.  Returns 0 when all the
   /// items in the Array have been seen, else 1.
-  int advance (void);
+  int advance ();
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

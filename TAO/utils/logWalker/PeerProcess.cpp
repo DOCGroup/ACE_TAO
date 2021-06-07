@@ -81,7 +81,7 @@ Endpoint::operator < (const Endpoint &other) const
 }
 
 bool
-Endpoint::is_client (void) const
+Endpoint::is_client () const
 {
   return this->role_ != ER_SERVER;
 }
@@ -162,25 +162,25 @@ PeerProcess::match_server_addr (const Endpoint &addr) const
 }
 
 const Endpoint &
-PeerProcess::server_addr (void) const
+PeerProcess::server_addr () const
 {
   return this->server_ep_;
 }
 
 const Endpoint &
-PeerProcess::last_client_addr (void) const
+PeerProcess::last_client_addr () const
 {
   return this->last_transport_->client_endpoint_;
 }
 
 bool
-PeerProcess::is_server (void) const
+PeerProcess::is_server () const
 {
   return this->is_server_role_;
 }
 
 size_t
-PeerProcess::offset (void) const
+PeerProcess::offset () const
 {
   return this->origin_offset_;
 }
@@ -240,7 +240,7 @@ PeerProcess::match_hosts (Session *session)
 }
 
 const char *
-PeerProcess::id (void) const
+PeerProcess::id () const
 {
   if (this->remote_ != 0)
     {

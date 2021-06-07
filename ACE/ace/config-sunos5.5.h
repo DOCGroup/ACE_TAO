@@ -46,9 +46,6 @@
 #     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#   define ACE_HAS_NEW_NOTHROW
-# elif (__SUNPRO_CC == 0x420) || (__SUNPRO_CC == 0x410)
-# define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 
@@ -58,10 +55,6 @@
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
-
-// If exceptions are enabled and we are using Sun/CC then
-// <operator new> throws an exception instead of returning 0.
-#define ACE_NEW_THROWS_EXCEPTIONS
 
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
@@ -108,10 +101,6 @@
 #     define _REENTRANT
 #   endif /* _REENTRANT */
 # endif /* !ACE_MT_SAFE */
-
-# if (__GNUC__ < 3) || ((__GNUC__ == 3) && (__GNUC_MINOR__ <= 3))
-#   define ACE_LACKS_STD_WSTRING  1
-# endif
 
 #else  /* ! __SUNPRO_CC && ! __GNUG__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
@@ -166,9 +155,6 @@
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Platform supports IP multicast
 #define ACE_HAS_IP_MULTICAST
@@ -347,10 +333,6 @@
 #undef ACE_HAS_PROC_FS
 #undef ACE_HAS_PRUSAGE_T
 #endif /* (_LARGEFILE_SOURCE) || (_FILE_OFFSET_BITS==64) */
-
-#if defined (_POSIX_PTHREAD_SEMANTICS) || (_FILE_OFFSET_BITS == 64) || (_POSIX_C_SOURCE - 0 >= 199506L)
-#  define ACE_HAS_3_PARAM_READDIR_R
-#endif
 
 // Sum of the iov_len values can't be larger then SSIZE_MAX
 #define ACE_HAS_SOCK_BUF_SIZE_MAX

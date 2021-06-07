@@ -22,7 +22,6 @@ class TAO_CosEC_PushSupplierWrapper :
   //   class wraps the Cos PushSupplier to make it look like a Rtec
   //   PushSupplier.
 public:
-  // = Initialization and termination methods.
   TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
   // Constructor.
 

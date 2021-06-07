@@ -25,7 +25,7 @@ TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T (void)
 template<typename T>
 ACE_INLINE
 const T *
-TAO_Seq_Var_Base_T<T>::operator-> (void) const
+TAO_Seq_Var_Base_T<T>::operator-> () const
 {
   return this->ptr_;
 }
@@ -62,7 +62,7 @@ TAO_Seq_Var_Base_T<T>::operator T & () const
 template<typename T>
 ACE_INLINE
 const T &
-TAO_Seq_Var_Base_T<T>::in (void) const
+TAO_Seq_Var_Base_T<T>::in () const
 {
   return *this->ptr_;
 }
@@ -98,7 +98,7 @@ TAO_Seq_Var_Base_T<T>::_retn (void)
 template<typename T>
 ACE_INLINE
 T *
-TAO_Seq_Var_Base_T<T>::ptr (void) const
+TAO_Seq_Var_Base_T<T>::ptr () const
 {
   return this->ptr_;
 }

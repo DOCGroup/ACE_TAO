@@ -33,7 +33,7 @@ Test_Exception::~Test_Exception (void)
 }
 
 const char *
-Test_Exception::opname (void) const
+Test_Exception::opname () const
 {
   return this->opname_;
 }

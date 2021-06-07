@@ -22,7 +22,7 @@ public:
 
   virtual void trigger (void);
 
-  int exit_code (void) const;
+  int exit_code () const;
 
 private:
   CORBA::ORB_var orb_;

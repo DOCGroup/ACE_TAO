@@ -16,11 +16,9 @@
 
 #include "OBVS.h"
 
-
 class Checkpoint_i : public POA_Checkpoint
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Checkpoint_i (void);
 

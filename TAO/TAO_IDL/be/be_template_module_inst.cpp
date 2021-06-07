@@ -24,12 +24,12 @@ be_template_module_inst::be_template_module_inst (
 {
 }
 
-be_template_module_inst::~be_template_module_inst (void)
+be_template_module_inst::~be_template_module_inst ()
 {
 }
 
 void
-be_template_module_inst::destroy (void)
+be_template_module_inst::destroy ()
 {
   this->AST_Template_Module_Inst::destroy ();
 }
@@ -39,6 +39,3 @@ be_template_module_inst::accept (be_visitor *visitor)
 {
   return visitor->visit_template_module_inst (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_template_module_inst)
-

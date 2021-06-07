@@ -19,13 +19,13 @@ TAO_GIOP_Locate_Request_Header::request_id (CORBA::ULong id)
 }
 
 ACE_INLINE CORBA::ULong
-TAO_GIOP_Locate_Request_Header::request_id (void) const
+TAO_GIOP_Locate_Request_Header::request_id () const
 {
   return this->request_id_;
 }
 
 ACE_INLINE const TAO::ObjectKey &
-TAO_GIOP_Locate_Request_Header::object_key (void) const
+TAO_GIOP_Locate_Request_Header::object_key () const
 {
   return this->profile_.object_key ();
 }

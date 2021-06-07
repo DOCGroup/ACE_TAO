@@ -50,7 +50,7 @@ public:
   /**
    * Please see the documentation in ace/Task.h for details.
    */
-  virtual int svc (void);
+  virtual int svc ();
   virtual int open (void *);
   virtual int close (u_long);
 

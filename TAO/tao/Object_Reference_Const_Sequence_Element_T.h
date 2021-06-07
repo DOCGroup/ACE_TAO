@@ -45,12 +45,12 @@ public:
   {
   }
 
-  inline operator object_reference_type * (void) const
+  inline operator object_reference_type * () const
   {
     return *this->element_;
   }
 
-  inline object_reference_type * in (void) const
+  inline object_reference_type * in () const
   {
     return *this->element_;
   }

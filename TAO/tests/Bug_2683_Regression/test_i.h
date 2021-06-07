@@ -12,7 +12,7 @@ class ORB_Killer : public ACE_Task_Base
 public:
   /// Constructor
   ORB_Killer (CORBA::ORB_ptr orb);
-  virtual int svc (void);
+  virtual int svc ();
 private:
   CORBA::ORB_var orb_;
 };

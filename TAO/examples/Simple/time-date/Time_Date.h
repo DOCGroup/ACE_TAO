@@ -39,10 +39,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Shutdown the @c TAO_ORB_Manager.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Concurrency hook.
-  virtual int svc (void);
+  virtual int svc ();
 
 public:
   /// ORB pseudo-reference.

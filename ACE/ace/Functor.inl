@@ -34,7 +34,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Default constructor.
 
 ACE_INLINE
-ACE_Command_Base::ACE_Command_Base (void)
+ACE_Command_Base::ACE_Command_Base ()
 {
 }
 
@@ -103,6 +103,22 @@ ACE_Hash<unsigned long>::operator () (unsigned long t) const
 {
   return t;
 }
+
+#if (ACE_SIZEOF_LONG == 8)
+ACE_INLINE unsigned long
+ACE_Hash<long long>::operator () (long long t) const
+{
+  return static_cast<unsigned long> (t);
+}
+#endif /* ACE_SIZEOF_LONG == 8 */
+
+#if (ACE_SIZEOF_LONG == 8)
+ACE_INLINE unsigned long
+ACE_Hash<unsigned long long>::operator () (unsigned long long t) const
+{
+  return static_cast<unsigned long> (t);
+}
+#endif /* ACE_SIZEOF_LONG == 8 */
 
 // This #if needs to match the one in Functor.h
 #if (ACE_SIZEOF_LONG < 8)

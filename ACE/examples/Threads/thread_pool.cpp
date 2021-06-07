@@ -38,7 +38,7 @@ public:
   ~Thread_Pool (void);
   // Destructor...
 
-  virtual int svc (void);
+  virtual int svc ();
   // Iterate <n_iterations> time printing off a message and "waiting"
   // for all other threads to complete this iteration.
 

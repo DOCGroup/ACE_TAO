@@ -110,25 +110,25 @@ namespace CORBA
     Exception (const Exception &src);
 
     /// Destructor.
-    virtual ~Exception (void);
+    virtual ~Exception () = default;
 
     // = To throw the exception (when using the standard mapping).
-    virtual void _raise (void) const = 0;
+    virtual void _raise () const = 0;
 
     // = The static narrow operations.
     static Exception * _downcast (Exception * x);
     static Exception const * _downcast (Exception const * x);
 
     /// Return the repository ID of the Exception.
-    virtual const char * _rep_id (void) const;
+    virtual const char * _rep_id () const;
 
     /// Return the name of the Exception.
-    virtual const char * _name (void) const;
+    virtual const char * _name () const;
 
     // = These are TAO-specific extensions.
 
     /// Will be overridden in the concrete derived classes.
-    virtual CORBA::TypeCode_ptr _tao_type (void) const = 0;
+    virtual CORBA::TypeCode_ptr _tao_type () const = 0;
 
     /// Print the exception to output determined by @a f.
     /**
@@ -146,7 +146,7 @@ namespace CORBA
 
     /// Returns a string containing information about the exception. This
     /// function is not CORBA compliant.
-    virtual ACE_CString _info (void) const = 0;
+    virtual ACE_CString _info () const = 0;
 
     virtual void _tao_encode (TAO_OutputCDR &cdr) const = 0;
 
@@ -165,24 +165,23 @@ namespace CORBA
      * class SomeException : public // Derives from CORBA::Exception
      * {
      * public:
-     *   virtual CORBA::Exception *_tao_duplicate (void) const
+     *   virtual CORBA::Exception *_tao_duplicate () const
      *   {
      *     CORBA::Exception *result = 0;
      *     ACE_NEW_RETURN (
      *         result,
      *         SomeException (*this),
-     *         0
-     *       );
+     *         0);
      *     return result;
      *   }
      * };
      * </PRE>
      */
-    virtual CORBA::Exception *_tao_duplicate (void) const = 0;
+    virtual CORBA::Exception *_tao_duplicate () const = 0;
 
   protected:
     /// Default constructor.
-    Exception (void);
+    Exception () = default;
 
     /// Assignment operator.
     Exception & operator = (const Exception & src);

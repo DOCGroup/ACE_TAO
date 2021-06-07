@@ -64,22 +64,21 @@ private:
   TAO_LF_Multi_Event (const TAO_LF_Multi_Event &);
 
 protected:
-
   /// Validate the state change
   virtual void state_changed_i (LFS_STATE new_state);
 
   /// Check whether we have reached the final state..
-  virtual bool is_state_final (void) const;
+  virtual bool is_state_final () const;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not - This iterates over the list of attached events and
   /// returns true if any of them return true from successful.
-  virtual bool successful_i (void) const;
+  virtual bool successful_i () const;
 
   /// Return true if an error was detected while waiting for the
   /// event - This iterates over the list of events and returns
   /// true only if all of them return true from error_detected().
-  virtual bool error_detected_i (void) const;
+  virtual bool error_detected_i () const;
 
 private:
 

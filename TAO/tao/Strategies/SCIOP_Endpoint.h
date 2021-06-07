@@ -44,12 +44,9 @@ class TAO_SCIOP_Connection_Handler;
 class TAO_Strategies_Export TAO_SCIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
   // @todo Lose these friends!
   friend class TAO_SCIOP_Profile;
   friend class TAO_SSLIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_SCIOP_Endpoint (void);
@@ -90,27 +87,27 @@ public:
   // = SCIOP_Endpoint-specific methods.
 
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
+  const char *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
   /// Do we have a preferred local network for the target?
-  bool is_preferred_network (void) const;
+  bool is_preferred_network () const;
 
   /// Return the preferred network if any.
-  const char *preferred_network (void) const;
+  const char *preferred_network () const;
 
 private:
 
@@ -119,7 +116,7 @@ private:
            int use_dotted_decimal_addresses);
 
   /// Helper method for object_addr ().
-  void object_addr_i (void) const;
+  void object_addr_i () const;
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.

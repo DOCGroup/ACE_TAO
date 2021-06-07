@@ -35,7 +35,6 @@ class TAO_PortableServer_Export TAO_Dynamic_Hash_OpTable
   : public TAO_Operation_Table
 {
 public:
-  // = Initialization and termination methods.
   /**
    * Initialize the dynamic hash operation table with a database of
    * operation names. The hash table size may be different from the
@@ -50,7 +49,7 @@ public:
                             ACE_Allocator *alloc);
 
   /// Destructor
-  ~TAO_Dynamic_Hash_OpTable (void);
+  ~TAO_Dynamic_Hash_OpTable ();
 
   /// See the documentation in the base class for details.
   virtual int bind (const char *opname,

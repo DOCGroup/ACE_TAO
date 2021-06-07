@@ -5,13 +5,16 @@
  *
  *  Exercises drivers for a bounded packet relay, based on threaded timer queues.
  *
- *  @author Chris Gill           <cdgill@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> Based on the Timer Queue Test example written by Carlos O'Ryan        <coryan@cs.wustl.edu>  and Douglas C. Schmidt   <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
+ *  @author Chris Gill <cdgill@cs.wustl.edu>
+ *  @author Douglas C. Schmidt   <d.schmidt@vanderbilt.edu>
+ *
+ * Based on the Timer Queue Test example written by Carlos O'Ryan <coryan@cs.wustl.edu>
+ * and Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Sergio Flores-Gaitan <sergio@cs.wustl.edu>
  */
 //=============================================================================
 
-
-#include "ace/Auto_Ptr.h"
 #include "Thread_Bounded_Packet_Relay.h"
+#include <memory>
 
 typedef Bounded_Packet_Relay_Driver<Thread_Timer_Queue>
   THREAD_BOUNDED_PACKET_RELAY_DRIVER;
@@ -33,7 +36,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (input_task_mgr,
                   ACE_Thread_Manager,
                   -1);
-  auto_ptr <ACE_Thread_Manager> mgr (input_task_mgr);
+  std::unique_ptr <ACE_Thread_Manager> mgr (input_task_mgr);
 
   // Construct a new input device wrapper.  Auto ptr ensures memory is
   // freed when we exit this scope.
@@ -43,7 +46,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                              sizeof (input_text),
                                              input_text),
                   -1);
-  auto_ptr <Text_Input_Device_Wrapper> input (input_device);
+  std::unique_ptr <Text_Input_Device_Wrapper> input (input_device);
 
   // Construct a new output device wrapper.  Auto ptr ensures memory
   // is freed when we exit this scope.
@@ -51,7 +54,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (output_device,
                   Text_Output_Device_Wrapper,
                   -1);
-  auto_ptr <Text_Output_Device_Wrapper> output (output_device);
+  std::unique_ptr <Text_Output_Device_Wrapper> output (output_device);
 
   // Construct a new bounded packet relay.  Auto ptr ensures memory is
   // freed when we exit this scope.
@@ -61,7 +64,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                                         input_device,
                                         output_device),
                   -1);
-  auto_ptr <Bounded_Packet_Relay> relay (packet_relay);
+  std::unique_ptr <Bounded_Packet_Relay> relay (packet_relay);
 
   // Construct a receive input callback command for the relay, and register
   // it with the input device.  Auto ptr ensures memory is freed when we exit
@@ -71,7 +74,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                   INPUT_CALLBACK (*packet_relay,
                                   &Bounded_Packet_Relay::receive_input),
                   -1);
-  auto_ptr <INPUT_CALLBACK> callback (input_callback);
+  std::unique_ptr <INPUT_CALLBACK> callback (input_callback);
   if (input_device->set_send_input_msg_cmd (input_callback) < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -87,7 +90,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
                   Thread_Bounded_Packet_Relay_Driver (packet_relay),
                   -1);
 
-  auto_ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER> driver (tbprd);
+  std::unique_ptr <THREAD_BOUNDED_PACKET_RELAY_DRIVER> driver (tbprd);
 
   return driver->run ();
   // All dynamically allocated memory is released when main() returns.

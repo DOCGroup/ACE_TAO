@@ -41,7 +41,7 @@ namespace TAO
         PortableServer::Servant s,
         bool &w) = 0;
 
-      virtual bool allow_multiple_activations (void) const = 0;
+      virtual bool allow_multiple_activations () const = 0;
 
       virtual ::PortableServer::IdUniquenessPolicyValue type() const = 0;
     };

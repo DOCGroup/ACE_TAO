@@ -36,7 +36,6 @@ class TAO_Strategies_Export TAO_Advanced_Resource_Factory :
   public TAO_Default_Resource_Factory
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Advanced_Resource_Factory (void);
 
@@ -101,7 +100,7 @@ public:
 protected:
 
   /// Obtain the reactor implementation
-  virtual ACE_Reactor_Impl *allocate_reactor_impl (void) const;
+  virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   void report_option_value_error (const ACE_TCHAR* option_name,
                                   const ACE_TCHAR* option_value);

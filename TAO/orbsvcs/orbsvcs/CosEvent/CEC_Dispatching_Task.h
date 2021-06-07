@@ -47,7 +47,7 @@ public:
   TAO_CEC_Dispatching_Task (ACE_Thread_Manager* thr_manager = 0);
 
   /// Process the events in the queue.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual void push (TAO_CEC_ProxyPushSupplier *proxy,
                      CORBA::Any& event);

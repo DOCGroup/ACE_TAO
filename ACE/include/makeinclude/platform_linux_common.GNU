@@ -129,3 +129,26 @@ ifeq ($(threads),1)
        PRELIB = @true
     endif # ! PRELIB
 endif
+
+# DT_RUNPATH is preferred over DT_RPATH, but the linker will only use it when
+# this extra flag option (enable-new-dtags) is present
+LD_RPATH_FLAGS += -Wl,--enable-new-dtags
+
+# Rely on _GNU_SOURCE to set these defaults defined in /usr/include/features.h
+# instead of setting them directly here (older versions of gcc don't set it
+# for you): _SVID_SOURCE _BSD_SOURCE _POSIX_SOURCE _POSIX_C_SOURCE=199506L, ...
+CPPFLAGS += -D_GNU_SOURCE
+
+DCFLAGS  += -ggdb
+DCCFLAGS += -ggdb
+DLD      = $(CXX)
+LD       = $(CXX)
+
+ifeq ($(optimize),1)
+  SOFLAGS += -Wl,-O3
+endif
+
+SOFLAGS += -shared
+SOBUILD = $(COMPILE.cc) $(PIC) -o $(VSHDIR)$*.so $<; \
+          $(SOLINK.cc) -o $@ $(LDFLAGS) $(VSHDIR)$*.o
+PRELIB  = @true

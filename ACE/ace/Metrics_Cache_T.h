@@ -162,7 +162,7 @@ public:
   void metrics_enabled(int enabled);
 
   /// Return the enable state for metrics collection.
-  int metrics_enabled(void) const;
+  int metrics_enabled() const;
 
 protected:
 
@@ -213,7 +213,6 @@ protected:
   int metrics_enabled_;
 
 private:
-
   /// Allocation strategy object.
   ALLOCATOR* allocator_;
 

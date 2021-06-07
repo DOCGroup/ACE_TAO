@@ -86,7 +86,7 @@ public:
   /*
    * Get the parent reader.
    */
-  virtual ACEXML_XMLReader *getParent (void) const;
+  virtual ACEXML_XMLReader *getParent () const;
 
   /*
    * Set the parent reader.
@@ -96,22 +96,22 @@ public:
   /*
    * Get the current DTD event handler.
    */
-  virtual ACEXML_DTDHandler *getDTDHandler (void) const;
+  virtual ACEXML_DTDHandler *getDTDHandler () const;
 
   /*
    * Get the current content event handler.
    */
-  virtual ACEXML_ContentHandler *getContentHandler (void) const;
+  virtual ACEXML_ContentHandler *getContentHandler () const;
 
   /*
    * Get the current entity resolver.
    */
-  virtual ACEXML_EntityResolver *getEntityResolver (void) const;
+  virtual ACEXML_EntityResolver *getEntityResolver () const;
 
   /*
    * Get the current error event handler.
    */
-  virtual ACEXML_ErrorHandler *getErrorHandler (void) const;
+  virtual ACEXML_ErrorHandler *getErrorHandler () const;
 
   /*
    * Set the DTD event handler.

@@ -33,7 +33,7 @@ public:
   virtual ~JAWS_Reaper (void);
 
   virtual int open (void * = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   JAWS_Concurrency_Base *concurrency_;

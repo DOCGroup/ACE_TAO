@@ -67,12 +67,10 @@ public:
   // @}
 
 private:
-
   TAO_Default_Thread_Lane_Resources_Manager (TAO_Default_Thread_Lane_Resources_Manager const &);
   void operator= (TAO_Default_Thread_Lane_Resources_Manager const &);
 
 protected:
-
   /// Default lane resources.
   TAO_Thread_Lane_Resources * const lane_resources_;
 

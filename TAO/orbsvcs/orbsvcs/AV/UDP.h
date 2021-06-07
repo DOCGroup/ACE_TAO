@@ -118,10 +118,10 @@ public:
   int close (void);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  const ACE_SOCK_Dgram *get_socket (void) const;
+  const ACE_SOCK_Dgram *get_socket () const;
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   /// Change the QoS
   virtual int change_qos (AVStreams::QoS);
@@ -161,7 +161,6 @@ public:
   virtual int close (void);
   virtual int activate_svc_handler (TAO_AV_Flow_Handler *handler);
 
-
 protected:
   ACE_INET_Addr *address_;
   ACE_INET_Addr *control_inet_address_;
@@ -169,8 +168,6 @@ protected:
   TAO_FlowSpec_Entry *entry_;
   TAO_AV_Flow_Protocol_Factory *flow_protocol_factory_;
   TAO_AV_Core::Flow_Component flow_component_;
-
-
 };
 
 /**

@@ -1,7 +1,5 @@
 #include "ace/Msg_WFMO_Reactor.h"
 
-
-
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_MSG_WFMO)
 
 #if !defined (__ACE_INLINE__)

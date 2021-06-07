@@ -40,9 +40,9 @@ void TAO_PG::Properties_Encoder::encode (
   PortableGroup::Properties * property_set) const
 {
   ACE_ASSERT (property_set != 0);
-  size_t count = values_.size();
+  CORBA::ULong const count = static_cast<CORBA::ULong> (values_.size());
   property_set->length(count);
-  for( size_t nItem = 0; nItem < count; ++nItem )
+  for( CORBA::ULong nItem = 0; nItem < count; ++nItem )
   {
     const NamedValue & nv = values_[nItem];
     PortableGroup::Property & property = (*property_set)[nItem];

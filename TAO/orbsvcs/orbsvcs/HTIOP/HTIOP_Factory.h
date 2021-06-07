@@ -53,16 +53,16 @@ namespace TAO
       virtual int match_prefix (const ACE_CString &prefix);
 
       /// Returns the prefix used by the protocol.
-      virtual const char *prefix (void) const;
+      virtual const char *prefix () const;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.
-      virtual char options_delimiter (void) const;
+      virtual char options_delimiter () const;
 
       // = Check Protocol_Factory.h for a description of these methods.
       virtual TAO_Acceptor  *make_acceptor (void);
       virtual TAO_Connector *make_connector  (void);
-      virtual int requires_explicit_endpoint (void) const;
+      virtual int requires_explicit_endpoint () const;
 
     private:
       /// Configuration reference
@@ -82,9 +82,9 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 // Note that these declarations are placed outside of the scope of the
 // namespace. The generated functions use a C style signature which does
-// not accomodate namespaces, so assuming namespace concatination is an
+// not accommodate namespaces, so assuming namespace concatenation is an
 // error. The service class name should be composed of a flattened class
-// name, with the namespaces preceeding the class name with '_'.
+// name, with the namespaces preceding the class name with '_'.
 ACE_STATIC_SVC_DECLARE_EXPORT (HTIOP, TAO_HTIOP_Protocol_Factory)
 ACE_FACTORY_DECLARE (HTIOP, TAO_HTIOP_Protocol_Factory)
 

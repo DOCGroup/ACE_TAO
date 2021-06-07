@@ -43,7 +43,6 @@ public:
   virtual ~TAO_LF_Invocation_Event (void);
 
 protected:
-
   /// Validate and perform the state change
   /**
    * This concrete class uses the following states declared in the
@@ -63,15 +62,15 @@ protected:
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful_i (void) const;
+  virtual bool successful_i () const;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected_i (void) const;
+  virtual bool error_detected_i () const;
 
 private:
   /// Check whether we have reached the final state..
-  bool is_state_final (void) const;
+  bool is_state_final () const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

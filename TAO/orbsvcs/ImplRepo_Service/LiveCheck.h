@@ -22,6 +22,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
+#include <atomic>
 
 class LiveCheck;
 class LiveEntry;
@@ -81,8 +82,8 @@ class Locator_Export LiveListener
   /// is received. Returns true if finished listening
   virtual bool status_changed (LiveStatus status) = 0;
 
-  /// accessor for the server name. Used by the LiveCheck to associate a listener
-  const char *server (void) const;
+  /// Accessor for the server name. Used by the LiveCheck to associate a listener
+  const char *server () const;
 
   LiveListener *_add_ref (void);
   void _remove_ref (void);
@@ -91,8 +92,7 @@ class Locator_Export LiveListener
   ACE_CString server_;
 
  private:
-  int refcount_;
-  TAO_SYNCH_MUTEX lock_;
+  std::atomic<int> refcount_;
 };
 
 typedef TAO_Intrusive_Ref_Count_Handle<LiveListener> LiveListener_ptr;
@@ -121,7 +121,7 @@ class Locator_Export LiveEntry
   void release_callback (void);
   void add_listener (LiveListener *ll);
   void remove_listener (LiveListener *ll);
-  LiveStatus status (void) const;
+  LiveStatus status () const;
   void status (LiveStatus l);
   void reset_status (void);
 
@@ -131,15 +131,16 @@ class Locator_Export LiveEntry
   void update_listeners (void);
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
   void do_ping (PortableServer::POA_ptr poa);
-  const ACE_Time_Value &next_check (void) const;
+  const ACE_Time_Value &next_check () const;
   static void set_reping_limit (int max);
-  bool reping_available (void) const;
+  bool reping_available () const;
   int next_reping (void);
   void max_retry_msec (int max);
-  const char *server_name (void) const;
+  const char *server_name () const;
   void set_pid (int pid);
   bool has_pid (int pid) const;
-  int pid (void) const;
+  int pid () const;
+  bool may_ping () const;
 
  private:
   LiveCheck *owner_;
@@ -224,7 +225,7 @@ class Locator_Export LC_TimeoutGuard
   ~LC_TimeoutGuard (void);
 
   /// Returns true if the in handle timeout in the owner was already set.
-  bool blocked (void) const;
+  bool blocked () const;
 
  private:
   LiveCheck *owner_;
@@ -271,7 +272,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void remove_listener (LiveListener *listener);
   bool schedule_ping (LiveEntry *entry);
   LiveStatus is_alive (const char *server);
-  const ACE_Time_Value &ping_interval (void) const;
+  const ACE_Time_Value &ping_interval () const;
 
  private:
   void enter_handle_timeout (void);

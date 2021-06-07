@@ -58,7 +58,6 @@ public:
     ACE_OPEN   = 0
   };
 
-  // = Initialization and termination methods.
   ACE_SV_Semaphore_Complex (void);
   ACE_SV_Semaphore_Complex (key_t key,
                             short create = ACE_SV_Semaphore_Complex::ACE_CREATE,
@@ -133,7 +132,7 @@ public:
   using ACE_SV_Semaphore_Simple::remove;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

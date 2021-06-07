@@ -27,7 +27,6 @@
 class Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Client_i (void);
 

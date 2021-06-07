@@ -20,7 +20,6 @@
 
 #include /**/ "ace/pre.h"
 
-
 #include "ace/Event_Handler.h"
 #include "ace/Containers.h"
 #include "orbsvcs/Time/time_serv_export.h"
@@ -48,7 +47,6 @@ class TAO_Time_Service_Clerk;
 class TAO_Time_Serv_Export Timer_Helper : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Timer_Helper (void);
 

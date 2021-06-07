@@ -33,7 +33,7 @@ Test_Task::init (int, ACE_TCHAR *[])
 }
 
 int
-Test_Task::fini (void)
+Test_Task::fini ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("finalizing %s\n"),

@@ -42,7 +42,7 @@ public:
   virtual int init (int argc, ACE_TCHAR* argv[]);
 
   /// The opposite of init().
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Run the TAO_Naming_Service.
   virtual int run (void);

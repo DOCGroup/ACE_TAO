@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -94,7 +93,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Structure (void);
+  virtual ~AST_Structure ();
 
   // This serves for both structs and unions.
   static void fwd_redefinition_helper (AST_Structure *&i,
@@ -103,55 +102,50 @@ public:
   // Overridden for unions.
   virtual void redefine (AST_Structure *from);
 
-  // Narrowing.
-
-  DEF_NARROW_FROM_DECL(AST_Structure);
-  DEF_NARROW_FROM_SCOPE(AST_Structure);
-
-  virtual int member_count (void);
+  virtual int member_count ();
   // Return the count of members.
 
-  virtual ACE_CDR::ULong nfields (void) const;
+  virtual ACE_CDR::ULong nfields () const;
   // Return the count of actual fields.
 
   virtual int field (AST_Field **&result,
                      ACE_CDR::ULong slot) const;
   // Get an individual field node.
 
-  virtual bool is_local (void);
+  virtual bool is_local ();
   // Overwrite the is_local method.
 
   virtual bool in_recursion (ACE_Unbounded_Queue<AST_Type *> &list);
   // Are we or the node represented by node involved in recursion.
 
-  virtual int contains_wstring (void);
+  virtual int contains_wstring ();
   // Do we contain a wstring at some nesting level?
 
   // Is this struct or union defined? This predicate returns FALSE when a
   // forward declaration is not defined yet, and TRUE in
   // all other cases.
-  virtual bool is_defined (void);
+  virtual bool is_defined ();
 
   // Recursively called on valuetype to check for legal use as
   // a primary key. Overridden for valuetype, struct, sequence,
   // union, array, typedef, and interface.
-  virtual bool legal_for_primary_key (void) const;
+  virtual bool legal_for_primary_key () const;
 
   // Accessors for the member.
-  AST_StructureFwd *fwd_decl (void) const;
+  AST_StructureFwd *fwd_decl () const;
   void fwd_decl (AST_StructureFwd *node);
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Cleanup function.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);
 
   // Accessor for the member.
-  ACE_Unbounded_Queue<AST_Field *> &fields (void);
+  ACE_Unbounded_Queue<AST_Field *> &fields ();
 
   static AST_Decl::NodeType const NT;
 
@@ -166,7 +160,7 @@ public:
   ///}
 
 protected:
-  friend int tao_yyparse (void);
+  friend int tao_yyparse ();
   // Scope Management Protocol.
 
   virtual AST_Union *fe_add_union (AST_Union *u);
@@ -177,7 +171,7 @@ protected:
 
   virtual AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
 
-  virtual int compute_size_type (void);
+  virtual int compute_size_type ();
   // Compute the size type if it is unknown.
 
   ACE_Unbounded_Queue<AST_Field *> fields_;
@@ -186,7 +180,7 @@ protected:
   // the struct.
 
 private:
-  int compute_member_count (void);
+  int compute_member_count ();
   // Count the number of members.
 
   int member_count_;

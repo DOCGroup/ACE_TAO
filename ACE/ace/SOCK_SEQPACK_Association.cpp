@@ -9,14 +9,12 @@
 #include "ace/SOCK_SEQPACK_Association.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Association)
 
 void
-ACE_SOCK_SEQPACK_Association::dump (void) const
+ACE_SOCK_SEQPACK_Association::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Association::dump");
@@ -24,7 +22,7 @@ ACE_SOCK_SEQPACK_Association::dump (void) const
 }
 
 int
-ACE_SOCK_SEQPACK_Association::close (void)
+ACE_SOCK_SEQPACK_Association::close ()
 {
 #if defined (ACE_WIN32)
   // We need the following call to make things work correctly on
@@ -43,16 +41,14 @@ ACE_SOCK_SEQPACK_Association::close (void)
 // draft-ietf-tsvwg-sctpsocket-09.txt to abruptly free a transport
 // transport association's resources.
 int
-ACE_SOCK_SEQPACK_Association::abort (void)
+ACE_SOCK_SEQPACK_Association::abort ()
 {
   //
   // setsockopt() SO_LINGER configures socket to reap immediately.
   // Normal close then aborts the association.
   //
-  linger slinger;
-
+  linger slinger = { 0, 0 };
   slinger.l_onoff = 1;
-  slinger.l_linger = 0;
 
   if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                 SOL_SOCKET,

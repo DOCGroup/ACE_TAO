@@ -42,7 +42,7 @@ public:
   virtual int handle_input (ACE_HANDLE h);
   virtual int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask);
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   ACE_TCHAR name_[MAXPATHLEN];

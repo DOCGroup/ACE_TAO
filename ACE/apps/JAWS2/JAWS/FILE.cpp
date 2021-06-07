@@ -65,7 +65,7 @@ JAWS_FILE::mem_map (int length,
 
 
 ACE_Mem_Map *
-JAWS_FILE::map (void) const
+JAWS_FILE::map () const
 {
   return this->map_;
 }

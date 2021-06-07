@@ -40,7 +40,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Persistent_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Persistent_IntId (void);
 
@@ -83,8 +82,6 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_Persistent_ExtId (void);
 
@@ -111,7 +108,7 @@ public:
 
   /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -145,7 +142,6 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_IntId
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Persistent_Index_IntId (void);
 
@@ -189,8 +185,6 @@ public:
 class TAO_Naming_Serv_Export TAO_Persistent_Index_ExtId
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   TAO_Persistent_Index_ExtId (void);
 
@@ -216,7 +210,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data member.
 

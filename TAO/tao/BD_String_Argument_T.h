@@ -47,7 +47,7 @@ namespace TAO
     virtual void interceptor_value (CORBA::Any *any) const;
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
 
-    typename S_var::s_traits::char_type const * arg (void) const;
+    typename S_var::s_traits::char_type const * arg () const;
 
   protected:
     typename S_var::s_traits::char_type const * x_;

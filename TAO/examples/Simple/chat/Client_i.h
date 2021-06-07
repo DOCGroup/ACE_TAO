@@ -39,7 +39,6 @@
 class Client_i : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Client_i (void);
 

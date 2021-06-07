@@ -40,7 +40,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
 
  protected:
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
   RTScheduling::Current_var current_;
   CORBA::Policy_var sched_param_;
   time_t start_time_;

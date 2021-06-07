@@ -21,11 +21,6 @@
 // For timer_queue_
 #include "ace/Recursive_Thread_Mutex.h"
 
-/*
- * ACE Reactor specialization hook.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #if !defined (__ACE_INLINE__)
 #include "ace/Select_Reactor_T.inl"
 #endif /* __ACE_INLINE__ */
@@ -190,7 +185,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew (void)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-  if (this->supress_notify_renew () == 0)
+  if (!this->supress_notify_renew ())
     this->token_.renew (this->requeue_position_);
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
@@ -450,7 +445,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::set_sig_handler
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_Timer_Queue *
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue (void) const
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::timer_queue () const
 {
   return this->timer_queue_;
 }
@@ -1549,7 +1544,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles (void)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> void
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump (void) const
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Select_Reactor_T::dump");

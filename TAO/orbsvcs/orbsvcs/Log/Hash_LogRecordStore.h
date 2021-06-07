@@ -59,10 +59,7 @@ class TAO_LogMgr_i;
 class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
   : public TAO_LogRecordStore
 {
- public:
-
-  // = Initialization and termination methods
-
+public:
   /// Constructor.
   TAO_Hash_LogRecordStore (TAO_LogMgr_i* logmgr,
                            DsLogAdmin::LogId id,
@@ -84,7 +81,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the administrative state of the log
   virtual DsLogAdmin::AdministrativeState
-    get_administrative_state (void) const;
+    get_administrative_state () const;
 
   /// Sets the administrative state of the log
   virtual void
@@ -92,7 +89,7 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void) const;
+    get_capacity_alarm_thresholds () const;
 
   /// Set the capacity alarm thresholds
   virtual void
@@ -100,39 +97,39 @@ class TAO_Log_Serv_Export TAO_Hash_LogRecordStore
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
-    get_forwarding_state (void) const;
+    get_forwarding_state () const;
 
   /// Sets the forwarding state
   virtual void
     set_forwarding_state (DsLogAdmin::ForwardingState state);
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval get_interval (void) const;
+  virtual DsLogAdmin::TimeInterval get_interval () const;
 
   /// Set the log duration.
   virtual void
     set_interval (const DsLogAdmin::TimeInterval & interval);
 
   /// Gets the log full action
-  virtual DsLogAdmin::LogFullActionType get_log_full_action (void) const;
+  virtual DsLogAdmin::LogFullActionType get_log_full_action () const;
 
   /// Sets the log full action
   virtual void set_log_full_action(DsLogAdmin::LogFullActionType action);
 
   /// Get the list of the QoS properties supported by the log.
-  virtual DsLogAdmin::QoSList* get_log_qos (void) const;
+  virtual DsLogAdmin::QoSList* get_log_qos () const;
 
   /// Set the list of the QoS properties supported by the log.
   virtual void set_log_qos (const DsLogAdmin::QoSList& qos);
 
   /// Gets the max record life
-  virtual CORBA::ULong get_max_record_life (void) const;
+  virtual CORBA::ULong get_max_record_life () const;
 
   /// Sets the max record life
   virtual void set_max_record_life (CORBA::ULong life);
 
   /// Get the current set value of the max size of the log data.
-  virtual CORBA::ULongLong get_max_size (void) const;
+  virtual CORBA::ULongLong get_max_size () const;
 
   /// Set the max size of log data. size == 0, => infinite.
   virtual void set_max_size (CORBA::ULongLong size);

@@ -106,10 +106,10 @@ public:
    */
   //@{
   /// Set/get the next element in the list
-  TAO_Queued_Message *next (void) const;
+  TAO_Queued_Message *next () const;
 
   /// Set/get the previous element in the list
-  TAO_Queued_Message *prev (void) const;
+  TAO_Queued_Message *prev () const;
 
   /// Remove this element from the list
   void remove_from_list (TAO_Queued_Message *&head,
@@ -133,10 +133,10 @@ public:
    * If the message has been partially sent it returns the number of
    * bytes that are still not sent.
    */
-  virtual size_t message_length (void) const = 0;
+  virtual size_t message_length () const = 0;
 
   /// Return 1 if all the data has been sent
-  virtual int all_data_sent (void) const = 0;
+  virtual int all_data_sent () const = 0;
 
   /// Fill up an io vector using the connects of the message
   /**

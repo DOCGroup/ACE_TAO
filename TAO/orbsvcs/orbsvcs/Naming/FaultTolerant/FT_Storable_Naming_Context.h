@@ -36,8 +36,6 @@ class TAO_FtNaming_Export TAO_FT_Storable_Naming_Context :
       public TAO_Storable_Naming_Context
 {
 public:
-  // = Initialization and termination methods.
-
   /**
    * Constructor that takes in preallocated data structure and takes
    * ownership of it.  Derived class from TAO_Persistent_Naming_Context

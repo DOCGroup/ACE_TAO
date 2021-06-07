@@ -5,8 +5,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
@@ -18,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Stream)
 
 void
-ACE_TLI_Stream::dump (void) const
+ACE_TLI_Stream::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Stream::dump");

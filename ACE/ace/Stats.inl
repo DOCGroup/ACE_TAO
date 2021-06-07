@@ -11,7 +11,7 @@ ACE_Stats_Value::ACE_Stats_Value (const u_int precision)
 
 ACE_INLINE
 u_int
-ACE_Stats_Value::precision (void) const
+ACE_Stats_Value::precision () const
 {
   return precision_;
 }
@@ -25,7 +25,7 @@ ACE_Stats_Value::whole (const ACE_UINT32 value)
 
 ACE_INLINE
 ACE_UINT32
-ACE_Stats_Value::whole (void) const
+ACE_Stats_Value::whole () const
 {
   return whole_;
 }
@@ -39,7 +39,7 @@ ACE_Stats_Value::fractional (const ACE_UINT32 value)
 
 ACE_INLINE
 ACE_UINT32
-ACE_Stats_Value::fractional (void) const
+ACE_Stats_Value::fractional () const
 {
   return fractional_;
 }
@@ -53,7 +53,7 @@ ACE_Stats_Value::scaled_value (ACE_UINT64 &sv) const
 
 ACE_INLINE
 void
-ACE_Stats_Value::dump (void) const
+ACE_Stats_Value::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACELIB_DEBUG ((LM_DEBUG,
@@ -70,28 +70,28 @@ ACE_Stats::ACE_Stats (void)
 
 ACE_INLINE
 ACE_UINT32
-ACE_Stats::samples (void) const
+ACE_Stats::samples () const
 {
   return number_of_samples_;
 }
 
 ACE_INLINE
 ACE_INT32
-ACE_Stats::min_value (void) const
+ACE_Stats::min_value () const
 {
   return min_;
 }
 
 ACE_INLINE
 ACE_INT32
-ACE_Stats::max_value (void) const
+ACE_Stats::max_value () const
 {
   return max_;
 }
 
 ACE_INLINE
 void
-ACE_Stats::dump (void) const
+ACE_Stats::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   print_summary (3u);

@@ -45,15 +45,11 @@ namespace TAO
        virtual void post_init (PortableInterceptor::ORBInitInfo_ptr info);
     protected:
         virtual TAO::Transport::Current_ptr
-        make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id)
-          = 0;
+        make_current_instance (TAO_ORB_Core* core, size_t tss_slot_id) = 0;
     protected:
       const ACE_TString id_;
-#if defined (ACE_WIN32_VC14)
-      // Workaround for connect issue 1577211
-      ACE_UNIMPLEMENTED_FUNC (Current_ORBInitializer_Base (const Current_ORBInitializer_Base &))
-      ACE_UNIMPLEMENTED_FUNC (Current_ORBInitializer_Base &operator = (const Current_ORBInitializer_Base &))
-#endif
+      Current_ORBInitializer_Base (const Current_ORBInitializer_Base &) = delete;
+      Current_ORBInitializer_Base &operator = (const Current_ORBInitializer_Base &) = delete;
     };
 
   } /* namespace Transport */

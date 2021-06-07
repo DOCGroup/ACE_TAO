@@ -31,7 +31,7 @@ Test_DynStruct::~Test_DynStruct (void)
 }
 
 const char*
-Test_DynStruct::test_name (void) const
+Test_DynStruct::test_name () const
 {
   return this->test_name_;
 }

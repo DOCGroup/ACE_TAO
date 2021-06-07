@@ -18,19 +18,19 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyDefaultServant::RequestProcessingStrategyDefaultServant (void)
+    RequestProcessingStrategyDefaultServant::RequestProcessingStrategyDefaultServant ()
       : default_servant_ (0)
     {
     }
 
     void
-    RequestProcessingStrategyDefaultServant::strategy_cleanup(void)
+    RequestProcessingStrategyDefaultServant::strategy_cleanup()
     {
       this->default_servant_ = 0;
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyDefaultServant::get_servant_manager (void)
+    RequestProcessingStrategyDefaultServant::get_servant_manager ()
     {
       throw PortableServer::POA::WrongPolicy ();
     }
@@ -43,7 +43,7 @@ namespace TAO
     }
 
     PortableServer::Servant
-    RequestProcessingStrategyDefaultServant::get_servant (void)
+    RequestProcessingStrategyDefaultServant::get_servant ()
     {
       // This operation returns the default servant associated with the
       // POA.
@@ -83,8 +83,7 @@ namespace TAO
     TAO_SERVANT_LOCATION
     RequestProcessingStrategyDefaultServant::locate_servant (
       const PortableServer::ObjectId & system_id,
-      PortableServer::Servant & servant
-      )
+      PortableServer::Servant & servant)
     {
       TAO_SERVANT_LOCATION location = TAO_SERVANT_NOT_FOUND;
 

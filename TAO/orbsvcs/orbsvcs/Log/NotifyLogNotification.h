@@ -44,8 +44,6 @@ class TAO_NotifyLog_Serv_Export TAO_NotifyLogNotification :
   public POA_CosNotifyComm::PushSupplier
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_NotifyLogNotification (CosNotifyChannelAdmin::EventChannel_ptr);
 

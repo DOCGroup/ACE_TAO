@@ -26,7 +26,7 @@ EC_Throughput::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Throughput::print_args (void) const
+EC_Throughput::print_args () const
 {
   this->EC_Driver::print_args ();
 }

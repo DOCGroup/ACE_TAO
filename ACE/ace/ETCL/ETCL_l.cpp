@@ -462,7 +462,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 static const char* extract_string(char*);
-//static const char * extract_string(char*);
 
 #define YY_LEX_DEBUG
 
@@ -946,6 +945,7 @@ YY_RULE_SETUP
 //#line 122 "ETCL/ETCL.ll"
 ETCL_ECHO;
   YY_BREAK
+// Fallthrough
 case YY_STATE_EOF(INITIAL):
   yyterminate();
 

@@ -18,8 +18,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Time_Value.h"
 
-#if defined (ACE_HAS_CPP11)
-
 #include "ace/Truncate.h"
 
 int
@@ -579,18 +577,3 @@ run_main (int, ACE_TCHAR *[])
   ACE_END_TEST;
   return errors;
 }
-
-#else
-
-int
-run_main (int, ACE_TCHAR *[])
-{
-  ACE_START_TEST (ACE_TEXT ("Chrono_Test"));
-
-  ACE_ERROR ((LM_INFO, ACE_TEXT ("std::chrono is not supported on this platform\n")));
-
-  ACE_END_TEST;
-  return 0;
-}
-
-#endif /* ACE_HAS_CPP11 */

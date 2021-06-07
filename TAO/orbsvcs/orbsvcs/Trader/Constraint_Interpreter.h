@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_CONSTRAINT_INTERPRETER_H
 #define TAO_CONSTRAINT_INTERPRETER_H
 #include /**/ "ace/pre.h"
@@ -44,13 +43,12 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* constraints);
 
   /**
    * This constructor builds an expression tree representing the
-   * constraint specified in <constraints>, and throws an Illegal
+   * constraint specified in @a constraints, and throws an Illegal
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
@@ -58,7 +56,7 @@ public:
                               const char* constraints);
 
   /// Destructor
-  ~TAO_Constraint_Interpreter (void);
+  ~TAO_Constraint_Interpreter ();
 
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
 
@@ -85,7 +83,6 @@ public:
 class TAO_Trading_Serv_Export TAO_Preference_Interpreter : public TAO_Interpreter
 {
 public:
-  // = Initialization and termination methods.
   TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
                               const char* preference);
 
@@ -137,10 +134,10 @@ public:
   typedef ACE_Unbounded_Queue<Preference_Info> Ordered_Offers;
 
 private:
-
-  /// Disallow copying.
-  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&);
-  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&);
+  TAO_Preference_Interpreter (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter& operator= (const TAO_Preference_Interpreter&) = delete;
+  TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
+  TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
 
   /// The ordered list of offers.
   Ordered_Offers offers_;

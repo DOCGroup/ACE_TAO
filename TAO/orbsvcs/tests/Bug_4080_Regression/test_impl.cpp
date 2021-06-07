@@ -28,7 +28,7 @@ UIPMC_Object_Impl::process ()
           ACE_DEBUG ((LM_DEBUG, "Server %t Shutting down\n"));
           try
             {
-              this->orb_->shutdown (0);
+              this->orb_->shutdown (false);
             }
           catch (const CORBA::Exception& ex)
             {

@@ -372,7 +372,7 @@ server (void *arg)
 #endif /* !ACE_LACKS_FORK || ACE_HAS_THREADS */
 
 void
-spawn (void)
+spawn ()
 {
   // Acceptor
   ACE_SOCK_Acceptor peer_acceptor;
@@ -397,10 +397,10 @@ spawn (void)
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) %p\n%a"),
+                      ACE_TEXT ("(%P|%t) %p\n"),
                       ACE_TEXT ("fork failed"),
                       1));
-          /* NOTREACHED */
+          ACE_OS::abort ();
         case 0:
           ACE_LOG_MSG->sync (ACE_TEXT ("SOCK_Send_Recv_Test-child"));
           client (&server_addr);

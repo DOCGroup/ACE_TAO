@@ -52,7 +52,6 @@ public:
   typedef ACE_Unbounded_Set<INT_ID> VALUE_SET;
   typedef ACE_Unbounded_Set_Iterator<INT_ID> VALUE_SET_ITERATOR;
 
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
                             const ACE_Unbounded_Set<INT_ID> &int_id_set,
@@ -88,7 +87,7 @@ public:
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev_;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 };
 
 // Forward decl.
@@ -166,8 +165,6 @@ public:
           const_iterator;
   typedef ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
           reverse_iterator;
-
-  // = Initialization and termination methods.
 
   /**
    * Initialize a @c Hash_Multi_Map_Manager with default size elements.
@@ -395,11 +392,11 @@ public:
 
   /// Returns the current number of @c ACE_Hash_Multi_Map_Entry objects in the
   /// hash table.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Return the size of the array that's used to point to the
   /// linked lists of @c ACE_Hash_Multi_Map_Entry objects in the hash table.
-  size_t total_size (void) const;
+  size_t total_size () const;
 
   /**
    * Returns a reference to the underlying @c ACE_LOCK.  This makes it
@@ -412,7 +409,7 @@ public:
   ACE_LOCK &mutex (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
@@ -578,7 +575,7 @@ protected:
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *table (void);
 
   /// Accessor of the current size attribute
-  size_t cur_size (void) const;
+  size_t cur_size () const;
 
 private:
   /**
@@ -597,8 +594,8 @@ private:
   size_t cur_size_;
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &))
+  void operator= (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
+  ACE_Hash_Multi_Map_Manager (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) = delete;
 };
 
 /**
@@ -613,7 +610,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Multi_Map_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -626,13 +622,13 @@ public:
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
@@ -655,7 +651,7 @@ protected:
   int reverse_i (void);
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
@@ -680,7 +676,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator_Base
 {
 public:
-  // = Initialization method.
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
   ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -693,13 +688,13 @@ public:
   int next (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&next_entry) const;
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
@@ -722,7 +717,7 @@ protected:
   int reverse_i (void);
 
   /// Dump the state of an object.
-  void dump_i (void) const;
+  void dump_i () const;
 
   /// Map we are iterating over.
   const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
@@ -751,7 +746,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                int tail = 0);
 
@@ -761,7 +755,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -797,7 +791,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Const_Iterator (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                      int tail = 0);
 
@@ -807,7 +800,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -850,7 +843,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Bucket_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Bucket_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                       const EXT_ID &ext_id,
                                       int tail = 0);
@@ -870,10 +862,10 @@ public:
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
 
   /// Returns a reference to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>& operator* () const;
 
   /// Returns a pointer to the interal element this object is pointing to.
-  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> (void) const;
+  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>* operator-> () const;
 
   /// Returns reference the Hash_Multi_Map_Manager that is being iterated
   /// over.
@@ -919,7 +911,6 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Reverse_Iterator : public ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  // = Initialization method.
   ACE_Hash_Multi_Map_Reverse_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
                                        int head = 0);
 
@@ -929,7 +920,7 @@ public:
   int advance (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 

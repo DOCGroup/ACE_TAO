@@ -18,12 +18,12 @@ be_porttype::be_porttype (UTL_ScopedName *n)
 {
 }
 
-be_porttype::~be_porttype (void)
+be_porttype::~be_porttype ()
 {
 }
 
 void
-be_porttype::destroy (void)
+be_porttype::destroy ()
 {
   this->AST_PortType::destroy ();
 }
@@ -33,6 +33,3 @@ be_porttype::accept (be_visitor *visitor)
 {
   return visitor->visit_porttype (this);
 }
-
-IMPL_NARROW_FROM_DECL (be_porttype)
-IMPL_NARROW_FROM_SCOPE (be_porttype)

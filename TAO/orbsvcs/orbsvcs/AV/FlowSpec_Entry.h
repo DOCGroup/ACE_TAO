@@ -18,7 +18,6 @@
 #include "ace/Containers.h"
 #include "ace/SString.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
@@ -32,16 +31,16 @@ public:
   TAO_Tokenizer (const char *string,char delimiter);
 
   /// destructor.
-  ~TAO_Tokenizer (void);
+  ~TAO_Tokenizer ();
 
   /// parses the string and tokenizes it.
   int parse (const char *string,char delimiter);
 
   /// Returns the next token.
-  char *token (void);
+  char *token ();
 
   /// Number of tokens.
-  int num_tokens (void);
+  int num_tokens ();
 
   const char *operator [] (size_t index) const;
 
@@ -65,7 +64,6 @@ class TAO_AV_Protocol_Object;
 class TAO_AV_Export TAO_FlowSpec_Entry
 {
 public:
-
   enum Direction
   {
     TAO_AV_INVALID   = -1,
@@ -112,10 +110,10 @@ public:
   virtual Role role (void) = 0;
   void role (Role role);
   /// accessor to string version of direction .
-  const char * direction_str (void) const;
+  const char * direction_str () const;
 
   /// accessor to the flow protocol string.
-  const char *flow_protocol_str (void) const;
+  const char *flow_protocol_str () const;
 
   /// set the flow protocol string.
   void flow_protocol_str (const char *flow_protocol_str);
@@ -128,20 +126,20 @@ public:
   void control_address (ACE_Addr *address);
 
   /// Address in string format i. hostname:port.
-  const char *address_str (void) const;
-  //  const char * peer_address_str (void) const;
+  const char *address_str () const;
+  //  const char * peer_address_str () const;
 
   /// accessor to carrier protocol i.e TCP,UDP,RTP/UDP.
   TAO_AV_Core::Protocol carrier_protocol (void);
 
   /// accessor to string version of carrier protocol.
-  const char * carrier_protocol_str (void) const;
+  const char * carrier_protocol_str () const;
 
   /// accessor to format to be used for this flow.
-  const char *format (void) const;
+  const char *format () const;
 
   /// accessor to name of this flow.
-  const char *flowname (void) const;
+  const char *flowname () const;
 
   /// converts the entry to a string.
   virtual const char *entry_to_string (void) = 0;
@@ -189,7 +187,6 @@ public:
   int is_multicast (void);
 
 protected:
-
   /// parses the flow protocol string with tokens separated by :
   int parse_flow_protocol_string (const char *flow_options_string);
 
@@ -255,7 +252,6 @@ protected:
   TAO_AV_Protocol_Object *control_protocol_object_;
   Role role_;
 };
-
 
 /**
  * @class TAO_Forward_FlowSpec_Entry

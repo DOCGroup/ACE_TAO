@@ -26,7 +26,6 @@
 class Receiver_i : public POA_Receiver
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Receiver_i (void);
 

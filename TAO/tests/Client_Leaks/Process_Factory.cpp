@@ -109,5 +109,5 @@ void
 Process_Factory::shutdown (void)
 {
   this->shutdown_received_ = 1;
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

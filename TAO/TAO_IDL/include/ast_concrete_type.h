@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -77,13 +76,10 @@ public:
   AST_ConcreteType (AST_Decl::NodeType nt,
                     UTL_ScopedName *n);
 
-  virtual ~AST_ConcreteType (void);
+  virtual ~AST_ConcreteType ();
 
   // Cleanup.
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_ConcreteType);
+  virtual void destroy ();
 
   virtual bool annotatable () const { return true; }
 };

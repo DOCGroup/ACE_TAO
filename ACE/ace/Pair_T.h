@@ -33,21 +33,18 @@ template <class T1, class T2>
 class ACE_Reference_Pair
 {
 public:
-
   // = Traits.
   typedef T1 first_type;
   typedef T2 second_type;
 
-  // = Initialization and termination methods.
   /// Constructor.
-  ACE_Reference_Pair (T1 &t1,
-                      T2 &t2);
+  ACE_Reference_Pair (T1 &t1, T2 &t2);
 
   /// Access first.
-  T1 &first (void) const;
+  T1 &first () const;
 
   /// Access second.
-  T2 &second (void) const;
+  T2 &second () const;
 
   // Compare pairs.
   bool operator== (const ACE_Reference_Pair<T1, T2> &rhs) const;

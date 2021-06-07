@@ -47,7 +47,6 @@ public:
   ~ACE_NS_Node (void);
 
 private:
-  // = Initialization methods
   ACE_NS_Node (const T &i, ACE_NS_Node<T> *n);
   ACE_NS_Node (ACE_NS_Node<T> *n = 0, int = 0);
   ACE_NS_Node (const ACE_NS_Node<T> &n);
@@ -68,9 +67,7 @@ template <class T>
 class ACE_Unbounded_List_Iterator
 {
 public:
-  // = Initialization method.
   ACE_Unbounded_List_Iterator (ACE_Unbounded_List<T> &s, int end = 0);
-
   // = Iteration methods.
 
   /// Pass back the <next_item> that hasn't been seen in the List.
@@ -86,10 +83,10 @@ public:
   int first (void);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -110,7 +107,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Pointer to the current node in the iteration.
   ACE_NS_Node<T> *current_;
 
@@ -137,7 +133,6 @@ public:
   typedef ACE_Unbounded_List_Iterator<T> ITERATOR;
   typedef ACE_Unbounded_List_Iterator<T> iterator;
 
-  // = Initialization and termination methods.
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
   ACE_Unbounded_List (ACE_Allocator *alloc = 0);
@@ -154,10 +149,10 @@ public:
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty (void) const;
+  int is_empty () const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
-  int is_full (void) const;
+  int is_full () const;
 
   // = Classic unordered set operations.
 
@@ -176,10 +171,10 @@ public:
   int remove (const T &item);
 
   /// Size of the set.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Reset the <ACE_Unbounded_List> to be empty.
   void reset (void);

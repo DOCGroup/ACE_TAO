@@ -20,15 +20,15 @@ public:
   JAWS_Header_Info (void);
   ~JAWS_Header_Info (void);
 
-  int end_of_line (void) const;
+  int end_of_line () const;
   void end_of_line (int flag);
 
-  const char *last_header_name (void) const;
+  const char *last_header_name () const;
 
-  int last_header_length (void) const;
+  int last_header_length () const;
   void last_header_length (int len);
 
-  const JAWS_Header_Data * last_header_data (void) const;
+  const JAWS_Header_Data * last_header_data () const;
 
   char *header_buf (void);
 
@@ -46,10 +46,10 @@ public:
   // This will insert last_header_data into the table if it is not
   // null.
 
-  int end_of_headers (void) const;
+  int end_of_headers () const;
   void end_of_headers (int flag);
 
-  int status (void) const;
+  int status () const;
   void status (int s);
 
   JAWS_Headers *table (void);

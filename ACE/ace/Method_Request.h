@@ -43,7 +43,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   ACE_Method_Request (unsigned long priority = 0);
 
@@ -52,7 +51,7 @@ public:
 
   // = Accessors.
   /// Get priority.
-  unsigned long priority (void) const;
+  unsigned long priority () const;
 
   /// Set priority.
   /**
@@ -80,10 +79,10 @@ public:
   virtual int call (void) = 0;
 
 private:
-
-  /// Disallow copying and assignment.
-  ACE_Method_Request (const ACE_Method_Request &);
-  void operator= (const ACE_Method_Request &);
+  ACE_Method_Request (const ACE_Method_Request &) = delete;
+  void operator= (const ACE_Method_Request &) = delete;
+  ACE_Method_Request (ACE_Method_Request &&) = delete;
+  void operator= (ACE_Method_Request &&) = delete;
 
 protected:
   /// The priority of the request.

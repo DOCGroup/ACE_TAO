@@ -93,7 +93,7 @@ public:
 
   //-- Topology_Parent
 
-  virtual bool is_persistent (void) const;
+  virtual bool is_persistent () const;
 
   virtual void save_persistent (TAO_Notify::Topology_Saver& saver);
   virtual bool change_to_parent (void);
@@ -117,7 +117,7 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_Object * follow_id_path (TAO_Notify::IdVec & id_path, size_t position);
-  virtual TAO_Notify_Object::ID get_id (void) const;
+  virtual TAO_Notify_Object::ID get_id () const;
 
 private:
 

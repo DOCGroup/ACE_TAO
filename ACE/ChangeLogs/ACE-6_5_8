@@ -1,0 +1,544 @@
+commit 4d7f65535e1050d284dcf1d16f78751b38adfdde
+Merge: 937821529f1 76ee5a67011
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Feb 7 11:05:19 2020 -0600
+
+    Merge pull request #1039 from jonesc-oci/iOS-changes
+    
+    Configuration changes for iOS builds.
+
+commit 76ee5a67011243f5ae7595e324f08ee77a73408a
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Thu Feb 6 14:54:28 2020 -0600
+
+    Add ACE_HAS_IOS preprocessor macro. Change CXXFLAGS to CCFLAGS.
+
+commit dfe0e0929249c1c417c4d98ac9aee05476e43c9e
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed Feb 5 16:49:28 2020 -0600
+
+    Add bitcode compile feature.
+
+commit b40e6033e033d10b1f59b7627467ed9f12ed5970
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed Feb 5 16:13:41 2020 -0600
+
+    Use single config file for iOS builds. Update build flags for iOS hardware.
+
+commit b04b660d7d52f5d0c8019f1de29791c565bac1b7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Feb 5 13:06:37 2020 -0600
+
+    Update ACE/ACE-INSTALL.html
+    
+    Co-Authored-By: Adam Mitz <mitza@objectcomputing.com>
+
+commit 87351e3ca860d234eb9206c006afa4726bc7335e
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed Feb 5 12:33:49 2020 -0600
+
+    Remove whitespace.
+
+commit 2afe9dc16a75cbbb3b9e0280af7bc182895338da
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed Feb 5 08:41:05 2020 -0600
+
+    Suppress "has no symbols" warnings for iOS builds.
+
+commit 8e75fd9d1b48373e709b3d90abb949deef6b9c8d
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Wed Feb 5 08:38:41 2020 -0600
+
+    Move ACE_LACKS_SYSTEM to iOS-specific header.
+
+commit 848c22e162de492caa4c1c9a3ce39a4cff0849b8
+Author: Chip Jones <jonesc@objectcomputing.com>
+Date:   Tue Feb 4 14:14:09 2020 -0600
+
+    Configuration changes for iOS builds.
+
+commit 7c1ba7b90306bec2a3479f81d15a51ad8834fd44
+Merge: c9ac5fecf46 37ddee2ee71
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 16:13:58 2020 -0600
+
+    Merge branch 'igtd/android-on-windows' of github.com:iguessthislldo/ACE_TAO into igtd/android-on-windows
+
+commit c9ac5fecf4621d2e186932a4003890506ce37b58
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 16:08:45 2020 -0600
+
+    Add VERSION rename to NEWS files
+
+commit 9d2fcbf4c5dde4294ed44ad7d741d929eccc4e04
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 16:02:07 2020 -0600
+
+    ACE-INSTALL: Update Android on Windows
+
+commit b810cc85ddbcac1a066e4036a441a57712e822f0
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 15:26:59 2020 -0600
+
+    platform_clang_common.GNU: Remove Alt GNU ld Check
+
+commit 977c354addc03b848b47c392658dfc00338bf1cb
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 15:23:17 2020 -0600
+
+    Change More References to VERSION.txt
+
+commit dc64a430fe1aa6b5245af09a354b98b78773b572
+Merge: 5c9bcb4f64b 816fca07086
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 4 14:56:25 2020 -0600
+
+    Merge remote-tracking branch 'upstream/master' into igtd/android-on-windows
+
+commit cd1cef25211ce104cf784bf2cba14a5b52d93d51
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 30 11:50:22 2020 +0100
+
+    List some important changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit b666e6ce5b5f26d51ac0a2a28df54ea046e7e718
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 29 09:46:15 2020 +0100
+
+    Remove empty lines
+    
+        * ACE/tests/INET_Addr_Test.cpp:
+        * ACE/tests/IOStream_Test.cpp:
+        * ACE/tests/Multicast_Test.cpp:
+
+commit 47c1ae25ed0ffccdd0d9ce93035850066d09eac9
+Merge: 1afb3f00e95 b0f830ea66e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 22 11:05:20 2020 +0100
+
+    Merge branch 'master' into jwi-layout
+
+commit 1afb3f00e95cf72bf39305bf62c6f06b90d39add
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 21 20:13:29 2020 +0100
+
+    Some more layout changes to trigger CI builds
+    
+        * ACE/ace/Activation_Queue.h:
+        * ACE/ace/Active_Map_Manager.h:
+        * ACE/ace/Active_Map_Manager_T.h:
+        * ACE/ace/Argv_Type_Converter.h:
+        * ACE/ace/Array_Map.h:
+        * ACE/ace/Asynch_Connector.h:
+        * ACE/ace/Atomic_Op.h:
+        * ACE/ace/Atomic_Op_GCC_T.h:
+        * ACE/ace/Based_Pointer_Repository.h:
+        * ACE/ace/Bound_Ptr.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/Cache_Map_Manager_T.h:
+        * ACE/ace/Caching_Strategies_T.h:
+        * ACE/ace/Capabilities.h:
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/DLL.h:
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/Dev_Poll_Reactor.h:
+
+commit b4e58d8b62f59bc92912dda32754cc0e4dd70672
+Merge: 6627fe21df7 8dae504b784
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jan 20 10:30:21 2020 -0600
+
+    Merge pull request #1029 from mitza-oci/rwlock-init
+    
+    wchar fix for #1023
+
+commit 8dae504b784400157d5d07c506db942abd4d56b8
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jan 20 09:17:55 2020 -0600
+
+    wchar fix
+
+commit d6c5fa19716b710de9738e80cc5c2840670a921e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 20 14:28:57 2020 +0100
+
+    Minor layout/doxygen changes, gathered through time
+    
+        * ACE/ace/ACE.inl:
+        * ACE/ace/ATM_Acceptor.cpp:
+        * ACE/ace/ATM_Addr.cpp:
+        * ACE/ace/ATM_Connector.cpp:
+        * ACE/ace/ATM_Params.cpp:
+        * ACE/ace/ATM_QoS.cpp:
+        * ACE/ace/ATM_QoS.h:
+        * ACE/ace/ATM_Stream.h:
+        * ACE/ace/Acceptor.h:
+        * ACE/ace/Active_Map_Manager_T.h:
+        * ACE/ace/Argv_Type_Converter.h:
+        * ACE/ace/Array_Base.h:
+        * ACE/ace/Array_Map.h:
+        * ACE/ace/Asynch_IO.h:
+        * ACE/ace/Atomic_Op_T.h:
+        * ACE/ace/Base_Thread_Adapter.h:
+        * ACE/ace/CDR_Base.h:
+        * ACE/ace/CDR_Size.h:
+        * ACE/ace/CDR_Stream.h:
+        * ACE/ace/CE_Screen_Output.h:
+        * ACE/ace/Cache_Map_Manager_T.h:
+        * ACE/ace/Cached_Connect_Strategy_T.h:
+        * ACE/ace/Caching_Strategies_T.h:
+        * ACE/ace/Caching_Utility_T.h:
+        * ACE/ace/Capabilities.h:
+        * ACE/ace/Cleanup_Strategies_T.h:
+        * ACE/ace/Codecs.h:
+        * ACE/ace/Codeset_Registry.h:
+        * ACE/ace/Compression/Compressor.h:
+        * ACE/ace/Configuration.h:
+        * ACE/ace/Connector.h:
+        * ACE/ace/Containers_T.h:
+        * ACE/ace/Copy_Disabled.h:
+        * ACE/ace/DEV_Connector.h:
+        * ACE/ace/DLL.h:
+        * ACE/ace/DLL_Manager.h:
+        * ACE/ace/Dev_Poll_Reactor.h:
+        * ACE/ace/Dynamic_Message_Strategy.h:
+        * ACE/ace/ETCL/ETCL_Constraint.h:
+        * ACE/ace/MEM_Stream.h:
+        * ACE/ace/Profile_Timer.h:
+        * ACE/ace/SUN_Proactor.h:
+        * ACE/ace/String_Base_Const.h:
+        * ACE/ace/Svc_Handler.h:
+
+commit 37ddee2ee7109a5093b360da104116389292acd5
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 17 17:27:34 2020 -0600
+
+    Rename VERSION files to VERSION.txt
+    
+    C++20 brings a new standard header called "version". This wouldn't be an
+    issue except for on Windows where filenames can be case insensitive.
+    This issue was discovered why trying to cross-compile for Android on
+    Windows.
+
+commit d662f7dff3a3980f60af918227d4bf10fcb4a6a2
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jan 17 16:46:24 2020 -0600
+
+    android: export CROSS_COMPILE var
+    
+    Export it so child processes can use tools from the same toolchain.
+
+commit 6627fe21df7aa79ad6ba7fa31d25863bd673e26e
+Merge: 4065ae9592e 1bdbb759df2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 17 15:27:35 2020 -0600
+
+    Merge pull request #1023 from mitza-oci/rwlock-init
+    
+    ACE_OS::rwlock_init - fixed bug when RW Lock is emulated and creating a condition variable fails
+
+commit 1bdbb759df28e9ea36796c23a969ed1d847c91b0
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 17 09:05:34 2020 -0600
+
+    code review changes
+
+commit 4065ae9592e4d914d404d1b7e03223c8291d0a20
+Merge: 314d3ed8af0 d109e9f7982
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 15:35:03 2020 +0100
+
+    Merge pull request #1025 from jwillemsen/jwi-mpctag
+    
+    Add Latest_ACETAO tag to MPC
+
+commit f480c6cc4f2335b79e350b596cbbe225b728ca7e
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 10:14:41 2020 +0100
+
+    Fixed error
+    
+        * ACE/tests/NonBlocking_Conn_Test.cpp:
+
+commit ef05a48c6f326bbb15eedd2d5606dd5134c05e0f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 09:22:28 2020 +0100
+
+    Updated the host we use to check our code with, some seem to be non responsive
+    
+        * ACE/tests/NonBlocking_Conn_Test.cpp:
+
+commit d109e9f7982997ba6a2047ddac4b6576bd51e16f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 09:08:28 2020 +0100
+
+    Removing tag on origin could also fail
+    
+        * ACE/bin/make_release.py:
+
+commit 15f0c6938a0ae2b88a498bd2fed7f353a5c51558
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 09:06:14 2020 +0100
+
+    Removing tag can fail when the tag is not yet there
+    
+        * ACE/bin/make_release.py:
+
+commit 76fab02113b0821c9bad447f357232ad9c3259eb
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 09:02:42 2020 +0100
+
+    Add missing quotes and also push all latest tags
+    
+        * ACE/bin/make_release.py:
+
+commit 02b1d932b76e76760fbcb5a275e19f5b1a61b251
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 17 08:54:57 2020 +0100
+
+    Add Latest_ACETAO tags to MPC to make it easier to clone the latest ACETAO+MPC using a CI build
+    
+        * ACE/bin/make_release.py:
+
+commit 1604249b469d6b82f6ac03d8324420bfe3f8ef75
+Merge: ecdb3766eff 32b858f84cf
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 16 17:35:54 2020 -0600
+
+    Merge pull request #1014 from iguessthislldo/igtd/auto_run_tests
+    
+    Rewrote auto_run_tests.pl Arg Parsing
+
+commit 8161bcb366447083d67791bf14392a8882dc6659
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 16 16:46:31 2020 -0600
+
+    ACE_OS::rwlock_init - fixed bug when RW Lock is emulated and creating a condition variable fails
+
+commit 5c9bcb4f64b416d4330455dc034d292c76869f82
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Jan 15 16:05:52 2020 -0600
+
+    Revert Changes to Platform Files for Android
+
+commit 32b858f84cf4220a51287b537f15e3176a9d7e7a
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Wed Jan 15 13:45:26 2020 -0600
+
+    auto_run_tests.pl: remove spaces in calls
+
+commit 77504588d955e031f286528308ab6efefda2d8dc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 18:48:07 2020 -0600
+
+    Update ACE NEWS
+
+commit 373ac1d54f1f02bef2472fe7dcb3da0b2c9cd976
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 18:39:08 2020 -0600
+
+    ACE-INSTALL: Cleanup
+
+commit 9b1927e2c8bda3c693c47b887189269f4bbecd7a
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 15:22:41 2020 -0600
+
+    ACE-INSTALL: Document VERSION file issue
+
+commit 1d9eb0db5c2a525dee79221af9cb77c9c48e6d31
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 13:22:16 2020 -0600
+
+    Fix platform_linux_common.GNU again
+
+commit 4d1f635e4b12eb49ef8b7372b51b3915d95400d7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 13:05:51 2020 -0600
+
+    Fix platform_linux_common.GNU
+
+commit de523d8c2149b489a12c453d8e12dd0655ada279
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jan 14 12:59:17 2020 -0600
+
+    Building for Android on Windows
+
+commit 9028d05555bbe6f24f18ee0d93dc4c7521c49638
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 9 09:16:21 2020 +0100
+
+    Add cast to silence new warning
+    
+        * ACE/tests/SOCK_Dgram_Bcast_Test.cpp:
+
+commit 3429716fe5689b312bdcccc57feceba49d8cad97
+Merge: f853b84db13 dc125f1c8f9
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 9 09:13:33 2020 +0100
+
+    Merge branch 'master' of https://github.com/DOCGroup/ACE_TAO
+
+commit f853b84db13f3a3441a2bd78a752cd0b88bec2b5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 8 17:18:23 2020 +0100
+
+    Fixed typo in debug message
+    
+        * ACE/tests/SOCK_Dgram_Bcast_Test.cpp:
+
+commit dc125f1c8f9d0b60afbae36af9ddeb0342d90de8
+Merge: db04c975067 234cbc8f26c
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 8 10:25:17 2020 +0100
+
+    Merge pull request #1013 from likema/proc-opts-fmt-attr
+    
+    Add ACE_GCC_FORMAT_ATTRIBUTE to ACE_Process_Options
+
+commit db04c97506766eda27f7ecb795cea8c26f0259d3
+Merge: 24caadcb663 a3bd9a4ff7f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jan 8 08:46:34 2020 +0100
+
+    Merge pull request #1018 from jwillemsen/jwi-embrio1033
+    
+    Embarcadero C++ Builder 10.3.3 changes (Rio)
+
+commit a3bd9a4ff7f464d69657b3482be2311572ddd892
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 7 14:54:23 2020 +0000
+
+    Embarcadero C++ Builder 10.3.3 changes (Rio)
+
+commit 71d507a8c63570dcf28b531838bf0223e0ac2c87
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jan 7 15:17:57 2020 +0100
+
+    Removed operator*& as it triggers the ambiguity issues
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit 127092869ecfd58450be59b7626b89180df6d670
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 6 09:30:18 2020 +0100
+
+    Make use of ACE_CDR::ULong for the operator[], that matches with TAO and should work with any compiler
+    
+        * ACE/tests/Compiler_Features_38_Test.cpp:
+
+commit eb87718ef82f6f7557e661b56e12aa72a5aae932
+Merge: 2075eb4e4ab c51ab9b2998
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 3 14:43:10 2020 -0600
+
+    Merge pull request #1015 from adamsj-oci/master
+    
+    add generate_export_file.pl to installed files
+
+commit c51ab9b29982fb81720f154ac23f34cb8915cae9
+Author: Jeremy Adams <adamsj@objectcomputing.com>
+Date:   Thu Jan 2 15:41:21 2020 -0600
+
+    add generate_export_file.pl to installed files
+
+commit 5aff54de415de4a223b401576b62f5a96133ba7b
+Author: Fred Hornsey <fred@hornsey.us>
+Date:   Tue Dec 31 17:39:02 2019 -0600
+
+    Rewrote auto_run_tests.pl Arg Parsing
+    
+    - Help message:
+      - It said test list options, like `-l` or `-a`, "only" do the tests
+        from that option. That isn't true, they include the tests in the
+        run.
+      - Removed reference to non-existent `-c` option which is supposed to
+        be an alias to `-Config`.
+      - Removed outdated synopsis and try to give a slightly more detailed
+        explanation of the script.
+      - Documented `-Exclude`
+      - Moved configuration listing to its own option and made it do it for
+        all test list files that would ran otherwise.
+    
+    - Argument Parsing:
+      - Switched to using `GetOpt::Long` and added long options.
+      - Fixed dry run `-z` option which wasn't being parsed.
+      - Fixed that when using `-l` to specify multiple files it only uses
+        the last one. Also made it so it takes non-option arguments as test
+        lists.
+    
+    - Documented what arguments are being parsed by `PerlACE` modules.
+    - Added 'use strict' and fixes for that.
+    - Removed seemingly unused `use English;`.
+
+commit 234cbc8f26c41ff53c1956ff3582c5fbdead28f1
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Sun Dec 29 01:27:56 2019 +0800
+
+    Add ACE_GCC_FORMAT_ATTRIBUTE to ACE_Process_Options::{command_line,setenv}.
+
+commit 06ee4ac4822a084fcdb296f00356721283bb158c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Dec 20 16:59:03 2019 -0600
+
+    Use ACE_Time_Value(0) in ACE_Sync_Options::set
+    
+    Respond to Review in https://github.com/DOCGroup/ACE_TAO/pull/1010
+
+commit 77a212244fc64003da9f078738b4fa0863595210
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 18 12:18:52 2019 -0600
+
+    Style Fixes
+
+commit 077f03e97ed4cf43325b32fff14eadcfd8fa6bba
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Wed Dec 18 01:11:27 2019 -0600
+
+    Fixes for tao_idl compiled with asan and ubsan
+    
+    Various fixes for tao_idl built using clang with
+    -fsanitize=undefined,address passed.
+    
+    - Work around static init ub in ACE_Sync_Options based on if
+      ACE_INITIALIZE_MEMORY_BEFORE_USE is defined.
+    - Fix a memory leak in UTL_Scope and a possible null dereference in
+      tao_idl be.
+    - Fixed a hard to track down memory leak involving AST_InterfaceFwd not
+      handling ownership of its placeholder AST_Interface correctly under
+      a case when a forward declaration of an interface is made after the
+      interface was already declared.
+
+commit e6f2f93b584212545359a5f8ceb71f58f81e99e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Dec 11 17:01:54 2019 -0600
+
+    recvmsg on Windows with control data: controllen may be changed during the recv call, needs to be copied back out
+
+commit 7f2d38e7214361e25ff4ae6cd6609bccd1237e41
+Author: Like Ma <likemartinma@gmail.com>
+Date:   Tue Dec 10 17:33:42 2019 +0800
+
+    Fix ACE_SOCK_Acceptor ctor comment.
+
+commit f968df011a227fc7f4406ff9c268593bc378305a
+Author: Knut Petter Svendsen <knut@altuma.no>
+Date:   Fri Dec 6 13:25:02 2019 +0100
+
+    Fixed typo in config-posix.h
+
+commit cab5c35b998c07e98d5c5b360a774e65d973b733
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Nov 22 10:13:31 2019 +0100
+
+    Make x.5.7 available
+    
+        * ACE/NEWS:
+        * ACE/bin/copy-script.sh:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/docs/bczar/bczar.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:

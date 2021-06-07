@@ -29,8 +29,8 @@
  *    - ACE_UINT16
  *    - ACE_INT32
  *    - ACE_UINT32
- *    - ACE_UINT64
  *    - ACE_INT64
+ *    - ACE_UINT64
  *
  *  Byte-order (endian-ness) determination:
  *    ACE_BYTE_ORDER, to either ACE_BIG_ENDIAN or ACE_LITTLE_ENDIAN
@@ -84,7 +84,6 @@
 // i.e. determining the type at compile-time rather than at
 // preprocessing-time, will work for all platforms, and does not
 // depend on ACE developer-defined configuration parameters.
-
 typedef ACE::If_Then_Else<
   (sizeof (void*) == sizeof (signed int)),
   signed int,
@@ -201,115 +200,23 @@ typedef ACE::If_Then_Else<
 #   endif
 # endif /* !defined (ACE_SIZEOF_LONG_LONG) */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// The sizes of the commonly implemented types are now known.  Set up
-// typedefs for whatever we can.  Some of these are needed for certain
-// cases of ACE_UINT64, so do them before the 64-bit stuff.
-
-#if defined (ACE_INT8_TYPE)
-  typedef ACE_INT8_TYPE         ACE_INT8;
-#elif defined (ACE_HAS_INT8_T)
-  typedef int8_t                ACE_INT8;
-#elif !defined (ACE_LACKS_SIGNED_CHAR)
-  typedef signed char           ACE_INT8;
-#else
-  typedef char                  ACE_INT8;
-#endif /* defined (ACE_INT8_TYPE) */
-
-#if defined (ACE_UINT8_TYPE)
-  typedef ACE_UINT8_TYPE        ACE_UINT8;
-#elif defined (ACE_HAS_UINT8_T)
-  typedef uint8_t               ACE_UINT8;
-#else
-  typedef unsigned char         ACE_UINT8;
-#endif /* defined (ACE_UINT8_TYPE) */
-
-#if defined (ACE_INT16_TYPE)
-  typedef ACE_INT16_TYPE        ACE_INT16;
-#elif defined (ACE_HAS_INT16_T)
-  typedef int16_t               ACE_INT16;
-#elif ACE_SIZEOF_SHORT == 2
-  typedef short                 ACE_INT16;
-#elif ACE_SIZEOF_INT == 2
-  typedef int                   ACE_INT16;
-#else
-# error Have to add to the ACE_INT16 type setting
-#endif  /* defined (ACE_INT16_TYPE) */
-
-#if defined (ACE_UINT16_TYPE)
-  typedef ACE_UINT16_TYPE       ACE_UINT16;
-#elif defined (ACE_HAS_UINT16_T)
-  typedef uint16_t              ACE_UINT16;
-#elif ACE_SIZEOF_SHORT == 2
-  typedef unsigned short        ACE_UINT16;
-#elif ACE_SIZEOF_INT == 2
-  typedef unsigned int          ACE_UINT16;
-#else
-# error Have to add to the ACE_UINT16 type setting
-#endif /* defined (ACE_UINT16_TYPE) */
-
-#if defined (ACE_INT32_TYPE)
-  typedef ACE_INT32_TYPE        ACE_INT32;
-#elif defined (ACE_HAS_INT32_T)
-  typedef int32_t               ACE_INT32;
-#elif ACE_SIZEOF_INT == 4
-  typedef int                   ACE_INT32;
-#elif ACE_SIZEOF_LONG == 4
-  typedef long                  ACE_INT32;
-#else
-# error Have to add to the ACE_INT32 type setting
-#endif /* defined (ACE_INT32_TYPE) */
-
-#if defined (ACE_UINT32_TYPE)
-  typedef ACE_UINT32_TYPE       ACE_UINT32;
-#elif defined (ACE_HAS_UINT32_T)
-  typedef uint32_t              ACE_UINT32;
-#elif ACE_SIZEOF_INT == 4
-  typedef unsigned int          ACE_UINT32;
-#elif ACE_SIZEOF_LONG == 4
-  typedef unsigned long         ACE_UINT32;
-#else
-# error Have to add to the ACE_UINT32 type setting
-#endif /* defined (ACE_UINT32_TYPE) */
-
-#if defined (ACE_INT64_TYPE)
-  typedef ACE_INT64_TYPE        ACE_INT64;
-#elif defined (ACE_HAS_INT64_T)
-  typedef int64_t               ACE_INT64;
-#elif ACE_SIZEOF_LONG == 8
-  typedef long                  ACE_INT64;
-#elif ACE_SIZEOF_LONG_LONG == 8
-# ifdef __GNUC__
-  // Silence g++ "-pedantic" warnings regarding use of "long long"
-  // type.
-  __extension__
-# endif  /* __GNUC__ */
-  typedef long long             ACE_INT64;
-#endif /* defined (ACE_INT64_TYPE) */
-
-#if defined (ACE_UINT64_TYPE)
-  typedef ACE_UINT64_TYPE       ACE_UINT64;
-#elif defined (ACE_HAS_UINT64_T)
-  typedef uint64_t              ACE_UINT64;
-#elif ACE_SIZEOF_LONG == 8
-  typedef unsigned long         ACE_UINT64;
-#elif ACE_SIZEOF_LONG_LONG == 8
-# ifdef __GNUC__
-  // Silence g++ "-pedantic" warnings regarding use of "long long"
-  // type.
-  __extension__
-# endif  /* __GNUC__ */
-  typedef unsigned long long    ACE_UINT64;
-#endif /* defined (ACE_UINT64_TYPE) */
+// The sizes of the commonly implemented types are known.
+typedef int8_t   ACE_INT8;
+typedef uint8_t  ACE_UINT8;
+typedef int16_t  ACE_INT16;
+typedef uint16_t ACE_UINT16;
+typedef int32_t  ACE_INT32;
+typedef uint32_t ACE_UINT32;
+typedef int64_t  ACE_INT64;
+typedef uint64_t ACE_UINT64;
 
 /// Define a generic byte for use in codecs
 typedef unsigned char ACE_Byte;
 
 // Define a pseudo wide character type when wchar is not supported so we
 // can support basic wide character string operations.
-
 #if defined (ACE_HAS_WCHAR) || defined (ACE_HAS_XPG4_MULTIBYTE_CHAR)
 #  define ACE_WINT_T wint_t
 #  define ACE_WCHAR_T wchar_t
@@ -361,7 +268,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
   // Note that Itanium hardware (IA64) can run in either byte order. It's
   // selected by the OS when loading; Windows runs little, HP-UX runs big.
 #   if defined (i386) || defined (__i386__) || defined (_M_IX86) || \
-     defined (vax) || defined (__alpha) || defined (__LITTLE_ENDIAN__) || \
+     defined (vax) || defined (__LITTLE_ENDIAN__) || \
      defined (ARM) || defined (_M_IA64) || defined (_M_AMD64) || \
      defined (__amd64) || \
      ((defined (__ia64__) || defined (__ia64)) && !defined (__hpux))
@@ -393,8 +300,14 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #   define ACE_IDL_NSTOHL(X) ((X) << 16)
 # endif /* ACE_LITTLE_ENDIAN */
 
-#define ACE_HTONS(x) htons(x)
-#define ACE_NTOHS(x) ntohs(x)
+// MQX doesn't define these macros correctly.
+# if defined (ACE_LITTLE_ENDIAN) && defined (ACE_MQX)
+#   define ACE_HTONS(x) x
+#   define ACE_NTOHS(x) x
+# else
+#   define ACE_HTONS(x) htons(x)
+#   define ACE_NTOHS(x) ntohs(x)
+# endif
 
 # define ACE_LONGLONG_TO_PTR(PTR_TYPE, L) \
      reinterpret_cast<PTR_TYPE> (static_cast<intptr_t> (L))
@@ -423,9 +336,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #  define ACE_UINT64_LITERAL(n) n ## ui64
 #  define ACE_INT64_LITERAL(n) n ## i64
 # endif /* defined (__MINGW32__) */
-#elif defined (__TANDEM)
-#   define ACE_UINT64_LITERAL(n) n ## LL
-#   define ACE_INT64_LITERAL(n) n ## LL
 #else  /* ! ACE_WIN32  */
 #   define ACE_UINT64_LITERAL(n) n ## ull
 #   define ACE_INT64_LITERAL(n) n ## ll

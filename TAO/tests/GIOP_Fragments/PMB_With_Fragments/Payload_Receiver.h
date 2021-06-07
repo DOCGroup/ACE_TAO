@@ -21,7 +21,7 @@ public:
 
   virtual void shutdown (void);
 
-  int get_count (void) const;
+  int get_count () const;
 
 public:
   int count_;

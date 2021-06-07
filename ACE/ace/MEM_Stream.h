@@ -54,7 +54,6 @@ class ACE_MEM_Connector;
 class ACE_Export ACE_MEM_Stream : public ACE_MEM_IO
 {
 public:
-
   friend class ACE_MEM_Acceptor;
   friend class ACE_MEM_Connector;
 
@@ -99,7 +98,7 @@ public:
   typedef ACE_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

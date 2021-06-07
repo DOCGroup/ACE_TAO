@@ -209,7 +209,7 @@ Session::destroy (void)
 }
 
 int
-Session::more_work (void) const
+Session::more_work () const
 {
   if (this->expected_messages_ > 0
       || this->active_thread_count_ > 0

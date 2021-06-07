@@ -23,7 +23,7 @@ class bug_3251_Export PersistentPoa:  public ACE_Service_Object
   protected:
     virtual int init (int argc, ACE_TCHAR *argv[]);
 
-    virtual int fini (void);
+    virtual int fini ();
 
   // private methods and instance variables
   private:

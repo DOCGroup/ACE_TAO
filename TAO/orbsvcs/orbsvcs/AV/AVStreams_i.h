@@ -175,7 +175,7 @@ public:
                           const MMDevice_Map_Hash_Key &right);
 
   /// hash function for this mmdevice.
-  u_long hash (void) const;
+  u_long hash () const;
 
   static const int hash_maximum_;
 protected:
@@ -964,8 +964,7 @@ public:
    */
   virtual CORBA::Boolean connect_to_peer (AVStreams::QoS & the_qos,
                                           const char * address,
-                                          const char * use_flow_protocol)
-    = 0;
+                                          const char * use_flow_protocol) = 0;
 
   /// connect to the peer endpoint.
   virtual CORBA::Boolean connect_to_peer_i (TAO_FlowSpec_Entry::Role role,
@@ -981,8 +980,7 @@ public:
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
                                AVStreams::FlowEndPoint_ptr peer,
-                               char *& flowProtocol)
-    = 0;
+                               char *& flowProtocol) = 0;
 
   /// listen request from the peer.
   virtual char * go_to_listen_i (TAO_FlowSpec_Entry::Role role,
@@ -1022,8 +1020,8 @@ protected:
 
 #if defined (ACE_WIN32_VC14)
   // Workaround for connect issue 1577211
-  ACE_UNIMPLEMENTED_FUNC (TAO_FlowEndPoint (const TAO_FlowEndPoint &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &))
+  TAO_FlowEndPoint (const TAO_FlowEndPoint &) = delete;
+  TAO_FlowEndPoint &operator= (const TAO_FlowEndPoint &) = delete;
 #endif
 };
 
@@ -1090,17 +1088,17 @@ class TAO_AV_Export TAO_FlowConsumer :
 {
 public:
   /// default constructor.
-  TAO_FlowConsumer (void);
+  TAO_FlowConsumer ();
 
   TAO_FlowConsumer (const char *flowname,
                     AVStreams::protocolSpec protocols,
                     const char *format);
 
   /// stop this flow, to be overridden by the application.
-  virtual void stop (void);
+  virtual void stop ();
 
   /// start this flow, to be overridden by the application.
-  virtual void start (void);
+  virtual void start ();
 
   virtual char * go_to_listen (AVStreams::QoS & the_qos,
                                CORBA::Boolean is_mcast,
@@ -1121,30 +1119,22 @@ public:
 class TAO_AV_Export TAO_MediaControl
   :public virtual POA_AVStreams::MediaControl
 {
-
 public:
   /// default constructor
-  TAO_MediaControl (void);
+  TAO_MediaControl ();
 
   virtual AVStreams::Position get_media_position (AVStreams::PositionOrigin an_origin,
-                                                  AVStreams::PositionKey a_key)
-    =0;
+                                                  AVStreams::PositionKey a_key) = 0;
 
-  virtual void set_media_position (const AVStreams::Position & a_position)
-    =0;
+  virtual void set_media_position (const AVStreams::Position & a_position) = 0;
 
-  virtual void start (const AVStreams::Position & a_position)
-    =0;
+  virtual void start (const AVStreams::Position & a_position) = 0;
 
-  virtual void pause (const AVStreams::Position & a_position)
-    =0;
+  virtual void pause (const AVStreams::Position & a_position) = 0;
 
-  virtual void resume (const AVStreams::Position & a_position)
-    =0;
+  virtual void resume (const AVStreams::Position & a_position) = 0;
 
-  virtual void stop (const AVStreams::Position & a_position)
-    =0;
-
+  virtual void stop (const AVStreams::Position & a_position) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

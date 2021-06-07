@@ -90,14 +90,12 @@ class TAO_AV_UDP_MCast_Flow_Handler
    public virtual ACE_Event_Handler
 {
 public:
-  /// Ctor
-  /// Dtor
   TAO_AV_UDP_MCast_Flow_Handler (void);
   virtual ~TAO_AV_UDP_MCast_Flow_Handler (void);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
-  ACE_SOCK_Dgram_Mcast *get_mcast_socket (void) const;
+  ACE_SOCK_Dgram_Mcast *get_mcast_socket () const;
   virtual ACE_Event_Handler* event_handler (void){ return this; }
   void set_peer_addr (ACE_INET_Addr *peer_addr);
 protected:

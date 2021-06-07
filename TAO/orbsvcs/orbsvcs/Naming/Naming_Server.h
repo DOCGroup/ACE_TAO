@@ -4,16 +4,13 @@
 /**
  *  @file    Naming_Server.h
  *
- *
  *    Implement wrappers useful to Naming Service servers.
- *
  *
  *  @author Nagarajan Surendran (naga@cs.wustl.edu)
  *  @author Matt Braun <mjb2@cs.wustl.edu>
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>.
  */
 //=============================================================================
-
 
 #ifndef TAO_NAMING_SERVER_H
 #define TAO_NAMING_SERVER_H
@@ -128,7 +125,7 @@ public:
   virtual int init_with_orb (int argc, ACE_TCHAR *argv [], CORBA::ORB_ptr orb);
 
   /// Destroy the child POA created in @c init_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
   virtual ~TAO_Naming_Server (void);
@@ -137,7 +134,7 @@ public:
   char * naming_service_ior (void);
 
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr operator-> (void) const;
+  CosNaming::NamingContext_ptr operator-> () const;
 
 protected:
   struct IOR_Bundle {
@@ -266,7 +263,6 @@ protected:
   /// If not zero use round trip timeout policy set to value specified
   int round_trip_timeout_;
   int use_round_trip_timeout_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

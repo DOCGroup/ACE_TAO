@@ -58,8 +58,6 @@ public:
   /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
   typedef ACE_Name_Request (ACE_Name_Handler::*REQUEST) (ACE_NS_WString *);
 
-  // = Initialization and termination.
-
   /// Default constructor.
   ACE_Name_Handler (ACE_Thread_Manager * = 0);
 
@@ -93,7 +91,7 @@ protected:
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.

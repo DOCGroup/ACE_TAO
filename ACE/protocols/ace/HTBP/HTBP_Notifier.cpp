@@ -82,7 +82,7 @@ ACE::HTBP::Notifier::unregister (void)
 }
 
 ACE_HANDLE
-ACE::HTBP::Notifier::get_handle(void) const
+ACE::HTBP::Notifier::get_handle() const
 {
   return this->channel_->ace_stream().get_handle();
 }

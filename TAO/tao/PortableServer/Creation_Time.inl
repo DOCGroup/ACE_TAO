@@ -37,7 +37,7 @@ namespace TAO
     }
 
     ACE_INLINE const void *
-    Creation_Time::creation_time (void) const
+    Creation_Time::creation_time () const
     {
       return &this->time_stamp_;
     }

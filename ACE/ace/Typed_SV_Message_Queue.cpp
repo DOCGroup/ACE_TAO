@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Typed_SV_Message_Queue)
 
 template <class T> void
-ACE_Typed_SV_Message_Queue<T>::dump (void) const
+ACE_Typed_SV_Message_Queue<T>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::dump");

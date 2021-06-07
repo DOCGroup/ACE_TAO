@@ -67,7 +67,7 @@
 // programs to have their own ACE-wide "default".
 
 // PROCESS-level values
-#  if (defined (_POSIX_PRIORITY_SCHEDULING) || defined (ACE_TANDEM_T1248_PTHREADS))
+#  if defined (_POSIX_PRIORITY_SCHEDULING)
 #    define ACE_PROC_PRI_FIFO_MIN  (sched_get_priority_min(SCHED_FIFO))
 #    define ACE_PROC_PRI_RR_MIN    (sched_get_priority_min(SCHED_RR))
 #    if defined (HPUX)
@@ -292,7 +292,7 @@
 #  define THR_EXPLICIT_SCHED      0x00800000
 #  define THR_SCHED_IO            0x01000000
 
-#  if !defined (ACE_HAS_STHREADS)
+#  if !defined (ACE_HAS_STHREADS) && !defined (ACE_MQX)
 #    if !defined (ACE_HAS_POSIX_SEM) && !defined (ACE_USES_FIFO_SEM)
 
 // This needs to be moved out of here.

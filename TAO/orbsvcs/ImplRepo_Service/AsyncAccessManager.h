@@ -58,13 +58,13 @@ class Locator_Export AsyncAccessManager
 
   void started_running (void);
 
-  bool is_terminating (void) const;
-  bool is_running (void) const;
+  bool is_terminating () const;
+  bool is_running () const;
   bool has_server (const char *name) const;
   void remote_state (ImplementationRepository::AAM_Status s);
 
   void add_interest (ImR_ResponseHandler *rh, bool manual);
-  ImplementationRepository::AAM_Status status (void) const;
+  ImplementationRepository::AAM_Status status () const;
   bool force_remove_rh (ImR_ResponseHandler *rh);
 
   void activator_replied_start_running (bool success, int pid);
@@ -119,7 +119,6 @@ typedef TAO_Intrusive_Ref_Count_Handle<AsyncAccessManager> AsyncAccessManager_pt
  *
  * @brief callback for handling asynch server startup requests
  */
-
 class ActivatorReceiver :
   public virtual POA_ImplementationRepository::AMI_ActivatorHandler
 {

@@ -66,8 +66,6 @@ public:
   /// Command entry point type definition.
   typedef int (Bounded_Packet_Relay::*ACTION) (void *);
 
-  // = Initialization method
-
   /// Constructor.
   Bounded_Packet_Relay (ACE_Thread_Manager *input_task_mgr,
                         Input_Device_Wrapper_Base *input_wrapper,
@@ -185,7 +183,6 @@ private:
 class Input_Device_Wrapper_Base : public ACE_Task_Base
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Input_Device_Wrapper_Base (ACE_Thread_Manager *input_task_mgr);
 
@@ -210,7 +207,7 @@ public:
   int request_stop (void);
 
   /// This method runs the input device loop in the new thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Provides an abstract interface to allow modifying device
   /// settings.

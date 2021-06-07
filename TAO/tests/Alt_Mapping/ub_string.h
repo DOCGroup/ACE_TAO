@@ -31,7 +31,7 @@ public:
   int run_sii_test (Alt_Mapping_ptr objref);
 
   /// return operation name
-  const char *opname (void) const;
+  const char *opname () const;
 
   /// set values for parameters
   int init_parameters (Alt_Mapping_ptr objref);

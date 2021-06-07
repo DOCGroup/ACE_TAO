@@ -45,14 +45,9 @@ class TAO_IIOP_Profile;
 class TAO_Export TAO_IIOP_Endpoint : public TAO_Endpoint
 {
 public:
-
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   // @todo Lose these friends!
   friend class TAO_IIOP_Profile;
   friend class TAO_SSLIOP_Profile;
-
-  // = Initialization and termination methods.
 
   /// Default constructor.
   TAO_IIOP_Endpoint (void);
@@ -72,9 +67,6 @@ public:
   TAO_IIOP_Endpoint (const char *host,
                      CORBA::UShort port,
                      CORBA::Short priority);
-
-
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
 
   /// Destructor.
   ~TAO_IIOP_Endpoint (void);
@@ -116,42 +108,33 @@ public:
 
   // = IIOP_Endpoint-specific methods.
 
-  /*
-   * Hook to copy only the non virtual concrete methods implemented
-   * in this class to the derived class in the specialization.
-   */
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_START
-
   /// Return a reference to the <object_addr>.
-  const ACE_INET_Addr &object_addr (void) const;
+  const ACE_INET_Addr &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
-  const char *host (void) const;
+  const char *host () const;
 
   /// Copy the string @a h into <host_> and return the resulting pointer.
   /// This object maintains ownership of this string.
   const char *host (const char *h);
 
   /// Return the port number.
-  CORBA::UShort port (void) const;
+  CORBA::UShort port () const;
 
   /// Set the port number.
   CORBA::UShort port (CORBA::UShort p);
 
   /// Do we have a preferred local network for the target?
-  bool is_preferred_network (void) const;
+  bool is_preferred_network () const;
 
   /// Return the preferred network if any.
-  const char *preferred_network (void) const;
+  const char *preferred_network () const;
 
 #if defined (ACE_HAS_IPV6)
   /// Does the host string represent an IPv6 decimal address.
-  bool is_ipv6_decimal (void) const;
+  bool is_ipv6_decimal () const;
 #endif /* ACE_HAS_IPV6 */
-
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_COPY_HOOK_END
-
 
   /// Need to have an assignment operator since the IIOP_Profile class may
   /// have to reorder its list of endpoints based on filtering by the EndpointPolicy.
@@ -172,15 +155,12 @@ private:
                                       bool prefer_ipv6,
                                       bool want_ipv6);
 
-
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_START
-
   /// Helper method for setting INET_Addr.
   int set (const ACE_INET_Addr &addr,
            int use_dotted_decimal_addresses);
 
   /// Helper method for object_addr () call.
-  void object_addr_i (void) const;
+  void object_addr_i () const;
 
   /// Generate preferred interfaces from the options passed in by the
   /// user.
@@ -231,8 +211,6 @@ private:
   /// IIOP Endpoints can be strung into a list.  Return the next
   /// endpoint in the list, if any.
   TAO_IIOP_Endpoint *next_;
-
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_COPY_HOOK_END
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

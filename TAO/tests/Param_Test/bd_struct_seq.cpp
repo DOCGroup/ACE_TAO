@@ -36,7 +36,7 @@ Test_Bounded_Struct_Sequence::~Test_Bounded_Struct_Sequence (void)
 }
 
 const char *
-Test_Bounded_Struct_Sequence::opname (void) const
+Test_Bounded_Struct_Sequence::opname () const
 {
   return this->opname_;
 }

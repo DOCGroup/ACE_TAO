@@ -363,13 +363,13 @@ public:
   int close_dispatch_threads (int wait);
 
   /// Get number of thread used as a parameter to CreatIoCompletionPort.
-  size_t number_of_threads (void) const;
+  size_t number_of_threads () const;
 
   /// Set number of thread used as a parameter to CreatIoCompletionPort.
   void number_of_threads (size_t threads);
 
   /// Get timer queue.
-  ACE_Proactor_Timer_Queue *timer_queue (void) const;
+  ACE_Proactor_Timer_Queue *timer_queue () const;
 
   /// Set timer queue.
   void timer_queue (ACE_Proactor_Timer_Queue *timer_queue);
@@ -379,10 +379,10 @@ public:
    * It is a no-op in POSIX platforms and it returns
    * ACE_INVALID_HANDLE.
    */
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Get the implementation class.
-  ACE_Proactor_Impl *implementation (void) const;
+  ACE_Proactor_Impl *implementation () const;
 
   // = Factory methods for the operations
 

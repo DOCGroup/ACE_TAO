@@ -72,7 +72,7 @@ public:
 
   virtual ~TAO_FT_Naming_Replication_Manager(void);
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int handle_exception (ACE_HANDLE );
 
   void stop (void);
@@ -81,10 +81,10 @@ public:
   void send_objgrp_update (PortableGroup::ObjectGroupId id,
                            FT_Naming::ChangeType update);
 
-  void init_orb (void);
+  void init_orb ();
 
-  bool init_peer (void );
-  bool peer_init_i (void );
+  bool init_peer ();
+  bool peer_init_i ();
   void send_registration (bool use_combo);
   bool update_peer_registration ();
 

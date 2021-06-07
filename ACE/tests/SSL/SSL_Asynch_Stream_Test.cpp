@@ -96,7 +96,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get the I/O handle.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   // Called when a new connection is ready to accept.
   virtual int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE);
@@ -409,7 +409,7 @@ Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
 }
 
 ACE_HANDLE
-Server_Acceptor::get_handle (void) const
+Server_Acceptor::get_handle () const
 {
   return this->acceptor_.get_handle ();
 }

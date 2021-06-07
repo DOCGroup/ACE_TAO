@@ -102,7 +102,7 @@ DllOrb::fini (void)
       mv_rootPOA_->destroy (1, 1);
 
       mv_rootPOA_ = PortableServer::POA::_nil ();
-    mv_orb_->shutdown (1);
+    mv_orb_->shutdown (true);
 
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() ...\n")));
     // wait for our threads to finish

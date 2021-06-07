@@ -29,7 +29,6 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_SupplierAdmin_i :
   //   This COS-compliant implementation of the SupplierAdmin uses
   //   TAO's RtecEventChannelAdmin::SupplierAdmin.
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_CosEC_SupplierAdmin_i (void);
 

@@ -46,7 +46,6 @@ class ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   ServerRequestInterceptor (void);
 
@@ -81,7 +80,6 @@ public:
   CORBA::Long request_count (void);
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
@@ -90,10 +88,8 @@ protected:
   ~ServerRequestInterceptor (void);
 
 private:
-
   /// The number of requests that have arrived on the server.
   ACE_Atomic_Op<TAO_SYNCH_MUTEX, long> request_count_;
-
 };
 
 #if defined(_MSC_VER)

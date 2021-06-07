@@ -24,7 +24,7 @@ public:
   {
   }
 
-  virtual const ACE_TCHAR *get_name (void) const
+  virtual const ACE_TCHAR *get_name () const
   {
     return ACE_TEXT ("UNKNOWN");
   }
@@ -56,7 +56,7 @@ public:
 
   // Get the handler of the device so that wait_for_activity() can
   // wait for data to arrive.
-  virtual ACE_Event_Handler *get_handler (void) const
+  virtual ACE_Event_Handler *get_handler () const
   {
     return 0;
   }

@@ -34,14 +34,15 @@
 //
 // SNMPv1 Get Next Application
 //
-class nextapp {
-  public:
+class nextapp
+{
+public:
   nextapp(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private:
+private:
   nextapp(const nextapp&);
 
   UdpAddress address_;

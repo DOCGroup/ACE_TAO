@@ -54,37 +54,37 @@ public:
   // = The Accessors.
 
   /// HTTP request method
-  const char *method (void) const;
+  const char *method () const;
 
   /// HTTP request uri
-  const char *uri (void) const;
+  const char *uri () const;
 
   /// HTTP request version
-  const char *version (void) const;
+  const char *version () const;
 
   /// The HTTP request uri translated into a server filename path
-  const char *path (void) const;
+  const char *path () const;
 
   /// TRUE of the request is a cgi request
-  int cgi (void) const;
+  int cgi () const;
 
   /// The arguments to the cgi request
-  const char *cgi_args (void) const;
+  const char *cgi_args () const;
 
   /// The environment variables passed to the CGI request
-  const char **cgi_env (void) const;
+  const char **cgi_env () const;
 
   /// The cgi request query string
-  const char *query_string (void) const;
+  const char *query_string () const;
 
   /// The cgi request path information
-  const char *path_info (void) const;
+  const char *path_info () const;
 
   /// The type of the HTTP request
-  int type (void) const;
+  int type () const;
 
   /// The headers that were parsed from the request
-  const Headers &headers (void) const;
+  const Headers &headers () const;
 
   /// Header strings stored
   const char *header_strings (int index) const;
@@ -162,7 +162,7 @@ private:
   int type (const char *type_string);
 
 private:
-  int got_request_line (void) const;
+  int got_request_line () const;
 
 private:
   int got_request_line_;

@@ -1426,13 +1426,9 @@ CORBA::DefaultValueRefCountBase::_tao_remove_ref (void)
 }
 
 CORBA::ULong
-CORBA::DefaultValueRefCountBase::_tao_refcount_value (void) const
+CORBA::DefaultValueRefCountBase::_tao_refcount_value () const
 {
-#if defined (ACE_HAS_CPP11)
   return this->refcount_;
-#else
-  return this->refcount_.value ();
-#endif /* ACE_HAS_CPP11 */
 }
 
 // ===========================================================
@@ -1444,8 +1440,7 @@ operator<< (TAO_OutputCDR &strm,
   return CORBA::ValueBase::_tao_marshal (
              strm,
              _tao_valuetype,
-             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast)
-           );
+             reinterpret_cast<ptrdiff_t> (&CORBA::ValueBase::_downcast));
 }
 
 CORBA::Boolean

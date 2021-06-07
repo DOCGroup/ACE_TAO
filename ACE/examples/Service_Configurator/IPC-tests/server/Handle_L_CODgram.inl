@@ -76,7 +76,7 @@ Handle_L_CODgram::fini(void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_L_CODgram::get_handle (void) const
+Handle_L_CODgram::get_handle () const
 {
   return ACE_LSOCK_CODgram::get_handle ();
 }

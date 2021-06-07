@@ -1,0 +1,17 @@
+/**
+
+@page DII Discarded Deferred Request Test README File
+
+	The goals of writing this test are:
+
+- Test request object management with the deferred DII calling scheme
+  when discarding the request.
+
+	To run the test use the run_test.pl script:
+
+$ ./run_test.pl
+
+	the script returns 0 if the test was successful.
+
+	In case of a regression the test might segfault.
+*/

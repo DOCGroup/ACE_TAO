@@ -16,18 +16,18 @@ TAO_ConstantDef_i::TAO_ConstantDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ConstantDef_i::~TAO_ConstantDef_i (void)
+TAO_ConstantDef_i::~TAO_ConstantDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ConstantDef_i::def_kind (void)
+TAO_ConstantDef_i::def_kind ()
 {
   return CORBA::dk_Constant;
 }
 
 CORBA::Contained::Description *
-TAO_ConstantDef_i::describe (void)
+TAO_ConstantDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -37,7 +37,7 @@ TAO_ConstantDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ConstantDef_i::describe_i (void)
+TAO_ConstantDef_i::describe_i ()
 {
   CORBA::Contained::Description *desc_ptr = 0;
   ACE_NEW_THROW_EX (desc_ptr,
@@ -73,7 +73,7 @@ TAO_ConstantDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ConstantDef_i::type (void)
+TAO_ConstantDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -83,7 +83,7 @@ TAO_ConstantDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ConstantDef_i::type_i (void)
+TAO_ConstantDef_i::type_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -97,7 +97,7 @@ TAO_ConstantDef_i::type_i (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ConstantDef_i::type_def (void)
+TAO_ConstantDef_i::type_def ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::IDLType::_nil ());
 
@@ -107,7 +107,7 @@ TAO_ConstantDef_i::type_def (void)
 }
 
 CORBA::IDLType_ptr
-TAO_ConstantDef_i::type_def_i (void)
+TAO_ConstantDef_i::type_def_i ()
 {
   ACE_TString type_path;
   this->repo_->config ()->get_string_value (this->section_key_,
@@ -142,7 +142,7 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
 }
 
 CORBA::Any *
-TAO_ConstantDef_i::value (void)
+TAO_ConstantDef_i::value ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -152,7 +152,7 @@ TAO_ConstantDef_i::value (void)
 }
 
 CORBA::Any *
-TAO_ConstantDef_i::value_i (void)
+TAO_ConstantDef_i::value_i ()
 {
   CORBA::TypeCode_var tc = this->type_i ();
 

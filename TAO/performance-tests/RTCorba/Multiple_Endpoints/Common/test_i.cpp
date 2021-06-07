@@ -24,5 +24,5 @@ Test_i::shutdown (const char *orb_id)
                                         argv,
                                         orb_id);
 
-  orb->shutdown (0);
+  orb->shutdown (false);
 }

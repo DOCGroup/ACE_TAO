@@ -28,7 +28,6 @@
 class Grid_Client_i
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Grid_Client_i (void);
 

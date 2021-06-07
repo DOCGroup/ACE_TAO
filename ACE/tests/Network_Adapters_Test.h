@@ -34,8 +34,6 @@
 class Echo_Handler : public ACE_Event_Handler
 {
 public:
-  // = Initialization and termination methods.
-
   /// Default constructor
   Echo_Handler (void);
 
@@ -94,7 +92,7 @@ public:
             ACE_Addr const &       local_addr = ACE_Addr::sap_any);
 
   /// Returns reference to the ACE::Ping_Socket. Necessary for ACE_Reactor.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /**
    * Takes care of the input. Reads the incoming ICMP datagrams and

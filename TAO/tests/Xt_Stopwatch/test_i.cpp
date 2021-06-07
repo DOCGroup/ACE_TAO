@@ -21,6 +21,6 @@ Stopwatch_imp::stop (void)
 void
 Stopwatch_imp::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

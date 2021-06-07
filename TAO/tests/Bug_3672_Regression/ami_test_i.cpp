@@ -35,6 +35,6 @@ AMI_Test_i::shutdown (void)
 {
   ACE_OS::sleep (5);
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

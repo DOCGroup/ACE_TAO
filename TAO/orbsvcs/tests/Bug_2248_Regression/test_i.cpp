@@ -37,7 +37,7 @@ Simple_Server_i::shutdown (const char* key)
   int still_alive = 1;
   if (!ACE_OS::strcmp (_key.in(), key))
     {
-       this->orb_->shutdown (0);
+       this->orb_->shutdown (false);
        still_alive = 0;
     }
 

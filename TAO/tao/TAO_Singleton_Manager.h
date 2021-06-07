@@ -58,7 +58,7 @@ public:
   int init (int register_with_object_manager);
 
   /// Explicitly destroy.
-  virtual int fini (void);
+  virtual int fini ();
 
   /**
    * Returns 1 before the TAO_Singleton_Manager has been constructed.
@@ -125,12 +125,10 @@ protected:
   //@}
 
 private:
-
-  /// Disallow copying by not implementing the following ...
-  //@{
-  TAO_Singleton_Manager (const TAO_Singleton_Manager &);
-  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &);
-  //@}
+  TAO_Singleton_Manager (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager (TAO_Singleton_Manager &&) = delete;
+  TAO_Singleton_Manager &operator= (TAO_Singleton_Manager &&) = delete;
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.

@@ -56,7 +56,7 @@ PCB::setID (long timerID)
 }
 
 long
-PCB::getID (void) const
+PCB::getID () const
 {
   ACE_TRACE ("PCB::getID");
   return timerID_;

@@ -23,7 +23,6 @@ class TLS_Client
   // = DESCRIPTION
   //   This client demonstates how to use the log service.
  public:
-  // = Initialization and Termination
   TLS_Client (void);
   ~TLS_Client ();
 

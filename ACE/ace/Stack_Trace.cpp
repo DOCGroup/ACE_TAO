@@ -66,7 +66,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
   ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
 }
 
-#elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H))
 // This is the code for glibc
 #  include <execinfo.h>
 
@@ -662,6 +662,22 @@ cs_operate(int (*func)(struct frame_state const *, void *), void *usrarg,
   fs.sf.AddrPC.Mode = AddrModeFlat;
   fs.sf.AddrFrame.Mode = AddrModeFlat;
   fs.sf.AddrBStore.Mode = AddrModeFlat;
+  fs.sf.AddrStack.Mode = AddrModeFlat;
+#  elif defined (_M_ARM)
+  DWORD machine = IMAGE_FILE_MACHINE_ARM;
+  fs.sf.AddrPC.Offset = c.Pc;
+  fs.sf.AddrFrame.Offset = c.R11;
+  fs.sf.AddrStack.Offset = c.Sp;
+  fs.sf.AddrPC.Mode = AddrModeFlat;
+  fs.sf.AddrFrame.Mode = AddrModeFlat;
+  fs.sf.AddrStack.Mode = AddrModeFlat;
+#  elif defined (_M_ARM64)
+  DWORD machine = IMAGE_FILE_MACHINE_ARM64;
+  fs.sf.AddrPC.Offset = c.Pc;
+  fs.sf.AddrFrame.Offset = c.Fp;
+  fs.sf.AddrStack.Offset = c.Sp;
+  fs.sf.AddrPC.Mode = AddrModeFlat;
+  fs.sf.AddrFrame.Mode = AddrModeFlat;
   fs.sf.AddrStack.Mode = AddrModeFlat;
 #  endif
 

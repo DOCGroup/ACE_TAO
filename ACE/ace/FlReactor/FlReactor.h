@@ -45,7 +45,6 @@ class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 {
 
 public:
-  // = Initialization and termination methods.
   ACE_FlReactor (size_t size = DEFAULT_SIZE,
                  bool restart = false,
                  ACE_Sig_Handler * = 0);

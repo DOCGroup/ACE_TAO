@@ -8,7 +8,7 @@
 class ACE_Svc_Export Recursive_Lock_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Recursive_Thread_Mutex mutex;

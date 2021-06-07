@@ -36,7 +36,7 @@ public:
   virtual void create_named_value (CORBA::NamedValue_ptr &nv);
 
   /// Used to force the initialization of the NVList adapter
-  static int Initializer (void);
+  static int Initializer ();
 };
 
 static int TAO_Requires_NVList_Adapter_Impl_Initializer =

@@ -68,18 +68,14 @@ namespace TAO
       /// is useful for chaining.
       PortableServer::Servant servant();
 
-
     protected:
-
       /// Constructor.
       TP_Custom_Request_Operation(PortableServer::Servant servant);
 
       virtual void execute_i() = 0;
       virtual void cancel_i() = 0;
 
-
     private:
-
       PortableServer::ServantBase_var servant_;
     };
 

@@ -100,7 +100,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Test assigment of sets.
   // To do that, we also test some of the iterator methods.
-  typedef ACE_Unbounded_Set<MyNode> MySet;
+  using MySet = ACE_Unbounded_Set<MyNode>;
   MySet ubs2 = ubs;              // Test a typedef of a set.
   if (ubs2.size() != ubs.size())
     {

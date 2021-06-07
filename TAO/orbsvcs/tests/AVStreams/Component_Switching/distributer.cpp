@@ -368,7 +368,7 @@ Distributer::init (int argc,
 }
 
 bool
-Distributer::done (void) const
+Distributer::done () const
 {
   return this->done_;
 }
@@ -445,7 +445,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       DISTRIBUTER::instance ()->shut_down ();
 
-//      orb->shutdown(1);
+//      orb->shutdown(true);
 
     }
   catch (const CORBA::Exception& ex)

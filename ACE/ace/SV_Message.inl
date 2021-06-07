@@ -18,7 +18,7 @@ ACE_SV_Message::~ACE_SV_Message (void)
 }
 
 ACE_INLINE long
-ACE_SV_Message::type (void) const
+ACE_SV_Message::type () const
 {
   ACE_TRACE ("ACE_SV_Message::type");
   return this->type_;

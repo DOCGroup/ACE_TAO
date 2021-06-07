@@ -95,7 +95,7 @@ public:
   virtual void disconnect_push_supplier (void);
 
   /// Active method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier.

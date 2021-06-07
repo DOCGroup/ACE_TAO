@@ -115,16 +115,13 @@
 # define ACE_HAS_TIME_T_LONG_MISMATCH
 #endif
 
-#define ACE_HAS_CPLUSPLUS_HEADERS 1
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_SIG_ATOMIC_T
 #define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_STDCPP_STL_INCLUDES 1
 #define ACE_HAS_STRING_CLASS 1
 #define ACE_HAS_USER_MODE_MASKS 1
 #define ACE_LACKS_ACE_IOSTREAM 1
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-#define ACE_HAS_NEW_NOTHROW
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #if defined (ACE_HAS_BCC32)
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
@@ -145,18 +142,21 @@
 # endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x730)
+#if (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_ISCTYPE
 #endif
 
-#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x730)
+#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_STRTOK_R
 #endif
 
-#if (__BORLANDC__ <= 0x730)
+#if (__BORLANDC__ <= 0x740)
 # define ACE_LACKS_LOCALTIME_R
 # define ACE_LACKS_GMTIME_R
+#endif
+
+#if (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_ASCTIME_R
 #endif
 
@@ -190,8 +190,20 @@
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
 # define ACE_LACKS_INLINE_ASSEMBLY
-#endif /* __clang__ */
 
+# if __cplusplus >= 201103L
+#  define ACE_HAS_CPP11
+# endif
+# if __cplusplus >= 201402L
+#  define ACE_HAS_CPP14
+# endif
+# if __cplusplus >= 201703L
+#  define ACE_HAS_CPP17
+# endif
+# if __cplusplus >= 202002L
+#  define ACE_HAS_CPP20
+# endif
+#endif /* __clang__ */
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */

@@ -45,7 +45,6 @@ class TAO_COIOP_Endpoint;
 class TAO_Strategies_Export TAO_COIOP_Connector : public TAO_Connector
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_COIOP_Connector (void);
 
@@ -65,7 +64,7 @@ public:
 
   virtual int check_prefix (const char *endpoint);
 
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
   //@}
 
 protected:

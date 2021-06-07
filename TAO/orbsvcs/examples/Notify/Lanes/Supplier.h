@@ -24,9 +24,7 @@
 class TAO_Notify_Lanes_Supplier
   : public POA_CosNotifyComm::StructuredPushSupplier
 {
- public:
-  // = Initialization and Termination code
-
+public:
   /// Constructor.
   TAO_Notify_Lanes_Supplier (TAO_Notify_ORB_Objects& orb_objects);
 

@@ -33,7 +33,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_New_Leader_Generator
 {
 public:
-
   /// Destructor.
   virtual ~TAO_New_Leader_Generator (void);
 

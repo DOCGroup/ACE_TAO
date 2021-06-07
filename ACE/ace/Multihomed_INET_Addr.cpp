@@ -13,7 +13,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Multihomed_INET_Addr)
 
 // Default constructor
 
-ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr (void)
+ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr ()
   : secondaries_ (0)
 {
   ACE_TRACE ("ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr");
@@ -323,7 +323,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
 #endif /* ACE_HAS_IPV6 */
 
 
-ACE_Multihomed_INET_Addr::~ACE_Multihomed_INET_Addr (void)
+ACE_Multihomed_INET_Addr::~ACE_Multihomed_INET_Addr ()
 {
 
 }

@@ -33,7 +33,7 @@ public:
   virtual int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                             ACE_Reactor_Mask mask = ACE_Event_Handler::ALL_EVENTS_MASK);
 
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
 private:
   void display_menu (void);
@@ -53,10 +53,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the IPC client.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Destroy the IPC client.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the svc.
 
   virtual int handle_close (ACE_HANDLE, ACE_Reactor_Mask);

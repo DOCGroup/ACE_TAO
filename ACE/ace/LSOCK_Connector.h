@@ -35,7 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_LSOCK_Connector : public ACE_SOCK_Connector
 {
 public:
-  // = Initialization methods.
   /// Default constructor.
   ACE_LSOCK_Connector (void);
 
@@ -72,7 +71,7 @@ public:
   typedef ACE_LSOCK_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

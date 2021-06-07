@@ -37,7 +37,7 @@ class DT_Test :public ACE_Task <ACE_SYNCH>
 
   protected:
   /// task svc
-  virtual int svc (void);
+  virtual int svc ();
 
 
 

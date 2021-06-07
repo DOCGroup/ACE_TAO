@@ -19,7 +19,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #if defined (ACE_HAS_RAPI)
 #include "rapi_lib.h"
 
@@ -37,9 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_RAPI_Session : public ACE_QoS_Session
 {
-
 public:
-
   /// Default destructor.
   ~ACE_RAPI_Session (void);
 
@@ -54,7 +51,7 @@ public:
   virtual int close (void);
 
   /// Returns the QoS for this RAPI session.
-  virtual ACE_QoS qos (void) const;
+  virtual ACE_QoS qos () const;
 
   /// Set QoS for this RAPI session. The socket parameter is used to confirm if
   /// this QoS session was subscribed to by the socket.
@@ -79,13 +76,13 @@ public:
   virtual int update_qos (void);
 
   /// Get methods for the flags_.
-  virtual ACE_End_Point_Type flags (void) const;
+  virtual ACE_End_Point_Type flags () const;
 
   /// Set methods for the flags_.
   virtual void flags (const ACE_End_Point_Type flags);
 
   /// Get the RAPI session id.
-  virtual int session_id (void) const;
+  virtual int session_id () const;
 
   /// Set the RAPI session id.
   virtual void session_id (const int session_id);
@@ -100,19 +97,19 @@ public:
   virtual RSVP_Event_Type rsvp_event_type (void);
 
   /// Get the destination address for this RAPI session.
-  virtual ACE_INET_Addr dest_addr (void) const;
+  virtual ACE_INET_Addr dest_addr () const;
 
   /// Set the destination address for this RAPI session.
   virtual void dest_addr (const ACE_INET_Addr &dest_addr);
 
   /// Get the source port for this session.
-  virtual u_short source_port (void) const;
+  virtual u_short source_port () const;
 
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port);
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr (void) const;
+  virtual ACE_INET_Addr* source_addr () const;
 
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr);
@@ -125,7 +122,6 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-
   /// Default constuctor. Constructor is defined private so that only
   /// the friend factory can instantiate this class.
   ACE_RAPI_Session (void);
@@ -162,7 +158,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class ACE_QoS_Export ACE_GQoS_Session : public ACE_QoS_Session
 {
-
 public:
 
   /// Default destructor.
@@ -180,7 +175,7 @@ public:
   virtual int close (void);
 
   /// Returns the QoS for this GQoS session.
-  virtual ACE_QoS qos (void) const;
+  virtual ACE_QoS qos () const;
 
   /// Set QoS for this GQoS session. The socket parameter is used to confirm if
   /// this QoS session was subscribed to by the socket.
@@ -202,29 +197,29 @@ public:
   virtual int update_qos (void);
 
   /// Get/Set methods for the flags_.
-  virtual ACE_End_Point_Type flags (void) const;
+  virtual ACE_End_Point_Type flags () const;
   virtual void flags (const ACE_End_Point_Type flags);
 
   /// Get the destination address for this GQoS session.
-  virtual ACE_INET_Addr dest_addr (void) const;
+  virtual ACE_INET_Addr dest_addr () const;
 
   /// Set the destination address for this GQoS session.
   virtual void dest_addr (const ACE_INET_Addr &dest_addr);
 
   /// Get the source port for this session.
-  virtual u_short source_port (void) const;
+  virtual u_short source_port () const;
 
   /// Set the source port for this session.
   virtual void source_port (const u_short &source_port);
 
   //Set the source host
-  virtual ACE_INET_Addr* source_addr (void) const;
+  virtual ACE_INET_Addr* source_addr () const;
 
   /// Set the source port for this session.
   virtual void source_addr (ACE_INET_Addr* source_addr);
 
   /// Get the GQoS session id.
-  virtual int session_id (void) const;
+  virtual int session_id () const;
 
   /// Set the GQoS session id.
   virtual void session_id (const int session_id);
@@ -246,11 +241,9 @@ public:
   friend class ACE_QoS_Session_Factory;
 
 private:
-
   /// Default constructor. Constructor is defined private so that only
   /// the friend factory can instantiate this class.
-  ACE_GQoS_Session (void);
-
+  ACE_GQoS_Session ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

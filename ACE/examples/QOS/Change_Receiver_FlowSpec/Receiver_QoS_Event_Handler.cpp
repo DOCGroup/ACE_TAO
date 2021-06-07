@@ -35,7 +35,7 @@ Receiver_QoS_Event_Handler::~Receiver_QoS_Event_Handler (void)
 // Return the handle of the Dgram_Mcast. This method is called
 // internally by the reactor.
 ACE_HANDLE
-Receiver_QoS_Event_Handler::get_handle (void) const
+Receiver_QoS_Event_Handler::get_handle () const
 {
   return this->dgram_mcast_qos_.get_handle ();
 }

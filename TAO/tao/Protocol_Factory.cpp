@@ -7,12 +7,12 @@ TAO_Protocol_Factory::TAO_Protocol_Factory (CORBA::ULong tag)
 {
 }
 
-TAO_Protocol_Factory::~TAO_Protocol_Factory (void)
+TAO_Protocol_Factory::~TAO_Protocol_Factory ()
 {
 }
 
 CORBA::ULong
-TAO_Protocol_Factory::tag (void) const
+TAO_Protocol_Factory::tag () const
 {
   return this->tag_;
 }

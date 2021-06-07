@@ -31,7 +31,6 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Interpreter
 {
 protected:
-  // = Initialization and termination methods.
   /// Constructor.
   TAO_Interpreter (void);
 
@@ -51,7 +50,6 @@ private:
   /// This mutex protects the <build_tree> method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
 };
-
 
 // Functions we need for parsing.
 extern int yyparse (void);

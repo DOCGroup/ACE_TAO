@@ -76,7 +76,7 @@ public:
                               const void *arg);
 
   /// Returns the internal handle used to receive multicast.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
 private:
   /// Factor common functionality from the two init functions.

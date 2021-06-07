@@ -42,7 +42,7 @@ public:
       lock.acquire ();
   }
 
-  ~Guard (void)
+  ~Guard ()
   {
     if (lock_upcall)
       this->lock_.release ();
@@ -68,7 +68,7 @@ class Handler : public ACE_Event_Handler
 {
 public:
   Handler (ACE_Reactor &reactor);
-  int handle_input (ACE_HANDLE fd);
+  int handle_input (ACE_HANDLE fd) override;
 
   ACE_Pipe pipe_;
   int number_of_messages_read_;
@@ -178,7 +178,7 @@ class Event_Loop_Task : public ACE_Task_Base
 {
 public:
   Event_Loop_Task (ACE_Reactor &reactor);
-  int svc (void);
+  int svc () override;
 
 private:
   ACE_Reactor &reactor_;
@@ -190,7 +190,7 @@ Event_Loop_Task::Event_Loop_Task (ACE_Reactor &reactor)
 }
 
 int
-Event_Loop_Task::svc (void)
+Event_Loop_Task::svc ()
 {
   return this->reactor_.run_reactor_event_loop ();
 }

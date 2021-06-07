@@ -299,7 +299,7 @@ Supplier::init (int argc, ACE_TCHAR **argv)
 }
 
 ACE_Reactor*
-Supplier::reactor_used (void) const
+Supplier::reactor_used () const
 {
   return ACE_Reactor::instance ();
 }

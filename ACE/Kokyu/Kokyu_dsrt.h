@@ -12,6 +12,7 @@
 
 #include "kokyu_export.h"
 #include "Kokyu_defs.h"
+#include <memory>
 
 namespace Kokyu
 {
@@ -67,7 +68,7 @@ namespace Kokyu
   private:
     /// Auto ptr to the implementation. Implementation will be created on the
     /// heap and deleted automatically when the dispatcher object is destructed.
-    auto_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
+    std::unique_ptr<DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits> > dispatcher_impl_;
   };
 
 
@@ -83,21 +84,21 @@ namespace Kokyu
 
   template <class DSRT_Scheduler_Traits>
   class DSRT_Dispatcher_Factory : private ACE_Copy_Disabled
-    {
-    public:
-      typedef auto_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
+  {
+  public:
+    typedef std::unique_ptr<DSRT_Dispatcher<DSRT_Scheduler_Traits> > DSRT_Dispatcher_Auto_Ptr;
 
-      /**
-       * Create a dispatcher for dynamic dispatching of threads.
-       * This will be used to dynamic scheduling of distributable threads for
-       * DSRTCORBA. The caller is responsible for freeing the memory.
-       *
-       * @param config Configuration information for the DSRT dispatcher.
-       *
-       * @return pointer to the DSRT dispatcher.
-       */
-      static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
-    };
+    /**
+      * Create a dispatcher for dynamic dispatching of threads.
+      * This will be used to dynamic scheduling of distributable threads for
+      * DSRTCORBA. The caller is responsible for freeing the memory.
+      *
+      * @param config Configuration information for the DSRT dispatcher.
+      *
+      * @return pointer to the DSRT dispatcher.
+      */
+    static DSRT_Dispatcher<DSRT_Scheduler_Traits>* create_DSRT_dispatcher (const DSRT_ConfigInfo&);
+  };
 
   /**
    * @class MIF_Sched_Strategy

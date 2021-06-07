@@ -65,8 +65,6 @@ public:
 class MT_Test : public Naming_Test, public ACE_Task_Base
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer and number of threads to spawn.
   MT_Test (CORBA::ORB_ptr orb,
            int size = 10);
@@ -75,7 +73,7 @@ public:
   virtual int execute (TAO_Naming_Client &root_context);
 
   /// This code is executed by each thread.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Number of threads to spawn.  By default is set to 10.
@@ -224,8 +222,6 @@ private:
 class Persistent_Test_Begin : public Naming_Test
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer.
   Persistent_Test_Begin (CORBA::ORB_ptr orb,
                          FILE * ior_output_file);
@@ -260,8 +256,6 @@ private:
 class Persistent_Test_End : public Naming_Test
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.  Takes in an orb pointer and the ior received from
   /// <Persistent_Test_Begin>.
   Persistent_Test_End (CORBA::ORB_ptr orb,
@@ -298,8 +292,6 @@ private:
 class CosNaming_Client : public ACE_Task_Base
 {
 public:
-  // = Initialization and termination methods.
-
   /// Constructor.
   CosNaming_Client (void);
 

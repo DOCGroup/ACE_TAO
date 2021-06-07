@@ -49,16 +49,16 @@ public:
       TAO_AMH_DSI_Response_Handler_ptr);
   TAO_AMH_DSI_Response_Handler_var &operator= (
       const TAO_AMH_DSI_Response_Handler_var &);
-  TAO_AMH_DSI_Response_Handler_ptr operator-> (void) const;
+  TAO_AMH_DSI_Response_Handler_ptr operator-> () const;
 
   operator const TAO_AMH_DSI_Response_Handler_ptr &() const;
   operator TAO_AMH_DSI_Response_Handler_ptr &();
 
-  TAO_AMH_DSI_Response_Handler_ptr in (void) const;
+  TAO_AMH_DSI_Response_Handler_ptr in () const;
   TAO_AMH_DSI_Response_Handler_ptr &inout (void);
   TAO_AMH_DSI_Response_Handler_ptr &out (void);
   TAO_AMH_DSI_Response_Handler_ptr _retn (void);
-  TAO_AMH_DSI_Response_Handler_ptr ptr (void) const;
+  TAO_AMH_DSI_Response_Handler_ptr ptr () const;
 
 private:
   TAO_AMH_DSI_Response_Handler_ptr ptr_;
@@ -86,16 +86,16 @@ public:
   TAO_AMH_DSI_Exception_Holder_var &operator= (TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var &operator= (
       const TAO_AMH_DSI_Exception_Holder_var &);
-  TAO_AMH_DSI_Exception_Holder* operator-> (void) const;
+  TAO_AMH_DSI_Exception_Holder* operator-> () const;
 
   operator const TAO_AMH_DSI_Exception_Holder* () const;
   operator TAO_AMH_DSI_Exception_Holder*& ();
 
-  TAO_AMH_DSI_Exception_Holder* in (void) const;
+  TAO_AMH_DSI_Exception_Holder* in () const;
   TAO_AMH_DSI_Exception_Holder*& inout (void);
   TAO_AMH_DSI_Exception_Holder*& out (void);
   TAO_AMH_DSI_Exception_Holder* _retn (void);
-  TAO_AMH_DSI_Exception_Holder* ptr (void) const;
+  TAO_AMH_DSI_Exception_Holder* ptr () const;
 
   // Hooks used by template sequence and valuetype manager classes
   // for non-defined forward declared valuetypes.
@@ -151,14 +151,14 @@ public:
 
   static CORBA::Boolean _tao_unmarshal ( TAO_InputCDR &,
                                          TAO_AMH_DSI_Exception_Holder *& );
-  virtual const char* _tao_obv_repository_id (void) const;
+  virtual const char* _tao_obv_repository_id () const;
   static const char* _tao_obv_static_repository_id (void);
 
   static void _tao_any_destructor (void *);
 
   virtual void raise_invoke ( );
 
-  CORBA::TypeCode_ptr _tao_type (void) const;
+  CORBA::TypeCode_ptr _tao_type () const;
   void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const;
   CORBA::Boolean _tao_match_formal_type (ptrdiff_t ) const;
 
@@ -244,13 +244,13 @@ public:
   /// CORBA Object related methods
   static TAO_AMH_DSI_Response_Handler* _duplicate (
              TAO_AMH_DSI_Response_Handler_ptr);
-  static TAO_AMH_DSI_Response_Handler* _nil (void);
+  static TAO_AMH_DSI_Response_Handler* _nil ();
   static TAO_AMH_DSI_Response_Handler* _narrow (CORBA::Object_ptr);
   static TAO_AMH_DSI_Response_Handler* _unchecked_narrow (CORBA::Object_ptr);
 
 protected:
   /// Return 0.  Should never be used.
-  virtual const char *_interface_repository_id (void) const;
+  virtual const char *_interface_repository_id () const;
 
   /// Simply returns "this"
   virtual void *_downcast (const char *repository_id);

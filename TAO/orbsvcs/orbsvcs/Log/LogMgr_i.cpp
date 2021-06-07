@@ -146,14 +146,14 @@ TAO_LogMgr_i::create_log_object (DsLogAdmin::LogId id)
 }
 
 DsLogAdmin::LogList*
-TAO_LogMgr_i::list_logs (void)
+TAO_LogMgr_i::list_logs ()
 {
   return this->logstore_->list_logs ();
 }
 
 
 DsLogAdmin::LogIdList*
-TAO_LogMgr_i::list_logs_by_id (void)
+TAO_LogMgr_i::list_logs_by_id ()
 {
   return this->logstore_->list_logs_by_id ();
 }

@@ -113,7 +113,7 @@ public:
   {
   };
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// keep a reference to the time calculation class
@@ -139,7 +139,7 @@ public:
   {
   };
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// keep a reference to the time calculation class

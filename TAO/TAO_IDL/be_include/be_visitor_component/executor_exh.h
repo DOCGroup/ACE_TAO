@@ -23,7 +23,7 @@ class be_visitor_executor_exh
 public:
   be_visitor_executor_exh (be_visitor_context *ctx);
 
-  ~be_visitor_executor_exh (void);
+  ~be_visitor_executor_exh ();
 
   virtual int visit_attribute (be_attribute *node);
   virtual int visit_component (be_component *node);

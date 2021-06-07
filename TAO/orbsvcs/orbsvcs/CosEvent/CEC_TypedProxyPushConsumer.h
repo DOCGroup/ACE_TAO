@@ -89,7 +89,7 @@ protected:
   friend class TAO_CEC_TypedProxyPushConsumer_Guard;
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
   void cleanup_i (void);
@@ -159,7 +159,7 @@ public:
   ~TAO_CEC_TypedProxyPushConsumer_Guard (void);
 
   /// Returns 1 if the reference count successfully acquired
-  int locked (void) const;
+  int locked () const;
 
 private:
   /// The lock used to protect the reference count

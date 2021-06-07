@@ -49,7 +49,6 @@ class TAO_LoadBalancing_Export TAO_LB_ServerRequestInterceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-
   /// Constructor.
   TAO_LB_ServerRequestInterceptor (TAO_LB_LoadAlert & load_alert);
 
@@ -82,7 +81,6 @@ public:
   //@}
 
 protected:
-
   /// Destructor.
   /**
    * Protected destructor to enforce correct memory management via
@@ -91,9 +89,7 @@ protected:
   ~TAO_LB_ServerRequestInterceptor (void);
 
 private:
-
   TAO_LB_LoadAlert & load_alert_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

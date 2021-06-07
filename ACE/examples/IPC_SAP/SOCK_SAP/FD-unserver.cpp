@@ -80,7 +80,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_LOG_MSG->sync (argv[0]);
           handle_client (stream);
           ACE_OS::exit (0);
-          /* NOTREACHED */
         default:
           stream.close ();
         }

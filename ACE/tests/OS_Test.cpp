@@ -41,7 +41,7 @@
 
 // Test ACE_OS::access() to be sure a file's existence is correctly noted.
 int
-access_test (void)
+access_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing access method\n")));
@@ -67,7 +67,7 @@ access_test (void)
 
 // Test ACE_OS::rename to be sure the files come and go as expected.
 int
-rename_test (void)
+rename_test ()
 {
 #if defined (ACE_LACKS_RENAME) || defined (ACE_VXWORKS)
   // On VxWorks only some filesystem drivers support rename
@@ -181,7 +181,7 @@ rename_test (void)
 
 //
 int
-string_emulation_test (void)
+string_emulation_test ()
 {
   {
     // ========================================================================
@@ -548,6 +548,9 @@ string_emulation_test (void)
     // ========================================================================
     // Test strtok (wchar_t version)
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing strtok (wchar_t version)\n")));
+#  ifdef ACE_LACKS_WCSTOK
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("  Skipped because platform lacks wcstok\n")));
+#  else
     //FUZZ: enable check_for_lack_ACE_OS
 
     wchar_t strtok_r1[] = ACE_TEXT_WIDE ("A string of tokens");
@@ -565,6 +568,7 @@ string_emulation_test (void)
                                                 ACE_TEXT_WIDE (" ")),
                                 ACE_TEXT_WIDE ("tokens") ) == 0);
     THIS_IS_NOT_AN_ASSERT_IT_IS_A_NON_DEBUG_TEST_AS_WELL (ACE_OS::strtok (0, ACE_TEXT_WIDE (" ")) == 0);
+#  endif /* ACE_LACKS_WCSTOK */
 
 
   }
@@ -574,7 +578,7 @@ string_emulation_test (void)
 }
 
 // Test ACE_OS::snprintf
-typedef int (*SNPrintF_t) (char *buf, size_t maxlen, const char *format, ...);
+using SNPrintF_t = int (*)(char *, size_t, const char *, ...);
 
 int
 snprintf_test (SNPrintF_t fn)
@@ -649,7 +653,7 @@ snprintf_test (SNPrintF_t fn)
 }
 
 static int
-getpwnam_r_test (void)
+getpwnam_r_test ()
 {
   int result = 0;
 
@@ -684,7 +688,7 @@ getpwnam_r_test (void)
 }
 
 static int
-compiler_test (void)
+compiler_test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing compiler methods\n")));
 
@@ -698,7 +702,7 @@ compiler_test (void)
 }
 
 static int
-version_test (void)
+version_test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing version macros\n")));
 
@@ -723,7 +727,7 @@ version_test (void)
 }
 
 static int
-ctime_r_test (void)
+ctime_r_test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Testing ctime_r\n")));
 
@@ -789,7 +793,7 @@ ctime_r_test (void)
 
 
 int
-string_strsncpy_test (void)
+string_strsncpy_test ()
 {
   {
     //FUZZ: disable check_for_lack_ACE_OS
@@ -937,7 +941,7 @@ string_strsncpy_test (void)
 
 // Test conversion between narrow and wide chars.
 int
-string_convert_test (void)
+string_convert_test ()
 {
 #if defined (ACE_HAS_WCHAR)
   ACE_DEBUG ((LM_DEBUG,
@@ -986,7 +990,7 @@ string_convert_test (void)
 
 // Test ACE_OS::strsignal()
 int
-strsignal_test (void)
+strsignal_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing strsignal method\n")));
@@ -1014,7 +1018,7 @@ strsignal_test (void)
 
 // Test the methods for getting cpu info
 int
-cpu_info_test (void)
+cpu_info_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing cpu info methods\n")));
@@ -1060,7 +1064,7 @@ cpu_info_test (void)
 }
 
 int
-last_error_test (void)
+last_error_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing last_error method\n")));
@@ -1081,7 +1085,7 @@ last_error_test (void)
 }
 
 int
-pagesize_test (void)
+pagesize_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing getpagesize method\n")));
@@ -1103,7 +1107,7 @@ pagesize_test (void)
 }
 
 int
-ace_ctype_test (void)
+ace_ctype_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ace ctype methods\n")));
@@ -1212,7 +1216,7 @@ ace_ctype_test (void)
 }
 
 int
-ceilf_test (void)
+ceilf_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceilf method\n")));
@@ -1240,7 +1244,7 @@ ceilf_test (void)
 }
 
 int
-floorf_test (void)
+floorf_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floorf method\n")));
@@ -1266,7 +1270,7 @@ floorf_test (void)
 }
 
 int
-ceil_test (void)
+ceil_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceil method\n")));
@@ -1294,7 +1298,7 @@ ceil_test (void)
 }
 
 int
-floor_test (void)
+floor_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floor method\n")));
@@ -1322,7 +1326,7 @@ floor_test (void)
 }
 
 int
-ceill_test (void)
+ceill_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing ceill method\n")));
@@ -1350,7 +1354,7 @@ ceill_test (void)
 }
 
 int
-floorl_test (void)
+floorl_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing floorl method\n")));
@@ -1376,7 +1380,7 @@ floorl_test (void)
 }
 
 int
-log2_test (void)
+log2_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing log2 method\n")));
@@ -1584,7 +1588,7 @@ int snprintf_emulation_test ()
 #endif // ACE_HAS_VSNPRINTF_EMULATION
 
 int
-swab_test (void)
+swab_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing swab method\n")));
@@ -1607,7 +1611,7 @@ swab_test (void)
 }
 
 int
-gai_strerror_test (void)
+gai_strerror_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing gai_strerror method\n")));

@@ -54,9 +54,8 @@ public:
   friend class ACE_SPIPE_Acceptor;
   friend class ACE_SPIPE_Connector;
 
-  // = Initialization method.
   /// Default constructor.
-  ACE_SPIPE_Stream (void);
+  ACE_SPIPE_Stream ();
 
   /// Obtain the address of whom we are connected with.
   int get_remote_addr (ACE_SPIPE_Addr &remote_sap) const;
@@ -152,7 +151,7 @@ public:
   typedef ACE_SPIPE_Addr PEER_ADDR;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

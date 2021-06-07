@@ -45,13 +45,11 @@ typedef ACE_Strong_Bound_Ptr<Printer, ACE_Thread_Mutex> Printer_var;
  */
 class Scheduler : public ACE_Task<ACE_SYNCH>
 {
-
   friend class Method_Request_print;
   friend class Method_Request_end;
 public:
-  // = Initialization and termination methods.
   /// Constructor.
-  Scheduler (Scheduler * = 0);
+  Scheduler (void);
 
   /// Initializer.
   virtual int open (void *args = 0);
@@ -69,12 +67,11 @@ public:
 protected:
   /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
   /// and dispatches them.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   // = These are the <Scheduler> implementation details.
   ACE_Activation_Queue activation_queue_;
-  Scheduler *scheduler_;
 };
 
 #endif /* ACE_HAS_THREADS */

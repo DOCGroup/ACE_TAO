@@ -158,9 +158,9 @@ public:
                   ACE_Log_Record &record,
                   ostream *output);
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver<ACE_SYNCH_USE> &rhs))
+  void operator= (const Log_Message_Receiver<ACE_SYNCH_USE> &rhs) = delete;
 
-  // Attributes.
+  /// Attributes
   Log_Message_Receiver_Impl<ACE_SYNCH_USE> *receiver_impl_;
 };
 
@@ -193,11 +193,10 @@ protected:
   ACE_SYNCH_MUTEX_T print_lock_;
 
 private:
-#if !defined (ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES)
   static ACE_SYNCH_MUTEX_T copy_lock_;
-#endif /* ACE_LACKS_STATIC_DATA_MEMBER_TEMPLATES */
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &))
-  ACE_UNIMPLEMENTED_FUNC (Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &))
+
+  void operator= (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &) = delete;
+  Log_Message_Receiver_Impl (const Log_Message_Receiver_Impl<ACE_SYNCH_USE> &) = delete;
 };
 
 #if defined (ACE_TEMPLATES_REQUIRE_SOURCE)

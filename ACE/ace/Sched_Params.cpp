@@ -7,7 +7,6 @@
  */
 //=============================================================================
 
-
 #include "ace/Sched_Params.h"
 
 #if !defined (__ACE_INLINE__)
@@ -18,8 +17,6 @@
 #  include "ace/OS_NS_string.h"
 #  include /**/ <sys/priocntl.h>
 #endif /* ACE_HAS_PRIOCNTL && ACE_HAS_THREADS */
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

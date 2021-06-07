@@ -42,7 +42,7 @@ namespace PortableInterceptor
       ("ORBInitializer_Registry", true); // only look in the local repo
 
 #if !defined (TAO_AS_STATIC_LIBS)
-    if (orbinitializer_registry_ == 0)
+    if (orbinitializer_registry_ == nullptr)
       {
         ACE_Service_Config::process_directive (
           ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE("ORBInitializer_Registry",
@@ -56,7 +56,7 @@ namespace PortableInterceptor
       }
 #endif /* !TAO_AS_STATIC_LIBS */
 
-    if (orbinitializer_registry_ != 0)
+    if (orbinitializer_registry_ != nullptr)
       {
         orbinitializer_registry_->register_orb_initializer (init);
       }

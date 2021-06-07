@@ -23,11 +23,11 @@ public:
   Handle_L_FIFO (void);
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   int open (const ACE_TCHAR *rendezvous_fifo);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask);
 

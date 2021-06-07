@@ -17,7 +17,7 @@ be_visitor_context_svth::be_visitor_context_svth (be_visitor_context *ctx)
 {
 }
 
-be_visitor_context_svth::~be_visitor_context_svth (void)
+be_visitor_context_svth::~be_visitor_context_svth ()
 {
 }
 
@@ -108,7 +108,7 @@ be_visitor_context_svth::visit_component (be_component *node)
       << "PortableServer::Servant sv," << be_nl
       << "const char *id);" << be_uidt << be_nl_2;
 
-  os_ << "virtual ~" << lname << "_Context_T (void);";
+  os_ << "virtual ~" << lname << "_Context_T ();";
 
   os_ << be_nl_2
       << "/** @name Operations and members for " << lname
@@ -161,12 +161,12 @@ be_visitor_context_svth::visit_uses (be_uses *node)
     {
       os_ << "::" << node_->full_name () << "::"
           << port_name << "Connections *" << be_nl
-          << "get_connections_" << port_name << " (void);";
+          << "get_connections_" << port_name << " ();";
     }
   else
     {
       os_ << "::" << obj_name << "_ptr" << be_nl
-          << "get_connection_" << port_name << " (void);";
+          << "get_connection_" << port_name << " ();";
     }
 
   os_ << be_nl << be_uidt_nl
@@ -187,7 +187,7 @@ be_visitor_context_svth::visit_uses (be_uses *node)
     }
   else
     {
-      os_ << "void);";
+      os_ << ");";
     }
 
   os_ << be_uidt_nl << be_nl
@@ -276,7 +276,7 @@ be_visitor_context_svth::visit_emits (be_emits *node)
 
   os_ << be_nl_2
       << "virtual ::" << obj_name << "Consumer_ptr" << be_nl
-      << "disconnect_" << port_name << " (void);";
+      << "disconnect_" << port_name << " ();";
 
   os_ << be_uidt_nl << be_nl
       << "protected:" << be_idt_nl

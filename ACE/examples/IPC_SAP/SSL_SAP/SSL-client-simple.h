@@ -22,26 +22,26 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
   // Parse the command-line arguments.
 
-  const ACE_Time_Value &sleep_time (void) const;
+  const ACE_Time_Value &sleep_time () const;
   // Return the amount of time to sleep in order to implement the
   // proper transmission rates.
 
-  u_short port (void) const;
+  u_short port () const;
   // Port of the server.
 
-  const ACE_TCHAR *host (void) const;
+  const ACE_TCHAR *host () const;
   // Host of the server.
 
-  const char *quit_string (void) const;
+  const char *quit_string () const;
   // String that shuts down the client/server.
 
   ssize_t read (void *buf, size_t len, size_t &iterations);
   // Read from the appropriate location.
 
-  size_t message_len (void) const;
+  size_t message_len () const;
   // Returns the length of the message to send.
 
-  const void *message_buf (void) const;
+  const void *message_buf () const;
   // Returns a pointer to the message.
 
   void run (void);
@@ -73,7 +73,7 @@ private:
   // Sleep_Time value.
 
   enum {QUIT_STRING_SIZE = 128};
-  char quit_string_[QUIT_STRING_SIZE];
+  char quit_string_[QUIT_STRING_SIZE + 1];
   // String that shuts down the client/server.
 
   size_t message_len_;

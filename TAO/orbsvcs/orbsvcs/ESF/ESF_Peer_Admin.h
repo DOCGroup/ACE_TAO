@@ -60,7 +60,7 @@ public:
   TAO_ESF_Peer_Admin (EVENT_CHANNEL *ec);
 
   /// destructor
-  virtual ~TAO_ESF_Peer_Admin (void);
+  virtual ~TAO_ESF_Peer_Admin ();
 
   /**
    * A <peer> has connected, this is invoked when the peer's client

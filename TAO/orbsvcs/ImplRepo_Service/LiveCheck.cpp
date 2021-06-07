@@ -12,8 +12,7 @@
 
 LiveListener::LiveListener (const char *server)
   : server_ (server),
-    refcount_ (1),
-    lock_ ()
+    refcount_ (1)
 {
 }
 
@@ -22,7 +21,7 @@ LiveListener::~LiveListener (void)
 }
 
 const char *
-LiveListener::server (void) const
+LiveListener::server () const
 {
   return this->server_.c_str ();
 }
@@ -30,13 +29,12 @@ LiveListener::server (void) const
 LiveListener *
 LiveListener::_add_ref (void)
 {
-  ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, mon, this->lock_, 0);
-  ++this->refcount_;
+  int const refcount = ++this->refcount_;
   if (ImR_Locator_i::debug () > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveListener::add_ref <%C> count <%d>\n"),
-                      server_.c_str(), refcount_));
+                      server_.c_str(), refcount));
     }
   return this;
 }
@@ -44,17 +42,13 @@ LiveListener::_add_ref (void)
 void
 LiveListener::_remove_ref (void)
 {
-  int count = 0;
-  {
-    ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_);
-    count = --this->refcount_;
-    if (ImR_Locator_i::debug () > 5)
-      {
-        ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
-                        server_.c_str(), count));
-      }
-  }
+  int const count = --this->refcount_;
+  if (ImR_Locator_i::debug () > 5)
+    {
+      ORBSVCS_DEBUG ((LM_DEBUG,
+                      ACE_TEXT  ("(%P|%t) LiveListener::remove_ref <%C> count <%d>\n"),
+                      server_.c_str(), count));
+    }
   if (count == 0)
     {
       delete this;
@@ -102,7 +96,7 @@ LiveEntry::set_reping_limit (int max)
 }
 
 bool
-LiveEntry::reping_available (void) const
+LiveEntry::reping_available () const
 {
   return this->repings_ < this->max_retry_;
 }
@@ -224,7 +218,7 @@ LiveEntry::reset_status (void)
 }
 
 LiveStatus
-LiveEntry::status (void) const
+LiveEntry::status () const
 {
   if (!this->may_ping_)
     {
@@ -314,13 +308,13 @@ LiveEntry::status (LiveStatus l)
 }
 
 const ACE_Time_Value &
-LiveEntry::next_check (void) const
+LiveEntry::next_check () const
 {
   return this->next_check_;
 }
 
 const char *
-LiveEntry::server_name (void) const
+LiveEntry::server_name () const
 {
   return this->server_.c_str();
 }
@@ -332,9 +326,15 @@ LiveEntry::set_pid (int pid)
 }
 
 int
-LiveEntry::pid (void) const
+LiveEntry::pid () const
 {
   return this->pid_;
+}
+
+bool
+LiveEntry::may_ping () const
+{
+  return this->may_ping_;
 }
 
 bool
@@ -350,9 +350,9 @@ LiveEntry::validate_ping (bool &want_reping, ACE_Time_Value& next)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) LiveEntry::validate_ping, status ")
-                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d> want_reping <%d>\n"),
+                      ACE_TEXT ("<%C> listeners <%d> server <%C> pid <%d> want_reping <%d> may_ping <%d>\n"),
                       status_name (this->liveliness_), this->listeners_.size (),
-                      this->server_.c_str(), this->pid_, want_reping));
+                      this->server_.c_str(), this->pid_, want_reping, this->may_ping_));
     }
 
   if (this->liveliness_ == LS_PING_AWAY ||
@@ -480,16 +480,15 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("(%P|%t) LiveEntry::do_ping, ")
-                          ACE_TEXT ("sendc_ping for server <%C> threw <%C>\n"),
+                          ACE_TEXT ("sendc_ping for server <%C> threw <%C> marking as dead\n"),
                           this->server_.c_str(), ex._info ().c_str ()));
         }
+      this->release_callback ();
       this->status (LS_DEAD);
     }
 }
 
 //---------------------------------------------------------------------------
-//---------------------------------------------------------------------------
-
 PingReceiver::PingReceiver (LiveEntry *entry, PortableServer::POA_ptr poa)
   :poa_ (PortableServer::POA::_duplicate(poa)),
    entry_ (entry)
@@ -686,7 +685,7 @@ LC_TimeoutGuard::~LC_TimeoutGuard (void)
     }
 }
 
-bool LC_TimeoutGuard::blocked (void) const
+bool LC_TimeoutGuard::blocked () const
 {
   return this->blocked_;
 }
@@ -758,7 +757,7 @@ LiveCheck::shutdown (void)
 }
 
 const ACE_Time_Value &
-LiveCheck::ping_interval (void) const
+LiveCheck::ping_interval () const
 {
   return this->ping_interval_;
 }
@@ -805,8 +804,8 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                               ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
-                              ACE_TEXT (", ping skipped for server <%C>\n"),
-                              token, entry->server_name ()));
+                              ACE_TEXT (", ping skipped for server <%C> may_ping <%d>\n"),
+                              token, entry->server_name (), entry->may_ping ()));
             }
         }
     }

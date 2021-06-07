@@ -75,7 +75,7 @@ public:
 
 protected:
   /// Task svc
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Release

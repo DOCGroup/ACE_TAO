@@ -1,9 +1,9 @@
 #ifndef ACE_CONFIG_H_INCLUDED
 #define ACE_CONFIG_H_INCLUDED
 #ifdef __FreeBSD_kernel__
-#include "config-kfreebsd.h"
+#include "ace/config-kfreebsd.h"
 #elif defined(__GNU__)
-#include "config-hurd.h"
+#include "ace/config-hurd.h"
 #else // assume linux
 /*
  * Macros that were enabled in Debian are stored here.
@@ -24,6 +24,6 @@
 #define __ACE_INLINE__
 #endif
 
-#include "config-linux.h"
+#include "ace/config-linux.h"
 #endif // __FreeBSD_version
 #endif /* ACE_CONFIG_H_INCLUDED */

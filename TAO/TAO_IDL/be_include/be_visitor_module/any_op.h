@@ -32,7 +32,7 @@ public:
   be_visitor_module_any_op (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_module_any_op (void);
+  ~be_visitor_module_any_op ();
 
   /// visit module
   virtual int visit_module (be_module *node);

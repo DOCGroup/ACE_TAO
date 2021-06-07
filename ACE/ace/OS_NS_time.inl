@@ -84,7 +84,7 @@ ACE_OS::clock_settime (clockid_t clockid, const struct timespec *ts)
 }
 
 // Magic number declaration and definition for ctime and ctime_r ()
-static const int ctime_buf_size = 26;
+static constexpr int ctime_buf_size = 26;
 
 ACE_INLINE ACE_TCHAR *
 ACE_OS::ctime (const time_t *t)
@@ -159,7 +159,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
 
 #   if defined (ACE_USES_WCHAR)
   ACE_Ascii_To_Wide wide_buf (bufp);
-  ACE_OS_String::strcpy (buf, wide_buf.wchar_rep ());
+  ACE_OS::strcpy (buf, wide_buf.wchar_rep ());
   return buf;
 #   else
   return bufp;
@@ -294,22 +294,6 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
 # endif
 
   return now;
-#elif defined (ACE_LINUX) && defined (ACE_HAS_ALPHA_TIMER)
-  // NOTE:  alphas only have a 32 bit tick (cycle) counter.  The rpcc
-  // instruction actually reads 64 bits, but the high 32 bits are
-  // implementation-specific.  Linux and Digital Unix, for example,
-  // use them for virtual tick counts, i.e., taking into account only
-  // the time that the process was running.  This information is from
-  // David Mosberger's article, see comment below.
-  ACE_UINT32 now;
-
-  // The following statement is based on code published by:
-  // Mosberger, David, "How to Make Your Applications Fly, Part 1",
-  // Linux Journal Issue 42, October 1997, page 50.  It reads the
-  // high-res tick counter directly into the memory variable.
-  asm volatile ("rpcc %0" : "=r" (now) : : "memory");
-
-  return now;
 #elif defined (ACE_HAS_POWERPC_TIMER) && (defined (ghs) || defined (__GNUG__))
   // PowerPC w/ GreenHills or g++.
 
@@ -317,9 +301,9 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   u_long most;
   u_long least;
 
-#if defined (ghs)
+#  if defined (ghs)
   ACE_OS::readPPCTimeBase (most, least);
-#else
+#  else
   u_long scratch;
 
   do {
@@ -328,7 +312,7 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
           "mftbu %2"
           : "=r" (most), "=r" (least), "=r" (scratch));
   } while (most != scratch);
-#endif
+#  endif
 
   return 0x100000000llu * most  +  least;
 
@@ -338,11 +322,11 @@ ACE_OS::gethrtime (const ACE_HRTimer_Op op)
   struct timespec ts;
 
   ACE_OS::clock_gettime (
-#if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
+#  if defined (ACE_HAS_CLOCK_GETTIME_MONOTONIC)
          CLOCK_MONOTONIC,
-#else
+#  else
          CLOCK_REALTIME,
-#endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
+#  endif /* !ACE_HAS_CLOCK_GETTIME_MONOTONIC */
          &ts);
 
   // Carefully create the return value to avoid arithmetic overflow
@@ -470,7 +454,7 @@ ACE_OS::time (time_t *tloc)
 #if defined (__GNUG__)
 namespace ACE_OS {
   ACE_INLINE long
-  timezone (void)
+  timezone ()
   {
     return ::ace_timezone ();
   }
@@ -484,7 +468,7 @@ ACE_OS::timezone (void)
 #endif /* ACE_LINUX */
 
 ACE_INLINE void
-ACE_OS::tzset (void)
+ACE_OS::tzset ()
 {
 #if defined (ACE_LACKS_TZSET)
   errno = ENOTSUP;

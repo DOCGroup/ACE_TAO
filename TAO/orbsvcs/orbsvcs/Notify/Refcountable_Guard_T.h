@@ -41,13 +41,13 @@ public:
   ~TAO_Notify_Refcountable_Guard_T ();
 
   /// Redirection operator
-  T* get (void) const;
+  T* get () const;
 
   /// Boolean test
-  bool isSet (void) const;
+  bool isSet () const;
 
   /// Redirection operator
-  T* operator -> (void) const;
+  T* operator -> () const;
 
   /// Dereference operator
   T& operator * () const;

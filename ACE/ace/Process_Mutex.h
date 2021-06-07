@@ -195,7 +195,7 @@ public:
 
 #if !defined (_ACE_USE_SV_SEM)
   /// Return the underlying mutex.
-  const ACE_mutex_t &lock (void) const;
+  const ACE_mutex_t &lock () const;
 #endif /* !_ACE_USE_SV_SEM */
 
   /// Get the name used for the lock, or null if no name is used.
@@ -206,7 +206,7 @@ public:
   static int unlink (const ACE_TCHAR *name);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

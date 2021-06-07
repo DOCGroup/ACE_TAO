@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -26,6 +24,7 @@
 #include "ace/os_include/os_stdio.h"
 #include "ace/os_include/os_fcntl.h"
 #include "ace/os_include/os_inttypes.h"
+#include "ace/os_include/os_errno.h"
 #include /**/ "ace/ACE_export.h"
 
 /* OPENVMS needs unistd for cuserid() */
@@ -126,6 +125,9 @@ inline ACE_HANDLE ace_fileno_helper (FILE *fp)
 # if defined (fileno)
   return (ACE_HANDLE)fileno (fp);
 # undef fileno
+# elif defined (ACE_LACKS_FILENO)
+  ACE_UNUSED_ARG (fp);
+  ACE_NOTSUP_RETURN (ACE_INVALID_HANDLE);
 # else
   return (ACE_HANDLE)(intptr_t)ACE_STD_NAMESPACE::fileno (fp);
 # endif /* defined (fileno) */
@@ -185,7 +187,7 @@ namespace ACE_OS {
   {
   public:
   /// Dump state of the object.
-    void dump (void) const;
+    void dump () const;
 
 # if defined (ACE_WIN32)
     ACE_OVERLAPPED overlapped_;

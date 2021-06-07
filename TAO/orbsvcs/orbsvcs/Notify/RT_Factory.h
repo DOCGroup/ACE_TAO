@@ -18,7 +18,7 @@
 
 #include "orbsvcs/Notify/Default_Factory.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
 #  pragma option push -w-8022
 #endif
 
@@ -38,11 +38,9 @@ public:
   /// Destructor
   virtual ~TAO_Notify_RT_Factory ();
 
-#if !defined (__GNUC__) || (__GNUC__ >= 3)
   /// Instruct the compiler that we want the create
   /// methods from the base class as well
   using TAO_Notify_Default_Factory::create;
-#endif /* !__GNUC__ || __GNUC__ >= 3 */
 
   /// Create StructuredProxyPushSupplier
   virtual void create (TAO_Notify_StructuredProxyPushSupplier*& proxy);
@@ -50,7 +48,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x730)
+#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
 # pragma option pop
 #endif
 

@@ -811,7 +811,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i (void) const
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i () const
 {
   ACE_TRACE ("ACE_Local_Name_Space::dump_i");
 
@@ -961,7 +961,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> void
-ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump (void) const
+ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   // Note that we *must* use structured exception handling here

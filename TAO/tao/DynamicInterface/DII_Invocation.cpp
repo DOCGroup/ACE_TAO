@@ -140,7 +140,6 @@ namespace TAO
     //    UserException we can assume that the request was
     //    completed.
     throw ::CORBA::UNKNOWN (TAO::VMCID, CORBA::COMPLETED_YES);
-
   }
 
 

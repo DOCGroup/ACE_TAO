@@ -52,7 +52,7 @@ EC_BCast::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_BCast::print_args (void) const
+EC_BCast::print_args () const
 {
   this->EC_Driver::print_args ();
 }

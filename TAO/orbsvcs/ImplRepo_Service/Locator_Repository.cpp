@@ -651,7 +651,7 @@ Locator_Repository::servers (void)
 }
 
 const Locator_Repository::SIMap&
-Locator_Repository::servers (void) const
+Locator_Repository::servers () const
 {
   return server_infos_;
 }
@@ -663,7 +663,7 @@ Locator_Repository::activators (void)
 }
 
 const Locator_Repository::AIMap&
-Locator_Repository::activators (void) const
+Locator_Repository::activators () const
 {
   return activator_infos_;
 }

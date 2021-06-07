@@ -47,7 +47,7 @@ EC_Consumer::connect (
 }
 
 int
-EC_Consumer::connected (void) const
+EC_Consumer::connected () const
 {
   return !CORBA::is_nil (this->supplier_proxy_.in ());
 }

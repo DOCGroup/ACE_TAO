@@ -86,7 +86,7 @@ public:
                        size_t max_cmdline_args = MAX_COMMAND_LINE_OPTIONS);
 
   /// Destructor.
-  ~ACE_Process_Options (void);
+  ~ACE_Process_Options ();
 
   // = Methods to set process creation options portably.
 
@@ -112,13 +112,17 @@ public:
                    ACE_HANDLE std_err = ACE_INVALID_HANDLE);
 
   /// Release the standard handles previously set with set_handles;
-  void release_handles (void);
+  void release_handles ();
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// @param format must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
   int setenv (const ACE_TCHAR *format,
-              ...);
+              ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
+#endif /* !ACE_USES_WCHAR */
+    ;
 
   /**
    * Set a single environment variable, @a variable_name.  Since
@@ -130,7 +134,11 @@ public:
    */
   int setenv (const ACE_TCHAR *variable_name,
               const ACE_TCHAR *format,
-              ...);
+              ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4)
+#endif /* !ACE_USES_WCHAR */
+    ;
 #endif // ACE_LACKS_VA_FUNCTIONS
 
   /// Same as above with argv format.  @a envp must be null terminated.
@@ -155,7 +163,11 @@ public:
    * path to run a process, this method *must* be called!  Returns 0
    * on success, -1 on failure.
    */
-  int command_line (const ACE_TCHAR *format, ...);
+  int command_line (const ACE_TCHAR *format, ...)
+#if !defined (ACE_USES_WCHAR)
+    ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
+#endif /* !ACE_USES_WCHAR */
+    ;
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_HAS_WINCE)
   /// Anti-TChar version of command_line ()
@@ -177,10 +189,10 @@ public:
 
   /// Return the process_name.  If the <process_name(name)> set
   /// method is not called, this method will return argv[0].
-  const ACE_TCHAR *process_name (void);
+  const ACE_TCHAR *process_name ();
 
   /// Get the creation flags.
-  u_long creation_flags (void) const;
+  u_long creation_flags () const;
 
   /**
    * Set the creation flags to affect how a new process is spawned.
@@ -196,7 +208,7 @@ public:
   void creation_flags (u_long);
 
   /// Current working directory.  Returns "" if nothing has been set.
-  ACE_TCHAR *working_directory (void);
+  ACE_TCHAR *working_directory ();
 
   /// Buffer of command-line options.  Returns a pointer to a buffer that
   /// contains the list of command line options.  Prior to a call to
@@ -217,18 +229,18 @@ public:
    * and returned with each entry pointing to the start of
    * null-terminated string.  Returns { 0 } if nothing has been set.
    */
-  ACE_TCHAR * const *command_line_argv (void);
+  ACE_TCHAR * const *command_line_argv ();
 
   /**
    * Null-terminated buffer of null terminated strings.  Each string
    * is an environment assignment "VARIABLE=value".  This buffer
    * should end with two null characters.
    */
-  ACE_TCHAR *env_buf (void);
+  ACE_TCHAR *env_buf ();
 
   /// Get the process group.  On UNIX, these methods are used by the
   /// ACE_Process_Manager to manage groups of processes.
-  pid_t getgroup (void) const;
+  pid_t getgroup () const;
 
   /// Set the process group.  On UNIX, these methods are used by the
   /// ACE_Process_Manager to manage groups of processes.
@@ -242,7 +254,7 @@ public:
   /// ACE_Process_Options::set_handles() you must not call
   /// handle_inheritance(false). Doing so will prevent the duplicated handles
   /// from surviving in the created process.
-  int handle_inheritance (void);
+  int handle_inheritance ();
   void handle_inheritance (int);
 
   /// Cause the specified handle to be passed to a child process
@@ -279,17 +291,17 @@ public:
   void avoid_zombies (int);
 
   /// Get current value for avoid_zombies.
-  int avoid_zombies (void);
+  int avoid_zombies ();
 
   /// Enable the use of a Unicode environment.  This only makes sense
   /// for Win32 when ACE_USES_WCHAR is not defined.
-  void enable_unicode_environment (void);
+  void enable_unicode_environment ();
 
   /// Disable the use of a Unicode environment.
-  void disable_unicode_environment (void);
+  void disable_unicode_environment ();
 
   /// Return the unicode environment status
-  bool use_unicode_environment (void) const;
+  bool use_unicode_environment () const;
 
 #if defined (ACE_WIN32)
   // = Non-portable accessors for when you "just have to use them."
@@ -299,7 +311,7 @@ public:
 
   /// Get the process_attributes.  Returns NULL if
   /// set_process_attributes has not been set.
-  LPSECURITY_ATTRIBUTES get_process_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_process_attributes () const;
 
   /// If this is called, a non-null process attributes is sent to
   /// CreateProcess.
@@ -307,14 +319,14 @@ public:
 
   /// Get the thread_attributes.  Returns NULL if set_thread_attributes
   /// has not been set.
-  LPSECURITY_ATTRIBUTES get_thread_attributes (void) const;
+  LPSECURITY_ATTRIBUTES get_thread_attributes () const;
 
   /// If this is called, a non-null thread attributes is sent to
   /// CreateProcess.
   LPSECURITY_ATTRIBUTES set_thread_attributes (void);
 
   /// Get user token. Return ACE_INVALID_HANDLE if it has not been set.
-  HANDLE get_user_token (void) const;
+  HANDLE get_user_token () const;
 
   /// Set user token for creating process as user.
   /// @param token the user token is passed to \c ::CreateProcessAsUser.
@@ -324,12 +336,12 @@ public:
 #else /* All things not WIN32 */
 
   /// argv-style array of environment settings.
-  ACE_TCHAR *const *env_argv (void);
+  ACE_TCHAR *const *env_argv ();
 
   // = Accessors for the standard handles.
-  ACE_HANDLE get_stdin (void) const;
-  ACE_HANDLE get_stdout (void) const;
-  ACE_HANDLE get_stderr (void) const;
+  ACE_HANDLE get_stdin () const;
+  ACE_HANDLE get_stdout () const;
+  ACE_HANDLE get_stderr () const;
 
   // = Set/get real & effective user & group id associated with user.
   int setreugid (const ACE_TCHAR* user);
@@ -337,15 +349,15 @@ public:
   void seteuid (uid_t id);
   void setrgid (uid_t id);
   void setegid (uid_t id);
-  uid_t getruid (void) const;
-  uid_t geteuid (void) const;
-  uid_t getrgid (void) const;
-  uid_t getegid (void) const;
+  uid_t getruid () const;
+  uid_t geteuid () const;
+  uid_t getrgid () const;
+  uid_t getegid () const;
 
   /**
    * Get the inherit_environment flag.
    */
-  bool inherit_environment (void) const;
+  bool inherit_environment () const;
 
   /**
    * Set the inherit_environment flag.
@@ -505,10 +517,10 @@ public:
   friend class ACE_Process_Manager;
 
   /// Default construction.  Use ACE_Process::spawn() to start a process.
-  ACE_Process (void);
+  ACE_Process ();
 
   /// Destructor.
-  virtual ~ACE_Process (void);
+  virtual ~ACE_Process ();
 
   /**
    * Called back from spawn() just before spawning the child.  If this
@@ -551,7 +563,7 @@ public:
 
   /// Called by a ACE_Process_Manager that is removing this object from
   /// its table of managed processes. Default is to do nothing.
-  virtual void unmanage (void);
+  virtual void unmanage ();
 
   /**
    * Wait for a previously spawned process to exit.
@@ -596,44 +608,44 @@ public:
    * This call doesn't give the process a chance to cleanup, so use it
    * with caution.
    */
-  int terminate (void);
+  int terminate ();
 
   /// Return the process id of the new child process.
-  pid_t getpid (void) const;
+  pid_t getpid () const;
 
   /// Return the handle of the process, if it has one.
-  ACE_HANDLE gethandle (void) const;
+  ACE_HANDLE gethandle () const;
 
   /// Return 1 if running; 0 otherwise.
-  int running (void) const;
+  int running () const;
 
   /// Return the process's exit code.  This method returns the raw
   /// exit status returned from system APIs (such as @c wait() or
   /// @c waitpid() ).  This value is system dependent.
-  ACE_exitcode exit_code (void) const;
+  ACE_exitcode exit_code () const;
 
   /// Return the process's return value.  This method returns the
   /// actual return value that a child process returns or exits with.
-  int return_value (void) const;
+  int return_value () const;
 
   /// Close all the handles in the set obtained from the
   /// @a ACE_Process_Options::dup_handles object used to spawn
   /// the process.
-  void close_dup_handles (void);
+  void close_dup_handles ();
 
   /// Close all the passed handles in the set obtained from the
   /// ACE_Process_Options object used to spawn the process.
-  void close_passed_handles (void);
+  void close_passed_handles ();
 
 #if defined (ACE_WIN32)
   PROCESS_INFORMATION process_info (void);
 #endif /* ACE_WIN32 */
 
 private:
-
-  // Disallow copying and assignment since we don't support this (yet).
-  ACE_Process (const ACE_Process &);
-  void operator= (const ACE_Process &);
+  ACE_Process (const ACE_Process &) = delete;
+  void operator= (const ACE_Process &) = delete;
+  ACE_Process (ACE_Process &&) = delete;
+  void operator= (ACE_Process &&) = delete;
 
 protected:
   /// Set this process's exit code.  ACE_Process_Manager uses this
@@ -675,16 +687,14 @@ private:
 class ACE_Export ACE_Managed_Process : public ACE_Process
 {
 public:
-
   /// Cleanup by deleting @c this.
-  virtual void unmanage (void);
+  virtual void unmanage ();
 
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Make sure that we're allocated dynamically!
-  virtual ~ACE_Managed_Process (void);
+  virtual ~ACE_Managed_Process ();
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

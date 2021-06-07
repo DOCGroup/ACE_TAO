@@ -38,13 +38,12 @@ template <class Concrete>
 class ACE_Dumpable_Adapter : public ACE_Dumpable
 {
 public:
-  // = Initialization and termination methods.
   ACE_Dumpable_Adapter (const Concrete *t);
   ~ACE_Dumpable_Adapter (void);
 
   /// Concrete dump method (simply delegates to the dump() method of
   /// <class Concrete>).
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Delegate to methods in the Concrete class.
   Concrete *operator->() const;

@@ -20,19 +20,18 @@ AST_Template_Module_Inst::AST_Template_Module_Inst (
 {
 }
 
-AST_Template_Module_Inst::~AST_Template_Module_Inst (void)
+AST_Template_Module_Inst::~AST_Template_Module_Inst ()
 {
 }
 
 AST_Template_Module *
-AST_Template_Module_Inst::ref (void) const
+AST_Template_Module_Inst::ref () const
 {
-  return
-    AST_Template_Module::narrow_from_decl (this->field_type ());
+  return dynamic_cast<AST_Template_Module*> (this->field_type ());
 }
 
 FE_Utils::T_ARGLIST const *
-AST_Template_Module_Inst::template_args (void) const
+AST_Template_Module_Inst::template_args () const
 {
   return this->template_args_;
 }
@@ -44,11 +43,11 @@ AST_Template_Module_Inst::dump (ACE_OSTREAM_TYPE &)
 }
 
 void
-AST_Template_Module_Inst::destroy (void)
+AST_Template_Module_Inst::destroy ()
 {
   this->template_args_->destroy ();
   delete this->template_args_;
-  this->template_args_ = 0;
+  this->template_args_ = nullptr;
 
   this->AST_Field::destroy ();
 }
@@ -58,6 +57,3 @@ AST_Template_Module_Inst::ast_accept (ast_visitor *visitor)
 {
   return visitor->visit_template_module_inst (this);
 }
-
-IMPL_NARROW_FROM_DECL (AST_Template_Module_Inst)
-

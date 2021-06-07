@@ -24,7 +24,7 @@ public:
   Dgram_Endpoint (const ACE_INET_Addr &local_addr);
 
   // = Hook methods inherited from the <ACE_Event_Handler>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE handle);
   virtual int handle_timeout (const ACE_Time_Value & tv,
                               const void *arg = 0);
@@ -55,7 +55,7 @@ Dgram_Endpoint::Dgram_Endpoint (const ACE_INET_Addr &local_addr)
 }
 
 ACE_HANDLE
-Dgram_Endpoint::get_handle (void) const
+Dgram_Endpoint::get_handle () const
 {
   return this->endpoint_.get_handle ();
 }

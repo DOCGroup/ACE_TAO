@@ -31,7 +31,7 @@ Test_Small_Union::~Test_Small_Union (void)
 }
 
 const char *
-Test_Small_Union::opname (void) const
+Test_Small_Union::opname () const
 {
   return this->opname_;
 }

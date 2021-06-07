@@ -39,7 +39,7 @@ namespace XML
     : public virtual EntityResolver
   {
   public:
-    XML_Schema_Resolver (void);
+    XML_Schema_Resolver ();
 
     XML_Schema_Resolver (Resolver &resolver);
 
@@ -86,7 +86,7 @@ namespace XML
     */
   struct XML_Utils_Export Environment_Resolver
   {
-    Environment_Resolver (void);
+    Environment_Resolver () = default;
 
     Environment_Resolver (const ACE_TCHAR *variable,
                           const ACE_TCHAR *path);

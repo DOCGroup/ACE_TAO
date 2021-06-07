@@ -57,7 +57,7 @@ public:
       int shutdown_event_type);
 
   /// returns 0 if it is not connected
-  virtual int connected (void) const;
+  virtual int connected () const;
 
   /// The application can invoke this method to disconnect from the EC
   /// and deactivate this class.

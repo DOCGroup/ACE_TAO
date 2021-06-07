@@ -32,5 +32,5 @@ return 1;
 void
 Secure_Vault_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

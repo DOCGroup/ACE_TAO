@@ -228,10 +228,10 @@ public:
   create_client_protocol_policy (const RTCORBA::ProtocolList & protocols);
 
   /// Reference to our creating ORB Core.
-  TAO_ORB_Core *orb_core (void) const;
+  TAO_ORB_Core *orb_core () const;
 
   /// Get the Thread Pool Manager.
-  TAO_Thread_Pool_Manager &tp_manager (void) const;
+  TAO_Thread_Pool_Manager &tp_manager () const;
 
   /**
    * This method changes the scheduling policy of the calling thread

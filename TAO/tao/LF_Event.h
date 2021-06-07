@@ -121,23 +121,22 @@ public:
   static const char *state_name (LFS_STATE st);
 
 protected:
-
   /// Validate the state change
   virtual void state_changed_i (LFS_STATE new_state) = 0;
 
   /// Check if we should keep waiting.
-  bool keep_waiting_i (void) const;
+  bool keep_waiting_i () const;
 
   /// Return true if the condition was satisfied successfully, false if it
   /// has not
-  virtual bool successful_i (void) const = 0 ;
+  virtual bool successful_i () const = 0 ;
 
   /// Return true if an error was detected while waiting for the
   /// event
-  virtual bool error_detected_i (void) const = 0;
+  virtual bool error_detected_i () const = 0;
 
   /// Check whether we have reached the final state..
-  virtual bool is_state_final (void) const = 0;
+  virtual bool is_state_final () const = 0;
 
 private:
 

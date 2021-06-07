@@ -51,6 +51,18 @@
 #  include /**/ <hostLib.h>
 #endif /* ACE_VXWORKS */
 
+#ifdef ACE_MQX
+#  if !defined (STDIN_FILENO) && defined (_LLIO_STDIN)
+#    define STDIN_FILENO (_LLIO_STDIN)
+#  endif
+#  if !defined (STDOUT_FILENO) && defined (_LLIO_STDOUT)
+#    define STDOUT_FILENO (_LLIO_STDOUT)
+#  endif
+#  if !defined (STDERR_FILENO) && defined (_LLIO_STDERR)
+#    define STDERR_FILENO (_LLIO_STDERR)
+#  endif
+#endif
+
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
 extern "C"
@@ -162,14 +174,6 @@ extern "C"
                            struct timespec *timeout);
 
 # endif /* ACE_LACKS_TIMEDWAIT_PROTOTYPES */
-
-#if defined (ACE_LACKS_SWAB_PROTOTYPE)
-  void swab(const void *, void *, ssize_t);
-#endif /* ACE_LACKS_SWAB_PROTOTYPE */
-
-#if defined (ACE_LACKS_GETOPT_PROTOTYPE)
-  int getopt(int, char * const [], const char *);
-#endif /* ACE_LACKS_GETOPT_PROTOTYPE */
 
 #ifdef __cplusplus
 }

@@ -29,7 +29,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Naming_Serv_Export TAO_Naming_Loader : public TAO_Object_Loader
 {
 public:
-
   /// Constructor
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
@@ -37,7 +36,7 @@ public:
   TAO_Naming_Loader (TAO_Naming_Server *server = 0);
 
   /// Destructor
-  ~TAO_Naming_Loader (void);
+  ~TAO_Naming_Loader ();
 
   /// Called by the Service Configurator framework to initialize the
   /// Event Service. Defined in <ace/Service_Config.h>
@@ -45,7 +44,7 @@ public:
 
   /// Called by the Service Configurator framework to remove the
   /// Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   /// This function call initializes the Naming Service given a reference to the
   /// ORB and the command line parameters.
@@ -53,14 +52,14 @@ public:
                                            int argc,
                                            ACE_TCHAR *argv[]);
 
- protected:
+protected:
   /// TODO: Need to set up service configurator to initialize the naming server
   /// Instance of the TAO_Naming_Server
   TAO_Naming_Server* naming_server_;
 
 private:
-  TAO_Naming_Loader (const TAO_Naming_Loader &);
-  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &);
+  TAO_Naming_Loader (const TAO_Naming_Loader &) = delete;
+  TAO_Naming_Loader &operator = (const TAO_Naming_Loader &) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

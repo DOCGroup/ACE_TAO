@@ -201,11 +201,7 @@ signal (int signum, ACE_SignalHandler func)
   else
 #if (defined ACE_WIN32 && !defined ACE_HAS_WINCE) || \
     (!defined ACE_LACKS_UNIX_SIGNALS && !defined ACE_LACKS_SIGNAL)
-#  if !defined (ACE_HAS_TANDEM_SIGNALS) && !defined (ACE_HAS_LYNXOS4_SIGNALS)
     return ::signal (signum, func);
-#  else
-    return (ACE_SignalHandler) ::signal (signum, (void (*)(int)) func);
-#  endif /* !ACE_HAS_TANDEM_SIGNALS && !ACE_HAS_LYNXOS4_SIGNALS */
 #else
     // @@ WINCE: Don't know how to implement signal on WinCE (yet.)
     ACE_UNUSED_ARG (signum);

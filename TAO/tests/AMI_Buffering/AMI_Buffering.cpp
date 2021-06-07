@@ -66,5 +66,5 @@ AMI_Buffering::try_shutdown(void)
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) max nesting level: %d\n", max_nest_));
   this->admin_->shutdown();
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

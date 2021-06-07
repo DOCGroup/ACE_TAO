@@ -15,5 +15,5 @@ Simple_Server_i::send_line (const char *line)
 void
 Simple_Server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

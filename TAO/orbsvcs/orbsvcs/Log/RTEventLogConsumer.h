@@ -54,8 +54,6 @@ class TAO_RTEventLogFactory_i;
 class TAO_RTEventLog_Serv_Export TAO_Rtec_LogConsumer :public virtual POA_RtecEventComm::PushConsumer
 {
 public:
-  // = Initialization and Termination methods.
-
   /// Constructor.
   TAO_Rtec_LogConsumer (TAO_RTEventLog_i *log);
 

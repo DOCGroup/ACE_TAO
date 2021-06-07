@@ -109,7 +109,6 @@ template <class STREAM>
 class ACE_IOStream : public iostream, public STREAM
 {
 public:
-  // = Initialization and termination methods.
   ACE_IOStream (STREAM &stream,
                   u_int streambuf_size = ACE_STREAMBUF_SIZE);
 
@@ -136,7 +135,7 @@ public:
    * the return of <eof> and check it instead of calling <eof>
    * successively.
    */
-  int eof (void) const;
+  int eof () const;
 
 #  if defined (ACE_HAS_STRING_CLASS)
   /**
@@ -225,17 +224,15 @@ protected:
   ACE_Streambuf_T<STREAM> *streambuf_;
 
 private:
-  // = Private methods.
-
   // We move these into the private section so that they cannot be
   // used by the application programmer.  This is necessary because
   // streambuf_ will be buffering IO on the STREAM object.  If these
   // functions were used in your program, there is a danger of getting
   // the datastream out of sync.
-  ACE_UNIMPLEMENTED_FUNC (ssize_t send (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t recv (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t send_n (...))
-  ACE_UNIMPLEMENTED_FUNC (ssize_t recv_n (...))
+  ssize_t send (...) = delete;
+  ssize_t recv (...) = delete;
+  ssize_t send_n (...) = delete;
+  ssize_t recv_n (...) = delete;
 };
 
 /**

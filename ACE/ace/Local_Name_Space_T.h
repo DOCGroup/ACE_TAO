@@ -102,7 +102,6 @@ template <ACE_MEM_POOL_1, class ACE_LOCK>
 class ACE_Local_Name_Space : public ACE_Name_Space
 {
 public:
-  // = Initialization and termination methods.
   /// "Do-nothing" constructor.
   ACE_Local_Name_Space (void);
 
@@ -205,8 +204,8 @@ public:
                                    const ACE_NS_WString &pattern);
 
   /// Dump the state of the object
-  virtual void dump (void) const;
-  virtual void dump_i (void) const;
+  virtual void dump () const;
+  virtual void dump_i () const;
 
   // = I just know this is going to cause problems on some platform...
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> >

@@ -21,7 +21,7 @@ TAO::be_visitor_alias_typecode::be_visitor_alias_typecode (
 int
 TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->base_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->base_type ());
 
 
   return this->common (node, base, "tk_alias");
@@ -32,7 +32,7 @@ TAO::be_visitor_alias_typecode::visit_typedef (be_typedef * node)
 int
 TAO::be_visitor_alias_typecode::visit_valuebox (be_valuebox * node)
 {
-  be_type * const base = be_type::narrow_from_decl (node->boxed_type ());
+  be_type * const base = dynamic_cast<be_type*> (node->boxed_type ());
 
   return this->common (node, base, "tk_value_box");
 }

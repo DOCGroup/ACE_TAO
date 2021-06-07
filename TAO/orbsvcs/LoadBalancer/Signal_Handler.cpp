@@ -121,7 +121,7 @@ TAO_LB_Signal_Handler::perform_cleanup (int signum)
       this->poa_->destroy (1, 1);
 
       // Now shutdown the ORB.
-      this->orb_->shutdown (1);
+      this->orb_->shutdown (true);
     }
   catch (const CORBA::Exception& ex)
     {

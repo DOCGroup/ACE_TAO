@@ -18,7 +18,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   /**
    * @class Storable_File_Guard
    * @brief Base class to use with TAO_Storable_Base to synch object state
@@ -32,11 +31,10 @@ namespace TAO
   class TAO_Export Storable_File_Guard
   {
   public:
-
     Storable_File_Guard (bool redundant,
                          bool use_backup = Storable_Base::use_backup_default);
 
-    virtual ~Storable_File_Guard () ACE_NOEXCEPT_FALSE;
+    virtual ~Storable_File_Guard () noexcept(false);
 
     /// Releases the lock, closes the file, and deletes the I/O stream.
     /// Destructors of derived classes should call this this will
@@ -69,7 +67,6 @@ namespace TAO
     };
 
   protected:
-
     /// Should be called by constructors of derived classes
     /// since can't call the virtual functions below in constructor
     /// of this class.
@@ -106,8 +103,7 @@ namespace TAO
     Storable_Base *fl_;
 
   private:
-
-    // Return 0 if succesful.
+    // Return 0 if successful.
     int load ();
 
     bool redundant_;
@@ -123,9 +119,7 @@ namespace TAO
 
     /// Symbolic values for the flags in the above
     enum { mode_write = 1, mode_read = 2, mode_create = 4 };
-
   };
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

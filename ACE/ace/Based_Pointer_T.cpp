@@ -22,7 +22,7 @@ ACE_Based_Pointer<CONCRETE>::ACE_Based_Pointer (void)
 }
 
 template <class CONCRETE> void
-ACE_Based_Pointer_Basic<CONCRETE>::dump (void) const
+ACE_Based_Pointer_Basic<CONCRETE>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::dump");

@@ -28,15 +28,15 @@ class DllOrb_Export DllOrb
     /// Destructor.
     ~DllOrb (void) throw ();
 
-    CORBA::ORB_ptr orb (void) const;
+    CORBA::ORB_ptr orb () const;
 
     virtual int init (int argc, ACE_TCHAR *argv[]);
 
-    virtual int fini (void);
+    virtual int fini ();
 
   // protected types and methods
   protected:
-    virtual int svc (void);
+    virtual int svc ();
 
   // private methods and instance variables
   private:

@@ -42,7 +42,6 @@
 class Logger_Server
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor.
   Logger_Server (void);
 

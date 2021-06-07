@@ -35,8 +35,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Priority_Reactor : public ACE_Select_Reactor
 {
 public:
-  // = Initialization and termination methods.
-
   /// Initialize ACE_Priority_Reactor with the default size.
   ACE_Priority_Reactor (ACE_Sig_Handler * = 0,
                         ACE_Timer_Queue * = 0);
@@ -51,7 +49,7 @@ public:
   virtual ~ACE_Priority_Reactor (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -165,7 +164,7 @@ public:
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
-      AST_ExprValue (void);
+      AST_ExprValue ();
 
       union
         {
@@ -238,30 +237,30 @@ public:
   AST_Expression (const ACE_CDR::Fixed &f);
 
   // Destructor.
-  virtual ~AST_Expression (void);
+  virtual ~AST_Expression ();
 
   // Data Accessors.
-  UTL_Scope *defined_in (void);
+  UTL_Scope *defined_in ();
   void set_defined_in (UTL_Scope *d);
 
-  long line (void);
+  long line ();
   void set_line (long l);
 
-  UTL_String *file_name (void);
+  UTL_String *file_name ();
   void set_file_name (UTL_String *f);
 
-  ExprComb ec (void);
+  ExprComb ec ();
 
-  AST_ExprValue *ev (void);
+  AST_ExprValue *ev ();
   void set_ev (AST_ExprValue *new_ev);
 
-  AST_Expression *v1 (void);
+  AST_Expression *v1 ();
   void set_v1 (AST_Expression *e);
 
-  AST_Expression *v2 (void);
+  AST_Expression *v2 ();
   void set_v2 (AST_Expression *e);
 
-  UTL_ScopedName *n (void);
+  UTL_ScopedName *n ();
   void set_n (UTL_ScopedName *new_n);
 
   // AST Dumping.
@@ -271,7 +270,7 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   // Other operations.
 
@@ -293,10 +292,10 @@ public:
   ///}
 
   // Accessor for the member.
-  AST_Decl *get_tdef (void) const;
+  AST_Decl *get_tdef () const;
 
   // Accessor for the member.
-  AST_Param_Holder *param_holder (void) const;
+  AST_Param_Holder *param_holder () const;
 
   static const char *exprtype_to_string (ExprType t);
 
@@ -352,7 +351,7 @@ private:
   // Non-zero if we were created from a reference template param.
 
   // Fill out the lineno, filename and definition scope details.
-  void fill_definition_details (void);
+  void fill_definition_details ();
 
   // Internal evaluation.
   virtual AST_ExprValue *eval_internal (EvalKind ek);

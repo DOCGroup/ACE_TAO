@@ -1,0 +1,17 @@
+/client
+/server
+/Stock_Quoter_TypesC.cpp
+/Stock_Quoter_TypesC.h
+/Stock_Quoter_TypesC.inl
+/Stock_Quoter_TypesS.cpp
+/Stock_Quoter_TypesS.h
+/Stock_QuoterC.cpp
+/Stock_QuoterC.h
+/Stock_QuoterC.inl
+/Stock_QuoterS.cpp
+/Stock_QuoterS.h
+/UDPTestC.cpp
+/UDPTestC.h
+/UDPTestC.inl
+/UDPTestS.cpp
+/UDPTestS.h

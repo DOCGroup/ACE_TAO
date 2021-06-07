@@ -51,7 +51,7 @@ HostProcess::proc_name (const ACE_CString &name)
 }
 
 const ACE_CString&
-HostProcess::proc_name (void) const
+HostProcess::proc_name () const
 {
   return this->proc_name_;
 }
@@ -139,14 +139,14 @@ HostProcess::find_peer (long h)
 
 
 long
-HostProcess::pid (void) const
+HostProcess::pid () const
 {
   return this->pid_;
 }
 
 
 const ACE_Time_Value &
-HostProcess::start_time (void) const
+HostProcess::start_time () const
 {
   return this->start_time_;
 }

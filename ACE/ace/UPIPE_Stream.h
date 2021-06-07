@@ -41,8 +41,6 @@ public:
 
   typedef ACE_Stream<ACE_SYNCH> MT_Stream;
 
-  // = Initialization and Termination.
-
   ACE_UPIPE_Stream (void);
 
   virtual ~ACE_UPIPE_Stream (void);
@@ -51,7 +49,7 @@ public:
   int close (void);
 
   /// Return the underlying I/O handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   // = Send/recv ACE Message_Blocks.
   /// Send a message through the message queue.  Returns -1 on error,
@@ -96,7 +94,7 @@ public:
   int get_remote_addr (ACE_UPIPE_Addr &remote_sap) const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

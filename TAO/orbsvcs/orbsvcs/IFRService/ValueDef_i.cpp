@@ -17,18 +17,18 @@ TAO_ValueDef_i::TAO_ValueDef_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_ValueDef_i::~TAO_ValueDef_i (void)
+TAO_ValueDef_i::~TAO_ValueDef_i ()
 {
 }
 
 CORBA::DefinitionKind
-TAO_ValueDef_i::def_kind (void)
+TAO_ValueDef_i::def_kind ()
 {
   return CORBA::dk_Value;
 }
 
 void
-TAO_ValueDef_i::destroy (void)
+TAO_ValueDef_i::destroy ()
 {
   TAO_IFR_WRITE_GUARD;
 
@@ -38,7 +38,7 @@ TAO_ValueDef_i::destroy (void)
 }
 
 void
-TAO_ValueDef_i::destroy_i (void)
+TAO_ValueDef_i::destroy_i ()
 {
   this->TAO_Container_i::destroy_i ();
 
@@ -60,7 +60,7 @@ TAO_ValueDef_i::destroy_i (void)
 }
 
 CORBA::Contained::Description *
-TAO_ValueDef_i::describe (void)
+TAO_ValueDef_i::describe ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -70,7 +70,7 @@ TAO_ValueDef_i::describe (void)
 }
 
 CORBA::Contained::Description *
-TAO_ValueDef_i::describe_i (void)
+TAO_ValueDef_i::describe_i ()
 {
   CORBA::ValueDescription *vd = 0;
   ACE_NEW_RETURN (vd,
@@ -91,7 +91,7 @@ TAO_ValueDef_i::describe_i (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueDef_i::type (void)
+TAO_ValueDef_i::type ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::TypeCode::_nil ());
 
@@ -101,7 +101,7 @@ TAO_ValueDef_i::type (void)
 }
 
 CORBA::TypeCode_ptr
-TAO_ValueDef_i::type_i (void)
+TAO_ValueDef_i::type_i ()
 {
   /// Since valuetype type codes may encapsultate the type code of a
   /// base class, this call could be recursive, with the
@@ -113,7 +113,7 @@ TAO_ValueDef_i::type_i (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_ValueDef_i::supported_interfaces (void)
+TAO_ValueDef_i::supported_interfaces ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -123,7 +123,7 @@ TAO_ValueDef_i::supported_interfaces (void)
 }
 
 CORBA::InterfaceDefSeq *
-TAO_ValueDef_i::supported_interfaces_i (void)
+TAO_ValueDef_i::supported_interfaces_i ()
 {
   CORBA::InterfaceDefSeq *seq = 0;
   ACE_NEW_RETURN (seq,
@@ -257,7 +257,7 @@ TAO_ValueDef_i::supported_interfaces_i (
 }
 
 CORBA::InitializerSeq *
-TAO_ValueDef_i::initializers (void)
+TAO_ValueDef_i::initializers ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -267,7 +267,7 @@ TAO_ValueDef_i::initializers (void)
 }
 
 CORBA::InitializerSeq *
-TAO_ValueDef_i::initializers_i (void)
+TAO_ValueDef_i::initializers_i ()
 {
   CORBA::InitializerSeq *iseq = 0;
   ACE_NEW_RETURN (iseq,
@@ -383,7 +383,7 @@ TAO_ValueDef_i::initializers_i (const CORBA::InitializerSeq &initializers)
 }
 
 CORBA::ValueDef_ptr
-TAO_ValueDef_i::base_value (void)
+TAO_ValueDef_i::base_value ()
 {
   TAO_IFR_READ_GUARD_RETURN (CORBA::ValueDef::_nil ());
 
@@ -393,7 +393,7 @@ TAO_ValueDef_i::base_value (void)
 }
 
 CORBA::ValueDef_ptr
-TAO_ValueDef_i::base_value_i (void)
+TAO_ValueDef_i::base_value_i ()
 {
   ACE_TString base_path;
   int status =
@@ -458,7 +458,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
 }
 
 CORBA::ValueDefSeq *
-TAO_ValueDef_i::abstract_base_values (void)
+TAO_ValueDef_i::abstract_base_values ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -468,7 +468,7 @@ TAO_ValueDef_i::abstract_base_values (void)
 }
 
 CORBA::ValueDefSeq *
-TAO_ValueDef_i::abstract_base_values_i (void)
+TAO_ValueDef_i::abstract_base_values_i ()
 {
   CORBA::ValueDefSeq *vd_seq = 0;
   ACE_NEW_RETURN (vd_seq,
@@ -585,7 +585,7 @@ TAO_ValueDef_i::abstract_base_values_i (
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_abstract (void)
+TAO_ValueDef_i::is_abstract ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -595,7 +595,7 @@ TAO_ValueDef_i::is_abstract (void)
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_abstract_i (void)
+TAO_ValueDef_i::is_abstract_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -624,7 +624,7 @@ TAO_ValueDef_i::is_abstract_i (CORBA::Boolean is_abstract)
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_custom (void)
+TAO_ValueDef_i::is_custom ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -634,7 +634,7 @@ TAO_ValueDef_i::is_custom (void)
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_custom_i (void)
+TAO_ValueDef_i::is_custom_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -663,7 +663,7 @@ TAO_ValueDef_i::is_custom_i (CORBA::Boolean is_custom)
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_truncatable (void)
+TAO_ValueDef_i::is_truncatable ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -673,7 +673,7 @@ TAO_ValueDef_i::is_truncatable (void)
 }
 
 CORBA::Boolean
-TAO_ValueDef_i::is_truncatable_i (void)
+TAO_ValueDef_i::is_truncatable_i ()
 {
   CORBA::ULong is_it = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
@@ -800,7 +800,7 @@ TAO_ValueDef_i::is_a_i (const char *id)
 }
 
 CORBA::ValueDef::FullValueDescription *
-TAO_ValueDef_i::describe_value (void)
+TAO_ValueDef_i::describe_value ()
 {
   TAO_IFR_READ_GUARD_RETURN (0);
 
@@ -810,7 +810,7 @@ TAO_ValueDef_i::describe_value (void)
 }
 
 CORBA::ValueDef::FullValueDescription *
-TAO_ValueDef_i::describe_value_i (void)
+TAO_ValueDef_i::describe_value_i ()
 {
   CORBA::ValueDef::FullValueDescription *fv_desc = 0;
   ACE_NEW_RETURN (fv_desc,

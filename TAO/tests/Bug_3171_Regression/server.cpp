@@ -58,7 +58,7 @@ class Worker : public ACE_Task_Base
 public:
   Worker ();
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
 };

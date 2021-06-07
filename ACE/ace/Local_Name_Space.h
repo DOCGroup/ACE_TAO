@@ -56,7 +56,7 @@ public:
   operator ACE_NS_WString () const;
 
   /// Return the ASCII character representation.
-  char *char_rep (void) const;
+  char *char_rep () const;
 
   /// Matches on substrings.
   int strstr (const ACE_NS_String &) const;
@@ -68,13 +68,13 @@ public:
   bool operator != (const ACE_NS_String &) const;
 
   /// Returns length of the string
-  size_t len (void) const;
+  size_t len () const;
 
   /// Returns the underlying representation.
-  ACE_WCHAR_T *fast_rep (void) const;
+  ACE_WCHAR_T *fast_rep () const;
 
   /// Returns a hash value for this string.
-  u_long hash (void) const;
+  u_long hash () const;
 
 private:
   /// Length of the string.

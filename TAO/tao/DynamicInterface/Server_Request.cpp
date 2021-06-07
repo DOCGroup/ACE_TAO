@@ -20,13 +20,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DSI ServerRequest object.
 CORBA::ULong
-CORBA::ServerRequest::_incr_refcount (void)
+CORBA::ServerRequest::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::ServerRequest::_decr_refcount (void)
+CORBA::ServerRequest::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -37,7 +37,7 @@ CORBA::ServerRequest::_decr_refcount (void)
 }
 
 CORBA::ServerRequest::ServerRequest (TAO_ServerRequest &orb_server_request)
-  : lazy_evaluation_ (0),
+  : lazy_evaluation_ (false),
     ctx_ (CORBA::Context::_nil ()),
     params_ (CORBA::NVList::_nil ()),
     retval_ (0),

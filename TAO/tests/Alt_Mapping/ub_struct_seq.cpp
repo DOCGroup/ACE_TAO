@@ -33,7 +33,7 @@ Test_Unbounded_Struct_Sequence::~Test_Unbounded_Struct_Sequence (
 }
 
 const char *
-Test_Unbounded_Struct_Sequence::opname (void) const
+Test_Unbounded_Struct_Sequence::opname () const
 {
   return this->opname_;
 }

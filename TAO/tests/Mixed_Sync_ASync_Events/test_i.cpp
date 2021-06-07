@@ -93,7 +93,7 @@ Test_i::shutdown (void)
   {
     this->opponent_->shutdown ();
   }
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 Test_Reply_i::Test_Reply_i (CORBA::ORB_ptr orb,

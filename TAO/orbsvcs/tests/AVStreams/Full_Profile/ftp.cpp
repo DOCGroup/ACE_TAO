@@ -348,7 +348,7 @@ ACE_TMAIN (int argc,
         ACE_ERROR_RETURN ((LM_ERROR,"client::init failed\n"),1);
       result = CLIENT::instance ()->run ();
 
-      poa->destroy (1, 1);
+      poa->destroy (true, true);
 
       orb->destroy ();
 

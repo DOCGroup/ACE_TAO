@@ -21,5 +21,5 @@ Hello::get_any (CORBA::Any const & the_any)
 void
 Hello::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

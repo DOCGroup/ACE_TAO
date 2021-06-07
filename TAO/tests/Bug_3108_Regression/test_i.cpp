@@ -16,5 +16,5 @@ test_i::test_method ()
 void
 test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

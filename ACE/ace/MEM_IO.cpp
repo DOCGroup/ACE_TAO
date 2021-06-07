@@ -8,13 +8,11 @@
 #include "ace/MEM_IO.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
-ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO (void)
+ACE_Reactive_MEM_IO::~ACE_Reactive_MEM_IO ()
 {
 }
 
@@ -334,7 +332,7 @@ ACE_MT_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 #endif /* ACE_WIN32 || !_ACE_USE_SV_SEM */
 
 void
-ACE_MEM_IO::dump (void) const
+ACE_MEM_IO::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_IO::dump");
@@ -374,7 +372,7 @@ ACE_MEM_IO::init (const ACE_TCHAR *name,
 }
 
 int
-ACE_MEM_IO::fini (void)
+ACE_MEM_IO::fini ()
 {
   if (this->deliver_strategy_ != 0)
     {

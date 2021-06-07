@@ -25,5 +25,5 @@ server_i::test_request (const char *msg)
 void
 server_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

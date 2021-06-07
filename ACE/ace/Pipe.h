@@ -42,7 +42,6 @@ class ACE_Time_Value;
 class ACE_Export ACE_Pipe
 {
 public:
-  // = Initialization and termination.
   /// Default constructor (does nothing...).
   ACE_Pipe (void);
 
@@ -73,17 +72,17 @@ public:
    * processes can also write to this handle as well since pipes are
    * bi-directional.
    */
-  ACE_HANDLE read_handle (void) const;
+  ACE_HANDLE read_handle () const;
 
   /**
    * This is the "write" side of the pipe.  Note, however, that
    * processes can also read to this handle as well since pipes are
    * bi-directional.
    */
-  ACE_HANDLE write_handle (void) const;
+  ACE_HANDLE write_handle () const;
 
   /// Dump the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// send upto @a n bytes in @a buf.
   ssize_t send (const void *buf, size_t n) const;

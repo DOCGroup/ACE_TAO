@@ -17,6 +17,10 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#ifdef ACE_MQX
+#  include "ace/MQX_Filesystem.h"
+#endif
+
 /*****************************************************************************/
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -752,6 +756,11 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
                                   ACE_TEXT_ALWAYS_WCHAR (mode),
                                   stream),
                      FILE *, 0);
+#elif defined (ACE_LACKS_FREOPEN)
+  ACE_UNUSED_ARG (filename);
+  ACE_UNUSED_ARG (mode);
+  ACE_UNUSED_ARG (stream);
+  ACE_NOTSUP_RETURN (0);
 #else
   ACE_OSCALL_RETURN
     (ACE_STD_NAMESPACE::freopen (ACE_TEXT_ALWAYS_CHAR (filename),
@@ -895,6 +904,8 @@ ACE_OS::rename (const char *old_name,
   if (::MoveFileExA (old_name, new_name, flags) == 0)
     ACE_FAIL_RETURN (-1);
   return 0;
+#elif defined (ACE_RENAME_EQUIVALENT)
+  ACE_OSCALL_RETURN (ACE_RENAME_EQUIVALENT (old_name, new_name), int, -1);
 # else
   ACE_UNUSED_ARG (flags);
   ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
@@ -941,7 +952,7 @@ ACE_OS::rename (const wchar_t *old_name,
 ACE_INLINE void
 ACE_OS::rewind (FILE *fp)
 {
-#if !defined (ACE_HAS_WINCE)
+#if !defined (ACE_HAS_WINCE) && !defined (ACE_MQX)
   ACE_OS_TRACE ("ACE_OS::rewind");
 # if defined (ACE_LACKS_REWIND)
   ACE_UNUSED_ARG (fp);
@@ -1116,12 +1127,8 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-      defined (ACE_HAS_DINKUM_STL) || defined (__DMC__) || \
       defined (ACE_HAS_VSWPRINTF) || \
-      (defined (ACE_WIN32_VC10) && !defined (ACE_HAS_WINCE)) || \
-      (defined (ACE_WIN32_VC9) && !defined (ACE_HAS_WINCE)) || \
-      (defined (ACE_WIN32_VC8) && !defined (ACE_HAS_WINCE) && \
-      _MSC_FULL_VER > 140050000)
+      (defined (_MSC_VER) && !defined (ACE_HAS_WINCE))
 
   // The XPG4/UNIX98/C99 signature of the wide-char sprintf has a
   // maxlen argument. Since this method doesn't supply one, pass in
@@ -1148,7 +1155,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
   ACE_UNUSED_ARG (argptr);
   ACE_NOTSUP_RETURN (-1);
 
-# endif /* XPG5 || ACE_HAS_DINKUM_STL */
+# endif /* XPG5 */
 }
 #endif /* ACE_HAS_WCHAR */
 
@@ -1200,7 +1207,6 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 {
 # if (defined _XOPEN_SOURCE && (_XOPEN_SOURCE - 0) >= 500) || \
      (defined (sun) && !(defined(_XOPEN_SOURCE) && (_XOPEN_VERSION-0==4))) || \
-     (defined (ACE_HAS_DINKUM_STL) || defined (__DMC__)) || \
       defined (ACE_HAS_VSWPRINTF) || \
       defined (ACE_WIN32)
 

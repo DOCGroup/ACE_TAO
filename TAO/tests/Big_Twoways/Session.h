@@ -45,7 +45,7 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Validate all the connections
   void validate_connections (void);

@@ -96,7 +96,7 @@ typedef ACE_Singleton<Client_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
 class Client_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Singleton<Client_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
@@ -114,7 +114,6 @@ Client_Proactor_Task::svc (void)
   return 0;
 }
 
-
 /**
  * Server's proactor
  */
@@ -126,7 +125,7 @@ typedef ACE_Singleton<Server_Proactor, ACE_SYNCH_RECURSIVE_MUTEX>
 class Server_Proactor_Task : public ACE_Task_Base
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 };
 
 typedef ACE_Singleton<Server_Proactor_Task, ACE_SYNCH_RECURSIVE_MUTEX>
@@ -269,7 +268,7 @@ public:
   int write (ACE_Message_Block &mb, size_t bytes_to_write);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int safe_to_delete (void) const;
+  int safe_to_delete () const;
 
 private:
   mutable ACE_SYNCH_RECURSIVE_MUTEX  mtx_;
@@ -529,7 +528,7 @@ Server_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
 }
 
 int
-Server_Service_Handler::safe_to_delete (void) const
+Server_Service_Handler::safe_to_delete () const
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -561,7 +560,7 @@ public:
 
   virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
 
-  int safe_to_delete (void) const;
+  int safe_to_delete () const;
 
   void prepare_for_connection (Server_Service_Handler *service_handler);
 
@@ -606,7 +605,7 @@ Acceptor::cancel (void)
 }
 
 int
-Acceptor::safe_to_delete (void) const
+Acceptor::safe_to_delete () const
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
   return (this->cancel_flag_ != 0 && this->accept_cnt_ == 0) ? 1 : 0;
@@ -708,13 +707,13 @@ public:
   int write (ACE_Message_Block &mb, size_t bytes_to_write);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  int safe_to_delete (void) const;
+  int safe_to_delete () const;
 
   int wait_for_external_write_queue (ACE_Time_Value *wait_time);
 
   int wait_for_read_completed (ACE_Time_Value *wait_time);
 
-  int read_successful (void) const;
+  int read_successful () const;
 
 private:
   mutable ACE_SYNCH_RECURSIVE_MUTEX  mtx_;
@@ -990,7 +989,7 @@ Client_Service_Handler::write (ACE_Message_Block &mb, size_t bytes_to_write)
 }
 
 int
-Client_Service_Handler::safe_to_delete (void) const
+Client_Service_Handler::safe_to_delete () const
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 
@@ -1012,7 +1011,7 @@ Client_Service_Handler::wait_for_read_completed (ACE_Time_Value *wait_time)
 }
 
 int
-Client_Service_Handler::read_successful (void) const
+Client_Service_Handler::read_successful () const
 {
   return this->read_successful_;
 }
@@ -1041,7 +1040,7 @@ public:
     const ACE_INET_Addr &remote,
     const ACE_INET_Addr& local);
 
-  int safe_to_delete (void) const;
+  int safe_to_delete () const;
 
   void prepare_for_connection (Client_Service_Handler *service_handler);
 
@@ -1123,7 +1122,7 @@ Connector::make_handler (void)
 }
 
 int
-Connector::safe_to_delete (void) const
+Connector::safe_to_delete () const
 {
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, guard, this->mtx_, -1);
 

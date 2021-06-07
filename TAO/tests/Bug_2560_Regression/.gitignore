@@ -1,2 +1,7 @@
 /client
+/QuoterC.cpp
+/QuoterC.h
+/QuoterC.inl
+/QuoterS.cpp
+/QuoterS.h
 /server

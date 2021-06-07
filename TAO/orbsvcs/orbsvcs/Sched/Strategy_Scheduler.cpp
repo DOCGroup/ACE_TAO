@@ -613,7 +613,7 @@ ACE_Scheduler_Strategy::ACE_Scheduler_Strategy (
 {
 }
 
-ACE_Scheduler_Strategy::~ACE_Scheduler_Strategy (void)
+ACE_Scheduler_Strategy::~ACE_Scheduler_Strategy ()
 {
 }
 

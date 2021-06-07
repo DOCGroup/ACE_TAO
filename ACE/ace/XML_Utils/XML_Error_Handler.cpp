@@ -12,15 +12,6 @@ using xercesc::SAXParseException;
 
 namespace XML
 {
-  XML_Error_Handler::XML_Error_Handler (void)
-    : errors_ (false)
-  {
-  }
-
-  XML_Error_Handler::~XML_Error_Handler()
-  {
-  }
-
   void XML_Error_Handler::warning(const SAXParseException& toCatch)
   {
     if (ACE::debug ())
@@ -68,7 +59,7 @@ namespace XML
   }
 
   bool
-  XML_Error_Handler::getErrors (void) const
+  XML_Error_Handler::getErrors () const
   {
     return this->errors_;
   }

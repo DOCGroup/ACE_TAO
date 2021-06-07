@@ -22,5 +22,5 @@ Simple_Server_i::shutdown (void)
 {
   // We dont shutdown the ORB. We allow the server to go away as it
   // wants.
-  // this->orb_->shutdown (0);
+  // this->orb_->shutdown (false);
 }

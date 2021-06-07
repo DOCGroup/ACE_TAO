@@ -475,6 +475,7 @@ project(Bug_4055_Regression_Test) : acetest, threads {
 }
 
 project(Bug_4189_Regression_Test) : acetest, threads {
+  avoids += ace_for_tao
   exename = Bug_4189_Regression_Test
   Source_Files {
     Bug_4189_Regression_Test.cpp
@@ -611,15 +612,6 @@ project(Compiler_Features_07_Test) : acetest {
   exename = Compiler_Features_07_Test
   Source_Files {
     Compiler_Features_07_Test.cpp
-  }
-}
-
-// This compiler feature is not supported on all compilers
-project(Compiler_Features_08_Test) : acetest {
-  requires += dummy_label
-  exename = Compiler_Features_08_Test
-  Source_Files {
-    Compiler_Features_08_Test.cpp
   }
 }
 
@@ -1214,6 +1206,13 @@ project(Multicast Test) : acetest {
   exename = Multicast_Test
   Source_Files {
     Multicast_Test.cpp
+  }
+}
+
+project(Multicast Interfaces Test) : acetest {
+  exename = Multicast_Interfaces_Test
+  Source_Files {
+    Multicast_Interfaces_Test.cpp
   }
 }
 
@@ -2286,6 +2285,7 @@ project(Missing_Svc_Conf_Test) : acetest {
 }
 
 project(UNIX Addr Test) : acetest {
+  avoids += ace_for_tao
   exename = UNIX_Addr_Test
   Source_Files {
     UNIX_Addr_Test.cpp

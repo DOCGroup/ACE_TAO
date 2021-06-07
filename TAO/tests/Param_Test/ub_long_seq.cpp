@@ -33,7 +33,7 @@ Test_Long_Sequence::~Test_Long_Sequence (void)
 }
 
 const char *
-Test_Long_Sequence::opname (void) const
+Test_Long_Sequence::opname () const
 {
   return this->opname_;
 }

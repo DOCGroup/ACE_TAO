@@ -205,7 +205,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_OS::sleep (5); // Allow the shutdown message to be processed.
       ACE_DEBUG ((LM_DEBUG, "Shutdown poa and orb . . .\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

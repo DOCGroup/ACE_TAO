@@ -19,7 +19,7 @@ TAO_Iterator_i::TAO_Iterator_i (PortableServer::POA_ptr poa,
 }
 
 
-TAO_Iterator_i::~TAO_Iterator_i (void)
+TAO_Iterator_i::~TAO_Iterator_i ()
 {
   // cancel timer
   if (this->timer_id_ != -1)
@@ -30,7 +30,7 @@ TAO_Iterator_i::~TAO_Iterator_i (void)
 
 
 void
-TAO_Iterator_i::destroy (void)
+TAO_Iterator_i::destroy ()
 {
   PortableServer::ObjectId_var oid =
     this->poa_->servant_to_id (this);

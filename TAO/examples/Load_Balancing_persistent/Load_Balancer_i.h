@@ -48,9 +48,6 @@ class  Object_Group_Factory_i :
   //    round robin groups).
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_Factory_i (CORBA::ORB_ptr orb,
                           PortableServer::POA_ptr poa);
@@ -185,9 +182,6 @@ class Object_Group_i
   //   different load balancing policies.
   //
 public:
-
-  // = Initialization and termination methods.
-
   /// Constructor.
   Object_Group_i (const char * id,
                   PortableServer::POA_ptr poa);
@@ -225,8 +219,7 @@ public:
    * ``round robin.''  If the group contains no members, <no_such_member>
    * exception is thrown.
    */
-  char * resolve (void)
-    = 0;
+  char * resolve (void) = 0;
 
   /**
    * Returns an object with the specified <Member_ID>.  If this

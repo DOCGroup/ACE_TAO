@@ -43,7 +43,7 @@ Test_ObjRef_Sequence::~Test_ObjRef_Sequence (void)
 }
 
 const char *
-Test_ObjRef_Sequence::opname (void) const
+Test_ObjRef_Sequence::opname () const
 {
   return this->opname_;
 }

@@ -61,7 +61,7 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
 
 
 ACE_INLINE size_t
-TAO_Queued_Data::missing_data (void) const
+TAO_Queued_Data::missing_data () const
 {
   return this->missing_data_;
 }
@@ -73,31 +73,31 @@ TAO_Queued_Data::missing_data (size_t data)
 }
 
 ACE_INLINE TAO_GIOP_Message_Version const &
-TAO_Queued_Data::giop_version (void) const
+TAO_Queued_Data::giop_version () const
 {
   return this->state_.giop_version ();
 }
 
 ACE_INLINE CORBA::Octet
-TAO_Queued_Data::byte_order (void) const
+TAO_Queued_Data::byte_order () const
 {
   return this->state_.byte_order ();
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Queued_Data::more_fragments (void) const
+TAO_Queued_Data::more_fragments () const
 {
   return this->state_.more_fragments ();
 }
 
 ACE_INLINE GIOP::MsgType
-TAO_Queued_Data::msg_type (void) const
+TAO_Queued_Data::msg_type () const
 {
   return this->state_.message_type ();
 }
 
 ACE_INLINE TAO_Queued_Data *
-TAO_Queued_Data::next (void) const
+TAO_Queued_Data::next () const
 {
   return this->next_;
 }
@@ -109,7 +109,7 @@ TAO_Queued_Data::next (TAO_Queued_Data* qd)
 }
 
 ACE_INLINE ACE_Message_Block *
-TAO_Queued_Data::msg_block (void) const
+TAO_Queued_Data::msg_block () const
 {
   return this->msg_block_;
 }
@@ -127,7 +127,7 @@ TAO_Queued_Data::state (const TAO_GIOP_Message_State& state)
 }
 
 ACE_INLINE const TAO_GIOP_Message_State&
-TAO_Queued_Data::state (void) const
+TAO_Queued_Data::state () const
 {
   return this->state_;
 }

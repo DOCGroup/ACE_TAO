@@ -40,7 +40,7 @@ public:
   int verify_results(void);
 
   /// Run by a daemon thread to handle deferred processing.
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg);

@@ -51,7 +51,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Sig_Handler;
 class ACE_Dev_Poll_Reactor;
 
-
 // ---------------------------------------------------------------------
 
 /**
@@ -67,7 +66,6 @@ class ACE_Dev_Poll_Reactor;
 class ACE_Dev_Poll_Reactor_Notify : public ACE_Reactor_Notify
 {
 public:
-
   /// Constructor
   ACE_Dev_Poll_Reactor_Notify (void);
 
@@ -99,7 +97,7 @@ public:
   /// Unimplemented method required by pure virtual method in abstract
   /// base class.
   /**
-   * This method's interface is not very compatibile with this
+   * This method's interface is not very compatible with this
    * Reactor's design.  It's not clear why this method is pure virtual
    * either.
    */
@@ -156,7 +154,7 @@ public:
     ACE_Reactor_Mask    = ACE_Event_Handler::ALL_EVENTS_MASK);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Method called by ACE_Dev_Poll_Reactor to obtain one notification.
   /// THIS METHOD MUST BE CALLED WITH THE REACTOR TOKEN HELD!
@@ -317,7 +315,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   class Handler_Repository
   {
   public:
-
     /// Constructor.
     Handler_Repository (void);
 
@@ -377,19 +374,18 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
     //@}
 
     /// Returns the current table size.
-    size_t size (void) const;
+    size_t size () const;
 
-    /// Returns the current table size.
-    size_t max_size (void) const;
+    /// Returns the maximum table size.
+    size_t max_size () const;
 
     /// Dump the state of an object.
-    void dump (void) const;
+    void dump () const;
 
     /// Declare the dynamic allocation hooks.
     ACE_ALLOC_HOOK_DECLARE;
 
   private:
-
     /// Current number of handles.
     int size_;
 
@@ -406,7 +402,6 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
   };
 
 public:
-
   /// Initialize @c ACE_Dev_Poll_Reactor with the default size.
   /**
    * The default size for the @c ACE_Dev_Poll_Reactor is the maximum
@@ -468,7 +463,7 @@ public:
 
   /// Get the timer queue
   /// @return The current @c ACE_Timer_Queue.
-  virtual ACE_Timer_Queue *timer_queue (void) const;
+  virtual ACE_Timer_Queue *timer_queue () const;
 
   /// Close down and release all resources.
   virtual int close (void);
@@ -809,7 +804,7 @@ public:
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
-  virtual size_t size (void) const;
+  virtual size_t size () const;
 
   /// Returns a reference to the Reactor's internal repository lock.
   virtual ACE_Lock &lock (void);
@@ -912,7 +907,7 @@ public:
   //@}
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1003,7 +998,6 @@ protected:
   short reactor_mask_to_poll_event (ACE_Reactor_Mask mask);
 
 protected:
-
   /// Has the reactor been initialized.
   bool initialized_;
 
@@ -1106,7 +1100,6 @@ protected:
   class ACE_Export Token_Guard
   {
   public:
-
     /// Constructor that will grab the token for us
     Token_Guard (ACE_Dev_Poll_Reactor_Token &token);
 
@@ -1119,7 +1112,7 @@ protected:
 
     /// Returns whether the thread that created this object owns the
     /// token or not.
-    int is_owner (void);
+    bool is_owner (void);
 
     /// A helper method that acquires the token 1) at a low priority, and
     /// 2) wait quietly for the token, not waking another thread. This
@@ -1133,20 +1126,17 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-
     Token_Guard (void);
 
   private:
-
     /// The Reactor token.
     ACE_Dev_Poll_Reactor_Token &token_;
 
     /// Flag that indicate whether the thread that created this object
-    /// owns the token or not. A value of 0 indicates that this class
-    /// hasn't got the token (and hence the thread) and a value of 1
+    /// owns the token or not. A value of false indicates that this class
+    /// hasn't got the token (and hence the thread) and a value of true
     /// vice-versa.
-    int owner_;
-
+    bool owner_;
   };
 };
 
@@ -1165,7 +1155,6 @@ protected:
 class ACE_Dev_Poll_Handler_Guard
 {
 public:
-
   /// Constructor
   /**
    * The constructor checks to see if @a eh is a reference-counted handler and
@@ -1189,13 +1178,11 @@ public:
   void release (void);
 
 private:
-
   /// The event handler being managed.
   ACE_Event_Handler *eh_;
 
   /// true if eh_ is a reference-counted handler.
   bool refcounted_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

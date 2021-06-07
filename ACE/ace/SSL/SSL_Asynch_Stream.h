@@ -184,7 +184,7 @@ public:
   int close (void);
 
   /// Return a pointer to the underlying SSL structure.
-  SSL *ssl (void) const;
+  SSL *ssl () const;
 
   /**
    * Initializes the factory with information which will be used with
@@ -277,7 +277,7 @@ public:
 protected:
   /// Virtual from ACE_Asynch_Operation. Since this class is essentially an
   /// implementation class, simply return 0.
-  virtual ACE_Asynch_Operation_Impl *implementation (void) const { return 0; }
+  virtual ACE_Asynch_Operation_Impl *implementation () const { return 0; }
 
   /// virtual from ACE_Handler
 
@@ -367,13 +367,10 @@ protected:
   //@}
 
 private:
-
-  // Preventing copying through construction or assignment.
-  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &);
-  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &);
+  ACE_SSL_Asynch_Stream (ACE_SSL_Asynch_Stream const &) = delete;
+  ACE_SSL_Asynch_Stream & operator= (ACE_SSL_Asynch_Stream const &) = delete;
 
 protected:
-
   /// Stream Type ST_CLIENT/ST_SERVER
   Stream_Type type_;
 
@@ -447,7 +444,6 @@ protected:
 
   /// Mutex to protect work
   ACE_SYNCH_MUTEX mutex_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

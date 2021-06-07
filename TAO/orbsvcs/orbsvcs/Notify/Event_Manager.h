@@ -91,10 +91,10 @@ public:
   void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
 
   /// What are the types being offered.
-  const TAO_Notify_EventTypeSeq& offered_types (void) const;
+  const TAO_Notify_EventTypeSeq& offered_types () const;
 
   /// What are the types being subscribed.
-  const TAO_Notify_EventTypeSeq& subscription_types (void) const;
+  const TAO_Notify_EventTypeSeq& subscription_types () const;
 
 protected:
   /// Subscribe <proxy_supplier> to the event type sequence list <seq>.
@@ -110,12 +110,10 @@ protected:
   void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq);
 
 private:
-  // Disallow copying and assignment; we don't need them
-  // and if we let the compiler generate them it needs the
-  // full declaration of the template arguments for ACE_Auto_Ptr<>
-  // below.
-  TAO_Notify_Event_Manager (TAO_Notify_Event_Manager&);
-  TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&);
+  TAO_Notify_Event_Manager (const TAO_Notify_Event_Manager&) = delete;
+  TAO_Notify_Event_Manager& operator= (const TAO_Notify_Event_Manager&) = delete;
+  TAO_Notify_Event_Manager (TAO_Notify_Event_Manager&&) = delete;
+  TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&&) = delete;
 
   /// Consumer Map
   ACE_Auto_Ptr< TAO_Notify_Consumer_Map > consumer_map_;

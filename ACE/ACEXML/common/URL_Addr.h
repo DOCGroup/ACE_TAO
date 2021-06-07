@@ -101,10 +101,10 @@ public:
   bool operator != (const ACEXML_URL_Addr &SAP) const;
 
   /// Computes and returns hash value.
-  virtual u_long hash (void) const;
+  virtual u_long hash () const;
 
   /// Return the path name.
-  const ACEXML_Char *get_path_name (void) const;
+  const ACEXML_Char *get_path_name () const;
 
   /// Commit suicide.
   int destroy (void);

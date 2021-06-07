@@ -32,7 +32,6 @@ template <class T>
 class ACE_Typed_SV_Message
 {
 public:
-  // = Initialization and termination methods.
   ACE_Typed_SV_Message (long type = 0,
                         int length = sizeof (T),
                         int max_size = sizeof (T));
@@ -43,19 +42,19 @@ public:
   ~ACE_Typed_SV_Message (void);
 
   /// Get the type of the message.
-  long type (void) const;
+  long type () const;
 
   /// Set the type of the message.
   void type (long type);
 
   /// Get the length of the message.
-  int length (void) const;
+  int length () const;
 
   /// Set the length of the message.
   void length (int l);
 
   /// Get the maximum size of the message.
-  int max_size (void) const;
+  int max_size () const;
 
   /// Set the maximum size of the message.
   void max_size (int m);
@@ -67,7 +66,7 @@ public:
   void data (const T &data);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

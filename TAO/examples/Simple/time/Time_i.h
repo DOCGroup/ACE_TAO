@@ -28,7 +28,6 @@
 class Time_i: public POA_Time
 {
 public:
-  // = Initialization and termination methods.
   /// Constructor
   Time_i (void);
 
