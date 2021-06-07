@@ -76,8 +76,12 @@
 # define ACE_LACKS_ACE_IOSTREAM
 # endif /* ! ACE_USES_OLD_IOSTREAMS */
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_NEW_NOTHROW
+#else
+
+// iostream header lacks ipfx (), isfx (), etc., declarations
+#  define ACE_LACKS_IOSTREAM_FX
+
+#endif
 
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.

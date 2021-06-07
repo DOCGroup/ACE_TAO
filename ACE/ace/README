@@ -64,8 +64,6 @@ ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
                                         a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
-ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
-                                        failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
@@ -354,7 +352,6 @@ ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
 ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
-ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
 ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
 ACE_HAS_NONCONST_CLOCK_SETTIME          Platform uses non-const

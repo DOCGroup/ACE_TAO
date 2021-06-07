@@ -331,7 +331,6 @@ inline int puts(const char* str) {
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_DIRENT
 
-#define ACE_NEW_THROWS_EXCEPTIONS
 #define ACE_TEXT_WIN32_FIND_DATA MFS_SEARCH_DATA
 
 #define ACE_LACKS_UNIX_SIGNALS
