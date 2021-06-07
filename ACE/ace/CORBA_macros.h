@@ -24,9 +24,9 @@
 
 #include /**/ "ace/config-all.h"
 
-# if !defined (ACE_LACKS_PRAGMA_ONCE)
-#   pragma once
-# endif /* ACE_LACKS_PRAGMA_ONCE */
+#if !defined (ACE_LACKS_PRAGMA_ONCE)
+#  pragma once
+#endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #define ACE_NEW_THROW_EX(POINTER,CONSTRUCTOR,EXCEPTION) \
   do { POINTER = new (std::nothrow) CONSTRUCTOR;         \
@@ -36,15 +36,15 @@
 // FUZZ: disable check_for_ACE_Guard
 # define ACE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
+    if (!OBJ.locked ()) throw EXCEPTION;
 
 # define ACE_READ_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Read_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
+    if (!OBJ.locked ()) throw EXCEPTION;
 
 # define ACE_WRITE_GUARD_THROW_EX(MUTEX,OBJ,LOCK,EXCEPTION) \
   ACE_Write_Guard< MUTEX > OBJ (LOCK); \
-    if (OBJ.locked () == 0) throw EXCEPTION;
+    if (!OBJ.locked ()) throw EXCEPTION;
 // FUZZ: enable check_for_ACE_Guard
 
 #include /**/ "ace/post.h"

@@ -60,15 +60,6 @@ typedef void * ACE_MALLOC_T;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-// ============================================================================
-// ACE_NEW macros
-//
-// A useful abstraction for expressions involving operator new since
-// we can change memory allocation error handling policies (e.g.,
-// depending on whether ANSI/ISO exception handling semantics are
-// being used).
-// ============================================================================
-
 // For backwards compatibility, we except all compilers to support these
 #include /**/ <new>
 #define ACE_bad_alloc std::bad_alloc
@@ -77,17 +68,18 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #define ACE_del_bad_alloc
 #define ACE_throw_bad_alloc throw std::bad_alloc ()
 
+// ACE_NEW macros
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new (std::nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return RET_VAL; } \
+     if (!POINTER) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; return; } \
+     if (!POINTER) { errno = ENOMEM; return; } \
    } while (0)
 #define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
-     if (POINTER == 0) { errno = ENOMEM; } \
+     if (!POINTER) { errno = ENOMEM; } \
    } while (0)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
