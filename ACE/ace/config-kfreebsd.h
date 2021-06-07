@@ -234,9 +234,6 @@
 /* Define to 1 if the system has the type `ssize_t'. */
 #define ACE_HAS_SSIZE_T 1
 
-/* Platform/compiler supports Standard C++ Library */
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-
 /* Compiler supports standard C++ template class member specializations */
 #define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
 
@@ -403,9 +400,6 @@
 /* Enable IPv6 support on platforms that don't have IPv6 turned on by default
    */
 #define ACE_USES_IPV4_IPV6_MIGRATION 1
-
-/* Platform has its standard C++ library in the namespace std. */
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */

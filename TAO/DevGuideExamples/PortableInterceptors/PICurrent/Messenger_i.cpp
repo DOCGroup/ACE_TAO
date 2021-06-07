@@ -9,11 +9,7 @@
 
 #include "Messenger_i.h"
 #include "ace/OS_NS_time.h"
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
 #include <iostream>
-#else
-#include <iostream.h>
-#endif
 
 // Implementation skeleton constructor
 Messenger_i::Messenger_i (void)
