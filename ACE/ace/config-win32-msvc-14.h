@@ -72,22 +72,15 @@
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
 // ace/iostream.h does not work with the standard cpp library (yet).
-# if !defined (ACE_USES_OLD_IOSTREAMS)
+#if !defined (ACE_USES_OLD_IOSTREAMS)
 # define ACE_LACKS_ACE_IOSTREAM
-# endif /* ! ACE_USES_OLD_IOSTREAMS */
-
-#else
-
-// iostream header lacks ipfx (), isfx (), etc., declarations
-#  define ACE_LACKS_IOSTREAM_FX
-
-#endif
+#endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
 
 // Disable warning of using Microsoft Extension.
-# pragma warning(disable:4231)
+#pragma warning(disable:4231)
 
 // 'class1' : inherits 'class2::member' via dominance
 #pragma warning(disable:4250)
