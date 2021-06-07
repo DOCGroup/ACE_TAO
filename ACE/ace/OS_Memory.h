@@ -71,15 +71,15 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // ACE_NEW macros
 #define ACE_NEW_RETURN(POINTER,CONSTRUCTOR,RET_VAL) \
    do { POINTER = new (std::nothrow) CONSTRUCTOR; \
-     if (!POINTER) { errno = ENOMEM; return RET_VAL; } \
+     if (POINTER == nullptr) { errno = ENOMEM; return RET_VAL; } \
    } while (0)
 #define ACE_NEW(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
-     if (!POINTER) { errno = ENOMEM; return; } \
+     if (POINTER == nullptr) { errno = ENOMEM; return; } \
    } while (0)
 #define ACE_NEW_NORETURN(POINTER,CONSTRUCTOR) \
    do { POINTER = new(std::nothrow) CONSTRUCTOR; \
-     if (!POINTER) { errno = ENOMEM; } \
+     if (POINTER == nullptr) { errno = ENOMEM; } \
    } while (0)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
