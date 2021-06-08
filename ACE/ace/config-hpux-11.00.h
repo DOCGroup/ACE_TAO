@@ -10,9 +10,7 @@
 #define ACE_LACKS_SYS_SELECT_H
 
 #if defined (__GNUG__)
-
 #  include "ace/config-g++-common.h"
-
 #else
 
 // aC++...
