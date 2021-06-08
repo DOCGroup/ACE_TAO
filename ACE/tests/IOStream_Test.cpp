@@ -316,7 +316,7 @@ server (void *arg = 0)
   // Compared to the method above, this is quite messy.  Notice also
   // that whitespace is lost.
 
-#if defined (ACE_HAS_STRING_CLASS) && defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+#if defined (ACE_HAS_STRING_CLASS)
   ACE_IOStream_String buf;
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) Server Received: ("));

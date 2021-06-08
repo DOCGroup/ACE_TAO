@@ -176,10 +176,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Caught exception during test; ")
-                  ACE_TEXT ("ACE_bad_alloc not defined correctly, or\n")));
-      ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("ACE_NEW_THROWS_EXCEPTIONS is not #defined ")
-                  ACE_TEXT ("(and should be).\n")));
+                  ACE_TEXT ("ACE_bad_alloc not defined correctly\n")));
       // Mark test failure
       status = 1;
     }

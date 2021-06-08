@@ -64,8 +64,6 @@ ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
                                         a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
-ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
-                                        failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
@@ -106,8 +104,6 @@ ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
                                         instead of C symbols in
                                         dlsym()
 ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
-ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   Platform has its standard c++
-                                        library in the namespace std.
 ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't
                                         work and you have to
                                         explicitly specify the std
@@ -356,7 +352,6 @@ ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
 ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
-ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
 ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
 ACE_HAS_NONCONST_CLOCK_SETTIME          Platform uses non-const
@@ -532,8 +527,6 @@ ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
 ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
-ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
-                                        Standard C++ Library
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even

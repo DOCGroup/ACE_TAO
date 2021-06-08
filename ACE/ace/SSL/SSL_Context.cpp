@@ -112,11 +112,15 @@ ACE_SSL_Context::ACE_SSL_Context (void)
     default_verify_callback_ (0),
     have_ca_ (0)
 {
+  ACE_TRACE ("ACE_SSL_Context::ACE_SSL_Context");
+
   ACE_SSL_Context::ssl_library_init ();
 }
 
 ACE_SSL_Context::~ACE_SSL_Context (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::~ACE_SSL_Context");
+
   if (this->context_)
     {
       ::SSL_CTX_free (this->context_);
@@ -129,18 +133,24 @@ ACE_SSL_Context::~ACE_SSL_Context (void)
 ACE_SSL_Context *
 ACE_SSL_Context::instance (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::instance");
+
   return ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::instance ();
 }
 
 void
 ACE_SSL_Context::close (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::close");
+
   ACE_Unmanaged_Singleton<ACE_SSL_Context, ACE_SYNCH_MUTEX>::close ();
 }
 
 void
 ACE_SSL_Context::ssl_library_init (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::ssl_library_init");
+
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
                      ace_ssl_mon,
                      *ACE_Static_Object_Lock::instance ()));
@@ -206,6 +216,8 @@ ACE_SSL_Context::ssl_library_init (void)
 void
 ACE_SSL_Context::ssl_library_fini (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::ssl_library_fini");
+
   ACE_MT (ACE_GUARD (ACE_Recursive_Thread_Mutex,
                      ace_ssl_mon,
                      *ACE_Static_Object_Lock::instance ()));
@@ -233,6 +245,8 @@ ACE_SSL_Context::ssl_library_fini (void)
 int
 ACE_SSL_Context::set_mode (int mode)
 {
+  ACE_TRACE ("ACE_SSL_Context::set_mode");
+
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex,
                             ace_ssl_mon,
                             *ACE_Static_Object_Lock::instance (),
@@ -283,6 +297,8 @@ ACE_SSL_Context::set_mode (int mode)
 int
 ACE_SSL_Context::filter_versions (const char* versionlist)
 {
+  ACE_TRACE ("ACE_SSL_Context::filter_versions");
+
   this->check_context ();
 
   ACE_CString vlist = versionlist;
@@ -366,6 +382,8 @@ ACE_SSL_Context::filter_versions (const char* versionlist)
 bool
 ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
 {
+  ACE_TRACE ("ACE_SSL_Context::check_host");
+
 #if defined (OPENSSL_VERSION_NUMBER) && (OPENSSL_VERSION_NUMBER >= 0x10002001L)
 
   this->check_context ();
@@ -423,6 +441,8 @@ ACE_SSL_Context::load_trusted_ca (const char* ca_file,
                                   const char* ca_dir,
                                   bool use_env_defaults)
 {
+  ACE_TRACE ("ACE_SSL_Context::load_trusted_ca");
+
   this->check_context ();
 
   if (ca_file == 0 && use_env_defaults)
@@ -534,6 +554,8 @@ int
 ACE_SSL_Context::private_key (const char *file_name,
                               int type)
 {
+  ACE_TRACE ("ACE_SSL_Context::private_key");
+
   if (this->private_key_.type () != -1)
     return 0;
 
@@ -555,6 +577,8 @@ ACE_SSL_Context::private_key (const char *file_name,
 int
 ACE_SSL_Context::verify_private_key (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::verify_private_key");
+
   this->check_context ();
 
   return (::SSL_CTX_check_private_key (this->context_) <= 0 ? -1 : 0);
@@ -564,6 +588,8 @@ int
 ACE_SSL_Context::certificate (const char *file_name,
                               int type)
 {
+  ACE_TRACE ("ACE_SSL_Context::certificate:file_name:type");
+
   if (this->certificate_.type () != -1)
     return 0;
 
@@ -585,6 +611,8 @@ ACE_SSL_Context::certificate (const char *file_name,
 int
 ACE_SSL_Context::certificate (X509* cert)
 {
+  ACE_TRACE ("ACE_SSL_Context::certificate:cert");
+
   // Is it really a good idea to return 0 if we're not setting the
   // certificate?
   if (this->certificate_.type () != -1)
@@ -606,9 +634,29 @@ ACE_SSL_Context::certificate (X509* cert)
     }
 }
 
+int
+ACE_SSL_Context::certificate_chain (const char *file_name, int type)
+{
+  ACE_TRACE ("ACE_SSL_Context::certificate_chain:file_name");
+
+  this->certificate_ = ACE_SSL_Data_File (file_name, type);
+
+  this->check_context ();
+
+  if (::SSL_CTX_use_certificate_chain_file (this->context_,
+                                            this->certificate_.file_name ()) <= 0)
+    {
+      return -1;
+    }
+  else
+    return 0;
+}
+
 void
 ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
 {
+  ACE_TRACE ("ACE_SSL_Context::set_verify_peer");
+
   this->check_context ();
 
   // Setup the peer verification mode.
@@ -630,6 +678,8 @@ ACE_SSL_Context::set_verify_peer (int strict, int once, int depth)
 int
 ACE_SSL_Context::random_seed (const char * seed)
 {
+  ACE_TRACE ("ACE_SSL_Context::random_seed");
+
   int len = ACE_Utils::truncate_cast<int> (ACE_OS::strlen (seed));
   ::RAND_seed (seed, len);
 
@@ -644,6 +694,8 @@ ACE_SSL_Context::random_seed (const char * seed)
 int
 ACE_SSL_Context::egd_file (const char * socket_file)
 {
+  ACE_TRACE ("ACE_SSL_Context::egd_file");
+
 #if OPENSSL_VERSION_NUMBER < 0x00905100L || defined (OPENSSL_NO_EGD)
   // OpenSSL < 0.9.5 doesn't have EGD support. OpenSSL 1.1 and newer
   // disable egd by default
@@ -663,6 +715,8 @@ ACE_SSL_Context::egd_file (const char * socket_file)
 int
 ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
 {
+  ACE_TRACE ("ACE_SSL_Context::seed_file");
+
   // RAND_load_file() returns the number of bytes used to seed the
   // random number generator. If the file reads ok, check RAND_status to
   // see if it got enough entropy.
@@ -680,6 +734,8 @@ ACE_SSL_Context::seed_file (const char * seed_file, long bytes)
 void
 ACE_SSL_Context::report_error (unsigned long error_code)
 {
+  ACE_TRACE ("ACE_SSL_Context::report_error:error_code");
+
   if (error_code != 0)
   {
     char error_string[256];
@@ -701,6 +757,8 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 void
 ACE_SSL_Context::report_error (void)
 {
+  ACE_TRACE ("ACE_SSL_Context::report_error");
+
   unsigned long err = ::ERR_get_error ();
   ACE_SSL_Context::report_error (err);
   ACE_OS::last_error (err);
@@ -710,6 +768,8 @@ int
 ACE_SSL_Context::dh_params (const char *file_name,
                             int type)
 {
+  ACE_TRACE ("ACE_SSL_Context::dh_params");
+
   if (this->dh_params_.type () != -1)
     return 0;
 

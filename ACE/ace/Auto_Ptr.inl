@@ -80,18 +80,14 @@ ACE_Auto_Basic_Ptr<X>::operator *() const
   return *this->get ();
 }
 
-#if defined (ACE_LACKS_AUTO_PTR) || \
-    !defined (ACE_HAS_STANDARD_CPP_LIBRARY) || \
-             (ACE_HAS_STANDARD_CPP_LIBRARY == 0)
-
+#if defined (ACE_LACKS_AUTO_PTR)
 template<class X> ACE_INLINE X *
 auto_ptr<X>::operator-> () const
 {
   ACE_TRACE ("auto_ptr<X>::operator->");
   return this->get ();
 }
-
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#endif /* ACE_LACKS_AUTO_PTR */
 
 template<class X> ACE_INLINE X *
 ACE_Auto_Ptr<X>::operator-> () const

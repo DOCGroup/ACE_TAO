@@ -18,18 +18,16 @@ Newsweek::operator new (size_t bytes)
 {
   return ::new char[bytes];
 }
-#if defined (ACE_HAS_NEW_NOTHROW)
 void *
-Newsweek::operator new (size_t bytes, const ACE_nothrow_t&)
+Newsweek::operator new (size_t bytes, const std::nothrow_t&)
 {
-  return ::new (ACE_nothrow) char[bytes];
+  return ::new (std::nothrow) char[bytes];
 }
 void
-Newsweek::operator delete (void *p, const ACE_nothrow_t&) throw ()
+Newsweek::operator delete (void *p, const std::nothrow_t&) throw ()
 {
   delete [] static_cast <char *> (p);
 }
-#endif
 void
 Newsweek::operator delete (void *ptr)
 {
