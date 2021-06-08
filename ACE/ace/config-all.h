@@ -104,6 +104,11 @@
 # define ACE_HAS_NEW_NOTHROW
 #endif /* ACE_HAS_NEW_NOTHROW */
 
+// We require the platform to have a string class
+#if !defined (ACE_HAS_STRING_CLASS)
+# define ACE_HAS_STRING_CLASS
+#endif /* ACE_HAS_STRING_CLASS */
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"
