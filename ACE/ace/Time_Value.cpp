@@ -12,7 +12,6 @@
 #include "ace/If_Then_Else.h"
 #include "ace/OS_NS_math.h"
 #include "ace/Time_Policy.h"
-#include <ostream>
 #include <iomanip>
 #include <cstdlib>
 #include <cmath>

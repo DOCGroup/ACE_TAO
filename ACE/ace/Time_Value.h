@@ -20,8 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_time.h"
-#include <chrono>
 #include "ace/Truncate.h"
+#include <chrono>
+#include <ostream>
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -31,9 +32,6 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
-
-// needed to determine if iostreams are present
-#include "ace/iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
