@@ -117,7 +117,6 @@ test_compression (CORBA::ULong nelements,
   if (decompress != mytest)
     {
       ACE_ERROR ((LM_ERROR, "Error, decompress not working\n"));
-
     }
   else
     {
