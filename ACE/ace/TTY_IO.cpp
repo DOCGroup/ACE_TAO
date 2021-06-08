@@ -36,6 +36,7 @@ ACE_TTY_IO::Serial_Params::Serial_Params ()
   readmincharacters = 0;
   readtimeoutmsec = 10000;
   paritymode = ACE_TTY_IO_NONE;
+  inpckenb = true;
   ctsenb = false;
   rtsenb = 0;
   xinenb = false;
@@ -243,14 +244,20 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag |=  PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              devpar.c_iflag |=  INPCK | PARMRK;
+              if(arg->inpckenb)
+                devpar.c_iflag |= INPCK | PARMRK;
+              else
+                devpar.c_iflag &= ~(INPCK | PARMRK);
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_EVEN) == 0)
             {
               devpar.c_cflag |=  PARENB;
               devpar.c_cflag &= ~PARODD;
               devpar.c_iflag &= ~IGNPAR;
-              devpar.c_iflag |=  INPCK | PARMRK;
+              if(arg->inpckenb)
+                devpar.c_iflag |= INPCK | PARMRK;
+              else
+                devpar.c_iflag &= ~(INPCK | PARMRK);
             }
           else if (ACE_OS::strcasecmp (arg->paritymode, ACE_TTY_IO_NONE) == 0)
             {
@@ -301,6 +308,8 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
 
       if (arg->databits < 8)
         devpar.c_iflag |= ISTRIP;
+      else
+        devpar.c_iflag &= ~ISTRIP;
 
 #if defined (IGNBRK)
       // If device is not a modem set to ignore break points
@@ -345,6 +354,21 @@ int ACE_TTY_IO::control (Control_Mode cmd, Serial_Params *arg) const
       // Disable SIGINTR, SIGSUSP, SIGDSUSP and SIGQUIT signals
       devpar.c_lflag &= ~ISIG;
 #endif /* ISIG */
+
+#if defined (IGNCR)
+      // Do not discard CR characters
+      devpar.c_iflag &= ~IGNCR;
+#endif /* IGNCR */
+
+#if defined (ICRNL)
+      // Disable CR to NL conversion
+      devpar.c_iflag &= ~ICRNL;
+#endif /* ICRNL */
+
+#if defined (INLCR)
+      // Disable NL to CR conversion
+      devpar.c_iflag &= ~INLCR;
+#endif /* INLCR */
 
 #if defined (OPOST)
       // Disable post-processing of output data

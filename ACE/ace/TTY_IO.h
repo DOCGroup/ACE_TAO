@@ -66,6 +66,9 @@ public:
         "odd" parity. Additionally Win32 supports "mark" and "space"
         parity modes. */
     const char *paritymode;
+    /** Enable/disable input parity checking. This option is only applicable
+        on systems which support the POSIX termios API */
+    bool inpckenb;
     /** Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
         together on some systems (RTS/CTS is enabled if either
         <code>ctsenb</code> or <code>rtsenb</code> is set). */
