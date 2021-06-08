@@ -460,9 +460,7 @@ private:
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
-#endif
+extern ACE_Export ostream &operator<<(std::ostream &o, const ACE_Time_Value &v );
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
