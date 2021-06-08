@@ -109,7 +109,7 @@ myallocator (const void *base_addr = 0)
       MALLOC *ptr = new MALLOC (MMAP_FILENAME,
                                 MUTEX_NAME,
                                 &options);
-      ACE_auto_ptr_reset (static_allocator, ptr);
+      static_allocator.reset (ptr);
     }
   return static_allocator.get ();
 }

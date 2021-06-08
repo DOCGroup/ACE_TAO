@@ -1624,7 +1624,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
                           false);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-          ACE_auto_ptr_reset (safe_data, x);
+          safe_data.reset (x);
 
           if (this->read_wchar_array (x, len))
             {
@@ -1651,7 +1651,7 @@ ACE_InputCDR::read_wstring (ACE_CDR::WChar*& x)
                           false);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-          ACE_auto_ptr_reset (safe_data, x);
+          safe_data.reset (x);
 
           if (this->read_wchar_array (x, len))
             {
