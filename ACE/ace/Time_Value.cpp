@@ -12,12 +12,7 @@
 #include "ace/If_Then_Else.h"
 #include "ace/OS_NS_math.h"
 #include "ace/Time_Policy.h"
-
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-# include <ostream>
-# include <iomanip>
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
-
+#include <iomanip>
 #include <cstdlib>
 #include <cmath>
 
@@ -306,8 +301,7 @@ ACE_Time_Value::operator *= (double d)
   return *this;
 }
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-ostream &operator<<(ostream &o, const ACE_Time_Value &v)
+std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
 {
   char const oldFiller = o.fill ();
   o.fill ('0');
@@ -330,6 +324,5 @@ ostream &operator<<(ostream &o, const ACE_Time_Value &v)
   o.fill (oldFiller);
   return o;
 }
-#endif /* ACE_HAS_CPP98_IOSTREAMS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
