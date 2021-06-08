@@ -170,14 +170,12 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0 (void)         {  return ipfx (0); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void)                                // Optimized ipfx(1)
+  virtual int ipfx0 (void) // Optimized ipfx(0)
+    {  return ipfx (0); }
+  virtual int ipfx1 (void) // Optimized ipfx(1)
     {
       if (good ())
         {
@@ -186,13 +184,10 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual void isfx (void) {  return; }
+  virtual void isfx (void) { return; }
   virtual int opfx (void)
     {
       if (good () && tie () != 0)
