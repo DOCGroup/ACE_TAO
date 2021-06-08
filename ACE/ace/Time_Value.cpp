@@ -302,7 +302,7 @@ ACE_Time_Value::operator *= (double d)
   return *this;
 }
 
-ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
+std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v)
 {
   char const oldFiller = o.fill ();
   o.fill ('0');
