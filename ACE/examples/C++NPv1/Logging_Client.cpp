@@ -97,7 +97,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (connector.connect (logging_client.peer (), server_addr) < 0)
     ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect()"), 1);
 
-#if defined (ACE_WIN32) defined (ACE_USES_OLD_IOSTREAMS)
+#if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
   for (;;) {
     char user_input[ACE_Log_Record::MAXLOGMSGLEN];
     if (!gets (user_input))
@@ -111,7 +111,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                          "%p\n", "logging_client.send()"), 1);
   }
 #else
-
   // Limit the number of characters read on each record
   cin.width (ACE_Log_Record::MAXLOGMSGLEN);
 
