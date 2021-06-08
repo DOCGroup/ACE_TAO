@@ -179,17 +179,7 @@ inline void
 ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
                     PTR_TYPE * p)
 {
-#if defined (ACE_AUTO_PTR_LACKS_RESET)
-  // Allow compiler to adjust pointer to potential base class pointer
-  // of element type found in auto_ptr.
-  typename AUTO_PTR_TYPE::element_type * const tp = p;
-  if (tp != ap.get ())
-    {
-      ap = AUTO_PTR_TYPE (tp);
-    }
-#else
   ap.reset (p);
-#endif /* ACE_AUTO_PTR_LACKS_RESET */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
