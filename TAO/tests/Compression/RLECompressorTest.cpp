@@ -9,14 +9,6 @@
 
 #include <memory>
 
-struct ACE_Byte_Array_ptr : std::unique_ptr<ACE_Byte> {
-    explicit ACE_Byte_Array_ptr(ACE_Byte *_Ptr = 0)
-        : std::unique_ptr<ACE_Byte>(_Ptr) {}
-    ~ACE_Byte_Array_ptr(void) {
-        delete [] (this->release());
-    }
-};
-
 /* This test produces the following output (RLECompressor)
 
 ******** TEST RLE Compressor ************
@@ -348,7 +340,7 @@ static int  test128_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    ACE_Byte_Array_ptr buff_128(new ACE_Byte[BUFF_128_SIZE]);
+    std::unique_ptr<ACE_Byte[]> buff_128(new ACE_Byte[BUFF_128_SIZE]);
 
     ACE_OS::memset(buff_128.get(), 0, BUFF_128_SIZE);  // Set Buffer to zero.
 
@@ -411,7 +403,7 @@ static int  test129A_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
+    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
@@ -474,7 +466,7 @@ static int  test129B_compressor(const ::Compression::Compressor_var &compressor)
             ACE_TEXT("ERROR: nil Compressor.\n")),-1);
     }
 
-    const ACE_Byte_Array_ptr buff_129(new ACE_Byte[BUFF_129_SIZE]);
+    const std::unique_ptr<ACE_Byte[]> buff_129(new ACE_Byte[BUFF_129_SIZE]);
 
     ACE_OS::memset(buff_129.get(), 0, BUFF_129_SIZE);  // Set Buffer to zero.
 
