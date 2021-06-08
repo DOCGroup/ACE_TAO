@@ -27,8 +27,6 @@
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 
-#    define ACE_HAS_NEW_NO_H 1
-
 // Compiler's template mechanism must see source code (i.e., .C files).
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
 

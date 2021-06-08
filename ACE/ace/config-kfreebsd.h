@@ -122,9 +122,6 @@
 #define ACE_LACKS_NEW_H 1
 #endif
 
-/* Platform provides new style C++ <new> header */
-#define ACE_HAS_NEW_NO_H 1
-
 /* Platform's select() uses non-const timeval* (only found on Linux right now)
    */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
