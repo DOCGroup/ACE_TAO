@@ -541,9 +541,6 @@ ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
 ACE_HAS_STRICT                          Use the STRICT compilation mode on Win32.
-ACE_HAS_STRING_CLASS                    Platform/Compiler supports a
-                                        String class (e.g., GNU or
-                                        Win32).
 ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
                                         hostent API for socket *_r()
                                         calls

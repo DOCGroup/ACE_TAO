@@ -316,7 +316,6 @@ server (void *arg = 0)
   // Compared to the method above, this is quite messy.  Notice also
   // that whitespace is lost.
 
-#if defined (ACE_HAS_STRING_CLASS)
   ACE_IOStream_String buf;
   ACE_DEBUG ((LM_DEBUG,
               " (%P|%t) Server Received: ("));
@@ -335,25 +334,6 @@ server (void *arg = 0)
 
   ACE_DEBUG ((LM_DEBUG,
               ")\n"));
-#else
-  char buf[BUFSIZ];
-  ACE_OS::memset (buf, 0, sizeof buf);
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Received: (")));
-
-  while (ACE_OS::strlen (buf) == 0
-         || buf[ACE_OS::strlen (buf) - 1] != '"')
-    {
-      if (! (client_handler >> buf))
-        break;
-      ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("%C "),
-                  buf));
-    }
-
-  ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (")\n")));
-#endif /* ACE_HAS_STRING_CLASS */
 
   // Send some non-textual data to the client.  We use a single
   // character to separate the fields but we could have used any valid

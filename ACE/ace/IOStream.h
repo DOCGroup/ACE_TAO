@@ -34,18 +34,11 @@
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
-#  if defined (ACE_HAS_STRING_CLASS)
-#    if defined (ACE_WIN32) && defined (_MSC_VER)
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef CString ACE_IOStream_String;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#    else
-#      include /**/ <string>
+# include /**/ <string>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef std::string ACE_IOStream_String;
 ACE_END_VERSIONED_NAMESPACE_DECL
-#    endif /* ACE_WIN32 && defined (_MSC_VER) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -75,10 +68,8 @@ public:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#  endif /* ACE_HAS_STRING_CLASS */
-
-#  include "ace/Time_Value.h"
-#  include "ace/os_include/sys/os_types.h"
+# include "ace/Time_Value.h"
+# include "ace/os_include/sys/os_types.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -401,7 +392,6 @@ typedef ostream& (*__omanip_)(ostream&);
 #  endif
 #define PUT_PROT(MT,DT,CODE)    PUT_SIG(MT,DT)  CODE
 #define PUT_FUNC(MT,DT)         PUT_PROT(MT,DT,PUT_CODE)
-
 
 // These are necessary in case somebody wants to derive from us and
 // override one of these with a custom approach.

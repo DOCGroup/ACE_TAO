@@ -3,7 +3,6 @@
 #define ACE_SUNCC_COMMON_H
 #include /**/ "ace/pre.h"
 
-# define ACE_HAS_STRING_CLASS
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 # define ACE_HAS_THR_C_DEST 1
 # define ACE_LACKS_SWAB

@@ -34,10 +34,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
-#  endif /* defined (ACE_HAS_STRING_CLASS) */
 
 template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
@@ -137,7 +135,6 @@ public:
    */
   int eof () const;
 
-#  if defined (ACE_HAS_STRING_CLASS)
   /**
    * A simple string operator.  The base <iostream> has them for char*
    * but that isn't always the best thing for a <String>.  If we don't
@@ -148,7 +145,6 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-#  endif /* ACE_HAS_STRING_CLASS */
   // = Using the macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 

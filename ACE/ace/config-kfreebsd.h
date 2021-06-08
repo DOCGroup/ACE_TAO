@@ -250,9 +250,6 @@
 /* Platform has <strings.h> (which contains bzero() prototype) */
 #define ACE_HAS_STRINGS 1
 
-/* Platform/Compiler supports a String class (e.g., GNU or Win32). */
-#define ACE_HAS_STRING_CLASS 1
-
 /* Define to 1 if platform has strnlen(). */
 #define ACE_HAS_STRNLEN 1
 
