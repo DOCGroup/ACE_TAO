@@ -530,8 +530,24 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_longlong:
       this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
-      this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
-                                  ev->u.llval);
+      {
+        ACE_CDR::LongLong value = ev->u.llval;
+        /*
+         * It seem in C/C++ compilers the minus sign and the bare number are
+         * parsed separately for negative integer literals. This can cause
+         * compilers to complain when using the minimum value of a signed integer
+         * because the number without the minus sign is 1 past the max signed
+         * value.
+         *
+         * https://stackoverflow.com/questions/65007935/integer-constant-is-so-large-that-it-is-unsigned-compiler-warning-rational
+         *
+         * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
+         */
+        const bool min_value = value == ACE_INT64_MIN;
+        if (min_value) value += 1;
+        TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII, value);
+        if (min_value) TAO_OutStream::print (" - 1");
+      }
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_ulonglong:

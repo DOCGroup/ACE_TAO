@@ -14,8 +14,11 @@
 #include "be_predefined_type.h"
 #include "be_visitor.h"
 #include "be_helper.h"
-#include "utl_identifier.h"
+
 #include "global_extern.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
 
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"
@@ -198,19 +201,19 @@ be_predefined_type::compute_tc_name ()
     case AST_PredefinedType::PT_any:
       ACE_NEW (id,
                Identifier ("_tc_any"));
-    break;
+      break;
     case AST_PredefinedType::PT_object:
       ACE_NEW (id,
                Identifier ("_tc_Object"));
-    break;
+      break;
     case AST_PredefinedType::PT_value:
       ACE_NEW (id,
                Identifier ("_tc_ValueBase"));
-    break;
+      break;
     case AST_PredefinedType::PT_abstract:
       ACE_NEW (id,
                Identifier ("_tc_AbstractBase"));
-    break;
+      break;
     case AST_PredefinedType::PT_pseudo:
       {
         char tcname [100];
@@ -222,9 +225,17 @@ be_predefined_type::compute_tc_name ()
                  Identifier (tcname));
         break;
       }
-    default:
-      ACE_ERROR ((LM_WARNING, "Unknown or invalid predefined type"));
+    case AST_PredefinedType::PT_uint8:
+      ACE_NEW (id, Identifier ("_tc_Uint8"));
       break;
+    case AST_PredefinedType::PT_int8:
+      ACE_NEW (id, Identifier ("_tc_Int8"));
+      break;
+    default:
+      idl_global->err ()->misc_error (
+        "be_predefined_type::compute_tc_name: Unknown or invalid predefined type", this);
+      // Nothing else to do. We will segfault if we continue, return, or throw Bailout
+      ACE_OS::abort ();
     }
 
   ACE_NEW (conc_name,

@@ -75,6 +75,30 @@ namespace CORBA
 
   typedef ACE_CDR::WChar WChar;
   typedef WChar &WChar_out;
+
+  typedef ACE_CDR::Int8 Int8;
+  typedef Int8 &Int8_out;
+
+  typedef ACE_CDR::Uint8 Uint8;
+  typedef Uint8 &Uint8_out;
+
+  typedef ACE_CDR::Int16 Int16;
+  typedef Int16 &Int16_out;
+
+  typedef ACE_CDR::Uint16 Uint16;
+  typedef Uint16 &Uint16_out;
+
+  typedef ACE_CDR::Int32 Int32;
+  typedef Int32 &Int32_out;
+
+  typedef ACE_CDR::Uint32 Uint32;
+  typedef Uint32 &Uint32_out;
+
+  typedef ACE_CDR::Int64 Int64;
+  typedef Int64 &Int64_out;
+
+  typedef ACE_CDR::Uint64 Uint64;
+  typedef Uint64 &Uint64_out;
   //@}
 
   typedef TAO::String_var<CORBA::Char> String_var;

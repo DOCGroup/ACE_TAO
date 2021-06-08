@@ -1,0 +1,50 @@
+const uint8 u8_min = 0;
+const uint8 u8_max = 255;
+const int8 i8_min = -128;
+const int8 i8_max = 127;
+const uint16 u16_max = 65535;
+const int16 i16_min = -32768;
+const int16 i16_max = 32767;
+const uint32 u32_max = 4294967295;
+const int32 i32_min = -2147483648;
+const int32 i32_max = 2147483647;
+const uint64 u64_max = 18446744073709551615;
+const int64 i64_min = -9223372036854775808;
+const int64 i64_max = 9223372036854775807;
+
+const uint8 u8_max_overflow = u8_max + 1; // == 0
+const int8 i8_max_overflow = i8_max + 1; // == i8_min TODO: value is 0
+
+const uint8 u8_max_negate = ~u8_max; // == 0
+const int8 i8_max_negate = ~i8_max; // == i8_min
+
+// TODO: More Expressions
+
+/* TODO: serialization functions stop these from compiling
+struct StructWithInts {
+  uint8 u8;
+  int8 i8;
+  uint16 u16;
+  int16 i16;
+  uint32 u32;
+  int32 i32;
+  uint64 u64;
+  int64 i64;
+};
+
+union UnionOverU8 switch (uint8) {
+case 0:
+  uint8 u8;
+case 1:
+  int8 i8;
+};
+
+union UnionOverI8 switch (int8) {
+case 0:
+  uint8 u8;
+case 1:
+  int8 i8;
+};
+*/
+
+// TODO: More situations?

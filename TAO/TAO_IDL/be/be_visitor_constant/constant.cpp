@@ -39,9 +39,9 @@ const char *exprtype_to_cpp_corba_type (AST_Expression::ExprType et)
     case AST_Expression::EV_fixed:
       return "Fixed";
     case AST_Expression::EV_int8:
-      return "CORBA::Octet";
+      return "CORBA::Int8";
     case AST_Expression::EV_uint8:
-      return "CORBA::Octet";
+      return "CORBA::Uint8";
     default:
       return 0;
     }

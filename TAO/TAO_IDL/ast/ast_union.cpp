@@ -155,7 +155,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           this->pd_udisc_type = AST_Expression::EV_ushort;
           break;
         case AST_PredefinedType::PT_int8:
-          this->pd_udisc_type = AST_Expression::EV_char;
+          this->pd_udisc_type = AST_Expression::EV_int8;
           break;
         case AST_PredefinedType::PT_char:
           this->pd_udisc_type = AST_Expression::EV_char;
@@ -164,7 +164,7 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
           this->pd_udisc_type = AST_Expression::EV_wchar;
           break;
         case AST_PredefinedType::PT_uint8:
-          this->pd_udisc_type = AST_Expression::EV_char;
+          this->pd_udisc_type = AST_Expression::EV_uint8;
           break;
         case AST_PredefinedType::PT_octet:
           this->pd_udisc_type = AST_Expression::EV_octet;

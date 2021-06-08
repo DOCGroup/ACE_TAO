@@ -71,8 +71,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_predefined_type.h"
 #include "ast_visitor.h"
-#include "utl_identifier.h"
 #include "global_extern.h"
+
+#include "utl_identifier.h"
+#include "utl_err.h"
+
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_stdio.h"
 
@@ -190,9 +193,16 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
           ACE_NEW (id,
                    Identifier (n->last_component ()->get_string ()));
           break;
+        case AST_PredefinedType::PT_uint8:
+          ACE_NEW (id, Identifier ("Uint8"));
+          break;
+        case AST_PredefinedType::PT_int8:
+          ACE_NEW (id, Identifier ("Int8"));
+          break;
         default:
-          ACE_ERROR ((LM_ERROR,
-                      "AST_PredefinedType - bad enum value\n"));
+          idl_global->err ()->misc_error ("AST_PredefinedType: bad enum value", this);
+          // Nothing else to do. We will segfault if we continue, return, or throw Bailout
+          ACE_OS::abort ();
         }
 
       ACE_NEW (conc_name,
