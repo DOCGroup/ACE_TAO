@@ -82,6 +82,16 @@
 # define ACE_HAS_MONITOR_POINTS 0
 #endif
 
+// For all compilers we require the std library to be in the std namespace
+#if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#endif
+
+// We require that the standard C++ library is support
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#endif
+
 // Define ACE_NEW_THROWS_EXCEPTIONS for all compilers, we
 // expect all compilers to do so
 #if !defined (ACE_NEW_THROWS_EXCEPTIONS)

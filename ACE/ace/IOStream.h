@@ -28,11 +28,9 @@
 // or, if it does, the platform is explicitly set to use old iostreams
 // by its config.h file.
 // This restriction is recorded in Bugzilla entry 857.
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
-#  if !defined (ACE_USES_OLD_IOSTREAMS) && !defined (ACE_LACKS_ACE_IOSTREAM)
-#    define ACE_LACKS_ACE_IOSTREAM
-#  endif /* !ACE_USES_OLD_IOSTREAMS && !ACE_LACKS_ACE_IOSTREAM */
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#if !defined (ACE_USES_OLD_IOSTREAMS) && !defined (ACE_LACKS_ACE_IOSTREAM)
+#  define ACE_LACKS_ACE_IOSTREAM
+#endif /* !ACE_USES_OLD_IOSTREAMS && !ACE_LACKS_ACE_IOSTREAM */
 
 #if !defined (ACE_LACKS_ACE_IOSTREAM)
 
@@ -44,15 +42,9 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #    else
 #      include /**/ <string>
 
-#      if defined(ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 typedef std::string ACE_IOStream_String;
 ACE_END_VERSIONED_NAMESPACE_DECL
-#      else
-ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-typedef string ACE_IOStream_String;
-ACE_END_VERSIONED_NAMESPACE_DECL
-#      endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #    endif /* ACE_WIN32 && defined (_MSC_VER) */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -310,7 +302,7 @@ protected:
 
   virtual ACE_HANDLE get_handle (void);
 
-#  if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0) && !defined (ACE_USES_OLD_IOSTREAMS)
+#  if !defined (ACE_USES_OLD_IOSTREAMS)
   char *base () const
     {
       return cur_mode_ == get_mode_ ? eback_saved_
@@ -336,7 +328,7 @@ protected:
     {
       return pptr () - pbase ();
     }
-#  endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#  endif /* !ACE_USES_OLD_IOSTREAMS */
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

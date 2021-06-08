@@ -24,26 +24,6 @@
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
-// If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
-// The -AA option enables the 2.0 standard C++ library. If not used, then
-// we have the old, 1.2.1 C++ library.
-#    if defined (_HP_NAMESPACE_STD)
-#      if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#        undef ACE_HAS_STANDARD_CPP_LIBRARY
-#      endif
-#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-#      endif
-#      if defined (RWSTD_NO_NAMESPACE)
-         namespace std {} using namespace std;
-#      else
-#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#      endif /* RWSTD_NO_NAMESPACE */
-#    else
-#      define ACE_USES_OLD_IOSTREAMS
-#    endif /* _HP_NAMESPACE_STD */
-
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
 

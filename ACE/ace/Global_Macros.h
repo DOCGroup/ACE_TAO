@@ -806,11 +806,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 // This is being placed here temporarily to help stabilize the builds, but will
 // be moved out along with the above macros as part of the subsetting.  dhinton
 #if !defined (ACE_LACKS_NEW_H)
-#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#    include /**/ <new>
-#  else
-#    include /**/ <new.h>
-#  endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#  include /**/ <new>
 #endif /* ! ACE_LACKS_NEW_H */
 
 # define ACE_NOOP(x)

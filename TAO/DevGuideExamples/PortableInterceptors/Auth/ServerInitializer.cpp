@@ -1,11 +1,7 @@
 #include "ServerInitializer.h"
 #include "ServerInterceptor.h"
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY == 1)
 #include <iostream>
-#else
-#include <iostream.h>
-#endif
 
 ServerInitializer::ServerInitializer ()
 {
