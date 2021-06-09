@@ -30,7 +30,7 @@ public:
 #ifdef ACE_HAS_CPP14
         server_ = std::make_unique<Server> (my_args.argc (), my_args.argv ());
 #else
-        server_.reset (new Server(my_args.argc (), my_args.argv ());
+        server_.reset (new Server(my_args.argc (), my_args.argv ()));
 #endif
 
         ACE_ASSERT (server_);
