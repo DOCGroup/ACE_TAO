@@ -184,7 +184,7 @@ TAO_AV_Connector_Registry::close_all ()
         {
           (*i)->close ();
 
-          this->close (*i);
+          delete *i;
         }
     }
 
