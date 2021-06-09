@@ -4,6 +4,7 @@
 #include "Client.h"
 
 #include "ace/ARGV.h"
+#include "ace/Task.h"
 
 class Client_Task : public ACE_Task_Base
 {
