@@ -341,7 +341,7 @@ FilterClient::create_supplieradmin ()
   constraint_list[1].event_types[0].type_name = CORBA::string_dup(TYPE_NAME);
   constraint_list[1].constraint_expr = CORBA::string_dup (SA_FILTER);
 
-  sa_filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = sa_filter->add_constraints (constraint_list);
 
   supplier_admin_->add_filter (sa_filter.in ());
 }
@@ -418,11 +418,10 @@ FilterClient::create_consumeradmin ()
   constraint_list[1].event_types[0].type_name = CORBA::string_dup(TYPE_NAME);
   constraint_list[1].constraint_expr = CORBA::string_dup (CA_FILTER);
 
-  ca_filter_1->add_constraints (constraint_list);
-  ca_filter_2->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info1 = ca_filter_1->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info2 = ca_filter_2->add_constraints (constraint_list);
 
   consumer_admin_1_->add_filter (ca_filter_1.in ());
-
   consumer_admin_2_->add_filter (ca_filter_2.in ());
 }
 

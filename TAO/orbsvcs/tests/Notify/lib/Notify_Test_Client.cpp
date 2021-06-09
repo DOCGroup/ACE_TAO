@@ -17,7 +17,7 @@ Notify_Test_Client::~Notify_Test_Client ()
     {
       try
       {
-        root_poa_->destroy(1, 1);
+        root_poa_->destroy(true, true);
         orb_->destroy();
       }
       catch (const CORBA::Exception& e)
