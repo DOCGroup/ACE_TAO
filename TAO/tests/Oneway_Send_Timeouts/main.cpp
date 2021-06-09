@@ -38,9 +38,9 @@ bool MyMain::init_server (const ACE_TCHAR* args)
   int thread_pool = 2;
 
 #ifdef ACE_HAS_CPP14
-  server_ = std::make_unique<Server> (my_args);
+  server_task_ = std::make_unique<Server_Task> (my_args);
 #else
-  server_.reset (new Server (my_args);
+  server_task_.reset (new Server_Task (my_args);
 #endif
 
   ACE_ASSERT (server_task_);
