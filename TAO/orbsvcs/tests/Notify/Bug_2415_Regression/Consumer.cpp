@@ -82,7 +82,7 @@ create_proxyFilter (CosNotifyChannelAdmin::EventChannel_ptr ec)
     constraint_list[0].constraint_expr =
       CORBA::string_dup ("$.domain_name == 'domain1'");
 
-    filter->add_constraints (constraint_list);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
     }
   return filter._retn();
 }

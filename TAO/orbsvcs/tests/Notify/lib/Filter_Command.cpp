@@ -135,7 +135,7 @@ TAO_Notify_Tests_Filter_Command::handle_add_constraint (void)
   constraint_list[0].constraint_expr = CORBA::string_dup (this->constraint_.c_str ());
 
   ACE_DEBUG ((LM_DEBUG, "Adding constraint %s\n", this->constraint_.c_str ()));
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 }
 
 void

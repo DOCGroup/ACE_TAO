@@ -131,7 +131,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       constraint_list[0].event_types.length (0);
       constraint_list[0].constraint_expr = CORBA::string_dup ("type != 1");
 
-      filter->add_constraints (constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
       consumer_admin->add_filter (filter.in ());
     }

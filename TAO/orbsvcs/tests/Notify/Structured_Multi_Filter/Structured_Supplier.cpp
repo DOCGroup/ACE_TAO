@@ -184,7 +184,7 @@ void add_admin_filter (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
   constraint_list[0].event_types.length (0);
   constraint_list[0].constraint_expr = CORBA::string_dup ("type != 0");
 
-  filter->add_constraints (constraint_list);
+  CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints (constraint_list);
 
   admin->add_filter (filter.in ());
 }
