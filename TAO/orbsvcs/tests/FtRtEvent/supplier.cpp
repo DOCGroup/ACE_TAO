@@ -55,7 +55,6 @@ get_event_channel(int argc, ACE_TCHAR** argv)
       }
     }
 
-
     if (CORBA::is_nil(channel.in()))
     {
       /// Find the FTRTEC from the Naming Service
@@ -108,14 +107,11 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     RtecEventComm::PushSupplier_var
       supplier = push_supplier._this();
 
-
     orb->run();
-
   }
   catch (const CORBA::Exception& ex){
       ex._tao_print_exception ("A CORBA Exception occurred.");
   }
-
 
   return 0;
 }

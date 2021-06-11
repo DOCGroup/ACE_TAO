@@ -49,7 +49,6 @@ get_event_channel(int argc, ACE_TCHAR** argv)
       }
     }
 
-
     if (CORBA::is_nil(channel.in()))
     {
       CosNaming::Name name(1);
@@ -114,7 +113,6 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       qos);
 
     orb->run();
-
   }
   catch (const CORBA::Exception& ex){
     ex._tao_print_exception ("A CORBA Exception occurred.");
