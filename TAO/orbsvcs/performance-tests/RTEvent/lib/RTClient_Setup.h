@@ -11,7 +11,7 @@
 #include "RTCORBA_Setup.h"
 #include "PriorityBand_Setup.h"
 #include "SyncScope_Setup.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -42,7 +42,7 @@ public:
 private:
   int use_rt_corba_;
 
-  auto_ptr<RTCORBA_Setup> rtcorba_setup_;
+  std::unique_ptr<RTCORBA_Setup> rtcorba_setup_;
   SyncScope_Setup syncscope_setup_;
 };
 
