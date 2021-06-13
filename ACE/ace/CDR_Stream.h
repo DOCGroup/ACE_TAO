@@ -1449,8 +1449,8 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Fixed &x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_OutputCDR &os, ACE_CDR::Uint8 &x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_OutputCDR &os, ACE_CDR::Int8 &x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::Uint8 &x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::Int8 &x);
 
 // CDR input operator from helper classes
 
