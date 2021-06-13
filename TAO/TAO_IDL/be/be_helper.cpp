@@ -533,13 +533,12 @@ TAO_OutStream::print (AST_Expression *expr)
       {
         ACE_CDR::LongLong value = ev->u.llval;
         /*
-         * It seem in C/C++ compilers the minus sign and the bare number are
-         * parsed separately for negative integer literals. This can cause
-         * compilers to complain when using the minimum value of a signed integer
-         * because the number without the minus sign is 1 past the max signed
-         * value.
+         * It seems that in C/C++ the minus sign and the bare number are parsed
+         * separately for negative integer literals. This can cause compilers
+         * to complain when using the minimum value of a signed integer because
+         * the number without the minus sign is 1 past the max signed value.
          *
-         * https://stackoverflow.com/questions/65007935/integer-constant-is-so-large-that-it-is-unsigned-compiler-warning-rational
+         * https://stackoverflow.com/questions/65007935
          *
          * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
          */

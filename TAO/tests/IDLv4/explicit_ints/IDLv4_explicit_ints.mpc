@@ -4,4 +4,7 @@ project: taoexe {
   IDL_Files {
     test.idl
   }
+  Source_Files {
+    main.cpp
+  }
 }

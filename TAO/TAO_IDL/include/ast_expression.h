@@ -161,6 +161,8 @@ public:
       , EV_none                   // Expression value is missing.
     };
 
+  static ExprType eval_kind_to_expr_type (EvalKind eval_kind);
+
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
@@ -184,8 +186,8 @@ public:
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
-          ACE_CDR::Char       int8val;  // Signed Byte Sized Integer
-          ACE_CDR::Octet      uint8val; // Unsigned Byte Sized Integer
+          ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
+          ACE_CDR::Uint8      uint8val; // Unsigned Byte Sized Integer
         } u;
 
       ExprType et;

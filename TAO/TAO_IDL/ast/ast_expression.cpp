@@ -84,6 +84,40 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
+AST_Expression::ExprType
+AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
+{
+  switch (eval_kind)
+    {
+    case EK_bool:
+      return EV_bool;
+    case EK_short:
+      return EV_short;
+    case EK_ushort:
+      return EV_ushort;
+    case EK_long:
+      return EV_long;
+    case EK_ulong:
+      return EV_ulong;
+    case EK_longlong:
+      return EV_longlong;
+    case EK_ulonglong:
+      return EV_ulonglong;
+    case EK_octet:
+      return EV_octet;
+    case EK_floating_point:
+      return EV_double;
+    case EK_fixed_point:
+      return EV_fixed;
+    case EK_int8:
+      return EV_int8;
+    case EK_uint8:
+      return EV_uint8;
+    default:
+      return EV_none;
+    }
+}
+
 // Helper function to fill out the details of where this expression
 // is defined.
 void
@@ -1777,6 +1811,32 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
 // Apply binary operators to an AST_Expression after evaluating
 // its sub-expressions.
 // Operations supported: '+', '-', '*', '/'
+template <typename Type>
+bool
+do_eval_bin_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
+{
+  switch (op)
+    {
+    case AST_Expression::EC_add:
+      result = a + b;
+      break;
+    case AST_Expression::EC_minus:
+      result = a - b;
+      break;
+    case AST_Expression::EC_mul:
+      result = a * b;
+      break;
+    case AST_Expression::EC_div:
+      if (!b) return true;
+      result = a / b;
+      break;
+    default:
+      return true;
+    }
+
+  return false;
+}
+
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 {
@@ -1795,161 +1855,88 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
+  const ExprType expr_type = eval_kind_to_expr_type (ek);
+  if (expr_type == EV_none) return nullptr;
+
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
 
-  if (ek == EK_ulonglong)
+  pd_v1->set_ev (pd_v1->coerce (expr_type));
+  pd_v2->set_ev (pd_v2->coerce (expr_type));
+  retval->et = expr_type;
+
+  bool failed = true;
+  switch (expr_type)
     {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
-      retval->et = EV_ulonglong;
+    case EV_int8:
+      failed = do_eval_bin_op<ACE_CDR::Int8> (pd_ec,
+        pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
+      break;
 
-      switch (this->pd_ec)
-        {
-        case EC_add:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval + this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_minus:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval - this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_mul:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval * this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_div:
-          if (this->pd_v2->ev ()->u.ullval == 0)
-            {
-              delete retval;
-              retval = nullptr;
-              return nullptr;
-            }
+    case EV_uint8:
+      failed = do_eval_bin_op<ACE_CDR::Uint8> (pd_ec,
+        pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
+      break;
 
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval / this->pd_v2->ev  ()->u.ullval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
+    case EV_short:
+      failed = do_eval_bin_op<ACE_CDR::Short> (pd_ec,
+        pd_v1->ev ()->u.sval, pd_v2->ev ()->u.sval, retval->u.sval);
+      break;
+
+    case EV_ushort:
+      failed = do_eval_bin_op<ACE_CDR::UShort> (pd_ec,
+        pd_v1->ev ()->u.usval, pd_v2->ev ()->u.usval, retval->u.usval);
+      break;
+
+    case EV_long:
+      failed = do_eval_bin_op<ACE_CDR::Long> (pd_ec,
+        pd_v1->ev ()->u.lval, pd_v2->ev ()->u.lval, retval->u.lval);
+      break;
+
+    case EV_ulong:
+      failed = do_eval_bin_op<ACE_CDR::ULong> (pd_ec,
+        pd_v1->ev ()->u.ulval, pd_v2->ev ()->u.ulval, retval->u.ulval);
+      break;
+
+    case EV_longlong:
+      failed = do_eval_bin_op<ACE_CDR::LongLong> (pd_ec,
+        pd_v1->ev ()->u.llval, pd_v2->ev ()->u.llval, retval->u.llval);
+      break;
+
+    case EV_ulonglong:
+      failed = do_eval_bin_op<ACE_CDR::ULongLong> (pd_ec,
+        pd_v1->ev ()->u.ullval, pd_v2->ev ()->u.ullval, retval->u.ullval);
+      break;
+
+    case EV_octet:
+      failed = do_eval_bin_op<ACE_CDR::Octet> (pd_ec,
+        pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
+      break;
+
+    case EV_double:
+      failed = do_eval_bin_op<ACE_CDR::Double> (pd_ec,
+        pd_v1->ev ()->u.dval, pd_v2->ev ()->u.dval, retval->u.dval);
+      break;
+
+    case EV_fixed:
+      failed = do_eval_bin_op<ACE_CDR::Fixed> (pd_ec,
+        pd_v1->ev ()->u.fixedval, pd_v2->ev ()->u.fixedval, retval->u.fixedval);
+      break;
+
+    default:
+      failed = true;
     }
-  else if (ek == EK_longlong)
+
+  if (failed)
     {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
-      retval->et = EV_longlong;
-
-      switch (this->pd_ec)
-        {
-        case EC_add:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval + this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_minus:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval - this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_mul:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval * this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_div:
-          if (this->pd_v2->ev ()->u.llval == 0)
-            {
-              delete retval;
-              retval = nullptr;
-              return nullptr;
-            }
-
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval / this->pd_v2->ev  ()->u.llval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
-    }
-  else if (ek == EK_fixed_point)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_fixed));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_fixed));
-      retval->et = EV_fixed;
-
-      switch (this->pd_ec)
-        {
-        case EC_add:
-          retval->u.fixedval =
-            this->pd_v1->ev ()->u.fixedval + this->pd_v2->ev ()->u.fixedval;
-          break;
-        case EC_minus:
-          retval->u.fixedval =
-            this->pd_v1->ev ()->u.fixedval - this->pd_v2->ev ()->u.fixedval;
-          break;
-        case EC_mul:
-          retval->u.fixedval =
-            this->pd_v1->ev ()->u.fixedval * this->pd_v2->ev ()->u.fixedval;
-          break;
-        case EC_div:
-          if (!this->pd_v2->ev ()->u.fixedval)
-            {
-              delete retval;
-              retval = nullptr;
-              return nullptr;
-            }
-
-          retval->u.fixedval =
-            this->pd_v1->ev ()->u.fixedval / this->pd_v2->ev ()->u.fixedval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
-    }
-  else
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_double));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_double));
-      retval->et = EV_double;
-
-      switch (this->pd_ec)
-        {
-        case EC_add:
-          retval->u.dval =
-            this->pd_v1->ev ()->u.dval + this->pd_v2->ev ()->u.dval;
-          break;
-        case EC_minus:
-          retval->u.dval =
-            this->pd_v1->ev ()->u.dval - this->pd_v2->ev ()->u.dval;
-          break;
-        case EC_mul:
-          retval->u.dval =
-            this->pd_v1->ev ()->u.dval * this->pd_v2->ev ()->u.dval;
-          break;
-        case EC_div:
-          if (ACE::is_equal (this->pd_v2->ev ()->u.dval, 0.0))
-            {
-              delete retval;
-              retval = nullptr;
-              return nullptr;
-            }
-
-          retval->u.dval =
-            this->pd_v1->ev ()->u.dval / this->pd_v2->ev  ()->u.dval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
+      delete retval;
+      retval = nullptr;
     }
 
   return retval;
 }
+
 // Apply binary operators to an AST_Expression after evaluating
 // its sub-expressions.
 // Operations supported: '%'
@@ -2007,8 +1994,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       retval->u.llval =
         this->pd_v1->ev ()->u.llval % this->pd_v2->ev ()->u.llval;
     }
-  else
-  if (ek == EK_ulong)
+  else if (ek == EK_ulong)
     {
       this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
       this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
@@ -2053,6 +2039,34 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 // Apply bitwise operations to an AST_Expression after evaluating
 // its sub-expressions.
 // Operations supported: '%', '|', '&', '^', '<<', '>>'
+template <typename Type>
+bool
+do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
+{
+  switch (op)
+    {
+    case AST_Expression::EC_or:
+      result = a | b;
+      break;
+    case AST_Expression::EC_xor:
+      result = a ^ b;
+      break;
+    case AST_Expression::EC_and:
+      result = a & b;
+      break;
+    case AST_Expression::EC_left:
+      result = a << b;
+      break;
+    case AST_Expression::EC_right:
+      result = a >> b;
+      break;
+    default:
+      return true;
+    }
+
+  return false;
+}
+
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 {
@@ -2071,314 +2085,79 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
+  const ExprType expr_type = eval_kind_to_expr_type (ek);
+  if (expr_type == EV_none) return nullptr;
+
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
 
-  switch (ek)
+  pd_v1->set_ev (pd_v1->coerce (expr_type));
+  pd_v2->set_ev (pd_v2->coerce (expr_type));
+  retval->et = expr_type;
+
+  bool failed = true;
+  switch (expr_type)
   {
-  case EK_ulonglong:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
-      retval->et = EV_ulonglong;
+    case EV_int8:
+      failed = do_eval_bit_op<ACE_CDR::Int8> (pd_ec,
+        pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
+      break;
 
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval | this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_xor:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval ^ this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_and:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval & this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_left:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval << this->pd_v2->ev ()->u.ullval;
-          break;
-        case EC_right:
-          retval->u.ullval =
-            this->pd_v1->ev ()->u.ullval >> this->pd_v2->ev ()->u.ullval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
+    case EV_uint8:
+      failed = do_eval_bit_op<ACE_CDR::Uint8> (pd_ec,
+        pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
+      break;
 
-    break;
-  case EK_longlong:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
-      retval->et = EV_longlong;
+    case EV_short:
+      failed = do_eval_bit_op<ACE_CDR::Short> (pd_ec,
+        pd_v1->ev ()->u.sval, pd_v2->ev ()->u.sval, retval->u.sval);
+      break;
 
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval | this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_xor:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval ^ this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_and:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval & this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_left:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval << this->pd_v2->ev ()->u.llval;
-          break;
-        case EC_right:
-          retval->u.llval =
-            this->pd_v1->ev ()->u.llval >> this->pd_v2->ev ()->u.llval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
+    case EV_ushort:
+      failed = do_eval_bit_op<ACE_CDR::UShort> (pd_ec,
+        pd_v1->ev ()->u.usval, pd_v2->ev ()->u.usval, retval->u.usval);
+      break;
 
-    break;
-  case EK_ulong:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
-      retval->et = EV_ulong;
+    case EV_long:
+      failed = do_eval_bit_op<ACE_CDR::Long> (pd_ec,
+        pd_v1->ev ()->u.lval, pd_v2->ev ()->u.lval, retval->u.lval);
+      break;
 
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval | this->pd_v2->ev ()->u.ulval;
-          break;
-        case EC_xor:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval ^ this->pd_v2->ev ()->u.ulval;
-          break;
-        case EC_and:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval & this->pd_v2->ev ()->u.ulval;
-          break;
-        case EC_left:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
-          break;
-        case EC_right:
-          retval->u.ulval =
-            this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
+    case EV_ulong:
+      failed = do_eval_bit_op<ACE_CDR::ULong> (pd_ec,
+        pd_v1->ev ()->u.ulval, pd_v2->ev ()->u.ulval, retval->u.ulval);
+      break;
 
-    break;
-  case EK_long:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
-      retval->et = EV_long;
+    case EV_longlong:
+      failed = do_eval_bit_op<ACE_CDR::LongLong> (pd_ec,
+        pd_v1->ev ()->u.llval, pd_v2->ev ()->u.llval, retval->u.llval);
+      break;
 
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.lval =
-            this->pd_v1->ev ()->u.lval | this->pd_v2->ev ()->u.lval;
-          break;
-        case EC_xor:
-          retval->u.lval =
-            this->pd_v1->ev ()->u.lval ^ this->pd_v2->ev ()->u.lval;
-          break;
-        case EC_and:
-          retval->u.lval =
-            this->pd_v1->ev ()->u.lval & this->pd_v2->ev ()->u.lval;
-          break;
-        case EC_left:
-          retval->u.lval =
-            this->pd_v1->ev ()->u.lval << this->pd_v2->ev ()->u.lval;
-          break;
-        case EC_right:
-          retval->u.lval =
-            this->pd_v1->ev ()->u.lval >> this->pd_v2->ev ()->u.lval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
+    case EV_ulonglong:
+      failed = do_eval_bit_op<ACE_CDR::ULongLong> (pd_ec,
+        pd_v1->ev ()->u.ullval, pd_v2->ev ()->u.ullval, retval->u.ullval);
+      break;
 
-    break;
-  case EK_ushort:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ushort));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ushort));
-      retval->et = EV_ushort;
+    case EV_octet:
+      failed = do_eval_bit_op<ACE_CDR::Octet> (pd_ec,
+        pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
+      break;
 
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.usval =
-            this->pd_v1->ev ()->u.usval | this->pd_v2->ev ()->u.usval;
-          break;
-        case EC_xor:
-          retval->u.usval =
-            this->pd_v1->ev ()->u.usval ^ this->pd_v2->ev ()->u.usval;
-          break;
-        case EC_and:
-          retval->u.usval =
-            this->pd_v1->ev ()->u.usval & this->pd_v2->ev ()->u.usval;
-          break;
-        case EC_left:
-          retval->u.usval =
-            this->pd_v1->ev ()->u.usval << this->pd_v2->ev ()->u.usval;
-          break;
-        case EC_right:
-          retval->u.usval =
-            this->pd_v1->ev ()->u.usval >> this->pd_v2->ev ()->u.usval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
+    case EV_bool:
+      failed = do_eval_bit_op<ACE_CDR::Boolean> (pd_ec,
+        pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
+      break;
 
-    break;
-  case EK_short:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_short));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_short));
-      retval->et = EV_short;
-
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.sval =
-            this->pd_v1->ev ()->u.sval | this->pd_v2->ev ()->u.sval;
-          break;
-        case EC_xor:
-          retval->u.sval =
-            this->pd_v1->ev ()->u.sval ^ this->pd_v2->ev ()->u.sval;
-          break;
-        case EC_and:
-          retval->u.sval =
-            this->pd_v1->ev ()->u.sval & this->pd_v2->ev ()->u.sval;
-          break;
-        case EC_left:
-          retval->u.sval =
-            this->pd_v1->ev ()->u.sval << this->pd_v2->ev ()->u.sval;
-          break;
-        case EC_right:
-          retval->u.sval =
-            this->pd_v1->ev ()->u.sval >> this->pd_v2->ev ()->u.sval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
-
-    break;
-  case EK_bool:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_bool));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_bool));
-      retval->et = EV_bool;
-
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.bval =
-            this->pd_v1->ev ()->u.bval | this->pd_v2->ev ()->u.bval;
-          break;
-        case EC_xor:
-          retval->u.bval =
-            this->pd_v1->ev ()->u.bval ^ this->pd_v2->ev ()->u.bval;
-          break;
-        case EC_and:
-          retval->u.bval =
-            this->pd_v1->ev ()->u.bval & this->pd_v2->ev ()->u.bval;
-          break;
-        case EC_left:
-          retval->u.bval =
-            this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
-          break;
-        case EC_right:
-          retval->u.bval =
-            this->pd_v1->ev ()->u.ulval >> this->pd_v2->ev ()->u.ulval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
-
-    break;
-  case EK_octet:
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_octet));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_octet));
-      retval->et = EV_octet;
-
-      switch (this->pd_ec)
-      {
-        case EC_or:
-          retval->u.oval =
-            this->pd_v1->ev ()->u.oval | this->pd_v2->ev ()->u.oval;
-          break;
-        case EC_xor:
-          retval->u.oval =
-            this->pd_v1->ev ()->u.oval ^ this->pd_v2->ev ()->u.oval;
-          break;
-        case EC_and:
-          retval->u.oval =
-            this->pd_v1->ev ()->u.oval & this->pd_v2->ev ()->u.oval;
-          break;
-        case EC_left:
-          {
-            // This is the only bitwise operation that can cause overflow
-            // even if both operands are in range, so we set the ExprType
-            // to a large type and then check for overflow.
-            retval->u.ulval =
-              this->pd_v1->ev ()->u.ulval << this->pd_v2->ev ()->u.ulval;
-            AST_Expression test (retval->u.ulval, EV_ulong);
-            AST_ExprValue *ev = test.coerce (EV_octet);
-            delete retval;
-            retval = ev;
-            break;
-          }
-        case EC_right:
-          retval->u.oval =
-            this->pd_v1->ev ()->u.oval >> this->pd_v2->ev ()->u.oval;
-          break;
-        default:
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-      }
-    }
-
-    break;
-  default:
-    delete retval;
-    retval = nullptr;
-    return nullptr;
+    default:
+      failed = true;
   }
+
+  if (failed)
+    {
+      delete retval;
+      retval = nullptr;
+    }
 
   return retval;
 }

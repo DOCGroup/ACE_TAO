@@ -19,8 +19,7 @@ template <typename IntType>
 void
 expect_equals (bool &any_failed, const char *name, IntType actual, IntType expected)
 {
-  const bool failed = actual != expected;
-  if (failed)
+  if (actual != expected)
     {
       using stream8::operator<<;
       *ACE_DEFAULT_LOG_STREAM
@@ -48,11 +47,33 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   expect_equals<CORBA::Int64>(any_failed, "i64_min", i64_min, (-9223372036854775807 - 1));
   expect_equals<CORBA::Int64>(any_failed, "i64_max", i64_max, 9223372036854775807);
 
+  expect_equals<CORBA::Uint8>(any_failed, "u8_min_overflow", u8_min_overflow, u8_max);
+  expect_equals<CORBA::Int8>(any_failed, "i8_min_overflow", i8_min_overflow, i8_max);
   expect_equals<CORBA::Uint8>(any_failed, "u8_max_overflow", u8_max_overflow, 0);
   expect_equals<CORBA::Int8>(any_failed, "i8_max_overflow", i8_max_overflow, i8_min);
 
   expect_equals<CORBA::Uint8>(any_failed, "u8_max_negate", u8_max_negate, 0);
   expect_equals<CORBA::Int8>(any_failed, "i8_max_negate", i8_max_negate, i8_min);
+
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e1", u8_e1, 2);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e2", u8_e2, 4);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e3", u8_e3, 12);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e4", u8_e4, 3);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e5", u8_e5, 7);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e6", u8_e6, 1);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e7", u8_e7, 1);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e8", u8_e8, 16);
+  expect_equals<CORBA::Uint8>(any_failed, "u8_e9", u8_e9, 8);
+
+  expect_equals<CORBA::Int8>(any_failed, "i8_e1", i8_e1, -2);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e2", i8_e2, 4);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e3", i8_e3, 12);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e4", i8_e4, 3);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e5", i8_e5, 7);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e6", i8_e6, 1);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e7", i8_e7, 1);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e8", i8_e8, 16);
+  expect_equals<CORBA::Int8>(any_failed, "i8_e9", i8_e9, 8);
 
   return any_failed ? 1 : 0;
 }

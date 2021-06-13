@@ -499,6 +499,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_wstring x);
 #endif /* ACE_LACKS_STD_WSTRING */
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::Int8 x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::Uint8 x);
 
 // CDR input operators for CORBA types
 
@@ -538,6 +540,8 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       ACE_InputCDR::to_std_wstring x);
 #endif /* ACE_LACKS_STD_WSTRING */
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::Int8 &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::Uint8 &x);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
