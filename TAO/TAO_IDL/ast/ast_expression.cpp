@@ -1312,11 +1312,11 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_double;
           return ev;
         case AST_Expression::EV_int8:
-          ev->u.fval = static_cast<double> (ev->u.int8val);
+          ev->u.dval = static_cast<double> (ev->u.int8val);
           ev->et = t;
           return ev;
         case AST_Expression::EV_uint8:
-          ev->u.fval = static_cast<double> (ev->u.uint8val);
+          ev->u.dval = static_cast<double> (ev->u.uint8val);
           ev->et = t;
           return ev;
         default:
@@ -2039,9 +2039,10 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 // Apply bitwise operations to an AST_Expression after evaluating
 // its sub-expressions.
 // Operations supported: '%', '|', '&', '^', '<<', '>>'
+
 template <typename Type>
 bool
-do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
+do_eval_bit_op_no_shift (AST_Expression::ExprComb op, Type a, Type b, Type &result)
 {
   switch (op)
     {
@@ -2054,6 +2055,19 @@ do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
     case AST_Expression::EC_and:
       result = a & b;
       break;
+    default:
+      return true;
+    }
+
+  return false;
+}
+
+template <typename Type>
+bool
+do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
+{
+  switch (op)
+    {
     case AST_Expression::EC_left:
       result = a << b;
       break;
@@ -2061,7 +2075,7 @@ do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
       result = a >> b;
       break;
     default:
-      return true;
+      return do_eval_bit_op_no_shift (op, a, b, result);
     }
 
   return false;
@@ -2145,7 +2159,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       break;
 
     case EV_bool:
-      failed = do_eval_bit_op<ACE_CDR::Boolean> (pd_ec,
+      failed = do_eval_bit_op_no_shift<ACE_CDR::Boolean> (pd_ec,
         pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
       break;
 
