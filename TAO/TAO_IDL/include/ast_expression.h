@@ -187,7 +187,7 @@ public:
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
           ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
-          ACE_CDR::Uint8      uint8val; // Unsigned Byte Sized Integer
+          ACE_CDR::UInt8      uint8val; // Unsigned Byte Sized Integer
         } u;
 
       ExprType et;

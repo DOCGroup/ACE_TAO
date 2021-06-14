@@ -1837,6 +1837,18 @@ do_eval_bin_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
   return false;
 }
 
+template <typename Type>
+bool
+do_eval_bin_op_float (AST_Expression::ExprComb op, Type a, Type b, Type &result)
+{
+  if (op == AST_Expression::EC_div)
+    {
+      result = a / b;
+      return false;
+    }
+  return do_eval_bin_op (op, a, b, result);
+}
+
 AST_Expression::AST_ExprValue *
 AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
 {
@@ -1875,7 +1887,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       break;
 
     case EV_uint8:
-      failed = do_eval_bin_op<ACE_CDR::Uint8> (pd_ec,
+      failed = do_eval_bin_op<ACE_CDR::UInt8> (pd_ec,
         pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
       break;
 
@@ -1915,7 +1927,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       break;
 
     case EV_double:
-      failed = do_eval_bin_op<ACE_CDR::Double> (pd_ec,
+      failed = do_eval_bin_op_float<ACE_CDR::Double> (pd_ec,
         pd_v1->ev ()->u.dval, pd_v2->ev ()->u.dval, retval->u.dval);
       break;
 
@@ -2119,7 +2131,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       break;
 
     case EV_uint8:
-      failed = do_eval_bit_op<ACE_CDR::Uint8> (pd_ec,
+      failed = do_eval_bit_op<ACE_CDR::UInt8> (pd_ec,
         pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
       break;
 

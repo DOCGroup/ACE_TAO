@@ -226,10 +226,10 @@ be_predefined_type::compute_tc_name ()
         break;
       }
     case AST_PredefinedType::PT_uint8:
-      ACE_NEW (id, Identifier ("_tc_Uint8"));
+      ACE_NEW (id, Identifier ("_tc_uint8"));
       break;
     case AST_PredefinedType::PT_int8:
-      ACE_NEW (id, Identifier ("_tc_Int8"));
+      ACE_NEW (id, Identifier ("_tc_int8"));
       break;
     default:
       idl_global->err ()->misc_error (

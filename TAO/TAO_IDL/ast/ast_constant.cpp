@@ -137,7 +137,7 @@ void
 AST_Constant::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "const ");
-  dump_i(o, AST_Expression::exprtype_to_string (pd_et));
+  dump_i (o, AST_Expression::exprtype_to_string (pd_et));
   this->dump_i (o, " ");
 
   this->local_name ()->dump (o);

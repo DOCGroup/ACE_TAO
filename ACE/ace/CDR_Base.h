@@ -208,7 +208,7 @@ public:
   typedef ACE_INT64 LongLong;
   typedef ACE_UINT64 ULongLong;
   typedef ACE_INT8 Int8;
-  typedef ACE_UINT8 Uint8;
+  typedef ACE_UINT8 UInt8;
   typedef Short Int16;
   typedef UShort Uint16;
   typedef Long Int32;

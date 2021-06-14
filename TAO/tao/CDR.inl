@@ -501,7 +501,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::Int8 x)
     && static_cast<ACE_OutputCDR &> (os) << x;
 }
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::Uint8 x)
+ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::UInt8 x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN, ACE_CDR::OCTET_SIZE)
@@ -643,7 +643,7 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::Int8 &x)
   return static_cast<ACE_InputCDR &> (is) >> x;
 }
 
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::Uint8 &x)
+ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::UInt8 &x)
 {
   return static_cast<ACE_InputCDR &> (is) >> x;
 }

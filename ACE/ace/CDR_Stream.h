@@ -261,7 +261,7 @@ public:
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
   ACE_CDR::Boolean write_fixed (const ACE_CDR::Fixed &x);
   ACE_CDR::Boolean write_int8 (ACE_CDR::Int8 x);
-  ACE_CDR::Boolean write_uint8 (ACE_CDR::Uint8 x);
+  ACE_CDR::Boolean write_uint8 (ACE_CDR::UInt8 x);
 
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
@@ -309,7 +309,7 @@ public:
   ACE_CDR::Boolean write_longdouble_array (const ACE_CDR::LongDouble* x,
                                            ACE_CDR::ULong length);
   ACE_CDR::Boolean write_int8_array (const ACE_CDR::Int8 *x, ACE_CDR::ULong length);
-  ACE_CDR::Boolean write_uint8_array (const ACE_CDR::Uint8 *x, ACE_CDR::ULong length);
+  ACE_CDR::Boolean write_uint8_array (const ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
 
   /// Write an octet array contained inside a MB, this can be optimized
   /// to minimize copies.
@@ -862,7 +862,7 @@ public:
   ACE_CDR::Boolean read_longdouble (ACE_CDR::LongDouble &x);
   ACE_CDR::Boolean read_fixed (ACE_CDR::Fixed &x);
   ACE_CDR::Boolean read_int8 (ACE_CDR::Int8 &x);
-  ACE_CDR::Boolean read_uint8 (ACE_CDR::Uint8 &x);
+  ACE_CDR::Boolean read_uint8 (ACE_CDR::UInt8 &x);
 
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
@@ -906,7 +906,7 @@ public:
   ACE_CDR::Boolean read_longdouble_array (ACE_CDR::LongDouble* x,
                                           ACE_CDR::ULong length);
   ACE_CDR::Boolean read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length);
-  ACE_CDR::Boolean read_uint8_array (ACE_CDR::Uint8 *x, ACE_CDR::ULong length);
+  ACE_CDR::Boolean read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
   //@}
 
   /**
@@ -1392,7 +1392,7 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Double x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Fixed &x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::Uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::UInt8 x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::Int8 x);
 
 // CDR output operator from helper classes
@@ -1449,7 +1449,7 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Fixed &x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::Uint8 &x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::UInt8 &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::Int8 &x);
 
 // CDR input operator from helper classes

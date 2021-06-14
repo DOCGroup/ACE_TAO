@@ -194,7 +194,7 @@ AST_PredefinedType::AST_PredefinedType (PredefinedType t,
                    Identifier (n->last_component ()->get_string ()));
           break;
         case AST_PredefinedType::PT_uint8:
-          ACE_NEW (id, Identifier ("Uint8"));
+          ACE_NEW (id, Identifier ("UInt8"));
           break;
         case AST_PredefinedType::PT_int8:
           ACE_NEW (id, Identifier ("Int8"));

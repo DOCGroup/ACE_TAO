@@ -79,8 +79,8 @@ namespace CORBA
   typedef ACE_CDR::Int8 Int8;
   typedef Int8 &Int8_out;
 
-  typedef ACE_CDR::Uint8 Uint8;
-  typedef Uint8 &Uint8_out;
+  typedef ACE_CDR::UInt8 UInt8;
+  typedef UInt8 &UInt8_out;
 
   typedef ACE_CDR::Int16 Int16;
   typedef Int16 &Int16_out;
