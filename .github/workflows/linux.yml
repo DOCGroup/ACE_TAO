@@ -20,7 +20,7 @@ jobs:
             CXX: g++-4.8
             PackageDeps: g++-4.8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-16.04
+            os: ubuntu-18.04
           - CC: gcc-6
             CXX: g++-6
             PackageDeps: g++-6
