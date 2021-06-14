@@ -1827,14 +1827,14 @@ do_eval_bin_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
       result = a * b;
       break;
     case AST_Expression::EC_div:
-      if (!b) return true;
+      if (!b) return false;
       result = a / b;
       break;
     default:
-      return true;
+      return false;
     }
 
-  return false;
+  return true;
 }
 
 template <typename Type>
@@ -1844,7 +1844,7 @@ do_eval_bin_op_float (AST_Expression::ExprComb op, Type a, Type b, Type &result)
   if (op == AST_Expression::EC_div)
     {
       result = a / b;
-      return false;
+      return true;
     }
   return do_eval_bin_op (op, a, b, result);
 }
@@ -1878,69 +1878,69 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool failed = true;
+  bool success = false;
   switch (expr_type)
     {
     case EV_int8:
-      failed = do_eval_bin_op<ACE_CDR::Int8> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::Int8> (pd_ec,
         pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
       break;
 
     case EV_uint8:
-      failed = do_eval_bin_op<ACE_CDR::UInt8> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::UInt8> (pd_ec,
         pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
       break;
 
     case EV_short:
-      failed = do_eval_bin_op<ACE_CDR::Short> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::Short> (pd_ec,
         pd_v1->ev ()->u.sval, pd_v2->ev ()->u.sval, retval->u.sval);
       break;
 
     case EV_ushort:
-      failed = do_eval_bin_op<ACE_CDR::UShort> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::UShort> (pd_ec,
         pd_v1->ev ()->u.usval, pd_v2->ev ()->u.usval, retval->u.usval);
       break;
 
     case EV_long:
-      failed = do_eval_bin_op<ACE_CDR::Long> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::Long> (pd_ec,
         pd_v1->ev ()->u.lval, pd_v2->ev ()->u.lval, retval->u.lval);
       break;
 
     case EV_ulong:
-      failed = do_eval_bin_op<ACE_CDR::ULong> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::ULong> (pd_ec,
         pd_v1->ev ()->u.ulval, pd_v2->ev ()->u.ulval, retval->u.ulval);
       break;
 
     case EV_longlong:
-      failed = do_eval_bin_op<ACE_CDR::LongLong> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::LongLong> (pd_ec,
         pd_v1->ev ()->u.llval, pd_v2->ev ()->u.llval, retval->u.llval);
       break;
 
     case EV_ulonglong:
-      failed = do_eval_bin_op<ACE_CDR::ULongLong> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::ULongLong> (pd_ec,
         pd_v1->ev ()->u.ullval, pd_v2->ev ()->u.ullval, retval->u.ullval);
       break;
 
     case EV_octet:
-      failed = do_eval_bin_op<ACE_CDR::Octet> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::Octet> (pd_ec,
         pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
       break;
 
     case EV_double:
-      failed = do_eval_bin_op_float<ACE_CDR::Double> (pd_ec,
+      success = do_eval_bin_op_float<ACE_CDR::Double> (pd_ec,
         pd_v1->ev ()->u.dval, pd_v2->ev ()->u.dval, retval->u.dval);
       break;
 
     case EV_fixed:
-      failed = do_eval_bin_op<ACE_CDR::Fixed> (pd_ec,
+      success = do_eval_bin_op<ACE_CDR::Fixed> (pd_ec,
         pd_v1->ev ()->u.fixedval, pd_v2->ev ()->u.fixedval, retval->u.fixedval);
       break;
 
     default:
-      failed = true;
+      success = true;
     }
 
-  if (failed)
+  if (!success)
     {
       delete retval;
       retval = nullptr;
@@ -2068,10 +2068,10 @@ do_eval_bit_op_no_shift (AST_Expression::ExprComb op, Type a, Type b, Type &resu
       result = a & b;
       break;
     default:
-      return true;
+      return false;
     }
 
-  return false;
+  return true;
 }
 
 template <typename Type>
@@ -2090,7 +2090,7 @@ do_eval_bit_op (AST_Expression::ExprComb op, Type a, Type b, Type &result)
       return do_eval_bit_op_no_shift (op, a, b, result);
     }
 
-  return false;
+  return true;
 }
 
 AST_Expression::AST_ExprValue *
@@ -2122,64 +2122,64 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool failed = true;
+  bool success = true;
   switch (expr_type)
   {
     case EV_int8:
-      failed = do_eval_bit_op<ACE_CDR::Int8> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::Int8> (pd_ec,
         pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
       break;
 
     case EV_uint8:
-      failed = do_eval_bit_op<ACE_CDR::UInt8> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::UInt8> (pd_ec,
         pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
       break;
 
     case EV_short:
-      failed = do_eval_bit_op<ACE_CDR::Short> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::Short> (pd_ec,
         pd_v1->ev ()->u.sval, pd_v2->ev ()->u.sval, retval->u.sval);
       break;
 
     case EV_ushort:
-      failed = do_eval_bit_op<ACE_CDR::UShort> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::UShort> (pd_ec,
         pd_v1->ev ()->u.usval, pd_v2->ev ()->u.usval, retval->u.usval);
       break;
 
     case EV_long:
-      failed = do_eval_bit_op<ACE_CDR::Long> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::Long> (pd_ec,
         pd_v1->ev ()->u.lval, pd_v2->ev ()->u.lval, retval->u.lval);
       break;
 
     case EV_ulong:
-      failed = do_eval_bit_op<ACE_CDR::ULong> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::ULong> (pd_ec,
         pd_v1->ev ()->u.ulval, pd_v2->ev ()->u.ulval, retval->u.ulval);
       break;
 
     case EV_longlong:
-      failed = do_eval_bit_op<ACE_CDR::LongLong> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::LongLong> (pd_ec,
         pd_v1->ev ()->u.llval, pd_v2->ev ()->u.llval, retval->u.llval);
       break;
 
     case EV_ulonglong:
-      failed = do_eval_bit_op<ACE_CDR::ULongLong> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::ULongLong> (pd_ec,
         pd_v1->ev ()->u.ullval, pd_v2->ev ()->u.ullval, retval->u.ullval);
       break;
 
     case EV_octet:
-      failed = do_eval_bit_op<ACE_CDR::Octet> (pd_ec,
+      success = do_eval_bit_op<ACE_CDR::Octet> (pd_ec,
         pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
       break;
 
     case EV_bool:
-      failed = do_eval_bit_op_no_shift<ACE_CDR::Boolean> (pd_ec,
+      success = do_eval_bit_op_no_shift<ACE_CDR::Boolean> (pd_ec,
         pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
       break;
 
     default:
-      failed = true;
+      success = true;
   }
 
-  if (failed)
+  if (!success)
     {
       delete retval;
       retval = nullptr;
@@ -2800,27 +2800,6 @@ dump_unary_expr (ACE_OSTREAM_TYPE &o,
   e->dump (o);
 }
 
-static void
-dump_nibble (ACE_OSTREAM_TYPE &o, short value)
-{
-  value = value & 0x0000000F;
-  if (value < 0xA) {
-    o << value;
-  } else if (value == 0xA) {
-    o << 'A';
-  } else if (value == 0xB) {
-    o << 'B';
-  } else if (value == 0xC) {
-    o << 'C';
-  } else if (value == 0xD) {
-    o << 'D';
-  } else if (value == 0xE) {
-    o << 'E';
-  } else if (value == 0xF) {
-    o << 'F';
-  }
-}
-
 // Dump the supplied AST_ExprValue to the ostream o.
 static void
 dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
@@ -2837,6 +2816,7 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
       o << ev->u.lval;
       break;
     case AST_Expression::EV_ulong:
+    case AST_Expression::EV_enum:
       o << ev->u.ulval;
       break;
     case AST_Expression::EV_float:
@@ -2852,8 +2832,11 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
       o << ev->u.wcval;
       break;
     case AST_Expression::EV_octet:
-      dump_nibble (o, ev->u.wcval);
-      dump_nibble (o, ev->u.wcval >> 4);
+      {
+        char buffer[5] = {0};
+        ACE_OS::sprintf (buffer, "0x%02x", ev->u.oval);
+        o << &buffer[0];
+      }
       break;
     case AST_Expression::EV_bool:
       o << (ev->u.bval == true ? "TRUE" : "FALSE");
@@ -2868,7 +2851,6 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
           o << "(null string)";
         }
       break;
-    case AST_Expression::EV_enum:
     case AST_Expression::EV_longlong:
       o << ev->u.llval;
       break;
