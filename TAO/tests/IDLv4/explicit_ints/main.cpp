@@ -76,5 +76,5 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   expect_equals<CORBA::Int8> (any_failed, "i8_e8", i8_e8, 16);
   expect_equals<CORBA::Int8> (any_failed, "i8_e9", i8_e9, 8);
 
-  return any_failed ? EXIT_SUCCESS : EXIT_FAILURE;
+  return any_failed ? EXIT_FAILURE : EXIT_SUCCESS;
 }
