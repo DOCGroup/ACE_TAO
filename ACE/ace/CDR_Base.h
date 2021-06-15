@@ -210,11 +210,11 @@ public:
   typedef ACE_INT8 Int8;
   typedef ACE_UINT8 UInt8;
   typedef Short Int16;
-  typedef UShort Uint16;
+  typedef UShort UInt16;
   typedef Long Int32;
-  typedef ULong Uint32;
+  typedef ULong UInt32;
   typedef LongLong Int64;
-  typedef ULongLong Uint64;
+  typedef ULongLong UInt64;
 
 #   if ACE_SIZEOF_FLOAT == 4
       typedef float Float;
