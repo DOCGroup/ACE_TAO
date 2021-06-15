@@ -1088,9 +1088,10 @@ annotation_tests ()
     test_union->field(af, 2);
     AST_UnionBranch *ub = dynamic_cast<AST_UnionBranch *>(*af);
     AST_UnionLabel *ul = ub->label ();
-    if (ul->label_val()->ev()->u.ulval != 2) {
-     t.failed("did not get the correct label value");
-    }
+    if (ul->label_val()->ev()->u.ulval != 2)
+      {
+        t.failed("did not get the correct label value");
+      }
   } catch (Failed const &) {}
 
   // Done, Print Overall Results
