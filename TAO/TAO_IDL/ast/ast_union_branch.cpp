@@ -187,9 +187,9 @@ AST_UnionBranch::add_labels (AST_Union *u)
        i.next ())
     {
       if (AST_UnionLabel::UL_default == i.item ()->label_kind ())
-      {
-        continue;
-      }
+        {
+          continue;
+        }
 
       AST_Expression *ex = i.item ()->label_val ();
       UTL_ScopedName *n = ex->n ();
