@@ -48,7 +48,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "tao/Basic_Types_IDLv4.h"
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Message_Semantics.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"
@@ -499,8 +499,8 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_wstring x);
 #endif /* ACE_LACKS_STD_WSTRING */
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::Int8 x);
-TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::UInt8 x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::IDLv4::Int8 x);
+TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::IDLv4::UInt8 x);
 
 // CDR input operators for CORBA types
 
@@ -540,8 +540,8 @@ TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
 TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &os,
                                       ACE_InputCDR::to_std_wstring x);
 #endif /* ACE_LACKS_STD_WSTRING */
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::Int8 &x);
-TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::UInt8 &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::IDLv4::Int8 &x);
+TAO_Export CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::IDLv4::UInt8 &x);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
