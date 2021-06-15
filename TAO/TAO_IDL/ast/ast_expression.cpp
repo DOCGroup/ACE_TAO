@@ -124,7 +124,7 @@ void
 AST_Expression::fill_definition_details ()
 {
   this->pd_defined_in = idl_global->scopes ().depth () > 0
-                          ? idl_global->scopes().top ()
+                          ? idl_global->scopes ().top ()
                           : nullptr ;
   this->pd_line = idl_global->lineno ();
   this->pd_file_name = idl_global->filename ();
@@ -854,11 +854,11 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_long;
           return ev;
         case AST_Expression::EV_int8:
-          ev->u.lval = static_cast<long>(ev->u.int8val);
+          ev->u.lval = static_cast<long> (ev->u.int8val);
           ev->et = t;
           return ev;
         case AST_Expression::EV_uint8:
-          ev->u.lval = static_cast<long>(ev->u.uint8val);
+          ev->u.lval = static_cast<long> (ev->u.uint8val);
           ev->et = t;
           return ev;
         default:
@@ -1867,7 +1867,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
-  const ExprType expr_type = eval_kind_to_expr_type (ek);
+  ExprType const expr_type = eval_kind_to_expr_type (ek);
   if (expr_type == EV_none) return nullptr;
 
   ACE_NEW_RETURN (retval,
@@ -2111,7 +2111,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
-  const ExprType expr_type = eval_kind_to_expr_type (ek);
+  ExprType const expr_type = eval_kind_to_expr_type (ek);
   if (expr_type == EV_none) return nullptr;
 
   ACE_NEW_RETURN (retval,
@@ -2688,7 +2688,7 @@ AST_Expression::evaluate (EvalKind ek)
 bool
 AST_Expression::operator== (AST_Expression *vc)
 {
-  return compare(vc);
+  return compare (vc);
 }
 
 bool
@@ -2702,7 +2702,7 @@ AST_Expression::compare (AST_Expression *vc)
   this->evaluate (EK_const);
   vc->evaluate (EK_const);
 
-  if (pd_ev == nullptr || vc->ev() == nullptr)
+  if (pd_ev == nullptr || vc->ev () == nullptr)
     {
       return false;
     }
@@ -2721,7 +2721,7 @@ AST_Expression::compare (AST_Expression *vc)
     case EV_long:
       return this->pd_ev->u.lval == vc->ev ()->u.lval;
     case EV_ulong:
-      return this->pd_ev->u.ulval == vc->ev()->u.ulval;
+      return this->pd_ev->u.ulval == vc->ev ()->u.ulval;
     case EV_float:
       return ACE::is_equal (this->pd_ev->u.fval, vc->ev ()->u.fval);
     case EV_double:
@@ -2833,9 +2833,10 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
       break;
     case AST_Expression::EV_octet:
       {
-        char buffer[5] = {0};
-        ACE_OS::sprintf (buffer, "0x%02x", ev->u.oval);
-        o << &buffer[0];
+        std::ios saved (nullptr);
+        saved.copyfmt (o);
+        o << "0x" << std::hex << std::setw (2) << std::setfill ('0') << unsigned (ev->u.oval);
+        o.copyfmt (saved);
       }
       break;
     case AST_Expression::EV_bool:
