@@ -92,14 +92,12 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl_2
-         << "virtual ::CORBA::ValueBase *" << be_nl
-         << "create_for_unmarshal ();";
+         << "virtual ::CORBA::ValueBase *create_for_unmarshal ();";
 
       if (node->supports_abstract ())
         {
           os << be_nl_2
-             << "virtual ::CORBA::AbstractBase_ptr" << be_nl
-             << "create_for_unmarshal_abstract ();" << be_uidt;
+             << "virtual ::CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();" << be_uidt;
         }
     }
 
