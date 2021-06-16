@@ -264,28 +264,23 @@ be_type::gen_common_varout (TAO_OutStream *os)
                                                     : "class ")
       << this->local_name () << ";";
 
-  *os << be_nl_2
-      << "typedef" << be_idt_nl
+  *os << be_nl
+      << "using " << this->local_name () << "_var = "
       << (st == AST_Type::FIXED ? "::TAO_Fixed_Var_T<"
                                 : "::TAO_Var_Var_T<")
-      << be_idt << be_idt_nl
-      << this->local_name () << be_uidt_nl
-      << ">" << be_uidt_nl
-      << this->local_name () << "_var;" << be_uidt << be_nl_2;
+      << this->local_name () << ">;" << be_nl;
 
   if (st == AST_Type::FIXED)
     {
-      *os << "typedef" << be_idt_nl
-          << this->local_name () << " &" << be_nl
-          << this->local_name () << "_out;" << be_uidt;
+      *os << "using " << this->local_name () << "_out = "
+          << this->local_name () << "&;";
     }
   else
     {
-      *os << "typedef" << be_idt_nl
-          << "::TAO_Out_T<" << be_idt << be_idt_nl
-          << this->local_name () << be_uidt_nl
-          << ">" << be_uidt_nl
-          << this->local_name () << "_out;" << be_uidt;
+      *os << "using " << this->local_name ()
+          << "_out = ::TAO_Out_T<"
+          << this->local_name ()
+          << ">;";
     }
 
   this->common_varout_gen_ = true;
@@ -308,8 +303,8 @@ be_type::gen_stub_decls (TAO_OutStream *os)
 
   if (i != nullptr)
     {
-      *os << "typedef " << this->local_name ()
-          << (v == nullptr ? "_ptr" : " *") << " _ptr_type;";
+      *os << "using _ptr_type = " << this->local_name ()
+          << (v == nullptr ? "_ptr" : "*") << ";";
     }
 
   bool skip_varout = false;
@@ -327,10 +322,8 @@ be_type::gen_stub_decls (TAO_OutStream *os)
   if (!skip_varout)
     {
       *os << be_nl
-          << "typedef " << this->local_name ()
-          << "_var _var_type;" << be_nl
-          << "typedef " << this->local_name ()
-          << "_out _out_type;";
+          << "using _var_type = " << this->local_name () << "_var;" << be_nl
+          << "using _out_type = " << this->local_name () << "_out;";
     }
 
   bool gen_any_destructor =
