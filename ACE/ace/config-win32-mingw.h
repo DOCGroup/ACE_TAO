@@ -92,6 +92,7 @@
 #define ACE_HAS_NONCONST_WCSDUP
 #define ACE_HAS_WINSOCK2_GQOS
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
+#define ACE_LACKS_SET_ABORT_BEHAVIOR
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.
