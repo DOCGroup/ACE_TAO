@@ -48,7 +48,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   if (node->is_amh_excep_holder ())
     {
-      *os << "  : exception (0)" << be_nl;
+      *os << "  : exception (nullptr)" << be_nl;
     }
 
   if (node->truncatable())
