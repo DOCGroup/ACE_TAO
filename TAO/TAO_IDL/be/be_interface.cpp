@@ -788,17 +788,15 @@ be_interface::gen_var_out_seq_decls ()
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
-      << "typedef " << lname << " *" << lname << "_ptr;";
+      << "using " << lname << "_ptr = " << lname << "*;";
 
   *os << be_nl
-      << "typedef TAO_Objref_Var_T<"
+      << "using " << lname << "_var = TAO_Objref_Var_T<"
       << lname
-      << "> "
-      << lname << "_var;" << be_nl
-      << "typedef TAO_Objref_Out_T<"
+      << ">;" << be_nl
+      << "using " << lname << "_out = TAO_Objref_Out_T<"
       << lname
-      << "> "
-      << lname << "_out;" << be_nl;
+      << ">;";
 
   os->gen_endif ();
 
@@ -807,8 +805,7 @@ be_interface::gen_var_out_seq_decls ()
 
 // ****************************************************************
 
-TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
-    )
+TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker ()
 {
 }
 

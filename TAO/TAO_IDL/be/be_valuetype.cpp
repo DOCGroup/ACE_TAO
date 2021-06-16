@@ -571,16 +571,8 @@ be_valuetype::gen_var_out_seq_decls ()
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
-      << "typedef" << be_idt_nl
-      << "TAO_Value_Var_T<" << be_idt << be_idt_nl
-      << lname << be_uidt_nl
-      << ">" << be_uidt_nl
-      << lname << "_var;" << be_uidt_nl << be_nl
-      << "typedef" << be_idt_nl
-      << "TAO_Value_Out_T<" << be_idt << be_idt_nl
-      << lname << be_uidt_nl
-      << ">" << be_uidt_nl
-      << lname << "_out;" << be_uidt;
+      << "using " << lname << "_var = TAO_Value_Var_T<" << lname << ">;" << be_nl
+      << "using " << lname << "_out = TAO_Value_Out_T<" << lname << ">;";
 
   os->gen_endif ();
 

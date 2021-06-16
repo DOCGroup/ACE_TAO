@@ -349,9 +349,9 @@ be_visitor_amh_interface_sh::create_amh_class (ACE_CString name)
   be_interface *amh_class = nullptr;
   ACE_NEW_RETURN (amh_class,
                   be_interface (amh_class_name, // name
-                                nullptr,              // list of inherited
+                                nullptr,        // list of inherited
                                 0,              // number of inherited
-                                nullptr,              // list of ancestors
+                                nullptr,        // list of ancestors
                                 0,              // number of ancestors
                                 0,              // non-local
                                 0),             // non-abstract
