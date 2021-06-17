@@ -114,8 +114,8 @@ run_main (int, ACE_TCHAR*[])
   process2.wait (&status);
   if (status != 1)
     {
-       ACE_ERROR ((LM_ERROR,
-                  "ERROR: process2 did not inherit env var Z.\n"));
+      ACE_ERROR ((LM_ERROR,
+                 "ERROR: process2 did not inherit env var Z, wait returned %d.\n", status));
       test_status = 1;
     }
 
