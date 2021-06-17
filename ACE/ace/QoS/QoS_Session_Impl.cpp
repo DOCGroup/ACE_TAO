@@ -237,8 +237,7 @@ ACE_RAPI_Session::open (ACE_INET_Addr dest_addr,
                         ACE_Protocol_ID protocol_id)
 {
   char buf [BUFSIZ];
-  dest_addr.addr_to_string (buf,
-                            BUFSIZ);
+  dest_addr.addr_to_string (buf, BUFSIZ);
   ACELIB_DEBUG ((LM_DEBUG,
               "In RAPI SESSION OPEN %s\n",
               buf));

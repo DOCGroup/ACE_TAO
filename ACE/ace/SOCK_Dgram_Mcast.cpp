@@ -44,7 +44,6 @@ class ACE_SDM_helpers
 {
 public:
   // Convert ACE_INET_Addr to string, using local formatting rules.
-
   static void addr_to_string (const ACE_INET_Addr &ip_addr,
                               ACE_TCHAR *ret_string,  // results here.
                               size_t len,

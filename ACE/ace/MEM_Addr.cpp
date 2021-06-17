@@ -87,7 +87,7 @@ ACE_MEM_Addr::same_host (const ACE_INET_Addr &sap)
 int
 ACE_MEM_Addr::addr_to_string (ACE_TCHAR s[],
                               size_t size,
-                              int ipaddr_format) const
+                              bool ipaddr_format) const
 {
   ACE_TRACE ("ACE_MEM_Addr::addr_to_string");
 

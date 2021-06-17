@@ -29,7 +29,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_INET_Addr)
 int
 ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
                                size_t size,
-                               int ipaddr_format) const
+                               bool ipaddr_format) const
 {
   ACE_TRACE ("ACE_INET_Addr::addr_to_string");
 
@@ -37,10 +37,10 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
   char hoststr[MAXHOSTNAMELEN+1];
 
   bool result = false;
-  if (ipaddr_format == 0)
-    result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
-  else
+  if (ipaddr_format)
     result = (this->get_host_addr (hoststr, MAXHOSTNAMELEN+1) != 0);
+  else
+    result = (this->get_host_name (hoststr, MAXHOSTNAMELEN+1) == 0);
 
   if (!result)
     return -1;
@@ -809,7 +809,6 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
 #endif /* ACE_HAS_WCHAR */
 
 // Return the character representation of the hostname.
-
 const char *
 ACE_INET_Addr::get_host_name () const
 {

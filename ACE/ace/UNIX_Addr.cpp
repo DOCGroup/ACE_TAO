@@ -47,7 +47,6 @@ ACE_UNIX_Addr::string_to_addr (const char addr[])
 }
 
 // Transform the current address into string format.
-
 int
 ACE_UNIX_Addr::addr_to_string (ACE_TCHAR s[], size_t len) const
 {

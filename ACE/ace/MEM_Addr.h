@@ -81,7 +81,7 @@ public:
   /// format.
   virtual int addr_to_string (ACE_TCHAR buffer[],
                               size_t size,
-                              int ipaddr_format = 1) const;
+                              bool ipaddr_format = true) const;
 
   /// Initializes the external ACE_MEM_Addr from the @a address.
   virtual int string_to_addr (const ACE_TCHAR address[]);
