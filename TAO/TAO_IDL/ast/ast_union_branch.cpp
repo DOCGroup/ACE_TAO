@@ -206,6 +206,12 @@ AST_UnionBranch::add_labels (AST_Union *u)
         {
           ex->ev ()->et = AST_Expression::EV_enum;
           AST_Enum *disc = dynamic_cast<AST_Enum*> (u->disc_type ());
+          if (disc == nullptr)
+            {
+              // this is strictly to mollycoddle the Coverity null pointer
+              // dereference check. The enum labels ensures consistency here.
+              return;
+            }
           AST_EnumVal *dval = disc->lookup_by_value (ex);
 
           if (dval == nullptr)
