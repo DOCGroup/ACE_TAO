@@ -52,6 +52,6 @@ require Driver;
 # ************************************************************
 
 my($driver) = new Driver('UNIX=gnu',
-                         'automatic=ACE_ROOT,TAO_ROOT,CIAO_ROOT,' .
+                         'automatic=ACE_ROOT,TAO_ROOT,' .
                          'DDS_ROOT,ACE_PLATFORM_CONFIG');
 exit($driver->run(\@ARGV));
