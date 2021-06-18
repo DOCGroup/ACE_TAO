@@ -15,18 +15,18 @@ ACE_OS_Thread_Adapter::ACE_OS_Thread_Adapter (
      ACE_THR_FUNC user_func
      , void *arg
      , ACE_THR_C_FUNC entry_point
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
      , ACE_SEH_EXCEPT_HANDLER selector
      , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
      , long cancel_flags
      )
   : ACE_Base_Thread_Adapter (user_func, arg, entry_point
                              , 0
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
                              , selector
                              , handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
                              , cancel_flags
                              )
 {
