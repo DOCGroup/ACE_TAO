@@ -323,10 +323,6 @@ sub CommandLine ()
           $run_script .=
             "export TAO_ROOT=$self->{TARGET}->{tao_root}\n";
         }
-        if (defined $self->{TARGET}->{ciao_root}) {
-          $run_script .=
-            "export CIAO_ROOT=$self->{TARGET}->{ciao_root}\n";
-        }
 
         while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {
             $run_script .=
