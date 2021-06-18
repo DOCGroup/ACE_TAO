@@ -811,15 +811,15 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 # define ACE_SEH_TRY __try
 # define ACE_SEH_EXCEPT(X) __except(X)
 # define ACE_SEH_FINALLY __finally
-#else /* !ACE_WIN32 */
+#else /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 # define ACE_SEH_TRY if (1)
 # define ACE_SEH_EXCEPT(X) while (0)
 # define ACE_SEH_FINALLY if (1)
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 // Handle ACE_Message_Queue.
 #   define ACE_SYNCH_DECL typename _ACE_SYNCH

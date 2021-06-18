@@ -4,7 +4,6 @@
  */
 
 #include "test_config.h"
-#include "ace/CDR_Base.h"
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
 int ExFilter(EXCEPTION_POINTERS *ep, DWORD code_arg)
