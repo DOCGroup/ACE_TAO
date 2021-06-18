@@ -1775,7 +1775,7 @@ sub check_for_bad_ace_trace()
 
                 # Look for TRACE statements
                 if (m/ACE_OS_TRACE\s*\(\s*\"(.*)\"/
-                    || m/ACE_TRACE\s*\(\s*\"(.*)\"/ {
+                    || m/ACE_TRACE\s*\(\s*\"(.*)\"/) {
                     my $trace = $1;
 
                     # reduce the classname
@@ -2416,7 +2416,6 @@ check_for_long_file_names () if ($opt_l >= 1);
 check_for_improper_main_declaration () if ($opt_l >= 1);
 check_for_TAO_Local_RefCounted_Object () if ($opt_l >= 1);
 check_for_include_OS_h () if ($opt_l >= 1);
-check_for_numeric_log () if ($opt_l >= 3);
 check_for_ORB_init () if ($opt_l >= 1);
 check_for_old_documentation_style () if ($opt_l >= 6);
 check_for_ace_log_categories () if ($opt_l >= 5);
