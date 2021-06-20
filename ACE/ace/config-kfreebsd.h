@@ -407,7 +407,6 @@
 # endif
 #endif
 
-
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1
 
