@@ -18,6 +18,13 @@ int ExFilter(EXCEPTION_POINTERS *ep, DWORD code_arg)
     ACE_DEBUG ((LM_INFO,("\tep->ExceptionRecord->ExceptionInformation[1]=%@\n"), ep->ExceptionRecord->ExceptionInformation[1]));
   return 1;
 }
+
+void test()
+{
+  volatile int* pInt = 0x0000000;
+  *pInt = 20;
+}
+
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
 int
@@ -26,6 +33,21 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_39_Test"));
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+  ACE_DEBUG ((LM_DEBUG,("Testing call SEH\n")));
+
+  ACE_SEH_TRY
+    {
+      test();
+    }
+  ACE_SEH_EXCEPT (ExFilter(GetExceptionInformation(), GetExceptionCode()))
+    {
+      ACE_DEBUG ((LM_DEBUG,("In SEH call\n")));
+    }
+
+  ACE_DEBUG ((LM_DEBUG,("SEH call worked\n")));
+
+  ACE_DEBUG ((LM_DEBUG,("Testing non-call SEH\n")));
+
   ACE_SEH_TRY
     {
       volatile int* pInt = 0x0000000;
@@ -33,10 +55,10 @@ run_main (int, ACE_TCHAR *[])
     }
   ACE_SEH_EXCEPT (ExFilter(GetExceptionInformation(), GetExceptionCode()))
     {
-      ACE_DEBUG ((LM_DEBUG,("In SEH __except\n")));
+      ACE_DEBUG ((LM_DEBUG,("In SEH non-call\n")));
     }
 
-  ACE_DEBUG ((LM_DEBUG,("SEH worked\n")));
+  ACE_DEBUG ((LM_DEBUG,("SEH non-call worked\n")));
 #else
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("Platform lacks ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS\n")));
