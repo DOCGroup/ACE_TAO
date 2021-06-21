@@ -20,8 +20,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
                                         , ACE_SEH_EXCEPT_HANDLER selector,
                                         ACE_SEH_EXCEPT_HANDLER handler
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                                        , long cancel_flags
-                                        )
+                                        , long cancel_flags)
   : ACE_Base_Thread_Adapter (
         user_func
         , arg
@@ -31,8 +30,7 @@ ACE_Thread_Adapter::ACE_Thread_Adapter (ACE_THR_FUNC user_func,
         , selector
         , handler
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-        , cancel_flags
-        )
+        , cancel_flags)
   , thr_mgr_ (tm)
 {
   ACE_OS_TRACE ("ACE_Thread_Adapter::ACE_Thread_Adapter");

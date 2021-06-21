@@ -153,9 +153,9 @@ int processWin32Record (ALLOCATOR *shmem_allocator)
   {
     return processRecord (shmem_allocator);
   }
-
   ACE_SEH_EXCEPT (handle_remap (GetExceptionInformation ()))
-  { }
+  {
+  }
 
   return 0;
 }

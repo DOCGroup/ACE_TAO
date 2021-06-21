@@ -48,8 +48,7 @@ public:
                          , ACE_SEH_EXCEPT_HANDLER selector = 0
                          , ACE_SEH_EXCEPT_HANDLER handler = 0
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
-                         , long cancel_flags = 0
-                         );
+                         , long cancel_flags = 0);
 
   /**
    * Execute the @a user_func_ with the @a arg.  This function deletes

@@ -179,10 +179,10 @@ public:
 
 #if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
   /// Get/Set TSS exception action.
-  static ACE_SEH_EXCEPT_HANDLER seh_except_selector (void);
+  static ACE_SEH_EXCEPT_HANDLER seh_except_selector ();
   static ACE_SEH_EXCEPT_HANDLER seh_except_selector (ACE_SEH_EXCEPT_HANDLER);
 
-  static ACE_SEH_EXCEPT_HANDLER seh_except_handler (void);
+  static ACE_SEH_EXCEPT_HANDLER seh_except_handler ();
   static ACE_SEH_EXCEPT_HANDLER seh_except_handler (ACE_SEH_EXCEPT_HANDLER);
 #endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
 
