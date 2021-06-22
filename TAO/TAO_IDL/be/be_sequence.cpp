@@ -95,22 +95,10 @@ be_sequence::be_sequence (AST_Expression *v,
         break;
     }
 
-  AST_Decl::NodeType nt = t->node_type ();
-  AST_Typedef *td = nullptr;
-  AST_Type *pbt = nullptr;
-
-  if (nt == AST_Decl::NT_typedef)
+  AST_Type *const base_type = primitive_base_type ();
+  if (base_type && base_type->node_type () == AST_Decl::NT_pre_defined)
     {
-      td = dynamic_cast<AST_Typedef*> (t);
-      pbt = td->primitive_base_type ();
-      nt = pbt->node_type ();
-    }
-
-  if (nt == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt =
-        dynamic_cast<AST_PredefinedType*> (pbt ? pbt : t);
-
+      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (base_type);
       switch (pdt->pt ())
         {
           case AST_PredefinedType::PT_octet:
@@ -280,31 +268,16 @@ be_sequence::managed_type ()
   if (this->mt_ == be_sequence::MNG_UNKNOWN) // Not calculated yet.
     {
       // Base types.
-      be_type *bt = nullptr;
-      be_type *prim_type = nullptr;
-
-      bt = dynamic_cast<be_type*> (this->base_type ());
-
-      if (!bt)
+      be_type *const base_type = dynamic_cast<be_type*> (primitive_base_type ());
+      if (!base_type)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "TAO_IDL (%N:%l) "
                            "dynamic_cast<be_type*> "
                            "failed\n"),
                           be_sequence::MNG_UNKNOWN);
 
-      if (bt->node_type () == AST_Decl::NT_typedef)
-        {
-          // Get the primitive base type of this typedef node.
-          be_typedef *t = dynamic_cast<be_typedef*> (bt);
-          prim_type = t->primitive_base_type ();
-        }
-      else
-        {
-          prim_type = bt;
-        }
-
       // Determine if we need a managed type and which one.
-      switch (prim_type->node_type ())
+      switch (base_type->node_type ())
         {
           case AST_Decl::NT_interface:
           case AST_Decl::NT_interface_fwd:
@@ -329,7 +302,7 @@ be_sequence::managed_type ()
           case AST_Decl::NT_pre_defined:
             {
               be_predefined_type * const bpd =
-                dynamic_cast<be_predefined_type*> (prim_type);
+                dynamic_cast<be_predefined_type*> (base_type);
 
               AST_PredefinedType::PredefinedType pt = bpd->pt ();
 
@@ -426,10 +399,8 @@ be_sequence::instance_name ()
                   '\0',
                   NAMEBUFSIZE);
 
-  be_type *bt = nullptr;
-  bt = dynamic_cast<be_type*> (this->base_type ());
-
-  if (bt == nullptr)
+  be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
+  if (!prim_type)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%N:%l) be_visitor_sequence_ch::"
@@ -437,18 +408,6 @@ be_sequence::instance_name ()
                   "Bad element type\n"));
 
       return namebuf;
-    }
-
-  // Generate the class name.
-
-  // The base type after removing all the aliases.
-  be_type  *prim_type = bt;
-
-  if (bt->node_type () == AST_Decl::NT_typedef)
-    {
-      // Get the primitive base type of this typedef node.
-      be_typedef *t = dynamic_cast<be_typedef*> (bt);
-      prim_type = t->primitive_base_type ();
     }
 
   // Generate the appropriate sequence type.
@@ -621,19 +580,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
       break;
     case be_sequence::MNG_STRING:
       {
-        be_type *prim_type = nullptr;
-        if (elem->node_type () == AST_Decl::NT_typedef)
-          {
-            // Get the primitive base type of this typedef node.
-            be_typedef *t = dynamic_cast<be_typedef*> (elem);
-            prim_type = t->primitive_base_type ();
-          }
-        else
-          {
-            prim_type = elem;
-          }
-
-        if (prim_type->node_type () == AST_Decl::NT_string)
+        be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
+        if (prim_type && prim_type->node_type () == AST_Decl::NT_string)
           {
             be_string *str =
               dynamic_cast<be_string*> (prim_type);
@@ -680,19 +628,8 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
       break;
     case be_sequence::MNG_WSTRING:
       {
-        be_type *prim_type = nullptr;
-        if (elem->node_type () == AST_Decl::NT_typedef)
-          {
-            // Get the primitive base type of this typedef node.
-            be_typedef *t = dynamic_cast<be_typedef*> (elem);
-            prim_type = t->primitive_base_type ();
-          }
-        else
-          {
-            prim_type = elem;
-          }
-
-        if (prim_type->node_type () == AST_Decl::NT_wstring)
+        be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
+        if (prim_type && prim_type->node_type () == AST_Decl::NT_wstring)
           {
             be_string *str =
               dynamic_cast<be_string*> (prim_type);
@@ -744,46 +681,59 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
             if (this->unbounded ())
               {
                 *os << "::TAO::unbounded_array_sequence<" << linebreak
-                     << be_idt << be_idt_nl
-                     << elem->nested_type_name (ctx_scope) << "," << linebreak
-                     << be_nl;
-                 *os << elem->nested_type_name (ctx_scope) << "_slice,"
-                     << linebreak << be_nl
-                     << elem->nested_type_name (ctx_scope) << "_tag"
-                     << linebreak << be_uidt_nl
-                     << ">" << be_uidt;
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice,"
+                    << linebreak << be_nl
+                    << elem->nested_type_name (ctx_scope) << "_tag"
+                    << linebreak << be_uidt_nl
+                    << ">" << be_uidt;
               }
             else
               {
                 *os << "::TAO::bounded_array_sequence<" << linebreak
-                     << be_idt << be_idt_nl
-                     << elem->nested_type_name (ctx_scope) << "," << linebreak
-                     << be_nl;
-                 *os << elem->nested_type_name (ctx_scope) << "_slice,"
-                     << linebreak << be_nl
-                     << elem->nested_type_name (ctx_scope) << "_tag,"
-                     << linebreak << be_nl
-                     << this->max_size ()->ev ()->u.ulval << linebreak
-                     << be_uidt_nl
-                     << ">" << be_uidt;
+                    << be_idt << be_idt_nl
+                    << elem->nested_type_name (ctx_scope) << "," << linebreak
+                    << be_nl;
+                *os << elem->nested_type_name (ctx_scope) << "_slice,"
+                    << linebreak << be_nl
+                    << elem->nested_type_name (ctx_scope) << "_tag,"
+                    << linebreak << be_nl
+                    << this->max_size ()->ev ()->u.ulval << linebreak
+                    << be_uidt_nl
+                    << ">" << be_uidt;
               }
 
             break;
           default:
-            if (this->unbounded ())
-              {
-                *os << "::TAO::unbounded_value_sequence< "
-                    << elem->nested_type_name (ctx_scope)
-                    << ">";
-              }
-            else
-              {
-                *os << "::TAO::bounded_value_sequence< "
-                    << elem->nested_type_name (ctx_scope) << ","
-                    << this->max_size ()->ev ()->u.ulval
-                    << ">";
-              }
+            {
+              const char *tag = "";
+              be_type *const base_type = dynamic_cast<be_type*> (primitive_base_type ());
+              if (base_type && base_type->node_type () == AST_Decl::NT_pre_defined)
+                {
+                  be_predefined_type *const predefined_type =
+                    dynamic_cast<be_predefined_type*> (base_type);
+                  switch (predefined_type->pt ())
+                    {
+                      case AST_PredefinedType::PT_uint8:
+                        tag = ", CORBA::IDLv4::UInt8_tag";
+                        break;
+                      case AST_PredefinedType::PT_int8:
+                        tag = ", CORBA::IDLv4::Int8_tag";
+                        break;
+                      default:
+                        break;
+                    }
+                }
 
+              *os
+                << "::TAO::" << (unbounded () ? "un" : "") << "bounded_value_sequence< "
+                << elem->nested_type_name (ctx_scope);
+              if (!unbounded ())
+                *os << "," << this->max_size ()->ev ()->u.ulval;
+              *os << tag << ">";
+            }
             break;
         }
 

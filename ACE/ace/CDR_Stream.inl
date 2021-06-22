@@ -162,6 +162,30 @@ ACE_OutputCDR::from_std_wstring::from_std_wstring (const std::wstring &ws,
 #endif
 
 ACE_INLINE
+ACE_InputCDR::to_int8::to_int8 (ACE_CDR::Int8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_int8::from_int8 (ACE_CDR::Int8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_uint8::to_uint8 (ACE_CDR::UInt8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_uint8::from_uint8 (ACE_CDR::UInt8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
 ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
   :  rhs_ (rhs)
 {
@@ -1374,20 +1398,6 @@ operator<< (ACE_OutputCDR &os, const std::wstring& x)
 }
 #endif
 
-ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, ACE_CDR::UInt8 x)
-{
-  os.write_uint8 (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
-}
-
-ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, ACE_CDR::Int8 x)
-{
-  os.write_int8 (x);
-  return (ACE_CDR::Boolean) os.good_bit ();
-}
-
 // The following use the helper classes
 ACE_INLINE ACE_CDR::Boolean
 operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_boolean x)
@@ -1445,6 +1455,20 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
   os.write_wstring (len, x.val_);
   return
     (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x)
+{
+  os.write_uint8 (x.val_);
+  return (ACE_CDR::Boolean) os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x)
+{
+  os.write_int8 (x.val_);
+  return (ACE_CDR::Boolean) os.good_bit ();
 }
 
 // ****************************************************************
@@ -1541,18 +1565,6 @@ operator>> (ACE_InputCDR &is, std::wstring& x)
 }
 #endif
 
-ACE_INLINE ACE_CDR::Boolean
-operator>> (ACE_InputCDR &is, ACE_CDR::UInt8 &x)
-{
-  return is.read_uint8 (x) && is.good_bit ();
-}
-
-ACE_INLINE ACE_CDR::Boolean
-operator>> (ACE_InputCDR &is, ACE_CDR::Int8 &x)
-{
-  return is.read_int8 (x) && is.good_bit ();
-}
-
 // The following use the helper classes
 ACE_INLINE ACE_CDR::Boolean
 operator>> (ACE_InputCDR &is, ACE_InputCDR::to_boolean x)
@@ -1623,6 +1635,19 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_std_wstring x)
          || static_cast<ACE_CDR::ULong> (x.val_.size ()) <= x.bound_));
 }
 #endif
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_uint8 x)
+{
+  return is.read_uint8 (x.ref_) && is.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_int8 x)
+{
+  return is.read_int8 (x.ref_) && is.good_bit ();
+}
+
 // ***************************************************************************
 // We must define these methods here because they use the "read_*" inlined
 // methods of the ACE_InputCDR class

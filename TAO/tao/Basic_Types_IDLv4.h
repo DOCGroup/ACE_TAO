@@ -26,27 +26,11 @@ namespace CORBA
     //@{
     typedef ACE_CDR::Int8 Int8;
     typedef Int8 &Int8_out;
+    struct Int8_tag {};
 
     typedef ACE_CDR::UInt8 UInt8;
     typedef UInt8 &UInt8_out;
-
-    typedef ACE_CDR::Int16 Int16;
-    typedef Int16 &Int16_out;
-
-    typedef ACE_CDR::UInt16 UInt16;
-    typedef UInt16 &UInt16_out;
-
-    typedef ACE_CDR::Int32 Int32;
-    typedef Int32 &Int32_out;
-
-    typedef ACE_CDR::UInt32 UInt32;
-    typedef UInt32 &UInt32_out;
-
-    typedef ACE_CDR::Int64 Int64;
-    typedef Int64 &Int64_out;
-
-    typedef ACE_CDR::UInt64 UInt64;
-    typedef UInt64 &UInt64_out;
+    struct UInt8_tag {};
     //@}
   }
 }

@@ -768,7 +768,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_ushort;
           return ev;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return 0;
+          if (ev->u.int8val < 0) return nullptr;
           ev->u.usval = static_cast<unsigned short> (ev->u.int8val);
           ev->et = t;
           return ev;
@@ -949,7 +949,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_ulong;
           return ev;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return 0;
+          if (ev->u.int8val < 0) return nullptr;
           ev->u.ulval = static_cast<unsigned long> (ev->u.int8val);
           ev->et = t;
           return ev;
@@ -1119,7 +1119,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           ev->et = AST_Expression::EV_ulonglong;
           return ev;
         case AST_Expression::EV_int8:
-          if (ev->u.int8val < 0) return 0;
+          if (ev->u.int8val < 0) return nullptr;
           ev->u.ullval = static_cast<ACE_UINT64> (ev->u.int8val);
           ev->et = t;
           return ev;

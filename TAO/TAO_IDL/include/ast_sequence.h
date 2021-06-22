@@ -90,6 +90,12 @@ public:
 
   AST_Type *base_type () const;
 
+  /**
+   * Returns the fully dealiased base type if it's a typedef. If it's not a
+   * typedef, the it returns the same value as as base_type().
+   */
+  AST_Type *primitive_base_type () const;
+
   virtual bool unbounded () const;
   // Is this sequence bounded or not.
 

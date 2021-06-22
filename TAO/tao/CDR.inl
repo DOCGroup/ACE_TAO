@@ -495,19 +495,6 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 #endif /* ACE_LACKS_STD_WSTRING */
 
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::IDLv4::Int8 x)
-{
-  return os.fragment_stream (ACE_CDR::OCTET_ALIGN, ACE_CDR::OCTET_SIZE)
-    && static_cast<ACE_OutputCDR &> (os) << x;
-}
-
-ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os, CORBA::IDLv4::UInt8 x)
-{
-  return
-    os.fragment_stream (ACE_CDR::OCTET_ALIGN, ACE_CDR::OCTET_SIZE)
-    && static_cast<ACE_OutputCDR &> (os) << x;
-}
-
 // ****************************************************************
 
 ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
@@ -637,15 +624,5 @@ ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is,
   return marshal_flag;
 }
 #endif /* ACE_LACKS_STD_WSTRING */
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::IDLv4::Int8 &x)
-{
-  return static_cast<ACE_InputCDR &> (is) >> x;
-}
-
-ACE_INLINE CORBA::Boolean operator>> (TAO_InputCDR &is, CORBA::IDLv4::UInt8 &x)
-{
-  return static_cast<ACE_InputCDR &> (is) >> x;
-}
 
 TAO_END_VERSIONED_NAMESPACE_DECL

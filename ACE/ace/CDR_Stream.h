@@ -197,6 +197,18 @@ public:
     ACE_CDR::WChar val_;
   };
 
+  struct ACE_Export from_int8
+  {
+    explicit from_int8 (ACE_CDR::Int8 val);
+    ACE_CDR::Int8 val_;
+  };
+
+  struct ACE_Export from_uint8
+  {
+    explicit from_uint8 (ACE_CDR::UInt8 val);
+    ACE_CDR::UInt8 val_;
+  };
+
   struct ACE_Export from_string
   {
     from_string (ACE_CDR::Char* s,
@@ -793,6 +805,18 @@ public:
   {
     explicit to_octet (ACE_CDR::Octet &o);
     ACE_CDR::Octet &ref_;
+  };
+
+  struct ACE_Export to_int8
+  {
+    explicit to_int8 (ACE_CDR::Int8 &ref);
+    ACE_CDR::Int8 &ref_;
+  };
+
+  struct ACE_Export to_uint8
+  {
+    explicit to_uint8 (ACE_CDR::UInt8 &ref);
+    ACE_CDR::UInt8 &ref_;
   };
 
   struct ACE_Export to_string
@@ -1392,8 +1416,6 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                ACE_CDR::Double x);
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const ACE_CDR::Fixed &x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::UInt8 x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::Int8 x);
 
 // CDR output operator from helper classes
 
@@ -1423,6 +1445,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::wstring& x);
 #endif
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::from_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::from_int8 x);
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
@@ -1449,8 +1473,6 @@ extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Double &x);
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                ACE_CDR::Fixed &x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::UInt8 &x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::Int8 &x);
 
 // CDR input operator from helper classes
 
@@ -1480,6 +1502,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_InputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                std::wstring& x);
 #endif
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::to_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::to_int8 x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

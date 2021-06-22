@@ -110,6 +110,14 @@ be_predefined_type::gen_member_ostream_operator (TAO_OutStream *os,
         *os << "ACE_OutputCDR::from_wchar (" << instance_name
             << (accessor ? " ()" : "") << ")";
         break;
+      case AST_PredefinedType::PT_uint8:
+        *os << "ACE_OutputCDR::from_uint8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
+      case AST_PredefinedType::PT_int8:
+        *os << "ACE_OutputCDR::from_int8 (" << instance_name
+            << (accessor ? " ()" : "") << ")";
+        break;
       case AST_PredefinedType::PT_object:
       case AST_PredefinedType::PT_abstract:
       case AST_PredefinedType::PT_pseudo:

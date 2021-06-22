@@ -1,3 +1,8 @@
+#include "tao/Int8Seq.pidl"
+#include "tao/UInt8Seq.pidl"
+#include "tao/OctetSeq.pidl"
+#include "tao/CharSeq.pidl"
+
 const uint8 u8_min = 0;
 const uint8 u8_max = 255;
 const int8 i8_min = -128;
@@ -40,6 +45,15 @@ const int8 i8_e7 = i8_e6 & 7;
 const int8 i8_e8 = i8_e7 << 4;
 const int8 i8_e9 = i8_e8 >> 1;
 
+typedef uint8 U8arr[3];
+typedef int8 I8arr[3];
+typedef octet Oarr[3];
+typedef char Carr[3];
+typedef sequence<uint8> U8seq;
+typedef sequence<int8> I8seq;
+typedef sequence<octet> Oseq;
+typedef sequence<char> Cseq;
+
 struct StructWithInts {
   uint8 u8;
   int8 i8;
@@ -49,6 +63,21 @@ struct StructWithInts {
   int32 i32;
   uint64 u64;
   int64 i64;
+
+  // Make sure there's no conflict between uint8, int8, octet, and char.
+  uint8 u8_arr[3];
+  int8 i8_arr[3];
+  sequence<uint8> u8_seq;
+  sequence<int8> i8_seq;
+  sequence<octet> o_seq;
+  sequence<char> c_seq;
+
+  U8arr td_u8_arr;
+  I8arr td_i8_arr;
+  U8seq td_u8_seq;
+  I8seq td_i8_seq;
+  Oseq td_o_seq;
+  Cseq td_c_seq;
 };
 
 union UnionOverU8 switch (uint8) {
@@ -56,6 +85,14 @@ case 0:
   uint8 u8;
 case 1:
   int8 i8;
+case 2:
+  uint8 u8arr[3];
+case 3:
+  int8 i8arr[3];
+case 4:
+  sequence<uint8> u8seq;
+case 5:
+  sequence<int8> i8seq;
 };
 
 union UnionOverI8 switch (int8) {
@@ -63,4 +100,12 @@ case 0:
   uint8 u8;
 case 1:
   int8 i8;
+case 2:
+  uint8 u8arr[3];
+case 3:
+  int8 i8arr[3];
+case 4:
+  sequence<uint8> u8seq;
+case 5:
+  sequence<int8> i8seq;
 };
