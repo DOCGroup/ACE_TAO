@@ -18,12 +18,27 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#include <cstdint>
+
 class DLL_Test_Parent_Export Parent
 {
 public:
   virtual ~Parent ();
 
   virtual void test ();
+};
+
+class DLL_Test_Parent_Export Data
+{
+public:
+  Data () = default;
+  Data (const Data& d) = default;
+  Data (Data&&) = default;
+  Data& operator= (const Data&) = default;
+  Data& operator= (Data&& d) = default;
+  virtual ~Data();
+private:
+  int8_t i {};
 };
 
 #endif /* ACE_TESTS_DLL_TEST_PARENT_H */

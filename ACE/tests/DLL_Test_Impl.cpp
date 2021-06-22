@@ -14,6 +14,7 @@
 #include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
+#include <utility>
 
 Hello_Impl::Hello_Impl ()
 {
@@ -116,6 +117,12 @@ void
 Child::test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
+
+  Data d;
+  Data f(d);
+  Data g;
+  g = d;
+  g = std::move(d);
 }
 
 // --------------------------------------------------------
