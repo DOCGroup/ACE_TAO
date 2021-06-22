@@ -55,7 +55,6 @@ int handle_test (ACE_DLL &dll)
 
 int basic_test (ACE_DLL &dll)
 {
-
   ACE_TString dll_file;
   const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
@@ -137,7 +136,6 @@ int dynamic_cast_test (ACE_DLL &dll)
 
   return 0;
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])

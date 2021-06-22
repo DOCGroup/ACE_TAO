@@ -9,12 +9,12 @@
  */
 //=============================================================================
 
-
 #include "DLL_Test_Impl.h"
 #include "ace/ACE.h"
 #include "ace/OS_Errno.h"
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
+#include <utility>
 
 Hello_Impl::Hello_Impl ()
 {
@@ -77,11 +77,11 @@ Hello_Impl::operator delete (void *ptr)
 extern "C" ACE_Svc_Export Hello *
 get_hello (void)
 {
-  Hello *hello = 0;
+  Hello *hello {};
 
   ACE_NEW_RETURN (hello,
                   Hello_Impl,
-                  0);
+                  nullptr);
 
   return hello;
 }
@@ -117,6 +117,12 @@ void
 Child::test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
+
+  Data d;
+  Data f(d);
+  Data g;
+  g = d;
+  g = std::move(d);
 }
 
 // --------------------------------------------------------
@@ -126,7 +132,7 @@ Child::test ()
 extern "C" ACE_Svc_Export int
 dynamic_cast_test (Parent *target)
 {
-  Child *c = 0;
+  Child *c {};
   c = dynamic_cast<Child*> (target);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dynamic_cast_test: parent %@; child %@\n"),
               target, c));

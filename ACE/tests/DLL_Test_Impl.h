@@ -31,19 +31,19 @@ class Hello_Impl : public Hello
 {
 public:
   /// Constructor
-  Hello_Impl (void);
+  Hello_Impl ();
 
   /// Destructor
-  ~Hello_Impl (void);
+  ~Hello_Impl ();
 
   /// See the documentation in the base class
-  void say_next (void);
+  void say_next () override;
 
   /// Uses ACE::strnew() to allocate the returned string.
-  ACE_TCHAR *new_info (void);
+  ACE_TCHAR *new_info () override;
 
   /// Uses ACE_OS::malloc() to allocate the returned string.
-  ACE_TCHAR *malloc_info (void);
+  ACE_TCHAR *malloc_info () override;
 
   // Overload the new/delete opertors so the object will be
   // created/deleted using the memory allocator associated with the

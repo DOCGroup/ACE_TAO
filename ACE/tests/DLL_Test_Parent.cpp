@@ -10,3 +10,8 @@ Parent::test ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parent called\n")));
 }
+
+Data::~Data ()
+{
+}
+

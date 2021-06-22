@@ -22,9 +22,9 @@
 struct Printer
 {
   Printer (const char *message);
-  ~Printer (void) ;
+  ~Printer () ;
 
-  void print (void);
+  void print ();
 
   const char *message_;
   static size_t instance_count_;
