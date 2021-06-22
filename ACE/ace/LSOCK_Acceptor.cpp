@@ -9,14 +9,11 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_LSOCK_Acceptor)
 
 // Return the local endpoint address.
-
 int
 ACE_LSOCK_Acceptor::get_local_addr (ACE_Addr &a) const
 {

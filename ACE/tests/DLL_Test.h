@@ -67,7 +67,6 @@ public:
   virtual ~Child (void);
 
   virtual void test (void);
-
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

@@ -15,7 +15,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
 #include "ace/ACE.h"
@@ -28,8 +27,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 
