@@ -31,7 +31,7 @@ class Hello
 {
 public:
   /// Destructor
-  virtual ~Hello (void)
+  virtual ~Hello ()
     {
       ACE_TRACE ("Hello::~Hello");
     }
@@ -43,30 +43,29 @@ public:
    * methods implemented in the shared library.
    */
   //@{
-  void say_hello (void)
+  void say_hello ()
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Hello\n")));
   }
 
-  virtual void say_next (void) = 0;
+  virtual void say_next () = 0;
 
-  virtual ACE_TCHAR *new_info (void) = 0;
+  virtual ACE_TCHAR *new_info () = 0;
 
-  virtual ACE_TCHAR *malloc_info (void) = 0;
+  virtual ACE_TCHAR *malloc_info () = 0;
   //@}
 };
-
 
 // Used to test dynamic_cast<> in shared libraries.
 class ACE_Svc_Export Child : public Parent
 {
 public:
-  Child (void);
+  Child ();
 
-  virtual ~Child (void);
+  virtual ~Child ();
 
-  virtual void test (void);
+  virtual void test ();
 };
 
 #endif /* ACE_TESTS_DLL_TEST_H */

@@ -22,11 +22,9 @@
 class DLL_Test_Parent_Export Parent
 {
 public:
+  virtual ~Parent ();
 
-  virtual ~Parent (void);
-
-  virtual void test (void);
-
+  virtual void test ();
 };
 
 #endif /* ACE_TESTS_DLL_TEST_PARENT_H */
