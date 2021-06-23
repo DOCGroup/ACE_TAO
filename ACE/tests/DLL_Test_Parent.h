@@ -32,10 +32,10 @@ class DLL_Test_Parent_Export Data
 {
 public:
   Data () = default;
-  Data (const Data& d) = default;
+  Data (const Data&) = default;
   Data (Data&&) = default;
   Data& operator= (const Data&) = default;
-  Data& operator= (Data&& d) = default;
+  Data& operator= (Data&&) = default;
   virtual ~Data();
 private:
   int8_t i {};
