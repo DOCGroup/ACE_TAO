@@ -223,10 +223,6 @@
 # define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
-#if !defined (__MINGW32__)
-# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-#endif /* __MINGW32__ */
-
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
 #define ACE_HAS_DIRENT
