@@ -41,4 +41,17 @@ private:
   int8_t i {};
 };
 
+class DLL_Test_Parent_Export Base
+{
+public:
+  Base ();
+};
+
+class DLL_Test_Parent_Export Derived : public Base
+{
+public:
+  Derived ();
+  void _raise () const;
+};
+
 #endif /* ACE_TESTS_DLL_TEST_PARENT_H */
