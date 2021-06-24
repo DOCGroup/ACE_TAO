@@ -15,6 +15,7 @@
 #include "ace/svc_export.h"
 #include "ace/OS_NS_string.h"
 #include <utility>
+#include <memory>
 
 Hello_Impl::Hello_Impl ()
 {
@@ -116,13 +117,27 @@ Child::~Child ()
 void
 Child::test ()
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child called\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("child test called\n")));
 
   Data d;
   Data f(d);
   Data g;
   g = d;
   g = std::move(d);
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions\n")));
+
+  std::unique_ptr<Derived> excep (new Derived ());
+  try
+  {
+    excep->_raise();
+  }
+  catch (const Derived&)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in catch derived\n")));
+  }
+
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions finished\n")));
 }
 
 // --------------------------------------------------------

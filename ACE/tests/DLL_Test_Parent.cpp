@@ -15,3 +15,17 @@ Data::~Data ()
 {
 }
 
+Base::Base ()
+{
+}
+
+Derived::Derived ()
+{
+}
+
+void
+Derived::_raise () const
+{
+  throw *this;
+}
+
