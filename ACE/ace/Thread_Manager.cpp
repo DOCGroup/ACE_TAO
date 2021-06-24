@@ -1784,7 +1784,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
 #if !defined (ACE_HAS_VXTHREADS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
-    // on our implementation.   Chorus'es thr_join seems broken.
+    // on our implementation.
     ACE_Thread_Descriptor_Base *item = 0;
 
     while ((item = term_thr_list_copy.delete_head ()) != 0)
