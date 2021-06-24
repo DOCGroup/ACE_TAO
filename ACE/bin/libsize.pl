@@ -105,8 +105,6 @@ if ($ACE_ROOT =~ /vxworks/) {
   $size = '/usr/lynx/3.0.0/ppc/cdk/sunos-xcoff-ppc/bin/size';
 } elsif ($ACE_ROOT =~ /lynx/) {
   $size = '/usr/lynx/3.0.0/x86/cdk/sunos-coff-x86/bin/size';
-} elsif ($ACE_ROOT =~ /chorus/) {
-  $size = '/project/doc/mvme/green68k/gnu/bin/size';
 } else {
   $size = 'size';
 }
