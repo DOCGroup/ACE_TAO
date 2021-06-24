@@ -29,7 +29,7 @@ $status = 0;
 for ($i = 0; $i <= $#ARGV; $i++) {
     if ($ARGV[$i] eq "-h" || $ARGV[$i] eq "-?") {
       print "Run_Test Perl script for TAO Param Test\n\n";
-      print "run_test [-n num] [-d] [-onewin] [-h] [-t type] [-i (dii|sii)]\n";
+      print "run_test [-n num] [-d] [-h] [-t type] [-i (dii|sii)]\n";
       print "\n";
       print "-n num              -- runs the client num times\n";
       print "-d                  -- runs each in debug mode\n";
