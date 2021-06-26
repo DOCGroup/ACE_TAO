@@ -5,7 +5,7 @@
 
 #include "test_config.h"
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 int ExFilter(EXCEPTION_POINTERS *ep, DWORD code_arg)
 {
   ACE_DEBUG ((LM_INFO,("In SEH Filter\n")));
@@ -25,14 +25,14 @@ void test()
   *pInt = 20;
 }
 
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT("Compiler_Features_39_Test"));
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_DEBUG ((LM_DEBUG,("Testing call SEH\n")));
 
   ACE_SEH_TRY
@@ -61,8 +61,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG,("SEH non-call worked\n")));
 #else
   ACE_DEBUG ((LM_INFO,
-              ACE_TEXT ("Platform lacks ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS\n")));
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+              ACE_TEXT ("Platform lacks ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS\n")));
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   ACE_END_TEST;
 

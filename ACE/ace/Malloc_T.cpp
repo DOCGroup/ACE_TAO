@@ -621,9 +621,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::remove ()
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void *
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc");
-#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (this->cb_ptr_ == 0)
     return 0;
@@ -643,12 +643,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
       prevp = this->cb_ptr_->freep_;
       currp = prevp->next_block_;
     }
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_SEH_EXCEPT (this->memory_pool_.seh_selector (GetExceptionInformation ()))
     {
       currp = prevp->next_block_;
     }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   // Search the freelist to locate a block of the appropriate size.
 
@@ -779,9 +779,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::calloc (size_t n_elem,
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free");
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (ap == 0 || this->cb_ptr_ == 0)
     return;
@@ -840,9 +840,9 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void*
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find");
-#endif /* !ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (this->cb_ptr_ == 0)
     return 0;

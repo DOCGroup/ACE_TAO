@@ -3208,16 +3208,16 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 
 void
 ACE_Log_Msg::init_hook (ACE_OS_Log_Msg_Attributes &attributes
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                         , ACE_SEH_EXCEPT_HANDLER selector
                         , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                                    )
 {
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   attributes.seh_except_selector_ = selector;
   attributes.seh_except_handler_ = handler;
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   if (ACE_Log_Msg::exists ())
     {
       ACE_Log_Msg *inherit_log = ACE_LOG_MSG;

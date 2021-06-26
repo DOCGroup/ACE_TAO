@@ -11,7 +11,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
   // this is only windows and only used here,
@@ -23,7 +23,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 {
   return 0;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
@@ -93,10 +93,10 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   : default_mask_ (0)
   , thread_hook_ (0)
   , exit_info_ ()
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)
   , seh_except_handler_ (ACE_SEH_Default_Exception_Handler)
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by
@@ -135,7 +135,7 @@ ACE_OS_Object_Manager::thread_hook ()
   return ACE_OS_Object_Manager::instance ()->thread_hook_;
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
 ACE_OS_Object_Manager::seh_except_selector (void)
 {
@@ -169,7 +169,7 @@ ACE_OS_Object_Manager::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
   instance->seh_except_handler_ = n;
   return retv;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 ACE_Thread_Hook *
 ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
