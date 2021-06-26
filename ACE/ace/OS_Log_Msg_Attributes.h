@@ -64,11 +64,11 @@ protected:
   /// Depth of the nesting for printing traces.
   int trace_depth_;
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   /// Structured exception handling Callbacks, only used under Win32
   ACE_SEH_EXCEPT_HANDLER seh_except_selector_;
   ACE_SEH_EXCEPT_HANDLER seh_except_handler_;
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 private:
   void operator= (const ACE_OS_Log_Msg_Attributes &) = delete;

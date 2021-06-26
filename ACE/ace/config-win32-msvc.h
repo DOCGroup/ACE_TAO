@@ -114,7 +114,7 @@
 #define ACE_LACKS_CORRECT_ISWPRINT_TAB
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
 
-#define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+#define ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
 
 // Turn off warnings for /W4
 // To resume any of these warning: #pragma warning(default: 4xxx)

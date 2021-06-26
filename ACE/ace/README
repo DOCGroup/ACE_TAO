@@ -193,7 +193,7 @@ ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
-ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS     Platform/compiler supports
+ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS     Platform/compiler supports
                                         Win32 structural exceptions
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG          Platform has BSD 4.4
                                         sendmsg()/recvmsg() APIs.

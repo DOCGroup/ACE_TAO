@@ -3580,7 +3580,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
                                            (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
@@ -3595,7 +3595,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                          flags),
                   -1);
 
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   else
     thread_args = thread_adapter;
 

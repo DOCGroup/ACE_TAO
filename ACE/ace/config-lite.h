@@ -65,20 +65,20 @@ typedef void (*ACE_CLEANUP_FUNC)(void *object, void *param) /* throw () */;
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 typedef int (*ACE_SEH_EXCEPT_HANDLER)(void *);
 // Prototype of win32 structured exception handler functions.
 // They are used to get the exception handling expression or
 // as exception handlers.
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 class ACE_OS_Thread_Descriptor;
 class ACE_OS_Log_Msg_Attributes;
 typedef void (*ACE_INIT_LOG_MSG_HOOK) (ACE_OS_Log_Msg_Attributes &attr
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                                        , ACE_SEH_EXCEPT_HANDLER selector
                                        , ACE_SEH_EXCEPT_HANDLER handler
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                                        );
 typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*,
                                           ACE_OS_Log_Msg_Attributes &);
