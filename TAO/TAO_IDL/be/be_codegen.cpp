@@ -1588,8 +1588,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
                   -1);
 
   if (this->implementation_header_->open (fname,
-                                          TAO_OutStream::TAO_IMPL_HDR)
-        == -1)
+                                          TAO_OutStream::TAO_IMPL_HDR) == -1)
     {
       return -1;
     }

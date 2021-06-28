@@ -100,12 +100,10 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << "{" << be_idt_nl;
   *os << fname << "_slice *_tao_dup_array =" << be_idt_nl
       << fname << "_alloc ();" << be_uidt_nl << be_nl;
-  *os << "if (!_tao_dup_array)" << be_idt_nl
-      << "{" << be_idt_nl
-      << "return static_cast <" << fname
-      << "_slice *> (0);" << be_uidt_nl
+  *os << "if (_tao_dup_array)" << be_idt_nl
+      << "{" << be_idt_nl;
+  *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_uidt_nl
       << "}" << be_uidt_nl << be_nl;
-  *os << fname << "_copy (_tao_dup_array, _tao_src_array);" << be_nl;
   *os << "return _tao_dup_array;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 
@@ -113,7 +111,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
   *os << fname << "_slice *" << be_nl;
   *os << fname << "_alloc ()" << be_nl;
   *os << "{" << be_idt_nl;
-  *os << fname << "_slice *retval = 0;" << be_nl;
+  *os << fname << "_slice *retval {};" << be_nl;
   *os << "ACE_NEW_RETURN (retval, ";
 
   if (bt->accept (this) == -1)
@@ -134,7 +132,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
                         -1);
     }
 
-  *os << ", 0);" << be_nl;
+  *os << ", nullptr);" << be_nl;
   *os << "return retval;" << be_uidt_nl;
   *os << "}" << be_nl_2;
 

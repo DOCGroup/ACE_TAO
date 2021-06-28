@@ -4153,33 +4153,29 @@ idl_get_pragma_string (char *pragma)
   // Get pointers to each end of the substring between the quotes.
   const char *firstquote = ACE_OS::strchr (pragma, '"');
 
-  if (firstquote == 0)
+  if (!firstquote)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error (IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
   const char *start = firstquote + 1;
   const char *end = ACE_OS::strchr (start, '"');
 
-  if (end == 0)
+  if (!end)
     {
-      idl_global->err ()->syntax_error (
-          IDL_GlobalData::PS_PragmaPrefixSyntax
-        );
+      idl_global->err ()->syntax_error ( IDL_GlobalData::PS_PragmaPrefixSyntax);
 
-      return 0;
+      return nullptr;
     }
 
-  int len = static_cast<int> (end - start);
-  char *retval = 0;
+  size_t const len = end - start;
+  char *retval {};
 
   ACE_NEW_RETURN (retval,
                   char[len + 1],
-                  0);
+                  nullptr);
 
   ACE_OS::strncpy (retval,
                    start,
