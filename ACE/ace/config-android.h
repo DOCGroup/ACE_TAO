@@ -156,8 +156,6 @@
 # define TEST_DIR "/data"
 #endif
 
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
-
 #if !defined (ACE_AS_STATIC_LIBS)
 # if (__GNUC__ == 4 && __GNUC_MINOR__ == 4)
 #  error Shared library support is not possible with GCC 4.4.x

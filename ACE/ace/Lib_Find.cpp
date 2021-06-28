@@ -587,8 +587,10 @@ ACE::ldsymbol (ACE_SHLIB_HANDLE sh, const ACE_TCHAR *entry_point)
 {
   void* symaddr = ACE_OS::dlsym (sh, entry_point);
   // if not found through dlsym() try registry
-  if (symaddr == 0)
-    symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
+  if (!symaddr)
+    {
+      symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
+    }
 
   return symaddr;
 }

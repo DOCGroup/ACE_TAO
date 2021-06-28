@@ -163,7 +163,16 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("Dynamically Linkable Libraries not supported on this platform\n")));
 #endif /* ACE_HAS_DYNAMIC_LINKING */
 
-  ACE_TEST_ASSERT (ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open")));
+  void* invalid_handle = ACE_OS::dlsym (ACE_SHLIB_INVALID_HANDLE, ACE_TEXT ("open"));
+  if (invalid_handle != nullptr)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_OS::dlsym using invalid handle should be nullptr and not %@\n")));
+      ++retval;
+    }
+  else
+   {
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("dlsym on invalid handle returned nullptr\n")));
+   }
 
   ACE_END_TEST;
   return retval == 0 ? 0 : 1;

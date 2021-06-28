@@ -177,11 +177,9 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 {
   ACE_OS_TRACE ("ACE_OS::dlsym");
 
-#if defined (ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE)
   // Check if the handle is valid before making any calls using it.
   if (handle == ACE_SHLIB_INVALID_HANDLE)
-    return 0;
-#endif /* ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE */
+    return nullptr;
 
   // Get the correct OS type.
 #if defined (ACE_HAS_WINCE)
@@ -207,17 +205,17 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
 
 #   if defined (ACE_USES_ASM_SYMBOL_IN_DLSYM)
-  int l = ACE_OS::strlen (symbolname) + 2;
-  char *asm_symbolname = 0;
+  int const l = ACE_OS::strlen (symbolname) + 2;
+  char *asm_symbolname {};
   ACE_NEW_RETURN (asm_symbolname, char[l], 0);
   ACE_OS::strcpy (asm_symbolname, "_") ;
   ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
   void *ace_result;
-  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0, ace_result);
+  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, nullptr, ace_result);
   delete [] asm_symbolname;
   return ace_result;
 #   else
-  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
+  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, nullptr);
 #   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
 
 # elif defined (ACE_WIN32)
@@ -226,11 +224,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
 # elif defined (__hpux)
 
-  void *value = 0;
-  int status;
+  void *value {};
+  int status = 0;
   shl_t _handle = handle;
   ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
-  return status == 0 ? value : 0;
+  return status == 0 ? value : nullptr;
 
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
 
@@ -244,7 +242,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   STATUS status;
   ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
 
-  return status == OK ? reinterpret_cast <void*>(value) : 0;
+  return status == OK ? reinterpret_cast <void*>(value) : nullptr;
 #else
   STATUS status;
 
@@ -255,15 +253,13 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 
   ACE_OSCALL (::symFind(sysSymTbl, &symbolDesc), int, -1, status);
 
-  return status == OK ? reinterpret_cast <void*>(symbolDesc.value) : 0;
+  return status == OK ? reinterpret_cast <void*>(symbolDesc.value) : nullptr;
 #endif /* (ACE_VXWORKS < 0x690) */
 
 # else
-
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (symbolname);
-  ACE_NOTSUP_RETURN (0);
-
+  ACE_NOTSUP_RETURN (nullptr);
 # endif /* ACE_HAS_SVR4_DYNAMIC_LINKING */
 }
 

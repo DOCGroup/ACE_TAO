@@ -116,10 +116,6 @@
 #  define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 #endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
 
-// OpenBSD's dlsym call segfaults when passed an invalid handle.
-// It seems as if most other OSs detect this and just report an error.
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
-
 #define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"
 
