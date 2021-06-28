@@ -120,10 +120,10 @@ ACE_OS::open (const char *filename,
 #elif defined (INTEGRITY)
   ACE_UNUSED_ARG (sa);
   if(!strcmp(filename,ACE_DEV_NULL)) {
-      ACE_OSCALL_RETURN (::AllocateNullConsoleDescriptor(), ACE_HANDLE, -1);
+      ACE_OSCALL_RETURN (::AllocateNullConsoleDescriptor(), ACE_HANDLE);
   }
   else {
-      ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, -1);
+      ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE);
   }
 #elif defined (ACE_MQX)
   ACE_UNUSED_ARG (perms);
@@ -131,7 +131,7 @@ ACE_OS::open (const char *filename,
   return MQX_Filesystem::inst ().open (filename, mode);
 #else
   ACE_UNUSED_ARG (sa);
-  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
+  ACE_OSCALL_RETURN (::open (filename, mode, perms), ACE_HANDLE);
 #endif /* ACE_WIN32 */
 }
 

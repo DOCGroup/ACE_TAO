@@ -32,12 +32,12 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   // SunOS4 does not automatically call _fini()!
   void *ptr;
 
-  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, 0, ptr);
+  ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_fini")), void *, ptr);
 
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
-  ACE_OSCALL_RETURN (::dlclose (handle), int, -1);
+  ACE_OSCALL_RETURN (::dlclose (handle), int);
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
@@ -55,7 +55,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
     return -1;
   if (desc.ref_count > 1)
     return 0;
-  ACE_OSCALL_RETURN (::shl_unload (handle), int, -1);
+  ACE_OSCALL_RETURN (::shl_unload (handle), int);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
@@ -68,7 +68,7 @@ ACE_OS::dlerror ()
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   const char *err = 0;
-  ACE_OSCALL (::dlerror (), const char *, 0, err);
+  ACE_OSCALL (::dlerror (), const char *, err);
   if (err == 0)
     return 0;
 #   if defined (ACE_USES_WCHAR)
@@ -81,7 +81,7 @@ ACE_OS::dlerror ()
 #   endif /* ACE_USES_WCHAR */
 # elif defined (__hpux) || defined (ACE_VXWORKS)
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::strerror(errno), char *, 0);
+  ACE_OSCALL_RETURN (::strerror(errno), char *);
   //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
@@ -110,7 +110,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
   void *handle;
-  ACE_OSCALL (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, 0, handle);
+  ACE_OSCALL (::dlopen (ACE_TEXT_ALWAYS_CHAR (fname), mode), void *, handle);
 #   if !defined (ACE_HAS_AUTOMATIC_INIT_FINI)
   if (handle != 0)
     {
@@ -118,7 +118,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
       // Some systems (e.g., SunOS4) do not automatically call _init(), so
       // we'll have to call it manually.
 
-      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, 0, ptr);
+      ACE_OSCALL (::dlsym (handle, ACE_TEXT ("_init")), void *, ptr);
 
       if (ptr != 0 && (*((int (*)(void)) ptr)) () == -1) // Call _init hook explicitly.
         {
@@ -134,7 +134,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
   ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (__hpux)
-  ACE_OSCALL_RETURN (::shl_load(fname, mode, 0L), ACE_SHLIB_HANDLE, 0);
+  ACE_OSCALL_RETURN (::shl_load(fname, mode, 0L), ACE_SHLIB_HANDLE);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
   MODULE* handle = 0;
@@ -146,7 +146,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
   if (filehandle != ACE_INVALID_HANDLE)
     {
       ACE_OS::last_error(0);
-      ACE_OSCALL ( ::loadModule (filehandle, LOAD_GLOBAL_SYMBOLS|LOAD_COMMON_MATCH_ALL ), MODULE *, 0, handle);
+      ACE_OSCALL ( ::loadModule (filehandle, LOAD_GLOBAL_SYMBOLS|LOAD_COMMON_MATCH_ALL ), MODULE *, handle);
       int loaderror = ACE_OS::last_error();
       ACE_OS::close (filehandle);
 
@@ -213,11 +213,11 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   ACE_OS::strcpy (asm_symbolname, "_") ;
   ACE_OS::strcpy (asm_symbolname + 1, symbolname) ;
   void *ace_result;
-  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, 0, ace_result);
+  ACE_OSCALL (::dlsym (handle, asm_symbolname), void *, ace_result);
   delete [] asm_symbolname;
   return ace_result;
 #   else
-  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *, 0);
+  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *);
 #   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
 
 # elif defined (ACE_WIN32)
@@ -229,7 +229,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   void *value = 0;
   int status;
   shl_t _handle = handle;
-  ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, -1, status);
+  ACE_OSCALL (::shl_findsym(&_handle, symbolname, TYPE_UNDEFINED, &value), int, status);
   return status == 0 ? value : 0;
 
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
@@ -242,7 +242,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   SYM_TYPE symtype;
   char *value = 0;
   STATUS status;
-  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, -1, status);
+  ACE_OSCALL (::symFindByName(sysSymTbl, symbolname, &value, &symtype), int, status);
 
   return status == OK ? reinterpret_cast <void*>(value) : 0;
 #else
@@ -253,7 +253,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   symbolDesc.mask = SYM_FIND_BY_NAME;
   symbolDesc.name = symbolname;
 
-  ACE_OSCALL (::symFind(sysSymTbl, &symbolDesc), int, -1, status);
+  ACE_OSCALL (::symFind(sysSymTbl, &symbolDesc), int, status);
 
   return status == OK ? reinterpret_cast <void*>(symbolDesc.value) : 0;
 #endif /* (ACE_VXWORKS < 0x690) */

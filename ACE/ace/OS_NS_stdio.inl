@@ -110,10 +110,7 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
 
   if (name != 0)
     {
-      ACE_OSCALL (ACE_OS::open (name, flags, perms),
-                  ACE_HANDLE,
-                  ACE_INVALID_HANDLE,
-                  lock->handle_);
+      ACE_OSCALL (ACE_OS::open (name, flags, perms), ACE_HANDLE, lock->handle_);
       if (lock->handle_ != ACE_INVALID_HANDLE)
         lock->lockname_ = ACE_OS::strdup (name);
       return lock->handle_ == ACE_INVALID_HANDLE ? -1 : 0;
@@ -153,9 +150,7 @@ ACE_OS::flock_unlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_type = F_UNLCK;   // Unlock file.
 
   // release lock
-  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK,
-                                    reinterpret_cast<long> (&lock->lock_)),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLK, reinterpret_cast<long> (&lock->lock_)), int);
 #endif /* ACE_WIN32 */
 }
 
@@ -217,9 +212,7 @@ ACE_OS::flock_rdlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_RDLCK;         // set read lock
   // block, if no access
-  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
-                                    reinterpret_cast<long> (&lock->lock_)),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW, reinterpret_cast<long> (&lock->lock_)), int);
 #endif /* ACE_WIN32 */
 }
 
@@ -258,7 +251,7 @@ ACE_OS::flock_tryrdlock (ACE_OS::ace_flock_t *lock,
   // Does not block, if no access, returns -1 and set errno = EBUSY;
   ACE_OSCALL (ACE_OS::fcntl (lock->handle_, F_SETLK,
                              reinterpret_cast<long> (&lock->lock_)),
-              int, -1, result);
+              int, result);
 
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
@@ -303,7 +296,7 @@ ACE_OS::flock_trywrlock (ACE_OS::ace_flock_t *lock,
   ACE_OSCALL (ACE_OS::fcntl (lock->handle_,
                              F_SETLK,
                              reinterpret_cast<long> (&lock->lock_)),
-              int, -1, result);
+              int, result);
 
   if (result == -1 && (errno == EACCES || errno == EAGAIN))
     errno = EBUSY;
@@ -343,9 +336,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
   lock->lock_.l_len = len;
   lock->lock_.l_type = F_WRLCK;         // set write lock
   // block, if no access
-  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW,
-                                    reinterpret_cast<long> (&lock->lock_)),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_OS::fcntl (lock->handle_, F_SETLKW, reinterpret_cast<long> (&lock->lock_)), int);
 #endif /* ACE_WIN32 */
 }
 
@@ -459,7 +450,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
 #else
   // Hackish because of missing buffer size!
   ACE_UNUSED_ARG (maxlen);
-  ACE_OSCALL_RETURN (::ace_cuserid(user), char*, 0);
+  ACE_OSCALL_RETURN (::ace_cuserid(user), char*);
 #endif /* ACE_VXWORKS */
 }
 
@@ -501,7 +492,7 @@ ACE_INLINE int
 ACE_OS::fclose (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fclose");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fclose (fp), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fclose (fp), int);
 }
 
 ACE_INLINE FILE *
@@ -510,13 +501,9 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   ACE_OS_TRACE ("ACE_OS::fdopen");
 #if defined (ACE_HAS_WINCE)
 # if defined (ACE_HAS_NONCONST_WFDOPEN)
-  ACE_OSCALL_RETURN (::_wfdopen ((int)handle, const_cast <ACE_TCHAR*> (ACE_TEXT_ALWAYS_WCHAR (mode))),
-                     FILE*,
-                     0);
+  ACE_OSCALL_RETURN (::_wfdopen ((int)handle, const_cast <ACE_TCHAR*> (ACE_TEXT_ALWAYS_WCHAR (mode))), FILE*);
 # else
-  ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)),
-                     FILE*,
-                     0);
+  ACE_OSCALL_RETURN (::_wfdopen (handle, ACE_TEXT_ALWAYS_WCHAR (mode)), FILE*);
 # endif
 #elif defined (ACE_WIN32)
   // kernel file handle -> FILE* conversion...
@@ -546,8 +533,7 @@ ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
   ACE_UNUSED_ARG (mode);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN
-    (::fdopen (handle, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *, 0);
+  ACE_OSCALL_RETURN (::fdopen (handle, ACE_TEXT_ALWAYS_CHAR (mode)), FILE *);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -555,7 +541,7 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fflush (fp), int);
 }
 
 ACE_INLINE int
@@ -583,7 +569,7 @@ ACE_OS::fgetpos (FILE *fp, fpos_t *pos)
   ACE_UNUSED_ARG (pos);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetpos (fp, pos), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetpos (fp, pos), int);
 #endif
 }
 
@@ -603,7 +589,7 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
   *iter = '\0';
   return c == EOF ? 0 : buf;
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgets (buf, size, fp), char *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgets (buf, size, fp), char *);
 #endif /* ACE_LACKS_FGETS */
 }
 
@@ -612,7 +598,7 @@ ACE_INLINE wchar_t *
 ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fgetws (buf, size, fp), wchar_t *);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
@@ -632,7 +618,7 @@ ACE_INLINE FILE *
 ACE_OS::fopen (const char *filename, const char *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
-  ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *, 0);
+  ACE_OSCALL_RETURN (::fopen (filename, mode), FILE *);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -642,7 +628,7 @@ ACE_OS::fopen (const char *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   ACE_Wide_To_Ascii n_mode (mode);
-  ACE_OSCALL_RETURN (::fopen (filename, n_mode.char_rep ()), FILE *, 0);
+  ACE_OSCALL_RETURN (::fopen (filename, n_mode.char_rep ()), FILE *);
 }
 
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
@@ -656,8 +642,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
   ACE_Wide_To_Ascii n_mode (mode);
-  ACE_OSCALL_RETURN
-    (::fopen (n_filename.char_rep (), n_mode.char_rep ()), FILE*, 0);
+  ACE_OSCALL_RETURN (::fopen (n_filename.char_rep (), n_mode.char_rep ()), FILE*);
 #endif /* ACE_HAS_WINCE */
 }
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
@@ -667,13 +652,11 @@ ACE_OS::fopen (const wchar_t *filename, const char *mode)
   ACE_OS_TRACE ("ACE_OS::fopen");
 #if defined (ACE_HAS_WINCE)
   ACE_Ascii_To_Wide n_mode (mode);
-  ACE_OSCALL_RETURN
-    (::_wfopen (filename, n_mode.wchar_rep ()), FILE *, 0);
+  ACE_OSCALL_RETURN (::_wfopen (filename, n_mode.wchar_rep ()), FILE *);
 #else
   // Non-Windows doesn't use wchar_t file systems.
   ACE_Wide_To_Ascii n_filename (filename);
-  ACE_OSCALL_RETURN
-    (::fopen (n_filename.char_rep (), mode), FILE*, 0);
+  ACE_OSCALL_RETURN (::fopen (n_filename.char_rep (), mode), FILE*);
 #endif /* ACE_HAS_WINCE */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -725,7 +708,7 @@ ACE_OS::fputs (const char *s, FILE *stream)
   ACE_UNUSED_ARG (stream);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputs (s, stream), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputs (s, stream), int);
 #endif
 }
 
@@ -734,7 +717,7 @@ ACE_INLINE int
 ACE_OS::fputs (const wchar_t *s, FILE *stream)
 {
   ACE_OS_TRACE ("ACE_OS::fputs");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputws (s, stream), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fputws (s, stream), int);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
@@ -742,9 +725,7 @@ ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fread");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp),
-                     size_t,
-                     0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp), size_t);
 }
 
 ACE_INLINE FILE *
@@ -755,7 +736,7 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
   ACE_OSCALL_RETURN (::_wfreopen (ACE_TEXT_ALWAYS_WCHAR (filename),
                                   ACE_TEXT_ALWAYS_WCHAR (mode),
                                   stream),
-                     FILE *, 0);
+                     FILE *);
 #elif defined (ACE_LACKS_FREOPEN)
   ACE_UNUSED_ARG (filename);
   ACE_UNUSED_ARG (mode);
@@ -766,7 +747,7 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
     (ACE_STD_NAMESPACE::freopen (ACE_TEXT_ALWAYS_CHAR (filename),
                                  ACE_TEXT_ALWAYS_CHAR (mode),
                                  stream),
-     FILE *, 0);
+     FILE *);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
@@ -793,7 +774,7 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
     }
 # endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
 #endif   /* ACE_WIN32 */
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fseek (fp, offset, whence), int, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fseek (fp, offset, whence), int);
 }
 
 ACE_INLINE int
@@ -804,23 +785,21 @@ ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
   ACE_UNUSED_ARG (pos);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::fsetpos (fp, pos), int, -1);
+  ACE_OSCALL_RETURN (::fsetpos (fp, pos), int);
 #endif /* ACE_LACKS_FSETPOS */
 }
 
 ACE_INLINE long
 ACE_OS::ftell (FILE* fp)
 {
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ftell (fp), long, -1);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::ftell (fp), long);
 }
 
 ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fwrite");
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp),
-                     size_t,
-                     0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp), size_t);
 }
 
 ACE_INLINE void
@@ -858,7 +837,7 @@ ACE_OS::puts (const char *s)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::puts (s), int, -1);
+  ACE_OSCALL_RETURN (::puts (s), int);
 #endif /* ACE_LACKS_PUTS */
 }
 
@@ -868,11 +847,11 @@ ACE_OS::puts (const wchar_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::puts");
 #if defined (ACE_WIN32)
-  ACE_OSCALL_RETURN (::_putws (s), int, -1);
+  ACE_OSCALL_RETURN (::_putws (s), int);
 #else /* ACE_WIN32 */
   // There's no putws()...
   ACE_Wide_To_Ascii n_s (s);
-  ACE_OSCALL_RETURN (::puts (n_s.char_rep ()), int, -1);
+  ACE_OSCALL_RETURN (::puts (n_s.char_rep ()), int);
 #endif /* ACE_WIN32 */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -905,10 +884,10 @@ ACE_OS::rename (const char *old_name,
     ACE_FAIL_RETURN (-1);
   return 0;
 #elif defined (ACE_RENAME_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_RENAME_EQUIVALENT (old_name, new_name), int, -1);
+  ACE_OSCALL_RETURN (ACE_RENAME_EQUIVALENT (old_name, new_name), int);
 # else
   ACE_UNUSED_ARG (flags);
-  ACE_OSCALL_RETURN (::rename (old_name, new_name), int, -1);
+  ACE_OSCALL_RETURN (::rename (old_name, new_name), int);
 # endif /* ACE_HAS_WINCE */
 }
 
@@ -940,7 +919,7 @@ ACE_OS::rename (const wchar_t *old_name,
   return 0;
 # elif defined (ACE_WIN32)
   ACE_UNUSED_ARG (flags);
-  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int, -1);
+  ACE_OSCALL_RETURN (::_wrename (old_name, new_name), int);
 # else
   ACE_Wide_To_Ascii nold_name (old_name);
   ACE_Wide_To_Ascii nnew_name (new_name);
@@ -976,11 +955,11 @@ ACE_OS::tempnam (const char *dir, const char *pfx)
   ACE_UNUSED_ARG (pfx);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_HAS_NONCONST_TEMPNAM)
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (const_cast <char *> (dir), const_cast<char *> (pfx)), char *);
 #elif defined (ACE_TEMPNAM_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_TEMPNAM_EQUIVALENT (dir, pfx), char *, 0);
+  ACE_OSCALL_RETURN (ACE_TEMPNAM_EQUIVALENT (dir, pfx), char *);
 #else /* ACE_LACKS_TEMPNAM */
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *, 0);
+  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::tempnam (dir, pfx), char *);
 #endif /* ACE_LACKS_TEMPNAM */
 }
 
@@ -995,9 +974,9 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
   ACE_NOTSUP_RETURN (0);
 #elif defined(ACE_WIN32)
 #  if defined (ACE_HAS_NONCONST_TEMPNAM)
-  ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *, 0);
+  ACE_OSCALL_RETURN (::_wtempnam (const_cast <wchar_t*> (dir), const_cast <wchar_t*> (pfx)), wchar_t *);
 #  else
-  ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *, 0);
+  ACE_OSCALL_RETURN (::_wtempnam (dir, pfx), wchar_t *);
 #  endif /* ACE_HAS_NONCONST_TEMPNAM */
 #else /* ACE_LACKS_TEMPNAM */
   // No native wide-char support; convert to narrow and call the char* variant.
