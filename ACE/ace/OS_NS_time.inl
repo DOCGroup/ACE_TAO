@@ -15,7 +15,7 @@ ACE_OS::asctime (const struct tm *t)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::asctime (t), char *);
+  return ACE_STD_NAMESPACE::asctime (t);
 #endif /* ACE_LACKS_ASCTIME */
 }
 
@@ -31,9 +31,9 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   return buf;
 # else
 #   if defined (ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R)
-  ACE_OSCALL_RETURN (::asctime_r (t, buf, reinterpret_cast<size_t*>(&buflen)), char *);
+  return ::asctime_r (t, buf, reinterpret_cast<size_t*>(&buflen));
 #   else
-  ACE_OSCALL_RETURN (::asctime_r (t, buf, buflen), char *);
+  return ::asctime_r (t, buf, buflen);
 #   endif /* ACE_HAS_SIZET_PTR_ASCTIME_R_AND_CTIME_R */
 # endif /* ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R */
 #elif defined (ACE_HAS_TR24731_2005_CRT)
@@ -59,7 +59,7 @@ ACE_OS::clock_gettime (clockid_t clockid, struct timespec *ts)
 {
   ACE_OS_TRACE ("ACE_OS::clock_gettime");
 #if defined (ACE_HAS_CLOCK_GETTIME)
-  ACE_OSCALL_RETURN (::clock_gettime (clockid, ts), int);
+  return ::clock_gettime (clockid, ts);
 #else
   ACE_UNUSED_ARG (clockid);
   ACE_UNUSED_ARG (ts);
@@ -72,9 +72,9 @@ ACE_OS::clock_settime (clockid_t clockid, const struct timespec *ts)
 {
 #if defined (ACE_HAS_CLOCK_SETTIME)
 #  if defined (ACE_HAS_NONCONST_CLOCK_SETTIME)
-  ACE_OSCALL_RETURN (::clock_settime (clockid, const_cast<struct timespec *>(ts)), int);
+  return ::clock_settime (clockid, const_cast<struct timespec *>(ts));
 #  else
-  ACE_OSCALL_RETURN (::clock_settime (clockid, ts), int);
+  return ::clock_settime (clockid, ts);
 #  endif /* ACE_HAS_NONCONST_CLOCK_SETTIME */
 #else
   ACE_UNUSED_ARG (clockid);
@@ -99,7 +99,7 @@ ACE_OS::ctime (const time_t *t)
                           buf,
                           ctime_buf_size);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wctime (t), wchar_t *);
+  return ::_wctime (t);
 #else
 #  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
   char *narrow_time;
@@ -116,7 +116,7 @@ ACE_OS::ctime (const time_t *t)
   wide_time = ACE_Ascii_To_Wide::convert (narrow_time);
   return wide_time;
 #  else
-  ACE_OSCALL_RETURN (::ctime (t), char *);
+  return ::ctime (t);
 #  endif /* ACE_USES_WCHAR */
 # endif /* ACE_HAS_WINCE */
 }
@@ -350,7 +350,7 @@ ACE_OS::gmtime (const time_t *t)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::gmtime (t), struct tm *);
+  return ::gmtime (t);
 #endif /* ACE_LACKS_GMTIME */
 }
 
@@ -385,7 +385,7 @@ ACE_OS::localtime (const time_t *t)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::localtime (t), struct tm *);
+  return ::localtime (t);
 #endif /* ACE_LACKS_LOCALTIME */
 }
 
@@ -446,7 +446,7 @@ ACE_OS::time (time_t *tloc)
     *tloc = retv;
   return retv;
 #else
-  ACE_OSCALL_RETURN (::time (tloc), time_t);
+  return ::time (tloc);
 #endif /* ACE_LACKS_TIME */
 }
 

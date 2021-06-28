@@ -57,7 +57,7 @@ ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
 ACE_INLINE int
 ACE_OS::atoi (const char *s)
 {
-  ACE_OSCALL_RETURN (::atoi (s), int);
+  return ::atoi (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -65,7 +65,7 @@ ACE_INLINE int
 ACE_OS::atoi (const wchar_t *s)
 {
 #if defined (ACE_WIN32) && defined (ACE_HAS_WTOI)
-  ACE_OSCALL_RETURN (::_wtoi (s), int);
+  return ::_wtoi (s);
 #else /* ACE_WIN32 */
   return ACE_OS::atoi (ACE_Wide_To_Ascii (s).char_rep ());
 #endif /* ACE_WIN32 */
@@ -75,7 +75,7 @@ ACE_OS::atoi (const wchar_t *s)
 ACE_INLINE long
 ACE_OS::atol (const char *s)
 {
-  ACE_OSCALL_RETURN (::atol (s), long);
+  return ::atol (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -83,7 +83,7 @@ ACE_INLINE long
 ACE_OS::atol (const wchar_t *s)
 {
 #if defined (ACE_WIN32) && defined (ACE_HAS_WTOL)
-  ACE_OSCALL_RETURN (::_wtol (s), long);
+  return ::_wtol (s);
 #else /* ACE_WIN32 */
   return ACE_OS::atol (ACE_Wide_To_Ascii (s).char_rep ());
 #endif /* ACE_WIN32 */
@@ -93,7 +93,7 @@ ACE_OS::atol (const wchar_t *s)
 ACE_INLINE double
 ACE_OS::atof (const char *s)
 {
-  ACE_OSCALL_RETURN (::atof (s), double);
+  return ::atof (s);
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -103,9 +103,9 @@ ACE_OS::atof (const wchar_t *s)
 #if !defined (ACE_HAS_WTOF)
   return ACE_OS::atof (ACE_Wide_To_Ascii (s).char_rep ());
 #elif defined (ACE_WTOF_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_WTOF_EQUIVALENT (s), double);
+  return ACE_WTOF_EQUIVALENT (s);
 #else /* ACE_HAS__WTOF */
-  ACE_OSCALL_RETURN (::wtof (s), double);
+  return ::wtof (s);
 #endif /* ACE_HAS_WTOF */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -176,7 +176,7 @@ ACE_OS::getenv (const char *symbol)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else /* ACE_LACKS_GETENV */
-  ACE_OSCALL_RETURN (::getenv (symbol), char *);
+  return ::getenv (symbol);
 #endif /* ACE_LACKS_GETENV */
 }
 
@@ -188,7 +188,7 @@ ACE_OS::getenv (const wchar_t *symbol)
   ACE_UNUSED_ARG (symbol);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::_wgetenv (symbol), wchar_t *);
+  return ::_wgetenv (symbol);
 #endif /* ACE_LACKS_GETENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
@@ -341,9 +341,9 @@ ACE_OS::putenv (const char *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (0);
 #elif defined (ACE_PUTENV_EQUIVALENT)
-  ACE_OSCALL_RETURN (ACE_PUTENV_EQUIVALENT (const_cast <char *> (string)), int);
+  return ACE_PUTENV_EQUIVALENT (const_cast <char *> (string));
 #else /* ! ACE_HAS_WINCE */
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::putenv (const_cast <char *> (string)), int);
+  return ACE_STD_NAMESPACE::putenv (const_cast <char *> (string));
 #endif /* ACE_LACKS_PUTENV && ACE_HAS_SETENV */
 }
 
@@ -356,7 +356,7 @@ ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
   ACE_UNUSED_ARG (overwrite);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::setenv (envname, envval, overwrite), int);
+  return ACE_STD_NAMESPACE::setenv (envname, envval, overwrite);
 #endif
 }
 
@@ -371,7 +371,7 @@ ACE_OS::unsetenv(const char *name)
   ::unsetenv (name);
   return 0;
 #else
-  ACE_OSCALL_RETURN (ACE_STD_NAMESPACE::unsetenv (name), int);
+  return ACE_STD_NAMESPACE::unsetenv (name);
 # endif /* ACE_HAS_VOID_UNSETENV */
 #endif /* ACE_LACKS_UNSETENV */
 }
@@ -385,7 +385,7 @@ ACE_OS::putenv (const wchar_t *string)
   ACE_UNUSED_ARG (string);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::_wputenv (string), int);
+  return ::_wputenv (string);
 #endif /* ACE_LACKS_PUTENV */
 }
 #endif /* ACE_HAS_WCHAR && ACE_WIN32 */
@@ -411,7 +411,7 @@ ACE_OS::rand ()
 {
   ACE_OS_TRACE ("ACE_OS::rand");
 #if !defined (ACE_LACKS_RAND)
-  ACE_OSCALL_RETURN (::rand (), int);
+  return ::rand ();
 #else
   ACE_NOTSUP_RETURN (-1);
 #endif /* ACE_LACKS_RAND */
@@ -609,9 +609,9 @@ ACE_OS::system (const ACE_TCHAR *s)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
-  ACE_OSCALL_RETURN (::_wsystem (s), int);
+  return ::_wsystem (s);
 #else
-  ACE_OSCALL_RETURN (::system (ACE_TEXT_ALWAYS_CHAR (s)), int);
+  return ::system (ACE_TEXT_ALWAYS_CHAR (s));
 #endif /* ACE_LACKS_SYSTEM */
 }
 

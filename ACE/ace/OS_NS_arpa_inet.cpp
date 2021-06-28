@@ -95,7 +95,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
 #else
   // inet_aton() returns 0 upon failure, not -1 since -1 is a valid
   // address (255.255.255.255).
-  ACE_OSCALL_RETURN (::inet_aton (host_name, addr), int);
+  return ::inet_aton (host_name, addr);
 #endif  /* ACE_LACKS_INET_ATON */
 }
 

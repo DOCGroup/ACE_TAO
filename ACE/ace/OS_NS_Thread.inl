@@ -573,8 +573,7 @@ ACE_OS::priority_control (ACE_idtype_t idtype, ACE_id_t identifier, int cmd, voi
 {
   ACE_OS_TRACE ("ACE_OS::priority_control");
 #if defined (ACE_HAS_PRIOCNTL)
-  ACE_OSCALL_RETURN (priocntl (idtype, identifier, cmd, static_cast<caddr_t> (arg)),
-                     long);
+  return priocntl (idtype, identifier, cmd, static_cast<caddr_t> (arg));
 #else  /* ! ACE_HAS_PRIOCNTL*/
   ACE_UNUSED_ARG (idtype);
   ACE_UNUSED_ARG (identifier);
@@ -1441,7 +1440,7 @@ ACE_OS::sema_destroy (ACE_sema_t *s)
 #else
       ACE_OS::free ((void *) s->name_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ACE_OSCALL_RETURN (::sem_close (s->sema_), int);
+      return ::sem_close (s->sema_);
     }
 # endif /*  ACE_LACKS_NAMED_POSIX_SEM */
   else
@@ -1667,9 +1666,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
       s->new_sema_ = true;
 #   endif /* ACE_LACKS_NAMED_POSIX_SEM */
       ACE_OS::memset(s->sema_, 0, sizeof(*s->sema_));
-      ACE_OSCALL_RETURN (::sem_init (s->sema_,
-                                     type != USYNC_THREAD,
-                                     count), int);
+      return ::sem_init (s->sema_, type != USYNC_THREAD, count);
 #  endif /* ACE_LACKS_UNNAMED_SEMAPHORE */
     }
 
@@ -1977,7 +1974,7 @@ ACE_INLINE int
 ACE_OS::sema_unlink (const char *name)
 {
 #if defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_SEM_UNLINK)
-  ACE_OSCALL_RETURN (::sem_unlink (name), int);
+  return ::sem_unlink (name);
 #else
   ACE_UNUSED_ARG (name);
   ACE_NOTSUP_RETURN (-1);
@@ -1990,7 +1987,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_post");
 # if defined (ACE_HAS_POSIX_SEM)
 #   if defined (ACE_HAS_POSIX_SEM_TIMEOUT) || defined (ACE_DISABLE_POSIX_SEM_TIMEOUT_EMULATION)
-  ACE_OSCALL_RETURN (::sem_post (s->sema_), int);
+  return ::sem_post (s->sema_);
 #   else
   int result = -1;
 
@@ -2052,7 +2049,7 @@ ACE_OS::sema_post (ACE_sema_t *s)
   return result;
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
-  ACE_OSCALL_RETURN (::semGive (s->sema_), int);
+  return ::semGive (s->sema_);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2089,7 +2086,7 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   ACE_OS_TRACE ("ACE_OS::sema_trywait");
 # if defined (ACE_HAS_POSIX_SEM)
   // POSIX semaphores set errno to EAGAIN if trywait fails
-  ACE_OSCALL_RETURN (::sem_trywait (s->sema_), int);
+  return ::sem_trywait (s->sema_);
 # elif defined (ACE_USES_FIFO_SEM)
   char  c;
   int     rc, flags;
@@ -2212,7 +2209,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
 {
   ACE_OS_TRACE ("ACE_OS::sema_wait");
 # if defined (ACE_HAS_POSIX_SEM)
-  ACE_OSCALL_RETURN (::sem_wait (s->sema_), int);
+  return ::sem_wait (s->sema_);
 # elif defined (ACE_USES_FIFO_SEM)
   char c;
   if (ACE_OS::read (s->fd_[0], &c, sizeof (char)) == 1)
@@ -2308,7 +2305,7 @@ ACE_OS::sema_wait (ACE_sema_t *s)
   /* NOTREACHED */
 #     endif /* ACE_USES_WINCE_SEMA_SIMULATION */
 #   elif defined (ACE_VXWORKS)
-  ACE_OSCALL_RETURN (::semTake (s->sema_, WAIT_FOREVER), int);
+  return ::semTake (s->sema_, WAIT_FOREVER);
 #   endif /* ACE_HAS_STHREADS */
 # else
   ACE_UNUSED_ARG (s);
@@ -2609,7 +2606,7 @@ ACE_OS::semctl (int int_id, int semnum, int cmd, semun value)
 {
   ACE_OS_TRACE ("ACE_OS::semctl");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semctl (int_id, semnum, cmd, value), int);
+  return ::semctl (int_id, semnum, cmd, value);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (semnum);
@@ -2625,7 +2622,7 @@ ACE_OS::semget (key_t key, int nsems, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::semget");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semget (key, nsems, flags), int);
+  return ::semget (key, nsems, flags);
 #else
   ACE_UNUSED_ARG (key);
   ACE_UNUSED_ARG (nsems);
@@ -2640,7 +2637,7 @@ ACE_OS::semop (int int_id, struct sembuf *sops, size_t nsops)
 {
   ACE_OS_TRACE ("ACE_OS::semop");
 #if defined (ACE_HAS_SYSV_IPC)
-  ACE_OSCALL_RETURN (::semop (int_id, sops, nsops), int);
+  return ::semop (int_id, sops, nsops);
 #else
   ACE_UNUSED_ARG (int_id);
   ACE_UNUSED_ARG (sops);
@@ -2666,8 +2663,7 @@ ACE_OS::sigtimedwait (const sigset_t *sset,
       tsp = &ts;
     }
 
-  ACE_OSCALL_RETURN (::sigtimedwait (sset, info, tsp),
-                     int);
+  return ::sigtimedwait (sset, info, tsp);
 #else
     ACE_UNUSED_ARG (sset);
     ACE_UNUSED_ARG (info);
@@ -2730,7 +2726,7 @@ ACE_OS::sigwaitinfo (const sigset_t *sset,
   // If this isn't true somewhere, let me know and I'll fix this.
   // -Steve Huston <shuston@riverace.com>.
 #if defined (ACE_HAS_SIGTIMEDWAIT)
-  ACE_OSCALL_RETURN (::sigwaitinfo (sset, info), int);
+  return ::sigwaitinfo (sset, info);
 #else
   ACE_UNUSED_ARG (sset);
   ACE_UNUSED_ARG (info);
@@ -2749,7 +2745,7 @@ ACE_OS::thr_cancel (ACE_thread_t thr_id)
                                         result),
                       int);
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskDelete (thr_id), int);
+  return ::taskDelete (thr_id);
 # else /* Could be ACE_HAS_PTHREADS && ACE_LACKS_PTHREAD_CANCEL */
   ACE_UNUSED_ARG (thr_id);
   ACE_NOTSUP_RETURN (-1);
@@ -2812,7 +2808,7 @@ ACE_OS::thr_continue (ACE_hthread_t target_thread)
   else
     return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskResume (target_thread), int);
+  return ::taskResume (target_thread);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);
@@ -2885,7 +2881,7 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
 
   return 0;
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskPriorityGet (ht_id, &priority), int);
+  return ::taskPriorityGet (ht_id, &priority);
 # else
   ACE_UNUSED_ARG (ht_id);
   ACE_UNUSED_ARG (priority);
@@ -3093,7 +3089,7 @@ ACE_OS::thr_kill (ACE_thread_t thr_id, int signum)
                      int);
 # elif defined (ACE_HAS_VXTHREADS)
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::kill (thr_id, signum), int);
+  return ::kill (thr_id, signum);
   //FUZZ: enable check_for_lack_ACE_OS
 # else
   ACE_UNUSED_ARG (thr_id);
@@ -3198,7 +3194,7 @@ ACE_OS::thr_self ()
   // Note, don't use "::" here since the following call is often a macro.
   return pthread_self ();
 # elif defined (ACE_HAS_STHREADS)
-  ACE_OSCALL_RETURN (::thr_self (), int);
+  return ::thr_self ();
 # elif defined (ACE_HAS_WTHREADS)
   return ::GetCurrentThreadId ();
 # elif defined (ACE_HAS_VXTHREADS)
@@ -3537,7 +3533,7 @@ ACE_OS::thr_suspend (ACE_hthread_t target_thread)
     ACE_FAIL_RETURN (-1);
   /* NOTREACHED */
 # elif defined (ACE_HAS_VXTHREADS)
-  ACE_OSCALL_RETURN (::taskSuspend (target_thread), int);
+  return ::taskSuspend (target_thread);
 # endif /* ACE_HAS_STHREADS */
 #else
   ACE_UNUSED_ARG (target_thread);

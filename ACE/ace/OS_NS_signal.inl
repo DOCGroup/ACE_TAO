@@ -23,9 +23,9 @@ kill (pid_t pid, int signum)
    * This only becomes an issue when using the 64bit compiler
    * as the TASK_ID is no longer defined as an int.
    */
-  ACE_OSCALL_RETURN (::kill ((ACE_VX_TASK_ID)pid, signum), int);
+  return ::kill ((ACE_VX_TASK_ID)pid, signum);
 #else
-  ACE_OSCALL_RETURN (::kill (pid, signum), int);
+  return ::kill (pid, signum);
 #endif /* ACE_LACKS_KILL */
 }
 
@@ -75,12 +75,9 @@ sigaction (int signum, const ACE_SIGACTION *nsa, ACE_SIGACTION *osa)
   ACE_UNUSED_ARG (osa);
   ACE_NOTSUP_RETURN (-1);
 #elif !defined (ACE_HAS_SIGACTION_CONSTP2)
-  ACE_OSCALL_RETURN (::sigaction (signum,
-                                  const_cast<ACE_SIGACTION*> (nsa),
-                                  osa),
-                     int);
+  return ::sigaction (signum, const_cast<ACE_SIGACTION*> (nsa), osa);
 #else
-  ACE_OSCALL_RETURN (::sigaction (signum, nsa, osa), int);
+  return ::sigaction (signum, nsa, osa);
 #endif /* ACE_WIN32 !ACE_HAS_WINCE */
 }
 
@@ -212,7 +209,7 @@ sigprocmask (int how, const sigset_t *nsp, sigset_t *osp)
   ACE_UNUSED_ARG (osp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::sigprocmask (how, nsp, osp), int);
+  return ::sigprocmask (how, nsp, osp);
 #endif /* ACE_LACKS_SIGSET || ACE_LACKS_SIGSET_DEFINITIONS || ACE_LACKS_SIGPROCMASK */
 }
 
@@ -241,7 +238,7 @@ raise (const int signum)
   ACE_UNUSED_ARG (signum);
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::raise (signum), int);
+  return ::raise (signum);
 #endif /* ACE_LACKS_RAISE */
 }
 

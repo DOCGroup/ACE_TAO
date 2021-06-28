@@ -37,7 +37,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
   if (ptr != 0)
     (*((int (*)(void)) ptr)) (); // Call _fini hook explicitly.
 # endif /* ACE_HAS_AUTOMATIC_INIT_FINI */
-  ACE_OSCALL_RETURN (::dlclose (handle), int);
+  return ::dlclose (handle);
 #elif defined (ACE_WIN32)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FreeLibrary (handle), ace_result_), int, -1);
 #elif defined (__hpux)
@@ -55,7 +55,7 @@ ACE_OS::dlclose (ACE_SHLIB_HANDLE handle)
     return -1;
   if (desc.ref_count > 1)
     return 0;
-  ACE_OSCALL_RETURN (::shl_unload (handle), int);
+  return ::shl_unload (handle);
 #else
   ACE_UNUSED_ARG (handle);
   ACE_NOTSUP_RETURN (-1);
@@ -81,7 +81,7 @@ ACE_OS::dlerror ()
 #   endif /* ACE_USES_WCHAR */
 # elif defined (__hpux) || defined (ACE_VXWORKS)
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::strerror(errno), char *);
+  return ::strerror(errno);
   //FUZZ: enable check_for_lack_ACE_OS
 # elif defined (ACE_WIN32)
   static ACE_TCHAR buf[128];
@@ -134,7 +134,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
   ACE_WIN32CALL_RETURN (ACE_TEXT_LoadLibrary (fname), ACE_SHLIB_HANDLE, 0);
 # elif defined (__hpux)
-  ACE_OSCALL_RETURN (::shl_load(fname, mode, 0L), ACE_SHLIB_HANDLE);
+  return ::shl_load(fname, mode, 0L);
 # elif defined (ACE_VXWORKS) && !defined (__RTP__)
   ACE_UNUSED_ARG (mode);
   MODULE* handle = 0;
@@ -217,7 +217,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
   delete [] asm_symbolname;
   return ace_result;
 #   else
-  ACE_OSCALL_RETURN (::dlsym (handle, symbolname), void *);
+  return ::dlsym (handle, symbolname);
 #   endif /* ACE_USES_ASM_SYMBOL_IN_DLSYM */
 
 # elif defined (ACE_WIN32)
