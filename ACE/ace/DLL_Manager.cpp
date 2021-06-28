@@ -307,11 +307,11 @@ ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TStri
                         auto_name.get (),
                         error.c_str ()));
 
-          return 0;
+          return nullptr;
         }
       return sym;
     }
-  return 0;
+  return nullptr;
 }
 
 ACE_SHLIB_HANDLE

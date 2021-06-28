@@ -300,8 +300,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
-  *os << "return" << be_idt_nl
-      << "strm.";
+  *os << "return strm.";
 
   // Based on our substate, we may be reading from a stream or writing into a
   // stream.
@@ -456,7 +455,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
                         -1);
     }
 
-  unsigned long ndims = array->n_dims ();
+  unsigned long const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
@@ -495,7 +494,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
         }
     }
 
-  *os << ");" << be_uidt
+  *os << ");"
       << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;

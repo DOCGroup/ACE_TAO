@@ -102,7 +102,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "::CORBA::ValueBase *" << be_nl
           << node->full_obv_skel_name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
-          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val {};" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl;
       if (! node->is_nested ())

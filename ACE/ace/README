@@ -475,10 +475,6 @@ ACE_HAS_XPG4_MULTIBYTE_CHAR             Platform has support for
                                         classification.
 ACE_HAS_REGEX                           Platform supports the POSIX
                                         regular expression library
-ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE For OpenBSD: The dlsym call
-                                        segfaults when passed an invalid
-                                        handle.  Other platforms handle
-                                        this more gracefully.
 ACE_HAS_SELECT_H                        Platform has special header for select().
 ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL For Win32: Use Select_Reactor
                                         as default implementation of
