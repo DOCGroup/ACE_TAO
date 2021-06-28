@@ -19,7 +19,7 @@ ACE_OS::madvise (caddr_t addr, size_t len, int map_advice)
 {
   ACE_OS_TRACE ("ACE_OS::madvise");
 #if !defined (ACE_LACKS_MADVISE)
-  ACE_OSCALL_RETURN (::madvise (addr, len, map_advice), int, -1);
+  return ::madvise (addr, len, map_advice);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -166,7 +166,7 @@ ACE_OS::mmap (void *addr,
                                       flags,
                                       file_handle,
                                       off),
-                     void *, MAP_FAILED);
+                     void *);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
   ACE_UNUSED_ARG (addr);
@@ -194,7 +194,7 @@ ACE_OS::mprotect (void *addr, size_t len, int prot)
   DWORD dummy; // Sigh!
   return ::VirtualProtect(addr, len, prot, &dummy) ? 0 : -1;
 #elif !defined (ACE_LACKS_MPROTECT)
-  ACE_OSCALL_RETURN (::mprotect ((ACE_MMAP_TYPE) addr, len, prot), int, -1);
+  return ::mprotect ((ACE_MMAP_TYPE) addr, len, prot);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -212,7 +212,7 @@ ACE_OS::msync (void *addr, size_t len, int sync)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::FlushViewOfFile (addr, len), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MSYNC)
-  ACE_OSCALL_RETURN (::msync ((ACE_MMAP_TYPE) addr, len, sync), int, -1);
+  return ::msync ((ACE_MMAP_TYPE) addr, len, sync);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -230,7 +230,7 @@ ACE_OS::munmap (void *addr, size_t len)
 
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::UnmapViewOfFile (addr), ace_result_), int, -1);
 #elif !defined (ACE_LACKS_MMAP) && !defined (ACE_LACKS_MUNMAP)
-  ACE_OSCALL_RETURN (::munmap ((ACE_MMAP_TYPE) addr, len), int, -1);
+  return ::munmap ((ACE_MMAP_TYPE) addr, len);
 #else
   ACE_UNUSED_ARG (addr);
   ACE_UNUSED_ARG (len);
@@ -263,10 +263,10 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
     }
   filename = buf;
 #endif
-  ACE_OSCALL_RETURN (::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms), ACE_HANDLE, ACE_INVALID_HANDLE);
+  return ::shm_open (ACE_TEXT_ALWAYS_CHAR(filename), mode, perms);
 #elif defined (ACE_OPENVMS)
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd")), ACE_HANDLE, ACE_INVALID_HANDLE);
+  return ::open (filename, mode, perms, ACE_TEXT("shr=get,put,upd"));
   //FUZZ: enable check_for_lack_ACE_OS
 #else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::open.
@@ -299,7 +299,7 @@ ACE_OS::shm_unlink (const ACE_TCHAR *path)
   ACE_UNUSED_ARG (path);
   ACE_NOTSUP_RETURN (-1);
 # else
-  ACE_OSCALL_RETURN (::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path)), int, -1);
+  return ::shm_unlink (ACE_TEXT_ALWAYS_CHAR(path));
 # endif /* ACE_LACKS_SHM_UNLINK */
 #else  /* ! ACE_HAS_SHM_OPEN */
   // Just use ::unlink.

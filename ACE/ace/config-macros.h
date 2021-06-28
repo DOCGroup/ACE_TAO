@@ -471,11 +471,11 @@
  */
 // ============================================================================
 
-#define ACE_OSCALL_RETURN(X,TYPE,FAILVALUE) \
+#define ACE_OSCALL_RETURN(X,TYPE) \
   do \
     return (TYPE) (X); \
   while (0)
-#define ACE_OSCALL(X,TYPE,FAILVALUE,RESULT) \
+#define ACE_OSCALL(X,TYPE,RESULT) \
   do \
     RESULT = (TYPE) (X); \
   while (0)
