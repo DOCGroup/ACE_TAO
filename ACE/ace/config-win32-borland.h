@@ -27,9 +27,7 @@
 #define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 #define ACE_CC_BETA_VERSION (0)
 
-#if (__BORLANDC__ >= 0x620)
-# define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
-#endif
+#define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -q -o%s"
 
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
@@ -51,11 +49,9 @@
 #endif
 
 #if defined (ACE_HAS_BCC64)
-// Use 32bit pre processor because cpp64 doesn't have the same
-// options
-# define ACE_CC_PREPROCESSOR "CPP32.EXE"
+# define ACE_CC_PREPROCESSOR "BCC64.EXE"
 #else
-# define ACE_CC_PREPROCESSOR "CPP32.EXE"
+# define ACE_CC_PREPROCESSOR "BCC32C.EXE"
 #endif
 
 # include "ace/config-win32-common.h"
