@@ -27,7 +27,7 @@
 #define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
 #define ACE_CC_BETA_VERSION (0)
 
-#define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -o%s"
+#define ACE_CC_PREPROCESSOR_ARGS "-Xdriver -E -q -o%s"
 
 #if !defined (WIN32)
 # if defined (__WIN32__) || defined (_WIN32)
