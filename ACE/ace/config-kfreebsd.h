@@ -354,7 +354,7 @@
 /* Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}. */
 #define ACE_LACKS_MSG_ACCRIGHTS 1
 
-/* Platform lacks named POSIX semaphores (e.g., Chorus) */
+/* Platform lacks named POSIX semaphores */
 #define ACE_LACKS_NAMED_POSIX_SEM 1
 
 /* Compiler complains about use of obsolete "pragma once" */
@@ -406,7 +406,6 @@
 /* #  undef WORDS_BIGENDIAN */
 # endif
 #endif
-
 
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1

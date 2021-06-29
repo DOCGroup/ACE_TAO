@@ -6,7 +6,7 @@
 #include /**/ "ace/pre.h"
 
 #ifndef ACE_CONFIG_WIN32_H
-#error Use config-win32.h in config.h instead of this header
+# error Use config-win32.h in config.h instead of this header
 #endif /* ACE_CONFIG_WIN32_H */
 
 #define ACE_HAS_CUSTOM_EXPORT_MACROS 1
@@ -17,19 +17,15 @@
 #define ACE_IMPORT_SINGLETON_DECLARATION(T) template class __declspec (dllimport) T
 #define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) template class __declspec (dllimport) SINGLETON_TYPE <CLASS, LOCK>;
 
-// In later versions of C++Builder we will prefer inline functions by
-// default. The debug configuration of ACE is built with functions
-// out-of-line, so when linking your application against a debug ACE
-// build, you can choose to use the out-of-line functions by adding
-// ACE_NO_INLINE=1 to your project settings.
-# if !defined (__ACE_INLINE__)
-#  define __ACE_INLINE__ 1
-# endif /* __ACE_INLINE__ */
+// Default to no inlining
+#if !defined (__ACE_INLINE__)
+# define __ACE_INLINE__ 0
+#endif /* __ACE_INLINE__ */
 
-# define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
-# define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
-# define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
-# define ACE_CC_BETA_VERSION (0)
+#define ACE_CC_NAME ACE_TEXT ("Embarcadero C++ Builder")
+#define ACE_CC_MAJOR_VERSION (__BORLANDC__ / 0x100)
+#define ACE_CC_MINOR_VERSION (__BORLANDC__ % 0x100)
+#define ACE_CC_BETA_VERSION (0)
 
 #if (__BORLANDC__ >= 0x620)
 # define ACE_CC_PREPROCESSOR_ARGS "-q -Sl -o%s"
@@ -64,9 +60,10 @@
 
 # include "ace/config-win32-common.h"
 
-# define ACE_WSTRING_HAS_USHORT_SUPPORT 1
-# define ACE_HAS_DIRENT
+#define ACE_WSTRING_HAS_USHORT_SUPPORT 1
+#define ACE_HAS_DIRENT
 
+#define ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS
 #define ACE_USES_STD_NAMESPACE_FOR_STDC_LIB 1
 
 #define ACE_LACKS_TERMIOS_H
@@ -126,7 +123,6 @@
 # define ACE_UINT64_FORMAT_SPECIFIER_ASCII "%Lu"
 # define ACE_INT64_FORMAT_SPECIFIER_ASCII "%Ld"
 #endif
-#define ACE_USES_STD_NAMESPACE_FOR_ABS 1
 #define ACE_ENDTHREADEX(STATUS) ::_endthreadex ((DWORD) STATUS)
 
 #if defined(ACE_MT_SAFE) && (ACE_MT_SAFE != 0)

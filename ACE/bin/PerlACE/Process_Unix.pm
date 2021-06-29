@@ -311,10 +311,6 @@ sub CommandLine ()
             "export LIBPATH=$libpath:.:\$LIBPATH\n".
             "export SHLIB_PATH=$libpath:.:\$SHLIB_PATH\n".
             "export PATH=\$PATH:$root/bin:$root/lib:$libpath:.\n";
-        if (defined $self->{TARGET}->{dance_root}) {
-          $run_script .=
-            "export DANCE_ROOT=$self->{TARGET}->{dance_root}\n";
-        }
         if (defined $self->{TARGET}->{ace_root}) {
           $run_script .=
             "export ACE_ROOT=$self->{TARGET}->{ace_root}\n";
@@ -322,10 +318,6 @@ sub CommandLine ()
         if (defined $self->{TARGET}->{tao_root}) {
           $run_script .=
             "export TAO_ROOT=$self->{TARGET}->{tao_root}\n";
-        }
-        if (defined $self->{TARGET}->{ciao_root}) {
-          $run_script .=
-            "export CIAO_ROOT=$self->{TARGET}->{ciao_root}\n";
         }
 
         while ( my ($env_key, $env_value) = each(%$x_env_ref) ) {

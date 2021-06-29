@@ -146,7 +146,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
       return nullptr;
     }
 
-  virtual const char* _interface_repository_id () const;
+  const char* _interface_repository_id () const override;
   //@}
 
 private:

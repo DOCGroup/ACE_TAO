@@ -137,7 +137,7 @@ ACE_OS::closesocket (ACE_HANDLE handle)
   ACE_SOCKCALL_RETURN (::closesocket ((SOCKET) handle), int, -1);
 #else
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_OSCALL_RETURN (::close (handle), int, -1);
+  return ::close (handle);
   //FUZZ: enable check_for_lack_ACE_OS
 #endif /* ACE_WIN32 */
 }
@@ -1015,8 +1015,7 @@ ACE_OS::socketpair (int domain, int type,
 
   ACE_NOTSUP_RETURN (-1);
 #else
-  ACE_OSCALL_RETURN (::socketpair (domain, type, protocol, sv),
-                     int, -1);
+  return ::socketpair (domain, type, protocol, sv);
 #endif /* ACE_LACKS_SOCKETPAIR */
 }
 
@@ -1028,7 +1027,7 @@ ACE_OS::if_nametoindex (const char *ifname)
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nametoindex (ifname), int, 0);
+  return ::if_nametoindex (ifname);
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
@@ -1041,7 +1040,7 @@ ACE_OS::if_indextoname (unsigned int ifindex, char *ifname)
   ACE_UNUSED_ARG (ifname);
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_indextoname (ifindex, ifname), char *, 0);
+  return ::if_indextoname (ifindex, ifname);
 #endif /* ACE_LACKS_IF_NAMETOINDEX */
 }
 
@@ -1052,7 +1051,7 @@ ACE_OS::if_nameindex ()
 #ifdef ACE_LACKS_IF_NAMEINDEX
   ACE_NOTSUP_RETURN (0);
 #else
-  ACE_OSCALL_RETURN (::if_nameindex (), struct if_nameindex *, 0);
+  return ::if_nameindex ();
 #endif /* ACE_LACKS_IF_NAMEINDEX */
 }
 

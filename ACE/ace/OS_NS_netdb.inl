@@ -13,7 +13,7 @@
     else \
       { \
         TYPE ace_result_; \
-        ACE_OSCALL (OP, TYPE, FAILVALUE, ace_result_); \
+        ACE_OSCALL (OP, TYPE, ace_result_); \
         if (ace_result_ != FAILVALUE) \
           ACE_OS::memcpy (TARGET, \
                     ace_result_, \
@@ -27,7 +27,7 @@
   do \
   { \
         TYPE ace_result_; \
-        ACE_OSCALL(OP,TYPE,FAILVALUE,ace_result_); \
+        ACE_OSCALL(OP,TYPE,ace_result_); \
         if (ace_result_ != FAILVALUE) \
           ACE_OS::memcpy (TARGET, \
                     ace_result_, \

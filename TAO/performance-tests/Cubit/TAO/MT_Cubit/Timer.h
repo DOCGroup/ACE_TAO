@@ -25,8 +25,7 @@
 /**
  * @class MT_Cubit_Timer
  *
- * @brief A class that encapsulates the pccTimer for chorus and uses
- * ACE Timer for other platforms.
+ * @brief A class that encapsulates the ACE timer
  */
 class MT_Cubit_Timer
 {

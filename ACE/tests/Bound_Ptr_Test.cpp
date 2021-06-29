@@ -18,12 +18,9 @@
 #include "Bound_Ptr_Test.h"
 #include "ace/Task.h"
 
-
-
 // The following Parent and Child classes illustrate how you might use the
 // ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr together in cyclic
 // relationships.
-
 struct Child_Base
 {
   virtual ~Child_Base ();
@@ -31,7 +28,6 @@ struct Child_Base
   // Perform some operation.
   virtual void do_something () = 0;
 };
-
 
 // This class should only be created on the heap. Normally it would be an
 // abstract class, and the implementation would be elsewhere.
@@ -74,7 +70,6 @@ struct Child : public Child_Base
 Child_Base::~Child_Base ()
 {
 }
-
 
 size_t Parent::instance_count_ = 0;
 

@@ -10,7 +10,7 @@
 
 # Assuming the msysCORE archive is extracted to c:\msys...
 # Start the Visual C++ Command Prompt
-# Set ACE_ROOT (TAO_ROOT, CIAO_ROOT, DDS_ROOT)
+# Set ACE_ROOT (TAO_ROOT, DDS_ROOT)
 # Add C:\msys\bin to PATH along with %ACE_ROOT%\lib and %ACE_ROOT%\bin
 # If necessary, generate GNUmakefiles with MPC (set MPC_ROOT, use -type gnuace)
 # Run "make"

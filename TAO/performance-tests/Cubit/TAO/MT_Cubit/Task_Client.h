@@ -354,7 +354,7 @@ private:
   /// requests of this thread.
   JITTER_ARRAY *my_jitter_array_;
 
-  /// Timer using pccTimer for chorus and ACE_Timer for other platforms.
+  /// Timer using ACE_Timer
   MT_Cubit_Timer *timer_;
 
   /// frequency of CORBA requests.

@@ -305,7 +305,6 @@ TAO_OutStream::print (const char *format, ...)
                           format,
                           ap),
               int,
-              -1,
               result);
   va_end (ap);
 

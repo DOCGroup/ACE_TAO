@@ -594,7 +594,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
   new_thr_desc->reset (this);
 
   ACE_Thread_Adapter *thread_args = 0;
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_NEW_RETURN (thread_args,
                   ACE_Thread_Adapter (func,
                                       args,
@@ -614,7 +614,7 @@ ACE_Thread_Manager::spawn_i (ACE_THR_FUNC func,
                                       new_thr_desc.get (),
                                       flags),
                   -1);
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args (static_cast<ACE_Base_Thread_Adapter *> (thread_args));
 
   ACE_TRACE ("ACE_Thread_Manager::spawn_i");
@@ -1784,7 +1784,7 @@ ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
 
 #if !defined (ACE_HAS_VXTHREADS)
     // @@ VxWorks doesn't support thr_join (yet.)  We are working
-    // on our implementation.   Chorus'es thr_join seems broken.
+    // on our implementation.
     ACE_Thread_Descriptor_Base *item = 0;
 
     while ((item = term_thr_list_copy.delete_head ()) != 0)

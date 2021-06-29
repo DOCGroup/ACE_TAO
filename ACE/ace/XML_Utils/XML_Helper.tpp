@@ -64,8 +64,6 @@ namespace XML
     if (this->initialized_)
       return;
 
-    //      CIAO_DEBUG ((LM_TRACE, CLINFO
-    //"XML_Helper<>::is_initialized - Initializing the Xerces runtime \n"));
     // Initialize the Xerces run-time
     try
       {

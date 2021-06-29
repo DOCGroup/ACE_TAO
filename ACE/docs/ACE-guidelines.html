@@ -128,7 +128,7 @@ bgcolor="#ffffff">
         .<p>
 
      <li> Never use <CODE>assert()</CODE> macros or related constructs
-         (such as abort()) calls in core ACE, TAO, and CIAO
+         (such as abort()) calls in core ACE and TAO
          library/framework code.  These macros are a major problem for
          production software that uses this code since the
          error-handling strategy (i.e., abort the process) is
@@ -139,13 +139,13 @@ bgcolor="#ffffff">
          conditions/invariants via exceptions or error return values.
          It's fine to use <CODE>assert()</CODE> macros et al. in test
          programs, but make sure these tests never find their way into
-         the core ACE, TAO, and CIAO library/framework code base. <P>
+         the core ACE and TAO library/framework code base. <P>
 
   </ul>
 
   <li><strong>Coding Style</strong><p>
   <ul>
-  <LI> When writing ACE, TAO, and CIAO class and method names make sure to use underscores ('_') to separate the parts of a name rather than intercaps.  For example, use
+  <LI> When writing ACE and TAO class and method names make sure to use underscores ('_') to separate the parts of a name rather than intercaps.  For example, use
 
         <pre>
         class ACE_Monitor_Control

@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
+. The macro ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS has been renamed
+  to ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS, update your code accordingly
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.1 and ACE-7.0.2
 ====================================================
 
