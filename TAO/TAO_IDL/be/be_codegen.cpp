@@ -2451,11 +2451,13 @@ TAO_CodeGen::gen_stub_hdr_includes ()
      idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
   if (idl4)
     {
-      *client_header_ << "\n"
+      *client_header_ <<
+        BE_GlobalData::core_versioned_ns_begin << "\n"
         "namespace CORBA\n"
         "{\n"
         "  using namespace IDLv4;\n"
-        "}";
+        "}\n" <<
+        BE_GlobalData::core_versioned_ns_end;
     }
 
   // May need ORB_Constants if users check SystemException minor

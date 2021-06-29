@@ -118,6 +118,19 @@ be_sequence::base_type () const
       this->AST_Sequence::base_type ());
 }
 
+be_type *
+be_sequence::primitive_base_type () const
+{
+  be_type *type_node = base_type ();
+  if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
+    {
+      be_typedef *const typedef_node = dynamic_cast<be_typedef *> (type_node);
+      if (!typedef_node) return nullptr;
+      type_node = typedef_node->primitive_base_type ();
+    }
+  return type_node;
+}
+
 // Helper to create_name.
 char *
 be_sequence::gen_name ()
@@ -268,7 +281,7 @@ be_sequence::managed_type ()
   if (this->mt_ == be_sequence::MNG_UNKNOWN) // Not calculated yet.
     {
       // Base types.
-      be_type *const base_type = dynamic_cast<be_type*> (primitive_base_type ());
+      be_type *const base_type = primitive_base_type ();
       if (!base_type)
         ACE_ERROR_RETURN ((LM_ERROR,
                            "TAO_IDL (%N:%l) "
@@ -399,7 +412,7 @@ be_sequence::instance_name ()
                   '\0',
                   NAMEBUFSIZE);
 
-  be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
+  be_type *const prim_type = primitive_base_type ();
   if (!prim_type)
     {
       ACE_ERROR ((LM_ERROR,
@@ -580,8 +593,16 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
       break;
     case be_sequence::MNG_STRING:
       {
-        be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
-        if (prim_type && prim_type->node_type () == AST_Decl::NT_string)
+        be_type *const prim_type = primitive_base_type ();
+        if (!prim_type)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_sequence::"
+                               "gen_base_class_name - "
+                               "Bad element type\n"),
+                              -1);
+          }
+        if (prim_type->node_type () == AST_Decl::NT_string)
           {
             be_string *str =
               dynamic_cast<be_string*> (prim_type);
@@ -628,8 +649,16 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
       break;
     case be_sequence::MNG_WSTRING:
       {
-        be_type *const prim_type = dynamic_cast<be_type *> (primitive_base_type ());
-        if (prim_type && prim_type->node_type () == AST_Decl::NT_wstring)
+        be_type *const prim_type = primitive_base_type ();
+        if (!prim_type)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               "(%N:%l) be_sequence::"
+                               "gen_base_class_name - "
+                               "Bad element type\n"),
+                              -1);
+          }
+        if (prim_type->node_type () == AST_Decl::NT_wstring)
           {
             be_string *str =
               dynamic_cast<be_string*> (prim_type);
@@ -708,9 +737,18 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
             break;
           default:
             {
+              be_type *const base_type = primitive_base_type ();
+              if (!base_type)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     "(%N:%l) be_sequence::"
+                                     "gen_base_class_name - "
+                                     "Bad element type\n"),
+                                    -1);
+                }
+
               const char *tag = "";
-              be_type *const base_type = dynamic_cast<be_type*> (primitive_base_type ());
-              if (base_type && base_type->node_type () == AST_Decl::NT_pre_defined)
+              if (base_type->node_type () == AST_Decl::NT_pre_defined)
                 {
                   be_predefined_type *const predefined_type =
                     dynamic_cast<be_predefined_type*> (base_type);

@@ -55,6 +55,9 @@ public:
     COREDX
   };
 
+  static const char *const core_versioned_ns_begin;
+  static const char *const core_versioned_ns_end;
+
   BE_GlobalData ();
   ~BE_GlobalData ();
 

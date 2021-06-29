@@ -33,7 +33,6 @@
 /IOPC.cpp
 /IOPC.h
 /IOPS.h
-/Int8Seq.pidl
 /Int8SeqC.cpp
 /Int8SeqC.h
 /Int8SeqS.h
@@ -97,7 +96,6 @@
 /TimeBaseC.cpp
 /TimeBaseC.h
 /TimeBaseS.h
-/UInt8Seq.pidl
 /UInt8SeqC.cpp
 /UInt8SeqC.h
 /UInt8SeqS.h
