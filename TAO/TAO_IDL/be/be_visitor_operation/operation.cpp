@@ -529,6 +529,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
           case AST_PredefinedType::PT_wchar:
             *os << "::ACE_InputCDR::to_wchar";
             return;
+          case AST_PredefinedType::PT_uint8:
+            *os << "::ACE_InputCDR::to_uint8";
+            return;
+          case AST_PredefinedType::PT_int8:
+            *os << "::ACE_InputCDR::to_int8";
+            return;
           case AST_PredefinedType::PT_void:
             break;
           default:

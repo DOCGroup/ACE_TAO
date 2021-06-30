@@ -108,6 +108,16 @@ be_visitor_any_extracted_type_decl::visit_predefined_type (
             << "::CORBA::Any::to_wchar " << var_name_
             << " (" << tmp_name_ << ");";
         break;
+      case AST_PredefinedType::PT_uint8:
+        os_ << tmp_name_ << " = 0;" << be_nl
+            << "::CORBA::Any::to_uint8 " << var_name_
+            << " (" << tmp_name_ << ");";
+        break;
+      case AST_PredefinedType::PT_int8:
+        os_ << tmp_name_ << " = 0;" << be_nl
+            << "::CORBA::Any::to_int8 " << var_name_
+            << " (" << tmp_name_ << ");";
+        break;
       case AST_PredefinedType::PT_short:
       case AST_PredefinedType::PT_ushort:
       case AST_PredefinedType::PT_long:

@@ -502,6 +502,16 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
           *os << "(strm >> ::ACE_InputCDR::to_boolean ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_uint8 ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_int8 ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
       else
         {
           *os << "(strm >> " << this->pre_ << f->local_name ()
@@ -533,6 +543,16 @@ be_visitor_valuetype_field_cdr_cs::visit_predefined_type (be_predefined_type *no
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm << ::ACE_OutputCDR::from_boolean ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_uint8 ("
+              << this->pre_ << f->local_name () << this->post_ << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_int8 ("
               << this->pre_ << f->local_name () << this->post_ << "))";
         }
       else

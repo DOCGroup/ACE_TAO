@@ -574,6 +574,28 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
               << "_tao_union." << f->local_name ()
               << " (_tao_union_tmp);";
         }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "::CORBA::UInt8 _tao_union_tmp;" << be_nl
+              << "::ACE_InputCDR::to_uint8 _tao_union_helper "
+              << "(_tao_union_tmp);" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl_2
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union." << f->local_name ()
+              << " (_tao_union_tmp);";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "::CORBA::Int8 _tao_union_tmp;" << be_nl
+              << "::ACE_InputCDR::to_int8 _tao_union_helper "
+              << "(_tao_union_tmp);" << be_nl
+              << "result = strm >> _tao_union_helper;" << be_nl_2
+              << "if (result)" << be_idt_nl
+              << "{" << be_idt_nl
+              << "_tao_union." << f->local_name ()
+              << " (_tao_union_tmp);";
+        }
       else
         {
           *os << node->name () << " _tao_union_tmp;" << be_nl
@@ -617,6 +639,16 @@ be_visitor_union_branch_cdr_op_cs::visit_predefined_type (
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "strm << ::ACE_OutputCDR::from_boolean (_tao_union."
+              << f->local_name () << " ());";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "strm << ::ACE_OutputCDR::from_uint8 (_tao_union."
+              << f->local_name () << " ());";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "strm << ::ACE_OutputCDR::from_int8 (_tao_union."
               << f->local_name () << " ());";
         }
       else

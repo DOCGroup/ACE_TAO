@@ -62,7 +62,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     }
   else
     {
-      *os << node->exprtype_to_string ();
+      *os << exprtype_to_cpp_corba_type (node->et ());
     }
 
   *os << " " << node->name ();

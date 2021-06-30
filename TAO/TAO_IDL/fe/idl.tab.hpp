@@ -132,13 +132,21 @@ extern int tao_yydebug;
     IDL_FIXED_PT_LITERAL = 333,    /* IDL_FIXED_PT_LITERAL  */
     IDL_TRUETOK = 334,             /* IDL_TRUETOK  */
     IDL_FALSETOK = 335,            /* IDL_FALSETOK  */
-    IDL_SCOPE_DELIMITOR = 336,     /* IDL_SCOPE_DELIMITOR  */
-    IDL_LEFT_SHIFT = 337,          /* IDL_LEFT_SHIFT  */
-    IDL_RIGHT_SHIFT = 338,         /* IDL_RIGHT_SHIFT  */
-    IDL_WCHAR_LITERAL = 339,       /* IDL_WCHAR_LITERAL  */
-    IDL_WSTRING_LITERAL = 340,     /* IDL_WSTRING_LITERAL  */
-    IDL_ANNOTATION_DECL = 341,     /* IDL_ANNOTATION_DECL  */
-    IDL_ANNOTATION_SYMBOL = 342    /* IDL_ANNOTATION_SYMBOL  */
+    IDL_INT8 = 336,                /* IDL_INT8  */
+    IDL_UINT8 = 337,               /* IDL_UINT8  */
+    IDL_INT16 = 338,               /* IDL_INT16  */
+    IDL_UINT16 = 339,              /* IDL_UINT16  */
+    IDL_INT32 = 340,               /* IDL_INT32  */
+    IDL_UINT32 = 341,              /* IDL_UINT32  */
+    IDL_INT64 = 342,               /* IDL_INT64  */
+    IDL_UINT64 = 343,              /* IDL_UINT64  */
+    IDL_SCOPE_DELIMITOR = 344,     /* IDL_SCOPE_DELIMITOR  */
+    IDL_LEFT_SHIFT = 345,          /* IDL_LEFT_SHIFT  */
+    IDL_RIGHT_SHIFT = 346,         /* IDL_RIGHT_SHIFT  */
+    IDL_WCHAR_LITERAL = 347,       /* IDL_WCHAR_LITERAL  */
+    IDL_WSTRING_LITERAL = 348,     /* IDL_WSTRING_LITERAL  */
+    IDL_ANNOTATION_DECL = 349,     /* IDL_ANNOTATION_DECL  */
+    IDL_ANNOTATION_SYMBOL = 350    /* IDL_ANNOTATION_SYMBOL  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -192,7 +200,7 @@ union YYSTYPE
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
 
-#line 196 "fe/idl.tab.hpp"
+#line 204 "fe/idl.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;

@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
 
-template<class T>
+template<class T, class Tag=int>
 class unbounded_value_sequence
 {
 public:

@@ -66,7 +66,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();
@@ -93,7 +93,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         {
           if (bnt == AST_Decl::NT_string || bnt == AST_Decl::NT_wstring)
             {
-              *os << node->exprtype_to_string ();
+              *os << exprtype_to_cpp_corba_type (node->et ());
             }
           else
             {
@@ -102,7 +102,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();

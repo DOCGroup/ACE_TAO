@@ -162,6 +162,30 @@ ACE_OutputCDR::from_std_wstring::from_std_wstring (const std::wstring &ws,
 #endif
 
 ACE_INLINE
+ACE_InputCDR::to_int8::to_int8 (ACE_CDR::Int8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_int8::from_int8 (ACE_CDR::Int8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
+ACE_InputCDR::to_uint8::to_uint8 (ACE_CDR::UInt8 &ref)
+  : ref_ (ref)
+{
+}
+
+ACE_INLINE
+ACE_OutputCDR::from_uint8::from_uint8 (ACE_CDR::UInt8 val)
+  : val_ (val)
+{
+}
+
+ACE_INLINE
 ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
   :  rhs_ (rhs)
 {
@@ -356,6 +380,18 @@ ACE_OutputCDR::write_wstring (const std::wstring &x)
 #endif
 
 ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_int8 (ACE_CDR::Int8 x)
+{
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet *> (&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_uint8 (ACE_CDR::UInt8 x)
+{
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet *> (&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
                                  ACE_CDR::ULong length)
 {
@@ -489,6 +525,18 @@ ACE_OutputCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
                             ACE_CDR::LONGDOUBLE_SIZE,
                             ACE_CDR::LONGDOUBLE_ALIGN,
                             length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_int8_array (const ACE_CDR::Int8 *x, ACE_CDR::ULong length)
+{
+  return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_OutputCDR::write_uint8_array (const ACE_CDR::UInt8 *x, ACE_CDR::ULong length)
+{
+  return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
 }
 
 ACE_INLINE bool
@@ -791,6 +839,18 @@ ACE_InputCDR::read_fixed (ACE_CDR::Fixed &x)
   return false;
 }
 
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_int8 (ACE_CDR::Int8 &x)
+{
+  return read_1 (reinterpret_cast<ACE_CDR::Octet *>(&x));
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_uint8 (ACE_CDR::UInt8 &x)
+{
+  return read_1 (reinterpret_cast<ACE_CDR::Octet *>(&x));
+}
+
 ACE_INLINE size_t
 ACE_InputCDR::length () const
 {
@@ -1019,6 +1079,30 @@ ACE_InputCDR::read_longdouble_array (ACE_CDR::LongDouble* x,
                            ACE_CDR::LONGDOUBLE_SIZE,
                            ACE_CDR::LONGDOUBLE_ALIGN,
                            length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length)
+{
+  if (length * ACE_CDR::OCTET_SIZE > this->length ())
+    {
+      this->good_bit_ = false;
+      return false;
+    }
+
+  return read_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
+}
+
+ACE_INLINE ACE_CDR::Boolean
+ACE_InputCDR::read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length)
+{
+  if (length * ACE_CDR::OCTET_SIZE > this->length ())
+    {
+      this->good_bit_ = false;
+      return false;
+    }
+
+  return read_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1373,6 +1457,20 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
     (ACE_CDR::Boolean) (os.good_bit () && (!x.bound_ || len <= x.bound_));
 }
 
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x)
+{
+  os.write_uint8 (x.val_);
+  return (ACE_CDR::Boolean) os.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x)
+{
+  os.write_int8 (x.val_);
+  return (ACE_CDR::Boolean) os.good_bit ();
+}
+
 // ****************************************************************
 
 ACE_INLINE ACE_CDR::Boolean
@@ -1537,6 +1635,19 @@ operator>> (ACE_InputCDR &is, ACE_InputCDR::to_std_wstring x)
          || static_cast<ACE_CDR::ULong> (x.val_.size ()) <= x.bound_));
 }
 #endif
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_uint8 x)
+{
+  return is.read_uint8 (x.ref_) && is.good_bit ();
+}
+
+ACE_INLINE ACE_CDR::Boolean
+operator>> (ACE_InputCDR &is, ACE_InputCDR::to_int8 x)
+{
+  return is.read_int8 (x.ref_) && is.good_bit ();
+}
+
 // ***************************************************************************
 // We must define these methods here because they use the "read_*" inlined
 // methods of the ACE_InputCDR class
