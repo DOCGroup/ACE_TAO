@@ -1445,8 +1445,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::wstring& x);
 #endif
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::from_uint8 x);
-extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_CDR::from_int8 x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x);
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
@@ -1502,8 +1502,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_InputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                std::wstring& x);
 #endif
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::to_uint8 x);
-extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_CDR::to_int8 x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_int8 x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
