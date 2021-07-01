@@ -42,10 +42,10 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   expect_equals<CORBA::Int16> (any_failed, "i16_min", i16_min, -32768);
   expect_equals<CORBA::Int16> (any_failed, "i16_max", i16_max, 32767);
   expect_equals<CORBA::UInt32> (any_failed, "u32_max", u32_max, 4294967295);
-  expect_equals<CORBA::Int32> (any_failed, "i32_min", i32_min, -2147483648);
+  expect_equals<CORBA::Int32> (any_failed, "i32_min", i32_min, -2147483647 - 1);
   expect_equals<CORBA::Int32> (any_failed, "i32_max", i32_max, 2147483647);
   expect_equals<CORBA::UInt64> (any_failed, "u64_max", u64_max, 18446744073709551615ULL);
-  expect_equals<CORBA::Int64> (any_failed, "i64_min", i64_min, (-9223372036854775807 - 1));
+  expect_equals<CORBA::Int64> (any_failed, "i64_min", i64_min, -9223372036854775807 - 1);
   expect_equals<CORBA::Int64> (any_failed, "i64_max", i64_max, 9223372036854775807);
 
   expect_equals<CORBA::UInt8> (any_failed, "u8_min_overflow", u8_min_overflow, u8_max);
