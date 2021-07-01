@@ -44,6 +44,7 @@ endif
 #CCFLAGS		+= -fstrict-prototype
 #endif
 DCFLAGS		+= -g
+DCCFLAGS	+= -g
 DLD		= $(CXX)
 LD		= $(CXX)
 OCFLAGS		+= -O2
