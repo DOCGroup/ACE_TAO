@@ -44,14 +44,17 @@ private:
 class DLL_Test_Parent_Export Base
 {
 public:
+  virtual void _raise () const;
   Base ();
+  virtual ~Base() = default;
 };
 
 class DLL_Test_Parent_Export Derived : public Base
 {
 public:
   Derived ();
-  void _raise () const;
+  void _raise () const override;
+  ~Derived () override = default;
 };
 
 #endif /* ACE_TESTS_DLL_TEST_PARENT_H */
