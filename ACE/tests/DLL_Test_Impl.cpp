@@ -125,23 +125,45 @@ Child::test ()
   g = d;
   g = std::move(d);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions\n")));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing base exception\n")));
 
-  std::unique_ptr<Derived> excep (new Derived ());
+  std::unique_ptr<Base> base_excep (new Base ());
   try
   {
-    excep->_raise();
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing base exception\n")));
+    base_excep->_raise();
+  }
+  catch (const Base&)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught base\n")));
+  }
+
+  std::unique_ptr<Derived> derived_excep (new Derived ());
+  try
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
+    derived_excep->_raise();
   }
   catch (const Derived&)
   {
-    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("in catch derived\n")));
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived\n")));
+  }
+
+  std::unique_ptr<Derived> derived_excep_base (new Derived ());
+  try
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
+    derived_excep_base->_raise();
+  }
+  catch (const Base&)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived as base\n")));
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions finished\n")));
 }
 
 // --------------------------------------------------------
-
 
 // Test dynamic cast
 extern "C" ACE_Svc_Export int

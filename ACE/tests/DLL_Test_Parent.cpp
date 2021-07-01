@@ -19,6 +19,12 @@ Base::Base ()
 {
 }
 
+void
+Base::_raise () const
+{
+  throw *this;
+}
+
 Derived::Derived ()
 {
 }
