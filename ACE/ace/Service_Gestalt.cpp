@@ -5,7 +5,6 @@
 #include "ace/Service_Manager.h"
 #include "ace/Service_Types.h"
 #include "ace/Containers.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Reactor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/DLL.h"
@@ -26,6 +25,8 @@
 #include "ace/Service_Gestalt.h"
 
 #include "ace/Svc_Conf_Param.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -914,7 +915,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
+  unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
@@ -945,7 +946,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf>
+  unique_ptr<ACE_XML_Svc_Conf>
     xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)

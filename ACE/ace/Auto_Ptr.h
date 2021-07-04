@@ -70,7 +70,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_AUTO_PTR)
 #include <memory>
-using std::auto_ptr;
+using std::unique_ptr;
 #else /* !ACE_LACKS_AUTO_PTR */
 
 /**
