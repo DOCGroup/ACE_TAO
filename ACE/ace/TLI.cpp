@@ -7,7 +7,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_sys_socket.h"
 
-#include <memory>
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
 
 #if defined (ACE_HAS_TLI)
 

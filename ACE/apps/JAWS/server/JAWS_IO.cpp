@@ -11,8 +11,9 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-#include <memory>
 #include "ace/Basic_Types.h"
+
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Basic_Array_Ptr
 
 JAWS_IO::JAWS_IO (void)
   : handler_ (0)

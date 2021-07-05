@@ -31,6 +31,8 @@
 #  include "ace/os_include/os_ifaddrs.h"
 #endif /* ACE_HAS_GETIFADDRS */
 
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
+
 #if defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670) && defined (__RTP__) && defined (ACE_HAS_IPV6)
 const struct in6_addr in6addr_any = IN6ADDR_ANY_INIT;
 const struct in6_addr in6addr_nodelocal_allnodes = IN6ADDR_NODELOCAL_ALLNODES_INIT;

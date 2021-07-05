@@ -11,7 +11,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
-#include <memory>
 #include "ace/os_include/sys/os_pstat.h"
 #if defined (ACE_HAS_SYSCTL)
 # include "ace/os_include/sys/os_sysctl.h"
@@ -21,6 +20,8 @@
 # include "vxCpuLib.h"
 # include "cpuset.h"
 #endif /* ACE_HAS_VXCPULIB */
+
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Basic_Array_Ptr
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 

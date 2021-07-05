@@ -23,7 +23,6 @@
 #include "ace/Acceptor.h"
 #include "ace/Handle_Set.h"
 #include "ace/Connector.h"
-#include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Process_Mutex.h"
 #include "ace/Signal.h"
@@ -35,6 +34,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/os_netdb.h"
 
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
 
 
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";

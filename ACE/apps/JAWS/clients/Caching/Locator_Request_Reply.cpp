@@ -7,10 +7,11 @@
 #include "Locator_Request_Reply.inl"
 #endif
 
-#include <memory>
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"
+
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Basic_Array_Ptr
 
 int
 ACE_URL_Locator_Request::url_query (const int how,

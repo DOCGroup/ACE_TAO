@@ -7,8 +7,9 @@
 #include "URL_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include <memory>
 #include "URL_Array_Helper.h"
+
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Basic_Array_Ptr
 
 size_t
 ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
