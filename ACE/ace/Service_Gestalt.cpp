@@ -558,7 +558,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   // make_service_type() is doing the dynamic loading and also runs
   // any static initializers
-  ACE_Auto_Ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
+  std::unique_ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
 
   if (tmp.get () != 0 &&
       this->initialize_i (tmp.get (), parameters) == 0)

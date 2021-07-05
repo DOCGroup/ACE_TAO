@@ -133,7 +133,7 @@ class My_FTP_RequestHandler
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 {
-  ACE_Auto_Ptr<std::ofstream> fout;
+  std::unique_ptr<std::ofstream> fout;
   std::ostream* sout = &std::cout;
 
   if (!parse_args (argc, argv))
