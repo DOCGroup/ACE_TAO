@@ -13,6 +13,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/ACE.h"
 
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_Utils
