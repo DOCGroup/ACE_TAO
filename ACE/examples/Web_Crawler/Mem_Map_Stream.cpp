@@ -1,5 +1,5 @@
 #include "ace/FILE_Addr.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Truncate.h"
 #include "Options.h"
 #include "Mem_Map_Stream.h"

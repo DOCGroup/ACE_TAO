@@ -2,7 +2,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/Log_Category.h"
 #include "ace/Handle_Set.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/SString.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdio.h"

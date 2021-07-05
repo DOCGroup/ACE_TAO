@@ -3,7 +3,7 @@
 #ifndef ACE_RMCAST_PROTOCOL_H
 #define ACE_RMCAST_PROTOCOL_H
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Bound_Ptr.h"
 
 #include "ace/Vector_T.h"

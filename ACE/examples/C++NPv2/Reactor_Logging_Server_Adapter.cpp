@@ -6,7 +6,7 @@
 #define _REACTOR_LOGGING_SERVER_ADAPTER_C
 
 #include "ace/ACE.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/INET_Addr.h"
 #include "ace/Truncate.h"
 #include "Reactor_Logging_Server_Adapter.h"

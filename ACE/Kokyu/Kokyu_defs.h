@@ -10,7 +10,7 @@
 #include /**/ "ace/pre.h"
 #include "ace/Containers_T.h"
 #include "ace/Time_Value.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Message_Block.h"
 #include "ace/Sched_Params.h"
 #include "ace/Malloc_Allocator.h"

@@ -20,7 +20,7 @@
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Log_Msg.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 static int done = 0;
 static int the_count = 0;

@@ -7,7 +7,7 @@
 #include "Locator_Request_Reply.inl"
 #endif
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "URL_Properties.h"
 #include "URL_Array_Helper.h"
 #include "URL_Locator.h"

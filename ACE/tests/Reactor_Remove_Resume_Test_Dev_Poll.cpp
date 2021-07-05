@@ -21,7 +21,7 @@
 #include "ace/ACE.h"
 #include "ace/Dev_Poll_Reactor.h"
 #include "ace/Pipe.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include <algorithm>
 #include <functional>

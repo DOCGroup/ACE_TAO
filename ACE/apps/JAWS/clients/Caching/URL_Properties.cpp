@@ -7,7 +7,7 @@
 #include "URL_Properties.inl"
 #endif /* __ACE_INLINE__ */
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "URL_Array_Helper.h"
 
 size_t

@@ -16,7 +16,7 @@
 #include "ace/Reactor.h"
 #include "ace/WFMO_Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Pipe.h"
 #include "ace/OS_main.h"
 

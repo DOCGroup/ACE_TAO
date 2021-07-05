@@ -1,5 +1,5 @@
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/OS_NS_errno.h"
 #include "ace/INet/HTTP_URL.h"
 #include "ace/INet/HTTP_ClientRequestHandler.h"

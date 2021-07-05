@@ -24,7 +24,7 @@
 #include "ace/Future_Set.h"
 #include "ace/Method_Request.h"
 #include "ace/Activation_Queue.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Atomic_Op.h"
 #include "ace/Null_Mutex.h"
 

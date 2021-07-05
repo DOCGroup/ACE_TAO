@@ -4,7 +4,7 @@
 
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Name_Space.h"
 
 // Listing 1 code/ch21

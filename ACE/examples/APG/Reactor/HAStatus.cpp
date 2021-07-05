@@ -2,7 +2,7 @@
 #include "ace/os_include/os_netdb.h"
 
 // Listing 1 code/ch07
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/INET_Addr.h"
 #include "ace/SOCK_Acceptor.h"

@@ -5,7 +5,7 @@
 #endif
 
 #include "ace/INet/INet_Log.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Functor_String.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

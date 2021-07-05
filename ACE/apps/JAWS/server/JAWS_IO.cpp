@@ -11,7 +11,7 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Basic_Types.h"
 
 JAWS_IO::JAWS_IO (void)

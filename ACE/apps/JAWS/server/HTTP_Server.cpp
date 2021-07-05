@@ -8,7 +8,7 @@
 #include "ace/LOCK_SOCK_Acceptor.h"
 #include "ace/Proactor.h"
 #include "ace/Signal.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "JAWS_IO.h"
 #include "HTTP_Server.h"

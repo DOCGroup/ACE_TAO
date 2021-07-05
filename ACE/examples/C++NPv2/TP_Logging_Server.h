@@ -5,7 +5,7 @@
 #ifndef _TP_LOGGING_SERVER_H
 #define _TP_LOGGING_SERVER_H
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Singleton.h"
 #include "ace/Synch.h"
 #include "ace/Task.h"
