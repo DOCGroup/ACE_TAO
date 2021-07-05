@@ -23,7 +23,8 @@
 #include "Kokyu_defs.h"
 #include "Dispatcher_Impl.h"
 #include "Dispatcher_Task.h"
-#include <memory>
+
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
 
 namespace Kokyu
 {
