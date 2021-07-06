@@ -355,6 +355,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     Basic_Arguments.h
     Basic_Argument_T.h
     Basic_Types.h
+    Basic_Types_IDLv4.h
     BD_String_Argument_T.h
     BiDir_Adapter.h
     Bind_Dispatcher_Guard.h
