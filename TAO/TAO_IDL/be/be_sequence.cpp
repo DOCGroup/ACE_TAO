@@ -752,6 +752,12 @@ be_sequence::gen_base_class_name (TAO_OutStream *os,
                 {
                   be_predefined_type *const predefined_type =
                     dynamic_cast<be_predefined_type*> (base_type);
+                  if (!predefined_type)
+                    ACE_ERROR_RETURN ((LM_ERROR,
+                                       "(%N:%l) be_sequence::"
+                                       "gen_base_class_name - "
+                                       "Bad element type\n"),
+                                      -1);
                   switch (predefined_type->pt ())
                     {
                       case AST_PredefinedType::PT_uint8:
