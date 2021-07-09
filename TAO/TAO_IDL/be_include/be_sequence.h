@@ -53,8 +53,14 @@ public:
                bool local,
                bool abstract);
 
-    // Non-virtual override of frontend method.
+  /// Non-virtual override of frontend method.
   be_type *base_type (void) const;
+
+  /**
+   * Returns the fully dealiased base type if it's a typedef. If it's not a
+   * typedef, the it returns the same value as as base_type().
+   */
+  be_type *primitive_base_type () const;
 
   /// Create a name for ourselves. If we are typedefed, then we get the name of
   /// the typedef node, else we generate a name for ourselves.

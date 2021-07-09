@@ -121,12 +121,16 @@ public:
       , EK_octet
       , EK_floating_point
       , EK_fixed_point
+      , EK_int8
+      , EK_uint8
     };
 
   // Enum to define expression type.
   enum ExprType
     {
-        EV_short                  // Expression value is short.
+        EV_int8                   // Signed Byte Sized Integer
+      , EV_uint8                  // Unsigned Byte Sized Integer
+      , EV_short                  // Expression value is short.
       , EV_ushort                 // Expression value is unsigned short.
       , EV_long                   // Expression value is long.
       , EV_ulong                  // Expression value is unsigned long.
@@ -158,6 +162,8 @@ public:
       , EV_none                   // Expression value is missing.
     };
 
+  static ExprType eval_kind_to_expr_type (EvalKind eval_kind);
+
   // Structure to describe value of constant expression and its type.
   struct AST_ExprValue
     {
@@ -181,6 +187,8 @@ public:
           char                *wstrval; // Contains wide string expr value.
           ACE_CDR::ULong      eval;     // Contains enumeration value.
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
+          ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
+          ACE_CDR::UInt8      uint8val; // Unsigned Byte Sized Integer
         } u;
 
       ExprType et;
@@ -280,10 +288,11 @@ public:
   // Evaluate then store value inside this AST_Expression.
   void evaluate (EvalKind ek);
 
-  // Compare two AST_Expressions.
-
+  /// Compare two AST_Expressions.
+  ///{
   bool operator== (AST_Expression *vc);
-  long compare (AST_Expression *vc);
+  bool compare (AST_Expression *vc);
+  ///}
 
   // Accessor for the member.
   AST_Decl *get_tdef (void) const;

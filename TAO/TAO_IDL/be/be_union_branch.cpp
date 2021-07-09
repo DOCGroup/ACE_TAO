@@ -118,9 +118,11 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
   switch (bu->udisc_type ())
     {
       case AST_Expression::EV_short:
+      case AST_Expression::EV_int8:
         *os << dv.u.short_val;
         break;
       case AST_Expression::EV_ushort:
+      case AST_Expression::EV_uint8:
         *os << dv.u.ushort_val;
         break;
       case AST_Expression::EV_long:
@@ -129,6 +131,7 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
       case AST_Expression::EV_ulong:
         *os << dv.u.ulong_val;
         break;
+      case AST_Expression::EV_octet:
       case AST_Expression::EV_char:
         os->print ("'\\%o'", dv.u.char_val);
         break;

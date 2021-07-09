@@ -530,8 +530,23 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_longlong:
       this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
-      this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
-                                  ev->u.llval);
+      {
+        ACE_CDR::LongLong value = ev->u.llval;
+        /*
+         * It seems that in C/C++ the minus sign and the bare number are parsed
+         * separately for negative integer literals. This can cause compilers
+         * to complain when using the minimum value of a signed integer because
+         * the number without the minus sign is 1 past the max signed value.
+         *
+         * https://stackoverflow.com/questions/65007935
+         *
+         * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
+         */
+        const bool min_value = value == ACE_INT64_MIN;
+        if (min_value) ++value;
+        TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII, value);
+        if (min_value) TAO_OutStream::print (" - 1");
+      }
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_ulonglong:
@@ -597,7 +612,7 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
       break;
     case AST_Expression::EV_octet:
-      this->TAO_OutStream::print ("%d", ev->u.oval);
+      this->TAO_OutStream::print ("0x%02x", ev->u.oval);
       break;
     case AST_Expression::EV_bool:
       this->TAO_OutStream::print ("%s", ev->u.bval ? "true" : "false");
@@ -610,6 +625,12 @@ TAO_OutStream::print (AST_Expression *expr)
       break;
     case AST_Expression::EV_enum:
       this->print (expr->n ());
+      break;
+    case AST_Expression::EV_int8:
+      this->TAO_OutStream::print ("%d", ev->u.int8val);
+      break;
+    case AST_Expression::EV_uint8:
+      this->TAO_OutStream::print ("%uu", ev->u.uint8val);
       break;
     default:
       break;

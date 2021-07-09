@@ -32,6 +32,11 @@
 
 TAO_IDL_BE_Export BE_GlobalData *be_global = 0;
 
+const char *const BE_GlobalData::core_versioned_ns_begin =
+  "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+const char *const BE_GlobalData::core_versioned_ns_end =
+  "\nTAO_END_VERSIONED_NAMESPACE_DECL\n";
+
 BE_GlobalData::BE_GlobalData (void)
   : changing_standard_include_files_ (1),
     skel_export_macro_ (0),
@@ -55,8 +60,8 @@ BE_GlobalData::BE_GlobalData (void)
     safe_include_ (0),
     unique_include_ (0),
     stripped_filename_ (0),
-    core_versioning_begin_ ("\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n"),
-    core_versioning_end_   ("\nTAO_END_VERSIONED_NAMESPACE_DECL\n"),
+    core_versioning_begin_ (core_versioned_ns_begin),
+    core_versioning_end_ (core_versioned_ns_end),
     versioning_begin_ (),
     versioning_end_ (),
     versioning_include_ (),
@@ -1144,7 +1149,7 @@ BE_GlobalData::versioning_end (const char * s)
 
   this->core_versioning_begin_ =
     this->versioning_end_ + // Yes, "end".
-    "\nTAO_BEGIN_VERSIONED_NAMESPACE_DECL\n";
+    core_versioned_ns_begin;
 }
 
 void
@@ -1156,7 +1161,7 @@ BE_GlobalData::versioning_begin (const char * s)
     + ACE_CString ("\n\n");
 
   this->core_versioning_end_ =
-    "\nTAO_END_VERSIONED_NAMESPACE_DECL\n"
+    core_versioned_ns_end
     + this->versioning_begin_;  // Yes, "begin".
 
   // Yes, "begin".

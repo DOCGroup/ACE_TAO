@@ -293,6 +293,16 @@ bool stack_based_lookup_for_primary_expr = false;
 %token          IDL_TRUETOK
 %token          IDL_FALSETOK
 
+                /* stdint like types defined in IDL4.2 7.4.13 */
+%token          IDL_INT8
+%token          IDL_UINT8
+%token          IDL_INT16
+%token          IDL_UINT16
+%token          IDL_INT32
+%token          IDL_UINT32
+%token          IDL_INT64
+%token          IDL_UINT64
+
 %token <strval> IDL_SCOPE_DELIMITOR
 %token          IDL_LEFT_SHIFT
 %token          IDL_RIGHT_SHIFT
@@ -2978,6 +2988,22 @@ signed_int
         {
           $$ = AST_Expression::EV_short;
         }
+        | IDL_INT8
+        {
+          $$ = AST_Expression::EV_int8;
+        }
+        | IDL_INT16
+        {
+          $$ = AST_Expression::EV_short;
+        }
+        | IDL_INT32
+        {
+          $$ = AST_Expression::EV_long;
+        }
+        | IDL_INT64
+        {
+          $$ = AST_Expression::EV_longlong;
+        }
         ;
 
 unsigned_int
@@ -2992,6 +3018,22 @@ unsigned_int
         | IDL_UNSIGNED IDL_SHORT
         {
           $$ = AST_Expression::EV_ushort;
+        }
+        | IDL_UINT8
+        {
+          $$ = AST_Expression::EV_uint8;
+        }
+        | IDL_UINT16
+        {
+          $$ = AST_Expression::EV_ushort;
+        }
+        | IDL_UINT32
+        {
+          $$ = AST_Expression::EV_ulong;
+        }
+        | IDL_UINT64
+        {
+          $$ = AST_Expression::EV_ulonglong;
         }
         ;
 
