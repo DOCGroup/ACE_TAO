@@ -940,8 +940,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
               return 0;
             }
 
-          ev->u.llval =
-            static_cast<ACE_CDR::LongLong> (ev->u.ullval);
+          tmp.llval = static_cast<ACE_CDR::LongLong> (ev->u.ullval);
           break;
         case AST_Expression::EV_bool:
           tmp.llval = (ACE_CDR::LongLong) ev->u.bval;
@@ -1015,8 +1014,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
               return 0;
             }
 
-          ev->u.ullval =
-            static_cast<ACE_CDR::LongLong> (ev->u.llval);
+          tmp.ullval = static_cast<ACE_CDR::LongLong> (ev->u.llval);
           break;
         case AST_Expression::EV_bool:
           tmp.ullval = ev->u.bval;
@@ -1083,7 +1081,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
         case AST_Expression::EV_longlong:
           tmp.bval = (ev->u.llval == 0) ? false : true;
           break;
-       case AST_Expression::EV_ulonglong:
+        case AST_Expression::EV_ulonglong:
           tmp.bval = (ev->u.ullval == 0) ? false : true;
           break;
         case AST_Expression::EV_float:
@@ -1271,8 +1269,8 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
 
           tmp.cval = (ACE_CDR::Char) ev->u.llval;
           break;
-       case AST_Expression::EV_ulonglong:
-          if (( ev->u.ullval & ACE_CHAR_MAX) != ev->u.ullval)
+        case AST_Expression::EV_ulonglong:
+          if ((ev->u.ullval & ACE_CHAR_MAX) != ev->u.ullval)
             {
               return 0;
             }
@@ -1367,7 +1365,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           tmp.wcval = (ACE_CDR::WChar) ev->u.llval;
           break;
         case AST_Expression::EV_ulonglong:
-          if ((ev->u.ullval & ACE_WCHAR_MAX) != ev->u.ullval )
+          if ((ev->u.ullval & ACE_WCHAR_MAX) != ev->u.ullval)
             {
               return 0;
             }
@@ -1977,7 +1975,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
   this->pd_v1->set_ev (this->pd_v1->eval_internal (ek));
   this->pd_v2->set_ev (this->pd_v2->eval_internal (ek));
 
-  if (this->pd_v1->ev () == 0 || this->pd_v2->ev () == 0 )
+  if (this->pd_v1->ev () == 0 || this->pd_v2->ev () == 0)
     {
       return 0;
     }
