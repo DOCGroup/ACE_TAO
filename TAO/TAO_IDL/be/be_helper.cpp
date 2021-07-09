@@ -498,6 +498,26 @@ TAO_OutStream::print (UTL_IdList *idl)
   return *this;
 }
 
+template <typename IntType>
+void
+signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *specifier)
+{
+  /*
+   * It seems that in C/C++ the minus sign and the bare number are parsed
+   * separately for negative integer literals. This can cause compilers
+   * to complain when using the minimum value of a signed integer because
+   * the number without the minus sign is 1 past the max signed value.
+   *
+   * https://stackoverflow.com/questions/65007935
+   *
+   * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
+   */
+  const bool min_value = value == min;
+  if (min_value) ++value;
+  os.print (specifier, value);
+  if (min_value) os.print (" - 1");
+}
+
 TAO_OutStream&
 TAO_OutStream::print (AST_Expression *expr)
 {
@@ -522,30 +542,16 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
       break;
     case AST_Expression::EV_long:
-      this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
+      signed_int_helper<ACE_CDR::Long> (
+        *this, ev->u.lval, ACE_INT32_MIN, ACE_INT32_FORMAT_SPECIFIER_ASCII);
       break;
     case AST_Expression::EV_ulong:
       this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
       break;
     case AST_Expression::EV_longlong:
       this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
-      {
-        ACE_CDR::LongLong value = ev->u.llval;
-        /*
-         * It seems that in C/C++ the minus sign and the bare number are parsed
-         * separately for negative integer literals. This can cause compilers
-         * to complain when using the minimum value of a signed integer because
-         * the number without the minus sign is 1 past the max signed value.
-         *
-         * https://stackoverflow.com/questions/65007935
-         *
-         * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
-         */
-        const bool min_value = value == ACE_INT64_MIN;
-        if (min_value) ++value;
-        TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII, value);
-        if (min_value) TAO_OutStream::print (" - 1");
-      }
+      signed_int_helper<ACE_CDR::LongLong> (
+        *this, ev->u.llval, ACE_INT64_MIN, ACE_INT64_FORMAT_SPECIFIER_ASCII);
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_ulonglong:

@@ -168,7 +168,7 @@ public:
     {
       AST_ExprValue ();
 
-      union
+      union Value
         {
           ACE_CDR::Short      sval;     // Contains short expression value.
           ACE_CDR::UShort     usval;    // Contains unsigned short expr value.
@@ -188,9 +188,10 @@ public:
           ACE_CDR::Fixed      fixedval; // Contains IDL fixed value.
           ACE_CDR::Int8       int8val;  // Signed Byte Sized Integer
           ACE_CDR::UInt8      uint8val; // Unsigned Byte Sized Integer
-        } u;
+        };
 
       ExprType et;
+      Value u;
     };
 
  // Operations.
