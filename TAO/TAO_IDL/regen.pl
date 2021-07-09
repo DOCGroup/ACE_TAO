@@ -18,6 +18,3 @@ my $bison_target = $debug ? 'debug_bison' : 'y.tab';
 if (system "make -f GNUmakefile.TAO_IDL_GEN $features lex.yy $bison_target all") {
   exit(1);
 }
-if (system("make -f GNUmakefile.TAO_IDL_GEN $features lex.yy $bison_target all")) {
-  exit(1);
-}
