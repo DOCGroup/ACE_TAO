@@ -25,7 +25,7 @@ namespace {
   void
   serialize_disc (TAO_OutStream *os, AST_Expression::ExprType disc_type, bool out)
   {
-    const char* tmp_suffix = nullptr;
+    const char* tmp_suffix = 0;
     switch (disc_type)
       {
         case AST_Expression::EV_bool:
