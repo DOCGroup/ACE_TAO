@@ -136,5 +136,10 @@
 #define ACE_HAS_STRNLEN
 #define ACE_HAS_WCSNLEN
 
+#define ACE_LACKS_STRUCT_DIR
+#define ACE_LACKS_OPENDIR
+#define ACE_LACKS_CLOSEDIR
+#define ACE_LACKS_READDIR
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */
