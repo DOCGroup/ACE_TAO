@@ -245,6 +245,19 @@ AST_Sequence::base_type (void) const
   return this->pd_base_type;
 }
 
+AST_Type *
+AST_Sequence::primitive_base_type () const
+{
+  AST_Type *type_node = base_type ();
+  if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *const typedef_node = dynamic_cast<AST_Typedef *> (type_node);
+      if (!typedef_node) return 0;
+      type_node = typedef_node->primitive_base_type ();
+    }
+  return type_node;
+}
+
 bool
 AST_Sequence::unbounded (void) const
 {

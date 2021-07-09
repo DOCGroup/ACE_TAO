@@ -154,11 +154,17 @@ AST_Union::AST_Union (AST_ConcreteType *dt,
         case AST_PredefinedType::PT_ushort:
           this->pd_udisc_type = AST_Expression::EV_ushort;
           break;
+        case AST_PredefinedType::PT_int8:
+          this->pd_udisc_type = AST_Expression::EV_int8;
+          break;
         case AST_PredefinedType::PT_char:
           this->pd_udisc_type = AST_Expression::EV_char;
           break;
         case AST_PredefinedType::PT_wchar:
           this->pd_udisc_type = AST_Expression::EV_wchar;
+          break;
+        case AST_PredefinedType::PT_uint8:
+          this->pd_udisc_type = AST_Expression::EV_uint8;
           break;
         case AST_PredefinedType::PT_octet:
           this->pd_udisc_type = AST_Expression::EV_octet;
@@ -604,7 +610,16 @@ AST_Union::compute_default_value (void)
 
       break;
     case AST_Expression::EV_char:
-      if (total_case_members > ACE_OCTET_MAX)
+    case AST_Expression::EV_int8:
+      if (total_case_members > ACE_INT8_MAX)
+        {
+          this->default_value_.computed_ = 0;
+        }
+
+      break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+      if (total_case_members > ACE_UINT8_MAX)
         {
           this->default_value_.computed_ = 0;
         }
@@ -679,6 +694,9 @@ AST_Union::compute_default_value (void)
     case AST_Expression::EV_ulong:
       this->default_value_.u.ulong_val = 0;
       break;
+    case AST_Expression::EV_uint8:
+    case AST_Expression::EV_octet:
+    case AST_Expression::EV_int8:
     case AST_Expression::EV_char:
       this->default_value_.u.char_val = 0;
       break;
@@ -781,6 +799,9 @@ AST_Union::compute_default_value (void)
                             }
 
                           break;
+                        case AST_Expression::EV_uint8:
+                        case AST_Expression::EV_octet:
+                        case AST_Expression::EV_int8:
                         case AST_Expression::EV_char:
                           if (this->default_value_.u.char_val
                                 == expr->ev ()->u.cval)

@@ -48,7 +48,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include /**/ "tao/TAO_Export.h"
-#include "tao/Basic_Types.h"
+#include "tao/Basic_Types_IDLv4.h"
 #include "tao/GIOP_Message_Version.h"
 #include "tao/Message_Semantics.h"
 #include "tao/Intrusive_Ref_Count_Handle_T.h"

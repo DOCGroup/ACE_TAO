@@ -204,6 +204,16 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
             "::ACE_InputCDR::to_octet (vb_object->_pd_value)";
           break;
 
+        case AST_PredefinedType::PT_uint8:
+          unmarshal_arg =
+            "::ACE_InputCDR::to_uint8 (vb_object->_pd_value)";
+          break;
+
+        case AST_PredefinedType::PT_int8:
+          unmarshal_arg =
+            "::ACE_InputCDR::to_int8 (vb_object->_pd_value)";
+          break;
+
         case AST_PredefinedType::PT_any:
           // We need to help the ">>" operator for "any" because
           // a conversion operator is not available.
@@ -405,6 +415,16 @@ be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
     case AST_PredefinedType::PT_octet:
       marshal_arg =
         "::ACE_OutputCDR::from_octet (this->_pd_value)";
+      break;
+
+    case AST_PredefinedType::PT_uint8:
+      marshal_arg =
+        "::ACE_OutputCDR::from_uint8 (this->_pd_value)";
+      break;
+
+    case AST_PredefinedType::PT_int8:
+      marshal_arg =
+        "::ACE_OutputCDR::from_int8 (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_any:

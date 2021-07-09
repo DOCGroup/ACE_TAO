@@ -129,7 +129,10 @@ be_union_branch::gen_default_label_value (TAO_OutStream *os,
       case AST_Expression::EV_ulong:
         *os << dv.u.ulong_val;
         break;
+      case AST_Expression::EV_octet:
       case AST_Expression::EV_char:
+      case AST_Expression::EV_int8:
+      case AST_Expression::EV_uint8:
         os->print ("'\\%o'", dv.u.char_val);
         break;
       case AST_Expression::EV_bool:

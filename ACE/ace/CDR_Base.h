@@ -198,7 +198,7 @@ public:
    */
   //@{
   typedef bool Boolean;
-  typedef unsigned char Octet;
+  typedef ACE_Byte Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
   typedef ACE_INT16 Short;
@@ -207,6 +207,14 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_INT64 LongLong;
   typedef ACE_UINT64 ULongLong;
+  typedef ACE_INT8 Int8;
+  typedef ACE_UINT8 UInt8;
+  typedef Short Int16;
+  typedef UShort UInt16;
+  typedef Long Int32;
+  typedef ULong UInt32;
+  typedef LongLong Int64;
+  typedef ULongLong UInt64;
 
 #   if ACE_SIZEOF_FLOAT == 4
       typedef float Float;

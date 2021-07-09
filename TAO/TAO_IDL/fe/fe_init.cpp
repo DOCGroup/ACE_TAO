@@ -81,7 +81,7 @@ const size_t LOCAL_ESCAPES_BUFFER_SIZE = 1024;
 void
 fe_populate_global_scope (void)
 {
-  // No need to created a scoped name for the basic types, the
+  // No need to create a scoped name for the basic types, the
   // AST_PredefinedType constructor will do that.
 
   AST_PredefinedType *pdt = 0;
@@ -209,6 +209,12 @@ fe_populate_global_scope (void)
       0);
 
   m->fe_add_predefined_type (pdt);
+
+  m->fe_add_predefined_type (idl_global->gen ()->create_predefined_type (
+    AST_PredefinedType::PT_uint8, 0));
+
+  m->fe_add_predefined_type (idl_global->gen ()->create_predefined_type (
+    AST_PredefinedType::PT_int8, 0));
 
   Identifier Object_id ("Object");
   UTL_ScopedName Object_name (&Object_id, 0);
