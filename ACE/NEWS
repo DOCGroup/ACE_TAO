@@ -1,3 +1,9 @@
+USER VISIBLE CHANGES BETWEEN ACE-6.5.13 and ACE-6.5.14
+======================================================
+
+. Add support for Embarcadero C++ Builder 10.4.2 Sydney using the
+  classic compiler.
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.12 and ACE-6.5.13
 ======================================================
 
