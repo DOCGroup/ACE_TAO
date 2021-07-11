@@ -10,9 +10,6 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 
 . Use more C++11 features
 
-. Add support for Embarcadero C++ Builder 10.4.2 Sydney using the
-  classic compiler.
-
 USER VISIBLE CHANGES BETWEEN ACE-7.0.1 and ACE-7.0.2
 ====================================================
 
