@@ -76,7 +76,7 @@ Hello_Impl::operator delete (void *ptr)
 }
 
 extern "C" ACE_Svc_Export Hello *
-get_hello (void)
+get_hello ()
 {
   Hello *hello {};
 
@@ -158,6 +158,17 @@ Child::test ()
   catch (const Base&)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived as base\n")));
+  }
+
+  std::unique_ptr<Base> derived_excep_alloc (Derived::_alloc ());
+  try
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception allocated with _alloc\n")));
+    derived_excep_base->_raise();
+  }
+  catch (const Derived&)
+  {
+    ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived exception\n")));
   }
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions finished\n")));

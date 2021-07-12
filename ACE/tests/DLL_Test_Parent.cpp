@@ -35,3 +35,8 @@ Derived::_raise () const
   throw *this;
 }
 
+Base*
+Derived::_alloc()
+{
+  return new Derived();
+}
