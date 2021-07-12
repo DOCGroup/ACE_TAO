@@ -53,6 +53,7 @@ class DLL_Test_Parent_Export Derived : public Base
 {
 public:
   Derived ();
+  static Base* _alloc ();
   void _raise () const override;
   ~Derived () override = default;
 };
