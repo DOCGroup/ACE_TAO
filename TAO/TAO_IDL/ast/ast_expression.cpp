@@ -1137,7 +1137,7 @@ coerce_value (AST_Expression::AST_ExprValue *ev,
           tmp.fval = (ACE_CDR::Float) ((ACE_CDR::LongLong) ev->u.ullval);
           break;
         case AST_Expression::EV_bool:
-          tmp.fval = (ACE_CDR::Float) ev->u.bval ? 1.0 : 0.0;
+          tmp.fval = (ACE_CDR::Float) ev->u.bval ? 1.0f : 0.0f;
           break;
         case AST_Expression::EV_double:
           if (ev->u.dval > ACE_FLT_MAX
