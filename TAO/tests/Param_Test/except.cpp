@@ -259,7 +259,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
           return -1;
         }
 
-      CORBA::ULong mod_value = ex.input;
+      CORBA::ULong const mod_value = ex.input;
 
       // We should be catching Ooops only when this is true.
       if (mod_value != 1)
