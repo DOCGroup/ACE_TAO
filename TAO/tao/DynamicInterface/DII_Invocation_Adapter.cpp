@@ -62,7 +62,7 @@ namespace TAO
     {
       CORBA::TypeCode_var xtc = this->exception_list_->item (l);
       this->ex_data_[l].id = xtc->id ();
-      this->ex_data_[l].alloc = 0;
+      this->ex_data_[l].alloc = nullptr;
 #if TAO_HAS_INTERCEPTORS == 1
       this->ex_data_[l].tc_ptr = xtc.in ();
 #endif
