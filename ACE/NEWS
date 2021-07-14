@@ -10,6 +10,8 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 
 . Use more C++11 features
 
+. Various cleanup
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.1 and ACE-7.0.2
 ====================================================
 
