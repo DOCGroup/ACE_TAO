@@ -3,7 +3,7 @@
 #ifndef ACE_RMCAST_BITS_H
 #define ACE_RMCAST_BITS_H
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_T.h"
 #include "ace/Synch_Traits.h"

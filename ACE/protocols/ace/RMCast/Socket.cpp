@@ -70,12 +70,12 @@ namespace ACE_RMCast
 
     ACE_Pipe signal_pipe_;
 
-    ACE_Auto_Ptr<Fragment> fragment_;
-    ACE_Auto_Ptr<Reassemble> reassemble_;
-    ACE_Auto_Ptr<Acknowledge> acknowledge_;
-    ACE_Auto_Ptr<Retransmit> retransmit_;
-    ACE_Auto_Ptr<Flow> flow_;
-    ACE_Auto_Ptr<Link> link_;
+    std::unique_ptr<Fragment> fragment_;
+    std::unique_ptr<Reassemble> reassemble_;
+    std::unique_ptr<Acknowledge> acknowledge_;
+    std::unique_ptr<Retransmit> retransmit_;
+    std::unique_ptr<Flow> flow_;
+    std::unique_ptr<Link> link_;
   };
 
 

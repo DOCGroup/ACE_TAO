@@ -11,6 +11,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/ARGV.h"
 
+#include "ace/Auto_Ptr.h"   // ACE_Auto_Basic_Array_Ptr used
+
 #include <list>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

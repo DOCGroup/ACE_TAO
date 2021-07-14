@@ -11,7 +11,7 @@
 
 #include "test_config.h"
 #include "ace/DLL.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/ACE.h"
 #include "ace/DLL_Manager.h"
 #include "ace/SString.h"

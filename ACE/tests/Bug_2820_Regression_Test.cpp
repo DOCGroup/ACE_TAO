@@ -14,7 +14,7 @@
  */
 
 #include "test_config.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 

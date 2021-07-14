@@ -14,7 +14,7 @@
 #include "ace/Event_Handler.h"
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 int const nhandlers = 3;
 

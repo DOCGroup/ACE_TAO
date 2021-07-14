@@ -13,6 +13,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
+
 static const ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static const ACEXML_Char empty_string[] = { 0 };
 

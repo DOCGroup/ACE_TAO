@@ -19,7 +19,7 @@
 #include "ace/Synch_Traits.h"
 #include "ace/Task.h"
 #include "ace/Pipe.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Reactor.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Thread_Semaphore.h"

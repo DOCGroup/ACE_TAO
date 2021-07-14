@@ -9,6 +9,11 @@ project(*lib): tao_output, rtcorba, install, messaging, ziop {
     Catior_i.cpp
   }
 
+  Header_Files {
+    Catior_i.h
+    catior_export.h
+  }
+
   specific {
     install_dir = tao/catior
   }

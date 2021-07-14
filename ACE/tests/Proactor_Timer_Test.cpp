@@ -26,7 +26,7 @@
 #include "ace/High_Res_Timer.h"
 #include "ace/Asynch_IO.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 static int    done = 0;
 static size_t counter = 0;

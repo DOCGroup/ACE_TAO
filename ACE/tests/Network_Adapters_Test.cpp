@@ -27,7 +27,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_signal.h"
 #include "ace/Timer_Heap.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #include "Network_Adapters_Test.h"
 

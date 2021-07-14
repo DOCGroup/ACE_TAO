@@ -7,7 +7,7 @@
  */
 //=============================================================================
 
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Refcounted_Auto_Ptr.h"
 #include "ace/Unbounded_Queue.h"
 #include "Gadget.h"

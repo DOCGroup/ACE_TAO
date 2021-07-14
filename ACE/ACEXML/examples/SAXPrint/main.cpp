@@ -6,7 +6,7 @@
 #include "Print_Handler.h"
 #include "SAXPrint_Handler.h"
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
 

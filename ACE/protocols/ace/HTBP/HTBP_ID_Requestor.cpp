@@ -7,6 +7,8 @@
 #include "ace/SOCK_Connector.h"
 #include "ace/UUID.h"
 
+#include "ace/Auto_Ptr.h"   // use ACE_Auto_Array_Ptr
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_TString ACE::HTBP::ID_Requestor::htid_;

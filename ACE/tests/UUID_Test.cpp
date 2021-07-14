@@ -12,7 +12,6 @@
 
 #include "test_config.h"
 #include "ace/UUID.h"
-#include "ace/Auto_Ptr.h"
 
 class Tester
 {
