@@ -214,8 +214,7 @@ ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
                                         calls init()/fini() for shared
                                         libraries
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
-                                        u_long fdmask (e.g., Linux and
-                                        SCO).
+                                        u_long fdmask (e.g., Linux).
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).
@@ -365,8 +364,7 @@ ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
 ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
-                                        parameter to msgsend() (e.g.,
-                                        SCO).
+                                        parameter to msgsend().
 ACE_HAS_NONCONST_READV                  Platform omits const qualifier from
                                         iovec parameter in readv() prototype.
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
@@ -801,7 +799,7 @@ ACE_LACKS_MKFIFO                        Platform lacks mkfifo() e.g.,
 ACE_LACKS_MKTEMP                        Platform lacks the mktemp() function.
 ACE_LACKS_MKSTEMP                       Platform lacks the mkstemp() function.
 ACE_LACKS_MMAP                          The platform doesn't have
-                                        mmap(2) (e.g., SCO UNIX).
+                                        mmap(2).
 ACE_LACKS_MODE_MASKS                    Platform/compiler doesn't have
                                         open() mode masks.
 ACE_LACKS_MPROTECT                      The platform doesn't have
@@ -862,8 +860,7 @@ ACE_LACKS_READV                         Platform doesn't define readv,
 ACE_LACKS_RENAME                        Platform lacks rename().
 ACE_LACKS_RLIMIT                        Platform/compiler lacks
                                         {get,set}rlimit() function
-                                        (e.g., VxWorks, and
-                                        SCO UNIX)
+                                        (e.g., VxWorks)
 ACE_LACKS_RLIMIT_PROTOTYPE              Platform/compiler lacks
                                         {get,set}rlimit() prototypes
                                         (e.g., Tandem)
@@ -925,8 +922,7 @@ ACE_LACKS_SYSV_SHMEM                    Platform lacks System V shared
 ACE_LACKS_SIGINFO_H                     Platform lacks the siginfo.h
                                         include file (e.g., MVS)
 ACE_LACKS_SOCKETPAIR                    Platform lacks the
-                                        socketpair() call (e.g., SCO
-                                        UNIX)
+                                        socketpair() cal
 ACE_LACKS_STRCASECMP                    Compiler/platform lacks
                                         strcasecmp() (e.g., DG/UX,
                                         UNIXWARE, VXWORKS)

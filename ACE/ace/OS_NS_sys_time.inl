@@ -47,8 +47,8 @@ ACE_OS::gettimeofday ()
   tv.tv_usec = tb.tb_low / 1000L;
 #else
 # if defined (ACE_HAS_TIMEZONE_GETTIMEOFDAY) || \
-  defined(ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
-  (defined (ACE_HAS_SVR4_GETTIMEOFDAY) && !defined (SCO))
+     defined (ACE_HAS_VOIDPTR_GETTIMEOFDAY) || \
+     defined (ACE_HAS_SVR4_GETTIMEOFDAY)
   ACE_OSCALL (::gettimeofday (&tv, 0), int, result);
 # elif defined (ACE_VXWORKS)
   // Assumes that struct timespec is same size as struct timeval,
