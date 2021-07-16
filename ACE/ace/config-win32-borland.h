@@ -131,19 +131,13 @@
 #if (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_ISWCTYPE
 # define ACE_LACKS_ISCTYPE
-#endif
-
-#if (__BORLANDC__ >= 0x640) && (__BORLANDC__ <= 0x750)
 # define ACE_LACKS_STRTOK_R
+# define ACE_LACKS_ASCTIME_R
 #endif
 
 #if (__BORLANDC__ <= 0x740)
 # define ACE_LACKS_LOCALTIME_R
 # define ACE_LACKS_GMTIME_R
-#endif
-
-#if (__BORLANDC__ <= 0x750)
-# define ACE_LACKS_ASCTIME_R
 #endif
 
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
