@@ -39,11 +39,7 @@ typedef struct stati64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stati64
 #       define ACE_WSTAT_FUNC_NAME ::_wstati64
 #   elif !defined (ACE_HAS_WINCE) && defined (_MSC_VER)
-#       if defined (ACE_MSVC_USES_DOUBLE_UNDERSCORE_STAT64)
-typedef struct __stat64 ACE_stat;
-#       else
 typedef struct _stat64 ACE_stat;
-#       endif
 #       define ACE_STAT_FUNC_NAME ::_stat64
 #       define ACE_WSTAT_FUNC_NAME ::_wstat64
 #   elif defined (__MINGW32__)
