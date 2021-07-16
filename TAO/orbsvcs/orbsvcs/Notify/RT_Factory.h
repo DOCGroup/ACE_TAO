@@ -18,7 +18,7 @@
 
 #include "orbsvcs/Notify/Default_Factory.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x750)
 #  pragma option push -w-8022
 #endif
 
@@ -48,7 +48,7 @@ public:
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
+#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x750)
 # pragma option pop
 #endif
 
