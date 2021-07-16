@@ -9,12 +9,6 @@
 # include "ace/os_include/os_signal.h"
 #endif
 
-#if defined (ACE_WCHAR_IN_STD_NAMESPACE)
-# define ACE_WCHAR_STD_NAMESPACE std
-#else
-# define ACE_WCHAR_STD_NAMESPACE ACE_STD_NAMESPACE
-#endif /* ACE_WCHAR_IN_STD_NAMESPACE */
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Doesn't need a macro since it *never* returns!
@@ -501,7 +495,7 @@ ACE_OS::strtod (const char *s, char **endptr)
 ACE_INLINE double
 ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 {
-  return ACE_WCHAR_STD_NAMESPACE::wcstod (s, endptr);
+  return std::wcstod (s, endptr);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
@@ -522,7 +516,7 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 #if defined (ACE_LACKS_WCSTOL)
   return ACE_OS::wcstol_emulation (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstol (s, ptr, base);
+  return std::wcstol (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -544,7 +538,7 @@ ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 #if defined (ACE_LACKS_WCSTOUL)
   return ACE_OS::wcstoul_emulation (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoul (s, ptr, base);
+  return std::wcstoul (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOUL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -570,7 +564,7 @@ ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
 #elif defined (ACE_WCSTOLL_EQUIVALENT)
   return ACE_WCSTOLL_EQUIVALENT (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoll (s, ptr, base);
+  return std::wcstoll (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOLL */
 }
 #endif /* ACE_HAS_WCHAR */
@@ -596,7 +590,7 @@ ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
 #elif defined (ACE_WCSTOULL_EQUIVALENT)
   return ACE_WCSTOULL_EQUIVALENT (s, ptr, base);
 #else
-  return ACE_WCHAR_STD_NAMESPACE::wcstoull (s, ptr, base);
+  return std::wcstoull (s, ptr, base);
 #endif /* ACE_LACKS_WCSTOULL */
 }
 #endif /* ACE_HAS_WCHAR */
