@@ -85,6 +85,9 @@
 #define ACE_HAS_WINSOCK2_GQOS
 #define ACE_ISCTYPE_EQUIVALENT ::_isctype
 #define ACE_LACKS_SET_ABORT_BEHAVIOR
+#define ACE_LACKS_NLINK_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_GID_T
 
 // We trust the user: He must have used -mpentiumpro or -mpentium
 // if that is what he wants.

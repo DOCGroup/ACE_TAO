@@ -141,5 +141,12 @@
 #define ACE_LACKS_CLOSEDIR
 #define ACE_LACKS_READDIR
 
+#define ACE_LACKS_MODE_T
+#define ACE_LACKS_PID_T
+
+#define ACE_LACKS_NLINK_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_GID_T
+
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */

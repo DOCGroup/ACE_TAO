@@ -304,17 +304,6 @@
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
 #define ACE_LACKS_CADDR_T
-#if !defined(__MINGW32__) && !defined (__BORLANDC__)
-# define ACE_LACKS_MODE_T
-#endif
-#if !defined(__MINGW32__)
-# define ACE_LACKS_PID_T
-#endif
-#if !defined (__BORLANDC__)
-# define ACE_LACKS_NLINK_T
-# define ACE_LACKS_UID_T
-# define ACE_LACKS_GID_T
-#endif
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_UNSETENV
 

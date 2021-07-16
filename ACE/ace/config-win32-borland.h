@@ -169,6 +169,7 @@
 #define ACE_HAS_BUILTIN_BSWAP32
 #define ACE_HAS_BUILTIN_BSWAP64
 #define ACE_LACKS_INLINE_ASSEMBLY
+#define ACE_LACKS_PID_T
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
