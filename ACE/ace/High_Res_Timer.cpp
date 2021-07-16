@@ -374,8 +374,7 @@ ACE_High_Res_Timer::elapsed_time (ACE_hrtime_t &nanoseconds) const
   // For more background on this, please see bugzilla #1024.
   nanoseconds = ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_)
             * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-  // Caution - Borland has a problem with >>=, so resist the temptation.
-  nanoseconds = nanoseconds >> 10;
+  nanoseconds >>= 10;
   // Right shift is implemented for non native 64-bit ints
   // operator/ only for a 32 bit result !
 #else
@@ -391,15 +390,11 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 {
 #if !defined (ACE_WIN32)
   // Same as above.
-  nanoseconds = this->total_
-          * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
-  // Caution - Borland has a problem with >>=, so resist the temptation.
-  nanoseconds = nanoseconds >> 10;
+  nanoseconds = this->total_ * (1024000u / ACE_High_Res_Timer::global_scale_factor ());
+  nanoseconds >>= 10;
 #else
   // This a higher-precision version, specific for Windows systems
-  nanoseconds =
-      this->total_ * 1000000000u /
-      ACE_High_Res_Timer::global_scale_factor ();
+  nanoseconds = this->total_ * 1000000000u / ACE_High_Res_Timer::global_scale_factor ();
 #endif
 }
 
