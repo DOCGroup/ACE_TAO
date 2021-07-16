@@ -173,7 +173,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
     return;
 
   COUNTER *new_counter = rhs.counter_;
-  X_t *new_ptr = rhs.ptr_;
+  X *new_ptr = rhs.ptr_;
   COUNTER::attach_strong (new_counter);
   if (COUNTER::detach_strong (this->counter_) == 0)
     delete this->ptr_;
@@ -190,7 +190,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
     return;
 
   COUNTER *new_counter = rhs.counter_;
-  X_t *new_ptr = rhs.ptr_;
+  X *new_ptr = rhs.ptr_;
 
   // When creating a strong pointer from a weak one we can't assume that the
   // underlying object still exists. Therefore we must check for a return value
@@ -274,7 +274,7 @@ template<class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::reset (X *p)
 {
   COUNTER *old_counter = this->counter_;
-  X_t *old_ptr = this->ptr_;
+  X *old_ptr = this->ptr_;
   this->counter_ = COUNTER::create_strong ();
   this->ptr_ = p;
   if (COUNTER::detach_strong (old_counter) == 0)

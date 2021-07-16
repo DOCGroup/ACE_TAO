@@ -161,9 +161,6 @@ private:
 
   // = Encapsulate reference count and object lifetime of instances.
 
-  // These methods must go after the others to work around a bug with
-  // Borland's C++ Builder...
-
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
   static ACE_Future_Rep<T> *internal_create (void);
