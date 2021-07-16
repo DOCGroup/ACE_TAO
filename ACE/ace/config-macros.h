@@ -253,7 +253,7 @@
 // ============================================================================
 
 #if !defined (ACE_UNUSED_ARG)
-# if defined (__GNUC__) || (defined (__BORLANDC__) && defined (__clang__))
+# if defined (__GNUC__) || defined (__BORLANDC__)
 #   define ACE_UNUSED_ARG(a) (void) (a)
 # elif defined (ghs) || defined (__hpux) || defined (__DECCXX) || defined (__rational__) || defined (__USLC__) || defined (ACE_RM544) || defined (__DCC__) || defined (__PGI)
 // Some compilers complain about "statement with no effect" with (a).
