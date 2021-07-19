@@ -4,6 +4,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include <ctime>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -15,7 +16,7 @@ ACE_OS::asctime (const struct tm *t)
   ACE_UNUSED_ARG (t);
   ACE_NOTSUP_RETURN (0);
 #else
-  return ACE_STD_NAMESPACE::asctime (t);
+  return std::asctime (t);
 #endif /* ACE_LACKS_ASCTIME */
 }
 
@@ -48,7 +49,7 @@ ACE_OS::asctime_r (const struct tm *t, char *buf, int buflen)
   ACE_NOTSUP_RETURN (0);
 #else
   char *result = 0;
-  ACE_OSCALL (ACE_STD_NAMESPACE::asctime (t), char *, result);
+  ACE_OSCALL (std::asctime (t), char *, result);
   ACE_OS::strsncpy (buf, result, buflen);
   return buf;
 #endif /* ACE_HAS_REENTRANT_FUNCTIONS */
@@ -421,7 +422,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
   ACE_UNUSED_ARG (timeptr);
   ACE_NOTSUP_RETURN (0);
 #else
-  return ACE_STD_NAMESPACE::strftime (s, maxsize, format, timeptr);
+  return std::strftime (s, maxsize, format, timeptr);
 #endif /* ACE_LACKS_STRFTIME */
 }
 
@@ -432,7 +433,7 @@ ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
 #if defined (ACE_LACKS_STRPTIME)
   return ACE_OS::strptime_emulation (buf, format, tm);
 #else
-  return ACE_STD_NAMESPACE::strptime (buf, format, tm);
+  return ::strptime (buf, format, tm);
 #endif /* ACE_LACKS_STRPTIME */
 }
 

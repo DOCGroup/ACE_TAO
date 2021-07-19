@@ -47,23 +47,13 @@
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
-inline void ace_clearerr_helper (FILE *stream)
-{
-#if defined (clearerr)
-  clearerr (stream);
-#undef clearerr
-#else
-  ACE_STD_NAMESPACE::clearerr (stream);
-#endif /* defined (clearerr) */
-}
-
 inline int ace_fgetc_helper (FILE *fp)
 {
 #if defined (fgetc)
   return fgetc (fp);
 #undef fgetc
 #else
-  return ACE_STD_NAMESPACE::fgetc (fp);
+  return ::fgetc (fp);
 #endif /* defined (fgetc) */
 }
 
@@ -74,7 +64,7 @@ inline int ace_fputc_helper (int ch, FILE *fp)
   return fputc (ch, fp);
 #undef fputc
 #else
-  return ACE_STD_NAMESPACE::fputc (ch, fp);
+  return ::fputc (ch, fp);
 #endif /* defined (fputc) */
 }
 #endif /* !ACE_LACKS_FPUTC */
@@ -86,7 +76,7 @@ inline int ace_getc_helper (FILE *fp)
   return getc (fp);
 #undef getc
 #else
-  return ACE_STD_NAMESPACE::getc (fp);
+  return ::getc (fp);
 #endif /* defined (getc) */
 }
 #elif defined getc
@@ -99,25 +89,13 @@ inline int ace_putc_helper (int ch, FILE *fp)
   return putc (ch, fp);
 #undef putc
 #elif !defined (ACE_LACKS_PUTC)
-  return ACE_STD_NAMESPACE::putc (ch, fp);
+  return ::putc (ch, fp);
 #else
   ACE_UNUSED_ARG (ch);
   ACE_UNUSED_ARG (fp);
   return -1;
 #endif /* defined (putc) */
 }
-
-#if !defined (ACE_LACKS_UNGETC)
-inline int ace_ungetc_helper (int ch, FILE *fp)
-{
-#if defined (ungetc)
-  return ungetc (ch, fp);
-#undef ungetc
-#else
-  return ACE_STD_NAMESPACE::ungetc (ch, fp);
-#endif /* defined (ungetc) */
-}
-#endif /* !ACE_LACKS_UNGETC */
 
 #if !defined ACE_FILENO_EQUIVALENT
 inline ACE_HANDLE ace_fileno_helper (FILE *fp)
