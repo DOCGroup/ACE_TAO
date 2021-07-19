@@ -48,7 +48,7 @@ inline int ace_sigemptyset_helper (sigset_t *s)
   return sigemptyset (s);
 #  undef sigemptyset
 #  else
-  return ACE_STD_NAMESPACE::sigemptyset (s);
+  return ::sigemptyset (s);
 #  endif /* defined (sigemptyset) */
 }
 
@@ -58,7 +58,7 @@ inline int ace_sigfillset_helper (sigset_t *s)
   return sigfillset (s);
 #  undef sigfillset
 #  else
-  return ACE_STD_NAMESPACE::sigfillset (s);
+  return ::sigfillset (s);
 #  endif /* defined (sigfillset) */
 }
 
@@ -68,7 +68,7 @@ inline int ace_sigaddset_helper (sigset_t *s, int signum)
   return sigaddset (s, signum);
 #  undef sigaddset
 #  else
-  return ACE_STD_NAMESPACE::sigaddset (s, signum);
+  return ::sigaddset (s, signum);
 #  endif /* defined (sigaddset) */
 }
 
@@ -78,7 +78,7 @@ inline int ace_sigdelset_helper (sigset_t *s, int signum)
   return sigdelset (s, signum);
 #  undef sigdelset
 #  else
-  return ACE_STD_NAMESPACE::sigdelset (s, signum);
+  return ::sigdelset (s, signum);
 #  endif /* defined (sigdelset) */
 }
 
@@ -88,7 +88,7 @@ inline int ace_sigismember_helper (sigset_t *s, int signum)
   return sigismember (s, signum);
 #  undef sigismember
 #  else
-  return ACE_STD_NAMESPACE::sigismember (s, signum);
+  return ::sigismember (s, signum);
 #  endif /* defined (sigismember) */
 }
 #endif /* !defined (ACE_LACKS_SIGSET) */
@@ -100,11 +100,10 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
   return sigsuspend (s);
 #  undef sigsuspend
 #  else
-  return ACE_STD_NAMESPACE::sigsuspend (s);
+  return ::sigsuspend (s);
 #  endif /* defined (sigsuspen) */
 }
 #endif /* ACE_HAS_SIGSUSPEND */
-
 
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
