@@ -146,8 +146,6 @@ private:
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Encapsulate reference count and object lifetime of instances.
-  // These methods must go after the others to work around a bug with
-  // Borland's C++ Builder...
 
   /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> instance,
   /// returning NULL if it cannot be created.

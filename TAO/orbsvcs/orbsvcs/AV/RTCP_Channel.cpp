@@ -188,9 +188,7 @@ RTCP_Channel_In::update_seq(ACE_UINT16 seq)
   else if (udelta <= RTP_SEQ_MOD - MAX_MISORDER)
     {
       // the sequence number made a large jump
-      ACE_UINT32 temp = seq; // Borland reports a warning on the next line
-                             // without this line.
-      if (temp == this->bad_seq_)
+      if (seq == this->bad_seq_)
         {
           // two sequential packets, assume the other side restarted without
           // telling us so just re-sync
