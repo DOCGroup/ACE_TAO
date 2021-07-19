@@ -315,7 +315,7 @@ ACE_OS::mktime (struct tm *t)
   ACE_OS_GUARD
 #     endif /* ACE_HAS_THREADS  &&  ! ACE_HAS_MT_SAFE_MKTIME */
 
-  return ACE_STD_NAMESPACE::mktime (t);
+  return std::mktime (t);
 #   endif /* ACE_HAS_WINCE */
 }
 
