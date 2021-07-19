@@ -22,6 +22,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_math.h"
+#include <cmath>
 
 #include /**/ "ace/ACE_export.h"
 
