@@ -148,7 +148,7 @@ ACE_OS::strsignal (int signum)
     ret_val = 0;
   else
 # endif /* (ACE_NEEDS_STRSIGNAL_RANGE_CHECK */
-  ret_val = ACE_STD_NAMESPACE::strsignal (signum);
+  ret_val = ::strsignal (signum);
 
   if (ret_val <= reinterpret_cast<char *> (0))
     {
