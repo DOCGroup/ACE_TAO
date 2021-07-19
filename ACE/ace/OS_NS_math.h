@@ -44,7 +44,7 @@ inline double ace_log2_helper (double x)
 #undef log2
 #else
 #  if !defined (ACE_LACKS_LOG2)
-  return ACE_STD_NAMESPACE::log2 (x);
+  return std::log2 (x);
 #  else
   /*
     ==================================================================
@@ -87,7 +87,7 @@ namespace ACE_OS
   inline
   T floor (T x)
   {
-    return ACE_STD_NAMESPACE::floor (x);
+    return std::floor (x);
   }
 
 #if defined (ACE_HAS_WINCE)
@@ -96,7 +96,7 @@ namespace ACE_OS
   inline
   float floor (float x)
   {
-    return ACE_STD_NAMESPACE::floorf (x);
+    return std::floorf (x);
   }
 #endif
 
@@ -105,7 +105,7 @@ namespace ACE_OS
   inline
   T ceil (T x)
   {
-    return ACE_STD_NAMESPACE::ceil (x);
+    return std::ceil (x);
   }
 
 #if defined (ACE_HAS_WINCE)
@@ -114,7 +114,7 @@ namespace ACE_OS
   inline
   float ceil (float x)
   {
-    return ACE_STD_NAMESPACE::ceilf (x);
+    return std::ceilf (x);
   }
 #endif
 

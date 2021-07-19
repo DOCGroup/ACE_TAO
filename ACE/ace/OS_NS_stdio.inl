@@ -343,7 +343,7 @@ ACE_OS::flock_wrlock (ACE_OS::ace_flock_t *lock,
 ACE_INLINE void
 ACE_OS::clearerr (FILE* fp)
 {
-  ace_clearerr_helper (fp);
+  std::clearerr (fp);
 }
 
 #if !defined (ACE_LACKS_CUSERID)
@@ -492,7 +492,7 @@ ACE_INLINE int
 ACE_OS::fclose (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fclose");
-  return ACE_STD_NAMESPACE::fclose (fp);
+  return std::fclose (fp);
 }
 
 ACE_INLINE FILE *
@@ -541,13 +541,13 @@ ACE_INLINE int
 ACE_OS::fflush (FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fflush");
-  return ACE_STD_NAMESPACE::fflush (fp);
+  return std::fflush (fp);
 }
 
 ACE_INLINE int
 ACE_OS::fgetc (FILE *fp)
 {
-  return ace_fgetc_helper (fp);
+  return std::fgetc (fp);
 }
 
 ACE_INLINE int
@@ -557,7 +557,7 @@ ACE_OS::getc (FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ace_getc_helper (fp);
+  return std::getc (fp);
 #endif
 }
 
@@ -569,7 +569,7 @@ ACE_OS::fgetpos (FILE *fp, fpos_t *pos)
   ACE_UNUSED_ARG (pos);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_STD_NAMESPACE::fgetpos (fp, pos);
+  return std::fgetpos (fp, pos);
 #endif
 }
 
@@ -582,14 +582,14 @@ ACE_OS::fgets (char *buf, int size, FILE *fp)
   int c = EOF;
   for (int i = 0; i < size - 1 && c != '\n'; ++i)
     {
-      c = ACE_STD_NAMESPACE::fgetc (fp);
+      c = std::fgetc (fp);
       if (c != EOF)
         *iter++ = static_cast<char> (c);
     }
   *iter = '\0';
   return c == EOF ? 0 : buf;
 #else
-  return ACE_STD_NAMESPACE::fgets (buf, size, fp);
+  return std::fgets (buf, size, fp);
 #endif /* ACE_LACKS_FGETS */
 }
 
@@ -598,7 +598,7 @@ ACE_INLINE wchar_t *
 ACE_OS::fgets (wchar_t *buf, int size, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fgets");
-  return ACE_STD_NAMESPACE::fgetws (buf, size, fp);
+  return std::fgetws (buf, size, fp);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FGETWS */
 
@@ -671,7 +671,7 @@ ACE_OS::ungetc (int c, FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ace_ungetc_helper (c, fp);
+  return std::ungetc (c, fp);
 #endif
 }
 
@@ -683,7 +683,7 @@ ACE_OS::fputc (int c, FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ace_fputc_helper (c, fp);
+  return std::fputc (c, fp);
 #endif
 }
 
@@ -695,7 +695,7 @@ ACE_OS::putc (int c, FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ace_putc_helper (c, fp);
+  return std::putc (c, fp);
 #endif
 }
 
@@ -708,7 +708,7 @@ ACE_OS::fputs (const char *s, FILE *stream)
   ACE_UNUSED_ARG (stream);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_STD_NAMESPACE::fputs (s, stream);
+  return std::fputs (s, stream);
 #endif
 }
 
@@ -717,7 +717,7 @@ ACE_INLINE int
 ACE_OS::fputs (const wchar_t *s, FILE *stream)
 {
   ACE_OS_TRACE ("ACE_OS::fputs");
-  return ACE_STD_NAMESPACE::fputws (s, stream);
+  return std::fputws (s, stream);
 }
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_FPUTWS */
 
@@ -725,7 +725,7 @@ ACE_INLINE size_t
 ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fread");
-  return ACE_STD_NAMESPACE::fread (ptr, size, nelems, fp);
+  return std::fread (ptr, size, nelems, fp);
 }
 
 ACE_INLINE FILE *
@@ -740,7 +740,7 @@ ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
   ACE_UNUSED_ARG (stream);
   ACE_NOTSUP_RETURN (0);
 #else
-  return ACE_STD_NAMESPACE::freopen (ACE_TEXT_ALWAYS_CHAR (filename), ACE_TEXT_ALWAYS_CHAR (mode), stream);
+  return std::freopen (ACE_TEXT_ALWAYS_CHAR (filename), ACE_TEXT_ALWAYS_CHAR (mode), stream);
 #endif /* ACE_WIN32 && ACE_USES_WCHAR */
 }
 
@@ -767,7 +767,7 @@ ACE_OS::fseek (FILE *fp, long offset, int whence)
     }
 # endif  /* SEEK_SET != FILE_BEGIN || SEEK_CUR != FILE_CURRENT || SEEK_END != FILE_END */
 #endif   /* ACE_WIN32 */
-  return ACE_STD_NAMESPACE::fseek (fp, offset, whence);
+  return std::fseek (fp, offset, whence);
 }
 
 ACE_INLINE int
@@ -785,14 +785,14 @@ ACE_OS::fsetpos (FILE* fp, fpos_t* pos)
 ACE_INLINE long
 ACE_OS::ftell (FILE* fp)
 {
-  return ACE_STD_NAMESPACE::ftell (fp);
+  return std::ftell (fp);
 }
 
 ACE_INLINE size_t
 ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fwrite");
-  return ACE_STD_NAMESPACE::fwrite (ptr, size, nitems, fp);
+  return std::fwrite (ptr, size, nitems, fp);
 }
 
 ACE_INLINE void
@@ -830,7 +830,7 @@ ACE_OS::puts (const char *s)
   ACE_UNUSED_ARG (s);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ::puts (s);
+  return std::puts (s);
 #endif /* ACE_LACKS_PUTS */
 }
 
@@ -934,7 +934,7 @@ ACE_OS::rewind (FILE *fp)
 #else
   // This isn't perfect since it doesn't reset EOF, but it's probably
   // the closest we can get on WINCE.
-  (void) ::fseek (fp, 0L, SEEK_SET);
+  (void) std::fseek (fp, 0L, SEEK_SET);
 #endif /* ACE_HAS_WINCE */
 }
 
@@ -1034,7 +1034,7 @@ ACE_OS::vprintf (const char *format, va_list argptr)
   ACE_UNUSED_ARG (argptr);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ::vprintf (format, argptr);
+  return std::vprintf (format, argptr);
 #endif /* ACE_LACKS_VPRINTF */
 }
 
@@ -1061,7 +1061,7 @@ ACE_OS::vfprintf (FILE *fp, const char *format, va_list argptr)
   ACE_UNUSED_ARG (argptr);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ACE_STD_NAMESPACE::vfprintf (fp, format, argptr);
+  return std::vfprintf (fp, format, argptr);
 #endif
 }
 
@@ -1089,7 +1089,7 @@ ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
   ACE_UNUSED_ARG (argptr);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return ::vsprintf (buffer, format, argptr);
+  return std::vsprintf (buffer, format, argptr);
 #endif /* ACE_LACKS_VSPRINTF */
 }
 

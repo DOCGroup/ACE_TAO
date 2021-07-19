@@ -58,7 +58,7 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
   return strtoll (s, ptr, base);
 # undef strtoll
 # else
-  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
+  return std::strtoll (s, ptr, base);
 # endif /* strtoll */
 }
 #endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
@@ -70,7 +70,7 @@ inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
   return strtoull (s, ptr, base);
 # undef strtoull
 # else
-  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
+  return std::strtoull (s, ptr, base);
 # endif /* strtoull */
 }
 #endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
