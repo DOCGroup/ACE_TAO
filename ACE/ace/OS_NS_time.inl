@@ -4,6 +4,7 @@
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_time.h"
+#include <ctime>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
