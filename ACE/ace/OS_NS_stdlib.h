@@ -22,6 +22,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_stdlib.h"
+#include <cstdlib>
 #include /**/ "ace/ACE_export.h"
 
 #include "ace/Basic_Types.h"  /* ACE_UINT64 and intptr_t in inl file */
