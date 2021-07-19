@@ -557,7 +557,7 @@ ACE_OS::getc (FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return std::getc (fp);
+  return ace_getc_helper (fp);
 #endif
 }
 
@@ -683,7 +683,7 @@ ACE_OS::fputc (int c, FILE *fp)
   ACE_UNUSED_ARG (fp);
   ACE_NOTSUP_RETURN (-1);
 #else
-  return std::fputc (c, fp);
+  return ace_fputc_helper (c, fp);
 #endif
 }
 

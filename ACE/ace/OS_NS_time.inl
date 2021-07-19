@@ -433,7 +433,7 @@ ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
 #if defined (ACE_LACKS_STRPTIME)
   return ACE_OS::strptime_emulation (buf, format, tm);
 #else
-  return std::strptime (buf, format, tm);
+  return ::strptime (buf, format, tm);
 #endif /* ACE_LACKS_STRPTIME */
 }
 

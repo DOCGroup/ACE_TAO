@@ -47,6 +47,55 @@
  * be usable later as there is no way to save the macro definition
  * using the pre-processor.
  */
+inline int ace_fgetc_helper (FILE *fp)
+{
+#if defined (fgetc)
+  return fgetc (fp);
+#undef fgetc
+#else
+  return ::fgetc (fp);
+#endif /* defined (fgetc) */
+}
+
+#if !defined (ACE_LACKS_FPUTC)
+inline int ace_fputc_helper (int ch, FILE *fp)
+{
+#if defined (fputc)
+  return fputc (ch, fp);
+#undef fputc
+#else
+  return ::fputc (ch, fp);
+#endif /* defined (fputc) */
+}
+#endif /* !ACE_LACKS_FPUTC */
+
+#if !defined (ACE_LACKS_GETC)
+inline int ace_getc_helper (FILE *fp)
+{
+#if defined (getc)
+  return getc (fp);
+#undef getc
+#else
+  return ::getc (fp);
+#endif /* defined (getc) */
+}
+#elif defined getc
+# undef getc
+#endif /* !ACE_LACKS_GETC */
+
+inline int ace_putc_helper (int ch, FILE *fp)
+{
+#if defined (putc)
+  return putc (ch, fp);
+#undef putc
+#elif !defined (ACE_LACKS_PUTC)
+  return ::putc (ch, fp);
+#else
+  ACE_UNUSED_ARG (ch);
+  ACE_UNUSED_ARG (fp);
+  return -1;
+#endif /* defined (putc) */
+}
 
 #if !defined ACE_FILENO_EQUIVALENT
 inline ACE_HANDLE ace_fileno_helper (FILE *fp)
