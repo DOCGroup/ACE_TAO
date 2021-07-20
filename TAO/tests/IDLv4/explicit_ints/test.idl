@@ -1,3 +1,12 @@
+#include __TAO_IDL_FEATURES
+#ifdef TAO_IDL_HAS_EXPLICIT_INTS
+#  if !TAO_IDL_HAS_EXPLICIT_INTS
+#    error "Expecting macro to be true"
+#  endif
+#else
+#  error "Expecting macro to be defined"
+#endif
+
 #include "tao/Int8Seq.pidl"
 #include "tao/UInt8Seq.pidl"
 #include "tao/OctetSeq.pidl"

@@ -6,6 +6,9 @@ USER VISIBLE CHANGES BETWEEN TAO-3.0.2 and TAO-3.0.3
   these are new distinct types that are not aliases of existing types covered
   by the CORBA specification.
 
+. Added the `tao/idl_features.h` header file for getting the IDL features
+  supported by IDL. See the file for example usage.
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.1 and TAO-3.0.2
 ====================================================
 
