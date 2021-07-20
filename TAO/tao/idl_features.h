@@ -13,9 +13,9 @@
  * // version.
  * #  define TAO_IDL_IDL_VERSION 0x30000
  * #  include "tao/idl_features.h"
- * #  define USE_FEATURE defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
- * #else
- * #  define USE_FEATURE 0
+ * #  if defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+ * #    define USE_FEATURE
+ * #  endif
  * #endif
  *
  * In IDL it can be used like this if you want to be compatible with older
@@ -23,10 +23,14 @@
  *
  * #if defined __TAO_IDL_FEATURES
  * #  include __TAO_IDL_FEATURES
- * #  define USE_FEATURE defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
- * #else
- * #  define USE_FEATURE 0
+ * #  if defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+ * #    define USE_FEATURE
+ * #  endif
  * #endif
+ *
+ * Note that support for annotations and anonymous types in IDL4 predate this
+ * file, so they are a potential special case depending on what ACE/TAO is
+ * being used.
  */
 
 #ifndef TAO_IDL_FEATURES_H
