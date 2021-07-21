@@ -262,10 +262,10 @@ Test_ObjRef::print_values (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*"
-              "in = %s, "
-              "inout = %s, "
-              "out = %s, "
-              "ret = %s*=*=*=*=*=\n",
+              "in = %C, "
+              "inout = %C, "
+              "out = %C, "
+              "ret = %C*=*=*=*=*=\n",
               in?in:"ERROR(null string)",
               inout?inout:"ERROR(null string)",
               out?out:"ERROR(null string)",

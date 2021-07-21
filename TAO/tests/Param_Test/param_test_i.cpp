@@ -263,7 +263,7 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
         {
           ACE_DEBUG ((LM_DEBUG,
                       "Element #%d\n"
-                      "in : %s\n",
+                      "in : %C\n",
                       i,
                       (s2[i]? (const char *)s2[i]:"<nul>")));
         }
@@ -737,7 +737,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   else if (a1 >>= str_in)
     {
       if (TAO_debug_level > 0)
-        ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %s\n", str_in));
+        ACE_DEBUG ((LM_DEBUG, "Received unbounded string = %C\n", str_in));
     }
   else if (a1 >>= coffee)
     {
