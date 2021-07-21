@@ -109,7 +109,7 @@ be_interface::be_interface (UTL_ScopedName *n,
       || nt == AST_Decl::NT_valuetype
       || nt == AST_Decl::NT_eventtype)
     {
-      return ;
+      return;
     }
 
   if (this->is_defined ())
