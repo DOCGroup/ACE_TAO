@@ -1,5 +1,14 @@
 #include "testC.h"
 
+#include "tao/idl_features.h"
+#ifdef TAO_IDL_HAS_EXPLICIT_INTS
+#  if !TAO_IDL_HAS_EXPLICIT_INTS
+#    error "Expecting macro to be true"
+#  endif
+#else
+#  error "Expecting macro to be defined"
+#endif
+
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_main.h"
 #include "ace/streams.h"
