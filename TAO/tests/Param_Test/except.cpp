@@ -272,7 +272,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Exception::run_sii_test - "
                       "expected user exception"
-                      " (%s,%d)\n",
+                      " (%C,%d)\n",
                       reason,
                       mod_value));
         }
