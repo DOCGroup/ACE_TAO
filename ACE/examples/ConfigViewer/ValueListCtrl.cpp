@@ -101,7 +101,7 @@ void ValueListCtrl::OnModify(wxCommandEvent& event)
   long Item = GetSelectedItem();
   if(Item == -1)
   {
-    return ;
+    return;
   }
   wxListItem ListItem;
   ACE_Configuration::VALUETYPE Type = (ACE_Configuration::VALUETYPE)GetItemData(Item);
@@ -159,7 +159,7 @@ void ValueListCtrl::OnDelete(wxCommandEvent& event)
   long Item = GetSelectedItem();
   if(Item == -1)
   {
-    return ;
+    return;
   }
   wxString Text = GetItemText(Item);
   m_pConfig->remove_value(m_Key, Text);
@@ -171,7 +171,7 @@ void ValueListCtrl::OnRename(wxCommandEvent& event)
   long Item = GetSelectedItem();
   if(Item == -1)
   {
-    return ;
+    return;
   }
   wxListItem ListItem;
   ACE_Configuration::VALUETYPE Type = (ACE_Configuration::VALUETYPE)GetItemData(Item);
