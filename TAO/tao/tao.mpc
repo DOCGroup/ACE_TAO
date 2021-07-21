@@ -448,6 +448,7 @@ project(TAO) : acelib, install, tao_output, taodefaults, pidl, extra_core, taoid
     HTTP_Client.h
     HTTP_Handler.h
     HTTP_Parser.h
+    idl_features.h
     IFR_Client_Adapter.h
     IIOP_Acceptor.h
     IIOPC.h
