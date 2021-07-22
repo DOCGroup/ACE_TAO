@@ -461,7 +461,6 @@ protected:
  public:
   static void intrusive_add_ref (ACE_Service_Gestalt*);
   static void intrusive_remove_ref (ACE_Service_Gestalt*);
-
 }; /* class ACE_Service_Gestalt */
 
 
