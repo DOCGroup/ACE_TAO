@@ -14,6 +14,7 @@ concurrency:
 jobs:
   build:
     strategy:
+      fast-fail: false
       matrix:
         include:
           - CC: gcc-4.8
