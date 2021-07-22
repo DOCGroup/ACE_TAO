@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "drv_extern.h"
 #include "utl_string.h"
+#include "utl_err.h"
+
 #include "ace/Version.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
@@ -138,6 +140,8 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
+  const ACE_TCHAR *arg_to_add = 0;
+
   if (str && ACE_OS::strchr (str, ' ') && !ACE_OS::strchr (str, '"'))
     {
       ACE_TCHAR *buf = 0;
@@ -147,14 +151,60 @@ DRV_cpp_putarg (const char *str)
           buf[0] = ACE_TEXT ('"');
           ACE_OS::strcpy (buf + 1, ACE_TEXT_CHAR_TO_TCHAR (str));
           ACE_OS::strcat (buf, ACE_TEXT ("\""));
-          DRV_arglist[DRV_argcount++] = buf;
+          arg_to_add = buf;
+        }
+      else
+        {
+          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate buffer!");
+          throw Bailout ();
         }
     }
-  else
+  else if (str)
     {
-      DRV_arglist[DRV_argcount++] =
-        ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+#ifdef ACE_WIN32
+      // Escape Doublequotes on Windows
+      size_t quote_count = 0;
+      for (const char* quote = ACE_OS::strchr (str, '"'); quote; quote = ACE_OS::strchr (quote, '"'))
+        {
+          ++quote_count;
+          ++quote;
+        }
+      if (quote_count)
+        {
+          ACE_TCHAR *buf = 0;
+          ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + quote_count + 1]);
+          if (buf)
+            {
+              ACE_TCHAR *to = buf;
+              for (const char* from = str; *from; ++from)
+                {
+                  if (*from == '"')
+                    {
+                      *to = ACE_TEXT ('\\');
+                      ++to;
+                    }
+                  *to = *from;
+                  ++to;
+                }
+              *to = ACE_TEXT ('\0');
+              arg_to_add = buf;
+            }
+          else
+            {
+              idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate buffer!");
+              throw Bailout ();
+            }
+        }
+      else
+        {
+          arg_to_add = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+        }
+#else
+      arg_to_add = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+#endif
     }
+
+  DRV_arglist[DRV_argcount++] = arg_to_add;
 }
 
 // Expand the output argument with the given filename.
@@ -587,7 +637,13 @@ DRV_cpp_post_init (void)
     idl_global->idl_version_.to_macro ());
   DRV_cpp_putarg (idl_version_arg);
 
-  DRV_cpp_putarg ("-D__TAO_IDL_FEATURES=\"tao/idl_features.h\"");
+  DRV_cpp_putarg ("-D__TAO_IDL_FEATURES="
+#ifdef TAO_IDL_FEATURES
+    TAO_IDL_FEATURES
+#else
+    "\"tao/idl_features.h\""
+#endif
+  );
 
   // Add include path for TAO_ROOT/orbsvcs.
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");
