@@ -140,71 +140,69 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  const ACE_TCHAR *arg_to_add = nullptr;
+  char *replace = nullptr;
+  if (str)
+    {
+      const char *const first_quote = ACE_OS::strchr (str, '"');
+      bool allocate_error = false;
 
-  if (str && ACE_OS::strchr (str, ' ') && !ACE_OS::strchr (str, '"'))
-    {
-      ACE_TCHAR *buf = nullptr;
-      ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
-      if (buf)
+      if (ACE_OS::strchr (str, ' ') && !first_quote)
         {
-          buf[0] = ACE_TEXT ('"');
-          ACE_OS::strcpy (buf + 1, ACE_TEXT_CHAR_TO_TCHAR (str));
-          ACE_OS::strcat (buf, ACE_TEXT ("\""));
-          arg_to_add = buf;
-        }
-      else
-        {
-          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate buffer!");
-          throw Bailout ();
-        }
-    }
-  else if (str)
-    {
-#ifdef ACE_WIN32
-      // Escape Doublequotes on Windows
-      size_t quote_count = 0;
-      for (const char* quote = ACE_OS::strchr (str, '"'); quote; quote = ACE_OS::strchr (quote, '"'))
-        {
-          ++quote_count;
-          ++quote;
-        }
-      if (quote_count)
-        {
-          ACE_TCHAR *buf = nullptr;
-          ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + quote_count + 1]);
-          if (buf)
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
+          allocate_error = !replace;
+          if (replace)
             {
-              ACE_TCHAR *to = buf;
-              for (const char* from = str; *from; ++from)
+              replace[0] = '"';
+              ACE_OS::strcpy (replace + 1, str);
+              ACE_OS::strcat (replace, "\"");
+            }
+        }
+#ifdef ACE_WIN32
+      else if (first_quote)
+        {
+          // Escape Doublequotes on Windows
+
+          size_t quote_count = 0;
+          for (const char *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
+            {
+              ++quote_count;
+              ++quote;
+            }
+
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + quote_count + 1]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              char *to = replace;
+              for (const char *from = str; *from; ++from)
                 {
                   if (*from == '"')
                     {
-                      *to = ACE_TEXT ('\\');
+                      *to = '\\';
                       ++to;
                     }
                   *to = *from;
                   ++to;
                 }
-              *to = ACE_TEXT ('\0');
-              arg_to_add = buf;
-            }
-          else
-            {
-              idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate buffer!");
-              throw Bailout ();
+              *to = '\0';
             }
         }
-      else
-        {
-          arg_to_add = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
-        }
-#else
-      arg_to_add = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
 #endif
+
+      if (allocate_error)
+        {
+          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate memory for argument!");
+          throw Bailout ();
+        }
     }
 
-  DRV_arglist[DRV_argcount++] = arg_to_add;
+  DRV_arglist[DRV_argcount++] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (replace ? replace : str));
+
+  if (replace)
+    {
+      delete replace;
+      replace = nullptr;
+    }
 }
 
 // Expand the output argument with the given filename.
