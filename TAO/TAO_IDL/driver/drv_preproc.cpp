@@ -200,7 +200,7 @@ DRV_cpp_putarg (const char *str)
 
   if (replace)
     {
-      delete replace;
+      delete [] replace;
       replace = nullptr;
     }
 }
