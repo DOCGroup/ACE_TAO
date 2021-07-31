@@ -156,7 +156,7 @@ public:
                     ACE_Thread_Manager* thr_mgr = 0);
 
   /// The svc call
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The supplier

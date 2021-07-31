@@ -31,7 +31,7 @@ public:
     return ++this->count_;
   }
 
-  float temperature (void) const
+  float temperature () const
   {
     return this->temperature_;
   }

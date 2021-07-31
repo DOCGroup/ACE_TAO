@@ -17,7 +17,7 @@ be_visitor_union_any_op_cs::be_visitor_union_any_op_cs (
 {
 }
 
-be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs (void)
+be_visitor_union_any_op_cs::~be_visitor_union_any_op_cs ()
 {
 }
 
@@ -70,21 +70,21 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  be_module *module = 0;
+  be_module *module = nullptr;
 
   AST_Decl *decl = node;
   if (decl->is_nested ())
     {
       if (node->defined_in ()->scope_node_type () == AST_Decl::NT_interface)
         {
-          be_interface *intf = 0;
-          intf = be_interface::narrow_from_scope (node->defined_in ());
+          be_interface *intf = nullptr;
+          intf = dynamic_cast<be_interface*> (node->defined_in ());
           decl = intf;
         }
 
       if (decl->defined_in ()->scope_node_type () == AST_Decl::NT_module)
         {
-          module = be_module::narrow_from_scope (decl->defined_in ());
+          module = dynamic_cast<be_module*> (decl->defined_in ());
 
           if (!module)
             {
@@ -209,7 +209,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
 
   *os << be_global->core_versioning_end () << be_nl;
 
-  if (module != 0)
+  if (module != nullptr)
     {
       *os << "\n\n#endif";
     }
@@ -221,8 +221,8 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
     {
       AST_Decl *d = si.item ();
 
-      be_enum *e = be_enum::narrow_from_decl (d);
-      if (e != 0)
+      be_enum *e = dynamic_cast<be_enum*> (d);
+      if (e != nullptr)
         {
           be_visitor_enum_any_op_cs visitor (&ctx);
 
@@ -247,14 +247,14 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
                         -1);
     }
 
-  node->cli_stub_any_op_gen (1);
+  node->cli_stub_any_op_gen (true);
   return 0;
 }
 
 int
 be_visitor_union_any_op_cs::visit_union_branch (be_union_branch *node)
 {
-  be_type *bt = be_type::narrow_from_decl (node->field_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->field_type ());
 
   if (!bt)
     {

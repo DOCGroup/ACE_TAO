@@ -160,8 +160,8 @@ public:
 
   virtual ~JAWS_Cache_Proxy (void);
 
-  DATA *data (void) const;
-  operator DATA * (void) const;
+  DATA *data () const;
+  operator DATA * () const;
 
   virtual int close (DATA *);
 

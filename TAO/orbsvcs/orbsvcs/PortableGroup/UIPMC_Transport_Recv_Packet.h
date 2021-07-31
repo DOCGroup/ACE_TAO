@@ -67,9 +67,9 @@ namespace TAO_PG
     /// Returns the time when the first fragment was received or
     /// ACE_Time_Value::zero if the whole packet was not able to
     /// reconstruct for some reason.
-    ACE_Time_Value const &started (void) const;
+    ACE_Time_Value const &started () const;
 
-    CORBA::ULong data_length (void) const;
+    CORBA::ULong data_length () const;
 
     /// Copies fragments to buf. Caller ensures that the buf is big enough
     /// for all fragments.

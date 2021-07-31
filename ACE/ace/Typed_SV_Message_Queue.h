@@ -56,13 +56,13 @@ public:
   int recv (ACE_Typed_SV_Message<T> &mb, int mflags = 0);
 
   /// Return the id of the underlying ACE_SV_Message_Queue.
-  int get_id (void) const;
+  int get_id () const;
 
   /// Control the underlying message queue.
   int control (int option, void *arg = 0);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

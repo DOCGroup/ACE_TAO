@@ -29,7 +29,7 @@ TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
 {
 }
 
-TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler (void)
+TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
   this->transport_->remove_reference ();
 
@@ -86,7 +86,7 @@ TAO_AMH_Response_Handler::init(TAO_ServerRequest &server_request,
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
+TAO_AMH_Response_Handler::_tao_rh_init_reply ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -126,7 +126,7 @@ TAO_AMH_Response_Handler::_tao_rh_init_reply (void)
 }
 
 void
-TAO_AMH_Response_Handler::_tao_rh_send_reply (void)
+TAO_AMH_Response_Handler::_tao_rh_send_reply ()
 {
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
@@ -311,7 +311,7 @@ TAO_AMH_Response_Handler::_tao_rh_send_location_forward (CORBA::Object_ptr fwd,
 }
 
 void
-TAO_AMH_Response_Handler::_remove_ref (void)
+TAO_AMH_Response_Handler::_remove_ref ()
 {
   if (--this->refcount_ == 0)
     {

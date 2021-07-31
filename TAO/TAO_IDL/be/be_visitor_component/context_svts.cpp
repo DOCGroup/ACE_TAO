@@ -17,7 +17,7 @@ be_visitor_context_svts::be_visitor_context_svts (be_visitor_context *ctx)
 {
 }
 
-be_visitor_context_svts::~be_visitor_context_svts (void)
+be_visitor_context_svts::~be_visitor_context_svts ()
 {
 }
 
@@ -70,7 +70,7 @@ be_visitor_context_svts::visit_component (be_component *node)
   os_ << be_nl_2
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << lname << "_Context_T<CONTAINER_TYPE, BASE>::~"
-      << lname << "_Context_T (void)" << be_nl
+      << lname << "_Context_T ()" << be_nl
       << "{" << be_nl
       << "}";
 
@@ -192,7 +192,7 @@ be_visitor_context_svts::visit_publishes (be_publishes *node)
 
   os_ << be_nl
       << be_nl
-      << "::Components::Cookie * retv = 0;" << be_nl
+      << "::Components::Cookie * retv {};" << be_nl
       << "ACE_NEW_THROW_EX (retv," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl
@@ -303,7 +303,7 @@ be_visitor_context_svts::visit_emits (be_emits *node)
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "Consumer_ptr" << be_nl
       << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::disconnect_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "Consumer_var ciao_emits_" << port_name << " =" << be_idt_nl
       << "this->ciao_emits_" << port_name << "_consumer_._retn ();" << be_uidt_nl << be_nl
@@ -329,7 +329,7 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "_ptr" << be_nl
       << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::get_connection_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "return ::" << fname << "::_duplicate (" << be_idt_nl
       << "this->ciao_uses_" << port_name << "_.in ());"
@@ -361,7 +361,7 @@ be_visitor_context_svts::gen_uses_simplex (AST_Type *obj,
       << "template <typename CONTAINER_TYPE, typename BASE>" << be_nl
       << "::" << fname << "_ptr" << be_nl
       << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::disconnect_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl
       << "::" << fname << "_var ciao_uses_" << port_name << " =" << be_idt_nl
       << "this->ciao_uses_" << port_name << "_._retn ();" << be_uidt_nl << be_nl
@@ -387,7 +387,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "::" << node_->full_name () << "::" << port_name
       << "Connections *" << be_nl
       << node_->local_name () << "_Context_T<CONTAINER_TYPE, BASE>::get_connections_"
-      << port_name << " (void)" << be_nl
+      << port_name << " ()" << be_nl
       << "{" << be_idt_nl;
 
   os_ << "ACE_GUARD_RETURN (TAO_SYNCH_MUTEX," << be_nl
@@ -397,7 +397,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "                  0);" << be_nl_2;
 
   os_ << "::" << node_->full_name () << "::" << port_name
-      << "Connections * tmp_retv = 0;" << be_nl
+      << "Connections * tmp_retv {};" << be_nl
       << "ACE_NEW_THROW_EX (tmp_retv," << be_nl
       << "                  ::" << node_->full_name ()
       << "::" << port_name << "Connections (" << be_nl
@@ -465,7 +465,7 @@ be_visitor_context_svts::gen_uses_multiplex (
       << "}";
 
   os_ << be_nl_2
-      << "::Components::Cookie * ck = 0;" << be_nl
+      << "::Components::Cookie * ck {};" << be_nl
       << "ACE_NEW_THROW_EX (ck," << be_nl
       << "                  ::CIAO::Cookie_Impl (ptr),"
       << be_nl

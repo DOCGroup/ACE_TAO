@@ -55,7 +55,7 @@ EC_Reconnect::parse_args (int& argc, ACE_TCHAR* argv[])
 }
 
 void
-EC_Reconnect::print_args (void) const
+EC_Reconnect::print_args () const
 {
   this->EC_Driver::print_args ();
 

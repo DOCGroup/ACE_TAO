@@ -9,11 +9,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE const void *
 ACE_OS::memchr (const void *s, int c, size_t len)
 {
-#if !defined (ACE_LACKS_MEMCHR)
   return ::memchr (s, c, len);
-#else /* ACE_LACKS_MEMCHR */
-  return ACE_OS::memchr_emulation (s, c, len);
-#endif /* !ACE_LACKS_MEMCHR */
 }
 
 ACE_INLINE void *
@@ -33,11 +29,7 @@ ACE_OS::memcmp (const void *t, const void *s, size_t len)
 ACE_INLINE void *
 ACE_OS::memcpy (void *t, const void *s, size_t len)
 {
-#if defined (ACE_HAS_MEMCPY_LOOP_UNROLL)
-  return fast_memcpy (t, s, len);
-#else
   return ::memcpy (t, s, len);
-#endif /* ACE_HAS_MEMCPY_LOOP_UNROLL */
 }
 
 ACE_INLINE void *
@@ -49,56 +41,7 @@ ACE_OS::memmove (void *t, const void *s, size_t len)
 ACE_INLINE void *
 ACE_OS::memset (void *s, int c, size_t len)
 {
-#if defined (ACE_HAS_SLOW_MEMSET)
-  // This section requires a high optimization level (-xO4 with SunCC)
-  // in order to actually be inlined.
-  char* ptr = static_cast<char*> (s);
-  switch (len)
-    {
-    case 16:
-      ptr[15] = c;
-    case 15:
-      ptr[14] = c;
-    case 14:
-      ptr[13] = c;
-    case 13:
-      ptr[12] = c;
-    case 12:
-      ptr[11] = c;
-    case 11:
-      ptr[10] = c;
-    case 10:
-      ptr[9] = c;
-    case 9:
-      ptr[8] = c;
-    case 8:
-      ptr[7] = c;
-    case 7:
-      ptr[6] = c;
-    case 6:
-      ptr[5] = c;
-    case 5:
-      ptr[4] = c;
-    case 4:
-      ptr[3] = c;
-    case 3:
-      ptr[2] = c;
-    case 2:
-      ptr[1] = c;
-    case 1:
-      ptr[0] = c;
-      break;
-    default:
-      for (size_t i = 0; i < len; ++i)
-        {
-          ptr[i] = c;
-        }
-    }
-
-  return s;
-#else
   return ::memset (s, c, len);
-#endif /* ACE_HAS_SLOW_MEMSET */
 }
 
 ACE_INLINE char *
@@ -403,11 +346,7 @@ ACE_OS::strpbrk (wchar_t *s, const wchar_t *t)
 ACE_INLINE const char *
 ACE_OS::strrchr (const char *s, int c)
 {
-#if defined (ACE_LACKS_STRRCHR)
-  return ACE_OS::strrchr_emulation (s, c);
-#else  /* ! ACE_LACKS_STRRCHR */
   return (const char *) ::strrchr (s, c);
-#endif /* ! ACE_LACKS_STRRCHR */
 }
 
 #if defined (ACE_HAS_WCHAR)
@@ -425,11 +364,7 @@ ACE_OS::strrchr (const wchar_t *s, wchar_t c)
 ACE_INLINE char *
 ACE_OS::strrchr (char *s, int c)
 {
-#if defined (ACE_LACKS_STRRCHR)
-  return ACE_OS::strrchr_emulation (s, c);
-#else  /* ! ACE_LACKS_STRRCHR */
   return ::strrchr (s, c);
-#endif /* ! ACE_LACKS_STRRCHR */
 }
 
 #if defined (ACE_HAS_WCHAR)

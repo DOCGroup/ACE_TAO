@@ -47,7 +47,7 @@ public:
                     ACE_TCHAR *filename);
 
   /// returns the number of bytes read/written in the last operation.
-  size_t byte_count (void) const;
+  size_t byte_count () const;
 
   /// Activate this instance of the <HTTP_Handler>
   virtual int open (void * = 0);

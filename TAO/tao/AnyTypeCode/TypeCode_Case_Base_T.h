@@ -49,7 +49,6 @@ namespace TAO
     class Case
     {
     public:
-
       /// Constructor.
       /**
        * Constructor used when creating static @c union @c TypeCodes.
@@ -60,20 +59,20 @@ namespace TAO
       /**
        * Constructor used when creating dynamic @c union @c TypeCodes.
        */
-      Case (void);
+      Case ();
 
       /// Destructor.
-      virtual ~Case (void);
+      virtual ~Case ();
 
       /// Cloning/copying operation.
-      virtual Case * clone (void) const = 0;
+      virtual Case * clone () const = 0;
 
       /// Return the IDL @c union case label value embedded within a
       /// @c CORBA::Any.
-      virtual CORBA::Any * label (void) const = 0;
+      virtual CORBA::Any * label () const = 0;
 
       /// Get the name of the @c union case/member.
-      char const * name (void) const;
+      char const * name () const;
 
       /// Set the name of the @c union case/member.
       void name (char const * the_name);
@@ -83,7 +82,7 @@ namespace TAO
        * @note The reference count is not manipulated by this method,
        *       i.e., ownership is retained by this class.
        */
-      CORBA::TypeCode_ptr type (void) const;
+      CORBA::TypeCode_ptr type () const;
 
       /// Set the @c CORBA::TypeCode of the @c union case/member.
       /**

@@ -61,7 +61,7 @@ public:
     CosNotifyChannelAdmin::ProxyID_out proxy_id);
 
 
-  TAO_MonitorEventChannel* get_ec (void) const;
+  TAO_MonitorEventChannel* get_ec () const;
 
   const ACE_CString & stat_name (void)const;
 

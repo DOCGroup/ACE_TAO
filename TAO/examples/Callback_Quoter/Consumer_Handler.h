@@ -72,7 +72,7 @@ public:
   Callback_Quoter::Consumer_var consumer_var_;
 
   /// This method gives the reactor pointer.
-  ACE_Reactor* reactor_used (void) const;
+  ACE_Reactor* reactor_used () const;
 
   /// Flag which notes whether the consumer has got registered with the
   /// Notifier-server.

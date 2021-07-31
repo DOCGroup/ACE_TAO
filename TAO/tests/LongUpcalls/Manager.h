@@ -32,7 +32,7 @@ public:
           Test::Controller_ptr controller,
           CORBA::Long milliseconds);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:

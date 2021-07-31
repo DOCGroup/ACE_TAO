@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // = Methods to deal with ACE_Hash_Map_Manager.
 
-CosProperty_Hash_Key::CosProperty_Hash_Key (void)
+CosProperty_Hash_Key::CosProperty_Hash_Key ()
 {
 }
 
@@ -47,20 +47,20 @@ CosProperty_Hash_Key::operator == (const CosProperty_Hash_Key &hash_key) const
 }
 
 u_long
-CosProperty_Hash_Key::hash (void) const
+CosProperty_Hash_Key::hash () const
 {
   u_long ret = ACE::hash_pjw (this->pname_);
 
   return ret;
 }
 
-CosProperty_Hash_Key::~CosProperty_Hash_Key (void)
+CosProperty_Hash_Key::~CosProperty_Hash_Key ()
 {
 }
 
 //======================================================================
 
-CosProperty_Hash_Value::CosProperty_Hash_Value (void)
+CosProperty_Hash_Value::CosProperty_Hash_Value ()
 {
 }
 
@@ -77,19 +77,19 @@ CosProperty_Hash_Value::CosProperty_Hash_Value (const CosProperty_Hash_Value &sr
 {
 }
 
-CosProperty_Hash_Value::~CosProperty_Hash_Value (void)
+CosProperty_Hash_Value::~CosProperty_Hash_Value ()
 {
 }
 
 //======================================================================
 
 // Constructor.
-TAO_PropertySetFactory::TAO_PropertySetFactory (void)
+TAO_PropertySetFactory::TAO_PropertySetFactory ()
 {
 }
 
 // Destructor.
-TAO_PropertySetFactory::~TAO_PropertySetFactory (void)
+TAO_PropertySetFactory::~TAO_PropertySetFactory ()
 {
 }
 
@@ -99,7 +99,7 @@ TAO_PropertySetFactory::~TAO_PropertySetFactory (void)
 // things.
 
 CosPropertyService::PropertySet_ptr
-TAO_PropertySetFactory::create_propertyset (void)
+TAO_PropertySetFactory::create_propertyset ()
 {
   // New a TAO_PropertySet.
   TAO_PropertySet *new_set;
@@ -201,7 +201,7 @@ TAO_PropertySetFactory::create_initial_propertyset (const CosPropertyService::Pr
 }
 
 // Destructor.
-TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory (void)
+TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory ()
 {
   // Release all the new'ed products.
   for (CORBA::ULong pi = 0;
@@ -213,7 +213,7 @@ TAO_PropertySetDefFactory::~TAO_PropertySetDefFactory (void)
 //======================================================================
 
 // Constrctor.
-TAO_PropertySetDefFactory::TAO_PropertySetDefFactory (void)
+TAO_PropertySetDefFactory::TAO_PropertySetDefFactory ()
 {
 }
 
@@ -223,7 +223,7 @@ TAO_PropertySetDefFactory::TAO_PropertySetDefFactory (void)
 // delete all these New'ed things.
 
 CosPropertyService::PropertySetDef_ptr
-TAO_PropertySetDefFactory::create_propertysetdef (void)
+TAO_PropertySetDefFactory::create_propertysetdef ()
 {
   // New a TAO_PropertySetDef.
   TAO_PropertySetDef *new_set;
@@ -330,7 +330,7 @@ TAO_PropertySetDefFactory::create_initial_propertysetdef (const CosPropertyServi
 // Makes default sized hash_table_. All the sequences are set the max
 // length as 0.
 
-TAO_PropertySet::TAO_PropertySet (void)
+TAO_PropertySet::TAO_PropertySet ()
 {
 }
 
@@ -397,7 +397,7 @@ TAO_PropertySet::TAO_PropertySet (const CosPropertyService::Properties initial_p
 
 // Destructor. All sequences will be deleted.
 
-TAO_PropertySet::~TAO_PropertySet (void)
+TAO_PropertySet::~TAO_PropertySet ()
 {
 }
 
@@ -625,7 +625,7 @@ TAO_PropertySet::define_properties (const CosPropertyService::Properties &nprope
 
 
 CORBA::ULong
-TAO_PropertySet::get_number_of_properties (void)
+TAO_PropertySet::get_number_of_properties ()
 {
   return static_cast<CORBA::ULong> (this->hash_table_.current_size ());
 }
@@ -990,7 +990,7 @@ TAO_PropertySet::delete_properties (const CosPropertyService::PropertyNames &pro
 
 
 CORBA::Boolean
-TAO_PropertySet::delete_all_properties (void)
+TAO_PropertySet::delete_all_properties ()
 {
   // Get all the property names in a names' sequence.
   CosPropertyService::PropertyNames *names_ptr = 0;
@@ -1043,7 +1043,7 @@ TAO_PropertySet::operator= (const TAO_PropertySet &)
 
 // Makes default sized hash_table_.
 
-TAO_PropertySetDef::TAO_PropertySetDef (void)
+TAO_PropertySetDef::TAO_PropertySetDef ()
 {
 }
 
@@ -1082,7 +1082,7 @@ TAO_PropertySetDef::TAO_PropertySetDef (const CosPropertyService::PropertyDefs i
 
 // Destructor.
 
-TAO_PropertySetDef::~TAO_PropertySetDef (void)
+TAO_PropertySetDef::~TAO_PropertySetDef ()
 {
 }
 
@@ -1521,7 +1521,7 @@ TAO_PropertyNamesIterator::TAO_PropertyNamesIterator (TAO_PropertySet &property_
 
 // Destructor.
 
-TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
+TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator ()
 {
 }
 
@@ -1529,7 +1529,7 @@ TAO_PropertyNamesIterator::~TAO_PropertyNamesIterator (void)
 // one exists.
 
 void
-TAO_PropertyNamesIterator::reset (void)
+TAO_PropertyNamesIterator::reset ()
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
@@ -1589,7 +1589,7 @@ TAO_PropertyNamesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertyNamesIterator::destroy (void)
+TAO_PropertyNamesIterator::destroy ()
 {
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests
@@ -1609,12 +1609,12 @@ TAO_PropertiesIterator::TAO_PropertiesIterator (TAO_PropertySet &property_set)
 {
 }
 
-TAO_PropertiesIterator::~TAO_PropertiesIterator (void)
+TAO_PropertiesIterator::~TAO_PropertiesIterator ()
 {
 }
 
 void
-TAO_PropertiesIterator::reset (void)
+TAO_PropertiesIterator::reset ()
 {
   this->iterator_ = this->iterator_.map ().begin ();
 }
@@ -1681,7 +1681,7 @@ TAO_PropertiesIterator::next_n (CORBA::ULong how_many,
 }
 
 void
-TAO_PropertiesIterator::destroy (void)
+TAO_PropertiesIterator::destroy ()
 {
   // Remove self from POA.  Because of reference counting, the POA
   // will automatically delete the servant when all pending requests

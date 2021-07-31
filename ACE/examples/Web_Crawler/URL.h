@@ -52,7 +52,7 @@ public:
   virtual ssize_t send_request (void) = 0;
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr (void) const = 0;
+  virtual const ACE_URL_Addr &url_addr () const = 0;
 
   /// Returns the <Mem_Map_Stream>.
   virtual Mem_Map_Stream &stream (void);

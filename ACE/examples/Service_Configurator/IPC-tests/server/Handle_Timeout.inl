@@ -69,7 +69,7 @@ Handle_Timeout::fini (void)
 }
 
 ACE_INLINE ACE_HANDLE
-Handle_Timeout::get_handle (void) const
+Handle_Timeout::get_handle () const
 {
   return ACE_INVALID_HANDLE;
 }

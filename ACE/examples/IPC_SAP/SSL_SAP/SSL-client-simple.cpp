@@ -68,13 +68,13 @@ Options::init (void)
 }
 
 size_t
-Options::message_len (void) const
+Options::message_len () const
 {
   return this->message_len_;
 }
 
 const void *
-Options::message_buf (void) const
+Options::message_buf () const
 {
   return this->message_buf_;
 }
@@ -145,25 +145,25 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 u_short
-Options::port (void) const
+Options::port () const
 {
   return this->port_;
 }
 
 const ACE_TCHAR *
-Options::host (void) const
+Options::host () const
 {
   return this->host_;
 }
 
 const char *
-Options::quit_string (void) const
+Options::quit_string () const
 {
   return this->quit_string_;
 }
 
 const ACE_Time_Value &
-Options::sleep_time (void) const
+Options::sleep_time () const
 {
   return this->sleep_time_;
 }

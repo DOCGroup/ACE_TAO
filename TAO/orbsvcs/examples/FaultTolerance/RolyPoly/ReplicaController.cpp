@@ -114,7 +114,7 @@ ReplicaController (CORBA::ORB_ptr orb)
 
   if (r < 0)
   {
-    orb_->shutdown (0);
+    orb_->shutdown (false);
   }
 }
 
@@ -189,7 +189,7 @@ listener ()
     ACE_DEBUG ((LM_DEBUG, "Group::InsufficienSpace\n"));
   }
 
-  orb_->shutdown (0);
+  orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr ReplicaController::

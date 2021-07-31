@@ -48,7 +48,6 @@ class TAO_Dynamic_TP_Export TAO_DTP_New_Leader_Generator
   : public TAO_New_Leader_Generator
 {
 public:
-
   /// Constructor.
   TAO_DTP_New_Leader_Generator (TAO_DTP_Thread_Pool &lane);
 
@@ -57,7 +56,6 @@ public:
   bool no_leaders_available (void);
 
 private:
-
   /// Pool associated with this leader generator.
   TAO_DTP_Thread_Pool &pool_;
 };
@@ -80,7 +78,7 @@ public:
   int svc (void);
 
   /// Accessor to the pool to which this thread belongs to.
-  TAO_DTP_Thread_Pool &pool (void) const;
+  TAO_DTP_Thread_Pool &pool () const;
 
 protected:
   /// Do the real work
@@ -163,12 +161,12 @@ public:
   /// @name Accessors
   // @{
 
-  bool use_timeouts (void) const;
-  const ACE_Time_Value& dynamic_thread_time (void) const;
+  bool use_timeouts () const;
+  const ACE_Time_Value& dynamic_thread_time () const;
 
-  TAO_DTP_Thread_Pool_Manager &manager (void) const;
-  CORBA::ULong id (void) const;
-  CORBA::ULong current_threads (void) const;
+  TAO_DTP_Thread_Pool_Manager &manager () const;
+  CORBA::ULong id () const;
+  CORBA::ULong current_threads () const;
   void add_active (void);
   bool remove_active (bool force);
 
@@ -239,11 +237,10 @@ public:
 
   /// @name Accessors
   // @{
-  TAO_ORB_Core &orb_core (void) const;
+  TAO_ORB_Core &orb_core () const;
   // @}
 
 private:
-
   /// @name Helpers
   // @{
 
@@ -255,7 +252,6 @@ private:
   // @}
 
 private:
-
   TAO_ORB_Core &orb_core_;
 
   THREAD_POOLS thread_pools_;

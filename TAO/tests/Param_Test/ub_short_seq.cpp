@@ -33,7 +33,7 @@ Test_Short_Sequence::~Test_Short_Sequence (void)
 }
 
 const char *
-Test_Short_Sequence::opname (void) const
+Test_Short_Sequence::opname () const
 {
   return this->opname_;
 }

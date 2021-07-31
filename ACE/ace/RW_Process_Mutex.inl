@@ -65,7 +65,7 @@ ACE_RW_Process_Mutex::tryacquire_write_upgrade (void)
 }
 
 ACE_INLINE const ACE_File_Lock &
-ACE_RW_Process_Mutex::lock (void) const
+ACE_RW_Process_Mutex::lock () const
 {
 // ACE_TRACE ("ACE_RW_Process_Mutex::lock");
   return this->lock_;

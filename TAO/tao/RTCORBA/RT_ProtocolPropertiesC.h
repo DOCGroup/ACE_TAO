@@ -98,9 +98,9 @@ namespace RTCORBA
 
     static ProtocolProperties_ptr _narrow (::CORBA::Object_ptr obj);
     static ProtocolProperties_ptr _unchecked_narrow (::CORBA::Object_ptr obj);
-    static ProtocolProperties_ptr _nil (void)
+    static ProtocolProperties_ptr _nil ()
     {
-      return static_cast<ProtocolProperties_ptr> (0);
+      return nullptr;
     }
 
     static void _tao_any_destructor (void *);
@@ -109,7 +109,7 @@ namespace RTCORBA
     // be\be_visitor_interface/interface_ch.cpp:216
 
     virtual ::CORBA::Boolean _is_a (const char *type_id);
-    virtual const char* _interface_repository_id (void) const;
+    virtual const char* _interface_repository_id () const;
     virtual ::CORBA::Boolean marshal (TAO_OutputCDR &cdr);
 
     // CDR Encoder/Decoder methods. (handcrafted)

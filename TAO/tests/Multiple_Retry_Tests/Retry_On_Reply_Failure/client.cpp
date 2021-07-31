@@ -55,7 +55,7 @@ public:
   // Constructor
 
   // = The Task_Base methods
-  virtual int svc (void);
+  virtual int svc ();
 
   // Caught any exception ?
   int received_ex_kind () const;

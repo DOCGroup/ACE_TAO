@@ -31,7 +31,7 @@ to run TAO on:<P>
 <table width="100%" border=1>
   <tr valign=top>
     <td><b>Fully supported, i.e., continually tested and used daily</b></td>
-    <td>Windows (Microsoft Visual C++ 7.1, 9.0, 10.0, 11.0, 12, 14.0, 14.1, and 14.2),
+    <td>Windows (Microsoft Visual Studio 2015, 2017, and 2019),
         Linux/Intel (Redhat, Debian, and SuSe), Android
     </td>
   </tr>
@@ -62,11 +62,9 @@ to run TAO on:<P>
 TAO.  If you have <A
 HREF="../docs/ACE-porting.html">porting
 questions</A> or have a problem compiling the TAO along with ACE
-wrappers on the platforms shown above please send email to the <A
-HREF="http://www.dre.vanderbilt.edu/~schmidt/TAO-mail.html">TAO mailing list</A> and we'll
-try to help you fix the problems.  You can also submit issues and
-enhancement requests through
-<a href="https://github.com/DOCGroup/ACE_TAO">github</a>.<P>
+wrappers on the platforms shown above please open a github <A
+HREF="https://github.com/DOCGroup/ACE_TAO">issue or discussion</A> and we'll
+try to help you fix the problems.<P>
 
 TAO can be obtained <A
 HREF="https://download.dre.vanderbilt.edu">electronically</A>
@@ -148,8 +146,8 @@ bundle as a single piece instead of trying to mix and match things up.<P>
           <LI>Run MPC like this, $ACE_ROOT/bin/mwc.pl TAO_ACE.mwc -type gnuace </LI>
           <LI>Run
           'make'.</LI> </OL></P><P> This will create all the required libraries for TAO
-          and TAO orbsvcs. In step 6, use -type vc71 if you want to
-          generate VC71 project and workspace files for Win32. Please
+          and TAO orbsvcs. In step 6, use -type vs2019 if you want to
+          generate Visual Studio 2019 project and workspace files for Win32. Please
           see <A href="../MPC/docs/USAGE"> MPC USAGE </A> document for
           details on how to generate build files for other compilers
           and tools.</P>
@@ -390,7 +388,7 @@ Make sure that you first build <code>$TAO_ROOT\TAO_IDL</code> and then <code>
 $TAO_ROOT\tao</code> because in order to compile the core TAO libraries
 you need to have <code>TAO_IDL</code> compiled.
 
-<H4>Visual C++ 7.1 and newer</H4>
+<H4>Visual Studio 2015 and newer</H4>
 
 <P>It works best if TAO is placed in ACE_wrappers so TAO ends up in
 <CODE>ACE_wrappers\TAO</CODE> because the Visual Studio Project files
@@ -402,7 +400,7 @@ href="../bin/MakeProjectCreator/config/acedefaults.mpb"> this base
 project </a> file.</P>
 
 <OL>
-  <LI>Make sure ACE is built (For Visual C++ 7.1, use ACE.sln). <P>
+  <LI>Make sure ACE is built (For Visual Studio 2015, use ACE.sln). <P>
 
   <LI>First make sure <CODE>ACE_wrappers\bin</CODE> is listed in the Executable
       Directories in Tools|Options.  This is needed if using the TAO_IDL

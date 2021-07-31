@@ -20,7 +20,7 @@ JAWS_Cache_Object::~JAWS_Cache_Object ()
 }
 
 void *
-JAWS_Cache_Object::internal (void) const
+JAWS_Cache_Object::internal () const
 {
   return this->internal_;
 }
@@ -32,19 +32,19 @@ JAWS_Cache_Object::internal (void *item)
 }
 
 const void *
-JAWS_Cache_Object::data (void) const
+JAWS_Cache_Object::data () const
 {
   return this->data_;
 }
 
 size_t
-JAWS_Cache_Object::size (void) const
+JAWS_Cache_Object::size () const
 {
   return this->size_;
 }
 
 unsigned int
-JAWS_Cache_Object::count (void) const
+JAWS_Cache_Object::count () const
 {
   return this->count_i ();
 }
@@ -64,25 +64,25 @@ JAWS_Cache_Object::release (void)
 }
 
 time_t
-JAWS_Cache_Object::last_access (void) const
+JAWS_Cache_Object::last_access () const
 {
   return this->last_access_;
 }
 
 time_t
-JAWS_Cache_Object::first_access (void) const
+JAWS_Cache_Object::first_access () const
 {
   return this->first_access_;
 }
 
 unsigned int
-JAWS_Cache_Object::priority (void) const
+JAWS_Cache_Object::priority () const
 {
   return this->priority_i ();
 }
 
 void *
-JAWS_Cache_Object::heap_item (void) const
+JAWS_Cache_Object::heap_item () const
 {
   return this->heap_item_;
 }
@@ -112,7 +112,7 @@ JAWS_Referenced_Cache_Object::lock (void)
 }
 
 unsigned int
-JAWS_Referenced_Cache_Object::count_i (void) const
+JAWS_Referenced_Cache_Object::count_i () const
 {
   if (this->count_.tryacquire_write () == 0)
     return 0;
@@ -133,7 +133,7 @@ JAWS_Referenced_Cache_Object::release_i (void)
 }
 
 unsigned int
-JAWS_Referenced_Cache_Object::priority_i (void) const
+JAWS_Referenced_Cache_Object::priority_i () const
 {
   unsigned int priority = ~(0U);
   double delta
@@ -167,7 +167,7 @@ JAWS_Counted_Cache_Object::lock (void)
 }
 
 unsigned int
-JAWS_Counted_Cache_Object::count_i (void) const
+JAWS_Counted_Cache_Object::count_i () const
 {
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, g ,this->lock_, 0);
 
@@ -194,7 +194,7 @@ JAWS_Counted_Cache_Object::release_i (void)
 }
 
 unsigned int
-JAWS_Counted_Cache_Object::priority_i (void) const
+JAWS_Counted_Cache_Object::priority_i () const
 {
   return this->count_i ();
 }

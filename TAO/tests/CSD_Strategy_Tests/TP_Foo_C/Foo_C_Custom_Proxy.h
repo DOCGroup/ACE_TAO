@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    Foo_C_Custom_Proxy.h
@@ -16,11 +14,9 @@
 #include "Foo_C_i.h"
 #include "tao/CSD_ThreadPool/CSD_TP_Strategy.h"
 
-
 class CSD_TP_Foo_C_Export Foo_C_Custom_Proxy
 {
 public:
-
   Foo_C_Custom_Proxy(Foo_C_i* servant,
                      Foo_C_ptr objref,
                        TAO::CSD::TP_Strategy* strategy);

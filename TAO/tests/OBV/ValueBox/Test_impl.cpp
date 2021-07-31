@@ -479,5 +479,5 @@ Test_impl::union_op4 (const ::Variable_Union1 & p1,
 void
 Test_impl::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

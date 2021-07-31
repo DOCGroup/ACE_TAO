@@ -14,6 +14,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_wchar.h"
 #include "ace/OS_Memory.h"
+#include <cstring>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
@@ -23,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using namespace TAO;
 
-CORBA::Any::Any (void)
+CORBA::Any::Any ()
   : impl_ (0)
 {
 }
@@ -37,7 +38,7 @@ CORBA::Any::Any (const CORBA::Any &rhs)
     }
 }
 
-CORBA::Any::~Any (void)
+CORBA::Any::~Any ()
 {
   if (this->impl_ != 0)
     {
@@ -80,7 +81,7 @@ CORBA::Any::replace (TAO::Any_Impl *new_impl)
 }
 
 CORBA::TypeCode_ptr
-CORBA::Any::type (void) const
+CORBA::Any::type () const
 {
   if (this->impl_ != 0)
     {
@@ -91,7 +92,7 @@ CORBA::Any::type (void) const
 }
 
 CORBA::TypeCode_ptr
-CORBA::Any::_tao_get_typecode (void) const
+CORBA::Any::_tao_get_typecode () const
 {
   if (this->impl_ != 0)
     {
@@ -116,7 +117,7 @@ CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
 }
 
 int
-CORBA::Any::_tao_byte_order (void) const
+CORBA::Any::_tao_byte_order () const
 {
   if (this->impl_ != 0)
     {
@@ -325,7 +326,7 @@ CORBA::Any::operator<<= (CORBA::Any::from_wchar wc)
 void
 CORBA::Any::operator<<= (CORBA::Any::from_string s)
 {
-  if (s.bound_ > 0 && s.val_ != 0 && ACE_OS::strlen (s.val_) > s.bound_)
+  if (s.bound_ > 0 && s.val_ != 0 && std::strlen (s.val_) > s.bound_)
     {
       return;
     }
@@ -429,8 +430,7 @@ operator<<= (CORBA::Any &any, const CORBA::Any &a)
       any,
       CORBA::Any::_tao_any_destructor,
       CORBA::_tc_any,
-      a
-    );
+      a);
 }
 
 // Insertion of Any - non-copying.
@@ -697,8 +697,7 @@ operator>>= (const CORBA::Any &any, const CORBA::Any *&a)
       any,
       CORBA::Any::_tao_any_destructor,
       CORBA::_tc_any,
-      a
-    );
+      a);
 }
 
 CORBA::Boolean

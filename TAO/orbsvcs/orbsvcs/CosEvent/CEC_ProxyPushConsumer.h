@@ -64,11 +64,11 @@ public:
   virtual void deactivate (void);
 
   /// Return false if no supplier is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /// Return the consumer object reference. It returns nil() if it has
   /// not connected yet.
-  CosEventComm::PushSupplier_ptr supplier (void) const;
+  CosEventComm::PushSupplier_ptr supplier () const;
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -105,7 +105,7 @@ protected:
   // The guard needs access to the following protected methods.
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the supplier
   void cleanup_i (void);
@@ -167,7 +167,7 @@ public:
   ~TAO_CEC_ProxyPushConsumer_Guard (void);
 
   /// Returns true if the reference count successfully acquired
-  bool locked (void) const;
+  bool locked () const;
 
 private:
   /// The lock used to protect the reference count

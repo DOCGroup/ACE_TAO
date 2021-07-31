@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "timeout_client.h"
 
 #include "tao/debug.h"
@@ -118,9 +117,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // ORB loop.
       orb->run ();  // Fetch responses
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0  // wait for completion
-                        );
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       // Wait for all the threads to finish before destroying the
       // ORB.

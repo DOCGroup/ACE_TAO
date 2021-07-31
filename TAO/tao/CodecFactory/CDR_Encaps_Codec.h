@@ -88,10 +88,8 @@ protected:
   void check_type_for_encoding (const CORBA::Any & data);
 
 private:
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &);
-  void operator= (const TAO_CDR_Encaps_Codec &);
+  TAO_CDR_Encaps_Codec (const TAO_CDR_Encaps_Codec &) = delete;
+  void operator= (const TAO_CDR_Encaps_Codec &) = delete;
 
 private:
   /// The major GIOP version associated with this Codec.

@@ -8,8 +8,6 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Log_Msg_NT_Event_Log::ACE_Log_Msg_NT_Event_Log (void)

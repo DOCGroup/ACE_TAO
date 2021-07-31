@@ -70,7 +70,7 @@ public:
   char * icmp_recv_buff (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -85,7 +85,6 @@ public:
   static ACE_Time_Value const time_default_;
 
 private:
-
   int receive_echo_reply (ACE_Time_Value const * timeout);
 
   /// Do not allow this function to percolate up to this interface.

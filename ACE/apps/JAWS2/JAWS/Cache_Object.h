@@ -23,34 +23,34 @@ public:
   JAWS_Cache_Object (const void *, size_t);
   virtual ~JAWS_Cache_Object (void);
 
-  void *internal (void) const;
+  void *internal () const;
   void internal (void *);
 
-  const void *data (void) const;
-  size_t size (void) const;
-  unsigned int count (void) const;
+  const void *data () const;
+  size_t size () const;
+  unsigned int count () const;
 
   int acquire (void);
   int release (void);
 
-  time_t last_access (void) const;
-  time_t first_access (void) const;
+  time_t last_access () const;
+  time_t first_access () const;
 
-  unsigned int priority (void) const;
+  unsigned int priority () const;
 
   enum { ACE_CO_REFERENCED, ACE_CO_COUNTED };
 
-  void *heap_item (void) const;
+  void *heap_item () const;
   void heap_item (void *item);
 
   virtual ACE_Lock & lock (void) = 0;
 
 protected:
 
-  virtual unsigned int count_i (void) const = 0;
+  virtual unsigned int count_i () const = 0;
   virtual int acquire_i (void) = 0;
   virtual int release_i (void) = 0;
-  virtual unsigned int priority_i (void) const = 0;
+  virtual unsigned int priority_i () const = 0;
 
 private:
 
@@ -76,10 +76,10 @@ public:
 
 protected:
 
-  virtual unsigned int count_i (void) const;
+  virtual unsigned int count_i () const;
   virtual int acquire_i (void);
   virtual int release_i (void);
-  virtual unsigned int priority_i (void) const;
+  virtual unsigned int priority_i () const;
 
 private:
 
@@ -98,10 +98,10 @@ public:
 
 protected:
 
-  virtual unsigned int count_i (void) const;
+  virtual unsigned int count_i () const;
   virtual int acquire_i (void);
   virtual int release_i (void);
-  virtual unsigned int priority_i (void) const;
+  virtual unsigned int priority_i () const;
 
 private:
 

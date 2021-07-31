@@ -41,7 +41,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (
 }
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::~ACE_Array_Map (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::~ACE_Array_Map ()
 {
   for (size_t idx = 0; idx != capacity_; ++idx)
   {
@@ -162,7 +162,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
 
 template<typename Key, typename Value, class EqualTo, class Alloc>
 void
-ACE_Array_Map<Key, Value, EqualTo, Alloc>::clear (void)
+ACE_Array_Map<Key, Value, EqualTo, Alloc>::clear ()
 {
   this->size_ = 0;  // No need to deallocate array nor destroy elements.
 }

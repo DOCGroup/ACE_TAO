@@ -12,11 +12,11 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ETCL_Constraint::ETCL_Constraint (void)
+ETCL_Constraint::ETCL_Constraint ()
 {
 }
 
-ETCL_Constraint::~ETCL_Constraint (void)
+ETCL_Constraint::~ETCL_Constraint ()
 {
 }
 
@@ -29,8 +29,7 @@ ETCL_Constraint::accept (ETCL_Constraint_Visitor * /* visitor */)
 // ****************************************************************
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    const ETCL_Literal_Constraint & lit
-  )
+    const ETCL_Literal_Constraint & lit)
   : ETCL_Constraint(),
     type_ (ACE_ETCL_UNKNOWN)
 {
@@ -50,8 +49,7 @@ ETCL_Literal_Constraint::ETCL_Literal_Constraint (
 }
 
 ETCL_Literal_Constraint::ETCL_Literal_Constraint (
-    ACE_CDR::Boolean boolean
-  )
+    ACE_CDR::Boolean boolean)
   : type_ (ACE_ETCL_BOOLEAN)
 {
   this->op_.bool_ = boolean;
@@ -84,7 +82,7 @@ ETCL_Literal_Constraint::accept (ETCL_Constraint_Visitor* visitor)
 }
 
 Literal_Type
-ETCL_Literal_Constraint::expr_type (void) const
+ETCL_Literal_Constraint::expr_type () const
 {
   return this->type_;
 }
@@ -95,12 +93,12 @@ ETCL_Literal_Constraint::operator= (const ETCL_Literal_Constraint& co)
   this->copy (co);
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::Boolean (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::Boolean () const
 {
   return (this->type_ == ACE_ETCL_BOOLEAN) ? this->op_.bool_ : false;
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::ULong (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::ULong () const
 {
   switch (this->type_)
   {
@@ -122,7 +120,7 @@ ETCL_Literal_Constraint::operator ACE_CDR::ULong (void) const
   }
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::Long (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::Long () const
 {
   switch (this->type_)
   {
@@ -147,7 +145,7 @@ ETCL_Literal_Constraint::operator ACE_CDR::Long (void) const
   }
 }
 
-ETCL_Literal_Constraint::operator ACE_CDR::Double (void) const
+ETCL_Literal_Constraint::operator ACE_CDR::Double () const
 {
   switch (this->type_)
   {
@@ -163,7 +161,7 @@ ETCL_Literal_Constraint::operator ACE_CDR::Double (void) const
   }
 }
 
-ETCL_Literal_Constraint::operator const char* (void) const
+ETCL_Literal_Constraint::operator const char* () const
 {
   switch (this->type_)
   {
@@ -536,9 +534,6 @@ ETCL_Component_Array::accept (ETCL_Constraint_Visitor *visitor)
 }
 
 // ****************************************************************
-
-ETCL_Special::~ETCL_Special (void)
-{}
 
 int
 ETCL_Special::accept (ETCL_Constraint_Visitor *visitor)

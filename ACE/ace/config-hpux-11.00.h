@@ -10,13 +10,7 @@
 #define ACE_LACKS_SYS_SELECT_H
 
 #if defined (__GNUG__)
-
-// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-// this must appear before its #include.
-#  define ACE_HAS_STRING_CLASS
-
 #  include "ace/config-g++-common.h"
-
 #else
 
 // aC++...
@@ -24,46 +18,8 @@
 // Precompiler needs extra flags to ignore "invalid #pragma directive"
 #  define ACE_CC_PREPROCESSOR_ARGS "-E +W 67"
 
-// If the -AA compile option is used, the compiler defines _HP_NAMESPACE_STD.
-// The -AA option enables the 2.0 standard C++ library. If not used, then
-// we have the old, 1.2.1 C++ library.
-#    if defined (_HP_NAMESPACE_STD)
-#      if defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#        undef ACE_HAS_STANDARD_CPP_LIBRARY
-#      endif
-#      define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#      if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#        undef ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB
-#      endif
-#      if defined (RWSTD_NO_NAMESPACE)
-         namespace std {} using namespace std;
-#      else
-#        define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#      endif /* RWSTD_NO_NAMESPACE */
-#    else
-#      define ACE_USES_OLD_IOSTREAMS
-       // There's no support in ACE's use of numeric_limits for those that
-       // aren't in std::
-#      define ACE_LACKS_NUMERIC_LIMITS
-#    endif /* _HP_NAMESPACE_STD */
-
-#    define ACE_HAS_WORKING_EXPLICIT_TEMPLATE_DESTRUCTOR
-
 // Platform lacks streambuf "linebuffered ()".
 #    define ACE_LACKS_LINEBUFFERED_STREAMBUF 1
-
-// Lack of (and broken) support for placement operator delete is a known
-// bug by HP, up until aC++ A.03.55.02.
-#    if (__HP_aCC < 35502)
-#      define ACE_LACKS_PLACEMENT_OPERATOR_DELETE
-#    endif /* __HP_aCC < 35502 */
-
-// Compiler's 'new' throws exceptions on failure, regardless of whether or
-// not exception handling is enabled in the compiler options. Fortunately,
-// new(nothrow_t) is offered.
-#    define ACE_NEW_THROWS_EXCEPTIONS
-#    define ACE_HAS_NEW_NOTHROW
-#    define ACE_HAS_NEW_NO_H 1
 
 // Compiler's template mechanism must see source code (i.e., .C files).
 #    define ACE_TEMPLATES_REQUIRE_SOURCE
@@ -167,9 +123,6 @@
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform has Dirent iterator functions.
 #define ACE_HAS_DIRENT
@@ -339,8 +292,6 @@
 #if defined (_INCLUDE__STDC_A1_SOURCE)
 #  define ACE_HAS_3_PARAM_WCSTOK
 #endif
-
-#define ACE_HAS_3_PARAM_READDIR_R
 
 #define ACE_LACKS_STRUCT_LIFNUM
 

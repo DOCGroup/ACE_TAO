@@ -58,7 +58,7 @@ public:
       return 0;
     }
 
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     {
       return event_.handle ();
     }

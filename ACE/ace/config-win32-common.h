@@ -223,10 +223,6 @@
 # define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
-#if !defined (__MINGW32__)
-# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-#endif /* __MINGW32__ */
-
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
 #define ACE_HAS_DIRENT
@@ -241,7 +237,6 @@
 #define ACE_HAS_WIN32_GETVERSION
 
 /* LACKS dir-related facilities */
-#define ACE_LACKS_READDIR_R
 #define ACE_LACKS_REWINDDIR
 #define ACE_LACKS_SEEKDIR
 #define ACE_LACKS_TELLDIR
@@ -278,13 +273,10 @@
 #define ACE_LACKS_GETIPNODEBYNAME_IPV6
 #define ACE_LACKS_KILL
 #define ACE_LACKS_INET_ATON
-#if _WIN32_WINNT < 0x0600
-# define ACE_LACKS_INET_NTOP
-# define ACE_LACKS_INET_PTON
-#endif
 #define ACE_LACKS_MADVISE
 #define ACE_LACKS_MKFIFO
 #define ACE_LACKS_MODE_MASKS
+#define ACE_LACKS_MSGHDR
 #define ACE_LACKS_PTHREAD_H
 #define ACE_LACKS_PWD_FUNCTIONS
 #define ACE_LACKS_RAND_R
@@ -312,17 +304,6 @@
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
 #define ACE_LACKS_CADDR_T
-#if !defined(__MINGW32__) && !defined (__BORLANDC__)
-# define ACE_LACKS_MODE_T
-#endif
-#if !defined(__MINGW32__)
-# define ACE_LACKS_PID_T
-#endif
-#if !defined (__BORLANDC__)
-# define ACE_LACKS_NLINK_T
-# define ACE_LACKS_UID_T
-# define ACE_LACKS_GID_T
-#endif
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_UNSETENV
 
@@ -334,16 +315,6 @@
 #define ACE_MKDIR_LACKS_MODE
 
 #define ACE_SIZEOF_LONG_LONG 8
-
-#if !defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed __int64
-#define ACE_UINT64_TYPE unsigned __int64
-#endif
-
-#if defined (__MINGW32__)
-#define ACE_INT64_TYPE  signed long long
-#define ACE_UINT64_TYPE unsigned long long
-#endif
 
 // Optimize ACE_Handle_Set for select().
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -566,6 +537,8 @@
 # define ACE_HAS_WIN32_TRYLOCK
 #endif
 #if _WIN32_WINNT < 0x600
+# define ACE_LACKS_INET_NTOP
+# define ACE_LACKS_INET_PTON
 # define ACE_LACKS_IF_NAMETOINDEX
 #endif
 #define ACE_LACKS_IF_NAMEINDEX
@@ -615,10 +588,6 @@
 
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
-#define ACE_LACKS_STRUCT_DIR
-#define ACE_LACKS_OPENDIR
-#define ACE_LACKS_CLOSEDIR
-#define ACE_LACKS_READDIR
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT

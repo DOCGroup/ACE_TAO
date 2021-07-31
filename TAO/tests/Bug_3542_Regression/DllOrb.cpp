@@ -71,7 +71,7 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     return -1;
   }
 
-  ACE_auto_ptr_reset (ma_barrier_, new ACE_Thread_Barrier (threadCnt + 1));
+  ma_barrier_.reset (new ACE_Thread_Barrier (threadCnt + 1));
 
   this->activate(
     THR_NEW_LWP|THR_JOINABLE|THR_INHERIT_SCHED,
@@ -96,14 +96,14 @@ DllOrb::fini (void)
     // attempt to protect against sporadic BAD_INV_ORDER exceptions
     ACE_OS::sleep (ACE_Time_Value (0, 500));
 
-    mv_orb_->shutdown (1);
+    mv_orb_->shutdown (true);
 
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() ...\n")));
     // wait for our threads to finish
     wait();
     ACE_DEBUG ((LM_ERROR, ACE_TEXT ("wait() done\n")));
 
-    ACE_auto_ptr_reset (ma_barrier_, static_cast<ACE_Thread_Barrier *> (0));
+    ma_barrier_.reset ();
   }
   catch (...)
   {

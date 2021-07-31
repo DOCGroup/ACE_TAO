@@ -300,7 +300,7 @@ test_i::shutdown (void)
 {
   this->receiver_->shutdown ();
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 int

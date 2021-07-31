@@ -13,7 +13,7 @@ Server_Worker::Server_Worker ()
 
 //
 const ACE_TCHAR *
-Server_Worker::kind (void) const
+Server_Worker::kind () const
 {
   return ACE_TEXT ("Server");
 }
@@ -110,12 +110,12 @@ Server_Worker::test_main (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Server exiting the event loop\n")));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       // During normal test execution the ORB would have been destroyed
       // by a request from the client.
 
-      //  orb->shutdown (0);
+      //  orb->shutdown (false);
 
       orb->destroy ();
     }

@@ -40,7 +40,7 @@ class TAO_Incremental_Key_Generator
 {
 public:
 
-  TAO_Incremental_Key_Generator (void);
+  TAO_Incremental_Key_Generator ();
 
   int operator() (PortableServer::ObjectId &id);
 

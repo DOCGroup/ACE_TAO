@@ -68,7 +68,7 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
 
 /// Destructor
-ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard (void)
+ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 {
   const ACE_Service_Type *tmp = 0;
 
@@ -140,7 +140,7 @@ Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
   ACE_OS::strcpy(name_,assd->name_);
 }
 
-ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc (void)
+ACE_Service_Gestalt::Processed_Static_Svc::~Processed_Static_Svc ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_Allocator::instance()->free(name_);
@@ -173,7 +173,7 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 }
 
 
-ACE_Service_Gestalt::~ACE_Service_Gestalt (void)
+ACE_Service_Gestalt::~ACE_Service_Gestalt ()
 {
 
   if (this->svc_repo_is_owned_)
@@ -243,7 +243,7 @@ ACE_Service_Gestalt::ACE_Service_Gestalt (size_t size,
 /// closed instance. Must not be virtual, as it is also called from
 /// the constructor.
 int
-ACE_Service_Gestalt::init_i (void)
+ACE_Service_Gestalt::init_i ()
 {
   // Only initialize the repo_ if (a) we are being constructed, or;
   // (b) we're being open()-ed, perhaps after previously having been
@@ -273,7 +273,7 @@ ACE_Service_Gestalt::init_i (void)
 /// Add the default statically-linked services to the Service
 /// Repository.
 int
-ACE_Service_Gestalt::load_static_svcs (void)
+ACE_Service_Gestalt::load_static_svcs ()
 {
   ACE_TRACE ("ACE_Service_Gestalt::load_static_svcs");
 
@@ -418,7 +418,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Service_Gestalt)
 
 
 void
-ACE_Service_Gestalt::dump (void) const
+ACE_Service_Gestalt::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Gestalt::dump");
@@ -966,7 +966,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 
 
 int
-ACE_Service_Gestalt::init_svc_conf_file_queue (void)
+ACE_Service_Gestalt::init_svc_conf_file_queue ()
 {
   if (this->svc_conf_file_queue_ == 0)
     {
@@ -1142,13 +1142,13 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
 
 
 int
-ACE_Service_Gestalt::is_opened (void)
+ACE_Service_Gestalt::is_opened ()
 {
   return this->is_opened_;
 }
 
 int
-ACE_Service_Gestalt::process_commandline_directives (void)
+ACE_Service_Gestalt::process_commandline_directives ()
 {
   int result = 0;
   if (this->svc_queue_ != 0)
@@ -1284,7 +1284,7 @@ ACE_Service_Gestalt::process_directives (bool )
 
 // Tidy up and perform last rites on a terminating ACE_Service_Gestalt.
 int
-ACE_Service_Gestalt::close (void)
+ACE_Service_Gestalt::close ()
 {
   ACE_TRACE ("ACE_Service_Gestalt::close");
 

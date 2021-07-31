@@ -142,6 +142,6 @@ Consumer::disconnect_push_consumer (void)
   // In this example we shutdown the ORB when we disconnect from the
   // EC (or rather the EC disconnects from us), but this doesn't have
   // to be the case....
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

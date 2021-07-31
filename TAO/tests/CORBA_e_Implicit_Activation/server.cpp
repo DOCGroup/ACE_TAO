@@ -32,7 +32,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   "ERROR: Implicit activation should have "
                   "thrown an exception with CORBA e compact.\n"));
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
       orb->destroy ();
     }
   catch (const PortableServer::POA::WrongPolicy&)

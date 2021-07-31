@@ -109,7 +109,7 @@ TAO_Notify_Lanes_Consumer::push_structured_event (const CosNotification::Structu
       this->deactivate ();
 
       // We received the event, shutdown the ORB.
-      this->orb_objects_.orb_->shutdown (1);
+      this->orb_objects_.orb_->shutdown (true);
     }
   catch (const CORBA::Exception& ex)
     {

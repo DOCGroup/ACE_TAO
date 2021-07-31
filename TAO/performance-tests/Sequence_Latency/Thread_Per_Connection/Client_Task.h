@@ -24,7 +24,7 @@ public:
                             ACE_High_Res_Timer::global_scale_factor_type gsf);
 
   /// The service method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Make sure that the current thread has a connection available.

@@ -68,8 +68,7 @@ namespace TAO
   template<>
   ::CORBA::Boolean
   Any_Impl_T<RTCORBA::ProtocolProperties>::to_object (
-      ::CORBA::Object_ptr &_tao_elem
-    ) const
+      ::CORBA::Object_ptr &_tao_elem) const
   {
     _tao_elem = ::CORBA::Object::_duplicate (this->value_);
     return true;

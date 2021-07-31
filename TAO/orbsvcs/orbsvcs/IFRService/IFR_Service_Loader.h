@@ -43,7 +43,7 @@ public:
 
   // Called by the Service Configurator framework to remove the
   // Event Service. Defined in <ace/Service_Config.h>
-  virtual int fini (void);
+  virtual int fini ();
 
   // This function call initializes the IFR Service given a reference to the
   // ORB and the command line parameters.

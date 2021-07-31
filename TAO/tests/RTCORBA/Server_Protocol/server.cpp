@@ -35,7 +35,7 @@ Test_i::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Received request to shut down the ORB\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 //*************************************************************************

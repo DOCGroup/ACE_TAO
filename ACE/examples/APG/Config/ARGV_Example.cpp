@@ -27,18 +27,18 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   int option;
   ACE_TCHAR config_file[MAXPATHLEN];
   ACE_TCHAR hostname[MAXHOSTNAMELEN];
-  ACE_OS_String::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
-  ACE_OS_String::strcpy (hostname, ACE_TEXT ("not set"));
+  ACE_OS::strcpy (config_file, ACE_TEXT ("HAStatus.conf"));
+  ACE_OS::strcpy (hostname, ACE_TEXT ("not set"));
   while ((option = cmd_opts ()) != EOF)
     switch (option) {
     case 'f':
-      ACE_OS_String::strncpy (config_file,
+      ACE_OS::strncpy (config_file,
                               cmd_opts.opt_arg (),
                               MAXPATHLEN);
       break;
 
     case 'h':
-      ACE_OS_String::strncpy (hostname,
+      ACE_OS::strncpy (hostname,
                               cmd_opts.opt_arg (),
                               MAXHOSTNAMELEN);
       break;

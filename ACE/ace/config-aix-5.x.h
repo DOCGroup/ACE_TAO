@@ -74,8 +74,6 @@
 
 #  undef WIFEXITED
 #  undef WEXITSTATUS
-#  define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 #  define ACE_HAS_CUSTOM_EXPORT_MACROS
 #  define ACE_Proper_Export_Flag
@@ -86,18 +84,10 @@
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE < CLASS, LOCK >;
 
 #elif defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
 
 # include "ace/config-g++-common.h"
 
 # define ACE_HAS_SSIZE_T
-
-# if (__GNUC__ < 4 || (__GNUC__ == 4 && __GNUC_MINOR__ == 0))
-// We have to explicitly instantiate static template members prior to g++ 4.1
-#   define ACE_HAS_EXPLICIT_STATIC_TEMPLATE_MEMBER_INSTANTIATION
-#endif /* g++ prior to 4.1 */
 
 # if !defined (ACE_MT_SAFE) || ACE_MT_SAFE != 0
     // ACE_MT_SAFE is #defined below, for all compilers.
@@ -145,9 +135,6 @@
 //#  define ACE_HAS_AIO_CALLS
 
 #define ACE_HAS_AIX_HI_RES_TIMER
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Prototypes for both signal() and struct sigaction are consistent.
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
@@ -312,7 +299,6 @@
 // AIX 5.1 has netinet/tcp.h
 #undef ACE_LACKS_NETINET_TCP_H
 
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_SCANDIR
 #define ACE_SCANDIR_CMP_USES_VOIDPTR
 #define ACE_SCANDIR_SEL_LACKS_CONST

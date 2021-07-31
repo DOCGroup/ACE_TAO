@@ -206,7 +206,7 @@ public:
    * done by the destructor.  If not, most systems will automatically
    * unsubscribe upon the close of the socket.
    */
-  ~ACE_SOCK_Dgram_Mcast (void);
+  ~ACE_SOCK_Dgram_Mcast ();
 
   /**
    * Explicitly open/bind the socket and define the network interface
@@ -330,17 +330,17 @@ public:
    * Logs the setting of all options, the bound address, the send address and
    * interface, and the list of current subscriptions.
    */
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-  /// Override write acessor for the constructor options (@see enum options above)
+  /// Override write accessor for the constructor options (@see enum options above)
   /// This class is typically default instantiated in a connection handler templated
   /// framework so these cannot be specified on construction.
   void opts (int opts);
 
-  /// Read acessor for the constructor options (@see enum options above)
+  /// Read accessor for the constructor options (@see enum options above)
   int opts () const;
 
 private:
@@ -352,7 +352,7 @@ private:
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
-  /// (Layered method for <subscribe> processing).
+  /// (Layered method for subscribe() processing).
   int subscribe_i (const ACE_INET_Addr &mcast_addr,
                    int reuse_addr = 1,
                    const ACE_TCHAR *net_if = 0);
@@ -367,7 +367,6 @@ private:
                      const ACE_TCHAR *net_if = 0);
 
 protected:
-
   /// Contains common open functionality so that inheriting classes can
   /// reuse it.
   int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
@@ -375,7 +374,7 @@ protected:
               int reuse_addr = 1);
 
   /// Empty the dynamic subscription list.
-  int clear_subs_list (void);
+  int clear_subs_list ();
 
 private:
   /// Per-instance options..

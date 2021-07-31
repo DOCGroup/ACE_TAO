@@ -38,7 +38,7 @@ ACE_DEV_Addr::operator != (const ACE_DEV_Addr &sap) const
 // Return the path name used for the rendezvous point.
 
 ACE_INLINE const ACE_TCHAR *
-ACE_DEV_Addr::get_path_name (void) const
+ACE_DEV_Addr::get_path_name () const
 {
   ACE_TRACE ("ACE_DEV_Addr::get_path_name");
 

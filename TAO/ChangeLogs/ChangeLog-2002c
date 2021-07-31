@@ -383,7 +383,7 @@ Sun Dec 22 11:26:30 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         Fix for Bug 1276. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1276 for more
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1276 for more
         details on this bug. The gist of the fix is this
 
           - If a follower thread timesout, it first tries to unbind the
@@ -1404,7 +1404,7 @@ Tue Dec  3 18:13:42 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         Fix for BUG 1382. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1382
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1382
 
         for details. The problem is basically that we didnt know when and
         how to do reference counting. The following fix addresses
@@ -1531,7 +1531,7 @@ Fri Nov 29 11:16:28 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         This set of fixes are for fixing BUG 1247. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1247
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1247
         for more details. The problem is that the server side connections
         never got purged. The cache manager was designed to purge
         connections in the client and server end.
@@ -2888,7 +2888,7 @@ Tue Nov 12 12:47:31 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         Fix for [BUG 1020]. Please see details of the bug at
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1020
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1020
 
         Please see the discussions in the above URL for details on
         the motivations for these changes. A very brief summary of the
@@ -4253,7 +4253,7 @@ Thu Oct 31 14:48:39 2002  Balachandran Natarajan  <bala@isis-server.isis.vanderb
 
         This is a fix for BUGID 1284. Please see
 
-        http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1284 for more
+        http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1284 for more
         details. This fix does the following
 
         - The invocation class selects a timeout from the two options that

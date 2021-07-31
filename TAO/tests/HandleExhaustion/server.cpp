@@ -84,7 +84,7 @@ public:
     cout << "Server: Descriptors::leak did not saturate fdset" << endl;
   }
 
-  bool ok (void) const
+  bool ok () const
   {
     return this->ok_;
   }

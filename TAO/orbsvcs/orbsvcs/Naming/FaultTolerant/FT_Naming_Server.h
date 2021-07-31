@@ -67,12 +67,12 @@ public:
    * Accessors and mutators for object references.
    */
   /// Returns a <NamingContext_ptr> for the root Naming Context.
-  CosNaming::NamingContext_ptr my_root_context (void) const;
-  CosNaming::NamingContext_ptr ft_root_context (void) const;
+  CosNaming::NamingContext_ptr my_root_context () const;
+  CosNaming::NamingContext_ptr ft_root_context () const;
 
   /// Returns the reference for this servers local naming manager servant.
-  ::FT_Naming::NamingManager_ptr my_naming_manager (void) const;
-  ::FT_Naming::NamingManager_ptr ft_naming_manager (void) const;
+  ::FT_Naming::NamingManager_ptr my_naming_manager () const;
+  ::FT_Naming::NamingManager_ptr ft_naming_manager () const;
 
   /// Initialize the naming manager with the ORB.
   int init_naming_manager_with_orb (int , ACE_TCHAR * [], CORBA::ORB_ptr orb);
@@ -107,10 +107,10 @@ public:
     persistent_naming_context_factory (void);
 
   /// Returns the IOR of the replication manager.
-  char* replicator_ior (void);
+  char* replicator_ior ();
 
   /// Returns the IOR of the naming manager.
-  char * naming_manager_ior (void);
+  char * naming_manager_ior ();
 
   virtual int update_object_group (
     const ::FT_Naming::ObjectGroupUpdate & group_info);
@@ -121,21 +121,21 @@ public:
   void update_ior (FT_Naming::EntityKind, const CORBA::Object_ptr);
   void combine_iors (FT_Naming::EntityKind, const CORBA::Object_ptr);
 
-  const ACE_CString & ft_endpoint (void);
-  const ACE_Time_Value & ft_update_delay (void);
+  const ACE_CString & ft_endpoint ();
+  const ACE_Time_Value & ft_update_delay ();
 
   /// Destroy the child POAs created in @c init_with_orb,
   /// @c init_naming_manager_with_orb, and
   /// @c init_replication_manager_with_orb
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Destructor.
-  virtual ~TAO_FT_Naming_Server (void);
+  virtual ~TAO_FT_Naming_Server ();
 
   void update_info (FT_Naming::UpdateInfoSeq &infos);
   void update_iors (const FT_Naming::ReplicaInfo & iors);
-  void update_info_i (void);
-  void update_iors_i (void);
+  void update_info_i ();
+  void update_iors_i ();
 
 protected:
 

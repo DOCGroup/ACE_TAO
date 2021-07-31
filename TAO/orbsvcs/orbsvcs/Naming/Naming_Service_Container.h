@@ -83,10 +83,10 @@ public:
   int first (void);
 
   /// Returns 1 when all items have been seen, else 0.
-  int done (void) const;
+  int done () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -149,10 +149,10 @@ public:
   // = Check boundary conditions.
 
   /// Returns 1 if the container is empty, otherwise returns 0.
-  int is_empty (void) const;
+  int is_empty () const;
 
   /// Returns 1 if the container is full, otherwise returns 0.
-  int is_full (void) const;
+  int is_full () const;
 
   // = Classic unordered set operations.
 
@@ -171,10 +171,10 @@ public:
   int remove (const T &item);
 
   /// Size of the set.
-  size_t size (void) const;
+  size_t size () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Reset the <ACE_Unbounded_List> to be empty.
   void reset (void);

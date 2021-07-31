@@ -131,24 +131,8 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This hack is needed to get around an odd and hard-to-reproduce problem
-// with HP aC++. If struct sigaction is defined extern "C" and the sigaction
-// function in namespace ACE_OS, the compiler sometimes gets confused.
-// If we help it with this typedef, it's fine. User code should not use
-// the ACE typedef - it will be removed without warning as soon as we can
-// either drop support for the broken compilers or figure out how to reproduce
-// it so it can be reported to HP and fixed.
-// There's a similar hack in OS_TLI.h for struct t_optmgmt.
-// Also see ChangeLog entries:
-// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
-// Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
-#if defined (__HP_aCC) && (__HP_aCC <= 37300)
-typedef extern "C" struct t_optmgmt  ACE_TOPTMGMT;
-typedef extern "C" struct t_bind  ACE_TBIND;
-#else
 typedef struct t_optmgmt ACE_TOPTMGMT;
 typedef struct t_bind  ACE_TBIND;
-#endif
 
 /**
  * @namespace ACE_OS

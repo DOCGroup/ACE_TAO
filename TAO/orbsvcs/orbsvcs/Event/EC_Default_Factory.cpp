@@ -40,12 +40,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_EC_Default_Factory::~TAO_EC_Default_Factory (void)
+TAO_EC_Default_Factory::~TAO_EC_Default_Factory ()
 {
 }
 
 int
-TAO_EC_Default_Factory::init_svcs (void)
+TAO_EC_Default_Factory::init_svcs ()
 {
   TAO_EC_Simple_Queue_Full_Action::init_svcs();
   return ACE_Service_Config::static_svcs ()->
@@ -106,16 +106,16 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               // need to parse the flags...ugh
               ACE_TCHAR* opt = ACE_OS::strdup (s);
 
-              ACE_TCHAR* aux = 0;
+              ACE_TCHAR* aux = nullptr;
               ACE_TCHAR* flags = ACE_OS::strtok_r (opt, ACE_TEXT (":"), &aux);
 
               TAO_EC_Thread_Flags tf(ACE_TEXT_ALWAYS_CHAR (flags)); // parse and set up
               this->dispatching_threads_flags_ = tf.flags ();
 
-              ACE_TCHAR* arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux);
+              ACE_TCHAR* arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux);
               if (arg)
                 {
-                  long prio = ACE_OS::strtol (arg, 0, 0);
+                  long prio = ACE_OS::strtol (arg, nullptr, 0);
 
                   this->dispatching_threads_priority_ = prio;
                 }
@@ -244,8 +244,8 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
               ACE_TCHAR* aux;
               for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
-                   arg != 0;
-                   arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux))
+                   arg != nullptr;
+                   arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
                   if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
                     synch_type = 0;
@@ -289,8 +289,8 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 
               ACE_TCHAR* aux;
               for (ACE_TCHAR* arg = ACE_OS::strtok_r (opt, ACE_TEXT(":"), &aux);
-                   arg != 0;
-                   arg = ACE_OS::strtok_r (0, ACE_TEXT(":"), &aux))
+                   arg != nullptr;
+                   arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux))
                 {
                   if (ACE_OS::strcasecmp (arg, ACE_TEXT("mt")) == 0)
                     synch_type = 0;
@@ -435,7 +435,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul(opt, 0, 10);
+              unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }
@@ -448,7 +448,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               const ACE_TCHAR* opt = arg_shifter.get_current ();
-              unsigned long timeout = ACE_OS::strtoul(opt, 0, 10);
+              unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }
@@ -498,7 +498,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_EC_Default_Factory::fini (void)
+TAO_EC_Default_Factory::fini ()
 {
   return 0;
 }
@@ -509,9 +509,9 @@ TAO_EC_Queue_Full_Service_Object*
 TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
                                              const ACE_TCHAR* fallback)
 {
-  TAO_EC_Queue_Full_Service_Object* so = 0;
+  TAO_EC_Queue_Full_Service_Object* so = nullptr;
   so = ACE_Dynamic_Service<TAO_EC_Queue_Full_Service_Object>::instance (wanted);
-  if (so != 0)
+  if (so != nullptr)
     return so;
 
   ORBSVCS_ERROR ((LM_ERROR,
@@ -522,7 +522,7 @@ TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
               fallback));
 
   so = ACE_Dynamic_Service<TAO_EC_Queue_Full_Service_Object>::instance (fallback);
-  if (so != 0)
+  if (so != nullptr)
     return so;
 
   ORBSVCS_ERROR ((LM_ERROR,
@@ -531,7 +531,7 @@ TAO_EC_Default_Factory::find_service_object (const ACE_TCHAR* wanted,
                       "aborting.\n",
                       fallback));
   ACE_OS::abort ();
-  return 0; // superfluous return to de-warn; we should never reach here
+  return nullptr; // superfluous return to de-warn; we should never reach here
 }
 
 TAO_EC_Dispatching*
@@ -550,7 +550,7 @@ TAO_EC_Default_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                                         this->dispatching_threads_force_active_,
                                         so);
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -568,7 +568,7 @@ TAO_EC_Default_Factory::create_filter_builder (TAO_EC_Event_Channel_Base *ec)
     return new TAO_EC_Basic_Filter_Builder (ec);
   else if (this->filtering_ == 2)
     return new TAO_EC_Prefix_Filter_Builder (ec);
-  return 0;
+  return nullptr;
 }
 
 void
@@ -584,7 +584,7 @@ TAO_EC_Default_Factory::create_supplier_filter_builder (TAO_EC_Event_Channel_Bas
     return new TAO_EC_Trivial_Supplier_Filter_Builder (ec);
   else if (this->supplier_filtering_ == 1)
     return new TAO_EC_Per_Supplier_Filter_Builder (ec);
-  return 0;
+  return nullptr;
 }
 
 void
@@ -647,7 +647,7 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
   if (this->timeout_ == 0)
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
@@ -659,7 +659,7 @@ TAO_EC_Default_Factory::create_timeout_generator (TAO_EC_Event_Channel_Base *)
     {
     }
 #endif
-  return 0;
+  return nullptr;
 }
 
 void
@@ -676,18 +676,18 @@ TAO_EC_Default_Factory::create_observer_strategy (TAO_EC_Event_Channel_Base *ec)
   else if (this->observer_ == 1)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = 0;
-      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
+      ACE_Lock* lock = nullptr;
+      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Basic_ObserverStrategy (ec, lock);
     }
   else if (this->observer_ == 2)
     {
       // @@ The lock should also be under control of the user...
-      ACE_Lock* lock = 0;
-      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, 0);
+      ACE_Lock* lock = nullptr;
+      ACE_NEW_RETURN (lock, ACE_Lock_Adapter<TAO_SYNCH_MUTEX>, nullptr);
       return new TAO_EC_Reactive_ObserverStrategy (ec, lock);
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -703,7 +703,7 @@ TAO_EC_Default_Factory::create_scheduling_strategy (TAO_EC_Event_Channel_Base*)
     return new TAO_EC_Null_Scheduling;
   else if (this->scheduling_ == 1)
     return new TAO_EC_Group_Scheduling;
-  return 0;
+  return nullptr;
 }
 
 void
@@ -811,7 +811,7 @@ TAO_EC_Default_Factory::create_proxy_push_consumer_collection (TAO_EC_Event_Chan
       TAO_EC_Consumer_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -904,7 +904,7 @@ TAO_EC_Default_Factory::create_proxy_push_supplier_collection (TAO_EC_Event_Chan
       TAO_EC_Supplier_RB_Tree_Iterator,
       ACE_NULL_SYNCH> ();
 
-  return 0;
+  return nullptr;
 }
 
 void
@@ -914,7 +914,7 @@ TAO_EC_Default_Factory::destroy_proxy_push_supplier_collection (TAO_EC_ProxyPush
 }
 
 ACE_Lock*
-TAO_EC_Default_Factory::create_consumer_lock (void)
+TAO_EC_Default_Factory::create_consumer_lock ()
 {
   if (this->consumer_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
@@ -922,7 +922,7 @@ TAO_EC_Default_Factory::create_consumer_lock (void)
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->consumer_lock_ == 2)
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
-  return 0;
+  return nullptr;
 }
 
 void
@@ -932,7 +932,7 @@ TAO_EC_Default_Factory::destroy_consumer_lock (ACE_Lock* x)
 }
 
 ACE_Lock*
-TAO_EC_Default_Factory::create_supplier_lock (void)
+TAO_EC_Default_Factory::create_supplier_lock ()
 {
   if (this->supplier_lock_ == 0)
     return new ACE_Lock_Adapter<ACE_Null_Mutex>;
@@ -940,7 +940,7 @@ TAO_EC_Default_Factory::create_supplier_lock (void)
     return new ACE_Lock_Adapter<TAO_SYNCH_MUTEX> ();
   else if (this->supplier_lock_ == 2)
     return new ACE_Lock_Adapter<TAO_SYNCH_RECURSIVE_MUTEX> ();
-  return 0;
+  return nullptr;
 }
 
 void
@@ -957,14 +957,14 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->consumer_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->consumer_control_period_);
       return new TAO_EC_Reactive_ConsumerControl (rate, consumer_control_timeout_, ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 void
@@ -981,14 +981,14 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
   else if (this->supplier_control_ == 1)
     {
       int argc = 0;
-      ACE_TCHAR **argv = 0;
+      ACE_TCHAR **argv = nullptr;
       CORBA::ORB_var orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
       ACE_Time_Value rate (0, this->supplier_control_period_);
       return new TAO_EC_Reactive_SupplierControl (rate, supplier_control_timeout_, ec, orb.in ());
     }
-  return 0;
+  return nullptr;
 }
 
 void

@@ -32,7 +32,7 @@ public:
           CORBA::Long milliseconds,
           CORBA::ORB_ptr orb);
 
-  virtual int svc (void);
+  virtual int svc ();
   // The service method
 
 private:

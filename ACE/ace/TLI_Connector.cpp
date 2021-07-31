@@ -1,7 +1,5 @@
 #include "ace/TLI_Connector.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 #if !defined (__ACE_INLINE__)
@@ -18,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Connector)
 
 void
-ACE_TLI_Connector::dump (void) const
+ACE_TLI_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Connector::dump");

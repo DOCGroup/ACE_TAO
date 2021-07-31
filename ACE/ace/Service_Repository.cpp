@@ -24,7 +24,7 @@ ACE_Service_Repository *ACE_Service_Repository::svc_rep_ = 0;
 bool ACE_Service_Repository::delete_svc_rep_ = false;
 
 void
-ACE_Service_Repository::dump (void) const
+ACE_Service_Repository::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Repository::dump");
@@ -73,7 +73,7 @@ ACE_Service_Repository::instance (ACE_Service_Repository *s)
 }
 
 void
-ACE_Service_Repository::close_singleton (void)
+ACE_Service_Repository::close_singleton ()
 {
   ACE_TRACE ("ACE_Service_Repository::close_singleton");
 
@@ -111,7 +111,7 @@ ACE_Service_Repository::ACE_Service_Repository (size_t size)
 /// Finalize (call fini() and possibly delete) all the services.
 
 int
-ACE_Service_Repository::fini (void)
+ACE_Service_Repository::fini ()
 {
   ACE_TRACE ("ACE_Service_Repository::fini");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
@@ -206,7 +206,7 @@ ACE_Service_Repository::fini (void)
 
 /// Close down all the services.
 int
-ACE_Service_Repository::close (void)
+ACE_Service_Repository::close ()
 {
   ACE_TRACE ("ACE_Service_Repository::close");
   ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->lock_, -1);
@@ -252,7 +252,7 @@ ACE_Service_Repository::close (void)
   return 0;
 }
 
-ACE_Service_Repository::~ACE_Service_Repository (void)
+ACE_Service_Repository::~ACE_Service_Repository ()
 {
   ACE_TRACE ("ACE_Service_Repository::~ACE_Service_Repository");
 #ifndef ACE_NLOGGING
@@ -554,7 +554,7 @@ ACE_Service_Repository::remove_i (const ACE_TCHAR name[], ACE_Service_Type **ps)
 ACE_ALLOC_HOOK_DEFINE(ACE_Service_Repository_Iterator)
 
 void
-ACE_Service_Repository_Iterator::dump (void) const
+ACE_Service_Repository_Iterator::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Service_Repository_Iterator::dump");
@@ -593,7 +593,7 @@ ACE_Service_Repository_Iterator::next (const ACE_Service_Type *&sr)
 /// skip over this entry.  Otherwise, we must advance the NEXT index to
 /// reference the next valid service entry.
 int
-ACE_Service_Repository_Iterator::advance (void)
+ACE_Service_Repository_Iterator::advance ()
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::advance");
 
@@ -605,7 +605,7 @@ ACE_Service_Repository_Iterator::advance (void)
 }
 
 bool
-ACE_Service_Repository_Iterator::valid (void) const
+ACE_Service_Repository_Iterator::valid () const
 {
   ACE_TRACE ("ACE_Service_Repository_Iterator::valid");
   if (!this->ignore_suspended_)

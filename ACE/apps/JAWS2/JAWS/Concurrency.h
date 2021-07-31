@@ -33,7 +33,7 @@ public:
   ~JAWS_Concurrency_Base (void);
 
   virtual int put (ACE_Message_Block *mb, ACE_Time_Value *tv = 0);
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int svc_loop (JAWS_Data_Block *db);
   // in thread pool, this is an infinite loop

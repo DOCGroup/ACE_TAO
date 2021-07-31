@@ -69,7 +69,7 @@ private:
   virtual int close (u_long flags = 0);
 
   /// Here the actual servicing of all requests is happening..
-  virtual int svc (void);
+  virtual int svc ();
 
   // = Implementation methods.
   u_long work_i (u_long, int);
@@ -215,11 +215,7 @@ Scheduler::svc (void)
     {
       // Dequeue the next method object (we use an auto pointer in
       // case an exception is thrown in the <call>).
-#if defined (ACE_HAS_CPP11)
       std::unique_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
-#else
-      auto_ptr<ACE_Method_Request> mo (this->activation_queue_.dequeue ());
-#endif /* ACE_HAS_CPP11 */
 
       ACE_DEBUG ((LM_DEBUG, " (%t) calling method object\n"));
       // Call it.
@@ -273,11 +269,7 @@ Scheduler::name (void)
         {
           // This scheduler is inactive... so we execute the user
           // request right away...
-#if defined (ACE_HAS_CPP11)
           std::unique_ptr<ACE_Method_Request> mo (new Method_Request_name (this, new_future));
-#else
-          auto_ptr<ACE_Method_Request> mo (new Method_Request_name (this, new_future));
-#endif /* ACE_HAS_CPP11 */
 
           mo->call ();
           // Smart pointer destructor automatically deletes mo.
@@ -302,13 +294,8 @@ Scheduler::work (u_long newparam, int newcount)
 
       if (this->thr_count () == 0)
         {
-#if defined (ACE_HAS_CPP11)
           std::unique_ptr<ACE_Method_Request> mo
             (new Method_Request_work (this, newparam, newcount, new_future));
-#else
-          auto_ptr<ACE_Method_Request> mo
-            (new Method_Request_work (this, newparam, newcount, new_future));
-#endif /* ACE_HAS_CPP11 */
           mo->call ();
           // Smart pointer destructor automatically deletes it.
         }

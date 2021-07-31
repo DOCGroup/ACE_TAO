@@ -33,8 +33,7 @@ namespace TAO
 
     void
     IdUniquenessStrategyUniqueFactoryImpl::destroy (
-      IdUniquenessStrategy *strategy
-      )
+      IdUniquenessStrategy *strategy)
     {
       strategy->strategy_cleanup ();
 

@@ -30,13 +30,11 @@ int
 TAO_Valuetype_Adapter_Factory_Impl::Initializer (void)
 {
   TAO_ORB_Core::valuetype_adapter_factory_name (
-      "Concrete_Valuetype_Adapter_Factory"
-    );
+      "Concrete_Valuetype_Adapter_Factory");
 
   return
     ACE_Service_Config::process_directive (
-        ace_svc_desc_TAO_Valuetype_Adapter_Factory_Impl
-      );
+        ace_svc_desc_TAO_Valuetype_Adapter_Factory_Impl);
 }
 
 

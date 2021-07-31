@@ -284,7 +284,7 @@ public:
   int open (const ACE_TCHAR *host,
             u_short port);
 
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   void handle (ACE_HANDLE);
 
 protected:
@@ -358,7 +358,7 @@ Sender::~Sender (void)
 }
 
 ACE_HANDLE
-Sender::handle (void) const
+Sender::handle () const
 {
   return this->stream_.get_handle ();
 }

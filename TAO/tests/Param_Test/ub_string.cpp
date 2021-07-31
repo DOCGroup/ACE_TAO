@@ -41,7 +41,7 @@ Test_Unbounded_String::~Test_Unbounded_String (void)
 }
 
 const char *
-Test_Unbounded_String::opname (void) const
+Test_Unbounded_String::opname () const
 {
   return this->opname_;
 }
@@ -160,10 +160,10 @@ Test_Unbounded_String::print_values (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n=*=*=*=*=*=*\n"
-              "in with len (%d) = %s\n"
-              "inout with len (%d) = %s\n"
-              "out with len (%d) = %s\n"
-              "ret with len (%d) = %s\n"
+              "in with len (%d) = %C\n"
+              "inout with len (%d) = %C\n"
+              "out with len (%d) = %C\n"
+              "ret with len (%d) = %C\n"
               "\n=*=*=*=*=*=*\n",
               (this->in_ ? ACE_OS::strlen (this->in_):0),
               (this->in_ ? this->in_:"<nul string>"),

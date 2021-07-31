@@ -142,7 +142,7 @@ find_another_host (ACE_TCHAR other_host[])
 }
 
 static int
-fail_no_listener_nonblocking (void)
+fail_no_listener_nonblocking ()
 {
   ACE_TCHAR test_host[MAXHOSTNAMELEN], test_addr[MAXHOSTNAMELEN + 8];
   int status;
@@ -224,7 +224,7 @@ fail_no_listener_nonblocking (void)
 // <ACE::handle_timed_complete> does checks on some systems.
 
 static int
-succeed_nonblocking (void)
+succeed_nonblocking ()
 {
   ACE_TCHAR test_host[MAXHOSTNAMELEN], test_addr[MAXHOSTNAMELEN + 8];
   int status;

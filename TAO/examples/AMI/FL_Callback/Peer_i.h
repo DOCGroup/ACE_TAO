@@ -92,7 +92,7 @@ public:
              CORBA::Long id);
 
   /// The thread entry point
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// The peers

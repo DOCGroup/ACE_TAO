@@ -3,7 +3,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ACE_Recyclable_State
-ACE_Recyclable::recycle_state (void) const
+ACE_Recyclable::recycle_state () const
 {
   return this->recycle_state_;
 }

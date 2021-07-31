@@ -46,7 +46,7 @@ AMI_Manager::start_workers (CORBA::Short worker_count,
 void
 AMI_Manager::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 // ****************************************************************

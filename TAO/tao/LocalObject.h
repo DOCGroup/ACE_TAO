@@ -46,13 +46,13 @@ namespace CORBA
   public:
 
     /// Destructor
-    virtual ~LocalObject (void);
+    virtual ~LocalObject ();
 
     /// Increment the ref count
     static LocalObject_ptr _duplicate (LocalObject_ptr obj);
 
     /// Return a NIL object
-    static LocalObject_ptr _nil (void);
+    static LocalObject_ptr _nil ();
 
     /**
      * @todo Narrowing a LocalObject to a CORBA::Object is broken
@@ -66,17 +66,17 @@ namespace CORBA
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 
     /// Always returns false.
-    virtual CORBA::Boolean _non_existent (void);
+    virtual CORBA::Boolean _non_existent ();
 
     /// Get the repository id.
-    virtual char * _repository_id (void);
+    virtual char * _repository_id ();
 
 #if ! defined (CORBA_E_COMPACT) && ! defined (CORBA_E_MICRO)
     /// Gets info about object from the Interface Repository.
-    virtual CORBA::InterfaceDef_ptr _get_interface (void);
+    virtual CORBA::InterfaceDef_ptr _get_interface ();
 
     /// Throws NO_IMPLEMENT.
-    virtual CORBA::Object_ptr _get_component (void);
+    virtual CORBA::Object_ptr _get_component ();
 
     virtual void _create_request (CORBA::Context_ptr ctx,
                                   const char * operation,
@@ -139,12 +139,12 @@ namespace CORBA
      */
     virtual CORBA::Boolean _is_equivalent (CORBA::Object_ptr other_obj);
 
-    virtual CORBA::ORB_ptr _get_orb (void);
+    virtual CORBA::ORB_ptr _get_orb ();
 
     // = TAO extensions
 
     /// Throws CORBA::NO_IMPLEMENT.
-    virtual TAO::ObjectKey * _key (void);
+    virtual TAO::ObjectKey * _key ();
 
     /// Useful for template programming.
     typedef LocalObject_ptr _ptr_type;
@@ -156,17 +156,11 @@ namespace CORBA
     /**
      * Make it protected to prevent instantiation of this class.
      */
-    LocalObject (void);
+    LocalObject ();
 
   private:
-    /**
-     * @name Unimplemented methods
-     */
-    //@{
-    ACE_UNIMPLEMENTED_FUNC (LocalObject (const LocalObject &))
-    ACE_UNIMPLEMENTED_FUNC (LocalObject & operator = (const LocalObject &))
-    //@}
-
+    LocalObject (const LocalObject &) = delete;
+    LocalObject & operator = (const LocalObject &)  = delete;
   };
 }   // End CORBA namespace
 

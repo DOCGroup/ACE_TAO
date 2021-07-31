@@ -17,13 +17,13 @@ namespace TAO
 {
   namespace Portable_Server
   {
-    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator (void) :
+    RequestProcessingStrategyServantActivator::RequestProcessingStrategyServantActivator () :
       etherealize_objects_ (true)
     {
     }
 
     void
-    RequestProcessingStrategyServantActivator::strategy_cleanup (void)
+    RequestProcessingStrategyServantActivator::strategy_cleanup ()
     {
       {
         Non_Servant_Upcall non_servant_upcall (*this->poa_);
@@ -36,7 +36,7 @@ namespace TAO
     }
 
     PortableServer::ServantManager_ptr
-    RequestProcessingStrategyServantActivator::get_servant_manager (void)
+    RequestProcessingStrategyServantActivator::get_servant_manager ()
     {
       return PortableServer::ServantManager::_duplicate (this->servant_activator_.in ());
     }
@@ -233,8 +233,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id
-      )
+      const PortableServer::ObjectId &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the

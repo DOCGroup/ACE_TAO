@@ -78,7 +78,7 @@ Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   // handle_close() as it does plain 'delete this'.
   if (!this->is_ref_counted_)
     {
-      typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH> super;
+      using super = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
       return super::handle_close (handle, mask);
     }
@@ -86,7 +86,7 @@ Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
   return 0;
 }
 
-typedef ACE_Connector<Svc_Handler, ACE_SOCK_CONNECTOR> CONNECTOR;
+using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
 static const char* hosts[] = {
   "www.russiantvguide.com:80",

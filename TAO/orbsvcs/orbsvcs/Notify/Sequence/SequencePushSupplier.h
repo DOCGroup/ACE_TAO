@@ -43,7 +43,7 @@ public:
   virtual void release (void);
 
   /// Retrieve the ior of this peer
-  virtual ACE_CString get_ior (void) const;
+  virtual ACE_CString get_ior () const;
 
 protected:
 

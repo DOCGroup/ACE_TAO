@@ -27,7 +27,6 @@ ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
   ACE_VERSIONED_NAMESPACE_NAME::ACE_OS::mutex_lock_cleanup (args);
 }
 
-
 #if !defined(ACE_WIN32) && defined (__IBMCPP__) && (__IBMCPP__ >= 400)
 # define ACE_BEGINTHREADEX(STACK, STACKSIZE, ENTRY_POINT, ARGS, FLAGS, THR_ID) \
        (*THR_ID = ::_beginthreadex ((void(_Optlink*)(void*))ENTRY_POINT, STACK, STACKSIZE, ARGS), *THR_ID)
@@ -1622,7 +1621,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, msec_timeout),
                                 result),
-              int, -1, result);
+              int, result);
   return result;
 #else
   // Prevent race conditions on the <waiters_> count.
@@ -1729,8 +1728,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result), int);
 #else
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
     return -1;
@@ -1912,11 +1910,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (sa);
   ACE_UNUSED_ARG (lock_type);
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m,
-                     lock_scope,
-                     attributes),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, lock_scope, attributes),
   result),
-  int, -1);
+  int);
 # elif defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
 
@@ -1988,12 +1984,11 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   ACE_NOTSUP_RETURN (-1);
 #  else
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
-                     result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m), result), int);
 #  endif /* ACE_LACKS_PTHREAD_MUTEX_DESTROY */
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2074,11 +2069,10 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2169,7 +2163,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts), result), int, -1, result);
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts), result), int, result);
 
   // We need to adjust this to make the errno values consistent.
   if (result == -1 && errno == ETIMEDOUT)
@@ -2249,11 +2243,10 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2351,11 +2344,10 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2405,7 +2397,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
 
 #ifndef ACE_WIN32
 
-int ACE_event_t::lock (void)
+int ACE_event_t::lock ()
 {
 # if !ACE_EVENT_USE_MUTEX_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -2414,7 +2406,7 @@ int ACE_event_t::lock (void)
   return ACE_OS::mutex_lock (&this->eventdata_->lock_);
 }
 
-int ACE_event_t::unlock (void)
+int ACE_event_t::unlock ()
 {
 # if !ACE_EVENT_USE_MUTEX_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -2423,7 +2415,7 @@ int ACE_event_t::unlock (void)
   return ACE_OS::mutex_unlock (&this->eventdata_->lock_);
 }
 
-int ACE_event_t::wake_one (void)
+int ACE_event_t::wake_one ()
 {
 # if !ACE_EVENT_USE_COND_PSHARED
   if (this->eventdata_->type_ == USYNC_PROCESS)
@@ -3135,14 +3127,36 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 #if defined ACE_HAS_THREADS && defined ACE_LACKS_RWLOCK_T
 namespace {
 struct UniqueName {
-  explicit UniqueName (const void *addr)
+  UniqueName (int type, const void *addr)
   {
+#ifdef ACE_WIN32
+    if (type == USYNC_THREAD)
+      {
+        this->named_ = false;
+        return;
+      }
+    this->named_ = true;
+#else
+    ACE_UNUSED_ARG (type);
+#endif
     ACE_OS::unique_name (addr, &this->buffer_[0], ACE_UNIQUE_NAME_LEN);
   }
 
-  operator const ACE_TCHAR * () const { return &this->buffer_[0]; }
+  operator const ACE_TCHAR * () const
+  {
+#ifdef ACE_WIN32
+    if (!this->named_)
+      {
+        return 0;
+      }
+#endif
+    return &this->buffer_[0];
+  }
 
   ACE_TCHAR buffer_[ACE_UNIQUE_NAME_LEN];
+#ifdef ACE_WIN32
+  bool named_;
+#endif
 };
 
 enum RWLockCleanup {RWLC_CondAttr, RWLC_Lock, RWLC_CondReaders, RWLC_CondWriters};
@@ -3197,23 +3211,24 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 
   RWLockCleaner cleanup (attributes, rw);
 
-  if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (&rw->lock_),
+  if (ACE_OS::mutex_init (&rw->lock_, type, UniqueName (type, &rw->lock_),
                           (ACE_mutexattr_t *) arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_Lock;
   if (ACE_OS::cond_init (&rw->waiting_readers_, attributes,
-                         UniqueName (&rw->waiting_readers_), arg) != 0)
+                         UniqueName (type, &rw->waiting_readers_), arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondReaders;
   if (ACE_OS::cond_init (&rw->waiting_writers_, attributes,
-                         UniqueName (&rw->waiting_writers_), arg) != 0)
+                         UniqueName (type, &rw->waiting_writers_), arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondWriters;
   if (ACE_OS::cond_init (&rw->waiting_important_writer_, attributes,
-                         UniqueName (&rw->waiting_important_writer_), arg) != 0)
+                         UniqueName (type, &rw->waiting_important_writer_),
+                         arg) != 0)
     return -1;
 
   cleanup.state_ = RWLC_CondAttr;
@@ -3277,7 +3292,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                                                                     sched_params.policy (),
                                                                     &param),
                                            result),
-                         int, -1);
+                         int);
     }
 # if defined (sun)
   // We need to be able to set LWP priorities on Suns, even without
@@ -3318,7 +3333,6 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 
   if (sched_params.scope () == ACE_SCOPE_THREAD)
     {
-
       // Setting the REALTIME_PRIORITY_CLASS on Windows is almost always
       // a VERY BAD THING. This include guard will allow people
       // to easily disable this feature in ACE.
@@ -3559,7 +3573,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
                                            (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
@@ -3574,19 +3588,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                          flags),
                   -1);
 
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   else
     thread_args = thread_adapter;
 
-#if defined (ACE_HAS_CPP11)
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
-#else
-  auto_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
-#endif /* ACE_HAS_CPP11 */
 
   if (thread_adapter == 0)
-    ACE_auto_ptr_reset (auto_thread_args,
-                        thread_args);
+    auto_thread_args.reset (thread_args);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -3916,7 +3925,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                   thread_args->entry_point (),
                                                   thread_args),
                                 result),
-              int, -1, result);
+              int, result);
   ::pthread_attr_destroy (&attr);
 
   // This is a SunOS or POSIX implementation of pthreads, where we
@@ -3950,7 +3959,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                              &policy,
                                                              &sparam),
                                     result), int,
-                  -1, result);
+                  result);
 
       // The only policy supported by by SunOS, thru version 5.6,
       // is SCHED_OTHER, so that's hard-coded here.
@@ -3966,7 +3975,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                                         policy,
                                                                         &sparam),
                                                result),
-                             int, -1);
+                             int);
         }
     }
 
@@ -4009,7 +4018,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                               thread_args->entry_point (),
                                               thread_args,
                                               flags, thr_id), result),
-              int, -1, result);
+              int, result);
 
   if (result != -1)
     {
@@ -4498,12 +4507,12 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          result),
-                       int, -1);
+                       int);
 #   elif defined (ACE_HAS_STHREADS)
     int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
                                          result),
-                       int, -1);
+                       int);
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (dest);
     *key = ::TlsAlloc ();
@@ -4706,10 +4715,10 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
       int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
                                            result),
-                         int, -1);
+                         int);
 #     elif defined (ACE_HAS_STHREADS)
       int result;
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int);
 #     elif defined (ACE_HAS_WTHREADS)
       ::TlsSetValue (key, data);
       return 0;
@@ -4821,16 +4830,6 @@ ACE_OS::unique_name (const void *object,
                     static_cast<int> (ACE_OS::getpid ()));
 }
 #endif
-
-pid_t
-ACE_OS::thr_gettid ()
-{
-#ifdef ACE_HAS_GETTID
-  return syscall (SYS_gettid);
-#else
-  ACE_NOTSUP_RETURN (-1);
-#endif
-}
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

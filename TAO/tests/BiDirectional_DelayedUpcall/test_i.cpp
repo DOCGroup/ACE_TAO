@@ -16,7 +16,7 @@ Callback_i::shutdown (void)
   // Shutdown the server before we shutdown our own ORB
   this->server_->shutdown ();
   // now we shut down
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void

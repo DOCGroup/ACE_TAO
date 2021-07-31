@@ -45,7 +45,6 @@
 /////////////////////////////////////////////////////////////////
 #define ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R
 #define ACE_HAS_3_PARAM_WCSTOK
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
 // Although ACE does have alloca() on this compiler/platform combination, it is
 // disabled by default since it can be dangerous.  Uncomment the following line
@@ -99,14 +98,11 @@
 #define ACE_HAS_GETTIMEOFDAY 1
 #define ACE_HAS_GETRUSAGE 1
 #define ACE_HAS_GETRUSAGE_PROTOTYPE 1
-#define ACE_HAS_NEW_NO_H 1
 #define ACE_IOCTL_TYPE_ARG2 u_long
 #define ACE_HAS_TIMEZONE 1
 #define ACE_HAS_SOCKADDR_MSG_NAME 1
 #define ACE_HAS_SIG_C_FUNC 1
 #define ACE_HAS_SOCKADDR_IN6_SIN6_LEN 1
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#define ACE_HAS_STRING_CLASS 1
 #define ACE_HAS_STRSIGNAL
 #define ACE_HAS_POSITION_INDEPENDENT_POINTERS 1
 #define ACE_HAS_POSIX_NONBLOCK 1
@@ -157,10 +153,8 @@
 #define ACE_LACKS_RLIMIT         // QNX rlimit syscalls don't work properly with ACE.
 
 #define ACE_MT_SAFE 1
-#define ACE_NEEDS_FUNC_DEFINITIONS
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 64000
 #define ACE_THR_PRI_FIFO_DEF 10
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_HAS_SIGTIMEDWAIT
 #define ACE_HAS_SIGSUSPEND
 

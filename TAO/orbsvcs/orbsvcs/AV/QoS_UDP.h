@@ -117,7 +117,7 @@ public:
   int open (ACE_Addr &address);
   virtual TAO_AV_Transport *transport (void);
   virtual int set_remote_address (ACE_Addr *address);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
   virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0);
   virtual int change_qos (AVStreams::QoS);

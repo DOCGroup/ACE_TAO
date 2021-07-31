@@ -48,13 +48,13 @@ public:
             int protocol = 0);
 
   /// Get handle.
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   /// Set handle.
   void set_handle (ACE_HANDLE);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

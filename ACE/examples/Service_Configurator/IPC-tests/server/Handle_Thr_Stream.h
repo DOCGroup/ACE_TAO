@@ -26,7 +26,7 @@ public:
   // = Dynamic linking hooks.
   virtual int init (int argc, ACE_TCHAR *argv[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
 
 private:
   ACE_Thread_Manager thr_mgr_;
@@ -54,7 +54,7 @@ public:
   virtual int close (u_long);
   // Close down the service.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Execute the service.
 
 protected:

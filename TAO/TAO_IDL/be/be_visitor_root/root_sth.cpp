@@ -16,7 +16,7 @@ be_visitor_root_sth::be_visitor_root_sth (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_sth::~be_visitor_root_sth (void)
+be_visitor_root_sth::~be_visitor_root_sth ()
 {
 }
 
@@ -127,7 +127,7 @@ be_visitor_root_sth::visit_component (be_component *node)
 }
 
 int
-be_visitor_root_sth::init (void)
+be_visitor_root_sth::init ()
 {
   /// First open the server-side file for writing
   int status =

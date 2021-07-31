@@ -227,7 +227,7 @@ namespace ACE
       typedef Addr PEER_ADDR;
 
       /// Dump the state of an object.
-      void dump (void) const;
+      void dump () const;
 
       /// Declare the dynamic allocation hooks.
       ACE_ALLOC_HOOK_DECLARE;
@@ -238,9 +238,9 @@ namespace ACE
       /// future. - Priyanka
       /// {@
       void set_handle (ACE_HANDLE h);
-      ACE_HANDLE get_handle (void) const;
+      ACE_HANDLE get_handle () const;
 
-      Session *session (void) const;
+      Session *session () const;
       void session (Session *s);
 
       /**

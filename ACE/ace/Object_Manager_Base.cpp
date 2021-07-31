@@ -11,7 +11,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 int ACE_SEH_Default_Exception_Selector (void *)
 {
   // this is only windows and only used here,
@@ -23,7 +23,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 {
   return 0;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # define ACE_OS_PREALLOCATE_OBJECT(TYPE, ID)\
@@ -47,14 +47,14 @@ int ACE_SEH_Default_Exception_Handler (void *)
     preallocated_object[ID] = 0;
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-ACE_Object_Manager_Base::ACE_Object_Manager_Base (void)
+ACE_Object_Manager_Base::ACE_Object_Manager_Base ()
   : object_manager_state_ (OBJ_MAN_UNINITIALIZED)
   , dynamically_allocated_ (false)
   , next_ (0)
 {
 }
 
-ACE_Object_Manager_Base::~ACE_Object_Manager_Base (void)
+ACE_Object_Manager_Base::~ACE_Object_Manager_Base ()
 {
 #if defined (ACE_HAS_NONSTATIC_OBJECT_MANAGER)
   // Clear the flag so that fini () doesn't delete again.
@@ -89,14 +89,14 @@ ACE_OS_Object_Manager *ACE_OS_Object_Manager::instance_ = 0;
 void *ACE_OS_Object_Manager::preallocated_object[
   ACE_OS_Object_Manager::ACE_OS_PREALLOCATED_OBJECTS] = { 0 };
 
-ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
+ACE_OS_Object_Manager::ACE_OS_Object_Manager ()
   : default_mask_ (0)
   , thread_hook_ (0)
   , exit_info_ ()
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   , seh_except_selector_ (ACE_SEH_Default_Exception_Selector)
   , seh_except_handler_ (ACE_SEH_Default_Exception_Handler)
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 {
   // If instance_ was not 0, then another ACE_OS_Object_Manager has
   // already been instantiated (it is likely to be one initialized by
@@ -115,7 +115,7 @@ ACE_OS_Object_Manager::ACE_OS_Object_Manager (void)
   init ();
 }
 
-ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
+ACE_OS_Object_Manager::~ACE_OS_Object_Manager ()
 {
   dynamically_allocated_ = false;   // Don't delete this again in fini()
   fini ();
@@ -124,18 +124,18 @@ ACE_OS_Object_Manager::~ACE_OS_Object_Manager (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_OS_Object_Manager)
 
 sigset_t *
-ACE_OS_Object_Manager::default_mask (void)
+ACE_OS_Object_Manager::default_mask ()
 {
   return ACE_OS_Object_Manager::instance ()->default_mask_;
 }
 
 ACE_Thread_Hook *
-ACE_OS_Object_Manager::thread_hook (void)
+ACE_OS_Object_Manager::thread_hook ()
 {
   return ACE_OS_Object_Manager::instance ()->thread_hook_;
 }
 
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 ACE_SEH_EXCEPT_HANDLER
 ACE_OS_Object_Manager::seh_except_selector (void)
 {
@@ -169,7 +169,7 @@ ACE_OS_Object_Manager::seh_except_handler (ACE_SEH_EXCEPT_HANDLER n)
   instance->seh_except_handler_ = n;
   return retv;
 }
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 ACE_Thread_Hook *
 ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
@@ -181,7 +181,7 @@ ACE_OS_Object_Manager::thread_hook (ACE_Thread_Hook *new_thread_hook)
 }
 
 ACE_OS_Object_Manager *
-ACE_OS_Object_Manager::instance (void)
+ACE_OS_Object_Manager::instance ()
 {
   // This function should be called during construction of static
   // instances, or before any other threads have been created in the
@@ -206,7 +206,7 @@ ACE_OS_Object_Manager::instance (void)
 }
 
 int
-ACE_OS_Object_Manager::init (void)
+ACE_OS_Object_Manager::init ()
 {
   if (starting_up_i ())
     {
@@ -306,7 +306,7 @@ ACE_OS_Object_Manager::init (void)
 // reason.  All objects clean up their per-object information and managed
 // objects, but only The Instance cleans up the static preallocated objects.
 int
-ACE_OS_Object_Manager::fini (void)
+ACE_OS_Object_Manager::fini ()
 {
   if (instance_ == 0  ||  shutting_down_i ())
     // Too late.  Or, maybe too early.  Either fini () has already
@@ -480,7 +480,7 @@ ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
 }
 
 int
-ACE_OS_Object_Manager::starting_up (void)
+ACE_OS_Object_Manager::starting_up ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->starting_up_i ()
@@ -488,7 +488,7 @@ ACE_OS_Object_Manager::starting_up (void)
 }
 
 int
-ACE_OS_Object_Manager::shutting_down (void)
+ACE_OS_Object_Manager::shutting_down ()
 {
   return ACE_OS_Object_Manager::instance_
     ? instance_->shutting_down_i ()
@@ -512,17 +512,17 @@ class ACE_OS_Object_Manager_Manager
 {
 public:
   /// Constructor.
-  ACE_OS_Object_Manager_Manager (void);
+  ACE_OS_Object_Manager_Manager ();
 
   /// Destructor.
-  ~ACE_OS_Object_Manager_Manager (void);
+  ~ACE_OS_Object_Manager_Manager ();
 
 private:
   /// Save the main thread ID, so that destruction can be suppressed.
   ACE_thread_t saved_main_thread_id_;
 };
 
-ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager (void)
+ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager ()
   : saved_main_thread_id_ (ACE_OS::thr_self ())
 {
   // Ensure that the Object_Manager gets initialized before any
@@ -532,7 +532,7 @@ ACE_OS_Object_Manager_Manager::ACE_OS_Object_Manager_Manager (void)
   (void) ACE_OS_Object_Manager::instance ();
 }
 
-ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager (void)
+ACE_OS_Object_Manager_Manager::~ACE_OS_Object_Manager_Manager ()
 {
   if (ACE_OS::thr_equal (ACE_OS::thr_self (),
                          saved_main_thread_id_))

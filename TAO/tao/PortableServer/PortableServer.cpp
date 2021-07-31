@@ -44,7 +44,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_POA_Initializer::init (void)
+TAO_POA_Initializer::init ()
 {
   ACE_Service_Config::process_directive (
       ace_svc_desc_IdAssignmentStrategySystem);

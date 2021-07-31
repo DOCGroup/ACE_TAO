@@ -47,19 +47,16 @@ template <class X>
 class ACE_Intrusive_Auto_Ptr
 {
 protected:
-
-    /// Used to define a proper boolean conversion for "if (sp) ..."
+  /// Used to define a proper boolean conversion for "if (sp) ..."
   static void unspecified_bool(ACE_Intrusive_Auto_Ptr<X>***){};
   typedef void (*unspecified_bool_type)(ACE_Intrusive_Auto_Ptr<X>***);
 
 public:
-
   /// Enables "if (sp) ..."
   operator unspecified_bool_type() const
     {
         return rep_ == 0 ? 0: unspecified_bool;
     }
-
 
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
@@ -76,7 +73,7 @@ public:
   /// Destructor. Releases the reference to the underlying representation.
   /// If the release of that reference causes its reference count to reach 0,
   /// the representation object will also be destroyed.
-  virtual ~ACE_Intrusive_Auto_Ptr (void);
+  virtual ~ACE_Intrusive_Auto_Ptr ();
 
   /// Assignment operator that binds the current object and @a r to the same
   /// ACE_Intrusive_Auto_Ptr_Rep. An ACE_Intrusive_Auto_Ptr_Rep
@@ -84,33 +81,29 @@ public:
   void operator = (const ACE_Intrusive_Auto_Ptr<X> &r);
 
   /// Redirection operator
-  X *operator-> (void) const;
+  X *operator-> () const;
 
   /// Accessor method.
   X &operator *() const;
 
   /// Releases the reference to the underlying representation object.
   /// @retval The pointer value prior to releasing it.
-  X *release (void);
+  X *release ();
 
   /// Releases the current pointer value and then sets a new
   /// pointer value specified by @a p.
   void reset (X *p = 0);
 
   /// Get the pointer value.
-  X *get (void) const;
+  X *get () const;
 
    /// Get the reference count value.
-  long count (void) const;
-
-  /// Returns @c true if this object does not contain a valid pointer.
-  //  bool null (void) const;
+  long count () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Protect operations on the ACE_Intrusive_Auto_Ptr.
   X *rep_;
 };

@@ -19,7 +19,7 @@ int run_main (int, ACE_TCHAR *[])
 #ifdef ACE_HAS_PTHREADS
 struct Inheritor : ACE_Task_Base
 {
-  int svc ()
+  int svc () override
   {
     ACE_DEBUG ((LM_DEBUG, "(%P|%t) - this test might crash ACE if it does not "
                           "have the fix for the second bug in #3480.\n"));
@@ -69,7 +69,7 @@ struct MyThread : ACE_Task_Base
   bool openfile_;
   static MyThread childthread_;
 
-  int svc ()
+  int svc () override
   {
     if (openfile_)
       {

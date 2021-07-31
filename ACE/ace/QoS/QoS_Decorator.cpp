@@ -23,7 +23,7 @@ ACE_QoS_Decorator_Base::~ACE_QoS_Decorator_Base (void)
 
 // Forward the call to ACE_Event_Handler component.
 ACE_HANDLE
-ACE_QoS_Decorator_Base::get_handle (void) const
+ACE_QoS_Decorator_Base::get_handle () const
 {
  return this->event_handler_->get_handle ();
 }
@@ -71,7 +71,7 @@ ACE_QoS_Decorator::~ACE_QoS_Decorator (void)
 // GQoS. RAPI needs additional QoS decoration. This is done by the
 // ACE_QoS_Event_Handler class.
 ACE_HANDLE
-ACE_QoS_Decorator::get_handle (void) const
+ACE_QoS_Decorator::get_handle () const
 {
   return this->decorator_base_->get_handle ();
 }
@@ -139,7 +139,7 @@ ACE_QoS_Event_Handler::qos_session (ACE_QoS_Session *qos_session)
 
 // Returns the RAPI file descriptor for listening to RAPI evnets.
 ACE_HANDLE
-ACE_QoS_Event_Handler::get_handle (void) const
+ACE_QoS_Event_Handler::get_handle () const
 {
   return this->qos_session_->rsvp_events_handle ();
 }

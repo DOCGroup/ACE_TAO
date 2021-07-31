@@ -10,7 +10,7 @@ Client_Task::Client_Task (Test::Process_Factory_ptr process_factory,
 }
 
 int
-Client_Task::successful_calls (void) const
+Client_Task::successful_calls () const
 {
   return this->successful_calls_;
 }

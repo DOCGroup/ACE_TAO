@@ -76,18 +76,18 @@ template <class HANDLER> void
 ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
 {
   // Variable for error tracking
-  int error = 0;
+  bool error = false;
 
   // If the asynchronous connect fails.
   if (!result.success () ||
       result.connect_handle () == ACE_INVALID_HANDLE)
     {
-      error = 1;
+      error = true;
     }
 
   if (result.error () != 0)
     {
-      error = 1;
+      error = true;
     }
 
   // set blocking mode
@@ -95,7 +95,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       ACE::clr_flags
         (result.connect_handle (), ACE_NONBLOCK) != 0)
     {
-      error = 1;
+      error = true;
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p\n"),
                   ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Set blocking mode")));
@@ -115,7 +115,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
   if (this->validate_new_connection_ &&
       this->validate_connection (result, remote_address, local_address) == -1)
     {
-      error = 1;
+      error = true;
     }
 
   HANDLER *new_handler = 0;
@@ -125,7 +125,7 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
       new_handler = this->make_handler ();
       if (new_handler == 0)
         {
-          error = 1;
+          error = true;
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("ACE_Asynch_Connector::handle_connect : Making of new handler failed")));
@@ -239,7 +239,7 @@ ACE_Asynch_Connector<HANDLER>::make_handler (void)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::pass_addresses (void) const
+ACE_Asynch_Connector<HANDLER>::pass_addresses () const
 {
   return this->pass_addresses_;
 }
@@ -251,7 +251,7 @@ ACE_Asynch_Connector<HANDLER>::pass_addresses (bool new_value)
 }
 
 template <class HANDLER> bool
-ACE_Asynch_Connector<HANDLER>::validate_new_connection (void) const
+ACE_Asynch_Connector<HANDLER>::validate_new_connection () const
 {
   return this->validate_new_connection_;
 }

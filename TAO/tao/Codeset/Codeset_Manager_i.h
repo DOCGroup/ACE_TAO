@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //======================================================================
 /*
  *  @file Codeset_Manager_i.h
@@ -72,7 +70,7 @@ public:
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.
-  void set_codeset (TAO_Tagged_Components& ) const;
+  void set_codeset (TAO_Tagged_Components&) const;
   ///
   /// Called from an object of "TAO_GIOP_Invocation" to set TCS on the
   /// Transport

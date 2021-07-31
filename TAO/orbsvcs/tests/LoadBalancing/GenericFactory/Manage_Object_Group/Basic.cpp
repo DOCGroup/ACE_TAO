@@ -61,5 +61,5 @@ Basic::remove_member (void)
 void
 Basic::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

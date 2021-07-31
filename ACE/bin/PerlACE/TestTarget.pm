@@ -1,4 +1,4 @@
-#! /usr/bin/perl
+#!/usr/bin/env perl
 #
 # The TestTarget class is for operations that are per-target while testing.
 # They can be overridden for specific needs like embedded systems, etc.
@@ -142,49 +142,8 @@ sub GetConfigSettings ($)
             $self->{tao_root} = $ENV{'TAO_ROOT'};
         }
     } else {
-        # fall back to assuming classic hierarchical struture
+        # fall back to assuming classic hierarchical structure
         $self->{tao_root} = "$self->{ace_root}/TAO";
-    }
-    $env_name = $env_prefix.'CIAO_ROOT';
-    if (exists $ENV{$env_name}) {
-        $self->{ciao_root} = $ENV{$env_name};
-    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/CIAO") {
-        # flat directory structure
-        $self->{ciao_root} = "$tgt_fs_root/CIAO";
-    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/ACE/TAO/CIAO") {
-        # hierarchical struture
-        $self->{ciao_root} = "$self->{tao_root}/CIAO";
-    } elsif (exists $ENV{'CIAO_ROOT'}) {
-        if ($fs_root ne $tgt_fs_root) {
-            $self->{ciao_root} =
-                PerlACE::rebase_path ($ENV{'CIAO_ROOT'}, $fs_root, $tgt_fs_root);
-        } else {
-            $self->{ciao_root} = $ENV{'CIAO_ROOT'};
-        }
-    } else {
-        # fall back to assuming classic hierarchical struture
-        $self->{ciao_root} = "$self->{tao_root}/CIAO";
-    }
-
-    $env_name = $env_prefix.'DANCE_ROOT';
-    if (exists $ENV{$env_name}) {
-        $self->{dance_root} = $ENV{$env_name};
-    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/DAnCE") {
-        # flat directory structure
-        $self->{dance_root} = "$tgt_fs_root/DAnCE";
-    } elsif ($fs_root ne $tgt_fs_root && -d "$fs_root/ACE/TAO/DAnCE") {
-        # hierarchical struture
-        $self->{dance_root} = "$self->{tao_root}/DAnCE";
-    } elsif (exists $ENV{'DANCE_ROOT'}) {
-        if ($fs_root ne $tgt_fs_root) {
-            $self->{dance_root} =
-                PerlACE::rebase_path ($ENV{'DANCE_ROOT'}, $fs_root, $tgt_fs_root);
-        } else {
-            $self->{dance_root} = $ENV{'DANCE_ROOT'};
-        }
-    } else {
-        # fall back to assuming classic hierarchical struture
-        $self->{dance_root} = "$self->{tao_root}/DAnCE";
     }
 
     $env_name = $env_prefix.'TEST_ROOT';
@@ -368,18 +327,6 @@ sub TAO_ROOT ($)
 {
     my $self = shift;
     return $self->{tao_root};
-}
-
-sub CIAO_ROOT ($)
-{
-    my $self = shift;
-    return $self->{ciao_root};
-}
-
-sub DANCE_ROOT ($)
-{
-    my $self = shift;
-    return $self->{dance_root};
 }
 
 sub HostName ($)

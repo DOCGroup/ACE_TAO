@@ -50,7 +50,7 @@ public:
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
   /// This isn't necessary, but it keeps some compilers happy.
-  ~ACE_Node (void);
+  ~ACE_Node ();
 
   ACE_ALLOC_HOOK_DECLARE;
 

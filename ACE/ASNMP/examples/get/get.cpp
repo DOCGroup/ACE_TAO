@@ -36,13 +36,13 @@
 // SNMPv1 Get Application
 //
 class getapp {
-  public:
+public:
   getapp(int argc, char **argv); // process command line args
   int valid() const;             // verify transaction can proceed
   int run();                     //  issue transaction
   static void usage();           // operator help message
 
-  private:
+private:
   getapp(const getapp&);
 
   UdpAddress address_;

@@ -110,7 +110,7 @@ namespace TAO
 
       bool operator== (const SSLIOP_Credentials &rhs);
 
-      CORBA::ULong hash (void) const;
+      CORBA::ULong hash () const;
 
       // The static operations.
       static SSLIOP::Credentials_ptr _duplicate (SSLIOP::Credentials_ptr obj);

@@ -133,7 +133,7 @@ ACE_Registry::Object::data (void *data)
 
 
 void *
-ACE_Registry::Object::data (void) const
+ACE_Registry::Object::data () const
 {
   return this->data_;
 }
@@ -147,7 +147,7 @@ ACE_Registry::Object::size (u_long size)
 
 
 u_long
-ACE_Registry::Object::size (void) const
+ACE_Registry::Object::size () const
 {
   return this->size_;
 }
@@ -161,7 +161,7 @@ ACE_Registry::Object::type (u_long type)
 
 
 u_long
-ACE_Registry::Object::type (void) const
+ACE_Registry::Object::type () const
 {
   return this->type_;
 }

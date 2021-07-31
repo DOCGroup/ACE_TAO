@@ -364,7 +364,7 @@
 // elements.
 # define ACE_FREE_LIST_WITH_POOL 1
 
-// A simple free list which doen't allocate/deallocate elements.
+// A simple free list which doesn't allocate/deallocate elements.
 # define ACE_PURE_FREE_LIST 2
 
 # if defined (ACE_WIN32)

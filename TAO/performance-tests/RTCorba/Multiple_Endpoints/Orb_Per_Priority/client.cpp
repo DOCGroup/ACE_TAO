@@ -39,7 +39,7 @@ public:
   // Accumulate the throughput statistics into <throughput>
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   CORBA::ORB_ptr orb_;

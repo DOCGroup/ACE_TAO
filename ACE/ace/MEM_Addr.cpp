@@ -22,7 +22,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Addr)
 
 // Transform the current address into string format.
 
-ACE_MEM_Addr::ACE_MEM_Addr (void)
+ACE_MEM_Addr::ACE_MEM_Addr ()
   : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   // ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
@@ -54,7 +54,7 @@ ACE_MEM_Addr::ACE_MEM_Addr (u_short port_number)
   this->initialize_local (port_number);
 }
 
-ACE_MEM_Addr::~ACE_MEM_Addr (void)
+ACE_MEM_Addr::~ACE_MEM_Addr ()
 {
 }
 
@@ -110,7 +110,7 @@ ACE_MEM_Addr::string_to_addr (const ACE_TCHAR s[])
 // Return the address.
 
 void *
-ACE_MEM_Addr::get_addr (void) const
+ACE_MEM_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_addr");
   return this->external_.get_addr ();
@@ -137,20 +137,20 @@ ACE_MEM_Addr::get_host_name (ACE_TCHAR hostname[],
 // Return the character representation of the hostname.
 
 const char *
-ACE_MEM_Addr::get_host_name (void) const
+ACE_MEM_Addr::get_host_name () const
 {
   ACE_TRACE ("ACE_MEM_Addr::get_host_name");
   return this->external_.get_host_name ();
 }
 
 u_long
-ACE_MEM_Addr::hash (void) const
+ACE_MEM_Addr::hash () const
 {
   return this->external_.hash ();
 }
 
 void
-ACE_MEM_Addr::dump (void) const
+ACE_MEM_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Addr::dump");

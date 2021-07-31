@@ -89,7 +89,7 @@ public:
 };
 
 
-int MyTask::svc (void )
+int MyTask::svc ()
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) MyTask started\n"));
 
@@ -372,7 +372,7 @@ public:
   int open (const ACE_TCHAR *host, u_short port);
   void close ();
 
-  ACE_HANDLE handle (void) const;
+  ACE_HANDLE handle () const;
   void handle (ACE_HANDLE);
 
 protected:
@@ -426,7 +426,7 @@ void Sender::close ()
   this->stream_.close ();
 }
 
-ACE_HANDLE Sender::handle (void) const
+ACE_HANDLE Sender::handle () const
 {
   return this->stream_.get_handle ();
 }

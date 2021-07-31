@@ -44,7 +44,7 @@ ACE_UNIX_Addr::operator != (const ACE_UNIX_Addr &sap) const
 // Return the path name used for the rendezvous point.
 
 ACE_INLINE const char *
-ACE_UNIX_Addr::get_path_name (void) const
+ACE_UNIX_Addr::get_path_name () const
 {
   return this->unix_addr_.sun_path;
 }

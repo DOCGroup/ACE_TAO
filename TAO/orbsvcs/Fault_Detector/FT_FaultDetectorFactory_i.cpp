@@ -13,9 +13,10 @@
 #include "Fault_Detector_i.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
-#include "ace/Auto_Ptr.h"
 #include "orbsvcs/CosNamingC.h"
 #include "orbsvcs/PortableGroup/PG_Property_Set.h"
+
+#include <memory>
 
 // Use this macro at the beginning of CORBA methods
 // to aid in debugging.
@@ -601,7 +602,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
       ));
     throw PortableGroup::ObjectNotCreated();
   }
-  auto_ptr<TAO::Fault_Detector_i> detector(pFD);
+  std::unique_ptr<TAO::Fault_Detector_i> detector(pFD);
 
   ACE_NEW_NORETURN ( factory_creation_id,
     PortableGroup::GenericFactory::FactoryCreationId);

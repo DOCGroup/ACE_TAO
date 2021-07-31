@@ -5,7 +5,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Service_Callbacks::~TAO_Service_Callbacks (void)
+TAO_Service_Callbacks::~TAO_Service_Callbacks ()
 {
 }
 
@@ -16,7 +16,6 @@ TAO_Service_Callbacks::select_profile (const TAO_MProfile & /*mprofile*/,
   return false;
 }
 
-
 CORBA::Boolean
 TAO_Service_Callbacks::object_is_nil (CORBA::Object_ptr /* obj */)
 {
@@ -24,7 +23,6 @@ TAO_Service_Callbacks::object_is_nil (CORBA::Object_ptr /* obj */)
   // something is wrong. So, we send a true for a is_nil () call
   return true;
 }
-
 
 TAO_Service_Callbacks::Profile_Equivalence
 TAO_Service_Callbacks::is_profile_equivalent (const TAO_Profile *,

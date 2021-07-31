@@ -3,7 +3,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (_ACE_USE_SV_SEM)
 ACE_INLINE const ACE_mutex_t &
-ACE_Process_Mutex::lock (void) const
+ACE_Process_Mutex::lock () const
 {
 // ACE_TRACE ("ACE_Process_Mutex::lock");
   return this->lock_.lock ();

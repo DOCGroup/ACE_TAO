@@ -108,7 +108,7 @@ public:
 
   /// hash() function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 
@@ -210,7 +210,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data member.
 

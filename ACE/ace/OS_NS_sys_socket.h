@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -281,7 +279,7 @@ namespace ACE_OS
   char *if_indextoname (unsigned int ifindex, char *ifname);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct if_nameindex *if_nameindex (void);
+  struct if_nameindex *if_nameindex ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void if_freenameindex (struct if_nameindex *ptr);
@@ -294,7 +292,7 @@ namespace ACE_OS
 
   /// Finalize WinSock after last use (e.g., when a DLL is unloaded).
   extern ACE_Export
-  int socket_fini (void);
+  int socket_fini ();
 
   /// Create a BSD-style socket (no QoS).
   ACE_NAMESPACE_INLINE_FUNCTION

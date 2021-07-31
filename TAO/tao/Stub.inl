@@ -15,7 +15,7 @@ TAO_Stub::reset_base (void)
 
 
 ACE_INLINE const TAO_SYNCH_MUTEX&
-TAO_Stub::profile_lock (void) const
+TAO_Stub::profile_lock () const
 {
   return this->profile_lock_;
 }
@@ -208,7 +208,7 @@ TAO_Stub::set_valid_profile (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::valid_profile (void) const
+TAO_Stub::valid_profile () const
 {
   return this->profile_success_;
 }
@@ -274,7 +274,7 @@ TAO_Stub::next_profile_retry (void)
 }
 
 ACE_INLINE const TAO_MProfile&
-TAO_Stub::base_profiles (void) const
+TAO_Stub::base_profiles () const
 {
   return this->base_profiles_;
 }
@@ -286,7 +286,7 @@ TAO_Stub::base_profiles (void)
 }
 
 ACE_INLINE const TAO_MProfile *
-TAO_Stub::forward_profiles (void) const
+TAO_Stub::forward_profiles () const
 {
   return this->forward_profiles_;
 }
@@ -298,13 +298,13 @@ TAO_Stub::forward_profiles (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::is_collocated (void) const
+TAO_Stub::is_collocated () const
 {
   return this->is_collocated_;
 }
 
 ACE_INLINE TAO_ORB_Core*
-TAO_Stub::orb_core (void) const
+TAO_Stub::orb_core () const
 {
   return this->orb_core_.get ();
 }
@@ -330,7 +330,7 @@ TAO_Stub::servant_orb (CORBA::ORB_ptr orb)
 }
 
 ACE_INLINE TAO_Abstract_ServantBase *
-TAO_Stub::collocated_servant (void) const
+TAO_Stub::collocated_servant () const
 {
   return collocated_servant_;
 }
@@ -342,7 +342,7 @@ TAO_Stub::collocated_servant (TAO_Abstract_ServantBase * servant)
 }
 
 ACE_INLINE TAO::Object_Proxy_Broker *
-TAO_Stub::object_proxy_broker (void) const
+TAO_Stub::object_proxy_broker () const
 {
   return this->object_proxy_broker_;
 }
@@ -361,7 +361,7 @@ TAO_Stub::destroy (void)
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Stub::optimize_collocation_objects (void) const
+TAO_Stub::optimize_collocation_objects () const
 {
   return this->collocation_opt_;
 }
@@ -393,7 +393,7 @@ void TAO_Stub::forwarded_on_exception (bool forwarded)
 ACE_INLINE
 bool TAO_Stub::forwarded_on_exception () const
 {
-  return forwarded_on_exception_.value ();
+  return forwarded_on_exception_;
 }
 
 ACE_INLINE
@@ -413,7 +413,7 @@ TAO_Stub::_decr_refcnt (void)
 
 ACE_INLINE
 CORBA::Boolean
-TAO_Stub::at_starting_profile (void) const
+TAO_Stub::at_starting_profile () const
 {
   return profile_in_use_ == base_profiles_.get_profile(0);
 }
@@ -429,7 +429,7 @@ TAO_Stub_Auto_Ptr::TAO_Stub_Auto_Ptr (TAO_Stub *p)
 }
 
 ACE_INLINE TAO_Stub *
-TAO_Stub_Auto_Ptr::get (void) const
+TAO_Stub_Auto_Ptr::get () const
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::get");
   return this->p_;
@@ -440,7 +440,7 @@ TAO_Stub_Auto_Ptr::release (void)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::release");
   TAO_Stub *old = this->p_;
-  this->p_ = 0;
+  this->p_ = nullptr;
   return old;
 }
 
@@ -448,7 +448,7 @@ ACE_INLINE void
 TAO_Stub_Auto_Ptr::reset (TAO_Stub *p)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::reset");
-  if (this->get () != p && this->get () != 0)
+  if (this->get () != p && this->get () != nullptr)
     this->get ()->_decr_refcnt ();
   this->p_ = p;
 }
@@ -482,12 +482,11 @@ ACE_INLINE
 TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr (void)
 {
   ACE_TRACE ("TAO_Stub_Auto_Ptr::~TAO_Stub_Auto_Ptr");
-  if (this->get() != 0)
+  if (this->get() != nullptr)
     this->get ()->_decr_refcnt ();
 }
 
 // Accessor methods to the underlying Stub Object
-
 ACE_INLINE TAO_Stub &
 TAO_Stub_Auto_Ptr::operator *() const
 {
@@ -495,6 +494,5 @@ TAO_Stub_Auto_Ptr::operator *() const
   // @@ Potential problem if this->p_ is zero!
   return *this->get ();
 }
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL

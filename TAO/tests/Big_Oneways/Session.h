@@ -46,7 +46,7 @@ private:
   void terminate (CORBA::Boolean success);
 
   /// Return 1 if all the work in this session has been completed
-  int more_work (void) const;
+  int more_work () const;
 
   /// Make sure that all threads have connections avaiable to the
   /// other sessions.
@@ -85,7 +85,7 @@ private:
   /// Helper class to run svc() in a separate thread
   Session_Task task_;
 
-  /// Barrier to start all threads simultaenously
+  /// Barrier to start all threads simultaneously
 #if defined(ACE_HAS_THREADS)
   typedef ACE_Thread_Barrier Barrier;
 #else

@@ -77,10 +77,10 @@ typedef ACE_Hash_Map_Manager<CORBA::ULong,TAO_SFP_Fragment_Table*,ACE_Null_Mutex
 class TAO_AV_Export TAO_SFP_Frame_State
 {
 public:
-  TAO_SFP_Frame_State (void);
-  CORBA::Boolean is_complete (void);
+  TAO_SFP_Frame_State ();
+  CORBA::Boolean is_complete ();
 
-  int reset (void);
+  int reset ();
 
   TAO_InputCDR cdr;
   // This is the InputCDR that will be used to decode the message.

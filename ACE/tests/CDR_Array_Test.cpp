@@ -180,7 +180,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
 {
   if (total <= 0)
     {
-      return ;
+      return;
     }
 
   char* srcbuf;
@@ -893,7 +893,7 @@ run_main (int argc, ACE_TCHAR *argv[])
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
               ACE::major_version (),
               ACE::minor_version(),
-              ACE::beta_version()));
+              ACE::micro_version()));
 
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("d:f:q:w:h:c:t:n:"));
   int dtotal = 0;

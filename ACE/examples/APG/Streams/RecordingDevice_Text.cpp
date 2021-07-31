@@ -23,7 +23,7 @@ int TextListenerAcceptor::open (ACE_INET_Addr &addr)
   return 0;
 }
 
-ACE_HANDLE TextListenerAcceptor::get_handle (void) const
+ACE_HANDLE TextListenerAcceptor::get_handle () const
 {
   return this->acceptor_.get_handle ();
 }
@@ -57,7 +57,7 @@ int TextListenerAcceptor::init (int argc, ACE_TCHAR *argv[])
   return 0;
 }
 
-ACE_Event_Handler *TextListenerAcceptor::get_handler (void) const
+ACE_Event_Handler *TextListenerAcceptor::get_handler () const
 {
   return (ACE_Event_Handler *)this;
 }
@@ -102,7 +102,7 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
 }
 // Listing 01
 
-const ACE_TCHAR *TextListener::get_name (void) const
+const ACE_TCHAR *TextListener::get_name () const
 {
   return ACE_TEXT ("TextListener");
 }

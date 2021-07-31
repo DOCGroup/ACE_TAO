@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "ace/config-all.h"
 // Don't use the ACE version accessors in class ACE, so that we can
 // support this test cleanly with the OS component, only.
@@ -31,7 +30,7 @@
 #include "ace/Basic_Types.h"
 #include "ace/OS_NS_unistd.h"
 
-typedef void* (*a_function_pointer) (void*);
+using a_function_pointer = void *(*)(void *);
 
 static
 u_int
@@ -156,7 +155,6 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %d\n"),
               (int) ACE_OS::sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
-
 
   ACE_END_TEST;
   return errors == 0  ?  0  :  1;

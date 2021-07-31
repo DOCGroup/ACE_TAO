@@ -3,7 +3,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE void
-ACE_ATM_Acceptor::dump (void) const
+ACE_ATM_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Acceptor::dump");

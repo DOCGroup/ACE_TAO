@@ -16,7 +16,7 @@ be_visitor_root_sh::be_visitor_root_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_root_sh::~be_visitor_root_sh (void)
+be_visitor_root_sh::~be_visitor_root_sh ()
 {
 }
 
@@ -62,7 +62,7 @@ be_visitor_root_sh::visit_root (be_root *node)
 }
 
 int
-be_visitor_root_sh::init (void)
+be_visitor_root_sh::init ()
 {
   /// First open the server-side file for writing
   int status =

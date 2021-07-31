@@ -31,17 +31,17 @@ namespace TAO
       : public LifespanStrategy
     {
     public:
-      LifespanStrategyTransient (void);
+      LifespanStrategyTransient ();
 
-      virtual void notify_startup (void);
+      virtual void notify_startup ();
 
-      virtual void notify_shutdown (void);
+      virtual void notify_shutdown ();
 
-      char key_type (void) const;
+      char key_type () const;
 
-      virtual CORBA::Boolean is_persistent (void) const;
+      virtual CORBA::Boolean is_persistent () const;
 
-      CORBA::ULong key_length (void) const;
+      CORBA::ULong key_length () const;
 
       virtual void create_key (CORBA::Octet *buffer, CORBA::ULong& starting_at);
 
@@ -50,7 +50,7 @@ namespace TAO
                      const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
 
       /// Check the state of the POA.
-      virtual void check_state (void);
+      virtual void check_state ();
 
       virtual ::PortableServer::LifespanPolicyValue type() const;
 

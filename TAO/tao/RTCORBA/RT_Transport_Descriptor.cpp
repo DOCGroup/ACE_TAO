@@ -105,7 +105,7 @@ TAO_RT_Transport_Descriptor::is_equivalent (const TAO_Transport_Descriptor_Inter
 }
 
 u_long
-TAO_RT_Transport_Descriptor::hash (void) const
+TAO_RT_Transport_Descriptor::hash () const
 {
   return this->endpoint_->hash ();
 }

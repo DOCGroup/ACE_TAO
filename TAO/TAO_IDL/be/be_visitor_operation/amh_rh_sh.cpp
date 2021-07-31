@@ -17,7 +17,7 @@ be_visitor_amh_rh_operation_sh::be_visitor_amh_rh_operation_sh (
 {
 }
 
-be_visitor_amh_rh_operation_sh::~be_visitor_amh_rh_operation_sh (void)
+be_visitor_amh_rh_operation_sh::~be_visitor_amh_rh_operation_sh ()
 {
 }
 
@@ -46,8 +46,8 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
       : node->defined_in ();
 
   // Needs to be one or the other.
-  if (be_interface::narrow_from_scope (s) == 0
-      && be_porttype::narrow_from_scope (s) == 0)
+  if (dynamic_cast<be_interface*> (s) == nullptr
+      && dynamic_cast<be_porttype*> (s) == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("be_visitor_amh_rh_operation_sh::")

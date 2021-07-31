@@ -26,7 +26,6 @@ namespace TAO
   class Storable_Factory;
 }
 
-
 /**
  * @class TAO_Storable_Naming_Context_Factory
  *

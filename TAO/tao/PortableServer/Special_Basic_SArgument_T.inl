@@ -17,7 +17,7 @@ template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
 S const &
-TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg (void) const
+TAO::In_Special_Basic_SArgument_T<S,to_S,from_S,Insert_Policy>::arg () const
 {
   return this->x_;
 }

@@ -151,26 +151,26 @@ public:
                     int reuse_addr = 1);
 
   /// Close down the Acceptor's resources.
-  virtual ~ACE_Acceptor (void);
+  virtual ~ACE_Acceptor ();
 
   /// Return the underlying PEER_ACCEPTOR object.
   virtual operator PEER_ACCEPTOR &() const;
 
   /// Return the underlying PEER_ACCEPTOR object.
-  virtual PEER_ACCEPTOR &acceptor (void) const;
+  virtual PEER_ACCEPTOR &acceptor () const;
 
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Close down the Acceptor
-  virtual int close (void);
+  virtual int close ();
 
   /// In the event that an accept fails, this method will be called and
   /// the return value will be returned from handle_input().
-  virtual int handle_accept_error (void);
+  virtual int handle_accept_error ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -225,7 +225,7 @@ protected:
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
   /// Calls {handle_close}.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **buf, size_t) const;
@@ -233,10 +233,10 @@ protected:
 public:
   // = Service management hooks.
   /// This method calls {Reactor::suspend}.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// This method calls {Reactor::resume}.
-  virtual int resume (void);
+  virtual int resume ();
 
 protected:
   /// Concrete factory for accepting connections from clients...
@@ -378,19 +378,19 @@ public:
                     int reuse_addr = 1);
 
   /// Close down the Strategy_Acceptor's resources.
-  virtual ~ACE_Strategy_Acceptor (void);
+  virtual ~ACE_Strategy_Acceptor ();
 
   /// Return the underlying PEER_ACCEPTOR object.
   virtual operator PEER_ACCEPTOR &() const;
 
   /// Return the underlying PEER_ACCEPTOR object.
-  virtual PEER_ACCEPTOR &acceptor (void) const;
+  virtual PEER_ACCEPTOR &acceptor () const;
 
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -399,16 +399,16 @@ public:
 
   /// This method delegates to the {Scheduling_Strategy}'s {suspend}
   /// method.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// This method delegates to the {Scheduling_Strategy}'s {resume}
   /// method.
-  virtual int resume (void);
+  virtual int resume ();
 
 protected:
 
   /// Calls {handle_close} when dynamically unlinked.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **buf, size_t) const;
@@ -543,7 +543,7 @@ public:
   typedef typename SVC_HANDLER::stream_type stream_type;
 
   /// Constructor.
-  ACE_Oneshot_Acceptor (void);
+  ACE_Oneshot_Acceptor ();
 
   /**
    * Initialize the appropriate strategies for concurrency and then
@@ -570,7 +570,7 @@ public:
             ACE_Concurrency_Strategy<SVC_HANDLER> * = 0);
 
   /// Close down the {Oneshot_Acceptor}.
-  virtual ~ACE_Oneshot_Acceptor (void);
+  virtual ~ACE_Oneshot_Acceptor ();
 
   // = Explicit factory operation.
   /// Create a {SVC_HANDLER}, accept the connection into the
@@ -582,19 +582,19 @@ public:
                       bool reset_new_handle = false);
 
   /// Cancel a oneshot acceptor that was started asynchronously.
-  virtual int cancel (void);
+  virtual int cancel ();
 
   /// Return the underlying {PEER_ACCEPTOR} object.
   virtual operator PEER_ACCEPTOR &() const;
 
   /// Return the underlying {PEER_ACCEPTOR} object.
-  virtual PEER_ACCEPTOR &acceptor (void) const;
+  virtual PEER_ACCEPTOR &acceptor () const;
 
   /// Close down the {Oneshot_Acceptor}.
-  virtual int close (void);
+  virtual int close ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -620,7 +620,7 @@ protected:
 
   // = Demultiplexing hooks.
   /// Returns the listening acceptor's {ACE_HANDLE}.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Perform termination activities when {this} is removed from the
   /// {reactor}.
@@ -642,7 +642,7 @@ protected:
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int fini (void);
+  virtual int fini ();
 
   /// Default version returns address info in {buf}.
   virtual int info (ACE_TCHAR **, size_t) const;
@@ -650,11 +650,11 @@ protected:
   // = Service management hooks.
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int suspend (void);
+  virtual int suspend ();
 
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
-  virtual int resume (void);
+  virtual int resume ();
 
 private:
   /**

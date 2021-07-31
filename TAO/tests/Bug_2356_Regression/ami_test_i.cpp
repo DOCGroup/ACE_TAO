@@ -38,6 +38,6 @@ AMI_Test_i::foo (CORBA::Long value)
 void
 AMI_Test_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 

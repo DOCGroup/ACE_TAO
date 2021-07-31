@@ -23,12 +23,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-/*
- * Hook for specializing the reactor with the concrete
- * type, for example, select, or thread pool.
- */
-//@@ REACTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 typedef ACE_Token ACE_SELECT_TOKEN;
 #else
@@ -126,7 +120,7 @@ public:
   virtual int timer_queue (ACE_Timer_Queue *tq);
 
   /// Return the current ACE_Timer_Queue.
-  virtual ACE_Timer_Queue *timer_queue (void) const;
+  virtual ACE_Timer_Queue *timer_queue () const;
 
   /// Close down the select_reactor and release all of its resources.
   virtual int close (void);
@@ -524,7 +518,7 @@ public:
 
   /// Returns the current size of the Reactor's internal descriptor
   /// table.
-  virtual size_t size (void) const;
+  virtual size_t size () const;
 
   /**
    * Returns a reference to the ACE_Reactor_Token that is
@@ -536,7 +530,7 @@ public:
   virtual ACE_Lock &lock (void);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -692,9 +686,8 @@ protected:
   sig_atomic_t deactivated_;
 
 private:
-  /// Deny access since member-wise won't work...
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) )
+  ACE_Select_Reactor_T (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
+  ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &operator=  (const ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

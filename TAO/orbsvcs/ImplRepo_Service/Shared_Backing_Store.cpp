@@ -161,11 +161,7 @@ namespace {
 #endif
     }
 
-#if defined (ACE_HAS_CPP11)
     std::unique_ptr <ACE_File_Lock> file_lock_;
-#else
-    auto_ptr<ACE_File_Lock> file_lock_;
-#endif
     FILE* file_;
     int flags_;
     bool locked_;

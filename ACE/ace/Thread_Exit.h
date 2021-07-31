@@ -41,17 +41,17 @@ class ACE_Export ACE_Thread_Exit
 {
 public:
   /// Capture the Thread that will be cleaned up automatically.
-  ACE_Thread_Exit (void);
+  ACE_Thread_Exit ();
 
   /// Set the ACE_Thread_Manager.
   void thr_mgr (ACE_Thread_Manager *tm);
 
   /// Destructor calls the thread-specific exit hooks when a thread
   /// exits.
-  ~ACE_Thread_Exit (void);
+  ~ACE_Thread_Exit ();
 
   /// Singleton access point.
-  static ACE_Thread_Exit *instance (void);
+  static ACE_Thread_Exit *instance ();
 
   /// Cleanup method, used by the ACE_Object_Manager to destroy the
   /// singleton.
@@ -90,16 +90,15 @@ public:
   ACE_Thread_Exit_Maybe (int flag = 0);
 
   /// Destroys the underlying ACE_Thread_Exit instance if it exists.
-  ~ACE_Thread_Exit_Maybe (void);
+  ~ACE_Thread_Exit_Maybe ();
 
   /// Delegates to underlying instance.
-  ACE_Thread_Exit * operator -> (void) const;
+  ACE_Thread_Exit * operator -> () const;
 
   /// Returns the underlying instance.
-  ACE_Thread_Exit * instance (void) const;
+  ACE_Thread_Exit * instance () const;
 
 private:
-
   /// Holds the underlying instance.
   ACE_Thread_Exit *instance_;
 

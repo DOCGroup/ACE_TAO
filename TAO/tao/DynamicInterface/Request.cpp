@@ -20,19 +20,20 @@
 # include "tao/DynamicInterface/Request.inl"
 #endif /* ! __ACE_INLINE__ */
 
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Reference counting for DII Request object.
 
 CORBA::ULong
-CORBA::Request::_incr_refcount (void)
+CORBA::Request::_incr_refcount ()
 {
   return ++this->refcount_;
 }
 
 CORBA::ULong
-CORBA::Request::_decr_refcount (void)
+CORBA::Request::_decr_refcount ()
 {
   CORBA::ULong const new_count = --this->refcount_;
 
@@ -139,7 +140,7 @@ CORBA::Request::invoke (void)
        _tao_arg_list,
        sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
        this->opname_,
-       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
+       static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        this->exceptions_.in (),
        this);
 
@@ -177,7 +178,7 @@ CORBA::Request::send_oneway (void)
       _tao_arg_list,
       sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
       this->opname_,
-      static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
+      static_cast<CORBA::ULong> (std::strlen (this->opname_)),
       TAO::TAO_SYNCHRONOUS_INVOCATION);
 
   // forward requested byte order
@@ -220,7 +221,7 @@ CORBA::Request::send_deferred (void)
       _tao_arg_list,
       static_cast<int> (number_args),
       this->opname_,
-      ACE_OS::strlen (this->opname_),
+      std::strlen (this->opname_),
       0,
       this->orb_->orb_core (),
       this);
@@ -250,7 +251,7 @@ CORBA::Request::sendc (CORBA::Object_ptr handler)
        _tao_arg_list,
        sizeof( _tao_arg_list ) / sizeof( TAO::Argument* ),
        const_cast<char *> (this->opname_),
-       static_cast<CORBA::ULong> (ACE_OS::strlen (this->opname_)),
+       static_cast<CORBA::ULong> (std::strlen (this->opname_)),
        0); // collocation proxy broker
 
   // forward requested byte order
@@ -380,7 +381,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Request::handle_response, unhandled reply status\n")));
+                  ACE_TEXT ("TAO (%P|%t) - Request::handle_response, unhandled reply status %d\n"), reply_status));
   }
 }
 

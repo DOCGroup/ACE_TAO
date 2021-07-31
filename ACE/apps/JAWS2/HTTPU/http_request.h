@@ -26,7 +26,7 @@ public:
   Parse_HTTP_Request *request_line (void);
   // Returns the parsed request line.
 
-  const Parse_HTTP_Request *request_line (void) const;
+  const Parse_HTTP_Request *request_line () const;
   // Returns the parsed request line.
 
   HTTP_Parse_URL *url (void);

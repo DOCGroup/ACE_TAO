@@ -22,18 +22,18 @@ public:
 
   enum URL_SCHEME { HTTP, FTP };
 
-  const char *scheme (void) const;
-  const char *user (void) const;
-  const char *passwd (void) const;
-  const char *host (void) const;
-  int port (void) const;
-  const char *url_path (void) const;
+  const char *scheme () const;
+  const char *user () const;
+  const char *passwd () const;
+  const char *host () const;
+  int port () const;
+  const char *url_path () const;
 
   enum URL_ERROR { URL_ERROR_NONE, URL_ERROR_STRDUP, URL_ERROR_SCHEME, URL_ERROR_SLASHSLASH };
 
-  int error (void) const { return( error_ ); }
+  int error () const { return( error_ ); }
 
-  int is_cgi (void) const;
+  int is_cgi () const;
 
 private:
   void parse_url (void);

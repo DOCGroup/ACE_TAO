@@ -55,7 +55,7 @@ ACE::HTBP::Addr::set_htid (const char *htid)
 }
 
 const char *
-ACE::HTBP::Addr::get_htid (void) const
+ACE::HTBP::Addr::get_htid () const
 {
   return this->htid_.c_str();
 }

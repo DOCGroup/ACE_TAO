@@ -48,9 +48,9 @@ enum ACE_CompressorId
 class ACE_Compression_Export ACE_Compressor
 {
 public:
-  ACE_CompressorId    get_compressor_id(void) const;
+  ACE_CompressorId    get_compressor_id() const;
 
-  ACE_UINT32          get_compression_level(void) const;
+  ACE_UINT32          get_compression_level() const;
 
   /**
     * Compress the @a in_ptr buffer for @a in_len into the
@@ -86,17 +86,17 @@ public:
   /**
     *  Return the current compressed bytes statistics counter.
     */
-  virtual ACE_UINT64  compressed_bytes(void) const;
+  virtual ACE_UINT64  compressed_bytes() const;
 
   /**
     *  Return the current uncompressed bytes statistics counter.
     */
-  virtual ACE_UINT64  uncompressed_bytes(void) const;
+  virtual ACE_UINT64  uncompressed_bytes() const;
 
   /**
     *  Return the current compression ratio statistics.
     */
-  virtual float       compression_ratio(void) const;
+  virtual float       compression_ratio() const;
 
   /**
     *  Reset the statistics to zero.
@@ -122,8 +122,8 @@ private:
   ACE_UINT64          compressed_bytes_;
   ACE_UINT64          uncompressed_bytes_;
 
-  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor (const ACE_Compressor&))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Compressor& operator= (const ACE_Compressor&))
+  ACE_Compressor (const ACE_Compressor&) = delete;
+  ACE_Compressor& operator= (const ACE_Compressor&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

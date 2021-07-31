@@ -155,7 +155,7 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       if (result != 0)
         return result;
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
     }
   catch (const CORBA::Exception& ex)
     {

@@ -28,12 +28,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_ORB_Core;
 
-/*
- * Includes and forward decls for specializing TAO's
- * endpoint implementation.
- */
-//@@ TAO_ENDPOINT_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 /**
  * @class TAO_Endpoint
  *
@@ -56,16 +50,16 @@ public:
                 CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
-  virtual ~TAO_Endpoint (void);
+  virtual ~TAO_Endpoint () = default;
 
   /// IOP protocol tag accessor.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// @c priority_ attribute setter.
   void priority (CORBA::Short priority);
 
   /// @c priority_ attribute getter.
-  CORBA::Short priority (void) const;
+  CORBA::Short priority () const;
 
   /**
    * @name TAO_Endpoint Template Methods
@@ -114,16 +108,10 @@ public:
 
   /// This method returns a deep copy of the corresponding endpoints by
   /// allocating memory.
-  virtual TAO_Endpoint *duplicate (void) = 0;
+  virtual TAO_Endpoint *duplicate () = 0;
 
   /// Return a hash value for this object.
-  virtual CORBA::ULong hash (void)  = 0;
-
-  /*
-   * Hook to add public methods from derived class onto base
-   * Endpoint class.
-   */
-  //@@ TAO_ENDPOINT_SPL_PUBLIC_METHODS_ADD_HOOK
+  virtual CORBA::ULong hash ()  = 0;
 
 protected:
   /// Lock for the address lookup.
@@ -150,19 +138,10 @@ protected:
   CORBA::Short priority_;
 
 private:
-
   /// Endpoints should not be copied.
-  TAO_Endpoint (const TAO_Endpoint&);
-  void operator= (const TAO_Endpoint&);
-
-  /*
-   * Addition of private members from derived class.
-   */
-  //@@ TAO_ENDPOINT_SPL_PRIVATE_DATA_ADD_HOOK
-
+  TAO_Endpoint (const TAO_Endpoint&) = delete;
+  void operator= (const TAO_Endpoint&) = delete;
 };
-
-//@@ TAO_ENDPOINT_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

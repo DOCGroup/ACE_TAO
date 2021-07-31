@@ -24,7 +24,7 @@ public:
   // Set the test attributes.
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   Test_i *server_;

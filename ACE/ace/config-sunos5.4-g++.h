@@ -10,10 +10,6 @@
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
 
-// config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-// this must appear before its #include.
-#define ACE_HAS_STRING_CLASS
-
 #include "ace/config-g++-common.h"
 
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
@@ -50,9 +46,6 @@
 
 // Platform supports POSIX O_NONBLOCK semantics.
 #define ACE_HAS_POSIX_NONBLOCK
-
-// Compiler/platform has correctly prototyped header files.
-#define ACE_HAS_CPLUSPLUS_HEADERS
 
 // Compiler/platform supports SunOS high resolution timers.
 #define ACE_HAS_HI_RES_TIMER

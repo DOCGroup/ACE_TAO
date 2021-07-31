@@ -34,7 +34,7 @@ Test_Nested_Struct::~Test_Nested_Struct (void)
 }
 
 const char *
-Test_Nested_Struct::opname (void) const
+Test_Nested_Struct::opname () const
 {
   return this->opname_;
 }
@@ -174,10 +174,10 @@ Test_Nested_Struct::print_values (void)
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
                   "Element # %d\n"
-                  "in (len = %d): %s\n"
-                  "inout (len = %d): %s\n"
-                  "out (len = %d): %s\n"
-                  "ret (len = %d): %s\n",
+                  "in (len = %d): %C\n"
+                  "inout (len = %d): %C\n"
+                  "out (len = %d): %C\n"
+                  "ret (len = %d): %C\n",
                   i,
                   this->in_.vs.seq.length (),
                   (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),

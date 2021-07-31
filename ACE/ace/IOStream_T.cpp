@@ -146,12 +146,9 @@ ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *&tv)
   return *this;
 }
 
-#if defined (ACE_HAS_STRING_CLASS)
-
-// A simple string operator.  The base iostream has 'em for char* but
-// that isn't always the best thing for a String.  If we don't provide
-// our own here, we may not get what we want.
-
+/// A simple string operator.  The base iostream has 'em for char* but
+/// that isn't always the best thing for a String.  If we don't provide
+/// our own here, we may not get what we want.
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)
 {
@@ -240,6 +237,5 @@ operator<< (STREAM &stream,
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#endif /* ACE_HAS_STRING_CLASS */
 #endif /* ACE_LACKS_ACE_IOSTREAM */
 #endif /* ACE_IOSTREAM_T_CPP */

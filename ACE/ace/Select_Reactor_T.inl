@@ -223,7 +223,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::deactivate (int do_stop)
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> ACE_INLINE size_t
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::size (void) const
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::size () const
 {
   return this->handler_rep_.size ();
 }

@@ -70,7 +70,6 @@ struct RefHelper
 
 struct CSD_TP_Test_Export AppHelper
 {
-
   static void ref_to_file(CORBA::ORB_ptr    orb,
                           CORBA::Object_ptr obj,
                           const ACE_TCHAR*  filename);

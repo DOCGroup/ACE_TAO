@@ -148,13 +148,13 @@ void TAO_FTEC_Event_Channel::oneway_set_update (
 
 
 RtecEventChannelAdmin::ConsumerAdmin_ptr
-TAO_FTEC_Event_Channel::for_consumers (void)
+TAO_FTEC_Event_Channel::for_consumers ()
 {
     return ec_impl_->for_consumers();
 }
 
 RtecEventChannelAdmin::SupplierAdmin_ptr
-TAO_FTEC_Event_Channel::for_suppliers (void)
+TAO_FTEC_Event_Channel::for_suppliers ()
 {
     return ec_impl_->for_suppliers();
 }
@@ -168,7 +168,7 @@ TAO_FTEC_Event_Channel::set_state (const FTRT::State & s)
 }
 
 void
-TAO_FTEC_Event_Channel::destroy (void)
+TAO_FTEC_Event_Channel::destroy ()
 {
   if (Fault_Detector::instance())
     Fault_Detector::instance()->stop();

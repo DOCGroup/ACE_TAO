@@ -36,7 +36,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
   virtual int handle_close (ACE_HANDLE,
                             ACE_Reactor_Mask);
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
@@ -47,7 +47,7 @@ private:
 };
 
 ACE_HANDLE
-Handler::get_handle (void) const
+Handler::get_handle () const
 {
   return this->mcast_.get_handle ();
 }

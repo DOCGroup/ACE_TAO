@@ -75,13 +75,13 @@ public:
   int control (int option, void *arg = 0);
 
   /// Get the underly internal id.
-  int get_id (void) const;
+  int get_id () const;
 
   /// Set the underly internal id.
   void set_id (int);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -37,7 +37,7 @@ Test_AnySeq::~Test_AnySeq (void)
 }
 
 const char *
-Test_AnySeq::opname (void) const
+Test_AnySeq::opname () const
 {
   return this->opname_;
 }
@@ -99,7 +99,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
             CORBA::String_var str = gen->gen_string ();
             if (TAO_debug_level > 0)
               ACE_DEBUG ((LM_DEBUG,
-                          "setting string = %s\n", str.in ()));
+                          "setting string = %C\n", str.in ()));
             this->in_[i] <<= str.in ();
             this->inout_[i] <<= 0; // different from in_
           }

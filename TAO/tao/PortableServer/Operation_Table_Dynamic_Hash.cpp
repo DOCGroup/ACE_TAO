@@ -50,7 +50,7 @@ TAO_Dynamic_Hash_OpTable::TAO_Dynamic_Hash_OpTable (
     }
 }
 
-TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable (void)
+TAO_Dynamic_Hash_OpTable::~TAO_Dynamic_Hash_OpTable ()
 {
   // Initialize an iterator.  We need to go thru each entry and free
   // up storage allocated to hold the external ids.  In this case,

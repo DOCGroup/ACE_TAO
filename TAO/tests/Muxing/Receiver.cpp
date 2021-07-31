@@ -36,5 +36,5 @@ Receiver::get_event_count (void)
 void
 Receiver::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

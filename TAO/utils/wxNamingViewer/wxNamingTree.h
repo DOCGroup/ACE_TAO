@@ -36,7 +36,7 @@ private:
   };
   void clearChildren (void);
   void clearChildren (wxTreeItemId& item);
-  WxNamingObject* getTreeObject(void) const;
+  WxNamingObject* getTreeObject() const;
   WxNamingObject* getTreeObject(wxTreeItemId& item) const;
   void listBindingList(
       wxTreeItemId& item,

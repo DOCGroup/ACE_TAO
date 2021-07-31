@@ -45,7 +45,7 @@ TAO_Object_Ref_Table::end (void)
 }
 
 ACE_INLINE size_t
-TAO_Object_Ref_Table::current_size (void) const
+TAO_Object_Ref_Table::current_size () const
 {
   return this->table_.size ();
 }

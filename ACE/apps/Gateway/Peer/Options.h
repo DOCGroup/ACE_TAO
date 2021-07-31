@@ -48,32 +48,32 @@ public:
    * on for connections to arrive from a gatewayd and create a
    * Supplier.
    */
-  u_short supplier_acceptor_port (void) const;
+  u_short supplier_acceptor_port () const;
 
   /**
    * Our acceptor port number, i.e., the one that we passively listen
    * on for connections to arrive from a gatewayd and create a
    * Consumer.
    */
-  u_short consumer_acceptor_port (void) const;
+  u_short consumer_acceptor_port () const;
 
   /// The connector port number, i.e., the one that we use to actively
   /// establish connections with a gatewayd and create a Supplier.
-  u_short supplier_connector_port (void) const;
+  u_short supplier_connector_port () const;
 
   /// The connector port number, i.e., the one that we use to actively
   /// establish connections with a gatewayd and create a Consumer.
-  u_short consumer_connector_port (void) const;
+  u_short consumer_connector_port () const;
 
   /// Our connector port host, i.e., the host running the gatewayd
   /// process.
-  const ACE_TCHAR *connector_host (void) const;
+  const ACE_TCHAR *connector_host () const;
 
   /// Duration between disconnects.
-  long timeout (void) const;
+  long timeout () const;
 
   /// The maximum size of the queue.
-  long max_queue_size (void) const;
+  long max_queue_size () const;
 
   /// Returns a reference to the connection id.
   CONNECTION_ID &connection_id (void);

@@ -146,7 +146,7 @@ project(ImR_Locator_Service) : orbsvcsexe, install_bin, avoids_minimum_corba, av
   // there is no way to narrow the options down to only static debug builds.
   // Incremental linking has also been turned off since it is
   // incompatible with this option, producing warnings at link time.
-  specific(em3, nmake, vc6, vc71) {
+  specific(em3, nmake, vc71) {
     link_options += /FORCE:MULTIPLE /INCREMENTAL:NO
   }
 

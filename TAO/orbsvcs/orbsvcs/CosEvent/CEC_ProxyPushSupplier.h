@@ -80,7 +80,7 @@ public:
   virtual void deactivate (void);
 
   /// Return 0 if no consumer is connected...
-  CORBA::Boolean is_connected (void) const;
+  CORBA::Boolean is_connected () const;
 
   /**
    * Return the consumer object reference. It returns nil() if it has
@@ -88,7 +88,7 @@ public:
    * NOTE: This method does not return a new reference!!! Doing so
    * will increase the locking overhead on the critical path.
    */
-  CosEventComm::PushConsumer_ptr consumer (void) const;
+  CosEventComm::PushConsumer_ptr consumer () const;
 
   /// The event channel is shutting down
   virtual void shutdown (void);
@@ -141,13 +141,13 @@ protected:
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// The private version (without locking) of is_connected().
-  CORBA::Boolean is_connected_i (void) const;
+  CORBA::Boolean is_connected_i () const;
 
   /// Release the child and the consumer
   void cleanup_i (void);
 
 #if defined (TAO_HAS_TYPED_EVENT_CHANNEL)
-  CORBA::Boolean is_typed_ec (void) const;
+  CORBA::Boolean is_typed_ec () const;
 #endif /* TAO_HAS_TYPED_EVENT_CHANNEL */
 
   /// Assigns the parameter to both consumer_ and nopolicy_consumer_, and

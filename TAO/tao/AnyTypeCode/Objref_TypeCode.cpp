@@ -76,7 +76,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::equivalent_i (
 template <typename StringType, class RefCountPolicy>
 CORBA::TypeCode_ptr
 TAO::TypeCode::Objref<StringType,
-                      RefCountPolicy>::get_compact_typecode_i (void) const
+                      RefCountPolicy>::get_compact_typecode_i () const
 {
   TAO_TypeCodeFactory_Adapter * const adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -122,7 +122,7 @@ TAO::TypeCode::Objref<StringType,
 
 template <typename StringType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i (void) const
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.
@@ -131,7 +131,7 @@ TAO::TypeCode::Objref<StringType, RefCountPolicy>::id_i (void) const
 
 template <typename StringType, class RefCountPolicy>
 char const *
-TAO::TypeCode::Objref<StringType, RefCountPolicy>::name_i (void) const
+TAO::TypeCode::Objref<StringType, RefCountPolicy>::name_i () const
 {
   // Ownership is retained by the TypeCode, as required by the C++
   // mapping.

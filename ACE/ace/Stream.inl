@@ -31,7 +31,7 @@ ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::next (const ACE_Module<ACE_SYNC
 }
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> ACE_INLINE int
-ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::done (void) const
+ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::done () const
 {
   ACE_TRACE ("ACE_Stream_Iterator<ACE_SYNCH_USE, TIME_POLICY>::done");
   return this->next_ == 0;

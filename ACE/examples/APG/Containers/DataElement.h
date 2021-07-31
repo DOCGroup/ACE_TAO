@@ -32,7 +32,7 @@ public:
 
   ~DataElement () { count_--; }
 
-  int getData (void) const { return data_; }
+  int getData () const { return data_; }
 
   void setData (int val) { data_ = val; }
 

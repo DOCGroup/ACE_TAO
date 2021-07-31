@@ -171,7 +171,7 @@ ACE_URL_Addr::operator= (const ACE_URL_Addr &addr)
 }
 
 u_long
-ACE_URL_Addr::hash (void) const
+ACE_URL_Addr::hash () const
 {
   u_long result = this->ACE_INET_Addr::hash ()
     + ACE::hash_pjw (this->get_path_name ());
@@ -205,7 +205,7 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
 }
 
 const ACE_TCHAR *
-ACE_URL_Addr::get_path_name (void) const
+ACE_URL_Addr::get_path_name () const
 {
   return this->path_name_;
 }

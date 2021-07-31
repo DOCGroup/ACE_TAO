@@ -148,11 +148,11 @@ public:
   int close_dispatch_threads (int wait);
 
   /// @@ This is a no-op on POSIX platforms. Returns 0.
-  size_t number_of_threads (void) const;
+  size_t number_of_threads () const;
   void number_of_threads (size_t threads);
 
   /// This is a no-op in POSIX. Returns ACE_INVALID_HANDLE.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   // Methods used to create Asynch IO factory and result objects. We
   // create the right objects here in these methods.
@@ -575,7 +575,7 @@ protected:
   int setup_signal_handler (int signal_number) const;
 
   /// Insures that RT_completion_signals_ are blocked in the calling thread.
-  int block_signals (void) const;
+  int block_signals () const;
 
   /**
    * Dispatch a single set of events.  @a timeout is a pointer to a
@@ -617,7 +617,6 @@ protected:
  */
 class ACE_Export ACE_POSIX_Asynch_Timer : public ACE_POSIX_Asynch_Result
 {
-
   /// The factory method for this class is with the POSIX_Proactor
   /// class.
   friend class ACE_POSIX_Proactor;
@@ -635,13 +634,13 @@ protected:
                           int signal_number = ACE_SIGRTMIN);
 
   /// Destructor.
-  virtual ~ACE_POSIX_Asynch_Timer (void) {}
+  ~ACE_POSIX_Asynch_Timer (void) override = default;
 
   /// This method calls the handler's handle_timeout method.
-  virtual void complete (size_t bytes_transferred,
-                         int success,
-                         const void *completion_key,
-                         u_long error = 0);
+  void complete (size_t bytes_transferred,
+                 int success,
+                 const void *completion_key,
+                 u_long error = 0) override;
 
   /// Time value requested by caller
   ACE_Time_Value time_;

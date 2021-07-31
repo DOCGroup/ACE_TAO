@@ -117,7 +117,7 @@ Peer_Handler::handle_close (ACE_HANDLE,
 }
 
 ACE_HANDLE
-Peer_Handler::get_handle (void) const
+Peer_Handler::get_handle () const
 {
   return this->peer ().get_handle ();
 }

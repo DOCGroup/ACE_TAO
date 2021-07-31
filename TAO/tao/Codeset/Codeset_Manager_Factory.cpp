@@ -19,7 +19,7 @@ TAO_Codeset_Manager_Factory::~TAO_Codeset_Manager_Factory (void)
 }
 
 bool
-TAO_Codeset_Manager_Factory::is_default (void) const
+TAO_Codeset_Manager_Factory::is_default () const
 {
   return false;
 }

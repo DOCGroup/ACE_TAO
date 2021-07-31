@@ -85,7 +85,7 @@ public:
   virtual CACHING_UTILITY &caching_utility (void) = 0;
 
   /// Dumps the state of the object.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 //////////////////////////////////////////////////////////////////////////
@@ -158,7 +158,7 @@ public:
   CACHING_UTILITY &caching_utility (void);
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -254,7 +254,7 @@ public:
   CACHING_UTILITY &caching_utility (void);
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -353,7 +353,7 @@ public:
   CACHING_UTILITY &caching_utility (void);
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -444,7 +444,7 @@ public:
   CACHING_UTILITY &caching_utility (void);
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -521,7 +521,7 @@ public:
   CACHING_UTILITY &caching_utility (void);
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

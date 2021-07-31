@@ -30,7 +30,7 @@ public:
   int svc (void);
 
   /// The status of the svc loop
-  int status (void) const;
+  int status () const;
 
 private:
   /// Output file for IOR

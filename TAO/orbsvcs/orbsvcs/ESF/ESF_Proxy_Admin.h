@@ -66,7 +66,7 @@ public:
   TAO_ESF_Proxy_Admin (EVENT_CHANNEL *ec);
 
   /// Cleanup internal resources, destroy the internal collection
-  virtual ~TAO_ESF_Proxy_Admin (void);
+  virtual ~TAO_ESF_Proxy_Admin ();
 
   /// Iterate over its internal collection.
   void for_each (TAO_ESF_Worker<PROXY> *worker);
@@ -78,14 +78,14 @@ public:
   // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
   virtual INTERFACE*
-      obtain (void);
+      obtain ();
 
   /**
    * The Event Channel that owns this Admin object is going
    * down. Invoke <shutdown> on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
-  virtual void shutdown (void);
+  virtual void shutdown ();
 
   /**
    * A <proxy> has connected, this is invoked when the proxy's client

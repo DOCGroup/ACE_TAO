@@ -31,7 +31,7 @@ Test_Var_Array::~Test_Var_Array (void)
 }
 
 const char *
-Test_Var_Array::opname (void) const
+Test_Var_Array::opname () const
 {
   return this->opname_;
 }
@@ -156,6 +156,6 @@ Test_Var_Array::print (const Param_Test::Var_Array_slice *a)
 {
   for (CORBA::ULong i = 0; i < Param_Test::DIM2; i++)
     {
-      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %s\n",i, a[i].in ()));
+      ACE_DEBUG ((LM_DEBUG, "\t\tElement #%d = %C\n",i, a[i].in ()));
     }
 }

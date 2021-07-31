@@ -42,7 +42,7 @@ public:
     : rep_(rep), waitCond_(wait), mutex_(mutex)
   { }
 
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   HA_Device_Repository &rep_;

@@ -152,7 +152,7 @@ public:
   int cancel (long timer_id, const void **act = 0);
 
   /// Runs the dispatching thread.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Inform the dispatching thread that it should terminate.
   virtual void deactivate (void);
@@ -164,10 +164,10 @@ public:
   int timer_queue (TQ *tq);
 
   /// Return the current <TQ>.
-  TQ *timer_queue (void) const;
+  TQ *timer_queue () const;
 
   /// Return the thread id of our active object.
-  ACE_thread_t thr_id (void) const;
+  ACE_thread_t thr_id () const;
 
   /**
    * We override the default activate() method so that we can ensure

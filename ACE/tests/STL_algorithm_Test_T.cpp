@@ -27,7 +27,7 @@ public:
     return *this;
   }
 
-  typename T::difference_type get_count (void) const
+  typename T::difference_type get_count () const
   {
     return this->count_;
   }

@@ -24,20 +24,13 @@ public:
 
   void *operator new (size_t n);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
-  void *operator new (size_t n, const ACE_nothrow_t&) throw();
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
-  void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-#endif
-
+  void *operator new (size_t n, const std::nothrow_t&) throw();
+  void operator delete (void *p, const std::nothrow_t&) throw ();
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
   void operator delete (void *, void *);
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
 
   /// Have we been dynamically created?
   bool dynamic_;
@@ -67,9 +60,8 @@ A::operator new (size_t n)
     }
 }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
 void*
-A::operator new (size_t n, const ACE_nothrow_t&) throw()
+A::operator new (size_t n, const std::nothrow_t&) throw()
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
@@ -88,19 +80,15 @@ A::operator new (size_t n, const ACE_nothrow_t&) throw()
       // storage, depending on config flags).
       dynamic_instance->set ();
 
-      return ::new(ACE_nothrow) char[n];
+      return ::new(std::nothrow) char[n];
     }
 }
 
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
 void
-A::operator delete (void *p, const ACE_nothrow_t&) throw()
+A::operator delete (void *p, const std::nothrow_t&) throw()
 {
   ::delete [] static_cast <char *> (p);
 }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-
-#endif /* ACE_HAS_NEW_NOTHROW */
 
 void
 A::operator delete (void *obj)

@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_TLI_CONNECTOR_H
 #define ACE_TLI_CONNECTOR_H
 #include /**/ "ace/pre.h"
@@ -110,7 +109,7 @@ public:
   typedef ACE_TLI_Stream PEER_STREAM;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -49,7 +49,7 @@ ACE_TSS_Connection::get_connection (void)
 }
 
 ACE_SOCK_Stream *
-ACE_TSS_Connection::make_TSS_TYPE (void) const
+ACE_TSS_Connection::make_TSS_TYPE () const
 {
   ACE_TRACE ("ACE_TSS_Connection::make_TSS_TYPE");
 
@@ -77,7 +77,7 @@ ACE_TSS_Connection::operator ACE_SOCK_Stream *(void)
 }
 
 void
-ACE_TSS_Connection::dump (void) const
+ACE_TSS_Connection::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TSS_Connection::dump");
@@ -386,7 +386,7 @@ ACE_Remote_Token_Proxy::owner_id (void)
 }
 
 void
-ACE_Remote_Token_Proxy::dump (void) const
+ACE_Remote_Token_Proxy::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Token_Proxy::dump");
@@ -401,7 +401,7 @@ ACE_Remote_Token_Proxy::dump (void) const
 }
 
 ACE_Token_Proxy *
-ACE_Remote_Mutex::clone (void) const
+ACE_Remote_Mutex::clone () const
 {
   ACE_Token_Proxy *temp;
   ACE_NEW_RETURN (temp,
@@ -423,7 +423,7 @@ ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
 }
 
 void
-ACE_Remote_Mutex::dump (void) const
+ACE_Remote_Mutex::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_Mutex::dump");
@@ -446,13 +446,13 @@ ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
 }
 
 int
-ACE_Remote_RLock::type (void) const
+ACE_Remote_RLock::type () const
 {
   return ACE_RW_Token::READER;
 }
 
 ACE_Token_Proxy *
-ACE_Remote_RLock::clone (void) const
+ACE_Remote_RLock::clone () const
 {
   ACE_Token_Proxy *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -464,7 +464,7 @@ ACE_Remote_RLock::clone (void) const
 }
 
 void
-ACE_Remote_RLock::dump (void) const
+ACE_Remote_RLock::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_RLock::dump");
@@ -488,13 +488,13 @@ ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
 }
 
 int
-ACE_Remote_WLock::type (void) const
+ACE_Remote_WLock::type () const
 {
   return ACE_RW_Token::WRITER;
 }
 
 ACE_Token_Proxy *
-ACE_Remote_WLock::clone (void) const
+ACE_Remote_WLock::clone () const
 {
   ACE_Token_Proxy *temp = 0;
   ACE_NEW_RETURN (temp,
@@ -506,7 +506,7 @@ ACE_Remote_WLock::clone (void) const
 }
 
 void
-ACE_Remote_WLock::dump (void) const
+ACE_Remote_WLock::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Remote_WLock::dump");

@@ -68,7 +68,7 @@ protected:
 
   // = Demultiplexing hooks.
   /// Return the underlying <ACE_HANDLE>.
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
 
   /// Callback method invoked by the <ACE_Reactor> when client events
   /// arrive.

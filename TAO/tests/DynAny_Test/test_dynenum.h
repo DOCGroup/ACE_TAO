@@ -20,7 +20,7 @@ public:
   Test_DynEnum (CORBA::ORB_var orb, int debug);
   ~Test_DynEnum (void);
 
-  const char* test_name (void) const;
+  const char* test_name () const;
 
   int run_test (void);
 

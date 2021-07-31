@@ -56,7 +56,7 @@ public:
   Client (Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:

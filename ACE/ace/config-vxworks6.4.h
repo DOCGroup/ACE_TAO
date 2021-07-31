@@ -52,7 +52,6 @@
 # endif
 
 #elif defined (__DCC__)
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
 # define ACE_TEMPLATES_REQUIRE_SOURCE
 #else  /* ! __GNUG__ && !__DCC__ */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */
@@ -87,7 +86,6 @@
 
 // OS-specific configuration
 #define ACE_HAS_4_4BSD_SENDMSG_RECVMSG
-#define ACE_HAS_3_PARAM_READDIR_R
 #define ACE_HAS_NET_IF_DL_H
 #define ACE_HAS_NONCONST_GETBY
 #define ACE_HAS_NONCONST_INET_ADDR
@@ -104,7 +102,6 @@
 #define ACE_HAS_CLOCK_GETTIME
 #define ACE_HAS_CLOCK_SETTIME
 #define ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES
-#define ACE_HAS_CPLUSPLUS_HEADERS
 #define ACE_HAS_DIRENT
 #define ACE_HAS_HANDLE_SET_OPTIMIZED_FOR_SELECT
 #define ACE_HAS_MSG

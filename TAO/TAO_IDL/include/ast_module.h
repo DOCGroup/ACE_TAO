@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -87,21 +86,17 @@ public:
   AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
 
   // Destructor.
-  virtual ~AST_Module (void);
+  virtual ~AST_Module ();
 
   // Cleanup function.
-  virtual void destroy (void);
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(AST_Module);
-  DEF_NARROW_FROM_SCOPE(AST_Module);
+  virtual void destroy ();
 
   // AST Dumping.
   virtual void dump (ACE_OSTREAM_TYPE &o);
 
   // Involved in OBV_ namespace generation.
-  void set_has_nested_valuetype (void);
-  bool has_nested_valuetype (void);
+  void set_has_nested_valuetype ();
+  bool has_nested_valuetype ();
 
   // Allows adding an interface at a later point.
   // The interface i is inserted after interface ix, if
@@ -135,11 +130,11 @@ public:
   virtual int ast_accept (ast_visitor *visitor);
 
   // Accessors for the member.
-  AST_Template_Module_Inst *from_inst (void) const;
+  AST_Template_Module_Inst *from_inst () const;
   void from_inst (AST_Template_Module_Inst *node);
 
   // Accessors for the member.
-  AST_Template_Module_Ref *from_ref (void) const;
+  AST_Template_Module_Ref *from_ref () const;
   void from_ref (AST_Template_Module_Ref *node);
 
   // Override that looks in previous openings.
@@ -238,7 +233,7 @@ public:
   // (called by AST_Root::destroy on the CORBA module containing
   // the basic types, since it isn't destroyed between processing
   // multiple IDL files.
-  void reset_last_in_same_parent_scope (void);
+  void reset_last_in_same_parent_scope ();
 
   virtual bool annotatable () const { return true; }
 

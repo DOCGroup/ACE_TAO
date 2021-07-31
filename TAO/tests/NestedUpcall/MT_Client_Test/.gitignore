@@ -1,2 +1,7 @@
 /client
+/MT_Client_TestC.cpp
+/MT_Client_TestC.h
+/MT_Client_TestC.inl
+/MT_Client_TestS.cpp
+/MT_Client_TestS.h
 /server

@@ -52,7 +52,7 @@ ACE_MEM_Acceptor::get_local_addr (ACE_MEM_Addr &sap) const
 }
 
 ACE_INLINE const ACE_TCHAR *
-ACE_MEM_Acceptor::mmap_prefix (void) const
+ACE_MEM_Acceptor::mmap_prefix () const
 {
   return this->mmap_prefix_;
 }
@@ -71,7 +71,7 @@ ACE_MEM_Acceptor::mmap_prefix (const ACE_TCHAR *prefix)
 }
 
 ACE_INLINE ACE_MEM_IO::Signal_Strategy
-ACE_MEM_Acceptor::preferred_strategy (void) const
+ACE_MEM_Acceptor::preferred_strategy () const
 {
   return this->preferred_strategy_;
 }

@@ -86,7 +86,7 @@ protected:
   // Hook method called by the <svc> template method to do the actual
   // protocol.  Must be overridden by the subclass.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Template method entry point into the handler task.
 
   virtual void print_results (void);
@@ -131,19 +131,19 @@ private:
 };
 
 u_short
-Options::port (void) const
+Options::port () const
 {
   return this->port_;
 }
 
 int
-Options::verbose (void) const
+Options::verbose () const
 {
   return this->verbose_;
 }
 
 int
-Options::reply_message_len (void) const
+Options::reply_message_len () const
 {
   return this->reply_message_len_;
 }

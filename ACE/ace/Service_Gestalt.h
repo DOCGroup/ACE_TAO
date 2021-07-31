@@ -85,10 +85,10 @@ public:
 
   /// Perform user-specified close activities and remove dynamic
   /// memory.
-  ~ACE_Service_Gestalt (void);
+  ~ACE_Service_Gestalt ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
    /**
    * Performs an open without parsing command-line arguments.  The
@@ -185,7 +185,7 @@ public:
 
   /// Has it been opened?  Returns the difference between the times
   /// open and close have been called on this instance
-  int is_opened (void);
+  int is_opened ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -253,7 +253,7 @@ public:
 
   /// Tidy up and perform last rites when ACE_Service_Config is shut
   /// down.  This method calls @c close_svcs.  Returns 0.
-  int close (void);
+  int close ();
 
   /// Registers a service descriptor for a static service object
   int insert (ACE_Static_Svc_Descriptor *stsd);
@@ -318,17 +318,16 @@ public:
   struct Processed_Static_Svc
   {
     Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
-    ~Processed_Static_Svc (void);
+    ~Processed_Static_Svc ();
     ACE_TCHAR * name_;
     const ACE_Static_Svc_Descriptor *assd_;
     ACE_ALLOC_HOOK_DECLARE;
   };
 
   /// Get the current ACE_Service_Repository held by this object.
-  ACE_Service_Repository* current_service_repository (void);
+  ACE_Service_Repository* current_service_repository ();
 
 protected:
-
   int parse_args_i (int, ACE_TCHAR *argv[],
                     bool& ignore_default_svc_conf_file);
 
@@ -349,15 +348,15 @@ protected:
               bool ignore_debug_flag = false);
 
   /// Initialize the @c svc_conf_file_queue_ if necessary.
-  int init_svc_conf_file_queue (void);
+  int init_svc_conf_file_queue ();
 
   /// Add the default statically-linked services to the
   /// ACE_Service_Repository.
-  int load_static_svcs (void);
+  int load_static_svcs ();
 
   /// Process service configuration requests that were provided on the
   /// command-line.  Returns the number of errors that occurred.
-  int process_commandline_directives (void);
+  int process_commandline_directives ();
 
   /// Process a static directive without also inserting its descriptor
   /// the global table. This avoids multiple additions when processing
@@ -386,10 +385,9 @@ protected:
   /// Performs the common initialization tasks for a new or previously
   /// closed instance. Must not be virtual, as it is called from the
   /// constructor.
-  int init_i (void);
+  int init_i ();
 
 protected:
-
   /// Maintain a queue of services to be configured from the
   /// command-line.
   typedef ACE_Unbounded_Queue<ACE_TString> ACE_SVC_QUEUE;
@@ -414,7 +412,6 @@ protected:
   friend class ACE_Service_Config_Guard;
 
 protected:
-
   /// Do we own the service repository instance, or have only been
   /// given a ptr to the singleton?
   bool svc_repo_is_owned_;
@@ -495,7 +492,7 @@ public:
   ACE_Service_Type_Dynamic_Guard (ACE_Service_Repository &r,
                                   ACE_TCHAR const *name);
 
-  ~ACE_Service_Type_Dynamic_Guard (void);
+  ~ACE_Service_Type_Dynamic_Guard ();
 
 private:
   ACE_Service_Repository & repo_;
@@ -508,7 +505,6 @@ private:
 // FUZZ: enable check_for_ACE_Guard
 #endif
 };
-
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

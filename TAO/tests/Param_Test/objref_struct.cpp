@@ -34,7 +34,7 @@ Test_Objref_Struct::~Test_Objref_Struct (void)
 }
 
 const char *
-Test_Objref_Struct::opname (void) const
+Test_Objref_Struct::opname () const
 {
   return this->opname_;
 }
@@ -231,10 +231,10 @@ Test_Objref_Struct::print_values (void)
 
       ACE_DEBUG ((LM_DEBUG,
                   "\n*=*=*=*=*=*=*=*=*=*=\n"
-                  "in_ name = %s\n"
-                  "inout_ name = %s\n"
-                  "out_ name = %s\n"
-                  "ret_ name = %s\n",
+                  "in_ name = %C\n"
+                  "inout_ name = %C\n"
+                  "out_ name = %C\n"
+                  "ret_ name = %C\n",
                   s_in->name.in (),
                   s_inout->name.in (),
                   s_out->name.in (),

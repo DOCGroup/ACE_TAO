@@ -34,7 +34,7 @@ Test_Recursive_Struct::~Test_Recursive_Struct (void)
 }
 
 const char *
-Test_Recursive_Struct::opname (void) const
+Test_Recursive_Struct::opname () const
 {
   return this->opname_;
 }

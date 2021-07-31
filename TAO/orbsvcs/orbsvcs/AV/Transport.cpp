@@ -47,7 +47,7 @@ TAO_AV_Flow_Protocol_Item::TAO_AV_Flow_Protocol_Item (const ACE_CString &name)
 // TAO_AV_Connector_Registry
 //------------------------------------------------------------
 
-TAO_AV_Connector_Registry::TAO_AV_Connector_Registry (void)
+TAO_AV_Connector_Registry::TAO_AV_Connector_Registry ()
 {
 }
 
@@ -168,31 +168,31 @@ TAO_AV_Connector_Registry::close (TAO_AV_Connector *connector)
 {
   this->connectors_.remove (connector);
 
-  if (connector != 0)
-    delete connector;
+  delete connector;
+
   return 0;
 }
 
 int
-TAO_AV_Connector_Registry::close_all (void)
+TAO_AV_Connector_Registry::close_all ()
 {
   for (TAO_AV_ConnectorSetItor i = this->connectors_.begin ();
        i != this->connectors_.end ();
        ++i)
     {
       if (*i != 0)
-        continue;
+        {
+          (*i)->close ();
 
-      (*i)->close ();
-
-      this->close (*i);
+          delete *i;
+        }
     }
 
   this->connectors_.reset ();
   return 0;
 }
 
-TAO_AV_Connector_Registry::~TAO_AV_Connector_Registry (void)
+TAO_AV_Connector_Registry::~TAO_AV_Connector_Registry ()
 {
   this->close_all ();
 }
@@ -201,11 +201,11 @@ TAO_AV_Connector_Registry::~TAO_AV_Connector_Registry (void)
 // TAO_AV_Acceptor_Registry
 //------------------------------------------------------------
 
-TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry (void)
+TAO_AV_Acceptor_Registry::TAO_AV_Acceptor_Registry ()
 {
 }
 
-TAO_AV_Acceptor_Registry::~TAO_AV_Acceptor_Registry (void)
+TAO_AV_Acceptor_Registry::~TAO_AV_Acceptor_Registry ()
 {
   this->close_all();
 }
@@ -443,7 +443,7 @@ TAO_AV_Acceptor_Registry::close (TAO_AV_Acceptor *acceptor)
 }
 
 int
-TAO_AV_Acceptor_Registry::close_all (void)
+TAO_AV_Acceptor_Registry::close_all ()
 {
   for (TAO_AV_AcceptorSetItor i = this->acceptors_.begin ();
        i != this->acceptors_.end ();
@@ -465,17 +465,17 @@ TAO_AV_Acceptor_Registry::close_all (void)
 // TAO_AV_Transport
 //----------------------------------------------------------------------
 
-TAO_AV_Transport::TAO_AV_Transport (void)
+TAO_AV_Transport::TAO_AV_Transport ()
 {
 }
 
 // Virtual destructor.
-TAO_AV_Transport::~TAO_AV_Transport (void)
+TAO_AV_Transport::~TAO_AV_Transport ()
 {
 }
 
 ACE_Addr*
-TAO_AV_Transport::get_local_addr (void)
+TAO_AV_Transport::get_local_addr ()
 {
   return 0;
 }
@@ -485,7 +485,7 @@ TAO_AV_Transport::get_local_addr (void)
 //----------------------------------------------------------------------
 
 //TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (TAO_AV_Callback *callback)
-TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
+TAO_AV_Flow_Handler::TAO_AV_Flow_Handler ()
   :transport_ (0),
    callback_ (0),
    protocol_object_ (0),
@@ -493,7 +493,7 @@ TAO_AV_Flow_Handler::TAO_AV_Flow_Handler (void)
 {
 }
 
-TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler(void)
+TAO_AV_Flow_Handler::~TAO_AV_Flow_Handler()
 {
   // cancel the timer (if there is one)
   this->cancel_timer();
@@ -524,7 +524,7 @@ TAO_AV_Flow_Handler::start (TAO_FlowSpec_Entry::Role role)
 }
 
 int
-TAO_AV_Flow_Handler::schedule_timer (void)
+TAO_AV_Flow_Handler::schedule_timer ()
 {
   ACE_Event_Handler *event_handler = this->event_handler ();
   ACE_Time_Value *tv = 0;
@@ -546,7 +546,7 @@ TAO_AV_Flow_Handler::schedule_timer (void)
 
 
 int
-TAO_AV_Flow_Handler::cancel_timer (void)
+TAO_AV_Flow_Handler::cancel_timer ()
 {
   if (this->timer_id_ != -1)
   return TAO_AV_CORE::instance()->reactor ()->cancel_timer (this->timer_id_);
@@ -605,7 +605,7 @@ TAO_AV_Flow_Handler::change_qos (AVStreams::QoS)
 }
 
 TAO_AV_Transport*
-TAO_AV_Flow_Handler::transport (void)
+TAO_AV_Flow_Handler::transport ()
 {
   return this->transport_;
 }
@@ -617,7 +617,7 @@ TAO_AV_Flow_Handler::protocol_object (TAO_AV_Protocol_Object *protocol_object)
 }
 
 TAO_AV_Protocol_Object*
-TAO_AV_Flow_Handler::protocol_object (void)
+TAO_AV_Flow_Handler::protocol_object ()
 {
   return this->protocol_object_;
 }
@@ -629,29 +629,29 @@ TAO_AV_Flow_Handler::callback (TAO_AV_Callback *callback)
 }
 
 // TAO_AV_Connector
-TAO_AV_Connector::TAO_AV_Connector (void)
+TAO_AV_Connector::TAO_AV_Connector ()
 {
 }
 
-TAO_AV_Connector::~TAO_AV_Connector (void)
+TAO_AV_Connector::~TAO_AV_Connector ()
 {
 }
 
 // TAO_AV_Acceptor
-TAO_AV_Acceptor::TAO_AV_Acceptor (void)
+TAO_AV_Acceptor::TAO_AV_Acceptor ()
 {
 }
 
-TAO_AV_Acceptor::~TAO_AV_Acceptor (void)
+TAO_AV_Acceptor::~TAO_AV_Acceptor ()
 {
 }
 
-TAO_AV_Transport_Factory::TAO_AV_Transport_Factory (void)
+TAO_AV_Transport_Factory::TAO_AV_Transport_Factory ()
  : ref_count (0)
 {
 }
 
-TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory (void)
+TAO_AV_Transport_Factory::~TAO_AV_Transport_Factory ()
 {
 }
 
@@ -669,13 +669,13 @@ TAO_AV_Transport_Factory::match_protocol (const char * /* protocol_string */)
 }
 
 TAO_AV_Acceptor *
-TAO_AV_Transport_Factory::make_acceptor (void)
+TAO_AV_Transport_Factory::make_acceptor ()
 {
   return 0;
 }
 
 TAO_AV_Connector *
-TAO_AV_Transport_Factory::make_connector (void)
+TAO_AV_Transport_Factory::make_connector ()
 {
   return 0;
 }

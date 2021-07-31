@@ -66,7 +66,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
   ACE_OS::strcpy (&this->buf_[0], UNABLE_TO_GET_TRACE);
 }
 
-#elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H)) && (__GNUC__ > 3 || (__GNUC__ == 3 && __GNUC_MINOR__ >= 3))
+#elif (defined(__GLIBC__) || defined(ACE_HAS_EXECINFO_H))
 // This is the code for glibc
 #  include <execinfo.h>
 
@@ -741,12 +741,6 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
 void
 ACE_Stack_Trace::generate_trace (ssize_t, size_t)
 {
-// Call determine_starting_frame() on HP aCC build to resolve declared
-// method never referenced warning.
-#if defined (__HP_aCC)
-  size_t starting_frame = determine_starting_frame (0, 0);
-#endif
-
   ACE_OS::strcpy (&this->buf_[0], UNSUPPORTED);
 }
 #endif

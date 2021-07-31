@@ -21,5 +21,5 @@ test_i::shutdown (void)
   ACE_DEBUG ((LM_DEBUG,
               "Shutting down ORB.\n"));
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

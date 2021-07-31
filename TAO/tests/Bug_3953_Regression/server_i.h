@@ -13,7 +13,7 @@ public:
 
   void shutdown (void);
 
-  bool exception (void) const;
+  bool exception () const;
 private:
   int quiet_;
   // Be quiet.

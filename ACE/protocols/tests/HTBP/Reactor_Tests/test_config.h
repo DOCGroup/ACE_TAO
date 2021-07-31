@@ -173,9 +173,9 @@ inline ACE_Test_Output::ACE_Test_Output (void)
 
 inline ACE_Test_Output::~ACE_Test_Output (void)
 {
-#if !defined (ACE_LACKS_IOSTREAM_TOTALLY) && !defined (ACE_PSOS)
+#if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   ACE_LOG_MSG->msg_ostream (&cerr);
-#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY && ! ACE_PSOS */
+#endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::OSTREAM);
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::STDERR);
@@ -203,7 +203,7 @@ ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
 #else
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir;
+  const ACE_TCHAR *test_dir {};
 
 #if !defined (ACE_HAS_WINCE)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));

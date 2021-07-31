@@ -8,14 +8,13 @@
 #include "ace/Malloc_Base.h"
 #include "ace/OS_NS_string.h"
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Process-wide ACE_Allocator.
 ACE_Allocator *ACE_Allocator::allocator_ = 0;
 
 void
-ACE_Control_Block::ACE_Malloc_Header::dump (void) const
+ACE_Control_Block::ACE_Malloc_Header::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::ACE_Malloc_Header::dump");
@@ -28,7 +27,7 @@ ACE_Control_Block::ACE_Malloc_Header::dump (void) const
 }
 
 void
-ACE_Control_Block::print_alignment_info (void)
+ACE_Control_Block::print_alignment_info ()
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::print_alignment_info");
@@ -64,7 +63,7 @@ ACE_Control_Block::print_alignment_info (void)
 }
 
 void
-ACE_Control_Block::dump (void) const
+ACE_Control_Block::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::dump");
@@ -90,7 +89,7 @@ ACE_Control_Block::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (void)
+ACE_Control_Block::ACE_Name_Node::ACE_Name_Node ()
   : name_ (0),
     pointer_ (0),
     next_ (0),
@@ -116,19 +115,19 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
 }
 
 const char *
-ACE_Control_Block::ACE_Name_Node::name (void) const
+ACE_Control_Block::ACE_Name_Node::name () const
 {
   return this->name_;
 }
 
-ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header (void)
+ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
   : next_block_ (0),
     size_ (0)
 {
 }
 
 void
-ACE_Control_Block::ACE_Name_Node::dump (void) const
+ACE_Control_Block::ACE_Name_Node::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::dump");
@@ -155,7 +154,7 @@ ACE_Malloc_Stats::ACE_Malloc_Stats (void)
 }
 
 void
-ACE_Malloc_Stats::dump (void) const
+ACE_Malloc_Stats::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Malloc_Stats::dump");

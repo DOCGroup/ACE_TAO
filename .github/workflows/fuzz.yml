@@ -4,7 +4,12 @@ on:
   push:
   pull_request:
   schedule:
-    - cron: '0 7 * * SUN'
+    - cron: '0 1 * * SUN'
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 jobs:
   build:

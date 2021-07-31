@@ -204,8 +204,8 @@ public:
                                    const ACE_NS_WString &pattern);
 
   /// Dump the state of the object
-  virtual void dump (void) const;
-  virtual void dump_i (void) const;
+  virtual void dump () const;
+  virtual void dump_i () const;
 
   // = I just know this is going to cause problems on some platform...
   typedef ACE_Allocator_Adapter <ACE_Malloc <ACE_MEM_POOL_2, ACE_LOCK> >

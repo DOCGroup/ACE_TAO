@@ -151,7 +151,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       destruction.collect_basic_stats (destruction_stats);
       destruction_stats.dump_results (ACE_TEXT("Destruction"), gsf);
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

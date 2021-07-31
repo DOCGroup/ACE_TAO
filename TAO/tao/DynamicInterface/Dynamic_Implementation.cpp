@@ -62,7 +62,7 @@ TAO_DynamicImplementation::_get_interface (void)
 }
 
 const char *
-TAO_DynamicImplementation::_interface_repository_id (void) const
+TAO_DynamicImplementation::_interface_repository_id () const
 {
   // This should never be called.
   return 0;

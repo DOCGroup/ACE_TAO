@@ -30,10 +30,8 @@
 
 // Number of iterations to run the test.
 #if defined (ACE_VXWORKS)
-const int THREADS_PER_POOL = 50;
 const unsigned long MAX_THREAD = 500;
 #else
-const int THREADS_PER_POOL = 1000;
  # ifdef ACE_FACE_SAFETY_BASE
 const unsigned long MAX_THREAD = 10000;
  # else
@@ -59,11 +57,11 @@ public:
   Thread_Pool (int n_threads);
 
   /// Destructor...
-  ~Thread_Pool (void);
+  ~Thread_Pool () override;
 
   /// Iterate <n_iterations> time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
-  virtual int svc (void);
+  int svc () override;
 
   /// Start the threads in the pool.
   void start();
@@ -82,11 +80,11 @@ public:
 private:
   //FUZZ: disable check_for_lack_ACE_OS
   /// Spawn the threads in the pool.
-  virtual int open (void * = 0);
+  int open (void * = 0) override;
 
   /// Close hook.
   ///FUZZ: enable check_for_lack_ACE_OS
-  virtual int close (u_long);
+  int close (u_long) override;
 
   /// Total number of threads activated through this thread pool ever.
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> total_activated_threads_;
@@ -105,7 +103,7 @@ Thread_Pool::operator!()
   return ! this->failed_;
 }
 
-Thread_Pool::~Thread_Pool (void)
+Thread_Pool::~Thread_Pool ()
 {
 }
 
@@ -141,7 +139,7 @@ Thread_Pool::start ()
 }
 
 int
-Thread_Pool::svc (void)
+Thread_Pool::svc ()
 {
   unsigned long t = ++this->total_activated_threads_;
   if (PRINT_DEBUG_MSGS) // change this to 'true' for debugging

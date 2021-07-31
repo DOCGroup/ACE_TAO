@@ -42,7 +42,7 @@ public:
   virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
 
   /// Accessors
-  int channel_count (void) const;
+  int channel_count () const;
   EC_Observer* channel (int i) const;
 
 private:
@@ -85,7 +85,7 @@ public:
   /// add some command line args to enable/disable observerions
   virtual void initialize_orb_and_poa (int& argc, ACE_TCHAR* argv[]);
   virtual int parse_args (int& argc, ACE_TCHAR* argv[]);
-  virtual void print_args (void) const;
+  virtual void print_args () const;
   virtual void print_usage (void);
 
   /// Run the suppliers, using the <thread_manager> parameter

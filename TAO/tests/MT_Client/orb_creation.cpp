@@ -53,7 +53,7 @@ public:
           const char* ior);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:

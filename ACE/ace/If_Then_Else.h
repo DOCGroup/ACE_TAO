@@ -21,7 +21,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE
 {
-
   /**
    * @struct If_Then_Else
    *

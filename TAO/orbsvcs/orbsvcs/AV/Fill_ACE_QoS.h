@@ -35,7 +35,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  */
 class Fill_ACE_QoS
 {
-
 public:
   typedef ACE_Hash_Map_Manager <ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex> FLOW_SPEC_HASH_MAP;
 
@@ -66,7 +65,6 @@ public:
   FLOW_SPEC_HASH_MAP& map (void);
 
 private:
-
   // The Service Provider is currently set to NULL for all ACE_QoS.
   static const iovec iov_;
 

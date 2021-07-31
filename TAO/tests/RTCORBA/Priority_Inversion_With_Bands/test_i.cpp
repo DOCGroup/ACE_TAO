@@ -85,7 +85,7 @@ test_i::method (CORBA::ULong work,
 
   if (this->current_iteration_ == this->total_iterations_)
     {
-      this->orb_->shutdown (0);
+      this->orb_->shutdown (false);
     }
 }
 

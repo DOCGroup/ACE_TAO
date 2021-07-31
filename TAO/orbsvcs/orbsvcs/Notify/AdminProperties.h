@@ -52,10 +52,10 @@ public:
   void init ();
 
   // = Const Accessors
-  const TAO_Notify_Property_Long& max_global_queue_length (void) const;
-  const TAO_Notify_Property_Long& max_consumers (void) const;
-  const TAO_Notify_Property_Long& max_suppliers (void) const;
-  const TAO_Notify_Property_Boolean& reject_new_events (void) const;
+  const TAO_Notify_Property_Long& max_global_queue_length () const;
+  const TAO_Notify_Property_Long& max_consumers () const;
+  const TAO_Notify_Property_Long& max_suppliers () const;
+  const TAO_Notify_Property_Boolean& reject_new_events () const;
 
   // = Non-const accessors
   TAO_Notify_Property_Long & max_global_queue_length (void);

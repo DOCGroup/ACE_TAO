@@ -55,9 +55,9 @@ public:
   typedef TAO_Service_Offer_Iterator<LOCK_TYPE> offer_iterator;
 
   /// No arg constructor.
-  TAO_Offer_Database (void);
+  TAO_Offer_Database ();
 
-  ~TAO_Offer_Database (void);
+  ~TAO_Offer_Database ();
 
   /// Add an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
@@ -100,7 +100,6 @@ public:
     Offer_Database;
 
 private:
-
   // The internal id is a pointer here, not only to avoid copying,
   // since we would only copy on insertion, and we only insert once
   // --- with an empty Offer_Map_Entry --- but also since most locks
@@ -130,8 +129,8 @@ private:
                               CORBA::ULong& id);
 
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const TAO_Offer_Database<LOCK_TYPE> &))
-  ACE_UNIMPLEMENTED_FUNC (TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &))
+  void operator= (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
+  TAO_Offer_Database (const TAO_Offer_Database<LOCK_TYPE> &) = delete;
 
   LOCK_TYPE db_lock_;
 
@@ -150,8 +149,7 @@ private:
 template <class LOCK_TYPE>
 class TAO_Service_Offer_Iterator
 {
- public:
-
+public:
   typedef TAO_Offer_Database<LOCK_TYPE> Offer_Database;
 
   TAO_Service_Offer_Iterator (const char* type,

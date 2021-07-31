@@ -8,8 +8,6 @@
 #include "ACEXML/common/HttpCharStream.h"
 #include "ACEXML/common/Encoding.h"
 
-
-
 /* Header FSM states. */
 static const int HDST_LINE1_PROTOCOL = 0;
 static const int HDST_LINE1_WHITESPACE = 1;
@@ -30,7 +28,6 @@ ACEXML_HttpCharStream::ACEXML_HttpCharStream (void)
     data_offset_ (0),
     encoding_ (0)
 {
-
 }
 
 ACEXML_HttpCharStream::~ACEXML_HttpCharStream (void)

@@ -21,7 +21,7 @@ Client::Client (int argc, ACE_TCHAR* argv[])
 Client::~Client ()
 {
   if (!CORBA::is_nil (orb_.in())) {
-    orb_->shutdown (1);
+    orb_->shutdown (true);
     orb_->destroy ();
     orb_ = CORBA::ORB::_nil();
   }

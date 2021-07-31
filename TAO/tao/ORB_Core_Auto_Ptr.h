@@ -38,7 +38,6 @@ class TAO_ORB_Core;
 class TAO_Export TAO_ORB_Core_Auto_Ptr
 {
 public:
-
   /**
    * @name Initialization and termination methods
    */
@@ -46,7 +45,7 @@ public:
   explicit TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core *p = 0);
   TAO_ORB_Core_Auto_Ptr (TAO_ORB_Core_Auto_Ptr &ap);
   TAO_ORB_Core_Auto_Ptr &operator= (TAO_ORB_Core_Auto_Ptr &rhs);
-  ~TAO_ORB_Core_Auto_Ptr (void);
+  ~TAO_ORB_Core_Auto_Ptr ();
   //@}
 
   /**
@@ -54,8 +53,8 @@ public:
    */
   //@{
   TAO_ORB_Core &operator *() const;
-  TAO_ORB_Core *get (void) const;
-  TAO_ORB_Core *release (void);
+  TAO_ORB_Core *get () const;
+  TAO_ORB_Core *release ();
   void reset (TAO_ORB_Core *p = 0);
   TAO_ORB_Core *operator-> () const;
   //@}

@@ -55,7 +55,7 @@ ACE_NS_Node<T>::ACE_NS_Node (const ACE_NS_Node<T> &s)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List)
 
   template <class T> size_t
-ACE_Unbounded_List<T>::size (void) const
+ACE_Unbounded_List<T>::size () const
 {
   // ACE_TRACE ("ACE_Unbounded_List<T>::size");
   return this->cur_size_;
@@ -93,7 +93,7 @@ ACE_Unbounded_List<T>::reset (void)
 }
 
 template <class T> void
-ACE_Unbounded_List<T>::dump (void) const
+ACE_Unbounded_List<T>::dump () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::dump");
 
@@ -263,7 +263,7 @@ ACE_Unbounded_List<T>::end (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_Unbounded_List_Iterator)
 
   template <class T> void
-ACE_Unbounded_List_Iterator<T>::dump (void) const
+ACE_Unbounded_List_Iterator<T>::dump () const
 {
   // ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::dump");
 }
@@ -293,7 +293,7 @@ ACE_Unbounded_List_Iterator<T>::first (void)
 }
 
 template <class T> int
-ACE_Unbounded_List_Iterator<T>::done (void) const
+ACE_Unbounded_List_Iterator<T>::done () const
 {
   ACE_TRACE ("ACE_Unbounded_List_Iterator<T>::done");
 
@@ -366,14 +366,14 @@ ACE_Unbounded_List_Iterator<T>::operator!= (const ACE_Unbounded_List_Iterator<T>
 // ---
 
 template <class T> int
-ACE_Unbounded_List<T>::is_empty (void) const
+ACE_Unbounded_List<T>::is_empty () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_empty");
   return this->head_ == this->head_->next_;
 }
 
 template <class T>  int
-ACE_Unbounded_List<T>::is_full (void) const
+ACE_Unbounded_List<T>::is_full () const
 {
   ACE_TRACE ("ACE_Unbounded_List<T>::is_full");
   return 0; // We should implement a "node of last resort for this..."

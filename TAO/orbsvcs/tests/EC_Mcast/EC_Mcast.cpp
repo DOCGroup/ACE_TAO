@@ -693,7 +693,7 @@ ECM_Supplier::activate (RtecEventChannelAdmin::EventChannel_ptr ec,
 }
 
 int
-ECM_Supplier::supplier_id (void) const
+ECM_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }
@@ -1024,7 +1024,7 @@ ECM_Local_Federation::close_receiver (void)
 }
 
 void
-ECM_Local_Federation::dump_results (void) const
+ECM_Local_Federation::dump_results () const
 {
   double unfiltered_ratio = 0;
   if (this->recv_count_ != 0)

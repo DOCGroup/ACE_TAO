@@ -92,7 +92,7 @@ public:
    * This function is used to calculate the new high, low and last values
    * for each stock in the stock database randomly.
    */
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Change the rate at which database updates are made
   void update_rate (u_int rate);

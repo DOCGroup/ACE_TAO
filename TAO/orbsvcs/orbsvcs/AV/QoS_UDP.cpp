@@ -543,7 +543,7 @@ TAO_AV_UDP_QoS_Flow_Handler::set_remote_address (ACE_Addr *address)
 
 
 ACE_HANDLE
-TAO_AV_UDP_QoS_Flow_Handler::get_handle (void) const
+TAO_AV_UDP_QoS_Flow_Handler::get_handle () const
 {
   if (TAO_debug_level > 0)
     ORBSVCS_DEBUG ((LM_DEBUG,

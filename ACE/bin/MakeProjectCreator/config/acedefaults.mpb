@@ -24,6 +24,10 @@ project: ipv6, vc_warnings, build_files, test_files, svc_conf_files, ace_unicode
     release::macros += ACE_NDEBUG ACE_USE_RCSID=0
   }
 
+  // Link To Android Logging Library for Log_Msg_Android_Logcat
+  specific(gnuace) {
+    linkflags += $(if $(android_abi),-llog)
+  }
 }
 
 feature(ace_inline) {

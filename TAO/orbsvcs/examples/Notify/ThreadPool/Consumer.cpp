@@ -150,7 +150,7 @@ TAO_Notify_ThreadPool_Consumer::push_structured_event (const CosNotification::St
       this->deactivate ();
 
       // We received the event, shutdown the ORB.
-      this->orb_objects_.orb_->shutdown (1);
+      this->orb_objects_.orb_->shutdown (true);
     }
 
   // Eat CPU:

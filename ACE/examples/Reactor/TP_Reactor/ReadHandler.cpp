@@ -49,7 +49,7 @@ ACE_SOCK_Stream &ReadHandler::getStream(void) {
     return mStream;
 }
 
-ACE_HANDLE ReadHandler::get_handle(void) const {
+ACE_HANDLE ReadHandler::get_handle() const {
     ACE_TRACE("ReadHandler::get_handle(void)");
     return mStream.get_handle();
 }

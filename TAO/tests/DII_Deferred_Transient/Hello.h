@@ -14,9 +14,9 @@ public:
   Hello ();
 
   // = The skeleton methods
-  virtual void crash ();
+  void crash () override;
 
-  virtual char * get_string ();
+  char * get_string () override;
 };
 
 #include /**/ "ace/post.h"

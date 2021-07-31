@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 

@@ -53,7 +53,6 @@ extern "C" int LIB$FIND_IMAGE_SYMBOL(...);
 class ACE_LD_Symbol_Registry
 {
 public:
-
   typedef ACE_RB_Tree<const ACE_TCHAR*,
                       void*,
                       ACE_Less_Than<const ACE_TCHAR*>,
@@ -64,9 +63,9 @@ public:
 
   void* find_symbol (const ACE_TCHAR* symname);
 
-  ACE_LD_Symbol_Registry () {}
-private:
+  ACE_LD_Symbol_Registry () = default;
 
+private:
   TREE symbol_registry_;
 };
 
@@ -588,8 +587,10 @@ ACE::ldsymbol (ACE_SHLIB_HANDLE sh, const ACE_TCHAR *entry_point)
 {
   void* symaddr = ACE_OS::dlsym (sh, entry_point);
   // if not found through dlsym() try registry
-  if (symaddr == 0)
-    symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
+  if (!symaddr)
+    {
+      symaddr = ACE_LD_SYMBOL_REGISTRY::instance ()->find_symbol (entry_point);
+    }
 
   return symaddr;
 }

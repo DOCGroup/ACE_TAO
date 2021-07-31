@@ -37,7 +37,7 @@ Sender_QoS_Event_Handler::~Sender_QoS_Event_Handler (void)
 // internally by the reactor.
 
 ACE_HANDLE
-Sender_QoS_Event_Handler::get_handle (void) const
+Sender_QoS_Event_Handler::get_handle () const
 {
   return this->dgram_mcast_qos_.get_handle ();
 }

@@ -1,4 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
 /*
 
 COPYRIGHT
@@ -103,9 +102,9 @@ class AST_Annotation_Member;
 class TAO_IDL_FE_Export AST_Generator
 {
 public:
-  AST_Generator (void) {}
+  AST_Generator () {}
 
-  virtual ~AST_Generator (void) {}
+  virtual ~AST_Generator () {}
 
   // Operations.
 

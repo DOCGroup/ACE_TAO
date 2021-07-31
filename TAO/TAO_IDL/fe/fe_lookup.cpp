@@ -176,7 +176,7 @@ TAO_IDL_CPP_Keyword_Table::lookup (const char *str, unsigned int len)
 
   if (len <= MAX_WORD_LENGTH && len >= MIN_WORD_LENGTH)
     {
-      unsigned int key = hash (str, len);
+      unsigned int const key = hash (str, len);
 
       if (key <= MAX_HASH_VALUE && key >= MIN_HASH_VALUE)
         {

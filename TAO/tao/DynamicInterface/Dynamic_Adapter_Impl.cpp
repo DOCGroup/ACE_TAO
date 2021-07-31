@@ -89,7 +89,7 @@ TAO_Dynamic_Adapter_Impl::request_is_nil (CORBA::Request_ptr req)
 void
 TAO_Dynamic_Adapter_Impl::request_release (CORBA::Request_ptr req)
 {
-  if (req != 0)
+  if (req)
     {
       req->_decr_refcount ();
     }
@@ -104,7 +104,7 @@ TAO_Dynamic_Adapter_Impl::server_request_is_nil (CORBA::ServerRequest_ptr req)
 void
 TAO_Dynamic_Adapter_Impl::server_request_release (CORBA::ServerRequest_ptr req)
 {
-  if (req != 0)
+  if (req)
     {
       req->_decr_refcount ();
     }

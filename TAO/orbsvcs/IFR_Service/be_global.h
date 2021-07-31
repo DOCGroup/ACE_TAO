@@ -45,13 +45,13 @@ public:
 
   // Data accessors.
 
-  bool removing (void) const;
+  bool removing () const;
   void removing (bool value);
 
-  CORBA::ORB_ptr orb (void) const;
+  CORBA::ORB_ptr orb () const;
   void orb (CORBA::ORB_ptr orb);
 
-  CORBA::Repository_ptr repository (void) const;
+  CORBA::Repository_ptr repository () const;
   void repository (CORBA::Repository_ptr repo);
 
   ACE_Unbounded_Stack<CORBA::Container_ptr> &ifr_scopes (void);
@@ -59,19 +59,19 @@ public:
   /// Cleanup function.
   void destroy (void);
 
-  const char *filename (void) const;
+  const char *filename () const;
   void filename (char *fname);
 
-  bool enable_locking (void) const;
+  bool enable_locking () const;
   void enable_locking (bool value);
 
-  bool do_included_files (void) const;
+  bool do_included_files () const;
   void do_included_files (bool val);
 
   bool allow_duplicate_typedefs () const;
   void allow_duplicate_typedefs (bool val);
 
-  ACE_CString orb_args (void) const;
+  ACE_CString orb_args () const;
   void orb_args (const ACE_CString& args);
 
   /// Command line passed to ACE_Process::spawn. Different

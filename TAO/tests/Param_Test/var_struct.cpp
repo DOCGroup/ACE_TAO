@@ -34,7 +34,7 @@ Test_Var_Struct::~Test_Var_Struct (void)
 }
 
 const char *
-Test_Var_Struct::opname (void) const
+Test_Var_Struct::opname () const
 {
   return this->opname_;
 }
@@ -187,10 +187,10 @@ Test_Var_Struct::print_values (void)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy1 = %s\n"
-              "inout_.dummy1 = %s\n"
-              "out_.dummy1 = %s\n"
-              "ret_.dummy1 = %s\n",
+              "in_.dummy1 = %C\n"
+              "inout_.dummy1 = %C\n"
+              "out_.dummy1 = %C\n"
+              "ret_.dummy1 = %C\n",
               this->in_.dummy1.in (),
               this->inout_->dummy1.in (),
               this->out_->dummy1.in (),
@@ -198,10 +198,10 @@ Test_Var_Struct::print_values (void)
 
   ACE_DEBUG ((LM_DEBUG,
               "\n*=*=*=*=*=*=*=*=*=*=\n"
-              "in_.dummy2 = %s\n"
-              "inout_.dummy2 = %s\n"
-              "out_.dummy2 = %s\n"
-              "ret_.dummy2 = %s\n",
+              "in_.dummy2 = %C\n"
+              "inout_.dummy2 = %C\n"
+              "out_.dummy2 = %C\n"
+              "ret_.dummy2 = %C\n",
               this->in_.dummy2.in (),
               this->inout_->dummy2.in (),
               this->out_->dummy2.in (),
@@ -213,7 +213,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in.seq : %s\n",
+                  "in.seq : %C\n",
                   i,
                   (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
     }
@@ -222,7 +222,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "inout : %s\n",
+                  "inout : %C\n",
                   i,
                   (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
     }
@@ -233,7 +233,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
     }
@@ -244,7 +244,7 @@ Test_Var_Struct::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
     }

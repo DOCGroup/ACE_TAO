@@ -48,13 +48,13 @@ namespace ACE
 
               ~Context ();
 
-              operator bool (void) const;
+              operator bool () const;
 
-              bool operator ! (void) const;
+              bool operator ! () const;
 
               ACE_SSL_Context& ssl_context (void);
 
-              const ACE_SSL_Context& ssl_context (void) const;
+              const ACE_SSL_Context& ssl_context () const;
 
               bool use_default_ca ();
 

@@ -72,10 +72,10 @@ public:
   ACE_Dumpable (const void *);
 
   /// This pure virtual method must be filled in by a subclass.
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 
 protected:
-  virtual ~ACE_Dumpable (void);
+  virtual ~ACE_Dumpable ();
 
 private:
   /// Pointer to the object that is being stored.

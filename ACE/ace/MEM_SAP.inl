@@ -12,13 +12,13 @@ ACE_MEM_SAP_Node::ACE_MEM_SAP_Node (size_t cap)
 }
 
 ACE_INLINE size_t
-ACE_MEM_SAP_Node::size (void) const
+ACE_MEM_SAP_Node::size () const
 {
   return this->size_;
 }
 
 ACE_INLINE size_t
-ACE_MEM_SAP_Node::capacity (void) const
+ACE_MEM_SAP_Node::capacity () const
 {
   return this->capacity_;
 }

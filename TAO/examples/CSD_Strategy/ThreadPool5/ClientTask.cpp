@@ -1,5 +1,3 @@
-// This may look like C, but it's really -*- C++ -*-
-
 //=============================================================================
 /**
  *  @file    ClientTask.cpp
@@ -23,11 +21,9 @@ ClientTask::ClientTask(CORBA::ORB_ptr orb,
 {
 }
 
-
 ClientTask::~ClientTask()
 {
 }
-
 
 int
 ClientTask::open(void*)

@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -24,6 +22,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_stdlib.h"
+#include <cstdlib>
 #include /**/ "ace/ACE_export.h"
 
 #include "ace/Basic_Types.h"  /* ACE_UINT64 and intptr_t in inl file */
@@ -60,7 +59,7 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
   return strtoll (s, ptr, base);
 # undef strtoll
 # else
-  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
+  return std::strtoll (s, ptr, base);
 # endif /* strtoll */
 }
 #endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
@@ -72,7 +71,7 @@ inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
   return strtoull (s, ptr, base);
 # undef strtoull
 # else
-  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
+  return std::strtoull (s, ptr, base);
 # endif /* strtoull */
 }
 #endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
@@ -100,10 +99,10 @@ namespace ACE_OS {
    */
   //@{
   ACE_NAMESPACE_INLINE_FUNCTION
-  void _exit (int status = 0);
+  void _exit [[noreturn]] (int status = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void abort (void);
+  void abort [[noreturn]] ();
 
   /**
    * Register an at exit hook. The @a name can be used to analyze shutdown
@@ -180,7 +179,7 @@ namespace ACE_OS {
   void *calloc (size_t elements, size_t sizeof_elements);
 
   extern ACE_Export
-  void exit (int status = 0);
+  void exit [[noreturn]] (int status = 0);
 
   extern ACE_Export
   void free (void *);
@@ -195,7 +194,7 @@ namespace ACE_OS {
 
   // not in spec
   extern ACE_Export
-  ACE_TCHAR *getenvstrings (void);
+  ACE_TCHAR *getenvstrings ();
 
   // itoa not in spec
   /// Converts an integer to a string.
@@ -276,7 +275,7 @@ namespace ACE_OS {
   int unsetenv(const char *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rand (void);
+  int rand ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int rand_r (unsigned int *seed);

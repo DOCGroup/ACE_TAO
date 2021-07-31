@@ -114,12 +114,11 @@ public:
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
-  void dump (void) const {}
+  void dump () const {}
 
 protected:
-
   /**
    * Map portions or the entire pool into the local virtual address
    * space.  To do this, we compute the new @c file_offset of the
@@ -131,7 +130,6 @@ protected:
   int unmap (void);
 
 private:
-
   /**
    * @class Control_Block
    *

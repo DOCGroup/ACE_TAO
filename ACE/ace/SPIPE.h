@@ -79,7 +79,7 @@ public:
   int disable (int signum) const ;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Temporary store of duplex pipe handle.
@@ -98,7 +98,7 @@ private:
 
 protected:
   /// Ensure that this class is an abstract base class
-  ACE_SPIPE (void);
+  ACE_SPIPE ();
 
   /// Our local address.
   ACE_SPIPE_Addr local_addr_;

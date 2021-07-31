@@ -39,7 +39,7 @@ Test_Complex_Any::~Test_Complex_Any (void)
 }
 
 const char *
-Test_Complex_Any::opname (void) const
+Test_Complex_Any::opname () const
 {
   return this->opname_;
 }
@@ -102,7 +102,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 5 string = %s\n",
+                        "setting level 5 string = %C\n",
                         l5_str));
 
           level4_struct.level5_string = l5_str;
@@ -115,7 +115,7 @@ Test_Complex_Any::reset_parameters (void)
 
           if (TAO_debug_level > 0)
             ACE_DEBUG ((LM_DEBUG,
-                        "setting level 9 string = %s\n",
+                        "setting level 9 string = %C\n",
                         l9_str));
 
           level8_struct.level9_string = l9_str;

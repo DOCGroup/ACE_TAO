@@ -73,7 +73,7 @@ namespace ACE
         return *this;
       }
 
-    u_long ConnectionCacheKey::hash (void) const
+    u_long ConnectionCacheKey::hash () const
       {
         return this->key_ ? this->key ().hash () : 0;
       }

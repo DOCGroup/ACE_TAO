@@ -145,10 +145,9 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     constraints.length(1);
 
     constraints[0].event_types = event_types;
-    constraints[0].constraint_expr = CORBA::string_dup(
-      "");
+    constraints[0].constraint_expr = CORBA::string_dup("");
 
-    filter->add_constraints(constraints);
+    CosNotifyFilter::ConstraintInfoSeq_var cons_info = filter->add_constraints(constraints);
 
     pps->add_filter(filter.in());
 

@@ -77,7 +77,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations, A::AMI_AMI_TestHandler_ptr handler);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Set all members to nil
   void clear ();
@@ -235,8 +235,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->run (tv);
 
       root_poa->deactivate_object (id.in ());
-      root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       hello = A::AMI_AMI_TestHandler::_nil ();
       root_poa = PortableServer::POA::_nil ();

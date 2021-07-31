@@ -13,7 +13,7 @@ class My_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   My_Task (int n);
-  virtual int svc (void);
+  virtual int svc ();
 
   static void sleep_hook (void *);
 

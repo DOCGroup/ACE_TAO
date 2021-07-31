@@ -10,7 +10,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK>
-ACE_Refcountable_T<ACE_LOCK>::~ACE_Refcountable_T (void)
+ACE_Refcountable_T<ACE_LOCK>::~ACE_Refcountable_T ()
 {
 }
 

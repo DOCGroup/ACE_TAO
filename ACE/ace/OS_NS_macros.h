@@ -7,8 +7,6 @@
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  *  @author Jesper S. M|ller<stophph@diku.dk>
  *  @author and a cast of thousands...
- *
- *  Originally in OS.h.
  */
 //=============================================================================
 
@@ -33,8 +31,8 @@
       if (RESULT == FAILVALUE) { int ___ = ::WSAGetLastError (); errno = ___; RESULT = FAILVALUE; } \
   } while (0)
 #else
-# define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE,FAILVALUE)
-# define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) ACE_OSCALL(OP,TYPE,FAILVALUE,RESULT)
+# define ACE_SOCKCALL_RETURN(OP,TYPE,FAILVALUE) ACE_OSCALL_RETURN(OP,TYPE)
+# define ACE_SOCKCALL(OP,TYPE,FAILVALUE,RESULT) ACE_OSCALL(OP,TYPE,RESULT)
 #endif /* ACE_WIN32 */
 
 #if !defined (ACE_WIN32)
@@ -67,10 +65,9 @@
 
 #endif /* !ACE_WIN32 */
 
-// Helper functions to split large intergers into smaller high-order
+// Helper functions to split large integers into smaller high-order
 // and low-order parts, and reconstitute them again.  These are
 // required primarily for supporting _FILE_OFFSET_BITS==64 on windows.
-
 #if defined(ACE_WIN32)
 #  if defined(_FILE_OFFSET_BITS) && (_FILE_OFFSET_BITS==64)
 #    include "ace/Basic_Types.h"
@@ -104,8 +101,6 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #    define ACE_COMBINE_PARTS(X,Y) X
 #  endif /* _FILE_OFFSET_BITS==64 */
 #endif /* ACE_WIN32 */
-
-
 
 # include /**/ "ace/post.h"
 

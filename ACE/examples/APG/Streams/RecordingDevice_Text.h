@@ -26,7 +26,7 @@ public:
 
   int open (ACE_INET_Addr &addr);
 
-  ACE_HANDLE get_handle (void) const;
+  ACE_HANDLE get_handle () const;
 
   int handle_input (ACE_HANDLE);
 
@@ -37,7 +37,7 @@ public:
   // Open a listening socket on the port specified by argv.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  ACE_Event_Handler *get_handler (void) const;
+  ACE_Event_Handler *get_handler () const;
 
   virtual RecordingDevice *wait_for_activity (void);
 
@@ -59,7 +59,7 @@ class TextListener : public RecordingDevice
 public:
   TextListener (TextListenerAcceptor *acceptor);
 
-  virtual const ACE_TCHAR *get_name (void) const;
+  virtual const ACE_TCHAR *get_name () const;
 
   int answer_call (void);
 

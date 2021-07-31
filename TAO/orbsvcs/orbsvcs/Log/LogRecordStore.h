@@ -50,7 +50,7 @@ public:
 
   /// Gets the administrative state of the log
   virtual DsLogAdmin::AdministrativeState
-    get_administrative_state (void) const = 0;
+    get_administrative_state () const = 0;
 
   /// Sets the administrative state of the log
   virtual void
@@ -58,7 +58,7 @@ public:
 
   /// Get the capacity alarm thresholds
   virtual DsLogAdmin::CapacityAlarmThresholdList*
-    get_capacity_alarm_thresholds (void) const = 0;
+    get_capacity_alarm_thresholds () const = 0;
 
   /// Set the capacity alarm thresholds
   virtual void
@@ -66,14 +66,14 @@ public:
 
   /// Gets the forwarding state
   virtual DsLogAdmin::ForwardingState
-    get_forwarding_state (void) const = 0;
+    get_forwarding_state () const = 0;
 
   /// Sets the forwarding state
   virtual void
     set_forwarding_state (DsLogAdmin::ForwardingState state) = 0;
 
   /// Get the log duration
-  virtual DsLogAdmin::TimeInterval get_interval (void) const = 0;
+  virtual DsLogAdmin::TimeInterval get_interval () const = 0;
 
   /// Set the log duration.
   virtual void
@@ -81,7 +81,7 @@ public:
 
   /// Get the log full action
   virtual DsLogAdmin::LogFullActionType
-    get_log_full_action (void) const = 0;
+    get_log_full_action () const = 0;
 
   /// Set the log full action
   virtual void
@@ -89,7 +89,7 @@ public:
 
   /// Get the list of the QoS properties supported by the log.
   virtual DsLogAdmin::QoSList*
-    get_log_qos (void) const = 0;
+    get_log_qos () const = 0;
 
   /// Set the list of the QoS properties supported by the log.
   virtual void
@@ -97,7 +97,7 @@ public:
 
   /// Gets the max record life
   virtual CORBA::ULong
-    get_max_record_life (void) const = 0;
+    get_max_record_life () const = 0;
 
   /// Sets the max record life
   virtual void
@@ -105,7 +105,7 @@ public:
 
   /// Get the current set value of the max size of the log data.
   virtual CORBA::ULongLong
-    get_max_size (void) const = 0;
+    get_max_size () const = 0;
 
   /// Set the max size of log data. size == 0, => infinite.
   virtual void

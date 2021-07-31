@@ -18,7 +18,7 @@ ACE_LSOCK_CODgram::set_handle (ACE_HANDLE h)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_LSOCK_CODgram::get_handle (void) const
+ACE_LSOCK_CODgram::get_handle () const
 {
   ACE_TRACE ("ACE_LSOCK_CODgram::get_handle");
   return this->ACE_SOCK_CODgram::get_handle ();

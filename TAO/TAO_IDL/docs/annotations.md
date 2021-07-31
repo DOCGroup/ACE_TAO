@@ -27,6 +27,7 @@ compiler that uses `tao_idl`.**
   * [TAO 2.5.5](#tao-255)
   * [TAO 2.5.6](#tao-256)
   * [TAO 2.5.7](#tao-257)
+  * [TAO 2.5.10](#tao-2510)
 
 ## IDL Annotations
 
@@ -95,7 +96,13 @@ TAO IDL's front-end library can read them:
 - structures and their member values
 - unions and their cases
 - enumerations and their enumerators
-- interfaces and their operations and attributes
+- interfaces, porttypes, eventtypes, components and all of their direct
+  contents
+- valuetypes and most of their direct contents with the exception of these
+  kinds of valuetype statements:
+  - import: not supported by TAO
+  - typeid: not supported by TAO within valuetypes
+  - typeprefix: No corresponding AST Node to attach annotations to
 
 These are the general cases. The rest of the cases are defined in the next
 section. If an annotation application isn't listed in the general case list or
@@ -603,3 +610,10 @@ annotation member names with `_cxx_` if they are also a C++ keyword.
 
 - Expanded documentation on what can be annotated and how to extend annotation
   support.
+
+### TAO 2.5.10
+
+- Annotation support extended:
+  - All the direct contents of interfaces
+  - The porttypes, eventtypes, components and all their direct contents
+  - Valuetypes and most of their direct contents

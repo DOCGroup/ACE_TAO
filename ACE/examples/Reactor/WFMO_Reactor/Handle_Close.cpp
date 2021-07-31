@@ -62,7 +62,7 @@ public:
     this->reactor (0);
   }
 
-  ACE_HANDLE get_handle (void) const
+  ACE_HANDLE get_handle () const
   {
     return this->pipe_.read_handle ();
   }
@@ -123,7 +123,7 @@ public:
     this->reactor (0);
   }
 
-  ACE_HANDLE get_handle (void) const
+  ACE_HANDLE get_handle () const
   {
     return this->pipe_.read_handle ();
   }

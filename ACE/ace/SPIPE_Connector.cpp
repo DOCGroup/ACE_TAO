@@ -12,8 +12,6 @@
 #include "ace/SPIPE_Connector.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
@@ -39,14 +37,14 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
 }
 
 void
-ACE_SPIPE_Connector::dump (void) const
+ACE_SPIPE_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SPIPE_Connector::dump");
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_SPIPE_Connector::ACE_SPIPE_Connector (void)
+ACE_SPIPE_Connector::ACE_SPIPE_Connector ()
 {
   ACE_TRACE ("ACE_SPIPE_Connector::ACE_SPIPE_Connector");
 }

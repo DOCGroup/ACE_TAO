@@ -17,7 +17,7 @@ Notify_Test_Client::~Notify_Test_Client ()
     {
       try
       {
-        root_poa_->destroy(1, 1);
+        root_poa_->destroy(true, true);
         orb_->destroy();
       }
       catch (const CORBA::Exception& e)
@@ -150,7 +150,7 @@ Notify_Test_Client::consumer_done (TAO_Notify_Tests_Peer*)
 }
 
 bool
-Notify_Test_Client::is_done (void) const
+Notify_Test_Client::is_done () const
 {
   return this->done_;
 }

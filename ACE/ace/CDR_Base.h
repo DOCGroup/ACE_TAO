@@ -198,7 +198,7 @@ public:
    */
   //@{
   typedef bool Boolean;
-  typedef unsigned char Octet;
+  typedef ACE_Byte Octet;
   typedef char Char;
   typedef ACE_WCHAR_T WChar;
   typedef ACE_INT16 Short;
@@ -207,6 +207,14 @@ public:
   typedef ACE_UINT32 ULong;
   typedef ACE_INT64 LongLong;
   typedef ACE_UINT64 ULongLong;
+  typedef ACE_INT8 Int8;
+  typedef ACE_UINT8 UInt8;
+  typedef Short Int16;
+  typedef UShort UInt16;
+  typedef Long Int32;
+  typedef ULong UInt32;
+  typedef LongLong Int64;
+  typedef ULongLong UInt64;
 
 #   if ACE_SIZEOF_FLOAT == 4
       typedef float Float;
@@ -397,10 +405,15 @@ public:
          };
 
          class Iterator
-           : public std::iterator<std::bidirectional_iterator_tag, Proxy>
-           , private IteratorBase
+           : private IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Proxy value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Proxy* pointer;
+           typedef Proxy& reference;
+
            explicit Iterator (Fixed *outer, int digit = 0);
            Proxy operator* ();
            Iterator &operator+= (std::ptrdiff_t n);
@@ -415,10 +428,15 @@ public:
          };
 
          class ConstIterator
-           : public std::iterator<std::bidirectional_iterator_tag, Octet>
-           , private IteratorBase
+           : public IteratorBase
          {
          public:
+           typedef std::bidirectional_iterator_tag iterator_category;
+           typedef Octet value_type;
+           typedef std::ptrdiff_t difference_type;
+           typedef Octet* pointer;
+           typedef Octet& reference;
+
            explicit ConstIterator (const Fixed *outer, int digit = 0);
            Octet operator* ();
            ConstIterator &operator+= (std::ptrdiff_t n);

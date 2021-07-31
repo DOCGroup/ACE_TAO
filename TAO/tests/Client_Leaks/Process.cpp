@@ -15,5 +15,5 @@ Process::get_process_id (void)
 void
 Process::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

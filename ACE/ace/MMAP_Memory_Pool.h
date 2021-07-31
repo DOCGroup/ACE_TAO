@@ -120,9 +120,8 @@ public:
   bool install_signal_handler_;
 
 private:
-  // Prevent copying
-  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &);
-  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &);
+  ACE_MMAP_Memory_Pool_Options (const ACE_MMAP_Memory_Pool_Options &) = delete;
+  ACE_MMAP_Memory_Pool_Options &operator= (const ACE_MMAP_Memory_Pool_Options &) = delete;
 };
 
 /**
@@ -211,13 +210,13 @@ public:
   virtual int remap (void *addr);
 
   /// Return the base address of this memory pool.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
-  ACE_Mem_Map const & mmap (void) const;
+  ACE_Mem_Map const & mmap () const;
 
   /// Get reference to underlying ACE_Mem_Map object.
   ACE_Mem_Map & mmap (void);

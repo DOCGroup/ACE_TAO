@@ -8,7 +8,7 @@
 class ACE_Svc_Export Token_Test : public Benchmark_Performance
 {
 public:
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   static ACE_Token token;

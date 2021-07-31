@@ -8,7 +8,6 @@
  */
 //=============================================================================
 
-
 #ifndef ACE_AUTO_INCDEC_T_H
 #define ACE_AUTO_INCDEC_T_H
 
@@ -46,7 +45,7 @@ public:
   ~ACE_Auto_IncDec (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -56,8 +55,8 @@ protected:
   /// we're incrementing/decrementing.
   ACE_SAFELY_INCREMENTABLE_DECREMENTABLE &counter_;
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Auto_IncDec (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &))
+  void operator= (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &) = delete;
+  ACE_Auto_IncDec (const ACE_Auto_IncDec<ACE_SAFELY_INCREMENTABLE_DECREMENTABLE> &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

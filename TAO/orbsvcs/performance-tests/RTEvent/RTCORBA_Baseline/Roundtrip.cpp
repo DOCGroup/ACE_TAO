@@ -28,5 +28,5 @@ Roundtrip::test_method (Test::Timestamp send_time,
 void
 Roundtrip::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

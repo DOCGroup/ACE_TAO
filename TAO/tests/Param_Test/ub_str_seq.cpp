@@ -33,7 +33,7 @@ Test_String_Sequence::~Test_String_Sequence (void)
 }
 
 const char *
-Test_String_Sequence::opname (void) const
+Test_String_Sequence::opname () const
 {
   return this->opname_;
 }
@@ -157,7 +157,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   this->in_[i]? (const char *)this->in_[i]:"<nul>"));
     }
@@ -168,7 +168,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
     }
@@ -179,7 +179,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
     }
@@ -190,7 +190,7 @@ Test_String_Sequence::print_values (void)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "in : %s\n",
+                  "in : %C\n",
                   i,
                   (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
     }

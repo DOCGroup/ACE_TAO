@@ -35,12 +35,10 @@ My_Accept_Handler::My_Accept_Handler (ACE_INET_Addr &addr)
     this->open (addr);
 }
 
-
 My_Accept_Handler::~My_Accept_Handler ()
 {
   this->peer_acceptor_.close ();     // Prevent handle leaks
 }
-
 
 int
 My_Accept_Handler::open (ACE_INET_Addr &addr)

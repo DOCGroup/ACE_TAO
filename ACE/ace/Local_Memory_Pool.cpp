@@ -1,17 +1,14 @@
-// Local_Memory_Pool.cpp
 #include "ace/Local_Memory_Pool.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/Log_Category.h"
-
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Local_Memory_Pool)
 
 void
-ACE_Local_Memory_Pool::dump (void) const
+ACE_Local_Memory_Pool::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Local_Memory_Pool::dump");
@@ -24,7 +21,7 @@ ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const ACE_TCHAR *,
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
 }
 
-ACE_Local_Memory_Pool::~ACE_Local_Memory_Pool (void)
+ACE_Local_Memory_Pool::~ACE_Local_Memory_Pool ()
 {
   // Free up all memory allocated by this pool.
   this->release ();
@@ -137,7 +134,7 @@ ACE_Local_Memory_Pool::remap (void *)
 }
 
 void *
-ACE_Local_Memory_Pool::base_addr (void) const
+ACE_Local_Memory_Pool::base_addr () const
 {
   return 0;
 }

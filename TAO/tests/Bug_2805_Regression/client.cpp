@@ -80,7 +80,7 @@ public:
   Client (A::AMI_Test_ptr server, int niterations);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   // private:
   /// Var for the AMI_Test object.
@@ -271,8 +271,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "threads finished\n"));
 
-      root_poa->destroy (1,  // ethernalize objects
-                         0);  // wait for completion
+      root_poa->destroy (true,  // ethernalize objects
+                         false);  // wait for completion
 
       orb->destroy ();
     }

@@ -30,7 +30,7 @@ public:
   virtual int svc (void) = 0;
   virtual int init (int, ACE_TCHAR *[]);
   virtual int info (ACE_TCHAR **, size_t) const;
-  virtual int fini (void);
+  virtual int fini ();
   static void *svc_run (Benchmark_Performance *bp);
 
   // = Set/get flag that controls how the tests are shut down

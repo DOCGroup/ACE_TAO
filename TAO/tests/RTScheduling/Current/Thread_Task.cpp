@@ -156,7 +156,7 @@ Thread_Task::svc (void)
             // exceptions on fast dual processor machines.
             ACE_OS::sleep (1);
 
-            orb_->shutdown (0);
+            orb_->shutdown (false);
           }
       }
     }

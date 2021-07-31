@@ -11,7 +11,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_MEM_Connector)
 
 void
-ACE_MEM_Connector::dump (void) const
+ACE_MEM_Connector::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_MEM_Connector::dump");
@@ -22,7 +22,7 @@ ACE_MEM_Connector::dump (void) const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_MEM_Connector::ACE_MEM_Connector (void)
+ACE_MEM_Connector::ACE_MEM_Connector ()
   : malloc_options_ (ACE_DEFAULT_BASE_ADDR, 0),
     preferred_strategy_ (ACE_MEM_IO::Reactive)
 {

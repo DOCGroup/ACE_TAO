@@ -17,19 +17,16 @@ public:
            AST_Type *uses_type,
            bool is_multiple);
 
-  virtual ~be_uses (void);
+  virtual ~be_uses ();
 
   // Non-virtual override of frontend method.
-  be_type *uses_type (void) const;
-
-  // Narrowing.
-  DEF_NARROW_FROM_DECL(be_uses);
+  be_type *uses_type () const;
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
 
   // Cleanup.
-  virtual void destroy (void);
+  virtual void destroy ();
 
   void original_uses (be_uses *original_uses);
   // Sets the original uses from which this one was created,

@@ -73,5 +73,5 @@ Simple_Server_i::handle_timeout (const ACE_Time_Value &,
 void
 Simple_Server_i::shutdown ()
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

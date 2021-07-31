@@ -33,7 +33,7 @@ public:
   int unbind (const EXT_ID &ext_id);
   int unbind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
 
-  size_t size (void) const;
+  size_t size () const;
 
 protected:
 

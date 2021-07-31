@@ -14,7 +14,7 @@ public:
   FIFO_Recv_Handler (void);
   ~FIFO_Recv_Handler (void);
 
-  virtual ACE_HANDLE get_handle (void) const;
+  virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE fd);
 
 private:
@@ -37,7 +37,7 @@ FIFO_Recv_Handler::FIFO_Recv_Handler (void)
 }
 
 ACE_HANDLE
-FIFO_Recv_Handler::get_handle (void) const
+FIFO_Recv_Handler::get_handle () const
 {
   return this->fifo_reader_.get_handle ();
 }

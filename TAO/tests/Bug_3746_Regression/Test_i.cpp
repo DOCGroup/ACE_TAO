@@ -17,5 +17,5 @@ BoundSequences::BoundSequences (CORBA::ORB_ptr orb)
 void
 BoundSequences::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

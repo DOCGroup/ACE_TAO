@@ -73,7 +73,7 @@ public:
    *                  Defaults to ACE_Allocator::instance().
    */
   ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = 0,
-                        ACE_Allocator *alloc = 0,
+                        ACE_Allocator *alloc = nullptr,
                         ACE_Allocator *db_alloc = 0);
 
   /// Destructor.
@@ -118,19 +118,19 @@ public:
   int enqueue (ACE_Method_Request *new_method_request, ACE_Time_Value *tv = 0);
 
   /// Get the current number of method objects in the queue.
-  size_t method_count (void) const;
+  size_t method_count () const;
 
   /// Returns 1 if the queue is empty, 0 otherwise.
-  int is_empty (void) const;
+  int is_empty () const;
 
   /// Returns 1 if the queue is full, 0 otherwise.
-  int is_full (void) const;
+  int is_full () const;
 
   /// Dump the state of an request.
-  void dump (void) const;
+  void dump () const;
 
   /// Get a pointer to the underlying queue.
-  ACE_Message_Queue<ACE_SYNCH> *queue (void) const;
+  ACE_Message_Queue<ACE_SYNCH> *queue () const;
 
   /// Set the pointer to the underlying queue.
   void queue (ACE_Message_Queue<ACE_SYNCH> *q);
@@ -139,7 +139,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   /// Stores the Method_Requests.
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
@@ -153,8 +152,10 @@ private:
   /// Allocation strategy of the message blocks.
   ACE_Allocator *data_block_allocator_;
 
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Activation_Queue &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Activation_Queue (const ACE_Activation_Queue &))
+  void operator= (const ACE_Activation_Queue &) = delete;
+  ACE_Activation_Queue (const ACE_Activation_Queue &) = delete;
+  void operator= (ACE_Activation_Queue &&) = delete;
+  ACE_Activation_Queue (ACE_Activation_Queue &&) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

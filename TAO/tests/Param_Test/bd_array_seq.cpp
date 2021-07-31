@@ -36,7 +36,7 @@ Test_Bounded_Array_Sequence::~Test_Bounded_Array_Sequence (void)
 }
 
 const char *
-Test_Bounded_Array_Sequence::opname (void) const
+Test_Bounded_Array_Sequence::opname () const
 {
   return this->opname_;
 }

@@ -107,8 +107,7 @@ AST_Field::AST_Field (AST_Type *ft,
 
   if (fnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -140,8 +139,7 @@ AST_Field::AST_Field (AST_Decl::NodeType nt,
 
   if (fnt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph =
-        AST_Param_Holder::narrow_from_decl (ft);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (ft);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {
@@ -163,7 +161,7 @@ AST_Field::AST_Field (
   // be an issue here.
 }
 
-AST_Field::~AST_Field (void)
+AST_Field::~AST_Field ()
 {
 }
 
@@ -198,26 +196,26 @@ AST_Field::ast_accept (ast_visitor *visitor)
 }
 
 void
-AST_Field::destroy (void)
+AST_Field::destroy ()
 {
   if (this->owns_base_type_ && this->ref_type_)
     {
       this->ref_type_->destroy ();
       delete this->ref_type_;
-      this->ref_type_ = 0;
+      this->ref_type_ = nullptr;
     }
 
   this->AST_Decl::destroy ();
 }
 
 AST_Type *
-AST_Field::field_type (void) const
+AST_Field::field_type () const
 {
   return this->ref_type_;
 }
 
 AST_Field::Visibility
-AST_Field::visibility (void) const
+AST_Field::visibility () const
 {
   return this->visibility_;
 }
@@ -229,12 +227,10 @@ AST_Field::visibility (AST_Field::Visibility val)
 }
 
 int
-AST_Field::contains_wstring (void)
+AST_Field::contains_wstring ()
 {
   return this->ref_type_->contains_wstring ();
 }
-
-IMPL_NARROW_FROM_DECL(AST_Field)
 
 bool AST_Field::annotatable () const
 {

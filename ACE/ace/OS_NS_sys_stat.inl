@@ -20,8 +20,7 @@ namespace ACE_OS
 #if defined (ACE_WIN32) || defined (ACE_MQX)
     return ACE_OS::open (filename, O_CREAT|O_TRUNC|O_WRONLY, mode);
 #else
-    ACE_OSCALL_RETURN (::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode),
-                       ACE_HANDLE, ACE_INVALID_HANDLE);
+    return ::creat (ACE_TEXT_ALWAYS_CHAR (filename), mode);
 #endif /* ACE_WIN32 */
   }
 
@@ -33,7 +32,7 @@ namespace ACE_OS
     // Solaris for intel uses an macro for fstat(), this is a wrapper
     // for _fxstat() use of the macro.
     // causes compile and runtime problems.
-    ACE_OSCALL_RETURN (::_fxstat (_STAT_VER, handle, stp), int, -1);
+    return ::_fxstat (_STAT_VER, handle, stp);
 #elif defined (ACE_WIN32)
     BY_HANDLE_FILE_INFORMATION fdata;
 
@@ -70,7 +69,7 @@ namespace ACE_OS
     ::fsync(handle);
     //FUZZ: enable check_for_lack_ACE_OS
 #  endif
-    ACE_OSCALL_RETURN (::fstat (handle, stp), int, -1);
+    return ::fstat (handle, stp);
 #endif /* !ACE_HAS_X86_STAT_MACROS */
   }
 
@@ -132,9 +131,9 @@ namespace ACE_OS
 # elif defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for lstat(), this macro is a
     // wrapper for _lxstat().
-    ACE_OSCALL_RETURN (::_lxstat (_STAT_VER, file, stp), int, -1);
+    return ::_lxstat (_STAT_VER, file, stp);
 # else /* !ACE_HAS_X86_STAT_MACROS */
-    ACE_OSCALL_RETURN (::lstat (file, stp), int, -1);
+    return ::lstat (file, stp);
 # endif /* ACE_LACKS_LSTAT */
   }
 
@@ -162,12 +161,12 @@ namespace ACE_OS
 #elif defined (ACE_MKDIR_LACKS_MODE)
     ACE_UNUSED_ARG (mode);
 #  if defined (ACE_MKDIR_EQUIVALENT)
-    ACE_OSCALL_RETURN (ACE_MKDIR_EQUIVALENT (path), int, -1);
+    return ACE_MKDIR_EQUIVALENT (path);
 #  else
-    ACE_OSCALL_RETURN (::mkdir (path), int, -1);
+    return ::mkdir (path);
 #  endif
 #else
-    ACE_OSCALL_RETURN (::mkdir (path, mode), int, -1);
+    return::mkdir (path, mode);
 #endif
   }
 
@@ -183,7 +182,7 @@ namespace ACE_OS
                           int, -1);
 #elif defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
     ACE_UNUSED_ARG (mode);
-    ACE_OSCALL_RETURN (::_wmkdir (path), int, -1);
+    return ::_wmkdir (path);
 #else
     return ACE_OS::mkdir (ACE_Wide_To_Ascii (path).char_rep (), mode);
 #endif /* ACE_HAS_WINCE */
@@ -200,7 +199,7 @@ namespace ACE_OS
     ACE_UNUSED_ARG (mode);
     ACE_NOTSUP_RETURN (-1);
 #else
-    ACE_OSCALL_RETURN (::mkfifo (ACE_TEXT_ALWAYS_CHAR (file), mode), int, -1);
+    return ::mkfifo (ACE_TEXT_ALWAYS_CHAR (file), mode);
 #endif /* ACE_LACKS_MKFIFO */
   }
 
@@ -209,7 +208,7 @@ namespace ACE_OS
   {
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_HAS_NONCONST_STAT)
-    ACE_OSCALL_RETURN (::stat (const_cast <char *> (file), stp), int, -1);
+    return ::stat (const_cast <char *> (file), stp);
 #elif defined (ACE_LACKS_STAT)
     ACE_NOTSUP_RETURN (-1);
 #elif defined (ACE_HAS_WINCE)
@@ -241,11 +240,11 @@ namespace ACE_OS
 #elif defined (ACE_HAS_X86_STAT_MACROS)
     // Solaris for intel uses an macro for stat(), this macro is a
     // wrapper for _xstat().
-    ACE_OSCALL_RETURN (::_xstat (_STAT_VER, file, stp), int, -1);
+    return ::_xstat (_STAT_VER, file, stp);
 #elif defined (ACE_MQX)
     return MQX_Filesystem::inst ().stat (file, stp);
 #else
-    ACE_OSCALL_RETURN (ACE_STAT_FUNC_NAME (file, stp), int, -1);
+    return ACE_STAT_FUNC_NAME (file, stp);
 #endif /* ACE_HAS_NONCONST_STAT */
   }
 
@@ -283,7 +282,7 @@ namespace ACE_OS
 #elif defined (__BORLANDC__) \
       || defined (_MSC_VER) \
       || (defined (__MINGW32__) && !defined (__MINGW64_VERSION_MAJOR))
-    ACE_OSCALL_RETURN (ACE_WSTAT_FUNC_NAME (file, stp), int, -1);
+    return ACE_WSTAT_FUNC_NAME (file, stp);
 #else /* ACE_HAS_WINCE */
     ACE_Wide_To_Ascii nfile (file);
     return ACE_OS::stat (nfile.char_rep (), stp);
@@ -304,7 +303,7 @@ namespace ACE_OS
     ACE_SECURECRTCALL (_umask_s (new_mode, &old_mode), mode_t, -1, old_mode);
     return static_cast<mode_t> (old_mode);
 # elif defined (ACE_WIN32) && !defined (__BORLANDC__)
-    ACE_OSCALL_RETURN (::_umask (cmask), mode_t, -1);
+    return ::_umask (cmask);
 # else
     return ::umask (cmask); // This call shouldn't fail...
 # endif /* ACE_LACKS_UMASK */

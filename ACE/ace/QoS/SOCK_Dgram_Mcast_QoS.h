@@ -113,7 +113,6 @@ public:
 private:
   // = Disable public <open> method to ensure class used properly.
 
-
   /// Subscribe to the multicast interface using QoS-enabled semantics.
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
                      const ACE_QoS_Params &qos_params,
@@ -125,7 +124,6 @@ private:
 
   /// Manages the QoS sessions that this socket subscribes to.
   ACE_QoS_Manager qos_manager_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

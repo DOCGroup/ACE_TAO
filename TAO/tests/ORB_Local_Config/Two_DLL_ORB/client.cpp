@@ -12,7 +12,7 @@ Client_Worker::Client_Worker ()
 }
 
 const ACE_TCHAR *
-Client_Worker::kind (void) const
+Client_Worker::kind () const
 {
   return ACE_TEXT ("Client");
 }
@@ -122,7 +122,7 @@ Client_Worker::test_main (int argc, ACE_TCHAR *argv[])
             }
       }
 
-      orb->shutdown (0);
+      orb->shutdown (false);
 
       orb->destroy ();
     }

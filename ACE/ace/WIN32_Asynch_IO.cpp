@@ -17,61 +17,61 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 size_t
-ACE_WIN32_Asynch_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Result::bytes_transferred () const
 {
   return this->bytes_transferred_;
 }
 
 const void *
-ACE_WIN32_Asynch_Result::act (void) const
+ACE_WIN32_Asynch_Result::act () const
 {
   return this->act_;
 }
 
 int
-ACE_WIN32_Asynch_Result::success (void) const
+ACE_WIN32_Asynch_Result::success () const
 {
   return this->success_;
 }
 
 const void *
-ACE_WIN32_Asynch_Result::completion_key (void) const
+ACE_WIN32_Asynch_Result::completion_key () const
 {
   return this->completion_key_;
 }
 
 u_long
-ACE_WIN32_Asynch_Result::error (void) const
+ACE_WIN32_Asynch_Result::error () const
 {
   return this->error_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Result::event (void) const
+ACE_WIN32_Asynch_Result::event () const
 {
   return this->hEvent;
 }
 
 u_long
-ACE_WIN32_Asynch_Result::offset (void) const
+ACE_WIN32_Asynch_Result::offset () const
 {
   return this->Offset;
 }
 
 u_long
-ACE_WIN32_Asynch_Result::offset_high (void) const
+ACE_WIN32_Asynch_Result::offset_high () const
 {
   return this->OffsetHigh;
 }
 
 int
-ACE_WIN32_Asynch_Result::priority (void) const
+ACE_WIN32_Asynch_Result::priority () const
 {
   ACE_NOTSUP_RETURN (0);
 }
 
 int
-ACE_WIN32_Asynch_Result::signal_number (void) const
+ACE_WIN32_Asynch_Result::signal_number () const
 {
   ACE_NOTSUP_RETURN (0);
 }
@@ -190,7 +190,7 @@ ACE_WIN32_Asynch_Operation::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Operation::proactor (void) const
+ACE_WIN32_Asynch_Operation::proactor () const
 {
   return this->proactor_;
 }
@@ -210,19 +210,19 @@ ACE_WIN32_Asynch_Operation::~ACE_WIN32_Asynch_Operation (void)
 // ************************************************************
 
 size_t
-ACE_WIN32_Asynch_Read_Stream_Result::bytes_to_read (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 ACE_Message_Block &
-ACE_WIN32_Asynch_Read_Stream_Result::message_block (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_Stream_Result::handle (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::handle () const
 {
   return this->handle_;
 }
@@ -302,61 +302,61 @@ ACE_WIN32_Asynch_Read_Stream_Result::~ACE_WIN32_Asynch_Read_Stream_Result (void)
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Read_Stream_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_Stream_Result::act (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Stream_Result::success (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_Stream_Result::completion_key (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Stream_Result::error (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_Stream_Result::event (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Stream_Result::offset (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Stream_Result::offset_high (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Stream_Result::priority (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Stream_Result::signal_number (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -368,7 +368,7 @@ ACE_WIN32_Asynch_Read_Stream_Result::post_completion (ACE_Proactor_Impl *proacto
 }
 
 int
-ACE_WIN32_Asynch_Read_Stream_Result::scatter_enabled (void) const
+ACE_WIN32_Asynch_Read_Stream_Result::scatter_enabled () const
 {
   return this->scatter_enabled_;
 }
@@ -638,25 +638,25 @@ ACE_WIN32_Asynch_Read_Stream::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Read_Stream::proactor (void) const
+ACE_WIN32_Asynch_Read_Stream::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
 size_t
-ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 ACE_Message_Block &
-ACE_WIN32_Asynch_Write_Stream_Result::message_block (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_Stream_Result::handle (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::handle () const
 {
   return this->handle_;
 }
@@ -731,61 +731,61 @@ ACE_WIN32_Asynch_Write_Stream_Result::~ACE_WIN32_Asynch_Write_Stream_Result (voi
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Write_Stream_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_Stream_Result::act (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Stream_Result::success (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_Stream_Result::completion_key (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Stream_Result::error (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_Stream_Result::event (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Stream_Result::offset (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Stream_Result::offset_high (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Stream_Result::priority (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Stream_Result::signal_number (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -797,7 +797,7 @@ ACE_WIN32_Asynch_Write_Stream_Result::post_completion (ACE_Proactor_Impl *proact
 }
 
 int
-ACE_WIN32_Asynch_Write_Stream_Result::gather_enabled (void) const
+ACE_WIN32_Asynch_Write_Stream_Result::gather_enabled () const
 {
   return this->gather_enabled_;
 }
@@ -1066,7 +1066,7 @@ ACE_WIN32_Asynch_Write_Stream::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Write_Stream::proactor (void) const
+ACE_WIN32_Asynch_Write_Stream::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
@@ -1155,61 +1155,61 @@ ACE_WIN32_Asynch_Read_File_Result::~ACE_WIN32_Asynch_Read_File_Result (void)
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Read_File_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Read_File_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_File_Result::act (void) const
+ACE_WIN32_Asynch_Read_File_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Read_File_Result::success (void) const
+ACE_WIN32_Asynch_Read_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_File_Result::completion_key (void) const
+ACE_WIN32_Asynch_Read_File_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_File_Result::error (void) const
+ACE_WIN32_Asynch_Read_File_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_File_Result::event (void) const
+ACE_WIN32_Asynch_Read_File_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_File_Result::offset (void) const
+ACE_WIN32_Asynch_Read_File_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_File_Result::offset_high (void) const
+ACE_WIN32_Asynch_Read_File_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Read_File_Result::priority (void) const
+ACE_WIN32_Asynch_Read_File_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Read_File_Result::signal_number (void) const
+ACE_WIN32_Asynch_Read_File_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -1220,19 +1220,19 @@ ACE_WIN32_Asynch_Read_File_Result::signal_number (void) const
 // ACE_WIN32_Asynch_Read_Stream_Result base class.
 
 size_t
-ACE_WIN32_Asynch_Read_File_Result::bytes_to_read (void) const
+ACE_WIN32_Asynch_Read_File_Result::bytes_to_read () const
 {
   return ACE_WIN32_Asynch_Read_Stream_Result::bytes_to_read ();
 }
 
 ACE_Message_Block &
-ACE_WIN32_Asynch_Read_File_Result::message_block (void) const
+ACE_WIN32_Asynch_Read_File_Result::message_block () const
 {
   return ACE_WIN32_Asynch_Read_Stream_Result::message_block ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_File_Result::handle (void) const
+ACE_WIN32_Asynch_Read_File_Result::handle () const
 {
   return ACE_WIN32_Asynch_Read_Stream_Result::handle ();
 }
@@ -1468,7 +1468,7 @@ ACE_WIN32_Asynch_Read_File::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Read_File::proactor (void) const
+ACE_WIN32_Asynch_Read_File::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
@@ -1558,61 +1558,61 @@ ACE_WIN32_Asynch_Write_File_Result::~ACE_WIN32_Asynch_Write_File_Result  (void)
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Write_File_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Write_File_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_File_Result::act (void) const
+ACE_WIN32_Asynch_Write_File_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Write_File_Result::success (void) const
+ACE_WIN32_Asynch_Write_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_File_Result::completion_key (void) const
+ACE_WIN32_Asynch_Write_File_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_File_Result::error (void) const
+ACE_WIN32_Asynch_Write_File_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_File_Result::event (void) const
+ACE_WIN32_Asynch_Write_File_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_File_Result::offset (void) const
+ACE_WIN32_Asynch_Write_File_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_File_Result::offset_high (void) const
+ACE_WIN32_Asynch_Write_File_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Write_File_Result::priority (void) const
+ACE_WIN32_Asynch_Write_File_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Write_File_Result::signal_number (void) const
+ACE_WIN32_Asynch_Write_File_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -1623,19 +1623,19 @@ ACE_WIN32_Asynch_Write_File_Result::signal_number (void) const
 // ACE_WIN32_Asynch_Write_Stream_Result base class.
 
 size_t
-ACE_WIN32_Asynch_Write_File_Result::bytes_to_write (void) const
+ACE_WIN32_Asynch_Write_File_Result::bytes_to_write () const
 {
   return ACE_WIN32_Asynch_Write_Stream_Result::bytes_to_write ();
 }
 
 ACE_Message_Block &
-ACE_WIN32_Asynch_Write_File_Result::message_block (void) const
+ACE_WIN32_Asynch_Write_File_Result::message_block () const
 {
   return ACE_WIN32_Asynch_Write_Stream_Result::message_block ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_File_Result::handle (void) const
+ACE_WIN32_Asynch_Write_File_Result::handle () const
 {
   return ACE_WIN32_Asynch_Write_Stream_Result::handle ();
 }
@@ -1915,31 +1915,31 @@ ACE_WIN32_Asynch_Write_File::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Write_File::proactor (void) const
+ACE_WIN32_Asynch_Write_File::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
 size_t
-ACE_WIN32_Asynch_Accept_Result::bytes_to_read (void) const
+ACE_WIN32_Asynch_Accept_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 ACE_Message_Block &
-ACE_WIN32_Asynch_Accept_Result::message_block (void) const
+ACE_WIN32_Asynch_Accept_Result::message_block () const
 {
   return this->message_block_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Accept_Result::listen_handle (void) const
+ACE_WIN32_Asynch_Accept_Result::listen_handle () const
 {
   return this->listen_handle_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Accept_Result::accept_handle (void) const
+ACE_WIN32_Asynch_Accept_Result::accept_handle () const
 {
   return this->accept_handle_;
 }
@@ -2008,61 +2008,61 @@ ACE_WIN32_Asynch_Accept_Result::~ACE_WIN32_Asynch_Accept_Result (void)
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Accept_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Accept_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Accept_Result::act (void) const
+ACE_WIN32_Asynch_Accept_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Accept_Result::success (void) const
+ACE_WIN32_Asynch_Accept_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Accept_Result::completion_key (void) const
+ACE_WIN32_Asynch_Accept_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Accept_Result::error (void) const
+ACE_WIN32_Asynch_Accept_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Accept_Result::event (void) const
+ACE_WIN32_Asynch_Accept_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Accept_Result::offset (void) const
+ACE_WIN32_Asynch_Accept_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Accept_Result::offset_high (void) const
+ACE_WIN32_Asynch_Accept_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Accept_Result::priority (void) const
+ACE_WIN32_Asynch_Accept_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Accept_Result::signal_number (void) const
+ACE_WIN32_Asynch_Accept_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -2232,7 +2232,7 @@ ACE_WIN32_Asynch_Accept::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Accept::proactor (void) const
+ACE_WIN32_Asynch_Accept::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
@@ -2240,7 +2240,7 @@ ACE_WIN32_Asynch_Accept::proactor (void) const
 // *********************************************************************
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Connect_Result::connect_handle (void) const
+ACE_WIN32_Asynch_Connect_Result::connect_handle () const
 {
   return this->connect_handle_;
 }
@@ -2296,61 +2296,61 @@ ACE_WIN32_Asynch_Connect_Result::~ACE_WIN32_Asynch_Connect_Result (void)
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Connect_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Connect_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Connect_Result::act (void) const
+ACE_WIN32_Asynch_Connect_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Connect_Result::success (void) const
+ACE_WIN32_Asynch_Connect_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Connect_Result::completion_key (void) const
+ACE_WIN32_Asynch_Connect_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Connect_Result::error (void) const
+ACE_WIN32_Asynch_Connect_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Connect_Result::event (void) const
+ACE_WIN32_Asynch_Connect_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Connect_Result::offset (void) const
+ACE_WIN32_Asynch_Connect_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Connect_Result::offset_high (void) const
+ACE_WIN32_Asynch_Connect_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Connect_Result::priority (void) const
+ACE_WIN32_Asynch_Connect_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Connect_Result::signal_number (void) const
+ACE_WIN32_Asynch_Connect_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -2378,13 +2378,13 @@ ACE_WIN32_Asynch_Connect::~ACE_WIN32_Asynch_Connect (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Connect::proactor (void) const
+ACE_WIN32_Asynch_Connect::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Connect::get_handle (void) const
+ACE_WIN32_Asynch_Connect::get_handle () const
 {
 
   ACE_ASSERT (0);
@@ -2808,37 +2808,37 @@ ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 // *********************************************************************
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Transmit_File_Result::socket (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::socket () const
 {
   return this->socket_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Transmit_File_Result::file (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::file () const
 {
   return this->file_;
 }
 
 ACE_Asynch_Transmit_File::Header_And_Trailer *
-ACE_WIN32_Asynch_Transmit_File_Result::header_and_trailer (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::header_and_trailer () const
 {
   return this->header_and_trailer_;
 }
 
 size_t
-ACE_WIN32_Asynch_Transmit_File_Result::bytes_to_write (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
 
 size_t
-ACE_WIN32_Asynch_Transmit_File_Result::bytes_per_send (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::bytes_per_send () const
 {
   return this->bytes_per_send_;
 }
 
 u_long
-ACE_WIN32_Asynch_Transmit_File_Result::flags (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::flags () const
 {
   return this->flags_;
 }
@@ -2920,61 +2920,61 @@ ACE_WIN32_Asynch_Transmit_File_Result::~ACE_WIN32_Asynch_Transmit_File_Result (v
 // warnings. These methods call the base class methods.
 
 size_t
-ACE_WIN32_Asynch_Transmit_File_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Transmit_File_Result::act (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Transmit_File_Result::success (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Transmit_File_Result::completion_key (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Transmit_File_Result::error (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Transmit_File_Result::event (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Transmit_File_Result::offset (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Transmit_File_Result::offset_high (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Transmit_File_Result::priority (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Transmit_File_Result::signal_number (void) const
+ACE_WIN32_Asynch_Transmit_File_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -3114,19 +3114,19 @@ ACE_WIN32_Asynch_Transmit_File::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Transmit_File::proactor (void) const
+ACE_WIN32_Asynch_Transmit_File::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
 
 size_t
-ACE_WIN32_Asynch_Read_Dgram_Result::bytes_to_read (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::bytes_to_read () const
 {
   return this->bytes_to_read_;
 }
 
 ACE_Message_Block*
-ACE_WIN32_Asynch_Read_Dgram_Result::message_block (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::message_block () const
 {
   return this->message_block_;
 }
@@ -3156,73 +3156,73 @@ ACE_WIN32_Asynch_Read_Dgram_Result::saddr () const
 
 
 int
-ACE_WIN32_Asynch_Read_Dgram_Result::flags (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_Dgram_Result::handle (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::handle () const
 {
   return this->handle_;
 }
 
 size_t
-ACE_WIN32_Asynch_Read_Dgram_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_Dgram_Result::act (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram_Result::success (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Read_Dgram_Result::completion_key (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Dgram_Result::error (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Read_Dgram_Result::event (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Dgram_Result::offset (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Read_Dgram_Result::offset_high (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram_Result::priority (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Read_Dgram_Result::signal_number (void) const
+ACE_WIN32_Asynch_Read_Dgram_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -3467,7 +3467,7 @@ ACE_WIN32_Asynch_Read_Dgram::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Read_Dgram::proactor (void) const
+ACE_WIN32_Asynch_Read_Dgram::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }
@@ -3482,7 +3482,7 @@ ACE_WIN32_Asynch_Read_Dgram::ACE_WIN32_Asynch_Read_Dgram (ACE_WIN32_Proactor *wi
 //***********************************************
 
 size_t
-ACE_WIN32_Asynch_Write_Dgram_Result::bytes_to_write (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::bytes_to_write () const
 {
   return this->bytes_to_write_;
 }
@@ -3494,73 +3494,73 @@ ACE_WIN32_Asynch_Write_Dgram_Result::message_block () const
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram_Result::flags (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::flags () const
 {
   return this->flags_;
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_Dgram_Result::handle (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::handle () const
 {
   return this->handle_;
 }
 
 size_t
-ACE_WIN32_Asynch_Write_Dgram_Result::bytes_transferred (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::bytes_transferred () const
 {
   return ACE_WIN32_Asynch_Result::bytes_transferred ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_Dgram_Result::act (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::act () const
 {
   return ACE_WIN32_Asynch_Result::act ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram_Result::success (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::success () const
 {
   return ACE_WIN32_Asynch_Result::success ();
 }
 
 const void *
-ACE_WIN32_Asynch_Write_Dgram_Result::completion_key (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::completion_key () const
 {
   return ACE_WIN32_Asynch_Result::completion_key ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Dgram_Result::error (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::error () const
 {
   return ACE_WIN32_Asynch_Result::error ();
 }
 
 ACE_HANDLE
-ACE_WIN32_Asynch_Write_Dgram_Result::event (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::event () const
 {
   return ACE_WIN32_Asynch_Result::event ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Dgram_Result::offset (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::offset () const
 {
   return ACE_WIN32_Asynch_Result::offset ();
 }
 
 u_long
-ACE_WIN32_Asynch_Write_Dgram_Result::offset_high (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::offset_high () const
 {
   return ACE_WIN32_Asynch_Result::offset_high ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram_Result::priority (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::priority () const
 {
   return ACE_WIN32_Asynch_Result::priority ();
 }
 
 int
-ACE_WIN32_Asynch_Write_Dgram_Result::signal_number (void) const
+ACE_WIN32_Asynch_Write_Dgram_Result::signal_number () const
 {
   return ACE_WIN32_Asynch_Result::signal_number ();
 }
@@ -3792,7 +3792,7 @@ ACE_WIN32_Asynch_Write_Dgram::cancel (void)
 }
 
 ACE_Proactor *
-ACE_WIN32_Asynch_Write_Dgram::proactor (void) const
+ACE_WIN32_Asynch_Write_Dgram::proactor () const
 {
   return ACE_WIN32_Asynch_Operation::proactor ();
 }

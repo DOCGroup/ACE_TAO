@@ -38,7 +38,7 @@ public:
 
 protected:
   /// The service method
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
   /// Print Statistics

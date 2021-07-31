@@ -36,14 +36,14 @@ ACE_Based_Pointer<CONCRETE>::operator = (CONCRETE *rhs)
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE
-ACE_Based_Pointer_Basic<CONCRETE>::operator *(void) const
+ACE_Based_Pointer_Basic<CONCRETE>::operator *() const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator *");
   return *reinterpret_cast<CONCRETE *> (ACE_COMPUTE_BASED_POINTER (this));
 }
 
 template <class CONCRETE> ACE_INLINE CONCRETE *
-ACE_Based_Pointer_Basic<CONCRETE>::addr (void) const
+ACE_Based_Pointer_Basic<CONCRETE>::addr () const
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::addr");
 

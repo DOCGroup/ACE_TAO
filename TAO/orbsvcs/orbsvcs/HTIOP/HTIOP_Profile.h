@@ -51,7 +51,7 @@ namespace TAO
     public:
       /// The object key delimiter that HTIOP uses or expects.
       static const char object_key_delimiter_;
-      virtual char object_key_delimiter (void) const;
+      virtual char object_key_delimiter () const;
 
       /// Return the char string prefix.
       static const char *prefix (void);
@@ -85,7 +85,7 @@ namespace TAO
        * This is used to create url-style reference.  Only one
        * endpoint is included into the string.
        */
-      virtual char * to_string (void) const;
+      virtual char * to_string () const;
 
       /**
        * Endpoints are transmitted using TAO-proprietory tagged component.
@@ -99,7 +99,7 @@ namespace TAO
       virtual TAO_Endpoint *endpoint (void);
 
       /// Return how many endpoints this profile contains.
-      virtual CORBA::ULong endpoint_count (void) const;
+      virtual CORBA::ULong endpoint_count () const;
 
       /**
        * Add <endp> to this profile's list of endpoints (it is inserted

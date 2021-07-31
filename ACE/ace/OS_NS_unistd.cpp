@@ -13,7 +13,9 @@
 #include "ace/Object_Manager_Base.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/os_include/sys/os_pstat.h"
-#include "ace/os_include/sys/os_sysctl.h"
+#if defined (ACE_HAS_SYSCTL)
+# include "ace/os_include/sys/os_sysctl.h"
+#endif /* ACE_HAS_SYSCTL */
 
 #if defined ACE_HAS_VXCPULIB
 # include "vxCpuLib.h"
@@ -229,7 +231,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execl");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  // ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
+  // return ::execv (path, argv);
 }
 
 int
@@ -238,7 +240,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execle");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
+  //  return ::execve (path, argv, envp);
 }
 
 int
@@ -247,7 +249,7 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execlp");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
+  //  return ::execvp (file, argv);
 }
 
 pid_t
@@ -397,7 +399,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 }
 
 long
-ACE_OS::num_processors (void)
+ACE_OS::num_processors ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors");
 
@@ -431,7 +433,7 @@ ACE_OS::num_processors (void)
 }
 
 long
-ACE_OS::num_processors_online (void)
+ACE_OS::num_processors_online ()
 {
   ACE_OS_TRACE ("ACE_OS::num_processors_online");
 

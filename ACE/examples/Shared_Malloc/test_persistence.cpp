@@ -38,7 +38,7 @@ public:
 
   ~Employee (void) { shmem_allocator->free (this->name_); }
 
-  const char *name (void) const { return this->name_; }
+  const char *name () const { return this->name_; }
 
   void name (const char *name)
   {
@@ -50,7 +50,7 @@ public:
     ACE_OS::strcpy (this->name_, name);
   }
 
-  u_long id (void) const { return id_; }
+  u_long id () const { return id_; }
 
   void id (u_long id) { id_ = id; }
 
@@ -59,18 +59,14 @@ public:
     return shmem_allocator->malloc (sizeof (Employee));
   }
 
-#if defined (ACE_HAS_NEW_NOTHROW)
-  void *operator new (size_t, const ACE_nothrow_t&)
+  void *operator new (size_t, const std::nothrow_t&)
   {
     return shmem_allocator->malloc (sizeof (Employee));
   }
-#if !defined (ACE_LACKS_PLACEMENT_OPERATOR_DELETE)
-  void operator delete (void *p, const ACE_nothrow_t&) throw ()
+  void operator delete (void *p, const std::nothrow_t&) throw ()
   {
     shmem_allocator->free (p);
   }
-#endif /* ACE_LACKS_PLACEMENT_OPERATOR_DELETE */
-#endif
 
   void operator delete (void *pointer)
   {

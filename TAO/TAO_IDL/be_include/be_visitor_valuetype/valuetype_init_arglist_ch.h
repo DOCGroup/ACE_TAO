@@ -29,7 +29,7 @@ public:
   be_visitor_valuetype_init_arglist_ch (be_visitor_context *ctx);
 
   /// destructor
-  ~be_visitor_valuetype_init_arglist_ch (void);
+  ~be_visitor_valuetype_init_arglist_ch ();
 
   /// visit factory construct
   virtual int visit_factory (be_factory *node);

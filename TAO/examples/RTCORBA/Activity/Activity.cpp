@@ -290,7 +290,7 @@ Activity::check_ifexit (void)
         }
 
       // shutdown the ORB
-      orb_->shutdown (0);
+      orb_->shutdown (false);
     }
 }
 

@@ -154,15 +154,12 @@ private:
   operator T ();
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
   // = Encapsulate reference count and object lifetime of instances.
-
-  // These methods must go after the others to work around a bug with
-  // Borland's C++ Builder...
 
   /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
   /// cannot be created.
@@ -197,7 +194,7 @@ private:
   static void assign (ACE_Future_Rep<T> *&rep, ACE_Future_Rep<T> *new_rep);
 
   /// Is result available?
-  int ready (void) const;
+  int ready () const;
 
   /// Pointer to the result.
   T *value_;
@@ -313,7 +310,7 @@ public:
   operator T ();
 
   /// Check if the result is available.
-  int ready (void) const;
+  int ready () const;
 
   /**
    * Attaches the specified observer to a subject (this ACE_Future).
@@ -344,7 +341,7 @@ public:
   int detach (ACE_Future_Observer<T> *observer);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /**
    * Get the underlying ACE_Future_Rep pointer. Note that this method should

@@ -72,7 +72,7 @@ public:
                        ACE_SSL_Context::instance ());
 
   /// Destructor
-  ~ACE_SSL_SOCK_Stream (void);
+  ~ACE_SSL_SOCK_Stream ();
 
   /// Send an @a n byte buffer to the ssl socket using the semantics of
   /// send(3n).
@@ -263,14 +263,14 @@ public:
    */
   //@{
   /// Close down the reader.
-  int close_reader (void);
+  int close_reader ();
 
   /// Close down the writer.
-  int close_writer (void);
+  int close_writer ();
   //@}
 
   ///Close down the socket.
-  int close (void);
+  int close ();
 
   /// Meta-type info
   typedef ACE_INET_Addr PEER_ADDR;
@@ -287,7 +287,7 @@ public:
   void set_handle (ACE_HANDLE fd);
 
   /// Return a pointer to the underlying SSL structure.
-  SSL *ssl (void) const;
+  SSL *ssl () const;
 
   /**
    * Return the address of the remotely connected peer (if there is
@@ -301,7 +301,7 @@ public:
   int get_remote_addr (ACE_Addr &) const;
 
   /// Return the underlying ACE_SOCK_Stream which ACE_SSL runs atop of.
-  ACE_SOCK_Stream & peer (void);
+  ACE_SOCK_Stream & peer ();
 
 protected:
   /// Underlying send() helper method common to all public send()
@@ -318,8 +318,8 @@ protected:
                   const ACE_Time_Value *timeout) const;
 
 private:
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_SSL_SOCK_Stream &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &))
+  void operator= (const ACE_SSL_SOCK_Stream &) = delete;
+  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &) = delete;
 
 protected:
   /// The SSL session.

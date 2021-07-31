@@ -50,12 +50,12 @@ public:
   /**
    * Default constructor.
    */
-  ACEXML_DefaultHandler (void);
+  ACEXML_DefaultHandler ();
 
   /**
    * destructor.
    */
-  virtual ~ACEXML_DefaultHandler (void);
+  virtual ~ACEXML_DefaultHandler ();
 
   // Methods inherit from ACEXML_ContentHandler.
 
@@ -69,7 +69,7 @@ public:
   /*
    * Receive notification of the end of a document.
    */
-  virtual void endDocument (void);
+  virtual void endDocument ();
 
   /*
    * Receive notification of the end of an element.
@@ -109,7 +109,7 @@ public:
   /*
    * Receive notification of the beginning of a document.
    */
-  virtual void startDocument (void);
+  virtual void startDocument ();
 
   /*
    * Receive notification of the beginning of an element.

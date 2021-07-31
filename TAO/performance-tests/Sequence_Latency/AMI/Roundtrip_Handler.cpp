@@ -7,7 +7,7 @@ Roundtrip_Handler::Roundtrip_Handler (int expected_callbacks)
 }
 
 int
-Roundtrip_Handler::pending_callbacks (void) const
+Roundtrip_Handler::pending_callbacks () const
 {
   return this->pending_callbacks_;
 }

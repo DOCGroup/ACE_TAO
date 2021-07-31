@@ -494,7 +494,7 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
           tmp_tester->test2 (-1);
         }
 
-      orb->shutdown (1);
+      orb->shutdown (true);
 
       orb->destroy ();
 

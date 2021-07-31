@@ -29,7 +29,7 @@ public:
                ACE_Thread_Manager *thr_mgr);
 
   /// The thread entry point function.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Gets the number of computations the thread was able to perform.
   u_long get_number_of_computations (void);

@@ -4,8 +4,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_Memory.h"
 
-
-
 #if defined (ACE_HAS_TLI)
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -23,7 +21,7 @@ struct ACE_TLI_Request
 class ACE_TLI_Request_Queue
 {
 public:
-  ACE_TLI_Request_Queue (void);
+  ACE_TLI_Request_Queue ();
 
   ACE_HANDLE open (ACE_HANDLE fd, int size);
   int close (void);
@@ -32,13 +30,13 @@ public:
   int dequeue (ACE_TLI_Request *&ptr);
   int remove (int sequence_number);
 
-  int is_empty (void) const;
-  int is_full (void) const;
+  int is_empty () const;
+  int is_full () const;
 
-  ACE_TLI_Request *alloc (void);
+  ACE_TLI_Request *alloc ();
   void    free (ACE_TLI_Request *node);
 
-  void dump (void) const;
+  void dump () const;
   // Dump the state of an object.
 
   ACE_ALLOC_HOOK_DECLARE;
@@ -56,7 +54,7 @@ private:
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Request_Queue)
 
 void
-ACE_TLI_Request_Queue::dump (void) const
+ACE_TLI_Request_Queue::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Request_Queue::dump");
@@ -64,14 +62,14 @@ ACE_TLI_Request_Queue::dump (void) const
 }
 
 int
-ACE_TLI_Request_Queue::is_empty (void) const
+ACE_TLI_Request_Queue::is_empty () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_empty");
   return this->current_count_ == 0;
 }
 
 int
-ACE_TLI_Request_Queue::is_full (void) const
+ACE_TLI_Request_Queue::is_full () const
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::is_full");
   return this->current_count_ + 1 == this->size_; // Add 1 for the dummy.
@@ -101,7 +99,7 @@ ACE_TLI_Request_Queue::alloc (void)
 ACE_ALLOC_HOOK_DEFINE(ACE_TLI_Acceptor)
 
 void
-ACE_TLI_Acceptor::dump (void) const
+ACE_TLI_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_TLI_Acceptor::dump");

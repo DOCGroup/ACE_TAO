@@ -18,7 +18,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->acceptor_.get_handle (); }
 
   // Called when a connection is ready to accept.
@@ -49,7 +49,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Get this handler's I/O handle.
-  virtual ACE_HANDLE get_handle (void) const
+  virtual ACE_HANDLE get_handle () const
     { return this->sock_.get_handle (); }
 
   // Called when input is available from the client.
@@ -93,9 +93,9 @@ ClientAcceptor::open (const ACE_INET_Addr &listen_addr)
 int
 ClientAcceptor::handle_input (ACE_HANDLE)
 {
-  ClientService *client;
+  ClientService *client = 0;
   ACE_NEW_RETURN (client, ClientService, -1);
-  auto_ptr<ClientService> p (client);
+  std::unique_ptr<ClientService> p (client);
 
   if (this->acceptor_.accept (client->peer ()) == -1)
     ACE_ERROR_RETURN ((LM_ERROR,

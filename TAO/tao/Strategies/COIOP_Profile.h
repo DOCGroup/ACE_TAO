@@ -44,7 +44,7 @@ class TAO_Strategies_Export TAO_COIOP_Profile : public TAO_Profile
 public:
   /// The object key delimiter that COIOP uses or expects.
   static const char object_key_delimiter_;
-  virtual char object_key_delimiter (void) const;
+  virtual char object_key_delimiter () const;
 
   /// Return the char string prefix.
   static const char *prefix (void);
@@ -63,10 +63,10 @@ public:
   ~TAO_COIOP_Profile (void);
 
   /// Template methods. Please tao/Profile.h for documentation.
-  virtual char * to_string (void) const;
+  virtual char * to_string () const;
   virtual int encode_endpoints (void);
   virtual TAO_Endpoint *endpoint (void);
-  virtual CORBA::ULong endpoint_count (void) const;
+  virtual CORBA::ULong endpoint_count () const;
   virtual CORBA::ULong hash (CORBA::ULong max);
   /**
    * Add <endp> to this profile's list of endpoints (it is inserted
@@ -79,8 +79,7 @@ protected:
 
   /// Template methods. Please see tao/Profile.h for documentation.
   virtual int decode_profile (TAO_InputCDR& cdr);
-  virtual void parse_string_i (const char *string
-                              );
+  virtual void parse_string_i (const char *string);
   virtual void create_profile_body (TAO_OutputCDR &cdr) const;
   virtual int decode_endpoints (void);
   virtual CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile);

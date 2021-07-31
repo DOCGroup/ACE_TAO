@@ -66,7 +66,7 @@ public:
   virtual CORBA::Boolean try_lock (TimeBase::TimeT max_wait);
 
   /// Returns the name of the mutex.
-  virtual const char *name (void) const;
+  virtual const char *name () const;
 
   /// Destructor.
   virtual ~TAO_RT_Mutex (void);
@@ -89,7 +89,7 @@ public:
   TAO_Named_RT_Mutex (const char *name);
 
   /// Returns the name of the mutex.
-  virtual const char *name (void) const;
+  virtual const char *name () const;
 
 protected:
 

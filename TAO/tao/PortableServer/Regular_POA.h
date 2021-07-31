@@ -47,16 +47,16 @@ public:
                    TAO_ORB_Core &orb_core,
                    TAO_Object_Adapter *object_adapter);
 
-  virtual ~TAO_Regular_POA (void);
+  virtual ~TAO_Regular_POA ();
 
-  PortableServer::POA_ptr the_parent (void);
+  PortableServer::POA_ptr the_parent ();
 
 protected:
-  virtual void remove_from_parent_i (void);
+  virtual void remove_from_parent_i ();
 
-  virtual CORBA::Boolean root (void) const;
+  virtual CORBA::Boolean root () const;
 
-  virtual char root_key_type (void);
+  virtual char root_key_type ();
 
   /// The parent of this POA, be aware that in case this pointer is nill,
   /// we are a parent. This can be achieved by deriving from this Regular_POA

@@ -18,12 +18,6 @@ public:
 
   virtual ~AST_Annotation_Decl ();
 
-  /// Narrowing
-  ///{
-  DEF_NARROW_FROM_DECL (AST_Annotation_Decl);
-  DEF_NARROW_FROM_SCOPE (AST_Annotation_Decl);
-  ///}
-
   /// AST Dumping
   virtual void dump (ACE_OSTREAM_TYPE &o);
 

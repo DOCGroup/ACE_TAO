@@ -69,7 +69,7 @@ public:
   Worker (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
 private:
 
@@ -90,7 +90,7 @@ public:
   SelfClient (CORBA::ORB_ptr orb, Simple_Server_ptr server, int niterations);
   // ctor
 
-  virtual int svc (void);
+  virtual int svc ();
   // The thread entry point.
 
 private:

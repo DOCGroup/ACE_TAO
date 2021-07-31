@@ -1,8 +1,8 @@
-README
-VERSION.txt
-AUTHORS
+usr/share/ace/README
+usr/share/ace/VERSION.txt
+usr/share/ace/AUTHORS
 docs/FAQ
-PROBLEM-REPORT-FORM
-THANKS
-VERSION.txt
-NEWS
+usr/share/ace/PROBLEM-REPORT-FORM
+usr/share/ace/THANKS
+usr/share/ace/VERSION.txt
+usr/share/ace/NEWS

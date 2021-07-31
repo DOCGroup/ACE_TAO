@@ -160,7 +160,7 @@ HTTP_Handler::svc (void)
 }
 
 const char *
-HTTP_Handler::filename (void) const
+HTTP_Handler::filename () const
 {
   return this->filename_;
 }

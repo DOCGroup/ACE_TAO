@@ -27,6 +27,7 @@
 #include "orbsvcs/Channel_Clients_T.h"
 #include "orbsvcs/Event/EC_Gateway_Sched.h"
 #include "orbsvcs/CosNamingC.h"
+#include <atomic>
 
 class Test_ECG;
 
@@ -67,7 +68,7 @@ public:
   virtual void disconnect_push_supplier (void);
   // The methods in the skeleton.
 
-  RtecEventComm::EventSourceID supplier_id (void) const;
+  RtecEventComm::EventSourceID supplier_id () const;
   // The supplier ID.
 
 private:
@@ -353,11 +354,11 @@ private:
   // to setup all the consumers.
   // The suppliers wait on the condition variable.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_suppliers_;
+  std::atomic<int> running_suppliers_;
   // keep track of how many suppliers are still running so we shutdown
   // at the right moment.
 
-  ACE_Atomic_Op<TAO_SYNCH_MUTEX,int> running_consumers_;
+  std::atomic<int> running_consumers_;
   // keep track of how many consumers are still running so we shutdown
   // at the right moment.
 

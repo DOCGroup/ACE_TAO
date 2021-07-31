@@ -74,7 +74,7 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename (void) const;
+  const ACE_TCHAR *filename () const;
 
   /// Close down the shared memory segment.
   virtual int close (void);
@@ -91,13 +91,13 @@ public:
   virtual int free (void *p);
 
   /// Return the size of the shared memory segment.
-  virtual size_t get_segment_size (void) const;
+  virtual size_t get_segment_size () const;
 
   /// Return the ID of the shared memory segment (i.e., an ACE_HANDLE).
-  virtual ACE_HANDLE get_id (void) const;
+  virtual ACE_HANDLE get_id () const;
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

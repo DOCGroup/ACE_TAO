@@ -11,21 +11,17 @@
 #include "ace/SOCK_SEQPACK_Acceptor.inl"
 #endif /* __ACE_INLINE__ */
 
-
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_SOCK_SEQPACK_Acceptor)
 
 // Do nothing routine for constructor.
-
-ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (void)
+ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor ()
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor");
 }
 
 // Performs the timed accept operation.
-
 int
 ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
                                         bool restart,
@@ -95,7 +91,6 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish (ACE_SOCK_SEQPACK_Association ne
 }
 
 // General purpose routine for accepting new connections.
-
 int
 ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association,
                            ACE_Addr *remote_addr,
@@ -150,7 +145,7 @@ ACE_SOCK_SEQPACK_Acceptor::accept (ACE_SOCK_SEQPACK_Association &new_association
 }
 
 void
-ACE_SOCK_SEQPACK_Acceptor::dump (void) const
+ACE_SOCK_SEQPACK_Acceptor::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::dump");
@@ -595,7 +590,7 @@ ACE_SOCK_SEQPACK_Acceptor::ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_
 }
 
 int
-ACE_SOCK_SEQPACK_Acceptor::close (void)
+ACE_SOCK_SEQPACK_Acceptor::close ()
 {
   return ACE_SOCK::close ();
 }

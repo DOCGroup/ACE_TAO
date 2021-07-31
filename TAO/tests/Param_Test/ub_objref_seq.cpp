@@ -43,7 +43,7 @@ Test_ObjRef_Sequence::~Test_ObjRef_Sequence (void)
 }
 
 const char *
-Test_ObjRef_Sequence::opname (void) const
+Test_ObjRef_Sequence::opname () const
 {
   return this->opname_;
 }
@@ -272,7 +272,7 @@ Test_ObjRef_Sequence::print_sequence (const Param_Test::Coffee_Mix &s)
         }
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "\ttype = <%s>\n",
+                  "\ttype = <%C>\n",
                   i,
                   c->_interface_repository_id ()));
     }

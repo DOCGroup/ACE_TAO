@@ -32,7 +32,7 @@ TAO_DII_Reply_Handler_var::~TAO_DII_Reply_Handler_var (void)
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::ptr (void) const
+TAO_DII_Reply_Handler_var::ptr () const
 {
   return this->ptr_;
 }
@@ -75,13 +75,13 @@ TAO_DII_Reply_Handler_var::operator TAO_DII_Reply_Handler_ptr &()
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::operator-> (void) const
+TAO_DII_Reply_Handler_var::operator-> () const
 {
   return this->ptr_;
 }
 
 ACE_INLINE TAO_DII_Reply_Handler_ptr
-TAO_DII_Reply_Handler_var::in (void) const
+TAO_DII_Reply_Handler_var::in () const
 {
   return this->ptr_;
 }

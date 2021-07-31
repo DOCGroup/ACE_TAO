@@ -37,12 +37,11 @@ class TAO_AV_Export TAO_AV_Default_Resource_Factory
   : public TAO_AV_Resource_Factory
 {
 public:
-
   /// Constructor.
-  TAO_AV_Default_Resource_Factory (void);
+  TAO_AV_Default_Resource_Factory ();
 
   /// Destructor.
-  virtual ~TAO_AV_Default_Resource_Factory (void);
+  virtual ~TAO_AV_Default_Resource_Factory ();
 
   /**
    * @name Service Configurator Hooks
@@ -50,7 +49,6 @@ public:
   //@{
   /// Dynamic linking hook
   virtual int init (int argc, ACE_TCHAR *argv[]);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

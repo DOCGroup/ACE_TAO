@@ -36,15 +36,15 @@ public:
   int parse_args (void);
 
   // GET methods.
-  ACE_INET_Addr *mult_session_addr (void) const;
+  ACE_INET_Addr *mult_session_addr () const;
 
-  ACE_INET_Addr *dest_addr (void) const;
+  ACE_INET_Addr *dest_addr () const;
 
-  u_short source_port (void) const;
+  u_short source_port () const;
 
-  ACE_Protocol_ID protocol (void) const;
+  ACE_Protocol_ID protocol () const;
 
-  int multicast_flag (void) const;
+  int multicast_flag () const;
 
 private:
 

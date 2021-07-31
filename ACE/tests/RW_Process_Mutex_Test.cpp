@@ -126,7 +126,7 @@ Child::any_overlaps (const Child &other) const
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-c n (child number) -p n (port number)] [-n mutex name]\n")));
@@ -310,7 +310,7 @@ reader (int num)
 }
 
 static void
-writer (void)
+writer ()
 {
   ACE_RW_Process_Mutex mutex (mutex_name.c_str ());
 

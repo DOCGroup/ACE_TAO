@@ -30,7 +30,7 @@ static const u_int n_processes = ACE_MAX_PROCESSES;
 
 // Explain usage and exit.
 static void
-print_usage_and_die (void)
+print_usage_and_die ()
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("usage: %n [-d (don't release mutex)] ")
@@ -65,7 +65,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 static void
-acquire_release (void)
+acquire_release ()
 {
   ACE_Process_Mutex mutex (mutex_name);
 

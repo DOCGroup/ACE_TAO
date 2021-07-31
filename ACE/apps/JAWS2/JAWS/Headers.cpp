@@ -32,19 +32,19 @@ JAWS_Header_Data::~JAWS_Header_Data (void)
 }
 
 const char *
-JAWS_Header_Data::header_name (void) const
+JAWS_Header_Data::header_name () const
 {
   return this->header_name_;
 }
 
 const char *
-JAWS_Header_Data::header_value (void) const
+JAWS_Header_Data::header_value () const
 {
   return this->header_value_;
 }
 
 int
-JAWS_Header_Data::header_type (void) const
+JAWS_Header_Data::header_type () const
 {
   return this->header_type_;
 }

@@ -94,7 +94,7 @@ public:
   /// @a size entries.
   ACE_Cache_Map_Manager (CACHING_STRATEGY &caching_strategy,
                          size_t size = ACE_DEFAULT_MAP_SIZE,
-                         ACE_Allocator *alloc = 0);
+                         ACE_Allocator *alloc = nullptr);
 
   /// Close down a <Cache_Map_Manager> and release dynamically allocated
   /// resources.
@@ -102,7 +102,7 @@ public:
 
   /// Initialize a cache with size @a length.
   int open (size_t length = ACE_DEFAULT_MAP_SIZE,
-            ACE_Allocator *alloc = 0);
+            ACE_Allocator *alloc = nullptr);
 
   /// Close down a cache and release dynamically allocated resources.
   int close (void);
@@ -190,13 +190,13 @@ public:
   int purge (void);
 
   /// Return the current size of the cache.
-  size_t current_size (void) const;
+  size_t current_size () const;
 
   /// Return the total size of the cache.
-  size_t total_size (void) const;
+  size_t total_size () const;
 
   /// Dumps the state of the object.
-  void dump (void) const;
+  void dump () const;
 
   // = STL styled iterator factory functions.
 
@@ -227,8 +227,8 @@ protected:
 
 private:
   // = Disallow these operations.
-  ACE_UNIMPLEMENTED_FUNC (void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
-  ACE_UNIMPLEMENTED_FUNC (ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &))
+  void operator= (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
+  ACE_Cache_Map_Manager (const ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMPL, CACHING_STRATEGY, ATTRIBUTES> &) = delete;
 };
 
 /**
@@ -274,7 +274,7 @@ public:
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.
-  ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
+  ACE_Reference_Pair<KEY, VALUE> operator* () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -295,7 +295,7 @@ public:
   IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -347,7 +347,7 @@ public:
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.
-  ACE_Reference_Pair<KEY, VALUE> operator* (void) const;
+  ACE_Reference_Pair<KEY, VALUE> operator* () const;
 
   // = STL styled iteration, compare, and reference functions.
 
@@ -368,7 +368,7 @@ public:
   REVERSE_IMPLEMENTATION &iterator_implementation (void);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

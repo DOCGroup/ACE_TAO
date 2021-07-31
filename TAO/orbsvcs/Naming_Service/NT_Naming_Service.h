@@ -45,7 +45,7 @@ public:
   virtual int handle_exception (ACE_HANDLE h);
 
   /// This is a virtual method inherited from ACE_NT_Service.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Initialize the objects argc_ and argv_ attributes values.
   virtual int init (int argc,

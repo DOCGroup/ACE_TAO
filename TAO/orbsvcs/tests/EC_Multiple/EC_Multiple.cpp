@@ -16,10 +16,10 @@
 #include "tao/ORB_Core.h"
 
 #include "ace/Get_Opt.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Sched_Params.h"
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_strings.h"
+#include <memory>
 
 #if defined (sun)
 # include <sys/lwp.h> /* for _lwp_self */
@@ -255,7 +255,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
       CosNaming::NamingContext_var naming_context =
         CosNaming::NamingContext::_narrow (naming_obj.in ());
 
-      auto_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
+      std::unique_ptr<POA_RtecScheduler::Scheduler> scheduler_impl;
       RtecScheduler::Scheduler_var scheduler;
 
       switch (this->scheduling_type_)
@@ -269,8 +269,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
 
         case Test_ECG::ss_local:
           {
-            auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-            scheduler_impl = auto_scheduler_impl;
+            std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
+            scheduler_impl = std::move(auto_scheduler_impl);
           }
           if (scheduler_impl.get () == 0)
             return -1;
@@ -287,12 +287,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_1)/sizeof (runtime_infos_1[0]),
                 runtime_infos_1);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_1_size,
                                             runtime_configs_1,
                                             runtime_infos_1_size,
                                             runtime_infos_1));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -307,12 +307,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_2)/sizeof (runtime_infos_2[0]),
                 runtime_infos_2);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_2_size,
                                             runtime_configs_2,
                                             runtime_infos_2_size,
                                             runtime_infos_2));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -327,12 +327,12 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                 sizeof (runtime_infos_3)/sizeof (runtime_infos_3[0]),
                 runtime_infos_3);
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl
                 (new ACE_Runtime_Scheduler (runtime_configs_3_size,
                                             runtime_configs_3,
                                             runtime_infos_3_size,
                                             runtime_infos_3));
-              scheduler_impl = auto_scheduler_impl;
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -344,8 +344,8 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
                           "Unknown name <%C> defaulting to "
                           "config scheduler\n", this->lcl_name_.c_str ()));
 
-              auto_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
-              scheduler_impl = auto_scheduler_impl;
+              std::unique_ptr<POA_RtecScheduler::Scheduler> auto_scheduler_impl (new ACE_Config_Scheduler);
+              scheduler_impl = std::move(auto_scheduler_impl);
 
               if (scheduler_impl.get () == 0)
                 return -1;
@@ -1402,7 +1402,7 @@ Test_Supplier::disconnect_push_consumer (void)
 {
 }
 
-int Test_Supplier::supplier_id (void) const
+int Test_Supplier::supplier_id () const
 {
   return this->supplier_id_;
 }

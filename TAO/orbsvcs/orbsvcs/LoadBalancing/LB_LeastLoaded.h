@@ -75,7 +75,6 @@ class TAO_LB_LeastLoaded
   : public virtual POA_CosLoadBalancing::Strategy
 {
 public:
-
   /// Constructor.
   TAO_LB_LeastLoaded (PortableServer::POA_ptr poa);
 
@@ -107,14 +106,12 @@ public:
   //@}
 
   /// Returns the default POA for this servant.
-  virtual PortableServer::POA_ptr _default_POA (
-    );
+  virtual PortableServer::POA_ptr _default_POA ();
 
   /// Initialize the LeastLoaded instance with the given properties.
   void init (const PortableGroup::Properties & props);
 
 protected:
-
   /// Destructor.
   ~TAO_LB_LeastLoaded (void);
 

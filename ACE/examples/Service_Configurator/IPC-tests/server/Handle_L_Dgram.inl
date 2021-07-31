@@ -77,7 +77,7 @@ Handle_L_Dgram::fini (void)
 }
 
 ACE_INLINE int
-Handle_L_Dgram::get_handle (void) const
+Handle_L_Dgram::get_handle () const
 {
   return this->ACE_LSOCK_Dgram::get_handle ();
 }

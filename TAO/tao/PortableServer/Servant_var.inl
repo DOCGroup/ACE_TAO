@@ -81,7 +81,7 @@ ACE_INLINE PortableServer::Servant_var<T>::operator void const * () const
 
 template <class T>
 ACE_INLINE T *
-PortableServer::Servant_var<T>::in (void) const
+PortableServer::Servant_var<T>::in () const
 {
   return this->ptr_;
 }

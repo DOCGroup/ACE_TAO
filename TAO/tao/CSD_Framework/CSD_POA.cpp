@@ -70,8 +70,7 @@ TAO_CSD_POA::new_POA (const String &name,
                              lock,
                              thread_lock,
                              orb_core,
-                             object_adapter
-                            ),
+                             object_adapter),
                     CORBA::NO_MEMORY ());
 
   TAO_CSD_Strategy_Repository *repo =

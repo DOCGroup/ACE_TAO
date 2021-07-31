@@ -36,7 +36,7 @@ private:
   public:
     // ctor
     ReactorTask(ACE_Event_Handler* handler) : reactor_(0), handler_(handler){}
-    virtual int svc (void);
+    virtual int svc ();
     // The thread entry point.
 
     ACE_Reactor* reactor_;

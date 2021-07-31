@@ -66,7 +66,7 @@ public:
   virtual void disconnect_structured_push_supplier (
   );
 
-  virtual const char * get_proxy_type_name (void) const;
+  virtual const char * get_proxy_type_name () const;
 
   virtual void configure(TAO_Notify_ConsumerAdmin & admin, CosNotifyChannelAdmin::ProxyID_out proxy_id);
 

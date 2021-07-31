@@ -326,7 +326,7 @@ const ACE_TCHAR * StubFaultNotifier::identity () const
  */
 void StubFaultNotifier::shutdown_i (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void StubFaultNotifier::push_structured_fault (

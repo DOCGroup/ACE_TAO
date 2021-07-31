@@ -44,7 +44,7 @@ while (my $argument = shift) {
 
 # Variables for command-line arguments to client and server
 # executables.
-$ns_multicast_port = $ns->RandomPort (); # Can not be 10000 on Chorus 4.0
+$ns_multicast_port = $ns->RandomPort ();
 $ns_orb_port = 2000 + $ns->RandomPort ();
 $ns_ssl_port = 4000 + $ns->RandomPort ();
 $nsiorfile = "ns.ior";

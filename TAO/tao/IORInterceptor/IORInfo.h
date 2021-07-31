@@ -113,10 +113,8 @@ protected:
   void check_validity (void);
 
 private:
-  /// Prevent copying through the copy constructor and the assignment
-  /// operator.
-  TAO_IORInfo (const TAO_IORInfo &);
-  void operator= (const TAO_IORInfo &);
+  TAO_IORInfo (const TAO_IORInfo &) = delete;
+  void operator= (const TAO_IORInfo &) = delete;
 
 private:
   /// Pointer to POA

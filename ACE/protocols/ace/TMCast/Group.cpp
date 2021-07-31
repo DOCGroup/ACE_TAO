@@ -121,7 +121,7 @@ namespace ACE_TMCast
       try
       {
         sock_.join (addr_);
-        auto_ptr<LinkListener> ll (new LinkListener (sock_, in_link_data_));
+        std::unique_ptr<LinkListener> ll (new LinkListener (sock_, in_link_data_));
 
         {
           AutoLock lock (mutex_);
@@ -469,7 +469,7 @@ namespace ACE_TMCast
     MessageQueue  in_recv_data_;
     MessageQueue  in_control_;
 
-    auto_ptr<Scheduler> scheduler_;
+    std::unique_ptr<Scheduler> scheduler_;
 
     MessageQueue& out_data_;
   };

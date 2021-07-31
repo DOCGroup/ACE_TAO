@@ -11,7 +11,6 @@
  */
 // ===================================================================
 
-
 #ifndef TAO_SCIOP_ACCEPTOR_H
 #define TAO_SCIOP_ACCEPTOR_H
 #include /**/ "ace/pre.h"
@@ -54,7 +53,7 @@ public:
 
   /// @@ Helper method for the implementation repository, should go
   ///    away
-  const ACE_INET_Addr& address (void) const;
+  const ACE_INET_Addr& address () const;
 
   /// Returns the array of endpoints in this acceptor
   const ACE_INET_Addr *endpoints (void);
@@ -109,7 +108,6 @@ public:
                               char *&host);
 
 protected:
-
   /**
    * Implement the common part of the open*() methods.  This method is
    * virtual to allow a derived class implementation to be invoked
@@ -204,7 +202,6 @@ protected:
   TAO_ORB_Core *orb_core_;
 
 private:
-
   /// the concrete acceptor, as a pointer to it's base class.
   TAO_SCIOP_BASE_ACCEPTOR base_acceptor_;
 
@@ -212,7 +209,6 @@ private:
   TAO_SCIOP_CREATION_STRATEGY *creation_strategy_;
   TAO_SCIOP_CONCURRENCY_STRATEGY *concurrency_strategy_;
   TAO_SCIOP_ACCEPT_STRATEGY *accept_strategy_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

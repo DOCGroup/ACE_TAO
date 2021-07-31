@@ -66,10 +66,10 @@ public:
   virtual int init (int argc, ACE_TCHAR *argv[]);
   // Initialize the IPC client.
 
-  virtual int fini (void);
+  virtual int fini ();
   // Destroy the IPC client.
 
-  virtual int svc (void);
+  virtual int svc ();
   // Run the svc.
 
 private:

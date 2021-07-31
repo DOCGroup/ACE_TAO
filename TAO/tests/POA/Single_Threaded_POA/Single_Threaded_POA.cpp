@@ -178,7 +178,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // In non-debug compiles, asserts will disappear.
       ACE_UNUSED_ARG (result);
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

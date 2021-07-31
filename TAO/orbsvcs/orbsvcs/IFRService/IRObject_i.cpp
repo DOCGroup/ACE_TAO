@@ -17,7 +17,7 @@ TAO_IRObject_i::TAO_IRObject_i (TAO_Repository_i *repo)
 {
 }
 
-TAO_IRObject_i::~TAO_IRObject_i (void)
+TAO_IRObject_i::~TAO_IRObject_i ()
 {
 }
 
@@ -36,7 +36,7 @@ TAO_IRObject_i::section_key (ACE_Configuration_Section_Key &key)
 }
 
 void
-TAO_IRObject_i::update_key (void)
+TAO_IRObject_i::update_key ()
 {
   TAO::Portable_Server::POA_Current_Impl *pc_impl =
     static_cast <TAO::Portable_Server::POA_Current_Impl *>

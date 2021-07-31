@@ -166,7 +166,7 @@ JAWS_IO_Handler::factory (void)
 }
 
 ACE_HANDLE
-JAWS_IO_Handler::handle (void) const
+JAWS_IO_Handler::handle () const
 {
   return this->handle_;
 }
@@ -354,7 +354,7 @@ JAWS_Asynch_Handler::act (const void *act_ref)
 
 #if 0
 ACE_HANDLE
-JAWS_Asynch_Handler::handle (void) const
+JAWS_Asynch_Handler::handle () const
 {
   return this->ioh_->handle ();
 }

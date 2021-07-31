@@ -48,8 +48,6 @@ namespace TAO
   class ObjectKey;
 }
 
-//@@ TAO_ACCEPTOR_SPL_INCLUDE_FORWARD_DECL_ADD_HOOK
-
 // ****************************************************************
 
 /// The TAO-specific OMG assigned value for the TAG_ORB_TYPE tagged
@@ -78,10 +76,10 @@ public:
   TAO_Acceptor (CORBA::ULong tag);
 
   /// Destructor
-  virtual ~TAO_Acceptor (void);
+  virtual ~TAO_Acceptor ();
 
   /// The tag, each concrete class will have a specific tag value.
-  CORBA::ULong tag (void) const;
+  CORBA::ULong tag () const;
 
   /// Set the amount of time to delay accepting new connections in the
   /// event that we encounter an error that may be transient.
@@ -106,7 +104,7 @@ public:
                             const char *options = 0) = 0;
 
   /// Closes the acceptor
-  virtual int close (void) = 0;
+  virtual int close () = 0;
 
   /**
    * Create the corresponding profile for this endpoint.
@@ -127,7 +125,7 @@ public:
    * is used for determining how many profiles will be generated
    * for this acceptor.
    */
-  virtual CORBA::ULong endpoint_count (void) = 0;
+  virtual CORBA::ULong endpoint_count () = 0;
 
   /**
    * This method fetches the @a key from the @a profile. Protocols that
@@ -148,23 +146,11 @@ public:
   /// into the reactor to try accepting again.
   int handle_expiration (ACE_Event_Handler* base_acceptor);
 
-  /*
-   * Hook to add public methods from derived acceptor classes onto
-   * this class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_PUBLIC_METHODS_ADD_HOOK
-
 private:
   /// IOP protocol tag.
   CORBA::ULong const tag_;
 
   time_t error_retry_delay_;
-
-  /*
-   * Hook to add data members from concrete acceptor implementations onto
-   * the base class.
-   */
-  //@@ TAO_ACCEPTOR_SPL_DATA_MEMBERS_ADD_HOOK
 };
 
 /// This is a drop-in replacement class for the ACE_Strategy_Acceptor.
@@ -187,7 +173,7 @@ public:
   {
   }
 
-  virtual int handle_accept_error (void)
+  virtual int handle_accept_error ()
   {
     return this->acceptor_->handle_accept_error (this);
   }
@@ -200,8 +186,6 @@ public:
 private:
   TAO_Acceptor* acceptor_;
 };
-
-//@@ TAO_ACCEPTOR_SPL_EXTERN_ADD_HOOK
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

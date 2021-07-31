@@ -165,7 +165,7 @@ class ACE_Export ACE_Flow_Spec
 {
 public:
   /// Default constructor.
-  ACE_Flow_Spec (void);
+  ACE_Flow_Spec ();
 
   /// Constructor that initializes all the fields.
   ACE_Flow_Spec (unsigned long token_rate,
@@ -180,61 +180,61 @@ public:
                  int priority);
 
   /// Get the token rate in bytes/sec.
-  unsigned long token_rate (void) const;
+  unsigned long token_rate () const;
 
   /// Set the token rate in bytes/sec.
   void token_rate (unsigned long tr);
 
   /// Get the token bucket size in bytes.
-  unsigned long token_bucket_size (void) const;
+  unsigned long token_bucket_size () const;
 
   /// Set the token bucket size in bytes.
   void token_bucket_size (unsigned long tbs);
 
   /// Get the PeakBandwidth in bytes/sec.
-  unsigned long peak_bandwidth (void) const;
+  unsigned long peak_bandwidth () const;
 
   /// Set the PeakBandwidth in bytes/sec.
   void peak_bandwidth (unsigned long pb);
 
   /// Get the latency in microseconds.
-  unsigned long latency (void) const;
+  unsigned long latency () const;
 
   /// Set the latency in microseconds.
   void latency (unsigned long l);
 
   /// Get the delay variation in microseconds.
-  unsigned long delay_variation (void) const;
+  unsigned long delay_variation () const;
 
   /// Set the delay variation in microseconds.
   void delay_variation (unsigned long dv);
 
   /// Get the service type.
-  ACE_SERVICE_TYPE service_type (void) const;
+  ACE_SERVICE_TYPE service_type () const;
 
   /// Set the service type.
   void service_type (ACE_SERVICE_TYPE st);
 
   /// Get the maximum SDU size in bytes.
-  unsigned long max_sdu_size (void) const;
+  unsigned long max_sdu_size () const;
 
   /// Set the maximum SDU size in bytes.
   void max_sdu_size (unsigned long mss);
 
   /// Get the minimum policed size in bytes.
-  unsigned long minimum_policed_size (void) const;
+  unsigned long minimum_policed_size () const;
 
   /// Set the minimum policed size in bytes.
   void minimum_policed_size (unsigned long mps);
 
   /// Get the time-to-live.
-  int ttl (void) const;
+  int ttl () const;
 
   /// Set the time-to-live.
   void ttl (int t);
 
   /// Get the priority.
-  int priority (void) const;
+  int priority () const;
 
   /// Set the priority.
   void priority (int p);
@@ -270,22 +270,22 @@ class ACE_Export ACE_QoS
 {
 public:
   /// Constructor
-  ACE_QoS (void);
+  ACE_QoS ();
 
   /// Get the flow spec for data sending.
-  ACE_Flow_Spec *sending_flowspec (void) const;
+  ACE_Flow_Spec *sending_flowspec () const;
 
   /// Set the flow spec for data sending.
   void sending_flowspec (ACE_Flow_Spec *fs);
 
   /// Get the flow spec for data receiving.
-  ACE_Flow_Spec *receiving_flowspec (void) const;
+  ACE_Flow_Spec *receiving_flowspec () const;
 
   /// Set the flow spec for data receiving.
   void receiving_flowspec (ACE_Flow_Spec *fs);
 
   /// Get the provider specific information.
-  iovec provider_specific (void) const;
+  iovec provider_specific () const;
 
   /// Set the provider specific information.
   void provider_specific (const iovec &ps);
@@ -327,31 +327,31 @@ public:
                   unsigned long flags = 0);
 
   /// Get caller data.
-  iovec *caller_data (void) const;
+  iovec *caller_data () const;
 
   /// Set caller data.
   void caller_data (iovec *);
 
   /// Get callee data.
-  iovec *callee_data (void) const;
+  iovec *callee_data () const;
 
   /// Set callee data.
   void callee_data (iovec *);
 
   /// Get socket qos.
-  ACE_QoS *socket_qos (void) const;
+  ACE_QoS *socket_qos () const;
 
   /// Set socket qos.
   void socket_qos (ACE_QoS *);
 
   /// Get group socket qos.
-  ACE_QoS *group_socket_qos (void) const;
+  ACE_QoS *group_socket_qos () const;
 
   /// Set group socket qos.
   void group_socket_qos (ACE_QoS *);
 
   /// Get flags.
-  unsigned long flags (void) const;
+  unsigned long flags () const;
 
   /// Set flags.
   void flags (unsigned long);
@@ -412,13 +412,13 @@ public:
                          unsigned long callback_data = 0);
 
   /// Get QoS condition callback.
-  ACE_QOS_CONDITION_FUNC qos_condition_callback (void) const;
+  ACE_QOS_CONDITION_FUNC qos_condition_callback () const;
 
   /// Set QoS condition callback.
   void qos_condition_callback (ACE_QOS_CONDITION_FUNC qcc);
 
   /// Get callback data.
-  unsigned long callback_data (void) const;
+  unsigned long callback_data () const;
 
   /// Set callback data.
   void callback_data (unsigned long cd);

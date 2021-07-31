@@ -20,5 +20,5 @@ void
 Sleep_Service::shutdown (void)
 {
   ACE_DEBUG ((LM_DEBUG, "Shutting down the ORB\n"));
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

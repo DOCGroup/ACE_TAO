@@ -17,7 +17,7 @@ public:
   // Destructor...
   int shutdown (void);
 
-  virtual int svc (void);
+  virtual int svc ();
 
   virtual int put (Test::Echo_ptr echoptr);
 

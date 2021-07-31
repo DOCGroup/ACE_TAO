@@ -152,7 +152,7 @@ public:
                                  const ACE_NS_WString &pattern) = 0;
 
   /// Dump the state of the object
-  virtual void dump (void) const = 0;
+  virtual void dump () const = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

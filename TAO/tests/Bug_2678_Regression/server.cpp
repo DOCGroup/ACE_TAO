@@ -22,7 +22,7 @@ Test_impl::Test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 void
 Test_impl::shutdown(void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 AnySeq *Test_impl::RunTest(const AnySeq &params)

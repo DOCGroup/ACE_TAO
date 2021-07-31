@@ -138,5 +138,5 @@ Current_Test_Impl::shutdown (void)
                 ACE_TEXT ("(%P|%t) server - shutting down.\n")));
   }
 
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }

@@ -55,7 +55,7 @@ namespace PortableServer
     /**
      * This destructor doesn't throw exceptions.
      */
-    ~Servant_var (void);
+    ~Servant_var ();
 
     /// Assignment operator.  Assumes ownership of @c p.
     Servant_var<T> & operator= (T * p);

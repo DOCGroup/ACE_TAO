@@ -35,10 +35,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * platforms.  When porting ACE to a new platform, this class is
  * the place to focus on.  Once this file is ported to a new
  * platform, pretty much everything else comes for "free."  See
- * <www.cs.wustl.edu/~schmidt/ACE_wrappers/etc/ACE-porting.html>
- * for instructions on porting ACE.  Please see the README file
- * in this directory for complete information on the meaning of
- * the various macros.
+ * docs/ACE-porting.html for instructions on porting ACE.
+ * Please see the README file in this directory for complete
+ * information on the meaning of the various macros.
  */
 namespace ACE_OS
 {

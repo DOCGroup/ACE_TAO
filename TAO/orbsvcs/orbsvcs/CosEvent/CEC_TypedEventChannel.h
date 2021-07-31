@@ -147,19 +147,19 @@ public:
   virtual void shutdown (void);
 
   /// Access the dispatching module....
-  TAO_CEC_Dispatching* dispatching (void) const;
+  TAO_CEC_Dispatching* dispatching () const;
 
   /// Access the consumer admin implementation.
-  TAO_CEC_TypedConsumerAdmin* typed_consumer_admin (void) const;
+  TAO_CEC_TypedConsumerAdmin* typed_consumer_admin () const;
 
   /// Access the supplier admin implementation.
-  TAO_CEC_TypedSupplierAdmin* typed_supplier_admin (void) const;
+  TAO_CEC_TypedSupplierAdmin* typed_supplier_admin () const;
 
   /// Access the consumer control strategy.
-  TAO_CEC_ConsumerControl* consumer_control (void) const;
+  TAO_CEC_ConsumerControl* consumer_control () const;
 
   /// Access the supplier control strategy.
-  TAO_CEC_SupplierControl* supplier_control (void) const;
+  TAO_CEC_SupplierControl* supplier_control () const;
 
   // = The factory methods, they delegate on the CEC_Factory.
   /// Create and destroy a ProxyPushSupplier
@@ -204,14 +204,14 @@ public:
   virtual void disconnected (TAO_CEC_ProxyPushSupplier*);
 
   /// Can the consumers reconnect to the EC?
-  int consumer_reconnect (void) const;
+  int consumer_reconnect () const;
 
   /// Can the suppliers reconnect to the EC?
-  int supplier_reconnect (void) const;
+  int supplier_reconnect () const;
 
   /// Should we send callback disconnect messages when a proxy is
   /// disconnected by the client
-  int disconnect_callbacks (void) const;
+  int disconnect_callbacks () const;
 
   // Hash map which will operate as a IFR cache for the Supported Interface's operations and parameters
   typedef ACE_Hash_Map_Manager_Ex<const char *, TAO_CEC_Operation_Params *, ACE_Hash<const char *>, ACE_Equal_To<const char *>, ACE_Null_Mutex> InterfaceDescription;
@@ -227,13 +227,13 @@ public:
   int supplier_register_supported_interface (const char *supported_interface);
 
   /// Function to return the supported_interface_
-  const char * supported_interface (void) const;
+  const char * supported_interface () const;
 
   /// Function to return the base_interfaces_
   CORBA::RepositoryId base_interfaces (CORBA::ULong index) const;
 
   /// Function to return the number of base_interfaces_
-  CORBA::ULong number_of_base_interfaces (void) const;
+  CORBA::ULong number_of_base_interfaces () const;
 
   /// Function populates the NVList from the provide param information
   virtual void create_operation_list (TAO_CEC_Operation_Params *oper_params,

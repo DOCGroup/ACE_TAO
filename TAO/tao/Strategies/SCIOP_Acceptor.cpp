@@ -10,6 +10,7 @@
 #include "tao/Transport.h"
 #include "tao/CDR.h"
 #include "ace/os_include/os_netdb.h"
+#include <cstring>
 
 #if !defined(__ACE_INLINE__)
 #include "tao/Strategies/SCIOP_Acceptor.inl"
@@ -190,7 +191,7 @@ TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
       // this code by comparing the IP address instead.  That would
       // trigger the following bug:
       //
-      // http://deuce.doc.wustl.edu/bugzilla/show_bug.cgi?id=1220
+      // http://bugzilla.dre.vanderbilt.edu/show_bug.cgi?id=1220
       //
       if (endp->port() == this->addrs_[i].get_port_number()
           && ACE_OS::strcmp(endp->host(), this->hosts_[i]) == 0)
@@ -237,7 +238,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_Multihomed_INET_Addr addr;
 
-  const char *port_separator_loc = ACE_OS::strchr (address, ':');
+  const char *port_separator_loc = std::strchr (address, ':');
   ACE_Auto_Basic_Array_Ptr<char> tmp_host_auto;
 
   if (port_separator_loc == address)
@@ -304,7 +305,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     // in open_i.
 
     // Set the length of the hostname
-    hostname_length = ACE_OS::strlen(address);
+    hostname_length = std::strlen(address);
   }
 
   ACE_NEW_RETURN(tmp_host, char[hostname_length + 1], -1);
@@ -525,12 +526,9 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
     {
       ACE_Multihomed_INET_Addr a(addr);
 
-      int found_a_port = 0;
-      ACE_UINT32 last_port = requested_port + this->port_span_ - 1;
-      if (last_port > ACE_MAX_DEFAULT_PORT)
-        {
-          last_port = ACE_MAX_DEFAULT_PORT;
-        }
+      bool found_a_port = false;
+      ACE_UINT32 const last_port = ACE_MIN (requested_port + this->port_span_ - 1,
+                                            ACE_MAX_DEFAULT_PORT);
 
       for (ACE_UINT32 p = requested_port; p <= last_port; p++)
         {
@@ -547,13 +545,13 @@ TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
                                          this->accept_strategy_,
                                          this->concurrency_strategy_) != -1)
             {
-              found_a_port = 1;
+              found_a_port = true;
               break;
             }
         }
 
       // Now, if we couldn't locate a port, we punt
-      if (! found_a_port)
+      if (!found_a_port)
         {
           if (TAO_debug_level > 0)
             TAOLIB_DEBUG ((LM_DEBUG,
@@ -806,7 +804,7 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
 {
 
   // Make a copy of hostnames string
-  int const hostnames_string_length = ACE_OS::strlen(hostnames) + 1;
+  int const hostnames_string_length = std::strlen(hostnames) + 1;
   char* hostnames_copy = 0;
   ACE_NEW_RETURN (hostnames_copy,
                   char[hostnames_string_length],
@@ -1000,7 +998,7 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
             }
           else if (name == "portspan")
             {
-              int range = static_cast<int> (ACE_OS::atoi (value.c_str ()));
+              int const range = ACE_OS::atoi (value.c_str ());
               // @@ What's the lower bound on the range?  zero, or one?
               if (range < 1 || range > ACE_MAX_DEFAULT_PORT)
                 TAOLIB_ERROR_RETURN ((LM_ERROR,

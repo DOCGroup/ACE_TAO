@@ -74,7 +74,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (
   Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::DSRT_Dispatcher_Auto_Ptr
     tmp( Kokyu::DSRT_Dispatcher_Factory<FP_Scheduler_Traits>::
          create_DSRT_dispatcher (config) );
-  kokyu_dispatcher_ = tmp;
+  kokyu_dispatcher_ = std::move(tmp);
 
   CORBA::Object_var object =
     orb->resolve_initial_references ("RTScheduler_Current");

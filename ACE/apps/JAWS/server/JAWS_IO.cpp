@@ -44,7 +44,7 @@ JAWS_Synch_IO::~JAWS_Synch_IO (void)
 }
 
 ACE_HANDLE
-JAWS_Synch_IO::handle (void) const
+JAWS_Synch_IO::handle () const
 {
   return this->handle_;
 }
@@ -429,7 +429,7 @@ JAWS_Synch_IO_No_Cache::~JAWS_Synch_IO_No_Cache (void)
 }
 
 ACE_HANDLE
-JAWS_Synch_IO_No_Cache::handle (void) const
+JAWS_Synch_IO_No_Cache::handle () const
 {
   return this->handle_;
 }

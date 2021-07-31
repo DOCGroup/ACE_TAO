@@ -18,7 +18,7 @@ PingObject_i::pong (void)
 void
 PingObject_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 PortableServer::POA_ptr

@@ -1,9 +1,6 @@
-// Stream.cpp
 #ifndef ACE_STREAM_CPP
 #define ACE_STREAM_CPP
 
-
-//#include "ace/Module.h"
 #include "ace/Stream.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
@@ -24,7 +21,7 @@ ACE_ALLOC_HOOK_DEFINE_Tyc(ACE_Stream)
 // Give some idea of what the heck is going on in a stream!
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> void
-ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::dump (void) const
+ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Stream<ACE_SYNCH_USE, TIME_POLICY>::dump");

@@ -24,7 +24,7 @@ class be_visitor_field_ch : public be_visitor_decl
 {
 public:
   be_visitor_field_ch (be_visitor_context *ctx);
-  ~be_visitor_field_ch (void);
+  ~be_visitor_field_ch ();
 
   virtual int visit_field (be_field *node);
   virtual int visit_array (be_array *node);

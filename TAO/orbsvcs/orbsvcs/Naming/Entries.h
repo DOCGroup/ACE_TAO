@@ -81,7 +81,7 @@ class TAO_Naming_Serv_Export TAO_ExtId
 {
 public:
   /// Constructor.
-  TAO_ExtId (void);
+  TAO_ExtId ();
 
   /// Constructor.
   TAO_ExtId (const char *id,
@@ -91,7 +91,7 @@ public:
   TAO_ExtId (const TAO_ExtId & rhs);
 
   /// Destructor.
-  ~TAO_ExtId (void);
+  ~TAO_ExtId ();
 
   // = Assignment and comparison operators.
 
@@ -106,7 +106,7 @@ public:
 
   /// <hash> function is required in order for this class to be usable by
   /// ACE_Hash_Map_Manager.
-  u_long hash (void) const;
+  u_long hash () const;
 
   // = Data members.
 

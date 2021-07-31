@@ -93,11 +93,11 @@ public:
   virtual int protect (void *addr, size_t len, int prot = PROT_RDWR);
 
   /// Dump the state of an object.
-  virtual void dump (void) const;
+  virtual void dump () const;
 
   /// Return the base address of this memory pool, 0 if base_addr
   /// never changes.
-  virtual void *base_addr (void) const;
+  virtual void *base_addr () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

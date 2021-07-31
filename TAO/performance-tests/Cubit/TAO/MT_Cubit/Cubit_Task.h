@@ -41,7 +41,7 @@ public:
               u_int task_id);
 
   /// Active Object entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Gets the ior of the cubit servant in this task.
   char* get_servant_ior (u_int index);

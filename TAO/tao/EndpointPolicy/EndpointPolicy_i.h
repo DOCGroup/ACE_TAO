@@ -53,7 +53,7 @@ public:
   virtual ~TAO_EndpointPolicy_i ();
 
   /// Returns a copy of this>
-  virtual TAO_EndpointPolicy_i *clone (void) const;
+  virtual TAO_EndpointPolicy_i *clone () const;
 
   // = The EndpointPolicy::Policy methods
 
@@ -64,7 +64,7 @@ public:
   virtual void destroy (void);
 
   // Return the cached policy type for this policy.
-  virtual TAO_Cached_Policy_Type _tao_cached_type (void) const;
+  virtual TAO_Cached_Policy_Type _tao_cached_type () const;
 
   virtual EndpointPolicy::EndpointList * value (void);
 

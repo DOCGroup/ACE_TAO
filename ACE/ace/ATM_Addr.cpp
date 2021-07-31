@@ -119,7 +119,7 @@ ACE_ATM_Addr::~ACE_ATM_Addr (void)
 // Return the address.
 
 void *
-ACE_ATM_Addr::get_addr (void) const
+ACE_ATM_Addr::get_addr () const
 {
   ACE_TRACE ("ACE_ATM_Addr::get_addr");
   return (void *) &this->atm_addr_;
@@ -434,7 +434,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
 }
 
 const ACE_TCHAR *
-ACE_ATM_Addr::addr_to_string (void) const
+ACE_ATM_Addr::addr_to_string () const
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
 
@@ -496,7 +496,7 @@ ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
 }
 
 void
-ACE_ATM_Addr::dump (void) const
+ACE_ATM_Addr::dump () const
 {
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_ATM_Addr::dump");

@@ -522,13 +522,13 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::~JAWS_Cache_Proxy (void)
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER> DATA *
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::data () const
 {
   return this->object_ ? (DATA *) this->object_->data () : 0;
 }
 
 template <class KEY, class DATA, class CACHE_MANAGER>
-JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * (void) const
+JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>::operator DATA * () const
 {
   return this->data ();
 }

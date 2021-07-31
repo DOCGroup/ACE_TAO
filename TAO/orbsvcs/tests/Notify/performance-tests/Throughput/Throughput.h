@@ -41,7 +41,7 @@ public:
   void orb (CORBA::ORB_ptr orb);
 
   /// The thread entry point.
-  virtual int svc (void);
+  virtual int svc ();
 
   int done_;
 
@@ -103,7 +103,7 @@ public:
   virtual ~Throughput_StructuredPushSupplier ();
 
   // = The ACE_Task_Base methods....
-  virtual int svc (void);
+  virtual int svc ();
 
   /// Accumulate the throughput statistics into <throughput>
   void accumulate_into (ACE_Throughput_Stats &throughput) const;

@@ -6,6 +6,7 @@
 #include "tao/IIOP_Profile.h"
 #include "tao/MProfile.h"
 #include "tao/CDR.h"
+#include <cstring>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -165,7 +166,7 @@ TAO_IORManip_IIOP_Filter::fill_profile_info (
       char host[host_length] = "";
       if (profile->endpoint ()->addr_to_string (host, host_length) != -1)
         {
-          char* delim = ACE_OS::strchr (host, ':');
+          char* delim = std::strchr (host, ':');
           if (delim != 0)
             {
               *delim = '\0';

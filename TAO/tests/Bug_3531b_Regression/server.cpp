@@ -10,6 +10,7 @@
 #include "ace/Task_T.h"
 #include "tao/TAO_Export.h"
 #include "ace/TP_Reactor.h"
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -75,7 +76,7 @@ public:
     : shutdown_ (false)
   {}
 
-  virtual int svc (void);
+  virtual int svc ();
   virtual int close (u_long = 0);
   virtual int put (ACE_Message_Block * mblk, ACE_Time_Value * tv = 0);
   int process_cmd (void);
@@ -200,13 +201,9 @@ public:
   Test_Resource_Factory ()
   {}
 
-  virtual ACE_Reactor_Impl* allocate_reactor_impl (void) const
+  virtual ACE_Reactor_Impl* allocate_reactor_impl () const
   {
     ACE_Reactor_Impl *impl = 0;
-    /*
-     * Hook to specialize TAO's reactor implementation.
-     */
-  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_START
     ACE_NEW_RETURN (impl,
                     Test_Reactor (ACE::max_handles (),
                                     1,
@@ -215,14 +212,13 @@ public:
                                     this->reactor_mask_signals_,
                                     ACE_Select_Reactor_Token::LIFO),
                     0);
-  //@@ TAO_REACTOR_SPL_COMMENT_HOOK_END
     return impl;
   }
 
 private:
 };
 
-// force export flag otherwise Windoze will complain
+// force export flag otherwise Windows will complain
 #define TAO_Test_Export ACE_Proper_Export_Flag
 
 ACE_FACTORY_DEFINE (TAO_Test, Test_Resource_Factory)
@@ -252,12 +248,12 @@ public:
   }
 
 protected:
-  virtual bool successful_i (void) const
+  virtual bool successful_i () const
   {
     return this->state_ == TAO_LF_Event::LFS_SUCCESS;
   }
 
-  virtual bool error_detected_i (void) const
+  virtual bool error_detected_i () const
   {
     return (this->state_ == TAO_LF_Event::LFS_FAILURE
             || this->state_ == TAO_LF_Event::LFS_TIMEOUT
@@ -268,7 +264,7 @@ protected:
     this->state_ = new_state;
   }
 
-  virtual bool is_state_final (void) const
+  virtual bool is_state_final () const
   {
     if (this->state_ == TAO_LF_Event::LFS_TIMEOUT ||
         this->state_ == TAO_LF_Event::LFS_FAILURE)
@@ -519,7 +515,7 @@ void Test_1 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                              lf_strategy,
                                              0));
@@ -540,12 +536,12 @@ void Test_2 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 2, 0, true);
@@ -568,7 +564,7 @@ void Test_3 (TAO_ORB_Core* orb_core)
 
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt1 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);
@@ -576,7 +572,7 @@ void Test_3 (TAO_ORB_Core* orb_core)
   leader_follower.set_upcall_thread ();
   TSS_ASSERT (tss, leader_follower, 0, 0, false);
 
-  std::auto_ptr<TAO_LF_Event_Loop_Thread_Helper>
+  std::unique_ptr<TAO_LF_Event_Loop_Thread_Helper>
     elt2 (new TAO_LF_Event_Loop_Thread_Helper(leader_follower,
                                               lf_strategy, 0));
   TSS_ASSERT (tss, leader_follower, 1, 0, true);

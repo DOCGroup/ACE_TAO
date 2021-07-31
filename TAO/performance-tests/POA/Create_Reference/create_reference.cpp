@@ -170,7 +170,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1  // POA::create_reference_with_id
                             );
 
-      root_poa->destroy (1, 1);
+      root_poa->destroy (true, true);
 
       orb->destroy ();
     }

@@ -34,7 +34,7 @@ namespace TAO
     Storable_File_Guard (bool redundant,
                          bool use_backup = Storable_Base::use_backup_default);
 
-    virtual ~Storable_File_Guard () ACE_NOEXCEPT_FALSE;
+    virtual ~Storable_File_Guard () noexcept(false);
 
     /// Releases the lock, closes the file, and deletes the I/O stream.
     /// Destructors of derived classes should call this this will

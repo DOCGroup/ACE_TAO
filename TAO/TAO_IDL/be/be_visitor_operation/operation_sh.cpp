@@ -16,7 +16,7 @@ be_visitor_operation_sh::be_visitor_operation_sh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_operation_sh::~be_visitor_operation_sh (void)
+be_visitor_operation_sh::~be_visitor_operation_sh ()
 {
 }
 
@@ -38,7 +38,7 @@ be_visitor_operation_sh::visit_operation (be_operation *node)
   *os << "virtual ";
 
   // STEP I: generate the return type.
-  be_type *bt = be_type::narrow_from_decl (node->return_type ());
+  be_type *bt = dynamic_cast<be_type*> (node->return_type ());
 
   if (!bt)
     {

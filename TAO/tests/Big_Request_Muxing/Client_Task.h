@@ -30,8 +30,8 @@ public:
   /// Thread entry point
   int svc (void);
 
-  bool done(void) const;
-  const char *ID (void) const;
+  bool done() const;
+  const char *ID () const;
 
 private:
   /// Make sure that all threads have connections available to

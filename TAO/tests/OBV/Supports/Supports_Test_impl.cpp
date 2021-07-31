@@ -158,7 +158,7 @@ test_impl::start (void)
 void
 test_impl::finish (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 

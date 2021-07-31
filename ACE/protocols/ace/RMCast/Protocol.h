@@ -138,7 +138,7 @@ namespace ACE_RMCast
 
   private:
     Profile&
-    operator= (Profile const&);
+    operator= (Profile const&) = delete;
 
   public:
     u16

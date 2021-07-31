@@ -29,7 +29,7 @@ Test_Short::~Test_Short (void)
 }
 
 const char *
-Test_Short::opname (void) const
+Test_Short::opname () const
 {
   return this->opname_;
 }

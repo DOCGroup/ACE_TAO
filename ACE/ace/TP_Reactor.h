@@ -54,7 +54,7 @@ public:
             ACE_Reactor_Mask mask,
             ACE_EH_PTMF callback);
 
-  bool dispatch (void) const;
+  bool dispatch () const;
 
   ACE_HANDLE handle_;
   ACE_Event_Handler *event_handler_;
@@ -66,9 +66,10 @@ public:
 private:
   bool dispatch_;
 
-  // Disallow copying and assignment.
-  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &);
-  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &);
+  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info &&) = delete;
+  ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info &&) = delete;
 };
 
 
@@ -114,13 +115,11 @@ public:
   int acquire_token (ACE_Time_Value *max_wait_time = 0);
 
 private:
-
-  // Disallow default construction.
-  ACE_TP_Token_Guard (void);
-
-  // Disallow copying and assignment.
-  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &);
-  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &);
+  ACE_TP_Token_Guard () = delete;
+  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;
+  ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
 private:
 
@@ -301,9 +300,8 @@ private:
   int post_process_socket_event (ACE_EH_Dispatch_Info &dispatch_info,int status);
 
 private:
-  /// Deny access since member-wise won't work...
-  ACE_TP_Reactor (const ACE_TP_Reactor &);
-  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &);
+  ACE_TP_Reactor (const ACE_TP_Reactor &) = delete;
+  ACE_TP_Reactor &operator = (const ACE_TP_Reactor &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

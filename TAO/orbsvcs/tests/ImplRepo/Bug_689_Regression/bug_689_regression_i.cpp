@@ -12,7 +12,7 @@ bug_689_regression_i::~bug_689_regression_i (void)
 void
 bug_689_regression_i::shutdown (void)
 {
-  this->orb_->shutdown (0);
+  this->orb_->shutdown (false);
 }
 
 void bug_689_regression_i::noop (void)

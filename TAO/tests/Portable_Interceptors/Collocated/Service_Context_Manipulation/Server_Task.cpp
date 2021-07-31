@@ -73,7 +73,7 @@ Server_Task::svc (void)
      ACE_OS::nanosleep (&ts);
      ACE_DEBUG ((LM_DEBUG, "(%P|%t) server task - event loop finished\n"));
 
-     root_poa->destroy (1, 1);
+     root_poa->destroy (true, true);
 
      this->sorb_->destroy ();
    }

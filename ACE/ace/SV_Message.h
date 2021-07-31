@@ -37,13 +37,13 @@ public:
   ~ACE_SV_Message (void);
 
   /// Get the message type.
-  long type (void) const;
+  long type () const;
 
   /// Set the message type.
   void type (long);
 
   /// Dump the state of an object.
-  void dump (void) const;
+  void dump () const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
