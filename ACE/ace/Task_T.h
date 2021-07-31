@@ -124,7 +124,7 @@ public: // Should be protected:
 
   // = Pointers to next ACE_Task_Base (if ACE is part of an ACE_Stream).
   /// Get next Task pointer.
-  ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next (void);
+  virtual ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *next (void);
 
   /// Set next Task pointer.
   void next (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *);
