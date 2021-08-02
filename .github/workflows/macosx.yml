@@ -6,6 +6,10 @@ on:
   schedule:
     - cron: '0 1 * * SUN'
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
   build:
     strategy:
