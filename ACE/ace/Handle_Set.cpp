@@ -1,4 +1,3 @@
-// Handle_Set.cpp
 #include "ace/Handle_Set.h"
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
