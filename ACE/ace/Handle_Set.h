@@ -113,6 +113,8 @@ public:
   fd_set *fdset (void);
 
 #if defined (ACE_HAS_BIG_FD_SET)
+  ACE_Handle_Set (const ACE_Handle_Set &other);
+
   /// Assignment operator optimizes for cases where <size_> == 0.
   ACE_Handle_Set & operator= (const ACE_Handle_Set &);
 #endif /* ACE_HAS_BIG_FD_SET */
