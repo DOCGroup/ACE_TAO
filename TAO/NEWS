@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN TAO-3.0.3 and TAO-3.0.4
+====================================================
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.2 and TAO-3.0.3
 ====================================================
 
@@ -8,7 +11,7 @@ USER VISIBLE CHANGES BETWEEN TAO-3.0.2 and TAO-3.0.3
 
 . Added the `tao/idl_features.h` header file for getting the IDL features
   supported by TAO_IDL. See the file for example usage
-  
+
 . TAO_IDL: Fix empty case evaluation on unions with enum discriminators
 
 USER VISIBLE CHANGES BETWEEN TAO-3.0.1 and TAO-3.0.2
