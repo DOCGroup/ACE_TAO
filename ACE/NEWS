@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
@@ -12,7 +15,7 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 
 . Various cleanup
 
-. Fix SocketConnect::ip_check() Concurrency and Too-Early Request Issues for Windows  
+. Fix SocketConnect::ip_check() Concurrency and Too-Early Request Issues for Windows
 
 . Make install: use relative links in prefix/share
 
