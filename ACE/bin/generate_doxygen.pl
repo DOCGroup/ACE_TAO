@@ -147,7 +147,7 @@ sub generate_doxy_files {
 
   my $KIT_path = $KIT;
   my $translate_paths =
-    ($KIT eq 'TAO' && !same_dir($TAO_ROOT, $ACE_ROOT, 'TAO'))));
+    ($KIT eq 'TAO' && !same_dir($TAO_ROOT, $ACE_ROOT, 'TAO'));
 
   foreach my $i (@DOCS) {
     if ($is_release) {
