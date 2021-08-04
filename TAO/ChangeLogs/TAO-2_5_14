@@ -1,0 +1,192 @@
+commit 8f7fa3d6e2ae2e10690e8d54197ff716d5344d77
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 2 16:00:46 2021 +0200
+
+    Update NEWS
+
+commit 648d530d787acf85b9b85f0e30f3ed114ff10294
+Merge: 4a2d6b0bd3f e3bafb9e3cb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 23 18:11:40 2021 -0500
+
+    Merge pull request #1634 from iguessthislldo/igtd/idl-features6
+    
+    [ACE6] Fix Coverity Issue
+
+commit e3bafb9e3cbedcdd7d4c6fb48e61101b92b390fe
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jul 23 11:55:34 2021 -0500
+
+    Fix Coverity Issue
+
+commit 4a2d6b0bd3f50e7628fbed8ce58eb520685b578d
+Merge: ac9ef6c7bb4 dc2f407fabf
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 18:34:10 2021 -0500
+
+    Merge pull request #1630 from mitza-oci/taoidlfe
+    
+    [ACE6] Updated tao_idl_fe base project
+
+commit d082b97a344ac018d29ca2696bdf265a44148160
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 15:24:09 2021 -0500
+
+    Refactor DRV_cpp_putarg to Avoid ACE_TCHAR
+
+commit dc2f407fabf64f80154b6b61bd7db6fb54b8f2c5
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 22 15:00:34 2021 -0500
+
+    Updated tao_idl_fe base project.
+    
+    Projects that use tao_idl_fe need TAO_ROOT on preprocessor include
+    path, due to the recent change to idl_defines.h including
+    idl_features.h from tao.
+
+commit 5fb27b193352b656f91a609b8d57806b536cd9ab
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 22 02:39:57 2021 -0500
+
+    Escape Double Quotes in tao_idl PP Args on Windows
+    
+    This is a backport of https://github.com/DOCGroup/ACE_TAO/pull/1627
+
+commit 8620f1886211103da60154c16e55149f1b9862ad
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Jul 20 20:39:18 2021 -0500
+
+    Header File for TAO_IDL Supported IDL Features
+    
+    Backport of https://github.com/DOCGroup/ACE_TAO/pull/1621
+    
+    Get information about what the IDL compiler is capable of, similarly to
+    the "version" standard header in C++.
+    
+    In C++ it can be used like this if you want to be compatible with older
+    versions of TAO:
+    
+    ```c++
+     #include "tao/orbconf.h"
+     #if defined TAO_HAS_IDL_FEATURES && TAO_HAS_IDL_FEATURES
+     // Use this macro if you are using something that's not the max possible
+     // version.
+     #  define TAO_IDL_IDL_VERSION 0x30000
+     #  include "tao/idl_features.h"
+     #  if defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+     #    define USE_FEATURE
+     #  endif
+     #endif
+    ```
+    
+    In IDL it can be used like this if you want to be compatible with older
+    versions of TAO:
+    
+    ```c++
+     #if defined __TAO_IDL_FEATURES
+     #  include __TAO_IDL_FEATURES
+     #  if defined TAO_IDL_HAS_FEATURE && TAO_IDL_HAS_FEATURE
+     #    define USE_FEATURE
+     #  endif
+     #endif
+    ```
+
+commit 27718b5ac6bd219a4cf0ebdc1182c396ee40eb17
+Merge: 8dafd144835 b23362324e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 14:41:27 2021 -0500
+
+    Merge pull request #1593 from mitza-oci/install-relative
+    
+    [ACE 6] make install: use relative links in prefix/share
+
+commit 8d789a12c3180f0308105054eeead7f5c181811c
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Fri Jul 9 14:25:27 2021 -0500
+
+    Update TAO/NEWS
+
+commit 3675e79e90533dfc63626ee0c4f0116d1ae9c902
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 22:30:42 2021 -0500
+
+    Replace a Stray nullptr with 0
+
+commit 74641777190b74d7e2b2e7a142299771f1086289
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 20:22:38 2021 -0500
+
+    ast_expression.cpp: Fix Uninitialized Value
+
+commit 2100bb4d9d73a251171b0d3808c059483314b885
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:31:41 2021 -0500
+
+    TAO/TAO_IDL/regen.pl: Exit with Error
+
+commit 860746a594bf7bd04ee2501a8d8b5c7d678934c7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 17:26:09 2021 -0500
+
+    Attempt to Fix Coverity Issues from #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+    
+    Because the main set of issues in `coerce_value` was caused by applying
+    the existing pattern, the issues caused by the existing code should also
+    be fixed.
+
+commit 1655769f404204483e8ee28a686f765df332be71
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 1 14:41:42 2021 -0500
+
+    Fix Integer Literals for Windows
+
+commit 90531b1dd0bcf226497542cd414c4a3b03456c10
+Author: Claus Klein <claus.klein@rohde-schwarz.com>
+Date:   Tue Jul 6 16:32:48 2021 +0200
+
+    add missed header Basic_Types_IDLv4 to list
+
+commit 2cbdf73f5418ef30639750f25ca5a1362f943a24
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:22:31 2021 -0500
+
+    IDLv4 Explicitly-named Integer Types
+    
+    Ported from https://github.com/DOCGroup/ACE_TAO/pull/840 to ACE6/TAO2.
+    Also regenerated with Bison 3.7.6 at the same time like in
+    d5819180d02d76ed3c14c421f02ad69c4d0bab9e in
+    https://github.com/DOCGroup/ACE_TAO/pull/1594
+
+commit b23362324e929b731f3908c2f1d458d16c524f49
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 8 14:04:25 2021 -0500
+
+    make install: use relative links in prefix/share
+
+commit 9b6353b6f0b64b46099ef57cb8e6305f6ea0cabc
+Author: Phil Mesnier <mesnierp@ociweb.com>
+Date:   Tue Jun 15 13:38:28 2021 -0500
+
+    more whitespace cleanup
+    
+    Co-authored-by: Fred Hornsey <hornseyf@objectcomputing.com>
+
+commit b1f713b0baf1e199151ae5b54cdbbe8a159cbc1a
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Tue Jun 15 08:22:10 2021 -0500
+
+    applying suggested whitespace changes.
+
+commit 2e2cb43b91ee0c0903feb7a25f33f98bffb01931
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Mon Jun 14 17:00:30 2021 -0500
+
+    Fuzz fix
+
+commit f39d2560e0c5d304fee5cd90b2ec9e52c1482e69
+Author: Phil Mesnier <mesnierp@objectcomputing.com>
+Date:   Mon Jun 14 16:51:26 2021 -0500
+
+    Fix and test for incorrect handling of empty enum-based union labels that happen to alias the default case.

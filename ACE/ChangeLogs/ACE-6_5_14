@@ -1,0 +1,115 @@
+commit 144e40f32a682e4729fb8b1ed773dfed94dd8e12
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Aug 2 16:56:40 2021 -0500
+
+    make_multicast_ifaddr: prevent buffer overrun from net_if
+    
+    fixes #1637
+    also removed a preprocessor conditional that was redundant
+    
+    (cherry picked from commit 06e2a14d2d98b2a18b50615f4c048cffd49b3bfd)
+
+commit b2763e7efaacc05dea0190d737644bcf0df61033
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 2 16:00:14 2021 +0200
+
+    Update NEWS
+
+commit 985ff7c0791b4f79d2625c56a58ed225ab884c65
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Jul 14 16:15:11 2021 +0200
+
+    Removed news item, Embarcadero classic compiler is not working
+
+commit 9604a4a75c1c3bb41b9f420b957b28b69c327b66
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Sun Jul 11 19:24:20 2021 +0200
+
+    Add news item
+    
+        * ACE/NEWS:
+
+commit 27718b5ac6bd219a4cf0ebdc1182c396ee40eb17
+Merge: 8dafd144835 b23362324e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jul 9 14:41:27 2021 -0500
+
+    Merge pull request #1593 from mitza-oci/install-relative
+    
+    [ACE 6] make install: use relative links in prefix/share
+
+commit 860746a594bf7bd04ee2501a8d8b5c7d678934c7
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 17:26:09 2021 -0500
+
+    Attempt to Fix Coverity Issues from #840
+    
+    https://github.com/DOCGroup/ACE_TAO/pull/840
+    
+    Because the main set of issues in `coerce_value` was caused by applying
+    the existing pattern, the issues caused by the existing code should also
+    be fixed.
+
+commit 2cbdf73f5418ef30639750f25ca5a1362f943a24
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Thu Jul 8 19:22:31 2021 -0500
+
+    IDLv4 Explicitly-named Integer Types
+    
+    Ported from https://github.com/DOCGroup/ACE_TAO/pull/840 to ACE6/TAO2.
+    Also regenerated with Bison 3.7.6 at the same time like in
+    d5819180d02d76ed3c14c421f02ad69c4d0bab9e in
+    https://github.com/DOCGroup/ACE_TAO/pull/1594
+
+commit b23362324e929b731f3908c2f1d458d16c524f49
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jul 8 14:04:25 2021 -0500
+
+    make install: use relative links in prefix/share
+
+commit 2063860a36b5b235cf681b74e8c3ef4909e2032d
+Merge: eff39881ad4 40feeb36f0b
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 15:51:42 2021 +0200
+
+    Merge pull request #1566 from jwillemsen/jwi-bcc32fix-ace6tao2
+    
+    [ace6] Updated bcc32 version check
+
+commit 40feeb36f0b550019f2830238d64a521675ea8c4
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jun 21 08:42:22 2021 +0200
+
+    Updated bcc32 version check
+    
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+
+commit 84438e5c0dfa16596fae1f9247d42e05b95db3c6
+Merge: 705b8d95eb5 bd42ac334e9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon May 24 09:47:58 2021 -0500
+
+    Merge pull request #1508 from simpsont-oci/ace6tao2_ip_check_fix_v2
+    
+    [ACE6] Fix SocketConnect::ip_check() Concurrency and Too-Early Request Issues for Windows
+
+commit bd42ac334e90816ed0a8778b9e45c1cc9d1b2447
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Fri May 14 09:00:59 2021 -0500
+
+    since we're not returning the value of recursing, switch to bool
+
+commit eef33151c45ae1826b346c0acbb03fca2f843cf6
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Thu May 13 14:29:01 2021 -0500
+
+    Apply suggestions from code review
+    
+    Co-authored-by: Adam Mitz <mitza@objectcomputing.com>
+
+commit 04d70c6c157074e053e4040d2d869c972be39eff
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Thu May 13 13:51:58 2021 -0500
+
+    fix concurrency and too-early-request issues for windows ip_check
