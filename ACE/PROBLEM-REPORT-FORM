@@ -25,7 +25,7 @@ include an entire platform-specific configuration file in the form.
 
 8<----------8<----------8<----------8<----------8<----------8<----------8<----
 
-    ACE VERSION: 7.0.2
+    ACE VERSION: 7.0.3
 
     HOST MACHINE and OPERATING SYSTEM:
         If on Windows based OS's, which version of WINSOCK do you
