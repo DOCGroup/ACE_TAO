@@ -24,9 +24,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#if !defined (ACE_LACKS_STDDEF_H)
-#  include /**/ <stddef.h>
-#endif /* !ACE_LACKS_STDDEF_H */
+#include /**/ <stddef.h>
 
 // Place all additions (especially function declarations) within extern "C" {}
 #ifdef __cplusplus
