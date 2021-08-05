@@ -47,14 +47,6 @@ extern "C"
    typedef ACE_WCHAR_T_TYPE wchar_t;
 #endif /* ACE_LACKS_WCHAR_T */
 
-//  Unsigned integer type of the result of the sizeof operator.
-#if defined (ACE_LACKS_SIZE_T)
-#  if !defined (ACE_SIZE_T_TYPE)
-#    define ACE_SIZE_T_TYPE unsigned int
-#  endif /* !ACE_SIZE_T_TYPE */
-   typedef ACE_SIZE_T_TYPE size_t;
-#endif /* ACE_LACKS_SIZE_T */
-
 #ifdef __cplusplus
 }
 #endif /* __cplusplus */
