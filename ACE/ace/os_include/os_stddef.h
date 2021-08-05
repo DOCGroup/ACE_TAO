@@ -32,14 +32,6 @@ extern "C"
 {
 #endif /* __cplusplus */
 
-//  Signed integer type of the result of subtracting two pointers.
-#if defined (ACE_LACKS_PTRDIFF_T)
-#  if !defined (ACE_PTRDIFF_T_TYPE)
-#    define ACE_PTRDIFF_T_TYPE unsigned long
-#  endif /* !ACE_PTRDIFF_T_TYPE */
-   typedef ACE_PTRDIFF_T_TYPE ptrdiff_t;
-#endif /* ACE_LACKS_PTRDIFF_T */
-
 /*
   Integer type whose range of values can represent distinct wide-character
   codes for all members of the largest character set specified among the
