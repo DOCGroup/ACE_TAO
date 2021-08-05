@@ -219,8 +219,6 @@
 
 #define ACE_HAS_UCONTEXT_T
 
-#define ACE_HAS_UTIME
-
 #define ACE_HAS_CTYPE_T
 
 // Platform has XPG4 wide character type and functions. However, the size

@@ -30,9 +30,7 @@
 #   include /**/ <alloca.h>
 #endif /* ACE_HAS_ALLOCA_H */
 
-#if !defined (ACE_LACKS_STDLIB_H)
-#  include /**/ <stdlib.h>
-#endif /* !ACE_LACKS_STDLIB_H */
+#include /**/ <stdlib.h>
 
 #if defined (ACE_VXWORKS) && !defined (__RTP__)
 #  include /**/ <envLib.h>
