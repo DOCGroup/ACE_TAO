@@ -145,7 +145,7 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
-#define ACE_HAS_ITOA 1
+#define ACE_HAS_ITOA
 
 #if defined (ACE_HAS_BCC64)
 # if (__BORLANDC__ <= 0x730)
