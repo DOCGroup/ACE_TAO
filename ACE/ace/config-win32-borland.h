@@ -155,10 +155,6 @@
 # define ACE_LACKS_GMTIME_R
 #endif
 
-#if (__BORLANDC__ <= 0x750)
-# define ACE_LACKS_ASCTIME_R
-#endif
-
 #define ACE_WCSDUP_EQUIVALENT ::_wcsdup
 #define ACE_STRCASECMP_EQUIVALENT ::stricmp
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
