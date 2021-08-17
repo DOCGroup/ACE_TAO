@@ -1,27 +1,19 @@
 #include "RLECompressor.h"
 #include "ace/OS_NS_string.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x750)
-#  pragma option push -w-8072
-#endif
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_RLECompressor::ACE_RLECompressor(void)
+ACE_RLECompressor::ACE_RLECompressor()
     : ACE_Compressor(ACE_COMPRESSORID_RLE)
-{
-}
-
-ACE_RLECompressor::~ACE_RLECompressor(void)
 {
 }
 
 // Compress using Run Length Encoding (RLE)
 ACE_UINT64
-ACE_RLECompressor::compress( const void *in_ptr,
-                             ACE_UINT64 in_len,
-                             void *out_ptr,
-                             ACE_UINT64 max_out_len )
+ACE_RLECompressor::compress(const void *in_ptr,
+                            ACE_UINT64 in_len,
+                            void *out_ptr,
+                            ACE_UINT64 max_out_len)
 {
     const ACE_Byte *in_p    = static_cast<const ACE_Byte *>(in_ptr);
     ACE_Byte *out_p         = static_cast<ACE_Byte *>(out_ptr);
@@ -96,10 +88,10 @@ ACE_RLECompressor::compress( const void *in_ptr,
 
 // Decompress using Run Length Encoding (RLE)
 ACE_UINT64
-ACE_RLECompressor::decompress( const void *in_ptr,
-                               ACE_UINT64 in_len,
-                               void *out_ptr,
-                               ACE_UINT64 max_out_len )
+ACE_RLECompressor::decompress(const void *in_ptr,
+                              ACE_UINT64 in_len,
+                              void *out_ptr,
+                              ACE_UINT64 max_out_len)
 {
     ACE_UINT64  out_len     = 0;
 
@@ -140,6 +132,3 @@ ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_RLECompressor, ACE_SYNCH_M
 // Close versioned namespace, if enabled by the user.
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if defined (__BORLANDC__) && (__BORLANDC__ <= 0x750)
-# pragma option pop
-#endif

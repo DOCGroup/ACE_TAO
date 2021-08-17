@@ -70,6 +70,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "fe_extern.h"
 #include "drv_extern.h"
 #include "utl_string.h"
+#include "utl_err.h"
+
 #include "ace/Version.h"
 #include "ace/Process_Manager.h"
 #include "ace/SString.h"
@@ -138,22 +140,68 @@ DRV_cpp_putarg (const char *str)
       throw Bailout ();
     }
 
-  if (str && ACE_OS::strchr (str, ' ') && !ACE_OS::strchr (str, '"'))
+  char *replace = nullptr;
+  if (str)
     {
-      ACE_TCHAR *buf = nullptr;
-      ACE_NEW_NORETURN (buf, ACE_TCHAR[ACE_OS::strlen (str) + 3]);
-      if (buf)
+      const char *const first_quote = ACE_OS::strchr (str, '"');
+      bool allocate_error = false;
+
+      if (ACE_OS::strchr (str, ' ') && !first_quote)
         {
-          buf[0] = ACE_TEXT ('"');
-          ACE_OS::strcpy (buf + 1, ACE_TEXT_CHAR_TO_TCHAR (str));
-          ACE_OS::strcat (buf, ACE_TEXT ("\""));
-          DRV_arglist[DRV_argcount++] = buf;
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              replace[0] = '"';
+              ACE_OS::strcpy (replace + 1, str);
+              ACE_OS::strcat (replace, "\"");
+            }
+        }
+#ifdef ACE_WIN32
+      else if (first_quote)
+        {
+          // Escape Doublequotes on Windows
+
+          size_t quote_count = 0;
+          for (const char *quote = first_quote; quote; quote = ACE_OS::strchr (quote, '"'))
+            {
+              ++quote_count;
+              ++quote;
+            }
+
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + quote_count + 1]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              char *to = replace;
+              for (const char *from = str; *from; ++from)
+                {
+                  if (*from == '"')
+                    {
+                      *to = '\\';
+                      ++to;
+                    }
+                  *to = *from;
+                  ++to;
+                }
+              *to = '\0';
+            }
+        }
+#endif
+
+      if (allocate_error)
+        {
+          idl_global->err()->misc_error ("DRV_cpp_putarg failed to allocate memory for argument!");
+          throw Bailout ();
         }
     }
-  else
+
+  DRV_arglist[DRV_argcount++] = ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (replace ? replace : str));
+
+  if (replace)
     {
-      DRV_arglist[DRV_argcount++] =
-        ACE::strnew (ACE_TEXT_CHAR_TO_TCHAR (str));
+      delete [] replace;
+      replace = nullptr;
     }
 }
 
@@ -587,7 +635,13 @@ DRV_cpp_post_init ()
     idl_global->idl_version_.to_macro ());
   DRV_cpp_putarg (idl_version_arg);
 
-  DRV_cpp_putarg ("-D__TAO_IDL_FEATURES=\"tao/idl_features.h\"");
+  DRV_cpp_putarg ("-D__TAO_IDL_FEATURES="
+#ifdef TAO_IDL_FEATURES
+    TAO_IDL_FEATURES
+#else
+    "\"tao/idl_features.h\""
+#endif
+  );
 
   // Add include path for TAO_ROOT/orbsvcs.
   char* TAO_ROOT = ACE_OS::getenv ("TAO_ROOT");

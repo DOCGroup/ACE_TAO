@@ -128,12 +128,10 @@
 # endif /* !__MT__ */
 #endif /* ACE_MT_SAFE && ACE_MT_SAFE != 0 */
 
-#if (__BORLANDC__ <= 0x750)
-# define ACE_LACKS_ISWCTYPE
-# define ACE_LACKS_ISCTYPE
-# define ACE_LACKS_STRTOK_R
-# define ACE_LACKS_ASCTIME_R
-#endif
+#define ACE_LACKS_ISWCTYPE
+#define ACE_LACKS_ISCTYPE
+#define ACE_LACKS_STRTOK_R
+#define ACE_LACKS_ASCTIME_R
 
 #if (__BORLANDC__ <= 0x740)
 # define ACE_LACKS_LOCALTIME_R
@@ -145,7 +143,7 @@
 #define ACE_STRNCASECMP_EQUIVALENT ::strnicmp
 #define ACE_WTOF_EQUIVALENT ::_wtof
 #define ACE_FILENO_EQUIVALENT(X) (_get_osfhandle (::_fileno (X)))
-#define ACE_HAS_ITOA 1
+#define ACE_HAS_ITOA
 
 #if defined (ACE_HAS_BCC64)
 # if (__BORLANDC__ <= 0x730)
