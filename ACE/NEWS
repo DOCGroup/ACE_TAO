@@ -1,3 +1,6 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
@@ -8,9 +11,13 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 
 . ACE CDR supports (u)int8
 
-. Use more C++11 features
+. Use more C++11 features including using std alternatives
 
 . Various cleanup
+
+. Fix SocketConnect::ip_check() Concurrency and Too-Early Request Issues for Windows
+
+. Make install: use relative links in prefix/share
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.1 and ACE-7.0.2
 ====================================================

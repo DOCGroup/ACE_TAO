@@ -310,7 +310,7 @@ namespace TAO
  *
  * <B>See Also:</B>
  *
- * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
+ * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/pluggable_protocols/index.html
  */
 class TAO_Export TAO_Transport
 {
@@ -1241,7 +1241,7 @@ namespace TAO
      *
      * <B>See Also:</B>
      *
-     * http://htmlpreview.github.com/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
+     * https://htmlpreview.github.io/?https://github.com/DOCGroup/ACE_TAO/blob/master/TAO/docs/transport_current/index.html
      *
      */
     class TAO_Export Stats

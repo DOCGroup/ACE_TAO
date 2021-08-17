@@ -483,13 +483,11 @@ ACE_OS::srand (u_int seed)
 #endif
 }
 
-#if !defined (ACE_LACKS_STRTOD)
 ACE_INLINE double
 ACE_OS::strtod (const char *s, char **endptr)
 {
   return ::strtod (s, endptr);
 }
-#endif /* !ACE_LACKS_STRTOD */
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
 ACE_INLINE double

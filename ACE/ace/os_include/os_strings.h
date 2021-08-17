@@ -28,15 +28,5 @@
 #  include /**/ <strings.h>
 #endif /* !ACE_LACKS_STRINGS_H */
 
-// Place all additions (especially function declarations) within extern "C" {}
-#ifdef __cplusplus
-extern "C"
-{
-#endif /* __cplusplus */
-
-#ifdef __cplusplus
-}
-#endif /* __cplusplus */
-
 #include /**/ "ace/post.h"
 #endif /* ACE_OS_INCLUDE_OS_STRINGS_H */
