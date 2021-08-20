@@ -20,18 +20,27 @@ MACOS_CODENAME_VER_10_11  := elcapitan
 MACOS_CODENAME_VER_10_12  := sierra
 MACOS_CODENAME_VER_10_13  := highsierra
 MACOS_CODENAME_VER_10_14  := mojave
-MACOS_CODENAME_VER_latest := mojave
+MACOS_CODENAME_VER_10_15  := catalina
+MACOS_CODENAME_VER_10_latest  := catalina
+MACOS_CODENAME_VER_11_5   := bigsur
+MACOS_CODENAME_VER_11_latest := bigsur
 
 MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSION))
 
 ifeq ($(MACOS_MAJOR_VERSION),10)
-  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 14; echo $$?),0)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 15; echo $$?),0)
     ## if the detected version is greater than the latest know version,
     ## just use the latest known version
-    MACOS_CODENAME = $(MACOS_CODENAME_VER_latest)
+    MACOS_CODENAME = $(MACOS_CODENAME_VER_10_latest)
   else ifeq ($(shell test $(MACOS_MINOR_VERSION) -lt 2; echo $$?),0)
     ## Unsupported minor version
     $(error Unsupported MacOS version $(MACOS_RELEASE_VERSION))
+  endif
+else ifeq ($(MACOS_MAJOR_VERSION),11)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 2; echo $$?),0)
+    ## if the detected version is greater than the latest know version,
+    ## just use the latest known version
+    MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
   endif
 else
   ## Unsupported major version
