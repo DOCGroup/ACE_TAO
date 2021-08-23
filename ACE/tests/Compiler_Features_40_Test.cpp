@@ -6,6 +6,7 @@
 #include "test_config.h"
 #include <vector>
 #include <string>
+#include <stdexcept>
 
 class TTestClass;
 
