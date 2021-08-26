@@ -1,5 +1,5 @@
 // -*- MPC -*-
-project: acelib, conv_lib {
+project: acelib {
   includes    += $(TAO_ROOT)/TAO_IDL/fe $(TAO_ROOT)/TAO_IDL/include $(TAO_ROOT)
   after       += TAO_IDL_FE
   libs        += TAO_IDL_FE
