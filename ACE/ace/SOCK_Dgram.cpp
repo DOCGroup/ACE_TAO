@@ -720,7 +720,8 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         ACE_HTONL (interface_addr.get_ip_address ());
 #else
       ifreq if_address;
-      ACE_OS::strncpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if), sizeof if_address.ifr_name);
+      ACE_OS::strncpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if), (sizeof if_address.ifr_name) - 1);
+      if_address.ifr_name[(sizeof if_address.ifr_name) - 1] = '\0';
       if (ACE_OS::ioctl (this->get_handle (),
                          SIOCGIFADDR,
                          &if_address) == -1)
