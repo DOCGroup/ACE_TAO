@@ -29,91 +29,149 @@ template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator++ (void)
 {
-  return __sync_add_and_fetch (&this->value_, 1);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_add_fetch (&value_, 1, __ATOMIC_ACQ_REL);
+#else
+  return __sync_add_and_fetch (&value_, 1);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator++ (int)
 {
-  return __sync_fetch_and_add (&this->value_, 1);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_fetch_add (&value_, 1, __ATOMIC_ACQ_REL);
+#else
+  return __sync_fetch_and_add (&value_, 1);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator-- (void)
 {
-  return __sync_sub_and_fetch (&this->value_, 1);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_sub_fetch (&value_, 1, __ATOMIC_ACQ_REL);
+#else
+  return __sync_sub_and_fetch (&value_, 1);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator-- (int)
 {
-  return __sync_fetch_and_sub (&this->value_, 1);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_fetch_sub (&value_, 1, __ATOMIC_ACQ_REL);
+#else
+  return __sync_fetch_and_sub (&value_, 1);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator+= (T rhs)
 {
-  return __sync_add_and_fetch (&this->value_, rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_add_fetch (&value_, rhs, __ATOMIC_ACQ_REL);
+#else
+  return __sync_add_and_fetch (&value_, rhs);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::operator-= (T rhs)
 {
-  return __sync_sub_and_fetch (&this->value_, rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_sub_fetch (&value_, rhs, __ATOMIC_ACQ_REL);
+#else
+  return __sync_sub_and_fetch (&value_, rhs);
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator== (T rhs) const
 {
-  return (this->value_ == rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) == rhs;
+#else
+  __sync_synchronize();
+  return value_ == rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator!= (T rhs) const
 {
-  return (this->value_ != rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) != rhs;
+#else
+  __sync_synchronize();
+  return value_ != rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator>= (T rhs) const
 {
-  return (this->value_ >= rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) >= rhs;
+#else
+  __sync_synchronize();
+  return value_ >= rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator> (T rhs) const
 {
-  return (this->value_ > rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) > rhs;
+#else
+  __sync_synchronize();
+  return value_ > rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator<= (T rhs) const
 {
-  return (this->value_ <= rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) <= rhs;
+#else
+  __sync_synchronize();
+  return value_ <= rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE bool
 ACE_Atomic_Op_GCC<T>::operator< (T rhs) const
 {
-  return (this->value_ < rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME) < rhs;
+#else
+  __sync_synchronize();
+  return value_ < rhs;
+#endif
 }
 
 template <typename T>
 ACE_INLINE ACE_Atomic_Op_GCC<T> &
 ACE_Atomic_Op_GCC<T>::operator= (T rhs)
 {
-  (void) __sync_lock_test_and_set (&this->value_, rhs);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  __atomic_store_n (&value_, rhs, __ATOMIC_RELEASE);
+#else
+  (void) __sync_lock_test_and_set (&value_, rhs);
+#endif
   return *this;
 }
 
@@ -122,7 +180,11 @@ ACE_INLINE ACE_Atomic_Op_GCC<T> &
 ACE_Atomic_Op_GCC<T>::operator= (
    const ACE_Atomic_Op_GCC<T> &rhs)
 {
-  (void) __sync_lock_test_and_set (&this->value_, rhs.value_);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  __atomic_store_n (&value_, __atomic_load_n (&rhs.value_, __ATOMIC_CONSUME), __ATOMIC_RELEASE);
+#else
+  (void) __sync_lock_test_and_set (&value_, rhs.value_);
+#endif
   return *this;
 }
 
@@ -130,21 +192,30 @@ template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::exchange (T newval)
 {
-  return __sync_val_compare_and_swap (&this->value_, this->value_, newval);
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_exchange_n (&value_, newval, __ATOMIC_ACQ_REL);
+#else
+  return __sync_val_compare_and_swap (&value_, value_, newval);
+#endif
 }
 
 template <typename T>
 ACE_INLINE T
 ACE_Atomic_Op_GCC<T>::value (void) const
 {
-  return this->value_;
+#if (__GNUC__ > 4) || ((__GNUC__ == 4) && (__GNUC_MINOR__ >= 7))
+  return __atomic_load_n (&value_, __ATOMIC_CONSUME);
+#else
+  __sync_synchronize();
+  return value_;
+#endif
 }
 
 template <typename T>
 ACE_INLINE volatile T &
 ACE_Atomic_Op_GCC<T>::value_i (void)
 {
-  return this->value_;
+  return value_;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
