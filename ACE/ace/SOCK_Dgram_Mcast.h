@@ -376,14 +376,14 @@ protected:
   /// Empty the dynamic subscription list.
   int clear_subs_list ();
 
-  /// Multicast address to which local send() methods send datagrams.
-  ACE_INET_Addr send_addr_;
-  /// Network interface to which all send() methods send multicast datagrams.
-  ACE_TCHAR *send_net_if_;
-
 private:
   /// Per-instance options..
   int opts_;
+
+  /// Multicast address to which local send() methods send datagrams.
+  ACE_INET_Addr  send_addr_;
+  /// Network interface to which all send() methods send multicast datagrams.
+  ACE_TCHAR *send_net_if_;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
  typedef ACE_DLList<ip_mreq>  subscription_list_t;
