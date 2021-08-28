@@ -16,7 +16,7 @@
 # pragma warning (disable:4103)
 # pragma pack (push, 8)
 #elif defined (__BORLANDC__)
-# pragma option push -a8 -b -Ve- -Vx- -w-rvl -w-rch -w-ccc -w-obs -w-aus -w-pia -w-inl -w-sig
+# pragma option push -a8 -b -Ve- -Vx-
 # pragma nopushoptwarn
 # pragma nopackwarning
 #endif

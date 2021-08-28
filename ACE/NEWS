@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 ====================================================
 
+. Cleanup Embarcadero C++ Builder support
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
