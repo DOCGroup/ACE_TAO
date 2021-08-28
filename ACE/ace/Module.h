@@ -60,7 +60,7 @@ public:
     M_DELETE_NONE = 4
   };
 
-  inline virtual ~ACE_Module_Base (void) {}
+  inline virtual ~ACE_Module_Base () {}
 };
 
 /**
@@ -160,7 +160,7 @@ public:
   void link (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
 
   /// Get the next pointer to the module above in the stream.
-  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next (void);
+  virtual ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *next ();
 
   /// Set the next pointer to the module above in the stream.
   virtual void next (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *m);
