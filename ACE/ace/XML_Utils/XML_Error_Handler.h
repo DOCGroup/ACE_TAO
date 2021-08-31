@@ -32,7 +32,7 @@ namespace XML
   {
   public:
     XML_Error_Handler () = default;
-    ~XML_Error_Handler () = default;
+    ~XML_Error_Handler () override = default;
 
     void warning(const xercesc::SAXParseException& toCatch) override;
     void error(const xercesc::SAXParseException& toCatch) override;
