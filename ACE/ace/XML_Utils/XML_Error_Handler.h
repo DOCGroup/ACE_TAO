@@ -42,7 +42,7 @@ namespace XML
     void fatalError(const SAXParseException& toCatch) override;
     void resetErrors() override;
     bool getErrors () const;
-  private :
+  private:
     XML_Error_Handler (const XML_Error_Handler&) = delete;
     XML_Error_Handler& operator= (const XML_Error_Handler&) = delete;
     XML_Error_Handler (XML_Error_Handler&&) = delete;

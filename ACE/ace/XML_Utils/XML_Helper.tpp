@@ -200,8 +200,7 @@ namespace XML
                                                     errText,
                                                     maxChars))
           {
-            char* message =
-              XMLString::transcode (errText);
+            char* message = XMLString::transcode (errText);
             ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
           }
         return 0;
@@ -224,20 +223,20 @@ namespace XML
 
   template <typename Resolver, typename Error>
   void
-  XML_Helper<Resolver, Error>::terminate_parser (void)
+  XML_Helper<Resolver, Error>::terminate_parser ()
   {
     if (!this->initialized_)
       return;
 
     try
       {
-        if (release_resolver_ && resolver_)
+        if (release_resolver_)
           {
             delete resolver_;
             resolver_ = 0;
           }
 
-        if (release_e_handler_ && e_handler_)
+        if (release_e_handler_)
           {
             delete e_handler_;
             e_handler_ = 0;
@@ -249,8 +248,7 @@ namespace XML
       }
     catch (const XMLException& e)
       {
-        char* message =
-          XMLString::transcode (e.getMessage());
+        char* message = XMLString::transcode (e.getMessage());
         ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
         throw;
       }
@@ -261,7 +259,7 @@ namespace XML
 
   template <typename Resolver, typename Error>
   Resolver &
-  XML_Helper<Resolver, Error>::get_resolver (void)
+  XML_Helper<Resolver, Error>::get_resolver ()
   {
     if (!this->resolver_)
       throw std::exception ();
@@ -271,7 +269,7 @@ namespace XML
 
   template <typename Resolver, typename Error>
   Error &
-  XML_Helper<Resolver, Error>::get_error_handler (void)
+  XML_Helper<Resolver, Error>::get_error_handler ()
   {
     if (!this->e_handler_)
       throw std::exception ();

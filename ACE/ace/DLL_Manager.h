@@ -55,11 +55,11 @@ public:
   /// Error stack. Fixed size should suffice. Ignores any errors exceeding the size.
   typedef ACE_Fixed_Stack <ACE_TString, 10> ERROR_STACK;
 
-  /// Default construtor.
-  ACE_DLL_Handle (void);
+  /// Default constructor.
+  ACE_DLL_Handle ();
 
   /// Destructor.
-  ~ACE_DLL_Handle (void);
+  ~ACE_DLL_Handle ();
 
   /// Returns the name of the shared library (without prefixes or suffixes).
   const ACE_TCHAR *dll_name () const;
