@@ -230,8 +230,8 @@ namespace XML
             e_handler_ = 0;
           }
 
-        this->parser_.reset (0);
-        this->impl_ = 0;
+        this->parser_.reset (nullptr);
+        this->impl_ = nullptr;
         xercesc::XMLPlatformUtils::Terminate();
       }
     catch (const XMLException& e)

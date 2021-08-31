@@ -81,7 +81,7 @@ namespace XML
 
   private:
     bool initialized_ { false };
-    XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
+    XERCES_CPP_NAMESPACE::DOMImplementation *impl_ {};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
 
     Resolver *resolver_;
