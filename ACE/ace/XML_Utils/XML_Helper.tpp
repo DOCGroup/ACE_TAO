@@ -24,22 +24,12 @@ namespace XML
   using xercesc::DOMException;
   using xercesc::DOMDocumentType;
   using xercesc::XercesDOMParser;
-/*
-  template <typename Resolver, typename Error>
-  XML_Helper<Resolver, Error>::XML_Helper ()
-    : initialized_ (false)
-  {
-    this->init_parser ();
-  }
-*/
+
   // TODO this is stub implementation
   template <typename Resolver, typename Error>
   XML_Helper<Resolver, Error>::XML_Helper (Resolver *resolver, Error *eh)
-    : initialized_ (false),
-      resolver_ (resolver),
-      release_resolver_(false),
-      e_handler_ (eh),
-      release_e_handler_ (false)
+    : resolver_ (resolver),
+      e_handler_ (eh)
   {
     this->init_parser ();
   }
@@ -83,8 +73,7 @@ namespace XML
       }
     catch (const XMLException& e)
       {
-        char* message =
-          XMLString::transcode (e.getMessage());
+        char* message = XMLString::transcode (e.getMessage());
         ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
 
         throw;
@@ -97,13 +86,12 @@ namespace XML
 
     // Instantiate the DOM parser.
     static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                  xercesc::chLatin_S,
-                                  xercesc::chNull };
+                                 xercesc::chLatin_S,
+                                 xercesc::chNull };
 
     // Get an implementation of the Load-Store (LS) interface
     // and cache it for later use
-    impl_ =
-      DOMImplementationRegistry::getDOMImplementation(gLS);
+    impl_ = DOMImplementationRegistry::getDOMImplementation(gLS);
 
     this->initialized_ = true;
     return;
@@ -115,8 +103,8 @@ namespace XML
                                            const ACE_TCHAR *ns,
                                            DOMDocumentType *doctype) const
   {
-    if (root == 0 || ns == 0)
-      return 0;
+    if (!root || !ns)
+      return nullptr;
 
     return this->impl_->createDocument (XStr (ns),
                                         XStr (root),
