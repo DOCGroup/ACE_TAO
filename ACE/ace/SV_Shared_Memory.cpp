@@ -69,7 +69,7 @@ ACE_SV_Shared_Memory::ACE_SV_Shared_Memory ()
 // Added this constructor to accept an internal id, the one generated
 // when a server constructs with the key IPC_PRIVATE.  The client can
 // be passed ACE_SV_Shared_Memory::internal_id via a socket and call
-// this construtor to attach the existing segment.  This prevents
+// this constructor to attach the existing segment.  This prevents
 // having to hard-code a key in advance.  Courtesy of Marvin Wolfthal
 // (maw@fsg.com).
 

@@ -24,22 +24,12 @@ namespace XML
   using xercesc::DOMException;
   using xercesc::DOMDocumentType;
   using xercesc::XercesDOMParser;
-/*
-  template <typename Resolver, typename Error>
-  XML_Helper<Resolver, Error>::XML_Helper ()
-    : initialized_ (false)
-  {
-    this->init_parser ();
-  }
-*/
+
   // TODO this is stub implementation
   template <typename Resolver, typename Error>
   XML_Helper<Resolver, Error>::XML_Helper (Resolver *resolver, Error *eh)
-    : initialized_ (false),
-      resolver_ (resolver),
-      release_resolver_(false),
-      e_handler_ (eh),
-      release_e_handler_ (false)
+    : resolver_ (resolver),
+      e_handler_ (eh)
   {
     this->init_parser ();
   }
@@ -83,8 +73,7 @@ namespace XML
       }
     catch (const XMLException& e)
       {
-        char* message =
-          XMLString::transcode (e.getMessage());
+        char* message = XMLString::transcode (e.getMessage());
         ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
 
         throw;
@@ -97,13 +86,12 @@ namespace XML
 
     // Instantiate the DOM parser.
     static const XMLCh gLS[] = { xercesc::chLatin_L,
-                                  xercesc::chLatin_S,
-                                  xercesc::chNull };
+                                 xercesc::chLatin_S,
+                                 xercesc::chNull };
 
     // Get an implementation of the Load-Store (LS) interface
     // and cache it for later use
-    impl_ =
-      DOMImplementationRegistry::getDOMImplementation(gLS);
+    impl_ = DOMImplementationRegistry::getDOMImplementation(gLS);
 
     this->initialized_ = true;
     return;
@@ -112,11 +100,11 @@ namespace XML
   template <typename Resolver, typename Error>
   XERCES_CPP_NAMESPACE::DOMDocument *
   XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *root,
-                                            const ACE_TCHAR *ns,
-                                            DOMDocumentType *doctype) const
+                                           const ACE_TCHAR *ns,
+                                           DOMDocumentType *doctype) const
   {
-    if (root == 0 || ns == 0)
-      return 0;
+    if (!root || !ns)
+      return nullptr;
 
     return this->impl_->createDocument (XStr (ns),
                                         XStr (root),
@@ -126,8 +114,8 @@ namespace XML
   template <typename Resolver, typename Error>
   XERCES_CPP_NAMESPACE::DOMDocumentType *
   XML_Helper<Resolver, Error>::create_doctype (const ACE_TCHAR *qn,
-                                                const ACE_TCHAR *pid,
-                                                const ACE_TCHAR *sid) const
+                                               const ACE_TCHAR *pid,
+                                               const ACE_TCHAR *sid) const
   {
     return this->impl_->createDocumentType (XStr (qn),
                                             XStr (pid),
@@ -200,8 +188,7 @@ namespace XML
                                                     errText,
                                                     maxChars))
           {
-            char* message =
-              XMLString::transcode (errText);
+            char* message = XMLString::transcode (errText);
             ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
           }
         return 0;
@@ -224,33 +211,32 @@ namespace XML
 
   template <typename Resolver, typename Error>
   void
-  XML_Helper<Resolver, Error>::terminate_parser (void)
+  XML_Helper<Resolver, Error>::terminate_parser ()
   {
     if (!this->initialized_)
       return;
 
     try
       {
-        if (release_resolver_ && resolver_)
+        if (release_resolver_)
           {
             delete resolver_;
             resolver_ = 0;
           }
 
-        if (release_e_handler_ && e_handler_)
+        if (release_e_handler_)
           {
             delete e_handler_;
             e_handler_ = 0;
           }
 
-        this->parser_.reset (0);
-        this->impl_ = 0;
+        this->parser_.reset (nullptr);
+        this->impl_ = nullptr;
         xercesc::XMLPlatformUtils::Terminate();
       }
     catch (const XMLException& e)
       {
-        char* message =
-          XMLString::transcode (e.getMessage());
+        char* message = XMLString::transcode (e.getMessage());
         ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
         throw;
       }
@@ -261,7 +247,7 @@ namespace XML
 
   template <typename Resolver, typename Error>
   Resolver &
-  XML_Helper<Resolver, Error>::get_resolver (void)
+  XML_Helper<Resolver, Error>::get_resolver ()
   {
     if (!this->resolver_)
       throw std::exception ();
@@ -271,7 +257,7 @@ namespace XML
 
   template <typename Resolver, typename Error>
   Error &
-  XML_Helper<Resolver, Error>::get_error_handler (void)
+  XML_Helper<Resolver, Error>::get_error_handler ()
   {
     if (!this->e_handler_)
       throw std::exception ();
