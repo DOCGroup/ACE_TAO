@@ -112,8 +112,8 @@ namespace XML
   template <typename Resolver, typename Error>
   XERCES_CPP_NAMESPACE::DOMDocument *
   XML_Helper<Resolver, Error>::create_dom (const ACE_TCHAR *root,
-                                            const ACE_TCHAR *ns,
-                                            DOMDocumentType *doctype) const
+                                           const ACE_TCHAR *ns,
+                                           DOMDocumentType *doctype) const
   {
     if (root == 0 || ns == 0)
       return 0;
@@ -126,8 +126,8 @@ namespace XML
   template <typename Resolver, typename Error>
   XERCES_CPP_NAMESPACE::DOMDocumentType *
   XML_Helper<Resolver, Error>::create_doctype (const ACE_TCHAR *qn,
-                                                const ACE_TCHAR *pid,
-                                                const ACE_TCHAR *sid) const
+                                               const ACE_TCHAR *pid,
+                                               const ACE_TCHAR *sid) const
   {
     return this->impl_->createDocumentType (XStr (qn),
                                             XStr (pid),
