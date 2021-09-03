@@ -117,7 +117,7 @@ run_main (int, ACE_TCHAR *[])
                    sizeof (ACE_INT32), 4);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT32) is %u%s"),
                    sizeof (ACE_UINT32), 4);
-  
+
   errors += check (ACE_TEXT ("sizeof (ACE_INT64) is %u%s"),
                    sizeof (ACE_INT64), 8);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT64) is %u%s"),
