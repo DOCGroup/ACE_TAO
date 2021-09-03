@@ -33,8 +33,8 @@
 using a_function_pointer = void *(*)(void *);
 
 static
-u_int
-check (const ACE_TCHAR *message, u_int i, u_int j)
+ACE_UINT32
+check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
 {
   if (i == j)
     {
@@ -50,8 +50,8 @@ check (const ACE_TCHAR *message, u_int i, u_int j)
 }
 
 static
-u_int
-check64 (const ACE_TCHAR* message, u_int64 i, u_int64 j)
+ACE_UINT32
+check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
 {
   if (i == j)
   {
