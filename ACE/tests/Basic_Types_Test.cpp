@@ -49,6 +49,22 @@ check (const ACE_TCHAR *message, u_int i, u_int j)
     }
 }
 
+static
+u_int
+check64 (const ACE_TCHAR* message, u_int64 i, u_int64 j)
+{
+  if (i == j)
+  {
+    ACE_DEBUG ((LM_DEBUG, message, j, ACE_TEXT ("\n")));
+    return 0;
+  }
+  else
+  {
+    ACE_ERROR ((LM_ERROR, ACE_TEXT ("assertion failed \"%s\": %u != %u\n"), message, i, j));
+    return 1;
+  }
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -95,12 +111,15 @@ run_main (int, ACE_TCHAR *[])
   errors += check (ACE_TEXT ("sizeof (ACE_INT16) is %u%s"),
                    sizeof (ACE_INT16), 2);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT16) is %u%s"),
-                   sizeof (ACE_INT16), 2);
+                   sizeof (ACE_UINT16), 2);
 
   errors += check (ACE_TEXT ("sizeof (ACE_INT32) is %u%s"),
                    sizeof (ACE_INT32), 4);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT32) is %u%s"),
-                   sizeof (ACE_INT32), 4);
+                   sizeof (ACE_UINT32), 4);
+  
+  errors += check (ACE_TEXT ("sizeof (ACE_INT64) is %u%s"),
+                   sizeof (ACE_INT64), 8);
   errors += check (ACE_TEXT ("sizeof (ACE_UINT64) is %u%s"),
                    sizeof (ACE_UINT64), 8);
 
@@ -143,6 +162,16 @@ run_main (int, ACE_TCHAR *[])
               ACE_TEXT ("assertion failed: no ACE_*_ENDIAN definition!\n")));
   ++errors;
 #endif /* ACE_LITTLE_ENDIAN */
+
+  test_val = 0x0123;
+  ACE_UINT32 test_val_2 = 0x01234567;
+  ACE_UINT64 test_val_3 = 0x0123456789abcdef;
+  errors +=
+    check (ACE_TEXT ("ACE_SWAP_WORD(0x0123) is %u%s"), ACE_SWAP_WORD (test_val), 0x2301);
+  errors +=
+    check (ACE_TEXT ("ACE_SWAP_LONG(0x01234567) is %u%s"), ACE_SWAP_LONG (test_val_2), 0x67452301);
+  errors +=
+    check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %u\n"),
               ACE_OS::getpagesize ()));

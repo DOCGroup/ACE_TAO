@@ -60,7 +60,7 @@ public:
     M_DELETE_NONE = 4
   };
 
-  inline virtual ~ACE_Module_Base () {}
+  virtual ~ACE_Module_Base () = default;
 };
 
 /**
