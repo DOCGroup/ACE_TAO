@@ -32,7 +32,6 @@
 
 using a_function_pointer = void *(*)(void *);
 
-static
 ACE_UINT32
 check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
 {
@@ -49,7 +48,6 @@ check (const ACE_TCHAR* message, ACE_UINT32 i, ACE_UINT32 j)
     }
 }
 
-static
 ACE_UINT32
 check64 (const ACE_TCHAR* message, ACE_UINT64 i, ACE_UINT64 j)
 {
