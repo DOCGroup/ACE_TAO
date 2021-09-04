@@ -379,7 +379,7 @@ protected:
   /// Multicast address to which local send() methods send datagrams.
   ACE_INET_Addr send_addr_;
   /// Network interface to which all send() methods send multicast datagrams.
-  ACE_TCHAR* send_net_if_;
+  ACE_TCHAR* send_net_if_ {};
 
 private:
   /// Per-instance options..

@@ -137,7 +137,6 @@ ACE_SOCK_Dgram_Mcast::dump () const
 ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   (ACE_SOCK_Dgram_Mcast::options opts)
  : send_addr_ ()
- , send_net_if_ (0)
  , opts_ (opts)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast");
