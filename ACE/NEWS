@@ -3,6 +3,10 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 
 . Cleanup Embarcadero C++ Builder support
 
+. Allow ACE_Module and ACE_SOCK_Dgram_Mcast to be sub-classed
+
+. Add ACE_SWAP_LONG_LONG byte swap macro for ACE_UINT64
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
