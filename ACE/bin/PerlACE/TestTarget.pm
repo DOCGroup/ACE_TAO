@@ -493,7 +493,6 @@ sub DeleteFile ($)
     my $self = shift;
     my $file = shift;
     my $newfile = $self->LocalFile($file);
-    my $remote_rm = (defined $self->{REMOTE_FILERM}) ? 1 : 0;
     if ((($file eq $newfile) ||
         (File::Spec->rel2abs($file) eq File::Spec->rel2abs($newfile))) &&
         !(defined $self->{REMOTE_FILERM})) {
