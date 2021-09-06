@@ -505,6 +505,9 @@ sub DeleteFile ($)
         } else {
             $cmd = $self->{REMOTE_FILERM} . ' ' . $newfile;
         }
+  #      if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+            print STDERR "Running $cmd\n";
+ #       }
         if (system ($cmd) != 0) {
         	print STDERR "ERROR executing [".$cmd."]\n";
         }
