@@ -495,9 +495,9 @@ sub DeleteFile ($)
     # expand path and possibly map to remote target root
     my $newfile = $self->LocalFile($file);
     if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILETEST}) {
-        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+#        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
             print STDERR "Deleting remote $file using path $newfile\n";
-        }
+#        }
         my $cmd = $self->{REMOTE_SHELL};
         if ($self->{REMOTE_FILERM} =~ /^\d*$/) {
             $cmd .= " 'test -e $newfile && rm $newfile'";
@@ -512,7 +512,7 @@ sub DeleteFile ($)
         }
     } else {
         unlink ($newfile);
-   }
+    }
 }
 
 sub GetFile ($)
