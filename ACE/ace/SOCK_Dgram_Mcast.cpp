@@ -136,8 +136,8 @@ ACE_SOCK_Dgram_Mcast::dump () const
 // Constructor.
 ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast
   (ACE_SOCK_Dgram_Mcast::options opts)
-  :  opts_ (opts),
-     send_net_if_ (0)
+ : send_addr_ ()
+ , opts_ (opts)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::ACE_SOCK_Dgram_Mcast");
 }
