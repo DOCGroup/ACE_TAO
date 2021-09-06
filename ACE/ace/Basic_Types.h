@@ -285,9 +285,11 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 // Byte swapping macros to deal with differences between little endian
 // and big endian machines.  Note that "long" here refers to 32 bit
 // quantities.
+# define ACE_SWAP_LONG_LONG(LL) ((ACE_SWAP_LONG ((LL)&0xFFFFFFFF) << 32) \
+            | ACE_SWAP_LONG(((LL) >> 32) & 0xFFFFFFFF))
 # define ACE_SWAP_LONG(L) ((ACE_SWAP_WORD ((L) & 0xFFFF) << 16) \
             | ACE_SWAP_WORD(((L) >> 16) & 0xFFFF))
-# define ACE_SWAP_WORD(L) ((((L) & 0x00FF) << 8) | (((L) & 0xFF00) >> 8))
+# define ACE_SWAP_WORD(W) ((((W) & 0x00FF) << 8) | (((W) & 0xFF00) >> 8))
 
 # define ACE_HTONL(X) htonl (X)
 # define ACE_NTOHL(X) ntohl (X)
