@@ -492,21 +492,23 @@ sub DeleteFile ($)
 {
     my $self = shift;
     my $file = shift;
+    # expand path and possibly map to remote target root
     my $newfile = $self->LocalFile($file);
-    if ((($file eq $newfile) ||
-        (File::Spec->rel2abs($file) eq File::Spec->rel2abs($newfile))) &&
-        !(defined $self->{REMOTE_FILERM})) {
-        unlink ($newfile);
-    } else {
-        my $cmd;
+    if (defined $self->{REMOTE_SHELL} && defined $self->{REMOTE_FILERM}) {
+        my $cmd = $self->{REMOTE_SHELL};
         if ($self->{REMOTE_FILERM} =~ /^\d*$/) {
-            $cmd = $self->{REMOTE_SHELL} . " 'test -e $newfile && rm $newfile'";
+            $cmd .= " 'test -e $newfile && rm $newfile'";
         } else {
-            $cmd = $self->{REMOTE_FILERM} . ' ' . $newfile;
+            $cmd .= ' ' . $self->{REMOTE_FILERM} . ' ' . $newfile;
+        }
+        if (defined $ENV{'ACE_TEST_VERBOSE'}) {
+           print STDERR "Deleting remote $file from path $newfile using $cmd\n";
         }
         if (system ($cmd) != 0) {
         	print STDERR "ERROR executing [".$cmd."]\n";
         }
+    } else {
+        unlink ($newfile);
     }
 }
 
