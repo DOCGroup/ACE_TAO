@@ -11,7 +11,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Thread_Manager.h"
 #include "ace/Process.h"
@@ -24,8 +23,6 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_stdlib.h"
 #include "ace/SString.h"
-
-
 
 #if !defined (ACE_LACKS_UNIX_SIGNALS) && !defined ACE_LACKS_SIGNAL
 
@@ -54,7 +51,6 @@ handle_signal (int signum)
   // they are "unsafe" when handler is invoked asynchronously.  On
   // NetBSD 3.X, calls to change the thread's signal mask block as
   // a lock seems to be held by the signal trampoline code.
-
 #if 0
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) received signal %S\n"),
@@ -165,7 +161,6 @@ synchronous_signal_handler (void *)
 
 // This function arranges to handle signals asynchronously, which is
 // necessary if an OS platform lacks threads.
-
 static ACE_THR_FUNC_RETURN
 asynchronous_signal_handler (void *)
 {
@@ -185,8 +180,7 @@ asynchronous_signal_handler (void *)
 
   // Register the <handle_signal> method to process all the signals in
   // <sigset>.
-  ACE_Sig_Action sa (sigset,
-                     (ACE_SignalHandler) handle_signal);
+  ACE_Sig_Action sa (sigset, (ACE_SignalHandler)handle_signal);
   ACE_UNUSED_ARG (sa);
 
   return 0;
