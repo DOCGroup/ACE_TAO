@@ -1,7 +1,7 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 ====================================================
 
-. Add support for Embarcadero C++ Builder 11.0 Olympus using
+. Add support for Embarcadero C++ Builder 11.0 Alexandria using
   the bcc32c compiler
 
 . Allow ACE_Module and ACE_SOCK_Dgram_Mcast to be sub-classed
