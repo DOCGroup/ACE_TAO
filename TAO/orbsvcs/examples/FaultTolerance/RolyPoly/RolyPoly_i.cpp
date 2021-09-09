@@ -10,10 +10,6 @@ RolyPoly_i::RolyPoly_i (CORBA::ORB_ptr orb)
 {
 }
 
-RolyPoly_i::~RolyPoly_i (void)
-{
-}
-
 CORBA::Any* RolyPoly_i::
 get_state ()
 {
@@ -59,7 +55,7 @@ RolyPoly_i::number (char *&str)
 }
 
 void
-RolyPoly_i::shutdown (void)
+RolyPoly_i::shutdown ()
 {
   ACE_DEBUG ((LM_DEBUG, "Server is shutting down.\n"));
 

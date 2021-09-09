@@ -12,6 +12,7 @@
 #include "Send_Task_Stopper.h"
 #include "ace/Auto_Ptr.h"
 #include "ace/High_Res_Timer.h"
+#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -59,7 +60,7 @@ public:
   typedef Auto_Disconnect<Client_Type> Client_Auto_Disconnect;
   typedef ACE_Auto_Basic_Array_Ptr<Client_Auto_Disconnect> Client_Auto_Disconnect_Array;
   typedef ACE_Auto_Basic_Array_Ptr<Send_Task> Send_Task_Array;
-  typedef auto_ptr<Send_Task_Stopper> Auto_Send_Task_Stopper;
+  typedef std::unique_ptr<Send_Task_Stopper> Auto_Send_Task_Stopper;
   typedef ACE_Auto_Basic_Array_Ptr<Auto_Send_Task_Stopper> Send_Task_Stopper_Array;
 
 private:

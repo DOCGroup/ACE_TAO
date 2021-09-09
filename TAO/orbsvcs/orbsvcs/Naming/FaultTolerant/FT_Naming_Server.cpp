@@ -559,6 +559,7 @@ TAO_FT_Naming_Server::parse_args (int argc,
               break;
             }
         }
+        // fallthrough
       case '?':
         // fallthrough
       default:
