@@ -307,7 +307,7 @@ UTL_IdList::get_string_copy ()
     {
       if (n > delimiter_start)
         {
-          ACE_OS::strncat (buffer, "::", 2);
+          ACE_OS::strcat (buffer, "::");
         }
       const char *item = i.item ()->get_string ();
       ACE_OS::strcat (buffer, item);
