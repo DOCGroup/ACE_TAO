@@ -386,7 +386,7 @@ TAO_Advanced_Resource_Factory::init_protocol_factories (void)
 
       (*factory)->factory (
         ACE_Dynamic_Service<TAO_Protocol_Factory>::instance (name.c_str ()));
-      if ((*factory)->factory () == 0)
+      if ((*factory)->factory () == nullptr)
         {
           TAOLIB_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT("TAO (%P|%t) Unable to load ")

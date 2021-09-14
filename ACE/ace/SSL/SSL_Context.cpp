@@ -408,8 +408,8 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
 
   char *peer = 0;
   char **peerarg = ACE::debug () ? &peer : 0;
-  int flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
-  size_t len = ACE_OS::strlen (name);
+  int const flags = X509_CHECK_FLAG_ALWAYS_CHECK_SUBJECT;
+  size_t const len = ACE_OS::strlen (name);
 
   int const result = ::X509_check_host (cert, name, len, flags, peerarg);
 
@@ -417,7 +417,7 @@ ACE_SSL_Context::check_host (const ACE_INET_Addr &host, SSL *peerssl)
     {
       ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("ACE (%P|%t) SSL_Context::check_host ")
-                  ACE_TEXT ("name <%C> returns %d, peer <%s>\n"),
+                  ACE_TEXT ("name <%C> returns %d, peer <%C>\n"),
                   name, result, peer));
     }
   if (peer != 0)
@@ -755,11 +755,11 @@ ACE_SSL_Context::report_error (unsigned long error_code)
 }
 
 void
-ACE_SSL_Context::report_error (void)
+ACE_SSL_Context::report_error ()
 {
   ACE_TRACE ("ACE_SSL_Context::report_error");
 
-  unsigned long err = ::ERR_get_error ();
+  unsigned long const err = ::ERR_get_error ();
   ACE_SSL_Context::report_error (err);
   ACE_OS::last_error (err);
 }
@@ -783,8 +783,8 @@ ACE_SSL_Context::dh_params (const char *file_name,
 
   {
     // Swiped from Rescorla's examples and the OpenSSL s_server.c app
-    DH * ret=0;
-    BIO * bio = 0;
+    DH * ret = nullptr;
+    BIO * bio = nullptr;
 
     if ((bio = ::BIO_new_file (this->dh_params_.file_name (), "r")) == 0)
       {
