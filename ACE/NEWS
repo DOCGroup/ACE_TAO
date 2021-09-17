@@ -4,6 +4,10 @@ USER VISIBLE CHANGES BETWEEN ACE-6.5.14 and ACE-6.5.15
 . Add support for Embarcadero C++ Builder 11.0 Alexandria using
   the bcc32 compiler
 
+. Add support for MacOSX Big Sur
+
+. Improved ACE_Atomic implementation for g++
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.13 and ACE-6.5.14
 ======================================================
 
