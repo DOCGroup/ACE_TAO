@@ -8,6 +8,10 @@ USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 
 . Add ACE_SWAP_LONG_LONG byte swap macro for ACE_UINT64
 
+. Improved ACE_Atomic implementation for g++
+
+. Various cleanup and using more C++11 features
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.2 and ACE-7.0.3
 ====================================================
 
