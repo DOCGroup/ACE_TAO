@@ -49,7 +49,7 @@ public:
   TAO_COIOP_Connector (void);
 
   /// Destructor.
-  ~TAO_COIOP_Connector (void);
+  ~TAO_COIOP_Connector () = default;
 
   /**
    * @name The TAO_Connector Methods

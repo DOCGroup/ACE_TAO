@@ -24,10 +24,6 @@ TAO_DIOP_Connector::TAO_DIOP_Connector (void)
 {
 }
 
-TAO_DIOP_Connector::~TAO_DIOP_Connector (void)
-{
-}
-
 int
 TAO_DIOP_Connector::open (TAO_ORB_Core *orb_core)
 {

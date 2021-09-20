@@ -47,13 +47,12 @@ typedef ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 class TAO_Strategies_Export TAO_COIOP_Transport : public TAO_Transport
 {
 public:
-
   /// Constructor.
   TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
                        TAO_ORB_Core *orb_core);
 
   /// Default destructor.
-  ~TAO_COIOP_Transport (void);
+  ~TAO_COIOP_Transport () = default;
 
   /// Look for the documentation in Transport.h.
   virtual int handle_input (TAO_Resume_Handle &rh,
