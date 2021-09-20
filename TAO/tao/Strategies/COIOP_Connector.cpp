@@ -13,12 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Connector::TAO_COIOP_Connector (void)
+TAO_COIOP_Connector::TAO_COIOP_Connector ()
   : TAO_Connector (TAO_TAG_COIOP_PROFILE)
-{
-}
-
-TAO_COIOP_Connector::~TAO_COIOP_Connector (void)
 {
 }
 

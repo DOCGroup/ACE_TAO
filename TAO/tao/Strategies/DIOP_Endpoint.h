@@ -65,7 +65,7 @@ public:
                      CORBA::Short priority);
 
   /// Destructor.
-  ~TAO_DIOP_Endpoint (void);
+  ~TAO_DIOP_Endpoint (void) = default;
 
   /**
    * @name TAO_Endpoint Methods

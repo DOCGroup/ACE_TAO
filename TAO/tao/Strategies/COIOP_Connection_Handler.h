@@ -44,9 +44,7 @@ class TAO_Strategies_Export TAO_COIOP_Connection_Handler
   : public TAO_COIOP_SVC_HANDLER,
     public TAO_Connection_Handler
 {
-
 public:
-
   TAO_COIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
@@ -84,7 +82,6 @@ public:
 
   /// Add ourselves to Cache.
   int add_transport_to_cache (void);
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

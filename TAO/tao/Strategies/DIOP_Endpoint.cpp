@@ -81,10 +81,6 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
   this->host (host); // With IPv6 performs check for decimal address
 }
 
-TAO_DIOP_Endpoint::~TAO_DIOP_Endpoint (void)
-{
-}
-
 int
 TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
                         int use_dotted_decimal_addresses)

@@ -52,7 +52,7 @@ public:
   TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid);
 
   /// Destructor.
-  ~TAO_COIOP_Endpoint (void);
+  ~TAO_COIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods

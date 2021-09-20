@@ -28,10 +28,6 @@ TAO_DIOP_Transport::TAO_DIOP_Transport (TAO_DIOP_Connection_Handler *handler,
 {
 }
 
-TAO_DIOP_Transport::~TAO_DIOP_Transport (void)
-{
-}
-
 ACE_Event_Handler *
 TAO_DIOP_Transport::event_handler_i (void)
 {

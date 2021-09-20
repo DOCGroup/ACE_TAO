@@ -39,7 +39,7 @@ public:
   TAO_COIOP_Protocol_Factory (void);
 
   /// Destructor.
-  virtual ~TAO_COIOP_Protocol_Factory (void);
+  virtual ~TAO_COIOP_Protocol_Factory () = default;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook
