@@ -10,23 +10,11 @@
 //=============================================================================
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.h"
 
-
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/PortableGroup/PG_Properties_Encoder.inl"
 #endif /* !  __ACE_INLINE__ */
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-//////////
-// Properties_Encoder
-TAO_PG::Properties_Encoder::Properties_Encoder ()
-{
-}
-
-TAO_PG::Properties_Encoder::~Properties_Encoder ()
-{
-}
-
 
 void TAO_PG::Properties_Encoder::add (
   const char * name,

@@ -25,7 +25,6 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint ()
     next_ (0),
     preferred_if_()
 {
-  this->uint_ip_addr (0u);
 }
 
 TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
@@ -38,21 +37,6 @@ TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const ACE_INET_Addr &addr)
     preferred_if_()
 {
   this->object_addr (addr);
-}
-
-// Use of this ctr must be avoided
-TAO_UIPMC_Endpoint::TAO_UIPMC_Endpoint (const CORBA::Octet class_d_address[4],
-                                        CORBA::UShort port)
-  : TAO_Endpoint (IOP::TAG_UIPMC),
-    port_ (port),
-    preferred_path_ (),
-    next_ (0),
-    preferred_if_()
-{
-  for (int i = 0; i<4; i++)
-    this->class_d_address_[i] = class_d_address[i];
-
-  this->update_object_addr ();
 }
 
 TAO_UIPMC_Endpoint::~TAO_UIPMC_Endpoint ()
@@ -68,7 +52,6 @@ TAO_UIPMC_Endpoint::object_addr (const ACE_INET_Addr &addr)
   addr.get_host_addr (tmp, sizeof tmp);
   this->host_ = CORBA::string_dup (tmp);
   this->object_addr_.set (addr);
-  this->uint_ip_addr (addr.get_ip_address ());
 }
 
 const char *
@@ -120,11 +103,11 @@ TAO_UIPMC_Endpoint::next ()
 TAO_Endpoint *
 TAO_UIPMC_Endpoint::duplicate ()
 {
-  TAO_UIPMC_Endpoint *endpoint = 0;
+  TAO_UIPMC_Endpoint *endpoint = nullptr;
 
   ACE_NEW_RETURN (endpoint,
                   TAO_UIPMC_Endpoint (this->object_addr_),
-                  0);
+                  nullptr);
 
   return endpoint;
 }
@@ -135,12 +118,12 @@ TAO_UIPMC_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
   const TAO_UIPMC_Endpoint *endpoint =
     dynamic_cast<const TAO_UIPMC_Endpoint *> (other_endpoint);
 
-  if (endpoint == 0)
-    return 0;
+  if (endpoint == nullptr)
+    return false;
 
   return
     (this->port_ == endpoint->port_
-     && ACE_OS::strcmp (this->host (), endpoint->host ()) == 0);
+     && std::strcmp (this->host (), endpoint->host ()) == 0);
 }
 
 CORBA::ULong
@@ -183,31 +166,29 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
             && this->object_addr_.get_type () == AF_INET6)
         {
           latest->preferred_if_ = CORBA::string_dup (preferred[i].c_str() + 3);
-          latest->preferred_path_.host = (const char *) 0;
+          latest->preferred_path_.host = static_cast<const char *> (0);
           if (TAO_debug_level > 3)
             ORBSVCS_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, setting network interface name <%s>"
-                      " as preferred path for [%s] \n",
+                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, setting network interface name <%C>"
+                      " as preferred path for [%C] \n",
                       latest->preferred_if_.in(), this->host_.in ()));
         }
       else
 #endif /* ACE_HAS_IPV6 */
         {
-          latest->preferred_path_.host =
-            CORBA::string_dup (preferred[i].c_str());
+          latest->preferred_path_.host = CORBA::string_dup (preferred[i].c_str());
 
           if (TAO_debug_level > 3)
             ORBSVCS_DEBUG ((LM_DEBUG,
-                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, adding path [%s]"
-                      " as preferred local address for [%s] \n",
+                      "TAO (%P|%t) - TAO_UIPMC_Endpoint::preferred_interfaces, adding path [%C]"
+                      " as preferred local address for [%C] \n",
                       latest->preferred_path_.host.in(), this->host_.in ()));
         }
 
       ++i;
       if (i < count)
         {
-          TAO_Endpoint *tmp_ep =
-            latest->duplicate ();
+          TAO_Endpoint *tmp_ep = latest->duplicate ();
           latest->next_ = dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
           if (!latest->next_)
             {
@@ -223,8 +204,7 @@ TAO_UIPMC_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
       !oc->orb_params ()->enforce_pref_interfaces ())
     {
       TAO_Endpoint *tmp_ep = latest->duplicate ();
-      latest->next_ =
-        dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
+      latest->next_ = dynamic_cast<TAO_UIPMC_Endpoint *> (tmp_ep);
       if (!latest->next_)
         {
           delete tmp_ep;

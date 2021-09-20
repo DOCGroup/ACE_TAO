@@ -50,7 +50,7 @@ public:
                       const char *listener_interfaces);
 
   /// Destructor.
-  ~TAO_UIPMC_Acceptor (void);
+  ~TAO_UIPMC_Acceptor ();
 
   /// @@ Helper method for the implementation repository, should go
   ///    away

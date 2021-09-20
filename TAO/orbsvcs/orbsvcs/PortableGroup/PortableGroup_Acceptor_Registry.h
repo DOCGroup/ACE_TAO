@@ -45,7 +45,6 @@ namespace CORBA
 class TAO_PortableGroup_Export TAO_PortableGroup_Acceptor_Registry
 {
 public:
-
   /**
    * @struct Entry
    *
@@ -64,7 +63,7 @@ public:
   };
 
   ///  Default constructor.
-  TAO_PortableGroup_Acceptor_Registry (void);
+  TAO_PortableGroup_Acceptor_Registry () = default;
 
   ///  Default destructor.
   ~TAO_PortableGroup_Acceptor_Registry (void);

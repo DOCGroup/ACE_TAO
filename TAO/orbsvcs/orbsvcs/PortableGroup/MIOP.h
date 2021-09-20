@@ -23,10 +23,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
 {
-
   class TAO_PortableGroup_Export MIOP_Loader
   {
-    public:
+  public:
     /// Used to force the insertion of UIPMC_Factory in the service
     /// configurator.
     static int Initializer (void);
@@ -34,7 +33,6 @@ namespace TAO
 
   static int
   Requires_MIOP_Initializer = MIOP_Loader::Initializer ();
-
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

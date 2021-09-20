@@ -25,10 +25,6 @@ TAO::PG_Object_Group_Manipulator::PG_Object_Group_Manipulator ()
 {
 }
 
-TAO::PG_Object_Group_Manipulator::~PG_Object_Group_Manipulator ()
-{
-}
-
 void TAO::PG_Object_Group_Manipulator::allocate_ogid (PortableGroup::ObjectGroupId & ogid)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->lock_ogid_);

@@ -35,10 +35,6 @@ TAO_UIPMC_Transport::TAO_UIPMC_Transport (
   this->uuid_hash_ = uuid.to_string ()->hash ();
 }
 
-TAO_UIPMC_Transport::~TAO_UIPMC_Transport ()
-{
-}
-
 ACE_Event_Handler *
 TAO_UIPMC_Transport::event_handler_i ()
 {
