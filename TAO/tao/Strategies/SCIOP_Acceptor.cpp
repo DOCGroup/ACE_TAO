@@ -727,7 +727,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+    if (if_addrs[j].is_loopback ())
       ++lo_cnt;
 
   // The instantiation for this template is in
@@ -762,7 +762,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          if_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)
@@ -854,7 +854,6 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   return 0;
 }
 
-
 CORBA::ULong
 TAO_SCIOP_Acceptor::endpoint_count (void)
 {
@@ -915,7 +914,6 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 
   return 1;
 }
-
 
 int
 TAO_SCIOP_Acceptor::parse_options (const char *str)
