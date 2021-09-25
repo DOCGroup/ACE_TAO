@@ -4,7 +4,6 @@
 namespace XMLSchema
 {
   //@@ VC6
-  //
   template<typename T>
   void
   add_info (XSCRT::ExtendedTypeInfoMap& map, T*)
