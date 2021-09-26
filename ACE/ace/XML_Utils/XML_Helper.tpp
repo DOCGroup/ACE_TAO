@@ -1,5 +1,4 @@
 #include "XML_Helper.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Log_Msg.h"
 #include "ace/Log_Category.h"
 #include "xercesc/util/XMLUniDefs.hpp"
@@ -10,6 +9,7 @@
 #include "xercesc/dom/DOM.hpp"
 #include "XercesString.h"
 #include "xercesc/dom/DOMLSSerializer.hpp"
+#include <memory>
 
 namespace XML
 {
@@ -74,7 +74,7 @@ namespace XML
     catch (const XMLException& e)
       {
         char* message = XMLString::transcode (e.getMessage());
-        ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+        std::unique_ptr<char[]> cleanup_message (message);
 
         throw;
       }
@@ -189,7 +189,7 @@ namespace XML
                                                     maxChars))
           {
             char* message = XMLString::transcode (errText);
-            ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+            std::unique_ptr<char[]> cleanup_message (message);
           }
         return 0;
 
@@ -197,7 +197,7 @@ namespace XML
     catch (const XMLException& e)
       {
         char* message = XMLString::transcode (e.getMessage());
-        ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+        std::unique_ptr<char[]> cleanup_message (message);
         throw 0;
       }
     catch (...)
@@ -237,7 +237,7 @@ namespace XML
     catch (const XMLException& e)
       {
         char* message = XMLString::transcode (e.getMessage());
-        ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+        std::unique_ptr<char[]> cleanup_message (message);
         throw;
       }
 
@@ -293,10 +293,10 @@ namespace XML
     catch (const xercesc::XMLException &e)
       {
         char* message = XMLString::transcode (e.getMessage());
-        ACE_Auto_Basic_Array_Ptr<char> cleanup_message (message);
+        std::unique_ptr<char[]> cleanup_message (message);
 
         char* name = XMLString::transcode (e.getType());
-        ACE_Auto_Basic_Array_Ptr<char> cleanup_name (name);
+        std::unique_ptr<char[]> cleanup_name (name);
 
         ACELIB_ERROR ((LM_ERROR, "Caught exception while serializing DOM to file.\n"
                     "Name: %C\n"

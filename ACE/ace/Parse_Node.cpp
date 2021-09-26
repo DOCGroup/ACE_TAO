@@ -10,9 +10,9 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
 #include "ace/ARGV.h"
-#include "ace/Auto_Ptr.h"
 
 #include <list>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -648,7 +648,7 @@ ACE_Function_Node::make_func_name (ACE_TCHAR const * func_name)
                       ACE_TCHAR[len],
                       0);
 
-      ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe (mangled_func_name);
+      std::unique_ptr<ACE_TCHAR[]> safe (mangled_func_name);
 
       ACE_OS::snprintf (mangled_func_name,
                         len,
