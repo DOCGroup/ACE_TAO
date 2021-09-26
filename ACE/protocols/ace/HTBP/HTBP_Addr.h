@@ -59,7 +59,7 @@ namespace ACE
             int address_family = AF_UNSPEC);
 
       /// Destructor
-      virtual ~Addr ();
+      virtual ~Addr () = default;
 
       int set (u_short port,
                const char host [],
