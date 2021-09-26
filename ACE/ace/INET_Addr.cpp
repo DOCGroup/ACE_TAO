@@ -1098,7 +1098,7 @@ ACE_INET_Addr::get_ip_address () const
   if (this->get_type () == AF_INET6)
     {
       if (IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr) ||
-          IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr)    )
+          IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr))
         {
           ACE_UINT32 addr;
           // Return the last 32 bits of the address

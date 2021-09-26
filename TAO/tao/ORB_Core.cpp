@@ -66,6 +66,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Message_Block.h"
 #include <cstring>
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ClientRequestInterceptor_Adapter.h"
@@ -2761,7 +2762,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
   if (factory != nullptr)
     {
-      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
+      std::unique_ptr <TAO_Adapter> iortable_adapter (factory->create (this));
       iortable_adapter->open ();
 
       CORBA::Object_var tmp_root = iortable_adapter->root ();
@@ -2795,7 +2796,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
   if (factory != nullptr)
     {
-      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
+      std::unique_ptr <TAO_Adapter> iortable_adapter (factory->create (this));
       iortable_adapter->open ();
 
       CORBA::Object_var tmp_root = iortable_adapter->root ();

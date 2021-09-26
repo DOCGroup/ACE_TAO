@@ -1,16 +1,10 @@
 #include "ConsumerAdmin_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_CosEC_ConsumerAdmin_i::TAO_CosEC_ConsumerAdmin_i (void)
   : qos_ (),
     rtec_consumeradmin_ (RtecEventChannelAdmin::ConsumerAdmin::_nil ())
 {
-  // No-Op.
-}
-
-TAO_CosEC_ConsumerAdmin_i::~TAO_CosEC_ConsumerAdmin_i (void)
-{
-  // No-Op.
 }
 
 int
@@ -39,11 +33,9 @@ TAO_CosEC_ConsumerAdmin_i::obtain_push_supplier (void)
                                                  rtecproxypushsupplier.in ()),
                   proxysupplier_nil);
 
-  auto_ptr<TAO_CosEC_ProxyPushSupplier_i>
-    auto_proxysupplier (proxypushsupplier);
+  std::unique_ptr<TAO_CosEC_ProxyPushSupplier_i> auto_proxysupplier (proxypushsupplier);
 
-  CosEventChannelAdmin::ProxyPushSupplier_ptr proxy_obj =
-    auto_proxysupplier.get ()->_this ();
+  CosEventChannelAdmin::ProxyPushSupplier_ptr proxy_obj = auto_proxysupplier.get ()->_this ();
 
    // give the ownership to the POA.
   auto_proxysupplier.get ()->_remove_ref ();

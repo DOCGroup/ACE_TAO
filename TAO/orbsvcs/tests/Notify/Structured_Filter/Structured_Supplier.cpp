@@ -13,8 +13,8 @@
 
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_strings.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_NS_unistd.h"
+#include <memory>
 
 static const ACE_TCHAR *ior_file = ACE_TEXT ("supplier.ior");
 static TAO_Notify_Tests_StructuredPushSupplier* supplier = 0;
@@ -153,7 +153,7 @@ static void create_supplier (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   try
   {
     Notify_Test_Client client;

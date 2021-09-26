@@ -298,7 +298,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
 
-      ACE_auto_ptr_reset (safe_entry, role_info);
+      safe_entry.reset (role_info);
       role_info->type_id_ = type_id;
     }
   else

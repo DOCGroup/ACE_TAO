@@ -19,10 +19,10 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/Singleton.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -187,7 +187,7 @@ namespace ACE_Utils
 
     /// The string representation of the UUID. This is created and
     /// updated only on demand.
-    mutable ACE_Auto_Ptr <ACE_CString> as_string_;
+    mutable std::unique_ptr <ACE_CString> as_string_;
   };
 
   /**

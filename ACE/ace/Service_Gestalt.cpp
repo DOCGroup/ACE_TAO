@@ -21,11 +21,10 @@
 #include "ace/OS_NS_time.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_sys_stat.h"
-
 #include "ace/TSS_T.h"
 #include "ace/Service_Gestalt.h"
-
 #include "ace/Svc_Conf_Param.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -557,7 +556,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   // make_service_type() is doing the dynamic loading and also runs
   // any static initializers
-  ACE_Auto_Ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
+  std::unique_ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
 
   if (tmp.get () != 0 &&
       this->initialize_i (tmp.get (), parameters) == 0)
@@ -914,7 +913,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
+  std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;
@@ -945,8 +944,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 #else
   ACE_DLL dll;
 
-  auto_ptr<ACE_XML_Svc_Conf>
-    xml_svc_conf (this->get_xml_svc_conf (dll));
+  std::unqiue_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;

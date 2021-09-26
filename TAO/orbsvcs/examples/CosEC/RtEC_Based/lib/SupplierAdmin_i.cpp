@@ -1,16 +1,10 @@
 #include "SupplierAdmin_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_CosEC_SupplierAdmin_i::TAO_CosEC_SupplierAdmin_i (void)
   : qos_ (),
     rtec_supplieradmin_ (RtecEventChannelAdmin::SupplierAdmin::_nil ())
 {
-  // No-Op.
-}
-
-TAO_CosEC_SupplierAdmin_i::~TAO_CosEC_SupplierAdmin_i (void)
-{
-  // No-Op.
 }
 
 int
@@ -38,7 +32,7 @@ TAO_CosEC_SupplierAdmin_i::obtain_push_consumer (void)
                   TAO_CosEC_ProxyPushConsumer_i (this->qos_,
                                                  rtecproxypushconsumer.in ()),
                   proxyconsumer_nil);
-  auto_ptr <TAO_CosEC_ProxyPushConsumer_i>
+  std::unique_ptr <TAO_CosEC_ProxyPushConsumer_i>
     auto_proxyconsumer (proxypushconsumer);
 
   CosEventChannelAdmin::ProxyPushConsumer_ptr proxy_obj =
@@ -57,4 +51,3 @@ TAO_CosEC_SupplierAdmin_i::obtain_pull_consumer (void)
   // TODO: implement this.
   return CosEventChannelAdmin::ProxyPullConsumer::_nil ();
 }
-

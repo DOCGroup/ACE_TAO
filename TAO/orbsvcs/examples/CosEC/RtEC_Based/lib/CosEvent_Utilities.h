@@ -37,7 +37,7 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
   CosEC_ServantBase (void);
 
   /// Destructor.
-  virtual ~CosEC_ServantBase (void);
+  virtual ~CosEC_ServantBase () = default;
 
   /**
    * This method creates a local scheduler, rtec and cosec.

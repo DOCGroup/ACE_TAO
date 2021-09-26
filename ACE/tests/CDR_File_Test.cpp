@@ -10,7 +10,6 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_stdlib.h"
@@ -24,8 +23,6 @@
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
-
-
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 

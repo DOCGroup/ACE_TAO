@@ -36,10 +36,10 @@ class TAO_RTEC_COSEC_Export TAO_CosEC_EventChannel_i :
   //
 public:
   /// Constructor.
-  TAO_CosEC_EventChannel_i (void);
+  TAO_CosEC_EventChannel_i ();
 
   /// Destructor.
-  ~TAO_CosEC_EventChannel_i (void);
+  ~TAO_CosEC_EventChannel_i () = default;
 
   /// Activates the ConsumerAdmin and SupplierAdmin servants.  Returns
   /// -1 on error, 0 on success.

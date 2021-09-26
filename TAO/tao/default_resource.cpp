@@ -27,6 +27,8 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "tao/default_resource.inl"
 #endif /* __ACE_INLINE__ */
@@ -1192,7 +1194,7 @@ TAO_Default_Resource_Factory::codeset_manager()
     }
 
 
-  ACE_Auto_Ptr<TAO_Codeset_Manager> safemgr (mgr);
+  std::unique_ptr<TAO_Codeset_Manager> safemgr (mgr);
 
   if (TAO_debug_level >= 1)
     TAOLIB_DEBUG ((LM_DEBUG,
@@ -1203,7 +1205,6 @@ TAO_Default_Resource_Factory::codeset_manager()
   this->wchar_codeset_parameters_.apply_to (mgr->wchar_codeset_descriptor());
 
   return safemgr.release ();
-
 }
 
 TAO_Resource_Factory::Resource_Usage
