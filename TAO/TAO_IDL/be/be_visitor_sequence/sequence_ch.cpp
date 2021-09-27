@@ -180,7 +180,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << "public:" << be_idt;
 
       *os << be_nl
-          << node->local_name () << " ();";
+          << node->local_name () << " () = default;";
 
       if (node->unbounded ())
         {
@@ -230,7 +230,7 @@ int be_visitor_sequence_ch::visit_sequence (be_sequence *node)
           << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
           << be_nl;
 
-      *os << "virtual ~" << node->local_name () << " ();";
+      *os << "virtual ~" << node->local_name () << " () = default;";
 
       if (be_global->alt_mapping () && node->unbounded ())
         {
