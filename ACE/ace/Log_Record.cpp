@@ -4,7 +4,6 @@
 #include "ace/ACE.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/CDR_Stream.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Truncate.h"
 #include "ace/Log_Category.h"
 
@@ -18,6 +17,7 @@
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 #include "ace/OS_Memory.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -389,7 +389,7 @@ operator>> (ACE_InputCDR &cdr,
 #else
     ACE_NEW_RETURN (log_msg, ACE_TCHAR[buffer_len + 1], -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-    ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> log_msg_p (log_msg);
+    std::unique_ptr<ACE_TCHAR[]> log_msg_p (log_msg);
     log_record.type (type);
     log_record.pid (pid);
     log_record.time_stamp (ACE_Time_Value (ACE_Utils::truncate_cast<time_t> (sec),

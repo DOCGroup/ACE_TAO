@@ -1,6 +1,5 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Reactor.h"
-#include "ace/Auto_Ptr.h"
 
 #include "tao/Leader_Follower.h"
 #include "tao/LF_Follower_Auto_Ptr.h"
@@ -11,6 +10,8 @@
 #include "tao/GUIResource_Factory.h"
 #include "tao/ORB_Core.h"
 #include "tao/ORB_Time_Policy.h"
+
+#include <memory>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/Leader_Follower.inl"
@@ -225,7 +226,7 @@ TAO_Leader_Follower::resume_events ()
   // not need to obtain the lock, only called when holding the lock
   while (!this->deferred_event_set_.is_empty ())
     {
-      ACE_Auto_Ptr<Deferred_Event> event (this->deferred_event_set_.pop_front ());
+      std::unique_ptr<Deferred_Event> event (this->deferred_event_set_.pop_front ());
       // Send a notification to the reactor to cause the awakening of a new
       // follower, if there is one already available.
       ACE_Reactor *reactor = this->orb_core_->reactor ();

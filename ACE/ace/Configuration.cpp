@@ -1,5 +1,4 @@
 #include "ace/Configuration.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/SString.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_strings.h"
@@ -16,6 +15,8 @@
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -111,7 +112,7 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
 {
   // Make a copy of key
   ACE_Configuration_Section_Key current_section = key;
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (path_in.rep ());
+  std::unique_ptr<ACE_TCHAR[]> pData (path_in.rep ());
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');
   parser.delimiter_replace ('/', '\0');
@@ -785,7 +786,7 @@ ACE_Configuration_Win32Registry::get_string_value (const ACE_Configuration_Secti
                   ACE_TCHAR[buffer_length],
                   -1);
 
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> buffer (temp);
+  std::unique_ptr<ACE_TCHAR[]> buffer (temp);
 
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
                                           t_name,
@@ -878,7 +879,7 @@ ACE_Configuration_Win32Registry::get_binary_value (
 
   BYTE * the_data = 0;
   ACE_NEW_RETURN (the_data, BYTE[length], -1);
-  ACE_Auto_Basic_Array_Ptr<BYTE> safe_data (the_data);
+  std::unique_ptr<BYTE[]> safe_data (the_data);
 
   if ((errnum = ACE_TEXT_RegQueryValueEx (base_key,
                                           t_name,
@@ -1001,7 +1002,7 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
   ACE_NEW_RETURN (temp_path,
                   ACE_TCHAR[ACE_OS::strlen (path) + 1],
                   0);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> pData (temp_path);
+  std::unique_ptr<ACE_TCHAR[]> pData (temp_path);
   ACE_OS::strcpy (pData.get (), path);
   ACE_Tokenizer parser (pData.get ());
   parser.delimiter_replace ('\\', '\0');

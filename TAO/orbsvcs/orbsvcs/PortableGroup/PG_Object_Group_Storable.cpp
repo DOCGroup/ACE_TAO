@@ -251,8 +251,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -290,8 +289,7 @@ TAO::PG_Object_Group_Storable::PG_Object_Group_Storable (
   // version already exists.
   bool stream_exists = false;
   {
-    ACE_Auto_Ptr<TAO::Storable_Base> stream (
-      this->create_stream ("r"));
+    ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
     if (stream->exists ())
       stream_exists = true;
@@ -311,16 +309,13 @@ TAO::PG_Object_Group_Storable::~PG_Object_Group_Storable ()
 {
   if (destroyed_)
     {
-      ACE_Auto_Ptr<TAO::Storable_Base> stream (
-        this->create_stream ("r"));
+      ACE_Auto_Ptr<TAO::Storable_Base> stream (this->create_stream ("r"));
 
       if (stream->exists ())
         {
           stream->remove ();
         }
-
     }
-
 }
 
 void

@@ -5,7 +5,7 @@
 #include "orbsvcs/RtecEventCommS.h"
 #include "orbsvcs/CosEventCommS.h"
 #include "ProxyPushConsumer_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 #if defined(_MSC_VER)
 #pragma warning(disable:4250)
@@ -25,10 +25,10 @@ public:
   TAO_CosEC_PushSupplierWrapper (CosEventComm::PushSupplier_ptr supplier);
   // Constructor.
 
-  ~TAO_CosEC_PushSupplierWrapper (void);
+  ~TAO_CosEC_PushSupplierWrapper () = default;
   // Destructor.
 
-  virtual void disconnect_push_supplier (void);
+  virtual void disconnect_push_supplier ();
   // Disconnects the push supplier.
 
 private:
@@ -50,12 +50,6 @@ TAO_CosEC_PushSupplierWrapper::TAO_CosEC_PushSupplierWrapper
 (CosEventComm::PushSupplier_ptr supplier)
   : supplier_ (CosEventComm::PushSupplier::_duplicate (supplier))
 {
-  // No-Op.
-}
-
-TAO_CosEC_PushSupplierWrapper::~TAO_CosEC_PushSupplierWrapper (void)
-{
-  // No-Op.
 }
 
 void
@@ -82,12 +76,10 @@ TAO_CosEC_ProxyPushConsumer_i::TAO_CosEC_ProxyPushConsumer_i (const RtecEventCha
     proxypushconsumer_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (proxypushconsumer)),
     wrapper_ (0)
 {
-  // No-Op.
 }
 
 TAO_CosEC_ProxyPushConsumer_i::~TAO_CosEC_ProxyPushConsumer_i (void)
 {
-  // No-Op.
 }
 
 void
@@ -153,8 +145,7 @@ TAO_CosEC_ProxyPushConsumer_i::connect_push_supplier (CosEventComm::PushSupplier
                     TAO_CosEC_PushSupplierWrapper (push_supplier),
                     CORBA::NO_MEMORY ());
 
-  auto_ptr <TAO_CosEC_PushSupplierWrapper>
-    auto_wrapper (wrapper);
+  std::unique_ptr <TAO_CosEC_PushSupplierWrapper> auto_wrapper (wrapper);
 
   RtecEventComm::PushSupplier_ptr rtecpushsupplier
     = auto_wrapper.get ()->_this ();

@@ -8,12 +8,6 @@ FactoryDriver::FactoryDriver (const ACE_TCHAR* name)
    child_poa_name_ ("CosEC_ChildPOA"),
    factory_servant_ (0)
 {
-  //No-Op.
-}
-
-FactoryDriver::~FactoryDriver (void)
-{
-  //No-Op.
 }
 
 int

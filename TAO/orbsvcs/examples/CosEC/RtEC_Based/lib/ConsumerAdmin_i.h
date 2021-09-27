@@ -34,7 +34,7 @@ public:
   TAO_CosEC_ConsumerAdmin_i (void);
 
   /// Destructor.
-  ~TAO_CosEC_ConsumerAdmin_i (void);
+  ~TAO_CosEC_ConsumerAdmin_i () = default;
 
   int init (const RtecEventChannelAdmin::ConsumerQOS &consumerqos,
             RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin);

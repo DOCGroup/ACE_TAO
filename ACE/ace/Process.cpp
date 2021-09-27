@@ -5,7 +5,6 @@
 #endif /* __ACE_INLINE__ */
 
 #include "ace/ARGV.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/Signal.h"
 #include "ace/SString.h"
 #include "ace/Log_Category.h"
@@ -26,6 +25,8 @@
 # include <rtpLib.h>
 # include <taskLib.h>
 #endif
+
+#include <memory>
 
 // This function acts as a signal handler for SIGCHLD. We don't really want
 // to do anything with the signal - it's just needed to interrupt a sleep.
@@ -1039,7 +1040,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
   ACE_TCHAR *newformat = 0;
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_newformat (newformat);
+  std::unique_ptr<ACE_TCHAR[]> safe_newformat (newformat);
 
 # if !defined (ACE_WIN32) && defined (ACE_USES_WCHAR)
   const ACE_TCHAR *fmt = ACE_TEXT ("%ls=%ls");
@@ -1061,7 +1062,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
 
   ACE_TCHAR *stack_buf = 0;
   ACE_NEW_RETURN (stack_buf, ACE_TCHAR[tmp_buflen], -1);
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_stack_buf (stack_buf);
+  std::unique_ptr<ACE_TCHAR[]> safe_stack_buf (stack_buf);
 
   do
     {
