@@ -106,12 +106,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   os->gen_ifdef_macro (node->flat_name ());
 
-  // default constructor
-  *os << be_nl_2
-      << node->name () << "::" << node->local_name ()
-      << " ()" << be_nl
-      << "{}";
-
   // for unbounded sequences, we have a different set of constructors
   if (node->unbounded ())
     {
@@ -200,12 +194,6 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
       *os << "length, buffer, release)" << be_uidt << be_uidt_nl
           << "{}";
   }
-
-  // Destructor.
-  *os << be_nl_2
-      << node->name () << "::~" << node->local_name ()
-      << " ()" << be_nl
-      << "{}";
 
   if (be_global->alt_mapping () && node->unbounded ())
     {
