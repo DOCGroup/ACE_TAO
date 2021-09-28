@@ -54,9 +54,8 @@ template <class T>
 class ACE_Incremental_Key_Generator
 {
 public:
-
   /// Constructor.
-  ACE_Incremental_Key_Generator ();
+  ACE_Incremental_Key_Generator () = default;
 
   /// Functor method: generates a new key.
   int operator () (T &t);
@@ -65,9 +64,8 @@ public:
   const T& current_value () const;
 
 protected:
-
   /// Current value.
-  T t_;
+  T t_ {};
 };
 
 /**
@@ -81,9 +79,8 @@ template <class T>
 class ACE_Iterator_Impl
 {
 public:
-
   /// Destructor.
-  virtual ~ACE_Iterator_Impl ();
+  virtual ~ACE_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const = 0;
@@ -112,9 +109,8 @@ template <class T>
 class ACE_Reverse_Iterator_Impl
 {
 public:
-
   /// Destructor.
-  virtual ~ACE_Reverse_Iterator_Impl ();
+  virtual ~ACE_Reverse_Iterator_Impl () = default;
 
   /// Clone.
   virtual ACE_Reverse_Iterator_Impl<T> *clone () const = 0;
@@ -143,7 +139,6 @@ template <class T>
 class ACE_Iterator
 {
 public:
-
   // = Traits.
   typedef T value_type;
   typedef ACE_Iterator_Impl<T> implementation;
@@ -183,7 +178,6 @@ public:
   ACE_Iterator_Impl<T> &impl ();
 
 protected:
-
   /// Implementation pointer.
   ACE_Iterator_Impl<T> *implementation_;
 };
@@ -199,7 +193,6 @@ template <class T>
 class ACE_Reverse_Iterator
 {
 public:
-
   // = Traits.
   typedef T value_type;
   typedef ACE_Reverse_Iterator_Impl<T> implementation;
@@ -245,7 +238,6 @@ public:
   ACE_Reverse_Iterator_Impl<T> &impl ();
 
 protected:
-
   /// Implementation pointer.
   ACE_Reverse_Iterator_Impl<T> *implementation_;
 };
@@ -261,7 +253,6 @@ template <class KEY, class VALUE>
 class ACE_Map
 {
 public:
-
   // = Traits.
   typedef KEY
           key_type;
@@ -279,7 +270,7 @@ public:
           reverse_iterator_implementation;
 
   /// Close down and release dynamically allocated resources.
-  virtual ~ACE_Map ();
+  virtual ~ACE_Map () = default;
 
   /// Initialize a map with size @a length.
   virtual int open (size_t length = ACE_DEFAULT_MAP_SIZE,
@@ -423,9 +414,8 @@ public:
   reverse_iterator rend ();
 
 protected:
-
   // = Protected no-op constructor.
-  ACE_Map ();
+  ACE_Map () = default;
 
   /// Return forward iterator.
   virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *begin_impl () = 0;
@@ -452,7 +442,6 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Iterator_Adapter : public ACE_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef IMPLEMENTATION
           implementation;
@@ -461,7 +450,7 @@ public:
   ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
 
   /// Destructor.
-  virtual ~ACE_Map_Impl_Iterator_Adapter ();
+  virtual ~ACE_Map_Impl_Iterator_Adapter () = default;
 
   /// Clone.
   virtual ACE_Iterator_Impl<T> *clone () const;
@@ -482,7 +471,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 };
@@ -498,7 +486,6 @@ template <class T, class IMPLEMENTATION, class ENTRY>
 class ACE_Map_Impl_Reverse_Iterator_Adapter : public ACE_Reverse_Iterator_Impl<T>
 {
 public:
-
   // = Traits.
   typedef IMPLEMENTATION
           implementation;
@@ -528,7 +515,6 @@ public:
   IMPLEMENTATION &impl ();
 
 protected:
-
   /// All implementation details are forwarded to this class.
   IMPLEMENTATION implementation_;
 };

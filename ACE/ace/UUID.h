@@ -96,7 +96,7 @@ namespace ACE_Utils
     UUID (const UUID &right);
 
     // Destructor
-    ~UUID ();
+    ~UUID () = default;
 
     ACE_UINT32 time_low () const;
     void time_low (ACE_UINT32);

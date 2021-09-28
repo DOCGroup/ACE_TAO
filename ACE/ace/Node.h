@@ -49,8 +49,7 @@ public:
   friend class ACE_Unbounded_Stack<T>;
   friend class ACE_Unbounded_Stack_Iterator<T>;
 
-  /// This isn't necessary, but it keeps some compilers happy.
-  ~ACE_Node ();
+  ~ACE_Node () = default;
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -59,8 +58,7 @@ private:
   ACE_Node (ACE_Node<T, C> *n = 0, int = 0);
   ACE_Node (const ACE_Node<T, C> &n);
 private:
-  /// Not possible
-  void operator= (const ACE_Node<T, C> &);
+  void operator= (const ACE_Node<T, C> &) = delete;
 
 private:
   /// Pointer to next element in the list of ACE_Nodes.

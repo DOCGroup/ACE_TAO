@@ -8,13 +8,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Default "do nothing" constructor.
-ACE_Token_Request::ACE_Token_Request (void)
-  : token_name_ (0),
-    client_id_ (0)
-{
-}
-
 // Create a ACE_Token_Request message.
 
 ACE_Token_Request::ACE_Token_Request (int token_type,

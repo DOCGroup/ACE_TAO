@@ -161,7 +161,7 @@ private:
 
 private:
   /// Contains all the framework components.
-  ACE_Framework_Component **component_vector_;
+  ACE_Framework_Component **component_vector_ {};
 
   /// Current number of components.
   int current_size_;

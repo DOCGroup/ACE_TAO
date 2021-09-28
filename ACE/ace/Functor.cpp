@@ -31,14 +31,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Command_Base::~ACE_Command_Base ()
-{
-}
-
-ACE_Noop_Command::ACE_Noop_Command()
-{
-}
-
 int
 ACE_Noop_Command::execute(void*)
 {
