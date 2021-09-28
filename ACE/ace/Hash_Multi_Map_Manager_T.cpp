@@ -51,11 +51,6 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (const EXT_ID
 {
 }
 
-template <class EXT_ID, class INT_ID>
-ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Multi_Map_Entry (void)
-{
-}
-
 template <class EXT_ID, class INT_ID> EXT_ID &
 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::key ()
 {
