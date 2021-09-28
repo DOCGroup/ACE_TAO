@@ -16,11 +16,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE_Tcc(ACE_Node)
 
 template <class T, class C>
-ACE_Node<T, C>::~ACE_Node ()
-{
-}
-
-template <class T, class C>
 ACE_Node<T, C>::ACE_Node (const T &i, ACE_Node<T, C> *n)
   : next_ (n),
     item_ (i)
