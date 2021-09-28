@@ -156,7 +156,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
       << "class "
       << " " << this->S_ << "Arg_Traits< ::"
       << node->name () << ">" << be_idt_nl
-      << ": public" << be_idt << be_idt_nl
+      << ": public "
       << "Object_" << this->S_ << "Arg_Traits_T<" << be_idt << be_idt_nl
       << "::" << node->name () << "_ptr," << be_nl
       << "::" << node->name () << "_var," << be_nl
@@ -169,8 +169,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
     }
 
   *os << "," << be_nl << this->insert_policy ()
-      << be_uidt_nl
-      << ">" << be_uidt << be_uidt << be_uidt << be_uidt_nl
+      << ">" << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_nl
       << "};";
 

@@ -141,12 +141,6 @@ be_visitor_interface_ss::visit_interface (be_interface *node)
       << "{" << be_nl
       << "}" << be_nl_2;
 
-  *os << full_skel_name << "::~"
-      << local_name_prefix << node_local_name
-      << " ()" << be_nl;
-  *os << "{" << be_nl;
-  *os << "}" << be_nl;
-
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) == -1)
     {
