@@ -64,7 +64,7 @@ public:
     };
 
   /// "Do-nothing" constructor.
-  ACE_Naming_Context (void);
+  ACE_Naming_Context ();
 
   /**
    * Specifies the scope of this namespace, opens and memory-maps the

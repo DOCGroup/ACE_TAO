@@ -83,7 +83,7 @@ public:
   };
 
   /// Destructor is virtual to enable proper cleanup.
-  virtual ~ACE_Event_Handler ();
+  virtual ~ACE_Event_Handler () = default;
 
   /// Get the I/O handle.
   virtual ACE_HANDLE get_handle () const;
