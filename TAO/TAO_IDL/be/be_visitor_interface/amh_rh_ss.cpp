@@ -67,20 +67,6 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
       << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
 
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::" << rh_skel_class_name.c_str () << " ()" << be_nl
-      << ": TAO_AMH_Response_Handler ()," << be_idt_nl
-      << "::" << node->full_name () << " ()" << be_uidt << be_uidt_nl
-      << "{" << be_nl
-      << "}" << be_nl_2;
-
-  *os << rh_skel_full_scope_name.c_str ()
-      << "::~" << rh_skel_class_name.c_str ()
-      << " ()" << be_nl;
-  *os << "{" << be_nl;
-  *os << "}";
-
-
   // Generate code for elements in the scope (e.g., operations)
   // We'll rely on the base class (be_visitor_scope) to do the
   // right thing for us.

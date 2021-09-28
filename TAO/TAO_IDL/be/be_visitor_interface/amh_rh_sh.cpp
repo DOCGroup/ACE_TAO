@@ -72,8 +72,8 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
   *os << be_nl
       << "{" << be_nl
       << "public:" << be_idt_nl
-      << rh_skel_class_name.c_str () << " ();" << be_nl
-      << "virtual ~" << rh_skel_class_name.c_str () << " ();";
+      << rh_skel_class_name.c_str () << " () = default;" << be_nl
+      << "virtual ~" << rh_skel_class_name.c_str () << " () = default;";
 
   // Generate code for elements in the scope (e.g., operations).
   if (this->visit_scope (node) ==  -1)

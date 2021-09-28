@@ -57,9 +57,9 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
     }
 
   *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
 
-  *os << "virtual void ";
+  *os << "void ";
 
   // Step 2: Generate the method name
   // Check if we are an attribute node in disguise.
@@ -91,7 +91,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << ";";
+  *os << " override;";
 
   return 0;
 }
