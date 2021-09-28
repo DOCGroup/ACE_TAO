@@ -47,10 +47,10 @@ class ACE_Export ACE_Remote_Token_Proxy : public ACE_Token_Proxy
 {
 public:
   /// Null construction.
-  ACE_Remote_Token_Proxy (void);
+  ACE_Remote_Token_Proxy ();
 
   /// Death.
-  virtual ~ACE_Remote_Token_Proxy (void);
+  virtual ~ACE_Remote_Token_Proxy ();
 
   /**
    * Same as Token_Proxy. @a name is the string uniquely identifying

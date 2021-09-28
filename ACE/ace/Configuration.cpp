@@ -20,15 +20,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Section_Key_Internal::ACE_Section_Key_Internal ()
-  : ref_count_ (0)
-{
-}
-
-ACE_Section_Key_Internal::~ACE_Section_Key_Internal ()
-{
-}
-
 int
 ACE_Section_Key_Internal::add_ref ()
 {
@@ -42,11 +33,6 @@ ACE_Section_Key_Internal::dec_ref ()
   if (!--ref_count_)
     delete this;
   return 0;
-}
-
-ACE_Configuration_Section_Key::ACE_Configuration_Section_Key ()
-  : key_ (0)
-{
 }
 
 ACE_Configuration_Section_Key::~ACE_Configuration_Section_Key ()
@@ -91,10 +77,6 @@ ACE_TCHAR ACE_Configuration::NULL_String_ = '\0';
 
 ACE_Configuration::ACE_Configuration ()
   : root_ ()
-{
-}
-
-ACE_Configuration::~ACE_Configuration ()
 {
 }
 

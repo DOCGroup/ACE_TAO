@@ -43,7 +43,7 @@ public:
   ACE_Lock ();
 
   /// Noop virtual destructor
-  virtual ~ACE_Lock ();
+  virtual ~ACE_Lock () = default;
 
   /**
    * Explicitly destroy the lock.  Note that only one thread should
@@ -121,7 +121,7 @@ class ACE_Export ACE_Adaptive_Lock : public ACE_Lock
 public:
   /// You must also override the destructor function to match with how
   /// you construct the underneath @c lock_.
-  virtual ~ACE_Adaptive_Lock ();
+  virtual ~ACE_Adaptive_Lock () = default;
 
   // = Lock/unlock operations.
 
@@ -142,9 +142,9 @@ protected:
    * The default constructor simply set the @c lock_ to 0 (null).  You
    * must overwrite this method for this class to work.
    */
-  ACE_Adaptive_Lock ();
+  ACE_Adaptive_Lock () = default;
 
-  ACE_Lock *lock_;
+  ACE_Lock *lock_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

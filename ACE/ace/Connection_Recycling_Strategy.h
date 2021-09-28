@@ -30,7 +30,7 @@ public:
   ACE_Connection_Recycling_Strategy ();
 
   /// Virtual Destructor
-  virtual ~ACE_Connection_Recycling_Strategy ();
+  virtual ~ACE_Connection_Recycling_Strategy () = default;
 
   /// Remove from cache.
   virtual int purge (const void *recycling_act) = 0;

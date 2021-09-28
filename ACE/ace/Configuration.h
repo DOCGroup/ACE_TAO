@@ -67,19 +67,19 @@ class ACE_Export ACE_Section_Key_Internal
 {
 public:
   /// Virtual destructor, make sure descendants are virtual!
-  virtual ~ACE_Section_Key_Internal (void);
+  virtual ~ACE_Section_Key_Internal () = default;
 
   /// Increment reference count
-  virtual int add_ref (void);
+  virtual int add_ref ();
 
   /// Decrement reference count.  Will delete this if count gets to 0
-  virtual int dec_ref (void);
+  virtual int dec_ref ();
 protected:
-  ACE_Section_Key_Internal (void);
+  ACE_Section_Key_Internal () = default;
   ACE_Section_Key_Internal (const ACE_Section_Key_Internal& rhs);
   ACE_Section_Key_Internal& operator= (ACE_Section_Key_Internal& rhs);
 
-  u_int ref_count_;
+  u_int ref_count_ {};
 };
 
 /**
@@ -96,7 +96,7 @@ class ACE_Export ACE_Configuration_Section_Key
   friend class ACE_Configuration;
 public:
   /// Default constructor.
-  ACE_Configuration_Section_Key (void);
+  ACE_Configuration_Section_Key () = default;
 
   /// Constructor that initializes to a pointer to a concrete internal key.
   /**
@@ -112,10 +112,9 @@ public:
 
   /// Assignment operator, increments reference count for this object
   /// and decrements it on @a rhs.
-  ACE_Configuration_Section_Key &
-    operator= (const ACE_Configuration_Section_Key &rhs);
+  ACE_Configuration_Section_Key &operator= (const ACE_Configuration_Section_Key &rhs);
 private:
-  ACE_Section_Key_Internal *key_;
+  ACE_Section_Key_Internal *key_ {};
 };
 
 /**
@@ -144,7 +143,7 @@ public:
   };
 
   /// Destructor
-  virtual ~ACE_Configuration (void);
+  virtual ~ACE_Configuration () = default;
 
   /// Obtain a reference to the root section of this configuration.
   /*
@@ -404,7 +403,6 @@ protected:
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
   ACE_Configuration& operator= (const ACE_Configuration& rhs);
-
 
   ACE_Configuration_Section_Key root_;
 };

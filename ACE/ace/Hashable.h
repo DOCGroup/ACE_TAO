@@ -30,7 +30,7 @@ class ACE_Export ACE_Hashable
 {
 public:
   /// Destructor.
-  virtual ~ACE_Hashable ();
+  virtual ~ACE_Hashable () = default;
 
   /// Computes and returns hash value.  This "caches" the hash value to
   /// improve performance.
@@ -38,7 +38,7 @@ public:
 
 protected:
   /// Protected constructor.
-  ACE_Hashable ();
+  ACE_Hashable () = default;
 
   /// This is the method that actually performs the non-cached hash
   /// computation.
@@ -46,14 +46,10 @@ protected:
 
 protected:
   /// Pre-computed hash-value.
-  mutable unsigned long hash_value_;
+  mutable unsigned long hash_value_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Hashable.inl"
-#endif /* __ACE_INLINE __ */
 
 #include /**/ "ace/post.h"
 
