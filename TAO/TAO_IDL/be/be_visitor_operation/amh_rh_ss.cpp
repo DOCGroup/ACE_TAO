@@ -171,7 +171,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << "holder->raise_" << operation_name.c_str ()
           << " ();" << be_uidt_nl
           << "}" << be_nl
-          << "catch ( ::CORBA::Exception& ex)"
+          << "catch (const ::CORBA::Exception& ex)"
           << be_nl
           << "{" << be_idt_nl
           << "this->_tao_rh_send_exception (ex);" << be_uidt_nl

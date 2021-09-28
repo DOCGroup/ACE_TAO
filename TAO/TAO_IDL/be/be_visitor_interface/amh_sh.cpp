@@ -113,7 +113,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   // No copy constructor for locality constraint interface.
   *os << class_name.c_str () << " (const " << class_name.c_str ()
       << "& rhs);" << be_nl
-      << "virtual ~" << class_name.c_str () << " (void);\n\n"
+      << "virtual ~" << class_name.c_str () << " () = default;\n\n"
       << be_nl
       << "virtual ::CORBA::Boolean _is_a (const char* logical_type_id);" << be_nl_2;
 

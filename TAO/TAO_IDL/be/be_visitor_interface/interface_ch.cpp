@@ -188,7 +188,6 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
     {
       // Generate the "protected" constructor so that users cannot
       // instantiate us.
-
       if (! node->is_abstract ())
         {
           *os << "// Concrete interface only." << be_nl
@@ -218,10 +217,10 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
       if (! node->is_abstract ())
         {
           *os << "// Concrete non-local interface only." << be_nl
-              << node->local_name () << " (" << be_idt << be_idt_nl
-              << "::IOP::IOR *ior," << be_nl
-              << "TAO_ORB_Core *orb_core);" << be_uidt
-              << be_uidt_nl << be_nl;
+              << node->local_name () << " ("
+              << "::IOP::IOR *ior, "
+              << "TAO_ORB_Core *orb_core);"
+              << be_nl << be_nl;
         }
 
       *os << "// Non-local interface only." << be_nl
@@ -243,7 +242,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   // Protected destructor.
   *os << be_nl_2
-      << "virtual ~" << node->local_name () << " ();";
+      << "virtual ~" << node->local_name () << " () = default;";
 
   // Private copy constructor and assignment operator. These are not
   // allowed, hence they are private.
