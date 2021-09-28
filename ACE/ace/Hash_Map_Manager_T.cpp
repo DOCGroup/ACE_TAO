@@ -53,6 +53,11 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (const EXT_ID &ext_id,
 {
 }
 
+template <class EXT_ID, class INT_ID>
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::~ACE_Hash_Map_Entry ()
+{
+}
+
 template <class EXT_ID, class INT_ID> EXT_ID &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key ()
 {

@@ -45,7 +45,7 @@ public:
                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev);
 
   /// Destructor.
-  ~ACE_Hash_Map_Entry () = default;
+  ~ACE_Hash_Map_Entry ();
 
   /// Key accessor.
   EXT_ID& key ();
