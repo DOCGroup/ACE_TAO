@@ -58,7 +58,6 @@ private:
   ACE_Node (ACE_Node<T, C> *n = 0, int = 0);
   ACE_Node (const ACE_Node<T, C> &n);
 private:
-  /// Not possible
   void operator= (const ACE_Node<T, C> &) = delete;
 
 private:
