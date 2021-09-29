@@ -1,0 +1,111 @@
+commit 91630f5cdb507babf94e0a9e7cc8ac236bc97648
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Sep 17 08:54:01 2021 +0200
+
+    Update NEWS
+
+commit 216a00bb8e60d3163dec87e634eabdbd8a6118e3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Sep 9 19:27:16 2021 +0200
+
+    Update NEWS
+
+commit f959e309ee75b1b5e51b27e80fb6a0a55cc4dfa1
+Merge: 106e4736533 e2e639121ad
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 6 11:23:46 2021 -0500
+
+    Merge pull request #1670 from mitza-oci/no-conv-lib-62
+    
+    [ace6tao2] Removed conv_lib.mpb
+
+commit 106e47365336828900e66d8e33934e0959ef7838
+Merge: d035863b2a8 615284ae6d9
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Sep 6 11:23:10 2021 -0500
+
+    Merge pull request #1664 from simpsont-oci/atomic_op_gcc_tsan_fixes_and_updated_atomics
+    
+    [ACE6] Update ACE_Atomic_Op_GCC to support newer __atomic operations when available
+
+commit e2e639121adf82de5183688b0d26fd0a6097dd3b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 31 21:01:43 2021 -0500
+
+    Removed conv_lib.mpb
+    
+    Replaced uses of it with install_lib
+    
+    (cherry picked from commit 1bfbc674980869ef05c6fed94c01f291ff5fd7d4)
+
+commit 615284ae6d9ca661bd1f644b042003dd8e161f30
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Thu Aug 26 12:52:39 2021 -0500
+
+    make use of clang's compatibility with GCC's __atomic methods
+
+commit c04bb36209f697dab1f0f46a2868f4f43a5bfe29
+Author: Timothy Simpson <simpsont@objectcomputing.com>
+Date:   Wed Aug 25 22:45:34 2021 -0500
+
+    support for newer preferred C++11 style __atomic methods when applicable and load-side synchronization
+
+commit 2f773602b3a7788e27c0ce05dda02c0eb0326ed2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 20 15:58:40 2021 -0500
+
+    Fixed warning in ACE_SOCK_Dgram::make_multicast_ifaddr
+
+commit 31673b8bcb8ff7e4b8e67f2671deef5a3f32d521
+Merge: b2600884c13 5dc04f8e9ff
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 20 14:51:03 2021 -0500
+
+    Merge pull request #1657 from jrw972/support-big-sur
+    
+    ACE 6 doesn't support Big Sur
+
+commit f416adcbdc76f096ae34bb984a50c1070e957701
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Fri Aug 20 11:00:40 2021 -0500
+
+    ACE 6 doesn't support Big Sur
+    
+    Problem
+    -------
+    
+    ACE 6 doesn't compile for macOS Big Sur.
+    
+    Solution
+    --------
+    
+    Update platform_macosx.GNU and related files to support Catalina and
+    Big Sur.
+
+commit ac4db46a6b9505ec3f2fe0e6792b9a08a8534843
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 16:20:25 2021 +0200
+
+    Updated Embarcadero C++ Compiler checks
+    
+        * ACE/ace/Compression/rle/RLECompressor.cpp:
+        * ACE/ace/post.h:
+        * ACE/ace/pre.h:
+
+commit b344abde2f0676ecda529735264f1c41e3c5ee94
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 08:32:08 2021 +0200
+
+    Updated Embarcadero version checks
+
+commit 38bfd5a69ed2f584e436980b9fe309935010919f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Aug 16 08:28:09 2021 +0200
+
+    Updated Embarcadero version checks
+
+commit 448e4b00edd5d4e5e7ccdbbfcb97dbc686ecfdb5
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Aug 4 08:48:30 2021 +0200
+
+    Updated for next release

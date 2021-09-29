@@ -1,4 +1,4 @@
-This is TAO version 2.5.14, released Wed Aug 04 08:36:34 CEST 2021
+This is TAO version 2.5.15, released Wed Sep 29 09:17:26 CEST 2021
 
 If you have any problems with or questions about TAO, please send
 e-mail to the TAO mailing list (tao-bugs@list.isis.vanderbilt.edu),
