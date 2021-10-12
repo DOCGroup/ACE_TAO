@@ -88,7 +88,7 @@ public:
                 u_char selector = DEFAULT_SELECTOR);
 
   /// Default dtor.
-  ~ACE_ATM_Addr (void);
+  ~ACE_ATM_Addr () = default;
 
   /// Default initialization for non-address values (e.g.,
   /// t_atm_sap_addr.SVE_tag_addr, t_atm_sap_addr.SVE_tag_selector)
