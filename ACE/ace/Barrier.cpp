@@ -2,10 +2,6 @@
 
 #if defined (ACE_HAS_THREADS)
 
-#if !defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
-#endif /* __ACE_INLINE__ */
-
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_errno.h"
 
