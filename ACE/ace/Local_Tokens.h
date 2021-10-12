@@ -905,14 +905,11 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-  // @@ Hopefully, we can remove this ridicules ifdef when CE's compiler becomes more normal.
   /// Construction.
-  ACE_Null_Token (void);
+  ACE_Null_Token () = default;
 
   /// Destructor.
-  ~ACE_Null_Token (void);
-#endif /* ACE_LACKS_INLINE_FUNCTION */
+  ~ACE_Null_Token () = default;
 
   /// Acquire.
   virtual int acquire (int /* notify */ = 0,
