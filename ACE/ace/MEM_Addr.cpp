@@ -54,10 +54,6 @@ ACE_MEM_Addr::ACE_MEM_Addr (u_short port_number)
   this->initialize_local (port_number);
 }
 
-ACE_MEM_Addr::~ACE_MEM_Addr ()
-{
-}
-
 int
 ACE_MEM_Addr::initialize_local (u_short port_number)
 {

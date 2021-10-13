@@ -51,10 +51,6 @@ ACE_Base_Thread_Adapter::ACE_Base_Thread_Adapter (
 #endif // ACE_USES_GPROF
 }
 
-ACE_Base_Thread_Adapter::~ACE_Base_Thread_Adapter ()
-{
-}
-
 void
 ACE_Base_Thread_Adapter::inherit_log_msg ()
 {
@@ -81,10 +77,6 @@ ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
 {
   if (ACE_Base_Thread_Adapter::sync_log_msg_hook_ != 0)
     (*ACE_Base_Thread_Adapter::sync_log_msg_hook_) (prg);
-}
-
-ACE_OS_Thread_Descriptor::~ACE_OS_Thread_Descriptor ()
-{
 }
 
 ACE_OS_Thread_Descriptor *

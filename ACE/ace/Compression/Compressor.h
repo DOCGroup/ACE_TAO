@@ -103,7 +103,7 @@ public:
     */
   virtual void reset_stats();
 
-  virtual ~ACE_Compressor ();
+  virtual ~ACE_Compressor () = default;
 
 protected:
   ACE_Compressor(ACE_CompressorId compressor_id,

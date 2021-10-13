@@ -56,16 +56,6 @@ ACE_Tokens::no_of_waiters ()
   return this->waiters_.size ();
 }
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-ACE_Null_Token::ACE_Null_Token (void)
-{
-}
-
-ACE_Null_Token::~ACE_Null_Token (void)
-{
-}
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 void
 ACE_TPQ_Entry::dump () const
 {
