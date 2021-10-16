@@ -112,12 +112,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
   this->set (sap, selector);
 }
 
-ACE_ATM_Addr::~ACE_ATM_Addr (void)
-{
-}
-
 // Return the address.
-
 void *
 ACE_ATM_Addr::get_addr () const
 {

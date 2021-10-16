@@ -27,7 +27,7 @@
   derivatives based upon this software code base.
 =====================================================================*/
 
-//---------[ external C libaries used ]--------------------------------
+//---------[ external C libraries used ]--------------------------------
 
 #include "asnmp/oid.h"                  // include def for oid class
 #include "ace/OS_NS_string.h"

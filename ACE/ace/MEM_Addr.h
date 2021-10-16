@@ -47,7 +47,7 @@ public:
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
   /// Default dtor.
-  ~ACE_MEM_Addr (void);
+  ~ACE_MEM_Addr () = default;
 
   // = Direct initialization methods.
 

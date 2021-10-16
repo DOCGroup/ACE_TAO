@@ -253,11 +253,11 @@ public:
   ACE_Proactor* proactor () const;
 
   /// Destructor.
-  virtual ~ACE_Asynch_Operation (void);
+  virtual ~ACE_Asynch_Operation () = default;
 
 protected:
   /// Constructor.
-  ACE_Asynch_Operation (void);
+  ACE_Asynch_Operation () = default;
 
   /// Return the underlying implementation class.
   virtual ACE_Asynch_Operation_Impl *implementation () const = 0;
