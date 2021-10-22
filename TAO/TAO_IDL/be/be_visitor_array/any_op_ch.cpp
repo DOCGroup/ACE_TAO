@@ -18,10 +18,6 @@ be_visitor_array_any_op_ch::be_visitor_array_any_op_ch (
 {
 }
 
-be_visitor_array_any_op_ch::~be_visitor_array_any_op_ch ()
-{
-}
-
 int
 be_visitor_array_any_op_ch::visit_array (be_array *node)
 {

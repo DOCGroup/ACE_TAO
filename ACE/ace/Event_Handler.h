@@ -280,7 +280,7 @@ public:
 
 protected:
   /// Force ACE_Event_Handler to be an abstract base class.
-  ACE_Event_Handler (ACE_Reactor * = 0,
+  ACE_Event_Handler (ACE_Reactor * = nullptr,
                      int priority = ACE_Event_Handler::LO_PRIORITY);
 
   /// Typedef for implementation of reference counting.
@@ -390,8 +390,7 @@ class ACE_Export ACE_Notification_Buffer
 public:
   ACE_Notification_Buffer ();
 
-  ACE_Notification_Buffer (ACE_Event_Handler *eh,
-                           ACE_Reactor_Mask mask);
+  ACE_Notification_Buffer (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
   /// Default destructor.
   ~ACE_Notification_Buffer () = default;

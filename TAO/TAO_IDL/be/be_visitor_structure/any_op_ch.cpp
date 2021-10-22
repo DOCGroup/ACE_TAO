@@ -22,10 +22,6 @@ be_visitor_structure_any_op_ch::be_visitor_structure_any_op_ch (
 {
 }
 
-be_visitor_structure_any_op_ch::~be_visitor_structure_any_op_ch ()
-{
-}
-
 int
 be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 {

@@ -17,10 +17,6 @@ be_visitor_enum_any_op_ch::be_visitor_enum_any_op_ch (
 {
 }
 
-be_visitor_enum_any_op_ch::~be_visitor_enum_any_op_ch ()
-{
-}
-
 int
 be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
 {

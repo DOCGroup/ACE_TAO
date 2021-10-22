@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARRAY_CDR_OP_CI_H_
 #define _BE_VISITOR_ARRAY_CDR_OP_CI_H_
 
-// ************************************************************
-// class be_visitor_array_cdr_op_ci
-// ************************************************************
-
 /**
  * @class be_visitor_array_cdr_op_ci
  *
