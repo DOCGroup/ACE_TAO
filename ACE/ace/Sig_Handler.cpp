@@ -146,12 +146,12 @@ ACE_Sig_Handler::register_handler_i (int signum,
       ACE_Sig_Action sa; // Define a "null" action.
       ACE_Event_Handler *sh = ACE_Sig_Handler::handler_i (signum, new_sh);
 
-      // Return a pointer to the old <ACE_Sig_Handler> if the user
+      // Return a pointer to the old ACE_Event_Handler if the user
       // asks for this.
       if (old_sh != 0)
         *old_sh = sh;
 
-      // Make sure that <new_disp> points to a valid location if the
+      // Make sure that @a new_disp points to a valid location if the
       // user doesn't care...
       if (new_disp == 0)
         new_disp = &sa;
