@@ -10,9 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /************************************************************/
 
 ACE_INLINE int
-ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */,
-                                               siginfo_t * /* siginfo */,
-                                               ucontext_t *)
+ACE_Wakeup_All_Threads_Handler::handle_signal (int /* signum */, siginfo_t * /* siginfo */, ucontext_t *)
 {
   // This will get called when <WFMO_Reactor->wakeup_all_threads_> event
   // is signaled. There is nothing to be done here.

@@ -185,9 +185,7 @@ public:
   virtual int handle_input (ACE_HANDLE);
 
   // Dispatches handle_input () notification.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   virtual int handle_timeout (ACE_Time_Value const & current_time,
                               void const * act = 0);

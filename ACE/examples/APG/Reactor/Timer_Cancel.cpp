@@ -35,9 +35,7 @@ public:
   {
   }
 
-  int handle_signal (int sig,
-                     siginfo_t * = 0,
-                     ucontext_t * = 0)
+  int handle_signal (int sig, siginfo_t * = 0, ucontext_t * = 0)
   {
     if (sig == SIGINT)
       {

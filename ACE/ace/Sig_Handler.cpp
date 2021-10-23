@@ -236,9 +236,7 @@ ACE_Sig_Handler::remove_handler (int signum,
 /// Master dispatcher function that gets called by a signal handler and
 /// dispatches one handler...
 void
-ACE_Sig_Handler::dispatch (int signum,
-                           siginfo_t *siginfo,
-                           ucontext_t *ucontext)
+ACE_Sig_Handler::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handler::dispatch");
 
@@ -514,9 +512,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
 /// Master dispatcher function that gets called by a signal handler and
 /// dispatches *all* the handlers...
 void
-ACE_Sig_Handlers::dispatch (int signum,
-                            siginfo_t *siginfo,
-                            ucontext_t *ucontext)
+ACE_Sig_Handlers::dispatch (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Handlers::dispatch");
   // The following is #ifdef'd out because it's entirely non-portable

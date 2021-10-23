@@ -43,9 +43,7 @@ ACE_Sig_Adapter::sigkey ()
 }
 
 int
-ACE_Sig_Adapter::handle_signal (int signum,
-                                siginfo_t *siginfo,
-                                ucontext_t *ucontext)
+ACE_Sig_Adapter::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *ucontext)
 {
   ACE_TRACE ("ACE_Sig_Adapter::handle_signal");
 

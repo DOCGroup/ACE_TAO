@@ -7,8 +7,7 @@
 class MySignalHandler : public ACE_Event_Handler
   {
   public:
-    virtual int handle_signal(int signo,
-                              siginfo_t * = 0, ucontext_t * = 0)
+    virtual int handle_signal(int signo, siginfo_t * = 0, ucontext_t * = 0)
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Signal %d\n"), signo));
       return 0;

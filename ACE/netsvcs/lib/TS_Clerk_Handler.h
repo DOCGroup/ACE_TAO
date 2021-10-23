@@ -121,9 +121,7 @@ public:
 
 protected:
   /// Handle SIGPIPE.
-  virtual int handle_signal (int signum,
-                             siginfo_t *,
-                             ucontext_t *);
+  virtual int handle_signal (int signum, siginfo_t *, ucontext_t *);
 
   static void stderr_output (int = 0);
 

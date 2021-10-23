@@ -20,15 +20,14 @@
 // Default is to have a 2 second timeout.
 static int timeout = 2;
 
+// This class illustrates how to handle signal-driven I/O using
+// the <ACE_Reactor> framework.  Note that signals may be caught
+// and processed without requiring the use of global signal
+// handler functions or global signal handler data.
 class Sig_Handler : public ACE_Event_Handler
 {
-  // = TITLE
-  //   This class illustrates how to handle signal-driven I/O using
-  //   the <ACE_Reactor> framework.  Note that signals may be caught
-  //   and processed without requiring the use of global signal
-  //   handler functions or global signal handler data.
 public:
-  Sig_Handler (void);
+  Sig_Handler ();
   virtual ACE_HANDLE get_handle () const;
   virtual int handle_input (ACE_HANDLE);
 
@@ -36,8 +35,7 @@ public:
   virtual int shutdown (ACE_HANDLE, ACE_Reactor_Mask);
   //FUZZ: enable check_for_lack_ACE_OS
 
-  virtual int handle_signal (int signum, siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
 private:
   ACE_HANDLE handle_;
@@ -46,7 +44,7 @@ private:
 // A dummy_handle is required to reserve a slot in the ACE_Reactor's
 // descriptor table.
 
-Sig_Handler::Sig_Handler (void)
+Sig_Handler::Sig_Handler ()
 {
   // Assign the Sig_Handler a dummy I/O descriptor.  Note that even
   // though we open this file "Write Only" we still need to use the

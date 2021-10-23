@@ -13,9 +13,7 @@ public:
   virtual ~MySignalHandler()
   { }
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0)
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0)
   {
     ACE_TRACE ("MySignalHandler::handle_signal");
 

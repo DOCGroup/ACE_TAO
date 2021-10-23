@@ -2420,9 +2420,7 @@ ACE_WFMO_Reactor_Notify::get_handle () const
 // Handle all pending notifications.
 
 int
-ACE_WFMO_Reactor_Notify::handle_signal (int signum,
-                                        siginfo_t *siginfo,
-                                        ucontext_t *)
+ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   ACE_UNUSED_ARG (signum);
 

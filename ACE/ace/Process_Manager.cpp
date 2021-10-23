@@ -333,9 +333,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
 // On Win32, this routine is called synchronously, and is passed the
 // HANDLE of the Process that exited, so we can do all our work here.
 int
-ACE_Process_Manager::handle_signal (int,
-                                    siginfo_t *si,
-                                    ucontext_t *)
+ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
