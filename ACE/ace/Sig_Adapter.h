@@ -40,7 +40,7 @@ public:
 
   /// Returns this signal key that's used to remove this from the
   /// ACE_Reactor's internal table.
-  int sigkey ();
+  int sigkey () const;
 
   /// Called by the ACE_Reactor to dispatch the signal handler.
   int handle_signal (int, siginfo_t *, ucontext_t *) override;

@@ -32,7 +32,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Adapter)
 
 int
-ACE_Sig_Adapter::sigkey ()
+ACE_Sig_Adapter::sigkey () const
 {
   ACE_TRACE ("ACE_Sig_Adapter::sigkey");
   return this->sigkey_;
