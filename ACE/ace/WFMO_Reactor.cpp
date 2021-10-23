@@ -1621,14 +1621,13 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
                                               ACE_Event_Handler **user_event_handler)
 {
   long existing_masks = 0;
-  int found = 0;
+  bool found = false;
 
   ACE_Event_Handler_var safe_event_handler =
-    this->handler (handle,
-                   existing_masks);
+    this->handler (handle, existing_masks);
 
   if (safe_event_handler.handler ())
-    found = 1;
+    found = true;
 
   if (!found)
     return -1;
@@ -1639,37 +1638,36 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::READ_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_READ) &&
         !ACE_BIT_ENABLED (existing_masks, FD_CLOSE))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::WRITE_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_WRITE))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::EXCEPT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_OOB))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::ACCEPT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_ACCEPT))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::CONNECT_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_CONNECT))
-      found = 0;
+      found = false;
 
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
-      found = 0;
-
+      found = false;
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))
-      found = 0;
+      found = false;
 
   if (found &&
       user_event_handler)
@@ -1898,12 +1896,12 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
     return time->msec ();
 }
 
-
 int
-ACE_WFMO_Reactor::expire_timers (void)
+ACE_WFMO_Reactor::expire_timers ()
 {
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
+
     // expire all pending timers.
     return this->timer_queue_->expire ();
 
@@ -2420,9 +2418,7 @@ ACE_WFMO_Reactor_Notify::get_handle () const
 // Handle all pending notifications.
 
 int
-ACE_WFMO_Reactor_Notify::handle_signal (int signum,
-                                        siginfo_t *siginfo,
-                                        ucontext_t *)
+ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *)
 {
   ACE_UNUSED_ARG (signum);
 

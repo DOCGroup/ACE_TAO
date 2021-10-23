@@ -164,7 +164,7 @@ public:
   /// Register @c this as the current disposition and store old
   /// disposition into @a oaction if it is non-NULL.
   int register_action (int signum,
-                       ACE_Sig_Action *oaction = 0);
+                       ACE_Sig_Action *oaction = nullptr);
 
   /// Assign the value of @a oaction to @c this and make it become the
   /// new signal disposition.
@@ -223,7 +223,7 @@ public:
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated
-  ACE_Sig_Guard (ACE_Sig_Set *mask = 0, bool condition = true);
+  ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
 
   /// Restore blocked signals.
   ~ACE_Sig_Guard ();
@@ -239,7 +239,7 @@ private:
   ACE_Sig_Set omask_;
 
   /// Guard Condition
-  bool condition_;
+  bool const condition_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

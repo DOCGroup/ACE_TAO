@@ -59,8 +59,7 @@ Event_Transceiver::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Event_Transceiver::handle_close (ACE_HANDLE,
-                                 ACE_Reactor_Mask)
+Event_Transceiver::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;
@@ -69,9 +68,7 @@ Event_Transceiver::handle_close (ACE_HANDLE,
 // Close down via SIGINT or SIGQUIT.
 
 int
-Event_Transceiver::handle_signal (int,
-                                  siginfo_t *,
-                                  ucontext_t *)
+Event_Transceiver::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_Reactor::instance ()->end_reactor_event_loop ();
   return 0;

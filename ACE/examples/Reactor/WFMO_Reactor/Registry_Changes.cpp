@@ -9,7 +9,6 @@
  */
 //=============================================================================
 
-
 #include "ace/OS_main.h"
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY) && !defined (ACE_LACKS_REGNOTIFYCHANGEKEYVALUE)
@@ -18,8 +17,6 @@
 #include "ace/Registry.h"
 #include "ace/Auto_Event.h"
 #include "ace/OS_NS_unistd.h"
-
-
 
 static int stop_test = 0;
 static HKEY context_to_monitor = HKEY_CURRENT_USER;

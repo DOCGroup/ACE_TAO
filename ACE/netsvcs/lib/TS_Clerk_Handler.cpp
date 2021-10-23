@@ -64,7 +64,6 @@ ACE_TS_Clerk_Handler::timeout (void)
 }
 
 // This is called when a <send> to the logging server fails...
-
 int
 ACE_TS_Clerk_Handler::handle_signal (int, siginfo_t *, ucontext_t *)
 {

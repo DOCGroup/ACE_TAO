@@ -137,9 +137,7 @@ Peer_Handler<PEER_STREAM>::handle_output (ACE_HANDLE)
 }
 
 template <typename PEER_STREAM> int
-Peer_Handler<PEER_STREAM>::handle_signal (int,
-                                          siginfo_t *,
-                                          ucontext_t *)
+Peer_Handler<PEER_STREAM>::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   // @@ Note that this code is not portable to all OS platforms since
   // it uses print statements within signal handler context.

@@ -35,9 +35,7 @@ public:
   ~Thread_Handler (void);
   // Destructor.
 
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
   // Handle signals.
 
   virtual int handle_exception (ACE_HANDLE);

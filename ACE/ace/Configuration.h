@@ -426,7 +426,7 @@ public:
 
 protected:
   /// Destructor - invokes <RegCloseKey>
-  virtual ~ACE_Section_Key_Win32 (void);
+  virtual ~ACE_Section_Key_Win32 ();
 
   // Not used
   ACE_Section_Key_Win32 (const ACE_Section_Key_Win32& rhs);
@@ -454,7 +454,7 @@ public:
                                             u_long security_access = KEY_ALL_ACCESS);
 
   /// Destructor
-  virtual ~ACE_Configuration_Win32Registry (void);
+  virtual ~ACE_Configuration_Win32Registry ();
 
   virtual int open_section (const ACE_Configuration_Section_Key& base,
                             const ACE_TCHAR* sub_section,
@@ -557,7 +557,7 @@ class ACE_Export ACE_Configuration_ExtId
 {
 public:
   /// Defeault ctor
-  ACE_Configuration_ExtId (void);
+  ACE_Configuration_ExtId () = default;
 
   /// Named constructor
   explicit ACE_Configuration_ExtId (const ACE_TCHAR* name);
@@ -566,7 +566,7 @@ public:
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
 
   /// destructor
-  ~ACE_Configuration_ExtId (void);
+  ~ACE_Configuration_ExtId () = default;
 
   /// Assignment operator
   ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
@@ -586,11 +586,10 @@ public:
   u_long hash  () const;
 
   // = Data members.
-
-  const ACE_TCHAR * name_;
+  const ACE_TCHAR * name_ {};
 
   // Accessors
-  const ACE_TCHAR *name (void);
+  const ACE_TCHAR *name ();
 };
 
 typedef ACE_Hash_Map_With_Allocator<ACE_Configuration_ExtId, int>

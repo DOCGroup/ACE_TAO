@@ -73,9 +73,7 @@ IPC_Server::~IPC_Server (void)
 }
 
 int
-IPC_Server::handle_signal (int,
-                           siginfo_t *,
-                           ucontext_t *)
+IPC_Server::handle_signal (int, siginfo_t *, ucontext_t *)
 {
   ACE_LOG_MSG->log (LM_INFO, ACE_TEXT ("IPC_Server::handle_signal().\n"));
 

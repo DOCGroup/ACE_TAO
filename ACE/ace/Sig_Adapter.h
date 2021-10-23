@@ -36,20 +36,20 @@ public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
   ACE_Sig_Adapter (ACE_Sig_Handler_Ex, int sigkey = 0);
-  ~ACE_Sig_Adapter (void);
+  ~ACE_Sig_Adapter () override = default;
 
   /// Returns this signal key that's used to remove this from the
   /// ACE_Reactor's internal table.
-  int sigkey (void);
+  int sigkey () const;
 
-  /// Called by the <Reactor> to dispatch the signal handler.
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *);
+  /// Called by the ACE_Reactor to dispatch the signal handler.
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Key for this signal handler (used to remove it).
-  int sigkey_;
+  int const sigkey_;
 
   /// Is this an external handler or an ACE handler?
   enum
@@ -68,7 +68,7 @@ private:
   ACE_Sig_Action sa_;
 
   /// This is an ACE hander.
-  ACE_Event_Handler *eh_;
+  ACE_Event_Handler *eh_ {};
 
   /// This is a normal C function.
   ACE_Sig_Handler_Ex sig_func_;
