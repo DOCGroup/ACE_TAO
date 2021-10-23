@@ -53,7 +53,6 @@ ACE_Sig_Adapter::handle_signal (int signum, siginfo_t *siginfo, ucontext_t *ucon
       {
         // We have to dispatch a handler that was registered by a
         // third-party library.
-
         ACE_Sig_Action old_disp;
 
         // Make sure this handler executes in the context it was

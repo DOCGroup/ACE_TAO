@@ -1151,9 +1151,7 @@ ACE_WFMO_Reactor::handler (ACE_HANDLE handle,
 {
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  return this->handler_rep_.handler (handle,
-                                     mask,
-                                     event_handler);
+  return this->handler_rep_.handler (handle, mask, event_handler);
 }
 
 ACE_INLINE bool

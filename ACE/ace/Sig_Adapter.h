@@ -36,14 +36,14 @@ public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
   ACE_Sig_Adapter (ACE_Sig_Handler_Ex, int sigkey = 0);
-  ~ACE_Sig_Adapter (void);
+  ~ACE_Sig_Adapter () override;
 
   /// Returns this signal key that's used to remove this from the
   /// ACE_Reactor's internal table.
   int sigkey ();
 
   /// Called by the ACE_Reactor to dispatch the signal handler.
-  virtual int handle_signal (int, siginfo_t *, ucontext_t *);
+  int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
   ACE_ALLOC_HOOK_DECLARE;
 
