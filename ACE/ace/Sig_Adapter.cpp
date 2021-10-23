@@ -29,10 +29,6 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
-ACE_Sig_Adapter::~ACE_Sig_Adapter ()
-{
-}
-
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Adapter)
 
 int

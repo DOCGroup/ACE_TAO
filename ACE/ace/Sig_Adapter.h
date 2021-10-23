@@ -36,7 +36,7 @@ public:
   ACE_Sig_Adapter (ACE_Sig_Action &, int sigkey);
   ACE_Sig_Adapter (ACE_Event_Handler *, int sigkey);
   ACE_Sig_Adapter (ACE_Sig_Handler_Ex, int sigkey = 0);
-  ~ACE_Sig_Adapter () override;
+  ~ACE_Sig_Adapter () override = default;
 
   /// Returns this signal key that's used to remove this from the
   /// ACE_Reactor's internal table.
