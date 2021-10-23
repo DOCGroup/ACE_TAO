@@ -114,7 +114,6 @@ ACE_Configuration::expand_path (const ACE_Configuration_Section_Key& key,
     }
 
   return 0;
-
 }
 
 int
@@ -1098,11 +1097,6 @@ ACE_Configuration_Value_IntId::free (ACE_Allocator *alloc)
   // Do nothing in other cases...
 }
 
-ACE_Configuration_ExtId::ACE_Configuration_ExtId ()
-  : name_ (0)
-{
-}
-
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_TCHAR* name)
   : name_ (name)
 {
@@ -1110,10 +1104,6 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_TCHAR* name)
 
 ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs)
   : name_ (rhs.name_)
-{
-}
-
-ACE_Configuration_ExtId::~ACE_Configuration_ExtId ()
 {
 }
 
@@ -1521,8 +1511,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
        )
     {
       ACE_TString simple_section (sub_section, separator - sub_section);
-      int ret_val =
-        open_simple_section (result, simple_section.c_str (), create, result);
+      int const ret_val = open_simple_section (result, simple_section.c_str (), create, result);
       if (ret_val)
         return ret_val;
       sub_section = separator + 1;

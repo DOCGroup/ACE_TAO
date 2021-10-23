@@ -20,8 +20,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
-ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func,
-                                  int sigkey)
+ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
   : sigkey_ (sigkey),
     type_ (C_FUNCTION),
     eh_ (0),

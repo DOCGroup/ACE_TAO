@@ -32,8 +32,7 @@
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
 #if !defined (ACE_WIN32) && !defined(ACE_LACKS_UNIX_SIGNALS)
-static void
-sigchld_nop (int, siginfo_t *, ucontext_t *)
+static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
   return;
 }

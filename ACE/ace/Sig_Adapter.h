@@ -40,16 +40,16 @@ public:
 
   /// Returns this signal key that's used to remove this from the
   /// ACE_Reactor's internal table.
-  int sigkey (void);
+  int sigkey ();
 
-  /// Called by the <Reactor> to dispatch the signal handler.
+  /// Called by the ACE_Reactor to dispatch the signal handler.
   virtual int handle_signal (int, siginfo_t *, ucontext_t *);
 
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
   /// Key for this signal handler (used to remove it).
-  int sigkey_;
+  int const sigkey_;
 
   /// Is this an external handler or an ACE handler?
   enum

@@ -94,8 +94,7 @@ public:
    * <handle_signal> method of the appropriate pre-registered
    * ACE_Event_Handler.
    */
-  static void dispatch (int, siginfo_t *,
-                        ucontext_t *);
+  static void dispatch (int, siginfo_t *, ucontext_t *);
 
   /// Dump the state of an object.
   void dump () const;
@@ -149,7 +148,7 @@ private:
 /**
  * @class ACE_Sig_Handlers
  *
- * @brief This is an alternative signal handling dispatcher for ACE.  It
+ * @brief This is an alternative signal handling dispatcher for ACE. It
  * allows a list of signal handlers to be registered for each
  * signal.  It also makes SA_RESTART the default mode.
  *
