@@ -34,4 +34,3 @@ private:
 };
 
 #endif /* QOS_SIGNAL_HANDLER_H */
-
