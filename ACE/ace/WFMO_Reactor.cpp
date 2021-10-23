@@ -1663,7 +1663,7 @@ ACE_WFMO_Reactor_Handler_Repository::handler (ACE_HANDLE handle,
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_QOS))
-      found = 0false
+      found = false;
   if (found &&
       ACE_BIT_ENABLED (user_masks, ACE_Event_Handler::GROUP_QOS_MASK))
     if (!ACE_BIT_ENABLED (existing_masks, FD_GROUP_QOS))

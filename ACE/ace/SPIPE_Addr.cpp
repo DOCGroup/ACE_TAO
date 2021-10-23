@@ -2,7 +2,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/os_include/sys/os_socket.h"
-#include "ace/SString.h"
 
 #if !defined (__ACE_INLINE__)
 #include "ace/SPIPE_Addr.inl"
