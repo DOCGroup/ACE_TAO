@@ -16,10 +16,6 @@ be_visitor_array_ci::be_visitor_array_ci (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_ci::~be_visitor_array_ci ()
-{
-}
-
 int be_visitor_array_ci::visit_array (be_array *node)
 {
   // Nothing to do if we are imported or code is already generated.
