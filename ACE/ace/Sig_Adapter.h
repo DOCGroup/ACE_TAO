@@ -68,7 +68,7 @@ private:
   ACE_Sig_Action sa_;
 
   /// This is an ACE hander.
-  ACE_Event_Handler *eh_;
+  ACE_Event_Handler *eh_ {};
 
   /// This is a normal C function.
   ACE_Sig_Handler_Ex sig_func_;

@@ -4,8 +4,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
   : sigkey_ (sigkey),
     type_ (SIG_ACTION),
     sa_ (sa),
-    eh_ (0),
-    sig_func_ (0)
+    sig_func_ (nullptr)
 {
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
@@ -15,7 +14,7 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
   : sigkey_ (sigkey),
     type_ (ACE_HANDLER),
     eh_ (eh),
-    sig_func_ (0)
+    sig_func_ (nullptr)
 {
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
@@ -23,7 +22,6 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
   : sigkey_ (sigkey),
     type_ (C_FUNCTION),
-    eh_ (0),
     sig_func_ (sig_func)
 {
   // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
