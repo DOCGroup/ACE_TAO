@@ -346,8 +346,8 @@ ACE_Sig_Handlers::register_handler (int signum,
 
   if (ACE_Sig_Handler::in_range (signum))
     {
-      ACE_Sig_Adapter *ace_sig_adapter = 0; // Our signal handler.
-      ACE_Sig_Adapter *extern_sh = 0; // An external signal handler.
+      ACE_Sig_Adapter *ace_sig_adapter = nullptr; // Our signal handler.
+      ACE_Sig_Adapter *extern_sh = nullptr; // An external signal handler.
       ACE_Sig_Action sa;
 
       // Get current signal disposition.
@@ -355,7 +355,6 @@ ACE_Sig_Handlers::register_handler (int signum,
 
       // Check whether we are already in control of the signal
       // handling disposition...
-
       if (!(sa.handler () == ace_signal_handlers_dispatcher
           || sa.handler () == ACE_SignalHandler (SIG_IGN)
           || sa.handler () == ACE_SignalHandler (SIG_DFL)))
@@ -364,7 +363,6 @@ ACE_Sig_Handlers::register_handler (int signum,
 
           // Upto here we never disabled RESTART_MODE.  Thus,
           // RESTART_MODE can only be changed by 3rd party libraries.
-
           if (ACE_BIT_DISABLED (sa.flags (), SA_RESTART)
               && ACE_Sig_Handlers::third_party_sig_handler_)
             // Toggling is disallowed since we might break 3rd party
@@ -397,7 +395,7 @@ ACE_Sig_Handlers::register_handler (int signum,
       // Add the ACE signal handler to the set of handlers for this
       // signal (make sure it goes before the external one if there is
       // one of these).
-      int result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
+      int const result = ACE_Sig_Handlers_Set::instance (signum)->insert (ace_sig_adapter);
 
       if (result == -1)
         {
@@ -580,7 +578,7 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   ACE_SIG_HANDLERS_SET *handler_set =
     ACE_Sig_Handlers_Set::instance (signum);
   ACE_SIG_HANDLERS_ITERATOR handler_iterator (*handler_set);
-  ACE_Event_Handler **eh = 0;
+  ACE_Event_Handler **eh = nullptr;
 
   // Find the first handler...
   handler_iterator.next (eh);
@@ -591,12 +589,12 @@ ACE_Sig_Handlers::handler (int signum, ACE_Event_Handler *new_sh)
   // ... and then insert the new signal handler into the beginning of
   // the set (note, this is a bit too tied up in the implementation of
   // ACE_Unbounded_Set...).
-  ACE_Sig_Adapter *temp = 0;
+  ACE_Sig_Adapter *temp = nullptr;
 
   ACE_NEW_RETURN (temp,
                   ACE_Sig_Adapter (new_sh,
                                    ++ACE_Sig_Handlers::sigkey_),
-                  0);
+                  nullptr);
   handler_set->insert (temp);
   return *eh;
 }
