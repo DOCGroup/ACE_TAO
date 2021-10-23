@@ -6,17 +6,14 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Action &sa, int sigkey)
     sa_ (sa),
     sig_func_ (nullptr)
 {
-  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
-ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh,
-                                  int sigkey)
+ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Event_Handler *eh, int sigkey)
   : sigkey_ (sigkey),
     type_ (ACE_HANDLER),
     eh_ (eh),
     sig_func_ (nullptr)
 {
-  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
@@ -24,7 +21,6 @@ ACE_Sig_Adapter::ACE_Sig_Adapter (ACE_Sig_Handler_Ex sig_func, int sigkey)
     type_ (C_FUNCTION),
     sig_func_ (sig_func)
 {
-  // ACE_TRACE ("ACE_Sig_Adapter::ACE_Sig_Adapter");
 }
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Sig_Adapter)
