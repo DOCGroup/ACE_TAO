@@ -1896,12 +1896,12 @@ ACE_WFMO_Reactor::calculate_timeout (ACE_Time_Value *max_wait_time)
     return time->msec ();
 }
 
-
 int
-ACE_WFMO_Reactor::expire_timers (void)
+ACE_WFMO_Reactor::expire_timers ()
 {
   // If "owner" thread
   if (ACE_Thread::self () == this->owner_)
+
     // expire all pending timers.
     return this->timer_queue_->expire ();
 
