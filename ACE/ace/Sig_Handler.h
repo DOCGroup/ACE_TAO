@@ -77,7 +77,7 @@ public:
   /// True if there is a pending signal.
   static int sig_pending ();
 
-  /// Reset the value of <sig_pending_> so that no signal is pending.
+  /// Reset the value of sig_pending_ so that no signal is pending.
   static void sig_pending (int);
 
   // = Set/get the handler associated with a particular signal.
@@ -91,7 +91,7 @@ public:
 
   /**
    * Callback routine registered with sigaction(2) that dispatches the
-   * <handle_signal> method of the appropriate pre-registered
+   * handle_signal() method of the appropriate pre-registered
    * ACE_Event_Handler.
    */
   static void dispatch (int, siginfo_t *, ucontext_t *);
@@ -108,12 +108,12 @@ protected:
   /**
    * Set a new ACE_Event_Handler that is associated with @a signum.
    * Return the existing handler.  Does not acquire any locks so that
-   * it can be called from a signal handler, such as <dispatch>.
+   * it can be called from a signal handler, such as dispatch().
    */
   static ACE_Event_Handler *handler_i (int signum, ACE_Event_Handler *);
 
   /**
-   * This implementation method is called by <register_handler> and
+   * This implementation method is called by register_handler() and
    * @c dispatch.  It doesn't do any locking so that it can be called
    * within a signal handler, such as @c dispatch.  It adds a new
    * ACE_Event_Handler and a new sigaction associated with @a signum.
@@ -123,13 +123,13 @@ protected:
    */
   static int register_handler_i (int signum,
                                  ACE_Event_Handler *new_sh,
-                                 ACE_Sig_Action *new_disp = 0,
-                                 ACE_Event_Handler **old_sh = 0,
-                                 ACE_Sig_Action *old_disp = 0);
+                                 ACE_Sig_Action *new_disp = nullptr,
+                                 ACE_Event_Handler **old_sh = nullptr,
+                                 ACE_Sig_Action *old_disp = nullptr);
 
   static int remove_handler_i (int signum,
-                               ACE_Sig_Action *new_disp = 0,
-                               ACE_Sig_Action *old_disp = 0,
+                               ACE_Sig_Action *new_disp = nullptr,
+                               ACE_Sig_Action *old_disp = nullptr,
                                int sigkey = -1);
 
   /// Check whether the SIGNUM is within the legal range of signals.
@@ -154,7 +154,7 @@ private:
  * Using this class a program can register one or more
  * ACE_Event_Handler with the ACE_Sig_Handler in order to
  * handle a designated @a signum.  When a signal occurs that
- * corresponds to this @a signum, the <handle_signal> methods of
+ * corresponds to this @a signum, the handle_signal() methods of
  * all the registered ACE_Event_Handlers are invoked
  * automatically.
  */
@@ -169,7 +169,7 @@ public:
    * Add a new ACE_Event_Handler and a new sigaction associated with
    * @a signum.  Passes back the existing ACE_Event_Handler and its
    * sigaction if pointers are non-zero.  Returns -1 on failure and
-   * a <sigkey> that is >= 0 on success.
+   * a sigkey that is >= 0 on success.
    */
   int register_handler (int signum,
                         ACE_Event_Handler *new_sh,
@@ -194,12 +194,12 @@ public:
   // = Set/get the handler associated with a particular signal.
 
   /// Return the head of the list of ACE_Sig_Handlers associated with
-  /// SIGNUM.
+  /// @a signum.
   ACE_Event_Handler *handler (int signum) override;
 
   /**
-   * Set a new ACE_Event_Handler that is associated with SIGNUM at
-   * the head of the list of signals.  Return the existing handler
+   * Set a new ACE_Event_Handler that is associated with @a signum at
+   * the head of the list of signals. Return the existing handler
    * that was at the head.
    */
   ACE_Event_Handler *handler (int signum, ACE_Event_Handler *) override;
@@ -221,7 +221,7 @@ private:
   /**
    * Keeps track of the id that uniquely identifies each registered
    * signal handler.  This id can be used to cancel a timer via the
-   * <remove_handler> method.
+   * remove_handler() method.
    */
   static int sigkey_;
 
