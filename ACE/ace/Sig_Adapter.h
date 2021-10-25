@@ -62,12 +62,12 @@ private:
     C_FUNCTION
   } type_;
 
-  // = This should be a union, but C++ won't allow that because the
-  // <ACE_Sig_Action> has a constructor.
+  /// This should be a union, but C++ won't allow that because the
+  /// ACE_Sig_Action has a constructor.
   /// This is an external handler (ugh).
   ACE_Sig_Action sa_;
 
-  /// This is an ACE hander.
+  /// This is an ACE event handler.
   ACE_Event_Handler *eh_ {};
 
   /// This is a normal C function.
