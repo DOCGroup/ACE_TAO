@@ -21,7 +21,7 @@ ACE_Sig_Set::ACE_Sig_Set (sigset_t *ss)
 }
 
 ACE_INLINE
-ACE_Sig_Set::ACE_Sig_Set (int fill)
+ACE_Sig_Set::ACE_Sig_Set (bool fill)
   // : sigset_ ()
 {
   ACE_TRACE ("ACE_Sig_Set::ACE_Sig_Set");
