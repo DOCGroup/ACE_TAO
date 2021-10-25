@@ -103,7 +103,7 @@ public:
   /// Assigns the various fields of a @c sigaction struct but doesn't
   /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
   /// Assigns the various fields of a @c sigaction struct but doesn't
@@ -119,7 +119,7 @@ public:
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
   /**
@@ -149,7 +149,7 @@ public:
    */
   ACE_Sig_Action (const ACE_Sig_Set &signalss,
                   ACE_SignalHandler handler,
-                  sigset_t *sigmask = 0,
+                  sigset_t *sigmask = nullptr,
                   int flags = 0);
 
   ACE_Sig_Action (const ACE_Sig_Action&) = default;
