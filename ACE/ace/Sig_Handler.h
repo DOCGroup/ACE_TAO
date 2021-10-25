@@ -110,8 +110,7 @@ protected:
    * Return the existing handler.  Does not acquire any locks so that
    * it can be called from a signal handler, such as <dispatch>.
    */
-  static ACE_Event_Handler *handler_i (int signum,
-                                       ACE_Event_Handler *);
+  static ACE_Event_Handler *handler_i (int signum, ACE_Event_Handler *);
 
   /**
    * This implementation method is called by <register_handler> and
@@ -172,11 +171,11 @@ public:
    * sigaction if pointers are non-zero.  Returns -1 on failure and
    * a <sigkey> that is >= 0 on success.
    */
-  virtual int register_handler (int signum,
-                                ACE_Event_Handler *new_sh,
-                                ACE_Sig_Action *new_disp = 0,
-                                ACE_Event_Handler **old_sh = 0,
-                                ACE_Sig_Action *old_disp = 0);
+  int register_handler (int signum,
+                        ACE_Event_Handler *new_sh,
+                        ACE_Sig_Action *new_disp = 0,
+                        ACE_Event_Handler **old_sh = 0,
+                        ACE_Sig_Action *old_disp = 0) override;
 
   /**
    * Remove an ACE_Event_Handler currently associated with @a signum.
@@ -187,24 +186,23 @@ public:
    * by the caller).  Returns 0 on success and -1 if @a signum is
    * invalid.
    */
-  virtual int remove_handler (int signum,
-                              ACE_Sig_Action *new_disp = 0,
-                              ACE_Sig_Action *old_disp = 0,
-                              int sigkey = -1);
+  int remove_handler (int signum,
+                      ACE_Sig_Action *new_disp = 0,
+                      ACE_Sig_Action *old_disp = 0,
+                      int sigkey = -1) override;
 
   // = Set/get the handler associated with a particular signal.
 
   /// Return the head of the list of ACE_Sig_Handlers associated with
   /// SIGNUM.
-  virtual ACE_Event_Handler *handler (int signum);
+  ACE_Event_Handler *handler (int signum) override;
 
   /**
    * Set a new ACE_Event_Handler that is associated with SIGNUM at
    * the head of the list of signals.  Return the existing handler
    * that was at the head.
    */
-  virtual ACE_Event_Handler *handler (int signum,
-                                      ACE_Event_Handler *);
+  ACE_Event_Handler *handler (int signum, ACE_Event_Handler *) override;
 
   /**
    * Callback routine registered with sigaction(2) that dispatches the
