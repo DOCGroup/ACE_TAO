@@ -33,8 +33,7 @@ ACE_Sig_Action::~ACE_Sig_Action ()
   ACE_TRACE ("ACE_Sig_Action::~ACE_Sig_Action");
 }
 
-// Restore the signal mask.
-
+/// Restore the signal mask.
 ACE_Sig_Guard::~ACE_Sig_Guard ()
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
