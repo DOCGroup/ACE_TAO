@@ -1506,11 +1506,11 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
 
   result = base;
 
-  for (const ACE_TCHAR* separator;
-       (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != 0;
+  for (const ACE_TCHAR* separator = nullptr;
+       (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != nullptr;
        )
     {
-      ACE_TString simple_section (sub_section, separator - sub_section);
+      ACE_TString const simple_section (sub_section, separator - sub_section);
       int const ret_val = open_simple_section (result, simple_section.c_str (), create, result);
       if (ret_val)
         return ret_val;
