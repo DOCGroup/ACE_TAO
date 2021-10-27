@@ -1508,7 +1508,11 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
        (separator = ACE_OS::strchr (sub_section, ACE_TEXT ('\\'))) != nullptr;
        )
     {
-      ACE_TString const simple_section (sub_section, separator - sub_section);
+      // Create a substring from the current location until the new found separator
+      // Because ACE_TString works with the character length we need to keep in mind
+      // the size of a single character
+      ACE_TString tsub_section (sub_section);
+      ACE_TString const simple_section = tsub_section.substring(0, (separator - sub_section) / sizeof (ACE_TCHAR));
       int const ret_val = open_simple_section (result, simple_section.c_str(), create, result);
       if (ret_val)
         return ret_val;
