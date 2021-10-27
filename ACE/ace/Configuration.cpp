@@ -1289,7 +1289,7 @@ ACE_Configuration_Heap::open (const ACE_TCHAR* file_name,
 int
 ACE_Configuration_Heap::create_index ()
 {
-  void *section_index = 0;
+  void *section_index = nullptr;
 
   // This is the easy case since if we find hash table in the
   // memory-mapped file we know it's already initialized.
@@ -1300,7 +1300,7 @@ ACE_Configuration_Heap::create_index ()
   // memory-mapped file).
   else
     {
-      size_t index_size = sizeof (SECTION_MAP);
+      size_t constexpr index_size = sizeof (SECTION_MAP);
       section_index = this->allocator_->malloc (index_size);
 
       if (section_index == 0
@@ -1401,7 +1401,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
   // Create a new section and add it to the global list
 
   // Allocate memory for items to be stored in the table.
-  size_t section_len = section.length () + 1;
+  size_t const section_len = section.length () + 1;
   ACE_TCHAR *ptr = (ACE_TCHAR*) this->allocator_->malloc (section_len * sizeof (ACE_TCHAR));
 
   int return_value = -1;
@@ -1413,12 +1413,11 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
       // Populate memory with data.
       ACE_OS::strcpy (ptr, section.fast_rep ());
 
-      void *value_hash_map = 0;
-      size_t map_size = sizeof (VALUE_MAP);
-      value_hash_map = this->allocator_->malloc (map_size);
+      size_t constexpr map_size = sizeof (VALUE_MAP);
+      void *value_hash_map = this->allocator_->malloc (map_size);
 
       // If allocation failed ...
-      if (value_hash_map == 0)
+      if (value_hash_map == nullptr)
         return -1;
 
       // Initialize allocated hash map through placement new.
@@ -1429,12 +1428,11 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
         }
 
       // create the section map
-      void* section_hash_map = 0;
-      map_size = sizeof (SUBSECTION_MAP);
-      section_hash_map = this->allocator_->malloc (map_size);
+      size_t constexpr subsection_map_size = sizeof (SUBSECTION_MAP);
+      void* section_hash_map = this->allocator_->malloc (subsection_map_size);
 
       // If allocation failed
-      if (section_hash_map == 0)
+      if (section_hash_map == nullptr)
         return -1;
 
       // initialize allocated hash map through placement new
@@ -1468,7 +1466,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
     }
 
   // set the result
-  ACE_Configuration_Section_Key_Heap *temp;
+  ACE_Configuration_Section_Key_Heap *temp = nullptr;
   ACE_NEW_RETURN (temp,
                   ACE_Configuration_Section_Key_Heap (ptr),
                   -1);
@@ -1511,7 +1509,7 @@ ACE_Configuration_Heap::open_section (const ACE_Configuration_Section_Key& base,
        )
     {
       ACE_TString const simple_section (sub_section, separator - sub_section);
-      int const ret_val = open_simple_section (result, simple_section.c_str (), create, result);
+      int const ret_val = open_simple_section (result, simple_section.c_str(), create, result);
       if (ret_val)
         return ret_val;
       sub_section = separator + 1;
@@ -1589,7 +1587,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   section += sub_section;
   ACE_Configuration_ExtId SectionExtId (section.fast_rep ());
-  SECTION_HASH::ENTRY* section_entry = 0;
+  SECTION_HASH::ENTRY* section_entry = nullptr;
   SECTION_HASH* hashmap = index_;
   if (hashmap->find (SectionExtId, section_entry))
     return -1;
@@ -1620,7 +1618,7 @@ ACE_Configuration_Heap::remove_section (const ACE_Configuration_Section_Key& key
 
   // Now remove subkey from parent key
   ACE_Configuration_ExtId SubSExtId (sub_section);
-  SUBSECTION_HASH::ENTRY* subsection_entry = 0;
+  SUBSECTION_HASH::ENTRY* subsection_entry = nullptr;
   if (((SUBSECTION_HASH*)ParentIntId.section_hash_map_)->
       find (SubSExtId, subsection_entry))
     return -1;
