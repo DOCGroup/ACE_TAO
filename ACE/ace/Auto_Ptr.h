@@ -78,6 +78,8 @@ using std::auto_ptr;
 #endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
 #else /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class auto_ptr
  *
@@ -94,6 +96,8 @@ public:
 
   X *operator-> () const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
 
