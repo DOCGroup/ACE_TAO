@@ -2697,9 +2697,11 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
     case AST_Expression::EV_char:
       o << ev->u.cval;
       break;
+#ifndef ACE_HAS_CPP20
     case AST_Expression::EV_wchar:
       o << ev->u.wcval;
       break;
+#endif
     case AST_Expression::EV_octet:
       {
         std::ios saved (nullptr);
