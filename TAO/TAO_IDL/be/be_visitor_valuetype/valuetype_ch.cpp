@@ -46,8 +46,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   int status = 0;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (node->node_type () == AST_Decl::NT_eventtype)
     {
@@ -234,8 +233,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we inherit from CORBA::Object and/or CORBA::AbstractBase
   // (in addition to CORBA::ValueBase) we have to add these
@@ -392,8 +390,7 @@ be_visitor_valuetype_ch::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node); // save the node
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   // Every operation is declared public and virtual in the client code.
   *os << be_uidt_nl << "public:" << be_idt_nl << "virtual ";

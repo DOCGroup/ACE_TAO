@@ -64,8 +64,7 @@ be_visitor_amh_rh_interface_ss::visit_interface (be_interface *node)
   ACE_CString rh_skel_class_name (rh_skel_class_name_prefix);
   rh_skel_class_name += node->local_name ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate code for elements in the scope (e.g., operations)
   // We'll rely on the base class (be_visitor_scope) to do the
