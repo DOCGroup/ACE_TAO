@@ -40,8 +40,7 @@ be_visitor_valuetype_ci::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "ACE_INLINE" << be_nl;
   *os << node->name () << "::" << node->local_name () << " (void)" << be_nl;

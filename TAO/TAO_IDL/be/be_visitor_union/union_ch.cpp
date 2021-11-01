@@ -117,8 +117,7 @@ int be_visitor_union_ch::visit_union (be_union *node)
 
   if ((dv.computed_ != 0) && (node->default_index () == -1))
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       // Only if all cases are not covered AND there is no explicit
       // default, we get the _default () method.

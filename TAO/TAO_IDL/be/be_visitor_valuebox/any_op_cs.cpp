@@ -42,8 +42,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
 
   // Generate the Any <<= and >>= operator declarations
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 

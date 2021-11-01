@@ -69,8 +69,7 @@ be_visitor_valuetype_init_cs::visit_valuetype (be_valuetype *node)
                    "%s_init",
                    node->local_name ());
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // ctor
   *os << be_nl_2

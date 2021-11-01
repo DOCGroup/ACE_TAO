@@ -90,8 +90,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // dup method.
   *os << fname << "_slice *" << be_nl

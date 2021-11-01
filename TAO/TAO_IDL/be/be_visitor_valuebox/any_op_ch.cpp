@@ -39,8 +39,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   be_module *module = 0;
 

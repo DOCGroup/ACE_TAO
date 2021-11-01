@@ -152,9 +152,7 @@ be_visitor_root_ch::gen_fwd_decls (void)
 {
   if (idl_global->non_local_iface_seen_)
     {
-      *o_ << be_nl_2
-          << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (o_);
 
       *o_ << be_global->core_versioning_begin () << be_nl;
 
@@ -187,9 +185,7 @@ be_visitor_root_ch::gen_ref_counting_overrides (void)
   size_t index = 0;
   be_interface_fwd *ifwd = 0;
 
-  *o_ << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (o_);
 
   for (index = 0; index < size; ++index)
     {
@@ -233,10 +229,7 @@ be_visitor_root_ch::gen_static_corba_overrides (void)
   size_t index = 0;
   AST_Interface *i = 0;
 
-  *o_ << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__
-      << be_nl;
+  TAO_INSERT_COMMENT (o_);
 
   *o_ << be_global->core_versioning_begin ();
 
