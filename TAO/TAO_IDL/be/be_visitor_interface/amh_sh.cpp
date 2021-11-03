@@ -42,8 +42,7 @@ be_visitor_amh_interface_sh::visit_interface (be_interface *node)
   TAO_OutStream *os = this->ctx_->stream ();
   ACE_CString class_name;
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // We shall have a POA_ prefix only if we are at the topmost level.
   if (!node->is_nested ())

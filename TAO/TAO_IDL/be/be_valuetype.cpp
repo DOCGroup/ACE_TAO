@@ -451,9 +451,7 @@ be_valuetype::gen_helper_header (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -482,8 +480,7 @@ be_valuetype::gen_helper_inline (char *, char *)
   // is not getting generated... Actually this is a much bigger
   // problem. Just hacking  it up for the timebeing..
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "#if defined (__ACE_INLINE__)" << be_nl_2
       << be_global->core_versioning_begin () << be_nl
@@ -508,8 +505,7 @@ be_valuetype::gen_helper_stubs (char *, char *)
 {
   TAO_OutStream *os = tao_cg->client_stubs ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << "CORBA::add_ref (" << this->full_name () << " * vt)" << be_nl
@@ -560,8 +556,7 @@ be_valuetype::gen_var_out_seq_decls ()
 
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),

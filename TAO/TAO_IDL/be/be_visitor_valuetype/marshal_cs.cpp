@@ -29,8 +29,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->sub_state (TAO_CodeGen::TAO_CDR_OUTPUT);
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "::CORBA::Boolean" << be_nl;
 

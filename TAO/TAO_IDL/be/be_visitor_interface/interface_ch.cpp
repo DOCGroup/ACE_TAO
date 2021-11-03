@@ -36,8 +36,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   AST_Component *c = dynamic_cast<AST_Component*> (node);
 
@@ -133,8 +132,7 @@ be_visitor_interface_ch::visit_interface (be_interface *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
 

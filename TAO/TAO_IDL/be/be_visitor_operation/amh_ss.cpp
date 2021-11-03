@@ -301,8 +301,7 @@ be_visitor_amh_operation_ss::generate_shared_prologue (be_decl *node,
                                                        TAO_OutStream *os,
                                                        const char *skel_prefix)
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // We need the interface node in which this operation was defined. However,
   // if this operation node was an attribute node in disguise, we get this
