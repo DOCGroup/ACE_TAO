@@ -287,7 +287,7 @@ public:
     void dump () const;
   };
 
-  typedef ACE_Malloc_Header *MALLOC_HEADER_PTR;
+  using MALLOC_HEADER_PTR = ACE_Malloc_Header *;
 
   /**
    * @class ACE_Name_Node
