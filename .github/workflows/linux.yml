@@ -15,11 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - CC: gcc-4.8
-            CXX: g++-4.8
-            PackageDeps: g++-4.8
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-16.04
           - CC: gcc-6
             CXX: g++-6
             PackageDeps: g++-6
@@ -45,11 +40,6 @@ jobs:
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-18.04
-          - CC: clang-5.0
-            CXX: clang++-5.0
-            PackageDeps: clang-5.0
-            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-16.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
