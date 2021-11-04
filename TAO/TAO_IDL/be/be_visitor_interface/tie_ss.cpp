@@ -75,8 +75,7 @@ be_visitor_interface_tie_ss::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "template <class T>" << be_nl
       << fulltiename << "<T>::" << localtiename << " (T &t)" << be_idt_nl

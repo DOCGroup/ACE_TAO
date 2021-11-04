@@ -44,8 +44,7 @@ be_visitor_interface_cs::visit_interface (be_interface *node)
 
   if (node->is_defined () && be_global->gen_arg_traits ())
     {
-      *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_global->core_versioning_begin ();
 

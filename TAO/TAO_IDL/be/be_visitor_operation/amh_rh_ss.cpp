@@ -73,8 +73,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   buf = nullptr;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";

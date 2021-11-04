@@ -287,6 +287,8 @@ public:
     void dump () const;
   };
 
+  using MALLOC_HEADER_PTR = ACE_Malloc_Header *;
+
   /**
    * @class ACE_Name_Node
    *

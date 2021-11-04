@@ -113,8 +113,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -123,8 +122,8 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_union" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << node->name () << " &_tao_union)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   serialize_disc (os, node->udisc_type (), true /* out */);
@@ -169,8 +168,8 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->name () << " &_tao_union" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->name () << " &_tao_union)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   be_type* disc_type =
