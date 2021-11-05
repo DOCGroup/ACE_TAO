@@ -634,8 +634,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
     (nbytes + sizeof (MALLOC_HEADER) - 1) / sizeof (MALLOC_HEADER)
     + 1; // Add one for the <MALLOC_HEADER> itself.
 
-  typename ACE_CB::MALLOC_HEADER_PTR prevp = 0;
-  typename ACE_CB::MALLOC_HEADER_PTR currp = 0;
+  MALLOC_HEADER *prevp = 0;
+  MALLOC_HEADER *currp = 0;
 
   ACE_SEH_TRY
     {
@@ -672,7 +672,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                   // allocate at tail end.
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
                   currp->size_ -= nunits;
-                  currp += static_cast<int> (currp->size_);
+                  currp += currp->size_;
                   MALLOC_HEADER::init_ptr (&currp->next_block_,
                                            0,
                                            this->cb_ptr_);
@@ -698,7 +698,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               if (remap_addr != 0)
                 this->cb_ptr_ = (ACE_CB *) remap_addr;
 
-              if (currp)
+              if (currp != 0)
                 {
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nblocks_);
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.nchunks_);
@@ -788,8 +788,8 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
     return;
 
   // Adjust AP to point to the block MALLOC_HEADER
-  typename ACE_CB::MALLOC_HEADER_PTR blockp = ((MALLOC_HEADER *) ap) - 1;
-  typename ACE_CB::MALLOC_HEADER_PTR currp = this->cb_ptr_->freep_;
+  MALLOC_HEADER *blockp = ((MALLOC_HEADER *) ap) - 1;
+  MALLOC_HEADER *currp = this->cb_ptr_->freep_;
 
   // Search until we find the location where the blocks belongs.  Note
   // that addresses are kept in sorted order.
@@ -798,20 +798,18 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
     {
       for (;
            blockp <= currp
-             || blockp >= currp->next_block_;
+             || blockp >= (MALLOC_HEADER *) currp->next_block_;
            currp = currp->next_block_)
         {
-          if (currp >= currp->next_block_
+          if (currp >= (MALLOC_HEADER *) currp->next_block_
               && (blockp > currp
-                  || blockp < currp->next_block_))
+                  || blockp < (MALLOC_HEADER *) currp->next_block_))
             // Freed block at the start or the end of the memory pool.
             break;
         }
 
       // Join to upper neighbor.
-      typename ACE_CB::MALLOC_HEADER_PTR next = blockp;
-      next += static_cast<int> (blockp->size_); // ACE_Based_Pointer has += but not +
-      if (next == currp->next_block_)
+      if ((blockp + blockp->size_) == currp->next_block_)
         {
           ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
           blockp->size_ += currp->next_block_->size_;
@@ -821,9 +819,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
         blockp->next_block_ = currp->next_block_;
 
       // Join to lower neighbor.
-      next = currp;
-      next += static_cast<int> (currp->size_);
-      if (next == blockp)
+      if ((currp + currp->size_) == blockp)
         {
           ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
           currp->size_ += blockp->size_;
