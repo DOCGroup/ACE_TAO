@@ -136,7 +136,6 @@ test_expressions (int &error_count)
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::mul", MixedFloatValues::mul, 18.0);
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::add", MixedFloatValues::add, 9.0);
   expect_equals<CORBA::Double> (error_count, "MixedFloatValues::sub", MixedFloatValues::sub, 3.0);
-
 }
 
 int

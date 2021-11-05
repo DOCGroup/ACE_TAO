@@ -1743,7 +1743,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
     }
 
   ExprType const expr_type = ek == EK_const ?
-    pd_v1->ev()->et : eval_kind_to_expr_type (ek);
+    pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
   if (expr_type == EV_none) return nullptr;
 
   ACE_NEW_RETURN (retval,
@@ -1871,7 +1871,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
   bool success = false;
   switch (expr_type)
-  {
+    {
     case EV_int8:
       success = do_eval_mod_op<ACE_CDR::Int8> (
         pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
@@ -1924,7 +1924,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
 
     default:
       break;
-  }
+    }
 
   if (!success)
     {
@@ -2011,7 +2011,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 
   bool success = false;
   switch (expr_type)
-  {
+    {
     case EV_int8:
       success = do_eval_bit_op<ACE_CDR::Int8> (pd_ec,
         pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
@@ -2064,7 +2064,7 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
 
     default:
       break;
-  }
+    }
 
   if (!success)
     {
