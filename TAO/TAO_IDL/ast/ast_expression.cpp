@@ -1858,7 +1858,7 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
     }
 
   ExprType const expr_type = ek == EK_const ?
-    pd_v1->ev()->et : eval_kind_to_expr_type (ek);
+    pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
   if (expr_type == EV_none) return nullptr;
 
   ACE_NEW_RETURN (retval,

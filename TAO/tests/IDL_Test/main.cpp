@@ -139,7 +139,7 @@ test_expressions (int &error_count)
 }
 
 int
-ACE_TMAIN(int argc, ACE_TCHAR *argv[])
+ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 
@@ -234,8 +234,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Check whether the implementation of Dubble and Toil are generated
       CommaList::Dubble dub;
       CommaList::Toil toi;
-      dub.length(4);
-      toi.length(4);
+      dub.length (4);
+      toi.length (4);
 
       ciao_i c;
       id = root_poa->activate_object (&c);
@@ -385,7 +385,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
           {
             ++error_count;
-            ACE_ERROR( (LM_ERROR,
+            ACE_ERROR ((LM_ERROR,
                        "mismatch in downcast for %C\n",
                         base[0]));
           }
