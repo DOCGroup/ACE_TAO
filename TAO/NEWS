@@ -1,6 +1,9 @@
 USER VISIBLE CHANGES BETWEEN TAO-3.0.4 and TAO-3.0.5
 ====================================================
 
+. TAO_IDL: Fix bug where floating point constant expressions fail to evaulate.
+  This bug was introduced in in 3.0.3.
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.3 and TAO-3.0.4
 ====================================================
 

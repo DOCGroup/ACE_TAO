@@ -98,6 +98,7 @@ AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
     case EK_long:
       return EV_long;
     case EK_ulong:
+    case EK_positive_int:
       return EV_ulong;
     case EK_longlong:
       return EV_longlong;
@@ -113,9 +114,13 @@ AST_Expression::eval_kind_to_expr_type (AST_Expression::EvalKind eval_kind)
       return EV_int8;
     case EK_uint8:
       return EV_uint8;
-    default:
+    case EK_const:
+      idl_global->err ()->misc_error ("eval_kind_to_expr_type can't handle EK_const");
       return EV_none;
     }
+
+  idl_global->err ()->misc_error ("eval_kind_to_expr_type unhandled EvalKind");
+  return EV_none;
 }
 
 // Helper function to fill out the details of where this expression
@@ -1650,7 +1655,8 @@ eval_kind (AST_Expression::AST_ExprValue *ev, AST_Expression::EvalKind ek)
     case AST_Expression::EK_uint8:
       retval = coerce_value (newval, AST_Expression::EV_uint8);
       break;
-    default:
+    case AST_Expression::EK_floating_point:
+      retval = coerce_value (newval, AST_Expression::EV_double);
       break;
   }
 
@@ -1736,7 +1742,8 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
-  ExprType const expr_type = eval_kind_to_expr_type (ek);
+  ExprType const expr_type = ek == EK_const ?
+    pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
   if (expr_type == EV_none) return nullptr;
 
   ACE_NEW_RETURN (retval,
@@ -1806,7 +1813,7 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
       break;
 
     default:
-      success = true;
+      break;
     }
 
   if (!success)
@@ -1816,6 +1823,17 @@ AST_Expression::eval_bin_op (AST_Expression::EvalKind ek)
     }
 
   return retval;
+}
+
+template <typename Type>
+bool
+do_eval_mod_op (Type a, Type b, Type &result)
+{
+  if (b == 0) {
+    return false;
+  }
+  result = a % b;
+  return true;
 }
 
 // Apply binary operators to an AST_Expression after evaluating
@@ -1839,79 +1857,79 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
       return nullptr;
     }
 
+  ExprType const expr_type = ek == EK_const ?
+    pd_v1->ev ()->et : eval_kind_to_expr_type (ek);
+  if (expr_type == EV_none) return nullptr;
+
   ACE_NEW_RETURN (retval,
                   AST_ExprValue,
                   nullptr);
 
-  if (ek == EK_ulonglong)
+  pd_v1->set_ev (pd_v1->coerce (expr_type));
+  pd_v2->set_ev (pd_v2->coerce (expr_type));
+  retval->et = expr_type;
+
+  bool success = false;
+  switch (expr_type)
     {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulonglong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulonglong));
-      retval->et = EV_ulonglong;
+    case EV_int8:
+      success = do_eval_mod_op<ACE_CDR::Int8> (
+        pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
+      break;
 
-      if (this->pd_v2->ev ()->u.ullval == 0)
-        {
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
+    case EV_uint8:
+      success = do_eval_mod_op<ACE_CDR::UInt8> (
+        pd_v1->ev ()->u.uint8val, pd_v2->ev ()->u.uint8val, retval->u.uint8val);
+      break;
 
-      retval->u.ullval =
-        this->pd_v1->ev ()->u.ullval % this->pd_v2->ev ()->u.ullval;
+    case EV_short:
+      success = do_eval_mod_op<ACE_CDR::Short> (
+        pd_v1->ev ()->u.sval, pd_v2->ev ()->u.sval, retval->u.sval);
+      break;
+
+    case EV_ushort:
+      success = do_eval_mod_op<ACE_CDR::UShort> (
+        pd_v1->ev ()->u.usval, pd_v2->ev ()->u.usval, retval->u.usval);
+      break;
+
+    case EV_long:
+      success = do_eval_mod_op<ACE_CDR::Long> (
+        pd_v1->ev ()->u.lval, pd_v2->ev ()->u.lval, retval->u.lval);
+      break;
+
+    case EV_ulong:
+      success = do_eval_mod_op<ACE_CDR::ULong> (
+        pd_v1->ev ()->u.ulval, pd_v2->ev ()->u.ulval, retval->u.ulval);
+      break;
+
+    case EV_longlong:
+      success = do_eval_mod_op<ACE_CDR::LongLong> (
+        pd_v1->ev ()->u.llval, pd_v2->ev ()->u.llval, retval->u.llval);
+      break;
+
+    case EV_ulonglong:
+      success = do_eval_mod_op<ACE_CDR::ULongLong> (
+        pd_v1->ev ()->u.ullval, pd_v2->ev ()->u.ullval, retval->u.ullval);
+      break;
+
+    case EV_octet:
+      success = do_eval_mod_op<ACE_CDR::Octet> (
+        pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
+      break;
+
+    case EV_bool:
+      success = do_eval_mod_op<ACE_CDR::Boolean> (
+        pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
+      break;
+
+    default:
+      break;
     }
-  else if (ek == EK_longlong)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_longlong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_longlong));
-      retval->et = EV_longlong;
 
-      if (this->pd_v2->ev ()->u.llval == 0)
-        {
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
-
-      retval->u.llval =
-        this->pd_v1->ev ()->u.llval % this->pd_v2->ev ()->u.llval;
-    }
-  else if (ek == EK_ulong)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_ulong));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_ulong));
-      retval->et = EV_ulong;
-
-      if (this->pd_v2->ev ()->u.ulval == 0)
-        {
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
-
-      retval->u.ulval =
-        this->pd_v1->ev ()->u.ulval % this->pd_v2->ev ()->u.ulval;
-    }
-  else if (ek == EK_long)
-    {
-      this->pd_v1->set_ev (this->pd_v1->coerce (EV_long));
-      this->pd_v2->set_ev (this->pd_v2->coerce (EV_long));
-      retval->et = EV_long;
-
-      if (this->pd_v2->ev ()->u.lval == 0)
-        {
-          delete retval;
-          retval = nullptr;
-          return nullptr;
-        }
-
-      retval->u.lval =
-        this->pd_v1->ev ()->u.lval % this->pd_v2->ev ()->u.lval;
-    }
-  else
+  if (!success)
     {
       delete retval;
       retval = nullptr;
-      return nullptr;
     }
 
   return retval;
@@ -1991,9 +2009,9 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
   pd_v2->set_ev (pd_v2->coerce (expr_type));
   retval->et = expr_type;
 
-  bool success = true;
+  bool success = false;
   switch (expr_type)
-  {
+    {
     case EV_int8:
       success = do_eval_bit_op<ACE_CDR::Int8> (pd_ec,
         pd_v1->ev ()->u.int8val, pd_v2->ev ()->u.int8val, retval->u.int8val);
@@ -2045,8 +2063,8 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
       break;
 
     default:
-      success = true;
-  }
+      break;
+    }
 
   if (!success)
     {
@@ -2163,10 +2181,10 @@ AST_Expression::eval_un_op (AST_Expression::EvalKind ek)
         case EV_octet:
           retval->u.oval = ~this->pd_v1->ev ()->u.oval;
           break;
-        case AST_Expression::EV_int8:
+        case EV_int8:
           retval->u.int8val = ~pd_v1->ev ()->u.int8val;
           break;
-        case AST_Expression::EV_uint8:
+        case EV_uint8:
           retval->u.uint8val = ~pd_v1->ev ()->u.uint8val;
           break;
         default:
@@ -2372,8 +2390,21 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_fixed:
       tmp = this->eval_internal (EK_fixed_point);
       break;
-    default:
-      tmp = this->eval_internal (EK_const);
+    case EV_float:
+    case EV_double:
+    case EV_longdouble:
+      tmp = eval_internal (EK_floating_point);
+      break;
+    case EV_char:
+    case EV_wchar:
+    case EV_string:
+    case EV_wstring:
+    case EV_enum:
+    case EV_any:
+    case EV_object:
+    case EV_void:
+      tmp = eval_internal (EK_const);
+    case EV_none:
       break;
   }
 
@@ -2457,7 +2488,8 @@ AST_Expression::coerce (AST_Expression::ExprType t)
     case EV_uint8:
       copy->u.uint8val = this->pd_ev->u.uint8val;
       break;
-    default:
+    case EV_any:
+    case EV_object:
       break;
   }
 
@@ -2677,30 +2709,32 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
     {
     case AST_Expression::EV_short:
       o << ev->u.sval;
-      break;
+      return;
     case AST_Expression::EV_ushort:
       o << ev->u.usval;
-      break;
+      return;
     case AST_Expression::EV_long:
       o << ev->u.lval;
-      break;
+      return;
     case AST_Expression::EV_ulong:
     case AST_Expression::EV_enum:
       o << ev->u.ulval;
-      break;
+      return;
     case AST_Expression::EV_float:
       o << ev->u.fval;
-      break;
+      return;
     case AST_Expression::EV_double:
       o << ev->u.dval;
-      break;
+      return;
     case AST_Expression::EV_char:
       o << ev->u.cval;
-      break;
-#ifndef ACE_HAS_CPP20
+      return;
     case AST_Expression::EV_wchar:
-      o << ev->u.wcval;
+#ifdef ACE_HAS_CPP20
       break;
+#else
+      o << ev->u.wcval;
+      return;
 #endif
     case AST_Expression::EV_octet:
       {
@@ -2709,10 +2743,10 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
         o << "0x" << std::hex << std::setw (2) << std::setfill ('0') << unsigned (ev->u.oval);
         o.copyfmt (saved);
       }
-      break;
+      return;
     case AST_Expression::EV_bool:
       o << (ev->u.bval == true ? "TRUE" : "FALSE");
-      break;
+      return;
     case AST_Expression::EV_string:
       if (ev->u.strval != nullptr)
         {
@@ -2722,25 +2756,32 @@ dump_expr_val (ACE_OSTREAM_TYPE &o, AST_Expression::AST_ExprValue *ev)
         {
           o << "(null string)";
         }
-      break;
+      return;
     case AST_Expression::EV_longlong:
       o << ev->u.llval;
-      break;
+      return;
     case AST_Expression::EV_ulonglong:
       o << ev->u.ullval;
-      break;
+      return;
     case AST_Expression::EV_fixed:
       o << ev->u.fixedval;
-      break;
+      return;
     case AST_Expression::EV_int8:
       o << static_cast<short> (ev->u.int8val);
-      break;
+      return;
     case AST_Expression::EV_uint8:
       o << static_cast<unsigned short> (ev->u.uint8val);
+      return;
+    case AST_Expression::EV_longdouble:
+    case AST_Expression::EV_wstring:
+    case AST_Expression::EV_any:
+    case AST_Expression::EV_object:
+    case AST_Expression::EV_void:
+    case AST_Expression::EV_none:
       break;
-    default:
-      o << "(Can not dump this type)";
     }
+
+    o << "(Can not dump type " << AST_Expression::exprtype_to_string (ev->et) << ")";
 }
 
 // Dump an AST_Expression node to the ostream o.
@@ -2842,6 +2883,7 @@ AST_Expression::dump (ACE_OSTREAM_TYPE &o)
         o << ACE_TEXT ("(nil symbolic name)");
       break;
     case EC_none:
+      o << ACE_TEXT ("(none)");
       break;
     default:
       o << ACE_TEXT ("unsupported dump mode for expression with ec == ")
@@ -3048,9 +3090,9 @@ AST_Expression::exprtype_to_string (ExprType t)
     return "uint8";
   case AST_Expression::EV_int8:
     return "int8";
-  default:
-    return "<UNKNOWN TYPE>";
   }
+
+  return "<UNKNOWN TYPE>";
 }
 
 AST_Enum *
