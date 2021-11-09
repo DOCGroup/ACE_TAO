@@ -2052,6 +2052,11 @@ AST_Expression::eval_bit_op (AST_Expression::EvalKind ek)
         pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
       break;
 
+    case EV_bool:
+      success = do_eval_bit_op_no_shift<ACE_CDR::Boolean> (pd_ec,
+        pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
+      break;
+
     default:
       break;
     }
