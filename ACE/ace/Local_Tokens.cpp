@@ -160,10 +160,6 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
                     ACE_MAXCLIENTIDLEN);
 }
 
-ACE_TSS_TPQ_Entry::~ACE_TSS_TPQ_Entry (void)
-{
-}
-
 void
 ACE_TSS_TPQ_Entry::dump () const
 {
