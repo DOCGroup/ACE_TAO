@@ -54,6 +54,17 @@ ACE_MEM_Addr::ACE_MEM_Addr (u_short port_number)
   this->initialize_local (port_number);
 }
 
+ACE_MEM_Addr&
+ACE_MEM_Addr::operator= (const ACE_MEM_Addr& sa)
+{
+  if (this != std::addressof(sa))
+  {
+    this->external_.set (sa.external_);
+    this->internal_.set (sa.internal_);
+  }
+  return *this;
+}
+
 int
 ACE_MEM_Addr::initialize_local (u_short port_number)
 {
