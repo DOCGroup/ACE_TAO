@@ -1917,11 +1917,6 @@ AST_Expression::eval_mod_op (AST_Expression::EvalKind ek)
         pd_v1->ev ()->u.oval, pd_v2->ev ()->u.oval, retval->u.oval);
       break;
 
-    case EV_bool:
-      success = do_eval_mod_op<ACE_CDR::Boolean> (
-        pd_v1->ev ()->u.bval, pd_v2->ev ()->u.bval, retval->u.bval);
-      break;
-
     default:
       break;
     }
