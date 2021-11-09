@@ -695,7 +695,8 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   // open(), and there's already a SIGCHLD action set, so no
   // action is needed here.
   ACE_Sig_Action old_action;
-  ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+  ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+  ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
   do_sigchld.register_action (SIGCHLD, &old_action);
 
   pid_t pid;
