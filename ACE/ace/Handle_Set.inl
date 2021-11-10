@@ -27,6 +27,13 @@ ACE_Handle_Set::reset (void)
 }
 
 #if defined (ACE_HAS_BIG_FD_SET)
+ACE_INLINE ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &other)
+  : size_ (other.size_)
+  , max_handle_ (other.max_handle_)
+  , min_handle_ (other.min_handle_)
+  , mask_ (other.mask_)
+{}
+
 ACE_INLINE ACE_Handle_Set &
 ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 {
