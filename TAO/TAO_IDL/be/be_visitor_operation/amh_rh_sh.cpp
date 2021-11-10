@@ -56,8 +56,7 @@ be_visitor_amh_rh_operation_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "virtual void ";
 

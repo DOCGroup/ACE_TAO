@@ -72,8 +72,7 @@ int be_visitor_union_cs::visit_union (be_union *node)
   // Now generate the operations on the union such as the copy constructor
   // and the assignment operator.
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the copy constructor and the assignment operator here.
   *os << be_nl_2

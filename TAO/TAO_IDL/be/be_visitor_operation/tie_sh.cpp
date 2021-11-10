@@ -47,8 +47,7 @@ be_visitor_operation_tie_sh::visit_operation (be_operation *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   be_visitor_context ctx (*this->ctx_);
   be_visitor_operation_rettype oro_visitor (&ctx);

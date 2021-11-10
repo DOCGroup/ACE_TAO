@@ -143,8 +143,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the array traits specialization definitions,
   // guarded by #ifdef on unaliased array element type and length.

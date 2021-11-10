@@ -61,9 +61,7 @@ be_visitor_arg_traits::visit_root (be_root *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl
       << be_global->core_versioning_begin ();
@@ -141,8 +139,7 @@ be_visitor_arg_traits::visit_interface (be_interface *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -245,9 +242,7 @@ be_visitor_arg_traits::visit_valuebox (be_valuebox *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os);
 
   os << be_nl_2
       << "template<>" << be_nl
@@ -301,9 +296,7 @@ be_visitor_arg_traits::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream & os = *this->ctx_->stream ();
 
-  os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (&os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -425,8 +418,7 @@ be_visitor_arg_traits::visit_operation (be_operation *node)
         {
           TAO_OutStream *os = this->ctx_->stream ();
 
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__;
+          TAO_INSERT_COMMENT (os);
 
           std::string guard_suffix =
             std::string (this->S_) + std::string ("arg_traits");
@@ -505,8 +497,7 @@ be_visitor_arg_traits::visit_attribute (be_attribute *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -585,8 +576,7 @@ be_visitor_arg_traits::visit_argument (be_argument *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   std::string guard_suffix =
     std::string (this->S_) + std::string ("arg_traits");
@@ -679,8 +669,7 @@ be_visitor_arg_traits::visit_sequence (be_sequence *node)
       return 0;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   bool use_vec = (node->unbounded () && be_global->alt_mapping ());
   UTL_ScopedName *sn = alias->name ();
@@ -898,8 +887,7 @@ be_visitor_arg_traits::visit_enum (be_enum *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -941,8 +929,7 @@ be_visitor_arg_traits::visit_structure (be_structure *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl
@@ -1052,8 +1039,7 @@ be_visitor_arg_traits::visit_union (be_union *node)
   // multiple declarations.
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "template<>" << be_nl

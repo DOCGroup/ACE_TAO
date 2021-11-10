@@ -61,8 +61,7 @@ be_visitor_sequence_cdr_op_ch::visit_sequence (be_sequence *node)
   be_type *bt = dynamic_cast<be_type*> (node);
   be_typedef *tdef = dynamic_cast<be_typedef*> (bt);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we're an anonymous sequence, we must protect against
   // being declared more than once.

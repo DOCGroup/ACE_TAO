@@ -123,8 +123,7 @@ be_visitor_amh_operation_sh::generate_shared_prologue (
     TAO_OutStream *os,
     const char *skel_prefix)
 {
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "static void " << skel_prefix
       << this->ctx_->port_prefix ().c_str ()

@@ -381,8 +381,11 @@ tp_reactor_factory (void)
  *
  * Reactor test execution functor.
  */
-struct Run_Test : public std::unary_function<reactor_factory_type, void>
+struct Run_Test
 {
+  typedef reactor_factory_type argument_type;
+  typedef void result_type;
+
   /// Function call operator overload.
   void operator() (reactor_factory_type factory)
   {

@@ -184,7 +184,11 @@ run_main (int, ACE_TCHAR *[])
     {
       // ... start the test fresh ...
       reset_counts();
+#ifdef ACE_HAS_CPP17
+      const auto b = std::make_unique<Aggregate>();
+#else
       std::auto_ptr<Aggregate> b(new Aggregate);
+#endif
       never_reached(__FILE__, __LINE__);
     }
   catch(...)

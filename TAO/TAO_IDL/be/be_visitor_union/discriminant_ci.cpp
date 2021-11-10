@@ -51,8 +51,7 @@ be_visitor_union_discriminant_ci::visit_enum (be_enum *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {
@@ -141,8 +140,7 @@ be_visitor_union_discriminant_ci::visit_predefined_type (
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if ((dv.computed_ != 0) && (bu->default_index () == -1))
     {

@@ -35,8 +35,7 @@ int be_visitor_interface_smart_proxy_ch::visit_interface (be_interface *node)
       bt = node;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "class " << be_global->stub_export_macro ()<< " "
       << "TAO_" << node->flat_name ()
