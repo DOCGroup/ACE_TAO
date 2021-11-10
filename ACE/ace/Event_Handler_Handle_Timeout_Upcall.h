@@ -87,7 +87,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Flag indicating that reference counting is required for this
   /// event handler upcall.
   int requires_reference_counting_;

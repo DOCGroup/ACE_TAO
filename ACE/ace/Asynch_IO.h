@@ -1556,7 +1556,6 @@ private:
   ACE_Asynch_Write_Dgram (const ACE_Asynch_Write_Dgram &) = delete;
 };
 
-
 /**
  * @class ACE_Handler
  *

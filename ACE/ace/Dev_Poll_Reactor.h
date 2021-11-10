@@ -1126,7 +1126,7 @@ protected:
     int acquire (ACE_Time_Value *max_wait = 0);
 
   private:
-    Token_Guard (void);
+    Token_Guard ();
 
   private:
     /// The Reactor token.

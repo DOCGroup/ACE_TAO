@@ -38,7 +38,6 @@ static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 }
 #endif /* ACE_WIN32 */
 
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Process::ACE_Process ()

@@ -344,7 +344,6 @@ public:
   int opts () const;
 
 private:
-
   /// Subscribe to a multicast address on one or more network interface(s).
   /// (No QoS support.)
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,

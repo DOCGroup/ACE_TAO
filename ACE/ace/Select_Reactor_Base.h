@@ -375,7 +375,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Remove the binding of @a handle corresponding to position @a pos
   /// in accordance with the @a mask.
   int unbind (ACE_HANDLE handle,
@@ -437,7 +436,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// Reference to the Handler_Repository we are iterating over.
   ACE_Select_Reactor_Handler_Repository const * const rep_;
 
