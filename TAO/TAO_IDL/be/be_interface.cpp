@@ -744,8 +744,7 @@ be_interface::gen_var_out_seq_decls ()
   const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
@@ -1856,8 +1855,7 @@ be_interface::gen_gperf_things (const char *flat_name)
 
   TAO_OutStream *os = tao_cg->server_skeletons ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,

@@ -644,3 +644,9 @@ TAO_OutStream::print (AST_Expression *expr)
   return *this;
 }
 
+void TAO_OutStream::insert_comment (const char *file, int line)
+{
+  *this << be_nl << "// TAO_IDL - Generated from" << be_nl
+        << "// " << file << ':' << static_cast<ACE_CDR::ULong> (line)
+        << be_nl_2;
+}

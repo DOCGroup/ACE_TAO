@@ -46,8 +46,7 @@ be_visitor_amh_rh_interface_sh::visit_interface (be_interface *node)
       rh_skel_class_name = "POA_TAO_";
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   rh_skel_class_name += rh_base_class_name.c_str ();
 

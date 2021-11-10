@@ -145,9 +145,7 @@ TAO_CodeGen::start_client_header (const char *fname)
       return -1;
     }
 
-  *this->client_header_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                        << "// " << __FILE__ << ":" << __LINE__
-                        << be_nl_2;
+  TAO_INSERT_COMMENT (this->client_header_);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->client_header_);
@@ -362,9 +360,7 @@ TAO_CodeGen::start_client_stubs (const char *fname)
       return -1;
     }
 
-  *this->client_stubs_ << be_nl << "// TAO_IDL - Generated from" << be_nl
-                       << "// " << __FILE__ << ":" << __LINE__
-                       << be_nl_2;
+  TAO_INSERT_COMMENT (this->client_stubs_);
 
   this->gen_stub_src_includes ();
 
@@ -446,10 +442,7 @@ TAO_CodeGen::start_server_header (const char *fname)
       return -1;
     }
 
-  *this->server_header_ << be_nl
-                        << "// TAO_IDL - Generated from" << be_nl
-                        << "// " << __FILE__ << ":" << __LINE__
-                        << be_nl_2;
+  TAO_INSERT_COMMENT (this->server_header_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_header_);
@@ -575,12 +568,7 @@ TAO_CodeGen::start_server_template_header (const char *fname)
       return -1;
     }
 
-  *this->server_template_header_ << be_nl
-                                 << "// TAO_IDL - Generated from"
-                                 << be_nl
-                                 << "// " << __FILE__
-                                 << ":" << __LINE__
-                                 << be_nl_2;
+  TAO_INSERT_COMMENT (this->server_template_header_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_header_);
@@ -631,9 +619,7 @@ TAO_CodeGen::start_server_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_skeletons_ << be_nl_2 << "// TAO_IDL - Generated from"
-                           << be_nl << "// " << __FILE__ << ":" << __LINE__
-                           << be_nl_2;
+  TAO_INSERT_COMMENT (this->server_skeletons_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_skeletons_);
@@ -693,10 +679,7 @@ TAO_CodeGen::start_server_template_skeletons (const char *fname)
       return -1;
     }
 
-  *this->server_template_skeletons_ << be_nl << "// TAO_IDL - Generated from"
-                                    << be_nl << "// "
-                                    << __FILE__ << ":" << __LINE__
-                                    << be_nl_2;
+  TAO_INSERT_COMMENT (this->server_template_skeletons_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->server_template_skeletons_);
@@ -772,10 +755,7 @@ TAO_CodeGen::start_anyop_header (const char *fname)
       return 0;
     }
 
-  *this->anyop_header_ << be_nl
-                       << "// TAO_IDL - Generated from" << be_nl
-                       << "// " << __FILE__ << ":" << __LINE__
-                       << be_nl_2;
+  TAO_INSERT_COMMENT (this->anyop_header_);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->anyop_header_);
@@ -1007,10 +987,7 @@ TAO_CodeGen::start_ciao_svnt_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_header_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_header_);
@@ -1110,10 +1087,7 @@ TAO_CodeGen::start_ciao_svnt_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_source_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_source_);
@@ -1153,10 +1127,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_template_header_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_template_header_);
@@ -1235,10 +1206,7 @@ TAO_CodeGen::start_ciao_svnt_template_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_svnt_template_source_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_svnt_template_source_);
@@ -1442,10 +1410,7 @@ TAO_CodeGen::start_ciao_conn_header (const char *fname)
 
   TAO_OutStream &os = *this->ciao_conn_header_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_conn_header_);
@@ -1514,10 +1479,7 @@ TAO_CodeGen::start_ciao_conn_source (const char *fname)
 
   TAO_OutStream &os = *this->ciao_conn_source_;
 
-  os << be_nl
-     << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__
-     << be_nl;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the #ident string, if any.
   this->gen_ident_string (this->ciao_conn_source_);
@@ -1593,10 +1555,7 @@ TAO_CodeGen::start_implementation_header (const char *fname)
       return -1;
     }
 
-  *this->implementation_header_ << be_nl << "// TAO_IDL - Generated from"
-                                << be_nl << "// "
-                                << __FILE__ << ":" << __LINE__
-                                << be_nl_2;
+  TAO_INSERT_COMMENT (this->implementation_header_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->implementation_header_);
@@ -1650,10 +1609,7 @@ TAO_CodeGen::start_implementation_skeleton (const char *fname)
       return -1;
     }
 
-  *this->implementation_skeleton_ << be_nl << "// TAO_IDL - Generated from"
-                                  << be_nl << "// "
-                                  << __FILE__ << ":" << __LINE__
-                                  << be_nl_2;
+  TAO_INSERT_COMMENT (this->implementation_skeleton_);
 
   // Generate the ident string, if any.
   this->gen_ident_string (this->implementation_skeleton_);
@@ -1680,9 +1636,7 @@ TAO_CodeGen::end_client_header ()
 {
   // Generate the <<= and >>= operators here.
 
-  *this->client_header_ << be_nl_2 << "// TAO_IDL - Generated from"
-                        << be_nl << "// " << __FILE__ << ":"
-                        << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (this->client_header_);
 
   // End versioned namespace support before remaining include
   // directives at end of file.
@@ -1824,9 +1778,7 @@ TAO_CodeGen::end_implementation_header (const char *fname)
 int
 TAO_CodeGen::end_server_template_header ()
 {
-  *this->server_template_header_ << be_nl_2 << "// TAO_IDL - Generated from"
-                                 << be_nl << "// "
-                                 << __FILE__ << ":" << __LINE__ << "\n";
+  TAO_INSERT_COMMENT (this->server_template_header_);
 
   // End versioned namespace support.  Do not place include directives
   // before this.

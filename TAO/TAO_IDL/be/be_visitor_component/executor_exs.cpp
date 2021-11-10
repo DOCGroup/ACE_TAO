@@ -21,10 +21,6 @@ be_visitor_executor_exs::be_visitor_executor_exs (
 {
 }
 
-be_visitor_executor_exs::~be_visitor_executor_exs ()
-{
-}
-
 int
 be_visitor_executor_exs::visit_operation (be_operation *node)
 {

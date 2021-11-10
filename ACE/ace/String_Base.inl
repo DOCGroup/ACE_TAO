@@ -442,15 +442,13 @@ operator <= (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs) const
 // ----------------------------------------------
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator== (const ACE_CHAR_T *s,
-            const ACE_String_Base<ACE_CHAR_T> &t)
+operator== (const ACE_CHAR_T *s, const ACE_String_Base<ACE_CHAR_T> &t)
 {
   return t == s;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator!= (const ACE_CHAR_T *s,
-            const ACE_String_Base<ACE_CHAR_T> &t)
+operator!= (const ACE_CHAR_T *s, const ACE_String_Base<ACE_CHAR_T> &t)
 {
   return !(t == s);
 }

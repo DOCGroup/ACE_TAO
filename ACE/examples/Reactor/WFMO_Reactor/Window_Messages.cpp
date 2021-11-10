@@ -20,8 +20,6 @@
 #include "ace/Auto_Ptr.h"
 #include "ace/Auto_Event.h"
 
-
-
 class Event_Handler : public ACE_Event_Handler
 {
 public:

@@ -151,28 +151,28 @@ extern "C"
 
 #if defined (ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES)
   // Prototypes for both signal() and struct sigaction are consistent..
-  typedef void (*ACE_SignalHandler)(int);
-  typedef void (*ACE_SignalHandlerV)(int);
+  using ACE_SignalHandler = void (*)(int);
+  using ACE_SignalHandlerV = void (*)(int);
 #elif defined (ACE_HAS_SVR4_SIGNAL_T)
    // SVR4 Signals are inconsistent (e.g., see struct sigaction)..
-   typedef void (*ACE_SignalHandler)(int);
-   typedef void (*ACE_SignalHandlerV)(void);
+   using ACE_SignalHandler = void (*)(int);
+   using ACE_SignalHandlerV = void (*)(void);
 #elif defined (ACE_WIN32)
-   typedef void (__cdecl *ACE_SignalHandler)(int);
-   typedef void (__cdecl *ACE_SignalHandlerV)(int);
+   using ACE_SignalHandler = void (__cdecl *)(int);
+   using ACE_SignalHandlerV = void (__cdecl *)(int);
 #elif defined (INTEGRITY)
-   typedef void (*ACE_SignalHandler)();
-   typedef void (*ACE_SignalHandlerV)(int);
+   using ACE_SignalHandler = void (*)();
+   using ACE_SignalHandlerV = void (*)(int);
 #elif defined (ACE_HAS_RTEMS)
-   typedef void (*ACE_SignalHandler)();
-   typedef void (*ACE_SignalHandlerV)();
+   using ACE_SignalHandler = void (*)();
+   using ACE_SignalHandlerV = void (*)();
 #else /* This is necessary for some older broken version of cfront */
 #  if defined (SIG_PF)
 #    define ACE_SignalHandler SIG_PF
 #  else
-     typedef void (*ACE_SignalHandler)(int);
+     using ACE_SignalHandler = void (*)(int);
 #  endif /* SIG_PF */
-   typedef void (*ACE_SignalHandlerV)(...);
+   using ACE_SignalHandlerV = void (*)(...);
 #endif /* ACE_HAS_CONSISTENT_SIGNAL_PROTOTYPES */
 
 #if defined (ACE_LACKS_SIGACTION)

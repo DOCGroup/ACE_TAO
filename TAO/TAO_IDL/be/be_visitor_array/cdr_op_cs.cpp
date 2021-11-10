@@ -159,8 +159,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 

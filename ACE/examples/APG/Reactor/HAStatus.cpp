@@ -241,9 +241,7 @@ public:
   LoopStopper (int signum = SIGINT);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 };
 
 LoopStopper::LoopStopper (int signum)
@@ -268,9 +266,7 @@ public:
   LogSwitcher (int on_sig, int off_sig);
 
   // Called when object is signaled by OS.
-  virtual int handle_signal (int signum,
-                             siginfo_t * = 0,
-                             ucontext_t * = 0);
+  virtual int handle_signal (int signum, siginfo_t * = 0, ucontext_t * = 0);
 
   // Called when an exceptional event occurs.
   virtual int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE);

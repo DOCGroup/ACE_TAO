@@ -32,13 +32,11 @@
 // to do anything with the signal - it's just needed to interrupt a sleep.
 // See wait() for more info.
 #if !defined (ACE_WIN32) && !defined(ACE_LACKS_UNIX_SIGNALS)
-static void
-sigchld_nop (int, siginfo_t *, ucontext_t *)
+static void sigchld_nop (int, siginfo_t *, ucontext_t *)
 {
   return;
 }
 #endif /* ACE_WIN32 */
-
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -696,7 +694,8 @@ ACE_Process::wait (const ACE_Time_Value &tv,
   // open(), and there's already a SIGCHLD action set, so no
   // action is needed here.
   ACE_Sig_Action old_action;
-  ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+  ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+  ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
   do_sigchld.register_action (SIGCHLD, &old_action);
 
   pid_t pid;

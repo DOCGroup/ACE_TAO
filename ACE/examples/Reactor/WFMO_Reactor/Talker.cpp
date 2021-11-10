@@ -527,7 +527,6 @@ STDIN_Handler::register_thread_exit_hook (void)
 
 // The STDIN thread has exited.  This means the user hit ^C.  We can
 // end the event loop and delete ourself.
-
 int
 STDIN_Handler::handle_signal (int, siginfo_t *si, ucontext_t *)
 {

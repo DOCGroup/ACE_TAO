@@ -214,10 +214,10 @@ private:
   mutable ACE_SYNCH_RECURSIVE_CONDITION value_ready_;
 
 private:
-  ACE_Future_Rep (void);
+  ACE_Future_Rep ();
 
 protected:
-  ~ACE_Future_Rep (void);
+  ~ACE_Future_Rep ();
 };
 
 /**
@@ -354,7 +354,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-
   /// The ACE_Future_Rep
   /// Protect operations on the <Future>.
   typedef ACE_Future_Rep<T> FUTURE_REP;

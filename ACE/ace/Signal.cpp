@@ -33,8 +33,7 @@ ACE_Sig_Action::~ACE_Sig_Action ()
   ACE_TRACE ("ACE_Sig_Action::~ACE_Sig_Action");
 }
 
-// Restore the signal mask.
-
+/// Restore the signal mask.
 ACE_Sig_Guard::~ACE_Sig_Guard ()
 {
   //ACE_TRACE ("ACE_Sig_Guard::~ACE_Sig_Guard");
@@ -93,7 +92,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = sig_flags;
 
-  if (sig_mask == 0)
+  if (sig_mask == nullptr)
     ACE_OS::sigemptyset (&this->sa_.sa_mask);
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...
@@ -121,7 +120,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
   this->sa_.sa_flags = sig_flags;
 
-  if (sig_mask == 0)
+  if (sig_mask == nullptr)
     ACE_OS::sigemptyset (&this->sa_.sa_mask);
   else
     this->sa_.sa_mask = *sig_mask; // Structure assignment...

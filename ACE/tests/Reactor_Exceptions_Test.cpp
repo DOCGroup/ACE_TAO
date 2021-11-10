@@ -101,8 +101,8 @@ public:
 };
 
 #if defined (ACE_HAS_THREADS)
-static int
-worker ()
+static void*
+worker (void*)
 {
   ACE_Reactor::instance ()->owner (ACE_OS::thr_self ());
 
@@ -138,7 +138,6 @@ run_main (int argc, ACE_TCHAR *argv[])
     // Make sure handler gets cleaned up before reactor by putting it in its
     // own scope
     My_Handler handler (local_addr);
-
 
     if (ACE_Reactor::instance ()->register_handler
         (&handler,

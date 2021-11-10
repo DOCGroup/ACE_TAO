@@ -52,10 +52,6 @@ be_array::be_array (UTL_ScopedName *n,
     }
 }
 
-be_array::~be_array ()
-{
-}
-
 int
 be_array::create_name ()
 {

@@ -39,8 +39,7 @@ be_visitor_valuetype_any_op_ch::visit_valuetype (be_valuetype *node)
   TAO_OutStream *os = this->ctx_->stream ();
   const char *macro = this->ctx_->export_macro ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   be_module *module = nullptr;
 

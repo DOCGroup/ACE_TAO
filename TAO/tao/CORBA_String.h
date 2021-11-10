@@ -273,6 +273,8 @@ TAO_Export ostream &
 operator<< (ostream &, CORBA::String_out &);
 TAO_Export istream &
 operator>> (istream &, CORBA::String_out &);
+
+#  ifndef ACE_HAS_CPP20
 TAO_Export ostream &
 operator<< (ostream &, const CORBA::WString_var &);
 TAO_Export istream &
@@ -281,6 +283,7 @@ TAO_Export ostream &
 operator<< (ostream &, CORBA::WString_out &);
 TAO_Export istream &
 operator>> (istream &, CORBA::WString_out &);
+#  endif /* ACE_HAS_CPP20 */
 
 # endif /* ACE_LACKS_IOSTREAM_TOTALLY */
 

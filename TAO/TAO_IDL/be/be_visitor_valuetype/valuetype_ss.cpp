@@ -53,8 +53,7 @@ be_visitor_valuetype_ss::visit_valuetype (be_valuetype *node)
 
   const char *full_skel_name = full_skel_name_holder.c_str ();
 
-  *os << be_nl << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Find if we are at the top scope or inside some module,
   // pre-compute the prefix that must be added to the local name in

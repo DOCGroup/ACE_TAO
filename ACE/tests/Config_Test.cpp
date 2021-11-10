@@ -22,8 +22,6 @@
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
-
-
 static int
 test (ACE_Configuration *config,
       ACE_Configuration_Section_Key &testsection)

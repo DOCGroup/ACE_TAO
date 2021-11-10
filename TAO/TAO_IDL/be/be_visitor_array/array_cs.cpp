@@ -16,10 +16,6 @@ be_visitor_array_cs::be_visitor_array_cs (be_visitor_context *ctx)
 {
 }
 
-be_visitor_array_cs::~be_visitor_array_cs ()
-{
-}
-
 int be_visitor_array_cs::visit_array (be_array *node)
 {
   // Nothing to do if we are imported or code is already generated.
@@ -90,8 +86,7 @@ int be_visitor_array_cs::visit_array (be_array *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // dup method.
   *os << fname << "_slice *" << be_nl

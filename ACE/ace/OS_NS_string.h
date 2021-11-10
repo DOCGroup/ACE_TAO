@@ -407,7 +407,6 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   wchar_t *strtok (wchar_t *s, const wchar_t *tokens);
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOK */
-
   //@}
 
   /// Finds the next token in a string (safe char version).

@@ -73,6 +73,8 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 using std::auto_ptr;
 #else /* !ACE_LACKS_AUTO_PTR */
 
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
+
 /**
  * @class auto_ptr
  *
@@ -89,6 +91,8 @@ public:
 
   X *operator-> () const;
 };
+
+ACE_END_VERSIONED_NAMESPACE_DECL
 
 #endif /* !ACE_LACKS_AUTO_PTR */
 

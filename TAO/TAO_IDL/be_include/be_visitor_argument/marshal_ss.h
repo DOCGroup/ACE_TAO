@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_MARSHAL_SS_H_
 #define _BE_VISITOR_ARGUMENT_MARSHAL_SS_H_
 
-// ************************************************************
-// class be_visitor_args_marshal_ss
-// ************************************************************
-
 /**
  * @class be_visitor_args_marshal_ss
  *
