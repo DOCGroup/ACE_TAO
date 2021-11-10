@@ -31,9 +31,9 @@ ace_sig_handlers_dispatch (int signum, siginfo_t *info, ucontext_t *context)
 #define ace_signal_handlers_dispatcher ACE_SignalHandler(ace_sig_handlers_dispatch)
 
 #else
-#define ace_signal_handler_dispatcher ACE_SignalHandler(ACE_Sig_Handler::dispatch)
+#define ace_signal_handler_dispatcher reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> ((ACE_Sig_Handler_Ex)ACE_Sig_Handler::dispatch))
 
-#define ace_signal_handlers_dispatcher ACE_SignalHandler(ACE_Sig_Handlers::dispatch)
+#define ace_signal_handlers_dispatcher reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> ((ACE_Sig_Handler_Ex)ACE_Sig_Handlers::dispatch))
 #endif /* ACE_HAS_SIG_C_FUNC */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
