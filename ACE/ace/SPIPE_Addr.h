@@ -39,6 +39,9 @@ public:
   /// Copy constructor.
   ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa);
 
+  /// Assignment operator
+  ACE_SPIPE_Addr& operator= (const ACE_SPIPE_Addr& sa) = default;
+
   /// Create a ACE_SPIPE_Addr from a rendezvous point in the file
   /// system.
   ACE_SPIPE_Addr (const ACE_TCHAR *rendezvous_point, gid_t = 0, uid_t = 0);
