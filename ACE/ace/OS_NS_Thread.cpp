@@ -21,6 +21,8 @@
 #  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
 
+#include <memory>
+
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
 {

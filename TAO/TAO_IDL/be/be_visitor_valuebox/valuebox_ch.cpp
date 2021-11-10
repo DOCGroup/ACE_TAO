@@ -37,8 +37,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
 
   this->ctx_->node (node); // save the node
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2
       << "class " << node->local_name () << ";" ;
@@ -110,8 +109,7 @@ be_visitor_valuebox_ch::visit_valuebox (be_valuebox *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the "protected" destructor
 
@@ -163,8 +161,7 @@ be_visitor_valuebox_ch::visit_array (be_array *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor();
 
@@ -282,8 +279,7 @@ be_visitor_valuebox_ch::visit_sequence (be_sequence *node)
   // Indicate that this type has been used as a sequence element.
   bt->seen_in_sequence (true);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor();
 
@@ -402,8 +398,7 @@ be_visitor_valuebox_ch::visit_string (be_string *node)
   // Retrieve the node being visited by this be_visitor_valuebox_ch.
   be_decl * vb_node = this->ctx_->node ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor ();
   this->emit_constructor_one_arg (node, "", "", "");
@@ -474,8 +469,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor();
 
@@ -542,8 +536,7 @@ be_visitor_valuebox_ch::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Member variable of underlying type;
   this->emit_boxed_member_var (node, "_var");
@@ -576,8 +569,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor();
 
@@ -668,9 +660,7 @@ be_visitor_valuebox_ch::visit_union (be_union *node)
                         -1);
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
-
+  TAO_INSERT_COMMENT (os);
 
   // Member variable of underlying type;
   this->emit_boxed_member_var (node, "_var");
@@ -686,8 +676,7 @@ be_visitor_valuebox_ch::emit_for_predef_enum (be_type *node,
 {
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   this->emit_default_constructor ();
 

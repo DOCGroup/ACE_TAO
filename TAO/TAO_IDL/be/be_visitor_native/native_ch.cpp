@@ -38,10 +38,7 @@ be_visitor_native_ch::visit_native (be_native *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__
-      << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   const char *node_name = node->full_name ();
 

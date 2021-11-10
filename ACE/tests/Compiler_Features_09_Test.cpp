@@ -62,6 +62,7 @@ run_main (int, ACE_TCHAR *[])
   // failure
   int status = 0;
 
+#ifndef ACE_HAS_CPP17 // There is no auto_ptr in C++17
   // ... this works with the ACE version of auto_ptr (well, the
   // namespace is broken, but you get the idea) ...
   std::auto_ptr<Base> x(new Base);
@@ -102,6 +103,7 @@ run_main (int, ACE_TCHAR *[])
                  ));
     }
 
+#endif
   ACE_END_TEST;
   return status;
 }

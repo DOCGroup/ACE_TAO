@@ -61,8 +61,7 @@ be_visitor_root_sth::visit_module (be_module *node)
 
   // Generate the skeleton class name.
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-               << "// " __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Now generate the class definition. The prefix POA_ is prepended to our
   // name only if we are the outermost module.

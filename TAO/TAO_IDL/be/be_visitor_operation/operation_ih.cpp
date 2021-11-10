@@ -36,8 +36,7 @@ be_visitor_operation_ih::visit_operation (be_operation *node)
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
     }
 
   // every operation is declared virtual in the client code

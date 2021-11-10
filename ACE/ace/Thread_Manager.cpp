@@ -9,6 +9,8 @@
 #include "ace/OS_NS_sys_time.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if !defined (__ACE_INLINE__)
 #include "ace/Thread_Manager.inl"
 #endif /* __ACE_INLINE__ */

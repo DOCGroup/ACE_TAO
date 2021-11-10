@@ -35,8 +35,7 @@ be_visitor_interface_is::visit_interface (be_interface *node)
 
   if (be_global->gen_impl_debug_info ())
     {
-      *os << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+      TAO_INSERT_COMMENT (os);
     }
 
   *os << "// Implementation skeleton constructor" << be_nl;

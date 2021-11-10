@@ -101,8 +101,7 @@ int be_visitor_sequence_cs::visit_sequence (be_sequence *node)
 
   *os << be_nl_2;
 
-  *os << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   os->gen_ifdef_macro (node->flat_name ());
 

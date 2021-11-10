@@ -683,7 +683,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               // Skip over the MALLOC_HEADER when returning pointer.
               return currp + 1;
             }
-          else if (currp == this->cb_ptr_->freep_)
+          else if (currp == static_cast<MALLOC_HEADER *> (this->cb_ptr_->freep_))
             {
               // We've wrapped around freelist without finding a
               // block.  Therefore, we need to ask the memory pool for
@@ -809,7 +809,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
         }
 
       // Join to upper neighbor.
-      if ((blockp + blockp->size_) == currp->next_block_)
+      if (blockp + blockp->size_ == static_cast<MALLOC_HEADER *> (currp->next_block_))
         {
           ACE_MALLOC_STATS (--this->cb_ptr_->malloc_stats_.nblocks_);
           blockp->size_ += currp->next_block_->size_;

@@ -254,8 +254,7 @@ be_type::gen_common_varout (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   AST_Type::SIZE_TYPE st = this->size_type ();
 
@@ -299,9 +298,7 @@ be_type::gen_stub_decls (TAO_OutStream *os)
       return;
     }
 
-  *os << be_nl_2
-      << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   AST_Interface *i = dynamic_cast<AST_Interface*> (this);
   AST_ValueType *v = dynamic_cast<AST_ValueType*> (this);

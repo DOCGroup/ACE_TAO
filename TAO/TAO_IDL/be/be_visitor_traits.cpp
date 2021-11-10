@@ -55,9 +55,7 @@ be_visitor_traits::visit_root (be_root *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << be_nl_2
-          << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_nl
           << be_global->core_versioning_begin ();

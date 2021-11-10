@@ -37,8 +37,7 @@ int be_visitor_exception_ch::visit_exception (be_exception *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2 << "class " << be_global->stub_export_macro ()
             << " " << node->local_name ()

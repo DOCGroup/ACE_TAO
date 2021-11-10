@@ -40,8 +40,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ ;
+  TAO_INSERT_COMMENT (os);
 
   // OBV_ class maps only to a typedef if we are optimizing accessors.
   if (node->opt_accessor ())
@@ -142,8 +141,7 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // to avoid ambiguity.
       if (node->n_supports () > 0)
         {
-          *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-              << "// " << __FILE__ << ":" << __LINE__ ;
+          TAO_INSERT_COMMENT (os);
 
           *os << be_nl_2 << "virtual void _add_ref (void);" << be_nl;
           *os << "virtual void _remove_ref (void);";
