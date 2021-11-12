@@ -12,8 +12,8 @@
 
 #if defined (TAO_HAS_NOTIFICATION_MONITOR_CONTROL) && defined (TAO_AS_STATIC_LIBS)
 // for static builds, be sure the library is included
-#include "orbsvcs/orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/MonitorManager.h"
+#include "orbsvcs/Notify/MonitorControlExt/MC_Notify_Service.h"
+#include "orbsvcs/Notify/MonitorControl/MonitorManager.h"
 #endif
 
 #if defined (TAO_EXPLICIT_NEGOTIATE_CODESETS)
