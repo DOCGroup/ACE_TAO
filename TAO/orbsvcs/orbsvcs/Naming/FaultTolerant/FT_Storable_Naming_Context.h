@@ -9,14 +9,13 @@
  */
 //=============================================================================
 
-
 #ifndef TAO_FT_STORABLE_NAMING_CONTEXT_H
 #define TAO_FT_STORABLE_NAMING_CONTEXT_H
 #include /**/ "ace/pre.h"
 
 #include "orbsvcs/Naming/Storable_Naming_Context.h"
 #include "orbsvcs/Naming/FaultTolerant/ftnaming_export.h"
-#include "orbsvcs/orbsvcs/PortableGroupC.h"
+#include "orbsvcs/PortableGroupC.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_Naming_Manager.h"
 #include "orbsvcs/FT_NamingReplicationC.h"
 

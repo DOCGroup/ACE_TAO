@@ -101,6 +101,22 @@ jobs:
             vcpkglibdir: debug/lib
             vcpkgpackages: openssl xerces-c zlib
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
+          - name: VS2022Debug64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: openssl xerces-c zlib
+          - name: VS2022Release64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: openssl xerces-c zlib
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:
@@ -125,7 +141,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v7
       with:
-        vcpkgGitCommitId: d417ae59d6e9aa20d9f812b5deb966645c54687d
+        vcpkgGitCommitId: 70033dbb31527fb3e69654731f540f59c87787f9
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}

@@ -1,5 +1,3 @@
-
-
 Goals:
 ------
 This is a step up from the Simple mcast test.  There are still two
@@ -49,7 +47,3 @@ $gateway-ec -ORBsvcconf consumer-ec.conf -i consumer-ec.ior
 $consumer -ORBInitRef Event_Service=file://consumer-ec.ior
 $gateway-ec -ORBsvcconf supplier-ec.conf -i supplier-ec.ior
 $supplier -ORBInitRef Event_Service=file://supplier-ec.ior
-
-
-
-

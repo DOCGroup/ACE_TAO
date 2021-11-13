@@ -7,7 +7,7 @@
 
 #include "tao/Monitor/Monitor.h"
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control.h"
+#include "orbsvcs/Notify/MonitorControl/Control.h"
 
 #include "ace/Hash_Map_Manager_T.h"
 

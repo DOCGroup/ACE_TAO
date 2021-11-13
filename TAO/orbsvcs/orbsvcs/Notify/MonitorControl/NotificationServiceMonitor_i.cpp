@@ -1,6 +1,6 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
+#include "orbsvcs/Notify/MonitorControl/NotificationServiceMonitor_i.h"
 
 #include "tao/Monitor/Monitor_Impl.h"
 #include "ace/Auto_Ptr.h"
@@ -9,7 +9,7 @@
 
 #if defined (TAO_HAS_MONITOR_FRAMEWORK) && (TAO_HAS_MONITOR_FRAMEWORK == 1)
 
-#include "orbsvcs/orbsvcs/Notify/MonitorControl/Control_Registry.h"
+#include "orbsvcs/Notify/MonitorControl/Control_Registry.h"
 
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
