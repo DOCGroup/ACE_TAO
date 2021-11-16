@@ -1,6 +1,13 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.15 and ACE-6.5.16
 ======================================================
 
+. Initial not-tested support for Visual Studio 2022
+
+. Fixed compile errors when using Visual Studio 2019 with C++17
+  or C++20 support enabled
+
+. Removed use of deprecated std::iterator
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.14 and ACE-6.5.15
 ======================================================
 
