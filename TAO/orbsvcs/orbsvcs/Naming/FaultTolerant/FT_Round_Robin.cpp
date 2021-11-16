@@ -15,11 +15,6 @@ TAO_FT_Round_Robin::TAO_FT_Round_Robin ()
 {
 }
 
-TAO_FT_Round_Robin::~TAO_FT_Round_Robin ()
-{
-}
-
-
 bool
 TAO_FT_Round_Robin::next_location (
       PortableGroup::ObjectGroup_ptr object_group,

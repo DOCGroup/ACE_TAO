@@ -31,15 +31,7 @@ TAO_FT_Storable_Naming_Context::TAO_FT_Storable_Naming_Context (CORBA::ORB_ptr o
     stale_ (false),
     replicator_ (((TAO_FT_Storable_Naming_Context_Factory *)cxt_factory)->replicator())
 {
-
 }
-
-
-TAO_FT_Storable_Naming_Context::~TAO_FT_Storable_Naming_Context ()
-{
-  // Perform appropriate cleanup based on the destruction level specified.
-}
-
 
 CORBA::Boolean
 TAO_FT_Storable_Naming_Context::is_object_group (CORBA::Object_ptr obj) const
@@ -128,7 +120,6 @@ TAO_FT_Storable_Naming_Context::stale ()
 {
   return stale_;
 }
-
 
 void
 TAO_FT_Storable_Naming_Context::context_written ()
