@@ -33,7 +33,6 @@
 #pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO
@@ -59,9 +58,8 @@ class TAO_FtNaming_Export TAO_FT_Naming_Manager
     public ACE_Task_Base
 {
 public:
-
   /// Constructor.
-  TAO_FT_Naming_Manager (void);
+  TAO_FT_Naming_Manager ();
 
   void set_replicator (TAO_FT_Naming_Replication_Manager *repl);
 
@@ -340,9 +338,7 @@ private:
   PortableGroup::Name built_in_balancing_strategy_name_;
 
   PortableGroup::Name object_group_property_name_;
-
 };
-
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

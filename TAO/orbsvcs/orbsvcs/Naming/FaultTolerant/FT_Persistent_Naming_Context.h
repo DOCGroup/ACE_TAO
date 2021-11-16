@@ -46,7 +46,7 @@ public:
                                     ACE_UINT32 *counter = 0);
 
   /// Destructor.
-  virtual ~TAO_FT_Persistent_Naming_Context (void);
+  virtual ~TAO_FT_Persistent_Naming_Context () = default;
 
   /**
    * Override the resolve operation to support load balancing using
