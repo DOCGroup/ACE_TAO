@@ -1,0 +1,113 @@
+commit 8d8ffb88621135e4ea8acb50ef79a56cb2907864
+Merge: e79f78efa9e 6221d768d75
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 12 10:08:50 2021 -0600
+
+    Merge pull request #1728 from mitza-oci/tao2-notifyinclude
+    
+    [TAO 2] Notify svc: Fixed include
+
+commit 6221d768d759732d11fb425ea8766b64d0db14c3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Nov 11 11:37:07 2021 -0600
+
+    Notify svc: Fixed include
+    
+    The "make install" tree doesn't have two orbsvcs directories
+    
+    (cherry picked from commit 026a87c8d9d1ce03c09d77e8c1fb99eb7d6af666)
+
+commit 65c0af62568253959345d73f01af0dc94fb1e11c
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 10 14:53:28 2021 -0600
+
+    SystemExceptions shouldn't use a different export
+    
+    All classes defined in libTAO should use the same export macro.
+    This avoids MSVC creating import libs for all executables that use
+    libTAO -- see https://github.com/DOCGroup/MPC/issues/130 and
+    https://github.com/microsoft/vcpkg/issues/16551
+    
+    (cherry picked from commit 0f879fd3f8a6e4d0b1762bd6c1424af735813ccc)
+    
+    # Conflicts:
+    #       TAO/tao/SystemException.h
+
+commit e8bc30554bb54f07fd3b55a655c45bc381e52cd4
+Merge: 596c90c7d6c d155cf53c6e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 10 08:34:19 2021 -0600
+
+    Merge branch 'ace6tao2' into igtd/backport-1715
+
+commit 596c90c7d6c06260c74e12d3b995dc17b7985ab6
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 12:54:59 2021 -0600
+
+    TAO/NEWS: Remove extra "in"
+
+commit 80d4db0c504f09077954fa2f3139ba2aa1955e6e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 12:30:34 2021 -0600
+
+    Restore bool bitwise expressions
+
+commit 36af3cc15a754cdbb887d25a2b16e167abb9051d
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 09:08:07 2021 -0600
+
+    Remove Unnecessary Boolean Operations
+    
+    To address warnings on windows.
+
+commit a0461832021d4989a43aa1141f711cb9e849f454
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 00:46:55 2021 -0600
+
+    Update TAO/NEWS
+
+commit d4922e3d93d2b3fb42d03b09ae764423d8d8b1cc
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Nov 9 00:31:55 2021 -0600
+
+    Fix Floating Point Constant Expressions in tao_idl
+    
+    Backport of https://github.com/DOCGroup/ACE_TAO/pull/1715
+    
+    Fixes #1713 and adds some regression tests for constant expressions.
+    Also tried to do some more cleanup and minor fixes related to #840.
+
+commit ef2d9343c11931079c32ca80ff7017e12865024e
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 1 15:28:00 2021 -0500
+
+    tao_idl updates for /std:c++20
+    
+    std::ostream doesn't work with wchar_t
+
+commit a863b40b782977086995a6a9d8f805c55cc93678
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 1 12:03:17 2021 -0500
+
+    TAO updates for /std:c++20
+    
+    Note that the C++20 standard library disallows using
+    wide (wchar_t) strings with narrow iostreams
+
+commit ecbca0bd527eb34e4568c5b5a8abf54667dccebd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 21:38:48 2021 -0500
+
+    tao_idl updates for /std:c++20
+    
+    resolved ambiguous call to operator<< by refactoring to avoid
+    repetition of the same statement 300 times
+
+commit 4b7a9168a77c958cbdd05a4e1ecee71a3bf73303
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 29 09:49:53 2021 +0200
+
+    Update for next ACE 6.5.x release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:

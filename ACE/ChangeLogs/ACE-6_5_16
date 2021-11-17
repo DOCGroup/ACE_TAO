@@ -1,0 +1,105 @@
+commit 2d073c5a90f7663d8c43fec451ab31c9e24e73d4
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Nov 16 08:20:24 2021 -0600
+
+    ACE NEWS for 6.5.16
+
+commit d155cf53c6e82d9c9ec1086d18d2db413ae28930
+Merge: 0cfb634acbf 05799339af7
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 10 08:33:06 2021 -0600
+
+    Merge pull request #1714 from mitza-oci/msvc-langstd-ace6tao2
+    
+    [ace6tao2] Port to MSVC with /std:c++17 and 20
+
+commit 0cfb634acbf7e879190307efcbe91b29fc6f360d
+Merge: 15373a92f1c 6205b23dc8b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 10 08:32:50 2021 -0600
+
+    Merge pull request #1641 from mitza-oci/handle-set-warnings
+    
+    [ACE 6] Fixed warnings related to Handle_Set's copy constructor
+
+commit 05799339af7c3c80b8de34451fec513aa2afc4dd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 10:27:48 2021 -0500
+
+    Resolve "ambiguous call to overloaded operator" with /std:c++20
+    
+    (cherry picked from commit fd83ab71c26234f56b7e8bfb3794c7058b923dcc)
+
+commit 4ffb9d10827d95f58716cb868d2b8a4af5af2f56
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 5 10:27:21 2021 -0500
+
+    Reverted b01722554a69d1850c026d529e5b0a5e023961cd
+    
+    (cherry picked from commit 0e2c9d980d009ace54e08a2da3ab2d57d48b5596)
+    
+    # Conflicts:
+    #       ACE/ace/Malloc.h
+
+commit 920ee20982e751376e99e782515831acf0cebefd
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Nov 4 17:22:01 2021 -0500
+
+    Updated ACE tests for /std:c++17
+
+commit 7e1eda8c1cd59d4d1720ceb96b24a8806de33877
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Wed Nov 3 20:19:41 2021 -0500
+
+    Added included needed for ACE_HAS_CPP11 and up
+
+commit 81fe8e4219fb2b6d43dc2c09e6acbc4151431bdc
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 21:07:11 2021 -0500
+
+    getting libACE to compile with /std:c++20
+    
+    avoid ambiguous calls to overloaded operators
+
+commit 9b46cce3c9fb6eed1ad06b116a6c7cc31f823465
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sun Oct 31 12:56:00 2021 -0500
+
+    ACE tests: fixed compatibility with MSVC /std:c++17
+
+commit a0dffa696c8a11a1bc6039118fc578663843cd65
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Oct 30 17:22:45 2021 -0500
+
+    Add versioned namespace macros
+
+commit 9dbd5b15e1bf2181d99e21d13bdd24b61b625ccb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Oct 30 14:34:42 2021 -0500
+
+    Fix compile errors on MSVC /std:c++17
+
+commit a2a30309aeeb4b6d51ddbfec14acbf24315b83f2
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Nov 1 15:19:51 2021 -0500
+
+    Merge pull request #1300 from VemundH/remove-std-iterator
+    
+    Remove deprecated std::iterator
+    
+    (cherry picked from commit 858a63528d213eeec10de11660a770f7b7dc1bfd)
+
+commit 4b7a9168a77c958cbdd05a4e1ecee71a3bf73303
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Sep 29 09:49:53 2021 +0200
+
+    Update for next ACE 6.5.x release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit 6205b23dc8beb0691e887f988246f53bb0f3da4f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Aug 3 11:02:39 2021 -0500
+
+    Fixed warnings related to Handle_Set's copy constructor
