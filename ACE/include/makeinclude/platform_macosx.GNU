@@ -52,7 +52,7 @@ else ifeq ($(MACOS_MAJOR_VERSION),12)
   endif
 else
   ## Unsupported major version
-  $(error Unsupported MacOS version $(MACOS_RELEASE_VERSION))
+  MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
 endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_$(MACOS_CODENAME).GNU
