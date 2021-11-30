@@ -45,13 +45,13 @@ else ifeq ($(MACOS_MAJOR_VERSION),11)
     MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
   endif
 else ifeq ($(MACOS_MAJOR_VERSION),12)
-  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 2; echo $$?),0)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 0; echo $$?),0)
     ## if the detected version is greater than the latest know version,
     ## just use the latest known version
     MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
   endif
 else
-  ## Unsupported major version
+  ## Unsupported major version -- will fallback to the last known version.
   MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
 endif
 
