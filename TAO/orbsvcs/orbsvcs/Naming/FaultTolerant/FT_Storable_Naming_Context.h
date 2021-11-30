@@ -48,7 +48,7 @@ public:
                                   TAO::Storable_Factory *factory);
 
   /// Destructor.
-  virtual ~TAO_FT_Storable_Naming_Context (void);
+  virtual ~TAO_FT_Storable_Naming_Context () = default;
 
   /**
    * Override the resolve operation to support load balancing using
