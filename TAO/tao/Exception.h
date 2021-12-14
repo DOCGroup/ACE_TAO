@@ -165,13 +165,13 @@ namespace CORBA
      * class SomeException : public // Derives from CORBA::Exception
      * {
      * public:
-     *   virtual CORBA::Exception *_tao_duplicate () const
+     *   CORBA::Exception *_tao_duplicate () override const
      *   {
-     *     CORBA::Exception *result = 0;
+     *     CORBA::Exception *result {};
      *     ACE_NEW_RETURN (
      *         result,
      *         SomeException (*this),
-     *         0);
+     *         nullptr);
      *     return result;
      *   }
      * };
