@@ -269,3 +269,12 @@ module call_test
     void do_op (in string call);
   };
 };
+
+// Test that using an attribut call is working correctly
+module call_attribute
+{
+  interface iBar
+  {
+    attribute string call;
+  };
+};
