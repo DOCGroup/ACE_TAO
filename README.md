@@ -1,5 +1,5 @@
 [![Lastest release](https://img.shields.io/github/release/docgroup/ace_tao.svg)](https://github.com/DOCGroup/ACE_TAO/releases/latest)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/9a20abe6590a4b3ca946d7634d9f51af)](https://www.codacy.com/app/DOCGroup/ACE_TAO?utm_source=github.com&utm_medium=referral&utm_content=DOCGroup/ACE_TAO&utm_campaign=badger)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/4089b696ab6c47ed933ca8d6a6cc6d9b)](https://www.codacy.com/gh/DOCGroup/ACE_TAO/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=DOCGroup/ACE_TAO&amp;utm_campaign=Badge_Grade)
 [![Linux CI](https://github.com/DOCGroup/ACE_TAO/workflows/linux/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Alinux)
 [![Windows CI](https://github.com/DOCGroup/ACE_TAO/workflows/windows/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Awindows)
 [![Fuzz CI](https://github.com/DOCGroup/ACE_TAO/workflows/fuzz/badge.svg)](https://github.com/DOCGroup/ACE_TAO/actions?query=workflow%3Afuzz)
