@@ -1,5 +1,15 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.5 and ACE-7.0.6
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.4 and ACE-7.0.5
 ====================================================
+
+. Initial not tested support for Visual Studio 2022
+
+. Fixed compile errors when using Visual Studio 2019 with C++17
+  or C++20 support enabled
+
+. Various cleanup and using more C++11 features
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.3 and ACE-7.0.4
 ====================================================

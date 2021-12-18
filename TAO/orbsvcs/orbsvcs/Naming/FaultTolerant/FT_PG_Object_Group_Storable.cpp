@@ -52,10 +52,6 @@ TAO::FT_PG_Object_Group_Storable::FT_PG_Object_Group_Storable
 {
 }
 
-TAO::FT_PG_Object_Group_Storable::~FT_PG_Object_Group_Storable ()
-{
-}
-
 void
 TAO::FT_PG_Object_Group_Storable::stale (bool is_stale)
 {
