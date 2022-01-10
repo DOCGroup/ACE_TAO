@@ -57,7 +57,7 @@ TAO_Codeset_Manager_i::default_char_codeset = TAO_DEFAULT_CHAR_CODESET_ID;
 CONV_FRAME::CodeSetId
 TAO_Codeset_Manager_i::default_wchar_codeset = TAO_DEFAULT_WCHAR_CODESET_ID;
 
-TAO_Codeset_Manager_i::TAO_Codeset_Manager_i (void)
+TAO_Codeset_Manager_i::TAO_Codeset_Manager_i ()
   : codeset_info_ (),
     char_descriptor_ (),
     wchar_descriptor_ ()
@@ -70,18 +70,14 @@ TAO_Codeset_Manager_i::TAO_Codeset_Manager_i (void)
 
 }
 
-TAO_Codeset_Manager_i::~TAO_Codeset_Manager_i (void)
-{
-}
-
 TAO_Codeset_Descriptor_Base *
-TAO_Codeset_Manager_i::char_codeset_descriptor (void)
+TAO_Codeset_Manager_i::char_codeset_descriptor ()
 {
   return &this->char_descriptor_;
 }
 
 TAO_Codeset_Descriptor_Base *
-TAO_Codeset_Manager_i::wchar_codeset_descriptor (void)
+TAO_Codeset_Manager_i::wchar_codeset_descriptor ()
 {
   return &this->wchar_descriptor_;
 }

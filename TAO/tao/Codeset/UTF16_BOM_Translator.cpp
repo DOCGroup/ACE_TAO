@@ -39,10 +39,6 @@ TAO_UTF16_BOM_Translator::TAO_UTF16_BOM_Translator (bool forceBE)
                ACE_TEXT("forceBE %d\n"), this->forceBE_ ? 1:0 ));
 }
 
-TAO_UTF16_BOM_Translator::~TAO_UTF16_BOM_Translator (void)
-{
-}
-
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean
 TAO_UTF16_BOM_Translator::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
