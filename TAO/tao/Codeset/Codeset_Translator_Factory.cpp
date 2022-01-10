@@ -16,16 +16,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Translator_Factory::TAO_Codeset_Translator_Factory ()
-{
-
-}
-
-TAO_Codeset_Translator_Factory::~TAO_Codeset_Translator_Factory ()
-{
-
-}
-
 int
 TAO_Codeset_Translator_Factory::init (int , ACE_TCHAR **)
 {

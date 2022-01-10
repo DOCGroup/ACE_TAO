@@ -54,8 +54,8 @@ class TAO_Codeset_Export TAO_Codeset_Translator_Factory :
   public ACE_Service_Object
 {
 public:
-  TAO_Codeset_Translator_Factory ();
-  virtual ~TAO_Codeset_Translator_Factory ();
+  TAO_Codeset_Translator_Factory () = default;
+  virtual ~TAO_Codeset_Translator_Factory () = default;
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
 protected:

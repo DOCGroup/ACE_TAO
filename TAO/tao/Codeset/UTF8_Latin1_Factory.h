@@ -15,7 +15,7 @@ class TAO_Codeset_Export TAO_UTF8_Latin1_Factory
   : public TAO_Codeset_Translator_Factory
 {
 public:
-  TAO_UTF8_Latin1_Factory ();
+  TAO_UTF8_Latin1_Factory () = default;
   virtual ~TAO_UTF8_Latin1_Factory ();
   virtual int init (int argc, ACE_TCHAR *argv[]);
 
@@ -39,7 +39,7 @@ private:
   void create_translator () const;
 
 private:
-  TAO_UTF8_Latin1_Translator *translator_;
+  TAO_UTF8_Latin1_Translator *translator_ {};
 };
 
 

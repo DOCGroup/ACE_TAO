@@ -5,10 +5,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Codeset_Manager_Factory_Base::~TAO_Codeset_Manager_Factory_Base ()
-{
-}
-
 bool
 TAO_Codeset_Manager_Factory_Base::is_default () const
 {
