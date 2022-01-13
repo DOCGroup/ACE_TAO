@@ -51,6 +51,7 @@ jobs:
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
+            optional_macros: CCFLAGS+=-std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-20.04
           - CC: clang-5.0
