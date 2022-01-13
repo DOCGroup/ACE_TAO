@@ -55,9 +55,7 @@ public:
   {
   }
 
-  ~valuetype_sequence_element()
-  {
-  }
+  ~valuetype_sequence_element() = default;
 
   valuetype_sequence_element & operator=(
       valuetype_var const & rhs)

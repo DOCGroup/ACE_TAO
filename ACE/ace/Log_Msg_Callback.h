@@ -53,10 +53,10 @@ class ACE_Export ACE_Log_Msg_Callback
 {
 public:
   /// Default constructor
-  ACE_Log_Msg_Callback (void);
+  ACE_Log_Msg_Callback () = default;
 
   /// No-op virtual destructor.
-  virtual ~ACE_Log_Msg_Callback (void);
+  virtual ~ACE_Log_Msg_Callback ();
 
   /// Callback routine.  This is called when we want to log a message.
   /// Since this routine is pure virtual, it must be overwritten by the

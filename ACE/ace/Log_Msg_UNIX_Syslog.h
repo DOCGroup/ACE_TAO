@@ -35,10 +35,10 @@ class ACE_Export ACE_Log_Msg_UNIX_Syslog : public ACE_Log_Msg_Backend
 {
 public:
   /// Constructor
-  ACE_Log_Msg_UNIX_Syslog (void);
+  ACE_Log_Msg_UNIX_Syslog () = default;
 
   /// Destructor
-  virtual ~ACE_Log_Msg_UNIX_Syslog (void);
+  virtual ~ACE_Log_Msg_UNIX_Syslog ();
 
   /// Open a new event log.
   /**

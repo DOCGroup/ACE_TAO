@@ -51,10 +51,6 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
 {
 }
 
-CORBA::AbstractBase::~AbstractBase (void)
-{
-}
-
 void
 CORBA::AbstractBase::_add_ref (void)
 {

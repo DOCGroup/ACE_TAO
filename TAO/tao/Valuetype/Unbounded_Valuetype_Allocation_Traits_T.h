@@ -31,7 +31,7 @@ struct unbounded_valuetype_allocation_traits
 
   inline static value_type * default_buffer_allocation()
   {
-    return 0;
+    return nullptr;
   }
 
   inline static value_type * allocbuf(CORBA::ULong maximum)
@@ -58,7 +58,7 @@ struct unbounded_valuetype_allocation_traits
 
   inline static void freebuf(value_type * buffer)
   {
-    if(buffer != 0)
+    if(buffer != nullptr)
     {
       value_type * begin = buffer - 1;
       value_type * end = reinterpret_cast<value_type*>(*begin);
