@@ -39,7 +39,7 @@ public:
       ACE_Allocator *allocator);
 
   /// Destructor.
-  virtual ~TAO_Asynch_Reply_Dispatcher ();
+  virtual ~TAO_Asynch_Reply_Dispatcher () = default;
 
   /// @name The Reply Dispatcher methods
   //@{

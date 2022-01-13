@@ -84,10 +84,6 @@ CORBA::ValueBase::ValueBase (const ValueBase& val)
 {
 }
 
-CORBA::ValueBase::~ValueBase (void)
-{
-}
-
 CORBA::ValueBase*
 CORBA::ValueBase::_downcast (CORBA::ValueBase *vt)
 {
