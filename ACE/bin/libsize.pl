@@ -15,7 +15,7 @@ $usage =
 #### Configuration parameters.
 ####
 $build_args =
-  'debug=0 optimize=1 static_libs_only=1 DEFFLAGS=-DACE_USE_RCSID=0';
+  'debug=0 optimize=1 static_libs_only=1';
 $ACE_COMPONENTS =
   'OS Utils Logging Threads Demux Connection Sockets IPC Svcconf ' .
     'Streams Memory Token Other';

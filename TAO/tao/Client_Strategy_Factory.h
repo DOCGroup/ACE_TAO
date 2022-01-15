@@ -56,7 +56,6 @@ namespace Messaging
 class TAO_Export TAO_Client_Strategy_Factory : public ACE_Service_Object
 {
 public:
-
   /// Destructor
   virtual ~TAO_Client_Strategy_Factory ();
 

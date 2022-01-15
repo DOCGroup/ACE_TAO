@@ -24,6 +24,8 @@ MACOS_CODENAME_VER_11_0   := bigsur
 MACOS_CODENAME_VER_11_1   := bigsur
 MACOS_CODENAME_VER_11_2   := bigsur
 MACOS_CODENAME_VER_11_latest := bigsur
+MACOS_CODENAME_VER_12_0   := monterey
+MACOS_CODENAME_VER_12_latest := monterey
 
 MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSION))
 
@@ -42,10 +44,15 @@ else ifeq ($(MACOS_MAJOR_VERSION),11)
     ## just use the latest known version
     MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
   endif
+else ifeq ($(MACOS_MAJOR_VERSION),12)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 0; echo $$?),0)
+    ## if the detected version is greater than the latest know version,
+    ## just use the latest known version
+    MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
+  endif
 else
-  ## if the detected version is greater than the latest know version,
-  ## just use the latest known version
-  MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
+  ## Unsupported major version -- will fallback to the last known version.
+  MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
 endif
 
 include $(ACE_ROOT)/include/makeinclude/platform_macosx_$(MACOS_CODENAME).GNU

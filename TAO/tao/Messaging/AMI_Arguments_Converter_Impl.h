@@ -39,7 +39,6 @@ class TAO_Messaging_Export TAO_AMI_Arguments_Converter_Impl
   : public TAO::Collocated_Arguments_Converter
 {
 public:
-
   virtual void convert_request (TAO_ServerRequest & server_request,
                                 TAO::Argument * const args[],
                                 size_t nargs);
@@ -65,12 +64,10 @@ static int
 TAO_Requires_AMI_Arguments_Converter_Impl_Initializer =
   TAO_AMI_Arguments_Converter_Impl::Initializer ();
 
-
 ACE_STATIC_SVC_DECLARE (TAO_AMI_Arguments_Converter_Impl)
 ACE_FACTORY_DECLARE (TAO_Messaging, TAO_AMI_Arguments_Converter_Impl)
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
 
 #include /**/ "ace/post.h"
 
