@@ -18,7 +18,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-
 #include "tao/PI/PI.h"
 #include "tao/LocalObject.h"
 
@@ -37,8 +36,8 @@ class TAO_BiDir_PolicyFactory
   , public ::CORBA::LocalObject
 {
 public:
-  virtual CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                           const CORBA::Any & value);
+  CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
+                                   const CORBA::Any & value) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

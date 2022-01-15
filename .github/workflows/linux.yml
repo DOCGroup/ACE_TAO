@@ -32,6 +32,7 @@ jobs:
             PackageDeps: g++-7
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-18.04
+            CheckPkgConfig: 1
           - CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
@@ -50,6 +51,7 @@ jobs:
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
+            optional_macros: CCFLAGS+=-std=c++20
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-20.04
           - CC: clang-5.0
@@ -149,54 +151,55 @@ jobs:
       CC: ${{ matrix.CC }}
       CXX: ${{ matrix.CXX }}
     steps:
-    - name: checkout ACE/TAO
+    - name: Checkout ACE_TAO
       uses: actions/checkout@v2
-    - name: checkout MPC
+    - name: Checkout MPC
       uses: actions/checkout@v2
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
-    - name: Add Repo
+    - name: Add apt repo
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
       if: matrix.Repo != ''
-    - name: Add packages
+    - name: Add apt packages
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
-    - name: create $ACE_ROOT/ace/config.h
+    - name: Create $ACE_ROOT/ace/config.h
       run: |
         '#include "ace/config-linux.h"' > ${env:ACE_ROOT}/ace/config.h
       shell: pwsh
-    - name: create $ACE_ROOT/include/makeinclude/platform_macros.GNU
+    - name: Create $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         'ipv6=1' > ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'xerces3=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
         'ssl=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        'INSTALL_PREFIX = ${{ github.workspace }}/installed' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
-    - name: add optional optional macros
+    - name: Add optional platform macros
       run: |
         '${{ matrix.optional_macros }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
       if: matrix.optional_macros != ''
-    - name: extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
+    - name: Extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
-        '${{ matrix.platform_file }}' >>  ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
+        '${{ matrix.platform_file }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
-    - name: create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
+    - name: Create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
         'ipv6=1' > ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'xerces3=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'ssl=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
         'versioned_namespace=1' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       shell: pwsh
-    - name: add optional optional feature
+    - name: Add optional MPC features
       run: |
         '${{ matrix.optional_feature }}' >> ${env:ACE_ROOT}/bin/MakeProjectCreator/config/default.features
       if: matrix.optional_feature != ''
       shell: pwsh
-    - name: initialize CodeQL
+    - name: Initialize CodeQL
       uses: github/codeql-action/init@v1
       with:
         languages: cpp
@@ -209,14 +212,24 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
-    - name: Build TAO_ACE project
+    - name: Build TAO_ACE workspace
       run: |
         make -j 6 -C ${env:TAO_ROOT}
       shell: pwsh
-    - name: Build ACE/tests project
+    - name: Build ACE/tests workspace
       run: |
         make -j 6 -C ${env:ACE_ROOT}/tests
       shell: pwsh
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
       if: matrix.feature == 'CodeQL'
+    - name: Install TAO_ACE workspace
+      run: |
+        make -C ${env:TAO_ROOT} install
+      shell: pwsh
+    - name: Test pkgconfig
+      if: matrix.CheckPkgConfig
+      run: |
+        cd ${{ github.workspace }}/installed/lib/pkgconfig
+        export PKG_CONFIG_PATH=.
+        for f in *.pc; do pkg-config --print-errors --exists ${f%.pc}; done

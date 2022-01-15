@@ -22,11 +22,6 @@ TAO_Asynch_Reply_Dispatcher::TAO_Asynch_Reply_Dispatcher (
 {
 }
 
-// Destructor.
-TAO_Asynch_Reply_Dispatcher::~TAO_Asynch_Reply_Dispatcher ()
-{
-}
-
 // Dispatch the reply.
 int
 TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)

@@ -35,7 +35,6 @@ namespace CORBA
 class TAO_ValueFactory_Map
 {
 public:
-
   TAO_ValueFactory_Map (void);
   ~TAO_ValueFactory_Map (void);
 
