@@ -20,12 +20,12 @@ TAO_AMH_Response_Handler::TAO_AMH_Response_Handler ()
   : reply_status_ (GIOP::NO_EXCEPTION)
   , mesg_base_ (0)
   , request_id_ (0)
-  , response_expected_ (0)
-  , transport_ (0)
-  , orb_core_ (0)
+  , response_expected_ (false)
+  , transport_ (nullptr)
+  , orb_core_ (nullptr)
   , argument_flag_ (1)
   , rh_reply_status_ (TAO_RS_UNINITIALIZED)
-  , allocator_ (0)
+  , allocator_ (nullptr)
 {
 }
 
@@ -38,7 +38,7 @@ TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
 
-    if (this->response_expected_ == 0) //oneway ?
+    if (!this->response_expected_) //oneway ?
       {
         return;
       }

@@ -3245,7 +3245,7 @@ ACE_Log_Msg::inherit_hook (ACE_OS_Thread_Descriptor *thr_desc,
 #if !defined (ACE_THREADS_DONT_INHERIT_LOG_MSG)  && \
     !defined (ACE_HAS_MINIMAL_ACE_OS)
   // Inherit the logging features if the parent thread has an
-  // <ACE_Log_Msg>.  Note that all of the following operations occur
+  // ACE_Log_Msg.  Note that all of the following operations occur
   // within thread-specific storage.
   ACE_Log_Msg *new_log = ACE_LOG_MSG;
 
