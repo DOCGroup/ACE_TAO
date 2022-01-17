@@ -1533,7 +1533,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // request/reply id.
     CORBA::ULong tmp = 0;
-    CORBA::ULong *id = &tmp;
+    CORBA::ULong *id = std::addressof(tmp);
     char *tmp_id = nullptr;
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||

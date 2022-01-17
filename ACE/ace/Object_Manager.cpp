@@ -353,13 +353,13 @@ ACE_Object_Manager::init ()
 
 #if defined (ACE_HAS_TSS_EMULATION)
 int
-ACE_Object_Manager::init_tss (void)
+ACE_Object_Manager::init_tss ()
 {
   return ACE_Object_Manager::instance ()->init_tss_i ();
 }
 
 int
-ACE_Object_Manager::init_tss_i (void)
+ACE_Object_Manager::init_tss_i ()
 {
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
     *instance_->internal_lock_, -1));
