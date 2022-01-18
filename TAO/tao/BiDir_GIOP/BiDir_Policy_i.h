@@ -48,7 +48,7 @@ public:
   /// Copy constructor.
   TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this.
   virtual TAO_BidirectionalPolicy *clone () const;
 
   /// = The BiDir::BidirectionalPolicy methods
