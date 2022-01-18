@@ -1616,8 +1616,7 @@ TAO_GIOP_Message_Base::is_ready_for_bidirectional (TAO_OutputCDR &msg) const
   msg.get_version (giop_version);
 
   // Get the parser we need to use
-  TAO_GIOP_Message_Generator_Parser *generator_parser =
-    this->get_parser (giop_version);
+  TAO_GIOP_Message_Generator_Parser *generator_parser = this->get_parser (giop_version);
 
   // We dont really know.. So ask the generator and parser objects that
   // we know.

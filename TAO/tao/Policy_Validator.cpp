@@ -55,7 +55,6 @@ TAO_Policy_Validator::add_validator (TAO_Policy_Validator *validator)
     }
 }
 
-
 void
 TAO_Policy_Validator::validate (TAO_Policy_Set &policies)
 {
