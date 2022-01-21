@@ -309,7 +309,7 @@ void TAO::PG_FactoryRegistry::register_factory (
         }
     }
 
-  PortableGroup::FactoryInfos & infos = role_info->infos_;;
+  PortableGroup::FactoryInfos & infos = role_info->infos_;
   CORBA::ULong length = infos.length();
   for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {

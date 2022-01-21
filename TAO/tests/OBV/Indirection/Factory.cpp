@@ -24,7 +24,7 @@ void
 BoxedValueFactory::register_new_factory (CORBA::ORB& orb) {
   CORBA::ValueFactoryBase_var mf = new BoxedValueFactory;
   demo::value::idl::boxedValue_var bv (new OBV_demo::value::idl::boxedValue);
-  CORBA::String_var id = bv->_tao_type ()->id ();;
+  CORBA::String_var id = bv->_tao_type ()->id ();
   orb.register_value_factory (id.in (), mf.in ());
 }
 

@@ -233,7 +233,7 @@ be_component::scan (UTL_Scope *s)
             this->mirror_scan (mp->port_type ());
             continue;
           case AST_Decl::NT_attr:
-            a = dynamic_cast<AST_Attribute*> (d);;
+            a = dynamic_cast<AST_Attribute*> (d);
 
             if (!a->readonly ())
               {
@@ -410,7 +410,7 @@ be_component::mirror_scan (AST_PortType *pt)
 
             continue;
           case AST_Decl::NT_attr:
-            a = dynamic_cast<AST_Attribute*> (d);;
+            a = dynamic_cast<AST_Attribute*> (d);
 
             if (!a->readonly ())
               {
