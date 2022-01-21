@@ -2175,7 +2175,7 @@ TAO_CodeGen::gen_export_file (const char *filename,
       return;
     }
 
-  ACE_CString stem_str (macro_str.substr (0, stem_len));;
+  ACE_CString stem_str (macro_str.substr (0, stem_len));
   const char *stem = stem_str.c_str ();
 
   os << "\n#ifndef " << stem << "_EXPORT_H\n"
