@@ -177,7 +177,7 @@ DRV_cpp_putarg (const char *str)
             }
         }
 #endif
-      if (ACE_OS::strchr (str, ' ') && !first_quote)
+      if (ACE_OS::strchr (str, ' '))
         {
           ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
           allocate_error = !replace;

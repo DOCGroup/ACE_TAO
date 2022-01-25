@@ -186,7 +186,6 @@ DRV_parse_args (long ac, char **av)
   ACE_CString buffer;
   char *s = nullptr;
   long i;
-  bool has_space = false;
 
   // After -- process all arguments as files
   bool just_files = false;
@@ -285,10 +284,7 @@ DRV_parse_args (long ac, char **av)
                   if (i < ac - 1)
                     {
                       idl_global->append_idl_flag (av[i + 1]);
-                      has_space = FE_Utils::hasspace (av[i + 1]);
 
-                      // If the include path has a space, we need to
-                      // add literal "s.
                       ACE_CString arg = av[i];
                       arg += av[i + 1];
 
@@ -303,10 +299,6 @@ DRV_parse_args (long ac, char **av)
                 }
               else
                 {
-                  has_space = FE_Utils::hasspace (av[i]);
-
-                  // If the include path has a space, we need to
-                  // add literal "s.
                   ACE_CString arg (av[i], 2);
                   arg += av[i] + 2;
 
