@@ -367,7 +367,7 @@ TAO_IIOP_Acceptor::open (TAO_ORB_Core *orb_core,
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT ("IIOP_Acceptor::open, ")
-                      ACE_TEXT ("Overriding address in IOR with %C\n"),
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
                       this->hostname_in_ior_));
         }
       specified_hostname = this->hostname_in_ior_;
@@ -596,8 +596,8 @@ TAO_IIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
     {
       if (TAO_debug_level >= 5)
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO (%P|%t) IIOP_Acceptor - ")
-                      ACE_TEXT ("Overriding the hostname with <%C>\n"),
+                      ACE_TEXT ("TAO (%P|%t) - IIOP_Acceptor::hostname, ")
+                      ACE_TEXT ("overriding the hostname with <%C>\n"),
                       this->hostname_in_ior_));
 
       host = CORBA::string_dup (this->hostname_in_ior_);

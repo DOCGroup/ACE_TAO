@@ -1408,8 +1408,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
 
-  this->orb_params ()->use_parallel_connects
-    (use_parallel_connects != 0);
+  this->orb_params ()->use_parallel_connects (use_parallel_connects != 0);
 
   this->orb_params ()->linger (linger);
   this->orb_params ()->accept_error_delay (accept_error_delay);
