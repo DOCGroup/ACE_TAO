@@ -290,9 +290,7 @@ DRV_parse_args (long ac, char **av)
                       // If the include path has a space, we need to
                       // add literal "s.
                       ACE_CString arg = av[i];
-                      arg += (has_space ? "\"" : "");
                       arg += av[i + 1];
-                      arg += (has_space ? "\"" : "");
 
                       DRV_cpp_putarg (arg.c_str ());
                       idl_global->add_include_path (arg.substr (2).c_str (), false);
@@ -310,9 +308,7 @@ DRV_parse_args (long ac, char **av)
                   // If the include path has a space, we need to
                   // add literal "s.
                   ACE_CString arg (av[i], 2);
-                  arg += (has_space ? "\"" : "");
                   arg += av[i] + 2;
-                  arg += (has_space? "\"" : "");
 
                   idl_global->add_include_path (arg.substr (2).c_str (), false);
                   DRV_cpp_putarg (arg.c_str ());
