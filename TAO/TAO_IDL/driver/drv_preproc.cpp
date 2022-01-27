@@ -485,10 +485,7 @@ DRV_sweep_dirs (const char *rel_path,
             {
               if (!include_added)
                 {
-                  /// Surround the path name with quotes, in
-                  /// case the original path argument included
-                  /// spaces. If it didn't, no harm done.
-                  ACE_CString incl_arg ("-I ");
+                  ACE_CString incl_arg ("-I");
                   incl_arg += bname;
                   DRV_cpp_putarg (incl_arg.c_str ());
                   idl_global->add_rel_include_path (bname.c_str ());
