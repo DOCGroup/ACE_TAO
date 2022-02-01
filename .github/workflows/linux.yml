@@ -228,6 +228,7 @@ jobs:
       run: |
         make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
       shell: pwsh
+      if: matrix.feature != 'CORBA/e micro'
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
       if: matrix.feature == 'CodeQL'
