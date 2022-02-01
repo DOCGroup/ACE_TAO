@@ -181,8 +181,8 @@ jobs:
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
-    - name: Build solution TAO/tests/IDL_Test.sln
-      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/tests/IDL_Test.sln
+    - name: Build solution TAO/tests/IDL_Test/IDL_Test.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/tests/IDL_Test/IDL_Test.sln
   mingw:
     runs-on: windows-2019
     strategy:
