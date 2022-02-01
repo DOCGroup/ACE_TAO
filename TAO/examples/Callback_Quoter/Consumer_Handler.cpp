@@ -81,7 +81,7 @@ Consumer_Handler::read_ior (ACE_TCHAR *filename)
 
 // Parses the command line arguments and returns an error status.
 int
-Consumer_Handler::parse_args (void)
+Consumer_Handler::parse_args ()
 {
   ACE_Get_Opt get_opts (argc_, argv_, ACE_TEXT("a:t:d:f:xk:xs"));
   int c;
@@ -146,7 +146,7 @@ Consumer_Handler::parse_args (void)
 
 // This method uses the naming service to obtain the server object reference.
 int
-Consumer_Handler::via_naming_service (void)
+Consumer_Handler::via_naming_service ()
 {
   try
     {
