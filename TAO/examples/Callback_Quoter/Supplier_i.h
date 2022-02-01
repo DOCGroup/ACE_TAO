@@ -37,13 +37,13 @@ class Supplier
 {
 public:
   /// Constructor.
-  Supplier (void);
+  Supplier ();
 
   /// Destructor.
-  ~Supplier (void);
+  ~Supplier ();
 
   /// Execute  the daemon.
-  int run (void);
+  int run ();
 
   /// Initialize the client communication endpoint with Notifier.
   int init (int argc, ACE_TCHAR *argv[]);
@@ -64,11 +64,11 @@ private:
   int read_ior (ACE_TCHAR *filename);
 
   /// Parses the arguments passed on the command line.
-  int parse_args (void);
+  int parse_args ();
 
   /// This method initialises the naming service and registers the
   /// object with the POA.
-  int via_naming_service(void);
+  int via_naming_service();
 
   /// returns the TAO instance of the singleton Reactor.
    ACE_Reactor *reactor_used () const;

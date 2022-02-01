@@ -1,5 +1,3 @@
-/* -*- C++ -*- */
-
 //=============================================================================
 /**
  *  @file    Consumer_Handler.h
@@ -9,7 +7,6 @@
  *  @author Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
 //=============================================================================
-
 
 #ifndef CONSUMER_HANDLER_H
 #define CONSUMER_HANDLER_H
@@ -45,16 +42,16 @@ class Consumer_Handler
 {
 public:
   /// Constructor.
-  Consumer_Handler (void);
+  Consumer_Handler ();
 
   /// Destructor.
-  ~Consumer_Handler (void);
+  ~Consumer_Handler ();
 
   /// Initialize the client communication with the server.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Start the ORB object.
-  int run (void);
+  int run ();
 
   /// the name of the stock the consumer is interested in.
   ACE_CString stock_name_;
@@ -83,7 +80,6 @@ public:
   int unregistered_;
 
 private:
-
   /// Our orb.
   CORBA::ORB_var orb_;
 

@@ -1,4 +1,3 @@
-
 //=============================================================================
 /**
  *  @file    Notifier_Input_Handler.cpp
@@ -9,7 +8,6 @@
  */
 //=============================================================================
 
-
 #include "Notifier_Input_Handler.h"
 #include "tao/debug.h"
 #include "tao/ORB_Core.h"
@@ -18,8 +16,7 @@
 #include "ace/OS_NS_ctype.h"
 
 // Constructor.
-
-Notifier_Input_Handler::Notifier_Input_Handler (void)
+Notifier_Input_Handler::Notifier_Input_Handler ()
   : ior_output_file_ (0),
     argc_ (0),
     argv_ (0),
@@ -28,8 +25,7 @@ Notifier_Input_Handler::Notifier_Input_Handler (void)
 }
 
 // Destructor.
-
-Notifier_Input_Handler::~Notifier_Input_Handler (void)
+Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
 
@@ -44,9 +40,8 @@ Notifier_Input_Handler::~Notifier_Input_Handler (void)
 
 // The naming service is initialized and the naming context as well as
 // the object name is bound to the naming server.
-
 int
-Notifier_Input_Handler::init_naming_service (void)
+Notifier_Input_Handler::init_naming_service ()
 {
 
   CORBA::ORB_var orb = this->orb_manager_.orb ();
@@ -83,7 +78,7 @@ Notifier_Input_Handler::init_naming_service (void)
 
 // Parse the command-line arguments and set options.
 int
-Notifier_Input_Handler::parse_args (void)
+Notifier_Input_Handler::parse_args ()
 {
   ACE_Get_Opt get_opts (this->argc_, this->argv_, ACE_TEXT("df:s "));
   int c;
@@ -125,15 +120,12 @@ Notifier_Input_Handler::parse_args (void)
 }
 
 // Initialize the server.
-
 int
 Notifier_Input_Handler::init (int argc,
                               ACE_TCHAR *argv[])
 {
-
   // Call the init of <TAO_ORB_Manager> to initialize the ORB and
   // create the child poa under the root POA.
-
   this->argc_ = argc;
   this->argv_ = argv;
 
@@ -192,11 +184,9 @@ Notifier_Input_Handler::init (int argc,
 }
 
 int
-Notifier_Input_Handler::run (void)
+Notifier_Input_Handler::run ()
 {
   // Run the main event loop for the ORB.
-
-
   ACE_DEBUG ((LM_DEBUG,
               " Type \"q\" to quit \n"));
 
@@ -216,7 +206,6 @@ int
 Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
   char buf[BUFSIZ];
-
 
   try
     {
