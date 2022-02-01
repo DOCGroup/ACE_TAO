@@ -44,7 +44,7 @@ public:
   ~Supplier_Timer_Handler () = default;
 
   /// Method which will be called by the Reactor when timeout occurs.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
+  int handle_timeout (const ACE_Time_Value &tv, const void *arg = 0) override;
 
 private:
   /// The values of the stock and its rate are got from the file.
