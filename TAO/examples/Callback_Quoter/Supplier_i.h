@@ -52,11 +52,11 @@ public:
   int send_market_status (const char *stock_name,
                           long value);
 
+private:
   /// The timer handler used to send the market status to the notifier
   /// periodically.
-  Supplier_Timer_Handler *supplier_timer_handler_;
+  Supplier_Timer_Handler *supplier_timer_handler_ {};
 
-private:
   /// Remember our orb.
   CORBA::ORB_var orb_;
 

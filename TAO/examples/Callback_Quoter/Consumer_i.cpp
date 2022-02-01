@@ -12,10 +12,6 @@
 
 #include "Consumer_i.h"
 
-Consumer_i::Consumer_i ()
-{
-}
-
 void
 Consumer_i::push (const Callback_Quoter::Info &data)
 {

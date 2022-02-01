@@ -29,7 +29,7 @@ class Consumer_i : public POA_Callback_Quoter::Consumer
 {
 public:
   /// Constructor.
-  Consumer_i ();
+  Consumer_i () = default;
 
   /// Destructor.
   ~Consumer_i () = default;
@@ -46,9 +46,6 @@ public:
 private:
   /// ORB pointer.
   CORBA::ORB_var orb_;
-
-  /// If 1 denotes that the consumer is dead else alive.
-  int quit_;
 
   // @@ Please rename to Notifier.
   /// Smart pointer to the Notifier object.

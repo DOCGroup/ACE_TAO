@@ -28,14 +28,12 @@ Notifier_Input_Handler::Notifier_Input_Handler ()
 Notifier_Input_Handler::~Notifier_Input_Handler ()
 {
    // Make sure to cleanup the STDIN handler.
-
   if (ACE_Event_Handler::remove_stdin_handler
       (this->notifier_i_.orb_->orb_core ()->reactor (),
        this->notifier_i_.orb_->orb_core ()->thr_mgr ()) == -1)
      ACE_ERROR ((LM_ERROR,
                "%p\n",
                "remove_stdin_handler"));
-
 }
 
 // The naming service is initialized and the naming context as well as
@@ -43,7 +41,6 @@ Notifier_Input_Handler::~Notifier_Input_Handler ()
 int
 Notifier_Input_Handler::init_naming_service ()
 {
-
   CORBA::ORB_var orb = this->orb_manager_.orb ();
 
   if (this->naming_server_.init (orb.in ()) == -1)
@@ -187,16 +184,13 @@ int
 Notifier_Input_Handler::run ()
 {
   // Run the main event loop for the ORB.
-  ACE_DEBUG ((LM_DEBUG,
-              " Type \"q\" to quit \n"));
+  ACE_DEBUG ((LM_DEBUG, " Type \"q\" to quit \n"));
 
-  int result = this->orb_manager_.run ();
+  int const result = this->orb_manager_.run ();
 
   if (result == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         "Notifier_Input_Handler::run"),
-                        -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "Notifier_Input_Handler::run"), -1);
     }
 
   return 0;
@@ -205,22 +199,19 @@ Notifier_Input_Handler::run ()
 int
 Notifier_Input_Handler::handle_input (ACE_HANDLE)
 {
-  char buf[BUFSIZ];
-
   try
     {
+      char buf[BUFSIZ];
+
       // The string could read contains \n\0 hence using ACE_OS::read
       // which returns the no of bytes read and hence i can manipulate
       // and remove the devil from the picture i.e '\n' ! ;)
-
-      ssize_t strlen = ACE_OS::read (ACE_STDIN,
-                                     buf,
-                                     sizeof buf);
+      ssize_t const strlen = ACE_OS::read (ACE_STDIN, buf, sizeof buf);
       if (buf[strlen -1] == '\n')
         buf[strlen -1] = '\0';
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s",
+                  "%C",
                   buf));
 
       if (ACE_OS::ace_tolower(buf[0]) == 'q')

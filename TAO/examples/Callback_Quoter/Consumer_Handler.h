@@ -63,7 +63,7 @@ public:
   Notifier_var server_;
 
   /// The consumer object.
-  Consumer_i *consumer_servant_;
+  Consumer_i *consumer_servant_ {};
 
   /// Pointer to the consumer object registered with the ORB.
   Callback_Quoter::Consumer_var consumer_var_;
@@ -88,11 +88,11 @@ private:
 
   /// Parse the command line arguments.  Returns 0 on success, -1 on
   /// error.
-  int parse_args (void);
+  int parse_args ();
 
-  /// This method initialises the naming service and registers the
+  /// This method initializes the naming service and registers the
   /// object with the POA.
-  int via_naming_service (void);
+  int via_naming_service ();
 
   /// # of arguments on the command line.
   int argc_;
