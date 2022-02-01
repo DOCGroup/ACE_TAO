@@ -49,7 +49,7 @@ public:
   TAO_DIOP_Connector (void);
 
   /// Destructor.
-  ~TAO_DIOP_Connector (void);
+  ~TAO_DIOP_Connector () = default;
 
   /**
    * @name The TAO_Connector Methods
@@ -68,7 +68,6 @@ public:
   //@}
 
 protected:
-
   /**
    * @name More TAO_Connector Methods
    *
@@ -88,7 +87,6 @@ protected:
   int cancel_svc_handler (TAO_Connection_Handler * svc_handler);
 
 private:
-
   /// Return the remote endpoint, a helper function
   TAO_DIOP_Endpoint *remote_endpoint (TAO_Endpoint *ep);
 };

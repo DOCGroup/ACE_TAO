@@ -53,8 +53,7 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream& os = *(this->ctx_->stream ());
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   //@@ If I'm generating concrete class I need a RefCounter.
   os << "class " << be_global->stub_export_macro ()
@@ -92,14 +91,12 @@ be_visitor_valuetype_init_ch::visit_valuetype (be_valuetype *node)
       //@@ Boris: create_for_unmarshal is still public...
       // generate create_for_unmarshal
       os << be_nl_2
-         << "virtual ::CORBA::ValueBase *" << be_nl
-         << "create_for_unmarshal ();";
+         << "virtual ::CORBA::ValueBase *create_for_unmarshal ();";
 
       if (node->supports_abstract ())
         {
           os << be_nl_2
-             << "virtual ::CORBA::AbstractBase_ptr" << be_nl
-             << "create_for_unmarshal_abstract ();" << be_uidt;
+             << "virtual ::CORBA::AbstractBase_ptr create_for_unmarshal_abstract ();" << be_uidt;
         }
     }
 

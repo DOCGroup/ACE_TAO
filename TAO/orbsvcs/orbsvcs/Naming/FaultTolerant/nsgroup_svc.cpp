@@ -12,8 +12,7 @@
 #include "orbsvcs/Naming/FaultTolerant/nsgroup_svc.h"
 #include "ace/OS_NS_strings.h"
 
-
-NS_group_svc::NS_group_svc (bool quiet )
+NS_group_svc::NS_group_svc (bool quiet)
   : quiet_ (quiet)
 {
 }

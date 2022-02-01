@@ -67,7 +67,7 @@ inline long ace_timezone()
   struct timeval time;
   struct timezone zone;
   ACE_UNUSED_ARG (result);
-  ACE_OSCALL (::gettimeofday (&time, &zone), int, -1, result);
+  ACE_OSCALL (::gettimeofday (&time, &zone), int, result);
   return zone.tz_minuteswest * 60;
 #else
   ACE_NOTSUP_RETURN (0);

@@ -670,7 +670,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (inet_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+    if (inet_addrs[j].is_loopback ())
       lo_cnt++;
 
   // The instantiation for this template is in
@@ -705,7 +705,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          inet_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          inet_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)

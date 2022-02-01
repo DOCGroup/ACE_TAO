@@ -12,12 +12,9 @@
  */
 //=============================================================================
 
-
 #include "test_config.h"
 #include "ace/Task.h"
 #include "ace/Thread_Hook.h"
-
-
 
 #if defined (ACE_HAS_THREADS)
 #include "ace/Atomic_Op.h"

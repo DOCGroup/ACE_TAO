@@ -101,12 +101,6 @@ public:
   bool ifr_added ();
   void ifr_added (bool val);
 
-  const char *exprtype_to_string ();
-  // Returns the appropriate type.
-
-  static const char *exprtype_to_string (AST_Expression::ExprType et);
-  // For use with ORBs without the CORBA namespace.
-
   UTL_ScopedName *enum_full_name ();
   // If our type is enum, we have to generate the scoped name.
 

@@ -110,7 +110,6 @@ public:
 
 private:
   T *& ptr_;
-
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

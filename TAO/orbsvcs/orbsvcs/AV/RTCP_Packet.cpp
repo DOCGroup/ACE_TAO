@@ -136,10 +136,8 @@ RTCP_BYE_Packet::RTCP_BYE_Packet(char* buffer, int *len)
     }
 
   // Optional - store the reason for leaving
-  unsigned int temp = this->chd_.length_; // Borland reports a warning on the
-                                          // following line with out this.
   ACE_OS::memset(this->reason_, 0, sizeof(this->reason_));
-  if (temp > this->chd_.count_)
+  if (this->chd_.length_ > this->chd_.count_)
     {
       this->reason_length_ = buffer[index];
       index++;

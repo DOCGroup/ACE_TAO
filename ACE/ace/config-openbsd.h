@@ -39,7 +39,6 @@
 #define ACE_HAS_MKDIR
 #define ACE_HAS_MSG
 #define ACE_HAS_NANOSLEEP
-#define ACE_HAS_NEW_NO_H
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL
 #define ACE_HAS_POLL
 #define ACE_HAS_POSIX_NONBLOCK
@@ -68,7 +67,6 @@
 #define ACE_HAS_SOCKLEN_T
 #define ACE_HAS_SSIZE_T
 #define ACE_HAS_STRINGS
-#define ACE_HAS_STRING_CLASS
 #define ACE_HAS_SVR4_DYNAMIC_LINKING
 #define ACE_HAS_SVR4_SIGNAL_T
 #define ACE_HAS_SYSCTL
@@ -117,10 +115,6 @@
 #if !defined ACE_LACKS_PERFECT_MULTICAST_FILTERING
 #  define ACE_LACKS_PERFECT_MULTICAST_FILTERING 1
 #endif /* ACE_LACKS_PERFECT_MULTICAST_FILTERING */
-
-// OpenBSD's dlsym call segfaults when passed an invalid handle.
-// It seems as if most other OSs detect this and just report an error.
-#define ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE
 
 #define ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "%ld"
 #define ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "%lu"

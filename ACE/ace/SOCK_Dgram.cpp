@@ -406,7 +406,6 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 
 // Send an iovec of size N to ADDR as a datagram (connectionless
 // version).
-
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
                       int n,
@@ -420,8 +419,8 @@ ACE_SOCK_Dgram::send (const iovec iov[],
 
   // Determine the total length of all the buffers in <iov>.
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
-    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
+    // The iov_len is unsigned on Linux, RTEMS and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
@@ -481,8 +480,8 @@ ACE_SOCK_Dgram::recv (iovec iov[],
   ACE_UNUSED_ARG (to_addr);
 
   for (i = 0; i < n; i++)
-#if ! (defined(__BORLANDC__) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
-    // The iov_len is unsigned on Linux, RTEMS and with Borland. If we go
+#if ! (defined(ACE_LACKS_IOVEC) || defined(ACE_LINUX) || defined(ACE_HAS_RTEMS))
+    // The iov_len is unsigned on Linux, RTEMS and when using the ACE iovec struct. If we go
     // ahead and try the if, it will emit a warning.
     if (iov[i].iov_len < 0)
       return -1;
@@ -673,7 +672,6 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
       ACE_INET_Addr interface_addr;
       if (interface_addr.set (mcast_addr.get_port_number (), net_if) == -1)
         {
-#if defined (ACE_WIN32)
           IP_ADAPTER_ADDRESSES tmp_addrs;
           // Initial call to determine actual memory size needed
           ULONG bufLen = 0;
@@ -717,15 +715,12 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
               errno = EINVAL;
               return -1;
             }
-#else
-          ACE_NOTSUP_RETURN (-1);
-#endif /* ACE_WIN32 */
         }
       lmreq.imr_interface.s_addr =
         ACE_HTONL (interface_addr.get_ip_address ());
 #else
       ifreq if_address;
-      ACE_OS::strcpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if));
+      ACE_OS::strsncpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if), (sizeof if_address.ifr_name));
       if (ACE_OS::ioctl (this->get_handle (),
                          SIOCGIFADDR,
                          &if_address) == -1)

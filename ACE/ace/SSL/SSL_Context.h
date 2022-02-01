@@ -168,6 +168,12 @@ public:
   /// Load certificate from memory rather than a file.
   int certificate (X509* cert);
 
+  /// Loads certificate chain file_name into ctx. Certificates must be
+  /// sorted starting with the subject's certificate (actual client or
+  /// server certificate), followed by ordered intermediate CA certificates.
+  /// E.g. Let's Encrypt's intermediate certificate chain.
+  int certificate_chain (const char *file_name, int type = SSL_FILETYPE_PEM);
+
   /// Parse the string and filter crypto versions accordingly
   int filter_versions (const char *filter);
 

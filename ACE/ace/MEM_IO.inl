@@ -49,9 +49,9 @@ ACE_MT_MEM_IO::Simple_Queue::init (MQ_Struct *mq,
 ACE_INLINE ssize_t
 ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 {
-#if !defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Reactive_MEM_IO::get_buf_len");
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   if (this->shm_malloc_ == 0)
     {

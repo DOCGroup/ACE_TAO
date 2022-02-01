@@ -2,7 +2,6 @@
 // Include Section
 // ******************************************************************
 
-#include "ace/Auto_Ptr.h"
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
@@ -16,7 +15,7 @@
 #include "goS.h"
 #include "Notify_StructuredPushSupplier.h"
 #include "Notify_Test_Client.h"
-
+#include <memory>
 
 // ******************************************************************
 // Data Section
@@ -174,7 +173,7 @@ create_suppliers (CosNotifyChannelAdmin::SupplierAdmin_ptr admin,
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int status = 0;
-  ACE_Auto_Ptr< sig_i > sig_impl;
+  std::unique_ptr<sig_i> sig_impl;
   try
     {
       Supplier_Client client;

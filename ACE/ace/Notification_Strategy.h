@@ -38,7 +38,7 @@ public:
   ACE_Notification_Strategy (ACE_Event_Handler *eh, ACE_Reactor_Mask mask);
 
   /// Destructor.
-  virtual ~ACE_Notification_Strategy ();
+  virtual ~ACE_Notification_Strategy () = default;
 
   virtual int notify () = 0;
   virtual int notify (ACE_Event_Handler *, ACE_Reactor_Mask mask) = 0;

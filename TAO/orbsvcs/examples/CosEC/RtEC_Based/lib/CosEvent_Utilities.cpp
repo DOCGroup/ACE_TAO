@@ -4,7 +4,7 @@
 #include "orbsvcs/Event_Service_Constants.h"
 #include "EventChannel_i.h"
 #include "ace/Auto_Ptr.h"
-#include "ace/OS_NS_string.h"
+#include <memory>
 
 CosEC_ServantBase::CosEC_ServantBase (void)
   :poa_ (PortableServer::POA::_nil ()),
@@ -16,15 +16,6 @@ CosEC_ServantBase::CosEC_ServantBase (void)
    eventSourceIds_ (0),
    source_type_pairs_ (0)
 {
-  // No-Op.
-}
-
-CosEC_ServantBase::~CosEC_ServantBase (void)
-{
-  // No-Op.
-#if 0
-  ACE_DEBUG ((LM_DEBUG, "in cosec servant base %d\n", this));
-#endif
 }
 
 void
@@ -41,10 +32,10 @@ CosEC_ServantBase::init (PortableServer::POA_ptr thispoa,
   this->thispoa_ = PortableServer::POA::_duplicate (thispoa);
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  auto_ptr<POA_RtecEventChannelAdmin::EventChannel>
+  std::unique_ptr<POA_RtecEventChannelAdmin::EventChannel>
     auto_rtec_servant_ (this->create_rtec ());
 
-  auto_ptr<TAO_CosEC_EventChannel_i>
+  std::unique_ptr<TAO_CosEC_EventChannel_i>
     auto_cosec_servant_ (this->create_cosec ());
 
   // if all the servants were allocated then set the class pointers.

@@ -18,8 +18,7 @@
 // ************************************************************
 
 be_visitor_operation_arglist::be_visitor_operation_arglist (
-    be_visitor_context *ctx
-  )
+    be_visitor_context *ctx)
   : be_visitor_operation (ctx),
     unused_ (false)
 {
@@ -33,14 +32,14 @@ int
 be_visitor_operation_arglist::visit_operation (be_operation *node)
 {
   TAO_OutStream *os = this->ctx_->stream ();
-  bool has_args = node->argument_count () > 0;
+  bool const has_args = node->argument_count () > 0;
 
-  *os << " (" << be_idt_nl;
+  *os << " (";
 
   switch (this->ctx_->state ())
     {
     case TAO_CodeGen::TAO_OPERATION_ARGLIST_PROXY_IMPL_XS:
-      *os << "::CORBA::Object *_collocated_tao_target_";
+      *os << be_idt_nl << "::CORBA::Object *_collocated_tao_target_";
 
       if (has_args)
         {
@@ -49,6 +48,14 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
 
       break;
     default:
+      if (has_args)
+        {
+          *os << be_idt_nl;
+        }
+      else
+        {
+          *os << be_idt;
+        }
       break;
     }
 
@@ -60,11 +67,6 @@ be_visitor_operation_arglist::visit_operation (be_operation *node)
                          "visit_operation - "
                          "codegen for scope failed\n"),
                         -1);
-    }
-
-  if (!has_args)
-    {
-      *os << "void";
     }
 
   *os << ")" << be_uidt;

@@ -15,20 +15,7 @@
 #include "tao/debug.h"
 #include "ace/OS_Memory.h"
 
-// ****************************************************************
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-/////////////////////////////
-// UTF8_Latin1_Translator implementation
-
-TAO_UTF8_Latin1_Translator::TAO_UTF8_Latin1_Translator ()
-{
-}
-
-TAO_UTF8_Latin1_Translator::~TAO_UTF8_Latin1_Translator (void)
-{
-}
 
 // = Documented in $ACE_ROOT/ace/CDR_Stream.h
 ACE_CDR::Boolean

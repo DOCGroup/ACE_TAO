@@ -244,7 +244,7 @@ namespace TAO
   void
   Any_Basic_Impl::_tao_decode (TAO_InputCDR &cdr)
   {
-    if (! this->demarshal_value (cdr))
+    if (!this->demarshal_value (cdr))
       {
         throw ::CORBA::MARSHAL ();
       }

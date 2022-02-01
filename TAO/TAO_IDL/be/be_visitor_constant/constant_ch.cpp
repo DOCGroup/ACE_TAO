@@ -31,8 +31,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // If we are defined in the outermost scope, then the value is assigned
   // to us here itself, else it will be in the *.cpp file.
@@ -66,7 +65,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();
@@ -93,7 +92,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         {
           if (bnt == AST_Decl::NT_string || bnt == AST_Decl::NT_wstring)
             {
-              *os << node->exprtype_to_string ();
+              *os << exprtype_to_cpp_corba_type (node->et ());
             }
           else
             {
@@ -102,7 +101,7 @@ be_visitor_constant_ch::visit_constant (be_constant *node)
         }
       else
         {
-          *os << node->exprtype_to_string ();
+          *os << exprtype_to_cpp_corba_type (node->et ());
         }
 
       *os << " " << node->local_name ();

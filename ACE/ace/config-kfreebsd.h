@@ -122,9 +122,6 @@
 #define ACE_LACKS_NEW_H 1
 #endif
 
-/* Platform provides new style C++ <new> header */
-#define ACE_HAS_NEW_NO_H 1
-
 /* Platform's select() uses non-const timeval* (only found on Linux right now)
    */
 #define ACE_HAS_NONCONST_SELECT_TIMEVAL 1
@@ -234,9 +231,6 @@
 /* Define to 1 if the system has the type `ssize_t'. */
 #define ACE_HAS_SSIZE_T 1
 
-/* Platform/compiler supports Standard C++ Library */
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-
 /* Compiler supports standard C++ template class member specializations */
 #define ACE_HAS_STD_TEMPLATE_CLASS_MEMBER_SPECIALIZATION 1
 
@@ -255,9 +249,6 @@
 
 /* Platform has <strings.h> (which contains bzero() prototype) */
 #define ACE_HAS_STRINGS 1
-
-/* Platform/Compiler supports a String class (e.g., GNU or Win32). */
-#define ACE_HAS_STRING_CLASS 1
 
 /* Define to 1 if platform has strnlen(). */
 #define ACE_HAS_STRNLEN 1
@@ -363,7 +354,7 @@
 /* Platform defines ACE_HAS_MSG, but lacks msg_accrights{len}. */
 #define ACE_LACKS_MSG_ACCRIGHTS 1
 
-/* Platform lacks named POSIX semaphores (e.g., Chorus) */
+/* Platform lacks named POSIX semaphores */
 #define ACE_LACKS_NAMED_POSIX_SEM 1
 
 /* Compiler complains about use of obsolete "pragma once" */
@@ -404,9 +395,6 @@
    */
 #define ACE_USES_IPV4_IPV6_MIGRATION 1
 
-/* Platform has its standard C++ library in the namespace std. */
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-
 /* Define WORDS_BIGENDIAN to 1 if your processor stores words with the most
    significant byte first (like Motorola and SPARC, unlike Intel). */
 #if defined AC_APPLE_UNIVERSAL_BUILD
@@ -418,7 +406,6 @@
 /* #  undef WORDS_BIGENDIAN */
 # endif
 #endif
-
 
 /* Enable ACE inlining */
 #define __ACE_INLINE__ 1

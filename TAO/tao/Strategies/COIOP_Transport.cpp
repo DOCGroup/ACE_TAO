@@ -27,10 +27,6 @@ TAO_COIOP_Transport::TAO_COIOP_Transport (TAO_COIOP_Connection_Handler *handler,
 {
 }
 
-TAO_COIOP_Transport::~TAO_COIOP_Transport (void)
-{
-}
-
 ACE_Event_Handler *
 TAO_COIOP_Transport::event_handler_i (void)
 {

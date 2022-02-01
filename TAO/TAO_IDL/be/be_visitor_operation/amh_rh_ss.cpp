@@ -73,8 +73,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
   buf = nullptr;
 
   // Step 1 : Generate return type: always void
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << "void" << be_nl
       << response_handler_implementation_name.c_str () << "::";
@@ -171,7 +170,7 @@ be_visitor_amh_rh_operation_ss::visit_operation (be_operation *node)
           << "holder->raise_" << operation_name.c_str ()
           << " ();" << be_uidt_nl
           << "}" << be_nl
-          << "catch ( ::CORBA::Exception& ex)"
+          << "catch (const ::CORBA::Exception& ex)"
           << be_nl
           << "{" << be_idt_nl
           << "this->_tao_rh_send_exception (ex);" << be_uidt_nl

@@ -82,6 +82,40 @@
 # define ACE_HAS_MONITOR_POINTS 0
 #endif
 
+// For all compilers we require the std library to be in the std namespace
+#if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
+#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
+#endif
+
+// We require that the standard C++ library is support
+#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
+# define ACE_HAS_STANDARD_CPP_LIBRARY 1
+#endif
+
+// Define ACE_NEW_THROWS_EXCEPTIONS for all compilers, we
+// expect all compilers to do so
+#if !defined (ACE_NEW_THROWS_EXCEPTIONS)
+# define ACE_NEW_THROWS_EXCEPTIONS
+#endif /* ACE_NEW_THROWS_EXCEPTIONS */
+
+// Define ACE_HAS_NEW_NOTHROW for all compilers, we
+// except all compilers to support this
+#if !defined (ACE_HAS_NEW_NOTHROW)
+# define ACE_HAS_NEW_NOTHROW
+#endif /* ACE_HAS_NEW_NOTHROW */
+
+// We require the platform to have a string class
+#if !defined (ACE_HAS_STRING_CLASS)
+# define ACE_HAS_STRING_CLASS
+#endif /* ACE_HAS_STRING_CLASS */
+
+// ACE 7.0.3 renamed this macro, defining the old name for
+// backwards compatibility
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
+# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
+
+
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
 #include "ace/OS_main.h"

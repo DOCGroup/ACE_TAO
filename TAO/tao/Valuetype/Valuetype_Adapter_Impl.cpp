@@ -9,10 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Valuetype_Adapter_Impl::~TAO_Valuetype_Adapter_Impl (void)
-{
-}
-
 CORBA::Object_ptr
 TAO_Valuetype_Adapter_Impl::abstractbase_to_object (
     CORBA::AbstractBase_ptr p)

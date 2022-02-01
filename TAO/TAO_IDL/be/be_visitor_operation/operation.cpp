@@ -241,7 +241,7 @@ be_visitor_operation::gen_stub_operation_body (
 
   *os << be_nl_2
       << "TAO::" << (node->is_abstract () ? "AbstractBase_" : "" )
-      << "Invocation_Adapter _tao_call (" << be_idt << be_idt_nl
+      << "Invocation_Adapter _invocation_call (" << be_idt << be_idt_nl
       << "this," << be_nl
       << "_the_tao_operation_signature," << be_nl
       << node->argument_count () + 1 << "," << be_nl
@@ -321,7 +321,7 @@ be_visitor_operation::gen_stub_operation_body (
   // case covered as well.
   if (node->exceptions ())
     {
-      *os << "_tao_call.invoke (" << be_idt << be_idt_nl
+      *os << "_invocation_call.invoke (" << be_idt << be_idt_nl
           << "_tao_" << node->flat_name ()
           << "_exceptiondata," << be_nl
           << node->exceptions ()->length () << be_uidt_nl
@@ -329,7 +329,7 @@ be_visitor_operation::gen_stub_operation_body (
     }
   else
     {
-      *os << "_tao_call.invoke (nullptr, 0);";
+      *os << "_invocation_call.invoke (nullptr, 0);";
     }
 
   if (!this->void_return_type (return_type))
@@ -528,6 +528,12 @@ be_visitor_operation::gen_arg_template_param_name (AST_Decl *scope,
             return;
           case AST_PredefinedType::PT_wchar:
             *os << "::ACE_InputCDR::to_wchar";
+            return;
+          case AST_PredefinedType::PT_uint8:
+            *os << "::ACE_InputCDR::to_uint8";
+            return;
+          case AST_PredefinedType::PT_int8:
+            *os << "::ACE_InputCDR::to_int8";
             return;
           case AST_PredefinedType::PT_void:
             break;

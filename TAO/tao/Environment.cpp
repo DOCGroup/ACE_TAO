@@ -106,7 +106,7 @@ CORBA::Environment::default_environment ()
   // clear the environment before calling into the ORB.
   TAO_ORB_Core_instance ()->default_environment ()->clear ();
 
-  return TAO_default_environment ();;
+  return TAO_default_environment ();
 }
 
 // Convenience -- say if the exception is a system exception or not.

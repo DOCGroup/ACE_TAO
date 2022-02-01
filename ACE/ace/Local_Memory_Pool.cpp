@@ -1,7 +1,7 @@
 #include "ace/Local_Memory_Pool.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/OS_Memory.h"
 #include "ace/Log_Category.h"
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +60,7 @@ ACE_Local_Memory_Pool::acquire (size_t nbytes,
                   0);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-  ACE_Auto_Basic_Array_Ptr<char> cp (temp);
+  std::unique_ptr<char[]> cp (temp);
 
   if (this->allocated_chunks_.insert (cp.get ()) != 0)
     ACELIB_ERROR_RETURN ((LM_ERROR,

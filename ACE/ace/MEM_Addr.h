@@ -35,10 +35,13 @@ class ACE_Export ACE_MEM_Addr : public ACE_Addr
 {
 public:
   /// Default constructor.
-  ACE_MEM_Addr (void);
+  ACE_MEM_Addr ();
 
   /// Copy constructor.
   ACE_MEM_Addr (const ACE_MEM_Addr &);
+
+  /// Assignment operator
+  ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;
 
   /// Creates an ACE_MEM_Addr from a @a port_number
   ACE_MEM_Addr (u_short port_number);
@@ -47,7 +50,7 @@ public:
   explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
 
   /// Default dtor.
-  ~ACE_MEM_Addr (void);
+  ~ACE_MEM_Addr () = default;
 
   // = Direct initialization methods.
 

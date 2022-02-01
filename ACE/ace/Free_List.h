@@ -36,7 +36,7 @@ class ACE_Free_List
 {
 public:
   /// Destructor - removes all the elements from the free_list.
-  virtual ~ACE_Free_List ();
+  virtual ~ACE_Free_List () = default;
 
   /// Inserts an element onto the free list (if it isn't past the high
   /// water mark).

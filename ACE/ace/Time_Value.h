@@ -20,8 +20,9 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_time.h"
-#include <chrono>
 #include "ace/Truncate.h"
+#include <chrono>
+#include <ostream>
 
 // Define some helpful constants.
 // Not type-safe, and signed.  For backward compatibility.
@@ -31,9 +32,6 @@ suseconds_t const ACE_ONE_SECOND_IN_USECS = 1000000;
 
 // needed for ACE_UINT64
 #include "ace/Basic_Types.h"
-
-// needed to determine if iostreams are present
-#include "ace/iosfwd.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -460,9 +458,7 @@ private:
 #endif /* ACE_HAS_TIME_T_LONG_MISMATCH */
 };
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
-extern ACE_Export ostream &operator<<( ostream &o, const ACE_Time_Value &v );
-#endif
+extern ACE_Export std::ostream &operator<<(std::ostream &o, const ACE_Time_Value &v );
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -863,12 +863,8 @@ namespace { // helpers for vsnprintf_emulation
 
       const long double log = val > 0 ? std::log10 (val) : 0;
       int dig_left = static_cast<int> (1 + ((val >= 1) ? log : 0));
-
-#if defined __HP_aCC && __HP_aCC < 40000
-      int exp = static_cast<int> (log);
-#else
       int exp = static_cast<int> (std::floor (log));
-#endif
+
       if (flags.has (SNPRINTF_FLEXPONENT))
         {
           const int p = precision > 0 ? precision : (precision < 0 ? 6 : 1);

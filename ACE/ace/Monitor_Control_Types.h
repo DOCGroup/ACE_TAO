@@ -74,7 +74,7 @@ namespace ACE
        */
       struct ACE_Export Constraint
       {
-        Constraint ();
+        Constraint () = default;
         ~Constraint ();
 
         /// Implemented explicitly so reference counting of control
@@ -83,7 +83,7 @@ namespace ACE
         Constraint& operator= (const Constraint& rhs);
 
         ACE_CString expr;
-        Control_Action* control_action;
+        Control_Action* control_action {};
       };
 
       /**

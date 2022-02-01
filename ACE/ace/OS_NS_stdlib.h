@@ -22,6 +22,7 @@
 # endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/os_include/os_stdlib.h"
+#include <cstdlib>
 #include /**/ "ace/ACE_export.h"
 
 #include "ace/Basic_Types.h"  /* ACE_UINT64 and intptr_t in inl file */
@@ -58,7 +59,7 @@ inline ACE_INT64 ace_strtoll_helper (const char *s, char **ptr, int base)
   return strtoll (s, ptr, base);
 # undef strtoll
 # else
-  return ACE_STD_NAMESPACE::strtoll (s, ptr, base);
+  return std::strtoll (s, ptr, base);
 # endif /* strtoll */
 }
 #endif /* !ACE_LACKS_STRTOLL && !ACE_STRTOLL_EQUIVALENT */
@@ -70,7 +71,7 @@ inline ACE_INT64 ace_strtoull_helper (const char *s, char **ptr, int base)
   return strtoull (s, ptr, base);
 # undef strtoull
 # else
-  return ACE_STD_NAMESPACE::strtoull (s, ptr, base);
+  return std::strtoull (s, ptr, base);
 # endif /* strtoull */
 }
 #endif /* !ACE_LACKS_STRTOULL && !ACE_STRTOULL_EQUIVALENT */
@@ -309,11 +310,9 @@ namespace ACE_OS {
   extern ACE_Export
   ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
 
-#if !defined (ACE_LACKS_STRTOD)
   /// Converts a string to a double value (char version).
   ACE_NAMESPACE_INLINE_FUNCTION
   double strtod (const char *s, char **endptr);
-#endif /* !ACE_LACKS_STRTOD */
 
 #if defined (ACE_HAS_WCHAR) && !defined (ACE_LACKS_WCSTOD)
   /// Converts a string to a double value (wchar_t version).

@@ -139,7 +139,7 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
                       ACE_TEXT ("TAO (%P|%t) - ")
                       ACE_TEXT (" ACE_Thread::get_prio\n")));
 
-          return ;
+          return;
         }
 
       CORBA::Short native_priority = CORBA::Short (priority);

@@ -43,6 +43,9 @@ public:
   /// Copy constructor.
   ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
 
+  /// Assignment operator
+  ACE_UNIX_Addr& operator= (const ACE_UNIX_Addr&) = default;
+
   /// Creates an ACE_UNIX_Addr from a string.
   ACE_UNIX_Addr (const char rendezvous_point[]);
 

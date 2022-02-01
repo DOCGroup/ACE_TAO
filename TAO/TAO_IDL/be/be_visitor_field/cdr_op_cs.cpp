@@ -500,6 +500,16 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
           *os << "(strm >> ::ACE_InputCDR::to_boolean (_tao_aggregate."
               << f->local_name () << "))";
         }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_uint8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm >> ::ACE_InputCDR::to_int8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
       else
         {
           *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
@@ -529,6 +539,16 @@ be_visitor_field_cdr_op_cs::visit_predefined_type (be_predefined_type *node)
       else if (pt == AST_PredefinedType::PT_boolean)
         {
           *os << "(strm << ::ACE_OutputCDR::from_boolean (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_uint8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_uint8 (_tao_aggregate."
+              << f->local_name () << "))";
+        }
+      else if (pt == AST_PredefinedType::PT_int8)
+        {
+          *os << "(strm << ::ACE_OutputCDR::from_int8 (_tao_aggregate."
               << f->local_name () << "))";
         }
       else

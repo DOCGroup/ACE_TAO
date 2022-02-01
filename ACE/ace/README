@@ -64,8 +64,6 @@ ACE_MKDIR_LACKS_MODE                    This platform has a mkdir function with
                                         a mode argument
 ACE_MT_SAFE                             Compile using multi-thread libraries
 ACE_NDEBUG                              Turns off debugging features
-ACE_NEW_THROWS_EXCEPTIONS               Compiler's 'new' throws exception on
-                                        failure (ANSI C++ behavior).
 ACE_NLOGGING                            Turns off the LM_DEBUG and
                                         LM_ERROR logging macros...
 ACE_NTRACE                              Turns off the tracing feature when = 1.
@@ -106,8 +104,6 @@ ACE_USES_ASM_SYMBOL_IN_DLSYM            Platform uses assembly symbols
                                         instead of C symbols in
                                         dlsym()
 ACE_USES_STATIC_MFC                     When linking MFC as a static library is desired
-ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB   Platform has its standard c++
-                                        library in the namespace std.
 ACE_USES_EXPLICIT_STD_NAMESPACE         Set this when ::fclose doesn't
                                         work and you have to
                                         explicitly specify the std
@@ -197,7 +193,7 @@ ACE_HAS_STDARG_THR_DEST                 Platform has void (*)(...)
                                         prototype for
                                         pthread_key_create()
                                         destructor (e.g., LynxOS).
-ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS     Platform/compiler supports
+ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS     Platform/compiler supports
                                         Win32 structural exceptions
 ACE_HAS_4_4BSD_SENDMSG_RECVMSG          Platform has BSD 4.4
                                         sendmsg()/recvmsg() APIs.
@@ -218,8 +214,7 @@ ACE_HAS_AUTOMATIC_INIT_FINI             Compiler/platform correctly
                                         calls init()/fini() for shared
                                         libraries
 ACE_HAS_BIG_FD_SET                      Compiler/platform has typedef
-                                        u_long fdmask (e.g., Linux and
-                                        SCO).
+                                        u_long fdmask (e.g., Linux).
 ACE_HAS_BROKEN_ACCEPT_ADDR              Platform can't correctly deal
                                         with a NULL addr to accept()
                                         (e.g, VxWorks < 6.9).
@@ -356,7 +351,6 @@ ACE_HAS_MT_SAFE_MKTIME                  Platform supports MT safe
 ACE_HAS_MUTEX_TIMEOUTS                  Compiler supports timed mutex
                                         acquisitions
                                         (e.g. pthread_mutex_timedlock()).
-ACE_HAS_NEW_NOTHROW                     Compiler offers new (nothrow).
 ACE_HAS_NONCONST_CHDIR                  Platform uses non-const char *
                                         in call to chdir
 ACE_HAS_NONCONST_CLOCK_SETTIME          Platform uses non-const
@@ -370,8 +364,7 @@ ACE_HAS_NONCONST_GETBY                  Platform uses non-const char *
                                         in calls to gethostbyaddr,
                                         gethostbyname, getservbyname
 ACE_HAS_NONCONST_MSGSND                 Platform has a non-const
-                                        parameter to msgsend() (e.g.,
-                                        SCO).
+                                        parameter to msgsend().
 ACE_HAS_NONCONST_READV                  Platform omits const qualifier from
                                         iovec parameter in readv() prototype.
 ACE_HAS_NONCONST_SELECT_TIMEVAL         Platform's select() uses
@@ -480,10 +473,6 @@ ACE_HAS_XPG4_MULTIBYTE_CHAR             Platform has support for
                                         classification.
 ACE_HAS_REGEX                           Platform supports the POSIX
                                         regular expression library
-ACE_HAS_DLSYM_SEGFAULT_ON_INVALID_HANDLE For OpenBSD: The dlsym call
-                                        segfaults when passed an invalid
-                                        handle.  Other platforms handle
-                                        this more gracefully.
 ACE_HAS_SELECT_H                        Platform has special header for select().
 ACE_USE_SELECT_REACTOR_FOR_REACTOR_IMPL For Win32: Use Select_Reactor
                                         as default implementation of
@@ -532,8 +521,6 @@ ACE_HAS_SSIZE_T                         Compiler supports the ssize_t
                                         typedef
 ACE_HAS_STHREADS                        Platform supports Solaris
                                         threads
-ACE_HAS_STANDARD_CPP_LIBRARY            Platform/compiler supports
-                                        Standard C++ Library
 ACE_HAS_STRBUF_T                        Compiler/platform supports
                                         struct strbuf
 ACE_HAS_STRDUP_EMULATION                Use ACE's strdup() emulation (even
@@ -548,9 +535,6 @@ ACE_HAS_STRNLEN                         Platform supports strnlen(3).
 ACE_HAS_STREAMS                         Platform supports STREAMS
 ACE_HAS_STREAM_PIPES                    Platform supports STREAM pipes
 ACE_HAS_STRICT                          Use the STRICT compilation mode on Win32.
-ACE_HAS_STRING_CLASS                    Platform/Compiler supports a
-                                        String class (e.g., GNU or
-                                        Win32).
 ACE_HAS_STRUCT_NETDB_DATA               Compiler/platform has strange
                                         hostent API for socket *_r()
                                         calls
@@ -741,7 +725,7 @@ ACE_HRTIME_T_IS_BASIC_TYPE              ACE_hrtime_t is a basic type that
                                         doesn't require ACE_U64_TO_U32
                                         conversion
 ACE_LACKS_ACCESS                        Platform lacks access() (e.g.,
-                                        VxWorks and Chorus)
+                                        VxWorks)
 ACE_LACKS_ACE_IOSTREAM                  Platform can not build
                                         ace/IOStream{,_T}.cpp.  This
                                         does not necessarily mean that
@@ -782,18 +766,17 @@ ACE_LACKS_INLINE_FUNCTIONS              Platform can't handle "inline"
                                         keyword correctly.
 ACE_LACKS_EXEC                          Platform lacks the exec()
                                         family of system calls (e.g.,
-                                        Win32, VxWorks, Chorus)
+                                        Win32, VxWorks)
 ACE_LACKS_FILELOCKS                     Platform lacks file locking
                                         mechanism
 ACE_LACKS_FORK                          Platform lacks the fork()
                                         system call (e.g., Win32,
-                                        VxWorks, Chorus)
+                                        VxWorks)
 ACE_LACKS_GETPGID                       Platform lacks getpgid() call
-                                        (e.g., Win32, Chorus, and
+                                        (e.g., Win32, and
                                         FreeBSD).
 ACE_LACKS_GETSERVBYNAME                 Platforms lacks
-                                        getservbyname() (e.g., VxWorks
-                                        and Chorus).
+                                        getservbyname() (e.g., VxWorks)
 ACE_LACKS_GETIPNODEBYADDR               Platform lacks getipnodebyaddr().
 ACE_LACKS_GETIPNODEBYNAME               Platform lacks getipnodebyname().
 ACE_LACKS_INET_ATON                     Platform lacks the inet_aton()
@@ -802,7 +785,7 @@ ACE_LACKS_IOSTREAM_FX                   iostream header does not
                                         declare ipfx (), opfx (),
                                         etc.
 ACE_LACKS_KEY_T                         Platform lacks key_t (e.g.,
-                                        Chorus, VxWorks, Win32)
+                                        VxWorks, Win32)
 ACE_LACKS_LINEBUFFERED_STREAMBUF        Platform lacks streambuf
                                         "linebuffered ()".
 ACE_LACKS_LSTAT                         Platform lacks the lstat() function.
@@ -810,13 +793,13 @@ ACE_LACKS_MADVISE                       Platform lacks madvise()
                                         (e.g., Linux)
 ACE_LACKS_MALLOC_H                      Platform lacks malloc.h
 ACE_LACKS_MEMORY_H                      Platform lacks memory.h (e.g.,
-                                        VxWorks and Chorus)
+                                        VxWorks)
 ACE_LACKS_MKFIFO                        Platform lacks mkfifo() e.g.,
-                                        VxWorks, Chorus, pSoS, and WinNT.
+                                        VxWorks, pSoS, and WinNT.
 ACE_LACKS_MKTEMP                        Platform lacks the mktemp() function.
 ACE_LACKS_MKSTEMP                       Platform lacks the mkstemp() function.
 ACE_LACKS_MMAP                          The platform doesn't have
-                                        mmap(2) (e.g., SCO UNIX).
+                                        mmap(2).
 ACE_LACKS_MODE_MASKS                    Platform/compiler doesn't have
                                         open() mode masks.
 ACE_LACKS_MPROTECT                      The platform doesn't have
@@ -834,7 +817,7 @@ ACE_LACKS_MSYNC                         Platform lacks msync() (e.g.,
 ACE_LACKS_MUTEXATTR_PSHARED             Platform lacks
                                         pthread_mutexattr_setpshared().
 ACE_LACKS_NAMED_POSIX_SEM               Platform lacks named POSIX
-                                        semaphores (e.g., Chorus)
+                                        semaphores
 ACE_LACKS_NETDB_REENTRANT_FUNCTIONS     Platform does not support
                                         reentrant netdb functions
                                         (getprotobyname_r,
@@ -877,8 +860,7 @@ ACE_LACKS_READV                         Platform doesn't define readv,
 ACE_LACKS_RENAME                        Platform lacks rename().
 ACE_LACKS_RLIMIT                        Platform/compiler lacks
                                         {get,set}rlimit() function
-                                        (e.g., VxWorks, Chorus, and
-                                        SCO UNIX)
+                                        (e.g., VxWorks)
 ACE_LACKS_RLIMIT_PROTOTYPE              Platform/compiler lacks
                                         {get,set}rlimit() prototypes
                                         (e.g., Tandem)
@@ -911,12 +893,11 @@ ACE_LACKS_SETSCHED                      Platform lacks
                                         pthread_attr_setsched()
                                         (e.g. MVS)
 ACE_LACKS_SIGACTION                     Platform lacks struct
-                                        sigaction (e.g., Win32 and
-                                        Chorus)
+                                        sigaction (e.g., Win32)
 ACE_LACKS_SIGNED_CHAR                   Platform lacks "signed char"
                                         type (broken!)
 ACE_LACKS_SIGSET                        Platform lacks signal sets
-                                        (e.g., Chorus and Win32)
+                                        (e.g., Win32)
 ACE_LACKS_STRPTIME                      Platform/compiler lacks the strptime()
                                         function.
 ACE_LACKS_WCSCHR                        Platform/compiler lacks wcschr()
@@ -926,7 +907,7 @@ ACE_LACKS_WCSRCHR                       Platform/compiler lacks wcsrchr()
 ACE_LACKS_SWAB                          Platform/compiler lacks
                                         swab () function.
 ACE_LACKS_SYS_MSG_H                     Platform lacks sys/msg.h
-                                        (e.g., Chorus and VxWorks)
+                                        (e.g., VxWorks)
 ACE_LACKS_SYS_PARAM_H                   Platform lacks <sys/param.h>
                                         (e.g., MVS)
 ACE_LACKS_SENDMSG                       Platform lacks sendmsg()
@@ -941,8 +922,7 @@ ACE_LACKS_SYSV_SHMEM                    Platform lacks System V shared
 ACE_LACKS_SIGINFO_H                     Platform lacks the siginfo.h
                                         include file (e.g., MVS)
 ACE_LACKS_SOCKETPAIR                    Platform lacks the
-                                        socketpair() call (e.g., SCO
-                                        UNIX)
+                                        socketpair() cal
 ACE_LACKS_STRCASECMP                    Compiler/platform lacks
                                         strcasecmp() (e.g., DG/UX,
                                         UNIXWARE, VXWORKS)
@@ -995,8 +975,7 @@ ACE_LACKS_UNISTD_H                      Platform lacks the unistd.h
 ACE_LACKS_UNIX_DOMAIN_SOCKETS           ACE platform has no UNIX
                                         domain sockets
 ACE_LACKS_UNIX_SIGNALS                  Platform lacks full signal
-                                        support (e.g., Win32 and
-                                        Chorus).
+                                        support (e.g., Win32).
 ACE_LACKS_UNSIGNEDLONGLONG_T            Compiler/platform does not
                                         support the unsigned long
                                         long datatype.

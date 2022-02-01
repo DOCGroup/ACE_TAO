@@ -18,10 +18,6 @@ TAO_COIOP_Protocol_Factory::TAO_COIOP_Protocol_Factory (void)
 {
 }
 
-TAO_COIOP_Protocol_Factory::~TAO_COIOP_Protocol_Factory (void)
-{
-}
-
 int
 TAO_COIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {

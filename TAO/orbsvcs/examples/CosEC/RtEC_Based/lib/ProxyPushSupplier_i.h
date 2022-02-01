@@ -37,7 +37,7 @@ public:
                                  RtecEventChannelAdmin::ProxyPushSupplier_ptr pps);
 
   /// Destructor.
-  ~TAO_CosEC_ProxyPushSupplier_i (void);
+  ~TAO_CosEC_ProxyPushSupplier_i () = default;
 
   /// Ends the event communication and disposes this object.
   virtual void disconnect_push_supplier (void);

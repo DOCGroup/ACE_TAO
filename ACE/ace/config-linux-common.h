@@ -52,16 +52,11 @@
 #if defined (__INTEL_COMPILER)
 #  include "ace/config-icc-common.h"
 #elif defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-#  define ACE_HAS_STRING_CLASS
 #  include "ace/config-g++-common.h"
 #elif defined (__SUNCC_PRO) || defined (__SUNPRO_CC)
 #  include "ace/config-suncc-common.h"
 #elif defined (__PGI)
 // Portable group compiler
-#  define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #  define ACE_LACKS_SWAB
 #elif defined (__GNUC__)
 /**

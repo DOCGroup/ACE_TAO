@@ -21,6 +21,49 @@ be_visitor_union_cdr_op_cs::~be_visitor_union_cdr_op_cs ()
 {
 }
 
+namespace {
+  void
+  serialize_disc (TAO_OutStream *os, AST_Expression::ExprType disc_type, bool out)
+  {
+    const char* tmp_suffix = nullptr;
+    switch (disc_type)
+      {
+        case AST_Expression::EV_bool:
+          tmp_suffix = "boolean";
+          break;
+        case AST_Expression::EV_char:
+          tmp_suffix = "char";
+          break;
+        case AST_Expression::EV_wchar:
+          tmp_suffix = "wchar";
+          break;
+        case AST_Expression::EV_uint8:
+          tmp_suffix = "uint8";
+          break;
+        case AST_Expression::EV_int8:
+          tmp_suffix = "int8";
+          break;
+        default:
+          break;
+      }
+
+    const char* val = out ? "_tao_union._d ()" : "_tao_discriminant";
+    if (tmp_suffix)
+      {
+        *os << (out ? "::ACE_OutputCDR::from_" : "::ACE_InputCDR::to_")
+          << tmp_suffix << " tmp (" << val << ");" << be_nl;
+        val = "tmp";
+      }
+
+    *os
+      << "if (!(strm " << (out ? "<<" : ">>") << " " << val << "))" << be_idt_nl
+      << "{" << be_idt_nl
+      << "return false;" << be_uidt_nl
+      << "}" << be_uidt_nl << be_nl
+      << "::CORBA::Boolean result = true;" << be_nl_2;
+  }
+}
+
 int
 be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 {
@@ -70,8 +113,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -80,41 +122,13 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
 
   *os << "::CORBA::Boolean operator<< (" << be_idt << be_idt_nl
       << "TAO_OutputCDR &strm," << be_nl
-      << "const " << node->name () << " &_tao_union" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << "const " << node->name () << " &_tao_union)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
-  bool boolDisc = false;
+  serialize_disc (os, node->udisc_type (), true /* out */);
 
-  switch (node->udisc_type ())
-    {
-      case AST_Expression::EV_bool:
-        boolDisc = true;
-        *os << "::ACE_OutputCDR::from_boolean tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-
-        break;
-      case AST_Expression::EV_char:
-        *os << "::ACE_OutputCDR::from_char tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-
-        break;
-      case AST_Expression::EV_wchar:
-        *os << "::ACE_OutputCDR::from_wchar tmp (_tao_union._d ());" << be_nl
-            << "if ( !(strm << tmp) )" << be_idt_nl;
-
-        break;
-      default:
-        *os << "if ( !(strm << _tao_union._d ()) )" << be_idt_nl;
-
-        break;
-    }
-
-  *os << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2;
-
+  const bool boolDisc = node->udisc_type () == AST_Expression::EV_bool;
   if (!boolDisc)
     {
       *os << "switch (_tao_union._d ())" << be_nl
@@ -154,8 +168,8 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   this->ctx_->sub_state(TAO_CodeGen::TAO_CDR_INPUT);
   *os << "::CORBA::Boolean operator>> (" << be_idt << be_idt_nl
       << "TAO_InputCDR &strm," << be_nl
-      << node->name () << " &_tao_union" << be_uidt_nl
-      << ")" << be_uidt_nl
+      << node->name () << " &_tao_union)" << be_uidt
+      << be_uidt_nl
       << "{" << be_idt_nl;
 
   be_type* disc_type =
@@ -165,33 +179,7 @@ be_visitor_union_cdr_op_cs::visit_union (be_union *node)
   *os << disc_type->full_name ()
       << " " << "_tao_discriminant;" << be_nl;
 
-  switch (node->udisc_type ())
-    {
-      case AST_Expression::EV_bool:
-        *os << "::ACE_InputCDR::to_boolean tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-
-        break;
-      case AST_Expression::EV_char:
-        *os << "::ACE_InputCDR::to_char tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-
-        break;
-      case AST_Expression::EV_wchar:
-        *os << "::ACE_InputCDR::to_wchar tmp (_tao_discriminant);" << be_nl
-            << "if ( !(strm >> tmp) )" << be_idt_nl;
-
-        break;
-      default:
-        *os << "if ( !(strm >> _tao_discriminant) )" << be_idt_nl;
-
-        break;
-    }
-
-  *os << "{" << be_idt_nl
-      << "return false;" << be_uidt_nl
-      << "}" << be_uidt_nl << be_nl
-      << "::CORBA::Boolean result = true;" << be_nl_2;
+  serialize_disc (os, node->udisc_type (), false /* in */);
 
   if (boolDisc)
     {

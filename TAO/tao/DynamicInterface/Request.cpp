@@ -161,7 +161,7 @@ CORBA::Request::invoke (void)
 }
 
 void
-CORBA::Request::send_oneway (void)
+CORBA::Request::send_oneway ()
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 
@@ -381,7 +381,7 @@ CORBA::Request::handle_response (TAO_InputCDR &incoming,
     default:
       // @@ (JP) Don't know what to do about any of these yet.
       TAOLIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("TAO (%P|%t) - Request::handle_response, unhandled reply status\n")));
+                  ACE_TEXT ("TAO (%P|%t) - Request::handle_response, unhandled reply status %d\n"), reply_status));
   }
 }
 

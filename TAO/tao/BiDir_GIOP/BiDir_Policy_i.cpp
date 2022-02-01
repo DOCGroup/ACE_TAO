@@ -28,7 +28,7 @@ TAO_BidirectionalPolicy::TAO_BidirectionalPolicy (const TAO_BidirectionalPolicy 
 }
 
 CORBA::PolicyType
-TAO_BidirectionalPolicy::policy_type (void)
+TAO_BidirectionalPolicy::policy_type ()
 {
   // Future policy implementors: notice how this minimizes the
   // footprint of the class.
@@ -39,10 +39,10 @@ TAO_BidirectionalPolicy::policy_type (void)
 TAO_BidirectionalPolicy *
 TAO_BidirectionalPolicy::clone () const
 {
-  TAO_BidirectionalPolicy *copy = 0;
+  TAO_BidirectionalPolicy *copy = nullptr;
   ACE_NEW_RETURN (copy,
                   TAO_BidirectionalPolicy (*this),
-                  0);
+                  nullptr);
   return copy;
 }
 
@@ -51,7 +51,7 @@ TAO_BidirectionalPolicy::copy (void)
 {
   // Future policy implementors: notice how the following code is
   // exception safe!
-  TAO_BidirectionalPolicy* tmp = 0;
+  TAO_BidirectionalPolicy* tmp = nullptr;
   ACE_NEW_THROW_EX (tmp, TAO_BidirectionalPolicy (*this),
                     CORBA::NO_MEMORY (TAO::VMCID,
                                       CORBA::COMPLETED_NO));
@@ -60,12 +60,12 @@ TAO_BidirectionalPolicy::copy (void)
 }
 
 void
-TAO_BidirectionalPolicy::destroy (void)
+TAO_BidirectionalPolicy::destroy ()
 {
 }
 
 BiDirPolicy::BidirectionalPolicyValue
-TAO_BidirectionalPolicy::value (void)
+TAO_BidirectionalPolicy::value ()
 {
   return this->value_;
 }

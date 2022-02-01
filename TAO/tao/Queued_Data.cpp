@@ -131,23 +131,25 @@ TAO_Queued_Data::release (TAO_Queued_Data *qd)
 
   if (qd->allocator_)
     {
+      // Store the allocator first on the stack, destructor of
+      // qd will be called first, fixes gcc warning
+      ACE_Allocator *alloc = qd->allocator_;
       ACE_DES_FREE (qd,
-                    qd->allocator_->free,
+                    alloc->free,
                     TAO_Queued_Data);
-
-      return;
     }
-
-  // @todo: Need to be removed at some point of time!
-  if (TAO_debug_level == 4)
+  else
     {
-      // This debug is for testing purposes!
-      TAOLIB_DEBUG ((LM_DEBUG,
-                  "TAO (%P|%t) - Queued_Data[%d]::release\n",
-                  "Using global pool for releasing\n"));
+      // @todo: Need to be removed at some point of time!
+      if (TAO_debug_level == 4)
+        {
+          // This debug is for testing purposes!
+          TAOLIB_DEBUG ((LM_DEBUG,
+                      "TAO (%P|%t) - Queued_Data[%d]::release\n",
+                      "Using global pool for releasing\n"));
+        }
+      delete qd;
     }
-  delete qd;
-
 }
 
 

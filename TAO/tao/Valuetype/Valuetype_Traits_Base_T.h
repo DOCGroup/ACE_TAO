@@ -38,7 +38,7 @@ struct valuetype_traits_base
 
   inline static object_type * nil()
   {
-    return 0;
+    return nullptr;
   }
 
   inline static object_type * default_initializer()

@@ -19,9 +19,7 @@
 
 #include "ace/Numeric_Limits.h"
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
 #include <sstream>
-#endif
 
 int
 run_main (int, ACE_TCHAR *[])
@@ -175,7 +173,6 @@ run_main (int, ACE_TCHAR *[])
                 ACE_TEXT ("set_msec test failed: %d usecs should be 555000\n"),
                 msec_test3.usec ()));
 
-#ifdef ACE_HAS_CPP98_IOSTREAMS
   std::ostringstream ost;
   ost << ACE_Time_Value(1);
   ACE_TEST_ASSERT( ost.str() == "1" );
@@ -194,7 +191,6 @@ run_main (int, ACE_TCHAR *[])
   ost.str("");
   ost << ACE_Time_Value();
   ACE_TEST_ASSERT( ost.str() == "0" );
-#endif
 
   ACE_END_TEST;
 

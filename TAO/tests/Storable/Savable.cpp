@@ -104,8 +104,7 @@ Savable::Savable (TAO::Storable_Factory & storable_factory)
         }
     }
 
-  ACE_Auto_Ptr<TAO::Storable_Base>
-    stream (storable_factory_.create_stream("test.dat", "r"));
+  ACE_Auto_Ptr<TAO::Storable_Base> stream (storable_factory_.create_stream("test.dat", "r"));
   if (stream->exists ())
     {
       Savable_File_Guard fg(*this, SFG::CREATE_WITH_FILE);

@@ -34,10 +34,8 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#  if defined (ACE_HAS_STRING_CLASS)
 template <class STREAM> STREAM & operator>> (STREAM &stream, ACE_Quoted_String &str);
 template <class STREAM> STREAM & operator<< (STREAM &stream, ACE_Quoted_String &str);
-#  endif /* defined (ACE_HAS_STRING_CLASS) */
 
 template <class STREAM>
 class ACE_Streambuf_T : public ACE_Streambuf
@@ -137,7 +135,6 @@ public:
    */
   int eof () const;
 
-#  if defined (ACE_HAS_STRING_CLASS)
   /**
    * A simple string operator.  The base <iostream> has them for char*
    * but that isn't always the best thing for a <String>.  If we don't
@@ -148,7 +145,6 @@ public:
   /// The converse of the <String::put> operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
-#  endif /* ACE_HAS_STRING_CLASS */
   // = Using the macros to provide get/set operators.
   GETPUT_FUNC_SET (ACE_IOStream<STREAM>)
 
@@ -170,14 +166,12 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual int ipfx0 (void)         {  return ipfx (0); }  // Optimized ipfx(0)
-  virtual int ipfx1 (void)                                // Optimized ipfx(1)
+  virtual int ipfx0 (void) // Optimized ipfx(0)
+    {  return ipfx (0); }
+  virtual int ipfx1 (void) // Optimized ipfx(1)
     {
       if (good ())
         {
@@ -186,13 +180,10 @@ public:
           if (good ())
               return 1;
         }
-#    if !defined (ACE_WIN32)
-      // MS VC++ 5.0 doesn't declare setstate.
       setstate (failbit);
-#    endif /* !ACE_WIN32 */
       return (0);
     }
-  virtual void isfx (void) {  return; }
+  virtual void isfx (void) { return; }
   virtual int opfx (void)
     {
       if (good () && tie () != 0)

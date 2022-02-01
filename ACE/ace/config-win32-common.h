@@ -223,10 +223,6 @@
 # define ACE_HAS_IO_H
 #endif /* ! ACE_HAS_WINCE */
 
-#if !defined (__MINGW32__)
-# define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
-#endif /* __MINGW32__ */
-
 #define ACE_DEFAULT_THREAD_PRIORITY 0
 
 #define ACE_HAS_DIRENT
@@ -308,17 +304,6 @@
 #define ACE_LACKS_IOVEC
 #define ACE_LACKS_LOG2
 #define ACE_LACKS_CADDR_T
-#if !defined(__MINGW32__) && !defined (__BORLANDC__)
-# define ACE_LACKS_MODE_T
-#endif
-#if !defined(__MINGW32__)
-# define ACE_LACKS_PID_T
-#endif
-#if !defined (__BORLANDC__)
-# define ACE_LACKS_NLINK_T
-# define ACE_LACKS_UID_T
-# define ACE_LACKS_GID_T
-#endif
 #define ACE_LACKS_SETENV
 #define ACE_LACKS_UNSETENV
 
@@ -603,10 +588,6 @@
 
 #define ACE_SIZEOF_WCHAR 2
 #define ACE_HAS_MUTEX_TIMEOUTS
-#define ACE_LACKS_STRUCT_DIR
-#define ACE_LACKS_OPENDIR
-#define ACE_LACKS_CLOSEDIR
-#define ACE_LACKS_READDIR
 #define ACE_LACKS_ALPHASORT
 #define ACE_LACKS_MKSTEMP
 #define ACE_LACKS_LSTAT

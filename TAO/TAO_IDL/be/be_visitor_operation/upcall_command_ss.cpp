@@ -76,8 +76,7 @@ be_visitor_operation_upcall_command_ss::visit (
   // save the node.
   this->ctx_->node (node);
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   // Generate the operation-specific TAO::Upcall_Command concrete
   // class.

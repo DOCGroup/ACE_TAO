@@ -333,9 +333,7 @@ ACE_Process_Manager::handle_close (ACE_HANDLE /* handle */,
 // On Win32, this routine is called synchronously, and is passed the
 // HANDLE of the Process that exited, so we can do all our work here.
 int
-ACE_Process_Manager::handle_signal (int,
-                                    siginfo_t *si,
-                                    ucontext_t *)
+ACE_Process_Manager::handle_signal (int, siginfo_t *si, ucontext_t *)
 {
 #if defined (ACE_WIN32)
   ACE_HANDLE proc = si->si_handle_;
@@ -888,7 +886,8 @@ ACE_Process_Manager::wait (pid_t pid,
           ACE_Sig_Action old_action;
           if (this->reactor () == 0)
             {
-              ACE_Sig_Action do_sigchld ((ACE_SignalHandler)sigchld_nop);
+              ACE_Sig_Handler_Ex sigchld_nop_ptr = sigchld_nop;
+              ACE_Sig_Action do_sigchld (reinterpret_cast<ACE_SignalHandler> (reinterpret_cast<void*> (sigchld_nop_ptr)));
               do_sigchld.register_action (SIGCHLD, &old_action);
             }
 

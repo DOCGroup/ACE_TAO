@@ -48,7 +48,7 @@ inline int ace_sigemptyset_helper (sigset_t *s)
   return sigemptyset (s);
 #  undef sigemptyset
 #  else
-  return ACE_STD_NAMESPACE::sigemptyset (s);
+  return ::sigemptyset (s);
 #  endif /* defined (sigemptyset) */
 }
 
@@ -58,7 +58,7 @@ inline int ace_sigfillset_helper (sigset_t *s)
   return sigfillset (s);
 #  undef sigfillset
 #  else
-  return ACE_STD_NAMESPACE::sigfillset (s);
+  return ::sigfillset (s);
 #  endif /* defined (sigfillset) */
 }
 
@@ -68,7 +68,7 @@ inline int ace_sigaddset_helper (sigset_t *s, int signum)
   return sigaddset (s, signum);
 #  undef sigaddset
 #  else
-  return ACE_STD_NAMESPACE::sigaddset (s, signum);
+  return ::sigaddset (s, signum);
 #  endif /* defined (sigaddset) */
 }
 
@@ -78,7 +78,7 @@ inline int ace_sigdelset_helper (sigset_t *s, int signum)
   return sigdelset (s, signum);
 #  undef sigdelset
 #  else
-  return ACE_STD_NAMESPACE::sigdelset (s, signum);
+  return ::sigdelset (s, signum);
 #  endif /* defined (sigdelset) */
 }
 
@@ -88,7 +88,7 @@ inline int ace_sigismember_helper (sigset_t *s, int signum)
   return sigismember (s, signum);
 #  undef sigismember
 #  else
-  return ACE_STD_NAMESPACE::sigismember (s, signum);
+  return ::sigismember (s, signum);
 #  endif /* defined (sigismember) */
 }
 #endif /* !defined (ACE_LACKS_SIGSET) */
@@ -100,11 +100,10 @@ inline int ace_sigsuspend_helper (const sigset_t *s)
   return sigsuspend (s);
 #  undef sigsuspend
 #  else
-  return ACE_STD_NAMESPACE::sigsuspend (s);
+  return ::sigsuspend (s);
 #  endif /* defined (sigsuspen) */
 }
 #endif /* ACE_HAS_SIGSUSPEND */
-
 
 # if !defined (SIG_BLOCK)
 #   define SIG_BLOCK   1
@@ -139,22 +138,7 @@ extern "C"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// This hack is needed to get around an odd and hard-to-reproduce problem
-// with HP aC++. If struct sigaction is defined extern "C" and the sigaction
-// function in namespace ACE_OS, the compiler sometimes gets confused.
-// If we help it with this typedef, it's fine. User code should not use
-// the ACE typedef - it will be removed without warning as soon as we can
-// either drop support for the broken compilers or figure out how to reproduce
-// it so it can be reported to HP and fixed.
-// There's a similar hack in OS_TLI.h for struct t_optmgmt.
-// Also see ChangeLog entries:
-// Mon Jan 23 16:35:40 UTC 2006  Steve Huston  <shuston@riverace.com>
-// Mon Jan 23 22:08:56 UTC 2006  Steve Huston  <shuston@riverace.com>
-#if defined (__HP_aCC) && (__HP_aCC <= 37300)
-typedef extern "C" struct sigaction  ACE_SIGACTION;
-#else
 typedef struct sigaction ACE_SIGACTION;
-#endif
 
 namespace ACE_OS {
 

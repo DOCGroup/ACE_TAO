@@ -50,8 +50,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_nl_2;
   *os << "const ";
@@ -62,7 +61,7 @@ be_visitor_constant_cs::visit_constant (be_constant *node)
     }
   else
     {
-      *os << node->exprtype_to_string ();
+      *os << exprtype_to_cpp_corba_type (node->et ());
     }
 
   *os << " " << node->name ();

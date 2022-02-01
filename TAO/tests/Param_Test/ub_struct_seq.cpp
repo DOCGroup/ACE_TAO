@@ -381,8 +381,8 @@ Test_Unbounded_Struct_Sequence::print_sequence (const Param_Test::PathSpec &s)
 
       ACE_DEBUG ((LM_DEBUG,
                   "Element #%d\n"
-                  "\tname.id = %s\n"
-                  "\tname.kind = %s\n"
+                  "\tname.id = %C\n"
+                  "\tname.kind = %C\n"
                   "\tprocess = %d\n",
                   i,
                   vs.name.id.in (), vs.name.kind.in (), vs.process));

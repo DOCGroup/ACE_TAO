@@ -857,6 +857,10 @@ enum TAO_Policy_Scope
 # define TAO_DEFAULT_COLLOCATION_STRATEGY TAO_COLLOCATION_THRU_POA
 #endif
 
+#ifndef TAO_HAS_IDL_FEATURES
+#  define TAO_HAS_IDL_FEATURES 1
+#endif
+
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 #include /**/ "ace/post.h"

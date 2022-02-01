@@ -74,8 +74,6 @@
 
 #  undef WIFEXITED
 #  undef WEXITSTATUS
-#  define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#  define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 
 #  define ACE_HAS_CUSTOM_EXPORT_MACROS
 #  define ACE_Proper_Export_Flag
@@ -86,9 +84,6 @@
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) extern template class SINGLETON_TYPE < CLASS, LOCK >;
 
 #elif defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
 
 # include "ace/config-g++-common.h"
 
@@ -223,8 +218,6 @@
 #define ACE_HAS_UALARM
 
 #define ACE_HAS_UCONTEXT_T
-
-#define ACE_HAS_UTIME
 
 #define ACE_HAS_CTYPE_T
 

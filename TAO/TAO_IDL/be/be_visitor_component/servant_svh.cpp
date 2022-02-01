@@ -17,10 +17,6 @@ be_visitor_servant_svh::be_visitor_servant_svh (be_visitor_context *ctx)
 {
 }
 
-be_visitor_servant_svh::~be_visitor_servant_svh ()
-{
-}
-
 int
 be_visitor_servant_svh::visit_component (be_component *node)
 {

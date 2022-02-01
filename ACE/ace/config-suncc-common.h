@@ -3,9 +3,6 @@
 #define ACE_SUNCC_COMMON_H
 #include /**/ "ace/pre.h"
 
-# define ACE_HAS_STANDARD_CPP_LIBRARY 1
-# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-# define ACE_HAS_STRING_CLASS
 # define ACE_EXPLICIT_TEMPLATE_DESTRUCTOR_TAKES_ARGS
 # define ACE_HAS_THR_C_DEST 1
 # define ACE_LACKS_SWAB
@@ -22,8 +19,6 @@
 #  define ACE_IMPORT_SINGLETON_DECLARATION(T) __extension__ extern template class T
 #  define ACE_IMPORT_SINGLETON_DECLARE(SINGLETON_TYPE, CLASS, LOCK) __extension__ extern template class SINGLETON_TYPE<CLASS, LOCK>;
 #endif  /* ACE_HAS_CUSTOM_EXPORT_MACROS == 0 */
-
-#define ACE_NEW_THROWS_EXCEPTIONS
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
 # define ACE_SIZEOF_LONG_DOUBLE 12

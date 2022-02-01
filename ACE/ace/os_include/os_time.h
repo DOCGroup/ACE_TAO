@@ -34,9 +34,7 @@
 #  include /**/ <sys/time.h>
 #endif /* !ACE_LACKS_SYS_TIME_H */
 
-#if !defined (ACE_LACKS_TIME_H)
-#  include /**/ <time.h>
-#endif /* !ACE_LACKS_TIME_H */
+#include /**/ <time.h>
 
 #if defined (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB) && \
             (ACE_USES_STD_NAMESPACE_FOR_STDC_LIB != 0)

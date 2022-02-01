@@ -242,9 +242,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
       constraint_list[0].event_types.length(0);
       constraint_list[0].constraint_expr = CORBA::string_dup("Number == 100");
 
-      filter1->add_constraints(constraint_list);
-
-      filter2->add_constraints(constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info1 = filter1->add_constraints(constraint_list);
+      CosNotifyFilter::ConstraintInfoSeq_var cons_info2 = filter2->add_constraints(constraint_list);
 
       ca->add_filter (filter1.in());
 

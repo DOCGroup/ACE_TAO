@@ -38,15 +38,12 @@
 # elif defined (ACE_OPENVMS)
 #   include /**/ <wchar.h>
 #   include /**/ <wctype.h>
-# elif defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-    (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-#   include /**/ <cwchar>
-#   include /**/ <cwctype>
 # elif defined (ACE_HAS_WINCE)
 #   include /**/ <wtypes.h>
 # else
-#   include /**/ <wchar.h>
-# endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#   include /**/ <cwchar>
+#   include /**/ <cwctype>
+# endif /* ACE_VXWORKS */
 #endif /* ACE_HAS_WCHAR */
 
 #if defined (ACE_HAS_ICONV)

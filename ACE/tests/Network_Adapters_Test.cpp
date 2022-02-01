@@ -583,9 +583,7 @@ Stop_Handler::open ()
 }
 
 int
-Stop_Handler::handle_signal (int signum,
-                             siginfo_t * ,
-                             ucontext_t *)
+Stop_Handler::handle_signal (int signum, siginfo_t * , ucontext_t *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_signal - started.\n")));

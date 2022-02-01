@@ -24,8 +24,6 @@
 #define ACE_LACKS_GETEGID
 #define ACE_LACKS_GETGID
 
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
 #define ACE_TEMPLATES_REQUIRE_SOURCE 1
 #define TAO_USE_SEQUENCE_TEMPLATES
 #define _REENTRANT
@@ -177,7 +175,6 @@ extern "C"
 #define ACE_LACKS_READLINK
 #define ACE_LACKS_GETPPID
 #define NSIG (SIGRTMAX+1)
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #define ACE_LACKS_CUSERID
 #define ACE_NEEDS_HUGE_THREAD_STACKSIZE 0x5000
 #define fileno(file) ((file)->io_channel) //Hack to get Svc_Conf_l.cpp compiled

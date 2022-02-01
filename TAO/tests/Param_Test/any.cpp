@@ -130,7 +130,7 @@ Test_Any::reset_parameters (void)
         char *str = gen->gen_string ();
 
         if (TAO_debug_level > 0)
-          ACE_DEBUG ((LM_DEBUG, "setting string = %s\n", str));
+          ACE_DEBUG ((LM_DEBUG, "setting string = %C\n", str));
         this->in_ <<= str;
         this->inout_ <<= str;
         CORBA::string_free (str);

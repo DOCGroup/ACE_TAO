@@ -14,6 +14,7 @@ concurrency:
 jobs:
   msvc:
     strategy:
+      fail-fast: false
       matrix:
         include:
           - name: VS2017WChar
@@ -82,6 +83,40 @@ jobs:
             vcpkgarch: x86-windows
             vcpkglibdir: lib
             vcpkgpackages: openssl xerces-c zlib
+          - name: VS2019Debug64Cxx17
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: openssl xerces-c zlib
+            OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
+          - name: VS2019Debug64Cxx20
+            vmimage: windows-2019
+            mpctype: vs2019
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: openssl xerces-c zlib
+            OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
+          - name: VS2022Debug64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Debug
+            vcpkgarch: x64-windows
+            vcpkglibdir: debug/lib
+            vcpkgpackages: openssl xerces-c zlib
+          - name: VS2022Release64
+            vmimage: windows-2022
+            mpctype: vs2022
+            BuildPlatform: x64
+            BuildConfiguration: Release
+            vcpkgarch: x64-windows
+            vcpkglibdir: lib
+            vcpkgpackages: openssl xerces-c zlib
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:
@@ -106,7 +141,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v7
       with:
-        vcpkgGitCommitId: 5568f110b509a9fd90711978a7cb76bae75bb092
+        vcpkgGitCommitId: 70033dbb31527fb3e69654731f540f59c87787f9
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
@@ -130,11 +165,11 @@ jobs:
       if: matrix.OptionalFeatures != ''
     - name: Run mwc.pl on $(TAO_ROOT)/TAO_ACE.mwc
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/TAO_ACE.mwc -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Run mwc.pl on $(ACE_ROOT)/tests/tests.mwc
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
       run: |
@@ -151,6 +186,7 @@ jobs:
   mingw:
     runs-on: windows-2019
     strategy:
+      fail-fast: false
       matrix:
         compiler: [gcc]
         msystem: [MINGW64]

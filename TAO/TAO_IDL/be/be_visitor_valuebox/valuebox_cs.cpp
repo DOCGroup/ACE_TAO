@@ -48,17 +48,15 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
 
   this->ctx_->node (node); // save the node
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (node->is_defined ())
     {
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)"
+          << be_nl
           << "{" << be_idt_nl
           << "::CORBA::add_ref (p);" << be_uidt_nl
           << "}";
@@ -66,9 +64,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
@@ -76,9 +72,7 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::release ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p" << be_uidt_nl
-          << ")" << be_uidt_nl
+          << node->name () << " * p)"  << be_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
@@ -202,6 +196,16 @@ be_visitor_valuebox_cs::visit_valuebox (be_valuebox *node)
         case AST_PredefinedType::PT_octet:
           unmarshal_arg =
             "::ACE_InputCDR::to_octet (vb_object->_pd_value)";
+          break;
+
+        case AST_PredefinedType::PT_uint8:
+          unmarshal_arg =
+            "::ACE_InputCDR::to_uint8 (vb_object->_pd_value)";
+          break;
+
+        case AST_PredefinedType::PT_int8:
+          unmarshal_arg =
+            "::ACE_InputCDR::to_int8 (vb_object->_pd_value)";
           break;
 
         case AST_PredefinedType::PT_any:
@@ -329,8 +333,7 @@ be_visitor_valuebox_cs::visit_array (be_array * node)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 
@@ -355,8 +358,7 @@ be_visitor_valuebox_cs::visit_enum (be_enum *)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 
@@ -405,6 +407,16 @@ be_visitor_valuebox_cs::visit_predefined_type (be_predefined_type * node)
     case AST_PredefinedType::PT_octet:
       marshal_arg =
         "::ACE_OutputCDR::from_octet (this->_pd_value)";
+      break;
+
+    case AST_PredefinedType::PT_uint8:
+      marshal_arg =
+        "::ACE_OutputCDR::from_uint8 (this->_pd_value)";
+      break;
+
+    case AST_PredefinedType::PT_int8:
+      marshal_arg =
+        "::ACE_OutputCDR::from_int8 (this->_pd_value)";
       break;
 
     case AST_PredefinedType::PT_any:
@@ -462,8 +474,7 @@ be_visitor_valuebox_cs::visit_sequence (be_sequence *node)
   ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
   be_visitor_sequence_buffer_type bt_visitor (&ctx);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   if (node->unbounded ())
     {
@@ -616,8 +627,7 @@ be_visitor_valuebox_cs::visit_string (be_string *str)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 
@@ -662,8 +672,7 @@ be_visitor_valuebox_cs::visit_structure (be_structure *)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 
@@ -704,8 +713,7 @@ be_visitor_valuebox_cs::visit_union (be_union *)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 
@@ -741,8 +749,7 @@ be_visitor_valuebox_cs::emit_for_predef_enum (char const * marshal_arg)
   // Retrieve the node being visited by this be_visitor_valuebox_cs.
   be_decl * const vb_node = this->ctx_->node ();
 
-  os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-     << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (&os);
 
   this->emit_destructor ();
 

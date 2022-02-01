@@ -47,7 +47,7 @@ public:
   ACE_Future_Set (ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = 0);
 
   /// Destructor.
-  ~ACE_Future_Set (void);
+  ~ACE_Future_Set ();
 
   /**
    * Return 1 if their are no ACE_Future objects left on its queue and

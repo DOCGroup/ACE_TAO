@@ -72,7 +72,7 @@ namespace ACE
 
     private:
       /// Prevent that users can make an instance.
-      Monitor_Point_Registry ();
+      Monitor_Point_Registry () = default;
 
       /// Underlying container for the registry.
       typedef ACE_Hash_Map_Manager<ACE_CString,
@@ -84,7 +84,7 @@ namespace ACE
 
       /// Since we're accessed as a singleton, we can keep track of
       /// dispensing unique ids for constraints.
-      long constraint_id_;
+      long constraint_id_ {};
     };
   }
 }

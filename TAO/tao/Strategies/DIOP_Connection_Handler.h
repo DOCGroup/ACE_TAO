@@ -45,9 +45,7 @@ class TAO_Strategies_Export TAO_DIOP_Connection_Handler
   : public TAO_DIOP_SVC_HANDLER
   , public TAO_Connection_Handler
 {
-
 public:
-
   TAO_DIOP_Connection_Handler (ACE_Thread_Manager* t = 0);
 
   /// Constructor.
@@ -116,7 +114,6 @@ public:
   int set_dscp_codepoint (CORBA::Long dscp_codepoint);
 
 protected:
-
   //@{
   /**
    * @name TAO_Connection Handler overloads

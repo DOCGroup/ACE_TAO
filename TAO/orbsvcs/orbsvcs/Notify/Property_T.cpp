@@ -9,6 +9,8 @@
 
 #include "orbsvcs/Notify/PropertySeq.h"
 
+#include "orbsvcs/NotifyExtC.h"
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /*****************************************************************************/

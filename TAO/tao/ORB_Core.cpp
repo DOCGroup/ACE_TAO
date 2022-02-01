@@ -66,6 +66,7 @@
 #include "ace/OS_NS_string.h"
 #include "ace/Message_Block.h"
 #include <cstring>
+#include <memory>
 
 #if TAO_HAS_INTERCEPTORS == 1
 # include "tao/ClientRequestInterceptor_Adapter.h"
@@ -257,7 +258,7 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     valuetype_adapter_ (nullptr),
     parser_registry_ (),
     bidir_adapter_ (nullptr),
-    bidir_giop_policy_ (0),
+    bidir_giop_policy_ (false),
     ziop_adapter_ (nullptr),
     ziop_enabled_ (false),
     flushing_strategy_ (nullptr),
@@ -332,7 +333,6 @@ TAO_ORB_Core::~TAO_ORB_Core ()
 
   // This will destroy the service repository for this core
   (void) TAO::ORB::close_services (this->config_);
-
 }
 
 int
@@ -1408,8 +1408,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                                             (no_server_side_name_lookups
                                              || dotted_decimal_addresses);
 
-  this->orb_params ()->use_parallel_connects
-    (use_parallel_connects != 0);
+  this->orb_params ()->use_parallel_connects (use_parallel_connects != 0);
 
   this->orb_params ()->linger (linger);
   this->orb_params ()->accept_error_delay (accept_error_delay);
@@ -2761,7 +2760,7 @@ TAO_ORB_Core::resolve_ior_table_i ()
 
   if (factory != nullptr)
     {
-      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
+      std::unique_ptr <TAO_Adapter> iortable_adapter (factory->create (this));
       iortable_adapter->open ();
 
       CORBA::Object_var tmp_root = iortable_adapter->root ();
@@ -2795,7 +2794,7 @@ TAO_ORB_Core::resolve_async_ior_table_i ()
 
   if (factory != nullptr)
     {
-      ACE_Auto_Ptr <TAO_Adapter> iortable_adapter (factory->create (this));
+      std::unique_ptr <TAO_Adapter> iortable_adapter (factory->create (this));
       iortable_adapter->open ();
 
       CORBA::Object_var tmp_root = iortable_adapter->root ();

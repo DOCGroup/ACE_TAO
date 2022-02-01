@@ -44,7 +44,7 @@ Echo_i::echo_list (const char *)
     orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(1)] =
-    orb_->resolve_initial_references ("NameService");;
+    orb_->resolve_initial_references ("NameService");
 
   list[CORBA::ULong(2)] =
     orb_->resolve_initial_references ("NameService");

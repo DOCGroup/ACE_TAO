@@ -130,7 +130,7 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
     {
       retv = this->mq_->head_;
       // Here, we assume we already have acquired the lock necessary
-      // and there are soemthing in the queue.
+      // and there are something in the queue.
       if (this->mq_->head_ == this->mq_->tail_)
         {
           // Last message in the queue.

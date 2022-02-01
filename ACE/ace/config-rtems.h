@@ -21,9 +21,6 @@
 
 // Then the compiler specific parts
 #if defined (__GNUG__)
-  // config-g-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
 # include "ace/config-g++-common.h"
 #else  /* ! __GNUG__  */
 #  ifdef __cplusplus  /* Let it slide for C compilers. */

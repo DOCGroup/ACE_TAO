@@ -1,4 +1,4 @@
-This is TAO version 3.0.2, released Fri May 14 11:33:28 CEST 2021
+This is TAO version 3.0.6, released Thu Jan 20 09:26:53 CET 2022
 
 If you have any problems with or questions about TAO, please open
 a issue or discussion on the ACE_TAO github project at

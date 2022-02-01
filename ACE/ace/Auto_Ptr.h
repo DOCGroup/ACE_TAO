@@ -68,15 +68,12 @@ protected:
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 
-#if !defined (ACE_LACKS_AUTO_PTR) && \
-     defined (ACE_HAS_STANDARD_CPP_LIBRARY) && \
-            (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
+#if !defined (ACE_LACKS_AUTO_PTR)
 #include <memory>
-#if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB) && \
-            (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB != 0)
 using std::auto_ptr;
-#endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-#else /* ACE_HAS_STANDARD_CPP_LIBRARY */
+#else /* !ACE_LACKS_AUTO_PTR */
+
+ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
  * @class auto_ptr
@@ -95,7 +92,9 @@ public:
   X *operator-> () const;
 };
 
-#endif /* ACE_HAS_STANDARD_CPP_LIBRARY */
+ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* !ACE_LACKS_AUTO_PTR */
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -184,17 +183,7 @@ inline void
 ACE_auto_ptr_reset (AUTO_PTR_TYPE & ap,
                     PTR_TYPE * p)
 {
-#if defined (ACE_AUTO_PTR_LACKS_RESET)
-  // Allow compiler to adjust pointer to potential base class pointer
-  // of element type found in auto_ptr.
-  typename AUTO_PTR_TYPE::element_type * const tp = p;
-  if (tp != ap.get ())
-    {
-      ap = AUTO_PTR_TYPE (tp);
-    }
-#else
   ap.reset (p);
-#endif /* ACE_AUTO_PTR_LACKS_RESET */
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

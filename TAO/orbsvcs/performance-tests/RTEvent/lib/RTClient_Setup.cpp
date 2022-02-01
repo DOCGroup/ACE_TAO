@@ -23,9 +23,6 @@ RTClient_Setup::RTClient_Setup (int use_rt_corba,
 {
   if (use_rt_corba)
     {
-      ACE_auto_ptr_reset (this->rtcorba_setup_,
-                          new RTCORBA_Setup (orb,
-                                             rt_class,
-                                             nthreads));
+      this->rtcorba_setup_.reset (new RTCORBA_Setup (orb, rt_class, nthreads));
     }
 }

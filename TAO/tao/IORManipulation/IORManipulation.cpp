@@ -55,8 +55,7 @@ TAO_IOR_Manipulation_impl::merge_iors (
   for (i = 1; i < iors.length () ; i++)
     {
       // this gets a copy of the MProfile, hence the auto_ptr;
-      ACE_auto_ptr_reset (tmp_pfiles,
-                          iors[i]->_stubobj ()->make_profiles ());
+      tmp_pfiles.reset (iors[i]->_stubobj ()->make_profiles ());
 
       // check to see if any of the profiles in tmp_pfiles are already
       // in Merged_Profiles.  If so raise exception.
@@ -183,8 +182,7 @@ TAO_IOR_Manipulation_impl::remove_profiles (
 
   // Now we can remove the profiles which we want to eliminate from
   // the Object.
-  ACE_auto_ptr_reset (tmp_pfiles,
-                      ior2->_stubobj ()->make_profiles ());
+  tmp_pfiles.reset (ior2->_stubobj ()->make_profiles ());
 
   TAO_MProfile& mp = stub -> base_profiles();
   if (mp.remove_profiles (tmp_pfiles.get ()) < 0)

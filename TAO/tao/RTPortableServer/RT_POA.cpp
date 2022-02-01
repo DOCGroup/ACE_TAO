@@ -592,7 +592,7 @@ TAO_RT_POA::the_POAManager (void)
 PortableServer::AdapterActivator_ptr
 TAO_RT_POA::the_activator (void)
 {
-  return this->TAO_Regular_POA::the_activator ();;
+  return this->TAO_Regular_POA::the_activator ();
 }
 
 void

@@ -51,7 +51,7 @@ public:
   /// Get the thread creation flags.
   long flags () const;
 
-  virtual ~ACE_OS_Thread_Descriptor ();
+  virtual ~ACE_OS_Thread_Descriptor () = default;
 
 protected:
   /// For use by ACE_Thread_Descriptor.
@@ -87,7 +87,7 @@ class ACE_Service_Gestalt;
 class ACE_Export ACE_Base_Thread_Adapter
 {
 public:
-  virtual ~ACE_Base_Thread_Adapter ();
+  virtual ~ACE_Base_Thread_Adapter () = default;
 
   /// Virtual method invoked by the thread entry point.
   virtual ACE_THR_FUNC_RETURN invoke () = 0;
@@ -117,10 +117,10 @@ protected:
                            void *arg,
                            ACE_THR_C_FUNC entry_point = (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
                            ACE_OS_Thread_Descriptor *td = 0
-# if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+# if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
                            , ACE_SEH_EXCEPT_HANDLER selector = 0
                            , ACE_SEH_EXCEPT_HANDLER handler = 0
-# endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+# endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
                            , long cancel_flags = 0
                       );
   /// Inherit the logging features if the parent thread has an

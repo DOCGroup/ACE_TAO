@@ -136,7 +136,6 @@ class Signal_Handler
   : public ACE_Event_Handler
 {
 public:
-
   int handle_signal (int signo, siginfo_t *, ucontext_t *)
   {
     switch (signo)
@@ -151,7 +150,6 @@ public:
 
     return 0;
   }
-
 };
 
 typedef ACE_Select_Reactor_Token_T<ACE_Noop_Token>

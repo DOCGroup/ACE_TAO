@@ -11,7 +11,6 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_Thread.h"
 #include "ace/Object_Manager_Base.h"
-#include "ace/Auto_Ptr.h"
 #include "ace/os_include/sys/os_pstat.h"
 #if defined (ACE_HAS_SYSCTL)
 # include "ace/os_include/sys/os_sysctl.h"
@@ -21,6 +20,8 @@
 # include "vxCpuLib.h"
 # include "cpuset.h"
 #endif /* ACE_HAS_VXCPULIB */
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -231,7 +232,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execl");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  // ACE_OSCALL_RETURN (::execv (path, argv), int, -1);
+  // return ::execv (path, argv);
 }
 
 int
@@ -240,7 +241,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execle");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execve (path, argv, envp), int, -1);
+  //  return ::execve (path, argv, envp);
 }
 
 int
@@ -249,7 +250,7 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
   ACE_OS_TRACE ("ACE_OS::execlp");
   ACE_NOTSUP_RETURN (-1);
   // Need to write this code.
-  //  ACE_OSCALL_RETURN (::execvp (file, argv), int, -1);
+  //  return ::execvp (file, argv);
 }
 
 pid_t
@@ -303,7 +304,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
 # if defined (ACE_WIN32)
 
   ACE_TCHAR *buf = 0;
-  ACE_Auto_Basic_Array_Ptr<ACE_TCHAR> safe_ptr (buf);
+  std::unique_ptr<ACE_TCHAR[]> safe_ptr (buf);
   if (ACE_OS::argv_to_string (argv, buf) != -1)
     {
       PROCESS_INFORMATION process_info;

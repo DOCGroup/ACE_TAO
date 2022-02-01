@@ -260,6 +260,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
+        // fallthrough
       default:
 #if !defined (ACE_NLOGGING)
         const ACE_TCHAR *reqNonMinCorba=
@@ -754,21 +755,13 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
 TAO_Storable_Naming_Context_Factory *
 TAO_Naming_Server::storable_naming_context_factory (size_t context_size)
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_Storable_Naming_Context_Factory (context_size);
-#else
-  return new TAO_Storable_Naming_Context_Factory (context_size);
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_Storable_Naming_Context_Factory (context_size);
 }
 
 TAO_Persistent_Naming_Context_Factory *
 TAO_Naming_Server::persistent_naming_context_factory ()
 {
-#if defined (ACE_HAS_NEW_NOTHROW)
-  return new (ACE_nothrow) TAO_Persistent_Naming_Context_Factory;
-#else
-  return new TAO_Persistent_Naming_Context_Factory;
-#endif /* ACE_HAS_NEW_NOTHROW */
+  return new (std::nothrow) TAO_Persistent_Naming_Context_Factory;
 }
 
 int

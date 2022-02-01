@@ -23,15 +23,6 @@
 #  define ACE_WIN32_VC14
 #endif
 
-// Visual C++ 9.0 (.NET) deprecated the old iostreams
-#if !defined (ACE_HAS_STANDARD_CPP_LIBRARY)
-#define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#endif
-
-#if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
-#endif
-
 // Windows' timeval is non-conformant (defined in terms of long instead of
 // time_t) and VC8 changed time_t to a 64-bit value even when compiling a
 // 32-bit application. Therefore, ace/Time_Value needs to rearrange a few
@@ -80,33 +71,16 @@
 // Platform support linebuffered streaming is broken
 #define ACE_LACKS_LINEBUFFERED_STREAMBUF
 
-#if defined (ACE_HAS_STANDARD_CPP_LIBRARY) && (ACE_HAS_STANDARD_CPP_LIBRARY != 0)
-
-// Platform has its Standard C++ library in the namespace std
-# if !defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-# define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB       1
-# endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
-
 // ace/iostream.h does not work with the standard cpp library (yet).
-# if !defined (ACE_USES_OLD_IOSTREAMS)
+#if !defined (ACE_USES_OLD_IOSTREAMS)
 # define ACE_LACKS_ACE_IOSTREAM
-# endif /* ! ACE_USES_OLD_IOSTREAMS */
-
-#define ACE_NEW_THROWS_EXCEPTIONS
-#define ACE_HAS_NEW_NOTHROW
-
-#else
-
-// iostream header lacks ipfx (), isfx (), etc., declarations
-#  define ACE_LACKS_IOSTREAM_FX
-
-#endif
+#endif /* ! ACE_USES_OLD_IOSTREAMS */
 
 // There are too many instances of this warning to fix it right now.
 // Maybe in the future.
 
 // Disable warning of using Microsoft Extension.
-# pragma warning(disable:4231)
+#pragma warning(disable:4231)
 
 // 'class1' : inherits 'class2::member' via dominance
 #pragma warning(disable:4250)
@@ -161,6 +135,18 @@
 
 #define ACE_HAS_STRNLEN
 #define ACE_HAS_WCSNLEN
+
+#define ACE_LACKS_STRUCT_DIR
+#define ACE_LACKS_OPENDIR
+#define ACE_LACKS_CLOSEDIR
+#define ACE_LACKS_READDIR
+
+#define ACE_LACKS_MODE_T
+#define ACE_LACKS_PID_T
+
+#define ACE_LACKS_NLINK_T
+#define ACE_LACKS_UID_T
+#define ACE_LACKS_GID_T
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_MSVC_14_H */

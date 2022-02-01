@@ -197,6 +197,18 @@ public:
     ACE_CDR::WChar val_;
   };
 
+  struct ACE_Export from_int8
+  {
+    explicit from_int8 (ACE_CDR::Int8 val);
+    ACE_CDR::Int8 val_;
+  };
+
+  struct ACE_Export from_uint8
+  {
+    explicit from_uint8 (ACE_CDR::UInt8 val);
+    ACE_CDR::UInt8 val_;
+  };
+
   struct ACE_Export from_string
   {
     from_string (ACE_CDR::Char* s,
@@ -260,6 +272,8 @@ public:
   ACE_CDR::Boolean write_double (const ACE_CDR::Double &x);
   ACE_CDR::Boolean write_longdouble (const ACE_CDR::LongDouble &x);
   ACE_CDR::Boolean write_fixed (const ACE_CDR::Fixed &x);
+  ACE_CDR::Boolean write_int8 (ACE_CDR::Int8 x);
+  ACE_CDR::Boolean write_uint8 (ACE_CDR::UInt8 x);
 
   /// For string we offer methods that accept a precomputed length.
   ACE_CDR::Boolean write_string (const ACE_CDR::Char *x);
@@ -306,6 +320,8 @@ public:
                                        ACE_CDR::ULong length);
   ACE_CDR::Boolean write_longdouble_array (const ACE_CDR::LongDouble* x,
                                            ACE_CDR::ULong length);
+  ACE_CDR::Boolean write_int8_array (const ACE_CDR::Int8 *x, ACE_CDR::ULong length);
+  ACE_CDR::Boolean write_uint8_array (const ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
 
   /// Write an octet array contained inside a MB, this can be optimized
   /// to minimize copies.
@@ -791,6 +807,18 @@ public:
     ACE_CDR::Octet &ref_;
   };
 
+  struct ACE_Export to_int8
+  {
+    explicit to_int8 (ACE_CDR::Int8 &ref);
+    ACE_CDR::Int8 &ref_;
+  };
+
+  struct ACE_Export to_uint8
+  {
+    explicit to_uint8 (ACE_CDR::UInt8 &ref);
+    ACE_CDR::UInt8 &ref_;
+  };
+
   struct ACE_Export to_string
   {
     /**
@@ -857,6 +885,8 @@ public:
   ACE_CDR::Boolean read_double (ACE_CDR::Double &x);
   ACE_CDR::Boolean read_longdouble (ACE_CDR::LongDouble &x);
   ACE_CDR::Boolean read_fixed (ACE_CDR::Fixed &x);
+  ACE_CDR::Boolean read_int8 (ACE_CDR::Int8 &x);
+  ACE_CDR::Boolean read_uint8 (ACE_CDR::UInt8 &x);
 
   ACE_CDR::Boolean read_string (ACE_CDR::Char *&x);
   ACE_CDR::Boolean read_string (ACE_CString &x);
@@ -899,6 +929,8 @@ public:
                                       ACE_CDR::ULong length);
   ACE_CDR::Boolean read_longdouble_array (ACE_CDR::LongDouble* x,
                                           ACE_CDR::ULong length);
+  ACE_CDR::Boolean read_int8_array (ACE_CDR::Int8 *x, ACE_CDR::ULong length);
+  ACE_CDR::Boolean read_uint8_array (ACE_CDR::UInt8 *x, ACE_CDR::ULong length);
   //@}
 
   /**
@@ -1413,6 +1445,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os,
                                                const std::wstring& x);
 #endif
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_int8 x);
 
 // Not used by CORBA or TAO
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
@@ -1468,6 +1502,8 @@ extern ACE_Export ACE_CDR::Boolean operator<< (ACE_InputCDR &os,
 extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &is,
                                                std::wstring& x);
 #endif
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_uint8 x);
+extern ACE_Export ACE_CDR::Boolean operator>> (ACE_InputCDR &os, ACE_InputCDR::to_int8 x);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -49,17 +49,14 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   if (node->is_defined ())
     {
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::add_ref (p);" << be_uidt_nl
           << "}";
@@ -67,9 +64,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::remove_ref ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
@@ -77,9 +72,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name () << ">::release ("
-          << be_idt << be_idt_nl
-          << node->name () << " * p)" << be_uidt
-          << be_uidt_nl
+          << node->name () << " * p)" << be_nl
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
@@ -245,7 +238,7 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
       *os << "::CORBA::ValueBase *" << be_nl
           << node->name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
-          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val {};" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl
           << node->local_name () << " ()," << be_nl
@@ -417,8 +410,7 @@ be_visitor_valuetype_cs::visit_operation (be_operation *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // STEP I: Generate the return type.
   be_type *bt = dynamic_cast<be_type*> (node->return_type ());

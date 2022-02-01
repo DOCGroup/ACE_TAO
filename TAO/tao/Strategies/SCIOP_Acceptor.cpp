@@ -415,8 +415,10 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 2)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Overriding address in IOR with %C\n"),
-                    this->hostname_in_ior_));
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("SCIOP_Acceptor::open, ")
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
+                      this->hostname_in_ior_));
       }
       if (this->hostname (orb_core,
                           this->addrs_[i],
@@ -727,7 +729,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
   // the list of cached hostnames unless it is the only interface.
   size_t lo_cnt = 0;  // Loopback interface count
   for (size_t j = 0; j < if_cnt; ++j)
-    if (if_addrs[j].get_ip_address () == INADDR_LOOPBACK)
+    if (if_addrs[j].is_loopback ())
       ++lo_cnt;
 
   // The instantiation for this template is in
@@ -762,7 +764,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
       // Ignore any loopback interface if there are other
       // non-loopback interfaces.
       if (if_cnt != lo_cnt &&
-          if_addrs[i].get_ip_address() == INADDR_LOOPBACK)
+          if_addrs[i].is_loopback ())
         continue;
 
       if (this->hostname_in_ior_ != 0)
@@ -770,7 +772,9 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if (TAO_debug_level > 2)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %C\n"),
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("SCIOP_Acceptor::probe_interfaces, ")
+                          ACE_TEXT ("overriding address in IOR with %C\n"),
                           this->hostname_in_ior_));
             }
           if (this->hostname (orb_core,
@@ -854,7 +858,6 @@ TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
   return 0;
 }
 
-
 CORBA::ULong
 TAO_SCIOP_Acceptor::endpoint_count (void)
 {
@@ -916,7 +919,6 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
   return 1;
 }
 
-
 int
 TAO_SCIOP_Acceptor::parse_options (const char *str)
 {
@@ -926,7 +928,6 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
-
   ACE_CString options (str);
 
   size_t len = options.length ();

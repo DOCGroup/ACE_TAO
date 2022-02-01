@@ -56,16 +56,6 @@ ACE_Tokens::no_of_waiters ()
   return this->waiters_.size ();
 }
 
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-ACE_Null_Token::ACE_Null_Token (void)
-{
-}
-
-ACE_Null_Token::~ACE_Null_Token (void)
-{
-}
-#endif /* ACE_LACKS_INLINE_FUNCTIONS */
-
 void
 ACE_TPQ_Entry::dump () const
 {
@@ -170,10 +160,6 @@ ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
                     ACE_MAXCLIENTIDLEN);
 }
 
-ACE_TSS_TPQ_Entry::~ACE_TSS_TPQ_Entry (void)
-{
-}
-
 void
 ACE_TSS_TPQ_Entry::dump () const
 {
@@ -221,7 +207,7 @@ ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * (void)
   // the same as the subclass, so that the slicing works .
   ACE_TPQ_ENTRY::proxy ((ACE_Token_Proxy *)(this->proxy_));
   ACE_TPQ_ENTRY::client_id (this->client_id_);
-  return  (ACE_TPQ_Entry *) this;;
+  return  (ACE_TPQ_Entry *) this;
 #endif /* !ACE_NO_TSS_TOKENS */
 }
 

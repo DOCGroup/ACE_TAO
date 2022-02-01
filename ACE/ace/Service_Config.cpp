@@ -513,9 +513,7 @@ ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
 
 // Signal handling API to trigger dynamic reconfiguration.
 void
-ACE_Service_Config::handle_signal (int sig,
-                                   siginfo_t *,
-                                   ucontext_t *)
+ACE_Service_Config::handle_signal (int sig, siginfo_t *, ucontext_t *)
 {
 #if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (sig);

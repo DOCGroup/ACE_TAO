@@ -298,7 +298,7 @@ void TAO::PG_FactoryRegistry::register_factory (
                         RoleInfo(5),
                         CORBA::NO_MEMORY());
 
-      ACE_auto_ptr_reset (safe_entry, role_info);
+      safe_entry.reset (role_info);
       role_info->type_id_ = type_id;
     }
   else
@@ -309,7 +309,7 @@ void TAO::PG_FactoryRegistry::register_factory (
         }
     }
 
-  PortableGroup::FactoryInfos & infos = role_info->infos_;;
+  PortableGroup::FactoryInfos & infos = role_info->infos_;
   CORBA::ULong length = infos.length();
   for (CORBA::ULong nInfo = 0u; nInfo < length; ++nInfo)
     {

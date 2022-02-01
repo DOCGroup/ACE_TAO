@@ -55,9 +55,7 @@ be_visitor_traits::visit_root (be_root *node)
     {
       TAO_OutStream *os = this->ctx_->stream ();
 
-      *os << be_nl_2
-          << "// TAO_IDL - Generated from" << be_nl
-          << "// " << __FILE__ << ":" << __LINE__;
+      TAO_INSERT_COMMENT (os);
 
       *os << be_nl
           << be_global->core_versioning_begin ();
@@ -128,14 +126,13 @@ be_visitor_traits::visit_interface (be_interface *node)
           << " ::" << fname << ">" << be_nl
           << "{" << be_idt_nl
           << "static ::" << fname << "_ptr duplicate ("
-          << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
-          << "static void release (" << be_idt << be_idt_nl
-          << "::" << fname << "_ptr p);" << be_uidt << be_uidt_nl
+          << "::" << fname << "_ptr p);" << be_nl
+          << "static void release ("
+          << "::" << fname << "_ptr p);" << be_nl
           << "static ::" << fname << "_ptr nil ();" << be_nl
-          << "static ::CORBA::Boolean marshal (" << be_idt << be_idt_nl
-          << "const ::" << fname << "_ptr p," << be_nl
-          << "TAO_OutputCDR & cdr);" << be_uidt  << be_uidt << be_uidt_nl
+          << "static ::CORBA::Boolean marshal ("
+          << "const ::" << fname << "_ptr p,"
+          << "TAO_OutputCDR & cdr);" << be_uidt_nl
           << "};";
 
       os->gen_endif ();

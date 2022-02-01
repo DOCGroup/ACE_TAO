@@ -180,7 +180,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
 {
   if (total <= 0)
     {
-      return ;
+      return;
     }
 
   char* srcbuf;

@@ -6,11 +6,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE void
 TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
 {
-  size_t const newsize =
-    ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
+  size_t const newsize = ACE_CDR::total_length (&mb, 0) + ACE_CDR::MAX_ALIGNMENT;
 
-  ACE_Data_Block *db =
-    mb.data_block ()->clone_nocopy ();
+  ACE_Data_Block *db = mb.data_block ()->clone_nocopy ();
 
   if (db->size (newsize) == -1)
     return;
@@ -30,10 +28,7 @@ TAO_Queued_Data::replace_data_block (ACE_Message_Block &mb)
 
 ACE_INLINE
 TAO_Queued_Data::TAO_Queued_Data (ACE_Allocator *alloc)
-  : msg_block_ (0),
-    missing_data_ (0),
-    state_ (),
-    next_ (0),
+  : state_ (),
     allocator_ (alloc)
 {
 }
@@ -42,9 +37,7 @@ ACE_INLINE
 TAO_Queued_Data::TAO_Queued_Data (ACE_Message_Block *mb,
                                   ACE_Allocator *alloc)
   : msg_block_ (mb),
-    missing_data_ (0),
     state_ (),
-    next_ (0),
     allocator_ (alloc)
 {
 }
@@ -54,11 +47,9 @@ TAO_Queued_Data::TAO_Queued_Data (const TAO_Queued_Data &qd)
   : msg_block_ (qd.msg_block_->duplicate ()),
     missing_data_ (qd.missing_data_),
     state_ (qd.state_),
-    next_ (0),
     allocator_ (qd.allocator_)
 {
 }
-
 
 ACE_INLINE size_t
 TAO_Queued_Data::missing_data () const

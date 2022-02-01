@@ -124,14 +124,6 @@ ACE_Asynch_Operation::proactor () const
   return this->implementation ()->proactor ();
 }
 
-ACE_Asynch_Operation::ACE_Asynch_Operation ()
-{
-}
-
-ACE_Asynch_Operation::~ACE_Asynch_Operation ()
-{
-}
-
 ACE_Proactor *
 ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
                                     ACE_Handler &handler) const

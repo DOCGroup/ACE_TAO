@@ -57,7 +57,7 @@ struct ACE_Export ACE_Sub_Barrier
                    const ACE_TCHAR *name = 0,
                    void *arg = 0);
 
-  ~ACE_Sub_Barrier ();
+  ~ACE_Sub_Barrier () = default;
 
   /// True if this generation of the barrier is done.
   ACE_Condition_Thread_Mutex barrier_finished_;
@@ -98,7 +98,7 @@ public:
                void *arg = 0);
 
   /// Default destructor.
-  ~ACE_Barrier ();
+  ~ACE_Barrier () = default;
 
   /// Block the caller until all @c count threads have called @c wait and
   /// then allow all the caller threads to continue in parallel.
@@ -166,7 +166,7 @@ public:
   ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = 0);
 
   /// Default destructor.
-  ~ACE_Thread_Barrier ();
+  ~ACE_Thread_Barrier () = default;
 
   /// Dump the state of an object.
   void dump () const;
@@ -176,10 +176,6 @@ public:
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
-
-#if defined (__ACE_INLINE__)
-#include "ace/Barrier.inl"
-#endif /* __ACE_INLINE__ */
 
 #endif /* !ACE_HAS_THREADS */
 

@@ -26,6 +26,7 @@ project(*IDL): taoserver, messaging, gen_ostream {
     Bug_3312_Regression.idl
     Bug_3819_Regression.idl
     Bug_3821_Regression.idl
+    expressions.idl
     full.idl
     fwd.idl
     gperf.idl
@@ -147,6 +148,8 @@ project(*DLL): taoidldefaults, taolib, messaging {
     dif2S.cpp
     enum_in_structC.cpp
     enum_in_structS.cpp
+    expressionsC.cpp
+    expressionsS.cpp
     fullC.cpp
     fullS.cpp
     fwdC.cpp
@@ -241,11 +244,6 @@ project(*Main): taoserver, messaging, gen_ostream {
   exename = main
   after += *DLL
   libs += IDL_Test_DLL
-  verbatim(gnuace, macros) {
-    ifeq ($(OSTYPE),VMS)
-      CCFLAGS += -Wc/DISTINGUISH_NESTED_ENUMS
-    endif
-  }
 
   IDL_Files {
   }

@@ -56,7 +56,6 @@ class TAO_Codeset_Descriptor;
 class TAO_Codeset_Export TAO_Codeset_Manager_i :
   public TAO_Codeset_Manager
 {
-
 public:
   /// NCS for char is defaulted to ISO 8859-1:1987; Latin Alphabet
   /// No. 1
@@ -65,8 +64,8 @@ public:
   /// to provide a non-compliant default wchar codeset may do so.
   static CONV_FRAME::CodeSetId default_wchar_codeset;
 
-  TAO_Codeset_Manager_i (void);
-  ~TAO_Codeset_Manager_i (void);
+  TAO_Codeset_Manager_i ();
+  ~TAO_Codeset_Manager_i () = default;
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values
   /// for Char/Wchar in to the Object Reference.

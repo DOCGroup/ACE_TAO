@@ -79,7 +79,6 @@ int singleton_test ()
 
 // Protection against this test being run on platforms not supporting Dlls.
 #if defined(ACE_HAS_DYNAMIC_LINKING)
-
     ACE_TString dll_file;
     const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
     if (subdir_env)

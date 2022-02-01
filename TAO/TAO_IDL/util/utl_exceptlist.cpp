@@ -95,7 +95,6 @@ UTL_ExceptList::head ()
 // class UTL_List's private member). This is so we
 // can avoid copying the contained quantity, an
 // AST_Exception.
-
 void
 UTL_ExceptList::destroy ()
 {

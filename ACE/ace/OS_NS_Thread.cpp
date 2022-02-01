@@ -1621,7 +1621,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   ACE_OSCALL (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, msec_timeout),
                                 result),
-              int, -1, result);
+              int, result);
   return result;
 #else
   // Prevent race conditions on the <waiters_> count.
@@ -1728,8 +1728,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 #   if defined (ACE_HAS_THREADS)
 #   if defined (ACE_HAS_WTHREADS_CONDITION_VARIABLE)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::SleepConditionVariableCS (cv, external_mutex, INFINITE), result), int);
 #else
   if (ACE_OS::thread_mutex_lock (&cv->waiters_lock_) != 0)
     return -1;
@@ -1911,11 +1910,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   ACE_UNUSED_ARG (sa);
   ACE_UNUSED_ARG (lock_type);
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m,
-                     lock_scope,
-                     attributes),
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_init (m, lock_scope, attributes),
   result),
-  int, -1);
+  int);
 # elif defined (ACE_HAS_WTHREADS)
   m->type_ = lock_scope;
 
@@ -1987,12 +1984,11 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
   ACE_NOTSUP_RETURN (-1);
 #  else
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m),
-                     result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_mutex_destroy (m), result), int);
 #  endif /* ACE_LACKS_PTHREAD_MUTEX_DESTROY */
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_destroy (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2073,11 +2069,10 @@ ACE_OS::mutex_lock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_lock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_lock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2168,7 +2163,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // Note that the mutex should not be a recursive one, i.e., it
   // should only be a standard mutex or an error checking mutex.
 
-  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts), result), int, -1, result);
+  ACE_OSCALL (ACE_ADAPT_RETVAL (::pthread_mutex_timedlock (m, &ts), result), int, result);
 
   // We need to adjust this to make the errno values consistent.
   if (result == -1 && errno == ETIMEDOUT)
@@ -2248,11 +2243,10 @@ ACE_OS::mutex_trylock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_trylock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_trylock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -2350,11 +2344,10 @@ ACE_OS::mutex_unlock (ACE_mutex_t *m)
 # if defined (ACE_HAS_PTHREADS)
   // Note, don't use "::" here since the following call is often a macro.
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result),
-                     int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_mutex_unlock (m), result), int);
 # elif defined (ACE_HAS_STHREADS)
   int result;
-  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int, -1);
+  ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::mutex_unlock (m), result), int);
 # elif defined (ACE_HAS_WTHREADS)
   switch (m->type_)
 {
@@ -3299,7 +3292,7 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
                                                                     sched_params.policy (),
                                                                     &param),
                                            result),
-                         int, -1);
+                         int);
     }
 # if defined (sun)
   // We need to be able to set LWP priorities on Suns, even without
@@ -3580,7 +3573,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_Base_Thread_Adapter *thread_args = 0;
   if (thread_adapter == 0)
-#if defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
     ACE_NEW_RETURN (thread_args,
                     ACE_OS_Thread_Adapter (func, args,
                                            (ACE_THR_C_FUNC) ACE_THREAD_ADAPTER_NAME,
@@ -3595,15 +3588,14 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                          flags),
                   -1);
 
-#endif /* ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
   else
     thread_args = thread_adapter;
 
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
 
   if (thread_adapter == 0)
-    ACE_auto_ptr_reset (auto_thread_args,
-                        thread_args);
+    auto_thread_args.reset (thread_args);
 
 #if defined (ACE_HAS_THREADS)
 
@@ -3933,7 +3925,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                   thread_args->entry_point (),
                                                   thread_args),
                                 result),
-              int, -1, result);
+              int, result);
   ::pthread_attr_destroy (&attr);
 
   // This is a SunOS or POSIX implementation of pthreads, where we
@@ -3967,7 +3959,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                              &policy,
                                                              &sparam),
                                     result), int,
-                  -1, result);
+                  result);
 
       // The only policy supported by by SunOS, thru version 5.6,
       // is SCHED_OTHER, so that's hard-coded here.
@@ -3983,7 +3975,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                                                         policy,
                                                                         &sparam),
                                                result),
-                             int, -1);
+                             int);
         }
     }
 
@@ -4026,7 +4018,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                                               thread_args->entry_point (),
                                               thread_args,
                                               flags, thr_id), result),
-              int, -1, result);
+              int, result);
 
   if (result != -1)
     {
@@ -4515,12 +4507,12 @@ ACE_OS::thr_keycreate_native (ACE_OS_thread_key_t *key,
     int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::pthread_key_create (key, dest),
                                          result),
-                       int, -1);
+                       int);
 #   elif defined (ACE_HAS_STHREADS)
     int result;
     ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_keycreate (key, dest),
                                          result),
-                       int, -1);
+                       int);
 #   elif defined (ACE_HAS_WTHREADS)
     ACE_UNUSED_ARG (dest);
     *key = ::TlsAlloc ();
@@ -4723,10 +4715,10 @@ ACE_OS::thr_setspecific_native (ACE_OS_thread_key_t key, void *data)
       int result;
       ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_setspecific (key, data),
                                            result),
-                         int, -1);
+                         int);
 #     elif defined (ACE_HAS_STHREADS)
       int result;
-      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int, -1);
+      ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (::thr_setspecific (key, data), result), int);
 #     elif defined (ACE_HAS_WTHREADS)
       ::TlsSetValue (key, data);
       return 0;

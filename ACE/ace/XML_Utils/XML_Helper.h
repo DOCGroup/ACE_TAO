@@ -44,7 +44,6 @@ namespace XML
   class XML_Helper
   {
   public:
-    //      XML_Helper (void);
     XML_Helper (Resolver *resolver = nullptr, Error_Handler *eh = nullptr);
 
     ~XML_Helper ();
@@ -81,14 +80,14 @@ namespace XML
     void init_parser ();
 
   private:
-    bool initialized_;
-    XERCES_CPP_NAMESPACE::DOMImplementation *impl_;
+    bool initialized_ { false };
+    XERCES_CPP_NAMESPACE::DOMImplementation *impl_ {};
     mutable std::unique_ptr<XERCES_CPP_NAMESPACE::XercesDOMParser> parser_;
 
     Resolver *resolver_;
-    bool release_resolver_;
+    bool release_resolver_ { false };
     Error_Handler *e_handler_;
-    bool release_e_handler_;
+    bool release_e_handler_ { false };
   };
 }
 

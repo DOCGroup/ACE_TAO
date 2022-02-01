@@ -806,24 +806,20 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 // This is being placed here temporarily to help stabilize the builds, but will
 // be moved out along with the above macros as part of the subsetting.  dhinton
 #if !defined (ACE_LACKS_NEW_H)
-#  if defined (ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB)
-#    include /**/ <new>
-#  else
-#    include /**/ <new.h>
-#  endif /* ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB */
+#  include /**/ <new>
 #endif /* ! ACE_LACKS_NEW_H */
 
 # define ACE_NOOP(x)
 
-#if defined (ACE_WIN32) && defined (ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS)
+#if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 # define ACE_SEH_TRY __try
 # define ACE_SEH_EXCEPT(X) __except(X)
 # define ACE_SEH_FINALLY __finally
-#else /* !ACE_WIN32 */
+#else /* !ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 # define ACE_SEH_TRY if (1)
 # define ACE_SEH_EXCEPT(X) while (0)
 # define ACE_SEH_FINALLY if (1)
-#endif /* ACE_WIN32 */
+#endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
 // Handle ACE_Message_Queue.
 #   define ACE_SYNCH_DECL typename _ACE_SYNCH

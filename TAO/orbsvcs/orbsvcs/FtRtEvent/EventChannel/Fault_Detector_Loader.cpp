@@ -43,7 +43,7 @@ namespace FTRTEC {
     if (argc > 0 && ACE_OS::strcasecmp (argv[0], ACE_TEXT("sctp")) == 0)
     {
 #if (TAO_HAS_SCIOP == 1)
-      ACE_auto_ptr_reset(detector_, detector);
+      detector_.reset (detector);
 #else
       ORBSVCS_DEBUG ((LM_DEBUG,
                   "(%P|%t) SCTP not enabled. ",

@@ -52,7 +52,6 @@ ACE_EH_Dispatch_Info::dispatch () const
 
 ACE_INLINE
 ACE_TP_Token_Guard::ACE_TP_Token_Guard (ACE_Select_Reactor_Token &token)
-
   : token_ (token),
     owner_ (false)
 {

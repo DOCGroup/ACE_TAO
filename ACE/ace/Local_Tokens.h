@@ -216,7 +216,7 @@ public:
                      const ACE_TCHAR *client_id);
 
   /// Destructor.
-  virtual ~ACE_TSS_TPQ_Entry (void);
+  virtual ~ACE_TSS_TPQ_Entry () = default;
 
   /// Allows us to pass args to the construction of the TSS object.
   virtual ACE_TPQ_Entry *make_TSS_TYPE () const;
@@ -235,9 +235,8 @@ public:
 #endif /* ACE_NO_TSS_TOKENS */
 
 private:
-  /// Private: should not be used
-  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &);
-  void operator= (const ACE_TSS_TPQ_Entry &);
+  ACE_TSS_TPQ_Entry (const ACE_TSS_TPQ_Entry &) = delete;
+  void operator= (const ACE_TSS_TPQ_Entry &) = delete;
 
   // = These are passed to the constructor of ACE_TPQ_Entry in
   // make_TSS_TYPE
@@ -905,14 +904,11 @@ protected:
 class ACE_Export ACE_Null_Token : public ACE_Token_Proxy
 {
 public:
-#if defined (ACE_LACKS_INLINE_FUNCTIONS)
-  // @@ Hopefully, we can remove this ridicules ifdef when CE's compiler becomes more normal.
   /// Construction.
-  ACE_Null_Token (void);
+  ACE_Null_Token () = default;
 
   /// Destructor.
-  ~ACE_Null_Token (void);
-#endif /* ACE_LACKS_INLINE_FUNCTION */
+  ~ACE_Null_Token () = default;
 
   /// Acquire.
   virtual int acquire (int /* notify */ = 0,

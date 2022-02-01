@@ -13,27 +13,6 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-template <class KEY, class VALUE>
-ACE_Map<KEY, VALUE>::~ACE_Map ()
-{
-}
-
-template <class T>
-ACE_Iterator_Impl<T>::~ACE_Iterator_Impl ()
-{
-}
-
-template <class T>
-ACE_Reverse_Iterator_Impl<T>::~ACE_Reverse_Iterator_Impl ()
-{
-}
-
-template <class T, class IMPLEMENTATION, class ENTRY>
-ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::~ACE_Map_Impl_Iterator_Adapter ()
-{
-}
-
-
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_Iterator_Impl<T> *
 ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone () const
 {
@@ -87,7 +66,6 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone () const
                   0);
   return temp;
 }
-
 
 template <class T, class IMPLEMENTATION, class ENTRY> int
 ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const

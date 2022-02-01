@@ -50,9 +50,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 
       req->set_return_type (CORBA::_tc_ulong);
 
-      req->exceptions ()->add (CORBA::TypeCode::_duplicate (
-                                   Param_Test::_tc_Ooops
-                                 ));
+      req->exceptions ()->add (CORBA::TypeCode::_duplicate (Param_Test::_tc_Ooops));
 
       req->invoke ();
 
@@ -143,7 +141,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
+                          "Test_Exception::dii_req_invoke - "
                           "caught NO_MEMORY system exception - "
                           "expected known user exception\n"));
             }
@@ -154,7 +152,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
+                          "Test_Exception::dii_req_invoke - "
                           "caught NO_MEMORY system exception - "
                           "expected UNKNOWN exception\n"));
             }
@@ -165,8 +163,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
-                          "caught unexpected uknown exception\n"));
+                          "Test_Exception::dii_req_invoke - "
+                          "caught unexpected unknown exception\n"));
             }
         }
     }
@@ -194,7 +192,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
+                          "Test_Exception::dii_req_invoke - "
                           "caught unknown exception - "
                           "expected known user exception\n"));
             }
@@ -205,7 +203,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
+                          "Test_Exception::dii_req_invoke - "
                           "caught unknown exception - "
                           "expected NO_MEMORY system exception\n"));
             }
@@ -216,8 +214,8 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "Test_Exception::run_sii_test - "
-                          "caught unexpected uknown exception\n"));
+                          "Test_Exception::dii_req_invoke - "
+                          "caught unexpected unknown exception\n"));
             }
         }
     }
@@ -259,7 +257,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
           return -1;
         }
 
-      CORBA::ULong mod_value = ex.input;
+      CORBA::ULong const mod_value = ex.input;
 
       // We should be catching Ooops only when this is true.
       if (mod_value != 1)
@@ -272,7 +270,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
           ACE_DEBUG ((LM_DEBUG,
                       "Test_Exception::run_sii_test - "
                       "expected user exception"
-                      " (%s,%d)\n",
+                      " (%C,%d)\n",
                       reason,
                       mod_value));
         }

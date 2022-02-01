@@ -28,12 +28,6 @@ ACE::HTBP::Addr::Addr (const ACE::HTBP::Addr &other)
   : ACE_INET_Addr (other),
     htid_(other.htid_)
 {
-
-}
-
-// Destructor
-ACE::HTBP::Addr::~Addr ()
-{
 }
 
 int

@@ -109,7 +109,7 @@ be_interface::be_interface (UTL_ScopedName *n,
       || nt == AST_Decl::NT_valuetype
       || nt == AST_Decl::NT_eventtype)
     {
-      return ;
+      return;
     }
 
   if (this->is_defined ())
@@ -744,8 +744,7 @@ be_interface::gen_var_out_seq_decls ()
   const char *lname = this->local_name ();
   TAO_OutStream *os = tao_cg->client_header ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the ifdefined macro for this interface.
   os->gen_ifdef_macro (this->flat_name (),
@@ -788,17 +787,15 @@ be_interface::gen_var_out_seq_decls ()
 
   *os << be_nl_2
       << "class " << lname << ";" << be_nl
-      << "typedef " << lname << " *" << lname << "_ptr;";
+      << "using " << lname << "_ptr = " << lname << "*;";
 
   *os << be_nl
-      << "typedef TAO_Objref_Var_T<"
+      << "using " << lname << "_var = TAO_Objref_Var_T<"
       << lname
-      << "> "
-      << lname << "_var;" << be_nl
-      << "typedef TAO_Objref_Out_T<"
+      << ">;" << be_nl
+      << "using " << lname << "_out = TAO_Objref_Out_T<"
       << lname
-      << "> "
-      << lname << "_out;" << be_nl;
+      << ">;";
 
   os->gen_endif ();
 
@@ -807,8 +804,7 @@ be_interface::gen_var_out_seq_decls ()
 
 // ****************************************************************
 
-TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker (
-    )
+TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker ()
 {
 }
 
@@ -1859,8 +1855,7 @@ be_interface::gen_gperf_things (const char *flat_name)
 
   TAO_OutStream *os = tao_cg->server_skeletons ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Generate the correct class definition for the operation lookup
   // strategy. Then, get the lookup method from GPERF. And then,

@@ -713,7 +713,7 @@ ACEXML_Parser::parse_element (int is_root)
       && ACE_OS::strcmp (startname, this->doctype_) != 0)
     {
       this->fatal_error (ACE_TEXT ("Root element different from DOCTYPE"));
-      return ;
+      return;
     }
   ACEXML_AttributesImpl attributes;
   ACEXML_Char ch;

@@ -34,7 +34,7 @@ class TAO_FTNS_Notifier : public ACE_Event_Handler
 public:
   TAO_FTNS_Notifier (TAO_FT_Naming_Server &owner, bool iors);
 
-  virtual int handle_exception (ACE_HANDLE );
+  int handle_exception (ACE_HANDLE) override;
 
   TAO_FT_Naming_Server &owner_;
   bool iors_;
@@ -57,7 +57,7 @@ class TAO_FtNaming_Export TAO_FT_Naming_Server : public TAO_Naming_Server
 public:
   friend class TAO_FTNS_Notifier;
 
-  TAO_FT_Naming_Server (void);
+  TAO_FT_Naming_Server ();
 
   /// Initialize the Naming Service and Object Group Manager with the command line
   /// arguments and the ORB. Overrridden from TAO_Naming_Server
@@ -138,7 +138,6 @@ public:
   void update_iors_i ();
 
 protected:
-
   enum FT_IOR_Indexes {
     PEER_ROOT = 1,
     FT_ROOT,
@@ -199,9 +198,7 @@ protected:
   ACE_Unbounded_Queue<FT_Naming::UpdateInfoSeq*> u_infos_;
   TAO_SYNCH_MUTEX ior_lock_;
   TAO_SYNCH_MUTEX info_lock_;
-
-
- };
+};
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

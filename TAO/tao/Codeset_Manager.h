@@ -58,11 +58,9 @@ class TAO_Codeset_Descriptor_Base;
  */
 class TAO_Export TAO_Codeset_Manager
 {
-
 public:
-
   /// Destructor.
-  virtual ~TAO_Codeset_Manager (void);
+  virtual ~TAO_Codeset_Manager ();
 
   /// Called by an object of TAO_Acceptor to set NCS and CCS values for
   /// Char/Wchar in to the Object Reference.

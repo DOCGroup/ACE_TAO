@@ -305,7 +305,6 @@ TAO_OutStream::print (const char *format, ...)
                           format,
                           ap),
               int,
-              -1,
               result);
   va_end (ap);
 
@@ -316,6 +315,13 @@ TAO_OutStream &
 TAO_OutStream::operator<< (const char *str)
 {
   ACE_OS::fprintf (this->fp_, "%s", str);
+  return *this;
+}
+
+TAO_OutStream &
+TAO_OutStream::operator<< (char ch)
+{
+  ACE_OS::fprintf (this->fp_, "%c", ch);
   return *this;
 }
 
@@ -499,6 +505,26 @@ TAO_OutStream::print (UTL_IdList *idl)
   return *this;
 }
 
+template <typename IntType>
+void
+signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *specifier)
+{
+  /*
+   * It seems that in C/C++ the minus sign and the bare number are parsed
+   * separately for negative integer literals. This can cause compilers
+   * to complain when using the minimum value of a signed integer because
+   * the number without the minus sign is 1 past the max signed value.
+   *
+   * https://stackoverflow.com/questions/65007935
+   *
+   * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
+   */
+  const bool min_value = value == min;
+  if (min_value) ++value;
+  os.print (specifier, value);
+  if (min_value) os.print (" - 1");
+}
+
 TAO_OutStream&
 TAO_OutStream::print (AST_Expression *expr)
 {
@@ -523,15 +549,16 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.usval, 'U');
       break;
     case AST_Expression::EV_long:
-      this->TAO_OutStream::print (ACE_INT32_FORMAT_SPECIFIER_ASCII, ev->u.lval);
+      signed_int_helper<ACE_CDR::Long> (
+        *this, ev->u.lval, ACE_INT32_MIN, ACE_INT32_FORMAT_SPECIFIER_ASCII);
       break;
     case AST_Expression::EV_ulong:
       this->TAO_OutStream::print (ACE_UINT32_FORMAT_SPECIFIER_ASCII "%c", ev->u.ulval, 'U');
       break;
     case AST_Expression::EV_longlong:
       this->TAO_OutStream::print ("ACE_INT64_LITERAL (");
-      this->TAO_OutStream::print (ACE_INT64_FORMAT_SPECIFIER_ASCII,
-                                  ev->u.llval);
+      signed_int_helper<ACE_CDR::LongLong> (
+        *this, ev->u.llval, ACE_INT64_MIN, ACE_INT64_FORMAT_SPECIFIER_ASCII);
       this->TAO_OutStream::print (")");
       break;
     case AST_Expression::EV_ulonglong:
@@ -597,7 +624,7 @@ TAO_OutStream::print (AST_Expression *expr)
       this->TAO_OutStream::print ("L'%lc'", ev->u.wcval);
       break;
     case AST_Expression::EV_octet:
-      this->TAO_OutStream::print ("%d", ev->u.oval);
+      this->TAO_OutStream::print ("0x%02x", ev->u.oval);
       break;
     case AST_Expression::EV_bool:
       this->TAO_OutStream::print ("%s", ev->u.bval ? "true" : "false");
@@ -611,6 +638,12 @@ TAO_OutStream::print (AST_Expression *expr)
     case AST_Expression::EV_enum:
       this->print (expr->n ());
       break;
+    case AST_Expression::EV_int8:
+      this->TAO_OutStream::print ("%d", ev->u.int8val);
+      break;
+    case AST_Expression::EV_uint8:
+      this->TAO_OutStream::print ("%uu", ev->u.uint8val);
+      break;
     default:
       break;
     }
@@ -618,3 +651,9 @@ TAO_OutStream::print (AST_Expression *expr)
   return *this;
 }
 
+void TAO_OutStream::insert_comment (const char *file, int line)
+{
+  *this << be_nl << "// TAO_IDL - Generated from" << be_nl
+        << "// " << file << ':' << static_cast<ACE_CDR::ULong> (line)
+        << be_nl_2;
+}

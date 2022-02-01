@@ -15,6 +15,7 @@
 #include "ace/Sample_History.h"
 #include "ace/Basic_Stats.h"
 #include "ace/Auto_Ptr.h"
+#include <memory>
 
 Control::Control (size_t peers_expected,
                   size_t iterations,
@@ -91,8 +92,8 @@ Control::join (Federated_Test::Peer_ptr peer)
 
       /// ... and automatically disconnect the loopbacks ...
       typedef Auto_Disconnect<Federated_Test::Loopback> Loopback_Disconnect;
-      ACE_Auto_Basic_Array_Ptr<auto_ptr<Loopback_Disconnect> > disconnects (
-          new auto_ptr<Loopback_Disconnect>[2*this->peers_count_]
+      ACE_Auto_Basic_Array_Ptr<std::unique_ptr<Loopback_Disconnect> > disconnects (
+          new std::unique_ptr<Loopback_Disconnect>[2*this->peers_count_]
           );
 
       ACE_DEBUG ((LM_DEBUG,
@@ -112,18 +113,14 @@ Control::join (Federated_Test::Peer_ptr peer)
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type);
 
-              ACE_auto_ptr_reset (disconnects[lcount],
-                                  new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()));
+              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
               lcount++;
 
               loopbacks[lcount] =
                 this->peers_[j]->setup_loopback (experiment_id,
                                                  base_event_type + 2);
 
-              ACE_auto_ptr_reset (disconnects[lcount],
-                                  new Loopback_Disconnect (
-                                        loopbacks[lcount].in ()));
+              disconnects[lcount].reset (new Loopback_Disconnect (loopbacks[lcount].in ()));
               lcount++;
             }
         }

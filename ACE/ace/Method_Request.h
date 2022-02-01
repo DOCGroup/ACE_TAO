@@ -47,7 +47,7 @@ public:
   ACE_Method_Request (unsigned long priority = 0);
 
   /// Destructor.
-  virtual ~ACE_Method_Request (void);
+  virtual ~ACE_Method_Request () = default;
 
   // = Accessors.
   /// Get priority.
@@ -87,7 +87,6 @@ private:
 protected:
   /// The priority of the request.
   unsigned long priority_;
-
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

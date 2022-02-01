@@ -159,8 +159,7 @@ be_visitor_array_cdr_op_cs::visit_array (be_array *node)
   TAO_OutStream *os = this->ctx_->stream ();
   this->ctx_->node (node);
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   *os << be_global->core_versioning_begin () << be_nl;
 
@@ -300,8 +299,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
   // We generate optimized code based on an optimized interface available from
   // the CDR class. These optimizations are applicable only to primitive
   // types.
-  *os << "return" << be_idt_nl
-      << "strm.";
+  *os << "return strm.";
 
   // Based on our substate, we may be reading from a stream or writing into a
   // stream.
@@ -362,6 +360,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
       break;
     case AST_PredefinedType::PT_boolean:
       *os << "boolean_array";
+      break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "uint8_array";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "int8_array";
       break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -431,6 +435,12 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
     case AST_PredefinedType::PT_boolean:
       *os << "ACE_CDR::Boolean";
       break;
+    case AST_PredefinedType::PT_uint8:
+      *os << "ACE_CDR::UInt8";
+      break;
+    case AST_PredefinedType::PT_int8:
+      *os << "ACE_CDR::Int8";
+      break;
     default:
       ACE_ERROR_RETURN ((LM_ERROR,
                          "(%N:%l) be_visitor_array_cdr_op_cs::"
@@ -456,7 +466,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
                         -1);
     }
 
-  unsigned long ndims = array->n_dims ();
+  unsigned long const ndims = array->n_dims ();
 
   // Generate a product of all the dimensions. This will be the total length
   // of the "unfolded" single dimensional array.
@@ -495,7 +505,7 @@ be_visitor_array_cdr_op_cs::visit_predefined_type (
         }
     }
 
-  *os << ");" << be_uidt
+  *os << ");"
       << be_uidt << be_uidt << be_uidt_nl;
 
   return 0;

@@ -47,7 +47,7 @@ namespace TAO
                                                poa->orb_core().server_factory ()->active_object_map_creation_parameters ()
                                               ), CORBA::NO_MEMORY ());
 
-      ACE_auto_ptr_reset (this->active_object_map_, active_object_map);
+      this->active_object_map_.reset (active_object_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
       ACE_CString name_str ("Active_Object_Map_");

@@ -10,10 +10,6 @@
 
 #include "DllOrb.h"
 
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
-#  pragma option push -w-8057
-#endif
-
 ACE_TCHAR const * const scpc_loadOrb = ACE_DYNAMIC_VERSIONED_SERVICE_DIRECTIVE(
   "testDllOrb",
   "Bug_3252",
@@ -230,7 +226,3 @@ ACE_TMAIN(int, ACE_TCHAR **argv)
 
   return 0;
 }
-
-#if defined (__BORLANDC__) && (__BORLANDC__ >= 0x660) && (__BORLANDC__ <= 0x750)
-# pragma option pop
-#endif

@@ -39,7 +39,7 @@ class TAO_Valuetype_Export TAO_Valuetype_Adapter_Factory_Impl
   : public TAO_Valuetype_Adapter_Factory
 {
 public:
-  virtual ~TAO_Valuetype_Adapter_Factory_Impl ();
+  virtual ~TAO_Valuetype_Adapter_Factory_Impl () = default;
 
   virtual TAO_Valuetype_Adapter * create ();
 

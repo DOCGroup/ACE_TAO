@@ -1,5 +1,5 @@
 #include "EventChannel_i.h"
-#include "ace/Auto_Ptr.h"
+#include <memory>
 
 TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i (void)
   : consumer_admin_ (0),
@@ -7,12 +7,6 @@ TAO_CosEC_EventChannel_i::TAO_CosEC_EventChannel_i (void)
     consumeradmin_ (CosEventChannelAdmin::ConsumerAdmin::_nil ()),
     supplieradmin_ (CosEventChannelAdmin::SupplierAdmin::_nil ())
 {
-  // No-Op.
-}
-
-TAO_CosEC_EventChannel_i::~TAO_CosEC_EventChannel_i (void)
-{
-  //No-Op.
 }
 
 int
@@ -26,14 +20,14 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
                   TAO_CosEC_ConsumerAdmin_i (),
                   -1);
 
-  auto_ptr <TAO_CosEC_ConsumerAdmin_i> auto_consumer_ (consumer_);
+  std::unique_ptr <TAO_CosEC_ConsumerAdmin_i> auto_consumer_ (consumer_);
 
   TAO_CosEC_SupplierAdmin_i *supplier_;
   ACE_NEW_RETURN (supplier_,
                   TAO_CosEC_SupplierAdmin_i (),
                   -1);
 
-  auto_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
+  std::unique_ptr <TAO_CosEC_SupplierAdmin_i> auto_supplier_ (supplier_);
 
   RtecEventChannelAdmin::ConsumerAdmin_ptr rtec_consumeradmin =
     rtec->for_consumers ();
@@ -68,21 +62,19 @@ TAO_CosEC_EventChannel_i::init (const RtecEventChannelAdmin::ConsumerQOS &consum
 }
 
 CosEventChannelAdmin::ConsumerAdmin_ptr
-TAO_CosEC_EventChannel_i::for_consumers (void)
+TAO_CosEC_EventChannel_i::for_consumers ()
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object.
-  return
-    CosEventChannelAdmin::ConsumerAdmin::_duplicate (this->consumeradmin_.in());
+  return CosEventChannelAdmin::ConsumerAdmin::_duplicate (this->consumeradmin_.in());
 }
 
 CosEventChannelAdmin::SupplierAdmin_ptr
-TAO_CosEC_EventChannel_i::for_suppliers (void)
+TAO_CosEC_EventChannel_i::for_suppliers ()
 {
   // @@ Pradeep: you must make a copy here, because the caller is
   // responsible of removing this object, same here..
-  return
-    CosEventChannelAdmin::SupplierAdmin::_duplicate (this->supplieradmin_.in ());
+  return CosEventChannelAdmin::SupplierAdmin::_duplicate (this->supplieradmin_.in ());
 }
 
 void
@@ -105,4 +97,3 @@ TAO_CosEC_EventChannel_i::shutdown (void)
 {
   this->destroy ();
 }
-

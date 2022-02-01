@@ -76,7 +76,7 @@ namespace XML
     Basic_Resolver (const ACE_TCHAR *path);
 
     XMLCh* operator() (const XMLCh *const publicId,
-                        const XMLCh *const systemId) const;
+                       const XMLCh *const systemId) const;
     XStr path_;
   };
 
@@ -92,10 +92,10 @@ namespace XML
                           const ACE_TCHAR *path);
 
     void add_path (const ACE_TCHAR *variable,
-                    const ACE_TCHAR *path);
+                   const ACE_TCHAR *path);
 
     XMLCh* operator() (const XMLCh *const publicId,
-                        const XMLCh *const systemId) const;
+                       const XMLCh *const systemId) const;
 
     std::vector<XStr> paths_;
   };

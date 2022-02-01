@@ -170,14 +170,12 @@ public:
   /// dynamically.
   void *operator new (size_t n);
 
-#if defined (ACE_HAS_NEW_NOTHROW)
   /// Overloaded new operator, nothrow_t variant. Unobtrusively records if a
   /// <Svc_Handler> is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const ACE_nothrow_t&) throw();
-  void operator delete (void *p, const ACE_nothrow_t&) throw ();
-#endif
+  void *operator new (size_t n, const std::nothrow_t&) throw();
+  void operator delete (void *p, const std::nothrow_t&) throw ();
 
   /// This operator permits "placement new" on a per-object basis.
   void * operator new (size_t n, void *p);

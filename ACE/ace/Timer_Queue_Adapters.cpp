@@ -120,9 +120,7 @@ ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::ACE_Async_Timer_Queue_Adapter (ACE_Sig_
 // occurs.
 
 template <class TQ, class TYPE> int
-ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum,
-                                                  siginfo_t *,
-                                                  ucontext_t *)
+ACE_Async_Timer_Queue_Adapter<TQ, TYPE>::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {
   switch (signum)
     {

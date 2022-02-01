@@ -40,8 +40,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
 
   TAO_OutStream *os = this->ctx_->stream ();
 
-  *os << be_nl_2 << "// TAO_IDL - Generated from" << be_nl
-      << "// " << __FILE__ << ":" << __LINE__ << be_nl_2;
+  TAO_INSERT_COMMENT (os);
 
   // Default constructor.
   *os << node->full_obv_skel_name () << "::";
@@ -102,7 +101,7 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
           << "::CORBA::ValueBase *" << be_nl
           << node->full_obv_skel_name () << "::_copy_value ()" << be_nl
           << "{" << be_idt_nl
-          << "::CORBA::ValueBase *ret_val = 0;" << be_nl
+          << "::CORBA::ValueBase *ret_val {};" << be_nl
           << "ACE_NEW_THROW_EX (" << be_idt_nl
           << "ret_val," << be_nl;
       if (! node->is_nested ())

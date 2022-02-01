@@ -565,17 +565,19 @@ TAO_AV_UDP_Acceptor::close ()
 //------------------------------------------------------------
 TAO_AV_UDP_Connector::TAO_AV_UDP_Connector ()
   : control_inet_address_ (0)
+  , delete_control_inet_address_ (false)
 {
 }
 
 TAO_AV_UDP_Connector::~TAO_AV_UDP_Connector ()
 {
-  if (this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
+  if (this->entry_ && this->flow_component_ == TAO_AV_Core::TAO_AV_CONTROL)
     {
       delete this->entry_->control_handler ();
+      this->entry_->control_handler (nullptr);
     }
 
-  if (this->control_inet_address_ != 0)
+  if (this->delete_control_inet_address_)
     delete this->control_inet_address_;
 }
 
@@ -691,9 +693,12 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
 
 
                       if (entry->control_address () == 0)
-                        ACE_NEW_RETURN (this->control_inet_address_,
-                                        ACE_INET_Addr ("0"),
-                                        -1);
+                        {
+                          ACE_NEW_RETURN (this->control_inet_address_,
+                                          ACE_INET_Addr ("0"),
+                                          -1);
+                          delete_control_inet_address_ = true;
+                        }
                       else
                         control_inet_address_ = dynamic_cast<ACE_INET_Addr*> (entry->control_address ());
                     }

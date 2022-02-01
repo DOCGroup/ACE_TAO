@@ -4,7 +4,6 @@
 // Please try to keep this alphabetically sorted.
 //
 build_dir_per_project = Specifies to use per project object file output dirs (VDIR and VSHDIR) if set to '1'.
-ciao = Indicates whether or not this project contains CIAO code.
 idl_files = When a Define_Custom(IDL) is used, they will be accessible through this variable name.
 install = This is a synonym for exeout.
 linkflags = Platform specific flags passed during the linking of dynamic libraries and executables.

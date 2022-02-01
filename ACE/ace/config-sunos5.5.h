@@ -42,11 +42,8 @@
     // If -compat=4 is turned on, the old 4.2 settings for iostreams are used,
     // but the newer, explicit instantiation is used (above)
 #   if (__SUNPRO_CC_COMPAT >= 5)
-#     define ACE_HAS_STANDARD_CPP_LIBRARY 1
-#     define ACE_USES_STD_NAMESPACE_FOR_STDCPP_LIB 1
 #     define ACE_HAS_THR_C_DEST
 #   endif /* __SUNPRO_CC_COMPAT >= 5 */
-#   define ACE_HAS_NEW_NOTHROW
 # endif /* __SUNPRO_CC >= 0x500 */
 # endif /* __SUNPRO_CC >= 0x420 */
 
@@ -56,10 +53,6 @@
 # define ACE_HAS_XPG4_MULTIBYTE_CHAR
 # define ACE_LACKS_LINEBUFFERED_STREAMBUF
 # define ACE_LACKS_SIGNED_CHAR
-
-// If exceptions are enabled and we are using Sun/CC then
-// <operator new> throws an exception instead of returning 0.
-#define ACE_NEW_THROWS_EXCEPTIONS
 
     /* If you want to disable threading with Sun CC, remove -mt
        from your CFLAGS, e.g., using make threads=0. */
@@ -88,10 +81,6 @@
 #  endif  /* __SUNPRO_CC > 0x540 (> Sun C++ 5.4) */
 
 #elif defined (__GNUG__)
-  // config-g++-common.h undef's ACE_HAS_STRING_CLASS with -frepo, so
-  // this must appear before its #include.
-# define ACE_HAS_STRING_CLASS
-
 # include "ace/config-g++-common.h"
 
 # define ACE_HAS_HI_RES_TIMER

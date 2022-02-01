@@ -14,10 +14,6 @@
 #ifndef _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
 #define _BE_VISITOR_ARGUMENT_INVOKE_CS_H_
 
-// ************************************************************
-// class be_visitor_args_invoke_cs
-// ************************************************************
-
 /**
  * @class be_visitor_args_invoke_cs
  *
