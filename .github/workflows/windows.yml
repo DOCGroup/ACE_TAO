@@ -173,7 +173,7 @@ jobs:
       shell: pwsh
     - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
       run: |
-        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1
