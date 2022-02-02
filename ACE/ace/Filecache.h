@@ -104,7 +104,7 @@ public:
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
 
   /// Closes any open handles, release acquired file.
-  ~ACE_Filecache_Handle (void);
+  ~ACE_Filecache_Handle ();
 
   /// Base address of memory mapped file.
   void *address () const;
@@ -120,10 +120,10 @@ public:
 
 protected:
   /// Default do nothing constructor.  Prevent it from being called.
-  ACE_Filecache_Handle (void);
+  ACE_Filecache_Handle ();
 
   /// Common initializations for constructors.
-  void init (void);
+  void init ();
 
 public:
   /// These come from ACE_Filecache_Object, which is an internal class.
@@ -164,9 +164,9 @@ class ACE_Export ACE_Filecache
 {
 public:
   /// Singleton pattern.
-  static ACE_Filecache *instance (void);
+  static ACE_Filecache *instance ();
 
-  ~ACE_Filecache (void);
+  ~ACE_Filecache ();
 
   /// Returns 0 if the file associated with ``filename'' is in the cache,
   /// or -1 if not.
@@ -198,7 +198,6 @@ protected:
                                   int mapit);
 
 public:
-
   enum
   {
     /// For this stupid implementation, use an array.  Someday, use a
@@ -212,7 +211,7 @@ public:
 
 protected:
   /// Prevent it from being called.
-  ACE_Filecache (void);
+  ACE_Filecache ();
 
 private:
   ACE_OFF_T size_;
@@ -287,10 +286,10 @@ public:
 
 protected:
   /// Prevent from being called.
-  ACE_Filecache_Object (void);
+  ACE_Filecache_Object ();
 
   /// Common initialization code,
-  void init (void);
+  void init ();
 
 private:
   /// Internal error logging method, no locking.
