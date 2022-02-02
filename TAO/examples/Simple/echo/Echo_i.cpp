@@ -1,19 +1,6 @@
 #include "Echo_i.h"
 
-// Constructor.
-
-Echo_i::Echo_i (void)
-{
-}
-
-// Destructor.
-
-Echo_i::~Echo_i (void)
-{
-}
-
 // Set the ORB pointer.
-
 void
 Echo_i::orb (CORBA::ORB_ptr o)
 {
@@ -21,7 +8,6 @@ Echo_i::orb (CORBA::ORB_ptr o)
 }
 
 // Return a list of object references.
-
 Echo::List *
 Echo_i::echo_list (const char *)
 {

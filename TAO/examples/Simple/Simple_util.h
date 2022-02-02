@@ -35,10 +35,10 @@ class Server
 {
 public:
   /// Constructor.
-  Server (void);
+  Server ();
 
   /// Destructor.
-  ~Server (void);
+  ~Server () = default;
 
   /// Initialize the Server state - parsing arguments and waiting.
   /// interface_name is the name used to register the Servant.
@@ -51,7 +51,7 @@ public:
   int register_name (const char *name);
 
   /// Run the orb.
-  int run (void);
+  int run ();
 
   /// Ignore this method if you are not testing the InterOperable
   /// Naming Service.
@@ -59,7 +59,7 @@ public:
 
 private:
   /// Parses the commandline arguments.
-  int parse_args (void);
+  int parse_args ();
 
   /// A holder of the servant that does ref counting for him.
   typedef TAO_Intrusive_Ref_Count_Handle<Servant> Servant_var;
@@ -102,10 +102,10 @@ class Client
 {
 public:
   /// Constructor.
-  Client (void);
+  Client ();
 
   /// Destructor.
-  ~Client (void);
+  ~Client ();
 
   /// Initialize the client communication endpoint with server.
   int init (const char *name, int argc, ACE_TCHAR *argv[]);
