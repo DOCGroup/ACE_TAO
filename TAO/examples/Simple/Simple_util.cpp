@@ -250,11 +250,10 @@ Server<Servant>::register_name (const char *name)
 
 // Constructor.
 template <class ServerInterface>
-Client<ServerInterface>::Client (void)
+Client<ServerInterface>::Client ()
   : ior_ ("")
   , do_shutdown_ (0)
 {
-  //no-op
 }
 
 // Reads the Server ior from a file
