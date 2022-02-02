@@ -48,7 +48,7 @@ class ACE_Export ACE_LSOCK_CODgram : public ACE_SOCK_CODgram, public ACE_LSOCK
 {
 public:
   /// Default constructor; requires a call to open() prior to communication.
-  ACE_LSOCK_CODgram (void);
+  ACE_LSOCK_CODgram ();
 
   /**
    * @name Initialization methods

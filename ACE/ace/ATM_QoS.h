@@ -81,7 +81,7 @@ public:
                      int = DEFAULT_PKT_SIZE);
 
   /// Get ATM_QoS struct.
-  ATM_QoS get_qos (void);
+  ATM_QoS get_qos ();
 
   /// Dump the state of an object.
   void dump () const;

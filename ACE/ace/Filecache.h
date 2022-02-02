@@ -254,13 +254,13 @@ public:
                         LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Only if reference count is zero should this be called.
-  ~ACE_Filecache_Object (void);
+  ~ACE_Filecache_Object ();
 
   /// Increment the reference_count_.
-  int acquire (void);
+  int acquire ();
 
   /// Decrement the reference_count_.
-  int release (void);
+  int release ();
 
   // = error_ accessors
   int error () const;
