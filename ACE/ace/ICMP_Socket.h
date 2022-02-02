@@ -78,11 +78,9 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-
   // Protected constructors, so the class can only be derived from.
-
   /// Default constructor.
-  ACE_ICMP_Socket (void);
+  ACE_ICMP_Socket ();
 
   /// Constructor that takes a local listening address.
   ACE_ICMP_Socket (ACE_Addr const & local,

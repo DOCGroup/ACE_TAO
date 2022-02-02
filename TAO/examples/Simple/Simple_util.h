@@ -141,10 +141,10 @@ private:
   TAO_Naming_Client naming_client_;
 
   /// # of arguments on the command line.
-  int argc_;
+  int argc_ {};
 
   /// arguments from command line.
-  ACE_TCHAR **argv_;
+  ACE_TCHAR **argv_ {};
 
   /// IOR of the obj ref of the server.
   ACE_CString ior_;
