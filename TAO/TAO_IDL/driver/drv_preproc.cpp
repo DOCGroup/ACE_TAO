@@ -143,10 +143,10 @@ DRV_cpp_putarg (const char *str)
   char *replace = nullptr;
   if (str)
     {
-      const char *const first_quote = ACE_OS::strchr (str, '"');
       bool allocate_error = false;
 
 #ifdef ACE_WIN32
+      const char *const first_quote = ACE_OS::strchr (str, '"');
       if (first_quote)
         {
           // Escape Doublequotes on Windows
