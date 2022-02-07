@@ -25,7 +25,6 @@ ACE_Node<T, C>::ACE_Node (const T &i, ACE_Node<T, C> *n)
 template <class T, class C>
 ACE_Node<T, C>::ACE_Node (ACE_Node<T, C> *n, int)
   : next_ (n)
-  , item_ ()
 {
 }
 
