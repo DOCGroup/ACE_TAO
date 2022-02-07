@@ -115,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Send the callback object to the server
       server->callback_object (callback.in ());
 
-      // A  method to kickstart callbacks from the server
+      // A method to kickstart callbacks from the server
       CORBA::Long r =
         server->test_method (1);
 

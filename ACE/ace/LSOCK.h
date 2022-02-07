@@ -55,7 +55,7 @@ protected:
   // = Ensure that ACE_LSOCK is an abstract base class
 
   /// Default constructor.
-  ACE_LSOCK (void);
+  ACE_LSOCK ();
 
   /// Initialize based on @a handle.
   ACE_LSOCK (ACE_HANDLE handle);

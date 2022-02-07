@@ -161,7 +161,7 @@ CORBA::Request::invoke (void)
 }
 
 void
-CORBA::Request::send_oneway (void)
+CORBA::Request::send_oneway ()
 {
   TAO::NamedValue_Argument _tao_retval (this->result_);
 

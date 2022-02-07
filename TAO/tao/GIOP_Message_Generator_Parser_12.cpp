@@ -476,7 +476,7 @@ TAO_GIOP_Message_Generator_Parser_12::marshall_target_spec (
             if (!(msg << index))
               return false;
             if (!(msg << *ior))
-              return false;;
+              return false;
           }
         else
           {

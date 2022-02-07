@@ -30,10 +30,10 @@ class Echo_i : public POA_Echo
 {
 public:
   /// Constructor.
-  Echo_i (void);
+  Echo_i (void) = default;
 
   /// Destructor.
-  virtual ~Echo_i (void);
+  virtual ~Echo_i (void) = default;
 
   /// Return the mesg string back from the server.
   virtual Echo::List *echo_list (const char *mesg);

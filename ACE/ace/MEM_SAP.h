@@ -52,7 +52,7 @@ public:
   size_t capacity () const;
 
   /// Get the pointer to the block of data we hold.
-  void *data (void);
+  void *data ();
 
   /// The maximum size of this memory block.
   size_t capacity_;

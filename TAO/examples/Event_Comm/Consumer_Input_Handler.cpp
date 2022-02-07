@@ -10,11 +10,6 @@ Consumer_Input_Handler::Consumer_Input_Handler (void)
   // No-Op.
 }
 
-Consumer_Input_Handler::~Consumer_Input_Handler (void)
-{
-  // No-Op.
-}
-
 int
 Consumer_Input_Handler::consumer_initiated_shutdown (void)
 {
