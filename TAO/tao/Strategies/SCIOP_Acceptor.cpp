@@ -415,8 +415,10 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 2)
       {
         TAOLIB_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("Overriding address in IOR with %C\n"),
-                    this->hostname_in_ior_));
+                      ACE_TEXT ("TAO (%P|%t) - ")
+                      ACE_TEXT ("SCIOP_Acceptor::open, ")
+                      ACE_TEXT ("overriding address in IOR with %C\n"),
+                      this->hostname_in_ior_));
       }
       if (this->hostname (orb_core,
                           this->addrs_[i],
@@ -770,7 +772,9 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if (TAO_debug_level > 2)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %C\n"),
+                          ACE_TEXT ("TAO (%P|%t) - ")
+                          ACE_TEXT ("SCIOP_Acceptor::probe_interfaces, ")
+                          ACE_TEXT ("overriding address in IOR with %C\n"),
                           this->hostname_in_ior_));
             }
           if (this->hostname (orb_core,
@@ -924,7 +928,6 @@ TAO_SCIOP_Acceptor::parse_options (const char *str)
   // Use an option format similar to the one used for CGI scripts in
   // HTTP URLs.
   // e.g.:  option1=foo&option2=bar
-
   ACE_CString options (str);
 
   size_t len = options.length ();

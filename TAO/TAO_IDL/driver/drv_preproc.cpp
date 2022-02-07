@@ -143,22 +143,11 @@ DRV_cpp_putarg (const char *str)
   char *replace = nullptr;
   if (str)
     {
-      const char *const first_quote = ACE_OS::strchr (str, '"');
       bool allocate_error = false;
 
-      if (ACE_OS::strchr (str, ' ') && !first_quote)
-        {
-          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
-          allocate_error = !replace;
-          if (replace)
-            {
-              replace[0] = '"';
-              ACE_OS::strcpy (replace + 1, str);
-              ACE_OS::strcat (replace, "\"");
-            }
-        }
 #ifdef ACE_WIN32
-      else if (first_quote)
+      const char *const first_quote = ACE_OS::strchr (str, '"');
+      if (first_quote)
         {
           // Escape Doublequotes on Windows
 
@@ -188,6 +177,17 @@ DRV_cpp_putarg (const char *str)
             }
         }
 #endif
+      if (ACE_OS::strchr (str, ' '))
+        {
+          ACE_NEW_NORETURN (replace, char[ACE_OS::strlen (str) + 3]);
+          allocate_error = !replace;
+          if (replace)
+            {
+              replace[0] = '"';
+              ACE_OS::strcpy (replace + 1, str);
+              ACE_OS::strcat (replace, "\"");
+            }
+        }
 
       if (allocate_error)
         {
@@ -485,13 +485,8 @@ DRV_sweep_dirs (const char *rel_path,
             {
               if (!include_added)
                 {
-                  /// Surround the path name with quotes, in
-                  /// case the original path argument included
-                  /// spaces. If it didn't, no harm done.
-                  ACE_CString incl_arg ("-I ");
-                  incl_arg += '\"';
+                  ACE_CString incl_arg ("-I");
                   incl_arg += bname;
-                  incl_arg += '\"';
                   DRV_cpp_putarg (incl_arg.c_str ());
                   idl_global->add_rel_include_path (bname.c_str ());
                   full_path = ACE_OS::realpath ("", abspath);

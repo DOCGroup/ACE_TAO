@@ -1,5 +1,12 @@
+USER VISIBLE CHANGES BETWEEN ACE-7.0.6 and ACE-7.0.7
+====================================================
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.5 and ACE-7.0.6
 ====================================================
+
+. Various cleanup and using more C++11 features
+
+. Various packaging related fixes
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.4 and ACE-7.0.5
 ====================================================

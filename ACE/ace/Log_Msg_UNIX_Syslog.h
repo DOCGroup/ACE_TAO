@@ -51,10 +51,10 @@ public:
   virtual int open (const ACE_TCHAR *logger_key);
 
   /// Reset the backend.
-  virtual int reset (void);
+  virtual int reset ();
 
   /// Close the backend completely.
-  virtual int close (void);
+  virtual int close ();
 
   /// This is called when we want to log a message.
   virtual ssize_t log (ACE_Log_Record &log_record);

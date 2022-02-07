@@ -270,7 +270,7 @@ WUCS4_UTF16::read_wchar (ACE_InputCDR &cdr, ACE_CDR::WChar &x)
             if (! this->read_2 (cdr, &low))
               {
                 cdr.reset_byte_order (old_bo);
-                return 0;;
+                return 0;
               }
             if (low < ACE_UTF16_SURROGATE_LOW_BEGIN
               || low >= ACE_UTF16_SURROGATE_LOW_END)

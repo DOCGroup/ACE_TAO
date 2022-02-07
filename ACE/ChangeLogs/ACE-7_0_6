@@ -1,0 +1,144 @@
+commit d61d61771cb9f73a9c2a0fc4c4f896385513c212
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 20 08:26:33 2022 +0100
+
+    List changes
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
+
+commit e1066915005387ee81397e9cec2e24b72abb1bd9
+Merge: a8372419d0e 27acd637ea3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 17 14:40:36 2022 +0100
+
+    Merge pull request #1765 from jwillemsen/jwi-cleanup2
+    
+    Use doxygen/nullptr/bool
+
+commit 27acd637ea341c104749d6b8369d67fc5448920d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Mon Jan 17 11:57:46 2022 +0100
+
+    Use doxygen/nullptr/bool
+    
+        * ACE/ace/Log_Msg.cpp:
+        * ACE/ace/NT_Service.cpp:
+        * ACE/ace/Object_Manager.cpp:
+        * ACE/ace/Object_Manager.h:
+        * ACE/ace/Thread.inl:
+        * ACE/tests/Task_Test.cpp:
+        * TAO/tao/DynamicInterface/Request.cpp:
+        * TAO/tao/GIOP_Message_Base.cpp:
+        * TAO/tao/Messaging/AMH_Response_Handler.cpp:
+
+commit d41442943e4fcdfc689133619b2043aee7d62a59
+Merge: 97daeea11d2 ab0b550403f
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 13 17:40:49 2022 +0100
+
+    Merge pull request #1761 from jwillemsen/jwi-defaultoverride
+    
+    Make use of C++ default/override
+
+commit ab0b550403f711d725405afdd04475107b8f3bd2
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Jan 13 10:28:36 2022 +0100
+
+    Make use of C++ default/override
+
+commit 97daeea11d251609247a90379d61551e8627910a
+Merge: 71c64284b43 0f69c85d3a3
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jan 10 21:20:04 2022 -0600
+
+    Merge pull request #1752 from mitza-oci/gha-install
+    
+    make install, pkgconfig, ace_for_tao fixes
+
+commit 0f69c85d3a38b8b50bd766fae5795b81329c7335
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 7 16:55:12 2022 -0600
+
+    Fixed a few pkg-config issues
+
+commit ee8f83a1e404008de94f274c821300b051c0f72e
+Merge: f6a98bf6e81 5edb3f8c49d
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 7 08:21:15 2022 -0600
+
+    Merge pull request #1749 from mitza-oci/idldep
+    
+    depgen for IDL: remove assumption about IDL files in subdirs
+
+commit cacd3ed5e1b549e9adb7c8701ca33d6996ea532d
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Fri Jan 7 11:33:33 2022 +0100
+
+    Removed lef over for rcsid
+    
+        * ACE/bin/MakeProjectCreator/config/acedefaults.mpb:
+        * ACE/bin/libsize.pl:
+        * TAO/docs/minimumTAO.html:
+        * TAO/docs/performance.html:
+
+commit 5baa38055364284c93cade6beb486f5ca178d024
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 6 21:31:25 2022 -0600
+
+    Updated ace_for_tao project to allow it to install
+
+commit ac17f0ebd2d13b5e403adf782d2e4460695bc716
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 6 19:10:38 2022 -0600
+
+    removed a file that's no longer in the repo from ace_for_tao.mpc
+
+commit 5edb3f8c49de9b98900bcc03ba5e0500fcc020db
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 6 11:01:55 2022 -0600
+
+    depgen for IDL: remove assumption about IDL files in subdirs
+    
+    tao_idl dir/file.idl doesn't put its output in dir by default
+    The ObjectGenerator perl module doesn't know about the -o option to tao_idl
+    The base filename may work anyway due to VPATH
+
+commit 5d5cf9581bfb7fb92df367ea326b18c5b71cc4e4
+Author: Cristian Ungureanu <cristian.ungureanu@gmail.com>
+Date:   Tue Nov 30 09:43:01 2021 +0200
+
+    Fixed a minor OS version comparison error.
+
+commit acd22a1811e54c53472c15600c541922d779569f
+Author: Cristian Ungureanu <cristian.ungureanu@gmail.com>
+Date:   Mon Nov 29 15:41:53 2021 +0200
+
+    Will fallback to macOS 12 (latest) if on higher OS.
+
+commit 183f781cd689802874e9f56f10b3e5591b0914a7
+Author: Cristian Ungureanu <cristian.ungureanu@gmail.com>
+Date:   Mon Nov 29 15:20:04 2021 +0200
+
+    Support for MacOS 10.12 Monterey - Intel build.
+
+commit e66d46e38a26f3113edd07241337205e9842cf40
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Thu Nov 18 15:03:57 2021 +0100
+
+    Fallback to MacOSX 11 latest when we have a not recognized major version
+    
+        * ACE/include/makeinclude/platform_macosx.GNU:
+        * TAO/NEWS:
+
+commit b75ee3d8e1cc3dcad8d508b590167837fe0bfa2a
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Wed Nov 17 11:30:38 2021 +0100
+
+    Prepare for next release and make x.0.5 public
+    
+        * ACE/NEWS:
+        * ACE/bin/diff-builds-and-group-fixed-tests-only.sh:
+        * ACE/docs/Download.html:
+        * ACE/etc/index.html:
+        * TAO/NEWS:
