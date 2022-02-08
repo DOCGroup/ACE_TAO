@@ -3615,7 +3615,6 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 # if defined (ACE_HAS_PTHREADS)
   int result;
-  int name_set = 0;
 # if defined (ACE_PTHREAD_ATTR_T_INITIALIZE)
   /* Tests show that VxWorks 6.x pthread lib does not only
    * require zeroing of mutex/condition objects to function correctly
@@ -3853,10 +3852,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           ::pthread_attr_destroy (&attr);
           return -1;
         }
-      name_set = 1;
     }
-#   else
-  ACE_UNUSED_ARG (thr_name);
 #   endif /* ACE_HAS_PTHREAD_ATTR_SETNAME */
 
       // *** Set Scope
@@ -4008,15 +4004,19 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   auto_thread_args.release ();
 
   // *** Set pthread name (second try)
+#   if !defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
 #     if defined (ACE_HAS_PTHREAD_SETNAME_NP)
-  if (!name_set && thr_name && *thr_name)
+  if (thr_name && *thr_name)
     {
       ACE_OSCALL (ACE_ADAPT_RETVAL(::pthread_setname_np (*thr_id, *thr_name),
                                    result),
                   int,
                   result);
     }
-#     endif /* ACE_HAS_PTHREAD_SETNAME_NP */
+#     else
+  ACE_UNUSED_ARG (thr_name);
+#      endif /* ACE_HAS_PTHREAD_SETNAME_NP */
+#   endif   /* !ACE_HAS_PTHREAD_ATTR_SETNAME */
 
   return result;
 # elif defined (ACE_HAS_STHREADS)
