@@ -207,7 +207,7 @@ ACE_TSS_TPQ_Entry::operator ACE_TPQ_Entry * (void)
   // the same as the subclass, so that the slicing works .
   ACE_TPQ_ENTRY::proxy ((ACE_Token_Proxy *)(this->proxy_));
   ACE_TPQ_ENTRY::client_id (this->client_id_);
-  return  (ACE_TPQ_Entry *) this;;
+  return  (ACE_TPQ_Entry *) this;
 #endif /* !ACE_NO_TSS_TOKENS */
 }
 

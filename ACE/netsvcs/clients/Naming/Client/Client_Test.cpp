@@ -229,7 +229,7 @@ Client_Test::display_menu (void)
   ACE_DEBUG ((LM_DEBUG, "         Name Service Main Menu\n"));
   ACE_DEBUG ((LM_DEBUG, "         ----------------------\n"));
   ACE_DEBUG ((LM_DEBUG, "<P> Use Process Local Database\n"));
-  ACE_DEBUG ((LM_DEBUG, "<N> Use Node Local Database\n"));;
+  ACE_DEBUG ((LM_DEBUG, "<N> Use Node Local Database\n"));
   ACE_DEBUG ((LM_DEBUG, "<H> Set Remote Name server <host> and <port>\n\n"));
   ACE_DEBUG ((LM_DEBUG, "<B> Bind <key> <value> [<type>]\n"));
   ACE_DEBUG ((LM_DEBUG, "<U> Unbind <key>\n"));

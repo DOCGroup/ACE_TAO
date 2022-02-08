@@ -9,11 +9,6 @@ Consumer_Handler::Consumer_Handler (void)
   // No-Op.
 }
 
-Consumer_Handler::~Consumer_Handler (void)
-{
-  // No-Op.
-}
-
 int
 Consumer_Handler::init (int argc,
                         ACE_TCHAR *argv[],

@@ -528,7 +528,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
                             const TAO_POA_Policy_Set &policies)
 {
-  // This operaton creates a new POA as a child of the target POA. The
+  // This operation creates a new POA as a child of the target POA. The
   // specified name identifies the new POA with respect to other POAs
   // with the same parent POA. If the target POA already has a child
   // POA with the specified name, the AdapterAlreadyExists exception

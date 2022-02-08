@@ -227,7 +227,7 @@ void WxSelectNSDialog::onRemove( wxCommandEvent& WXUNUSED(event))
     delete static_cast<wxString*>( servers->GetClientData( index));
     servers->Delete( index);
 
-    ACE_Configuration_Section_Key section = config->root_section();;
+    ACE_Configuration_Section_Key section = config->root_section();
     config->remove_value( section, name);
 
   }

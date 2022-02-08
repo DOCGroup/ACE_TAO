@@ -281,7 +281,7 @@ Client::run (void)
                                         this->protocol_,
                                         &addr);
 
-      ACE_INET_Addr peer_addr (this->peer_addr_.c_str ());;
+      ACE_INET_Addr peer_addr (this->peer_addr_.c_str ());
       entry.set_peer_addr (&peer_addr);
 
       flow_spec [0] = CORBA::string_dup (entry.entry_to_string ());

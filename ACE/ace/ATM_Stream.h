@@ -46,14 +46,14 @@ class ACE_Export ACE_ATM_Stream
 {
 public:
   /// Default constructor.
-  ACE_ATM_Stream (void);
+  ACE_ATM_Stream ();
 
   // = ATM-specific open and shutdown operations.
   /// open the stream.
   int open (ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Close down and release resources.
-  int close (void);
+  int close ();
 
   /// Get the underlying handle.
   ACE_HANDLE get_handle () const;

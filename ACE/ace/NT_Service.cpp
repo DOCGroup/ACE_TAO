@@ -79,11 +79,10 @@ ACE_NT_Service::open (void *args)
 }
 
 int
-ACE_NT_Service::fini (void)
+ACE_NT_Service::fini ()
 {
   return this->report_status (SERVICE_STOPPED, 0);
 }
-
 
 void
 ACE_NT_Service::handle_control (DWORD control_code)
@@ -306,21 +305,19 @@ ACE_NT_Service::startup (void)
 
 }
 
-
 void
-ACE_NT_Service::capture_log_msg_attributes (void)
+ACE_NT_Service::capture_log_msg_attributes ()
 {
   ACE_Log_Msg::init_hook (this->log_msg_attributes_);
 }
 
 void
-ACE_NT_Service::inherit_log_msg_attributes (void)
+ACE_NT_Service::inherit_log_msg_attributes ()
 {
   // There's no thread descriptor involved with a NT-started
   // thread, so the first arg is 0.
   ACE_Log_Msg::inherit_hook (0, this->log_msg_attributes_);
 }
-
 
 int
 ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
