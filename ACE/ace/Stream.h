@@ -162,20 +162,7 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
-private:
-  /// Actually perform the unlinking of two Streams (must be called
-  /// with locks held).
-  int unlink_i (void);
-
-  /// Actually perform the linking of two Streams (must be called with
-  /// locks held).
-  int link_i (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
-
-  /// Must a new module onto the Stream.
-  int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
-                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
-
+protected:
   /// Pointer to the head of the stream.
   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
 
@@ -199,6 +186,20 @@ private:
 
   /// Use to tell all threads waiting on the close that we are done.
   ACE_SYNCH_CONDITION_T final_close_;
+
+private:
+  /// Actually perform the unlinking of two Streams (must be called
+  /// with locks held).
+  int unlink_i (void);
+
+  /// Actually perform the linking of two Streams (must be called with
+  /// locks held).
+  int link_i (ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> &);
+
+  /// Must a new module onto the Stream.
+  int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
+                   ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
 };
 
 /**
