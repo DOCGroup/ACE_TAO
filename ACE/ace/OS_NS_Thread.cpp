@@ -3853,9 +3853,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           return -1;
         }
     }
-#else
-  ACE_UNUSED_ARG (thr_name);
-#   endif
+#   endif /* ACE_HAS_PTHREAD_ATTR_SETNAME */
 
       // *** Set Scope
 #   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
@@ -4004,6 +4002,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #   endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
   auto_thread_args.release ();
+
+  // *** Set pthread name (second try)
+#   if !defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
+#     if defined (ACE_HAS_PTHREAD_SETNAME_NP)
+  if (thr_name && *thr_name)
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL(::pthread_setname_np (*thr_id, *thr_name),
+                                   result),
+                  int,
+                  result);
+    }
+#     else
+  ACE_UNUSED_ARG (thr_name);
+#      endif /* ACE_HAS_PTHREAD_SETNAME_NP */
+#   endif   /* !ACE_HAS_PTHREAD_ATTR_SETNAME */
+
   return result;
 # elif defined (ACE_HAS_STHREADS)
   int result;
