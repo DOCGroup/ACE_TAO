@@ -88,6 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_stat.h"
 
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 1024;
@@ -1188,15 +1189,47 @@ DRV_pre_proc (const char *myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
+  const char *call_failed = nullptr;
+  bool bail = false;
   FILE * const file = ACE_OS::fopen (myfile, "r");
-
   if (file == nullptr)
+    call_failed = "";
+  else
+    {
+      // Check to see that the file is a normal file. If we don't and the file
+      // is a directory, then the copy would be blank and any error message
+      // later wouldn't be accurate.
+      const ACE_HANDLE file_desc = ACE_OS::fileno (file);
+      if (file_desc == -1)
+        call_failed = "(fileno) ";
+      else
+        {
+          ACE_stat file_stat;
+          if (ACE_OS::fstat (file_desc, &file_stat) == -1)
+            call_failed = "(fstat) ";
+          else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
+            {
+              ACE_ERROR ((LM_ERROR,
+                          "%C: ERROR: This is not a normal file: \"%C\"\n",
+                          idl_global->prog_name (),
+                          myfile));
+              bail = true;
+            }
+        }
+    }
+
+  if (call_failed)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: ERROR: Unable to open file : %m\n",
+                  "%C: ERROR: Unable to open file %C\"%C\": %m\n",
                   idl_global->prog_name (),
+                  call_failed,
                   myfile));
+      bail = true;
+    }
 
+  if (bail)
+    {
       (void) ACE_OS::unlink (tmp_ifile);
       (void) ACE_OS::unlink (tmp_file);
       throw Bailout ();
