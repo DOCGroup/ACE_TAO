@@ -1200,7 +1200,7 @@ DRV_pre_proc (const char *myfile)
       // is a directory, then the copy would be blank and any error message
       // later wouldn't be accurate.
       const ACE_HANDLE file_desc = ACE_OS::fileno (file);
-      if (file_desc == -1)
+      if (file_desc == ACE_INVALID_HANDLE)
         call_failed = "(fileno) ";
       else
         {
