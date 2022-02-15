@@ -23,3 +23,4 @@ usr/lib/libACE_RLECompression.so usr/lib/@DEB_HOST_MULTIARCH@/
 usr/lib/pkgconfig/ACE.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
 usr/lib/pkgconfig/ACE_ETCL.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
 usr/lib/pkgconfig/ACE_ETCL_Parser.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
+usr/lib/pkgconfig/ACE_Monitor_Control.pc usr/lib/@DEB_HOST_MULTIARCH@/pkgconfig/
