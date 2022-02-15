@@ -1,3 +1,54 @@
+ace (7.0.6+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Mon, 14 Feb 2022 19:22:20 +0000
+
+ace (7.0.6+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.6
+    - Sync debian/* with upstream.
+    - Install ACE_Monitor_Control.pc
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Fri, 28 Jan 2022 19:42:31 +0000
+
+ace (7.0.5+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.5
+    - Sync debian/* with upstream.
+    - Remove upstream applied patch.
+  * Update Standards-Version to 4.6.0.1
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Thu, 30 Dec 2021 00:08:17 +0000
+
+ace (7.0.3+dfsg-2) unstable; urgency=medium
+
+  * Team upload.
+  * Upload to unstable.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Mon, 23 Aug 2021 22:27:59 +0100
+
+ace (7.0.3+dfsg-1) experimental; urgency=medium
+
+  * Team upload.
+  * Update to upstream v7.0.3
+    - Sync debian/* with upstream.
+    - Remove upstream applied patch.
+    - Add upstream patch to fix doxygen generation.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Thu, 19 Aug 2021 21:37:21 +0100
+
+ace (7.0.2+dfsg-2) experimental; urgency=medium
+
+  * Team upload.
+  * Add upstream patch to fix FTBFS on arm.
+  * Update copyright to use SPDX identifier.
+
+ -- Sudip Mukherjee <sudipm.mukherjee@gmail.com>  Sun, 13 Jun 2021 14:20:33 +0100
+
 ace (7.0.2+dfsg-1) experimental; urgency=medium
 
   * Team upload.
