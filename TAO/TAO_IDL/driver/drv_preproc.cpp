@@ -1134,7 +1134,7 @@ DRV_pre_proc (const char *myfile)
   else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: ERROR: This is not a normal file: \"%C\"\n",
+                  "%C: ERROR: This is not a regular file: \"%C\"\n",
                   idl_global->prog_name (),
                   myfile));
       throw Bailout ();
