@@ -3,6 +3,9 @@ USER VISIBLE CHANGES BETWEEN TAO-3.0.6 and TAO-3.0.7
 
 . Fixed an issue with handling spaces in paths for TAO_IDL
 
+. TAO_IDL: Fix open file error not mentioning the filename and not checking if
+  the file is actually a directory.
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.5 and TAO-3.0.6
 ====================================================
 
