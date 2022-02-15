@@ -88,6 +88,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/OS_NS_fcntl.h"
+#include "ace/OS_NS_sys_stat.h"
 
 // Storage for preprocessor args.
 unsigned long const DRV_MAX_ARGCOUNT = 1024;
@@ -1118,6 +1119,27 @@ DRV_stripped_name (char *fn)
 void
 DRV_pre_proc (const char *myfile)
 {
+  // Check to see that the file is a normal file. If we don't and the file is a
+  // directory, then the copy would be blank and any error message later might
+  // not be helpful.
+  ACE_stat file_stat;
+  if (ACE_OS::stat (myfile, &file_stat) == -1)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: Unable to open file (stat) \"%C\": %m\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+  else if ((file_stat.st_mode & S_IFREG) != S_IFREG)
+    {
+      ACE_ERROR ((LM_ERROR,
+                  "%C: ERROR: This is not a regular file: \"%C\"\n",
+                  idl_global->prog_name (),
+                  myfile));
+      throw Bailout ();
+    }
+
   const char* tmpdir = idl_global->temp_dir ();
   static const char temp_file_extension[] = ".cpp";
 
@@ -1188,16 +1210,13 @@ DRV_pre_proc (const char *myfile)
 
   // Rename temporary files so that they have extensions accepted
   // by the preprocessor.
-
   FILE * const file = ACE_OS::fopen (myfile, "r");
-
   if (file == 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%C: Unable to open file : %m\n",
+                  "%C: ERROR: Unable to open file (fopen) \"%C\": %m\n",
                   idl_global->prog_name (),
                   myfile));
-
       (void) ACE_OS::unlink (tmp_ifile);
       (void) ACE_OS::unlink (tmp_file);
       throw Bailout ();
