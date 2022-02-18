@@ -218,8 +218,7 @@ ACE_OS::condattr_synctype (ACE_condattr_t &attributes, int& type)
 ACE_INLINE int
 ACE_OS::condattr_setclock (ACE_condattr_t &attributes, clockid_t clock_id)
 {
-#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK) && \
-  !defined (ACE_LACKS_CONDATTR_SETCLOCK)
+#if defined (ACE_HAS_CONDATTR_SETCLOCK) && !defined (ACE_LACKS_CONDATTR_SETCLOCK)
   int result = -1;
   ACE_OSCALL_RETURN (ACE_ADAPT_RETVAL (pthread_condattr_setclock (&attributes, clock_id),
                                        result),
