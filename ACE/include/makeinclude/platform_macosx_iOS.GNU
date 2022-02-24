@@ -20,14 +20,14 @@ ifeq ($(IPHONE_TARGET), SIMULATOR)
   IPHONE_HARDWARE_ARCHITECTURE=x86_64
 endif
 
-ifeq (($(IPHONE_TARGET), M1_SIMULATOR))
+ifeq ($(IPHONE_TARGET), M1_SIMULATOR)
   CROSS-COMPILE=1
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=arm64
 endif
 
-ifeq ($(IPHONE_TARGET), M1_SIMULATOR) or ifeq($(IPHONE_TARGET), SIMULATOR)
+ifeq ($(IPHONE_TARGET), M1_SIMULATOR, SIMULATOR)
 # June 2017 release, iPhone 6s and later
   CFLAGS  += -miphoneos-version-min=12.0
   CCFLAGS += -miphoneos-version-min=12.0
