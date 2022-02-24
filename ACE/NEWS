@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.6 and ACE-7.0.7
 ====================================================
 
+. Added support for iOS Simulator on M1 architecture MacOS systems
+
 USER VISIBLE CHANGES BETWEEN ACE-7.0.5 and ACE-7.0.6
 ====================================================
 
