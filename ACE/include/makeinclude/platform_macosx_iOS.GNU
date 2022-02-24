@@ -10,7 +10,7 @@ else
 endif
 
 ifndef IPHONE_TARGET
-  $(error Please set IPHONE_TARGET to SIMULATOR or HARDWARE)
+  $(error Please set IPHONE_TARGET to SIMULATOR, M1_SIMULATOR, or HARDWARE)
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
