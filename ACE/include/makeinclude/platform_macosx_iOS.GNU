@@ -10,7 +10,7 @@ else
 endif
 
 ifndef IPHONE_TARGET
-  $(error Please set IPHONE_TARGET to SIMULATOR, M1_SIMULATOR, or HARDWARE)
+  $(error Please set IPHONE_TARGET to SIMULATOR or HARDWARE)
 endif
 
 ifeq ($(IPHONE_TARGET), SIMULATOR)
@@ -18,16 +18,7 @@ ifeq ($(IPHONE_TARGET), SIMULATOR)
   IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
   IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
   IPHONE_HARDWARE_ARCHITECTURE=x86_64
-endif
 
-ifeq ($(IPHONE_TARGET), M1_SIMULATOR)
-  CROSS-COMPILE=1
-  IPHONE_PLATFORM:=$(XCODE)/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer
-  IPHONE_SDK:=$(IPHONE_PLATFORM)/SDKs/iPhoneSimulator${IPHONE_VERSION}.sdk
-  IPHONE_HARDWARE_ARCHITECTURE=arm64
-endif
-
-ifeq ($(IPHONE_TARGET), M1_SIMULATOR, SIMULATOR)
 # June 2017 release, iPhone 6s and later
   CFLAGS  += -miphoneos-version-min=12.0
   CCFLAGS += -miphoneos-version-min=12.0
@@ -66,12 +57,18 @@ RANLIB:=$(XCODE)/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/bin/
 DLD = $(CXX)
 LD  = $(CXX)
 
-ifeq ($(IPHONE_TARGET), M1_SIMULATOR)
-CFLAGS  += -target $(IPHONE_HARDWARE_ARCHITECTURE)-apple-ios${IPHONE_VERSION}-simulator
-CCFLAGS += -target $(IPHONE_HARDWARE_ARCHITECTURE)-apple-ios${IPHONE_VERSION}-simulator
+ifeq ($(shell uname -m), arm64)
+  ifeq ($(IPHONE_TARGET), SIMULATOR)
+    IPHONE_HARDWARE_ARCHITECTURE=arm64
+    CFLAGS  += -target $(IPHONE_HARDWARE_ARCHITECTURE)-apple-ios${IPHONE_VERSION}-simulator
+    CCFLAGS += -target $(IPHONE_HARDWARE_ARCHITECTURE)-apple-ios${IPHONE_VERSION}-simulator
+  else
+    CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
+    CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
+  endif
 else
-CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
-CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
+  CFLAGS  += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
+  CCFLAGS += -arch $(IPHONE_HARDWARE_ARCHITECTURE)
 endif
 
 CFLAGS  += -isysroot $(IPHONE_SDK)
