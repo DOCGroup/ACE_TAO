@@ -132,9 +132,9 @@ jobs:
       ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: checkout MPC
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
@@ -199,9 +199,9 @@ jobs:
       MPC_ROOT: ${{ github.workspace }}/MPC
     steps:
     - name: checkout ACE/TAO
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: checkout MPC
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
