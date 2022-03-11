@@ -220,9 +220,8 @@ be_visitor_operation_upcall_command_ss::gen_upcall (
   const char *op_name = node->flat_name ();
   static const char *excep_suffix = "_excep";
   static const size_t excep_suffix_len = ACE_OS::strlen (excep_suffix);
-  bool excep_method = ((ACE_OS::strstr (op_name, excep_suffix) +
-                        excep_suffix_len) ==
-                       (op_name + ACE_OS::strlen (op_name)));
+  const char *substr = ACE_OS::strstr (op_name, excep_suffix);
+  bool excep_method = substr && substr + excep_suffix_len == op_name + ACE_OS::strlen (op_name);
 
   for (; !si.is_done (); si.next (), ++index)
     {
