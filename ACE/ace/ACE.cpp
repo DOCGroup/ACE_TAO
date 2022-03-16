@@ -2791,6 +2791,7 @@ ACE::fork (const ACE_TCHAR *program_name,
               return 0;
             case static_cast<pid_t>(-1): // assumes all errnos are < 256
               ACE_OS::_exit (errno);
+              [[fallthrough]];    // gcc sees this as a fallthrough
             default:  // child terminates, orphaning grandchild
               ACE_OS::_exit (0);
             }

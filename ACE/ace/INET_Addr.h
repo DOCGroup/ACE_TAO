@@ -42,6 +42,9 @@ public:
   /// Copy constructor.
   ACE_INET_Addr (const ACE_INET_Addr &);
 
+  /// Assignment operator.
+  ACE_INET_Addr& operator = (const ACE_INET_Addr &);
+
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   ACE_INET_Addr (const sockaddr_in *addr, int len);
 

@@ -390,6 +390,7 @@ ACE_OS::fork_exec (ACE_TCHAR *argv[])
               // If the execv fails, this child needs to exit.
               ACE_OS::exit (errno);
             }
+          [[ fallthrough ]];
 #   endif /* ACE_HAS_WCHAR */
           return result;
         default:

@@ -111,6 +111,28 @@ ACE_Handle_Set::ACE_Handle_Set (const fd_set &fd_mask)
 #endif /* !ACE_HANDLE_SET_USES_FD_ARRAY */
 }
 
+#if defined (ACE_HAS_BIG_FD_SET)
+ACE_INLINE
+ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &rhs)
+{
+  ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
+
+  if (rhs.size_ > 0)
+    {
+      this->size_ =
+        rhs.size_;
+      this->max_handle_ =
+        rhs.max_handle_;
+      this->min_handle_ =
+        rhs.min_handle_;
+      this->mask_ =
+        rhs.mask_;
+    }
+  else
+    this->reset ();
+}
+#endif /* ACE_HAS_BIG_FD_SET */
+
 // Counts the number of bits enabled in N.  Uses a table lookup to
 // speed up the count.
 

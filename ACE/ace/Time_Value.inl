@@ -109,6 +109,13 @@ ACE_Time_Value::ACE_Time_Value ()
 }
 
 ACE_INLINE
+ACE_Time_Value::ACE_Time_Value (const ACE_Time_Value &tv)
+{
+  // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
+  this->set (tv.sec (), tv.usec ());
+}
+
+ACE_INLINE
 ACE_Time_Value::ACE_Time_Value (time_t sec, suseconds_t usec)
 {
   // ACE_OS_TRACE ("ACE_Time_Value::ACE_Time_Value");
