@@ -149,16 +149,16 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   switch (n)
     {
     case -1:
-      // FALLTHROUGH
       ACELIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("****************** recv_reply returned -1\n")));
+      [[fallthrough]];
     default:
       ACELIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                   ACE_TEXT ("recv failed"),
                   n,
                   sizeof (ACE_UINT32)));
-      // FALLTHROUGH
+      [[fallthrough]];
     case 0:
       // We've shutdown unexpectedly
       return -1;

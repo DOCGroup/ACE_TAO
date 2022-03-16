@@ -105,6 +105,13 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
   this->set (sa);
 }
 
+ACE_UNIX_Addr&
+ACE_UNIX_Addr::operator = (const ACE_UNIX_Addr &sa)
+{
+  this->set (sa);
+  return *this;
+}
+
 int
 ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
 {

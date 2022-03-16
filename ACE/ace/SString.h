@@ -93,6 +93,9 @@ public:
   /// Copy constructor.
   ACE_NS_WString (const ACE_NS_WString &s);
 
+  /// Assignment operator.
+  ACE_NS_WString &operator = (const ACE_NS_WString &s);
+
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = 0);
 

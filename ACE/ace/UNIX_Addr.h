@@ -81,6 +81,9 @@ public:
   int set (const wchar_t rendezvous_point[]);
 #endif /* ACE_HAS_WCHAR */
 
+  /// Assignment operator.
+  ACE_UNIX_Addr &operator = (const ACE_UNIX_Addr &sa);
+
   /// Compare two addresses for equality.
   bool operator == (const ACE_UNIX_Addr &SAP) const;
 

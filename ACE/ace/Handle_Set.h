@@ -66,6 +66,11 @@ public:
    */
   ACE_Handle_Set (const fd_set &mask);
 
+#if defined (ACE_HAS_BIG_FD_SET)
+  /// Constructor optimizes for cases where <size_> == 0.
+  ACE_Handle_Set (const ACE_Handle_Set &);
+#endif /* ACE_HAS_BIG_FD_SET */
+
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.
   void reset (void);
