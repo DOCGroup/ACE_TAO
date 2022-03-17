@@ -2231,11 +2231,11 @@ ACE::handle_ready (ACE_HANDLE handle,
     {
     case 0:  // Timer expired.
       errno = ETIME;
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     case -1: // we got here directly - select() returned -1.
       return -1;
     case 1: // Handle has data.
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     default: // default is case result > 0; return a
       // ACE_ASSERT (result == 1);
       return result;
@@ -2791,7 +2791,7 @@ ACE::fork (const ACE_TCHAR *program_name,
               return 0;
             case static_cast<pid_t>(-1): // assumes all errnos are < 256
               ACE_OS::_exit (errno);
-              [[fallthrough]];    // gcc sees this as a fallthrough
+              ACE_FALLTHROUGH;    // gcc sees this as a fallthrough
             default:  // child terminates, orphaning grandchild
               ACE_OS::_exit (0);
             }
