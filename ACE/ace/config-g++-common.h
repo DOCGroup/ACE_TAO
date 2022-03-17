@@ -38,6 +38,15 @@
 # if __cplusplus > 199711L
 #  define ACE_HAS_CPP11
 # endif
+# if __cplusplus >= 201402L
+#  define ACE_HAS_CPP14
+# endif
+# if __cplusplus >= 201703L
+#  define ACE_HAS_CPP17
+# endif
+# if __cplusplus >= 202002L
+#  define ACE_HAS_CPP20
+# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
