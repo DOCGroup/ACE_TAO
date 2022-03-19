@@ -18,9 +18,11 @@
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
+# define ACE_FALLTHROUGH [[gnu::fallthrough]]
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
+# define ACE_FALLTHROUGH [[gnu::fallthrough]]
 #endif
 #if __cplusplus >= 201703L
 # define ACE_HAS_CPP17
