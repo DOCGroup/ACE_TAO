@@ -582,7 +582,7 @@ sub WaitKill ($)
         return 0;
     }
 
-    my $status = $self->TimedWait ($timeout);
+    my ($status, $sigcode) = $self->TimedWait ($timeout);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -605,7 +605,7 @@ sub WaitKill ($)
 
     $self->{RUNNING} = 0;
 
-    return $status;
+    return (wantarray() ? ($status, $sigcode) : $status);
 }
 
 
@@ -636,7 +636,10 @@ sub TerminateWaitKill ($)
     return $self->WaitKill ($timeout);
 }
 
-# really only for internal use
+# Really only for internal use.
+# The second returned parameter is the 8 bits indicating
+# whether there was a core dump and the the signal the process
+# died from, if any.
 sub check_return_value ($)
 {
     my $self = shift;
@@ -656,12 +659,13 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        $rc >>= 8;
-        return $rc;
+        return ($rc >> 8);
     }
 
     # Ignore NSK 16-bit completion code
     $rc &= 0xff if $is_NSK;
+
+    my $rc_copy = $rc;
 
     # Remember Core dump flag
     my $dump = 0;
@@ -673,7 +677,7 @@ sub check_return_value ($)
 
     # check for ABRT, KILL or TERM
     if ($rc == 6 || $rc == 9 || $rc == 15) {
-        return 0;
+        return (0, $rc_copy);
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -683,7 +687,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return 255;
+    return (255, $rc_copy);
 }
 
 # for internal use
