@@ -207,7 +207,8 @@ sub WaitKill ($)
 {
     my $self = shift;
     my $timeout = shift;
-    my $status = $self->TimedWait ($timeout);
+
+    my ($status, $sigcode) = $self->TimedWait ($timeout);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -216,7 +217,7 @@ sub WaitKill ($)
 
     $self->{RUNNING} = 0;
 
-    return $status;
+    return (wantarray() ? ($status, $sigcode) : $status);
 }
 
 
@@ -262,10 +263,10 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        $rc >>= 8;
-        return $rc;
+        return ($rc >> 8);
     }
 
+    my $rc_copy = $rc;
     my $dump = 0;
 
     if ($rc & 0x80) {
@@ -275,7 +276,7 @@ sub check_return_value ($)
 
     # check for ABRT, KILL or TERM
     if ($rc == 6 || $rc == 9 || $rc == 15) {
-        return 0;
+        return (0, $rc_copy);
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -285,7 +286,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return 0;
+    return (0, $rc_copy);
 }
 
 sub Kill ()
