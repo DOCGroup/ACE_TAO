@@ -637,9 +637,8 @@ sub TerminateWaitKill ($)
 }
 
 # Really only for internal use.
-# The second returned parameter is the 8 bits indicating
-# whether there was a core dump and the the signal the process
-# died from, if any.
+# The second returned parameter is an 8-bit integer indicating whether
+# there was a core dump and the signal the process died from, if any.
 sub check_return_value ($)
 {
     my $self = shift;
