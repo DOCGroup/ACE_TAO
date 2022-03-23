@@ -8,6 +8,10 @@ Sat Oct 11 20:45:03 UTC 2014  Steve Huston  <shuston@riverace.com>
 
 Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
 
+Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
+
+        * NEWS: Add description of the below changes.
+
         * ace/OS_NS_stdlib.{h inl cpp}:
         * ace/OS_NS_stdio.{h inl}:
         * ace/README:
@@ -44,6 +48,7 @@ Thu Oct  9 16:21:38 UTC 2014  Steve Huston  <shuston@riverace.com>
         * examples/Service_Configurator/IPC-tests/client/local_dgram_client.cpp:
           Won't work if ACE_DISABLE_TEMPNAM is set.
 
+<<<<<<< HEAD
 Tue Aug  5 21:49:12 UTC 2014  Steve Huston  <shuston@riverace.com>
 
         * ace/Process.cpp (setenv): Use the correct format string for
@@ -114,6 +119,8 @@ Thu Aug 29 22:06:55 UTC 2013  Steve Huston  <shuston@riverace.com>
 
         * ace/README: Added ACE_HAS_INT_SWAB description.
 
+=======
+>>>>>>> Riverace-6.2a
 Mon May 27 10:09:24 CEST 2013  Johnny Willemsen  <jwillemsen@remedy.nl>
 
         * ACE version 6.2.0 released.

@@ -47,6 +47,13 @@ ACE_NS_WString::ACE_NS_WString (const ACE_NS_WString &s)
 }
 
 ACE_INLINE
+ACE_NS_WString &ACE_NS_WString::operator = (const ACE_NS_WString &s)
+{
+    set(s.c_str());
+    return *this;
+}
+
+ACE_INLINE
 ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
   : ACE_WString (c, alloc)
 {
@@ -130,7 +137,6 @@ ACE_SString::operator== (const ACE_SString &s) const
 }
 
 // Less than comparison operator.
-
 ACE_INLINE bool
 ACE_SString::operator < (const ACE_SString &s) const
 {

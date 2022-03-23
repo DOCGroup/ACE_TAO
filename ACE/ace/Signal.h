@@ -158,6 +158,9 @@ public:
   /// Copy constructor.
   ACE_Sig_Action (const ACE_Sig_Action &s);
 
+  /// Assignment operator.
+  ACE_Sig_Action& operator = (const ACE_Sig_Action &s);
+
   /// Default dtor.
   ~ACE_Sig_Action (void);
 

@@ -34,9 +34,21 @@
 #  define ACE_HAS_NEW_NOTHROW
 #endif /* __GNUC__ >= 3.3 */
 
+// g++ has private attributes to do fallthrough until the standard one comes into play at c++17
 #if (__GNUC__ >= 5 || (__GNUC__ == 4 && __GNUC_MINOR__ >= 7))
 # if __cplusplus > 199711L
 #  define ACE_HAS_CPP11
+#  define ACE_FALLTHROUGH [[gnu::fallthrough]]
+# endif
+# if __cplusplus >= 201402L
+#  define ACE_HAS_CPP14
+#  define ACE_FALLTHROUGH [[gnu::fallthrough]]
+# endif
+# if __cplusplus >= 201703L
+#  define ACE_HAS_CPP17
+# endif
+# if __cplusplus >= 202002L
+#  define ACE_HAS_CPP20
 # endif
 #endif
 
