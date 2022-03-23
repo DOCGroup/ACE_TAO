@@ -573,16 +573,17 @@ sub Spawn ()
     return 0;
 }
 
-sub WaitKill ($)
+sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opt_signum = shift;
 
     if ($self->{RUNNING} == 0) {
         return 0;
     }
 
-    my ($status, $sigcode) = $self->TimedWait ($timeout);
+    my $status = $self->TimedWait ($timeout, $opt_signum);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -605,7 +606,7 @@ sub WaitKill ($)
 
     $self->{RUNNING} = 0;
 
-    return (wantarray() ? ($status, $sigcode) : $status);
+    return $status;
 }
 
 
@@ -637,12 +638,13 @@ sub TerminateWaitKill ($)
 }
 
 # Really only for internal use.
-# The second returned parameter is an 8-bit integer indicating whether
+# The second parameter is an 8-bit integer output indicating whether
 # there was a core dump and the signal the process died from, if any.
-sub check_return_value ($)
+sub check_return_value ($;$)
 {
     my $self = shift;
     my $rc = shift;
+    my $opt_signum = shift;
 
     # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
@@ -664,7 +666,9 @@ sub check_return_value ($)
     # Ignore NSK 16-bit completion code
     $rc &= 0xff if $is_NSK;
 
-    my $rc_copy = $rc;
+    if (defined($opt_signum)) {
+        ${$opt_signum} = $rc;
+    }
 
     # Remember Core dump flag
     my $dump = 0;
@@ -676,7 +680,7 @@ sub check_return_value ($)
 
     # check for ABRT, KILL or TERM
     if ($rc == 6 || $rc == 9 || $rc == 15) {
-        return (0, $rc_copy);
+        return 0;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -686,7 +690,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return (255, $rc_copy);
+    return 255;
 }
 
 # for internal use
@@ -801,10 +805,11 @@ sub Wait ($)
 
 }
 
-sub TimedWait ($)
+sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opt_signum = shift;
 
     if (!defined $self->{PROCESS}) {
         return 0;
@@ -820,7 +825,7 @@ sub TimedWait ($)
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?);
+            return $self->check_return_value ($?, $opt_signum);
         }
         select(undef, undef, undef, 0.1);
     }

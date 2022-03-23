@@ -203,12 +203,13 @@ sub Spawn ()
     return 0;
 }
 
-sub WaitKill ($)
+sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opt_signum = shift;
 
-    my ($status, $sigcode) = $self->TimedWait ($timeout);
+    my $status = $self->TimedWait ($timeout, $opt_signum);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -217,7 +218,7 @@ sub WaitKill ($)
 
     $self->{RUNNING} = 0;
 
-    return (wantarray() ? ($status, $sigcode) : $status);
+    return $status;
 }
 
 
@@ -249,10 +250,11 @@ sub TerminateWaitKill ($)
 }
 
 # really only for internal use
-sub check_return_value ($)
+sub check_return_value ($;$)
 {
     my $self = shift;
     my $rc = shift;
+    my $opt_signum = shift;
 
     if ($rc == 0) {
         return 0;
@@ -266,7 +268,10 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
 
-    my $rc_copy = $rc;
+    if (defined($opt_signum)) {
+        ${$opt_signum} = $rc;
+    }
+
     my $dump = 0;
 
     if ($rc & 0x80) {
@@ -276,7 +281,7 @@ sub check_return_value ($)
 
     # check for ABRT, KILL or TERM
     if ($rc == 6 || $rc == 9 || $rc == 15) {
-        return (0, $rc_copy);
+        return 0;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -286,7 +291,7 @@ sub check_return_value ($)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return (0, $rc_copy);
+    return 0;
 }
 
 sub Kill ()
@@ -316,17 +321,18 @@ sub Wait ($)
 
 }
 
-sub TimedWait ($)
+sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opt_signum = shift;
 
     $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
 
     my $status;
     my $pid = VmsProcess::TimedWaitPid ($self->{PROCESS}, $timeout, $status);
     if ($pid > 0) {
-      return $self->check_return_value ($status);
+      return $self->check_return_value ($status, $opt_signum);
     }
     return -1;
 }
