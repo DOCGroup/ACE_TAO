@@ -174,7 +174,7 @@ protected:
 
   // = Synchronization objects used for thread-safe streams.
   /// Protect the stream against race conditions.
-  ACE_SYNCH_MUTEX_T lock_;
+  mutable ACE_SYNCH_MUTEX_T lock_;
 
 #if defined (ACE_HAS_THREADS)
   /// Attributes to initialize condition with.
