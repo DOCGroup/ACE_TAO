@@ -1207,11 +1207,11 @@ ACE_ALLOC_HOOK_DEFINE(ACE_Configuration_Section_Key_Heap)
 //////////////////////////////////////////////////////////////////////////////
 
 ACE_Configuration_Heap::ACE_Configuration_Heap ()
-  : allocator_ (0),
-    index_ (0),
+  : allocator_ (nullptr),
+    index_ (nullptr),
     default_map_size_ (0)
 {
-  ACE_Configuration_Section_Key_Heap *temp = 0;
+  ACE_Configuration_Section_Key_Heap *temp = nullptr;
 
   ACE_NEW (temp, ACE_Configuration_Section_Key_Heap (ACE_TEXT ("")));
   root_ = ACE_Configuration_Section_Key (temp);
