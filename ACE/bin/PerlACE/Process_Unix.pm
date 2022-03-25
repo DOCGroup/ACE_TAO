@@ -577,13 +577,13 @@ sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
-    my $opt_signum = shift;
+    my $opts = shift;
 
     if ($self->{RUNNING} == 0) {
         return 0;
     }
 
-    my $status = $self->TimedWait ($timeout, $opt_signum);
+    my $status = $self->TimedWait ($timeout, $opts);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -638,13 +638,13 @@ sub TerminateWaitKill ($)
 }
 
 # Really only for internal use.
-# The second parameter is an 8-bit integer output indicating whether
-# there was a core dump and the signal the process died from, if any.
+# The second parameter is an output indicating whether there was
+# a core dump and the signal the process died from, if any.
 sub check_return_value ($;$)
 {
     my $self = shift;
     my $rc = shift;
-    my $opt_signum = shift;
+    my $opts = shift // {};
 
     # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
@@ -666,10 +666,6 @@ sub check_return_value ($;$)
     # Ignore NSK 16-bit completion code
     $rc &= 0xff if $is_NSK;
 
-    if (defined($opt_signum)) {
-        ${$opt_signum} = $rc;
-    }
-
     # Remember Core dump flag
     my $dump = 0;
 
@@ -678,9 +674,14 @@ sub check_return_value ($;$)
         $dump = 1;
     }
 
-    # check for ABRT, KILL or TERM
-    if ($rc == 6 || $rc == 9 || $rc == 15) {
-        return 0;
+    my $signal_ref = $opts->{signal_ref};
+    if (defined $signal_ref) {
+        ${$signal_ref} = $rc;
+    }
+
+    my $dump_ref = $opts->{dump_ref};
+    if (defined $dump_ref) {
+        ${$dump_ref} = $dump;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -809,7 +810,7 @@ sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
-    my $opt_signum = shift;
+    my $opts = shift;
 
     if (!defined $self->{PROCESS}) {
         return 0;
@@ -825,7 +826,7 @@ sub TimedWait ($;$)
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?, $opt_signum);
+            return $self->check_return_value ($?, $opts);
         }
         select(undef, undef, undef, 0.1);
     }
