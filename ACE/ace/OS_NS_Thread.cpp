@@ -13,13 +13,13 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Category.h" // for ACE_ASSERT
-#include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #ifdef ACE_HAS_GETTID
 #  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
+#include <memory>
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
