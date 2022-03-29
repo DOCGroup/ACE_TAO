@@ -234,6 +234,14 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (
 {
 }
 
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>& operator= (
+  const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs)
+{
+  value_ = rhs.value_;
+  return *this;
+}
+
 ACE_INLINE unsigned long
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator++ (void)
 {
