@@ -203,6 +203,9 @@ sub Spawn ()
     return 0;
 }
 
+# The second argument is an optional output argument that, if present,
+# will be passed to check_return_value function to get the signal number
+# the process has received, if any, and/or whether there was a core dump.
 sub WaitKill ($;$)
 {
     my $self = shift;
@@ -249,7 +252,9 @@ sub TerminateWaitKill ($)
     return $self->WaitKill ($timeout);
 }
 
-# really only for internal use
+# Really only for internal use.
+# The second argument is an output argument indicating whether there was
+# a core dump and/or the signal number the process has died from, if any.
 sub check_return_value ($;$)
 {
     my $self = shift;
@@ -322,6 +327,9 @@ sub Wait ($)
 
 }
 
+# The second argument is an optional output argument that, if present,
+# will contain the signal number that the process has received, if any,
+# and/or whether there was a core dump.
 sub TimedWait ($;$)
 {
     my $self = shift;
