@@ -15,31 +15,6 @@ jobs:
     strategy:
       matrix:
         include:
-          - name: VS2017WChar
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            vcpkgarch: x64-windows
-            vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
-            OptionalFeatures: uses_wchar=1
-          - name: VS2017Debug64
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            vcpkgarch: x64-windows
-            vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
-          - name: VS2017Release64
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            vcpkgarch: x64-windows
-            vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
           - name: VS2019WChar
             vmimage: windows-2019
             mpctype: vs2019
