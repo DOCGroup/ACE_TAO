@@ -203,16 +203,11 @@ sub Spawn ()
     return 0;
 }
 
-# The second argument is an optional output argument that, if present,
-# will be passed to check_return_value function to get the signal number
-# the process has received, if any, and/or whether there was a core dump.
-sub WaitKill ($;$)
+sub WaitKill ($)
 {
     my $self = shift;
     my $timeout = shift;
-    my $opts = shift;
-
-    my $status = $self->TimedWait ($timeout, $opts);
+    my $status = $self->TimedWait ($timeout);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -252,14 +247,11 @@ sub TerminateWaitKill ($)
     return $self->WaitKill ($timeout);
 }
 
-# Really only for internal use.
-# The second argument is an output argument indicating whether there was
-# a core dump and/or the signal number the process has died from, if any.
-sub check_return_value ($;$)
+# really only for internal use
+sub check_return_value ($)
 {
     my $self = shift;
     my $rc = shift;
-    my $opts = shift // {};
 
     if ($rc == 0) {
         return 0;
@@ -270,7 +262,8 @@ sub check_return_value ($;$)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        return ($rc >> 8);
+        $rc >>= 8;
+        return $rc;
     }
 
     my $dump = 0;
@@ -280,14 +273,9 @@ sub check_return_value ($;$)
         $dump = 1;
     }
 
-    my $signal_ref = $opts->{signal_ref};
-    if (defined $signal_ref) {
-        ${$signal_ref} = $rc;
-    }
-
-    my $dump_ref = $opts->{dump_ref};
-    if (defined $dump_ref) {
-        ${$dump_ref} = $dump;
+    # check for ABRT, KILL or TERM
+    if ($rc == 6 || $rc == 9 || $rc == 15) {
+        return 0;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -297,7 +285,7 @@ sub check_return_value ($;$)
 
     print STDERR "signal $rc : ", $signame[$rc], "\n";
 
-    return 255;
+    return 0;
 }
 
 sub Kill ()
@@ -327,21 +315,17 @@ sub Wait ($)
 
 }
 
-# The second argument is an optional output argument that, if present,
-# will contain the signal number that the process has received, if any,
-# and/or whether there was a core dump.
-sub TimedWait ($;$)
+sub TimedWait ($)
 {
     my $self = shift;
     my $timeout = shift;
-    my $opts = shift;
 
     $timeout *= $PerlACE::Process::WAIT_DELAY_FACTOR;
 
     my $status;
     my $pid = VmsProcess::TimedWaitPid ($self->{PROCESS}, $timeout, $status);
     if ($pid > 0) {
-      return $self->check_return_value ($status, $opts);
+      return $self->check_return_value ($status);
     }
     return -1;
 }
