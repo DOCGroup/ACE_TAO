@@ -13,33 +13,9 @@ concurrency:
 jobs:
   build:
     strategy:
+      fail-fast: false
       matrix:
         include:
-          - name: VS2017WChar
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            vcpkgarch: x64-windows
-            vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar]'
-            OptionalFeatures: uses_wchar=1
-          - name: VS2017Debug64
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Debug
-            vcpkgarch: x64-windows
-            vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c
-          - name: VS2017Release64
-            vmimage: windows-2016
-            mpctype: vs2017
-            BuildPlatform: x64
-            BuildConfiguration: Release
-            vcpkgarch: x64-windows
-            vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c
           - name: VS2019WChar
             vmimage: windows-2019
             mpctype: vs2019
@@ -121,7 +97,7 @@ jobs:
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v7
       with:
-        vcpkgGitCommitId: 70033dbb31527fb3e69654731f540f59c87787f9
+        vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
         vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
