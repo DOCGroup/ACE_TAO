@@ -157,9 +157,6 @@ public:
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;
 
-  /// Assignment operator.
-  ACE_Sig_Action& operator = (const ACE_Sig_Action &s);
-
   /// Default dtor.
   ~ACE_Sig_Action ();
 

@@ -325,19 +325,6 @@ ACE_INET_Addr::ACE_INET_Addr (const ACE_INET_Addr &sa)
   this->set (sa);
 }
 
-// Assignment operator.
-
-ACE_INET_Addr &
-ACE_INET_Addr::operator = (const ACE_INET_Addr &sa)
-{
-  ACE_TRACE ("ACE_INET_Addr::operator=");
-  base_set (sa.get_type (), sa.get_size());
-  this->reset ();
-  this->set (sa);
-
-  return *this;
-}
-
 // Initializes a ACE_INET_Addr from a PORT_NUMBER and a 32 bit Internet
 // address.
 int

@@ -81,14 +81,6 @@ ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
   this->set (sa);
 }
 
-// Assignment operator.
-ACE_SPIPE_Addr&
-ACE_SPIPE_Addr::operator = (const ACE_SPIPE_Addr &sa)
-{
-    this->set(sa);
-    return *this;
-}
-
 int
 ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
                      gid_t gid,

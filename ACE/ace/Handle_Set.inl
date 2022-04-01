@@ -63,24 +63,6 @@ ACE_Handle_Set::operator = (const ACE_Handle_Set &rhs)
 
   return *this;
 }
-
-ACE_INLINE
-ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &rhs)
-{
-  ACE_TRACE ("ACE_Handle_Set::ACE_Handle_Set");
-
-  if (rhs.size_ > 0)
-    {
-      this->size_ = rhs.size_;
-      this->max_handle_ = rhs.max_handle_;
-      this->min_handle_ = rhs.min_handle_;
-      this->mask_ = rhs.mask_;
-    }
-  else
-    {
-      this->reset ();
-    }
-}
 #endif /* ACE_HAS_BIG_FD_SET */
 
 /// Returns the number of the large bit.

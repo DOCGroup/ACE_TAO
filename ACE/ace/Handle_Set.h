@@ -71,10 +71,19 @@ public:
    */
   ACE_Handle_Set (const fd_set &mask);
 
+
 #if defined (ACE_HAS_BIG_FD_SET)
-  /// Constructor optimizes for cases where <size_> == 0.
-  ACE_Handle_Set (const ACE_Handle_Set &);
+  /// Assignment operator optimizes for cases where size_ == 0.
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
+  /// Copy constructor optimizes for cases where size_ == 0
+  ACE_Handle_Set (const ACE_Handle_Set &rhs);
+#else
+  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
+  ACE_Handle_Set (const ACE_Handle_Set &) = default;
 #endif /* ACE_HAS_BIG_FD_SET */
+
+  ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
+  ACE_Handle_Set (ACE_Handle_Set &&) = default;
 
   // = Methods for manipulating bitsets.
   /// Initialize the bitmask to all 0s and reset the associated fields.
@@ -117,19 +126,6 @@ public:
   /// Returns a pointer to the underlying @c fd_set.  Returns 0 if
   /// there are no handle bits set (<size_> == 0).
   fd_set *fdset ();
-
-#if defined (ACE_HAS_BIG_FD_SET)
-  /// Assignment operator optimizes for cases where size_ == 0.
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
-  /// Copy constructor optimizes for cases where size_ == 0
-  ACE_Handle_Set (const ACE_Handle_Set &rhs);
-#else
-  ACE_Handle_Set & operator= (const ACE_Handle_Set &) = default;
-  ACE_Handle_Set (const ACE_Handle_Set &) = default;
-#endif /* ACE_HAS_BIG_FD_SET */
-
-  ACE_Handle_Set & operator= (ACE_Handle_Set &&) = default;
-  ACE_Handle_Set (ACE_Handle_Set &&) = default;
 
   /// Dump the state of an object.
   void dump () const;

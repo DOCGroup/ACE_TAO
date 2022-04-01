@@ -78,7 +78,6 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
 
-  ACE_Time_Value (const ACE_Time_Value&) = default;
   ACE_Time_Value (ACE_Time_Value&&) = default;
 
   /// Construct the ACE_Time_Value object from a chrono duration.
