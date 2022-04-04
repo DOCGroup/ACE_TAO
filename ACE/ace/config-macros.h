@@ -274,7 +274,7 @@
 
 
 // Compiler-specific configs can define ACE_FALLTHROUGH but if not,
-// and it's a C++17 or hgher compiler, use the defined mechanism.
+// and it's a C++17 or higher compiler, use the defined mechanism.
 #if !defined ACE_FALLTHROUGH
 #  if defined ACE_HAS_CPP17
 #    define ACE_FALLTHROUGH [[fallthrough]]
