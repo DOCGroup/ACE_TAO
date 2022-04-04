@@ -316,7 +316,7 @@ sub Kill ()
     if ($self->{RUNNING}) {
         kill ('KILL', $self->{PROCESS});
         waitpid ($self->{PROCESS}, 0);
-        $self->check_return_value ($?);
+        $self->check_return_value ($?, {self_crash => 1});
     }
 
     $self->{RUNNING} = 0;

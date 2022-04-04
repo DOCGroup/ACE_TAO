@@ -784,7 +784,7 @@ sub Kill ($)
             my $pid = waitpid ($self->{PROCESS}, WNOHANG);
             if ($pid > 0) {
                 if (! $ignore_return_value) {
-                    $self->check_return_value ($?);
+                    $self->check_return_value ($?, {self_crash => 1});
                 }
                 last;
             }
