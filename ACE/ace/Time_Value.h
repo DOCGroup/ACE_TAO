@@ -67,9 +67,6 @@ public:
   /// Constructor.
   explicit ACE_Time_Value (time_t sec, suseconds_t usec = 0);
 
-  /// Assign @ tv to this
-  ACE_Time_Value (const ACE_Time_Value &tv);
-
   // = Methods for converting to/from various time formats.
 
   /// Construct the ACE_Time_Value from a timeval.
@@ -78,6 +75,7 @@ public:
   /// Construct the ACE_Time_Value object from a timespec_t.
   explicit ACE_Time_Value (const timespec_t &t);
 
+  ACE_Time_Value (const ACE_Time_Value&) = default;
   ACE_Time_Value (ACE_Time_Value&&) = default;
 
   /// Construct the ACE_Time_Value object from a chrono duration.
