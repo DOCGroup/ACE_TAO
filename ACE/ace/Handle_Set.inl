@@ -31,14 +31,10 @@ ACE_Handle_Set::ACE_Handle_Set (const ACE_Handle_Set &rhs)
 
   if (rhs.size_ > 0)
     {
-      this->size_ =
-        rhs.size_;
-      this->max_handle_ =
-        rhs.max_handle_;
-      this->min_handle_ =
-        rhs.min_handle_;
-      this->mask_ =
-        rhs.mask_;
+      this->size_ = rhs.size_;
+      this->max_handle_ = rhs.max_handle_;
+      this->min_handle_ = rhs.min_handle_;
+      this->mask_ = rhs.mask_;
     }
   else
     this->reset ();
