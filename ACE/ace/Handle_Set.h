@@ -71,7 +71,6 @@ public:
    */
   ACE_Handle_Set (const fd_set &mask);
 
-
 #if defined (ACE_HAS_BIG_FD_SET)
   /// Assignment operator optimizes for cases where size_ == 0.
   ACE_Handle_Set & operator= (const ACE_Handle_Set &rhs);
