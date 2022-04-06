@@ -615,16 +615,17 @@ sub WaitKill ($;$)
 
 # Do a Spawn and immediately WaitKill
 
-sub SpawnWaitKill ($)
+sub SpawnWaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if ($self->Spawn () == -1) {
         return -1;
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, $opts);
 }
 
 sub TerminateWaitKill ($)
@@ -637,14 +638,19 @@ sub TerminateWaitKill ($)
         kill ('TERM', $self->{PROCESS});
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, {self_crash => 1});
 }
 
 # Really only for internal use.
-# The second optional argument indicates whether the corresponding process
-# may deliberately send a signal to itself or not. It also contains output
-# data indicating whether there was a core dump and/or the signal nubmer
-# the process has died from, if any.
+# The second optional argument is a hash reference with the following keys.
+# 1. "self_crash" indicates if the process may receive a signal intentionally.
+# In that case, a signal may originate from the process, e.g., by calling abort(),
+# or from an associated Perl script, e.g., by calling kill. If "self_crash" is
+# missing, it has the same meaning as if "self_crash" is evaluated to false.
+# A signal intentionally received can be either KILL, TERM, or ABRT. Any other
+# signal indicates there was an actual error.
+# 2. "signal_ref" is a scalar reference that will hold the signal number, if any.
+# 3. "dump_ref" is a scalar reference that indicates if there was a core dump.
 sub check_return_value ($)
 {
     my $self = shift;
