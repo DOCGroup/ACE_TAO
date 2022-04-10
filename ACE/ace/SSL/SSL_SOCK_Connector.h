@@ -160,7 +160,7 @@ public:
                           int perms = 0);
 
   /// Default dtor.
-  ~ACE_SSL_SOCK_Connector (void);
+  virtual ~ACE_SSL_SOCK_Connector (void);
 
   /**
    * Actively connect to a peer, producing a connected @c ACE_SSL_SOCK_Stream
