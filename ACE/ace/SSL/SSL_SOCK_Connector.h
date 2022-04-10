@@ -291,8 +291,8 @@ public:
 
 protected:
   /// Complete non-blocking SSL active connection.
-  int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
-                   const ACE_Time_Value *timeout);
+  virtual int ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
+                           const ACE_Time_Value *timeout);
 
 protected:
   /// The class that does all of the non-secure socket connection.
