@@ -573,16 +573,20 @@ sub Spawn ()
     return 0;
 }
 
-sub WaitKill ($)
+# The second argument is an optional output argument that, if present,
+# will be passed to check_return_value function to get the signal number
+# the process has received, if any, and/or whether there was a core dump.
+sub WaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if ($self->{RUNNING} == 0) {
         return 0;
     }
 
-    my $status = $self->TimedWait ($timeout);
+    my $status = $self->TimedWait ($timeout, $opts);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -611,16 +615,17 @@ sub WaitKill ($)
 
 # Do a Spawn and immediately WaitKill
 
-sub SpawnWaitKill ($)
+sub SpawnWaitKill ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if ($self->Spawn () == -1) {
         return -1;
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, $opts);
 }
 
 sub TerminateWaitKill ($)
@@ -633,14 +638,24 @@ sub TerminateWaitKill ($)
         kill ('TERM', $self->{PROCESS});
     }
 
-    return $self->WaitKill ($timeout);
+    return $self->WaitKill ($timeout, {self_crash => 1});
 }
 
-# really only for internal use
+# Really only for internal use.
+# The second optional argument is a hash reference with the following keys.
+# 1. "self_crash" indicates if the process may receive a signal intentionally.
+# In that case, a signal may originate from the process, e.g., by calling abort(),
+# or from an associated Perl script, e.g., by calling kill. If "self_crash" is
+# missing, it has the same meaning as if "self_crash" is evaluated to false.
+# A signal intentionally received can be either KILL, TERM, or ABRT. Any other
+# signal indicates there was an actual error.
+# 2. "signal_ref" is a scalar reference that will hold the signal number, if any.
+# 3. "dump_ref" is a scalar reference that indicates if there was a core dump.
 sub check_return_value ($)
 {
     my $self = shift;
     my $rc = shift;
+    my $opts = shift // {};
 
     # NSK OSS has a 32-bit waitpid() status
     my $is_NSK = ($^O eq "nonstop_kernel");
@@ -656,8 +671,7 @@ sub check_return_value ($)
         return ($rc >> 8);
     }
     elsif (($rc & 0xff) == 0) {
-        $rc >>= 8;
-        return $rc;
+        return ($rc >> 8);
     }
 
     # Ignore NSK 16-bit completion code
@@ -671,9 +685,22 @@ sub check_return_value ($)
         $dump = 1;
     }
 
-    # check for ABRT, KILL or TERM
-    if ($rc == 6 || $rc == 9 || $rc == 15) {
+    # A undef means the process does not self crash
+    my $self_crash = $opts->{self_crash};
+
+    # ABRT, KILL or TERM can be sent deliberately
+    if ($self_crash && ($rc == 6 || $rc == 9 || $rc == 15)) {
         return 0;
+    }
+
+    my $signal_ref = $opts->{signal_ref};
+    if (defined $signal_ref) {
+        ${$signal_ref} = $rc;
+    }
+
+    my $dump_ref = $opts->{dump_ref};
+    if (defined $dump_ref) {
+        ${$dump_ref} = $dump;
     }
 
     print STDERR "ERROR: <", $self->{EXECUTABLE},
@@ -763,7 +790,7 @@ sub Kill ($)
             my $pid = waitpid ($self->{PROCESS}, WNOHANG);
             if ($pid > 0) {
                 if (! $ignore_return_value) {
-                    $self->check_return_value ($?);
+                    $self->check_return_value ($?, {self_crash => 1});
                 }
                 last;
             }
@@ -798,10 +825,14 @@ sub Wait ($)
 
 }
 
-sub TimedWait ($)
+# The second argument is an optional output argument that, if present,
+# will contain the signal number that the process has received, if any,
+# and/or whether there was a core dump.
+sub TimedWait ($;$)
 {
     my $self = shift;
     my $timeout = shift;
+    my $opts = shift;
 
     if (!defined $self->{PROCESS}) {
         return 0;
@@ -817,7 +848,7 @@ sub TimedWait ($)
     while ($timeout-- != 0) {
         my $pid = waitpid ($self->{PROCESS}, &WNOHANG);
         if ($pid != 0 && $? != -1) {
-            return $self->check_return_value ($?);
+            return $self->check_return_value ($?, $opts);
         }
         select(undef, undef, undef, 0.1);
     }
