@@ -637,7 +637,8 @@ def move_packages (name, stage_dir, package_dir):
     print ("\tZip file...")
     target_file = join (package_dir, name + ".zip")
     shutil.copy (join (stage_dir, "zip-archive.zip"), target_file)
-    ex ("md5sum " + target_file + " > " + target_file + ".md5")
+    ex ("cd " +  package_dir + "; md5sum " + os.path.basename(target_file) + " > " + os.path.basename(target_file) + ".md5")
+    ex ("cd " +  package_dir + "; sha256sum " + os.path.basename(target_file) + " > " + os.path.basename(target_file) + ".sha256")
 
 
     tar_file = join (stage_dir, "tar-archive.tar")
@@ -647,12 +648,14 @@ def move_packages (name, stage_dir, package_dir):
     print ("\tBzip2 file.....")
     shutil.copy (tar_file, target_file)
     ex ("bzip2 " + target_file)
-    ex ("md5sum " + target_file + ".bz2 > " + target_file + ".bz2.md5")
+    ex ("cd " + package_dir + "; md5sum " + os.path.basename(target_file) + ".bz2 > " + os.path.basename(target_file) + ".bz2.md5")
+    ex ("cd " + package_dir + "; sha256sum " + os.path.basename(target_file) + ".bz2 > " + os.path.basename(target_file) + ".bz2.sha256")
 
     print ("\tgzip file.....")
     shutil.copy (tar_file, target_file)
     ex ("gzip " + target_file)
-    ex ("md5sum " + target_file + ".gz > " + target_file + ".gz.md5")
+    ex ("cd " + package_dir + "; md5sum " + os.path.basename(target_file) + ".gz > " + os.path.basename(target_file) + ".gz.md5")
+    ex ("cd " + package_dir + "; sha256sum " + os.path.basename(target_file) + ".gz > " + os.path.basename(target_file) + ".gz.sha256")
 
 def create_file_lists (base_dir, prefix, exclude):
     """ Creates two lists of files:  files that need CR->CRLF
