@@ -158,12 +158,12 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
-    - name: Add apt repo
+    - name: Add apt repo ${{ matrix.Repo }}
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
       if: matrix.Repo != ''
-    - name: Add apt packages
+    - name: Add apt packages ${{ matrix.PackageDeps }}
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
