@@ -185,7 +185,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'u':
         // Usage, same as error
-	ACE_FALLTHROUGH;
+        ACE_FALLTHROUGH;
       default:
         ACE_DEBUG ((LM_DEBUG, "%s -i interface\n", argv[0]));
         ACE_OS::exit (1);

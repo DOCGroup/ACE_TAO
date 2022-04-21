@@ -123,7 +123,7 @@ STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
         break;
       case 'u':
         // usage same as unknown
-	ACE_FALLTHROUGH;
+        ACE_FALLTHROUGH;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
         "%n:\n"
