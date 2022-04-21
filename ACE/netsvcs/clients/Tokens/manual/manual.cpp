@@ -122,7 +122,8 @@ STDIN_Token::parse_args (int argc, ACE_TCHAR *argv[])
         ignore_deadlock_ = 1;
         break;
       case 'u':
-        // usage: fallthrough
+        // usage same as unknown
+	ACE_FALLTHROUGH;
       default:
         ACE_ERROR_RETURN ((LM_ERROR,
         "%n:\n"

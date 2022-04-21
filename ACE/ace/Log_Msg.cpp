@@ -1624,7 +1624,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                           // according to %I
                   *bp++ = '\n';
                   --bspace;
-                  /* fallthrough */
+                  ACE_FALLTHROUGH;
 
                 case 'I': // Indent with nesting_depth*width spaces
                   // Caller can do %*I to override nesting indent, and
@@ -2358,7 +2358,7 @@ bool ACE_Log_Formatter::process_conversion ()
     // from the "varags" list so they will end up returning true (keep parsing)
     case '$':
       this->copy_trunc ("\n", 1);
-      // fall-through
+      ACE_FALLTHROUGH;
     case 'I':
       len = std::min (static_cast<int> (this->bspace_),
                       this->logger_->trace_depth_ *

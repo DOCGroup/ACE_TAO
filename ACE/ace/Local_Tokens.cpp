@@ -1223,6 +1223,7 @@ ACE_Token_Proxy::acquire (int notify,
               ACE_RETURN (-1);
             }
           // Else, fallthrough and block!
+	  ACE_FALLTHROUGH;
 
         case EWOULDBLOCK :
           if (this->debug_)

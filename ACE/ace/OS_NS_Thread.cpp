@@ -3175,13 +3175,13 @@ struct RWLockCleaner {
       {
       case RWLC_CondWriters:
         ACE_OS::cond_destroy (&this->rw_->waiting_writers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondReaders:
         ACE_OS::cond_destroy (&this->rw_->waiting_readers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_Lock:
         ACE_OS::mutex_destroy (&this->rw_->lock_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondAttr:
         ACE_OS::condattr_destroy (this->attr_);
       }
