@@ -121,7 +121,6 @@ ACE_SString::operator== (const ACE_SString &s) const
 }
 
 // Less than comparison operator.
-
 ACE_INLINE bool
 ACE_SString::operator < (const ACE_SString &s) const
 {

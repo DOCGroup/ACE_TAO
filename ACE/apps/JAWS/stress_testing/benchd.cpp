@@ -184,7 +184,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         INTERFACE = get_opt.opt_arg ();
         break;
       case 'u':
-        // Usage fallthrough.
+        // Usage, same as error
+        ACE_FALLTHROUGH;
       default:
         ACE_DEBUG ((LM_DEBUG, "%s -i interface\n", argv[0]));
         ACE_OS::exit (1);

@@ -2724,7 +2724,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
               this->pending_tail_ = 0;
               break; // switch
             }
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
 
         case ACE_Dynamic_Message_Strategy::LATE:
           // Make sure the head of the late queue is set (there may

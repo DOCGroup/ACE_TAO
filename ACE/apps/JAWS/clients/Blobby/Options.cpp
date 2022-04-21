@@ -50,7 +50,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'o':
         this->offset_ = ACE_OS::atoi (get_opt.opt_arg ());
         break;
-        // Usage fallthrough.
       default:
         ACE_DEBUG ((LM_DEBUG, "%s -h hostname -f filename -[r/w] [-p port] [-l length] [-o offset] [-d]\n", argv[0]));
         ACE_OS::exit (1);

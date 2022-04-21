@@ -1034,9 +1034,9 @@ ACE_Select_Reactor_Impl::bit_ops (ACE_HANDLE handle,
       // be treated here  which means we need to clear the handle|mask
       // from the current dispatch handler
       this->clear_dispatch_mask (handle, mask);
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     case ACE_Reactor::SET_MASK:
-      /* FALLTHRU */
+      ACE_FALLTHROUGH;
     case ACE_Reactor::ADD_MASK:
 
       // The following code is rather subtle...  Note that if we are

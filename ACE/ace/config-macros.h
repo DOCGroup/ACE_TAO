@@ -272,6 +272,17 @@
 # define ACE_NOTREACHED(a) a
 #endif /* ghs || ..... */
 
+
+// Compiler-specific configs can define ACE_FALLTHROUGH but if not,
+// and it's a C++17 or higher compiler, use the defined mechanism.
+#if !defined ACE_FALLTHROUGH
+#  if defined ACE_HAS_CPP17
+#    define ACE_FALLTHROUGH [[fallthrough]]
+#  else
+#    define ACE_FALLTHROUGH
+#  endif /* ACE_HAS_CPP17 */
+#endif /* ACE_FALLTHROUGH */
+
 // ============================================================================
 // ACE_ALLOC_HOOK* macros
 //

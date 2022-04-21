@@ -143,55 +143,54 @@ ACE_Name_Proxy::recv_reply (ACE_Name_Request &reply)
   // implementation assumes that the first 4 bytes are the length of
   // the message.
   ssize_t n = this->peer_.recv ((void *) &reply, sizeof (ACE_UINT32));
-
-  switch (n)
+  if (n != sizeof (ACE_UINT32))
     {
-    case -1:
-      ACELIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("****************** recv_reply returned -1\n")));
-      // FALLTHROUGH
-    default:
-      ACELIB_ERROR ((LM_ERROR,
-                  ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
-                  ACE_TEXT ("recv failed"),
-                  n,
-                  sizeof (ACE_UINT32)));
-      // FALLTHROUGH
-    case 0:
+      // Not the correct number of bytes. Sort out just what kind of fail,
+      // but this is wrong and will end up failing the call.
+      if (n == -1)
+        {
+          ACELIB_DEBUG ((LM_DEBUG,
+                         ACE_TEXT ("****************** recv_reply returned -1\n")));
+        }
+      else if (n != 0)
+        {
+          ACELIB_ERROR ((LM_ERROR,
+                         ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
+                         ACE_TEXT ("recv failed"),
+                         n,
+                         sizeof (ACE_UINT32)));
+        }
+      // If 0, no diagnostic - the peer shut it down.
       // We've shutdown unexpectedly
       return -1;
-      // NOTREACHED
-    case sizeof (ACE_UINT32):
-      {
-        // Transform the length into host byte order.
-        ssize_t length = ACE_NTOHL (reply.length ());
+    }
 
-        // Receive the rest of the request message.
-        // @@ beware of blocking read!!!.
-        n = this->peer_.recv ((void *) (((char *) &reply)
-                                        + sizeof (ACE_UINT32)),
-                              length - sizeof (ACE_UINT32));
+  // Transform the length into host byte order.
+  ssize_t length = ACE_NTOHL (reply.length ());
 
-        // Subtract off the size of the part we skipped over...
-        if (n != ssize_t (length - sizeof (ACE_UINT32)))
-          {
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p expected %d, got %d\n"),
-                        ACE_TEXT ("invalid length"),
-                        length,
-                        n));
-            return -1;
-          }
+  // Receive the rest of the request message.
+  // @@ beware of blocking read!!!.
+  n = this->peer_.recv ((void *) (((char *) &reply) + sizeof (ACE_UINT32)),
+                        length - sizeof (ACE_UINT32));
 
-        // Decode the request into host byte order.
-        if (reply.decode () == -1)
-          {
-            ACELIB_ERROR ((LM_ERROR,
-                        ACE_TEXT ("%p\n"),
-                        ACE_TEXT ("decode failed")));
-            return -1;
-          }
-      }
+  // Subtract off the size of the part we skipped over...
+  if (n != ssize_t (length - sizeof (ACE_UINT32)))
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p expected %d, got %d\n"),
+                     ACE_TEXT ("invalid length"),
+                     length,
+                     n));
+      return -1;
+    }
+
+  // Decode the request into host byte order.
+  if (reply.decode () == -1)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("%p\n"),
+                     ACE_TEXT ("decode failed")));
+      return -1;
     }
   return 0;
 }

@@ -44,7 +44,8 @@ parse_args (int argc, ACE_TCHAR *argv[])
         iterations = ACE_OS::atoi (getopt.opt_arg ());
         break;
       case 'u':
-        // usage fallthrough
+        // usage same as unknown.
+        ACE_FALLTHROUGH;
       default:
         ACE_ERROR ((LM_ERROR,
                     "%n: -m max_message_size (in k) -i iterations\n%a",
