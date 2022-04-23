@@ -559,9 +559,9 @@ TAO_FT_Naming_Server::parse_args (int argc,
               break;
             }
         }
-        // fallthrough
+        ACE_FALLTHROUGH;
       case '?':
-        // fallthrough
+        ACE_FALLTHROUGH;
       default:
         ORBSVCS_ERROR ((LM_ERROR,ACE_TEXT ("Unknown arg %c\n"), c ));
         ORBSVCS_ERROR_RETURN ((LM_ERROR,

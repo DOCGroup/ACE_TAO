@@ -151,7 +151,7 @@ Log::get_preamble ()
             if (this->procs_.get(first) == 0)
               first->proc_name(a2);
           }
-          //fallthru
+          ACE_FALLTHROUGH;
         default:
           {
             char ext[10];

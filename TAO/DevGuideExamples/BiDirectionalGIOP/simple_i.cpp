@@ -16,10 +16,6 @@ Simple_i::Simple_i (CORBA::ORB_ptr orb, int callback_count)
 {
 }
 
-Simple_i::~Simple_i (void)
-{
-}
-
 CORBA::Long Simple_i::test_method (CORBA::Boolean do_callback)
 {
   if (do_callback) {

@@ -159,7 +159,7 @@ Life_Cycle_Service_Server::parse_args (int argc,
         ORBSVCS_ERROR ((LM_ERROR,
                     "%s: unknown arg, -%c\n",
                     argv[0], char(opt)));
-        // fallthrough
+        ACE_FALLTHROUGH;
       case '?':
         ORBSVCS_DEBUG ((LM_DEBUG,
                     ACE_TEXT("usage:  %s")
