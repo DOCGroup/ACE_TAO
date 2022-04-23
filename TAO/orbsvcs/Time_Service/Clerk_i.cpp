@@ -138,7 +138,7 @@ Clerk_i::parse_args (int argc,
        break;
 
       case '?':  // display help for use of the server.
-        /* FALLTHRU */
+        ACE_FALLTHROUGH;
       default:
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")

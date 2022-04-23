@@ -263,7 +263,7 @@ Test_ECG::run (int argc, ACE_TCHAR* argv[])
         default:
           ACE_ERROR ((LM_WARNING, "Unknown scheduling type %d\n",
                       this->scheduling_type_));
-          /*FALLTHROUGH*/
+          ACE_FALLTHROUGH;
         case Test_ECG::ss_global:
           break;
 
