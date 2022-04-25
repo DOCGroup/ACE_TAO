@@ -246,8 +246,8 @@ public:
   static int at_exit (ACE_Cleanup *object, void *param = 0, const char* name = 0);
 
 #if defined (ACE_HAS_TSS_EMULATION)
-  static int init_tss (void);
-  int init_tss_i (void);
+  static int init_tss ();
+  int init_tss_i ();
 #endif
 
   /**

@@ -46,7 +46,7 @@ CORBA::AbstractBase::_stubobj () const
           return this->equivalent_obj_->_stubobj ();
         }
     }
-  return 0;
+  return nullptr;
 }
 
 ACE_INLINE

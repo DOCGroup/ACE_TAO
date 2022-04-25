@@ -553,7 +553,7 @@ ACEXML_Parser::parse_includesect (void)
                   return 0;
                 }
             }
-          // Fallthrough
+          ACE_FALLTHROUGH;
         default:
           this->fatal_error (ACE_TEXT ("Invalid includeSect"));
       }
@@ -993,7 +993,7 @@ ACEXML_Parser::parse_content (const ACEXML_Char* startname,
 //                 cdata_length = 0;
 //                 break;
 //               }
-            // Fall thru...
+            ACE_FALLTHROUGH;
           default:
             ++cdata_length;
             this->obstack_.grow (ch);
@@ -2860,7 +2860,7 @@ ACEXML_Parser::parse_processing_instruction (void)
               }
             break;
           case 0x0A:
-            // Fall thru...
+            ACE_FALLTHROUGH;
           default:
             if (state == 1)
               this->obstack_.grow ('?');

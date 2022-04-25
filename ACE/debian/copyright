@@ -21,14 +21,14 @@ Files:     *
 Copyright: 1993-2019 Douglas C. Schmidt and his research group at
            Washington University, University of California, Irvine,
            and Vanderbilt University
-License:   other-BSD
+License:   DOC
 
 Files:     debian/*
 Copyright: 1998, Ossama Othman <ossama@debian.org>
            Brian Nelson <pyro@debian.org>
            Konstantinos Margaritis <markos@debian.org>
            Thomas Girard <thomas.g.girard@free.fr>
-License:   other-BSD
+License:   DOC
 
 Files:     apps/gperf/*
 Copyright: 1989 Free Software Foundation, Inc.
@@ -131,7 +131,7 @@ License: BSD-4.2
  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  POSSIBILITY OF SUCH DAMAGE.
 
-License: other-BSD
+License: DOC
  Copyright and Licensing Information for ACE(TM), TAO(TM), CIAO(TM),
  DAnCE(TM), and CoSMIC(TM)
  .

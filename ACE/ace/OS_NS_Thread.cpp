@@ -13,13 +13,13 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/Log_Category.h" // for ACE_ASSERT
-#include "ace/Auto_Ptr.h"
 #include "ace/Thread_Mutex.h"
 #include "ace/Condition_Thread_Mutex.h"
 #include "ace/Guard_T.h"
 #ifdef ACE_HAS_GETTID
 #  include "ace/OS_NS_sys_resource.h" // syscall for gettid impl
 #endif
+#include <memory>
 
 extern "C" void
 ACE_MUTEX_LOCK_CLEANUP_ADAPTER_NAME (void *args)
@@ -3175,13 +3175,13 @@ struct RWLockCleaner {
       {
       case RWLC_CondWriters:
         ACE_OS::cond_destroy (&this->rw_->waiting_writers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondReaders:
         ACE_OS::cond_destroy (&this->rw_->waiting_readers_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_Lock:
         ACE_OS::mutex_destroy (&this->rw_->lock_);
-        // FALLTHROUGH
+        ACE_FALLTHROUGH;
       case RWLC_CondAttr:
         ACE_OS::condattr_destroy (this->attr_);
       }
@@ -3853,9 +3853,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           return -1;
         }
     }
-#else
-  ACE_UNUSED_ARG (thr_name);
-#   endif
+#   endif /* ACE_HAS_PTHREAD_ATTR_SETNAME */
 
       // *** Set Scope
 #   if !defined (ACE_LACKS_THREAD_PROCESS_SCOPING)
@@ -4004,6 +4002,22 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #   endif /* sun && ACE_HAS_ONLY_SCHED_OTHER */
   auto_thread_args.release ();
+
+  // *** Set pthread name (second try)
+#   if !defined (ACE_HAS_PTHREAD_ATTR_SETNAME)
+#     if defined (ACE_HAS_PTHREAD_SETNAME_NP)
+  if (thr_name && *thr_name)
+    {
+      ACE_OSCALL (ACE_ADAPT_RETVAL(::pthread_setname_np (*thr_id, *thr_name),
+                                   result),
+                  int,
+                  result);
+    }
+#     else
+  ACE_UNUSED_ARG (thr_name);
+#      endif /* ACE_HAS_PTHREAD_SETNAME_NP */
+#   endif   /* !ACE_HAS_PTHREAD_ATTR_SETNAME */
+
   return result;
 # elif defined (ACE_HAS_STHREADS)
   int result;

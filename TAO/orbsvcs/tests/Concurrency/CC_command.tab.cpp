@@ -804,7 +804,7 @@ case 20:
     break;}
 case 21:
 { cmdlist->setrepeat(ace_cc_yyvsp[-1].num);
-                          ace_cc_yyval.command = new CC_Dummy_Cmd();;
+                          ace_cc_yyval.command = new CC_Dummy_Cmd();
     break;}
 case 22:
 { ace_cc_yyval.command = new CC_Excep_Cmd(ace_cc_yyvsp[-1].id); ;

@@ -236,7 +236,7 @@ namespace CORBA
   protected:
     ValueBase ();
     ValueBase (const ValueBase&);
-    virtual ~ValueBase ();
+    virtual ~ValueBase () = default;
 
     /// This flag is set to be true when the valuetype defined
     /// in the idl has the truncatable parent.

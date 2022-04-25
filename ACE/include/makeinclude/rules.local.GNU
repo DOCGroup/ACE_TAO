@@ -150,7 +150,7 @@ RC_OUTPUT_FLAG ?=
   ifneq (,$(COMPILE.rc))
 $(VDIR)%.rc.o: %.rc
 	$(mk_obj_out_dir)
-	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $<
+	$(COMPILE.rc) $(RC_OUTPUT_FLAG) $@ $(abspath $<)
 	${MVCMD}
   endif # COMPILE.rc
 

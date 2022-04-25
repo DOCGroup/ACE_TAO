@@ -377,7 +377,7 @@ public:
 
 protected:
   /// Default ctor
-  ACE_Configuration (void);
+  ACE_Configuration ();
 
   /// Resolves the internal key from a section key
   ACE_Section_Key_Internal* get_internal_key
@@ -767,10 +767,10 @@ class ACE_Export ACE_Configuration_Heap : public ACE_Configuration
 {
 public:
   /// Default ctor
-  ACE_Configuration_Heap (void);
+  ACE_Configuration_Heap ();
 
   /// Destructor
-  virtual ~ACE_Configuration_Heap (void);
+  virtual ~ACE_Configuration_Heap ();
 
   /**
    * Opens a configuration that allocates its memory from a memory-mapped file.
@@ -867,7 +867,7 @@ private:
                    ACE_Configuration_Section_Key &result);
 
   /// Helper for the <open> method.
-  int create_index (void);
+  int create_index ();
 
   /// Helper for create_index() method: places hash table into an
   /// allocated space.

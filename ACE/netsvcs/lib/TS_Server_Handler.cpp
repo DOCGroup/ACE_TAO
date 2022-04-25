@@ -204,14 +204,14 @@ ACE_TS_Server_Handler::recv_request (void)
         case -1:
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("****************** recv_request returned -1\n")));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         default:
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                       ACE_TEXT ("recv failed"),
                       n,
                       bytes_expected));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         case 0:
           // We've shutdown unexpectedly, let's abandon the
           // connection.

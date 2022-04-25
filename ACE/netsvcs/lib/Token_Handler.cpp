@@ -408,11 +408,11 @@ ACE_Token_Handler::recv_request (void)
   switch (n)
     {
     case -1:
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     default:
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p got %d bytes, expected %d bytes\n"),
                   ACE_TEXT ("recv failed"), n, sizeof (ACE_UINT32)));
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     case 0:
       // We've shutdown unexpectedly, let's abandon the connection.
       this->abandon (0);

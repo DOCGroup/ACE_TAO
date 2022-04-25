@@ -239,7 +239,7 @@ STDIN_Handler::handle_input (ACE_HANDLE handle)
         ACE_ERROR ((LM_ERROR,
                     "%p\n",
                     "read"));
-      /* FALLTHROUGH */
+      ACE_FALLTHROUGH;
     case 0:
       ACE_Reactor::end_event_loop ();
       break;

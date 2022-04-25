@@ -142,7 +142,7 @@ public: // Should be protected:
    * Note that if this conflicts with the C++ iostream <flush>
    * function, just rewrite the iostream function as ::<flush>.
    */
-  int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
+  virtual int flush (u_long flag = ACE_Task_Flags::ACE_FLUSHALL);
 
   // = Special routines corresponding to certain message types.
 

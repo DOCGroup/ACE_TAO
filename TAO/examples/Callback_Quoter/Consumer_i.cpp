@@ -10,16 +10,7 @@
  */
 //=============================================================================
 
-
 #include "Consumer_i.h"
-
-Consumer_i::Consumer_i (void)
-{
-}
-
-Consumer_i::~Consumer_i (void)
-{
-}
 
 void
 Consumer_i::push (const Callback_Quoter::Info &data)
@@ -34,11 +25,9 @@ Consumer_i::push (const Callback_Quoter::Info &data)
 }
 
 void
-Consumer_i::shutdown (void)
+Consumer_i::shutdown ()
 {
-
   // Instruct the ORB to shutdown.
-
   ACE_DEBUG ((LM_DEBUG,
               " consumer shutting down \n"));
 

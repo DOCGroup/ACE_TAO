@@ -68,7 +68,7 @@ Foo_i::op5(void)
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Increment counter.\n"));
   unsigned newcount = ++this->count_op5_;
   ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - Counter is now %d.\n", newcount));
-  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));;
+  ACE_DEBUG((LM_DEBUG, "(%P|%t) Foo_i::op5() - EXIT - Raise a FooException.\n"));
 }
 
 

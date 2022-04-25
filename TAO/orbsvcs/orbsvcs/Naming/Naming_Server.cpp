@@ -260,7 +260,7 @@ TAO_Naming_Server::parse_args (int argc,
         this->round_trip_timeout_ = (int)1.0e7 * ACE_OS::atoi (get_opts.opt_arg ());
         break;
       case '?':
-        // fallthrough
+        ACE_FALLTHROUGH;
       default:
 #if !defined (ACE_NLOGGING)
         const ACE_TCHAR *reqNonMinCorba=

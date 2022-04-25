@@ -31,7 +31,7 @@ if (scalar @ARGV && ! -d $pcdir) {
 }
 
 for my $file (@ARGV) {
-  open IN, $file;
+  open IN, $file or die $file . ": $!";
   my $pcfile = $file;
   $pcfile =~ s/\.in$//;
   open OUT, ">$pcdir/$pcfile";

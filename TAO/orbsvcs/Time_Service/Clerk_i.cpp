@@ -138,7 +138,7 @@ Clerk_i::parse_args (int argc,
        break;
 
       case '?':  // display help for use of the server.
-        /* FALLTHRU */
+        ACE_FALLTHROUGH;
       default:
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[SERVER] Process/Thread Id : (%P/%t)")
@@ -221,7 +221,7 @@ Clerk_i::get_first_IOR (void)
                        server_context) != 0)
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to get next N IORs ")),
-                          -1);;
+                          -1);
     }
   catch (const CORBA::Exception& ex)
     {

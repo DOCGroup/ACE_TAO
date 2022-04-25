@@ -53,7 +53,7 @@ namespace XMLSchema
 
     add_info<boolean> (map, 0);
 
-    add_info<float_> (map, 0);;
+    add_info<float_> (map, 0);
     add_info<double_> (map, 0);
 
     add_info<string<C> > (map, 0);

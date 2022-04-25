@@ -162,6 +162,31 @@ public:
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
+protected:
+  /// Pointer to the head of the stream.
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
+
+  /// Pointer to the tail of the stream.
+  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_;
+
+  /// Pointer to an adjoining linked stream.
+  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_;
+
+  // = Synchronization objects used for thread-safe streams.
+  /// Protect the stream against race conditions.
+  mutable ACE_SYNCH_MUTEX_T lock_;
+
+#if defined (ACE_HAS_THREADS)
+  /// Attributes to initialize condition with.
+  /* We only need this because some crappy compilers can't
+     properly handle initializing the conditions with
+     temporary objects. */
+  ACE_Condition_Attributes_T<TIME_POLICY> cond_attr_;
+#endif
+
+  /// Use to tell all threads waiting on the close that we are done.
+  ACE_SYNCH_CONDITION_T final_close_;
+
 private:
   /// Actually perform the unlinking of two Streams (must be called
   /// with locks held).
@@ -175,30 +200,6 @@ private:
   int push_module (ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *,
                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0,
                    ACE_Module<ACE_SYNCH_USE, TIME_POLICY> * = 0);
-
-  /// Pointer to the head of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_head_;
-
-  /// Pointer to the tail of the stream.
-  ACE_Module<ACE_SYNCH_USE, TIME_POLICY> *stream_tail_;
-
-  /// Pointer to an adjoining linked stream.
-  ACE_Stream<ACE_SYNCH_USE, TIME_POLICY> *linked_us_;
-
-  // = Synchronization objects used for thread-safe streams.
-  /// Protect the stream against race conditions.
-  ACE_SYNCH_MUTEX_T lock_;
-
-#if defined (ACE_HAS_THREADS)
-  /// Attributes to initialize condition with.
-  /* We only need this because some crappy compilers can't
-     properly handle initializing the conditions with
-     temporary objects. */
-  ACE_Condition_Attributes_T<TIME_POLICY> cond_attr_;
-#endif
-
-  /// Use to tell all threads waiting on the close that we are done.
-  ACE_SYNCH_CONDITION_T final_close_;
 };
 
 /**

@@ -100,7 +100,7 @@ if ($client_status != 0) {
 
 
 for ($i = 0; $i < $number_of_servers; $i++) {
-    $server_status = $SV[$i]->WaitKill ($servers[$i]->ProcessStopWaitInterval());
+    $server_status = $SV[$i]->WaitKill ($servers[$i]->ProcessStopWaitInterval(), {self_crash => 1});
 
     if ($server_status < 0) {
         print STDERR "ERROR: server $i returned $server_status\n";

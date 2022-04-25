@@ -66,7 +66,7 @@ public:
   /// of one-off values.
   IIOPEndpointValue_i (const char *host, CORBA::UShort port);
 
-  virtual ~IIOPEndpointValue_i (void);
+  virtual ~IIOPEndpointValue_i ();
 
   /// The is_equivalent test is used by the endpoint policy framework
   /// for testing if a target endpoint is the same as the endpoint
@@ -91,7 +91,7 @@ public:
   void port (CORBA::UShort p);
 
   // Protocol tag get operator, inherited from EndpointValueBase
-  CORBA::ULong protocol_tag (void);
+  CORBA::ULong protocol_tag ();
 
 private:
   CORBA::Boolean is_equivalent_i (CORBA::UShort port, const char *host) const;

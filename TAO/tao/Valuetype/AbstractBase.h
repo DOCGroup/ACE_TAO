@@ -125,10 +125,9 @@ namespace CORBA
     AbstractBase ();
     AbstractBase (const AbstractBase &);
 
-    virtual ~AbstractBase ();
+    virtual ~AbstractBase () = default;
 
   protected:
-
     CORBA::Boolean is_objref_;
 
   private:

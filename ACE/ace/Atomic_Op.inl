@@ -523,6 +523,15 @@ ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (unsigned long rhs)
   return *this;
 }
 
+ACE_INLINE
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>&
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long> &rhs)
+{
+  ACE_Atomic_Op_GCC<unsigned long>::operator= (rhs);
+  return *this;
+}
+
+
 // The long long intrinsics are not available on PPC
 #if !defined (__powerpc__)
 ACE_INLINE

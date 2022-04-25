@@ -5,7 +5,7 @@ includedir=@includedir@
 
 Name: TAO_CosProperty_Serv
 Description: TAO CosProperty Service Library
-Requires: TAO_PortableServer_Skel
+Requires: TAO_CosProperty_Skel
 Version: @VERSION@
 Libs: -L${libdir} -lTAO_CosProperty_Serv
 Cflags: -I${includedir}

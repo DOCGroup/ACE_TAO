@@ -99,6 +99,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
     max_size_ (size),
     cur_size_ (0),
     cur_limbo_ (0),
+    iterator_ (nullptr),
     timer_ids_curr_ (0),
     timer_ids_min_free_ (0),
     preallocated_nodes_ (0),

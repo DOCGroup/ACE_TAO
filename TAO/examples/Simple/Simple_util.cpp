@@ -24,12 +24,6 @@ Server<Servant>::Server (void)
   this->servant_ = tmp;
 }
 
-// Destructor.
-template <class Servant>
-Server<Servant>::~Server (void)
-{
-}
-
 // Parse the command-line arguments and set options.
 template <class Servant> int
 Server<Servant>::parse_args (void)
@@ -250,11 +244,10 @@ Server<Servant>::register_name (const char *name)
 
 // Constructor.
 template <class ServerInterface>
-Client<ServerInterface>::Client (void)
+Client<ServerInterface>::Client ()
   : ior_ ("")
   , do_shutdown_ (0)
 {
-  //no-op
 }
 
 // Reads the Server ior from a file
@@ -341,7 +334,7 @@ Client<ServerInterface>::parse_args (void)
 }
 
 template <class ServerInterface>
-Client<ServerInterface>::~Client (void)
+Client<ServerInterface>::~Client ()
 {
   this->orb_->destroy ();
 }

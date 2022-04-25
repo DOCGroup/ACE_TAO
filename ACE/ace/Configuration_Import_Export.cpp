@@ -11,16 +11,8 @@ ACE_Config_ImpExp_Base::ACE_Config_ImpExp_Base (ACE_Configuration& config)
 {
 }
 
-ACE_Config_ImpExp_Base::~ACE_Config_ImpExp_Base ()
-{
-}
-
 ACE_Registry_ImpExp::ACE_Registry_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
-{
-}
-
-ACE_Registry_ImpExp::~ACE_Registry_ImpExp ()
 {
 }
 
@@ -465,10 +457,6 @@ ACE_Registry_ImpExp::process_previous_line_format (ACE_TCHAR* buffer,
 
 ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
     : ACE_Config_ImpExp_Base (config)
-{
-}
-
-ACE_Ini_ImpExp::~ACE_Ini_ImpExp ()
 {
 }
 

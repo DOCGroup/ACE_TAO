@@ -65,8 +65,8 @@ namespace ACE
     class ACE_Export Monitor_Admin
     {
     public:
-      Monitor_Admin (void);
-      ~Monitor_Admin (void);
+      Monitor_Admin ();
+      ~Monitor_Admin ();
 
       /// Add or access monitor points in a global registry
       /// If the ACE_Time_Value arg is non-zero,

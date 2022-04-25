@@ -2,16 +2,6 @@
 #include "Supplier_Input_Handler.h"
 #include "supplier.h"
 
-Supplier::Supplier (void)
-{
-  // No-Op.
-}
-
-Supplier::~Supplier (void)
-{
-  // No-Op.
-}
-
 int
 Supplier::handle_signal (int signum, siginfo_t *, ucontext_t *)
 {

@@ -1181,7 +1181,7 @@ TAO_PropertySetDef::define_property_with_mode (const char *property_name,
         {
           break;
         }
-      // fallthrough
+      ACE_FALLTHROUGH;
     default:
       // Error. ret is -1 or rebind returned other than 1.
       throw CORBA::UNKNOWN ();

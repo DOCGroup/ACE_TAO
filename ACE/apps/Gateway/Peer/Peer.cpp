@@ -247,7 +247,7 @@ Peer_Handler::handle_output (ACE_HANDLE)
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("%p\n"),
                       ACE_TEXT ("transmission failure in handle_output")));
-          /* FALLTHROUGH */
+          ACE_FALLTHROUGH;
         default: // Sent the whole thing.
           // If we succeed in writing the entire event (or we did not
           // fail due to EWOULDBLOCK) then check if there are more
@@ -419,14 +419,14 @@ Peer_Handler::recv (ACE_Message_Block *&mb)
       if (errno == EWOULDBLOCK)
         // This might happen if only the header came through.
         return -1;
-      // fallthrough
+      ACE_FALLTHROUGH;
     case 0: // Premature EOF.
       if (data_bytes_left_to_read)
       {
       this->msg_frag_ = this->msg_frag_->release ();
       return 0;
       }
-      // fallthrough
+      ACE_FALLTHROUGH;
     default:
       // Set the write pointer at 1 past the end of the event.
       this->msg_frag_->wr_ptr (data_received);

@@ -241,7 +241,7 @@ namespace TAO
           // Unlock servant (if appropriate).
           this->single_threaded_poa_cleanup ();
 
-          /* FALLTHRU */
+          ACE_FALLTHROUGH;
 
         case OBJECT_ADAPTER_LOCK_RELEASED:
           // Cleanup servant locator related state.  Note that because
@@ -265,7 +265,7 @@ namespace TAO
           // Cleanup servant related state.
           this->servant_cleanup ();
 
-          /* FALLTHRU */
+          ACE_FALLTHROUGH;
 
         case POA_CURRENT_SETUP:
           // Cleanup POA related state.
@@ -274,14 +274,14 @@ namespace TAO
           // Teardown current for this request.
           this->current_context_.teardown ();
 
-          /* FALLTHRU */
+          ACE_FALLTHROUGH;
 
         case OBJECT_ADAPTER_LOCK_ACQUIRED:
           // Finally, since the object adapter lock was acquired, we must
           // release it.
           this->object_adapter_->lock ().release ();
 
-          /* FALLTHRU */
+          ACE_FALLTHROUGH;
 
         case INITIAL_STAGE:
         default:
