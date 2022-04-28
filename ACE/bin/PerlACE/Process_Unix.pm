@@ -565,6 +565,133 @@ sub Spawn ()
     return 0;
 }
 
+sub print_stacktrace
+{
+    my $self = shift;
+    my $process = shift;
+
+    # Get the core file pattern
+    my $core_pattern_file = "/proc/sys/kernel/core_pattern";
+    if (!(-e $core_pattern_file)) {
+        print STDOUT "WARNING: Core file pattern $core_pattern_file does not exist\n";
+        return;
+    }
+
+    my $pattern_fh;
+    if (!open ($pattern_fh, "<", "$core_pattern_file")) {
+        print STDOUT "WARNING: Could not open $core_pattern_file\n";
+        return;
+    }
+
+    my $line = <$pattern_fh>;
+    chomp ($line);
+    close ($pattern_fh);
+
+    # Find the core file from the pattern
+    my $last_slash_idx = rindex ($line, "/");
+    my $path = ".";
+    my $pattern;
+    if ($last_slash_idx == -1) {
+        $pattern = $line;
+    } else {
+        $pattern = substr ($line, $last_slash_idx + 1);
+        $path = substr ($line, 0, $last_slash_idx);
+    }
+
+    # If /proc/sys/kernel/core_uses_pid is non-zero and the pattern
+    # doesn't have %p, then .PID is appended to the core file name.
+    my $uses_pid_file = "/proc/sys/kernel/core_uses_pid";
+    my $uses_pid = 0;
+    if (!open (my $uses_pid_fh, "<", "$uses_pid_file")) {
+        print STDOUT "WARNING: Could not open $uses_pid_file\n";
+    } else {
+        $line = <$uses_pid_fh>;
+        if ($line ne "" || $line ne "\n") {
+            $uses_pid = $line;
+        }
+        close ($uses_pid_fh);
+    }
+
+    my $exec_path = $process->Executable ();
+
+    my $exec_name_idx = index ($pattern, "%e");
+    if ($exec_name_idx != -1) {
+        my $exec_name = File::Basename::basename ($exec_path);
+        # The core file name contains at most 15 characters from the executable name
+        # (https://man7.org/linux/man-pages/man5/core.5.html).
+        $exec_name = substr ($exec_name, 0, 15);
+        substr ($pattern, $exec_name_idx, 2) = $exec_name;
+    }
+
+    my $hname_idx = index ($pattern, "%h");
+    if ($hname_idx != -1) {
+        substr ($pattern, $hname_idx, 2) = Sys::Hostname::hostname ();
+    }
+
+    my $pid_idx = index ($pattern, "%p");
+    if ($pid_idx != -1) {
+        substr ($pattern, $pid_idx, 2) = _getpid ($process);
+    } elsif ($uses_pid != 0) {
+        $pattern = $pattern . "." . _getpid ($process);
+    }
+
+    my $timestamp_idx = index ($pattern, "%t");
+    my $core_file_path;
+    if ($timestamp_idx != -1) {
+        my $prefix = substr ($pattern, 0, $timestamp_idx);
+        my $suffix_len = length ($pattern) - $timestamp_idx - 2;
+        my $suffix = substr ($pattern, $timestamp_idx + 2, $suffix_len);
+
+        # Get the core file with latest timestamp.
+        opendir (my $dh, $path);
+        my @files = grep (/$prefix[0-9]+$suffix/, readdir ($dh));
+        my $latest_timestamp;
+        my $chosen_core_file;
+        foreach my $file (@files) {
+            my $timestamp_len = length ($file) - $timestamp_idx - $suffix_len;
+            my $timestamp = substr ($file, $timestamp_idx, $timestamp_len);
+            if (!defined $latest_timestamp) {
+                $latest_timestamp = $timestamp;
+                $chosen_core_file = $file;
+            } elsif ($latest_timestamp < $timestamp) {
+                $latest_timestamp = $timestamp;
+                $chosen_core_file = $file;
+            }
+        }
+        closedir ($dh);
+        if (defined $chosen_core_file) {
+            $core_file_path = $path . "/" . $chosen_core_file;
+        } else {
+            print STDOUT "WARNING: Could not determine a core file with timestamp\n";
+            return;
+        }
+    } else {
+        $core_file_path = $path . "/" . $pattern;
+    }
+
+    if (!(-e $core_file_path)) {
+        print STDOUT "WARNING: Core file $core_file_path does not exist\n";
+        return;
+    }
+
+    # Print stack trace.
+    my $stack_trace;
+    if (system ("gdb --version") != -1) {
+        $stack_trace = `gdb $exec_path -c $core_file_path -ex bt -ex quit`;
+    } elsif (system ("lldb --version") != -1) {
+        print STDOUT "WARNING: Failed printing stack trace with gdb. Trying lldb...\n";
+        $stack_trace = `lldb $exec_path -c $core_file_path -o bt -o quit`;
+    } else {
+        print STDOUT "WARNING: Failed printing stack trace with both gdb and lldb\n";
+    }
+
+    if (defined $stack_trace) {
+        print STDOUT "\n======= Stack trace from core file $core_file_path =======\n";
+        print STDOUT $stack_trace;
+        print STDOUT "\n";
+    }
+}
+
 # The second argument is an optional output argument that, if present,
 # will be passed to check_return_value function to get the signal number
 # the process has received, if any, and/or whether there was a core dump.
@@ -578,7 +705,19 @@ sub WaitKill ($;$)
         return 0;
     }
 
-    my $status = $self->TimedWait ($timeout, $opts);
+    my $has_core;
+    my %my_opts = (dump_ref => \$has_core);
+
+    if (defined $opts) {
+        if (defined $opts->{self_crash}) {
+            $my_opts{self_crash} = $opts->{self_crash};
+        }
+        if (defined $opts->{signal_ref}) {
+            $my_opts{signal_ref} = $opts->{signal_ref};
+        }
+    }
+
+    my $status = $self->TimedWait ($timeout, \%my_opts);
 
     if ($status == -1) {
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
@@ -586,17 +725,23 @@ sub WaitKill ($;$)
         if ($ENV{ACE_TEST_LOG_STUCK_STACKS}) {
             my $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
             my $commands = ($^O eq 'darwin') ? "-o 'bt all'"
-                : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
+              : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
             system "$debugger --batch -p $self->{PROCESS} $commands";
         }
 
         if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {
             system ($^O ne 'darwin') ? "gcore $self->{PROCESS}"
-                : "lldb -b -p $self->{PROCESS} -o " .
-                "'process save-core core.$self->{PROCESS}'";
+              : "lldb -b -p $self->{PROCESS} -o " .
+              "'process save-core core.$self->{PROCESS}'";
         }
 
         $self->Kill ();
+    } elsif ($status == 255 && $has_core && !$ENV{ACE_TEST_DISABLE_STACK_TRACE}) {
+        $self->print_stacktrace ();
+    }
+
+    if (defined $opts && defined $opts->{dump_ref}) {
+        ${$opts->{dump_ref}} = $has_core;
     }
 
     $self->{RUNNING} = 0;
