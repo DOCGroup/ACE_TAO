@@ -572,13 +572,13 @@ sub print_stacktrace_linux
     # Get the core file pattern
     my $core_pattern_file = "/proc/sys/kernel/core_pattern";
     if (!(-e $core_pattern_file)) {
-        print STDOUT "WARNING: Core file pattern $core_pattern_file does not exist\n";
+        print STDERR "WARNING: print_stacktrace_linux: Core file pattern $core_pattern_file does not exist\n";
         return;
     }
 
     my $pattern_fh;
     if (!open ($pattern_fh, "<", "$core_pattern_file")) {
-        print STDOUT "WARNING: Could not open $core_pattern_file\n";
+        print STDERR "WARNING: print_stacktrace_linux: Could not open $core_pattern_file: $!\n";
         return;
     }
 
@@ -602,9 +602,10 @@ sub print_stacktrace_linux
     my $uses_pid_file = "/proc/sys/kernel/core_uses_pid";
     my $uses_pid = 0;
     if (!open (my $uses_pid_fh, "<", "$uses_pid_file")) {
-        print STDOUT "WARNING: Could not open $uses_pid_file\n";
+        print STDERR "WARNING: print_stacktrace_linux: Could not open $uses_pid_file: $!\n";
     } else {
         $line = <$uses_pid_fh>;
+        chomp ($line);
         if ($line ne "" || $line ne "\n") {
             $uses_pid = $line;
         }
@@ -642,7 +643,10 @@ sub print_stacktrace_linux
         my $suffix = substr ($pattern, $timestamp_idx + 2, $suffix_len);
 
         # Get the core file with latest timestamp.
-        opendir (my $dh, $path);
+        if (!opendir (my $dh, $path)) {
+            print STDERR "WARNING: print_stacktrace_linux: Couldn't opendir $path: $!\n";
+            return;
+        }
         my @files = grep (/$prefix[0-9]+$suffix/, readdir ($dh));
         my $latest_timestamp;
         my $chosen_core_file;
@@ -661,7 +665,7 @@ sub print_stacktrace_linux
         if (defined $chosen_core_file) {
             $core_file_path = $path . "/" . $chosen_core_file;
         } else {
-            print STDOUT "WARNING: Could not determine a core file with timestamp\n";
+            print STDERR "WARNING: print_stacktrace_linux: Could not determine a core file with timestamp\n";
             return;
         }
     } else {
@@ -669,7 +673,7 @@ sub print_stacktrace_linux
     }
 
     if (!(-e $core_file_path)) {
-        print STDOUT "WARNING: Core file $core_file_path does not exist\n";
+        print STDERR "WARNING: print_stacktrace_linux: Core file $core_file_path does not exist\n";
         return;
     }
 
@@ -678,10 +682,10 @@ sub print_stacktrace_linux
     if (system ("gdb --version") != -1) {
         $stack_trace = `gdb $exec_path -c $core_file_path -ex bt -ex quit`;
     } elsif (system ("lldb --version") != -1) {
-        print STDOUT "WARNING: Failed printing stack trace with gdb. Trying lldb...\n";
+        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with gdb. Trying lldb...\n";
         $stack_trace = `lldb $exec_path -c $core_file_path -o bt -o quit`;
     } else {
-        print STDOUT "WARNING: Failed printing stack trace with both gdb and lldb\n";
+        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with both gdb and lldb\n";
     }
 
     if (defined $stack_trace) {
