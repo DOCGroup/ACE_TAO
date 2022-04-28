@@ -573,10 +573,9 @@ sub Spawn ()
     return 0;
 }
 
-sub print_stacktrace
+sub print_stacktrace_linux
 {
     my $self = shift;
-    my $process = shift;
 
     # Get the core file pattern
     my $core_pattern_file = "/proc/sys/kernel/core_pattern";
@@ -620,7 +619,7 @@ sub print_stacktrace
         close ($uses_pid_fh);
     }
 
-    my $exec_path = $process->Executable ();
+    my $exec_path = Executable ();
 
     my $exec_name_idx = index ($pattern, "%e");
     if ($exec_name_idx != -1) {
@@ -638,9 +637,9 @@ sub print_stacktrace
 
     my $pid_idx = index ($pattern, "%p");
     if ($pid_idx != -1) {
-        substr ($pattern, $pid_idx, 2) = _getpid ($process);
+        substr ($pattern, $pid_idx, 2) = $self->{PROCESS};
     } elsif ($uses_pid != 0) {
-        $pattern = $pattern . "." . _getpid ($process);
+        $pattern = $pattern . "." . $self->{PROCESS};
     }
 
     my $timestamp_idx = index ($pattern, "%t");
@@ -700,6 +699,11 @@ sub print_stacktrace
     }
 }
 
+sub print_stacktrace_darwin
+{
+    # TODO(sonndin): Core files on macOS are stored in /cores and have name core.PID
+}
+
 # The second argument is an optional output argument that, if present,
 # will be passed to check_return_value function to get the signal number
 # the process has received, if any, and/or whether there was a core dump.
@@ -745,7 +749,11 @@ sub WaitKill ($;$)
 
         $self->Kill ();
     } elsif ($status == 255 && $has_core && !$ENV{ACE_TEST_DISABLE_STACK_TRACE}) {
-        $self->print_stacktrace ();
+        if ($^O eq 'linux') {
+            $self->print_stacktrace_linux ();
+        } elsif ($^O eq 'darwin') {
+            $self->print_stacktrace_darwin ();
+        }
     }
 
     if (defined $opts && defined $opts->{dump_ref}) {
@@ -757,9 +765,7 @@ sub WaitKill ($;$)
     return $status;
 }
 
-
 # Do a Spawn and immediately WaitKill
-
 sub SpawnWaitKill ($;$)
 {
     my $self = shift;
