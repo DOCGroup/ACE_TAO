@@ -672,14 +672,23 @@ sub print_stacktrace_linux
         $core_file_path = $path . "/" . $pattern;
     }
 
-    $self->print_stacktrace_common($exec_path, $core_file_path, "gdb");
+    my $debugger = "gdb";
+    if ($ENV{ACE_TEST_DEBUGGER}) {
+        $debugger = $ENV{ACE_TEST_DEBUGGER};
+    }
+    $self->print_stacktrace_common($exec_path, $core_file_path, $debugger);
 }
 
 sub print_stacktrace_darwin
 {
     my $self = shift;
     my $core_file_path = "/cores/core." . $self->{PROCESS};
-    $self->print_stacktrace_common($self->Executable (), $core_file_path, "lldb");
+
+    my $debugger = "lldb";
+    if ($ENV{ACE_TEST_DEBUGGER}) {
+        $debugger = $ENV{ACE_TEST_DEBUGGER};
+    }
+    $self->print_stacktrace_common($self->Executable (), $core_file_path, $debugger);
 }
 
 sub print_stacktrace_common
@@ -707,7 +716,11 @@ sub print_stacktrace_common
         $secondary_db = "lldb";
         $secondary_cmd = $lldb_cmd;
     } else {
-        $preferred_cmd = $lldb_cmd;
+        if ($preferred_db eq "lldb") {
+            $preferred_cmd = $lldb_cmd;
+        } else { # Other lldb versions.
+            $preferred_cmd = "$preferred_db $exec_path -c $core_file_path -o bt -o quit";
+        }
         $secondary_db = "gdb";
         $secondary_cmd = $gdb_cmd;
     }
