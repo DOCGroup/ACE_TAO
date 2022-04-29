@@ -620,7 +620,7 @@ sub print_stacktrace_linux
         close ($uses_pid_fh);
     }
 
-    my $exec_path = Executable ();
+    my $exec_path = $self->Executable ();
 
     my $exec_name_idx = index ($pattern, "%e");
     if ($exec_name_idx != -1) {
@@ -651,7 +651,8 @@ sub print_stacktrace_linux
         my $suffix = substr ($pattern, $timestamp_idx + 2, $suffix_len);
 
         # Get the core file with latest timestamp.
-        if (!opendir (my $dh, $path)) {
+        my $dh;
+        if (!opendir ($dh, $path)) {
             print STDERR "WARNING: print_stacktrace_linux: Couldn't opendir $path: $!\n";
             return;
         }
@@ -680,32 +681,61 @@ sub print_stacktrace_linux
         $core_file_path = $path . "/" . $pattern;
     }
 
-    if (!(-e $core_file_path)) {
-        print STDERR "WARNING: print_stacktrace_linux: Core file $core_file_path does not exist\n";
-        return;
-    }
-
-    # Print stack trace.
-    my $stack_trace;
-    if (system ("gdb --version") != -1) {
-        $stack_trace = `gdb $exec_path -c $core_file_path -ex bt -ex quit`;
-    } elsif (system ("lldb --version") != -1) {
-        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with gdb. Trying lldb...\n";
-        $stack_trace = `lldb $exec_path -c $core_file_path -o bt -o quit`;
-    } else {
-        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with both gdb and lldb\n";
-    }
-
-    if (defined $stack_trace) {
-        print STDOUT "\n======= Stack trace from core file $core_file_path =======\n";
-        print STDOUT $stack_trace;
-        print STDOUT "\n";
-    }
+    $self->print_stacktrace_common($exec_path, $core_file_path, "gdb");
 }
 
 sub print_stacktrace_darwin
 {
-    # TODO(sonndin): Core files on macOS are stored in /cores and have name core.PID
+    my $self = shift;
+    my $core_file_path = "/cores/core." . $self->{PROCESS};
+    $self->print_stacktrace_common($self->Executable (), $core_file_path, "lldb");
+}
+
+sub print_stacktrace_common
+{
+    my $self = shift;
+    my $exec_path = shift;
+    my $core_file_path = shift;
+    my $preferred_db = shift;
+
+    if (!(-e $core_file_path)) {
+        print STDERR "WARNING: print_stacktrace_linux: Core file $core_file_path does not exist\n";
+        return;
+    }
+    if (!defined $preferred_db) {
+        $preferred_db = "gdb";
+    }
+    my $preferred_cmd;
+    my $secondary_db;
+    my $secondary_cmd;
+    my $gdb_cmd = "gdb $exec_path -c $core_file_path -ex bt -ex quit";
+    my $lldb_cmd = "lldb $exec_path -c $core_file_path -o bt -o quit";
+
+    if ($preferred_db eq "gdb") {
+        $preferred_cmd = $gdb_cmd;
+        $secondary_db = "lldb";
+        $secondary_cmd = $lldb_cmd;
+    } else {
+        $preferred_cmd = $lldb_cmd;
+        $secondary_db = "gdb";
+        $secondary_cmd = $gdb_cmd;
+    }
+
+    my $stack_trace;
+    if (system ("$preferred_db --version") != -1) {
+        $stack_trace = `$preferred_cmd`;
+    } elsif (system ("$secondary_db --version") != -1) {
+        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with $preferred_db. Trying $secondary_db...\n";
+        $stack_trace = `$secondary_cmd`;
+    } else {
+        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with both $preferred_db and $secondary_db\n";
+    }
+
+    if (defined $stack_trace) {
+        print STDERR "\n======= Stack trace of $exec_path from core file $core_file_path =======\n";
+        print STDERR $stack_trace;
+        print STDERR "\n";
+    }
 }
 
 # The second argument is an optional output argument that, if present,
