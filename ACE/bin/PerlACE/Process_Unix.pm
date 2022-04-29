@@ -587,14 +587,13 @@ sub print_stacktrace_linux
     close ($pattern_fh);
 
     # Find the core file from the pattern
-    my $last_slash_idx = rindex ($line, "/");
     my $path = ".";
     my $pattern;
-    if ($last_slash_idx == -1) {
-        $pattern = $line;
+    if ($line =~ /^(.*)\/([^\/]*)$/) {
+        $path = $1;
+        $pattern = $2;
     } else {
-        $pattern = substr ($line, $last_slash_idx + 1);
-        $path = substr ($line, 0, $last_slash_idx);
+        $pattern = $line;
     }
 
     # If /proc/sys/kernel/core_uses_pid is non-zero and the pattern
