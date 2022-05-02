@@ -200,7 +200,7 @@ jobs:
       if: matrix.optional_feature != ''
       shell: pwsh
     - name: Initialize CodeQL
-      uses: github/codeql-action/init@v1
+      uses: github/codeql-action/init@v2
       with:
         languages: cpp
       if: matrix.feature == 'CodeQL'
@@ -230,7 +230,7 @@ jobs:
       shell: pwsh
       if: matrix.feature != 'CORBA/e micro'
     - name: Perform CodeQL Analysis
-      uses: github/codeql-action/analyze@v1
+      uses: github/codeql-action/analyze@v2
       if: matrix.feature == 'CodeQL'
     - name: Install TAO_ACE workspace
       run: |
