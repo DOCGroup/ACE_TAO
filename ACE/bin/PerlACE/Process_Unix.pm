@@ -592,7 +592,8 @@ sub print_stacktrace_linux
     if ($line =~ /^(.*)\/([^\/]*)$/) {
         $path = $1;
         $pattern = $2;
-    } else {
+    }
+    else {
         $pattern = $line;
     }
 
@@ -602,7 +603,8 @@ sub print_stacktrace_linux
     my $uses_pid = 0;
     if (!open (my $uses_pid_fh, "<", "$uses_pid_file")) {
         print STDERR "WARNING: print_stacktrace_linux: Could not open $uses_pid_file: $!\n";
-    } else {
+    }
+    else {
         $line = <$uses_pid_fh>;
         chomp ($line);
         if ($line ne "" || $line ne "\n") {
@@ -630,7 +632,8 @@ sub print_stacktrace_linux
     my $pid_idx = index ($pattern, "%p");
     if ($pid_idx != -1) {
         substr ($pattern, $pid_idx, 2) = $self->{PROCESS};
-    } elsif ($uses_pid != 0) {
+    }
+    elsif ($uses_pid != 0) {
         $pattern = $pattern . "." . $self->{PROCESS};
     }
 
@@ -656,7 +659,8 @@ sub print_stacktrace_linux
             if (!defined $latest_timestamp) {
                 $latest_timestamp = $timestamp;
                 $chosen_core_file = $file;
-            } elsif ($latest_timestamp < $timestamp) {
+            }
+            elsif ($latest_timestamp < $timestamp) {
                 $latest_timestamp = $timestamp;
                 $chosen_core_file = $file;
             }
@@ -664,11 +668,13 @@ sub print_stacktrace_linux
         closedir ($dh);
         if (defined $chosen_core_file) {
             $core_file_path = $path . "/" . $chosen_core_file;
-        } else {
+        }
+        else {
             print STDERR "WARNING: print_stacktrace_linux: Could not determine a core file with timestamp\n";
             return;
         }
-    } else {
+    }
+    else {
         $core_file_path = $path . "/" . $pattern;
     }
 
@@ -699,7 +705,7 @@ sub print_stacktrace_common
     my $preferred_db = shift;
 
     if (!(-e $core_file_path)) {
-        print STDERR "WARNING: print_stacktrace_linux: Core file $core_file_path does not exist\n";
+        print STDERR "WARNING: print_stacktrace_common: Core file $core_file_path does not exist\n";
         return;
     }
     if (!defined $preferred_db) {
@@ -715,10 +721,12 @@ sub print_stacktrace_common
         $preferred_cmd = $gdb_cmd;
         $secondary_db = "lldb";
         $secondary_cmd = $lldb_cmd;
-    } else {
+    }
+    else {
         if ($preferred_db eq "lldb") {
             $preferred_cmd = $lldb_cmd;
-        } else { # Other lldb versions.
+        }
+        else { # Other lldb versions.
             $preferred_cmd = "$preferred_db $exec_path -c $core_file_path -o bt -o quit";
         }
         $secondary_db = "gdb";
@@ -728,17 +736,19 @@ sub print_stacktrace_common
     my $stack_trace;
     if (system ("$preferred_db --version") != -1) {
         $stack_trace = `$preferred_cmd`;
-    } elsif (system ("$secondary_db --version") != -1) {
-        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with $preferred_db. Trying $secondary_db...\n";
+    }
+    elsif (system ("$secondary_db --version") != -1) {
+        print STDERR "WARNING: print_stacktrace_common: Failed printing stack trace with $preferred_db. Trying $secondary_db...\n";
         $stack_trace = `$secondary_cmd`;
-    } else {
-        print STDERR "WARNING: print_stacktrace_linux: Failed printing stack trace with both $preferred_db and $secondary_db\n";
+    }
+    else {
+        print STDERR "WARNING: print_stacktrace_common: Failed printing stack trace with both $preferred_db and $secondary_db\n";
     }
 
     if (defined $stack_trace) {
-        print STDERR "\n======= Stack trace of $exec_path from core file $core_file_path =======\n";
+        print STDERR "\n======= Begin stack trace of $exec_path from core file $core_file_path =======\n";
         print STDERR $stack_trace;
-        print STDERR "\n";
+        print STDERR "======= End stack trace =======\n";
     }
 }
 
@@ -773,9 +783,13 @@ sub WaitKill ($;$)
         print STDERR "ERROR: $self->{EXECUTABLE} timedout\n";
 
         if ($ENV{ACE_TEST_LOG_STUCK_STACKS}) {
-            my $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
-            my $commands = ($^O eq 'darwin') ? "-o 'bt all'"
-              : "-ex 'set pagination off' -ex 'thread apply all backtrace'";
+            my $debugger = $ENV{ACE_TEST_DEBUGGER};
+            if (!defined $debugger) {
+                $debugger = ($^O eq 'darwin') ? 'lldb' : 'gdb';
+            }
+
+            my $commands = ($debugger eq 'gdb') ?
+              "-ex 'set pagination off' -ex 'thread apply all backtrace'" : "-o 'bt all'";
             system "$debugger --batch -p $self->{PROCESS} $commands";
         }
 
@@ -786,10 +800,12 @@ sub WaitKill ($;$)
         }
 
         $self->Kill ();
-    } elsif ($status == 255 && $has_core && !$ENV{ACE_TEST_DISABLE_STACK_TRACE}) {
+    }
+    elsif ($status == 255 && $has_core && !$ENV{ACE_TEST_DISABLE_STACK_TRACE}) {
         if ($^O eq 'linux') {
             $self->print_stacktrace_linux ();
-        } elsif ($^O eq 'darwin') {
+        }
+        elsif ($^O eq 'darwin') {
             $self->print_stacktrace_darwin ();
         }
     }
