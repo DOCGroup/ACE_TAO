@@ -722,23 +722,22 @@ sub print_stacktrace_common
     my $preferred_cmd;
     my $secondary_db;
     my $secondary_cmd;
-    my $gdb_cmd = "gdb $exec_path -c $core_file_path -ex bt -ex quit";
-    my $lldb_cmd = "lldb $exec_path -c $core_file_path -o bt -o quit";
+    my $gdb_args = " $exec_path -c $core_file_path -ex bt -ex quit";
+    my $lldb_args = " $exec_path -c $core_file_path -o bt -o quit";
 
-    if ($preferred_db eq "gdb") {
-        $preferred_cmd = $gdb_cmd;
+    if ($preferred_db =~ /gdb/) {
+        $preferred_cmd = $preferred_db . $gdb_args;
         $secondary_db = "lldb";
-        $secondary_cmd = $lldb_cmd;
+        $secondary_cmd = $secondary_db . $lldb_args;
+    }
+    elsif ($preferred_db =~ /lldb/) {
+        $preferred_cmd = $preferred_db . $lldb_args;
+        $secondary_db = "gdb";
+        $secondary_cmd = $secondary_db . $gdb_args;
     }
     else {
-        if ($preferred_db eq "lldb") {
-            $preferred_cmd = $lldb_cmd;
-        }
-        else { # Other lldb versions.
-            $preferred_cmd = "$preferred_db $exec_path -c $core_file_path -o bt -o quit";
-        }
-        $secondary_db = "gdb";
-        $secondary_cmd = $gdb_cmd;
+        print STDERR "ERROR: print_stacktrace_common: Unknown debugger ($preferred_db) requested\n";
+        return;
     }
 
     my $stack_trace;
