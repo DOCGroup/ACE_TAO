@@ -254,6 +254,8 @@ public:
                        const char* ca_dir = 0,
                        bool use_env_defaults = true);
 
+  int load_crl_file(const char* file_name, int type);
+
   /**
    *  Test whether any CA locations have been successfully loaded and
    *  return the number of successful attempts.
