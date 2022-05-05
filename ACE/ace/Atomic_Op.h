@@ -269,6 +269,7 @@ public:
   ACE_Atomic_Op (int c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (int rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, int> &rhs);
 };
 
 template<>
@@ -280,6 +281,7 @@ public:
   ACE_Atomic_Op (unsigned int c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (unsigned int rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned int> &rhs);
 };
 
 // If we have built in atomic op, use that, the assignment operator
@@ -293,6 +295,7 @@ public:
   ACE_Atomic_Op (long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (long rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long> &rhs);
 };
 
 template<>
@@ -318,6 +321,7 @@ public:
   ACE_Atomic_Op (long long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (long long rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, long long> &c);
 };
 
 template<>
@@ -329,6 +333,7 @@ public:
   ACE_Atomic_Op (unsigned long long c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (unsigned long long rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long long> &c);
 };
 #endif /* !__powerpc__ */
 
@@ -342,6 +347,7 @@ public:
   ACE_Atomic_Op (short c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (short rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, short> &c);
 };
 
 template<>
@@ -353,6 +359,7 @@ public:
   ACE_Atomic_Op (unsigned short c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (unsigned short rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, unsigned short> &c);
 };
 #endif
 
@@ -366,6 +373,7 @@ public:
   ACE_Atomic_Op (bool c);
   ACE_Atomic_Op (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
   ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (bool rhs);
+  ACE_Atomic_Op<ACE_Thread_Mutex, bool> &operator= (const ACE_Atomic_Op<ACE_Thread_Mutex, bool> &c);
 };
 #endif
 
