@@ -583,7 +583,7 @@ ACE_SSL_Context::load_crl_file(const char *file_name, int type)
         {
           goto err;
         }
-      ret = ::X509_STORE_adn_crl(st, x);
+      ret = ::X509_STORE_add_crl(st, x);
     }
 
   if (ret == 1)
