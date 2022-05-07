@@ -655,7 +655,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT ("TAO (%P|%t) - Unable to load ")
                           ACE_TEXT ("crl file ")
-                          ACE_TEXT ("<%C> in SSLIOP factory, errno = %s.\n"),
+                          ACE_TEXT ("<%C> in SSLIOP factory, errno = %C.\n"),
                           crl_path.in(), ERR_reason_error_string(ERR_get_error())));
         }
       else
@@ -663,8 +663,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_INFO,
-                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded ")
-                              ACE_TEXT("crl file ")
+                              ACE_TEXT ("TAO (%P|%t) - SSLIOP loaded crl file ")
                               ACE_TEXT("<%C>\n"),
                               crl_path.in()));
             }
