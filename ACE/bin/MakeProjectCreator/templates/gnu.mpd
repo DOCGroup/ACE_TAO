@@ -731,6 +731,7 @@ endif
 <%if(postbuild)%>
 all: __postbuild__
 
+.PHONY: __postbuild__
 <%if(exename)%>
 __postbuild__: $(VBIN) $(INSTALL)
 <%else%>
