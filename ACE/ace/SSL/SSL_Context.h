@@ -255,7 +255,7 @@ public:
                        bool use_env_defaults = true);
 
   /**
-   *  Load the location of the CRL. 
+   *  Load the location of the CRL.
    *
    *  @param[in] file_name          CRL file pathname. Passed to
    *                                @c SSL_CTX_Load_verify_locations() if not
