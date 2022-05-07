@@ -653,8 +653,7 @@ TAO::SSLIOP::Protocol_Factory::init (int argc, ACE_TCHAR* argv[])
       if (ssl_ctx->load_crl_file(crl_path.in(), crl_type) != 1)
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                          ACE_TEXT ("TAO (%P|%t) - Unable to load ")
-                          ACE_TEXT ("crl file ")
+                          ACE_TEXT ("TAO (%P|%t) - Unable to load crl file ")
                           ACE_TEXT ("<%C> in SSLIOP factory, errno = %C.\n"),
                           crl_path.in(), ERR_reason_error_string(ERR_get_error())));
         }
