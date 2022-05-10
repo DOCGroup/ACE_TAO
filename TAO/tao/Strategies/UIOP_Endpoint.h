@@ -48,7 +48,7 @@ public:
                      CORBA::Short priority = TAO_INVALID_PRIORITY);
 
   /// Destructor.
-  ~TAO_UIOP_Endpoint (void);
+  ~TAO_UIOP_Endpoint () = default;
 
   /**
    * @name TAO_Endpoint Methods

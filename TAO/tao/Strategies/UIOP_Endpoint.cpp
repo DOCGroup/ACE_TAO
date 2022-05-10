@@ -26,10 +26,6 @@ TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (void)
 {
 }
 
-TAO_UIOP_Endpoint::~TAO_UIOP_Endpoint (void)
-{
-}
-
 int
 TAO_UIOP_Endpoint::addr_to_string (char *buffer, size_t length)
 {

@@ -9,11 +9,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_OC_Endpoint_Selector_Factory::TAO_OC_Endpoint_Selector_Factory (void)
-  : oc_endpoint_selector_(0)
-{
-}
-
 TAO_OC_Endpoint_Selector_Factory::~TAO_OC_Endpoint_Selector_Factory (void)
 {
   delete this->oc_endpoint_selector_;
