@@ -35,8 +35,8 @@ class TAO_Strategies_Export TAO_SCIOP_Protocol_Factory
 : public TAO_Protocol_Factory
 {
 public:
-  TAO_SCIOP_Protocol_Factory (void);
-  virtual ~TAO_SCIOP_Protocol_Factory (void);
+  TAO_SCIOP_Protocol_Factory ();
+  virtual ~TAO_SCIOP_Protocol_Factory () = default;
 
   // = Service Configurator hooks.
   /// Dynamic linking hook

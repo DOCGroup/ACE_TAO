@@ -50,10 +50,10 @@ class TAO_Strategies_Export TAO_SHMIOP_Connector : public TAO_Connector
 {
 public:
   /// Constructor.
-  TAO_SHMIOP_Connector (void);
+  TAO_SHMIOP_Connector ();
 
   /// Default destructor
-  ~TAO_SHMIOP_Connector (void);
+  ~TAO_SHMIOP_Connector () = default;
 
   /**
    * @name The TAO_Connector Methods
