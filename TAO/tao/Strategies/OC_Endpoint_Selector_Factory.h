@@ -50,7 +50,7 @@ class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Factory
 {
 public:
   /// Constructor.
-  TAO_OC_Endpoint_Selector_Factory (void);
+  TAO_OC_Endpoint_Selector_Factory () = default;
 
   /// Destructor.
   virtual ~TAO_OC_Endpoint_Selector_Factory (void);
@@ -65,7 +65,7 @@ protected:
   /// The possible endpoint selector strategies that can be
   /// returned by this factory
 
-  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_;
+  TAO_Optimized_Connection_Endpoint_Selector *oc_endpoint_selector_ {};
 
   int register_orb_initializer (void);
 };

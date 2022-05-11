@@ -16,10 +16,6 @@ TAO_SCIOP_Protocol_Factory::TAO_SCIOP_Protocol_Factory (void)
 {
 }
 
-TAO_SCIOP_Protocol_Factory::~TAO_SCIOP_Protocol_Factory (void)
-{
-}
-
 int
 TAO_SCIOP_Protocol_Factory::match_prefix (const ACE_CString &prefix)
 {

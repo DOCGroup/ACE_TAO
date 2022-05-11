@@ -24,10 +24,6 @@ TAO_SHMIOP_Connector::TAO_SHMIOP_Connector (void)
 {
 }
 
-TAO_SHMIOP_Connector::~TAO_SHMIOP_Connector (void)
-{
-}
-
 int
 TAO_SHMIOP_Connector::open (TAO_ORB_Core *orb_core)
 {

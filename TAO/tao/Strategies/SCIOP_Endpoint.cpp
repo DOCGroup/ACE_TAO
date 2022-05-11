@@ -78,10 +78,6 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
   this->priority (priority);
 }
 
-TAO_SCIOP_Endpoint::~TAO_SCIOP_Endpoint (void)
-{
-}
-
 TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
   : TAO_Endpoint (rhs.tag_,
                   rhs.priority_)
