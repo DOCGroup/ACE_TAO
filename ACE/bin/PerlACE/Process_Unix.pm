@@ -594,6 +594,11 @@ sub print_stacktrace_linux
     chomp ($line);
     close ($pattern_fh);
 
+    if ($line =~ /\|/) {
+        print STDERR "WARNING: print_stacktrace_linux: Core files are handled by a separate service. Core pattern: $line\n";
+        return;
+    }
+
     # Find the core file from the pattern
     my $path = ".";
     my $pattern;
