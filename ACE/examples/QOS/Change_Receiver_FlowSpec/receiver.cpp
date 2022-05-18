@@ -23,7 +23,7 @@
 
 // To open QOS sockets administrative access is required on the
 // machine.  Fill in default values for QoS structure.  The default
-// values were simply choosen from existing QOS templates available
+// values were simply chosen from existing QOS templates available
 // via WSAGetQosByName.  Notice that ProviderSpecific settings are
 // being allowed when picking the "default" template but not for
 // "well-known" QOS templates.  Also notice that since data is only
