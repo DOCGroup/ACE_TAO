@@ -633,6 +633,12 @@ ast_visitor_tmpl_module_inst::visit_sequence (AST_Sequence *)
 }
 
 int
+ast_visitor_tmpl_module_inst::visit_map (AST_Map *)
+{
+  return 0;
+}
+
+int
 ast_visitor_tmpl_module_inst::visit_string (AST_String *)
 {
   return 0;

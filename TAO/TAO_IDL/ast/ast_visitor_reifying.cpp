@@ -19,6 +19,7 @@
 #include "ast_typedef.h"
 #include "ast_array.h"
 #include "ast_sequence.h"
+#include "ast_map.h"
 #include "ast_union.h"
 #include "ast_enum.h"
 #include "ast_predefined_type.h"
@@ -481,6 +482,74 @@ ast_visitor_reifying::visit_sequence (AST_Sequence *node)
                                          &sn,
                                          false,
                                          false);
+
+  // No need to add this new node to any scope - it's anonymous
+  // and owned by the node that references it.
+
+  return 0;
+}
+
+int
+ast_visitor_reifying::visit_map (AST_Map *node)
+{
+  AST_Type *key_bt = node->key_type ();
+  AST_Type *value_bt = node->value_type ();
+
+  if (key_bt->ast_accept (this) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_reifying::")
+                         ACE_TEXT ("visit_map - ")
+                         ACE_TEXT ("visit of key type failed\n")),
+                        -1);
+    }
+
+  key_bt = dynamic_cast<AST_Type*> (this->reified_node_);
+
+  if (value_bt->ast_accept (this) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("ast_visitor_reifying::")
+                         ACE_TEXT ("visit_map - ")
+                         ACE_TEXT ("visit of value type failed\n")),
+                        -1);
+    }
+
+  value_bt = dynamic_cast<AST_Type*> (this->reified_node_);
+
+  AST_Expression *v = node->max_size ();
+  AST_Param_Holder *ph = v->param_holder ();
+
+  if (ph != 0)
+    {
+      if (this->visit_param_holder (ph) != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("ast_visitor_reifying::")
+                             ACE_TEXT ("visit_map - ")
+                             ACE_TEXT ("visit_param_holder() ")
+                             ACE_TEXT ("failed\n")),
+                            -1);
+        }
+
+      AST_Constant *c = dynamic_cast<AST_Constant*> (this->reified_node_);
+
+      v = c->constant_value ();
+    }
+
+  AST_Expression *bound =
+    idl_global->gen ()->create_expr (v,
+                                     AST_Expression::EV_ulong);
+  Identifier id ("map");
+  UTL_ScopedName sn (&id, 0);
+
+  this->reified_node_ =
+    idl_global->gen ()->create_map (bound,
+                                    key_bt,
+                                    value_bt,
+                                    &sn,
+                                    false,
+                                    false);
 
   // No need to add this new node to any scope - it's anonymous
   // and owned by the node that references it.

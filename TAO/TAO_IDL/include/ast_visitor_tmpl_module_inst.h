@@ -71,6 +71,7 @@ public:
   virtual int visit_enum_val (AST_EnumVal *node);
   virtual int visit_array (AST_Array *node);
   virtual int visit_sequence (AST_Sequence *node);
+  virtual int visit_map(AST_Map* node);
   virtual int visit_string (AST_String *node);
   virtual int visit_native (AST_Native *node);
   virtual int visit_valuebox (AST_ValueBox *node);
