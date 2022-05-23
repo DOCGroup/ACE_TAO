@@ -16,7 +16,12 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#define GCC_VERSION (__GNUC__ * 10000 \
+                     + __GNUC_MINOR__ * 100 \
+                     + __GNUC_PATCHLEVEL__)
+#if GCC_VERSION > 120000
 #define ACE_ANY_OPS_USE_NAMESPACE
+#endif
 
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
