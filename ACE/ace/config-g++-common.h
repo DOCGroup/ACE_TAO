@@ -17,7 +17,7 @@
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
 #if ACE_CC_MAJOR_VERSION >= 12
-#define ACE_ANY_OPS_USE_NAMESPACE
+# define ACE_ANY_OPS_USE_NAMESPACE
 #endif
 
 #if __cplusplus >= 201103L
