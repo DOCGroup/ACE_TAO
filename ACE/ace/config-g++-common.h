@@ -15,11 +15,8 @@
 #define ACE_CC_BETA_VERSION (0)
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-
-#define GCC_VERSION (__GNUC__ * 10000 \
-                     + __GNUC_MINOR__ * 100 \
-                     + __GNUC_PATCHLEVEL__)
-#if GCC_VERSION >= 120000
+                
+#if ACE_CC_MAJOR_VERSION >= 12
 #define ACE_ANY_OPS_USE_NAMESPACE
 #endif
 
