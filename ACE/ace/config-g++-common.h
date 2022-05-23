@@ -15,7 +15,7 @@
 #define ACE_CC_BETA_VERSION (0)
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
-                
+
 #if ACE_CC_MAJOR_VERSION >= 12
 #define ACE_ANY_OPS_USE_NAMESPACE
 #endif
