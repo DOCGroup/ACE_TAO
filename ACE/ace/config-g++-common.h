@@ -16,6 +16,8 @@
 
 #define ACE_TEMPLATES_REQUIRE_SOURCE
 
+#define ACE_ANY_OPS_USE_NAMESPACE
+
 #if __cplusplus >= 201103L
 # define ACE_HAS_CPP11
 # define ACE_FALLTHROUGH [[gnu::fallthrough]]
