@@ -1,1 +1,4 @@
-map<int, char> data;
+struct DataStruct {
+    sequence<int32> seqData;
+    map<int32, int32> mapData;
+};
