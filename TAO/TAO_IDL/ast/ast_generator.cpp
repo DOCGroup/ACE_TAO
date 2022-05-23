@@ -97,6 +97,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_enum_val.h"
 #include "ast_array.h"
 #include "ast_sequence.h"
+#include "ast_map.h"
 #include "ast_string.h"
 #include "ast_structure_fwd.h"
 #include "ast_typedef.h"
@@ -862,6 +863,27 @@ AST_Generator::create_sequence (AST_Expression *ms,
                                 n,
                                 is_local,
                                 is_abstract),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Map *
+AST_Generator::create_map (AST_Expression *ms,
+                                AST_Type *key_bt,
+                                AST_Type *val_bt,
+                                UTL_ScopedName *n,
+                                bool is_local,
+                                bool is_abstract)
+{
+  AST_Map *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  AST_Map (ms,
+                           key_bt,
+                           val_bt,
+                           n,
+                           is_local,
+                           is_abstract),
                   nullptr);
 
   return retval;
