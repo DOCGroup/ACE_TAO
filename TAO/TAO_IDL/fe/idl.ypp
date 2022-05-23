@@ -131,6 +131,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include <ast_consumes.h>
 #include <ast_extended_port.h>
 #include <ast_mirror_port.h>
+#include <ast_map.h>
 
 #include <fe_declarator.h>
 #include <fe_interface_header.h>
@@ -232,6 +233,7 @@ bool stack_based_lookup_for_primary_expr = false;
 %token          IDL_SWITCH
 %token          IDL_ENUM
 %token          IDL_SEQUENCE
+%token          IDL_MAP
 %token          IDL_STRING
 %token          IDL_WSTRING
 %token          IDL_EXCEPTION
@@ -317,7 +319,7 @@ bool stack_based_lookup_for_primary_expr = false;
  */
 
 %type <dcval>   type_spec simple_type_spec constructed_type_spec
-%type <dcval>   template_type_spec sequence_type_spec string_type_spec
+%type <dcval>   template_type_spec sequence_type_spec string_type_spec map_type_spec
 %type <dcval>   struct_type enum_type switch_type_spec union_type
 %type <dcval>   array_declarator op_type_spec wstring_type_spec
 %type <dcval>   param_type_spec type_dcl type_declarator actual_parameter
@@ -2834,6 +2836,7 @@ template_type_spec
         | string_type_spec
         | wstring_type_spec
         | fixed_type_spec
+        | map_type_spec
         ;
 
 constructed_type_spec
@@ -3886,6 +3889,88 @@ enumerator :
             }
 
           delete annotations;
+        }
+        ;
+
+map_type_spec :
+        IDL_MAP
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapSeen);
+          idl_global->scopes().push(0);
+        }
+        '<'
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapSqSeen);
+        }
+        simple_type_spec
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapTypeSeen);
+        }
+        ','
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapCommaSeen);
+        }
+        simple_type_spec
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapTypeSeen);
+        }
+        '>'
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapQsSeen);
+
+          AST_Map *map = 0;
+          AST_Decl *key_type = $5;
+          AST_Decl *val_type = $9;
+          
+          /*
+           * Remove sequence marker from scopes stack.
+           */
+          if (idl_global->scopes ().top () == 0)
+            {
+             idl_global->scopes ().pop ();
+            }
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          /*
+           * Create a node representing a sequence.
+           */
+          if (key_type && val_type)
+            {
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type);
+
+              if (ktp == 0 || vtp == 0)
+                {
+                  ; // Error will be caught in FE_Declarator.
+                }
+              else
+                {
+                  Identifier id ("map");
+                  UTL_ScopedName sn (&id, 0);
+                  ACE_CDR::ULong bound = 0UL;
+
+                  map =
+                    idl_global->gen ()->create_map (
+                        idl_global->gen ()->create_expr (
+                                                bound,
+                                                AST_Expression::EV_ulong
+                                              ),
+                        ktp,
+                        vtp,
+                        &sn,
+                        s->is_local (),
+                        s->is_abstract ()
+                      );
+                  // map->base_type_annotations (*type_annotations);
+
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
+            }
+
+          // delete type_annotations;
+
+          $$ = map;
         }
         ;
 
