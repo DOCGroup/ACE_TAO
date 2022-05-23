@@ -62,6 +62,7 @@ class AST_Constant;
 class AST_EnumVal;
 class AST_Array;
 class AST_Sequence;
+class AST_Map;
 class AST_String;
 class AST_Typedef;
 class AST_Root;
@@ -133,6 +134,7 @@ public:
   virtual int visit_enum_val (AST_EnumVal *node) = 0;
   virtual int visit_array (AST_Array *node) = 0;
   virtual int visit_sequence (AST_Sequence *node) = 0;
+  virtual int visit_map (AST_Map *node) = 0;
   virtual int visit_string (AST_String *node) = 0;
   virtual int visit_typedef (AST_Typedef *node) = 0;
   virtual int visit_root (AST_Root *node) = 0;

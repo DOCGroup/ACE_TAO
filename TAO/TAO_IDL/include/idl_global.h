@@ -234,6 +234,11 @@ public:
     , PS_EnumQsSeen             // Seen '}' for enum
     , PS_EnumBodySeen           // Seen complete enum body
     , PS_EnumCommaSeen          // Seen ',' in list of enumerators
+    , PS_MapSeen                // Seen a MAP keyword
+    , PS_MapSqSeen              // Seen a '<' for map
+    , PS_MapQsSeen              // Seen a '>' for map
+    , PS_MapTypeSeen            // Seen a type decl for map
+    , PS_MapCommaSeen           // Seen comma for sequence
     , PS_SequenceSeen           // Seen a SEQUENCE keyword
     , PS_SequenceSqSeen         // Seen '<' for sequence
     , PS_SequenceQsSeen         // Seen '>' for sequence
