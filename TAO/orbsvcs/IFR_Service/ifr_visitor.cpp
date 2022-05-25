@@ -315,6 +315,12 @@ ifr_visitor::visit_sequence (AST_Sequence *)
 }
 
 int
+ifr_visitor::visit_map (AST_Map *)
+{
+  return 0;
+}
+
+int
 ifr_visitor::visit_string (AST_String *)
 {
   return 0;
