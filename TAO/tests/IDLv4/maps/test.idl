@@ -1,4 +1,5 @@
 struct DataStruct {
     sequence<int32> seqData;
     map<int32, int32> mapData;
+    map<int32, int32, 4> mapData;
 };
