@@ -330,7 +330,7 @@ public:
                                          bool is_abstract);
 
   // Create a node representing a map type.
-  virtual AST_Map *create_map(AST_Expression *v, 
+  virtual AST_Map *create_map(AST_Expression *v,
                               AST_Type *key_bt,
                               AST_Type *val_bt,
                               UTL_ScopedName *n,
