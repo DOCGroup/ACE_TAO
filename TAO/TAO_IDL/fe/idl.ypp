@@ -404,7 +404,7 @@ bool stack_based_lookup_for_primary_expr = false;
 %type <annotation_params_val> annotation_appl_params_maybe annotation_appl_params
 %type <annotation_params_val> named_annotation_appl_params more_named_annotation_appl_params
 %type <annotation_param_val> named_annotation_appl_param
-%type <decl_annotations_pair_val> seq_head
+%type <decl_annotations_pair_val> seq_head map_type
 
 %type <decls_val> member_i state_member value_element
 %type <vival> visibility
@@ -3902,25 +3902,19 @@ map_type_spec :
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_MapSqSeen);
         }
-        simple_type_spec
-        {
-          idl_global->set_parse_state(IDL_GlobalData::PS_MapTypeSeen);
-        }
+        map_type
         ','
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_MapCommaSeen);
         }
-        simple_type_spec
-        {
-          idl_global->set_parse_state(IDL_GlobalData::PS_MapTypeSeen);
-        }
+        map_type
         '>'
         {
           idl_global->set_parse_state(IDL_GlobalData::PS_MapQsSeen);
 
           AST_Map *map = 0;
-          AST_Decl *key_type = $5;
-          AST_Decl *val_type = $9;
+          Decl_Annotations_Pair *key_type = $5;
+          Decl_Annotations_Pair *val_type = $8;
           
           /*
            * Remove sequence marker from scopes stack.
@@ -3937,8 +3931,8 @@ map_type_spec :
            */
           if (key_type && val_type)
             {
-              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type);
-              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type);
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
 
               if (ktp == 0 || vtp == 0)
                 {
@@ -3968,9 +3962,76 @@ map_type_spec :
                 }
             }
 
-          // delete type_annotations;
-
           $$ = map;
+        }
+        | IDL_MAP
+          '<'
+          map_type
+          ','
+          map_type
+          ','
+          positive_int_expr
+          '>'
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapQsSeen);
+
+          AST_Map *map = 0;
+          Decl_Annotations_Pair *key_type = $3;
+          Decl_Annotations_Pair *val_type = $5;
+
+          /*
+           * Remove sequence marker from scopes stack.
+           */
+          if (idl_global->scopes ().top () == 0)
+            {
+             idl_global->scopes ().pop ();
+            }
+
+          UTL_Scope *s = idl_global->scopes ().top_non_null ();
+
+          /*
+           * Create a node representing a sequence.
+           */
+          if (key_type && val_type)
+            {
+              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
+
+              if (ktp == 0 || vtp == 0)
+                {
+                  ; // Error will be caught in FE_Declarator.
+                }
+              else
+                {
+                  Identifier id ("map");
+                  UTL_ScopedName sn (&id, 0);
+
+                  map =
+                    idl_global->gen ()->create_map (
+                        $7,
+                        ktp,
+                        vtp,
+                        &sn,
+                        s->is_local (),
+                        s->is_abstract ()
+                      );
+                  // map->base_type_annotations (*type_annotations);
+
+                  idl_global->err ()->anonymous_type_diagnostic ();
+                }
+            }
+          $$ = map;
+        }
+        ;
+
+map_type :
+        annotations_maybe simple_type_spec
+        {
+          idl_global->set_parse_state(IDL_GlobalData::PS_MapTypeSeen);
+          Decl_Annotations_Pair* pair = new Decl_Annotations_Pair;
+          pair->decl = $2;
+          pair->annotations = $1;
+          $$ = pair;
         }
         ;
 
