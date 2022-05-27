@@ -24,6 +24,8 @@ MACOS_CODENAME_VER_10_15  := catalina
 MACOS_CODENAME_VER_10_latest  := catalina
 MACOS_CODENAME_VER_11_5   := bigsur
 MACOS_CODENAME_VER_11_latest := bigsur
+MACOS_CODENAME_VER_12_3   := monterey
+MACOS_CODENAME_VER_12_latest := monterey
 
 MACOS_CODENAME = $(MACOS_CODENAME_VER_$(MACOS_MAJOR_VERSION)_$(MACOS_MINOR_VERSION))
 
@@ -41,6 +43,12 @@ else ifeq ($(MACOS_MAJOR_VERSION),11)
     ## if the detected version is greater than the latest know version,
     ## just use the latest known version
     MACOS_CODENAME = $(MACOS_CODENAME_VER_11_latest)
+  endif
+else ifeq ($(MACOS_MAJOR_VERSION),12)
+  ifeq ($(shell test $(MACOS_MINOR_VERSION) -gt 3; echo $$?),0)
+    ## if the detected version is greater than the latest know version,
+    ## just use the latest known version
+    MACOS_CODENAME = $(MACOS_CODENAME_VER_12_latest)
   endif
 else
   ## Unsupported major version
