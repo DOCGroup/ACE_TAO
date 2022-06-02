@@ -94,7 +94,7 @@ AST_Map::AST_Map (AST_Expression *ms,
                             UTL_ScopedName *n,
                             bool local,
                             bool abstract)
-  : COMMON_Base (key_bt->is_local () || local,
+  : COMMON_Base (key_bt->is_local () || val_bt->is_local() || local,
                  abstract),
     AST_Decl (AST_Decl::NT_map,
               n,
@@ -256,7 +256,7 @@ AST_Map::value_type () const
 }
 
 AST_Type *
-AST_Map::primitive_base_type () const
+AST_Map::primitive_key_type () const
 {
   AST_Type *type_node = key_type ();
   if (type_node && type_node->node_type () == AST_Decl::NT_typedef)
@@ -265,6 +265,18 @@ AST_Map::primitive_base_type () const
       if (!typedef_node) return 0;
       type_node = typedef_node->primitive_base_type ();
     }
+  return type_node;
+}
+
+AST_Type *
+AST_Map::primitive_value_type () const {
+  AST_Type *type_node = value_type();
+  if (type_node && type_node->node_type() == AST_Decl::NT_typedef)
+    {
+      AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef*>(type_node);
+      if(!typedef_node) return 0;
+      type_node = typedef_node->primitive_base_type();
+    }   
   return type_node;
 }
 

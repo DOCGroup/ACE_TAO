@@ -94,9 +94,15 @@ public:
 
   /**
    * Returns the fully dealiased base type if it's a typedef. If it's not a
-   * typedef, the it returns the same value as as base_type().
+   * typedef, the it returns the same value as as key_type().
    */
-  AST_Type *primitive_base_type () const;
+  AST_Type *primitive_key_type () const;
+
+  /**
+   * Returns the fully dealiased base type if it's a typedef. If it's not a
+   * typedef, the it returns the same value as as value_type().
+   */
+  AST_Type *primitive_value_type () const;
 
   virtual bool unbounded () const;
   // Is this map bounded or not.
@@ -147,9 +153,14 @@ private:
   // responsible for destroying it.
 
   /**
-   * Annotations on the base type
+   * Annotations on the key type
    */
-  AST_Annotation_Appls base_type_annotations_;
+  AST_Annotation_Appls key_type_annotations_;
+  
+  /**
+   * Annotations on the value type
+   */
+  AST_Annotation_Appls value_type_annotations_;
 };
 
 #endif           // _AST_MAP_AST_MAP_HH
