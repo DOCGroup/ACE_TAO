@@ -75,11 +75,11 @@ class TAO_IDL_FE_Export AST_Map : public virtual AST_ConcreteType
 {
 public:
   AST_Map (AST_Expression *max_size,
-                AST_Type *key_bt,
-                AST_Type *val_bt,
-                UTL_ScopedName *n,
-                bool local,
-                bool abstract);
+           AST_Type *key_bt,
+           AST_Type *val_bt,
+           UTL_ScopedName *n,
+           bool local,
+           bool abstract);
 
   virtual ~AST_Map ();
 
@@ -90,7 +90,7 @@ public:
   AST_Expression *max_size ();
 
   AST_Type *key_type () const;
-  AST_Type *value_type() const;
+  AST_Type *value_type () const;
 
   /**
    * Returns the fully dealiased base type if it's a typedef. If it's not a
@@ -128,11 +128,20 @@ public:
   static AST_Decl::NodeType const NT;
 
   /**
-   * Get and Set Annotations on the base type
+   * Get and Set Annotations on the key type
    */
   ///{
-  AST_Annotation_Appls &base_type_annotations ();
-  void base_type_annotations (const AST_Annotation_Appls &annotations);
+  AST_Annotation_Appls &key_type_annotations ();
+  void key_type_annotations (const AST_Annotation_Appls &annotations);
+  ///}
+
+
+  /**
+   * Get and Set Annotations on the value type
+   */
+  ///{
+  AST_Annotation_Appls &value_type_annotations ();
+  void value_type_annotations (const AST_Annotation_Appls &annotations);
   ///}
 
 private:
