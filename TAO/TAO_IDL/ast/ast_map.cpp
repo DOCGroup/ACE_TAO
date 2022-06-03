@@ -214,8 +214,8 @@ AST_Map::dump (ACE_OSTREAM_TYPE &o)
 {
   this->dump_i (o, "map <");
   AST_Annotation_Appls::iterator i,
-    finished = base_type_annotations ().end ();
-  for (i = base_type_annotations ().begin (); i != finished; ++i)
+    finished = key_type_annotations ().end ();
+  for (i = key_type_annotations ().begin (); i != finished; ++i)
     {
       AST_Annotation_Appl *a = i->get ();
       a->dump (o);
@@ -223,6 +223,14 @@ AST_Map::dump (ACE_OSTREAM_TYPE &o)
     }
   this->key_pd_type->dump (o);
   this->dump_i (o, ", ");
+
+  finished = value_type_annotations ().end ();
+  for (i = value_type_annotations ().begin (); i != finished; ++i)
+    {
+      AST_Annotation_Appl *a = i->get ();
+      a->dump (o);
+      dump_i (o, " ");
+    }
   this->value_pd_type->dump (o);
   this->dump_i (o, ", ");
   this->pd_max_size->dump (o);
@@ -269,12 +277,13 @@ AST_Map::primitive_key_type () const
 }
 
 AST_Type *
-AST_Map::primitive_value_type () const {
+AST_Map::primitive_value_type () const
+{
   AST_Type *type_node = value_type();
   if (type_node && type_node->node_type() == AST_Decl::NT_typedef)
     {
       AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef*>(type_node);
-      if(!typedef_node) return nullptr;
+      if (!typedef_node) return nullptr;
       type_node = typedef_node->primitive_base_type();
     }   
   return type_node;
@@ -316,13 +325,25 @@ AST_Map::destroy ()
 }
 
 AST_Annotation_Appls &
-AST_Map::base_type_annotations ()
+AST_Map::key_type_annotations ()
 {
-  return base_type_annotations_;
+  return value_type_annotations_;
 }
 
 void
-AST_Map::base_type_annotations (const AST_Annotation_Appls &annotations)
+AST_Map::key_type_annotations (const AST_Annotation_Appls &annotations)
 {
-  base_type_annotations_ = annotations;
+  key_type_annotations_ = annotations;
+}
+
+AST_Annotation_Appls &
+AST_Map::value_type_annotations ()
+{
+  return value_type_annotations_;
+}
+
+void
+AST_Map::value_type_annotations (const AST_Annotation_Appls &annotations)
+{
+  value_type_annotations_ = annotations;
 }
