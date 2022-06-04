@@ -14,7 +14,7 @@ struct DataStruct {
 
     map<int32, TestStruct> mapStructs;
     map<int32, TestStruct, 4> mapStructsBounded;
-    
+
     map<string, TestStructSeq> stringSequenceMap;
     map<string, TestStructSeq, 2> stringSequenceMapBounded;
 

@@ -157,15 +157,18 @@ private:
   bool unbounded_;
   // Whether we are bounded or unbounded.
 
-  bool owns_base_type_;
-  // If our base type is anonymous array or map, we're
+  bool owns_key_type_;
+  // If our key type is anonymous array or map, we're
+  // responsible for destroying it.
+  bool owns_value_type_;
+  // If our value type is anonymous array or map, we're
   // responsible for destroying it.
 
   /**
    * Annotations on the key type
    */
   AST_Annotation_Appls key_type_annotations_;
-  
+
   /**
    * Annotations on the value type
    */

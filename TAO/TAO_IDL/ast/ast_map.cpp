@@ -89,11 +89,11 @@ AST_Decl::NodeType const
 AST_Map::NT = AST_Decl::NT_map;
 
 AST_Map::AST_Map (AST_Expression *ms,
-                            AST_Type *key_bt,
-                            AST_Type *val_bt,
-                            UTL_ScopedName *n,
-                            bool local,
-                            bool abstract)
+                  AST_Type *key_bt,
+                  AST_Type *val_bt,
+                  UTL_ScopedName *n,
+                  bool local,
+                  bool abstract)
   : COMMON_Base (key_bt->is_local () || val_bt->is_local() || local,
                  abstract),
     AST_Decl (AST_Decl::NT_map,
@@ -107,13 +107,14 @@ AST_Map::AST_Map (AST_Expression *ms,
     key_pd_type (key_bt),
     value_pd_type (val_bt),
     unbounded_ (true),
-    owns_base_type_ (false)
+    owns_key_type_ (false),
+    owns_value_type_ (false)
 {
   FE_Utils::tmpl_mod_ref_check (this, key_bt);
 
-  AST_Decl::NodeType bnt = key_bt->node_type ();
+  AST_Decl::NodeType knt = key_bt->node_type ();
 
-  if (bnt == AST_Decl::NT_param_holder)
+  if (knt == AST_Decl::NT_param_holder)
     {
       AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (key_bt);
 
@@ -123,6 +124,24 @@ AST_Map::AST_Map (AST_Expression *ms,
           key_bt->destroy ();
           delete key_bt;
           key_bt = nullptr;
+          throw Bailout ();
+        }
+    }
+
+  FE_Utils::tmpl_mod_ref_check (this, val_bt);
+
+  AST_Decl::NodeType vnt = val_bt->node_type ();
+
+  if (vnt == AST_Decl::NT_param_holder)
+    {
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (val_bt);
+
+      if (ph->info ()->type_ == AST_Decl::NT_const)
+        {
+          idl_global->err ()->not_a_type (val_bt);
+          val_bt->destroy ();
+          delete val_bt;
+          val_bt = nullptr;
           throw Bailout ();
         }
     }
@@ -138,12 +157,15 @@ AST_Map::AST_Map (AST_Expression *ms,
   // A map data type is always VARIABLE.
   this->size_type (AST_Type::VARIABLE);
 
-  AST_Decl::NodeType nt = key_bt->node_type ();
+  this->owns_key_type_ =
+    knt == AST_Decl::NT_array
+    || knt == AST_Decl::NT_map
+    || knt == AST_Decl::NT_param_holder;
 
-  this->owns_base_type_ =
-    nt == AST_Decl::NT_array
-    || nt == AST_Decl::NT_map
-    || nt == AST_Decl::NT_param_holder;
+  this->owns_value_type_ =
+    vnt == AST_Decl::NT_array
+    || vnt == AST_Decl::NT_map
+    || vnt == AST_Decl::NT_param_holder;
 }
 
 AST_Map::~AST_Map ()
@@ -310,11 +332,18 @@ AST_Map::is_defined ()
 void
 AST_Map::destroy ()
 {
-  if (this->owns_base_type_)
+  if (this->owns_key_type_)
     {
       this->key_pd_type->destroy ();
       delete this->key_pd_type;
       this->key_pd_type = nullptr;
+    }
+  
+  if (this->owns_value_type_)
+    {
+      this->value_pd_type->destroy();
+      delete this->value_pd_type;
+      this->value_pd_type = nullptr;
     }
 
   this->pd_max_size->destroy ();
