@@ -3955,8 +3955,8 @@ map_type_spec :
                 }
             }
 
-          delete key_type->annotation;
-          delete val_type->annotation;
+          delete key_type->annotations;
+          delete val_type->annotations;
           $$ = map;
         }
         | IDL_MAP
@@ -4021,8 +4021,8 @@ map_type_spec :
                 }
             }
 
-          delete key_type->annotation;
-          delete val_type->annotation;
+          delete key_type->annotations;
+          delete val_type->annotations;
           $$ = map;
         }
         ;

@@ -6921,8 +6921,8 @@ yyreduce:
                 }
             }
 
-          delete key_type->annotation;
-          delete val_type->annotation;
+          delete key_type->annotations;
+          delete val_type->annotations;
           (yyval.dcval) = map;
         }
 #line 6929 "fe/idl.tab.cpp"
@@ -6980,8 +6980,8 @@ yyreduce:
                 }
             }
 
-          delete key_type->annotation;
-          delete val_type->annotation;
+          delete key_type->annotations;
+          delete val_type->annotations;
           (yyval.dcval) = map;
         }
 #line 6988 "fe/idl.tab.cpp"
