@@ -237,7 +237,7 @@ public:
     , PS_MapSeen                // Seen a MAP keyword
     , PS_MapSqSeen              // Seen a '<' for map
     , PS_MapQsSeen              // Seen a '>' for map
-    , PS_MapTypeSeen            // Seen a type decl for map
+    , PS_MapTypeSeen         // Seen a type decl for map
     , PS_MapCommaSeen           // Seen comma for sequence
     , PS_MapExprSeen            // Seen a size expression for sequence
     , PS_SequenceSeen           // Seen a SEQUENCE keyword
