@@ -307,7 +307,7 @@ AST_Map::primitive_value_type () const
       AST_Typedef * const typedef_node = dynamic_cast<AST_Typedef*>(type_node);
       if (!typedef_node) return 0;
       type_node = typedef_node->primitive_base_type();
-    }   
+    }
   return type_node;
 }
 
@@ -338,7 +338,7 @@ AST_Map::destroy ()
       delete this->key_pd_type;
       this->key_pd_type = 0;
     }
-  
+
   if (this->owns_value_type_)
     {
       this->value_pd_type->destroy();
