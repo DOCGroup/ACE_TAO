@@ -3894,6 +3894,11 @@ enumerator :
 
 map_type_spec :
         IDL_MAP
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_MapTypeSeen);
+
+          idl_global->scopes ().push (0);
+        }
         '<'
         map_type
         ','
@@ -3945,15 +3950,23 @@ map_type_spec :
                         s->is_local (),
                         s->is_abstract ()
                       );
-                  // map->base_type_annotations (*type_annotations);
+                  map->key_type_annotations (*key_type->annotations);
+                  map->value_type_annotations (*val_type->annotations);
 
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
 
+          delete key_type->annotation;
+          delete val_type->annotation;
           $$ = map;
         }
         | IDL_MAP
+        {
+          idl_global->set_parse_state (IDL_GlobalData::PS_MapTypeSeen);
+
+          idl_global->scopes ().push (0);
+        }
           '<'
           map_type
           ','
@@ -4004,11 +4017,15 @@ map_type_spec :
                         s->is_local (),
                         s->is_abstract ()
                       );
-                  // map->base_type_annotations (*type_annotations);
+                  map->key_type_annotations (*key_type->annotations);
+                  map->value_type_annotations (*val_type->annotations);
 
                   idl_global->err ()->anonymous_type_diagnostic ();
                 }
             }
+
+          delete key_type->annotation;
+          delete val_type->annotation;
           $$ = map;
         }
         ;
