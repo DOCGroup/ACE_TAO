@@ -169,7 +169,7 @@ jobs:
       run: |
         wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
-      if: contains (matrix.Repo, 'llvm')
+      if: startsWith (matrix.Repo, 'llvm-toolchain')
     - name: Add apt packages ${{ matrix.PackageDeps }}
       run: |
         sudo apt-get --yes update
