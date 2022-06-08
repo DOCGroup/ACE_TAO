@@ -156,7 +156,7 @@ extern int tao_yydebug;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 164 "fe/idl.ypp"
+#line 166 "fe/idl.ypp"
 
   AST_Decl                      *dcval;         /* Decl value           */
   UTL_StrList                   *slval;         /* String list          */
@@ -200,8 +200,9 @@ union YYSTYPE
   AST_Annotation_Decl *annotation_decl_val;
   AST_Decls *decls_val;
   Decl_Annotations_Pair *decl_annotations_pair_val;
+  Decl_Annotations_Pair_Pair* decl_annotations_pair_val_pair;
 
-#line 205 "fe/idl.tab.hpp"
+#line 206 "fe/idl.tab.hpp"
 
 };
 typedef union YYSTYPE YYSTYPE;
