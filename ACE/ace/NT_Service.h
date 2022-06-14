@@ -196,13 +196,13 @@ public:
    * error, 0 on success.  This just affects the SCM and registry - the
    * can and will keep running fine if it is already running.
    */
-  int remove (void);
+  int remove ();
 
   /// Sets the startup type for the service.  Returns -1 on error, 0 on success.
   int startup (DWORD startup);
 
   /// Returns the current startup type.
-  DWORD startup (void);
+  DWORD startup ();
 
   // = Methods to control ACE_Log_Msg behavior in the service.
 
@@ -216,7 +216,7 @@ public:
    * call this function just before calling the StartServiceCtrlDispatcher
    * function.
    */
-  void capture_log_msg_attributes (void);
+  void capture_log_msg_attributes ();
 
   /**
    * Set the ACE_Log_Msg attributes in the current thread to those saved
