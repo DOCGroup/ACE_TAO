@@ -1,0 +1,137 @@
+commit 4637db4161be645eb73aae66eeb7cdf98853bca7
+Author: Justin R. Wilson <wilsonj@objectcomputing.com>
+Date:   Thu May 26 14:21:46 2022 -0500
+
+    Add support for macOS Monterey
+
+commit 77c66ad410a81710ae5c8f91b316f2566dfb0035
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue May 10 11:05:27 2022 -0500
+
+    From review
+
+commit 717332778368b909f502a0b91a130bf9d4013d3b
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon May 9 14:21:13 2022 -0500
+
+    Return when core files are handled by a dedicated service
+
+commit ed7780d7c28553a7f1080c450d3a5aa62245e1d8
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed May 4 16:14:30 2022 -0500
+
+    From review
+
+commit c45da571827a06c29a794b9e3ac17c720892b5fe
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue May 3 12:05:17 2022 -0500
+
+    From review
+
+commit 25671db08e2f939f96dc90a75f39038f4cff3953
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 17:41:07 2022 -0500
+
+    Choosing debugger is configurable
+
+commit fad3aa9f735ede7455e2fe7e7ff5a5c991b9f8f7
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 16:45:38 2022 -0500
+
+    From review
+
+commit f04748dc14e7218547cd8621b89d880390ea8b38
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 29 16:30:31 2022 -0500
+
+    Add support for macOS & fixed errors
+
+commit c3dea08e83126e36b99d919ddcd0c8cf333092d8
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 18:22:28 2022 -0500
+
+    Update logs
+
+commit a45738d60e2ffe6792f4c3d582eaa369bac8b82d
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 18:07:18 2022 -0500
+
+    Update WaitKill
+
+commit 66e7e08a2042ed8cfeb56d72e3538eaed5a11b97
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 28 17:39:07 2022 -0500
+
+    Print out stack trace
+
+commit 7846f2db1fe1f781cf9573c5392fe69131be71c7
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Apr 6 13:00:30 2022 -0500
+
+    Update doc and add argument to SpawnWaitKill
+
+commit 146a30e97879d52584d681754354e3e1bc9df02b
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 4 17:00:53 2022 -0500
+
+    Update Kill function
+
+commit e401f02ed7c528e6caaba85763d1b153f56e75f3
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Apr 4 12:31:09 2022 -0500
+
+    Indicating if a process can self crash and get signal info
+
+commit 0f190e0f155c2eea7587a7b4462d52efc6d6d725
+Author: Son Dinh <technology789@gmail.com>
+Date:   Thu Mar 31 14:35:10 2022 -0500
+
+    Revert "Get signal information from PerlACE"
+
+commit 9e115d56f7986e3bc79b5bb6de9508fc2c11cf64
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 28 21:52:05 2022 -0500
+
+    Update code comments
+
+commit 2aae81f0997ff78652023276f5a61e1c2a6edcbf
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Mar 25 12:23:14 2022 -0500
+
+    Use hashref
+
+commit f336038380c3d096d36d94b68777cab077163d8c
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Wed Mar 23 14:42:39 2022 -0500
+
+    Update function prototype
+
+commit 8a40528ea37006b20f031ad93d038ecb52090d2d
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Mar 22 11:29:33 2022 -0500
+
+    Update VMS process
+
+commit cb7b485a4641b0c0282e2d73216c1c3a54a92e4c
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 21 23:34:47 2022 -0500
+
+    Update comment
+
+commit 34602aeea68e0c364b87c2de7b4215839f7807f2
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Mon Mar 21 23:21:28 2022 -0500
+
+    Return signal code if any
+
+commit bb40fc4e180ba724d1a23296e526ff8591e9985f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Jan 6 11:01:55 2022 -0600
+
+    depgen for IDL: remove assumption about IDL files in subdirs
+    
+    tao_idl dir/file.idl doesn't put its output in dir by default
+    The ObjectGenerator perl module doesn't know about the -o option to tao_idl
+    The base filename may work anyway due to VPATH
+    
+    (cherry picked from commit 5edb3f8c49de9b98900bcc03ba5e0500fcc020db)

@@ -1,0 +1,118 @@
+commit d4139bda50f6c91fd0678532c45738b676522da6
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 7 09:39:44 2022 +0200
+
+    Fixed merge conflicts
+
+commit c59927e3016c817114e5572d0d9bcfb5fe94ac66
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Tue Apr 12 12:37:45 2022 -0500
+
+    More tests update
+
+commit 027700d2ee6d9c8265717e9d117ad87d43911d44
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Fri Apr 8 12:34:55 2022 -0500
+
+    Update orbsvcs tests
+
+commit abd2964b279d3d54450750fc0359f4aad24d40a5
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 7 16:56:03 2022 -0500
+
+    More updates to TAO/tests
+
+commit 8d4dfcbddad8a3aeb48c8d69f45ad037a3129e28
+Author: Son Dinh <dinhs@objectcomputing.com>
+Date:   Thu Apr 7 11:26:20 2022 -0500
+
+    Fixing tests
+
+commit 84c8fabf00da4d576e0671f3f5c274970a4d9281
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Mar 31 16:26:49 2022 -0500
+
+    NEWS for recent TAO 2.x changes
+
+commit 670074ab32dbb65d4e2cb0503dedba2751c69fd6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Mar 11 10:35:21 2022 -0600
+
+    tao_idl: avoid undefined behavior (adding to nullptr)
+    
+    (cherry picked from commit 0bfdaeb95608f3652cfe499e1960988c71476f30)
+
+commit 56748a767cc984fefe3473515cc3985b8c68a59e
+Author: Fred Hornsey <hornseyf@objectcomputing.com>
+Date:   Tue Feb 15 14:41:57 2022 -0600
+
+    Fix tao_idl File Error Messages
+    
+    Backport of https://github.com/DOCGroup/ACE_TAO/pull/1783
+    
+    1. The error message for failing to open an IDL file didn't have the
+       filename in it. This was because the `ACE_ERROR` for it was using a
+       `%m` when it should have been using a `%p`.
+       It looks like https://github.com/DOCGroup/ACE_TAO/commit/faab6830cf4ecf67b452183dba712caae7996be4
+       went one change too far.
+    
+    2. First brought up here: https://github.com/objectcomputing/OpenDDS/issues/3308
+       Inputting a directory to tao_idl results in an empty file that causes
+       a weird error latter. Changed it to ensure the file is a regular file
+       using `stat`.
+
+commit 132801c870f2fa1a951770099f8781da006d455b
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Thu Feb 3 10:50:44 2022 -0600
+
+    Merge pull request #1778 from ClaytonCalabrese/resolve_space_in_path_followup
+    
+    TAO_IDL: Fix Space In Path Handling: Unused Variable Followup
+    
+    (cherry picked from commit a943c6302418abb397b271f94202df3efb722151)
+
+commit 57c9ec77ae81388bc212820417d1cc27ab9e4b3a
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Feb 1 14:57:43 2022 -0600
+
+    Merge pull request #1772 from ClaytonCalabrese/resolve_space_in_path
+    
+    TAO_IDL: Fix Space In Path Handling
+    
+    (cherry picked from commit e4b72cc9a0fcc5e0f4449eef2598d84df37715b2)
+
+commit 1196295dc3f4a17d4ebb6688c3160aa3e69c8279
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jan 14 16:48:18 2022 -0600
+
+    Merge pull request #1760 from mitza-oci/cxx20
+    
+    fixed build with GCC -std=c++20
+    
+    (cherry picked from commit a8372419d0e73f4b816fccd15d85b085c56ea4d3)
+    
+    # Conflicts:
+    #       .github/workflows/linux.yml
+
+commit facc3186b738077451f2f3357f0ba2b02b81b517
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jan 11 14:21:45 2022 -0600
+
+    [TAO 2]: fixed warning in ast_expression.cpp
+    
+    Already fixed in TAO 3
+
+commit b451f7e5b2ebaaa95085fab746821d9de167efab
+Merge: 570490704a2 f8d8777b9cb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Nov 23 09:09:04 2021 -0600
+
+    Merge pull request #1738 from mitza-oci/tao2-comments
+    
+    [TAO 2] fixed comments in tao_idl-generated code
+
+commit f8d8777b9cb4c42d8e693b9c97f8f9469740de76
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Nov 19 16:00:54 2021 -0600
+
+    fixed comments in tao_idl-generated code
