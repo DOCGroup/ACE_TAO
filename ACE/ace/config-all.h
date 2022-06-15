@@ -109,12 +109,16 @@
 # define ACE_HAS_STRING_CLASS
 #endif /* ACE_HAS_STRING_CLASS */
 
+// From ACE 7.0.8 we assume all compilers support this
+#if !defined (ACE_ANY_OPS_USE_NAMESPACE)
+# define ACE_ANY_OPS_USE_NAMESPACE
+#endif /* ACE_ANY_OPS_USE_NAMESPACE */
+
 // ACE 7.0.3 renamed this macro, defining the old name for
 // backwards compatibility
 #if defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
 # define ACE_HAS_WIN32_STRUCTURAL_EXCEPTIONS
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
-
 
 // These includes are here to avoid circular dependencies.
 // Keep this at the bottom of the file.  It contains the main macros.
