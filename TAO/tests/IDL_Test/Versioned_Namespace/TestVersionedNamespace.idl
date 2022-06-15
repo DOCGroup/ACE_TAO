@@ -1,0 +1,7 @@
+module M1 {
+
+  valuetype V {
+    public string s1;
+  };
+
+};
