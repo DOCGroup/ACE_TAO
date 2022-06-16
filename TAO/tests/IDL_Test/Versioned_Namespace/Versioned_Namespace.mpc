@@ -1,6 +1,5 @@
 // -*- MPC -*-
-project(IDL_Test_Versioned_Namespace): taoidldefaults, valuetype, versioned_namespace {
-  requires += versioned_namespace
+project(IDL_Test_Versioned_Namespace): taoidldefaults, valuetype {
   idlflags += -Scdr -Sa
   idlflags += -Wb,versioning_begin=BEGIN_USER_VERSIONED_NAMESPACE \
               -Wb,versioning_end=END_USER_VERSIONED_NAMESPACE \
