@@ -199,7 +199,6 @@ jobs:
     - name: Extend $ACE_ROOT/include/makeinclude/platform_macros.GNU
       run: |
         '${{ matrix.platform_file }}' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
-        'versioned_namespace=1' >> ${env:ACE_ROOT}/include/makeinclude/platform_macros.GNU
       shell: pwsh
     - name: Create $ACE_ROOT/bin/MakeProjectCreator/config/default.features
       run: |
