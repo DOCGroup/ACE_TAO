@@ -2,7 +2,7 @@
 
 //=============================================================================
 /**
- *  @file    sequence_cs.h
+ *  @file    map_cs.h
  *
  *  Concrete visitor for the Sequence class
  *  This one provides code generation for the Sequence node in the client

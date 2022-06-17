@@ -1,7 +1,7 @@
 
 //=============================================================================
 /**
- *  @file    sequence.h
+ *  @file    map.h
  *
  *  Visitors for generation of code for Sequence
  *
