@@ -209,25 +209,28 @@ be_visitor_valuetype_obv_ch::visit_valuetype (be_valuetype *node)
       // Map fields to private data.
       if (!node->opt_accessor ())
         {
-          *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
+          if (be_global->cdr_support ())
+            {
+              *os << be_nl << be_uidt_nl << "protected:" << be_idt_nl;
 
-          *os << "virtual ::CORBA::Boolean" << be_nl
-              << "_tao_marshal__" << node->flat_name ()
-              << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_marshal__" << node->flat_name()
+                  << " (TAO_OutputCDR &, TAO_ChunkInfo &) const;" << be_nl_2;
 
-          *os << "virtual ::CORBA::Boolean" << be_nl
-              << "_tao_unmarshal__" << node->flat_name ()
-              << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
+              *os << "virtual ::CORBA::Boolean" << be_nl
+                  << "_tao_unmarshal__" << node->flat_name()
+                  << " (TAO_InputCDR &, TAO_ChunkInfo &);" << be_nl_2;
 
-          *os << "::CORBA::Boolean "
-              << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
-              << be_nl
-              << "::CORBA::Boolean "
-              << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
-              << be_nl
-              << "virtual void "
-              << "truncation_hook (void);"
-              << be_uidt_nl << be_nl;
+              *os << "::CORBA::Boolean "
+                  << "_tao_marshal_state (TAO_OutputCDR &, TAO_ChunkInfo &) const;"
+                  << be_nl
+                  << "::CORBA::Boolean "
+                  << "_tao_unmarshal_state (TAO_InputCDR &, TAO_ChunkInfo &);"
+                  << be_nl
+                  << "virtual void "
+                  << "truncation_hook ();"
+                  << be_uidt_nl << be_nl;
+            }
 
           *os << "private:" << be_idt;
 

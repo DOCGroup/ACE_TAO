@@ -53,6 +53,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
 
   if (node->is_defined ())
     {
+      *os << be_nl
+          << be_global->core_versioning_begin ();
+
       *os << be_nl_2
           << "void" << be_nl
           << "TAO::Value_Traits<" << node->name  () << ">::add_ref ("
@@ -82,6 +85,9 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
           << "{" << be_idt_nl
           << "::CORBA::remove_ref (p);" << be_uidt_nl
           << "}";
+
+      *os << be_nl
+          << be_global->core_versioning_end () << be_nl;
     }
 
   // The _downcast method.
@@ -170,58 +176,8 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
   // Nothing to marshal if abstract valuetype.
   if (!node->is_abstract () && !is_an_amh_exception_holder)
     {
-      // The virtual _tao_marshal_v method.
-      *os << "::CORBA::Boolean" << be_nl
-          << node->name ()
-          << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
-          << "{" << be_idt_nl
-          << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_);"
-          << be_nl
-          << "return ";
 
-      if (node->opt_accessor ())
-        {
-          be_decl *scope =
-            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-
-          *os << scope->name () << "::"
-              << node->local_name ()
-              << "::_tao_marshal_state (strm, ci);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "this->_tao_marshal__" << node->flat_name ()
-              << " (strm, ci);" << be_uidt_nl;
-        }
-
-      *os << "}" << be_nl_2;
-
-      // The virtual _tao_unmarshal_v method.
-      *os << "::CORBA::Boolean" << be_nl
-          << node->name ()
-          << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_, 1);"
-          << be_nl
-          << "return ";
-
-      if (node->opt_accessor ())
-        {
-          be_decl *scope =
-            dynamic_cast<be_scope*> (node->defined_in ())->decl ();
-
-          *os << scope->name () << "::"
-              << node->local_name ()
-              <<"::_tao_unmarshal_state (strm,ci);" << be_uidt_nl;
-        }
-      else
-        {
-          *os << "this->_tao_unmarshal__" << node->flat_name ()
-              << " (strm,ci);" << be_uidt_nl;
-        }
-
-      *os << "}" << be_nl_2;
+      this->marshal_unmarshal_v (node);
 
       *os << "::CORBA::Boolean" << be_nl
           << node->name ()
@@ -389,6 +345,81 @@ be_visitor_valuetype_cs::visit_valuetype (be_valuetype *node)
     }
 
   return 0;
+}
+
+void be_visitor_valuetype_cs::marshal_unmarshal_v (be_valuetype *node)
+{
+  TAO_OutStream *const os = this->ctx_->stream ();
+
+  if (!be_global->cdr_support ())
+    {
+      *os << "::CORBA::Boolean" << be_nl
+          << node->name ()
+          << "::_tao_marshal_v (TAO_OutputCDR &) const" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2
+          << "::CORBA::Boolean" << be_nl
+          << node->name ()
+          << "::_tao_unmarshal_v (TAO_InputCDR &)" << be_nl
+          << "{" << be_idt_nl
+          << "return false;" << be_uidt_nl
+          << "}" << be_nl_2;
+      return;
+    }
+
+  // The virtual _tao_marshal_v method.
+  *os << "::CORBA::Boolean" << be_nl
+      << node->name ()
+      << "::_tao_marshal_v (TAO_OutputCDR & strm) const" << be_nl
+      << "{" << be_idt_nl
+      << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_);"
+      << be_nl
+      << "return ";
+
+  if (node->opt_accessor ())
+    {
+      be_decl *scope =
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
+
+      *os << scope->name () << "::"
+          << node->local_name ()
+          << "::_tao_marshal_state (strm, ci);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "this->_tao_marshal__" << node->flat_name ()
+          << " (strm, ci);" << be_uidt_nl;
+    }
+
+  *os << "}" << be_nl_2;
+
+  // The virtual _tao_unmarshal_v method.
+  *os << "::CORBA::Boolean" << be_nl
+      << node->name ()
+      << "::_tao_unmarshal_v (TAO_InputCDR & strm)"
+      << be_nl
+      << "{" << be_idt_nl
+      << "TAO_ChunkInfo ci (this->is_truncatable_ || this->chunking_, 1);"
+      << be_nl
+      << "return ";
+
+  if (node->opt_accessor ())
+    {
+      be_decl *scope =
+        dynamic_cast<be_scope*> (node->defined_in ())->decl ();
+
+      *os << scope->name () << "::"
+          << node->local_name ()
+          <<"::_tao_unmarshal_state (strm,ci);" << be_uidt_nl;
+    }
+  else
+    {
+      *os << "this->_tao_unmarshal__" << node->flat_name ()
+          << " (strm,ci);" << be_uidt_nl;
+    }
+
+  *os << "}" << be_nl_2;
 }
 
 int

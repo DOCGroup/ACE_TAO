@@ -25,6 +25,8 @@
  */
 class be_visitor_valuetype_marshal_cs : public be_visitor_scope
 {
+  int marshal_state (be_valuetype *node);
+  int unmarshal_state (be_valuetype *node);
 
 public:
   /// constructor

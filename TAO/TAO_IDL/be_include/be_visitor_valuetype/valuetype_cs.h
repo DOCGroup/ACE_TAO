@@ -37,6 +37,8 @@ public:
 private:
   /// Recursive to generate for inherited members.
   void gen_ostream_operator_r (be_valuetype *node, unsigned long &index);
+
+  void marshal_unmarshal_v (be_valuetype *node);
 };
 
 #endif /* _BE_VALUETYPE_VALUETYPE_CS_H_ */
