@@ -148,7 +148,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
   //     *os << be_nl_2
   //         << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
   //         << node->key_type ()->full_name ()
-  //         << ", " 
+  //         << ", "
   //         << node->value_type()->full_name()
   //         << ", DCPS_ZERO_COPY_MAP_DEFAULT_SIZE> "
   //         << node->original_local_name ()
@@ -196,8 +196,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
   //         //                       ACE_TEXT ("buffer type visit failed\n")),
   //         //                       -1);
   //         //   }
-          
-  //         // if (kt->accept(&kt_visitor) == -1) 
+
+  //         // if (kt->accept(&kt_visitor) == -1)
   //         //   {
 
   //         //   }
@@ -210,8 +210,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
   //         //                       ACE_TEXT ("buffer type visit failed\n")),
   //         //                       -1);
   //         //   }
-          
-  //         // if (vt->accept(&vt_visitor) == -1) 
+
+  //         // if (vt->accept(&vt_visitor) == -1)
   //         //   {
 
   //         //   }
