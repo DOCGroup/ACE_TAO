@@ -63,13 +63,13 @@ public:
    * typedef, the it returns the same value as as key_type().
    */
   be_type *primitive_key_type () const;
-  
+
   /**
    * Returns the fully dealiased key type if it's a typedef. If it's not a
    * typedef, the it returns the same value as as key_type().
    */
   be_type *primitive_value_type () const;
-  
+
   /// Create a name for ourselves. If we are typedefed, then we get the name of
   /// the typedef node, else we generate a name for ourselves.
   virtual int create_name (be_typedef *node);
