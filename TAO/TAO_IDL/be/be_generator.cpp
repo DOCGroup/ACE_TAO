@@ -108,6 +108,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "be_enum_val.h"
 #include "be_array.h"
 #include "be_sequence.h"
+#include "be_map.h"
 #include "be_string.h"
 #include "be_typedef.h"
 #include "be_native.h"
@@ -877,6 +878,27 @@ be_generator::create_sequence (AST_Expression *v,
                                n,
                                is_local,
                                is_abstract),
+                  nullptr);
+
+  return retval;
+}
+
+AST_Map *
+be_generator::create_map (AST_Expression *v,
+                          AST_Type *kt,
+                          AST_Type *vt,
+                          UTL_ScopedName *n,
+                          bool is_local,
+                          bool is_abstract)
+{
+  be_map *retval = nullptr;
+  ACE_NEW_RETURN (retval,
+                  be_map (v,
+                          kt,
+                          vt,
+                          n,
+                          is_local,
+                          is_abstract),
                   nullptr);
 
   return retval;

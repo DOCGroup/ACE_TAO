@@ -1731,6 +1731,29 @@ IDL_GlobalData::dcps_sequence_type_defined (const char* seq_type)
 }
 
 void
+IDL_GlobalData::set_dcps_map_type (const char* map_type)
+{
+  // this->dcps_sequence_types_list_.enqueue_tail (ACE::strnew (seq_type));
+}
+
+bool
+IDL_GlobalData::dcps_map_type_defined (const char* map_type)
+{
+  char **tmp = nullptr;
+
+  // for (ACE_Unbounded_Queue_Iterator<char *>riter (
+  //        this->dcps_sequence_types_list_);
+  //      riter.done () == 0;
+  //      riter.advance ())
+  //   {
+  //     riter.next (tmp);
+  //     if (ACE_OS::strcmp (*tmp, seq_type) == 0)
+  //       return true;
+  //   }
+  return false;
+}
+
+void
 IDL_GlobalData::add_dcps_data_type (const char* id)
 {
   // Check if the type already exists.
