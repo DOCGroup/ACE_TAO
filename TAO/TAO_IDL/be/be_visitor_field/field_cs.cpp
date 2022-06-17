@@ -127,6 +127,12 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_field_cs::visit_map (be_map *node)
+{
+  return 0;
+}
+
+int
 be_visitor_field_cs::visit_structure (be_structure *node)
 {
   if (node->node_type () != AST_Decl::NT_typedef

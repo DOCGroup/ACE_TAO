@@ -148,6 +148,12 @@ be_visitor_field_cdr_op_ch::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_field_cdr_op_ch::visit_map (be_map *node)
+{
+  return 0;
+}
+
+int
 be_visitor_field_cdr_op_ch::visit_structure (be_structure *node)
 {
   // if not a typedef and we are defined in the use scope, we must be defined

@@ -71,6 +71,10 @@ public:
   virtual void seen_in_sequence (bool val);
 
   /// Accessors for the member.
+  bool seen_in_map (void) const;
+  virtual void seen_in_map (bool val);
+
+  /// Accessors for the member.
   bool seen_in_operation (void) const;
   virtual void seen_in_operation (bool val);
 
@@ -107,6 +111,9 @@ protected:
 
   /// Has this declaration been used as a sequence element?
   bool seen_in_sequence_;
+
+  /// Has this declaration been used as a map element?
+  bool seen_in_map_;
 
   /// Has this declaration been used as a return type or parameter?
   bool seen_in_operation_;

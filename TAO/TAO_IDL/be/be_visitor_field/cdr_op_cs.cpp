@@ -638,6 +638,12 @@ be_visitor_field_cdr_op_cs::visit_sequence (be_sequence *node)
 }
 
 int
+be_visitor_field_cdr_op_cs::visit_map (be_map *node)
+{
+  return 0;
+}
+
+int
 be_visitor_field_cdr_op_cs::visit_string (be_string *str)
 {
   TAO_OutStream *os = this->ctx_->stream ();

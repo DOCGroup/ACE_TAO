@@ -355,6 +355,18 @@ be_type::seen_in_sequence (bool val)
 }
 
 bool
+be_type::seen_in_map () const
+{
+  return this->seen_in_map_;
+}
+
+void
+be_type::seen_in_map (bool val)
+{
+  this->seen_in_map_ = val;
+}
+
+bool
 be_type::seen_in_operation () const
 {
   return this->seen_in_operation_;
