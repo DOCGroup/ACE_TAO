@@ -332,7 +332,16 @@ TAO_CodeGen::start_client_header (const char *fname)
   // Begin versioned namespace support after initial headers have been
   // included, but before the inline file and post include
   // directives.
-  *this->client_header_ << be_global->versioning_begin ();
+  //
+  // Just for the client header, which is included first,
+  // the versioned namespace is opened, closed, and opened again.
+  // This is needed because tao_idl will generate code as if there is no
+  // versioned namespace wrapping the mapped types.  The 'using namespace'
+  // that appears in the END macro allows these types to be referenced from
+  // the global namespace.
+  *this->client_header_ << be_global->versioning_begin ()
+                        << be_global->versioning_end ()
+                        << be_global->versioning_begin ();
 
   return 0;
 }

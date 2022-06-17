@@ -300,14 +300,18 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
   if (node->opt_accessor ())
     {
       *os << be_uidt_nl << "protected:" << be_idt_nl;
-      *os << "::CORBA::Boolean "
-          << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
-          << "::CORBA::Boolean "
-          << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
-          << "virtual void "
-          << "truncation_hook (void);"
-          << be_uidt_nl << be_nl;
-      *os << "private:" << be_idt_nl;
+
+      if (be_global->cdr_support ())
+       {
+        *os << "::CORBA::Boolean "
+            << "_tao_marshal_state (TAO_OutputCDR &) const;" << be_nl
+            << "::CORBA::Boolean "
+            << "_tao_unmarshal_state (TAO_InputCDR &);" << be_nl
+            << "virtual void truncation_hook ();" << be_nl;
+       }
+
+     *os  << be_uidt_nl << be_nl
+          << "private:" << be_idt_nl;
 
       this->gen_pd (node);
     }
@@ -327,7 +331,7 @@ be_visitor_valuetype_ch::visit_valuetype (be_valuetype *node)
                   << "_tao_unmarshal__" << node->flat_name ()
                   << " (TAO_InputCDR &, TAO_ChunkInfo &);";
             }
-          else
+          else if (be_global->cdr_support ())
             {
               *os << "virtual ::CORBA::Boolean" << be_nl
                   << "_tao_marshal__" << node->flat_name ()
