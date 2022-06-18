@@ -231,8 +231,8 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"";
     }
 
-  // TODO probably not what's supposed to be done here
-  *this->client_header() << "#include <map>";
+  // TODO not sure where to put this
+  *this->client_header() << "\n#include <map>\n";
 
   if (be_global->unique_include () != nullptr)
     {
