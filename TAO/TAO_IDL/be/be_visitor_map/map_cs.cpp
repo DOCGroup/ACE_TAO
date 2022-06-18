@@ -26,48 +26,30 @@ be_visitor_map_cs::~be_visitor_map_cs ()
 
 int be_visitor_map_cs::visit_map (be_map *node)
 {
-  // First create a name for ourselves.
-  if (node->create_name (this->ctx_->tdef ()) == -1)
+    if (node->defined_in () == 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_map_cs::")
-                         ACE_TEXT ("visit_map - ")
-                         ACE_TEXT ("failed creating name\n")),
-                        -1);
+      // The node is a nested map, and has had no scope defined.
+      node->set_defined_in (DeclAsScope (this->ctx_->scope ()->decl ()));
     }
 
-  // We don't check cli_stub_gen() here. If we are generated more
-  // than once as an anonymous map, the name guard will cause
-  // the C++ preprocessor to catch it. If we are generated more than
-  // once as a typedef (caused by a comma separated list of
-  // typedefs), our name will be changed by the call above and the
-  // name guard will not catch it, but that's ok - we want to
-  // be generated for each typedef.
-  if (node->imported ())
-    {
-      return 0;
-    }
+  TAO_OutStream *os = this->ctx_->stream ();
 
-  if (idl_global->dcps_map_type_defined (node->full_name ()))
-    {
-      return 0;
-    }
-
+  // Retrieve the key type since we may need to do some code
+  // generation for the base type.
   be_type *kt = dynamic_cast<be_type*> (node->key_type ());
 
   if (kt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_map_cs::")
+                         ACE_TEXT ("be_visitor_map_ch::")
                          ACE_TEXT ("visit_map - ")
                          ACE_TEXT ("Bad element type\n")),
                         -1);
     }
 
+  kt->seen_in_map (true);
   AST_Decl::NodeType knt = kt->node_type ();
 
-  // If our base type is an anonymous map, we must create a name
-  // and generate a class declaration for it as well.
   if (knt == AST_Decl::NT_map)
     {
       // Temporarily make the context's tdef node 0 so the nested call
@@ -79,7 +61,7 @@ int be_visitor_map_cs::visit_map (be_map *node)
       if (kt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_map_cs::")
+                             ACE_TEXT ("be_visitor_map_ch::")
                              ACE_TEXT ("visit_map - ")
                              ACE_TEXT ("codegen for anonymous ")
                              ACE_TEXT ("base type failed\n")),
@@ -90,21 +72,23 @@ int be_visitor_map_cs::visit_map (be_map *node)
       this->ctx_->tdef (tmp);
     }
 
+  
+  
   be_type *vt = dynamic_cast<be_type*> (node->value_type ());
 
   if (vt == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_map_cs::")
+                         ACE_TEXT ("be_visitor_map_ch::")
                          ACE_TEXT ("visit_map - ")
                          ACE_TEXT ("Bad element type\n")),
                         -1);
     }
 
+  vt->seen_in_map (true);
   AST_Decl::NodeType vnt = vt->node_type ();
 
-  // If our base type is an anonymous map, we must create a name
-  // and generate a class declaration for it as well.
+
   if (vnt == AST_Decl::NT_map)
     {
       // Temporarily make the context's tdef node 0 so the nested call
@@ -116,7 +100,7 @@ int be_visitor_map_cs::visit_map (be_map *node)
       if (kt->accept (this) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_map_cs::")
+                             ACE_TEXT ("be_visitor_map_ch::")
                              ACE_TEXT ("visit_map - ")
                              ACE_TEXT ("codegen for anonymous ")
                              ACE_TEXT ("base type failed\n")),
@@ -127,156 +111,16 @@ int be_visitor_map_cs::visit_map (be_map *node)
       this->ctx_->tdef (tmp);
     }
 
-  if (be_global->alt_mapping () && node->unbounded ())
-    {
-      // We are just a typedef and don't need any stub source
-      // code generation.
-      return 0;
-    }
-
-  TAO_OutStream *os = this->ctx_->stream ();
-
   *os << be_nl_2;
 
   TAO_INSERT_COMMENT (os);
 
-  os->gen_ifdef_macro (node->flat_name ());
+  *os << "std::map<"
+      << node->key_type ()->full_name ()
+      << ", "
+      << node->value_type ()->full_name ()
+      << ">";
 
-  // for unbounded maps, we have a different set of constructors
-  if (node->unbounded ())
-    {
-      *os << be_nl_2
-          << node->name () << "::" << node->local_name () << " ("
-          << be_idt << be_idt_nl
-          << "::CORBA::ULong max)" << be_uidt_nl
-          << ": " << be_idt;
-
-      int status =
-        node->gen_base_class_name (os,
-                                   "",
-                                   this->ctx_->scope ()->decl ());
-
-      // Pass it to the base constructor.
-      if (status == -1)
-        {
-          ACE_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("be_visitor_map_cs::")
-                             ACE_TEXT ("visit_map - ")
-                             ACE_TEXT ("codegen for base ")
-                             ACE_TEXT ("map class failed\n")),
-                           -1);
-        }
-
-
-      *os << " (max)" << be_uidt << be_uidt_nl
-          << "{}";
-    }
-
-  /// If we are using std::map, we can't implement this
-  /// constructor.
-  if (!be_global->alt_mapping () || !node->unbounded ())
-    {
-      // // Constructor with the buffer
-      // *os << be_nl_2
-      //     << node->name () << "::" << node->local_name () << " ("
-      //     << be_idt << be_idt_nl;
-
-      // if (node->unbounded ())
-      //   {
-      //     // Unbounded seq takes this extra parameter.
-      //     *os << "::CORBA::ULong max," << be_nl;
-      //   }
-
-      // *os << "::CORBA::ULong length," << be_nl;
-
-      // // generate the base type for the buffer
-      // be_visitor_context ctx (*this->ctx_);
-      // be_visitor_map_buffer_type bt_visitor (&ctx);
-
-      // if (kt->accept (&bt_visitor) == -1)
-      //   {
-      //     ACE_ERROR_RETURN ((LM_ERROR,
-      //                        ACE_TEXT ("be_visitor_map_cs::")
-      //                        ACE_TEXT ("visit_map - ")
-      //                        ACE_TEXT ("base type visit failed\n")),
-      //                       -1);
-      //   }
-
-      // *os << " * buffer," << be_nl
-      //     << "::CORBA::Boolean release)" << be_uidt
-      //     << be_uidt_nl
-      //     << "  : " << be_idt << be_idt;
-
-      // // Pass it to the base constructor.
-      // if (node->gen_base_class_name (os,
-      //                                "",
-      //                                this->ctx_->scope ()->decl ()) == -1)
-      //   {
-      //     ACE_ERROR_RETURN ((LM_ERROR,
-      //                        ACE_TEXT ("be_visitor_map_cs::")
-      //                        ACE_TEXT ("visit_map - ")
-      //                        ACE_TEXT ("codegen for base ")
-      //                        ACE_TEXT ("map class\n")),
-      //                       -1);
-      //   }
-
-      // *os << be_nl << "(";
-
-      // if (node->unbounded ())
-      //   {
-      //     *os << "max, ";
-      //   }
-
-      // *os << "length, buffer, release)" << be_uidt << be_uidt_nl
-      //     << "{}";
-  }
-
-  if (be_global->alt_mapping () && node->unbounded ())
-    {
-      *os << be_nl_2
-          << "::CORBA::ULong" << be_nl
-          << node->name () << "::length () const" << be_nl
-          << "{" << be_idt_nl
-          << "return this->size ();" << be_uidt_nl
-          << "}";
-
-      *os << be_nl_2
-          << "void" << be_nl
-          << node->name () << "::length ( ::CORBA::ULong length)"
-          << be_nl
-          << "{" << be_idt_nl
-          << "this->resize (length);" << be_uidt_nl
-          << "}";
-
-      *os << be_nl_2
-          << "::CORBA::ULong" << be_nl
-          << node->name () << "::maximum () const" << be_nl
-          << "{" << be_idt_nl
-          << "return this->capacity ();" << be_uidt_nl
-          << "}";
-    }
-
-  if (be_global->any_support ()
-      && !node->anonymous ()
-      && (!node->is_local ()
-          || be_global->gen_local_iface_anyops ()))
-    {
-      *os << be_nl_2
-          << "void "
-          << node->name () << "::_tao_any_destructor ("
-          << be_idt << be_idt_nl
-          << "void * _tao_void_pointer)" << be_uidt << be_uidt_nl
-          << "{" << be_idt_nl
-          << node->local_name () << " * _tao_tmp_pointer ="
-          << be_idt_nl
-          << "static_cast<" << node->local_name ()
-          << " *> (_tao_void_pointer);" << be_uidt_nl
-          << "delete _tao_tmp_pointer;" << be_uidt_nl
-          << "}";
-    }
-
-  os->gen_endif ();
-
-  node->cli_stub_gen (true);
+  node->cli_hdr_gen (true);
   return 0;
 }

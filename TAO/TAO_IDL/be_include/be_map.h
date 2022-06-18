@@ -66,7 +66,7 @@ public:
 
   /**
    * Returns the fully dealiased key type if it's a typedef. If it's not a
-   * typedef, the it returns the same value as as key_type().
+   * typedef, the it returns the same value as as value_type().
    */
   be_type *primitive_value_type () const;
 
@@ -95,13 +95,7 @@ public:
 
   /// Report the instance name for instantiation.
   const char *instance_name ();
-
-  /// Common code for generating the name and parameters of our
-  /// template map base class.
-  int gen_base_class_name (TAO_OutStream *os,
-                           const char * linebreak,
-                           AST_Decl *elem_scope);
-
+  
   /// Accessors for the member.
   be_field *field_node () const;
   void field_node (be_field *node);
