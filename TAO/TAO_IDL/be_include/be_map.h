@@ -95,7 +95,7 @@ public:
 
   /// Report the instance name for instantiation.
   const char *instance_name ();
-  
+
   /// Accessors for the member.
   be_field *field_node () const;
   void field_node (be_field *node);

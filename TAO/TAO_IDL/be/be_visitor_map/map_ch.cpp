@@ -69,8 +69,6 @@ int be_visitor_map_ch::visit_map (be_map *node)
       this->ctx_->tdef (tmp);
     }
 
-  
-  
   be_type *vt = dynamic_cast<be_type*> (node->value_type ());
 
   if (vt == 0)
