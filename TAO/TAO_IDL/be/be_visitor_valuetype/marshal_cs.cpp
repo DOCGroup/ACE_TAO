@@ -198,7 +198,7 @@ be_visitor_valuetype_marshal_cs::visit_valuetype (be_valuetype *node)
 
   // If the valuetype has no fields, and no stateful inherit,
   // the stream arg is unused.
-  bool const named_args = be_global->cdr_support () && (inh != nullptr || node->data_members_count () > 0);
+  bool const named_args = be_global->cdr_support () && (inh || node->data_members_count () > 0);
 
   if (named_args)
     {
