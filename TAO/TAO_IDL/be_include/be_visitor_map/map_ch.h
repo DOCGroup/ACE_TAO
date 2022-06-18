@@ -4,14 +4,13 @@
 /**
  *  @file    map_ch.h
  *
- *  Concrete visitor for the Sequence class
- *  This one provides code generation for the Sequence node in the client
+ *  Concrete visitor for the Map class
+ *  This one provides code generation for the Map node in the client
  *  header.
  *
- *  @author Aniruddha Gokhale
+ *  @author Tyler Mayoff
  */
 //=============================================================================
-
 
 #ifndef _BE_VISITOR_MAP_MAP_CH_H_
 #define _BE_VISITOR_MAP_MAP_CH_H_

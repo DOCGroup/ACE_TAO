@@ -8,7 +8,7 @@
  *  This one provides code generation for the Sequence node in the client
  *  stubs.
  *
- *  @author Aniruddha Gokhale
+ *  @author Tyler Mayoff
  */
 //=============================================================================
 

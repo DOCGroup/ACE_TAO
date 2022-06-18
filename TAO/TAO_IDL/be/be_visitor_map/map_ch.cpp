@@ -29,28 +29,6 @@ int be_visitor_map_ch::visit_map (be_map *node)
       node->set_defined_in (DeclAsScope (this->ctx_->scope ()->decl ()));
     }
 
-  // First create a name for ourselves.
-  if (node->create_name (this->ctx_->tdef ()) == -1)
-    {
-      ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("be_visitor_map_ch::")
-                         ACE_TEXT ("visit_map - ")
-                         ACE_TEXT ("failed creating name\n")),
-                        -1);
-    }
-
-  // We don't check cli_hdr_gen() here. If we are generated more
-  // than once as an anonymous map, the name guard will cause
-  // the C++ preprocessor to catch it. If we are generated more than
-  // once as a typedef (caused by a comma separated list of
-  // typedefs), our name will be changed by the call above and the
-  // name guard will not catch it, but that's ok - we want to
-  // be generated for each typedef.
-  if (node->imported ())
-    {
-      return 0;
-    }
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the key type since we may need to do some code
@@ -69,8 +47,6 @@ int be_visitor_map_ch::visit_map (be_map *node)
   kt->seen_in_map (true);
   AST_Decl::NodeType knt = kt->node_type ();
 
-  // If our key type is an anonymous map, we must create a name
-  // and generate a class declaration for it as well.
   if (knt == AST_Decl::NT_map)
     {
       // Temporarily make the context's tdef node 0 so the nested call
@@ -93,8 +69,8 @@ int be_visitor_map_ch::visit_map (be_map *node)
       this->ctx_->tdef (tmp);
     }
 
-  // Retrieve the key type since we may need to do some code
-  // generation for the base type.
+  
+  
   be_type *vt = dynamic_cast<be_type*> (node->value_type ());
 
   if (vt == nullptr)
@@ -106,11 +82,10 @@ int be_visitor_map_ch::visit_map (be_map *node)
                         -1);
     }
 
-  kt->seen_in_map (true);
+  vt->seen_in_map (true);
   AST_Decl::NodeType vnt = vt->node_type ();
 
-  // If our key type is an anonymous map, we must create a name
-  // and generate a class declaration for it as well.
+
   if (vnt == AST_Decl::NT_map)
     {
       // Temporarily make the context's tdef node 0 so the nested call
@@ -139,225 +114,9 @@ int be_visitor_map_ch::visit_map (be_map *node)
 
   *os << "std::map<"
       << node->key_type ()->full_name ()
-      << ","
+      << ", "
       << node->value_type ()->full_name ()
       << ">";
-  // if (idl_global->dcps_map_type_defined (node->full_name ()))
-  //   {
-  //     // Special Implementation for OpenDDS
-  //     *os << be_nl_2
-  //         << "typedef ::TAO::DCPS::ZeroCopyDataSeq< "
-  //         << node->key_type ()->full_name ()
-  //         << ", "
-  //         << node->value_type()->full_name()
-  //         << ", DCPS_ZERO_COPY_MAP_DEFAULT_SIZE> "
-  //         << node->original_local_name ()
-  //         << ";" << be_nl;
-  //   }
-  // else
-  //   {
-  //     os->gen_ifdef_macro (node->flat_name ());
-
-  //     *os << be_nl_2;
-
-  //     /// If we are using std::vector, we won't be using _vars
-  //     /// and _outs. They may get redefined and reinstated later.
-  //     if (!be_global->alt_mapping () || !node->unbounded ())
-  //       {
-  //         if (this->ctx_->tdef () != nullptr)
-  //           {
-  //             *os << "class " << node->local_name () << ";";
-  //           }
-
-  //         if (this->ctx_->tdef () != nullptr)
-  //           {
-  //             this->gen_varout_typedefs (node, kt);
-  //           }
-
-  //         if (this->ctx_->tdef () != nullptr)
-  //           {
-  //             this->gen_varout_typedefs (node, vt);
-  //           }
-  //       }
-  //     else
-  //       {
-  //         // *os << "typedef std::map< ";
-
-  //         // // Generate the base type for the buffer.
-  //         // be_visitor_context ctx (*this->ctx_);
-  //         // ctx.state (TAO_CodeGen::TAO_MAP_BUFFER_TYPE_CH);
-  //         // be_visitor_map_buffer_type kt_visitor (&ctx);
-
-  //         // if (kt->accept (&kt_visitor) == -1)
-  //         //   {
-  //         //     ACE_ERROR_RETURN ((LM_ERROR,
-  //         //                       ACE_TEXT ("be_visitor_map_ch::")
-  //         //                       ACE_TEXT ("visit_map - ")
-  //         //                       ACE_TEXT ("buffer type visit failed\n")),
-  //         //                       -1);
-  //         //   }
-
-  //         // if (kt->accept(&kt_visitor) == -1)
-  //         //   {
-
-  //         //   }
-
-  //         // if (vt->accept (&kt_visitor) == -1)
-  //         //   {
-  //         //     ACE_ERROR_RETURN ((LM_ERROR,
-  //         //                       ACE_TEXT ("be_visitor_map_ch::")
-  //         //                       ACE_TEXT ("visit_map - ")
-  //         //                       ACE_TEXT ("buffer type visit failed\n")),
-  //         //                       -1);
-  //         //   }
-
-  //         // if (vt->accept(&vt_visitor) == -1)
-  //         //   {
-
-  //         //   }
-
-  //         // *os << "> " << node->local_name () << ";";
-
-  //         // os->gen_endif ();
-  //         // node->cli_hdr_gen (true);
-  //         return 0;
-  //       }
-
-  //     *os << be_nl_2
-  //         << "class " << be_global->stub_export_macro () << " "
-  //         << node->local_name () << be_idt_nl
-  //         << ": public" << be_idt << be_idt_nl;
-
-  //     int status =
-  //       node->gen_base_class_name (os,
-  //                                 "",
-  //                                 this->ctx_->scope ()->decl ());
-
-  //     if (status == -1)
-  //       {
-  //         ACE_ERROR_RETURN ((LM_ERROR,
-  //                           ACE_TEXT ("be_visitor_map_ch::")
-  //                           ACE_TEXT ("visit_map - ")
-  //                           ACE_TEXT ("Base class name ")
-  //                           ACE_TEXT ("generation failed\n")),
-  //                           -1);
-  //       }
-
-  //     *os << be_uidt << be_uidt << be_uidt;
-
-  //     *os << be_nl
-  //         << "{" << be_nl
-  //         << "public:" << be_idt;
-
-  //     *os << be_nl
-  //         << node->local_name () << " () = default;";
-
-  //     if (node->unbounded ())
-  //       {
-  //         *os << be_nl
-  //             << node->local_name () << " ( ::CORBA::ULong max);";
-  //       }
-
-  //     /// If we are using std::vector, we can't implement this
-  //     /// constructor.
-  //     if (!be_global->alt_mapping () || !node->unbounded ())
-  //       {
-  //         // *os << be_nl
-  //         //     << node->local_name () << " (" << be_idt;
-
-  //         // if (node->unbounded ())
-  //         //   {
-  //         //     *os << be_nl
-  //         //         << "::CORBA::ULong max,";
-  //         //   }
-
-  //         // *os << be_nl
-  //         //     << "::CORBA::ULong length," << be_nl;
-
-  //         // // Generate the base type for the buffer.
-  //         // be_visitor_context ctx (*this->ctx_);
-  //         // ctx.state (TAO_CodeGen::TAO_SEQUENCE_BUFFER_TYPE_CH);
-  //         // be_visitor_map_buffer_type bt_visitor (&ctx);
-
-  //         // if (kt->accept (&bt_visitor) == -1)
-  //         //   {
-  //         //     ACE_ERROR_RETURN ((LM_ERROR,
-  //         //                       ACE_TEXT ("be_visitor_map_ch::")
-  //         //                       ACE_TEXT ("visit_map - ")
-  //         //                       ACE_TEXT ("buffer type visit failed\n")),
-  //         //                       -1);
-  //         //   }
-
-  //         // *os << "* buffer," << be_nl
-  //         //     << "::CORBA::Boolean release = false);" << be_uidt;
-  //     }
-
-  //     // Default copy/move constructor and assignment operators
-  //     *os << be_nl
-  //         << node->local_name () << " (const " << node->local_name () << " &) = default;" << be_nl
-  //         << node->local_name () << " (" << node->local_name () << " &&) = default;" << be_nl
-  //         << node->local_name () << "& operator= (const " << node->local_name () << " &) = default;" << be_nl
-  //         << node->local_name () << "& operator= (" << node->local_name () << " &&) = default;"
-  //         << be_nl;
-
-  //     *os << "virtual ~" << node->local_name () << " () = default;";
-
-  //     if (be_global->alt_mapping () && node->unbounded ())
-  //       {
-  //         *os << be_nl_2
-  //             << "virtual ::CORBA::ULong length () const;"
-  //             << be_nl
-  //             << "virtual void length (::CORBA::ULong);"
-  //             << be_nl_2
-  //             << "virtual ::CORBA::ULong maximum () const;";
-  //       }
-
-  //     *os << be_nl;
-
-  //     node->gen_stub_decls (os);
-
-  //     // TAO provides extensions for octet maps, first find out if
-  //     // the base type is an octet (or an alias for octet).
-  //     be_predefined_type *predef = nullptr;
-
-  //     if (kt->base_node_type () == AST_Type::NT_pre_defined)
-  //       {
-  //         be_typedef* alias =
-  //               dynamic_cast<be_typedef*> (kt);
-
-  //         if (alias == nullptr)
-  //           {
-  //             predef = dynamic_cast<be_predefined_type*> (kt);
-  //           }
-  //         else
-  //           {
-  //             predef =
-  //               dynamic_cast<be_predefined_type*> (
-  //                   alias->primitive_base_type ()
-  //                 );
-  //           }
-  //       }
-
-  //     // Now generate the extension...
-  //     if (predef != nullptr
-  //         && predef->pt () == AST_PredefinedType::PT_octet
-  //         && node->unbounded ()
-  //         && !be_global->alt_mapping ())
-  //       {
-  //         *os << be_nl_2
-  //             << "\n#if (TAO_NO_COPY_OCTET_SEQUENCES == 1)" << be_nl
-  //             << node->local_name () << " (::CORBA::ULong length, const ACE_Message_Block* mb)"
-  //             << be_idt_nl
-  //             << ": ::TAO::unbounded_value_map< ::CORBA::Octet>"
-  //             << " (length, mb) {}" << be_uidt_nl
-  //             << "\n#endif /* TAO_NO_COPY_OCTET_SEQUENCE == 1 */";
-  //       }
-
-  //     *os << be_uidt_nl
-  //         << "};";
-
-  //     os->gen_endif ();
-  //   }
 
   node->cli_hdr_gen (true);
   return 0;
