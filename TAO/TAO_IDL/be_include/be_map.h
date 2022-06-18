@@ -32,8 +32,8 @@ class be_field;
 // the base type is defined in the scope of this map. Hence we define
 // be_map to possess the additional characteristics of a scope.
 class be_map : public virtual AST_Map,
-                    public virtual be_scope,
-                    public virtual be_type
+               public virtual be_scope,
+               public virtual be_type
 {
 public:
   enum MANAGED_TYPE
@@ -104,7 +104,6 @@ public:
   virtual char *gen_name ();
 
 protected:
-
   /// Computes the fully scoped typecode name.
   virtual void compute_tc_name ();
 
