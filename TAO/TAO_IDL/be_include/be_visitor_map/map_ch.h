@@ -34,10 +34,6 @@ public:
 
   /// visit map node.
   virtual int visit_map (be_map *node);
-
-  /// Generate the typedefs for our _var and _out template classes.
-  void gen_varout_typedefs (be_map *node,
-                            be_type *elem);
 };
 
 #endif /* _BE_VISITOR_MAP_MAP_CH_H_ */

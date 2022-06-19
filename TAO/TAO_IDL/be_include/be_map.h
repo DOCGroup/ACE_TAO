@@ -36,17 +36,6 @@ class be_map : public virtual AST_Map,
                public virtual be_type
 {
 public:
-  enum MANAGED_TYPE
-  {
-    MNG_UNKNOWN,
-    MNG_NONE,
-    MNG_STRING,
-    MNG_WSTRING,
-    MNG_OBJREF,
-    MNG_VALUE,
-    MNG_PSEUDO
-  };
-
   be_map (AST_Expression *v,
           AST_Type *kt,
           AST_Type *vt,
@@ -69,13 +58,6 @@ public:
    * typedef, the it returns the same value as as value_type().
    */
   be_type *primitive_value_type () const;
-
-  /// Create a name for ourselves. If we are typedefed, then we get the name of
-  /// the typedef node, else we generate a name for ourselves.
-  virtual int create_name (be_typedef *node);
-
-  /// Return the managed type.
-  virtual MANAGED_TYPE managed_type ();
 
   // Scope management functions.
   virtual AST_Map *fe_add_map (AST_Map *);
@@ -100,21 +82,11 @@ public:
   be_field *field_node () const;
   void field_node (be_field *node);
 
-  /// Helper to create_name, also used by the traits visitor.
-  virtual char *gen_name ();
-
-protected:
-  /// Computes the fully scoped typecode name.
-  virtual void compute_tc_name ();
-
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,
                                      be_type *elem);
 
 private:
-  /// Our managed type.
-  MANAGED_TYPE mt_;
-
   /// Used if we are an anonymous member, to help generate a unique name.
   be_field *field_node_;
 };
