@@ -660,7 +660,7 @@ be_visitor_field_cdr_op_cs::visit_map (be_map *node)
         }
     }
 
-  // How generate the marshaling code for the sequence as a field.
+  // How generate the marshaling code for the map as a field.
 
   TAO_OutStream *os = this->ctx_->stream ();
 
@@ -682,11 +682,11 @@ be_visitor_field_cdr_op_cs::visit_map (be_map *node)
   switch (this->ctx_->sub_state ())
     {
     case TAO_CodeGen::TAO_CDR_INPUT:
-      *os << "(strm >> _tao_aggregate." << f->local_name () << ")";
+      *os << "true";
 
       return 0;
     case TAO_CodeGen::TAO_CDR_OUTPUT:
-      *os << "(strm << _tao_aggregate." << f->local_name () << ")";
+      *os << "true";
 
       return 0;
     case TAO_CodeGen::TAO_CDR_SCOPE:
