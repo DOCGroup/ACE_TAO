@@ -191,7 +191,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << be_nl_2
       << "/// Copying insertion." << be_nl
@@ -235,7 +235,7 @@ be_visitor_interface_any_op_cs::visit_interface (be_interface *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl;
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != nullptr)
     {
@@ -267,4 +267,3 @@ be_visitor_interface_any_op_cs::visit_connector (
 {
   return this->visit_interface (node);
 }
-

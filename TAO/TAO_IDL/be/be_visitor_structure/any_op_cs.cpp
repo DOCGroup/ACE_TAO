@@ -155,7 +155,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Copying insertion.
   *os << "/// Copying insertion." << be_nl
@@ -205,7 +205,7 @@ be_visitor_structure_any_op_cs::visit_structure (be_structure *node)
       << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != nullptr)
     {

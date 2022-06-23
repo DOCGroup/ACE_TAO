@@ -132,7 +132,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Generate the Any <<= and >>= operator declarations
   // Any <<= and >>= operators.
@@ -163,7 +163,7 @@ be_visitor_enum_any_op_cs::visit_enum (be_enum *node)
       << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != nullptr)
     {
