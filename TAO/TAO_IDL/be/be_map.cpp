@@ -145,6 +145,159 @@ be_map::primitive_value_type () const
   return type_node;
 }
 
+// Helper to create_name.
+char *
+be_map::gen_name ()
+{
+  char namebuf [NAMEBUFSIZE];
+  be_type *kt = nullptr;
+  be_type *vt = nullptr;
+
+  // Reset the buffer.
+  ACE_OS::memset (namebuf,
+                  '\0',
+                  NAMEBUFSIZE);
+
+  // Retrieve the base type.
+  kt = dynamic_cast<be_type*> (this->key_type ());
+  vt = dynamic_cast<be_type*> (this->value_type ());
+
+  if (kt == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_map::"
+                         "gen_name - "
+                         "bad key type\n"),
+                        0);
+    }
+
+  if (kt == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "(%N:%l) be_map::"
+                         "gen_name - "
+                         "bad value type\n"),
+                        0);
+    }
+
+  // If this is non-zero, add its local name to the generated name,
+  // for uniqueness.
+  be_field *fn = this->field_node_;
+
+  // TODO Key or value types that are anonymous maps
+  // if (bt->node_type () == AST_Decl::NT_sequence)
+  //   {
+  //     // Our base type is an anonymous sequence.
+  //     be_sequence *seq = dynamic_cast<be_sequence*> (bt);
+
+  //     if (seq == nullptr)
+  //       {
+  //         ACE_ERROR_RETURN ((LM_ERROR,
+  //                            "(%N:%l) be_map::"
+  //                            "gen_name - "
+  //                            "error converting base type to map\n"),
+  //                           0);
+  //       }
+
+  //     // If the nested sequence were defined in
+  //     // the scope of the enclosing sequence, we would have to
+  //     // not only define the nested class in two places, but also
+  //     // deal with the fact that, for the template classes, the
+  //     // enclosing sequence's template type is a class defined
+  //     // inside it. So we define the nested sequence in the next
+  //     // scope up, and the existing code generation works for both
+  //     // template and non-template implementations of IDL sequences.
+  //     UTL_Scope *parent = this->defined_in ();
+  //     seq->set_defined_in (parent);
+  //     char *seq_name = seq->gen_name ();
+
+  //     ACE_OS::sprintf (namebuf,
+  //                      "_tao_seq_%s_%s",
+  //                      seq_name,
+  //                      fn ? fn->local_name ()->get_string () : "");
+  //     ACE::strdelete (seq_name);
+  //   }
+  // else
+  ACE_OS::sprintf (namebuf,
+                    "_tao_map_%s_%s_",
+                    kt->flat_name (), vt->flat_name ());
+
+  // Append the size (if any).
+  if (this->unbounded () == false)
+    {
+      char ulval_str [NAMEBUFSIZE];
+      ACE_OS::sprintf (ulval_str,
+                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                       this->max_size ()->ev ()->u.ulval);
+      ACE_OS::strcat (namebuf,
+                      ulval_str);
+    }
+
+  return ACE::strnew (namebuf);
+}
+
+// Create a name for ourselves.
+int
+be_map::create_name (be_typedef *node)
+{
+  static char *namebuf = nullptr;
+  UTL_ScopedName *n = nullptr;
+
+  // Scope in which we are defined.
+  be_decl *scope = nullptr;
+
+  // If there is a typedef node, we use its name as our name.
+  if (node)
+    {
+      this->set_name (
+          dynamic_cast<UTL_ScopedName *> (node->name ()->copy ())
+        );
+    }
+  else
+    {
+      // Generate a local name.
+      namebuf = this->gen_name ();
+
+      // Now see if we have a fully scoped name and if so, generate one.
+      UTL_Scope *us = this->defined_in ();
+
+      scope = dynamic_cast<be_scope*> (us)->decl ();
+
+      if (scope != nullptr)
+        {
+          // Make a copy of the enclosing scope's name.
+          n = (UTL_ScopedName *) scope->name ()->copy ();
+
+          Identifier *id = nullptr;
+          ACE_NEW_RETURN (id,
+                          Identifier (namebuf),
+                          -1);
+
+          UTL_ScopedName *conc_name = nullptr;
+          ACE_NEW_RETURN (conc_name,
+                          UTL_ScopedName (id,
+                                          nullptr),
+                          -1);
+
+          // Add our local name as the last component.
+          n->nconc (conc_name);
+
+          // Set the fully scoped name.
+          this->set_name (n);
+        }
+      else
+        {
+          // We better be not here because we must be inside some scope,
+          // at least the ROOT scope.
+          return -1;
+        }
+
+      ACE::strdelete (namebuf);
+    }
+
+  return 0;
+}
+
 // Add this be_sequence to the locally defined types in this scope
 AST_Map *
 be_map::fe_add_map (AST_Map *t)
@@ -170,7 +323,7 @@ void
 be_map::gen_ostream_operator (TAO_OutStream *os,
                                    bool /* use_underscore */)
 {
-// TODO Gene ostream operator
+// TODO Gen ostream operator
 }
 
 int

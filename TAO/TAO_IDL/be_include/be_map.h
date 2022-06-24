@@ -59,6 +59,10 @@ public:
    */
   be_type *primitive_value_type () const;
 
+  /// Create a name for ourselves. If we are typedefed, then we get the name of
+  /// the typedef node, else we generate a name for ourselves.
+  virtual int create_name (be_typedef *node);
+
   // Scope management functions.
   virtual AST_Map *fe_add_map (AST_Map *);
 
@@ -81,6 +85,9 @@ public:
   /// Accessors for the member.
   be_field *field_node () const;
   void field_node (be_field *node);
+
+  /// Helper to create_name, also used by the traits visitor.
+  virtual char *gen_name ();
 
 private:
   const char *smart_fwd_helper_name (AST_Decl *elem_scope,
