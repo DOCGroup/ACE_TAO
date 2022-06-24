@@ -145,13 +145,7 @@ namespace RTCORBA
 
 #else
 
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
+namespace CORBA {
 
 /// Copying insertion.
 void
@@ -190,16 +184,9 @@ operator>>= (
         _tao_elem);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
+}
 
 
 #endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
