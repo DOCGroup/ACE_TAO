@@ -49,18 +49,18 @@ expect_equals (bool &any_failed, const char *name, const char* actual, const cha
 int ACE_TMAIN(int, ACE_TCHAR *[])
 {
   DataStruct d;
-  d.mapData[0] = 0;
-  d.mapData[1] = 1;
-  d.mapData[2] = 2;
-  d.mapData[3] = 3;
-  d.mapData[4] = 4;
-  d.mapData[5] = 5;
+  d.intIntMap[0] = 0;
+  d.intIntMap[1] = 1;
+  d.intIntMap[2] = 2;
+  d.intIntMap[3] = 3;
+  d.intIntMap[4] = 4;
+  d.intIntMap[5] = 5;
 
   bool any_failed = false;
-  expect_equals<CORBA::Long> (any_failed, "d.mapData.size()", d.mapData.size(), 6);
-  expect_equals<CORBA::Long> (any_failed, "d.mapData[0]", d.mapData[0], 0);
-  d.mapData[0] = 10;
-  expect_equals<CORBA::Long> (any_failed, "d.mapData[0]", d.mapData[0], 10);
+  expect_equals<CORBA::Long> (any_failed, "d.intIntMap.size()", d.intIntMap.size(), 6);
+  expect_equals<CORBA::Long> (any_failed, "d.intIntMap[0]", d.intIntMap[0], 0);
+  d.intIntMap[0] = 10;
+  expect_equals<CORBA::Long> (any_failed, "d.intIntMap[0]", d.intIntMap[0], 10);
 
   d.stringMapStructs["Test"] = TestStruct{0, "Test Struct"};
   expect_equals<CORBA::Long> (any_failed, "d.stringMapStructs['Test']", d.stringMapStructs["Test"].id, 0);
@@ -71,6 +71,11 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   tests[400] = t;
   d.stringMapMap["Test"] = tests;
   expect_equals<const char*> (any_failed, "d.stringMapStructs['Test']", d.stringMapMap["Test"][400].msg, "Test Struct");
+
+  TestIntStringMap testMap;
+  testMap[10] = "Hello World!";
+  d.mapStringMap[testMap] = "Hello World!";
+  expect_equals<const char*> (any_failed, "d.mapStringMap[testMap]", d.mapStringMap[testMap], "Hello World!");
 
   if (any_failed)
     return EXIT_FAILURE;
