@@ -5,10 +5,11 @@ struct TestStruct {
 
 typedef sequence<TestStruct> TestStructSeq;
 typedef map<int32, TestStruct> TestStructMap;
+typedef map<int32, string> TestIntStringMap;
 
 struct DataStruct {
-    map<int32, int32> mapData;
-    map<int32, int32, 4> mapDataBounded;
+    map<int32, int32> intIntMap;
+    map<int32, int32, 4> intIntMapBounded;
 
     map<string, TestStruct> stringMapStructs;
     map<string, TestStruct, 4> stringMapStructsBounded;
@@ -18,4 +19,6 @@ struct DataStruct {
     
     map<string, TestStructMap> stringMapMap;
     map<string, TestStructMap, 2> stringMapMapBounded;
+
+    map<TestIntStringMap, string> mapStringMap;
 };
