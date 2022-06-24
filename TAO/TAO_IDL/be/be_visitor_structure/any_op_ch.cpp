@@ -81,11 +81,11 @@ be_visitor_structure_any_op_ch::visit_structure (be_structure *node)
 
   *os << be_global->anyops_versioning_begin () << be_nl;
 
-  *os << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, const ::" << node->name ()
       << " &); // copying version" << be_nl;
-  *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
+  *os << macro << " void operator<<= (::CORBA::Any &, ::" << node->name ()
       << "*); // noncopying version" << be_nl;
-  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
+  *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const ::"
       << node->name () << " *&);";
 
   *os << be_global->anyops_versioning_end () << be_nl;
