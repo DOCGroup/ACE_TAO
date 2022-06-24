@@ -36,6 +36,11 @@ template <>
 void
 expect_equals (bool &any_failed, const char *name, const char* actual, const char* expected)
 {
+  if (name == 0 || actual == nullptr)
+    {
+      return;
+    }
+
   if (std::strcmp(actual, expected) != 0)
     {
       using stream8::operator<<;
