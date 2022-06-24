@@ -231,9 +231,6 @@ TAO_CodeGen::start_client_header (const char *fname)
                             << "\"";
     }
 
-  // TODO not sure where to put this
-  *this->client_header() << "\n#include <map>\n";
-
   if (be_global->unique_include () != 0)
     {
       *this->client_header_ << "\n#include \""
@@ -3061,6 +3058,14 @@ TAO_CodeGen::gen_stub_arg_file_includes (TAO_OutStream * stream)
       "tao/BD_String_Argument_T.h",
       stream
     );
+
+  be_global->changing_standard_include_files(0);
+  this->gen_cond_file_include (
+    idl_global->map_seen_,
+    "map",
+    stream
+  );
+  be_global->changing_standard_include_files(1);
 
   // If we have a bound string and we have any generation enabled we must
   // include Any.h to get the <<= operator for BD_String
