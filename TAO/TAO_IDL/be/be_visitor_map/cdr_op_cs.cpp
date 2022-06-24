@@ -31,46 +31,6 @@ be_visitor_map_cdr_op_cs::~be_visitor_map_cdr_op_cs ()
 int
 be_visitor_map_cdr_op_cs::visit_map (be_map *node)
 {
-  TAO_OutStream *os = this->ctx_->stream ();
-
-  // *os << be_nl
-  //     << "#if !defined _TAO_CDR_OP_"
-  //     << node->flat_name () << "_CPP_" << be_nl
-  //     << "#define _TAO_CDR_OP_" << node->flat_name () << "_CPP_"
-  //     << be_nl;
-
-  // *os << be_global->core_versioning_begin () << be_nl;
-
-  // be_type* kt = node->key_type();
-  // be_type* vt = node->key_type();
-
-  // *os << "::CORBA::Boolean operator<< (" << be_idt_nl
-  //     << "TAO_OutputCDR &strm," << be_nl
-  //     << "const std::map<" << kt->full_name ()
-  //     << "," << vt->full_name()
-  //     << "> &_tao_map)"
-  //     << be_uidt_nl
-  //     << "{" << be_idt_nl
-  //     << "return true;" << be_uidt_nl
-  //     << "}" << be_nl_2;
-
-  // *os << "::CORBA::Boolean operator>> (" << be_idt_nl
-  //     << "TAO_OutputCDR &strm," << be_nl
-  //     << "const std::map<" << kt->full_name ()
-  //     << "," << vt->full_name()
-  //     << "> &_tao_map)"
-  //     << be_uidt_nl
-  //     << "{" << be_idt_nl
-  //     << "return true;" << be_uidt_nl
-  //     << "}" << be_nl_2;
-
-  // *os << be_nl << be_global->core_versioning_end ();
-
-  // *os << be_nl
-  //     << "#endif /* _TAO_CDR_OP_"
-  //     << node->flat_name () << "_CPP_ */"
-  //     << be_nl;
-
   return 0;
 }
 
