@@ -44,7 +44,7 @@ int be_visitor_map_ch::visit_map (be_map *node)
   *os << be_nl_2;
 
   TAO_INSERT_COMMENT (os);
-  
+
   os->gen_ifdef_macro (node->flat_name ());
 
   *os << be_nl_2;
