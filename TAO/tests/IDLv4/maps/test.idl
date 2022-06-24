@@ -5,7 +5,7 @@ struct TestStruct {
 
 typedef sequence<TestStruct> TestStructSeq;
 
-// typedef map<int32, TestStruct> TestStructMap;
+typedef map<int32, TestStruct> TestStructMap;
 
 struct DataStruct {
     map<int32, int32> mapData;
@@ -17,6 +17,7 @@ struct DataStruct {
     map<string, TestStructSeq> stringSequenceMap;
     map<string, TestStructSeq, 2> stringSequenceMapBounded;
 
+    // TODO these are not generated properly yet
     // map<string, TestStructMap> stringMapMap;
     // map<string, TestStructMap, 2> stringMapMapBounded;
 };
