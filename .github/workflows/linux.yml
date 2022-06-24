@@ -148,6 +148,7 @@ jobs:
       run: |
         sudo apt-add-repository ${{ matrix.Repo }}
       if: startsWith (matrix.Repo, 'ppa:')
+    - name: Install apt packages
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
