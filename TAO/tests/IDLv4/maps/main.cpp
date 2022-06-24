@@ -66,6 +66,12 @@ int ACE_TMAIN(int, ACE_TCHAR *[])
   expect_equals<CORBA::Long> (any_failed, "d.stringMapStructs['Test']", d.stringMapStructs["Test"].id, 0);
   expect_equals<const char*> (any_failed, "d.stringMapStructs['Test']", d.stringMapStructs["Test"].msg, "Test Struct");
 
+  TestStruct t = TestStruct{0, "Test Struct"};
+  TestStructMap tests;
+  tests[400] = t;
+  d.stringMapMap["Test"] = tests;
+  expect_equals<const char*> (any_failed, "d.stringMapStructs['Test']", d.stringMapMap["Test"][400].msg, "Test Struct");
+
   if (any_failed)
     return EXIT_FAILURE;
 
