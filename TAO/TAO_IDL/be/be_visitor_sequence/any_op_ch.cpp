@@ -123,7 +123,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Generate the Any <<= and >>= operators.
   *os << macro
@@ -147,7 +147,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       << name.c_str ()
       << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != nullptr)
     {

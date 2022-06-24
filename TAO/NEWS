@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN TAO-3.0.7 and TAO-3.0.8
 ====================================================
 
+. Moved operators<<= and >>= for CORBA::Any to the CORBA namespace.
+  This makes the code compatible with GCC 12 and removes the need for
+  both the -fdelayed-template-parsing workaround (for clang) and defining
+  ACE_ANY_OPS_USE_NAMESPACE in config-macos*.h.
+
 USER VISIBLE CHANGES BETWEEN TAO-3.0.6 and TAO-3.0.7
 ====================================================
 

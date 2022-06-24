@@ -79,10 +79,11 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
+namespace CORBA {
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr); // copying
 TAO_RTCORBA_Export void operator<<= (::CORBA::Any &, RTCORBA::ProtocolProperties_ptr *); // non-copying
 TAO_RTCORBA_Export ::CORBA::Boolean operator>>= (const ::CORBA::Any &, RTCORBA::ProtocolProperties_ptr &);
+}
 TAO_END_VERSIONED_NAMESPACE_DECL
 
 

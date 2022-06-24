@@ -280,10 +280,8 @@ operator<< (std::ostream &, const CORBA::Any &);
 
 #endif /* GEN_OSTREAM_OPS */
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
 
 /// Typesafe insertion.
 
@@ -346,9 +344,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &,
                                        std::wstring &);
 #endif
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
@@ -358,10 +354,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
 
 /// Copying versions of insertion operators for basic types
 /// must also be defined for CORBA::Any_var.
@@ -426,10 +420,7 @@ TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_wstring);
 TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any_var &,
                                        CORBA::Any::to_object);
-
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

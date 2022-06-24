@@ -83,7 +83,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
           << "#else\n\n";
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << " *); // copying" << be_nl;
@@ -94,7 +94,7 @@ be_visitor_valuebox_any_op_ch::visit_valuebox (be_valuebox *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != nullptr)
     {
