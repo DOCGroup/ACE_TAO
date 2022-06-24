@@ -127,7 +127,7 @@ be_visitor_field_cs::visit_sequence (be_sequence *node)
 }
 
 int
-be_visitor_field_cs::visit_map (be_map *node)
+be_visitor_field_cs::visit_map (be_map *)
 {
   return 0;
 }

@@ -28,7 +28,7 @@ be_visitor_map_cdr_op_ch::~be_visitor_map_cdr_op_ch ()
 }
 
 int
-be_visitor_map_cdr_op_ch::visit_map (be_map *node)
+be_visitor_map_cdr_op_ch::visit_map (be_map *)
 {
   return 0;
 }
