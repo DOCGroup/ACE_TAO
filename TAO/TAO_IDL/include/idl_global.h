@@ -800,6 +800,7 @@ public:
   bool operation_seen_;
   bool pseudo_seq_seen_;
   bool recursive_type_seen_;
+  bool map_seen_;
   bool seq_seen_;
   bool short_seq_seen_;
   bool special_basic_decl_seen_;

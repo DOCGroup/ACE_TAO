@@ -69,38 +69,9 @@ be_map::be_map (AST_Expression *v,
       return;
     }
 
-  // This one gets set for all sequences, in addition to any specialized
-  // one that may get set below.
-  idl_global->seq_seen_ = true;
+  // This one gets set for all maps
+  idl_global->map_seen_ = true;
   idl_global->var_size_decl_seen_ = true;
-
-  AST_Type *const key_type = primitive_key_type ();
-  if (key_type && key_type->node_type () == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (key_type);
-      switch (pdt->pt ())
-        {
-          case AST_PredefinedType::PT_octet:
-            idl_global->octet_map_seen_ = true;
-            break;
-          default:
-            break;
-        }
-    }
-
-  AST_Type *const value_type = primitive_value_type();
-  if (value_type && value_type->node_type() == AST_Decl::NT_pre_defined)
-    {
-      AST_PredefinedType *pdt = dynamic_cast<AST_PredefinedType*> (key_type);
-      switch(pdt->pt())
-        {
-          case AST_PredefinedType::PT_octet:
-            idl_global->octet_map_seen_ = true;
-            break;
-          default:
-            break;
-        }
-    }
 }
 
 be_type *
@@ -180,44 +151,6 @@ be_map::gen_name ()
                         0);
     }
 
-  // If this is non-zero, add its local name to the generated name,
-  // for uniqueness.
-  be_field *fn = this->field_node_;
-
-  // TODO Key or value types that are anonymous maps
-  // if (bt->node_type () == AST_Decl::NT_sequence)
-  //   {
-  //     // Our base type is an anonymous sequence.
-  //     be_sequence *seq = dynamic_cast<be_sequence*> (bt);
-
-  //     if (seq == nullptr)
-  //       {
-  //         ACE_ERROR_RETURN ((LM_ERROR,
-  //                            "(%N:%l) be_map::"
-  //                            "gen_name - "
-  //                            "error converting base type to map\n"),
-  //                           0);
-  //       }
-
-  //     // If the nested sequence were defined in
-  //     // the scope of the enclosing sequence, we would have to
-  //     // not only define the nested class in two places, but also
-  //     // deal with the fact that, for the template classes, the
-  //     // enclosing sequence's template type is a class defined
-  //     // inside it. So we define the nested sequence in the next
-  //     // scope up, and the existing code generation works for both
-  //     // template and non-template implementations of IDL sequences.
-  //     UTL_Scope *parent = this->defined_in ();
-  //     seq->set_defined_in (parent);
-  //     char *seq_name = seq->gen_name ();
-
-  //     ACE_OS::sprintf (namebuf,
-  //                      "_tao_seq_%s_%s",
-  //                      seq_name,
-  //                      fn ? fn->local_name ()->get_string () : "");
-  //     ACE::strdelete (seq_name);
-  //   }
-  // else
   ACE_OS::sprintf (namebuf,
                     "_tao_map_%s_%s_",
                     kt->flat_name (), vt->flat_name ());
@@ -336,122 +269,7 @@ be_map::accept (be_visitor *visitor)
 const char *
 be_map::instance_name ()
 {
-  static char namebuf[NAMEBUFSIZE];
-  ACE_OS::memset (namebuf,
-                  '\0',
-                  NAMEBUFSIZE);
-
-  // be_type *const prim_type = primitive_base_type ();
-  // if (!prim_type)
-  //   {
-  //     ACE_ERROR ((LM_ERROR,
-  //                 "(%N:%l) be_visitor_sequence_ch::"
-  //                 "gen_instantiate_name - "
-  //                 "Bad element type\n"));
-
-  //     return namebuf;
-  //   }
-
-  // // Generate the appropriate sequence type.
-  // switch (this->managed_type ())
-  //   {
-  //   case be_sequence::MNG_PSEUDO:
-  //   case be_sequence::MNG_OBJREF:
-  //     if (this->unbounded ())
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_unbounded_object_reference_sequence_%s",
-  //                          prim_type->local_name ()->get_string ());
-  //       }
-  //     else
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_bounded_object_reference_sequence_%s_"
-  //                          ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-  //                          prim_type->local_name ()->get_string (),
-  //                          this->max_size ()->ev ()->u.ulval);
-  //       }
-
-  //     break;
-  //   case be_sequence::MNG_VALUE:
-  //     if (this->unbounded ())
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_unbounded_valuetype_sequence_%s",
-  //                          prim_type->local_name ()->get_string ());
-  //       }
-  //     else
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_bounded_valuetype_sequence_%s_"
-  //                          ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-  //                          prim_type->local_name ()->get_string (),
-  //                          this->max_size ()->ev ()->u.ulval);
-  //       }
-
-  //     break;
-  //   case be_sequence::MNG_STRING:
-  //     if (this->unbounded ())
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "::TAO::unbounded_basic_string_sequence<char>");
-  //       }
-  //     else
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_unbounded_string_sequence_%s",
-  //                          prim_type->local_name ()->get_string ());
-  //       }
-
-  //     break;
-  //   case be_sequence::MNG_WSTRING:
-  //     if (this->unbounded ())
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "::TAO::unbounded_basic_string_sequence<CORBA::WChar>");
-  //       }
-  //     else
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_bounded_wstring_sequence_%s",
-  //                          prim_type->local_name ()->get_string ());
-  //       }
-
-  //     break;
-  //   default: // Not a managed type.
-  //     if (this->unbounded ())
-  //       {
-  //         // TAO provides extensions for octet sequences, first find out
-  //         // if the base type is an octet (or an alias for octet)
-  //         be_predefined_type *predef =
-  //           dynamic_cast<be_predefined_type*> (prim_type);
-
-  //         if (predef != nullptr
-  //             && predef->pt() == AST_PredefinedType::PT_octet)
-  //           {
-  //             ACE_OS::sprintf (namebuf,
-  //                              "::TAO::unbounded_value_sequence<CORBA::Octet>");
-  //           }
-  //         else
-  //           {
-  //             ACE_OS::sprintf (namebuf,
-  //                              "_TAO_unbounded_value_sequence_%s",
-  //                              prim_type->local_name ()->get_string ());
-  //           }
-  //       }
-  //     else
-  //       {
-  //         ACE_OS::sprintf (namebuf,
-  //                          "_TAO_bounded_value_sequence_%s_"
-  //                          ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-  //                          prim_type->local_name ()->get_string (),
-  //                          this->max_size ()->ev ()->u.ulval);
-  //       }
-
-  //     break;
-  //   }
-
-  return namebuf;
+  return "";
 }
 
 be_field *
