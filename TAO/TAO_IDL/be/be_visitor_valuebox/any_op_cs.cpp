@@ -136,7 +136,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
           << "#else\n\n";
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << "/// Copying insertion." << be_nl
       << "void" << be_nl
@@ -181,7 +181,7 @@ be_visitor_valuebox_any_op_cs::visit_valuebox (be_valuebox *node)
       << ");" << be_uidt << be_uidt << be_uidt_nl
       << "}" << be_nl_2;
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {

@@ -89,7 +89,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void operator<<= (::CORBA::Any &, " << node->name ()
       << "_ptr); // copying" << be_nl;
@@ -98,7 +98,7 @@ be_visitor_interface_any_op_ch::visit_interface (be_interface *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << "_ptr &);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {
@@ -133,4 +133,3 @@ be_visitor_interface_any_op_ch::visit_connector (
 {
   return this->visit_interface (node);
 }
-

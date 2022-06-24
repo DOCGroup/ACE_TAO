@@ -67,3 +67,7 @@ jobs:
       run: |
         make -j 6 -C ${env:ACE_ROOT}/tests
       shell: pwsh
+    - name: Build TAO/tests/IDL_Test project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
+      shell: pwsh

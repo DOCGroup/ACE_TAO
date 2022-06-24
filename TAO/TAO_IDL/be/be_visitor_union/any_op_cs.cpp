@@ -155,7 +155,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Copying insertion.
   *os << "/// Copying insertion." << be_nl
@@ -205,7 +205,7 @@ be_visitor_union_any_op_cs::visit_union (be_union *node)
       << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {

@@ -267,7 +267,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Copying insertion.
   *os << be_nl
@@ -318,7 +318,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {

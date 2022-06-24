@@ -79,7 +79,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << be_nl_2
       << macro << " void operator<<= (::CORBA::Any &, const " << node->name ()
@@ -89,7 +89,7 @@ be_visitor_exception_any_op_ch::visit_exception (be_exception *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, const "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {
@@ -204,4 +204,3 @@ be_visitor_exception_any_op_ch::visit_union (be_union *node)
 
   return 0;
 }
-

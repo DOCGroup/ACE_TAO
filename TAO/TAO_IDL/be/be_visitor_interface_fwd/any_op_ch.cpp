@@ -86,7 +86,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
           << "#else\n\n";
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void"
       << " operator<<= (::CORBA::Any &, " << node->name ()
@@ -98,7 +98,7 @@ be_visitor_interface_fwd_any_op_ch::visit_interface_fwd (
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {

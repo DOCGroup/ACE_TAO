@@ -1,8 +1,5 @@
 # -*- Makefile -*-
 
-# Compiling TAO requires relaxing strict 2-phase name lookup rules:
-CCFLAGS += -fdelayed-template-parsing
-
 ifneq ($(CROSS_COMPILE),)
   CROSS-COMPILE = 1
   # Build using the cross-tools

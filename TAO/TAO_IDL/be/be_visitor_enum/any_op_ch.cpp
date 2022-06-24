@@ -78,7 +78,7 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
         }
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // Generate the Any <<= and >>= operators.
   *os << be_nl_2
@@ -87,7 +87,7 @@ be_visitor_enum_any_op_ch::visit_enum (be_enum *node)
   *os << macro << " ::CORBA::Boolean operator>>= (const ::CORBA::Any &, "
       << node->name () << " &);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   if (module != 0)
     {

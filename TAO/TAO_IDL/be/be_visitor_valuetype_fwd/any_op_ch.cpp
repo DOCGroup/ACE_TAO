@@ -96,7 +96,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       *os << "#else\n\n";
     }
 
-  *os << be_global->core_versioning_begin () << be_nl;
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   *os << macro << " void"
       << " operator<<= ( ::CORBA::Any &, " << node->name ()
@@ -108,7 +108,7 @@ be_visitor_valuetype_fwd_any_op_ch::visit_valuetype_fwd (
       << " operator>>= (const ::CORBA::Any &, "
       << node->name () << " *&);";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
   if (module != 0)
     {
       *os << "\n\n#endif";
@@ -123,4 +123,3 @@ be_visitor_valuetype_fwd_any_op_ch::visit_eventtype_fwd (be_eventtype_fwd *node)
 {
   return this->visit_valuetype_fwd (node);
 }
-
