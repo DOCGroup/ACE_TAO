@@ -36,7 +36,7 @@ template <>
 void
 expect_equals (bool &any_failed, const char *name, const char* actual, const char* expected)
 {
-  if (name == nullptr || actual == nullptr)
+  if (actual == nullptr || expected == nullptr)
     {
       return;
     }
