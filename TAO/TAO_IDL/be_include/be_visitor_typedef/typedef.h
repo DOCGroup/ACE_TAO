@@ -24,7 +24,6 @@
  */
 class be_visitor_typedef : public be_visitor_decl
 {
-
 public:
   /// constructor
   be_visitor_typedef (be_visitor_context *ctx);
