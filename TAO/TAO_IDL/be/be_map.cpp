@@ -173,7 +173,6 @@ be_map::gen_name ()
 int
 be_map::create_name (be_typedef *node)
 {
-  static char *namebuf = 0;
   UTL_ScopedName *n = 0;
 
   // Scope in which we are defined.
@@ -189,7 +188,7 @@ be_map::create_name (be_typedef *node)
   else
     {
       // Generate a local name.
-      namebuf = this->gen_name ();
+      static char *namebuf = this->gen_name ();
 
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
@@ -253,7 +252,7 @@ be_map::decl ()
 
 // Overridden method
 void
-be_map::gen_ostream_operator (TAO_OutStream *os,
+be_map::gen_ostream_operator (TAO_OutStream * /*os*/,
                                    bool /* use_underscore */)
 {
 // TODO Gen ostream operator
