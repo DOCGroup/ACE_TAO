@@ -155,7 +155,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
-
       *os << be_global->core_versioning_begin () << be_nl;
 
       *os << "namespace TAO" << be_nl
