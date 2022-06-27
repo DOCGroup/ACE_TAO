@@ -78,10 +78,10 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl
           << "void operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << "const ::std::vector< ::" << bt->full_name ()
+          << "const std::vector< ::" << bt->full_name ()
           << "> &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
-          << "::TAO::";
+          << "TAO::";
 
       switch (tc)
         {
@@ -110,11 +110,11 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl_2
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "const ::CORBA::Any &_tao_any," << be_nl
-          << "::std::vector< ::" << bt->full_name ()
+          << "std::vector< ::" << bt->full_name ()
           << "> &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
-          << "::TAO::";
+          << "TAO::";
 
       switch (tc)
         {
@@ -194,7 +194,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const ::" << node->name () << " &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "::TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
+      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -210,7 +210,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "::" << node->name () << " *_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "::TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
+      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
@@ -226,7 +226,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "const ::" << node->name () << " *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "return ::TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
+      << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
       << be_idt_nl
       << "_tao_any," << be_nl
       << "::" << node->name () << "::_tao_any_destructor," << be_nl
