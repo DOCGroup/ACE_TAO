@@ -180,7 +180,6 @@
 #endif
 
 #ifdef __clang__
-# define ACE_ANY_OPS_USE_NAMESPACE
 # define ACE_HAS_BUILTIN_BSWAP16
 # define ACE_HAS_BUILTIN_BSWAP32
 # define ACE_HAS_BUILTIN_BSWAP64
@@ -202,4 +201,3 @@
 
 #include /**/ "ace/post.h"
 #endif /* ACE_CONFIG_WIN32_BORLAND_H */
-
