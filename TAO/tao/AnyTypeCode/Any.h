@@ -66,7 +66,7 @@ namespace CORBA
     typedef Any_var _var_type;
     typedef Any_out _out_type;
 
-    Any ();
+    Any () = default;
     Any (const Any &);
 
     ~Any ();
@@ -170,7 +170,7 @@ namespace CORBA
     CORBA::Boolean operator>>= (unsigned char&) const;
 
   private:
-    TAO::Any_Impl *impl_;
+    TAO::Any_Impl *impl_ {};
 
     friend class TAO_Marshal_Any;
   };
@@ -224,7 +224,7 @@ namespace CORBA
     Any *ptr () const;
   private:
     /// Holds the Any.
-    Any *ptr_;
+    Any *ptr_ {};
   };
 
   /**

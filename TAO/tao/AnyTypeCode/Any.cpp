@@ -24,15 +24,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 using namespace TAO;
 
-CORBA::Any::Any ()
-  : impl_ (0)
-{
-}
-
 CORBA::Any::Any (const CORBA::Any &rhs)
   : impl_ (rhs.impl_)
 {
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       this->impl_->_add_ref ();
     }
@@ -40,7 +35,7 @@ CORBA::Any::Any (const CORBA::Any &rhs)
 
 CORBA::Any::~Any ()
 {
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       this->impl_->_remove_ref ();
     }
@@ -51,14 +46,14 @@ CORBA::Any::operator= (const CORBA::Any &rhs)
 {
   if (this->impl_ != rhs.impl_)
     {
-      if (this->impl_ != 0)
+      if (this->impl_)
         {
           this->impl_->_remove_ref ();
         }
 
       this->impl_ = rhs.impl_;
 
-      if (this->impl_ != 0)
+      if (this->impl_)
         {
           this->impl_->_add_ref ();
         }
@@ -72,7 +67,7 @@ CORBA::Any::replace (TAO::Any_Impl *new_impl)
 {
   ACE_ASSERT (new_impl != 0);
 
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       this->impl_->_remove_ref ();
     }
@@ -83,7 +78,7 @@ CORBA::Any::replace (TAO::Any_Impl *new_impl)
 CORBA::TypeCode_ptr
 CORBA::Any::type () const
 {
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       return this->impl_->type ();
     }
@@ -94,7 +89,7 @@ CORBA::Any::type () const
 CORBA::TypeCode_ptr
 CORBA::Any::_tao_get_typecode () const
 {
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       return this->impl_->_tao_get_typecode ();
     }
@@ -105,7 +100,7 @@ CORBA::Any::_tao_get_typecode () const
 void
 CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
 {
-  if (this->impl_ == 0)
+  if (!this->impl_)
     {
       ACE_NEW (this->impl_,
                TAO::Unknown_IDL_Type (tc));
@@ -119,7 +114,7 @@ CORBA::Any::_tao_set_typecode (const CORBA::TypeCode_ptr tc)
 int
 CORBA::Any::_tao_byte_order () const
 {
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       return this->impl_->_tao_byte_order ();
     }
@@ -132,7 +127,7 @@ CORBA::Any::type (CORBA::TypeCode_ptr tc)
 {
   CORBA::Boolean equiv = false;
 
-  if (this->impl_ != 0)
+  if (this->impl_)
     {
       equiv = this->impl_->_tao_get_typecode ()->equivalent (tc);
     }
@@ -172,9 +167,9 @@ CORBA::Any::to_value::to_value (CORBA::ValueBase *& obj)
 CORBA::Boolean
 CORBA::Any::checked_to_object (CORBA::Object_ptr &_tao_elem) const
 {
-  if (this->impl_ == 0)
+  if (!this->impl_)
     {
-      return 0;
+      return false;
     }
 
   return this->impl_->to_object (_tao_elem);
@@ -183,7 +178,7 @@ CORBA::Any::checked_to_object (CORBA::Object_ptr &_tao_elem) const
 CORBA::Boolean
 CORBA::Any::checked_to_value (CORBA::ValueBase *&_tao_elem) const
 {
-  if (this->impl_ == 0)
+  if (!this->impl_)
     {
       return false;
     }
@@ -194,7 +189,7 @@ CORBA::Any::checked_to_value (CORBA::ValueBase *&_tao_elem) const
 CORBA::Boolean
 CORBA::Any::checked_to_abstract_base (CORBA::AbstractBase_ptr &_tao_elem) const
 {
-  if (this->impl_ == 0)
+  if (!this->impl_)
     {
       return false;
     }
@@ -205,9 +200,8 @@ CORBA::Any::checked_to_abstract_base (CORBA::AbstractBase_ptr &_tao_elem) const
 // ****************************************************************
 
 CORBA::Any_var::Any_var (const CORBA::Any_var &r)
-  : ptr_ (0)
 {
-  if (r.ptr_ != 0)
+  if (r.ptr_)
     {
       ACE_NEW (this->ptr_,
                CORBA::Any (*r.ptr_));
@@ -230,9 +224,9 @@ CORBA::Any_var &
 CORBA::Any_var::operator= (const CORBA::Any_var &r)
 {
   delete this->ptr_;
-  this->ptr_ = 0;
+  this->ptr_ = nullptr;
 
-  if (r.ptr_ != 0)
+  if (r.ptr_)
     {
       ACE_NEW_RETURN (this->ptr_,
                       CORBA::Any (*r.ptr_),
@@ -249,7 +243,7 @@ operator<< (TAO_OutputCDR &cdr, const CORBA::Any &any)
 {
   TAO::Any_Impl *impl = any.impl ();
 
-  if (impl != 0)
+  if (impl)
     {
       return impl->marshal (cdr);
     }
@@ -262,14 +256,14 @@ operator>> (TAO_InputCDR &cdr, CORBA::Any &any)
 {
   CORBA::TypeCode_var tc;
 
-  if ((cdr >> tc.out ()) == 0)
+  if (!(cdr >> tc.out ()))
     {
       return false;
     }
 
   try
     {
-      TAO::Unknown_IDL_Type *impl = 0;
+      TAO::Unknown_IDL_Type *impl = nullptr;
       ACE_NEW_RETURN (impl,
                       TAO::Unknown_IDL_Type (tc.in ()),
                       false);
