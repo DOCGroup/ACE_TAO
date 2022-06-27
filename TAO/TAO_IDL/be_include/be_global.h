@@ -437,6 +437,12 @@ public:
   /// related code.
   const char * core_versioning_end () const;
 
+  /// Get text that opens a "versioned" namespace for CORBA::Any operators
+  const char *anyops_versioning_begin () const;
+
+  /// Get text that closes a "versioned" namespace for CORBA::Any operators
+  const char *anyops_versioning_end () const;
+
   // = Set and get methods for different file name endings.
 
   /// Set the client_hdr_ending.
@@ -980,6 +986,12 @@ private:
   /// Text that closes a "versioned" namespace for core TAO and
   /// orbsvcs related code.
   ACE_CString core_versioning_end_;
+
+  /// Text that opens a "versioned" namespace for CORBA::Any operators
+  ACE_CString anyops_versioning_begin_;
+
+  /// Text that closes a "versioned" namespace for CORBA::Any operators
+  ACE_CString anyops_versioning_end_;
 
   /// Text that opens a "versioned" namespace.
   ACE_CString versioning_begin_;

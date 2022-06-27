@@ -944,7 +944,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 #else
   ACE_DLL dll;
 
-  std::unqiue_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
+  std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
   if (xml_svc_conf.get () == 0)
     return -1;

@@ -107,7 +107,7 @@ namespace TAO
     /// Return the @c sync_scope policy value for the current one-way
     /// operation.  If the operation is not a one-way, a
     /// @c CORBA::BAD_INV_ORDER exception is thrown.
-    virtual Messaging::SyncScope sync_scope ();
+    virtual ::Messaging::SyncScope sync_scope ();
 
     /// Return the reply status for the current request.
     /**

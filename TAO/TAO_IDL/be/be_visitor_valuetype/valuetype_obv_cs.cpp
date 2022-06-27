@@ -127,21 +127,24 @@ be_visitor_valuetype_obv_cs::visit_valuetype (be_valuetype *node)
   // or the valuetype is abstract.
   if (!node->opt_accessor ())
     {
-      *os << be_nl_2 << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_marshal__" << node->flat_name ()
-          <<    " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
-          << "}" << be_nl_2;
+      if (be_global->cdr_support ())
+        {
+          *os << be_nl_2 << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_marshal__" << node->flat_name()
+              << " (TAO_OutputCDR &strm, TAO_ChunkInfo& ci) const" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_marshal_state (strm, ci);" << be_uidt_nl
+              << "}" << be_nl_2;
 
-      *os << "::CORBA::Boolean" << be_nl
-          << node->full_obv_skel_name ()
-          << "::_tao_unmarshal__" << node->flat_name ()
-          << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
-          << "{" << be_idt_nl
-          << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
-          << "}";
+          *os << "::CORBA::Boolean" << be_nl
+              << node->full_obv_skel_name()
+              << "::_tao_unmarshal__" << node->flat_name()
+              << " (TAO_InputCDR &strm, TAO_ChunkInfo& ci)" << be_nl
+              << "{" << be_idt_nl
+              << "return _tao_unmarshal_state (strm, ci);" << be_uidt_nl
+              << "}";
+        }
 
       if (this->visit_scope (node) == -1)
         {

@@ -30,8 +30,6 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_global->core_versioning_begin () << be_nl;
-
   // Since we don't generate CDR stream operators for types that
   // explicitly contain a local interface (at some level), we
   // must override these Any template class methods to avoid
@@ -40,6 +38,8 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
+      *os << be_global->core_versioning_begin () << be_nl;
+
       *os << be_nl_2
           << "namespace TAO" << be_nl
           << "{" << be_idt_nl
@@ -64,7 +64,11 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}";
+
+      *os << be_global->core_versioning_end () << be_nl;
     }
+
+  *os << be_global->anyops_versioning_begin () << be_nl;
 
   // If this is non-zero, we want to call its tc_name()
   // for the TypeCode to pass to the Any operator impls.
@@ -107,7 +111,7 @@ be_visitor_array_any_op_cs::visit_array (be_array *node)
       << ");" << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "}";
 
-  *os << be_global->core_versioning_end () << be_nl;
+  *os << be_global->anyops_versioning_end () << be_nl;
 
   node->cli_stub_any_op_gen (true);
   return 0;

@@ -68,9 +68,6 @@ ifeq ($(shared_libs), 1)
   endif
 endif
 
-# Compiling TAO requires relaxing strict 2-phase name lookup rules:
-CCFLAGS += -fdelayed-template-parsing
-
 # Added line below to support "Executable Shared Object" files (as
 # needed by the service configurator).
 # Marius Kjeldahl <mariusk@sn.no, marius@funcom.com>
