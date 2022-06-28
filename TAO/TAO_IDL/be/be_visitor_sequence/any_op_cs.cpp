@@ -42,8 +42,6 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
 
   TAO_INSERT_COMMENT (os);
 
-  *os << be_global->core_versioning_begin () << be_nl;
-
   // These are no-ops for now, so we just generate them and return
   if (be_global->alt_mapping () && node->max_size ()->ev ()->u.ulval == 0)
     {
@@ -75,10 +73,12 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           tc = ANY_OBJREF;
         }
 
+      *os << be_global->anyops_versioning_begin () << be_nl;
+
       *os << be_nl
           << "void operator<<= (" << be_idt_nl
           << "::CORBA::Any &_tao_any," << be_nl
-          << "const std::vector<" << bt->full_name ()
+          << "const std::vector< ::" << bt->full_name ()
           << "> &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "TAO::";
@@ -86,17 +86,17 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       switch (tc)
         {
         case ANY_OBJREF:
-          *os << "insert_objref_vector<"
+          *os << "insert_objref_vector< ::"
               << bt->full_name () << "_ptr> (";
 
           break;
         case ANY_ARRAY:
-          *os << "insert_array_vector<"
+          *os << "insert_array_vector< ::"
               << bt->full_name () << "_forany> (";
 
           break;
         default:
-          *os << "insert_value_vector<"
+          *os << "insert_value_vector< ::"
               << bt->full_name () << "> (";
 
           break;
@@ -110,7 +110,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       *os << be_nl_2
           << "::CORBA::Boolean operator>>= (" << be_idt_nl
           << "const ::CORBA::Any &_tao_any," << be_nl
-          << "std::vector<" << bt->full_name ()
+          << "std::vector< ::" << bt->full_name ()
           << "> &_tao_elem)" << be_uidt_nl
           << "{" << be_idt_nl
           << "return" << be_idt_nl
@@ -119,17 +119,17 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       switch (tc)
         {
         case ANY_OBJREF:
-          *os << "extract_objref_vector<"
+          *os << "extract_objref_vector< ::"
               << bt->full_name () << "_ptr> (";
 
           break;
         case ANY_ARRAY:
-          *os << "extract_array_vector<"
+          *os << "extract_array_vector< ::"
               << bt->full_name () << "_forany> (";
 
           break;
         default:
-          *os << "extract_value_vector<"
+          *os << "extract_value_vector< ::"
               << bt->full_name () << "> (";
 
           break;
@@ -141,7 +141,7 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "}";
 
       *os << be_nl
-          << be_global->core_versioning_end () << be_nl;
+          << be_global->anyops_versioning_end () << be_nl;
 
       node->cli_stub_any_op_gen (true);
       return 0;
@@ -155,6 +155,8 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   // type is inserted into an Any and then marshaled.
   if (node->is_local ())
     {
+      *os << be_global->core_versioning_begin () << be_nl;
+
       *os << "namespace TAO" << be_nl
           << "{" << be_idt_nl
           << "template<>" << be_nl
@@ -174,9 +176,9 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
           << "return false;" << be_uidt_nl
           << "}" << be_uidt_nl
           << "}" << be_nl;
-    }
 
-  *os << be_global->core_versioning_end () << be_nl;
+      *os << be_global->core_versioning_end () << be_nl;
+    }
 
   // If this is non-zero, we want to call its tc_name()
   // for the TypeCode to pass to the Any operator impls.
@@ -189,14 +191,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
       << "/// Copying insertion." << be_nl
       << "void operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " &_tao_elem)"
+      << "const ::" << node->name () << " &_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert_copy ("
+      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert_copy ("
       << be_idt_nl
       << "_tao_any," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << "::" << node->name () << "::_tao_any_destructor," << be_nl
+      << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}" << be_nl_2;
@@ -205,14 +207,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   *os << "/// Non-copying insertion." << be_nl
       << "void operator<<= (" << be_idt_nl
       << "::CORBA::Any &_tao_any," << be_nl
-      << node->name () << " *_tao_elem)"
+      << "::" << node->name () << " *_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "TAO::Any_Dual_Impl_T<" << node->name () << ">::insert ("
+      << "TAO::Any_Dual_Impl_T< ::" << node->name () << ">::insert ("
       << be_idt_nl
       << "_tao_any," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << "::" << node->name () << "::_tao_any_destructor," << be_nl
+      << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}" << be_nl_2;
@@ -221,14 +223,14 @@ be_visitor_sequence_any_op_cs::visit_sequence (be_sequence *node)
   *os << "/// Extraction to const pointer." << be_nl
       << "::CORBA::Boolean operator>>= (" << be_idt_nl
       << "const ::CORBA::Any &_tao_any," << be_nl
-      << "const " << node->name () << " *&_tao_elem)"
+      << "const ::" << node->name () << " *&_tao_elem)"
       << be_uidt_nl
       << "{" << be_idt_nl
-      << "return TAO::Any_Dual_Impl_T<" << node->name () << ">::extract ("
+      << "return TAO::Any_Dual_Impl_T< ::" << node->name () << ">::extract ("
       << be_idt_nl
       << "_tao_any," << be_nl
-      << node->name () << "::_tao_any_destructor," << be_nl
-      << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
+      << "::" << node->name () << "::_tao_any_destructor," << be_nl
+      << "::" << (td != nullptr ? td->tc_name () : node->tc_name ()) << "," << be_nl
       << "_tao_elem);" << be_uidt
       << be_uidt_nl
       << "}";
