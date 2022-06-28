@@ -126,9 +126,15 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:ACE_ROOT}/tests/tests.mwc -workers 4 ${{ matrix.OptionalMpcArgs }}
       shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type ${{ matrix.mpctype }} ${env:TAO_ROOT}/tests/IDL_Test -workers 4 ${{ matrix.OptionalMpcArgs }}
+      shell: pwsh
     - name: Setup msbuild
       uses: microsoft/setup-msbuild@v1
     - name: Build solution TAO/TAO_ACE.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/TAO_ACE.sln
     - name: Build solution ACE/tests/tests.sln
       run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} ACE/tests/tests.sln
+    - name: Build solution TAO/tests/IDL_Test/IDL_Test.sln
+      run: msbuild -maxcpucount -p:Platform=${{ matrix.BuildPlatform }} -p:Configuration=${{ matrix.BuildConfiguration }} TAO/tests/IDL_Test/IDL_Test.sln
