@@ -56,7 +56,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
       be_type *bt =
         dynamic_cast<be_type*> (node->base_type ());
 
-      name = "std::vector<";
+      name = "std::vector< ::";
       name += bt->full_name ();
       name += ">";
     }
@@ -70,7 +70,7 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
   // Generate the Any <<= and >>= operators.
   *os << macro
       << " void"
-      << " operator<<= ( ::CORBA::Any &, const "
+      << " operator<<= (::CORBA::Any &, const ::"
       << name.c_str ()
       << " &); // copying version" << be_nl;
 
@@ -78,14 +78,14 @@ be_visitor_sequence_any_op_ch::visit_sequence (be_sequence *node)
     {
       *os << macro
           << " void"
-          << " operator<<= ( ::CORBA::Any &, "
+          << " operator<<= (::CORBA::Any &, ::"
           << name.c_str ()
           << "*); // noncopying version" << be_nl;
     }
 
   *os << macro
       << " ::CORBA::Boolean"
-      << " operator>>= (const ::CORBA::Any &, const "
+      << " operator>>= (const ::CORBA::Any &, const ::"
       << name.c_str ()
       << " *&);";
 
