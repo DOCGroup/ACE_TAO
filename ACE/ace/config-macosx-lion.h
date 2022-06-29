@@ -3,10 +3,6 @@
 
 #include "ace/config-macosx-leopard.h"
 
-#ifdef __clang__
-# define ACE_ANY_OPS_USE_NAMESPACE
-#endif /* __clang__ */
-
 #if  defined (__x86_64__)
 // On 64 bit platforms, the "long" type is 64-bits.  Override the
 // default 32-bit platform-specific format specifiers appropriately.

@@ -46,7 +46,12 @@ jobs:
             PackageDeps: g++-11
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
             os: ubuntu-20.04
+          - CC: gcc-12
+            CXX: g++-12
+            PackageDeps: g++-12
             optional_macros: CCFLAGS+=-std=c++20
+            platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
+            os: ubuntu-22.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
@@ -134,12 +139,16 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
-    - name: Add Repo
+    - name: Add LLVM apt repo ${{ matrix.Repo }}
       run: |
-        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key|sudo apt-key add -
+        wget -O - https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
         sudo apt-add-repository "deb http://apt.llvm.org/$(lsb_release -cs)/ ${{ matrix.Repo }} main"
-      if: matrix.Repo != ''
-    - name: Add packages
+      if: startsWith (matrix.Repo, 'llvm-toolchain')
+    - name: Add PPA apt repo ${{ matrix.Repo }}
+      run: |
+        sudo apt-add-repository ${{ matrix.Repo }}
+      if: startsWith (matrix.Repo, 'ppa:')
+    - name: Install apt packages
       run: |
         sudo apt-get --yes update
         sudo apt-get --yes install libxerces-c-dev libssl-dev ${{ matrix.PackageDeps }}
@@ -187,6 +196,10 @@ jobs:
       run: |
         perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:ACE_ROOT}/tests/tests.mwc -workers 4
       shell: pwsh
+    - name: Run mwc.pl on $(TAO_ROOT)/tests/IDL_Test
+      run: |
+        perl ${env:ACE_ROOT}/bin/mwc.pl -type gnuace ${env:TAO_ROOT}/tests/IDL_Test -workers 4
+      shell: pwsh
     - name: Build TAO_ACE project
       run: |
         make -j 6 -C ${env:TAO_ROOT}
@@ -195,6 +208,11 @@ jobs:
       run: |
         make -j 6 -C ${env:ACE_ROOT}/tests
       shell: pwsh
+    - name: Build TAO/tests/IDL_Test project
+      run: |
+        make -j 6 -C ${env:TAO_ROOT}/tests/IDL_Test
+      shell: pwsh
+      if: matrix.feature != 'CORBA/e micro'
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v1
       if: matrix.feature == 'CodeQL'

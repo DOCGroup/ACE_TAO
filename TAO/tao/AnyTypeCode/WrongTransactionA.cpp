@@ -88,10 +88,8 @@ namespace TAO
   }
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 namespace CORBA
 {
-#endif
 
 // Copying insertion.
 void operator<<= (
@@ -148,8 +146,6 @@ CORBA::Boolean operator>>= (
       );
 }
 
-#ifdef ACE_ANY_OPS_USE_NAMESPACE
 }
-#endif
 
 TAO_END_VERSIONED_NAMESPACE_DECL

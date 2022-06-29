@@ -56,12 +56,6 @@ namespace RTCORBA
 // TAO_IDL - Generated from
 // be\be_visitor_interface/any_op_cs.cpp:51
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
 
 namespace TAO
 {
@@ -92,67 +86,9 @@ namespace TAO
     return false;
   }
 }
-TAO_END_VERSIONED_NAMESPACE_DECL
 
 
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-
-#if defined (ACE_ANY_OPS_USE_NAMESPACE)
-
-namespace RTCORBA
-{
-
-
-  /// Copying insertion.
-  void
-  operator<<= (
-      ::CORBA::Any &_tao_any,
-      ProtocolProperties_ptr _tao_elem)
-  {
-    ProtocolProperties_ptr _tao_objptr =
-      ProtocolProperties::_duplicate (_tao_elem);
-    _tao_any <<= &_tao_objptr;
-  }
-
-  /// Non-copying insertion.
-  void
-  operator<<= (
-      ::CORBA::Any &_tao_any,
-      ProtocolProperties_ptr *_tao_elem)
-  {
-    TAO::Any_Impl_T<ProtocolProperties>::insert (
-        _tao_any,
-        ProtocolProperties::_tao_any_destructor,
-        _tc_ProtocolProperties,
-        *_tao_elem);
-  }
-
-  ::CORBA::Boolean
-  operator>>= (
-      const ::CORBA::Any &_tao_any,
-      ProtocolProperties_ptr &_tao_elem)
-  {
-    return
-      TAO::Any_Impl_T<ProtocolProperties>::extract (
-          _tao_any,
-          ProtocolProperties::_tao_any_destructor,
-          _tc_ProtocolProperties,
-          _tao_elem);
-  }
-}
-
-#else
-
-
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
+namespace CORBA {
 
 /// Copying insertion.
 void
@@ -191,16 +127,6 @@ operator>>= (
         _tao_elem);
 }
 
-TAO_END_VERSIONED_NAMESPACE_DECL
-
-
-TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-
-
-
-#endif
+}
 
 TAO_END_VERSIONED_NAMESPACE_DECL
-
-
