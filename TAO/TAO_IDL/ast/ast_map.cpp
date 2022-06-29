@@ -116,7 +116,7 @@ AST_Map::AST_Map (AST_Expression *ms,
 
   if (knt == AST_Decl::NT_param_holder)
     {
-      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder*> (key_bt);
+      AST_Param_Holder *ph = dynamic_cast<AST_Param_Holder *> (key_bt);
 
       if (ph->info ()->type_ == AST_Decl::NT_const)
         {

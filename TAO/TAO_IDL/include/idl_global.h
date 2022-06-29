@@ -433,12 +433,6 @@ public:
   // BE calls to check whether pragma for this sequence has been set
   bool dcps_sequence_type_defined (const char* seq_type);
 
-  // FE calls when #pragma DCPS_DATA_MAP_TYPE is processed
-  void set_dcps_map_type (const char* map_type);
-
-  // BE calls to check whether pragma for this map has been set
-  bool dcps_map_type_defined (const char* map_type);
-
   // FE calls when #pragma DCPS_GEN_ZERO_COPY_READ is processed
   void dcps_gen_zero_copy_read (bool value);
 
