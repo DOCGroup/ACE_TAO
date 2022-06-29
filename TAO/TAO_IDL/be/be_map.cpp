@@ -199,7 +199,7 @@ be_map::create_name (be_typedef *node)
       if (scope != nullptr)
         {
           // Make a copy of the enclosing scope's name.
-          n = (UTL_ScopedName *) scope->name ()->copy ();
+          n = static_cast<UTL_ScopedName *> (scope->name ()->copy ());
 
           Identifier *id = nullptr;
           ACE_NEW_RETURN (id,
