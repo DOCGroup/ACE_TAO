@@ -626,10 +626,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
         {
           size_t nr_unsubscribed = 0;
 # if defined(ACE_LINUX)
-
-          struct if_nameindex *intf;
-
-          intf = ACE_OS::if_nameindex ();
+          struct if_nameindex *intf = ACE_OS::if_nameindex ();
 
           if (intf == 0)
             return -1;
