@@ -32,8 +32,7 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64  \
-     && defined (ACE_WIN32)
+# if defined (_FILE_OFFSET_BITS) && _FILE_OFFSET_BITS == 64 && defined (ACE_WIN32)
 #   if defined (__BORLANDC__)
 typedef struct stati64 ACE_stat;
 #       define ACE_STAT_FUNC_NAME ::_stati64
