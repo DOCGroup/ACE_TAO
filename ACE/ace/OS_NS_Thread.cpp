@@ -4921,9 +4921,9 @@ spa (FUNCPTR entry, ...)
                                           0, 0, 0, 0, 0, 0, 0, 0);
   va_end (pvar);
 
-  // ::taskSpawn () returns the taskID on success: return 0 instead if
-  // successful
-  return ret > 0 ? 0 : -1;
+  // ::taskSpawn () returns TASK_ID_ERROR on
+  // error. : return 0 instead if successful
+  return ret == TASK_ID_ERROR ? -1 : 0;
 }
 #endif /* !ACE_LACKS_VA_FUNCTIONS */
 
