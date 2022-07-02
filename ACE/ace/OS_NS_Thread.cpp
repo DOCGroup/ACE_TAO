@@ -4995,8 +4995,6 @@ add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
     }
 }
 
-#if !defined (ACE_LACKS_VA_FUNCTIONS)
-
 // This global function can be used from the VxWorks shell to pass
 // arguments to a C main () function.
 //
@@ -5091,7 +5089,6 @@ spaef (FUNCPTR entry, ...)
   // Return the return value of the invoked ace_main routine.
   return ret;
 }
-#endif /* !ACE_LACKS_VA_FUNCTIONS */
 
 // This global function can be used from the VxWorks shell to pass
 // arguments to and run a main () function (i.e. ace_main).
