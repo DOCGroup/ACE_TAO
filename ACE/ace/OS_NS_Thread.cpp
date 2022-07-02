@@ -5044,7 +5044,7 @@ spae (FUNCPTR entry, ...)
 
   // ::taskSpawn () returns the taskID on success: return 0 instead if
   // successful
-  return ret > 0 ? 0 : -1;
+  return ret == ACE_VX_TASK_ID_ERROR ? -1 : 0;
 }
 
 // This global function can be used from the VxWorks shell to pass
@@ -5084,7 +5084,7 @@ spaef (FUNCPTR entry, ...)
   for (i = argc; i < ACE_MAX_ARGS; ++i)
     argv[i] = 0;
 
-  int ret = entry (argc, argv);
+  int const ret = entry (argc, argv);
 
   va_end (pvar);
 
@@ -5147,9 +5147,9 @@ vx_execae (FUNCPTR entry, char* arg, int prio, int opt, size_t stacksz, ...)
   while( ret > 0 && ::taskIdVerify (ret) != ERROR )
     ::taskDelay (3 * ::sysClkRateGet ());
 
-  // ::taskSpawn () returns the taskID on success: return _vx_call_rc instead if
+  // ::taskSpawn () returns TASK_ID_ERROR on failure: return _vx_call_rc instead if
   // successful
-  return ret > 0 ? _vx_call_rc : 255;
+  return ret == ACE_VX_TASK_ID_ERROR ? 255 : _vx_call_rc;
 }
 
 #if defined(ACE_AS_STATIC_LIBS) && defined (ACE_VXWORKS_DEBUGGING_HELPER)
