@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Bcast_Node::~ACE_Bcast_Node (void)
+ACE_Bcast_Node::~ACE_Bcast_Node ()
 {
 }
 

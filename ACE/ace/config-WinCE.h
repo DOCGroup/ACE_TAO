@@ -194,8 +194,6 @@
 # define BUFSIZ 1024
 #endif
 
-#define ACE_LACKS_MALLOC_H      // We do have malloc.h, but don't use it.
-
 #define ACE_HAS_WINCE_BROKEN_ERRNO
 
 #define ACE_HAS_STRDUP_EMULATION

@@ -63,7 +63,7 @@ public:
 
   /// We need this destructor to keep some compilers from complaining.
   /// It's just a no-op, however.
-  ~ACE_ARGV_Queue_Entry_T (void);
+  ~ACE_ARGV_Queue_Entry_T ();
 
   /// Dump the state of this object.
   void dump (void) const;

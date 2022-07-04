@@ -43,7 +43,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
-  ~ACE_Bound_Ptr_Counter (void);
+  ~ACE_Bound_Ptr_Counter ();
 
   /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
   /// reference count to indicate ownership by a strong pointer.

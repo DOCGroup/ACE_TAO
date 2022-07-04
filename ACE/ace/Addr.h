@@ -34,7 +34,7 @@ public:
   ACE_Addr (int type = -1, int size = -1);
 
   /// Destructor.
-  virtual ~ACE_Addr (void);
+  virtual ~ACE_Addr ();
 
   // = Get/set the size of the address.
 

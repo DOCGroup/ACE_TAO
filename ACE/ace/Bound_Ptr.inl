@@ -135,7 +135,7 @@ ACE_Bound_Ptr_Counter<ACE_LOCK>::ACE_Bound_Ptr_Counter (long init_obj_ref_count)
 }
 
 template <class ACE_LOCK> inline
-ACE_Bound_Ptr_Counter<ACE_LOCK>::~ACE_Bound_Ptr_Counter (void)
+ACE_Bound_Ptr_Counter<ACE_LOCK>::~ACE_Bound_Ptr_Counter ()
 {
 }
 

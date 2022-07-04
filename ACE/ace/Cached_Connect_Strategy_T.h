@@ -223,7 +223,7 @@ public:
                                        int delete_lock = 0);
 
   /// Destructor
-  virtual ~ACE_Bounded_Cached_Connect_Strategy (void);
+  virtual ~ACE_Bounded_Cached_Connect_Strategy ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

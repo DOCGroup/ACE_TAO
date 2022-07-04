@@ -27,7 +27,7 @@ ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
 }
 
 template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector (void)
+ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector ()
 {
   //this->asynch_connect_.close ();
 }
