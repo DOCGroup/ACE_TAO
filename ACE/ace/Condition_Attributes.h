@@ -71,7 +71,7 @@ public:
   ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   /// Destructor
-  ~ACE_Condition_Attributes_T ();
+  ~ACE_Condition_Attributes_T () = default;
 
 private:
   void operator= (const ACE_Condition_Attributes_T<ACE_Monotonic_Time_Policy> &) = delete;

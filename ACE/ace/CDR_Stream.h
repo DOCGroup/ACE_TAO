@@ -1180,7 +1180,7 @@ private:
 class ACE_Export ACE_Char_Codeset_Translator
 {
 public:
-  virtual ~ACE_Char_Codeset_Translator ();
+  virtual ~ACE_Char_Codeset_Translator () = default;
 
   /// Read a single character from the stream, converting from the
   /// stream codeset to the native codeset
@@ -1288,7 +1288,7 @@ protected:
 class ACE_Export ACE_WChar_Codeset_Translator
 {
 public:
-  virtual ~ACE_WChar_Codeset_Translator ();
+  virtual ~ACE_WChar_Codeset_Translator () = default;
 
   virtual ACE_CDR::Boolean read_wchar (ACE_InputCDR&,
                                        ACE_CDR::WChar&) = 0;

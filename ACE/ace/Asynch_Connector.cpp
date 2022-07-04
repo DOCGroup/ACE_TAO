@@ -26,12 +26,6 @@ ACE_Asynch_Connector<HANDLER>::ACE_Asynch_Connector (void)
 {
 }
 
-template <class HANDLER>
-ACE_Asynch_Connector<HANDLER>::~ACE_Asynch_Connector (void)
-{
-  //this->asynch_connect_.close ();
-}
-
 template <class HANDLER> int
 ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
                                      ACE_Proactor *proactor,

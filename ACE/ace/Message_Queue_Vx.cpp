@@ -112,7 +112,6 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
 }
 
 // Clean up the queue if we have not already done so!
-
 int
 ACE_Message_Queue_Vx::close (void)
 {
@@ -144,7 +143,7 @@ ACE_Message_Queue_Vx::is_full_i (void)
 }
 
 size_t
-ACE_Message_Queue_Vx::high_water_mark (void)
+ACE_Message_Queue_Vx::high_water_mark ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::high_water_mark");
   ACE_NOTSUP_RETURN ((size_t) -1);
@@ -158,7 +157,7 @@ ACE_Message_Queue_Vx::high_water_mark (size_t)
 }
 
 size_t
-ACE_Message_Queue_Vx::low_water_mark (void)
+ACE_Message_Queue_Vx::low_water_mark ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::low_water_mark");
   // Don't need to guard, because this is fixed.
@@ -174,21 +173,21 @@ ACE_Message_Queue_Vx::low_water_mark (size_t)
 }
 
 size_t
-ACE_Message_Queue_Vx::message_bytes (void)
+ACE_Message_Queue_Vx::message_bytes ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::message_bytes");
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
 size_t
-ACE_Message_Queue_Vx::message_length (void)
+ACE_Message_Queue_Vx::message_length ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::message_length");
   ACE_NOTSUP_RETURN ((size_t) -1);
 }
 
 size_t
-ACE_Message_Queue_Vx::message_count (void)
+ACE_Message_Queue_Vx::message_count ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::message_count");
   // Don't need to guard, because this is a system call.
@@ -211,14 +210,14 @@ ACE_Message_Queue_Vx::message_length (size_t)
 }
 
 int
-ACE_Message_Queue_Vx::signal_enqueue_waiters (void)
+ACE_Message_Queue_Vx::signal_enqueue_waiters ()
 {
   // No-op.
   return 0;
 }
 
 int
-ACE_Message_Queue_Vx::signal_dequeue_waiters (void)
+ACE_Message_Queue_Vx::signal_dequeue_waiters ()
 {
   // No-op.
   return 0;

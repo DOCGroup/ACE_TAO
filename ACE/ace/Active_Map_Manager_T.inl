@@ -236,11 +236,6 @@ ACE_Active_Map_Manager<T>::ACE_Active_Map_Manager (size_t size,
 {
 }
 
-template <class T> ACE_INLINE
-ACE_Active_Map_Manager<T>::~ACE_Active_Map_Manager ()
-{
-}
-
 template <class T> ACE_INLINE int
 ACE_Active_Map_Manager<T>::open (size_t length,
                                  ACE_Allocator *alloc)

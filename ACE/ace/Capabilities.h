@@ -40,7 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_CapEntry
 {
 public:
-   virtual ~ACE_CapEntry (void);
+   virtual ~ACE_CapEntry () = default;
 
 protected:
   enum
