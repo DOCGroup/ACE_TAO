@@ -57,7 +57,7 @@ public:
   ACE_Profile_Timer ();
 
   /// Shutdown the timer.
-  ~ACE_Profile_Timer () = default;
+  ~ACE_Profile_Timer ();
 
   // = Timer methods.
   /// Activate the timer.
