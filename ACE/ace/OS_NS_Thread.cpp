@@ -2553,7 +2553,7 @@ namespace {
       {
         const int result = attributes ?
           ACE_OS::cond_init (&evtdata->condition_, *attributes, name, arg) :
-          ACE_OS::cond_init (&evtdata->condition_, type, name, arg);
+          ACE_OS::cond_init (&evtdata->condition_, (short) type, name, arg);
 
         if (result != 0)
           return result;
