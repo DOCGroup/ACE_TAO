@@ -24,14 +24,6 @@
 # define ACE_LACKS_STD_WSTRING
 #endif
 
-#if !defined (__RTP__)
-  // Fix for wrong typedef of time_t in kernel mode
-  #ifndef _TIME_T
-  #define _TIME_T
-  typedef long time_t;
-  #endif
-#endif
-
 #if ! defined (__ACE_INLINE__)
 # define __ACE_INLINE__
 #endif /* ! __ACE_INLINE__ */
