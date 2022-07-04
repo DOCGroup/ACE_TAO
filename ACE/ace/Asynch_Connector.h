@@ -48,7 +48,7 @@ public:
   ACE_Asynch_Connector (void);
 
   /// Virtual destruction
-  virtual ~ACE_Asynch_Connector (void);
+  virtual ~ACE_Asynch_Connector () = default;
 
   /**
    * This opens asynch connector

@@ -66,7 +66,7 @@ public:
                             const OPTIONS *options = 0);
 
   /// Destructor
-  virtual ~ACE_Pagefile_Memory_Pool (void);
+  virtual ~ACE_Pagefile_Memory_Pool ( = default;
 
   /// Ask system for initial chunk of shared memory.
   void *init_acquire (size_t nbytes,
