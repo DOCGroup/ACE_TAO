@@ -168,16 +168,12 @@ AST_Map::AST_Map (AST_Expression *ms,
     || vnt == AST_Decl::NT_param_holder;
 }
 
-AST_Map::~AST_Map ()
-{
-}
-
 // Public operations.
 
 bool
 AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 {
-  if (list.size () == 0) // only structs, unions and valuetypes can be recursive
+  if (list.is_empty ()) // only structs, unions and valuetypes can be recursive
     return false;
 
   list.enqueue_tail(this);

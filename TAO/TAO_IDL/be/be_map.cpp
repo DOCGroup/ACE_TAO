@@ -254,9 +254,8 @@ be_map::decl ()
 // Overridden method
 void
 be_map::gen_ostream_operator (TAO_OutStream * /*os*/,
-                                   bool /* use_underscore */)
+                              bool /* use_underscore */)
 {
-// TODO Gen ostream operator
 }
 
 int
