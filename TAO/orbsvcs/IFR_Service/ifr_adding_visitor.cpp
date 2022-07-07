@@ -2304,24 +2304,8 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 int
 ifr_adding_visitor::visit_map (AST_Map *node)
 {
-  try
-    {
-      // this->element_type (node->base_type ());
-
-      // this->ir_current_ =
-      //   be_global->repository ()->create_map (
-      //                                 node->max_size ()->ev ()->u.ulval,
-      //                                 this->ir_current_.in ()
-      //                               );
-    }
-  catch (const CORBA::Exception& ex)
-    {
-      ex._tao_print_exception (ACE_TEXT ("visit_map"));
-
-      return -1;
-    }
-
-  return 0;
+  // TODO Not sure what type of exception it would be
+  return -1;
 }
 
 int
