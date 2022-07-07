@@ -3913,7 +3913,7 @@ map_type_spec
           Decl_Annotations_Pair *val_type = type_pair->second;
 
           /*
-           * Remove sequence marker from scopes stack.
+           * Remove map marker from scopes stack.
            */
           if (idl_global->scopes ().top () == 0)
             {
@@ -3927,8 +3927,8 @@ map_type_spec
            */
           if (key_type && val_type)
             {
-              AST_Type *ktp = dynamic_cast<AST_Type*> (key_type->decl);
-              AST_Type *vtp = dynamic_cast<AST_Type*> (val_type->decl);
+              AST_Type *ktp = dynamic_cast<AST_Type *> (key_type->decl);
+              AST_Type *vtp = dynamic_cast<AST_Type *> (val_type->decl);
 
               if (ktp == 0 || vtp == 0)
                 {
