@@ -2304,8 +2304,13 @@ ifr_adding_visitor::visit_sequence (AST_Sequence *node)
 int
 ifr_adding_visitor::visit_map (AST_Map *node)
 {
-  // TODO Not sure what type of exception it would be
-  return -1;
+  ORBSVCS_ERROR_RETURN ((
+            LM_ERROR,
+            ACE_TEXT ("(%N:%l) ifr_adding_visitor::visit_map -")
+            ACE_TEXT (" maps are not supported\n")
+          ),
+          -1
+        );
 }
 
 int
