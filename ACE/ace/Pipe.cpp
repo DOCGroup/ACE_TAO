@@ -91,17 +91,19 @@ ACE_Pipe::open (int buffer_size)
 # endif /* ACE_WIN32 */
 
   // Bind listener to any port and then find out what the port was.
-  if (acceptor.open (local_any) == -1
-      || acceptor.get_local_addr (my_addr) == -1)
-    result = -1;
+  if (acceptor.open (local_any) == -1 || acceptor.get_local_addr (my_addr) == -1)
+    {
+      result = -1;
+    }
   else
     {
-      ACE_INET_Addr sv_addr (my_addr.get_port_number (),
-                             ACE_LOCALHOST);
+      ACE_INET_Addr sv_addr (my_addr.get_port_number (), ACE_LOCALHOST);
 
       // Establish a connection within the same process.
       if (connector.connect (writer, sv_addr) == -1)
-        result = -1;
+        {
+          result = -1;
+        }
       else if (acceptor.accept (reader) == -1)
         {
           writer.close ();
