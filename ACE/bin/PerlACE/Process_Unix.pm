@@ -802,7 +802,9 @@ sub WaitKill ($;$)
 
             my $commands = ($debugger eq 'gdb') ?
               "-ex 'set pagination off' -ex 'thread apply all backtrace'" : "-o 'bt all'";
+            print STDERR "\n======= Begin stuck stacks =======\n";
             system "$debugger --batch -p $self->{PROCESS} $commands";
+            print STDERR "======= End stuck stacks =======\n";
         }
 
         if ($ENV{ACE_TEST_GENERATE_CORE_FILE}) {
