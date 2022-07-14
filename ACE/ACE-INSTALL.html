@@ -184,7 +184,7 @@ document</a>.</p><p>
         Windows CE, MinGW, Microsoft Visual C++, GCC,
         Cygwin, VxWorks 6.x (kernel and rtp), OpenVMS on IA64,
         BlueCAT Linux, RedHat Linux, Fedora, MacOSX, Solaris,
-        Tru64, SuSE Linux on IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
+        SuSE Linux on IA32/EM64T/IA64, RTEMS, QNX, LynxOS,
         HPUX on IA64, and Android.
         The Intel C++ compiler is supported on
         Windows 32/64bit, Linux IA32/EM64T/IA64, MacOSX.
@@ -2205,41 +2205,6 @@ libraries.
       compiler.  Arturo Montes &lt;<a href="mailto:mitosys@colomsat.net.co">mitosys@colomsat.net.co</a>&gt;
       maintains this code.  In addition, he also maintains a version
       of <a href="http://www.cs.wustl.edu/%7Eschmidt/ACE_wrappers/FSU-threads.tar.gz">FSU pthreads</a>.</p><p>
-
-  </p></li><li><b>SGI IRIX 5.x and 6.x</b><p>
-
-      ACE used to build fine using the SGI C++ and GNU GCC compilers
-      for IRIX 5.x.  It has been ported to IRIX 6.x using the SGI
-      MipsPro 7.1 C++ compiler; be aware that in IRIX 6.2 there is a
-      number of patches that have to be installed and exceptions
-      appear to fail with the O32 ABI.  Please check the config files
-      for the details.</p><p>
-
-  </p></li><li><b>OSF/1 3.2 and 4.0 (a.k.a. Digital UNIX 4.0)</b> <p>
-
-      The Digital UNIX C++ 5.4 through 5.7 compilers have problems
-      with ACE's templates.  They compile the lib and most of the test
-      programs, although they warn about template usage.  Most tests
-      run, some dump core.  If you use a 5.x version of cxx, be sure
-      to set the CXX_VER variable to CXX_5, either on your make
-      command line or in an environment variable.  The ACE Makefiles
-      assume by default that the cxx version is 6.x or later.</p><p>
-
-      CXX 6.0 and 6.1 are much improved over 5.x: V6.0-020, V6.1-025,
-      and later build all of ACE cleanly.  All of the tests in
-      $(ACE_ROOT)/tests run successfully with CXX 6.0 and CXX 6.1.
-      Please note that problems have been reported with some versions
-      of CXX 6.1, notably versions -021 and earlier.  It's best to use
-      V6.1-022 or later.</p><p>
-
-      NOTE: if you use Digital UNIX 4.0f or later, you <strong>must</strong>
-      use <code>ace/config-tru64.h</code> instead of
-      <code>ace/config-osf1-4.0.h</code>.  <code>ace/config-tru64.h</code>
-      can be used for all supported compilers on any version of
-      Digital UNIX after and include 4.0.  And, with 4.0f and later when
-      using Digital CXX, you <strong>must</strong> use
-      <code>include/makeinclude/platform_tru64_cxx.GNU</code> instead of
-      <code>include/makeinclude/platform_osf1_4.0.GNU</code>.</p>
 
   </li><li><b> FreeBSD </b><p>
 

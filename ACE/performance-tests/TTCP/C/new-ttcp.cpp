@@ -777,11 +777,7 @@ prusage (register struct rusage *r0, struct rusage *r1,
 #if defined(SYSV)
   cp = "%Uuser %Ssys %Ereal %P";
 #else
-#if defined(sgi) /* IRIX 3.3 will show 0 for %M,%F,%R,%C */
-  cp = "%Uuser %Ssys %Ereal %P %Mmaxrss %F+%Rpf %Ccsw";
-#else
   cp = "%Uuser %Ssys %Ereal %P %Xi+%Dd %Mmaxrss %F+%Rpf %Ccsw";
-#endif
 #endif
   for (; *cp; cp++)
     {

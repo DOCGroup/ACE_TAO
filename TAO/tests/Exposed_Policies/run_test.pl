@@ -24,7 +24,6 @@ my $ior_base = "default.ior";
 my $ior_overridden = "overridden.ior";
 my $cfg_poa = "POA.cfg";
 my $cfg_object = "Object.cfg";
-my $cfg_suffix_tru64 = ".tru64";
 
 my $server_ior_base = $server->LocalFile ($ior_base);
 my $server_ior_overridden = $server->LocalFile ($ior_overridden);
@@ -47,13 +46,6 @@ if ($server->PutFile ($cfg_poa) == -1) {
 if ($server->PutFile ($cfg_object) == -1) {
     print STDERR "ERROR: cannot set file <$server_cfg_object>\n";
     return 1;
-}
-
-if ($^O eq "dec_osf") {
-    $server_cfg_poa = "$server_cfg_poa$cfg_suffix_tru64";
-    $server_cfg_object = "$server_cfg_object$cfg_suffix_tru64";
-    $client_cfg_poa = "$client_cfg_poa$cfg_suffix_tru64";
-    $client_cfg_object = "$client_cfg_object$cfg_suffix_tru64";
 }
 
 $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level ".

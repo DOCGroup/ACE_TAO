@@ -293,11 +293,6 @@ MT_Test::svc (void)
     {
       ex._tao_print_exception (
         "Unexpected exception in MT test bind");
-      // This debug statement works around a IRIX/MIPSPro 7.3 bug (it
-      // fails with optimize=1 debug=0; but works with any other
-      // settings for those flags).
-      ACE_DEBUG ((LM_DEBUG, "MT_Test(%t) - bind[3] %d\n",
-                  test_name_.length ()));
       return -1;
     }
 
