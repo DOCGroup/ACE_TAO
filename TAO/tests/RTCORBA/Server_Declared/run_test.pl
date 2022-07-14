@@ -55,10 +55,6 @@ if ($^O eq "MSWin32") {
     $server_args =
         "-a 1 -b 2";
 }
-elsif ($^O eq "dec_osf") {
-    $server_args =
-        "-a 20 -b 30";
-}
 elsif ($^O eq "hpux") {
     $continuous = 1;
     $server_args =
