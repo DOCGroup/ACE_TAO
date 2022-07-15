@@ -71,13 +71,13 @@ TAO/tests/Bug_1020_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MI
 TAO/tests/Bug_1020_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 QUICK
 TAO/tests/Bug_1254_Regression/run_test.pl:
 TAO/tests/Bug_1330_Regression/run_test.pl:
-TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX !QUICK
-TAO/tests/Bug_1361_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !IRIX QUICK
+TAO/tests/Bug_1361_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 !QUICK
+TAO/tests/Bug_1361_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !Win32 QUICK
 TAO/tests/Bug_1476_Test/run_test.pl: !NO_MESSAGING !CORBA_E_MICRO
 TAO/tests/Bug_1482_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !QUICK !LynxOS
 TAO/tests/Bug_1482_Regression/run_test.pl -quick : !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST QUICK !LynxOS
-TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash !QUICK
-TAO/tests/Bug_1551_Regression/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !IRIX !OpenVMS_IA64Crash QUICK
+TAO/tests/Bug_1551_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash !QUICK
+TAO/tests/Bug_1551_Regression/run_test.pl -quick: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ST !OpenVMS_IA64Crash QUICK
 TAO/tests/Bug_1636_Regression/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO
 TAO/tests/Bug_1639_Regression/run_test.pl: !CORBA_E_MICRO
 TAO/tests/Bug_1676_Regression/run_test.pl:
