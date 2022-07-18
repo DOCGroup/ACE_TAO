@@ -86,6 +86,12 @@ jobs:
       XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       SSL_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       SSL_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+<<<<<<< HEAD
+=======
+      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
+      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
+>>>>>>> 00b5590e8f1 (vcpkg triplet is now an environment variable)
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
@@ -99,7 +105,6 @@ jobs:
       with:
         vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
-        vcpkgTriplet: ${{ matrix.vcpkgarch }}
         appendedCacheKey: ${{ matrix.name }}
     - name: create $ACE_ROOT/ace/config.h
       run: |
