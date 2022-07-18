@@ -123,7 +123,7 @@ jobs:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
     - name: Install vcpkg
-      uses: lukka/run-vcpkg@v7
+      uses: lukka/run-vcpkg@v10
       with:
         vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
         vcpkgArguments: --recurse ${{ matrix.vcpkgpackages }}
