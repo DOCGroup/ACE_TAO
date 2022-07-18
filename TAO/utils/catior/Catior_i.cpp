@@ -1100,7 +1100,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for char.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char %u\n", c_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for char: %u\n", c_ccslen);
   buffer_ += buf;
 
   if (c_ccslen)
@@ -1131,7 +1131,7 @@ Catior_i::cat_codeset_info (TAO_InputCDR& cdr)
                        "for wchar.\n"),
                       false);
 
-  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar %u\n", w_ccslen);
+  ACE_OS::snprintf (buf, bufsize, "\tNumber of CCS for wchar: %u\n", w_ccslen);
   buffer_ += buf;
 
   if (w_ccslen)
