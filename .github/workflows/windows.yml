@@ -115,6 +115,7 @@ jobs:
       ZLIB_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
       ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg_installed
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v3
