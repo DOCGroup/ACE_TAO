@@ -136,6 +136,7 @@ jobs:
       VCPKG_ROOT: ${{ github.workspace }}/vcpkg
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       XERCESC_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       SSL_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
@@ -160,6 +161,14 @@ jobs:
       ZLIB_INCDIR: ${{ github.workspace }}/vcpkg_installed/installed/${{ matrix.vcpkgarch }}/include
       ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg_installed/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
 >>>>>>> e2a73f709b2 (Another path attempt)
+=======
+      XERCESC_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      XERCESC_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      SSL_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      SSL_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+      ZLIB_INCDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/include
+      ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg_installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
+>>>>>>> eb6c324131f (Path changes)
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
 <<<<<<< HEAD
 <<<<<<< HEAD
