@@ -156,7 +156,7 @@ jobs:
       run: |
         '{' > vcpkg.json
         '  "name": "tao",' >> vcpkg.json
-        '  "version-string": "githubaction"' >> vcpkg.json
+        '  "version-string": "githubaction",' >> vcpkg.json
         '  "dependencies": [ ${{ matrix.vcpkgpackages }} ]' >> vcpkg.json
         '}' >> vcpkg.json
       shell: pwsh
