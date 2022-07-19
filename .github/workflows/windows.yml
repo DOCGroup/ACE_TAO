@@ -130,7 +130,7 @@ jobs:
         '  "name": "tao",' >> vcpkg.json
         '  "version-string": "githubaction"' >> vcpkg.json
         '  "dependencies": [ ${{ matrix.vcpkgpackages }} ]' >> vcpkg.json
-        '}' ?> vcpkg.json
+        '}' >> vcpkg.json
       shell: pwsh
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v10
