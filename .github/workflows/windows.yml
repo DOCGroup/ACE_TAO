@@ -115,7 +115,6 @@ jobs:
       ZLIB_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
-      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v3
@@ -126,7 +125,7 @@ jobs:
         path: ${{ env.MPC_ROOT }}
     - name: create vcpkg.json
       run: |
-        '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]''}' > vcpkg.json
+        '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]}' > vcpkg.json
       shell: pwsh
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v10
