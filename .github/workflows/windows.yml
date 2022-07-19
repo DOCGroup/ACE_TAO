@@ -24,7 +24,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: '"openssl", "xerces-c[xmlch-wchar]", "zlib"'
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
             vmimage: windows-2019
@@ -83,7 +83,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: '"openssl", "xerces-c[xmlch-wchar]", "zlib"'
+            vcpkgpackages: '"openssl", {"name": "xerces-c", "features": ["xmlch-wchar"]}, "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2022Debug64
             vmimage: windows-2022
@@ -126,11 +126,7 @@ jobs:
         path: ${{ env.MPC_ROOT }}
     - name: create vcpkg.json
       run: |
-        '{' > vcpkg.json
-        '  "name": "tao",' >> vcpkg.json
-        '  "version-string": "githubaction",' >> vcpkg.json
-        '  "dependencies": [ ${{ matrix.vcpkgpackages }} ]' >> vcpkg.json
-        '}' >> vcpkg.json
+        '{"name": "tao","version-string": "githubaction","dependencies": [ ${{ matrix.vcpkgpackages }} ]''}' > vcpkg.json
       shell: pwsh
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v10
