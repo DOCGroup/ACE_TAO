@@ -104,7 +104,7 @@ jobs:
       uses: lukka/run-vcpkg@v10
       with:
         vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
-        runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `$[env.VCPKG_INSTALLED_DIR]`, `--triplet`, `$[env.VCPKG_DEFAULT_TRIPLET]`], `${{ matrix.vcpkgpackages }}`'
+        runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `${{ env.VCPKG_INSTALLED_DIR }}`, `--triplet`, `${{ env.VCPKG_DEFAULT_TRIPLET }}`, `${{ matrix.vcpkgpackages }}`]'
         appendedCacheKey: ${{ matrix.name }}
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
