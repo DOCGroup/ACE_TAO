@@ -24,7 +24,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
+            vcpkgpackages: '"openssl", "xerces-c[xmlch-wchar]", "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2019Debug64
             vmimage: windows-2019
@@ -33,7 +33,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Release64
             vmimage: windows-2019
             mpctype: vs2019
@@ -41,7 +41,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Debug32
             vmimage: windows-2019
             mpctype: vs2019
@@ -49,7 +49,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x86-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Release32
             vmimage: windows-2019
             mpctype: vs2019
@@ -57,7 +57,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x86-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2019Debug64Cxx17
             vmimage: windows-2019
             mpctype: vs2019
@@ -65,7 +65,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp17
           - name: VS2019Debug64Cxx20
             vmimage: windows-2019
@@ -74,7 +74,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
             OptionalMpcArgs: -value_template LanguageStandard=stdcpp20
           - name: VS2022WChar
             vmimage: windows-2022
@@ -83,7 +83,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: 'openssl xerces-c[xmlch-wchar] zlib'
+            vcpkgpackages: '"openssl", "xerces-c[xmlch-wchar]", "zlib"'
             OptionalFeatures: uses_wchar=1
           - name: VS2022Debug64
             vmimage: windows-2022
@@ -92,7 +92,7 @@ jobs:
             BuildConfiguration: Debug
             vcpkgarch: x64-windows
             vcpkglibdir: debug/lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
           - name: VS2022Release64
             vmimage: windows-2022
             mpctype: vs2022
@@ -100,7 +100,7 @@ jobs:
             BuildConfiguration: Release
             vcpkgarch: x64-windows
             vcpkglibdir: lib
-            vcpkgpackages: openssl xerces-c zlib
+            vcpkgpackages: '"openssl", "xerces-c", "zlib"'
     runs-on: ${{ matrix.vmimage }}
     name: ${{ matrix.name }}
     env:
@@ -124,11 +124,18 @@ jobs:
       with:
         repository: DOCGroup/MPC
         path: ${{ env.MPC_ROOT }}
+    - name: create vcpkg.json
+      run: |
+        '{' > vcpkg.json
+        '  "name": "tao",' >> vcpkg.json
+        '  "version-string": "githubaction"' >> vcpkg.json
+        '  "dependencies": [ ${{ matrix.vcpkgpackages }} ]' >> vcpkg.json
+        '}' ?> vcpkg.json
+      shell: pwsh
     - name: Install vcpkg
       uses: lukka/run-vcpkg@v10
       with:
         vcpkgGitCommitId: cef0b3ec767df6e83806899fe9525f6cf8d7bc91
-        runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `${{ env.VCPKG_INSTALLED_DIR }}`, `--triplet`, `${{ env.VCPKG_DEFAULT_TRIPLET }}`, `${{ matrix.vcpkgpackages }}`]'
         appendedCacheKey: ${{ matrix.name }}
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
