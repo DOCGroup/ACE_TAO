@@ -91,7 +91,11 @@ jobs:
       ZLIB_INCDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/include
       ZLIB_LIBDIR: ${{ github.workspace }}/vcpkg/installed/${{ matrix.vcpkgarch }}/${{ matrix.vcpkglibdir }}
       VCPKG_DEFAULT_TRIPLET: ${{ matrix.vcpkgarch }}
+<<<<<<< HEAD
 >>>>>>> 00b5590e8f1 (vcpkg triplet is now an environment variable)
+=======
+      VCPKG_INSTALLED_DIR: ${{ github.workspace }}/vcpkg
+>>>>>>> 9c95a92d0cc (Set VCPKG_INSTALLED_DIR)
     steps:
     - name: checkout ACE/TAO
       uses: actions/checkout@v2
@@ -104,7 +108,7 @@ jobs:
       uses: lukka/run-vcpkg@v10
       with:
         vcpkgGitCommitId: cef0b3ec767df6e83806899fe9525f6cf8d7bc91
-        runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--triplet`, `${{ env.VCPKG_DEFAULT_TRIPLET }}`, `${{ matrix.vcpkgpackages }}`]'
+        runVcpkgFormatString: '[`install`, `--recurse`, `--clean-after-build`, `--x-install-root`, `${{ env.VCPKG_INSTALLED_DIR }}`, `--triplet`, `${{ env.VCPKG_DEFAULT_TRIPLET }}`, `${{ matrix.vcpkgpackages }}`]'
         appendedCacheKey: ${{ matrix.name }}
         runVcpkgInstall: true
     - name: create $ACE_ROOT/ace/config.h
