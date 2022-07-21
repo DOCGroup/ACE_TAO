@@ -45,7 +45,7 @@ class ACE_Export ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> >
 public:
   ACE_Guard (ACE_Reactor_Token_T<ACE_Noop_Token> &) {}
   ACE_Guard (ACE_Reactor_Token_T<ACE_Noop_Token> &, int) {}
-  ~ACE_Guard () = default
+  ~ACE_Guard () = default;
 
   int acquire (void) { return 0; }
   int tryacquire (void) { return 0; }
