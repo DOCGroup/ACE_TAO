@@ -34,7 +34,7 @@ public:
   ~be_visitor_map_cdr_op_ch () = default;
 
   /// visit map
-  virtual int visit_map (be_map *node);
+  int visit_map (be_map *node) override;
 };
 
 #endif /* _BE_VISITOR_MAP_CDR_OP_CH_H_ */

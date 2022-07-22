@@ -17,14 +17,8 @@
 // stubs file.
 // ***************************************************************************
 
-be_visitor_map_cdr_op_cs::be_visitor_map_cdr_op_cs (
-    be_visitor_context *ctx
-  )
+be_visitor_map_cdr_op_cs::be_visitor_map_cdr_op_cs (be_visitor_context *ctx)
   : be_visitor_decl (ctx)
-{
-}
-
-be_visitor_map_cdr_op_cs::~be_visitor_map_cdr_op_cs ()
 {
 }
 

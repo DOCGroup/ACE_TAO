@@ -660,8 +660,6 @@ be_visitor_field_cdr_op_cs::visit_map (be_map *node)
         }
     }
 
-  // How generate the marshaling code for the map as a field.
-
   TAO_OutStream *os = this->ctx_->stream ();
 
   // Retrieve the field node.

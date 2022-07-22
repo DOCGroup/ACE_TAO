@@ -17,9 +17,7 @@
 // ***************************************************************************
 
 be_visitor_map_cdr_op_ch::be_visitor_map_cdr_op_ch (
-    be_visitor_context *ctx
-  )
-  : be_visitor_decl (ctx)
+    be_visitor_context *ctx) : be_visitor_decl (ctx)
 {
 }
 

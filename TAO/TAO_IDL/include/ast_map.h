@@ -87,7 +87,7 @@ public:
   // Are we or the node represented by node involved in recursion.
 
   // Data Accessors.
-  AST_Expression *max_size ();
+  AST_Expression *max_size () const;
 
   AST_Type *key_type () const;
   AST_Type *value_type () const;
@@ -134,7 +134,6 @@ public:
   AST_Annotation_Appls &key_type_annotations ();
   void key_type_annotations (const AST_Annotation_Appls &annotations);
   ///}
-
 
   /**
    * Get and Set Annotations on the value type
