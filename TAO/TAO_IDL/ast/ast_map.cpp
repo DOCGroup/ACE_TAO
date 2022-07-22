@@ -85,6 +85,8 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 AST_Decl::NodeType const
 AST_Map::NT = AST_Decl::NT_map;
 
@@ -208,7 +210,7 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = 0;
   list.get (recursable_type, 0);
-  if (!ACE_OS::strcmp (type->full_name (),
+  if (!std::strcmp (type->full_name (),
                            (*recursable_type)->full_name ()))
     {
       // They match.
@@ -264,7 +266,7 @@ AST_Map::ast_accept (ast_visitor *visitor)
 // Data accessors.
 
 AST_Expression *
-AST_Map::max_size ()
+AST_Map::max_size () const
 {
   return this->pd_max_size;
 }
