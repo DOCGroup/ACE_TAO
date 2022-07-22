@@ -77,17 +77,13 @@ be_map::be_map (AST_Expression *v,
 be_type *
 be_map::key_type () const
 {
-  return
-    dynamic_cast<be_type*> (
-      this->AST_Map::key_type ());
+  return dynamic_cast<be_type*> (this->AST_Map::key_type ());
 }
 
 be_type *
 be_map::value_type () const
 {
-  return
-    dynamic_cast<be_type*> (
-      this->AST_Map::value_type ());
+  return dynamic_cast<be_type*> (this->AST_Map::value_type ());
 }
 
 be_type *
@@ -182,14 +178,12 @@ be_map::create_name (be_typedef *node)
   if (node)
     {
       this->set_name (
-          dynamic_cast<UTL_ScopedName *> (node->name ()->copy ())
-        );
+          dynamic_cast<UTL_ScopedName *> (node->name ()->copy ()));
     }
   else
     {
       // Generate a local name.
-      static char *namebuf = nullptr;
-      namebuf = this->gen_name ();
+      static char *namebuf = this->gen_name ();
 
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();

@@ -61,7 +61,7 @@ public:
 
   /// Create a name for ourselves. If we are typedefed, then we get the name of
   /// the typedef node, else we generate a name for ourselves.
-  virtual int create_name (be_typedef *node);
+  int create_name (be_typedef *node);
 
   // Scope management functions.
   virtual AST_Map *fe_add_map (AST_Map *);
