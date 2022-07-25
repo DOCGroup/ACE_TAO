@@ -398,7 +398,7 @@ private:
   // the underlying internet address structure.
   void *ip_addr_pointer (void) const;
   int ip_addr_size (void) const;
-  int determine_type (void) const;
+  static int determine_type (void);
 
   /// Initialize underlying inet_addr_ to default values
   void reset_i (void);

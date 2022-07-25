@@ -89,7 +89,7 @@ private:
    * @return family type  AF_NETLINK
    *
    * */
-  int determine_type (void) const;
+  static int determine_type (void);
   /**
    * set nl_  @see nl_ to zero and sets address family to default value
    */

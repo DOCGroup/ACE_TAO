@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE ACE_Netlink_Addr::~ACE_Netlink_Addr (void){}
 
 ACE_INLINE ACE_Netlink_Addr::ACE_Netlink_Addr (void):
-ACE_Addr (this->determine_type(), sizeof (sockaddr_nl))
+ACE_Addr (determine_type(), sizeof (sockaddr_nl))
 {
   this->nl_.nl_family = AF_NETLINK;
 }
@@ -23,7 +23,7 @@ ACE_INLINE void ACE_Netlink_Addr::reset (void)
   this->nl_.nl_family = AF_NETLINK;
 }
 
-ACE_INLINE int ACE_Netlink_Addr::determine_type (void) const
+ACE_INLINE int ACE_Netlink_Addr::determine_type (void)
 {
   return AF_NETLINK;
 }

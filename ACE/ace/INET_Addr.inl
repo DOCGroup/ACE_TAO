@@ -32,7 +32,7 @@ ACE_INET_Addr::reset_i (void)
 }
 
 ACE_INLINE int
-ACE_INET_Addr::determine_type (void) const
+ACE_INET_Addr::determine_type (void)
 {
 #if defined (ACE_HAS_IPV6)
 #  if defined (ACE_USES_IPV4_IPV6_MIGRATION)
