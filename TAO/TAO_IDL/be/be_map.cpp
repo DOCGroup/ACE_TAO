@@ -183,7 +183,7 @@ be_map::create_name (be_typedef *node)
   else
     {
       // Generate a local name.
-      static char *namebuf = this->gen_name ();
+      char *namebuf = this->gen_name ();
 
       // Now see if we have a fully scoped name and if so, generate one.
       UTL_Scope *us = this->defined_in ();
