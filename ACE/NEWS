@@ -1,6 +1,8 @@
 USER VISIBLE CHANGES BETWEEN ACE-6.5.17 and ACE-6.5.18
 ======================================================
 
+. Fixes for Static Initialization Order Issues Reported By AddressSanitizer
+
 USER VISIBLE CHANGES BETWEEN ACE-6.5.16 and ACE-6.5.17
 ======================================================
 
