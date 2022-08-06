@@ -3923,7 +3923,7 @@ map_type_spec
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           /*
-           * Create a node representing a sequence.
+           * Create a node representing a map.
            */
           if (key_type && val_type)
             {
@@ -4028,7 +4028,7 @@ map_head :
           idl_global->set_parse_state (IDL_GlobalData::PS_MapSeen);
 
           /*
-           * Push a sequence marker on scopes stack.
+           * Push a map marker on scopes stack.
            */
           idl_global->scopes ().push (0);
         }
@@ -5194,6 +5194,54 @@ param_type_spec
                           || elem_nt == AST_Decl::NT_valuetype_fwd
                           || elem_nt == AST_Decl::NT_component
                           || elem_nt == AST_Decl::NT_component_fwd)
+                        {
+                          can_be_undefined = true;
+                        }
+                    }
+
+                  if (pbt->node_type() == AST_Decl::NT_map)
+                    {
+                      t = pbt;
+                      AST_Map *map_type =
+                        dynamic_cast<AST_Map*> (pbt);
+                      AST_Type *key_type =
+                        map_type->key_type ();
+                      AST_Type *val_type =
+                        map_type->value_type ();
+
+                      AST_Decl::NodeType key_nt =
+                        key_type->node_type ();
+                      AST_Decl::NodeType val_nt =
+                        val_type->node_type ();
+
+                      if (key_nt == AST_Decl::NT_typedef)
+                        {
+                          AST_Typedef *key_td =
+                            dynamic_cast<AST_Typedef*> (key_type);
+                          key_type = key_td->primitive_base_type ();
+                          key_nt = key_type->node_type ();
+                        }
+
+                      if (val_nt == AST_Decl::NT_typedef)
+                        {
+                          AST_Typedef *val_td =
+                            dynamic_cast<AST_Typedef*> (val_type);
+                          val_type = val_td->primitive_base_type ();
+                          val_nt = val_type->node_type ();
+                        }
+
+                      if (key_nt == AST_Decl::NT_interface
+                          || key_nt == AST_Decl::NT_interface_fwd
+                          || key_nt == AST_Decl::NT_valuetype
+                          || key_nt == AST_Decl::NT_valuetype_fwd
+                          || key_nt == AST_Decl::NT_component
+                          || key_nt == AST_Decl::NT_component_fwd
+                          || val_nt == AST_Decl::NT_interface
+                          || val_nt == AST_Decl::NT_interface_fwd
+                          || val_nt == AST_Decl::NT_valuetype
+                          || val_nt == AST_Decl::NT_valuetype_fwd
+                          || val_nt == AST_Decl::NT_component
+                          || val_nt == AST_Decl::NT_component_fwd)
                         {
                           can_be_undefined = true;
                         }
@@ -6772,6 +6820,10 @@ formal_parameter_type
         | IDL_SEQUENCE
         {
           $<ntval>$ = AST_Decl::NT_sequence;
+        }
+        | IDL_MAP
+        {
+          $<ntval>$ = AST_Decl::NT_map;
         }
         | IDL_INTERFACE
         {
