@@ -48,9 +48,8 @@ namespace ACE
 
   // Are we debugging ACE?
   // Keeps track of whether we're in some global debug mode.
-  char debug_;
+  bool debug_ = false;
 }
-
 
 int
 ACE::out_of_handles (int error)
@@ -167,7 +166,7 @@ ACE::debug ()
   //FUZZ: disable check_for_ace_log_categories
   static const char *debug = ACE_OS::getenv ("ACE_DEBUG");
   //FUZZ: enable check_for_ace_log_categories
-  return (ACE::debug_ != 0) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
+  return (ACE::debug_) ? ACE::debug_ : (debug != 0 ? (*debug != '0') : false);
 }
 
 void
