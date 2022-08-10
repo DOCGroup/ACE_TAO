@@ -1,0 +1,96 @@
+commit e8adb6ba4621e3eb9b25707c8757ba6a76656ffa
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Aug 5 10:16:59 2022 -0500
+
+    NEWS for next ACE6+TAO2 release
+
+commit 9e624020cf57ba399aadf1847b665e17a64ded25
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Tue Jun 28 08:47:31 2022 -0600
+
+    Merge pull request #1868 from mitza-oci/seq-codegen-any
+    
+    Updated sequence Any operators code generation
+    
+    (cherry picked from commit b4822ca137fe6622bbe7d2e3a48737a7d4bec21a)
+    
+    # Conflicts:
+    #       TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
+
+commit 7f2438525abef7fafb1ef2dabc53d16850c2f7d6
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Mon Jun 27 11:15:20 2022 -0600
+
+    Merge pull request #1865 from mitza-oci/no_ifdef_anyops_ns
+    
+    Removed ACE_ANY_OPS_USE_NAMESPACE as a compile-time option
+    
+    (cherry picked from commit dbc6154a1b9c2782e78b4d0698364a0780a9a06d)
+    
+    # Conflicts:
+    #       ACE/ace/config-win32-borland.h
+    #       TAO/NEWS
+    #       TAO/TAO_IDL/be/be_visitor_enum/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_enum/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_exception/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_exception/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_interface/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_interface/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_interface_fwd/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_sequence/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_sequence/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_structure/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_structure/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_union/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_union/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuebox/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuebox/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuetype/any_op_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuetype/any_op_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+
+commit 8dcfa002061c49db6327e3c68fbc587e58bebe05
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 24 15:13:50 2022 -0600
+
+    Merge pull request #1864 from mitza-oci/g++12
+    
+    GCC 12
+    
+    (cherry picked from commit 94d132b173807bb55f8c7481a57a523b4f07ba7e)
+    
+    # Conflicts:
+    #       .github/workflows/linux.yml
+    #       .github/workflows/macosx.yml
+    #       TAO/NEWS
+    #       TAO/TAO_IDL/be/be_visitor_valuetype_fwd/any_op_ch.cpp
+
+commit e0f2db3bf37bed348344ca1fff655eab1252a25f
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Sat Jun 18 15:41:39 2022 -0500
+
+    Corrected a nullptr that was merged from the TAO 3 branch
+
+commit 70857a74b9bd658a68b902a0a79abf83a7dea1bb
+Author: Adam Mitz <mitza@objectcomputing.com>
+Date:   Fri Jun 17 07:40:13 2022 -0600
+
+    Merge pull request #1859 from mitza-oci/valuetype-vn
+    
+    TAO_IDL updates for valuetypes and versioned namespaces
+    
+    (cherry picked from commit 587bacedd8b09849a25c3fa368b5fc315fe45ee6)
+    
+    # Conflicts:
+    #       TAO/TAO_IDL/be/be_visitor_valuetype/marshal_cs.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_ch.cpp
+    #       TAO/TAO_IDL/be/be_visitor_valuetype/valuetype_obv_ch.cpp
+
+commit af898a97d578ae2d68e29f064cd317369b0d04c3
+Author: Johnny Willemsen <jwillemsen@remedy.nl>
+Date:   Tue Jun 14 09:11:36 2022 +0200
+
+    Prepare for next 6.5.x release
+    
+        * ACE/NEWS:
+        * TAO/NEWS:
