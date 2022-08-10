@@ -1,7 +1,7 @@
 USER VISIBLE CHANGES BETWEEN ACE-7.0.8 and ACE-7.0.9
 ====================================================
 
-. Minor changes
+. Compile fixes for VxWorks 22.03
 
 USER VISIBLE CHANGES BETWEEN ACE-7.0.7 and ACE-7.0.8
 ====================================================
