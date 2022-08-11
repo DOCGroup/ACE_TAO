@@ -1479,7 +1479,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 #     elif defined (ACE_VXWORKS)
       // Inline the call to ACE_OS::sema_wait () because it takes an
       // ACE_Time_Value argument.  Avoid the cost of that conversion . . .
-      int const ticks_per_sec = ::sysClkRateGet ();
+      _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
       int const ticks = msec_timeout * ticks_per_sec / ACE_ONE_SECOND_IN_MSECS;
       result = ::semTake (cv->sema_.sema_, ticks);
 #     else
@@ -2217,7 +2217,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
   // expects).
   ACE_Time_Value relative_time = timeout.to_relative_time ();
 
-  int ticks_per_sec = ::sysClkRateGet ();
+  _Vx_freq_t const ticks_per_sec = ::sysClkRateGet ();
 
   int ticks = relative_time.sec() * ticks_per_sec +
       relative_time.usec () * ticks_per_sec / ACE_ONE_SECOND_IN_USECS;
