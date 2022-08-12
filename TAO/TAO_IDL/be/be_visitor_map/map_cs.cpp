@@ -3,9 +3,9 @@
 /**
  *  @file    map_cs.cpp
  *
- *  Visitor generating code for Sequences in the client stubs file
+ *  Visitor generating code for Maps in the client stubs file
  *
- *  @author Aniruddha Gokhale
+ *  @author Tyler Mayoff
  */
 //=============================================================================
 

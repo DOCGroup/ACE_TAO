@@ -6,7 +6,7 @@
  *  Visitor for code generation of Maps for the CDR operators
  *  in the client stubs.
  *
- *  @author Aniruddha Gokhale
+ *  @author Tyler Mayoff
  */
 //=============================================================================
 

@@ -4,8 +4,8 @@
 /**
  *  @file    map_cs.h
  *
- *  Concrete visitor for the Sequence class
- *  This one provides code generation for the Sequence node in the client
+ *  Concrete visitor for the Map class
+ *  This one provides code generation for the Map node in the client
  *  stubs.
  *
  *  @author Tyler Mayoff
