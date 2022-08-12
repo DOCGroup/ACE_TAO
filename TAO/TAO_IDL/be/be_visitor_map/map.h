@@ -3,9 +3,9 @@
 /**
  *  @file    map.h
  *
- *  Visitors for generation of code for Sequence
+ *  Visitors for generation of code for Map
  *
- *  @author Aniruddha Gokhale and Carlos O'Ryan
+ *  @author Tyler Mayoff
  */
 //=============================================================================
 

@@ -3,7 +3,7 @@
 /**
  *  @file    map_ch.cpp
  *
- *  Visitor generating code for Sequence in the client header
+ *  Visitor generating code for Map in the client header
  *
  *  @author Tyler Mayoff
  */

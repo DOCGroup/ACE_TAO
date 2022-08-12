@@ -6,7 +6,7 @@
  *  Visitor generating code for CDR operators for maps. This uses
  *  compiled marshaling.
  *
- *  @author Aniruddha Gokhale
+ *  @author Tyler Mayoff
  */
 //=============================================================================
 
