@@ -154,9 +154,10 @@ be_map::gen_name ()
   if (this->unbounded () == false)
     {
       char ulval_str [NAMEBUFSIZE];
-      ACE_OS::sprintf (ulval_str,
-                       "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
-                       this->max_size ()->ev ()->u.ulval);
+      std::snprintf (ulval_str,
+                      NAMEBUFSIZE,
+                      "_" ACE_UINT32_FORMAT_SPECIFIER_ASCII,
+                      this->max_size ()->ev ()->u.ulval);
       ACE_OS::strcat (namebuf,
                       ulval_str);
     }
