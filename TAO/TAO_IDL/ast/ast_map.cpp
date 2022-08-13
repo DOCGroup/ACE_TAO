@@ -180,29 +180,50 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
 
   list.enqueue_tail(this);
 
-  AST_Type *type = dynamic_cast<AST_Type*> (this->key_type ());
+  AST_Type *key_type = dynamic_cast<AST_Type*> (this->key_type ());
+  AST_Type *val_type = dynamic_cast<AST_Type*> (this->value_type());
 
-  if (type == 0)
+  if (key_type == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("AST_Map::in_recursion - ")
-                         ACE_TEXT ("bad base type\n")),
+                         ACE_TEXT ("bad key type\n")),
                         false);
     }
 
-  AST_Decl::NodeType nt = type->node_type ();
-
-  if (nt == AST_Decl::NT_typedef)
+  if (key_type == 0)
     {
-      AST_Typedef *td = dynamic_cast<AST_Typedef*> (type);
-      type = td->primitive_base_type ();
-      nt = type->node_type ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("AST_Map::in_recursion - ")
+                         ACE_TEXT ("bad value type\n")),
+                        false);
     }
 
-  if (nt != AST_Decl::NT_struct
-      && nt != AST_Decl::NT_union
-      && nt != AST_Decl::NT_valuetype
-      && nt != AST_Decl::NT_map)
+  AST_Decl::NodeType kt = key_type->node_type ();
+  AST_Decl::NodeType vt = val_type->node_type ();
+
+  if (kt == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *td = dynamic_cast<AST_Typedef*> (key_type);
+      key_type = td->primitive_base_type ();
+      kt = key_type->node_type ();
+    }
+
+  if (vt == AST_Decl::NT_typedef)
+    {
+      AST_Typedef *td = dynamic_cast<AST_Typedef*>(val_type);
+      val_type = td->primitive_base_type();
+      vt = val_type->node_type();
+    }
+
+  if (kt != AST_Decl::NT_struct
+      && kt != AST_Decl::NT_union
+      && kt != AST_Decl::NT_valuetype
+      && kt != AST_Decl::NT_map
+      && vt != AST_Decl::NT_struct
+      && vt != AST_Decl::NT_union
+      && vt != AST_Decl::NT_valuetype
+      && vt != AST_Decl::NT_map)
     {
       return false;
     }
@@ -210,8 +231,10 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   bool recursion_found = false;
   AST_Type** recursable_type = 0;
   list.get (recursable_type, 0);
-  if (!std::strcmp (type->full_name (),
-                           (*recursable_type)->full_name ()))
+  if (!std::strcmp (key_type->full_name (),
+                  (*recursable_type)->full_name ())
+      || !std::strcmp(val_type->full_name (),
+                  (*recursable_type)->full_name ()))
     {
       // They match.
       recursion_found = true;
@@ -220,7 +243,7 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
   else
     {
       // Check the element type.
-      recursion_found = type->in_recursion (list);
+      recursion_found = key_type->in_recursion (list) && val_type->in_recursion (list);
     }
 
   return recursion_found;
