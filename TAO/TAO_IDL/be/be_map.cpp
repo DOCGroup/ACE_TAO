@@ -146,7 +146,8 @@ be_map::gen_name ()
                         0);
     }
 
-  ACE_OS::sprintf (namebuf,
+  std::snprintf (namebuf,
+                    NAMEBUFSIZE,
                     "_tao_map_%s_%s_",
                     kt->flat_name (), vt->flat_name ());
 
