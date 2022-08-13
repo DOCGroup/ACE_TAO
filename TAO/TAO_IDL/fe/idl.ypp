@@ -3969,7 +3969,7 @@ map_type_spec
           Decl_Annotations_Pair *val_type = type_pair->second;
 
           /*
-           * Remove sequence marker from scopes stack.
+           * Remove map marker from scopes stack.
            */
           if (idl_global->scopes ().top () == 0)
             {
@@ -3979,7 +3979,7 @@ map_type_spec
           UTL_Scope *s = idl_global->scopes ().top_non_null ();
 
           /*
-           * Create a node representing a sequence.
+           * Create a node representing a map.
            */
           if (key_type && val_type)
             {
