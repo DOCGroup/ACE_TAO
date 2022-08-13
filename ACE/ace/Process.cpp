@@ -406,8 +406,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
 # endif /* ACE_LACKS_SETPGID */
 
 # if !defined (ACE_LACKS_SETREGID)
-      if (options.getrgid () != (uid_t) -1
-          || options.getegid () != (uid_t) -1)
+      if (options.getrgid () != (gid_t) -1
+          || options.getegid () != (gid_t) -1)
         if (ACE_OS::setregid (options.getrgid (),
                               options.getegid ()) == -1)
           {
@@ -836,8 +836,8 @@ ACE_Process_Options::ACE_Process_Options (bool inherit_environment,
     stderr_ (ACE_INVALID_HANDLE),
     ruid_ ((uid_t) -1),
     euid_ ((uid_t) -1),
-    rgid_ ((uid_t) -1),
-    egid_ ((uid_t) -1),
+    rgid_ ((gid_t) -1),
+    egid_ ((gid_t) -1),
 #endif /* ACE_WIN32 */
     handle_inheritance_ (true),
     set_handles_called_ (0),

@@ -291,13 +291,13 @@ ACE_Process_Options::seteuid (uid_t id)
 }
 
 ACE_INLINE void
-ACE_Process_Options::setrgid (uid_t id)
+ACE_Process_Options::setrgid (gid_t id)
 {
   this->rgid_ = id;
 }
 
 ACE_INLINE void
-ACE_Process_Options::setegid (uid_t id)
+ACE_Process_Options::setegid (gid_t id)
 {
   this->egid_ = id;
 }
@@ -314,13 +314,13 @@ ACE_Process_Options::geteuid () const
   return this->euid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getrgid () const
 {
   return this->rgid_;
 }
 
-ACE_INLINE uid_t
+ACE_INLINE gid_t
 ACE_Process_Options::getegid () const
 {
   return this->egid_;
