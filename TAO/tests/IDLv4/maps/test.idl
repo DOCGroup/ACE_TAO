@@ -1,9 +1,9 @@
 struct RecurseStruct;
-typedef map<int32, RecurseStruct> RecursedMap;
-// typedef sequence<RecurseStruct> RecursedSequence;
+typedef map<int32, RecurseStruct> IntRecursedMap;
+typedef map<RecurseStruct, int32> RecursedMapInt;
 struct RecurseStruct {
-    // RecursedSequence seq;
-    RecursedMap map;
+    RecursedMapInt rMapI;
+    IntRecursedMap iMapR;
 };
 
 struct TestStruct {
@@ -17,9 +17,6 @@ typedef map<int32, string> TestIntStringMap;
 
 struct DataStruct {
     // Bounded maps are not actually bounded as std::map doesn't support that
-
-    // RecursedSequence _recursedSequence;
-    RecursedMap _recursedMap;
 
     map<int32, int32> intIntMap;
     map<int32, int32, 4> intIntMapBounded;
