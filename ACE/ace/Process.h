@@ -347,12 +347,12 @@ public:
   int setreugid (const ACE_TCHAR* user);
   void setruid (uid_t id);
   void seteuid (uid_t id);
-  void setrgid (uid_t id);
-  void setegid (uid_t id);
+  void setrgid (gid_t id);
+  void setegid (gid_t id);
   uid_t getruid (void) const;
   uid_t geteuid (void) const;
-  uid_t getrgid (void) const;
-  uid_t getegid (void) const;
+  gid_t getrgid () const;
+  gid_t getegid () const;
 
   /**
    * Get the inherit_environment flag.
@@ -418,8 +418,8 @@ protected:
   //   These should be set to -1 to leave unchanged (default).
   uid_t ruid_;
   uid_t euid_;
-  uid_t rgid_;
-  uid_t egid_;
+  gid_t rgid_;
+  gid_t egid_;
 #endif /* ACE_WIN32 */
 
   /// Default true.
