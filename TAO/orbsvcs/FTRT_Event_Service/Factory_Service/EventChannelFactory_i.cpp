@@ -103,7 +103,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   const int ENV_BUF_LEN = 512;
   ACE_TCHAR buf[ENV_BUF_LEN];
   server_addr.addr_to_string(buf,ENV_BUF_LEN,0);
-  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), buf);
+  options.setenv(ACE_TEXT("EventChannelFactoryAddr"), ACE_TEXT("%s"), buf);
 
   // extract the object ID from the criteria
   for (CORBA::ULong i = 0; i < the_criteria.length(); ++i)
@@ -124,7 +124,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ORBSVCS_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
 
-  options.command_line(str.c_str());
+  options.command_line(ACE_TEXT("%s"), str.c_str());
 
   // Try to create a new process running date.
   ACE_Process new_process;
