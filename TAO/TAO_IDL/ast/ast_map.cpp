@@ -191,7 +191,7 @@ AST_Map::in_recursion (ACE_Unbounded_Queue<AST_Type *> &list)
                         false);
     }
 
-  if (key_type == nullptr)
+  if (val_type == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("AST_Map::in_recursion - ")
