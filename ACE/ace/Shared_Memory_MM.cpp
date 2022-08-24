@@ -20,8 +20,7 @@ ACE_Shared_Memory_MM::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-// Creates a shared memory segment of SIZE bytes.
-
+/// Creates a shared memory segment of SIZE bytes.
 ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
                                             size_t length,
                                             int prot,
@@ -47,25 +46,21 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
 
-// The "do-nothing" constructor.
-
+/// The "do-nothing" constructor.
 ACE_Shared_Memory_MM::ACE_Shared_Memory_MM ()
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
 
-// The overall size of the segment.
-
+/// The overall size of the segment.
 size_t
 ACE_Shared_Memory_MM::get_segment_size () const
 {
   ACE_TRACE ("ACE_Shared_Memory_MM::get_segment_size");
-  // This cast is legit since the original length in open() is an int.
   return this->shared_memory_.size ();
 }
 
-// Unmaps the shared memory segment.
-
+/// Unmaps the shared memory segment.
 int
 ACE_Shared_Memory_MM::remove ()
 {
@@ -73,8 +68,7 @@ ACE_Shared_Memory_MM::remove ()
   return shared_memory_.remove ();
 }
 
-// Closes (unmaps) the shared memory segment.
-
+/// Closes (unmaps) the shared memory segment.
 int
 ACE_Shared_Memory_MM::close ()
 {
