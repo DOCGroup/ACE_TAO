@@ -45,9 +45,8 @@ public:
     ALIGN_WORDB  = 8,
 
     /// Size used by verbose mode.
-    /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type)
-    ///           + 4 (@) ... + ? (progname)
-    VERBOSE_LEN = 128,
+    /// 20 (date) + 15 (host_name) + 10 (pid) + 10 (type) + 4 (@)
+    VERBOSE_LEN = 59,
 
     /// Maximum size of a logging message with the verbose headers
     MAXVERBOSELOGMSGLEN = VERBOSE_LEN + MAXLOGMSGLEN
@@ -161,6 +160,12 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
+
+protected:
+  int format_verbose (const ACE_TCHAR host_name[],
+                      u_long verbose_flag,
+                      ACE_TCHAR *verbose_msg,
+                      size_t verbose_msg_size);
 
 private:
   /// Round up to the alignment restrictions.
