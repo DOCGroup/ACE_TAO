@@ -26,11 +26,6 @@
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
-#if __GNUC__ >= 7
-# define ACE_FALLTHROUGH [[gnu::fallthrough]]
-#else
-# define ACE_FALLTHROUGH
-#endif
 #endif
 #if __cplusplus >= 201703L
 # define ACE_HAS_CPP17
