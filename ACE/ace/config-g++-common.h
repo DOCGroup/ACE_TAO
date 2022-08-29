@@ -31,17 +31,17 @@
 #  define ACE_HAS_NEW_NOTHROW
 #endif /* __GNUC__ >= 3.3 */
 
-#if __cplusplus >= 201103L
-# define ACE_HAS_CPP11
 #endif
 #if __cplusplus >= 201402L
 # define ACE_HAS_CPP14
 #endif
-#if __cplusplus >= 201703L
-# define ACE_HAS_CPP17
-#endif
-#if __cplusplus >= 202002L
-# define ACE_HAS_CPP20
+#if __cplusplus >= 201103L
+# define ACE_HAS_CPP11
+# if !defined (ACE_FALLTHROUGH) && (__GNUC__ >= 7)
+#  define ACE_FALLTHROUGH [[gnu::fallthrough]]
+# else
+#  define ACE_FALLTHROUGH
+# endif
 #endif
 
 #if (defined (i386) || defined (__i386__)) && !defined (ACE_SIZEOF_LONG_DOUBLE)
