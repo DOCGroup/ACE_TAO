@@ -30,15 +30,15 @@ public:
     UTL_ScopedName *name,
     AST_Annotation_Member *other);
 
-  virtual ~AST_Annotation_Member ();
+  ~AST_Annotation_Member () override;
 
   static AST_Decl::NodeType const NT;
 
   /// Cleanup
-  virtual void destroy ();
+  void destroy () override;
 
   /// AST Dumping
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   /// Get and Set the Value
   ///{

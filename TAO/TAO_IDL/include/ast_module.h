@@ -86,13 +86,13 @@ public:
   AST_Module (UTL_ScopedName *n, AST_Module *prev = 0);
 
   // Destructor.
-  virtual ~AST_Module ();
+  ~AST_Module () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Involved in OBV_ namespace generation.
   void set_has_nested_valuetype ();
@@ -109,8 +109,8 @@ public:
 
   // Has this node been referenced here already?
   // Override of method in UTL_Scope.
-  virtual bool referenced (AST_Decl *e,
-                           Identifier *id = 0);
+  bool referenced (AST_Decl *e,
+                           Identifier *id = 0) override;
 
   // Accessor to this module's previous opening.
   AST_Module *previous_opening ();
@@ -118,7 +118,7 @@ public:
   // Called to look up some declaration
   // in a previous opening of this module.
   AST_Decl *look_in_prev_mods_local (Identifier *e,
-                                     bool ignore_fwd = false);
+                                     bool ignore_fwd = false) override;
 
   // Called to look up some declaration
   // in a previous opening of this module.
@@ -127,7 +127,7 @@ public:
                                AST_Decl *&final_parent_decl);
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Accessors for the member.
   AST_Template_Module_Inst *from_inst () const;
@@ -140,94 +140,68 @@ public:
   // Override that looks in previous openings.
   virtual AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
-                                    AST_Decl *&final_parent_decl);
+                                    AST_Decl *&final_parent_decl) override;
 
   // We actually want to match the LAST module found in
   // the scope being searched not the FIRST one in the
   // list.
-  virtual AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only);
+  AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only) override;
 
   // Scope Management Protocol
 
-  virtual
-  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t);
+  AST_PredefinedType *fe_add_predefined_type (AST_PredefinedType *t) override;
 
-  virtual
-  AST_Module *fe_add_module (AST_Module *m);
+  AST_Module *fe_add_module (AST_Module *m) override;
 
-  virtual
   AST_Template_Module_Inst *fe_add_template_module_inst (
-    AST_Template_Module_Inst *m);
+    AST_Template_Module_Inst *m) override;
 
-  virtual
-  AST_Interface *fe_add_interface (AST_Interface *i);
+  AST_Interface *fe_add_interface (AST_Interface *i) override;
 
-  virtual
-  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i);
+  AST_InterfaceFwd *fe_add_interface_fwd (AST_InterfaceFwd *i) override;
 
-  virtual
-  AST_ValueType *fe_add_valuetype (AST_ValueType *i);
+  AST_ValueType *fe_add_valuetype (AST_ValueType *i) override;
 
-  virtual
-  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i);
+  AST_ValueTypeFwd *fe_add_valuetype_fwd (AST_ValueTypeFwd *i) override;
 
-  virtual
-  AST_EventType *fe_add_eventtype (AST_EventType *i);
+  AST_EventType *fe_add_eventtype (AST_EventType *i) override;
 
-  virtual
-  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i);
+  AST_EventTypeFwd *fe_add_eventtype_fwd (AST_EventTypeFwd *i) override;
 
-  virtual
-  AST_Component *fe_add_component (AST_Component *i);
+  AST_Component *fe_add_component (AST_Component *i) override;
 
-  virtual
-  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i);
+  AST_ComponentFwd *fe_add_component_fwd (AST_ComponentFwd *i) override;
 
-  virtual
-  AST_Connector *fe_add_connector (AST_Connector *i);
+  AST_Connector *fe_add_connector (AST_Connector *i) override;
 
-  virtual
-  AST_Home *fe_add_home (AST_Home *i);
+  AST_Home *fe_add_home (AST_Home *i) override;
 
-  virtual
-  AST_Constant *fe_add_constant (AST_Constant *c);
+  AST_Constant *fe_add_constant (AST_Constant *c) override;
 
-  virtual
-  AST_Exception *fe_add_exception (AST_Exception *e);
+  AST_Exception *fe_add_exception (AST_Exception *e) override;
 
-  virtual
-  AST_Union *fe_add_union (AST_Union *u);
+  AST_Union *fe_add_union (AST_Union *u) override;
 
-  virtual
-  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u);
+  AST_UnionFwd *fe_add_union_fwd (AST_UnionFwd *u) override;
 
-  virtual
-  AST_Structure *fe_add_structure (AST_Structure *s);
+  AST_Structure *fe_add_structure (AST_Structure *s) override;
 
-  virtual
-  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s);
+  AST_StructureFwd *fe_add_structure_fwd (AST_StructureFwd *s) override;
 
-  virtual
-  AST_Enum *fe_add_enum (AST_Enum *e);
+  AST_Enum *fe_add_enum (AST_Enum *e) override;
 
-  virtual
-  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v);
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
-  virtual
-  AST_Typedef *fe_add_typedef (AST_Typedef *t);
+  AST_Typedef *fe_add_typedef (AST_Typedef *t) override;
 
-  virtual
-  AST_Native *fe_add_native (AST_Native *n);
+  AST_Native *fe_add_native (AST_Native *n) override;
 
-  virtual
-  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb);
+  AST_ValueBox *fe_add_valuebox (AST_ValueBox *vb) override;
 
-  virtual
-  AST_PortType *fe_add_porttype (AST_PortType *pt);
+  AST_PortType *fe_add_porttype (AST_PortType *pt) override;
 
-  virtual
   AST_Annotation_Decl *fe_add_annotation_decl (
-    AST_Annotation_Decl *annotation_decl);
+    AST_Annotation_Decl *annotation_decl) override;
 
   // Reset the last_in_same_parent_scope_ member to ourself
   // (called by AST_Root::destroy on the CORBA module containing
@@ -235,7 +209,7 @@ public:
   // multiple IDL files.
   void reset_last_in_same_parent_scope ();
 
-  virtual bool annotatable () const { return true; }
+  bool annotatable () const override { return true; }
 
 private: // Data
   bool pd_has_nested_valuetype_;

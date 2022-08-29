@@ -23,10 +23,10 @@ public:
                  AST_Interface **supports_flat,
                  long n_supports_flat);
 
-  virtual ~AST_Component ();
+  ~AST_Component () override;
 
   // This also calls the base class version.
-  virtual void redefine (AST_Interface *from);
+  void redefine (AST_Interface *from) override;
 
   // Extend lookup to the base component.
   virtual AST_Decl *look_in_inherited (UTL_ScopedName *e,
@@ -50,7 +50,7 @@ public:
                                     AST_Decl *&final_parent_decl);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Allows adding an uses to a later point
   // The port i is inserted after port ix, if
@@ -59,28 +59,28 @@ public:
                    AST_Uses *ix = 0);
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &);
+  void dump (ACE_OSTREAM_TYPE &) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
   typedef AST_ComponentFwd FWD_TYPE;
 
 protected:
-  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+  AST_Provides *fe_add_provides (AST_Provides *p) override;
 
-  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+  AST_Uses *fe_add_uses (AST_Uses *p) override;
 
-  virtual AST_Publishes *fe_add_publishes (AST_Publishes *p);
+  AST_Publishes *fe_add_publishes (AST_Publishes *p) override;
 
-  virtual AST_Emits *fe_add_emits (AST_Emits *p);
+  AST_Emits *fe_add_emits (AST_Emits *p) override;
 
-  virtual AST_Consumes *fe_add_consumes (AST_Consumes *p);
+  AST_Consumes *fe_add_consumes (AST_Consumes *p) override;
 
-  virtual AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p);
+  AST_Extended_Port *fe_add_extended_port (AST_Extended_Port *p) override;
 
-  virtual AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p);
+  AST_Mirror_Port *fe_add_mirror_port (AST_Mirror_Port *p) override;
 
 protected:
   AST_Component *pd_base_component;

@@ -195,10 +195,10 @@ public:
     UTL_ScopedName *name,
     AST_Decl *other);
 
-  virtual ~AST_Decl ();
+  ~AST_Decl ();
 
   // Cleanup method.
-  virtual void destroy ();
+  void destroy () override;
 
   // If this decl has been found, some types need to be
   // moved onto their true definitions etc. Defaults to

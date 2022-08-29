@@ -12,19 +12,19 @@ public:
   AST_Consumes (UTL_ScopedName *n,
                 AST_Type *consumes_type);
 
-  virtual ~AST_Consumes ();
+  ~AST_Consumes () override;
 
   // Data Accessor.
   AST_Type *consumes_type () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 };

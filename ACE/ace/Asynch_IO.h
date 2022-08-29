@@ -356,7 +356,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -510,7 +510,7 @@ public:
 
   /// Return the underlying implementation class.
   /// @todo (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -657,7 +657,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -792,7 +792,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation object.
@@ -928,7 +928,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -1032,7 +1032,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Delegation/implementation class that all methods will be
@@ -1157,7 +1157,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// The implementation class.
@@ -1366,7 +1366,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.
@@ -1499,7 +1499,7 @@ public:
 
   /// Return the underlying implementation class.
   //  (this should be protected...)
-  virtual ACE_Asynch_Operation_Impl *implementation () const;
+  virtual ACE_Asynch_Operation_Impl *implementation () const override;
 
 protected:
   /// Implementation class that all methods will be forwarded to.

@@ -87,11 +87,11 @@ public:
   AST_Type *head ();
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // Copies the UTL_ExceptList pointers but not the
   // contained AST_Exceptions.
-  virtual UTL_ExceptList *copy ();
+  UTL_ExceptList *copy () override;
 
 private:
   // Data.

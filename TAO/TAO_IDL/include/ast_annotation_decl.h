@@ -16,13 +16,13 @@ public:
 
   AST_Annotation_Decl (UTL_ScopedName *name);
 
-  virtual ~AST_Annotation_Decl ();
+  ~AST_Annotation_Decl () override;
 
   /// AST Dumping
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   /// Cleanup
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
@@ -36,19 +36,19 @@ public:
   static void escape_name (UTL_ScopedName *name);
   ///}
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
-  virtual AST_Annotation_Member *fe_add_annotation_member (
-    AST_Annotation_Member *annotation_member);
+  AST_Annotation_Member *fe_add_annotation_member (
+    AST_Annotation_Member *annotation_member) override;
 
-  virtual AST_Constant *fe_add_constant (AST_Constant *t);
+  AST_Constant *fe_add_constant (AST_Constant *t) override;
 
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   /**
    * Should AMI visit this node? (NO)
    */
-  virtual bool ami_visit ();
+  bool ami_visit () override;
 };
 
 #endif

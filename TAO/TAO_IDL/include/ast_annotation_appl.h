@@ -45,16 +45,16 @@ public:
    */
   AST_Annotation_Appl (UTL_ScopedName *name, Params *params);
 
-  virtual ~AST_Annotation_Appl ();
+  ~AST_Annotation_Appl () override;
 
   /// AST Dumping
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   /// Visiting
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   /// Cleanup
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 

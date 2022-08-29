@@ -17,25 +17,25 @@ class TAO_IDL_FE_Export AST_PortType
 public:
   AST_PortType (UTL_ScopedName *n);
 
-  virtual ~AST_PortType ();
+  ~AST_PortType () override;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 
 protected:
-  virtual AST_Provides *fe_add_provides (AST_Provides *p);
+  AST_Provides *fe_add_provides (AST_Provides *p) override;
 
-  virtual AST_Uses *fe_add_uses (AST_Uses *p);
+  AST_Uses *fe_add_uses (AST_Uses *p) override;
 
-  virtual AST_Attribute *fe_add_attribute (AST_Attribute *a);
+  AST_Attribute *fe_add_attribute (AST_Attribute *a) override;
 };
 
 #endif           // AST_PORTTYPE_H

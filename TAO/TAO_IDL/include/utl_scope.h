@@ -158,7 +158,7 @@ public:
   UTL_Scope (AST_Decl::NodeType nt);
 
   // Destructor.
-  virtual ~UTL_Scope ();
+  ~UTL_Scope () override;
 
   // Data Accessors.
   AST_Decl::NodeType scope_node_type ()
@@ -230,7 +230,7 @@ public:
   void has_prefix (bool val);
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // Visiting.
   virtual int ast_accept (ast_visitor *visitor);

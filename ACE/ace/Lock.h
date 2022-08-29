@@ -125,15 +125,15 @@ public:
 
   // = Lock/unlock operations.
 
-  virtual int remove ();
-  virtual int acquire ();
-  virtual int tryacquire ();
-  virtual int release ();
-  virtual int acquire_read ();
-  virtual int acquire_write ();
-  virtual int tryacquire_read ();
-  virtual int tryacquire_write ();
-  virtual int tryacquire_write_upgrade ();
+  virtual int remove () override;
+  virtual int acquire () override;
+  virtual int tryacquire () override;
+  virtual int release () override;
+  virtual int acquire_read () override;
+  virtual int acquire_write () override;
+  virtual int tryacquire_read () override;
+  virtual int tryacquire_write () override;
+  virtual int tryacquire_write_upgrade () override;
   void dump () const;
 
 protected:

@@ -13,18 +13,18 @@ public:
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
 
-  virtual ~AST_Extended_Port ();
+  ~AST_Extended_Port () override;
 
   AST_PortType *port_type () const;
 
   // Cleanup function.
-  virtual void destroy ();
+  void destroy () override;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   static AST_Decl::NodeType const NT;
 };

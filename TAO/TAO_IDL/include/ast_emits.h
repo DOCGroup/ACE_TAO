@@ -12,19 +12,19 @@ public:
   AST_Emits (UTL_ScopedName *n,
              AST_Type *emits_type);
 
-  virtual ~AST_Emits ();
+  ~AST_Emits () override;
 
   // Data Accessor.
   AST_Type *emits_type () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 };

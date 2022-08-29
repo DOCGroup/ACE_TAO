@@ -88,7 +88,7 @@ public:
   AST_Type (AST_Decl::NodeType nt,
             UTL_ScopedName *n);
 
-  virtual ~AST_Type ();
+  ~AST_Type () override;
 
   // Determine if we are involved in some kind of limited recursion.
   // Most types cannot be involved except structs and unions.
@@ -130,10 +130,10 @@ public:
   virtual bool legal_for_primary_key () const;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   // Determine our size type and set it if it is unknown.

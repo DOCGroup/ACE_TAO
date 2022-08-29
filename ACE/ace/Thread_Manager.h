@@ -150,7 +150,7 @@ protected:
    void *param_;
 
    /// The apply method
-   void apply ();
+   void apply () override;
 };
 
 /**

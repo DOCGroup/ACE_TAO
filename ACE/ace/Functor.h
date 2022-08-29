@@ -87,7 +87,7 @@ public:
   ACE_Noop_Command() = default;
 
   /// Implement the empty execute() member function
-  virtual int execute(void*);
+  int execute(void*) override;
 };
 
 ////////////////////////////////////////////////////////////

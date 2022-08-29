@@ -86,19 +86,19 @@ public:
                 AST_Type *ft,
                 UTL_ScopedName *n);
 
-  virtual ~AST_Argument ();
+  ~AST_Argument () override;
 
   // Data Accessors.
   Direction direction ();
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 

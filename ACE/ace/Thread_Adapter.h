@@ -61,7 +61,7 @@ public:
    * @c this, thereby rendering the object useless after the call
    * returns.
    */
-  virtual ACE_THR_FUNC_RETURN invoke ();
+  ACE_THR_FUNC_RETURN invoke () override;
 
   /// Accessor for the optional ACE_Thread_Manager.
   ACE_Thread_Manager *thr_mgr ();

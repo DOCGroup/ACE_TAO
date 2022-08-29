@@ -109,7 +109,7 @@ public:
     UTL_ScopedName *name,
     AST_Field *other);
 
-  virtual ~AST_Field ();
+  ~AST_Field () override;
 
   // Data Accessors.
   AST_Type *field_type () const;
@@ -121,7 +121,7 @@ public:
   ///}
 
   // Are we or do we contain a wstring?
-  virtual int contains_wstring ();
+  int contains_wstring () override;
 
   // Determine this bit of state after we have
   // be added to our aggregate type and before
@@ -129,17 +129,17 @@ public:
   void set_recursive_flag ();
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
 protected:
   // Data.

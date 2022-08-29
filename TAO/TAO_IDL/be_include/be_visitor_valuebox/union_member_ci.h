@@ -39,38 +39,38 @@ public:
   // =visit operations on all possible data types that a union_branch can be
 
   /// visit array type
-  virtual int visit_array (be_array *node);
+  int visit_array (be_array *node) override;
 
   /// visit enum type
-  virtual int visit_enum (be_enum *node);
+  int visit_enum (be_enum *node) override;
 
   /// visit interface type
-  virtual int visit_interface (be_interface *node);
+  int visit_interface (be_interface *node) override;
 
   /// visit interface forward type
-  virtual int visit_interface_fwd (be_interface_fwd *node);
+  int visit_interface_fwd (be_interface_fwd *node) override;
 
-  virtual int visit_valuetype (be_valuetype *node);
+  int visit_valuetype (be_valuetype *node) override;
 
-  virtual int visit_valuetype_fwd (be_valuetype_fwd *node);
+  int visit_valuetype_fwd (be_valuetype_fwd *node) override;
 
   /// visit predefined type
-  virtual int visit_predefined_type (be_predefined_type *node);
+  int visit_predefined_type (be_predefined_type *node) override;
 
   /// visit sequence type
-  virtual int visit_sequence (be_sequence *node);
+  int visit_sequence (be_sequence *node) override;
 
   /// visit string type
-  virtual int visit_string (be_string *node);
+  int visit_string (be_string *node) override;
 
   /// visit structure type
-  virtual int visit_structure (be_structure *node);
+  int visit_structure (be_structure *node) override;
 
   /// visit typedefed type
-  virtual int visit_typedef (be_typedef *node);
+  int visit_typedef (be_typedef *node) override;
 
   /// visit union type
-  virtual int visit_union (be_union *node);
+  int visit_union (be_union *node) override;
 
 private:
   void emit_member_set (be_decl *field,

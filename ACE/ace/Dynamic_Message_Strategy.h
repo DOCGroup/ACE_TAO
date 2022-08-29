@@ -160,10 +160,10 @@ public:
 
   /// Dynamic priority conversion function based on time to deadline.
   virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb);
+                                 const ACE_Message_Block &mb) override;
 
   /// Dump the state of the strategy.
-  virtual void dump () const;
+  virtual void dump () const override;
 };
 
 /**
@@ -195,10 +195,10 @@ public:
 
   /// Dynamic priority conversion function based on laxity.
   virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb);
+                                 const ACE_Message_Block &mb) override;
 
   /// Dump the state of the strategy.
-  virtual void dump () const;
+  virtual void dump () const override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

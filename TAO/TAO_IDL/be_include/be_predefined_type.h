@@ -28,20 +28,20 @@ public:
                       UTL_ScopedName *n);
 
   // Overridden from class be_type.
-  virtual void gen_member_ostream_operator (TAO_OutStream *os,
-                                            const char *instance_name,
-                                            bool use_underscore,
-                                            bool accessor = false);
+  void gen_member_ostream_operator (TAO_OutStream *os,
+                                   const char *instance_name,
+                                   bool use_underscore,
+                                   bool accessor = false) override;
 
   // Visiting.
-  virtual int accept (be_visitor* visitor);
+  int accept (be_visitor* visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
 protected:
   /// Overridden method.
-  virtual void compute_tc_name ();
+  void compute_tc_name () override;
 
   // Compute and return the value.
 

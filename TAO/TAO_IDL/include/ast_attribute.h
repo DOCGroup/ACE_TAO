@@ -80,7 +80,7 @@ public:
                  bool local,
                  bool abstract);
 
-  virtual ~AST_Attribute ();
+  ~AST_Attribute () override;
 
   // Data Accessors.
 
@@ -89,13 +89,13 @@ public:
   UTL_ExceptList *get_set_exceptions () const;
 
   // AST Dumping.
-  virtual void dump (ACE_OSTREAM_TYPE &o);
+  void dump (ACE_OSTREAM_TYPE &o) override;
 
   // Visiting.
-  virtual int ast_accept (ast_visitor *visitor);
+  int ast_accept (ast_visitor *visitor) override;
 
   // Cleanup.
-  virtual void destroy ();
+  void destroy () override;
 
   // Methods to add exceptions directly, used when copying node.
   UTL_ExceptList *be_add_get_exceptions (UTL_ExceptList *t);
@@ -103,7 +103,7 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  virtual bool annotatable () const;
+  bool annotatable () const override;
 
 private:
   // Data.

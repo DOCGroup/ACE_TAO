@@ -96,10 +96,10 @@ public:
   virtual void dump (ACE_OSTREAM_TYPE &o);
   // Dump to ostream.
 
-  virtual void destroy ();
+  void destroy () override;
   // Cleanup function.
 
-  virtual UTL_IdList *copy ();
+  UTL_IdList *copy () override;
   // Copy the list.
 
   Identifier *head ();
