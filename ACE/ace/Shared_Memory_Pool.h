@@ -86,7 +86,7 @@ public:
   ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = 0,
                           const OPTIONS *options = 0);
 
-  virtual ~ACE_Shared_Memory_Pool (void);
+  virtual ~ACE_Shared_Memory_Pool () = default;
 
   /// Ask system for initial chunk of local memory.
   virtual void *init_acquire (size_t nbytes,

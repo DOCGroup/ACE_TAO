@@ -31,8 +31,7 @@ ACE_Shared_Memory_SV::ACE_Shared_Memory_SV (key_t id,
   ACE_TRACE ("ACE_Shared_Memory_SV::ACE_Shared_Memory_SV");
 }
 
-// The overall size of the segment.
-
+/// The overall size of the segment.
 size_t
 ACE_Shared_Memory_SV::get_segment_size () const
 {
@@ -42,8 +41,7 @@ ACE_Shared_Memory_SV::get_segment_size () const
   return this->shared_memory_.get_segment_size ();
 }
 
-// Removes the shared memory segment.
-
+/// Removes the shared memory segment.
 int
 ACE_Shared_Memory_SV::remove ()
 {
@@ -51,8 +49,7 @@ ACE_Shared_Memory_SV::remove ()
   return shared_memory_.remove ();
 }
 
-// Closes (detaches) the shared memory segment.
-
+/// Closes (detaches) the shared memory segment.
 int
 ACE_Shared_Memory_SV::close ()
 {
