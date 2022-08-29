@@ -28,33 +28,33 @@ jobs:
             CXX: g++-4.8
             PackageDeps: g++-4.8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: gcc-6
             CXX: g++-6
             PackageDeps: g++-6
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: gcc-7
             CXX: g++-7
             PackageDeps: g++-7
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
             CheckPkgConfig: 1
           - CC: gcc-8
             CXX: g++-8
             PackageDeps: g++-8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: gcc-9
             CXX: g++-9
             PackageDeps: g++-9
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: gcc-10
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: gcc-11
             CXX: g++-11
             PackageDeps: g++-11
@@ -71,28 +71,28 @@ jobs:
             CXX: clang++-5.0
             PackageDeps: clang-5.0
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: clang-6.0
             CXX: clang++-6.0
             PackageDeps: clang-6.0
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: clang-7
             CXX: clang++-7
             PackageDeps: clang-7
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: clang-8
             CXX: clang++-8
             PackageDeps: clang-8
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: clang-9
             CXX: clang++-9
             PackageDeps: clang-9
             Repo: llvm-toolchain-$(lsb_release -cs)-9
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux_clang.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
           - CC: clang-10
             CXX: clang++-10
             PackageDeps: clang-10
@@ -128,7 +128,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
             optional_feature: corba_e_micro=1
             optional_macros: corba_e_micro=1
           - feature: CORBA/e compact
@@ -136,7 +136,7 @@ jobs:
             CXX: g++-10
             PackageDeps: g++-10
             platform_file: include $(ACE_ROOT)/include/makeinclude/platform_linux.GNU
-            os: ubuntu-18.04
+            os: ubuntu-22.04
             optional_feature: corba_e_compact=1
             optional_macros: corba_e_compact=1
           - feature: ACE for TAO
