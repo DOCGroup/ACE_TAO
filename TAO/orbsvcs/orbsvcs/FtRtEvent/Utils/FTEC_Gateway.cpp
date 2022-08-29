@@ -93,7 +93,7 @@ private:
   Interceptor_Destoryer();
   inline void do_it() {
     destroy_interceptors();
-  };
+  }
 };
 
 struct FTEC_Gateway_Impl
